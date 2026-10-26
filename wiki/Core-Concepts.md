@@ -63,4 +63,4 @@ the change. Fitness scores license inspection only, never promotion.
 graph shows that pieces fit together; it is not evidence that the composed
 workflow runs correctly.
 
-See [Repository layout](Repository-Layout.md) for where each of these lives.
+Each has its own page: [EIS](EIS.md), [PCIV](PCIV.md) and [Operads](Operads.md).
