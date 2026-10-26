@@ -1,0 +1,34 @@
+.F.................                                                      [100%]
+================================== FAILURES ===================================
+______ test_all_original_pairs_reached_each_engine_with_actual_arguments ______
+
+evidence = {'carriers': {'10:F:base': {'original_history': [{'kind': 'Supply', 'token': '<>'}, {'kind': 'AdmitDatum', 'token': '<.....], [], [...]], 'members': [[...], [...]], 'representative': [{...}], ...}], 'cost': [1, -1], 'i': 1, ...}, ...], ...}
+
+    def test_all_original_pairs_reached_each_engine_with_actual_arguments(evidence):
+        request, response, log = (evidence[name] for name in ("request", "response", "log"))
+        replay.check_calls(request["cases"], response["calls"])
+        assert len(response["calls"]) == 9792 and len(log) == 3264
+        base = [r for r in response["calls"] if r["variant"] == "base"]
+        primary = [r for r in base if r["n"] <= 15]
+        held = [r for r in base if r["n"] >= 16]
+        assert len(primary) == 1820 and len(held) == 1444
+        assert len({(replay.wire(r["base_canonical_key"]), tuple(r["target"]), r["measure"]) for r in primary}) == 1820
+        for reading in ("L", "F"):
+            for measure in ("mu1", "mu2"):
+                rows = [r for r in base if r["reading"] == reading and r["measure"] == measure]
+                for n in range(3, 19):
+                    actual = {(r["i"], r["j"]) for r in rows if r["n"] == n}
+                    assert actual == {(i, j) for i in range(1, n) for j in range(i + 1, n)}
+        assert {r["id"] for r in log} == {r["id"] for r in base}
+        by_id = {r["id"]: r for r in base}
+        for call in log:
+            row = by_id[call["id"]]
+>           assert call["base_canonical_key"] == row["base_canonical_key"]
+E           assert [6, [1, 1, 1,..., 4], [3, 5]]] == [6, [1, 1, 1,..., 4], [1, 5]]]
+E             
+E             At index 2 diff: [[0, [0]], [0, [3]], [1, [0]], [2, [1]], [3, [2]]] != [[0, [2]], [1, [3]], [2, [5]], [3, [4]], [3, [5]]]
+E             Use -v to get more diff
+
+code\tests\test_paper011_genesis_g03.py:64: AssertionError
+=========================== short test summary info ===========================
+FAILED code/tests/test_paper011_genesis_g03.py::test_all_original_pairs_reached_each_engine_with_actual_arguments

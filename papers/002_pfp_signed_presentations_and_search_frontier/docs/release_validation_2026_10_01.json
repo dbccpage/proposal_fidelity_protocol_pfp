@@ -1,0 +1,131 @@
+{
+  "schema": "symbol-game.preprint-local-validation.v1",
+  "date": "2026-10-01",
+  "release_version": "0.1.0",
+  "source_baseline": "3f3399766",
+  "scope": "Local finite checks, package isolation, and proof replay; no live provider experiments or publication authorization",
+  "python": "3.12.14",
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_exact_fock_gap.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "9 passed in 0.09s",
+      "test_source_sha256": "51a495d617c1a78283eac93ae1b67300b97051f9c70bee698b27ab8781f130b8",
+      "stdout": ".........                                                                [100%]\n9 passed in 0.09s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_frontier_search.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "16 passed in 0.05s",
+      "test_source_sha256": "c6d174036a0d531ee8d98c917637a84ac2674dfb7b11cd3d5a5e50356b6680f3",
+      "stdout": "................                                                         [100%]\n16 passed in 0.05s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_manuscript_examples.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "3 passed in 0.02s",
+      "test_source_sha256": "2eaad2a76d1369cd862807d31a6ea985be13a9d2caec94d4eeaec2459a0584a2",
+      "stdout": "...                                                                      [100%]\n3 passed in 0.02s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_native_refusals.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "3 passed in 0.02s",
+      "test_source_sha256": "52c280cc9731fa88b93a932465e28c79efa0b83efc45f42786af841bde1728ac",
+      "stdout": "...                                                                      [100%]\n3 passed in 0.02s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_native_sign_graph.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "4 passed in 0.02s",
+      "test_source_sha256": "7d06a4499b2e998c8670255f0da9769620bef641a4f1690f413fa32c2274d21f",
+      "stdout": "....                                                                     [100%]\n4 passed in 0.02s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_sign_graph.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "3 passed in 0.01s",
+      "test_source_sha256": "cdfc820e4a5d4c86650873faefc81db6fbc49b119820b05c81e942a4d4007e1f",
+      "stdout": "...                                                                      [100%]\n3 passed in 0.01s\n"
+    }
+  ],
+  "lean": [],
+  "notebooks": [
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/002_the_symbol_game_signed_presentations_and_search_frontier",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    },
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks/signed_exchange_and_frontier.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/002_the_symbol_game_signed_presentations_and_search_frontier/jupyter_notebooks",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    }
+  ],
+  "external_deposit": false,
+  "rust": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-j",
+        "1",
+        "--manifest-path",
+        "code/rust/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "stdout": "   Compiling pfp_sign_graph v0.1.0 (/workspace/the_symbol_game/omega_engine_atlas/coda_atlas/omega_engine_pfp/002_the_symbol_game_signed_presentations_and_search_frontier/code/rust)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.56s\n     Running unittests src/lib.rs (code/rust/target/debug/deps/pfp_sign_graph-b683e7f4eeb23acf)\n\nrunning 3 tests\ntest sign_graph::tests::test_matrix_gauge ... ok\ntest sign_graph::tests::test_odd_triangle ... ok\ntest sign_graph::tests::test_tree_gauge ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running unittests src/bin/solve_sign_graph.rs (code/rust/target/debug/deps/solve_sign_graph-ca178f6422295e46)\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n   Doc-tests pfp_sign_graph\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n"
+    }
+  ]
+}

@@ -1,0 +1,879 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\emergencystretch=6em
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage{pdflscape}
+\newsavebox{\PfpMathBox}
+\newcommand{\PfpDisplayMath}[1]{%
+  \sbox{\PfpMathBox}{$\displaystyle #1$}%
+  \ifdim\wd\PfpMathBox>\linewidth
+    \resizebox{\linewidth}{!}{\usebox{\PfpMathBox}}%
+  \else\usebox{\PfpMathBox}\fi}
+\AtBeginDocument{\Urlmuskip=0mu plus 2mu}
+\lstset{breaklines=true,basicstyle=\small\ttfamily,columns=fullflexible,keepspaces=true}
+\setlength{\tabcolsep}{4pt}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{newunicodechar}
+  \makeatletter
+  \newcommand{\DeclareUnicodeCharacter}[2]{%
+    \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\def\temp{~}}%
+    \expandafter\endgroup
+    \expandafter\newunicodechar\expandafter{\temp}{#2}%
+  }
+  \makeatother
+\fi
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2190}{\ensuremath{\leftarrow}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{21A6}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2113}{\ensuremath{\ell}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{211A}{\ensuremath{\mathbb{Q}}}
+\DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{2115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{00B9}{\ensuremath{^1}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{2070}{\ensuremath{^0}}
+\DeclareUnicodeCharacter{2080}{\ensuremath{_0}}
+\DeclareUnicodeCharacter{2081}{\ensuremath{_1}}
+\DeclareUnicodeCharacter{2082}{\ensuremath{_2}}
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={PFP IX: Reviewing Claims Against Code and Evidence},
+  pdfauthor={Jeremy H. Carroll},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{PFP IX: Reviewing Claims Against Code and Evidence}
+\author{Jeremy H. Carroll}
+\date{2026-10-23 · Version 0.2.0 · Author-review extension}
+
+\begin{document}
+\makeatletter
+\begin{center}
+{\LARGE \@title\par}
+\vspace{0.8em}
+{\normalsize \@author\par}
+\vspace{0.5em}
+{\small \@date\par}
+\end{center}
+\makeatother
+
+\textbf{Code baseline:}
+\nolinkurl{59dde95a7860063c25d75db37f40af556e9f28ee}
+
+\subsection{Purpose}\label{purpose}
+
+This protocol helps a reviewer decide what a technical claim is
+supported by. It is a companion to the Proposal Fidelity Protocol (PFP)
+papers, operator guide, and curriculum guide. ``Adversarial'' means
+deliberately testing plausible ways the claim could fail. It does not
+require hostile language, confidence theater, or agreement among
+multiple models.
+
+The unit of review is a claim together with its inputs, implementation,
+and evidence. A successful check supports the property it checked under
+its assumptions. A failed check or missing prerequisite is useful
+information to preserve. This document provides a review procedure and
+worked examples. The only recorded model run it uses is a retained
+ten-trial trace, which Section 4.1 recounts as an example of reading a
+reported catch rate. Appendix A applies the procedure to one gate in
+this repository, the terminal gate of the seven-act Woland engine, with
+four defect families represented by five probe records from a historical
+replay on the audited code. It reports no measured psychological effect,
+search-escape rate, or general automated truth detector.
+
+\subsection{1. Make the claim small enough to
+inspect}\label{make-the-claim-small-enough-to-inspect}
+
+Replace a broad sentence such as ``the system verifies repairs'' with a
+concrete statement:
+
+\begin{quote}
+For this declared triangle, a replacement proposal that increases the
+checked quotient minimum is refused, and the active claims remain
+unchanged.
+\end{quote}
+
+The reviewer can now identify the graph, original claims, replacement,
+score definition, relevant branch, and expected stored state. If one is
+missing, ask the author to supply it before evaluating the broad claim.
+
+An \textbf{assumption} is a condition required by the statement. A
+\textbf{witness} is supplied data used to establish a particular
+property, such as a candidate potential or dual vector. A
+\textbf{receipt} is an execution record. An \textbf{open obligation} is
+a specific unanswered question needed for a stronger conclusion.
+
+Keep a stable source revision and exact artifact paths. When a source
+file changes, attach a new observation to the new bytes rather than
+silently reusing the old result.
+
+\subsection{2. Inspect the connection between language and
+behavior}\label{inspect-the-connection-between-language-and-behavior}
+
+For each important term, make a three-column note:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3332}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3332}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3332}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Name in the claim
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Property intended
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Operation actually performed
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+``exact repair'' & Changed claims satisfy the declared graph relation &
+A native result is checked under the selected graph inputs \\
+``notebook grading'' & A learner's answer is assessed & Perhaps only a
+supplied \nolinkurl{execution_status} string is counted \\
+``independent verifier'' & Errors can be detected without trusting the
+proposal & Perhaps only two parameter-hash fields are compared \\
+``replay'' & A recorded result is recomputed from its dependencies &
+Perhaps only one stored digest is compared with another \\
+\end{longtable}
+
+The third column comes from inspecting the actual call path. Matching
+names or comments are \nolinkurl{insufficient.} Conversely, a
+deliberately small check is useful when its stated property is equally
+small.
+
+The package's
+\href{code/tests/test_009_adversarial_reality_gate.py}{semiotic-audit
+fixture} compares the strings \passthrough{\lstinline!signified!} and
+\passthrough{\lstinline!interpretant!}. It illustrates mismatched
+\nolinkurl{descriptions.} It does not inspect downstream code, determine
+mathematical equivalence, or audit every execution path. Use a reviewer
+to establish those connections unless a separately validated tool
+actually performs the work.
+
+\subsection{3. Work through a concrete false
+reading}\label{work-through-a-concrete-false-reading}
+
+Take the triangle claims \(h=(1/3,\allowbreak 1/3,\allowbreak 1/3)\).
+Their cycle sum is one. Suppose an author says that subtracting
+endpoint-potential differences ``removes the cycle obstruction.''
+
+Choose potentials \(f=(0,\allowbreak 1/3,\allowbreak 2/3)\). Their edge
+differences are \(df=(1/3,\allowbreak 1/3,\allowbreak -2/3)\), so
+\(h-df=(0,\allowbreak 0,\allowbreak 1)\). The discrepancy has been
+concentrated, but the cycle sum remains one. Every potential produces
+edge differences summing to zero, so the objection concerns the proposed
+mechanism, not an unlucky choice of numbers.
+
+A different operation can replace the claims by \(df\), whose cycle sum
+is zero. That statement is supportable because the declared input
+changed. The reviewer should request this distinction in the main
+explanation, not accept a caution several pages later that contradicts
+the headline.
+
+The
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb}{cycle
+lesson} reproduces the first reading with these values, and the
+\href{https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/paper.md}{operator
+guide} shows both readings on an integer triangle. This package's
+\href{jupyter_notebooks/009_triangle_cycle_sum.ipynb}{companion
+notebook} and \href{code/tests/test_triangle_cycle_sum.py}{triangle
+tests} recompute the numbers above with exact fractions.
+
+\subsection{4. Design a probe that could change the
+verdict}\label{design-a-probe-that-could-change-the-verdict}
+
+A \textbf{positive control} is a case expected to pass. A
+\textbf{negative control} is a case with a known defect expected to
+fail. The pair tests whether a checker distinguishes cases, rather than
+accepting or refusing everything.
+
+A \textbf{linear program (LP)} minimizes a linear objective subject to
+linear constraints. A feasible \textbf{primal witness} obeys the
+original constraints; a feasible \textbf{dual witness} obeys the
+associated lower-bound constraints. Matching objective values certify
+optimality. In the graph example, dual closure means balanced flow at
+every vertex; the
+\href{https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper.md}{finite
+graph paper} gives the argument.
+
+For an exact LP certificate, first supply feasible primal and dual
+witnesses with equal objectives. Then independently corrupt a primal
+bound, break dual closure, and retain a feasible but nonmatching dual
+objective. The
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/the_symbol_game/lessons/system_integration/200_intermediates/02_exact_lp_certificates.ipynb}{LP
+lesson} supplies these three distinct failure cases. These are
+source-inspected cases; no fresh replay result is reported here. Equal
+objective values alone cannot replace feasibility.
+
+For a digest-bound packet, change node content while keeping its old
+digest key. The
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/01_codecs_and_tamper_evidence.ipynb}{codec
+lesson} contains that mutation. Checking that a string has 64 characters
+would not test the same property.
+
+Record the original and changed input, expected distinction, observed
+result, and reason the probe targets the claim. A probe passing is
+evidence for that case; exhaustiveness requires an independently
+justified finite enumeration or proof.
+
+\subsubsection{4.1 Reading a reported catch
+rate}\label{reading-a-reported-catch-rate}
+
+The same controls apply to a reported detection rate. Paper 001's
+package retains one paired run in which a proposer model classified
+small Hubbard-model instances as sign-free or as carrying an open sign
+obstruction, and an adversary model challenged or accepted each
+\nolinkurl{classification.} The run covers two frustrated lattices, a
+five-site ring and a six-site cluster of corner-sharing triangles, each
+at five interaction strengths, for 10 trials. Its
+\href{https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/demo2_r7_adversarial_debate_receipt.json}{replay
+receipt} reports the proposer as
+\nolinkurl{meta-llama/llama-3.1-8b-instruct} and the adversary as
+\nolinkurl{deepseek/deepseek-chat}. The
+\href{https://github.com/dbccpage/the_symbol_game/blob/593230f7daba7aa04d7c41dd456dfbd00a39bcbd/omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/demo2_r7_adversarial_debate_1790210039.jsonl}{trace}
+itself records no model identifiers.
+
+Each trial's reference label comes from a program check, not from a
+model. Six proposals claimed a sign-free certificate and were refused by
+Paper 001's certificate checker; they are labeled unsound. The other
+four claimed an open sign obstruction and were not refused at the time;
+they are labeled sound. The receipt describes these as historical
+verifier labels, not independent physical ground truth.
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+Checker label & Adversary challenged & Adversary concurred & Trials \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Unsound (refused) & 6 & 0 & 6 \\
+Sound (not refused) & 2 & 2 & 4 \\
+All trials & 8 & 2 & 10 \\
+\end{longtable}
+
+In these 10 trials the adversary challenged all six unsound proposals
+and missed none. It also challenged two of the four sound-labeled
+proposals and passed the other two. In both of those challenges its
+counter-proposal was the same open-obstruction claim, so it disputed the
+reasoning rather than the conclusion. Counting the trace field
+\nolinkurl{adversary_caught_am} instead gives 10 of 10, because that
+field is true in every record, including both \nolinkurl{concurrences.}
+Its name suggests detection; its values do not measure it.
+
+Four observations limit what the run shows:
+
+\begin{itemize}
+\tightlist
+\item
+  All ten trials ended in the same recorded terminal state, an open sign
+  obstruction, whether the adversary challenged or concurred.
+\item
+  The six refusals come from the checker. The adversary's challenges
+  agreed with them; the run does not show the adversary stopping
+  anything the checker would have accepted.
+\item
+  A later replay of the ten recorded proposals through a revised version
+  of the checker, stored in the same receipt, refuses all ten. The four
+  obstruction claims fail because none supplies a checked obstruction
+  witness. The sound label therefore means only that the checker did not
+  refuse the claim at the time.
+\item
+  The run says nothing about other models, lattices, or prompts.
+\end{itemize}
+
+The package bundles byte-identical copies of the
+\href{docs/historical_evidence/demo2_r7_adversarial_debate_1790210039.jsonl}{trace}
+and
+\href{docs/historical_evidence/demo2_r7_adversarial_debate_receipt.json}{receipt},
+with \href{docs/historical_evidence/provenance.json}{provenance and
+digests}. The test
+\href{code/tests/test_recorded_bout_counts.py}{\nolinkurl{test_recorded_bout_counts.py}}
+recounts these cells and checks the retained receipt without a sibling
+package. The exact recount module also gives challenge fractions of
+\(6/6=1\) among refused proposals and \(2/4=1/2\) among not-refused
+proposals, refused fraction \(6/8=3/4\) among challenges, and label
+agreement \((6+2)/10=4/5\). These are descriptive fractions against
+historical checker labels. A denominator of zero would leave the
+corresponding fraction undefined.
+
+The later replay recorded in the receipt does not pin its checker
+revision. The current package checks the recorded result; it does not
+rerun that checker or either model. A reproducible native replay would
+additionally need the checker source revision, executable, dependencies,
+and command.
+
+\subsection{5. Read formal statements at their actual
+scope}\label{read-formal-statements-at-their-actual-scope}
+
+Start with the theorem's definitions, hypotheses, and conclusion. Then
+identify the bridge from the paper's objects to those formal objects.
+
+This package's \passthrough{\lstinline!lean4!} folder holds copies of
+two of the files discussed below, together with the two modules that the
+second file imports. Each copy matches the repository's
+\passthrough{\lstinline!lean4!} file at the code baseline except for a
+two-line provenance comment at the top. The retained build records use
+Lean 4.34.0 with no external libraries. The
+\href{lean4/axiom_report.txt}{named-theorem report}, dated 2026-09-28,
+lists 32 theorems: 28 have no axiom dependencies, and four use
+\passthrough{\lstinline!propext!} and/or
+\passthrough{\lstinline!Quot.sound!}. The
+\href{lean4/full_axiom_report.txt}{full environment census}, dated
+2026-10-02, lists 516 declarations from those modules, including private
+and generated declarations, under the approved set
+\passthrough{\lstinline!propext!}, \passthrough{\lstinline!Quot.sound!},
+and \nolinkurl{Classical.choice}. These are different census scopes.
+This review compares source identity and inspects the retained reports;
+it does not claim a fresh Lean build.
+
+\href{lean4/Level15AuthorityCalculus.lean}{\mbox{\nolinkurl{Level15AuthorityCalculus.lean}}}
+defines distinct state constructors and formalizes that designated
+proposal constructors differ from the terminal-authority constructor. It
+also defines an ``independent verifier'' by unequal parameter hashes and
+shows that a state does not meet that definition against itself. These
+facts do not establish statistical independence of different models or
+guarantee that a runtime preserves the state partition.
+
+\href{lean4/TriggerNotLicense.lean}{\mbox{\nolinkurl{TriggerNotLicense.lean}}}
+constructs a finite case with an active trigger and zero lift budget. It
+shows that a trigger can exist without a licensed target under those
+definitions. It does not preclude independently licensed actions under
+alternate assumptions.
+
+The repository's terminal-routing source
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/lean4/TerminalizerPolicy.lean}{\nolinkurl{TerminalizerPolicy}}
+imports a Mathlib module and carries a source warning that its
+declarations were not typechecked against the named package
+\nolinkurl{configuration.} It is not copied into this package. Its table
+should therefore not be advertised here as a freshly compiled
+termination theorem. A build receipt must name the actual toolchain,
+dependencies, targets, and result.
+
+These examples make the review rule practical: cite what the formal
+statement says, and identify any missing implementation or modeling
+\nolinkurl{correspondence.}
+
+\subsection{6. State the review outcome without promoting
+it}\label{state-the-review-outcome-without-promoting-it}
+
+Use the following report terms as a declared review convention. They are
+not a new runtime API.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4999}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4999}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Review disposition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meaning
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Supported within scope & The inspected evidence supports the stated
+claim under recorded assumptions \\
+Refused claim & A counterexample, failed required check, or
+contradiction defeats the stated claim \\
+Open obligation & A particular missing bridge or result prevents the
+stronger conclusion \\
+Not run & The proposed execution has not been performed in this
+review \\
+\end{longtable}
+
+A package may contain all four dispositions on different claims. Report
+them \nolinkurl{individually.} Forwarding a supported result for another
+review is a workflow step; it grants no publication, deployment, or
+domain authority.
+
+The package's \href{code/tests/test_009_adversarial_reality_gate.py}{toy
+verdict function} maps supplied rational scores and flags to
+\nolinkurl{PASS_TO_MASTER}, \passthrough{\lstinline!REFUSE!}, or
+\nolinkurl{OPEN_RESIDUAL}. It does not compute those scores or establish
+that the flags describe reality. Its supplied-input tests cannot support
+a claim of comprehensive semantic \nolinkurl{verification.}
+
+\subsection{7. Preserve enough information for another
+reviewer}\label{preserve-enough-information-for-another-reviewer}
+
+A compact record should contain the claim text, source revision, file
+path, assumptions, exact input, command, environment or executable pin,
+observed outcome, and remaining obligation. Include the failing case and
+any skipped dependency. Identify whether a stored output was only read
+or was recomputed.
+
+For example, a review request can be recorded before execution:
+
+\begin{lstlisting}
+claim_id: triangle-replacement-01
+source_revision: 52cb5457f6c485ba548cfd292f6012a941ed22cf
+original_claims: ["1", "1", "1"]
+proposed_claims: ["5", "0", "0"]
+expected_status: DefectIncrease
+run_status: NOT_RUN
+next_check: Run the focused native-backed session test and inspect stored state
+decision_scope: review-only
+\end{lstlisting}
+
+This is a template, not an execution receipt. Replace the pending fields
+only with observed evidence. A digest binds a declared byte sequence;
+authenticating a producer and evaluating content are separate tasks.
+When claiming canonical JSON, test the actual requirements of
+\href{https://www.rfc-editor.org/rfc/rfc8785}{RFC 8785}, including
+primitive serialization, rather than equating key sorting with complete
+conformance.
+
+\subsection{8. Handle stalled work
+explicitly}\label{handle-stalled-work-explicitly}
+
+When several attempts produce no useful change, record the unchanged
+residual and the attempted move family. Check whether the current
+representation permits the requested result. The triangle above
+demonstrates why more potential adjustments cannot change its cycle sum.
+
+A new representation or new allowed move is a proposal that needs its
+own assumptions and checks. A stagnation trigger can suggest review; it
+does not license changing protected state or guarantee an escape. The
+local fixture only checks a supplied stagnation count, a locked-gauge
+flag, and a positive supplied score. It does not implement an effective
+search strategy.
+
+\subsection{Related work and scope}\label{related-work-and-scope}
+
+Necula's \href{https://doi.org/10.1145/263699.263712}{proof-carrying
+code} provides a primary example of a producer supplying evidence that a
+host checks against a declared policy. Saltzer and Schroeder's
+\href{https://doi.org/10.1109/PROC.1975.9939}{protection principles}
+provide security-design context for explicit permission and mediation.
+This protocol borrows a review discipline from these works; it does not
+inherit their technical results.
+
+The useful deliverable is a review whose reader can trace each
+conclusion to a precise statement, source, probe, or formal obligation.
+More ambitious claims about automated reasoning effectiveness require
+measurements or proofs beyond that trace.
+
+\subsection{Limitations}\label{limitations}
+
+This is a review procedure, not a measured method; no study of reviewer
+accuracy or effort stands behind it. Section 4.1 recounts one retained
+run of ten trials whose labels come from a program check, and it
+supports no rate for other settings. Appendix A audits one gate at one
+commit with five constructed probes in four defect families; it shows
+that each defect exists, not how often it changes a verdict in use. The
+package fixtures decide only from supplied values. The copied Lean
+modules prove narrow statements about their own definitions, and the
+terminal-routing source discussed in Section 5 states that it was not
+typechecked. This paper assigns no authorization and changes no
+\nolinkurl{jurisdiction.} It carries no operational authority or
+institutional standing.
+
+\subsection{Verification for this
+revision}\label{verification-for-this-revision}
+
+The package verifier (\nolinkurl{verify_deposit.py}) checks the manifest
+and the two-way file census, and
+\passthrough{\lstinline!tools/rebuild\_release.py --check!} checks the
+release archive against the manifests. The package-local
+\href{docs/v01_review_2026_10_02.json}{v0.1 review record} distinguishes
+fresh package tests, lint, type checking, an ordinary-Python notebook
+replay, and release checks from retained reports. The notebook replay
+executes all five code cells in a fresh CPython process and compares
+sources, positions, outputs, and execution counts; it does not test
+Jupyter rendering. A fresh pinned Lean 4.34.0 build is not run in this
+review because that toolchain is unavailable here. The existing release
+validations and formal reports retain their dates and scope. The Section
+4.1 recount and Appendix A record inspection are fresh checks of
+historical data, not fresh model, native-checker, or gate runs.
+
+The \href{_lev_landau_theoretical_minimum_quiz/quiz.md}{Landau quiz} and
+\href{_lev_landau_theoretical_minimum_quiz/study_guide.md}{study guide}
+provide 24 progressively scoped questions and an executable capstone.
+Their instructor rubric is local practice guidance; no learner study or
+qualification claim is made.
+
+\subsection{Research extension: review the experiment as well as the
+answer}\label{research-extension-review-the-experiment-as-well-as-the-answer}
+
+A harness rewrite changes how proposals are produced. Review it against
+the fixed measuring apparatus: permitted edits,
+\nolinkurl{public/private} partitions, checker identities, provider
+admission, original budget and submitted program bytes. Try mutations
+that change a reply after grading, substitute a checker, reuse a foreign
+split receipt, or attach an evaluation to a stale parent. Also test a
+program that passes visible examples while failing a private case. A
+public success label alone must not determine experimental replacement.
+
+The review record must distinguish executed boundary probes from
+proposed ones. Local tests exercise contract, accounting and replay
+boundaries; the rootless Linux probe requires the actual server.
+Confirmation repeats model calls on separately assigned cases and
+preserves every failure. A reviewer should not count repeated
+deterministic checker runs as additional model evidence.
+
+Paper 029 predeclares task-level pairing, confidence intervals and Holm
+correction. An incomplete transfer panel withholds comparative claims.
+The three short paired ignition repetitions are exploratory even if
+their means differ. The supplied AIDE2 paper itself describes its
+ignition evidence as inconclusive (pp.~10--11). No such new provider
+evidence exists in this revision, so the correct result is NOT\_MEASURED
+rather than a favorable effect estimate with missing
+\nolinkurl{observations.}
+
+The source and page references for this extension are collected in
+\href{../029/paper.pdf}{Paper 029} and its
+\href{../029/docs/source_to_claim_map.md}{source-to-claim map}. The
+author-review rendering does not replace a historical deposit or
+archive.
+
+\subsection{References}\label{references}
+
+\begin{itemize}
+\tightlist
+\item
+  Necula, G. C. (1997).
+  \href{https://doi.org/10.1145/263699.263712}{Proof-Carrying Code}. In
+  \emph{Proceedings of the 24th ACM SIGPLAN-SIGACT Symposium on
+  Principles of Programming Languages (POPL '97)}, pp.~106--119. ACM.
+  \nolinkurl{doi:10.1145/263699.263712.}
+\item
+  Saltzer, J. H., and Schroeder, M. D. (1975).
+  \href{https://doi.org/10.1109/PROC.1975.9939}{The Protection of
+  Information in Computer Systems}. \emph{Proceedings of the IEEE},
+  63(9), 1278--1308. \nolinkurl{doi:10.1109/PROC.1975.9939.}
+  \href{https://web.mit.edu/Saltzer/www/publications/protection/}{Author-hosted
+  copy}.
+\item
+  Rundgren, A., Jordan, B., and Erdtman, S. (2020).
+  \href{https://www.rfc-editor.org/rfc/rfc8785}{JSON Canonicalization
+  Scheme (JCS)}. RFC 8785, RFC Editor, June 2020. Independent Submission
+  stream, \nolinkurl{Informational.} \nolinkurl{doi:10.17487/RFC8785.}
+\end{itemize}
+
+\subsection{Appendix A. Where a gate's verdict comes
+from}\label{appendix-a.-where-a-gates-verdict-comes-from}
+
+This appendix applies Sections 2, 4 and 7 to one gate in this
+repository: the terminal gate of the seven-act Woland engine
+(\nolinkurl{omega_engine_woland}) at
+\href{https://github.com/dbccpage/the_symbol_game/commit/30609de2c3928238715375a9bac608256fa381d8}{audited
+revision 30609de2}. The gate is meant to authorize a proposal only when
+exact defect measures of the input are zero: a quotient defect, written
+\(\Phi_1\), and a cycle defect, written \(\Gamma_2\). Otherwise it
+should refuse, or record a bounded residual. The review question is the
+one of Section 2: for each verdict, which operation actually produced
+it?
+
+Four defect families, represented by five probes (F1, F2a, F2b, F3, F4),
+answer that question. Each fixes an input, states the status a sound
+gate must give, and records the status the audited code gave. They were
+run on the audited commit by a script of this collection,
+\nolinkurl{tools/replay_woland_gate_falsifiers.py}, which extracts the
+needed packages with \passthrough{\lstinline!git archive!} and calls
+single act functions. The stub gate runtime has no event sinks or model
+port; the script extracts files to a temporary directory and its
+\passthrough{\lstinline!--write!} mode writes the JSON record. The
+observed values below come from the retained collection record,
+\nolinkurl{verification/woland_gate_falsifiers.json}. A
+\href{docs/historical_evidence/woland_gate_falsifiers.json}{byte-identical
+copy} and its provenance are included here. This review inspects that
+record; executing the original gate again requires a repository checkout
+containing the audited commit. File and line references are to the
+audited commit.
+
+Table A.1. The name of each operation and what it does.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3332}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3332}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3332}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Name in the gate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Property intended
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Operation actually performed
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+``Gauge break'' and ``carrier lift'' (Act IV) & A lifted carrier on
+which the input's obstruction can be examined & A node is added and the
+cochain is replaced by zero on every edge
+(\nolinkurl{omega_engine_woland/use_cases/act_helpers.py}, lines 480 to
+498); Act II then scores the zeros
+(\nolinkurl{use_cases/bout_service.py}, lines 266 to 277) \\
+``Independent witness'' and ``countermodel'' (Act V) & A critique blocks
+a candidate when it establishes a defect & A critique blocks when its
+text contains the word ``DEFECT'' or ``FLAW''
+(\nolinkurl{act_helpers.py}, line 642) \\
+``Evidence references'' and ``obstruction non-vanishing receipt'' (Act
+VII) & Each reference names stored bytes that support the verdict & With
+no critique, the reference is the SHA-256 of the run key; the receipt's
+identifier is the SHA-256 of a label string, and its fields
+\nolinkurl{annihilates_coboundary} and
+\passthrough{\lstinline!norm\_bounded!} are the constant
+\passthrough{\lstinline!True!} (lines 917 to 932 and 1008 to 1015);
+every event record's \passthrough{\lstinline!carrier\_hash!} is the
+SHA-256 of the fixed bytes \passthrough{\lstinline!carrier!} (six sites,
+from line 179) \\
+``Novella'' and ``DDC tape'' of a challenge gate & A narrative and a
+step record of what the run did & Fixed text and fixed steps into which
+only the verdict, the counts and two numbers are substituted (C012 copy,
+\nolinkurl{governance/woland_gate.py}, lines 69 to 195) \\
+\end{longtable}
+
+Table A.2. Falsifiers: fixed input, expected status, observed status.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0684}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3013}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2602}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3698}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fixed input
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+A sound gate gives
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+The audited gate gave
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+F1 & Triangle with edges (0,1), (1,2), (2,0) and cochain (1, 1, 1),
+whose cycle sum is 3; default scorer; one candidate; no critique & Not
+\passthrough{\lstinline!AUTHORIZED!}: no potential changes a cycle sum
+(Section 3) & \passthrough{\lstinline!AUTHORIZED!} \\
+F2a & Critic reply: ``Counterexample: the residual (0,0,3) has cycle sum
+3, so the claimed repair is false.'' & Blocking & Not blocking; the
+candidate survives \\
+F2b & Critic reply: ``No defect found; the certificate checks.'' & Not
+blocking & Blocking; the candidate is removed \\
+F3 & Act VII with no critique, \(\Phi_1 = 1\), \(\Gamma_2 = 0\), and a
+dual witness of 1 on edge (0,1) only & Each reference is the digest of
+stored evidence; stated witness properties are checked & First reference
+is the SHA-256 of the run key; the receipt states that the witness
+annihilates coboundaries and is norm-bounded, although it is not
+balanced \\
+F4 & C012 gate with verdict \passthrough{\lstinline!REFUSE!}, 0 cases, 0
+passed, 5 defects & No statement of repair, agreement or budget that the
+inputs do not support & The novella states ``100\% concordance across
+all cases'', a respected budget, and ``zero duality gap on all 46 judge
+cases'', and names challenge C011; the step record contains an exact
+coboundary repair with status ``repaired'' \\
+\end{longtable}
+
+\subsubsection{A.1 Input replacement
+(F1)}\label{a.1-input-replacement-f1}
+
+On the triangle, the default scorer reports 3 in place of \(\Phi_1\),
+and \(\Gamma_2 = 0\). That scorer returns the \(\ell^1\) mass of the
+cochain, not the quotient defect, and it returns \(\Gamma_2 = 0\) for
+every input. Act IV fires because the score is positive and only one
+candidate exists. It returns a lifted carrier whose cochain is zero on
+every edge, and Act II on that cochain reports zero for both measures.
+Act VII then authorizes. The verdict comes from the replaced input, not
+from the proposal. This is the false reading of Section 3 in executable
+form: replacing the claims changes the input, and the gate then
+certifies the replacement.
+
+Fix: commit
+\href{https://github.com/dbccpage/the_symbol_game/commit/a054c8ce17c3025ac5518aaeef29096a299519bb}{\passthrough{\lstinline!a054c8ce1!}}
+on branch \nolinkurl{claude/mssn-study-corrections}. An Act IV lift now
+carries the input cochain to the lifted carrier, and a lift that lowers
+the measured obstruction is refused with
+\nolinkurl{WOLAND_LIFT_LOWERED_OBSTRUCTION}. The default scorer reports
+that nothing was measured, which cannot authorize, and Act VII requires
+exact rational zeros. The laundering falsifiers are in
+\nolinkurl{omega_engine_woland/tests/test_honest_gate_falsifiers.py}.
+
+\subsubsection{A.2 Keyword adjudication (F2a,
+F2b)}\label{a.2-keyword-adjudication-f2a-f2b}
+
+The critic's reply is a proposal like any other, and Section 2 asks what
+the gate does with it. It searches the text for two words. A reply that
+states a counterexample without either word does not block, and a reply
+that says no defect was found does block. The status of the candidate
+therefore depends on the critic's wording, not on a check of what the
+critique claims.
+
+Fix: commit
+\href{https://github.com/dbccpage/the_symbol_game/commit/a054c8ce17c3025ac5518aaeef29096a299519bb}{\passthrough{\lstinline!a054c8ce1!}}.
+A critique is now a typed JSON block, and a critique that cannot be
+parsed blocks; no keyword decides. The keyword falsifiers are in the
+same test file and in
+\nolinkurl{omega_engine_woland/tests/test_adversarial_m1_it2_1_challenger.py}.
+
+\subsubsection{A.3 Phantom evidence references
+(F3)}\label{a.3-phantom-evidence-references-f3}
+
+An evidence reference is useful only if another reviewer can retrieve
+the bytes it names (Section 7). With no critique, the audited gate
+substitutes the SHA-256 of the run key, which names no stored evidence.
+The identifier of the obstruction receipt is the SHA-256 of a label
+built from the run key and the dual value, not the digest of the
+receipt. The receipt itself asserts that the dual witness annihilates
+coboundaries and is norm-bounded, but those fields are constants: the
+witness of F3 has nonzero net flow at vertices 0 and 1, and no weights
+were supplied to bound it. The event records carry the same
+\passthrough{\lstinline!carrier\_hash!} in every run.
+
+Fix: commit
+\href{https://github.com/dbccpage/the_symbol_game/commit/a054c8ce17c3025ac5518aaeef29096a299519bb}{\passthrough{\lstinline!a054c8ce1!}}.
+The obstruction and deficit receipts are stored with the run under
+\nolinkurl{evidence_receipts}, keyed by the digest of their canonical
+bytes, and the verdict cites them by that digest. The constant witness
+fields are removed, and the run's \passthrough{\lstinline!receipt\_id!}
+is computed from its content.
+
+\subsubsection{A.4 Templated receipts
+(F4)}\label{a.4-templated-receipts-f4}
+
+The challenge packages carry their own copies of a gate module that
+writes a narrative (``novella'') and a hash-chained step record for each
+run. In the C012 copy, both are templates. For a refused run with no
+cases, the narrative still reports full agreement of the two checkers, a
+respected budget and models under 70B, and its default summary claims
+verified repairs on 46 judge cases; the step record lists an exact
+simplex descent and a repaired coboundary. The copy also names challenge
+C011, from which it was copied. The chain of digests over these steps is
+internally consistent (Section 7), so a reader who checks only the chain
+would accept them. The challenges folder holds 36 files named
+\nolinkurl{governance/woland_gate.py}, and the sentence about full
+agreement occurs verbatim in four of them.
+
+Fix: commit
+\href{https://github.com/dbccpage/the_symbol_game/commit/e6fbc15cf011121597a82a1d199626063bedf7c0}{\passthrough{\lstinline!e6fbc15cf!}}
+on the same branch. The 36 challenge copies of the gate now report a
+reference run as \nolinkurl{REFERENCE_SELF_CONSISTENT} or
+\nolinkurl{REFERENCE_SELF_INCONSISTENT} with a stated
+\passthrough{\lstinline!gate\_scope!}, and the narrative is a table of
+the measured counts with no templated claims. The tests are in
+\nolinkurl{omega_engine_projects/mssn_sn_symgam/challenges/harness_tests/test_harness_honesty.py}.
+
+\subsubsection{A.5 What the audit
+supports}\label{a.5-what-the-audit-supports}
+
+The five probes in four defect families show that, at the audited
+commit, an \passthrough{\lstinline!AUTHORIZED!} status from this gate
+does not establish that the proposal repaired its input, that a blocking
+critique established a defect, or that a cited reference names evidence.
+They do not show how often these defects changed a verdict in recorded
+runs, which this appendix does not examine. In the corrected gate,
+authorization requires an eligible candidate and no applicable blockers,
+together with an \passthrough{\lstinline!ACCEPTED!} checker verdict
+bound to that candidate by digest. When a carrier is declared, verified
+exact joint zeros are also required; with no declared carrier, the
+carrier-zero requirement does not apply. The receipt field
+\nolinkurl{authorization_evidence} records which of the two applied. The
+verdict therefore depends on a bound checker receipt, the property
+Section 2 asks a reviewer to locate. Binding identifies the candidate
+and receipt bytes; it does not by itself establish the checker's
+correctness, the producer's authenticity, statistical independence, or
+the truth of a parsed critique. The corrected-code descriptions above
+are source observations at the named revisions. The earlier review
+reported 66 and 44 passing tests for the two Woland files; those
+historical counts are not fresh executions in this v0.1 review.
+
+\end{document}

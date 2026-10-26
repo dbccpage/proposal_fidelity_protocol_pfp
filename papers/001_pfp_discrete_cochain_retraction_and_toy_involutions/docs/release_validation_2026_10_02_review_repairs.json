@@ -1,0 +1,187 @@
+{
+  "schema": "symbol-game.local-candidate-validation.v2",
+  "date": "2026-10-02",
+  "release_version": "0.1.0",
+  "authority_effect": "None",
+  "external_deposit": false,
+  "zenodo_submission": false,
+  "scope": "Paper 001 local review repairs: companion text, adapter and governor boundaries, offline tests, demos, figure script, Lean census, notebook kernel replay, and date-aligned PDF. No Zenodo submission, DOI, live provider call, or K8 forest-cap execution.",
+  "conceptual_source_baseline": "c819bec432446dd3c9b1edf1583384cfe76c6c71",
+  "conceptual_source_baseline_role": "cited pre-repair source used by the publication builder for GitHub links. It does not identify the repaired adapter or governor.",
+  "candidate_checkout": "df1f3be4d195b8da1f87e03b7ee4f32e943c40d6",
+  "candidate_branch": "feat/retire-named-product-plans-2026-10-02",
+  "checkout_scope": "measured HEAD while the receipt was written. The worktree is dirty and contains unrelated files. These repairs are uncommitted. The hashes below bind only the listed files.",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "tools": {
+    "ruff": "0.14.13",
+    "pytest": "8.3.5",
+    "pytest_note": "pyproject.toml dev extra asks for pytest>=9.0.3. The runner used here is pytest 8.3.5.",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "nbclient": "0.10.2",
+    "nbformat": "5.10.4",
+    "ipykernel": "7.3.0",
+    "rustc": "rustc 1.98.0 (88d9e12ae 2026-08-18)",
+    "cargo": "cargo 1.98.0 (797e8a9bc 2026-08-05)",
+    "lake": "Lake version 5.0.0-src+3447a66 (Lean version 4.34.0-rc1)",
+    "pandoc": "pandoc.exe 3.7.0.2",
+    "xelatex": "MiKTeX-XeTeX 4.16 (MiKTeX 25.12)"
+  },
+  "checks": [
+    {
+      "id": "ruff_code",
+      "command": "py -3.12 -m ruff check code",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "tool_version": "ruff 0.14.13",
+      "exit_code": 0,
+      "scope": "code/ under the Paper 001 package, using the project ruff configuration"
+    },
+    {
+      "id": "pytest_package",
+      "command": "py -3.12 -m pytest code/tests -o addopts= -q --tb=line -p no:cacheprovider",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "tool_version": "pytest 8.3.5",
+      "exit_code": 0,
+      "passed": 73,
+      "duration_s": 0.88,
+      "scope": "code/tests, including test_proposed_boundaries.py. A pytest_asyncio fixture-loop-scope DeprecationWarning was printed and is not a failure."
+    },
+    {
+      "id": "offline_demos",
+      "command": "py -3.12 code/run_demos.py --all",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "scope": "Demo 1 16/16, Demo 2 8/8, Demo 3 offline deposited-trace replay. --live was not used."
+    },
+    {
+      "id": "figures",
+      "command": "py -3.12 code/generate_figures.py",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "scope": "public_export/fig1_descent_and_obstruction.png rewritten by the package script. The figure is not embedded in the manuscript."
+    },
+    {
+      "id": "scipy_review_checks",
+      "command": "py -3.12 C:\\Users\\a343o\\Downloads\\paper001_proposed_repairs\\paper001_proposed_repairs\\evidence\\review_checks.py <package>/code",
+      "cwd": "the reviewer's evidence script, argument the package code directory",
+      "tool_version": "Python 3.12.10, numpy 2.4.2, scipy 1.17.0",
+      "exit_code": 0,
+      "scope": "32 directed cycles matched the cycle formula in exact arithmetic. 96 small graphs matched a separate SciPy HiGHS LP within absolute tolerance 1e-8. That LP comparison is a floating-point cross-check. Native cases are mocked subprocess responses, not executions of the Rust binary. Both wrong-space potentials cost 6. The K4 witness minimum is 2. Twenty rational CUT descents were admitted. A float CUT was refused. A positive optimum returned HOLD on both CUT and VERIFY."
+    },
+    {
+      "id": "cargo_package_target",
+      "command": "cargo test -j 1 --manifest-path code/rust/Cargo.toml",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "tool_version": "cargo 1.98.0 (797e8a9bc 2026-08-05); rustc 1.98.0 (88d9e12ae 2026-08-18)",
+      "exit_code": 101,
+      "scope": "Package-local target. MSVC link.exe LNK1104 could not open code/rust/target/debug/build/proc-macro2-67fca7ce2c53aecd/build_script_build-67fca7ce2c53aecd.exe. The output path is past the MAX_PATH limit used by link.exe. The same failure occurred for the following package-local cargo build of solve_graph_phi1."
+    },
+    {
+      "id": "cargo_short_target",
+      "command": "cargo test -j 1 --manifest-path code/rust/Cargo.toml",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "env": "CARGO_TARGET_DIR=C:\\Users\\a343o\\AppData\\Local\\Temp\\paper001-cargo",
+      "tool_version": "cargo 1.98.0 (797e8a9bc 2026-08-05); rustc 1.98.0 (88d9e12ae 2026-08-18)",
+      "exit_code": 0,
+      "passed": 8,
+      "scope": "pfp_exact_graph v0.1.0 lib tests, 0 bin tests, 0 doc tests. Compile finished in 31.44s; tests finished in 0.00s. A following cargo build -j 1 --bin solve_graph_phi1 with the same target directory exited 0 and finished the dev profile in 0.86s. The binary was not copied into code/rust/target, which is where native_functional.py looks. The temp target directory was removed after this run. This is not an execution of the 100,000-forest cap on K8. The unit test enumeration_limit_refuses_instead_of_returning_partial_minimum passed."
+    },
+    {
+      "id": "lake_build",
+      "command": "lake build",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/lean4",
+      "tool_version": "Lake version 5.0.0-src+3447a66 (Lean version 4.34.0-rc1)",
+      "exit_code": 0,
+      "scope": "Build completed successfully (5 jobs). Not passed -j 1. The manuscript command is plain lake build."
+    },
+    {
+      "id": "census_lean",
+      "command": "lake env lean Census.lean",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/lean4",
+      "tool_version": "Lake version 5.0.0-src+3447a66 (Lean version 4.34.0-rc1)",
+      "exit_code": 0,
+      "stdout": [
+        "SymbolGame001.pair_cancellation depends on axioms: [propext, Quot.sound]",
+        "SymbolGame001.non_authority_invariant does not depend on any axioms",
+        "SymbolGame001.odd_cycle_c3_sign_obstruction does not depend on any axioms"
+      ],
+      "scope": "Census.lean in the package lean4 directory"
+    },
+    {
+      "id": "replay_lean_axiom_census",
+      "command": "py -3.12 tools/replay_lean_axiom_census.py",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "stdout": "OK 001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions: Census.lean is up to date",
+      "scope": "package Lean axiom census replay"
+    },
+    {
+      "id": "replay_full_axiom_census",
+      "command": "py -3.12 tools/replay_full_axiom_census.py",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "stdout": "PASS: 151 package-local declarations; 3 modules; approved axioms only",
+      "scope": "three package-local Lean modules"
+    },
+    {
+      "id": "notebooks",
+      "command": "nbclient NotebookClient on temporary copies, kernel_name=python3, timeout=180, resources path set to each cwd",
+      "tool_version": "nbclient 0.10.2, nbformat 5.10.4, ipykernel 7.3.0, Python 3.12.10",
+      "exit_code": 0,
+      "scope": "demo1, demo2, and demo3 notebooks, each from the package directory and from jupyter_notebooks/. Zero error outputs. Deposited notebook bytes were unchanged. The kernel warned that it was running over TCP rather than IPC. Temporary copies were deleted."
+    },
+    {
+      "id": "pdf_deposit",
+      "command": "py -3.12 -B tools/build_publications.py --pdf --deposit --only 001 --pandoc C:\\Users\\a343o\\AppData\\Local\\Pandoc\\pandoc.exe --latex C:\\Users\\a343o\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\xelatex.exe",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp",
+      "tool_version": "pandoc.exe 3.7.0.2; MiKTeX-XeTeX 4.16 (MiKTeX 25.12)",
+      "exit_code": 0,
+      "stdout": "001: standalone source built; PDF current; deposit TeX/PDF compiled",
+      "scope": "Paper 001 deposit paper.tex and paper.pdf, plus publication/001. The builder refuses Overfull hbox warnings. This record does not state a page count. The new receipt path is inline code in the manuscript because that file is not in the cited baseline commit. --only 001 still refreshed publication/000 and publication/manifest.json from the current snapshot set. publication/002 was not listed as modified."
+    }
+  ],
+  "executed_file_sha256": {
+    "README.md": "0b7046c527bc74791d262c2825448d71c38cc4a50814a1108a12fe83ac19b4b4",
+    "paper.md": "f6cdd9099ca09f2fcaaf31aaef9624f5835d5fae0a1f18cdf464d497b30a1008",
+    "paper.tex": "3cb0790d6466849fa4836f68adb3b360f46551e9e3203f4e06461f30bc4d3473",
+    "paper.pdf": "cf77899d0ecf015609a20a38bf6eb9b916067ad6dc9599fc132fb26dd9ce786f",
+    "paper_change_log.md": "92d899c71a28814c3c5b9d0f544f0a070df861e5830a3a5da10631f07a4aa864",
+    "paper_claim_ledger.md": "741e3f5a52b2209f077a7c782d9935b6a787917b19cb9493218f188f17245701",
+    "zenodo_metadata.json": "2d40d17ec1a15b7e583693f87f4a275219731e363674b361bfb0fb93f0b7e8ff",
+    "docs/references.md": "eb503e1b1edd0cd278d59b1aade64415a4f4459ba588195f3602fafe46c95140",
+    "code/native_functional.py": "225d2ea4c84f3b93bee0e9d2efee6553b92ad87943a05699e43f1d6842054f97",
+    "code/symbol_game_governor.py": "c195e4d676c513f7a22690cc9b4a48084e9e21cde1f3c745e8dccb52df7139b3",
+    "code/tests/test_proposed_boundaries.py": "93d560a253ff57d9f43fc3ce49bad5b5b66a8f1bceef313c84a532ca8e3fbc75",
+    "code/tests/test_zenodo_regression_suite.py": "3de2ab8583b2f625d8643a5877638a57c971aa4f6a10608a7df65029be492846",
+    "_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "067c0514d80407524059e51ed4dcec29fc1bed2d5cabe5f1dff2b1d03f34a79f",
+    "_lev_landau_theoretical_minimum_quiz/quiz.md": "2ca615766f2fa8c4b1a59a2fffe7f9cfaeb6fdbd7d7938c1ba78eb96f14022fc",
+    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "ffde35eeba96bbb72f68484e0c941a6e0dfdbc0c58227df3f7b3672228a93393",
+    "_lev_landau_theoretical_minimum_quiz/instructor_key.md": "c140af939a0e7051e5de84e400de502eb7e25ef797a018ef0e16d67bc3419f32",
+    "public_export/fig1_descent_and_obstruction.png": "09a8aed744a3b478eaf559adbb3bca5b9e2e0d80d47ee34a1e2c20e12d648d5f",
+    "jupyter_notebooks/demo1_holonomy_interactive.ipynb": "4546b6f49680ccde8eae0204931a3e51bef33bd31b1127456f7425c0c1e81cd2",
+    "jupyter_notebooks/demo2_fsp_interactive.ipynb": "873c9da118929315e43a563d09669cf910f0ca02f2b35525f15b244e9617b25d",
+    "jupyter_notebooks/demo3_adversarial_debate_interactive.ipynb": "2aaf3e57824f595078009dec6db32b28dfc92af66facb3e2059c54eeeb719284",
+    "lean4/axiom_report.txt": "a4e8ca1e9982b0c5f55b9475bf0064b69dc9c0f4ac6d5e9c5a9da7ee4b68b1bf"
+  },
+  "collection_pdf_sha256": {
+    "publication/001/paper.pdf": "5d30230ba16684e6e6bb9ad67962e005c179acc502aa157bbf656f204c326285",
+    "publication/001/paper.tex": "fba87539ceea60de4898091c491bf0200fa1733ce9ad86f9e21d07a6e4b36a8a"
+  },
+  "deposit_pdf_differs_from_collection_pdf": true,
+  "historical_validation_retained": [
+    "docs/release_validation_2026_10_01.json",
+    "docs/release_validation_2026_10_02.json"
+  ],
+  "not_done": [
+    "No Zenodo API call and no DOI reservation.",
+    "No live OpenRouter demo.",
+    "The 100,000-forest refusal was not executed on K8.",
+    "The SciPy LP cross-check is numerical.",
+    "The native protocol probes mock subprocess responses.",
+    "This receipt is not hashed inside itself."
+  ]
+}

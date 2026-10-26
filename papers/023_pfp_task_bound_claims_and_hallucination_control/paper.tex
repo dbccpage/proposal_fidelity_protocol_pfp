@@ -1,0 +1,343 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\emergencystretch=3em
+\AtBeginDocument{\Urlmuskip=0mu plus 2mu}
+\lstset{breaklines=true,basicstyle=\small\ttfamily,columns=fullflexible,keepspaces=true}
+\setlength{\tabcolsep}{4pt}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{newunicodechar}
+  \makeatletter
+  \newcommand{\DeclareUnicodeCharacter}[2]{%
+    \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\def\temp{~}}%
+    \expandafter\endgroup
+    \expandafter\newunicodechar\expandafter{\temp}{#2}%
+  }
+  \makeatother
+\fi
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2190}{\ensuremath{\leftarrow}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{21A6}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2113}{\ensuremath{\ell}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{211A}{\ensuremath{\mathbb{Q}}}
+\DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{2115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{00B9}{\ensuremath{^1}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{2070}{\ensuremath{^0}}
+\DeclareUnicodeCharacter{2080}{\ensuremath{_0}}
+\DeclareUnicodeCharacter{2081}{\ensuremath{_1}}
+\DeclareUnicodeCharacter{2082}{\ensuremath{_2}}
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={PFP: Task-bound claims and the scope of hallucination control},
+  pdfauthor={Jeremy H. Carroll},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{PFP: Task-bound claims and the scope of hallucination control}
+\author{Jeremy H. Carroll}
+\date{2026-10-21}
+
+\begin{document}
+\makeatletter
+\begin{center}
+{\LARGE \@title\par}
+\vspace{0.8em}
+{\normalsize \@author\par}
+\vspace{0.5em}
+{\small \@date\par}
+{\small Version 0.2.0\par}
+\end{center}
+\makeatother
+
+\textbf{Code baseline:}
+\nolinkurl{6d9da6fa7919ae2a8b99b704e784e5a4f422aed2}
+
+\subsection{Abstract}\label{abstract}
+
+A certificate establishes a declared property of a declared task. It
+need not establish surrounding prose. We give a finite claim-scoping
+rule that admits only the claims actually discharged by independent
+checks, and a counterexample to promoting a correct witness into a
+correct explanation. This supplies a precise PFP response to some
+hallucinations while retaining the boundary around unchecked
+natural-language claims and source quotations.
+
+\subsection{Mechanism inventory}\label{mechanism-inventory}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Slot
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Value / Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Primitive Differences} & Distinct candidate answers / witnesses
+\(w, w' \in D\) and predicate value discrepancies
+\(R_j(P, w) \neq R_j(P, w')\) \\
+\textbf{Carriers / Structure} & Finite task tuple \(P = (D, R, H)\) with
+finite candidate domain \(D\), solution predicate \(R\), and declared
+assumptions \(H\) \\
+\textbf{Cochain complex} & Finite claim indicator complex
+\(C^0 \xrightarrow{d_0} C^1\) indexing claim obligations \(j \in J\) and
+evaluation receipts \\
+\textbf{Coboundary maps} & Verification indicator map assigning
+evaluation outcomes \(\{0, 1\}\) or error residuals across declared
+claim indices \(J\) \\
+\textbf{ZeroRel} & Exact satisfaction of all declared task predicates
+\(R_j(P, w) = \text{true}\) for \(j \in J_{\rm checked}\) \\
+\textbf{Licensed repairs} & Finite candidate substitution
+\(w \mapsto w'\) or prompt re-specification under declared prompt
+protocol \\
+\textbf{Quotient / Q1} & Quotient of accepted candidate claims modulo
+unchecked surrounding prose or unsupported universal generalizations \\
+\textbf{Residuals} & Unchecked prose assertions, invented citations, or
+unverified universal claims outside \(J_{\rm checked}\) \\
+\textbf{Witnesses} & Submitted candidate witness \(w \in D\) accompanied
+by typed receipt certifying the admitted subset \(J_{\rm checked}\) \\
+\textbf{Observers / profiles} & Independent checker functions
+\(C_j(P, w) \in \{\text{accept}, \text{reject}\}\) evaluating declared
+predicates \\
+\textbf{Anomalons} & \passthrough{\lstinline!OPEN!}: Semantic drift
+between natural language explanations and formal predicate
+specifications \\
+\textbf{CompletionLaw} & Finite checker evaluation exhaustion over the
+declared claim index set \(J\) \\
+\textbf{Terminal / route} & Receipt emission with exact admitted scope
+\(J_{\rm checked}\), or rejection/refusal on failed required claims \\
+\textbf{Authorization} & None supplied. Receipts concern specific
+checker results and confer no permission to act. \\
+\end{longtable}
+
+\subsection{1. Task, claim, and evidence}\label{task-claim-and-evidence}
+
+A task is a tuple \(P=(D,R,H)\): a finite candidate domain, a solution
+predicate, and supplied assumptions. Its identity includes all three. A
+claim index \(J\) names predicates \(R_j(P,w)\) with separately supplied
+checkers \(C_j\). A receipt contains the original task identity,
+submitted witness, checker identities, and exactly the set
+\(J_{\rm checked}\) for which those checks accepted. An admission schema
+checks this binding; it does not decide every predicate. Authorization
+to use the result remains an independent input.
+
+\subsection{2. Scope theorem}\label{scope-theorem}
+
+\textbf{Theorem.} Assume each invoked checker is sound on its declared
+input: \(C_j(P,w)=\mathsf{accept}\Rightarrow R_j(P,w)\). A receipt
+admitting only \(J_{\rm checked}\) establishes
+\(\bigwedge_{j\in J_{\rm checked}}R_j(P,w)\). It establishes no supplied
+predicate for a different task, assumption set, witness, or uninvoked
+claim index without an additional checked implication.
+
+\textbf{Proof.} Apply the corresponding soundness implication to each
+checked index and form their finite conjunction. No implication to
+another index is among the premises. A countermodel can keep every
+checked predicate true and make an unchecked predicate false, disproving
+that further inference. This last argument is a limitation of these
+premises, not a claim that every pair of mathematical predicates is
+independent. An actual proved implication can of course transport a
+claim when its assumptions and task bindings are checked.
+
+\subsection{3. A correct witness with a false surrounding
+claim}\label{a-correct-witness-with-a-false-surrounding-claim}
+
+Let \(D=\{0,1\}^2\) and \(R(x,y)\) mean \(x+y=1\). Both \((0,1)\) and
+\((1,0)\) solve the task. The witness \((1,0)\) passes the equation
+checker, but the sentence ``every solution has \(x=1\)'' is false. A
+receipt for equation satisfaction cannot validate that sentence. The
+companion independently checks the universal claim against all four
+assignments and rejects it.
+
+An invented source quotation is a third obligation. Its check needs
+supplied source bytes, their identity, and a span or other declared
+matching rule. The equation witness supplies none of those. Missing
+quotation evidence therefore leaves the quotation unverified even when
+the equation is solved.
+
+\subsection{4. Two-level PFP exchange}\label{two-level-pfp-exchange}
+
+The shared system prompt describes proposing, checking, repair, and
+refusal, with a worked example. The user instance supplies \(P\), its
+permitted witness language, required claims, and response schema. The
+model returns a candidate; the host chooses the relevant declared
+checkers and replays that candidate. The packet can contain an
+explanation, but the receipt records its exact checked scope. A failed
+required claim prevents full acceptance; an optional unchecked
+explanation remains explicitly outside the accepted scope.
+
+\subsection{5. Rejection tests and executable
+evidence}\label{rejection-tests-and-executable-evidence}
+
+Run
+\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/023_pfp_task_bound_claims_and_hallucination_control/code/replay.py}{the
+finite replay}. It checks a valid equation witness, an invalid witness,
+a wrong-task submission, a false universal statement, and a missing
+source quotation. It never replaces a rejected candidate with a
+separately computed solution. Its enumeration checks the supplied
+universal claim; it is not a model's answer. There are no provider calls
+or performance measurements. The proof is written; no new Lean
+formalization is claimed.
+
+\subsection{6. What this contributes and what remains
+open}\label{what-this-contributes-and-what-remains-open}
+
+The logical conjunction rule is elementary. PFP's contribution here is
+the operational requirement that claim scope, task identity, and
+independent checking survive prompt and packet handling. It prevents
+these particular forms of unsupported promotion under the sound-checker
+assumptions. It does not make all language true, resolve inconsistent
+assumptions, or establish the soundness of an arbitrary checker solely
+on the basis of a checker returning \passthrough{\lstinline!PASS!}.
+General extraction of prose into faithful mathematical obligations
+remains a separate research and implementation problem.
+
+The
+\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/023_pfp_task_bound_claims_and_hallucination_control/prompts/example.yaml}{two-level
+teaching packet} includes shared system rules, this typed user instance,
+a different worked example and a required candidate response schema. It
+keeps provider system/user roles separate. It is a saved example, not a
+schema-admission or model-run receipt; the local replay checks the
+mathematical or protocol obligations stated above.
+
+\subsection{7. Claim scope in the operadic
+implementation}\label{claim-scope-in-the-operadic-implementation}
+
+The current implementation separates capability composition from
+execution, immune screening, and lineage. OEOP supplies typed operation
+declarations and source-bound instructions; Woland executes configured
+callbacks; OEEIS supplies the immune observation; Prompt Civilization
+records lineage. Generated host instructions are discovery views, not
+additional claim authorities.
+
+The
+\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/028_pfp_operadic_composition_and_bounded_ddc_repair/paper.md}{bounded
+DDC repair study} applies this paper's distinction to one supplied code
+patch. A successful typed composition is not an executed repair. A
+\passthrough{\lstinline!REPAIRED!} outcome means the declared baseline
+failures were removed without breaking the supplied passing controls; it
+does not establish correctness on untested inputs. An immune result of
+\passthrough{\lstinline!NOT\_MEASURED!} cannot be read as clearance. A
+recorded lineage is not detector admission, and the example does not
+apply the patch to the original source.
+
+These are implementation correspondences to the scope theorem's
+premises, not new consequences of the finite Boolean replay. The
+original proof and example are unchanged. No model-performance
+measurement or new Lean proof is reported by this revision.
+
+\subsection{Sources and relation to the
+programme}\label{sources-and-relation-to-the-programme}
+
+This draft builds on the
+\href{https://github.com/dbccpage/the_symbol_game/blob/6d9da6fa7919ae2a8b99b704e784e5a4f422aed2/omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md}{WDP
+manuscript},
+\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/paper.md}{Paper
+021's source-and-execution distinctions}, and the
+\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/README.md}{corrected
+findings notices}.
+\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/022_pfp_frontier_research/paper.md}{Paper
+022} supplies a research design whose live-model and offline-strategy
+claims require their own source-bound scrutiny. These drafts do not
+adopt its empirical tables as new measurements. The
+\href{https://github.com/dbccpage/the_symbol_game/blob/main/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/README.md}{PFP
+collection} provides the \nolinkurl{shared-system/typed-instance}
+protocol. Genesis and MSS-N presentation stages do not license a new
+mathematical or physical carrier.
+
+\end{document}

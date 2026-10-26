@@ -1,0 +1,1349 @@
+theorem ResearchG01.req_nonzero._proof_1_4 : ∀ (xs ys : List.{0} Nat)
+  (iso : Derivation.Iso (ResearchG01.state xs) (ResearchG01.state ys))
+  (h :
+    And
+      (@Eq.{1} Nat
+        (@Derivation.Iso.dmap
+          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+            (@List.cons.{0} Derivation.Inst
+              (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+              (@List.nil.{0} Derivation.Inst))
+            (@List.nil.{0} Nat)
+            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+            (@List.cons.{0} Derivation.Inst
+              (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+              (@List.nil.{0} Derivation.Inst))
+            (@List.nil.{0} Nat)
+            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+      (@Eq.{1} Nat
+        (@Derivation.Iso.dmap
+          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+            (@List.cons.{0} Derivation.Inst
+              (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+              (@List.nil.{0} Derivation.Inst))
+            (@List.nil.{0} Nat)
+            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+            (@List.cons.{0} Derivation.Inst
+              (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+              (@List.nil.{0} Derivation.Inst))
+            (@List.nil.{0} Nat)
+            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))),
+  Not
+      (And
+        (@Ne.{1} Nat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+        (@Ne.{1} Nat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))) →
+    False :=
+fun (xs ys : ⋯) (iso : ⋯) (h : ⋯) (a : ⋯) =>
+  @Or.elim
+    (Not
+      (@Ne.{1} Nat
+        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+    (Not
+      (@Ne.{1} Nat
+        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+    False
+    (@Lean.Omega.Decidable.or_not_not_of_not_and
+      (@Ne.{1} Nat
+        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+      (@Ne.{1} Nat
+        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+      (Classical.propDecidable
+        (@Ne.{1} Nat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+      (Classical.propDecidable
+        (@Ne.{1} Nat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+      a)
+    (fun
+        (h₁ :
+          Not
+            (@Ne.{1} Nat
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))) =>
+      @Lean.Omega.Constraint.not_sat'_of_isImpossible
+        (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+          (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))))
+        (@of_decide_eq_true
+          (@Eq.{1} Bool
+            (Lean.Omega.Constraint.isImpossible
+              (Lean.Omega.Constraint.mk
+                (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+                (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+            Bool.true)
+          (instDecidableEqBool
+            (Lean.Omega.Constraint.isImpossible
+              (Lean.Omega.Constraint.mk
+                (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+                (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+            Bool.true)
+          (@id.{0}
+            (@Eq.{1} Bool
+              (@Decidable.decide
+                (@Eq.{1} Bool
+                  (Lean.Omega.Constraint.isImpossible
+                    (Lean.Omega.Constraint.mk
+                      (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+                      (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+                  Bool.true)
+                (instDecidableEqBool
+                  (Lean.Omega.Constraint.isImpossible
+                    (Lean.Omega.Constraint.mk
+                      (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+                      (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+                  Bool.true))
+              Bool.true)
+            (@Eq.refl.{1} Bool Bool.true)))
+        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (@List.nil.{0} Int)))
+        (Lean.Omega.Coeffs.ofList
+          (@List.cons.{0} Int
+            (@Nat.cast.{0} Int instNatCastInt
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+            (@List.cons.{0} Int
+              (@Nat.cast.{0} Int instNatCastInt
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+              (@List.nil.{0} Int))))
+        (@Lean.Omega.tidy_sat
+          (Lean.Omega.Constraint.mk
+            (@Option.some.{0} Int
+              (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
+            (@Option.some.{0} Int
+              (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))))
+          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (@List.nil.{0} Int)))
+          (Lean.Omega.Coeffs.ofList
+            (@List.cons.{0} Int
+              (@Nat.cast.{0} Int instNatCastInt
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@List.cons.{0} Int
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                (@List.nil.{0} Int))))
+          (Lean.Omega.combo_sat'
+            (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+              (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))
+            (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))
+              (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))))
+            (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int)))
+            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int)))
+            (Lean.Omega.Coeffs.ofList
+              (@List.cons.{0} Int
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@List.cons.{0} Int
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@List.nil.{0} Int))))
+            (@Lean.Omega.Constraint.addEquality_sat
+              (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int)))
+              (Lean.Omega.Coeffs.ofList
+                (@List.cons.{0} Int
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@List.cons.{0} Int
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (@List.nil.{0} Int))))
+              (@Eq.trans.{1} Int
+                (Lean.Omega.LinearCombo.eval
+                  (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                    (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                      (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int))))
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                      (@List.nil.{0} Int)))
+                  (Lean.Omega.Coeffs.ofList
+                    (@List.cons.{0} Int
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                      (@List.cons.{0} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                        (@List.nil.{0} Int)))))
+                (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                (@Eq.symm.{1} Int
+                  (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (Lean.Omega.LinearCombo.eval
+                    (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                      (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                            (@List.nil.{0} Int))))
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                        (@List.nil.{0} Int)))
+                    (Lean.Omega.Coeffs.ofList
+                      (@List.cons.{0} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (@List.nil.{0} Int)))))
+                  (@Eq.trans.{1} Int
+                    (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.coordinate
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int))))))
+                    (Lean.Omega.LinearCombo.eval
+                      (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                        (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                              (@List.nil.{0} Int))))
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int)))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int)))))
+                    (@Lean.Omega.Int.sub_congr
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.coordinate
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (@Eq.symm.{1} Int
+                        (Lean.Omega.LinearCombo.eval
+                          (Lean.Omega.LinearCombo.coordinate
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                          (Lean.Omega.Coeffs.ofList
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@List.nil.{0} Int)))))
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                        (@Lean.Omega.LinearCombo.coordinate_eval_1
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (@List.nil.{0} Int)))
+                      (@id.{0}
+                        (@Eq.{1} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                          (Lean.Omega.LinearCombo.eval
+                            (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                              (@List.nil.{0} Int))
+                            (Lean.Omega.Coeffs.ofList
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                                (@List.cons.{0} Int
+                                  (@Nat.cast.{0} Int instNatCastInt
+                                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                  (@List.nil.{0} Int))))))
+                        (@Eq.refl.{1} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                    (@Eq.symm.{1} Int
+                      (Lean.Omega.LinearCombo.eval
+                        (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                          (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                                (@List.nil.{0} Int))))
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                            (@List.nil.{0} Int)))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                        (Lean.Omega.LinearCombo.eval
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                                (@List.nil.{0} Int))))
+                          (Lean.Omega.Coeffs.ofList
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@List.nil.{0} Int)))))
+                        (Lean.Omega.LinearCombo.eval
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                            (@List.nil.{0} Int))
+                          (Lean.Omega.Coeffs.ofList
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@List.nil.{0} Int))))))
+                      (Lean.Omega.LinearCombo.sub_eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                              (@List.nil.{0} Int))))
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int))))))))
+                (@Int.sub_eq_zero_of_eq
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  (@Lean.Omega.Int.ofNat_congr
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@And.left
+                      (@Eq.{1} Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      (@Eq.{1} Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      h)))))
+            (@Lean.Omega.Constraint.addEquality_sat (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int)))
+              (Lean.Omega.Coeffs.ofList
+                (@List.cons.{0} Int
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@List.cons.{0} Int
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (@List.nil.{0} Int))))
+              (@Eq.trans.{1} Int
+                (Lean.Omega.LinearCombo.eval
+                  (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                    (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                      (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int))))
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                      (@List.nil.{0} Int)))
+                  (Lean.Omega.Coeffs.ofList
+                    (@List.cons.{0} Int
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                      (@List.cons.{0} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                        (@List.nil.{0} Int)))))
+                (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                (@Eq.symm.{1} Int
+                  (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                  (Lean.Omega.LinearCombo.eval
+                    (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                      (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                            (@List.nil.{0} Int))))
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                        (@List.nil.{0} Int)))
+                    (Lean.Omega.Coeffs.ofList
+                      (@List.cons.{0} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (@List.nil.{0} Int)))))
+                  (@Eq.trans.{1} Int
+                    (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                    (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.coordinate
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.nil.{0} Int))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int))))))
+                    (Lean.Omega.LinearCombo.eval
+                      (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                        (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                              (@List.nil.{0} Int))))
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.nil.{0} Int)))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int)))))
+                    (@Lean.Omega.Int.sub_congr
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.coordinate
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.nil.{0} Int))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (@Eq.symm.{1} Int
+                        (Lean.Omega.LinearCombo.eval
+                          (Lean.Omega.LinearCombo.coordinate
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                          (Lean.Omega.Coeffs.ofList
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@List.nil.{0} Int)))))
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                        (@Lean.Omega.LinearCombo.coordinate_eval_1
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (@List.nil.{0} Int)))
+                      (@id.{0}
+                        (@Eq.{1} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                          (Lean.Omega.LinearCombo.eval
+                            (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                              (@List.nil.{0} Int))
+                            (Lean.Omega.Coeffs.ofList
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                                (@List.cons.{0} Int
+                                  (@Nat.cast.{0} Int instNatCastInt
+                                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                  (@List.nil.{0} Int))))))
+                        (@Eq.refl.{1} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    (@Eq.symm.{1} Int
+                      (Lean.Omega.LinearCombo.eval
+                        (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                          (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                                (@List.nil.{0} Int))))
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.nil.{0} Int)))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                        (Lean.Omega.LinearCombo.eval
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                              (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                                (@List.nil.{0} Int))))
+                          (Lean.Omega.Coeffs.ofList
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@List.nil.{0} Int)))))
+                        (Lean.Omega.LinearCombo.eval
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.nil.{0} Int))
+                          (Lean.Omega.Coeffs.ofList
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@List.nil.{0} Int))))))
+                      (Lean.Omega.LinearCombo.sub_eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                              (@List.nil.{0} Int))))
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.nil.{0} Int))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int))))))))
+                (@Int.sub_eq_zero_of_eq
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                  (@Lean.Omega.Int.ofNat_congr
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                    (@Decidable.of_not_not
+                      (@Eq.{1} Nat
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                      (Classical.propDecidable
+                        (@Eq.{1} Nat
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                      h₁))))))))
+    fun (h₂ : ⋯) =>
+    @Lean.Omega.Constraint.not_sat'_of_isImpossible
+      (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+        (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))))
+      (@of_decide_eq_true
+        (@Eq.{1} Bool
+          (Lean.Omega.Constraint.isImpossible
+            (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+              (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+          Bool.true)
+        (instDecidableEqBool
+          (Lean.Omega.Constraint.isImpossible
+            (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+              (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+          Bool.true)
+        (@id.{0}
+          (@Eq.{1} Bool
+            (@Decidable.decide
+              (@Eq.{1} Bool
+                (Lean.Omega.Constraint.isImpossible
+                  (Lean.Omega.Constraint.mk
+                    (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+                    (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+                Bool.true)
+              (instDecidableEqBool
+                (Lean.Omega.Constraint.isImpossible
+                  (Lean.Omega.Constraint.mk
+                    (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+                    (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))))
+                Bool.true))
+            Bool.true)
+          (@Eq.refl.{1} Bool Bool.true)))
+      (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (@List.nil.{0} Int))
+      (Lean.Omega.Coeffs.ofList
+        (@List.cons.{0} Int
+          (@Nat.cast.{0} Int instNatCastInt
+            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+          (@List.cons.{0} Int
+            (@Nat.cast.{0} Int instNatCastInt
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+            (@List.nil.{0} Int))))
+      (@Lean.Omega.tidy_sat
+        (Lean.Omega.Constraint.mk
+          (@Option.some.{0} Int
+            (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))))
+          (@Option.some.{0} Int
+            (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2))))))
+        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))) (@List.nil.{0} Int))
+        (Lean.Omega.Coeffs.ofList
+          (@List.cons.{0} Int
+            (@Nat.cast.{0} Int instNatCastInt
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+            (@List.cons.{0} Int
+              (@Nat.cast.{0} Int instNatCastInt
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+              (@List.nil.{0} Int))))
+        (Lean.Omega.combo_sat'
+          (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2))))
+            (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))))
+          (Lean.Omega.Constraint.mk (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))
+            (@Option.some.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))))
+          (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int))
+          (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int))
+          (Lean.Omega.Coeffs.ofList
+            (@List.cons.{0} Int
+              (@Nat.cast.{0} Int instNatCastInt
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@List.cons.{0} Int
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                (@List.nil.{0} Int))))
+          (@Lean.Omega.Constraint.addEquality_sat
+            (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2))))
+            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int))
+            (Lean.Omega.Coeffs.ofList
+              (@List.cons.{0} Int
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@List.cons.{0} Int
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@List.nil.{0} Int))))
+            (@Eq.trans.{1} Int
+              (Lean.Omega.LinearCombo.eval
+                (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                  (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                  (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                    (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                      (@List.nil.{0} Int)))
+                  (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                    (@List.nil.{0} Int)))
+                (Lean.Omega.Coeffs.ofList
+                  (@List.cons.{0} Int
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                    (@List.cons.{0} Int
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (@List.nil.{0} Int)))))
+              (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+              (@Eq.symm.{1} Int
+                (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (Lean.Omega.LinearCombo.eval
+                  (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                    (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                      (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                        (@List.nil.{0} Int)))
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                      (@List.nil.{0} Int)))
+                  (Lean.Omega.Coeffs.ofList
+                    (@List.cons.{0} Int
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                      (@List.cons.{0} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                        (@List.nil.{0} Int)))))
+                (@Eq.trans.{1} Int
+                  (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                    (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                    (Lean.Omega.LinearCombo.eval
+                      (Lean.Omega.LinearCombo.coordinate (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int)))))
+                    (Lean.Omega.LinearCombo.eval
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                        (@List.nil.{0} Int))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int))))))
+                  (Lean.Omega.LinearCombo.eval
+                    (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                      (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int)))
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                        (@List.nil.{0} Int)))
+                    (Lean.Omega.Coeffs.ofList
+                      (@List.cons.{0} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (@List.nil.{0} Int)))))
+                  (@Lean.Omega.Int.sub_congr
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                    (Lean.Omega.LinearCombo.eval
+                      (Lean.Omega.LinearCombo.coordinate (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int)))))
+                    (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (Lean.Omega.LinearCombo.eval
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                        (@List.nil.{0} Int))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int)))))
+                    (@Eq.symm.{1} Int
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.coordinate
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                      (@Lean.Omega.LinearCombo.coordinate_eval_0
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (@List.nil.{0} Int))))
+                    (@id.{0}
+                      (@Eq.{1} Int
+                        (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (Lean.Omega.LinearCombo.eval
+                          (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                            (@List.nil.{0} Int))
+                          (Lean.Omega.Coeffs.ofList
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@List.cons.{0} Int
+                                (@Nat.cast.{0} Int instNatCastInt
+                                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@List.nil.{0} Int))))))
+                      (@Eq.refl.{1} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+                  (@Eq.symm.{1} Int
+                    (Lean.Omega.LinearCombo.eval
+                      (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                        (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                            (@List.nil.{0} Int)))
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                          (@List.nil.{0} Int)))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int)))))
+                    (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                          (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                            (@List.nil.{0} Int)))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int)))))
+                      (Lean.Omega.LinearCombo.eval
+                        (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                          (@List.nil.{0} Int))
+                        (Lean.Omega.Coeffs.ofList
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                            (@List.cons.{0} Int
+                              (@Nat.cast.{0} Int instNatCastInt
+                                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                              (@List.nil.{0} Int))))))
+                    (Lean.Omega.LinearCombo.sub_eval
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                        (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                          (@List.nil.{0} Int)))
+                      (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 2) (@instOfNat (nat_lit 2)))
+                        (@List.nil.{0} Int))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@List.nil.{0} Int))))))))
+              (@Int.sub_eq_zero_of_eq
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Lean.Omega.Int.ofNat_congr
+                  (@Derivation.Iso.dmap
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  (@And.right
+                    (@Eq.{1} Nat
+                      (@Derivation.Iso.dmap
+                        (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                          (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                          (@List.cons.{0} Derivation.Inst
+                            (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                            (@List.nil.{0} Derivation.Inst))
+                          (@List.nil.{0} Nat)
+                          (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                        (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                          (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                          (@List.cons.{0} Derivation.Inst
+                            (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                            (@List.nil.{0} Derivation.Inst))
+                          (@List.nil.{0} Nat)
+                          (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                        iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@Eq.{1} Nat
+                      (@Derivation.Iso.dmap
+                        (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                          (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                          (@List.cons.{0} Derivation.Inst
+                            (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                            (@List.nil.{0} Derivation.Inst))
+                          (@List.nil.{0} Nat)
+                          (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                        (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                          (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                          (@List.cons.{0} Derivation.Inst
+                            (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                            (@List.nil.{0} Derivation.Inst))
+                          (@List.nil.{0} Nat)
+                          (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                        iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    h)))))
+          (@Lean.Omega.Constraint.addEquality_sat (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+            (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))) (@List.nil.{0} Int))
+            (Lean.Omega.Coeffs.ofList
+              (@List.cons.{0} Int
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@List.cons.{0} Int
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@List.nil.{0} Int))))
+            (@Eq.trans.{1} Int
+              (Lean.Omega.LinearCombo.eval
+                (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                  (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                  (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                    (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                      (@List.nil.{0} Int)))
+                  (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                    (@List.nil.{0} Int)))
+                (Lean.Omega.Coeffs.ofList
+                  (@List.cons.{0} Int
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                    (@List.cons.{0} Int
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (@List.nil.{0} Int)))))
+              (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                (@Nat.cast.{0} Int instNatCastInt
+                  (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+              (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+              (@Eq.symm.{1} Int
+                (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                  (@Nat.cast.{0} Int instNatCastInt
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                (Lean.Omega.LinearCombo.eval
+                  (@HSub.hSub.{0, 0, 0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo Lean.Omega.LinearCombo
+                    (@instHSub.{0} Lean.Omega.LinearCombo Lean.Omega.LinearCombo.instSub)
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                      (@List.cons.{0} Int (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))
+                        (@List.nil.{0} Int)))
+                    (Lean.Omega.LinearCombo.mk (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))
+                      (@List.nil.{0} Int)))
+                  (Lean.Omega.Coeffs.ofList
+                    (@List.cons.{0} Int
+                      (@Nat.cast.{0} Int instNatCastInt
+                        (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                      (@List.cons.{0} Int
+                        (@Nat.cast.{0} Int instNatCastInt
+                          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                        (@List.nil.{0} Int)))))
+                (@Eq.trans.{1} Int
+                  (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                    (@Nat.cast.{0} Int instNatCastInt
+                      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                    (@Nat.cast.{0} Int instNatCastInt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                  (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub)
+                    (Lean.Omega.LinearCombo.eval
+                      (Lean.Omega.LinearCombo.coordinate (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                      (Lean.Omega.Coeffs.ofList
+                        (@List.cons.{0} Int
+                          (@Nat.cast.{0} Int instNatCastInt
+                            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                          (@List.cons.{0} Int
+                            (@Nat.cast.{0} Int instNatCastInt
+                              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ⋯) ⋯ ⋯))
+                            ⋯))))
+                    ⋯)
+                  ⋯ ⋯ ⋯))
+              ⋯))))

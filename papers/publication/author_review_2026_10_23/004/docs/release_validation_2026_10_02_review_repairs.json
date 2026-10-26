@@ -1,0 +1,103 @@
+{
+  "schema": "symbol-game.local-candidate-validation.v2",
+  "date": "2026-10-02",
+  "release_version": "0.1.0",
+  "authority_effect": "None",
+  "external_deposit": false,
+  "zenodo_submission": false,
+  "scope": "Paper 004 local review repairs: audited source tar at 52cb5457, historical native-run copies, version 0.1.0 metadata, governor fallback wording, Landau companion, and this receipt. No Zenodo submission, DOI reservation, repository publication, Cargo run, or lake build.",
+  "conceptual_source_baseline": "52cb5457f6c485ba548cfd292f6012a941ed22cf",
+  "conceptual_source_baseline_role": "Audited code baseline copied into audited_source/pfp-iv-native-source-52cb5457.tar.gz. The omega_symbol_game crate tree at this commit is 75d77aa5e1f30dfc102f00c8f7cb6159418dec63.",
+  "historical_native_run_commit": "1c7092c3db2ab2fa65999cf2555aff7733b97b99",
+  "historical_native_run_role": "Commit named by the 2026-09-28 report. Its omega_symbol_game crate tree is the same 75d77aa5e1f30dfc102f00c8f7cb6159418dec63. The report's native counts are historical. This receipt does not rerun them.",
+  "candidate_checkout": "df1f3be4d195b8da1f87e03b7ee4f32e943c40d6",
+  "candidate_branch": "feat/retire-named-product-plans-2026-10-02",
+  "checkout_scope": "Measured HEAD while this receipt was written. The worktree is dirty and contains unrelated files. These repairs are uncommitted. The hashes below bind only the listed files.",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "tools": {
+    "pytest": "8.3.5",
+    "pytest_note": "pyproject.toml dev extra asks for pytest>=9.0.3. The runner used here is pytest 8.3.5. An ambient pytest-asyncio install printed a deprecation when the plugin was left enabled. The recorded command disables that plugin with -p no:asyncio. No package test is an asyncio test.",
+    "ruff": "0.14.13",
+    "ruff_note": "No Python module was edited. ruff was not run on this repair.",
+    "pandoc": "pandoc.exe 3.7.0.2",
+    "xelatex": "MiKTeX-XeTeX 4.16 (MiKTeX 25.12)",
+    "markdownlint_cli": "0.49.1"
+  },
+  "checks": [
+    {
+      "id": "audited_source_inventory",
+      "command": "py -3.12 comparison of evidence/source_inventory.json sha256 values against audited_source/SOURCE_MEMBERS.sha256",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "scope": "19 of 19 reviewed source paths match, including host.rs, protocol.rs, native_functional.py, and packet_codec.py. The tar has 7875 regular files, 90941440 bytes, sha256 a7be14eb339d476debaf06264f4334c83018127840853404018ad6972361e557. Member manifest sha256 952625ad741692c9860ee1bd2670fdf38b05416377cdcb08263873708a1be73d. Cargo was not executed."
+    },
+    {
+      "id": "pytest_package",
+      "command": "py -3.12 -m pytest code/tests -o addopts= -q -ra --tb=no -p no:cacheprovider -p no:asyncio",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/004_the_symbol_game_native_verification_and_evidence_custody",
+      "tool_version": "pytest 8.3.5",
+      "exit_code": 0,
+      "passed": 82,
+      "skipped": 0,
+      "failed": 0,
+      "duration_s": 27.57,
+      "scope": "All files under code/tests on this machine. Attention tests ran because torch and numpy are installed here. test_lean4_verifier_live compiled two short snippets with lean --stdin because a Lean executable was on PATH. That is not lake build of lean4/ and not the axiom census. These 82 tests are not the historical 12, 11, 32, and 9 native tests."
+    },
+    {
+      "id": "markdownlint_touched",
+      "command": "npx --yes markdownlint-cli@0.49.1 on the twelve edited Markdown files",
+      "cwd": "repository root",
+      "tool_version": "markdownlint-cli 0.49.1",
+      "exit_code": 0,
+      "scope": "README.md, paper.md, paper_change_log.md, paper_claim_ledger.md, docs/descriptions.md, docs/references.md, docs/historical_native_run/README.md, audited_source/README.md, and the four Landau companion files. Configuration is the repository .markdownlint.json. The copied historical report was not linted."
+    },
+    {
+      "id": "pdf_deposit",
+      "command": "py -3.12 -B tools/build_publications.py --pdf --deposit --only 004 --pandoc C:\\Users\\a343o\\AppData\\Local\\Pandoc\\pandoc.exe --latex C:\\Users\\a343o\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\xelatex.exe",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp",
+      "tool_version": "pandoc.exe 3.7.0.2; MiKTeX-XeTeX 4.16 (MiKTeX 25.12)",
+      "exit_code": 0,
+      "stdout": "004: standalone source built; PDF current; deposit TeX/PDF compiled",
+      "scope": "Paper 004 deposit paper.tex and paper.pdf, plus publication/004 and publication/manifest.json. The builder refuses Overfull hbox warnings. In-deposit evidence paths in paper.md are inline code. publication/000/paper.pdf remained 12:44:14 and publication/001/paper.pdf remained 13:53:19. publication/002 through publication/010 paper.pdf remained 13:35:08."
+    }
+  ],
+  "executed_file_sha256": {
+    "README.md": "78108523c5830b7c4db0ce2a775e68dd77868621282eb01f615f9a5ae20f0432",
+    "paper.md": "731cabe1c16b2d944d6be83ed70d24e503e148b08d01738fd59bbfe020a749e8",
+    "paper.tex": "665155759d7c55fa6e881b292359b9543edcb220ff7e658a2bf9a4c451de5b2a",
+    "paper.pdf": "8d944e73f7b6b1a5b7014b0b88ce89e93a969bafba66eb3b63a16d4d6e176255",
+    "paper_change_log.md": "9e7ced4e1e415283429d77ed4b3c33830992dea6d80a416b50aad2d13cb31658",
+    "paper_claim_ledger.md": "a7ba5a4a4caf9667c655a42bb4e5ea18f89760a803b4d2c52099926c8a8f91a7",
+    "zenodo_metadata.json": "0a7b9316015dcee550ed7961c51e99ee05f1bcd59aaa79aa6d3423433d40f114",
+    "pyproject.toml": "6b52f6011ffecf00bbcc91aaa6fdbcb121b76ec1616a3ce84f1e0e595667586d",
+    "docs/descriptions.md": "cf811b8490afc7087e1df1c5828774b5f585ba37cd0cde0af848bb20a7a2d468",
+    "docs/references.md": "3ad11cdbc069bc875a594ec5ce80035daabf649a006d47403d4e35f5488394ee",
+    "docs/historical_native_run/README.md": "fe3b57ce8ace23070b66b7346eb40d9e245e0b8fafca9fc4b02ca8db3545e50a",
+    "docs/historical_native_run/report_second_revision_2026-09-28.md": "1dfd7f1ac2af0ee029c0bdbd9f4d6ef799eb8a07afd431d5964dc8dfe2228409",
+    "audited_source/README.md": "615c3cae0c73b330bea126260af2988ea6f16f6ad2e08c2688bb8c97ef166eb8",
+    "audited_source/REVISION.json": "ba8a625c2dddbfd25d25f3695687534aa7002e2f9265b12808a8e8586d05a820",
+    "audited_source/SOURCE_MEMBERS.sha256": "952625ad741692c9860ee1bd2670fdf38b05416377cdcb08263873708a1be73d",
+    "audited_source/pfp-iv-native-source-52cb5457.tar.gz": "a7be14eb339d476debaf06264f4334c83018127840853404018ad6972361e557",
+    "_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "b97f78c9ec3b7c91681fa2476e5290caef576090a1e084a3c87205f65c8a8972",
+    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "5c50cb46c54a283169d56bcc0cf78e4022c915d3eb33c50868609c084a7bcc40",
+    "_lev_landau_theoretical_minimum_quiz/quiz.md": "bc88977b0cdd753d21e2c3618bdc9b5cc93d1b834066f9b5a404f55557b97bd6",
+    "_lev_landau_theoretical_minimum_quiz/instructor_key.md": "f07426b2c6444ecd620f0aa3761076c2741a1b19ee08a537bf378614b58cfaa9"
+  },
+  "collection_pdf_sha256": {
+    "publication/004/paper.pdf": "fce8db8239cc8f2ad9ad44c1573567c9ce140de51add74cf7d40dd448ad5e643",
+    "publication/004/paper.tex": "665155759d7c55fa6e881b292359b9543edcb220ff7e658a2bf9a4c451de5b2a",
+    "publication/manifest.json": "ba3adead327ad63914410c310333a72408c3eee2277e7ce10b9a5d72112185a4"
+  },
+  "deposit_pdf_differs_from_collection_pdf": true,
+  "historical_validation_retained": [
+    "docs/release_validation_2026_10_01.json",
+    "docs/release_validation_2026_10_02.json"
+  ],
+  "not_done": [
+    "No Zenodo API call and no DOI reservation. The private repository was not made public.",
+    "Cargo was not run. The counts 12, 11, 32, and 9 remain the 2026-09-28 EDT report. Raw Cargo stdout was not found and was not invented.",
+    "lake build of lean4/ was not run. The axiom census was not replayed.",
+    "The package pytest did invoke lean --stdin on two snippets inside test_lean4_verifier_live.",
+    "This receipt does not contain its own digest. The manifest and archive check that follows this file is not recorded inside it."
+  ]
+}

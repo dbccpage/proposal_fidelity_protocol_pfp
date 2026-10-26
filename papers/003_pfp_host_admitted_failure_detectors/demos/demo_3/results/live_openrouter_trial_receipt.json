@@ -1,0 +1,3150 @@
+{
+  "schema": "symbol-game-demo3-experiment/live-matrix-receipt-v1",
+  "models": [
+    "openai/gpt-4o-mini"
+  ],
+  "fixtures": [
+    "gauge_even_triangle",
+    "gauge_odd_triangle",
+    "cochain_exact_cycle",
+    "cochain_nonexact_cycle",
+    "meron_two_pairs_survivor"
+  ],
+  "arms": [
+    "D",
+    "R"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "total_trials": 30,
+  "total_api_calls": 48,
+  "total_tokens": 20382,
+  "effect_statistics": {
+    "n_d": 15,
+    "n_r": 15,
+    "success_d": 15,
+    "success_r": 9,
+    "rate_d": 1.0,
+    "rate_r": 0.6,
+    "delta_d_minus_r": 0.4,
+    "se_agresti_caffo": 0.1323,
+    "ci95_agresti_caffo": [
+      0.0936,
+      0.6123
+    ],
+    "se_wald": 0.1265,
+    "ci95_wald": [
+      0.1521,
+      0.6479
+    ],
+    "mean_fuel_d": 1.4,
+    "mean_fuel_r": 1.8,
+    "mean_steps_d": 1.4,
+    "mean_steps_r": 1.8
+  },
+  "trials": [
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_even_triangle",
+      "arm": "D",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeRepair",
+      "fuel_consumed": 2,
+      "remaining_fuel": 10,
+      "step_count": 2,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "prior_state_digest": "ae842991c507b7143d78d0af3e627265ced3e03df851d0867d9070526087fbad",
+          "new_state_digest": "7b0f4faf52e5a677a956a81ef5ac223975810440b0d42cc41c5254d136b62043",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "vertex_bits",
+                "witness": [
+                  0,
+                  1,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "7b0f4faf52e5a677a956a81ef5ac223975810440b0d42cc41c5254d136b62043",
+          "new_state_digest": "cbeb767022a402749d8bb10f8173633a82530714dfe36bee7e0e6120374d783d",
+          "remaining_fuel": 10,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"vertex_bits\", \"witness\": [0, 1, 0]}},\n    {\"move_",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 395,
+            "completion_tokens": 78
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "cbeb767022a402749d8bb10f8173633a82530714dfe36bee7e0e6120374d783d",
+      "receipt_sha256": "ef7a42e6cf20cd3637757deb62b75f342d020203064b8279c18f6abb4b0ea399"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_even_triangle",
+      "arm": "R",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "REJECT_LOCAL",
+      "terminal_label": null,
+      "fuel_consumed": 3,
+      "remaining_fuel": 9,
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "91958ed4e3f5a64522a20537755f4628c9836cc03a656b43d5b8161138741892",
+          "new_state_digest": "0d890e0523b5f649a6533a3283a106a7943983eb2620ff2ab418318aa3956072",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "0d890e0523b5f649a6533a3283a106a7943983eb2620ff2ab418318aa3956072",
+          "new_state_digest": "0520f531bb6c47811b5886e60a1eb69445e1bc37c0d2d1b4c51ca09196542808",
+          "remaining_fuel": 10,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 2,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "0520f531bb6c47811b5886e60a1eb69445e1bc37c0d2d1b4c51ca09196542808",
+          "new_state_digest": "c2b5062d362969e4de024c0a7b11756865327ec1cf2b4a1bf656e2b129018201",
+          "remaining_fuel": 9,
+          "batch_rolled_back": true
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 390,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 3,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 390,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        }
+      ],
+      "final_state_digest": "c2b5062d362969e4de024c0a7b11756865327ec1cf2b4a1bf656e2b129018201",
+      "receipt_sha256": "589d4b5bf750fd826ba68ef5065fd37c792d9f479b83d7f63d4c412fb354a27f"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_odd_triangle",
+      "arm": "D",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "de83baba28ecbebf55455c360fe6b5b30469747ef652ed3c7ae66bd562e0ee88",
+          "new_state_digest": "09f63eaf42f441e925b07f20ea783421e0622eb6797e8a835c586f19e7dc8948",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "09f63eaf42f441e925b07f20ea783421e0622eb6797e8a835c586f19e7dc8948",
+      "receipt_sha256": "eba4e215fc6be5ea5e03398f04b9edda81a137dcdb3da91f4dedad57fb55bfcd"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_odd_triangle",
+      "arm": "R",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "3c9ca4e9889c9155b3263ddedc6db4911db53b602863345c93dce0f5cc1611b6",
+          "new_state_digest": "4d1e41cfc5e218bd4a9292fa9b57899f74f478d2e4b082d4e5445d73f208da7e",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "4d1e41cfc5e218bd4a9292fa9b57899f74f478d2e4b082d4e5445d73f208da7e",
+      "receipt_sha256": "63cb5fb949bdded992b998f1df776cf10e76a30fa97acc5a96d5f27909bb35e8"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_exact_cycle",
+      "arm": "D",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainRepair",
+      "fuel_consumed": 2,
+      "remaining_fuel": 10,
+      "step_count": 2,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "prior_state_digest": "e441e105f4ce006efb6768e19a95474a2b22e5171fdd612fc897cc1423c0c8e1",
+          "new_state_digest": "ef084d3c3efe8e0ca034930e6315e388243c58f1a33378f448bb89e193f4ee50",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "gauge_potential",
+                "witness": [
+                  "1/2",
+                  "1/2"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "ef084d3c3efe8e0ca034930e6315e388243c58f1a33378f448bb89e193f4ee50",
+          "new_state_digest": "e2b5f93680532ea9593279c510c64e63015bf63fa4c2122f14a0ee6375dac860",
+          "remaining_fuel": 10,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 295,
+            "completion_tokens": 83
+          },
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"gauge_potential\", \"witness\": [\"1/2\", \"1/2\"]}},\n  ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 348,
+            "completion_tokens": 81
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "e2b5f93680532ea9593279c510c64e63015bf63fa4c2122f14a0ee6375dac860",
+      "receipt_sha256": "ff2a6911103dda57b1fb8bf1ebbbbee57a9f871bacce965bba2266b6d9f945c8"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_exact_cycle",
+      "arm": "R",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "REJECT_LOCAL",
+      "terminal_label": null,
+      "fuel_consumed": 3,
+      "remaining_fuel": 9,
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "3e79a57cb0420ca4681248799f62a8c56ea5f796665712fb99d626fa101b1ea0",
+          "new_state_digest": "9136c01ba5612a0d387d1321f621b630037ffb3fa1faa2ee3490419a763485c6",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "9136c01ba5612a0d387d1321f621b630037ffb3fa1faa2ee3490419a763485c6",
+          "new_state_digest": "dd3ee0d19121485ace22e53ebaea2fa1095a0d4646d41103a9e98f3293f12bf3",
+          "remaining_fuel": 10,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 2,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "dd3ee0d19121485ace22e53ebaea2fa1095a0d4646d41103a9e98f3293f12bf3",
+          "new_state_digest": "78d5e5e9810660a015f5337c818bed5d9c1b8154712125059caac40436e0c30d",
+          "remaining_fuel": 9,
+          "batch_rolled_back": true
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 295,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 341,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 3,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 341,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        }
+      ],
+      "final_state_digest": "78d5e5e9810660a015f5337c818bed5d9c1b8154712125059caac40436e0c30d",
+      "receipt_sha256": "71b83edcb691911b12e6a78706c68ee294ba8b02d03ca28d0be8432d7994efa7"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_nonexact_cycle",
+      "arm": "D",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "e5b582a10b46d27ced5087108c34c867ad3ceb313d4569b89b6d57957f464798",
+          "new_state_digest": "bd43a1d5c03a7003ca392fa07812b1237f9285ce17368131b18a0d51b4cbcec3",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "bd43a1d5c03a7003ca392fa07812b1237f9285ce17368131b18a0d51b4cbcec3",
+      "receipt_sha256": "b623cbf1472321eb84cd303d613e1d4e9a70f0c9b8b5c9fdac54e60181ec2773"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_nonexact_cycle",
+      "arm": "R",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "00ad81ae30daee55a54f1b26c60a3e25c14fc68effe5d253b9651aa169927105",
+          "new_state_digest": "17d6cf08c7f780ce9a672a864d7221b898358a99a306d1a68714d4ea4fe12aa0",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "17d6cf08c7f780ce9a672a864d7221b898358a99a306d1a68714d4ea4fe12aa0",
+      "receipt_sha256": "2e1ba7b8b555340f42f26bdad9adcdb1cdb2b2a7772b452ac55effce18a8310c"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "meron_two_pairs_survivor",
+      "arm": "D",
+      "route": "finite_signed_path_pairing",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "MeronPartialCancellation",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "partial_sign_reversing_path_involution",
+                "witness": {
+                  "p0": "p3",
+                  "p3": "p0",
+                  "p1": "p2",
+                  "p2": "p1"
+                }
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "8a84ac9b53c5d6bd30202e096503d18c18ae9b12288022daec9d7356e0f91a1d",
+          "new_state_digest": "c05c3dd5e0080f0c6eb61a9ba02fcd030db8a6742d11b7bde7df4727a77ec194",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"partial_sign_reversing_path_involution\", \"witness",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 107
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "c05c3dd5e0080f0c6eb61a9ba02fcd030db8a6742d11b7bde7df4727a77ec194",
+      "receipt_sha256": "6d66181e79bd919f39a08fdba206e36b33fe5d85a6691891b6ab310181a8e99d"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "meron_two_pairs_survivor",
+      "arm": "R",
+      "route": "finite_signed_path_pairing",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 42,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "MeronPartialCancellation",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "partial_sign_reversing_path_involution",
+                "witness": {
+                  "p0": "p3",
+                  "p3": "p0",
+                  "p1": "p2",
+                  "p2": "p1"
+                }
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "f86852e0333daf6ca279b34658b651d046888d00e41b3072d90d2e4aad130216",
+          "new_state_digest": "5d74c4bfd22f72bff1176eea653c0883125cb7554fb4193ec893dadc753566d9",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"partial_sign_reversing_path_involution\", \"witness",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 107
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "5d74c4bfd22f72bff1176eea653c0883125cb7554fb4193ec893dadc753566d9",
+      "receipt_sha256": "6cd666f345f5c5fb17300cb8b8dafd6f8b74a81ed0b2076876d3c8d8df626557"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_even_triangle",
+      "arm": "D",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeRepair",
+      "fuel_consumed": 2,
+      "remaining_fuel": 10,
+      "step_count": 2,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "prior_state_digest": "ae842991c507b7143d78d0af3e627265ced3e03df851d0867d9070526087fbad",
+          "new_state_digest": "7b0f4faf52e5a677a956a81ef5ac223975810440b0d42cc41c5254d136b62043",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "vertex_bits",
+                "witness": [
+                  0,
+                  1,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "7b0f4faf52e5a677a956a81ef5ac223975810440b0d42cc41c5254d136b62043",
+          "new_state_digest": "cbeb767022a402749d8bb10f8173633a82530714dfe36bee7e0e6120374d783d",
+          "remaining_fuel": 10,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"vertex_bits\", \"witness\": [0, 1, 0]}},\n    {\"move_",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 395,
+            "completion_tokens": 78
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "cbeb767022a402749d8bb10f8173633a82530714dfe36bee7e0e6120374d783d",
+      "receipt_sha256": "81ea027977e2d5c0d1db6d0296c5e683db70394989eb131791269321e7c46e1d"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_even_triangle",
+      "arm": "R",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "REJECT_LOCAL",
+      "terminal_label": null,
+      "fuel_consumed": 3,
+      "remaining_fuel": 9,
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "91958ed4e3f5a64522a20537755f4628c9836cc03a656b43d5b8161138741892",
+          "new_state_digest": "0d890e0523b5f649a6533a3283a106a7943983eb2620ff2ab418318aa3956072",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "0d890e0523b5f649a6533a3283a106a7943983eb2620ff2ab418318aa3956072",
+          "new_state_digest": "0520f531bb6c47811b5886e60a1eb69445e1bc37c0d2d1b4c51ca09196542808",
+          "remaining_fuel": 10,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 2,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "0520f531bb6c47811b5886e60a1eb69445e1bc37c0d2d1b4c51ca09196542808",
+          "new_state_digest": "c2b5062d362969e4de024c0a7b11756865327ec1cf2b4a1bf656e2b129018201",
+          "remaining_fuel": 9,
+          "batch_rolled_back": true
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 390,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 3,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 390,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        }
+      ],
+      "final_state_digest": "c2b5062d362969e4de024c0a7b11756865327ec1cf2b4a1bf656e2b129018201",
+      "receipt_sha256": "4372e72b4c1846e89e553569a1f46c6990a7b0874edd87b3432901ccfe6b4481"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_odd_triangle",
+      "arm": "D",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "de83baba28ecbebf55455c360fe6b5b30469747ef652ed3c7ae66bd562e0ee88",
+          "new_state_digest": "09f63eaf42f441e925b07f20ea783421e0622eb6797e8a835c586f19e7dc8948",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "09f63eaf42f441e925b07f20ea783421e0622eb6797e8a835c586f19e7dc8948",
+      "receipt_sha256": "dfa13811b4ada2a02a262cd5024f0bad7fc04099d6e13cf9adbb4d3a8575f0bf"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_odd_triangle",
+      "arm": "R",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "3c9ca4e9889c9155b3263ddedc6db4911db53b602863345c93dce0f5cc1611b6",
+          "new_state_digest": "4d1e41cfc5e218bd4a9292fa9b57899f74f478d2e4b082d4e5445d73f208da7e",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "4d1e41cfc5e218bd4a9292fa9b57899f74f478d2e4b082d4e5445d73f208da7e",
+      "receipt_sha256": "dde0d242da82700518348021e7e3a0fcfbf7939d329e41554c176a0196a560f1"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_exact_cycle",
+      "arm": "D",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainRepair",
+      "fuel_consumed": 2,
+      "remaining_fuel": 10,
+      "step_count": 2,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "prior_state_digest": "e441e105f4ce006efb6768e19a95474a2b22e5171fdd612fc897cc1423c0c8e1",
+          "new_state_digest": "ef084d3c3efe8e0ca034930e6315e388243c58f1a33378f448bb89e193f4ee50",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "gauge_potential",
+                "witness": [
+                  "1/2",
+                  "1/2"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "ef084d3c3efe8e0ca034930e6315e388243c58f1a33378f448bb89e193f4ee50",
+          "new_state_digest": "e2b5f93680532ea9593279c510c64e63015bf63fa4c2122f14a0ee6375dac860",
+          "remaining_fuel": 10,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 295,
+            "completion_tokens": 83
+          },
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"gauge_potential\", \"witness\": [\"1/2\", \"1/2\"]}},\n  ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 348,
+            "completion_tokens": 81
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "e2b5f93680532ea9593279c510c64e63015bf63fa4c2122f14a0ee6375dac860",
+      "receipt_sha256": "0cd435ee9fa4ba38f12aab5e4056917487b51fa23d2077362706bce0172ddfdc"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_exact_cycle",
+      "arm": "R",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "REJECT_LOCAL",
+      "terminal_label": null,
+      "fuel_consumed": 3,
+      "remaining_fuel": 9,
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "3e79a57cb0420ca4681248799f62a8c56ea5f796665712fb99d626fa101b1ea0",
+          "new_state_digest": "9136c01ba5612a0d387d1321f621b630037ffb3fa1faa2ee3490419a763485c6",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "9136c01ba5612a0d387d1321f621b630037ffb3fa1faa2ee3490419a763485c6",
+          "new_state_digest": "dd3ee0d19121485ace22e53ebaea2fa1095a0d4646d41103a9e98f3293f12bf3",
+          "remaining_fuel": 10,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 2,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "dd3ee0d19121485ace22e53ebaea2fa1095a0d4646d41103a9e98f3293f12bf3",
+          "new_state_digest": "78d5e5e9810660a015f5337c818bed5d9c1b8154712125059caac40436e0c30d",
+          "remaining_fuel": 9,
+          "batch_rolled_back": true
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 295,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 341,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 3,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 341,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        }
+      ],
+      "final_state_digest": "78d5e5e9810660a015f5337c818bed5d9c1b8154712125059caac40436e0c30d",
+      "receipt_sha256": "f1118bac3265b72cc37c5b25269c4b152d1131a94758a9e29047ff31adfa5ee6"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_nonexact_cycle",
+      "arm": "D",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "e5b582a10b46d27ced5087108c34c867ad3ceb313d4569b89b6d57957f464798",
+          "new_state_digest": "bd43a1d5c03a7003ca392fa07812b1237f9285ce17368131b18a0d51b4cbcec3",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "bd43a1d5c03a7003ca392fa07812b1237f9285ce17368131b18a0d51b4cbcec3",
+      "receipt_sha256": "3194172632d255b69d4fe3c0ad245096997ab23aba37b2c771b18090cd53e858"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_nonexact_cycle",
+      "arm": "R",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "00ad81ae30daee55a54f1b26c60a3e25c14fc68effe5d253b9651aa169927105",
+          "new_state_digest": "17d6cf08c7f780ce9a672a864d7221b898358a99a306d1a68714d4ea4fe12aa0",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "17d6cf08c7f780ce9a672a864d7221b898358a99a306d1a68714d4ea4fe12aa0",
+      "receipt_sha256": "d578cf667f7ee509fc93cd123fc0d6e8861e9c8d5668890a2db172df4e7bfae6"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "meron_two_pairs_survivor",
+      "arm": "D",
+      "route": "finite_signed_path_pairing",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "MeronPartialCancellation",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "partial_sign_reversing_path_involution",
+                "witness": {
+                  "p0": "p3",
+                  "p3": "p0",
+                  "p1": "p2",
+                  "p2": "p1"
+                }
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "8a84ac9b53c5d6bd30202e096503d18c18ae9b12288022daec9d7356e0f91a1d",
+          "new_state_digest": "c05c3dd5e0080f0c6eb61a9ba02fcd030db8a6742d11b7bde7df4727a77ec194",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"partial_sign_reversing_path_involution\", \"witness",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 107
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "c05c3dd5e0080f0c6eb61a9ba02fcd030db8a6742d11b7bde7df4727a77ec194",
+      "receipt_sha256": "5c0e3268bdc1eac35c7b254302ddc6e1a47af3b1744f8b50d51b71c9ab1a18b6"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "meron_two_pairs_survivor",
+      "arm": "R",
+      "route": "finite_signed_path_pairing",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 43,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "MeronPartialCancellation",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "partial_sign_reversing_path_involution",
+                "witness": {
+                  "p0": "p3",
+                  "p3": "p0",
+                  "p1": "p2",
+                  "p2": "p1"
+                }
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "f86852e0333daf6ca279b34658b651d046888d00e41b3072d90d2e4aad130216",
+          "new_state_digest": "5d74c4bfd22f72bff1176eea653c0883125cb7554fb4193ec893dadc753566d9",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"partial_sign_reversing_path_involution\", \"witness",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 107
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "5d74c4bfd22f72bff1176eea653c0883125cb7554fb4193ec893dadc753566d9",
+      "receipt_sha256": "0d8aa2beaa387c9b003fde76f753a8d8264644855f8edf8ef912b9cff4f9ab64"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_even_triangle",
+      "arm": "D",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeRepair",
+      "fuel_consumed": 2,
+      "remaining_fuel": 10,
+      "step_count": 2,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "prior_state_digest": "ae842991c507b7143d78d0af3e627265ced3e03df851d0867d9070526087fbad",
+          "new_state_digest": "7b0f4faf52e5a677a956a81ef5ac223975810440b0d42cc41c5254d136b62043",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "vertex_bits",
+                "witness": [
+                  0,
+                  1,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "7b0f4faf52e5a677a956a81ef5ac223975810440b0d42cc41c5254d136b62043",
+          "new_state_digest": "cbeb767022a402749d8bb10f8173633a82530714dfe36bee7e0e6120374d783d",
+          "remaining_fuel": 10,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"vertex_bits\", \"witness\": [0, 1, 0]}},\n    {\"move_",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 395,
+            "completion_tokens": 78
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "cbeb767022a402749d8bb10f8173633a82530714dfe36bee7e0e6120374d783d",
+      "receipt_sha256": "8ded6d34e6299766347079c3c0158daa4134310d0ab472dbce672c1bb41331a8"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_even_triangle",
+      "arm": "R",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "REJECT_LOCAL",
+      "terminal_label": null,
+      "fuel_consumed": 3,
+      "remaining_fuel": 9,
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "91958ed4e3f5a64522a20537755f4628c9836cc03a656b43d5b8161138741892",
+          "new_state_digest": "0d890e0523b5f649a6533a3283a106a7943983eb2620ff2ab418318aa3956072",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "0d890e0523b5f649a6533a3283a106a7943983eb2620ff2ab418318aa3956072",
+          "new_state_digest": "0520f531bb6c47811b5886e60a1eb69445e1bc37c0d2d1b4c51ca09196542808",
+          "remaining_fuel": 10,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 2,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "0520f531bb6c47811b5886e60a1eb69445e1bc37c0d2d1b4c51ca09196542808",
+          "new_state_digest": "c2b5062d362969e4de024c0a7b11756865327ec1cf2b4a1bf656e2b129018201",
+          "remaining_fuel": 9,
+          "batch_rolled_back": true
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 390,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 3,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 390,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        }
+      ],
+      "final_state_digest": "c2b5062d362969e4de024c0a7b11756865327ec1cf2b4a1bf656e2b129018201",
+      "receipt_sha256": "01e5979c0069d977e4f10c27a5326c90ad45c931af778c848c16ae807f13eb68"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_odd_triangle",
+      "arm": "D",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "de83baba28ecbebf55455c360fe6b5b30469747ef652ed3c7ae66bd562e0ee88",
+          "new_state_digest": "09f63eaf42f441e925b07f20ea783421e0622eb6797e8a835c586f19e7dc8948",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "09f63eaf42f441e925b07f20ea783421e0622eb6797e8a835c586f19e7dc8948",
+      "receipt_sha256": "fb7920909bb75eedcd42c82a5df59c330e9c810c7f3c43d431b36bc68a763fff"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "gauge_odd_triangle",
+      "arm": "R",
+      "route": "restricted_diagonal_sign_gauge",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "RestrictedSignGaugeObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "odd_parity_cycle",
+                "witness": [
+                  0,
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "3c9ca4e9889c9155b3263ddedc6db4911db53b602863345c93dce0f5cc1611b6",
+          "new_state_digest": "4d1e41cfc5e218bd4a9292fa9b57899f74f478d2e4b082d4e5445d73f208da7e",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"odd_parity_cycle\", \"witness\": [0, 1, 2, 0]}},\n   ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 344,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "4d1e41cfc5e218bd4a9292fa9b57899f74f478d2e4b082d4e5445d73f208da7e",
+      "receipt_sha256": "93f06130d761950aa51790a6f734a286cad4199288181a53c2477b5450e9a543"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_exact_cycle",
+      "arm": "D",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainRepair",
+      "fuel_consumed": 2,
+      "remaining_fuel": 10,
+      "step_count": 2,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "prior_state_digest": "e441e105f4ce006efb6768e19a95474a2b22e5171fdd612fc897cc1423c0c8e1",
+          "new_state_digest": "ef084d3c3efe8e0ca034930e6315e388243c58f1a33378f448bb89e193f4ee50",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "gauge_potential",
+                "witness": [
+                  "1/2",
+                  "1/2"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "ef084d3c3efe8e0ca034930e6315e388243c58f1a33378f448bb89e193f4ee50",
+          "new_state_digest": "e2b5f93680532ea9593279c510c64e63015bf63fa4c2122f14a0ee6375dac860",
+          "remaining_fuel": 10,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 295,
+            "completion_tokens": 83
+          },
+          "host_decision": "HOLD_DETECTOR_FEEDBACK",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"gauge_potential\", \"witness\": [\"1/2\", \"1/2\"]}},\n  ",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 348,
+            "completion_tokens": 81
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "e2b5f93680532ea9593279c510c64e63015bf63fa4c2122f14a0ee6375dac860",
+      "receipt_sha256": "c521a2669eeab01b7ad1ed23dc25393ca504c61d460f65931888a3a50a2bc7a5"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_exact_cycle",
+      "arm": "R",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "REJECT_LOCAL",
+      "terminal_label": null,
+      "fuel_consumed": 3,
+      "remaining_fuel": 9,
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "3e79a57cb0420ca4681248799f62a8c56ea5f796665712fb99d626fa101b1ea0",
+          "new_state_digest": "9136c01ba5612a0d387d1321f621b630037ffb3fa1faa2ee3490419a763485c6",
+          "remaining_fuel": 11,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 1,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "9136c01ba5612a0d387d1321f621b630037ffb3fa1faa2ee3490419a763485c6",
+          "new_state_digest": "dd3ee0d19121485ace22e53ebaea2fa1095a0d4646d41103a9e98f3293f12bf3",
+          "remaining_fuel": 10,
+          "batch_rolled_back": true
+        },
+        {
+          "step_index": 2,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "INTAKE",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ],
+          "host_decision": "REJECT_LOCAL",
+          "prior_state_digest": "dd3ee0d19121485ace22e53ebaea2fa1095a0d4646d41103a9e98f3293f12bf3",
+          "new_state_digest": "78d5e5e9810660a015f5337c818bed5d9c1b8154712125059caac40436e0c30d",
+          "remaining_fuel": 9,
+          "batch_rolled_back": true
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 295,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 2,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 341,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        },
+        {
+          "turn": 3,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 341,
+            "completion_tokens": 83
+          },
+          "host_decision": "REJECT_LOCAL",
+          "findings": [
+            "AM-FSP-6-WRONG-ROUTE"
+          ]
+        }
+      ],
+      "final_state_digest": "78d5e5e9810660a015f5337c818bed5d9c1b8154712125059caac40436e0c30d",
+      "receipt_sha256": "39974f8c09c055a5d0a9031a49aea307a92c78659f96e27df70640293cdb0b23"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_nonexact_cycle",
+      "arm": "D",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "e5b582a10b46d27ced5087108c34c867ad3ceb313d4569b89b6d57957f464798",
+          "new_state_digest": "bd43a1d5c03a7003ca392fa07812b1237f9285ce17368131b18a0d51b4cbcec3",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "bd43a1d5c03a7003ca392fa07812b1237f9285ce17368131b18a0d51b4cbcec3",
+      "receipt_sha256": "cafb1f6963ee0612c74e653dd0870b6289a0ecd83328b68fcdcb52e638330eda"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "cochain_nonexact_cycle",
+      "arm": "R",
+      "route": "exact_rational_cochain_packet",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "ExactCochainObstruction",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "separating_left_null_functional",
+                "witness": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "00ad81ae30daee55a54f1b26c60a3e25c14fc68effe5d253b9651aa169927105",
+          "new_state_digest": "17d6cf08c7f780ce9a672a864d7221b898358a99a306d1a68714d4ea4fe12aa0",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"separating_left_null_functional\", \"witness\": [\"1\"",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 292,
+            "completion_tokens": 83
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "17d6cf08c7f780ce9a672a864d7221b898358a99a306d1a68714d4ea4fe12aa0",
+      "receipt_sha256": "972f1822ebc46385555777231caaac6d3dbe89a44d5be4f3f474e9137657c632"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "meron_two_pairs_survivor",
+      "arm": "D",
+      "route": "finite_signed_path_pairing",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "MeronPartialCancellation",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "D",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "partial_sign_reversing_path_involution",
+                "witness": {
+                  "p0": "p3",
+                  "p3": "p0",
+                  "p1": "p2",
+                  "p2": "p1"
+                }
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "8a84ac9b53c5d6bd30202e096503d18c18ae9b12288022daec9d7356e0f91a1d",
+          "new_state_digest": "c05c3dd5e0080f0c6eb61a9ba02fcd030db8a6742d11b7bde7df4727a77ec194",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"partial_sign_reversing_path_involution\", \"witness",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 107
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "c05c3dd5e0080f0c6eb61a9ba02fcd030db8a6742d11b7bde7df4727a77ec194",
+      "receipt_sha256": "3cb7c6da4f3cc5814056db04b1b7bc3e8d4a6223a4c1bae7df90b79ee0855baf"
+    },
+    {
+      "schema": "symbol-game-demo3-experiment/live-run-receipt-v1",
+      "fixture_id": "meron_two_pairs_survivor",
+      "arm": "R",
+      "route": "finite_signed_path_pairing",
+      "provider": "openrouter",
+      "model_id": "openai/gpt-4o-mini",
+      "seed": 44,
+      "temperature": 0.0,
+      "final_exit": "SCOPED_CERTIFICATE",
+      "terminal_label": "MeronPartialCancellation",
+      "fuel_consumed": 1,
+      "remaining_fuel": 11,
+      "step_count": 1,
+      "steps": [
+        {
+          "step_index": 0,
+          "arm": "R",
+          "phase_before": "INTAKE",
+          "phase_after": "TERMINAL",
+          "moves_proposed": [
+            {
+              "move_type": "COVER_ELEMENT",
+              "payload": {
+                "element_id": "elem_all"
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "PROPOSE_WITNESS",
+              "payload": {
+                "witness_type": "partial_sign_reversing_path_involution",
+                "witness": {
+                  "p0": "p3",
+                  "p3": "p0",
+                  "p1": "p2",
+                  "p2": "p1"
+                }
+              },
+              "self_reported_verified": null
+            },
+            {
+              "move_type": "VERIFY",
+              "payload": {},
+              "self_reported_verified": null
+            }
+          ],
+          "detector_findings": [],
+          "host_decision": "SCOPED_CERTIFICATE",
+          "prior_state_digest": "f86852e0333daf6ca279b34658b651d046888d00e41b3072d90d2e4aad130216",
+          "new_state_digest": "5d74c4bfd22f72bff1176eea653c0883125cb7554fb4193ec893dadc753566d9",
+          "remaining_fuel": 11,
+          "batch_rolled_back": false
+        }
+      ],
+      "call_log": [
+        {
+          "turn": 1,
+          "raw_completion_snippet": "```json\n[\n    {\"move_type\": \"COVER_ELEMENT\", \"payload\": {\"element_id\": \"elem_all\"}},\n    {\"move_type\": \"PROPOSE_WITNESS\", \"payload\": {\"witness_type\": \"partial_sign_reversing_path_involution\", \"witness",
+          "moves_parsed": 3,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 107
+          },
+          "host_decision": "SCOPED_CERTIFICATE",
+          "findings": []
+        }
+      ],
+      "final_state_digest": "5d74c4bfd22f72bff1176eea653c0883125cb7554fb4193ec893dadc753566d9",
+      "receipt_sha256": "48a6a8d23d313f1eba53d0fb4f5caa2d416336e5824789543290981439742e87"
+    }
+  ],
+  "matrix_sha256": "3fb2fb1b3f2bea1a181b7a7c67bd2103ccba5a35abece3c2207f63f5752ba72c"
+}

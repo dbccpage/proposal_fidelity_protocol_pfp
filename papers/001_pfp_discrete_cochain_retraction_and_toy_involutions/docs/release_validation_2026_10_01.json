@@ -1,0 +1,205 @@
+{
+  "schema": "symbol-game.preprint-local-validation.v1",
+  "date": "2026-10-01",
+  "release_version": "0.1.0",
+  "source_baseline": "3f3399766",
+  "scope": "Local finite checks, package isolation, and proof replay; no live provider experiments or publication authorization",
+  "python": "3.12.14",
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_certificate_gate.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "5 passed in 0.02s",
+      "test_source_sha256": "9896feb2e0da2493faf2d9cc44b7b4a4243c79060589bd63406bcc7f0b65d660",
+      "stdout": ".....                                                                    [100%]\n5 passed in 0.02s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_exact_fock_gap.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "9 passed in 0.11s",
+      "test_source_sha256": "51a495d617c1a78283eac93ae1b67300b97051f9c70bee698b27ab8781f130b8",
+      "stdout": ".........                                                                [100%]\n9 passed in 0.11s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_fock_path_proposition.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "1 passed in 0.10s",
+      "test_source_sha256": "ff86cb0f23d250faa1651cbfde88f89a91f0e22eff2c7764234c66a08d1cb750",
+      "stdout": ".                                                                        [100%]\n1 passed in 0.10s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_governor.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "3 passed in 0.03s",
+      "test_source_sha256": "2e7b5087acf455269960998bef62f2125eb047f90d773ba6db1c012c55462770",
+      "stdout": "...                                                                      [100%]\n3 passed in 0.03s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_manuscript_witnesses.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "3 passed in 0.04s",
+      "test_source_sha256": "679c0a22124ee76cd2ff7d378807eecbed416e6e3cc31f04a818ab7cfc8d3661",
+      "stdout": "...                                                                      [100%]\n3 passed in 0.04s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_review_regressions.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "38 passed in 0.15s",
+      "test_source_sha256": "02b1eeac153a90f5fc0749d98de675d088f24365a09bbc2c50c8fc30878b005f",
+      "stdout": "......................................                                   [100%]\n38 passed in 0.15s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_zenodo_regression_suite.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "5 passed in 0.03s",
+      "test_source_sha256": "42e0f96467c9c93145ebcada9b19a90695af68b63b5558238f406c79b804ca3d",
+      "stdout": ".....                                                                    [100%]\n5 passed in 0.03s\n"
+    }
+  ],
+  "lean": [
+    {
+      "command": [
+        "lake",
+        "build"
+      ],
+      "exit_code": 0,
+      "stdout": "\u2714 [2/5] Built InvolutionLaws (298ms)\n\u2714 [3/5] Built OddCycleObstruction (239ms)\n\u2714 [4/5] Built NonAuthority (236ms)\nBuild completed successfully (5 jobs).\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--write"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions: generated Census.lean\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--replay"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions: replayed census successfully\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_full_axiom_census.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 151 package-local declarations; 3 modules; approved axioms only\n"
+    }
+  ],
+  "notebooks": [
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks/demo1_holonomy_interactive.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    },
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks/demo1_holonomy_interactive.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    },
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks/demo2_fsp_interactive.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    },
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks/demo2_fsp_interactive.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    },
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks/demo3_adversarial_debate_interactive.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    },
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks/demo3_adversarial_debate_interactive.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/jupyter_notebooks",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    }
+  ],
+  "external_deposit": false,
+  "rust": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-j",
+        "1",
+        "--manifest-path",
+        "code/rust/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "stdout": "   Compiling proc-macro2 v1.0.107\n   Compiling unicode-ident v1.0.26\n   Compiling quote v1.0.47\n   Compiling autocfg v1.5.1\n   Compiling num-traits v0.2.19\n   Compiling serde_core v1.0.229\n   Compiling zmij v1.0.23\n   Compiling num-integer v0.1.47\n   Compiling syn v2.0.119\n   Compiling syn v3.0.6\n   Compiling serde v1.0.229\n   Compiling serde_json v1.0.151\n   Compiling thiserror v1.0.69\n   Compiling serde_derive v1.0.229\n   Compiling thiserror-impl v1.0.69\n   Compiling num-bigint v0.4.8\n   Compiling memchr v2.8.3\n   Compiling itoa v1.0.18\n   Compiling num-rational v0.4.2\n   Compiling pfp_exact_graph v0.1.0 (/workspace/the_symbol_game/omega_engine_atlas/coda_atlas/omega_engine_pfp/001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions/code/rust)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.82s\n     Running unittests src/lib.rs (code/rust/target/debug/deps/pfp_exact_graph-4d1b8f5bff56caa6)\n\nrunning 8 tests\ntest graph_phi1::tests::exact_and_inconsistent_triangles ... ok\ntest graph_phi1::tests::planar_triangular_multi_cycle_b1_2 ... ok\ntest graph_phi1::tests::manuscript_triangle_minimum_is_three ... ok\ntest graph_phi1::tests::rational_triangle_uses_exact_weighted_minimum ... ok\ntest graph_phi1::tests::rejects_nonpositive_weight ... ok\ntest graph_phi1::tests::rejects_unknown_endpoint_self_edge_and_bad_rational ... ok\ntest graph_phi1::tests::kagome_trimer_multi_cycle_b1_4 ... ok\ntest graph_phi1::tests::enumeration_limit_refuses_instead_of_returning_partial_minimum ... ok\n\ntest result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n     Running unittests src/bin/solve_graph_phi1.rs (code/rust/target/debug/deps/solve_graph_phi1-85a22d82c4fd48d5)\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n   Doc-tests pfp_exact_graph\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n"
+    }
+  ]
+}

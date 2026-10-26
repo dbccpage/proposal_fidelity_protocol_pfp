@@ -1,0 +1,14 @@
+# Representative fresh retained-algorithm results
+
+These are actual input, witness and checker records in the closed `final_bindings_v4` batch. The grade is `SOURCE_RECREATION_PYTHON`: retained algorithms freshly executed with byte-bound source and runtime, without model calls. The coverage overlay verifies each receipt and every retained artifact; the source's shared provenance and missing historical model bytes remain explicit.
+
+| Challenge | Input | Retained witness | Literal fresh result |
+|---|---|---|---|
+| C024, `c024_base_01_eq` | Four vertices; edges `01,02,13,23`; target edges `03,12,23`. | Local-complementation sequence `[0,2,3]`. | Both retained simulations return `PASS` and verify the sequence reaches the target. Full row: 38 solved candidates and two accepted scope refusals; all 39 retained mutations dual-rejected. |
+| C042, `c042_base_01` | Triangle edges `01,12,02`, three colors. | Coloring `[0,1,2]`. | The declared SAT branch verifies the finite satisfying assignment. |
+| C042, `c042_base_02` | The same triangle, two colors. | DRAT proof lines `-1 0`, `1 0`, `0`, bound to canonical CNF SHA256 `a4a0222a798f64c1b2220359f8066bf4a5110aa7f5ce2e9a9672b72319f87780`. | The declared DRAT branch verifies derivation of the empty clause via RUP/RAT. This is a checked finite negative certificate, not a refusal label. Full row: 61/64 accepted, three documented refusal-contract residuals, 48/48 mutations rejected by the one branching gate. |
+| C049, `c049_base_01_product_poset_3` | Finite category `0→1→2`, with composite `0→2`; product diagram objects `1,2`. | Apex `1`; legs `id1` and `f_1_2`. | Both retained checkers accept the finite product certificate. Full row: 36 positive candidates, 21 accepted negative claims and seven typed refusals. Only 17/48 mutants are dual-rejected; 31 expose checker disagreement. |
+
+Exact retained records: [C024 stream, first record](final_bindings_v4/C024/evaluations.jsonl), [C042 stream, first two records](final_bindings_v4/C042/evaluations.jsonl), [C049 stream, first record](final_bindings_v4/C049/evaluations.jsonl). Each record binds its original case path and input SHA256, candidate bytes and literal checker results. [The batch closure](final_bindings_v4/batch_receipt.json) has canonical self-digest `394f22109ca1092ecfb909f5ee396465c53b91e9b67e003a4e1daad5307c59ea`; [the verified 87-row overlay](coverage_matrix_v4.json) has self-digest `2483a9631e26d112a63b910526bfc806bcaa77122168342c3c53ad023035e206`.
+
+The three C042 residual inputs and inconsistent solver/judge boundary definitions are documented in [the refusal-contract audit](c042_refusal_contract_audit.md). Neither this table nor agreement between retained checkers establishes independent checker provenance, general solver completeness, checker synthesis, or fresh model accuracy.

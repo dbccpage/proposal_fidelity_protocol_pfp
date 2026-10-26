@@ -1,0 +1,162 @@
+{
+  "schema": "paper003.recovery.validation.v1",
+  "date": "2026-09-24",
+  "AuthorityEffect": "None",
+  "recovered_base_commit": "07e9f187f4e3e19cb0bb0634f046555c52a9486d",
+  "validated_source_commit": "4c63d7765c05aed03f4946b5c15d7ae59d857058",
+  "validated_tree": "e2136e0e70f6b01a3ad8a705d70d82d01ab9a1f9",
+  "branch": "codex/complete-paper-003",
+  "scope": "local implementation checks; protocol only; no live model experiment",
+  "checks": [
+    {
+      "name": "omega_functional library",
+      "status": "PASS",
+      "passed": 305
+    },
+    {
+      "name": "verify_wall_functionals",
+      "status": "PASS",
+      "passed": 6
+    },
+    {
+      "name": "omega_discrete_deformation_algebra",
+      "status": "PASS",
+      "passed": 244
+    },
+    {
+      "name": "omega_homology",
+      "status": "PASS",
+      "passed": 329
+    },
+    {
+      "name": "omega_lifts",
+      "status": "PASS",
+      "passed": 27
+    },
+    {
+      "name": "omega_symbol_game_runtime",
+      "status": "PASS",
+      "passed": 442
+    },
+    {
+      "name": "pharmacy",
+      "status": "PASS",
+      "passed": 25
+    },
+    {
+      "name": "education boundary",
+      "status": "PASS",
+      "passed": 19
+    },
+    {
+      "name": "education cycles",
+      "status": "PASS",
+      "passed": 4
+    },
+    {
+      "name": "notebook governor",
+      "status": "PASS",
+      "passed": 5
+    },
+    {
+      "name": "python symbol game boundary",
+      "status": "PASS",
+      "passed": 9
+    },
+    {
+      "name": "python operations boundary",
+      "status": "PASS",
+      "passed": 5
+    },
+    {
+      "name": "python MUB boundary",
+      "status": "PASS",
+      "passed": 4
+    },
+    {
+      "name": "Demo 3 replay",
+      "status": "PASS",
+      "passed": 16
+    },
+    {
+      "name": "Demo 2 R1",
+      "status": "PASS",
+      "passed": 10
+    },
+    {
+      "name": "Demo 1 runner",
+      "status": "PASS",
+      "passed": 6
+    },
+    {
+      "name": "recovery regressions",
+      "status": "PASS",
+      "passed": 8
+    },
+    {
+      "name": "solver_subgradient_l1::tests::test_l1_subgradient_fracture",
+      "status": "PASS",
+      "passed": 1,
+      "filtered": 128
+    },
+    {
+      "name": "Demo EIS-3 12 mechanical failure classes",
+      "status": "PASS",
+      "passed": 7,
+      "positive_fixtures_passed": 12,
+      "negative_fixtures_passed": 12,
+      "receipt_path": "research/papers/003_the_symbol_game/demos/demo_eis_failure_classes/receipt.json"
+    }
+  ],
+  "other_checks": {
+    "native_notebook_cells": 3,
+    "native_graph_smoke_cases": 5,
+    "historical_outputs_unchanged": true,
+    "paper_links": "PASS",
+    "changed_python_syntax_and_BOM": "PASS",
+    "git_diff_check": "PASS",
+    "clean_architecture_single_root": "PASS",
+    "ownership_guard": "validation/ownership_guard.json"
+  },
+  "binaries": {
+    "solve_graph_phi1": {
+      "sha256": "db88cd15d78ab2f5fcd662f91ff7726ef6bc4d80c8683b44f1a1fb2ed06fd05b",
+      "build_source_commit": "4c63d7765c05aed03f4946b5c15d7ae59d857058",
+      "cargo_profile": {
+        "debug": 0,
+        "incremental": false
+      }
+    },
+    "verify_wall_functionals": {
+      "sha256": "4b33f61427c4a05fe410446abbea690420b8f1021bbbc319a094b8f59c5753a0",
+      "build_source_commit": "4c63d7765c05aed03f4946b5c15d7ae59d857058",
+      "cargo_profile": {
+        "debug": 0,
+        "incremental": false
+      }
+    }
+  },
+  "limitations": [
+    {
+      "target": "omega_certifiers full library test target",
+      "status": "BLOCKED_PREEXISTING",
+      "reason": "meron_certificate.rs:488 includes an absent research/published Meron fixture; same source reference exists at recovered base"
+    },
+    {
+      "target": "legacy Woland/Woland/operations imports",
+      "status": "SOURCE_VALIDATION_ONLY",
+      "reason": "pre-existing missing omega_engine.kernel dependency; no end-to-end execution claim"
+    },
+    {
+      "target": "ownership source guard",
+      "status": "BOUNDED_PATTERN_GUARD",
+      "reason": "recognized named formulas and duplicate canonical types; no arbitrary alias or whole-program semantic proof"
+    },
+    {
+      "target": "controlled Demo 3",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "reason": "no live runner, admitted learned bank, held-out model trial, effect estimate, publication, or physics result"
+    }
+  ],
+  "total_passed": 1472
+}

@@ -1,0 +1,348 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\emergencystretch=6em
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage{pdflscape}
+\newsavebox{\PfpMathBox}
+\newcommand{\PfpDisplayMath}[1]{%
+  \sbox{\PfpMathBox}{$\displaystyle #1$}%
+  \ifdim\wd\PfpMathBox>\linewidth
+    \resizebox{\linewidth}{!}{\usebox{\PfpMathBox}}%
+  \else\usebox{\PfpMathBox}\fi}
+\AtBeginDocument{\Urlmuskip=0mu plus 2mu}
+\lstset{breaklines=true,basicstyle=\small\ttfamily,columns=fullflexible,keepspaces=true}
+\setlength{\tabcolsep}{4pt}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{newunicodechar}
+  \makeatletter
+  \newcommand{\DeclareUnicodeCharacter}[2]{%
+    \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\def\temp{~}}%
+    \expandafter\endgroup
+    \expandafter\newunicodechar\expandafter{\temp}{#2}%
+  }
+  \makeatother
+\fi
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2190}{\ensuremath{\leftarrow}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{21A6}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2113}{\ensuremath{\ell}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{211A}{\ensuremath{\mathbb{Q}}}
+\DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{2115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{00B9}{\ensuremath{^1}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{2070}{\ensuremath{^0}}
+\DeclareUnicodeCharacter{2080}{\ensuremath{_0}}
+\DeclareUnicodeCharacter{2081}{\ensuremath{_1}}
+\DeclareUnicodeCharacter{2082}{\ensuremath{_2}}
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={PFP: Compression that preserves future operations and their cost},
+  pdfauthor={Jeremy H. Carroll},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{PFP: Compression that preserves future operations and their cost}
+\author{Jeremy H. Carroll}
+\date{2026-10-23}
+
+\begin{document}
+\makeatletter
+\begin{center}
+{\LARGE \@title\par}
+\vspace{0.8em}
+{\normalsize \@author\par}
+\vspace{0.5em}
+{\small \@date\par}
+\end{center}
+\makeatother
+
+\textbf{Code baseline:}
+\nolinkurl{59dde95a7860063c25d75db37f40af556e9f28ee}
+
+\subsection{Abstract}\label{abstract}
+
+Equal current answers need not permit equal future choices. For a finite
+deterministic transition table, we characterize an exact operation and
+cost quotient and construct the coarsest stable refinement of an initial
+report. We give counterexamples to output-only compression and to
+choosing the fewest operations as the cheapest solution. The finite
+result imports standard transition-system refinement; its WDP role is
+preserving the original future question during representation change.
+
+\subsection{Mechanism inventory}\label{mechanism-inventory}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4999}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4999}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Mechanism
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Evidence
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Mathematical statement & Written proof under declared hypotheses \\
+Finite example & Standard-library replay of submitted inputs and
+rejection controls \\
+Model inference & Not executed \\
+Lean verification & No new formalization claimed \\
+Authorization & None supplied \\
+\end{longtable}
+
+\subsection{1. The declared finite
+model}\label{the-declared-finite-model}
+
+Let \(X\) be a finite state set, \(A\) a finite action alphabet, and
+\(q_0\) an initial report. Each action \(a\) has a partial deterministic
+transition \(t_a\) and a positive rational cost \(c_a\) on its domain.
+Terminal task labels are included in the protected report. A quotient
+\(q:X\to Z\) is exact if all action domains, costs, successor reports,
+and terminal labels descend and reflect the declared concrete
+operations.
+
+\subsection{2. Necessary and sufficient structural
+conditions}\label{necessary-and-sufficient-structural-conditions}
+
+\textbf{Theorem.} Such an exact quotient exists on a supplied report
+\(q\) precisely when states in one fibre have the same terminal labels
+and, for each action, the same enablement, the same enabled cost, and
+the same successor fibre.
+
+\textbf{Proof.} If quotient operations descend and reflect, evaluating
+one quotient state cannot depend on which representative was chosen.
+Each listed condition follows. Conversely, define enabled quotient
+actions, their costs, and their successors using any
+\nolinkurl{representative.} The conditions make all these definitions
+independent of the \nolinkurl{representative.} They give the commuting
+step maps and reflection of action enablement. Induction on a word then
+gives identical legal action words, protected reports, and accumulated
+costs for states in one fibre. Consequently the best finite resolution
+cost is also preserved, including the absence of any legal resolving
+word.
+
+This theorem concerns a deterministic table. For adversarial outcomes,
+the required successor data are the complete declared outcome relations
+in the appropriate information-state arena; Appendix S states that
+stronger model. Deterministic examples cannot certify a stochastic or
+hidden-state adapter.
+
+\subsection{3. Coarsest stable
+refinement}\label{coarsest-stable-refinement}
+
+Start from \(q_0\)'s partition, including terminal labels. Repeatedly
+split each block by the action signature: disabled, or the pair
+consisting of exact cost and successor block. Each proper split
+increases the number of blocks, so at most \(|X|-1\) proper splits
+occur. A stable partition satisfies the theorem's conditions. Any stable
+refinement of \(q_0\) refines every iteration: prove this by induction
+using its equal costs and successor classes. Therefore the terminal
+partition is the coarsest stable refinement. This is a finite
+construction, not a physically supplied observation instrument.
+
+\subsection{4. Current-output and cost
+counterexamples}\label{current-output-and-cost-counterexamples}
+
+Two states \(a,\allowbreak b\) both report zero, and both allow
+\passthrough{\lstinline!finish!}, reaching the same terminal state. Its
+cost is one at \(a\) and three at \(b\). The current output is preserved
+by identifying them, but operating cost is not. Disabling
+\passthrough{\lstinline!finish!} at \(b\) also destroys future
+capability. Conversely, a task asking only for the current zero has the
+same answer in both states despite these structural failures: accidental
+task-value preservation is weaker than operation-preserving exactness.
+
+In a second table, \passthrough{\lstinline!direct!} reaches the terminal
+in one operation costing five. \passthrough{\lstinline!next!} and
+\passthrough{\lstinline!finish!} take two operations costing one each.
+The cheaper route costs two. Add a positive-cost self-loop: it cannot
+improve any finite resolving word because deleting its repeated-state
+segment gives a legal word of strictly smaller cost. Thus an optimum,
+when reachable, occurs among simple paths of at most \(|X|-1\)
+transitions in this deterministic model.
+
+\subsection{5. Replay and scope}\label{replay-and-scope}
+
+The cost example declares states \passthrough{\lstinline!r!},
+\passthrough{\lstinline!s!} and terminal \passthrough{\lstinline!t!}:
+\passthrough{\lstinline!r!} can go directly to
+\passthrough{\lstinline!t!} for 5, move to \passthrough{\lstinline!s!}
+for 1 and then finish for 1, or loop at \passthrough{\lstinline!r!} for
+1. The checker replays the submitted route and its claimed rational
+price. A separate procedure enumerates simple paths in the original
+table. Positive cycles can be erased from a terminating deterministic
+route, so that finite enumeration establishes the minimum 2. A falsely
+claimed price, an expensive route presented as optimal and an unfinished
+route are rejected.
+
+The \href{code/replay.py}{reference} computes the stable refinement,
+checks exact rational route costs, and preserves a positive self-loop as
+a rejection control for the mistaken minimal-operation rule. It makes no
+provider calls. The new theorem has a written proof and finite replay,
+with no new Lean claim. The open native Source-25 target still requires
+actual states, edits, guard receipts, costs, and a declared carrier
+bound; this abstract table does not supply those bindings or implement a
+physical observer.
+
+The \href{prompts/example.yaml}{two-level teaching packet} includes
+shared system rules, this typed user instance, a different worked
+example and a required candidate response schema. It keeps provider
+system/user roles separate. It is a saved example, not a
+schema-admission or model-run receipt; the local replay checks the
+mathematical or protocol obligations stated above.
+
+\subsection{Research extension: bounded context without a preservation
+claim}\label{research-extension-bounded-context-without-a-preservation-claim}
+
+The AIDE2-inspired reference replaces full attempt history with the
+root, champion, two recent attempt summaries and references to retained
+evidence. The host refuses a projection that drops required references.
+Failure guidance is scoped and capped. These are bounded operational
+choices, not a construction of the coarsest stable quotient defined
+above. The external paper reports prompt size reductions for its own
+benchmarks (p.~9); those values are not local results.
+
+Consider two resumption records with the same displayed answer and
+payload digest. One retains the artifact reference, task and state
+binding; the other keeps only the digest. A later resume operation can
+be enabled on the first and refused on the second. A shorter summary
+that identifies them therefore violates future-operation preservation
+even if their current displayed answers agree. Keeping a textual
+reference is necessary for the campaign's custody contract, but is not
+sufficient to prove that a stochastic model will use the referenced
+content correctly. Equal token counts likewise imply no equality of
+future costs, action availability or successor states.
+
+The campaign records context bytes, actual reported input and output
+tokens, completion, failures and cost. The no-compression ablation keeps
+full prior code within the same request ceiling; crossing that ceiling
+is a retained refusal. This compares bounded policies rather than
+granting one arm an unlimited context. A reduction in context size may
+accompany a loss of useful distinctions, and a correct answer on the
+measured panel does not discharge every future operation.
+
+The existing finite deterministic theorem and its replay are reused
+unchanged. No new Lean result is claimed. Since the live campaign has
+not run, this revision reports no local compression factor, cost saving
+or preservation measurement.
+
+The source and page references for this extension are collected in
+\href{../029/paper.pdf}{Paper 029} and its
+\href{../029/docs/source_to_claim_map.md}{source-to-claim map}. The
+author-review rendering does not replace a historical deposit or
+archive.
+
+\subsection{Sources and relation to the
+programme}\label{sources-and-relation-to-the-programme}
+
+This draft builds on the
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md}{WDP
+manuscript},
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/paper.md}{Paper
+021's source-and-execution distinctions}, and the
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/README.md}{corrected
+findings notices}.
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/022_pfp_frontier_research/paper.md}{Paper
+022} supplies a research design whose live-model and offline-strategy
+claims require their own source-bound scrutiny. These drafts do not
+adopt its empirical tables as new \nolinkurl{measurements.} The
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/README.md}{PFP
+collection guide} provides the \nolinkurl{shared-system/typed-instance}
+protocol. Genesis and MSS-N presentation stages do not license a new
+mathematical or physical carrier.
+
+\end{document}

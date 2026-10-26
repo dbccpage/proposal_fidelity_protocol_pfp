@@ -1,0 +1,124 @@
+{
+  "schema_id": "pfp-teaching-two-level/v1",
+  "system_prompt": "You propose candidates in a finite declared game. Preserve the original task, domain, assumptions, moves and budget. Return only the JSON object required by response_schema. Never supply a trusted host verdict. A host checks the submitted object independently; a correct local claim does not validate unrelated prose. Use worked_example to understand the format; it is a different instance.",
+  "user_prompt": {
+    "task": "eq-cycle/v1",
+    "profile": "finite-local-relations",
+    "variables": [
+      "x",
+      "y",
+      "z"
+    ],
+    "domains": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "scopes": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "relations": [
+      [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    ],
+    "question": "Select a permitted row for every relation so the overlap values agree.",
+    "binding": "Wire arrays are decoded to tuples; check_family receives the original tables. A second instance is a separate task."
+  },
+  "worked_example": {
+    "task": "worked-unary",
+    "scope": [
+      "u"
+    ],
+    "allowed_rows": [
+      [
+        1
+      ]
+    ],
+    "candidate": {
+      "task": "worked-unary",
+      "rows": [
+        [
+          1
+        ]
+      ]
+    }
+  },
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "task": {
+        "const": "eq-cycle/v1"
+      },
+      "rows": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        }
+      }
+    },
+    "required": [
+      "task",
+      "rows"
+    ],
+    "additionalProperties": false
+  }
+}

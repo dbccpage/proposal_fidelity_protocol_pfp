@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-011-demo-recreation"
+version = "0.1.0"
+description = "Source-pinned Symbol Game demo recreations and proposal fidelity evidence"
+authors = [{ name = "Jeremy H. Carroll" }]
+license = { text = "PolyForm-Noncommercial-1.0.0" }
+readme = "README.md"
+requires-python = "==3.12.*"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "matplotlib>=3.7", "nbformat>=5.9", "pymupdf>=1.24"]
+replay = ["numpy==2.4.2", "PyYAML==6.0.3"]
+mechanisms = ["torch>=2.13.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+addopts = "-q --strict-markers --import-mode=importlib"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.setuptools]
+packages = []

@@ -1,0 +1,79 @@
+{
+  "schema": "symbol-game.preprint-local-validation.v1",
+  "date": "2026-10-01",
+  "release_version": "0.1.0",
+  "source_baseline": "3f3399766",
+  "scope": "Local finite checks, package isolation, and proof replay; no live provider experiments or publication authorization",
+  "python": "3.12.14",
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_c017_replay.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "8 passed in 0.04s",
+      "test_source_sha256": "e1981110dec404d8224f79e63690415c0824857bf3d7618a8a16213905cbaaff",
+      "stdout": "........                                                                 [100%]\n8 passed in 0.04s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_holonomy_checker.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "13 passed in 0.07s",
+      "test_source_sha256": "cbc6e171db22f02d398dad4846b21ea3c5fd685ef74c04f33b8a4aeb7036e178",
+      "stdout": ".............                                                            [100%]\n13 passed in 0.07s\n"
+    }
+  ],
+  "lean": [
+    {
+      "command": [
+        "lake",
+        "build"
+      ],
+      "exit_code": 0,
+      "stdout": "\u2714 [2/3] Built LatticeDecimation (201ms)\nBuild completed successfully (3 jobs).\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--write"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 010_the_symbol_game_holonomy_checks_and_model_pilots: generated Census.lean\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--replay"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 010_the_symbol_game_holonomy_checks_and_model_pilots: replayed census successfully\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_full_axiom_census.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 26 package-local declarations; 1 modules; approved axioms only\n"
+    }
+  ],
+  "notebooks": [],
+  "external_deposit": false,
+  "rust": []
+}

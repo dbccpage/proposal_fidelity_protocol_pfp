@@ -1,0 +1,68 @@
+[
+  {
+    "goal": "G01Targets.F1",
+    "matched": true,
+    "proof": "ResearchG01.F_1",
+    "type": "Derivation.validResponse Derivation.R2F 1 2 (ResearchG01.deltaF 1) ∧\n  Derivation.validResponse Derivation.R2F 1 2 (ResearchG01.deltaF 2) ∧\n    (ResearchG01.deltaF 1).length = 2 ∧\n      (ResearchG01.deltaF 2).length = 2 ∧\n        (∀ (δ : List Derivation.Item), δ.length ≤ 1 → ¬Derivation.validResponse Derivation.R2F 1 2 δ) ∧\n          Derivation.applyDelta Derivation.R2F (ResearchG01.deltaF 1) = some (ResearchG01.markF 1) ∧\n            Derivation.applyDelta Derivation.R2F (ResearchG01.deltaF 2) = some (ResearchG01.markF 2) ∧\n              ∀ (a : Derivation.Iso (ResearchG01.markF 1) (ResearchG01.markF 2)), False"
+  },
+  {
+    "goal": "G01Targets.F5",
+    "matched": true,
+    "proof": "ResearchG01.F_5",
+    "type": "(∀ (i : Nat),\n    i < 5 →\n      Derivation.validResponse Derivation.R2F 1 2 (ResearchG01.delta (ResearchG01.boundedArgs i)) ∧\n        (ResearchG01.delta (ResearchG01.boundedArgs i)).length = 2 ∧\n          (ResearchG01.boundedArgs i).length ≤ 2 ∧\n            Derivation.applyDelta Derivation.R2F (ResearchG01.delta (ResearchG01.boundedArgs i)) =\n              some (ResearchG01.state (ResearchG01.boundedArgs i))) ∧\n  ∀ (i j : Nat),\n    i < j →\n      j < 5 →\n        ∀\n          (a :\n            Derivation.Iso (ResearchG01.state (ResearchG01.boundedArgs i))\n              (ResearchG01.state (ResearchG01.boundedArgs j))),\n          False"
+  },
+  {
+    "goal": "G01Targets.FK",
+    "matched": true,
+    "proof": "ResearchG01.F_K",
+    "type": "(∀ (k : Nat),\n    1 ≤ k →\n      Derivation.validResponse Derivation.R2F 1 2 (ResearchG01.deltaF k) ∧\n        (ResearchG01.deltaF k).length = 2 ∧\n          Derivation.applyDelta Derivation.R2F (ResearchG01.deltaF k) = some (ResearchG01.markF k)) ∧\n  ∀ (j k : Nat), j ≠ k → ∀ (a : Derivation.Iso (ResearchG01.markF j) (ResearchG01.markF k)), False"
+  },
+  {
+    "goal": "G01Targets.H01",
+    "matched": true,
+    "proof": "ResearchG01.H01_relabelled_F5",
+    "type": "(∀ (i : Nat),\n    i < 5 →\n      Derivation.validResponse ResearchG01.relabelledBase 0 2 (ResearchG01.delta (ResearchG01.relabelledArgs i)) ∧\n        (ResearchG01.delta (ResearchG01.relabelledArgs i)).length = 2 ∧\n          (ResearchG01.relabelledArgs i).length ≤ 2 ∧\n            Derivation.applyDelta ResearchG01.relabelledBase (ResearchG01.delta (ResearchG01.relabelledArgs i)) =\n              some (ResearchG01.relabelledState (ResearchG01.relabelledArgs i))) ∧\n  ∀ (i j : Nat),\n    i < j →\n      j < 5 →\n        ∀\n          (a :\n            Derivation.Iso (ResearchG01.relabelledState (ResearchG01.relabelledArgs i))\n              (ResearchG01.relabelledState (ResearchG01.relabelledArgs j))),\n          False"
+  },
+  {
+    "goal": "G01Targets.H02",
+    "matched": true,
+    "proof": "ResearchG01.H02_family_vs_genout",
+    "type": "∀ (k : Nat), 1 ≤ k → ∀ (a : Derivation.Iso (ResearchG01.markF k) (ResearchG01.state [0, 1])), False"
+  },
+  {
+    "goal": "G01Targets.H03",
+    "matched": true,
+    "proof": "ResearchG01.H03_family_vs_genin",
+    "type": "∀ (k : Nat), 1 ≤ k → ∀ (a : Derivation.Iso (ResearchG01.markF k) (ResearchG01.state [1, 0])), False"
+  },
+  {
+    "goal": "G01Targets.H04",
+    "matched": true,
+    "proof": "ResearchG01.H04_fixed_k3",
+    "type": "Derivation.validResponse Derivation.R2F 1 2 (ResearchG01.deltaF 3) ∧\n  (ResearchG01.deltaF 3).length = 2 ∧\n    Derivation.applyDelta Derivation.R2F (ResearchG01.deltaF 3) = some (ResearchG01.markF 3)"
+  },
+  {
+    "goal": "G01Targets.H05",
+    "matched": true,
+    "proof": "ResearchG01.H05_bounded_family_members",
+    "type": "ResearchG01.markF 1 = ResearchG01.state (ResearchG01.boundedArgs 0) ∧\n  ResearchG01.markF 2 = ResearchG01.state (ResearchG01.boundedArgs 1) ∧\n    Nonempty (Derivation.Iso (ResearchG01.markF 1) (ResearchG01.state (ResearchG01.boundedArgs 0))) ∧\n      Nonempty (Derivation.Iso (ResearchG01.markF 2) (ResearchG01.state (ResearchG01.boundedArgs 1)))"
+  },
+  {
+    "goal": "G01Targets.H06",
+    "matched": true,
+    "proof": "ResearchG01.H06_genesis_mark_refuted",
+    "type": "Derivation.validResponse Derivation.R2F 1 2 (ResearchG01.delta [0]) → False"
+  },
+  {
+    "goal": "G01Targets.H07",
+    "matched": true,
+    "proof": "ResearchG01.H07_mu2_unique_witness",
+    "type": "∀ (a b : Derivation.Item),\n  Derivation.validResponse Derivation.R2F 1 2 [a, b] →\n    Derivation.aritySum [a, b] ≤ 1 →\n      ∃ s, Derivation.applyDelta Derivation.R2F [a, b] = some s ∧ Nonempty (Derivation.Iso s Derivation.U0F)"
+  },
+  {
+    "goal": "G01Targets.H08",
+    "matched": true,
+    "proof": "ResearchG01.H08_reading_identification_refuted",
+    "type": "∀ (xs ys : List Nat)\n  (a :\n    Derivation.Iso (ResearchG01.state xs)\n      { data := 2, forms := [ys.length], insts := [(0, ys)], rules := [], reqs := [(0, 1)] }),\n  False"
+  }
+]

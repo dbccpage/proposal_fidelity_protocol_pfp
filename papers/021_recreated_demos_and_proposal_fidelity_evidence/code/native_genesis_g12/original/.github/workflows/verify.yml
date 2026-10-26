@@ -1,0 +1,617 @@
+name: verify
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+      - name: Prompt byte-identity
+        run: python ci/check_prompt_hashes.py
+      - name: Transport document citations bound to Lean sources
+        run: python ci/check_transport_citations.py
+      # Skills are apparatus and hold no authority here. The declaration is
+      # checked mechanically because prose drifts: a skill cannot acquire
+      # authority by rewording its own description. This gate checks the
+      # DECLARATION and the SHAPE, never whether a procedure was followed.
+      - name: Skills declare no authority
+        run: python ci/check_skills.py
+      # A paper page citing a sibling that exists only on a branch is a dead
+      # link on main. That shipped in a pull request once and a reviewer, not
+      # a gate, caught it. On a pull_request event actions/checkout checks out
+      # the MERGE COMMIT, so the tree here is the state that would land and a
+      # plain existence check has merge-result semantics.
+      - name: Paper cross-references resolve
+        run: python ci/check_paper_citations.py
+      # Every evidence citation in the claim ledger must resolve: Lean
+      # theorem names against artifacts/lean_axioms.txt, test names
+      # against tests/, artifact keys against the committed exports.
+      # The population is enumerated independently of the classifier
+      # (the check_transport_citations.py discipline), so an
+      # unclassifiable token fails totality instead of cancelling out.
+      - name: Ledger evidence resolves
+        run: python ci/check_ledger_evidence.py
+      # Every module UNDER lean4/Derivation/ that is outside Derivation.lean's
+      # import closure must be named in lean4/ParkedAudit.lean, which is what
+      # emits its axiom reports. The scope clause is load-bearing: a top-level
+      # lean4/*.lean is outside this gate's census, outside the
+      # elaborated_modules.txt pin, and outside the axiom inventory unless it
+      # is a defaultTarget -- ParkedAudit.lean is itself such a file, so it
+      # audits every module except itself. An earlier version of this comment
+      # said "every module", which is wider than the enforced population.
+      #
+      # This step also checks that ParkedAudit is still IN defaultTargets and
+      # still contributing its pinned number of reports. Without that the
+      # whole audit was one word deep: deleting "ParkedAudit" from the
+      # lakefile dropped all 48 reports with every other gate green, and the
+      # documented repair for the resulting diff would have completed the
+      # disable.
+      #
+      # This is a PYTHON gate rather than a Lean one because the blind spot
+      # is only visible from outside Lean: ParkedAudit checks its own list
+      # against the compiled environment, but a module nothing imports is
+      # absent from that environment, so Lean cannot see that it is missing.
+      # Adding a parked module fails the elaborated_modules.txt census pin
+      # below -- and the documented repair for THAT is to regenerate the pin,
+      # which on its own would leave the module elaborated, pinned, and
+      # unaudited. This closes that gap by enumerating from the source tree.
+      - name: Parked modules are all named for audit
+        run: python ci/check_parked_audit.py
+      # Prose-level watchlist census. The identifier firewall in
+      # tests/test_primitive_contact.py bars identifiers; it cannot see a
+      # docstring, a STATUS page, or a Lean comment carrying an outside noun
+      # as if it were a house word. This reads tracked prose against a
+      # digest-stored term list and pins every whole-word hit per file,
+      # failing in BOTH directions: a hit above its pin names file, line,
+      # and token; a hit below it names the stale pin. The terms are digests
+      # because CLAUDE.md's refused-grid clause forbids recording outside
+      # names by naming them; `--probe WORD` answers whether a word is on
+      # the list. It reads prose only: identifiers containing `_` or digits
+      # are never split, so they remain the firewall's business.
+      - name: Prose watchlist census matches its pin
+        run: python ci/check_prose_watchlist.py
+      - name: Tests under coverage
+        run: |
+          coverage run -m pytest -q
+          coverage json -q
+          coverage report
+      - name: Independent 95% line and branch gates
+        run: python ci/check_coverage.py
+      - name: mypy strict
+        run: python -m mypy
+      # The runner census is a GLOB, not a hand list. The previous version
+      # named all 24 entry points explicitly, so a new code/run_*.py was not
+      # regeneration-checked until someone remembered to add it here, and
+      # nothing detected the omission.
+      #
+      # No committed census artifact is needed here, unlike the Lean module
+      # census, because artifacts/ IS the pin: ci/compare_artifacts.py walks
+      # the COMMITTED directory and reports both directions. A committed
+      # artifact with no regeneration - runner renamed, deleted, or dropped
+      # from the census - fails as a missing regeneration. A regenerated
+      # artifact that was never committed fails too, which is what stops a
+      # newly globbed runner from producing output nothing compares.
+      #
+      # DOMAIN: the top level of code/ only, matching the convention CLAUDE.md
+      # documents and the local Get-ChildItem procedure. A runner placed in a
+      # SUBDIRECTORY of code/ is NOT enumerated by this census.
+      #
+      # Execution order is free. The globbed runners were verified to produce
+      # byte-identical artifacts under LC_ALL=C order rather than the previous
+      # hand order; no runner reads another runner's artifact.
+      - name: Regenerate artifacts and compare
+        run: |
+          set -o pipefail
+          find code -maxdepth 1 -name 'run_*.py' \
+            | LC_ALL=C sort > /tmp/runners.txt
+          if [ ! -s /tmp/runners.txt ]; then
+            echo "census enumerated no runners - the enumeration is broken" >&2
+            exit 1
+          fi
+          echo "runner census: $(wc -l < /tmp/runners.txt) entry points"
+          while IFS= read -r r; do
+            PYTHONPATH=code python "$r" --artifacts artifacts_ci
+          done < /tmp/runners.txt
+          python ci/compare_artifacts.py artifacts artifacts_ci
+
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl --retry 5 --retry-all-errors --retry-delay 2 -sSfL \
+            https://elan.lean-lang.org/elan-init.sh -o /tmp/elan-init.sh
+          for attempt in 1 2 3 4 5 6; do
+            sh /tmp/elan-init.sh -y --default-toolchain none && break
+            if [ "$attempt" -eq 6 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Install pinned Lean toolchain
+        working-directory: lean4
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            elan toolchain install "$(cat lean-toolchain)" && break
+            if [ "$attempt" -eq 6 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
+      - name: lake build
+        working-directory: lean4
+        run: |
+          set -o pipefail
+          lake build 2>&1 | tee ../lake_build.log
+      - name: Forbidden-token and axiom audit
+        run: python3 ci/check_lean_audit.py lake_build.log
+      - name: Axiom report matches committed artifact
+        run: python3 ci/check_axiom_report.py lake_build.log
+      - name: Axiom artifact regenerates byte-identically (LF, no CRLF)
+        run: |
+          cp artifacts/lean_axioms.txt /tmp/lean_axioms.committed
+          python3 ci/regen_axiom_artifact.py lake_build.log
+          diff /tmp/lean_axioms.committed artifacts/lean_axioms.txt
+          git diff --check -- artifacts/lean_axioms.txt
+      # This package has its own Lake project and axiom inventory.  Run its
+      # clean build here, where elan is installed, rather than treating the
+      # committed log as evidence of a build that CI never performed.
+      - name: Second derivation, rung 2 track 1, fresh Lean and axiom audit
+        run: python3 research/second_nofirst/verify_lean.py
+      # Rung three's package is separate again, with its own axiom log and
+      # its own FW-DEF census.  Same reason as the step above: the committed
+      # log is not evidence of a build CI never performed.
+      - name: Second derivation, rung 3, fresh Lean and axiom audit
+        run: python3 research/second_index/verify_lean.py
+      # The typed-translation joining tree has an independent one-module Lake
+      # package.  Unlike the older manual research receipts, its two
+      # obstruction targets and provenance theorem are rebuilt here and its
+      # declaration census is compared with an exact committed inventory.
+      - name: Typed translation, fresh Lean and total axiom inventory
+        run: python3 research/typed_translation/verify_lean.py
+      # The four foundations trees of 2026-09-23 (plans C to F). Each runs its
+      # canonical new-tree verifier: input pins, tests, strict typing, its own
+      # Lake build against the sealed package, and the exact named axiom
+      # reports its TREE_CONTRACT.json lists. It runs here because it needs
+      # elan and builds Lean; the research job checks only their receipts.
+      - name: Native bridge, tree verifier with Lean and named axiom reports
+        working-directory: research/native_bridge
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python verify.py --check
+      - name: Native structure, tree verifier with Lean and named axiom reports
+        working-directory: research/native_structure
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python verify.py --check
+      - name: Conservation ladder, tree verifier with Lean and named axiom reports
+        working-directory: research/conservation_ladder
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python verify.py --check
+      - name: Domain adapters, tree verifier with Lean and named axiom reports
+        working-directory: research/domain_adapters
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python verify.py --check
+      - name: Every compiled declaration stays within the axiom boundary
+        run: python3 ci/check_declaration_axioms.py
+      # Must stay LAST in this job and must not write to lake_build.log: the
+      # three steps above compare that log against artifacts/lean_axioms.txt.
+      # `lake build` only builds defaultTargets, so a module the root does not
+      # import is never elaborated and a type error in it merges green.
+      #
+      # The census is RECURSIVE under Derivation/, so a subdirectory module
+      # cannot escape it. It does NOT match ci/check_lean_audit.py's rglob:
+      # that reads lean4/**/*.lean while this reads `find Derivation`.
+      # The difference is the two top-level roots,
+      # lean4/Derivation.lean and lean4/ParkedAudit.lean, which are covered
+      # by being defaultTargets rather than by this census -- so a new
+      # top-level lean4/*.lean that is NOT a default target would be read
+      # only by the plain-text token scan. An earlier version of this comment
+      # asserted the two enumerations matched; that is WITHDRAWN.
+      #
+      # The census is also PINNED against
+      # artifacts/elaborated_modules.txt. The pin is what closes partial
+      # silence: an empty guard catches a census that finds nothing, but only
+      # a diff catches one that finds SOME of the modules. Adding or removing
+      # a module fails here until the artifact is regenerated, which makes
+      # "every module was elaborated" a checkable receipt rather than a
+      # workflow claim. Regenerate with the command in CLAUDE.md.
+      - name: Every Lean module elaborates
+        working-directory: lean4
+        timeout-minutes: 20
+        run: python3 ../ci/gate_support.py lean-census
+
+  # The ELEVENTH gate family, and the only one EXPECTED to go red on a change;
+  # that is entirely legitimate. Read the next three paragraphs before
+  # reacting to a failure here.
+  #
+  # It was the tenth until ci/check_parked_audit.py took that number. The
+  # numbering is shared with CLAUDE.md, and leaving this comment at TENTH
+  # pointed "expected to go red" at the parked-module gate, which is not
+  # expected to go red and has a completely different repair.
+  #
+  # research/ is outside the sealed boundary. Before this job landed, its
+  # verifiers were manual receipts and no workflow job read that tree. The
+  # cost of that was paid on 2026-08-21: merging #76 and #77 left main with
+  # five failing research tests while this workflow reported SUCCESS: #77
+  # edited a module that SOURCE_MANIFEST.json pins by SHA-256, #76 shipped
+  # the tests that read the pin, and the two only interact once both are
+  # present. Every gate was green and the repository was broken.
+  #
+  # This job makes that drift VISIBLE. It does not decide whether drift
+  # BLOCKS -- that is branch protection, and it is the author's policy call.
+  # A sealed pull request that edits a module pinned in the manifest SHOULD
+  # show this job red. That is the signal to repin, not a defect in the PR,
+  # and it is the coupling that kept this tree out of CI in the first place.
+  # The repair is `verify_manifest.py --repin` followed by the prose revision
+  # it demands; review a repin by diffing the PARSED json, because --repin
+  # re-serializes and rewrites far more lines than it changes values.
+  #
+  # NOT run here: verify_lean.py. It builds the research Lake package, which
+  # needs elan and compiles the sealed package as a dependency -- exactly the
+  # expense this job exists to avoid. Research Lean verifiers run in the
+  # lean job instead: second_nofirst and typed_translation, and since
+  # 2026-09-23 the four foundations trees (native_bridge, native_structure,
+  # conservation_ladder, domain_adapters). Every other tree's AXIOMS remain
+  # a manual receipt, unchecked by any gate; do not read a green run here as
+  # covering them. (2026-09-21: this comment used to say no research tree's
+  # axioms were gated; that is withdrawn. 2026-09-23: it used to say two
+  # research Lean verifiers run in the lean job; that is withdrawn.)
+  research:
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 is load-bearing, not hygiene. verify_manifest.py walks
+      # history from the pinned snapshot with --full-history and resolves
+      # canonical git blobs; the default shallow checkout makes both silently
+      # unavailable, which would turn this gate into a green no-op.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+      - name: Research source pins match the sealed blobs
+        run: python research/primitive_difference_tower/verify_manifest.py
+      - name: Research tree tests
+        working-directory: research/primitive_difference_tower
+        run: python -m unittest discover -s . -p "test_*.py"
+      - name: Research tree strict typing
+        working-directory: research/primitive_difference_tower
+        run: python -m mypy
+      # The export surface is pinned the same way and for the same reason.
+      # Its second check is the one the sibling tree lacks: every exported
+      # name must actually be DECLARED in the module it is attributed to,
+      # so the interface cannot cite a theorem that was renamed away. A
+      # hash pin proves the source did not move; it does not prove the
+      # document names anything real.
+      - name: Portable interface pins and exports resolve
+        run: python research/portable_interface/verify_pins.py
+      - name: Portable interface tests
+        working-directory: research/portable_interface
+        run: python -m unittest discover -s . -p "test_*.py"
+      - name: Portable interface strict typing
+        working-directory: research/portable_interface
+        run: python -m mypy
+      # The blind-restart kernel is pinned to the artifacts its scoring
+      # key reads, and its third check is unlike either sibling's: it
+      # proves the prompt does not contain the answers. A staged prompt
+      # that states its own expected results is a leading question, and a
+      # solver agreeing with it is not evidence. Nothing here runs a
+      # solver or gates on one -- a reply is outside the machine.
+      - name: Blind restart pins, key resolution, and leak gate
+        run: python research/blind_restart/verify_pins.py
+      - name: Blind restart tests
+        working-directory: research/blind_restart
+        run: python -m unittest discover -s . -p "test_*.py"
+      - name: Blind restart strict typing
+        working-directory: research/blind_restart
+        run: python -m mypy
+      # Partial Decide is a recorder over the already declared bounded
+      # candidate computation. Its source/import verifier is load-bearing:
+      # without it a new engine or panel import could silently widen the
+      # syntactic/provenance surface this package explicitly declares.
+      - name: Partial Decide pins, imports, and receipt
+        run: python research/partial_decide/verify_pins.py
+        env:
+          PYTHONPATH: ${{ github.workspace }}/code
+      - name: Partial Decide tests
+        working-directory: research/partial_decide
+        run: python -m unittest discover -s . -p "test_*.py"
+        env:
+          PYTHONPATH: ${{ github.workspace }}/code
+      - name: Partial Decide strict typing
+        working-directory: research/partial_decide
+        run: python -m mypy
+        env:
+          PYTHONPATH: ${{ github.workspace }}/code
+      # The second derivation registers every rung here, so that no rung
+      # is a manual receipt (research/second/SEED.md, section 10).  Rung
+      # zero replays the inheritance; its verifier also checks that the
+      # seed and the rung's frozen texts have not moved.
+      - name: Second derivation, rung 0, pins and frozen texts
+        run: python research/second_inheritance/verify_pins.py
+      - name: Second derivation, rung 0, tests
+        working-directory: research/second_inheritance
+        run: python -m unittest discover -s . -p "test_*.py"
+      - name: Second derivation, rung 0, strict typing
+        working-directory: research/second_inheritance
+        run: python -m mypy
+      # Rung one answers Challenge one: the stream as a response at a
+      # three-item bound.  Its verifier also checks the frozen question and
+      # predictions by sha256, so a post-freeze edit fails CI, not just the
+      # local battery.
+      - name: Second derivation, rung 1, pins and frozen texts
+        run: python research/second_stream/verify_pins.py
+      # The tests replay both committed receipts into temporary paths.  The
+      # former standalone runner wrote directly over the tracked receipts
+      # before that comparison, which let drift bless itself.  Coverage must
+      # be generated in this same fresh test process and checked immediately;
+      # a committed coverage.json is not evidence of the current checkout.
+      - name: Second derivation, rung 1, replay, tests, and coverage
+        working-directory: research/second_stream
+        run: |
+          set -o pipefail
+          log="$RUNNER_TEMP/second-stream-tests.log"
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s . -p "test_*.py" 2>&1 | tee "$log"
+          python ../../ci/gate_support.py test-count "$log" --minimum 150
+          python -m coverage json -q
+          python check_coverage.py
+          git diff --exit-code -- receipts
+      - name: Second derivation, rung 1, strict typing
+        working-directory: research/second_stream
+        run: python -m mypy
+      # The boundary derivation (research/boundary_seed) is source-isolated
+      # under declared prior exposure, with its own kernel and Lean package.
+      # Its scan bans citations into sealed paths until a committed FREEZE.md
+      # marker. Registered append-only, as the seed requires. Its Lean package
+      # remains a manual receipt (`verify_lean.py`); rung two track one below
+      # registers its separate Lean package in the lean job.
+      - name: Boundary derivation, seed and frozen-prediction pins
+        run: python research/boundary_seed/verify_pins.py
+      - name: Boundary derivation, tests, receipts, source isolation
+        working-directory: research/boundary_seed
+        run: |
+          set -o pipefail
+          log="$RUNNER_TEMP/boundary-seed-tests.log"
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s tests -p "test_*.py" 2>&1 | tee "$log"
+          python ../../ci/gate_support.py test-count "$log" --minimum 566
+          python -m coverage json -q
+          python check_coverage.py
+          python ../../ci/gate_support.py replay --file receipts/challenge0.json -- python run_challenge0.py
+          python ../../ci/gate_support.py replay --file receipts/challenge1.json -- python run_challenge1.py
+          python ../../ci/gate_support.py replay --file receipts/challenge2.json -- python run_challenge2.py
+          python ../../ci/gate_support.py replay --file receipts/challenge3.json -- python run_challenge3.py
+          python ../../ci/gate_support.py replay --file receipts/challenge4.json -- python run_challenge4.py
+          python ../../ci/gate_support.py replay --file receipts/challenge5.json -- python run_challenge5.py
+          python ../../ci/gate_support.py replay --file receipts/continuation1.json -- python run_continuation1.py
+          python ../../ci/gate_support.py replay --file receipts/continuation2.json -- python run_continuation2.py
+          git diff --exit-code -- receipts
+      - name: Boundary derivation, strict typing
+        working-directory: research/boundary_seed
+        run: python -m mypy
+      # Rung two, track one: no first demand.  The seed requires every rung
+      # to register its pin verifier, replay, tests, coverage, receipt
+      # comparison, and strict typing here, so that no rung is a manual
+      # receipt (research/second/SEED.md, section 10).  Its clean Lean audit
+      # is registered separately in the lean job, where elan is installed.
+      - name: Second derivation, rung 2 track 1, pins, spans, and frozen texts
+        run: python research/second_nofirst/verify_pins.py
+      - name: Second derivation, rung 2 track 1, replay, tests, and coverage
+        working-directory: research/second_nofirst
+        run: |
+          set -euo pipefail
+          log="$RUNNER_TEMP/second-nofirst-tests.log"
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s . -p "test_*.py" 2>&1 | tee "$log"
+          python ../../ci/gate_support.py test-count "$log" --minimum 180
+          python -m coverage json -q
+          python check_coverage.py
+          git diff --exit-code -- receipts
+      - name: Second derivation, rung 2 track 1, strict typing
+        working-directory: research/second_nofirst
+        run: python -m mypy
+      # Second derivation, rung 2 track 2, stake read from state.
+      - name: Second derivation, stake rung, pins and frozen texts
+        run: python research/second_stake/verify_pins.py
+      - name: Second derivation, stake rung, tests, receipt, and coverage
+        working-directory: research/second_stake
+        run: |
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s . -p "test_*.py"
+          python -m coverage run --append run_stake.py --check
+          python -m coverage json -q
+          python check_coverage.py
+      - name: Second derivation, stake rung, strict typing
+        working-directory: research/second_stake
+        run: python -m mypy
+      # Rung three: the first-demand index over an arbitrary run.  The seed
+      # requires every rung to register its pin verifier, replay, tests,
+      # coverage, receipt comparison and strict typing here, so that no rung
+      # is a manual receipt (research/second/SEED.md, section 10).  Its clean
+      # Lean audit is registered in the lean job, where elan is installed.
+      # The receipt is compared by `run_index.py --check`, which writes
+      # nothing, and again by `git diff`, so a generator cannot bless its own
+      # drift by overwriting the bytes it is checked against.
+      - name: Second derivation, rung 3, pins, spans, and frozen texts
+        run: python research/second_index/verify_pins.py
+      - name: Second derivation, rung 3, replay, tests, and coverage
+        working-directory: research/second_index
+        run: |
+          set -euo pipefail
+          log="$RUNNER_TEMP/second-index-tests.log"
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s . -p "test_*.py" 2>&1 | tee "$log"
+          python ../../ci/gate_support.py test-count "$log" --minimum 120
+          python -m coverage json -q
+          python check_coverage.py
+          python run_index.py --check
+          git diff --exit-code -- receipts
+      - name: Second derivation, rung 3, strict typing
+        working-directory: research/second_index
+        run: python -m mypy
+      # The limit and the second observer, priced in one tree.
+      # An asserted minimum test count keeps the registration from being
+      # vacuous: thinghood, grammar_fit and priced_admissions all report
+      # "Ran 0 tests" under this exact command, so a gate that only runs it
+      # proves nothing.
+      - name: Limit and second observer, pins and frozen texts
+        run: python research/limit_and_observer/verify_pins.py
+      - name: Limit and second observer, tests, receipt, and coverage
+        working-directory: research/limit_and_observer
+        run: |
+          set -euo pipefail
+          log="$RUNNER_TEMP/limit-and-observer-tests.log"
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s tests -p "test_*.py" 2>&1 | tee "$log"
+          python ../../ci/gate_support.py test-count "$log" --minimum 60
+          python -m coverage json -q
+          python check_coverage.py
+          python run_price.py --check
+          git diff --exit-code -- receipts
+      - name: Limit and second observer, strict typing
+        working-directory: research/limit_and_observer
+        run: python -m mypy
+      # The pins, the tests, the coverage gate, the receipt regeneration and
+      # mypy all read code and receipts. None of them reads PROSE, and three
+      # published numbers in FINDINGS.md were the refuted predictions rather
+      # than the computed values while every one of those stayed green. This
+      # step binds each published number to the receipt it claims to report
+      # and fails in both directions: a drifted number is named with its file,
+      # line and both values, and a binding that stops matching is named as a
+      # stale binding, so deleting the sentence is not a way to pass. It runs
+      # after run_price.py --check so a stale receipt fails before this step.
+      - name: Limit and second observer, published prose bound to the receipt
+        working-directory: research/limit_and_observer
+        run: python verify_prose.py
+      # The side-free control (research/side_free) is the measurement the
+      # boundary rung could not take from inside itself: the same requirement,
+      # at the same prices, in a carrier with no placement and no sides.  Its
+      # design and predictions were frozen in a commit of their own before any
+      # of its code existed, and verify_pins.py holds both files byte for byte
+      # across the whole history of the path.  Appended after the existing
+      # steps and touching nothing else, as this tree's brief requires.
+      #
+      # The source has merged. The full source pin must exist, be an ancestor
+      # of this checkout, and match every declared source digest. Vendored
+      # bytes alone do not discharge this required provenance check.
+      - name: Side-free control, pins and frozen texts
+        run: python research/side_free/verify_pins.py
+      # The receipt comparison must follow a fresh run in the same checkout: a
+      # committed receipt is not evidence of the current code.  Coverage is
+      # generated in this same fresh process and checked immediately, and the
+      # test count is asserted so an enumeration that finds NOTHING cannot
+      # pass as a green suite.  2026-09-19: the exact-count policy is withdrawn;
+      # a declared minimum now permits suite growth while refusing a reduced
+      # or empty run. tests/test_registration.py binds that minimum to this
+      # step and requires the discovered population to reach it.
+      #
+      # The frozen design's conditional field remains in the record. The
+      # required pin step above refuses the unavailable-source condition, so
+      # the fresh receipt comparison below is unconditional after integration.
+      - name: Side-free control, tests, coverage, receipt, isolation
+        working-directory: research/side_free
+        run: |
+          set -o pipefail
+          log="$RUNNER_TEMP/side-free-tests.log"
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s tests -p "test_*.py" 2>&1 | tee "$log"
+          python ../../ci/gate_support.py test-count "$log" --minimum 364
+          python -m coverage json -q
+          python check_coverage.py
+          python run_side_free.py --check
+          git diff --exit-code -- receipts
+      - name: Side-free control, strict typing
+        working-directory: research/side_free
+        run: python -m mypy
+      # The price list between the two worlds.  It is registered as its own
+      # step because it has its own failure mode: every boundary number it
+      # carries is read from a pinned receipt and declared a second time in
+      # pinned/BOUNDARY_PIN.json, and gate C1 fails BY NAME when either side
+      # drifts.  COMPARISON.md is RENDERED from the receipt, so it is diffed
+      # beside it: a document that carries a number the receipt does not is
+      # the failure this step exists to catch. Both fresh receipt comparisons
+      # are mandatory; neither permits an unavailable-source fallback in CI.
+      - name: Side-free control, the price-list comparison
+        working-directory: research/side_free
+        run: |
+          python run_comparison.py --check
+          git diff --exit-code -- receipts/comparison.json COMPARISON.md
+      # The numbers gate.  This tree restates computed values across five prose
+      # documents, and three editorial repair passes each fixed the counts they
+      # were given and left or made others of the same class: a count typed into
+      # prose that no record field carries, or that contradicts one.  Prose has
+      # no gate, so an editorial fix cannot terminate.  This one binds every
+      # numeric literal of every tracked prose file to a named field of a
+      # receipt, to a named computation, or to a declared exemption, and FAILS
+      # CLOSED on anything else.  It runs inside the suite above as well; it is
+      # registered separately so that a red run says which defect class it is.
+      - name: Side-free control, prose numbers bound to the record
+        working-directory: research/side_free
+        run: python -m unittest tests.test_prose_numbers -v
+      # The typed-translation tree joins the sealed and boundary grammars and
+      # runs the total one-field removal experiment.  The freeze/pin verifier
+      # also binds the side-free and limit/second-observer controls by exact
+      # source blobs; their own batteries remain registered immediately above.
+      - name: Typed translation, freeze, source pins, vendored values, isolation
+        run: python research/typed_translation/verify_pins.py
+      # 2026-09-19: the former exact count is replaced by a minimum.
+      # tests/test_gates.py independently checks that floor and discovers
+      # enough tests; growth does not require a workflow edit.
+      - name: Typed translation, tests, coverage, receipt, isolation
+        working-directory: research/typed_translation
+        env:
+          PYTHONPATH: code
+        run: |
+          set -o pipefail
+          log="$RUNNER_TEMP/typed-translation-tests.log"
+          python -m coverage erase
+          python -m coverage run -m unittest discover -s tests -p "test_*.py" 2>&1 | tee "$log"
+          python ../../ci/gate_support.py test-count "$log" --minimum 119
+          python -m coverage json -q
+          python check_coverage.py
+          python run_translation.py --check
+          git diff --exit-code -- receipts/typed_translation.json STATUS.md FINDINGS.md CLAIM_LEDGER.md
+      - name: Typed translation, strict typing
+        working-directory: research/typed_translation
+        run: python -m mypy
+      - name: Typed translation, published prose bound to fresh computation
+        working-directory: research/typed_translation
+        run: python verify_prose.py
+      # The four foundations trees: each finite receipt regenerates
+      # byte-identically from the pinned bounds. Their Lean runs in the lean
+      # job, which is where their full verifier is registered.
+      - name: Native bridge, receipt regenerates byte-identically
+        working-directory: research/native_bridge
+        run: python run.py --check
+      - name: Native structure, receipt regenerates byte-identically
+        working-directory: research/native_structure
+        run: python run.py --check
+      - name: Conservation ladder, receipt regenerates byte-identically
+        working-directory: research/conservation_ladder
+        run: python run.py --check
+      - name: Domain adapters, receipt regenerates byte-identically
+        working-directory: research/domain_adapters
+        run: python run.py --check
+      # Last in this job on purpose: it runs EVERY research tree's own custody
+      # verifier, including the trees this job does not otherwise touch, and
+      # compares the outcome set with ci/tree_custody_pin.json. Most trees are
+      # outside the registered set above, so without this nothing reads them
+      # and a red can sit on main unnoticed; eleven did, for months. It judges
+      # no verifier: it fails on a NEW red and on a STALE pin, both named.
+      # It needs a clean worktree, which is why it runs after the steps that
+      # write and restore research receipts.
+      - name: Research tree custody census matches its pin
+        run: python3 ci/check_tree_custody.py
