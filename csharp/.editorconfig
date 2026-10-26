@@ -1,0 +1,31 @@
+# AuthorityEffect: None. Analyzer severities for PFP Lab C#.
+root = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+
+# Gate 5 (SCORING.md 3.5): cyclomatic complexity at most 10 per method (see CodeMetricsConfig.txt).
+# Nesting depth is measured by governance/tools/metrics.py (lizard).
+dotnet_diagnostic.CA1502.severity = error
+
+# RULE_CS_002: the null-forgiving operator is not runtime validation.
+dotnet_diagnostic.CS8600.severity = error
+dotnet_diagnostic.CS8602.severity = error
+dotnet_diagnostic.CS8604.severity = error
+
+# RULE_CS_004: cancellation must be forwarded.
+dotnet_diagnostic.CA2016.severity = error
+
+# RULE_CS_003: disposables must be disposed.
+dotnet_diagnostic.CA2000.severity = error
+dotnet_diagnostic.CA1816.severity = error
+
+# Test method names use underscores.
+[PfpLab.Tests/**.cs]
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA2007.severity = none
+# Negative tests construct objects only to see the constructor throw.
+dotnet_diagnostic.CA1806.severity = none

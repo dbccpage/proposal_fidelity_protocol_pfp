@@ -1,0 +1,99 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Paper 005 worked session: holonomy defect, refusal, repair, verify, retract",
+  "vertices": [
+    "a",
+    "b",
+    "c"
+  ],
+  "edges": [
+    {
+      "source": "a",
+      "target": "b",
+      "weight": 1
+    },
+    {
+      "source": "b",
+      "target": "c",
+      "weight": 2
+    },
+    {
+      "source": "c",
+      "target": "a",
+      "weight": 3
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "b",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "b",
+      "target": "c",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "c",
+      "target": "a",
+      "value": "1"
+    },
+    {
+      "move": "CUT",
+      "claims": [
+        {
+          "source": "a",
+          "target": "b",
+          "value": "5"
+        },
+        {
+          "source": "b",
+          "target": "c",
+          "value": "0"
+        },
+        {
+          "source": "c",
+          "target": "a",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "move": "CUT",
+      "claims": [
+        {
+          "source": "a",
+          "target": "b",
+          "value": "-2"
+        },
+        {
+          "source": "b",
+          "target": "c",
+          "value": "1"
+        },
+        {
+          "source": "c",
+          "target": "a",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "RETRACT",
+      "target_step_id": "step_003",
+      "reason": "demonstrate rollback"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Consistent claims: a section CUT reaches zero defect",
+  "vertices": [
+    "a",
+    "b",
+    "c"
+  ],
+  "edges": [
+    {
+      "source": "a",
+      "target": "b",
+      "weight": 1
+    },
+    {
+      "source": "b",
+      "target": "c",
+      "weight": 2
+    },
+    {
+      "source": "c",
+      "target": "a",
+      "weight": 3
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "b",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "b",
+      "target": "c",
+      "value": "2"
+    },
+    {
+      "move": "ASSERT",
+      "source": "c",
+      "target": "a",
+      "value": "-3"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "a": "0",
+        "b": "1",
+        "c": "3"
+      }
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:c,a"
+    }
+  ]
+}

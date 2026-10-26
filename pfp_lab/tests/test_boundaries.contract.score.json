@@ -1,0 +1,99 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_lab/tests/test_boundaries.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_lab/tests/test_boundaries.py",
+      "language": "Python",
+      "sha256": "97fdae78d9051cf0e7091b3fc9f83b50fa08a40c3b3d8a397a9f0376a11405ff"
+    },
+    "contract_urn": "urn:pfp-lab:tests:boundaries:v1",
+    "symbols": [
+      "imported_roots",
+      "rel",
+      "test_core_has_no_floats",
+      "test_core_imports_no_front_end",
+      "test_csharp_has_no_null_forgiving_operator",
+      "test_csharp_sources_were_found",
+      "test_imports_stay_in_bounds",
+      "test_new_trees_carry_no_upstream_names",
+      "test_no_assert_statements",
+      "test_no_isinstance_int",
+      "test_sources_were_found",
+      "tree"
+    ],
+    "owned_invariants": [
+      "The tests pass against the current sources."
+    ],
+    "boundaries": [
+      "Test code; support category 'test' (L2D floor, pending maintainer approval)."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_lab/tests/test_boundaries.py",
+      "language": "Python",
+      "sha256": "97fdae78d9051cf0e7091b3fc9f83b50fa08a40c3b3d8a397a9f0376a11405ff"
+    },
+    "profile": "Non-Numeric",
+    "level": "L3",
+    "level_basis": "AST and text scans enforcing RULE_PY_002/003, import bounds, naming and RULE_CS_002.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None and a unique contract URN; the module docstring states what is tested.",
+      "G2": "Expected values have an independent basis (Paper 005 guide numbers, hand-worked defects, the unmodified oracle, the rubric's calibration example) rather than being recomputed by the code under test.",
+      "G3": "Tests clean up temporary files and processes; no test depends on network access.",
+      "G4": "The suite passes, and its sensitivity is measured by the mutation campaigns of the modules it covers.",
+      "G5": "Test functions measured like runtime code. Metrics: worst function: cyclomatic 8, cognitive 14, nesting 4; metrics ceiling B."
+    },
+    "composite_grade": "C",
+    "score_token": "L3C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pytest-all.run.json",
+        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/mypy-strict.run.json",
+        "sha256": "c3e91ff7afd81aa52b729959ce7f4391c3ff4cae52f5aa352927b3959628cc80",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/ruff-check.run.json",
+        "sha256": "2ef6396146fac24df3de533e029117a816221211e77660704eca50b5cc6863af",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/ruff-format.run.json",
+        "sha256": "c8839377417062190ea553cc1ffd32ebad96f7c8b4ecfb7e9491f9ee03ed27a2",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.run.json",
+        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.json",
+        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

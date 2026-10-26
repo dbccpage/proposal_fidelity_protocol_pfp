@@ -1,0 +1,92 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Two components: the obstruction is the sum of each island's",
+  "vertices": [
+    "a",
+    "b",
+    "c",
+    "x",
+    "y"
+  ],
+  "edges": [
+    {
+      "source": "a",
+      "target": "b",
+      "weight": 2
+    },
+    {
+      "source": "b",
+      "target": "c",
+      "weight": 1
+    },
+    {
+      "source": "a",
+      "target": "c",
+      "weight": 1
+    },
+    {
+      "source": "x",
+      "target": "y",
+      "weight": 5
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "b",
+      "value": "1/2"
+    },
+    {
+      "move": "ASSERT",
+      "source": "b",
+      "target": "c",
+      "value": "1/2"
+    },
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "c",
+      "value": "3"
+    },
+    {
+      "move": "ASSERT",
+      "source": "x",
+      "target": "y",
+      "value": "-4/3"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "CUT",
+      "claims": [
+        {
+          "source": "a",
+          "target": "b",
+          "value": "1/2"
+        },
+        {
+          "source": "b",
+          "target": "c",
+          "value": "1/2"
+        },
+        {
+          "source": "a",
+          "target": "c",
+          "value": "1"
+        },
+        {
+          "source": "x",
+          "target": "y",
+          "value": "-4/3"
+        }
+      ]
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    }
+  ]
+}

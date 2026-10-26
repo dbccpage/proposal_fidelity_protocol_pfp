@@ -1,0 +1,97 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "csharp/PfpLab.Client/PfpLabClient.cs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Client/PfpLabClient.cs",
+      "language": "C#",
+      "sha256": "550f2f58fdb64fa9d5d5626df5059043c168eab3bf4b1a168342ec33b8837331"
+    },
+    "contract_urn": "urn:pfp-lab:csharp:client:v1",
+    "symbols": [
+      "IPfpLabClient",
+      "PfpLabClient"
+    ],
+    "owned_invariants": [
+      "Every returned object has passed Validate()."
+    ],
+    "boundaries": [
+      "Computes nothing; forwards to the core."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Client/PfpLabClient.cs",
+      "language": "C#",
+      "sha256": "550f2f58fdb64fa9d5d5626df5059043c168eab3bf4b1a168342ec33b8837331"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Typed facade over the five methods: local JSON pre-check, deserialisation with contract errors, validation of every answer.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "B",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
+      "G2": "Answers are deserialised and validated before return; user text that is not JSON is refused locally as Admission.",
+      "G3": "Typed failures: every core failure becomes CoreException with a CoreErrorKind (RULE_CS_002 checks run after deserialisation; no null-forgiving operator in runtime code, enforced by a scan); async methods take and forward CancellationToken (CA2016 as error); disposables are disposed (CA2000/CA1816 as error). Not B: panic-freedom is tested, not proven.",
+      "G4": "Unit tests, view-model tests with a scripted client, and contract tests against the real Python core. Mutation R = 1/1 (see mutation_accounting).",
+      "G5": "Cyclomatic complexity from lizard and CA1502 (threshold 10, error at build); nesting from the brace estimate. Cognitive complexity is not measured for C#, so A is not claimed. Metrics: worst function: cyclomatic 3, cognitive None, nesting 1; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/dotnet-build.run.json",
+        "sha256": "c1e96cfed01989efe39a640925fc139be65d4e0ef1b01fb8c68bef90df6644c2",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/csharp-tests.run.json",
+        "sha256": "697207bf8bd01d4a07c4ede2c406c360de471c2b375db7cba891865f7e785ab9",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pytest-all.run.json",
+        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.run.json",
+        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.json",
+        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 2,
+      "survived": 0,
+      "demonstrably_equivalent": 5,
+      "invalid": 5,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-csharp-app.mutation.json",
+        "sha256": "bc47635abd7037345647881c61a18dfd64c69afdc66fc10b2a25927370f272ad",
+        "note": "campaign m-csharp-app"
+      }
+    }
+  },
+  "history": []
+}

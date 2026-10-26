@@ -1,0 +1,118 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_lab/web/app.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_lab/web/app.py",
+      "language": "Python",
+      "sha256": "d9202713b6f02ea4354960dcf00cc71fd7d5f52ff69ba212350dfb3caa0b3e96"
+    },
+    "contract_urn": "urn:pfp-lab:web:app:v1",
+    "symbols": [
+      "DEFAULT_PORT",
+      "check_bind",
+      "create_app",
+      "entry",
+      "is_loopback",
+      "main",
+      "read_capped"
+    ],
+    "owned_invariants": [
+      "A body over MAX_JSON_BYTES gets 413 before parsing.",
+      "A non-loopback host needs --allow-remote."
+    ],
+    "boundaries": [
+      "The JavaScript page only renders core output; it computes no protocol value."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_lab/web/app.py",
+      "language": "Python",
+      "sha256": "d9202713b6f02ea4354960dcf00cc71fd7d5f52ff69ba212350dfb3caa0b3e96"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Stateless HTTP API and page server with chunked, capped body reads, typed error responses, an asset allow-list, and a loopback-by-default bind rule enforced before the server starts.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "B",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
+      "G2": "Non-Numeric profile: inputs are admitted by strict Pydantic models before use (RULE_PY_001) and outputs are typed; behaviour matches the documented contract in the module docstring and README. Not B: the static page's JavaScript is outside the Python profile and was checked by hand in a browser, not by an automated UI test.",
+      "G3": "Every expected failure is a typed exception with a stable code (AdmissionError, BudgetExceededError, UnknownPackError) or a typed verdict; no assert in production code (Ruff S101, AST test) and the whole suite passes under python -O; no bare or broad except (Ruff BLE001/E722). Not B: panic-freedom is tested, not proven.",
+      "G4": "Unit and boundary tests for every branch, negative tests for each refusal, run under pytest and under python -O. TestClient contract tests for every status code; bind-rule tests with uvicorn replaced. Mutation R = 1/1 (see mutation_accounting).",
+      "G5": "Functions are single-purpose; complexity measured per function. Metrics: worst function: cyclomatic 3, cognitive 4, nesting 2; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pytest-all.run.json",
+        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pytest-optimized.run.json",
+        "sha256": "ac3d840c58451cd659fce505f20cf43460d3fd7c73f36b19c9a73d01257a23b5",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/mypy-strict.run.json",
+        "sha256": "c3e91ff7afd81aa52b729959ce7f4391c3ff4cae52f5aa352927b3959628cc80",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/ruff-check.run.json",
+        "sha256": "2ef6396146fac24df3de533e029117a816221211e77660704eca50b5cc6863af",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/ruff-format.run.json",
+        "sha256": "c8839377417062190ea553cc1ffd32ebad96f7c8b4ecfb7e9491f9ee03ed27a2",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.run.json",
+        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.json",
+        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/import-linter.run.json",
+        "sha256": "1db645be8b322223d516e7de3be0ed55d654d6cf6a37275240b7ff98f28646eb",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 47,
+      "survived": 0,
+      "demonstrably_equivalent": 1,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-web.mutation.json",
+        "sha256": "5ac37251962471bac0d915695cb67ef958950010967eb38371f0704f0b1371cf",
+        "note": "campaign m-web"
+      }
+    }
+  },
+  "history": []
+}
