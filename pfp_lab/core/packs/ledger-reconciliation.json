@@ -1,0 +1,91 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Two ledgers disagree around a loop; the cheapest repair edits only the least trusted entry",
+  "vertices": [
+    "head_office",
+    "branch_a",
+    "branch_b",
+    "branch_c"
+  ],
+  "edges": [
+    {
+      "source": "head_office",
+      "target": "branch_a",
+      "weight": 5
+    },
+    {
+      "source": "branch_a",
+      "target": "branch_b",
+      "weight": 5
+    },
+    {
+      "source": "branch_b",
+      "target": "branch_c",
+      "weight": 5
+    },
+    {
+      "source": "head_office",
+      "target": "branch_c",
+      "weight": 1
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "head_office",
+      "target": "branch_a",
+      "value": "100"
+    },
+    {
+      "move": "ASSERT",
+      "source": "branch_a",
+      "target": "branch_b",
+      "value": "40"
+    },
+    {
+      "move": "ASSERT",
+      "source": "branch_b",
+      "target": "branch_c",
+      "value": "-15"
+    },
+    {
+      "move": "ASSERT",
+      "source": "head_office",
+      "target": "branch_c",
+      "value": "120"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "CUT",
+      "claims": [
+        {
+          "source": "head_office",
+          "target": "branch_a",
+          "value": "100"
+        },
+        {
+          "source": "branch_a",
+          "target": "branch_b",
+          "value": "40"
+        },
+        {
+          "source": "branch_b",
+          "target": "branch_c",
+          "value": "-15"
+        },
+        {
+          "source": "head_office",
+          "target": "branch_c",
+          "value": "125"
+        }
+      ]
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Retracting to the last consistent step undoes a bad revision, and both steps stay in the receipt",
+  "vertices": [
+    "x",
+    "y",
+    "z"
+  ],
+  "edges": [
+    {
+      "source": "x",
+      "target": "y",
+      "weight": 1
+    },
+    {
+      "source": "y",
+      "target": "z",
+      "weight": 1
+    },
+    {
+      "source": "x",
+      "target": "z",
+      "weight": 1
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "x",
+      "target": "y",
+      "value": "2",
+      "step_id": "xy"
+    },
+    {
+      "move": "ASSERT",
+      "source": "y",
+      "target": "z",
+      "value": "3",
+      "step_id": "yz"
+    },
+    {
+      "move": "ASSERT",
+      "source": "x",
+      "target": "z",
+      "value": "5",
+      "step_id": "xz_first"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "ASSERT",
+      "source": "x",
+      "target": "z",
+      "value": "8",
+      "step_id": "xz_revised"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "RETRACT",
+      "target_step_id": "xz_first",
+      "reason": "the revision contradicts the two-step path"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "x": "0",
+        "y": "2",
+        "z": "5"
+      }
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    }
+  ]
+}

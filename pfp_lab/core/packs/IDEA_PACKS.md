@@ -1,0 +1,24 @@
+# Idea packs
+
+AuthorityEffect: None.
+
+Five scenario packs in the `pfp-lab.scenario.v1` format. Each one is a small,
+exact demonstration of one idea about claims on a graph. They contain no code.
+
+| Pack | Idea |
+|---|---|
+| `arbitrage-cycle` | Price gaps quoted around a loop that do not sum to zero leave a nonzero obstruction. Retracting to before the stale quote and asserting a fresh one removes it. |
+| `ledger-reconciliation` | Two ledgers disagree around a loop. The obstruction is the mismatch times the weight of the least trusted entry, and a relational CUT that edits only that entry reaches zero. |
+| `every-edge-not-all` | Every claim on an odd loop can be met by some assignment, but no single assignment meets all three. |
+| `cheapest-repair` | Fitting a section that puts the whole mismatch on a heavy edge is refused, since the defect would rise. Putting it on the lightest edge is admitted. |
+| `retract-stale-claim` | A revision breaks consistency. RETRACT restores the state saved at the last consistent step, and both steps stay in the receipt. |
+
+Run any of them as a file:
+
+```bash
+python -m pfp_lab.cli.main run pfp_lab/core/packs/arbitrage-cycle.json
+```
+
+They are not yet listed by `pfp-lab packs`. Adding their ids to `PACK_IDS` in
+`pfp_lab/core/contracts.py` registers them; that change is governed and needs
+its score file regenerated.
