@@ -1,0 +1,40 @@
+{
+  "mutation_id": "mut_11_wrong_shift_amount_off_by_one",
+  "description": "Shift by 6 instead of 7 on width 8 sign bit",
+  "case": {
+    "case_id": "c058_b15_ashr_sign",
+    "width": 8,
+    "inputs": [
+      "x"
+    ],
+    "ops": [
+      [
+        "t1",
+        "ashr",
+        "x",
+        3
+      ],
+      [
+        "t2",
+        "ashr",
+        "t1",
+        4
+      ]
+    ],
+    "out": "t2",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b15_ashr_sign",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "res",
+        "ashr",
+        "x",
+        6
+      ]
+    ],
+    "out": "res"
+  }
+}

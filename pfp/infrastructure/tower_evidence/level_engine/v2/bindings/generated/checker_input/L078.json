@@ -1,0 +1,1260 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "ordered_log",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:636271b23fb63a80adb57da21f30ac913a7cf2f4a2f2d2e2663756012606e3b6",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:eb285a5989935f09e8bd61af8778cc1e9882d1ec9e93ca16c433a086dae08d6a",
+      "native_code": "FAILS:clocks_rise,parents_earlier",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_missing",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              6
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            5
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:436d55a38baf61d79b794e724dd722f83fd140f684b60040ebbec7706f6a18d5",
+      "native_code": "FAILS:parents_logged",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_future",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:cc7c591d512b40f9d7300f587ec84c12fa0f8a6b55e1aed20a661fef3e403ed6",
+      "native_code": "FAILS:clocks_rise,parents_earlier",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_future"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_clock",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "2/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:814fadda2c72f3e713ecf0c8ac009d202f98637e6cca0faf50ea05e39b100377",
+      "native_code": "FAILS:clocks_rise",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_node",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:a7d874c756c3d6527109a5dfb079693532c89d54130df862de01a3b8971778bf",
+      "native_code": "FAILS:node_order",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_nowhere",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:21c877470118367ee4343591d661304a42c1a232b4f35c669f1a32dcbee20551",
+      "native_code": "FAILS:at_given",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_stray",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:aaed74728047edd00852c62abd6cea42be99c25f285e91e86ac08571e2b6df9b",
+      "native_code": "FAILS:parent_typed,parents_logged",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_stray"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "at",
+            [
+              2,
+              4
+            ]
+          ],
+          [
+            "at",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "logged",
+            [
+              0
+            ]
+          ],
+          [
+            "logged",
+            [
+              1
+            ]
+          ],
+          [
+            "logged",
+            [
+              2
+            ]
+          ],
+          [
+            "logged",
+            [
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "parent",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "parent",
+            [
+              3,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "entry",
+            4
+          ],
+          [
+            "node",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "logged",
+            "sorts": [
+              "entry"
+            ]
+          },
+          {
+            "name": "at",
+            "sorts": [
+              "entry",
+              "node"
+            ]
+          },
+          {
+            "name": "parent",
+            "sorts": [
+              "entry",
+              "entry"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:f67042f66d45c2c74a3729f544fa7895c15ad44e4a1029e1c5627e7190f76c77",
+      "native_code": "FAILS:clocks_rise,parents_earlier",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 78,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_078"
+}

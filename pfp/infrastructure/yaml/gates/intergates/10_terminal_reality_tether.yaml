@@ -1,0 +1,33 @@
+intergate_id: "PFP-IG-10-TERMINAL-REALITY-TETHER"
+name: "Terminal Reality Tether Intergate"
+transition_from: "PFP-08-BEZDOMNY"
+transition_to: "PFP-13-WOLAND"
+cognitive_vector: "Empirical Grounding & Claim Hygiene Tether"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "user_global:claim_hygiene_rule"
+  - "ADR-OE-DIALOGUE-PLAY-001:Section_1"
+doctrine: |
+  "Manuscripts don't burn, but claims without receipts don't pass!
+   Terminal sign-off requires non-speculative claim discipline and four-part summary tie-out."
+objective: >
+  Enforce strict Claim Hygiene Discipline on final prompt rewriting artifacts before Woland terminal sign-off.
+  Verify that the candidate summary contains the mandatory four parts:
+  1) What it supports, 2) What it does not support, 3) The narrowest defensible claim, and 4) The next test needed.
+fences:
+  - "Claim Discipline Fence: Banned hype words ('proves', 'guarantees', 'flawless', 'universal') trigger RefusalCode.HYPE_WORD_DETECTED."
+  - "Four-Part Summary Fence: Artifact summary MUST explicitly include all four mandatory Claim Hygiene sections."
+  - "Receipt Signature Binding: Terminal sign-off requires a SHA-256 bound checker receipt stating ACCEPTED."
+input_schema:
+  candidate_summary_text: "string"
+  has_banned_hype_words: "bool"
+  checker_receipt_present: "bool"
+  checker_receipt_verdict: "string"
+transition_rules: >
+  If has_banned_hype_words is false and all 4 summary parts are present and checker_receipt_verdict == 'ACCEPTED',
+  admit final transition to PFP-13-WOLAND for terminal sign-off.
+narrowest_defensible_claim: >
+  Enforcing four-part claim hygiene summaries and receipt binding prevents speculative hype from entering canonical terminal releases.
+next_test_needed: >
+  Submit a terminal summary containing the word 'proves' and verify Intergate 10 triggers RefusalCode.HYPE_WORD_DETECTED.

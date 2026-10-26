@@ -1,0 +1,101 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.ddc.trace_merkle
+  name: Trace Merkle Normal Form
+  short_name: TMNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  status: active
+  verification_status: executable
+  family: runtime
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - execution_tape
+    - merkle_hash_chain
+    - step_receipt
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: non-reproducible, un-receipted, out-of-order, or mutated execution steps committed to trace
+  preserves_invariant: append-only cryptographic Merkle chaining with SHA-256 digests over RFC 8785 canonical JSON step receipts
+  protected_skeleton:
+    - step_index_sequence
+    - operational_rune
+    - previous_tape_hash
+    - current_tape_hash
+    - canonical_step_receipt
+  erased_structure:
+    - solver_wallclock_execution_time
+    - memory_heap_addresses
+  non_claims:
+    - does not claim a valid tape proves truth of outside prose
+    - does not confer operational authority; authority_effect is unconditionally None
+    - does not permit post-terminal continuation
+definition:
+  source: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/normal_forms/README.md
+  section: '2.0'
+  formal_statement: >
+    On a sequence of discrete operational transitions under alphabet {E, R, C, I, Λ, D, M, T},
+    Trace Merkle Normal Form (TMNF) commits transitions into an append-only tape. Integration rune I
+    requires an explicit deterministic step receipt (Law 5), computing current tape digest
+    h_k = SHA256(h_{k-1} || RFC8785(R_k)). Replay from genesis reproduces the active state losslessly.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: cryptographic_hash_chain_not_relational_project_join
+    anomaly_exclusion: missing step receipts, un-recomputed tape digests, silent state mutations, or post-terminal insertions
+    lossless_join:
+      status: replay_reconstruction
+      statement: given initial state s₀ and tape entries T, the full sequence of intermediate states is losslessly and deterministically reconstructed
+    dependency_preservation:
+      status: step_receipt_hash_preserved
+      statement: each step hash h_k = SHA256(h_{k-1} || RFC8785(R_k)) is verifiable locally from adjacent steps
+    syntactic_decision:
+      status: schema_and_hash_decidable
+      statement: membership is decidable by parsing TapeEntry schema and re-evaluating SHA-256 chain equality
+declarations_required:
+  - tape_index
+  - operation_rune
+  - step_receipt
+  - prev_hash
+  - current_hash
+evidence_required: []
+validation_criteria:
+  - tape entry index increments strictly by one without gaps
+  - current hash equals SHA-256 digest of previous hash concatenated with RFC 8785 canonical receipt JSON
+  - step receipt contains non-empty input and output state hashes
+terminal_routes:
+  - AdmitTraceMerkle
+  - RejectMissingReceipt
+  - RejectBrokenHashChain
+  - RejectOutdatedTape
+terminal_route_map:
+  AdmitTraceMerkle: Preserve
+  RejectMissingReceipt: Refuse
+  RejectBrokenHashChain: Invalidate
+  RejectOutdatedTape: Reject
+certification:
+  certificate_required: true
+  certificate_kind: merkle_tape_receipt
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+  - symptom: step committed to tape without explicit cryptographic receipt
+    diagnosis: un-receipted transition; violates Law 5
+    terminal: RejectMissingReceipt
+  - symptom: recomputed SHA-256 digest does not match declared current_hash
+    diagnosis: corrupted or out-of-order hash chain
+    terminal: RejectBrokenHashChain
+examples:
+  - ref: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+    section: '2.4'
+references:
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/dda_trace_cochain.contract.yaml

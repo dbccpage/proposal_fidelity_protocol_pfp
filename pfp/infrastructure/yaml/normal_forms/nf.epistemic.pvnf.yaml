@@ -1,0 +1,99 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.pvnf
+  name: Provenance Normal Form
+  short_name: PvNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: authority hallucination
+  preserves_invariant: generated answer or derived data product carries source facts,
+    transforms, model/tool calls, uncertainty, and non-replayable steps
+  protected_skeleton:
+  - source_facts
+  - transformations
+  - model_or_tool_calls
+  - uncertainty
+  - non_replayable_steps
+  erased_structure:
+  - intermediate_activations
+  - raw_generation_phases
+  non_claims:
+  - does not guarantee that the generating model is free of bias or error
+declarations_required:
+- source_facts
+- transformations
+- model_or_tool_calls
+- uncertainty
+- non_replayable_steps
+evidence_required:
+- fact_ids or tuple_ids
+- model_version
+- temperature or seed for replayable steps
+- signature of the executing model/verifier
+validation_criteria:
+- derived data products must trace back to declared source facts
+- non-replayable steps (e.g. sampling, external APIs) must be explicitly listed
+- uncertainty bounds must be declared
+proof_obligations: []
+terminal_routes:
+- ProvenanceTraced
+- NonReplayableFlagged
+- AuthorityHallucinationViolation
+- LineageLost
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: provenance_certificate
+  obstruction_class_required: false
+  loss_ledger_required: true
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: valid-sounding answer returned but no source facts or tool calls can be
+    recovered
+  diagnosis: authority hallucination
+  terminal: AuthorityHallucinationViolation
+references:
+- ../1_normal_forms.md
+terminal_route_map:
+  ProvenanceTraced: Preserve
+  NonReplayableFlagged: Escalate
+  AuthorityHallucinationViolation: Reject
+  LineageLost: Refuse
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: authority hallucination. generated answer or derived data product
+    carries source facts, transforms, model/tool calls, uncertainty, and non-replayable
+    steps
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: authority hallucination
+    lossless_join:
+      status: declared_reconstruction
+      statement: generated answer or derived data product carries source facts, transforms,
+        model/tool calls, uncertainty, and non-replayable steps
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

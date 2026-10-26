@@ -1,0 +1,89 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.evidence.loss_ledger
+  name: Loss Ledger Form
+  short_name: LLF
+  version: v0
+  status: draft
+  family: evidence
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - certificate_packet
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: unledgered erasure
+  preserves_invariant: every lossy transformation carries an append-only ledger mapping
+    dropped attributes, precision, and approximations to authority effects
+  protected_skeleton:
+  - ledger_id
+  - entries
+  - composed_at
+  erased_structure: []
+  non_claims:
+  - does not prevent loss of data; only enforces its formal accounting
+declarations_required:
+- ledger_id
+- entries
+- composed_at
+evidence_required:
+- entry_kind (attribute_drop | precision_loss | approximation)
+- entry_source
+- entry_reason
+- authority_effect
+validation_criteria:
+- ledger entries are non-empty if erased distinctions are declared in the certificate
+- each entry must specify a valid authority effect (e.g. non_authoritative_for_repair,
+  rounded_display_only)
+proof_obligations: []
+terminal_routes:
+- LedgerRecorded
+- LedgerMissing
+- Refuse
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: database columns are dropped during migration without an accounting ledger
+  diagnosis: unledgered erasure
+  terminal: LedgerMissing
+references:
+- ../1_normal_forms.md
+- ../1b_gtmur_representation_transport.md
+terminal_route_map:
+  LedgerRecorded: Preserve
+  LedgerMissing: BudgetUnknown
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: unledgered erasure. every lossy transformation carries an append-only
+    ledger mapping dropped attributes, precision, and approximations to authority
+    effects
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: unledgered erasure
+    lossless_join:
+      status: declared_reconstruction
+      statement: every lossy transformation carries an append-only ledger mapping
+        dropped attributes, precision, and approximations to authority effects
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

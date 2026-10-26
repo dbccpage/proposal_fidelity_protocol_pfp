@@ -1,0 +1,61 @@
+{
+  "input": {
+    "case_id": "ex08_reduce_inverse_inverse",
+    "task": "REDUCE",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ],
+      [
+        "inv(inv(x))",
+        "x"
+      ],
+      [
+        "mul(x, e)",
+        "x"
+      ]
+    ],
+    "term": "mul(inv(inv(x)), e)"
+  },
+  "expected_output": {
+    "case_id": "ex08_reduce_inverse_inverse",
+    "status": "SOLVED",
+    "task": "REDUCE",
+    "term": "mul(inv(inv(x)), e)",
+    "normal_form": "x",
+    "ddc_trace": {
+      "case_id": "ex08_reduce_inverse_inverse",
+      "trace_string": "ERT",
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task REDUCE for case ex08_reduce_inverse_inverse",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "R",
+          "detail": "Normalizing term mul(inv(inv(x)), e)",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "T",
+          "detail": "Reached normal form: x",
+          "meta": {}
+        }
+      ]
+    }
+  }
+}

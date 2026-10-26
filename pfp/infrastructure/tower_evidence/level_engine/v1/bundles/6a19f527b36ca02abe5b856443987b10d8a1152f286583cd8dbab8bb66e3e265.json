@@ -1,0 +1,228 @@
+{
+  "authority_effect": "None",
+  "carrier": {
+    "commit": "77ad2a7839aff8c9ec9b0204a5e9d6927fe8ae38",
+    "part": "repo_content",
+    "repo": "19L57G1",
+    "sources": [
+      {
+        "blob": "2b4601d814c0196f443b7907c07d34c71788ba3c",
+        "path": "code/derivation/boundary_cancellation.py",
+        "sha256": "sha256:049fa6312e78d22bd16ec55e9bd6ccce749f93fe532e9e313a904e7145376137"
+      },
+      {
+        "blob": "",
+        "path": "challenge-evidence:route_replay",
+        "sha256": "sha256:70430cad8c8cf9d38618b362ee6cd3d5479ea31bcd216655b08c39d153ab594d"
+      }
+    ]
+  },
+  "carrier_refusals": [
+    {
+      "evidence": "route_replay:own_neg:FAILS:exact_replayed,repeat_replayed,route_is_class",
+      "of": "own_neg"
+    },
+    {
+      "evidence": "route_replay:near_board:FAILS:board_replayed",
+      "of": "near_board"
+    },
+    {
+      "evidence": "route_replay:near_unwitnessed:FAILS:exact_replayed",
+      "of": "near_unwitnessed"
+    },
+    {
+      "evidence": "route_replay:near_exact:FAILS:exact_replayed",
+      "of": "near_exact"
+    },
+    {
+      "evidence": "route_replay:near_dual:FAILS:dual_replayed",
+      "of": "near_dual"
+    },
+    {
+      "evidence": "route_replay:near_open:FAILS:route_is_class",
+      "of": "near_open"
+    },
+    {
+      "evidence": "route_replay:mut:FAILS:repeat_replayed",
+      "of": "mut"
+    }
+  ],
+  "encoding": {
+    "decoder_path": "payload/route_replay/spec.py",
+    "decoder_sha256": "sha256:b67a9af081aff2e8dc3103c0a5cc5c0bcf10c10075037f2b6d4e88763f5ae224",
+    "input_schema": "draft:harness.packet.v1"
+  },
+  "lineage": {
+    "model_families": [
+      "claude"
+    ],
+    "note": "the harness and any draft checker share an author and a model family; agreement between them is correlated evidence",
+    "shared_author": true
+  },
+  "loss_ledger_sha256": "sha256:b8da0c380c6f5d3e041c2cf19d281ee73e8e0261796dfb78f633d8a4c53f5103",
+  "native_claims": [
+    {
+      "id": "d2_zero_unrestricted",
+      "lean": [
+        {
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ],
+          "name": "BoundaryCancellation.d2_zero_unrestricted"
+        }
+      ],
+      "status": "PROVED_THEOREM"
+    },
+    {
+      "id": "d2_zero_facets",
+      "lean": [
+        {
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ],
+          "name": "BoundaryCancellation.d2_zero_facets"
+        }
+      ],
+      "status": "PROVED_THEOREM"
+    },
+    {
+      "id": "two_rule",
+      "lean": [
+        {
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ],
+          "name": "PrimitivePassage.two_rule"
+        }
+      ],
+      "status": "PROVED_THEOREM"
+    }
+  ],
+  "non_claims": [
+    "answers a supplied challenge; not a derivation from the seed",
+    "no independent convergence with any outside list is claimed"
+  ],
+  "provenance": {
+    "isolation": "NOT_APPLICABLE",
+    "purity": "NOT_APPLICABLE",
+    "source_blindness": "NOT_BLIND"
+  },
+  "schema": "mssn.witness-bundle.v1",
+  "stage_change": null,
+  "target_input": {
+    "packet": {
+      "cases": [
+        {
+          "cochain": [
+            "1/1",
+            "2/1",
+            "1/1",
+            "2/1",
+            "1/1"
+          ],
+          "route": "exact",
+          "witness": [
+            "0/1",
+            "1/1",
+            "2/1",
+            "3/1"
+          ]
+        },
+        {
+          "cochain": [
+            "0/1",
+            "0/1",
+            "0/1",
+            "0/1",
+            "1/1"
+          ],
+          "route": "residual_closed",
+          "witness": [
+            "0/1",
+            "0/1",
+            "1/1",
+            "-1/1",
+            "1/1"
+          ]
+        },
+        {
+          "cochain": [
+            "1/1",
+            "0/1",
+            "0/1",
+            "0/1",
+            "0/1"
+          ],
+          "route": "open",
+          "witness": null
+        }
+      ],
+      "cycle": [
+        0,
+        3
+      ],
+      "d0": [
+        [
+          "-1/1",
+          "1/1",
+          "0/1",
+          "0/1"
+        ],
+        [
+          "-1/1",
+          "0/1",
+          "1/1",
+          "0/1"
+        ],
+        [
+          "0/1",
+          "-1/1",
+          "1/1",
+          "0/1"
+        ],
+        [
+          "0/1",
+          "-1/1",
+          "0/1",
+          "1/1"
+        ],
+        [
+          "0/1",
+          "0/1",
+          "-1/1",
+          "1/1"
+        ]
+      ],
+      "d1": [
+        [
+          "1/1",
+          "-1/1",
+          "1/1",
+          "0/1",
+          "0/1"
+        ]
+      ],
+      "trace": [
+        [
+          0,
+          "exact"
+        ],
+        [
+          1,
+          "residual_closed"
+        ],
+        [
+          2,
+          "open"
+        ],
+        [
+          0,
+          "exact"
+        ]
+      ]
+    }
+  }
+}

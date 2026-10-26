@@ -1,0 +1,49 @@
+{
+  "schema": "bqnf_cdc_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests checking Boundary-Quotient Normal Form (BQNF) invariants across synthetic CDC event streams",
+  "created_utc": "2026-09-25T15:10:48Z",
+  "properties_verified": [
+    {
+      "property_name": "canonical_fixtures_verification",
+      "test_function": "test_canonical_fixtures_pass",
+      "status": "PASS",
+      "fixture_count": 6,
+      "details": "All 6 canonical cases from data/cdc_events.json evaluated against exact coboundary repair semantics."
+    },
+    {
+      "property_name": "zero_defect_preservation",
+      "test_function": "test_zero_defect_preservation_property",
+      "status": "PASS",
+      "iterations": 50,
+      "details": "Non-boundary attribute modifications route to Preserve with obstruction [0] and repair null."
+    },
+    {
+      "property_name": "compensating_cochain_reversibility",
+      "test_function": "test_compensating_cochain_reversibility_property",
+      "status": "PASS",
+      "iterations": 50,
+      "details": "Forward event and reverse event deltas satisfy exact cycle cancellation: d(e) + d(-e) = 0."
+    },
+    {
+      "property_name": "multi_event_stream_convergence",
+      "test_function": "test_multi_event_stream_convergence_property",
+      "status": "PASS",
+      "iterations": 100,
+      "details": "Cumulative BQNF incremental repair state strictly equals relational full table recomputation at every turn across 5 customer partitions with zero drift."
+    },
+    {
+      "property_name": "missing_evidence_fail_closed",
+      "test_function": "test_missing_evidence_fail_closed_property",
+      "status": "PASS",
+      "iterations": 30,
+      "details": "Omission of required boundary attributes fails closed to Invalidate with certified=False and [NonZero - MissingEvidence]."
+    }
+  ],
+  "lean4_theorems_aligned": [
+    "NormalForms.bqnf_zero_defect_preserves",
+    "NormalForms.bqnf_exact_defect_repairs",
+    "NormalForms.non_invertible_aggregate_repair_routing"
+  ],
+  "all_properties_satisfied": true
+}

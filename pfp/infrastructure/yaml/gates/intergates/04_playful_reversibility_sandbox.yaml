@@ -1,0 +1,34 @@
+intergate_id: "PFP-IG-04-PLAYFUL-REVERSIBILITY"
+name: "Playful Reversibility Sandbox Intergate"
+transition_from: "PFP-03-BEGEMOT"
+transition_to: "PFP-06-MARGARITA"
+cognitive_vector: "Reversible Exploration & Gauge Isolation"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A3"
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A5"
+  - "ADR-OE-DIALOGUE-PLAY-001:Section_5.4"
+doctrine: |
+  "Reversible play reopens exploration; it does not close the ledger or grant authority.
+   Wild prompt mutations must remain strictly fenced within zero-authority boundaries."
+objective: >
+  Establish a zero-authority sandbox for experimental, high-variance prompt rewriting.
+  Ensure that creative prompt exploration can test alternative representations without risking
+  side-effects on production ledgers or certifying unverified claims.
+fences:
+  - "Authority Fence: All experimental play operations must carry AuthorityEffect: None."
+  - "Ledger Immunity Fence: Sandbox execution cannot mutate canonical state, issue credentials, or alter verification receipts."
+  - "Reversibility Fence: Any sandbox state must be strictly roll-backable to the pre-play baseline."
+input_schema:
+  sandbox_boundary_active: "bool"
+  declared_authority_effect: "string"
+  has_production_side_effects: "bool"
+transition_rules: >
+  If sandbox_boundary_active is true and declared_authority_effect == 'None' and has_production_side_effects is false,
+  permit passage to PFP-06-MARGARITA. Otherwise, trigger RefusalCode.UNAUTHORIZED_PLAY_EFFECT.
+narrowest_defensible_claim: >
+  Fencing exploratory prompt generation within zero-authority sandboxes protects core verification invariants
+  while allowing unconstrained creative iteration.
+next_test_needed: >
+  Attempt a production ledger write from inside a playful rewrite loop and verify the intergate blocks the operation.

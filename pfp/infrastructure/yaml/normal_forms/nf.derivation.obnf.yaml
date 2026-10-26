@@ -1,0 +1,114 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: form_contract
+identity:
+  id: nf.derivation.obnf
+  name: Obstruction Relativization Normal Form
+  short_name: OBNF
+  version: v0
+  status: draft
+  family: derivation
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - collapse_map
+  - protected_law
+  - obstruction_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: an obstruction asserted without naming the law it obstructs
+  preserves_invariant: a collision is a positive fact about a collapse, and becomes an obstruction
+    only relative to a declared protected law that its pushforward violates
+  protected_skeleton:
+  - source_relation
+  - collapse_map
+  - collision_witness
+  - protected_law
+  erased_structure: []
+  non_claims:
+  - does not make every collision an obstruction; a bare collapse can stay admissible
+  - does not fix which law is protected; that is a declaration, and a different declaration
+    gives a different verdict on the same collapse
+  - does not derive the collapse map from the relation it collapses
+  - does not imply authorization
+quadrilateral:
+  qualifies_as_true_normal_form: false
+  qualification_gap: no_project_join_theorem
+  anomaly_exclusion: an obstruction named without the law it is claimed to obstruct
+  lossless_join:
+    status: not_a_relational_decomposition
+    statement: the collapse map is recorded; it is not reconstructed by a natural join
+  dependency_preservation:
+    status: law_stays_attached_to_the_verdict
+    statement: a change of protected law is a different declaration and a different verdict
+  syntactic_decision:
+    status: declaration_decidable
+    statement: the verdict is computed from the collapse, the colliding pair, and the named
+      law
+declarations_required:
+- source_relation
+- collapse_map
+- protected_law
+- admissibility_policy
+evidence_required:
+- colliding_pair
+- pushforward_of_the_law
+- law_status_before_and_after
+validation_criteria:
+- a collision is recorded as an existence claim with the colliding pair as its witness
+- an obstruction claim names the protected law it is relative to
+- the pushforward of the protected law along the collapse is evaluated, not assumed
+- a collapse whose protected law survives is recorded as an admissible collision, not an obstruction
+- identification of two terms is recorded as always colliding, which is a fact about the map
+  and not yet a defect
+proof_obligations:
+- id: obnf.identification_always_collides
+  status: upstream_theorem
+  ref: 19L57G1
+  section: paper/primitive_difference.md S3
+- id: obnf.collision_becomes_obstruction_under_irreflexivity
+  status: upstream_theorem
+  ref: 19L57G1
+  section: paper/primitive_difference.md S3
+terminal_routes:
+- AcceptAdmissibleCollision
+- PromoteToObstruction
+- RejectUnrelativizedObstruction
+- RequireProtectedLawDeclaration
+certification:
+  certificate_required: true
+  certificate_kind: collision_certificate
+  obstruction_class_required: true
+  loss_ledger_required: true
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: a merge is reported as an obstruction with no law named
+  diagnosis: obstruction asserted absolutely rather than relative to a protected property
+  terminal: RejectUnrelativizedObstruction
+- symptom: a collapse is refused although every declared law survives it
+  diagnosis: collision treated as defect
+  terminal: AcceptAdmissibleCollision
+- symptom: the same collapse is an obstruction in one report and not in another
+  diagnosis: two different protected laws were in force and only one was recorded
+  terminal: RequireProtectedLawDeclaration
+examples:
+- ref: 19L57G1
+  section: paper/primitive_difference.md S3
+  note: collision defined prior to any law; obstruction defined relative to one
+references:
+- 19L/PIN.md
+- ./nf.derivation.pdnf.yaml
+- ./README.md
+schema_ref: ./normal_form_contract_schema.yaml
+terminal_route_map:
+  AcceptAdmissibleCollision: Preserve
+  PromoteToObstruction: Preserve
+  RejectUnrelativizedObstruction: Reject
+  RequireProtectedLawDeclaration: Refuse

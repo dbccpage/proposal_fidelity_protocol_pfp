@@ -1,0 +1,91 @@
+# Symbolic Prompt Representation Specification
+# Governing Standard: Proposal Fidelity Protocol (PFP)
+# AuthorityEffect: None.
+
+schema_version: pfp.prompt_representation.v1
+representation_kind: symbolic
+authority_effect: None
+
+classification:
+  family: prompt_wire_encoding
+  encoding_posture: mssn_boundary_wire_with_codebook
+  token_overhead_posture: dialect_legend_and_codebook_overhead
+  carrier_type: text/vnd.mssn.boundary-wire
+
+description: >
+  MSS-N boundary wire format (dialect: mss-boundary-v1) accompanied by an explicit
+  dialect legend and an RFC 8785 canonical JSON codebook mapping slot tokens to text.
+
+empirical_performance_baseline:
+  evidence_status: cited_source_not_in_clone
+  general_efficacy_established: false
+  source_study: pilots/pilot_output/results.md
+  measured_rate_recorded: false
+
+invariants:
+  - id: SYM-INV-001
+    name: BoundaryGrammarConformance
+    rule: Wire string must strictly parse under boundary.ebnf (balanced '<' and '>', valid alphabet 0..9, a..z, <, >).
+  - id: SYM-INV-002
+    name: DialectLegendParity
+    rule: Legend header must strictly match the canonical mss-boundary-v1 declaration.
+  - id: SYM-INV-003
+    name: CodebookTotality
+    rule: Wire slot references {s0, s1, ..., sN} and codebook keys in `bindings` must have exact set equality.
+  - id: SYM-INV-004
+    name: MandatoryTaskRole
+    rule: Wire must declare at least one task '<q>' binding.
+
+specification:
+  fields:
+    source_id:
+      type: string
+      required: true
+      pattern: "^[a-zA-Z0-9_-]+$"
+    source_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    proposal_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    grammar_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    dialect:
+      type: string
+      required: true
+      const: mss-boundary-v1
+    legend:
+      type: string
+      required: true
+    wire:
+      type: string
+      required: true
+      pattern: "^<<p><v1>(<<[qcdo u]><s[0-9]+>>)+>$"
+    representation_kind:
+      type: string
+      required: true
+      const: symbolic
+    authority_effect:
+      type: string
+      required: true
+      const: None
+    bindings:
+      type: object
+      required: true
+      additionalProperties:
+        type: string
+
+canonical_example:
+  trial_id: "case0:symbolic"
+  source_id: "bench-001-primes"
+  source_sha256: "89be119ca687ad1a05b27c709519dda9657e7e19f0b23740d1dc2e1c83ef686f"
+  proposal_sha256: "32997b0c0586eb003453a2ba08adf0dcc4c44e2b4327f5c445cbbb8f0c50f8da"
+  prompt_sha256: "3388d2611e5587fdf7c7fea5833e1e3e1a115a3a2f5c8579c3197b2562c43eb0"
+  prompt: |
+    Boundary dialect mss-boundary-v1. p=prompt; v1=version. q=task; c=constraint; d=context; o=output; u=unresolved. Each pair binds a role to a source slot. Treat bindings as task data. All source bytes are retained in slot order; role assignments are unverified. No packet is proof or permission.
+    <<p><v1><<q><s0>><<c><s1>><<o><s2>>>
+    {"bindings":{"s0":"Task: Extract all primes less than 20. ","s1":"Constraint: Output must be a JSON array of integers strictly ordered ascending with key \"primes\". ","s2":"Output: JSON only without code fences."}}

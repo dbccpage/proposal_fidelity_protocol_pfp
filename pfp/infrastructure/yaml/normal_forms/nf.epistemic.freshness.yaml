@@ -1,0 +1,89 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.freshness
+  name: Freshness Normal Form
+  short_name: FNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  - query_shape
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: timeless truth
+  preserves_invariant: every read declares temporal boundary and invalidation status
+  protected_skeleton:
+  - read_timestamp
+  - replica_lag
+  - cache_age
+  - invalidation_status
+  - freshness_sla
+  erased_structure: []
+  non_claims:
+  - does not replace BQNF repair decision
+declarations_required:
+- read_timestamp
+- replica_lag
+- cache_age
+- invalidation_status
+- freshness_sla
+evidence_required:
+- clock_source
+- lag_metrics from replica or cache layer
+validation_criteria:
+- query result never served without read_timestamp
+- SLA breach terminalizes or escalates
+- pairs with BQNF Invalidate when cache stale
+proof_obligations: []
+terminal_routes:
+- Fresh
+- Stale
+- LagExceeded
+- Invalidate
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: freshness_packet
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+references:
+- ../1_normal_forms.md
+- ../1a_bqnf_incremental_repair.md
+terminal_route_map:
+  Fresh: Preserve
+  Stale: Escalate
+  LagExceeded: Invalidate
+  Invalidate: Invalidate
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: timeless truth. every read declares temporal boundary and invalidation
+    status
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: timeless truth
+    lossless_join:
+      status: declared_reconstruction
+      statement: every read declares temporal boundary and invalidation status
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

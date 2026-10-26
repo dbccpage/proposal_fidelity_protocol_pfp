@@ -1,0 +1,58 @@
+{
+  "mutation_id": "mut_21_forward_reference_in_candidate",
+  "description": "Candidate uses t1 before defining it",
+  "case": {
+    "case_id": "c058_b16_dce_w8",
+    "width": 8,
+    "inputs": [
+      "x",
+      "y"
+    ],
+    "ops": [
+      [
+        "d1",
+        "mul",
+        "x",
+        "y"
+      ],
+      [
+        "d2",
+        "sub",
+        "d1",
+        "x"
+      ],
+      [
+        "d3",
+        "shl",
+        "d2",
+        2
+      ],
+      [
+        "live",
+        "xor",
+        "x",
+        "y"
+      ]
+    ],
+    "out": "live",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b16_dce_w8",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "res",
+        "add",
+        "t1",
+        "x"
+      ],
+      [
+        "t1",
+        "const",
+        5
+      ]
+    ],
+    "out": "res"
+  }
+}

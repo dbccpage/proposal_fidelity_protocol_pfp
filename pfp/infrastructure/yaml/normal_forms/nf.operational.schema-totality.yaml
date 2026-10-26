@@ -1,0 +1,84 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.operational.schema-totality
+  name: Declared SQL Key Projection and Candidate Totality Profile
+  short_name: SQL-TOTAL
+  version: v0
+  status: active
+  family: evidence
+classification:
+  hierarchy_level: normal_form
+  subject_kind: [relvar, candidate_carrier, schema_inventory]
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: Null identity, vacuous coverage, duplicate or foreign candidates, and unverified reconstruction.
+  preserves_invariant: Every source table has total keys and lossless declared-key projections; coverage is exact in set and cardinality.
+  protected_skeleton: [heading, total_keys, optional_domains, declared_fds, candidate_ids, input_digests]
+  erased_structure: []
+  non_claims:
+    - SQL coverage does not prove that an externally supplied verifier verdict is true.
+    - Storage scalars do not establish semantic atomicity of JSON or CSV payloads.
+    - No undeclared functional, multivalued, or join dependency is inferred.
+    - Key-plus-one-attribute projections do not certify unrestricted semantic 6NF.
+    - Educational REAL aggregate demos do not become exact mathematical solvers.
+    - Certification does not imply authorization or a Genesis scale extension.
+definition:
+  source: omega_engine_pfp/infrastructure/yaml/normal_forms/schema_pipeline.py
+  formal_statement: >-
+    For each declared table heading H and minimal total SQL keys K_i, use only
+    K_i -> H as the FD theory. Choose a minimal key K and project onto K union {a}
+    for each nonkey attribute a. Check heading coverage, chase losslessness, and
+    dependency preservation separately. A candidate problem has a nonempty stable
+    carrier; checks exhaust it only if IDs and cardinalities agree in both directions.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: operational SQL profile; semantic domains and complete MVD/JD theories remain undeclared
+    anomaly_exclusion: Null protected facts and incomplete or duplicate evidence cannot masquerade as total coverage.
+    lossless_join:
+      status: checked_under_declared_key_fds
+      statement: Exact chase verifies reconstruction; optional payload values join through total keys.
+    dependency_preservation:
+      status: independently_checked
+      statement: The projected FD theory must preserve original declared dependencies or expose a specific gap.
+    syntactic_decision:
+      status: finite_schema_decidable
+      statement: SQLite metadata, finite key FD closure, and exact candidate set/cardinality determine this profile.
+declarations_required:
+  - exhaustive SQL file and embedded-schema inventory
+  - total keys, optional domains, and closed key-FD scope
+  - nonempty candidate carrier with stable unique IDs and input digests
+evidence_required:
+  - per-table projection and reconstruction SQL
+  - losslessness and dependency-preservation results
+  - null mutation and missing, duplicate, foreign, or input-mismatched candidate refusals
+validation_criteria:
+  - Every declared schema source and table is inventoried.
+  - Protected facts reject SQL NULL on INSERT and UPDATE, including legacy text primary keys.
+  - Coverage uses set equality and cardinality, with input-bound foreign keys.
+  - Mathematical acceptance is separate from structural exhaustiveness.
+terminal_routes: [PreserveDeclaredProfile, RejectNullFact, RejectCarrierMismatch, RequireSemanticDependencies]
+terminal_route_map:
+  PreserveDeclaredProfile: Preserve
+  RejectNullFact: Reject
+  RejectCarrierMismatch: Reject
+  RequireSemanticDependencies: Refuse
+certification:
+  certificate_required: true
+  certificate_kind: omega.nf.schema-inventory.v1
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+proof_obligations:
+  - id: sql_totality.semantic_nf4_nf5_nf6
+    status: open
+    statement: Declare complete semantic domains, MVDs, and JDs before stronger normalization certification.
+references:
+  - ./normal_form_contract_schema.yaml
+  - schema_pipeline.py

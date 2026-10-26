@@ -1,0 +1,92 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.experimental.gauge
+  name: Gauge Experimental Extension
+  short_name: XGauge
+  version: v1
+  status: draft
+  family: experimental
+  theory_status: experimental
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - data_under_gauge_or_higher_regime
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: gauge drift
+  preserves_invariant: protected_skeleton_must_be_declared_before_transport
+  protected_skeleton:
+  - source_regime
+  - target_regime
+  - protected_skeleton
+  - allowed_gauge_transformations
+  - loss_ledger_policy
+  erased_structure: []
+  non_claims:
+  - does not make quantum market legal or physical domain claims part of the core
+    taxonomy
+  - does not promote experimental data regimes to normal forms
+declarations_required:
+- source_regime
+- target_regime
+- protected_skeleton
+- allowed_gauge_transformations
+- loss_ledger_policy
+evidence_required:
+- transformation_trace
+- preserved_skeleton_witness
+- loss_ledger_when_distinctions_are_erased
+validation_criteria:
+- protected_skeleton_must_be_declared_before_transport
+- erased_distinctions_require_loss_ledger
+- experimental_claims_must_remain_quarantined
+terminal_routes:
+- Preserve
+- Lift
+- Escalate
+- Unsupported
+- ClosureFailure
+- BudgetUnknown
+- Quarantine
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: experimental_gauge_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+terminal_route_map:
+  Preserve: Preserve
+  Lift: Lift
+  Escalate: Escalate
+  Unsupported: Unsupported
+  ClosureFailure: ClosureFailure
+  BudgetUnknown: BudgetUnknown
+  Quarantine: Quarantine
+  Refuse: Refuse
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: gauge drift. protected_skeleton_must_be_declared_before_transport
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: gauge drift
+    lossless_join:
+      status: declared_reconstruction
+      statement: protected_skeleton_must_be_declared_before_transport
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

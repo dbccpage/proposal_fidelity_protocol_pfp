@@ -1,0 +1,1457 @@
+{
+  "fixtures": [
+    {
+      "id": "pos",
+      "note": "points 1, 2, 3; patches {1, 2} and {2, 3}; sections 1 -> 0, 2 -> 1 and 2 -> 1, 3 -> 0 agree on the overlap {2}; the glue 1 -> 0, 2 -> 1, 3 -> 0",
+      "role": "positive",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "own_neg",
+      "note": "each section is consistent on its patch, but they disagree at the shared point 2",
+      "role": "own_negative",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "near_domain",
+      "note": "the first section forgets point 2 of its patch",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "defined_on_patch"
+    },
+    {
+      "id": "near_glue",
+      "note": "the glue gives point 3 the value 1, not the second section's 0",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "glue_restricts"
+    },
+    {
+      "id": "near_conflict",
+      "note": "the sections conflict at point 2; the glue follows the second",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "near_uncovered",
+      "note": "a fourth point lies in no patch and has no glue",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            4
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              4,
+              0,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              7
+            ]
+          ],
+          [
+            "assigns",
+            [
+              5,
+              1,
+              7
+            ]
+          ],
+          [
+            "assigns",
+            [
+              5,
+              2,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              7
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              5
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "near_outside",
+      "note": "the first section also gives point 3, outside its patch, a value",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              2,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "within_patch"
+    },
+    {
+      "id": "near_stray_member",
+      "note": "a point is a member of a value",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "near_stray_value",
+      "note": "a section gives a point another point as its value",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              1
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "near_stray_glue",
+      "note": "the glue gives a patch a value",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "glue_typed"
+    },
+    {
+      "id": "near_two",
+      "note": "the glue gives point 1 two values",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "point",
+            3
+          ],
+          [
+            "patch",
+            2
+          ],
+          [
+            "value",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "member",
+            "sorts": [
+              "point",
+              "patch"
+            ]
+          },
+          {
+            "name": "assigns",
+            "sorts": [
+              "patch",
+              "point",
+              "value"
+            ]
+          },
+          {
+            "name": "glue",
+            "sorts": [
+              "point",
+              "value"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "assigns",
+            [
+              3,
+              0,
+              5
+            ]
+          ],
+          [
+            "assigns",
+            [
+              3,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              1,
+              6
+            ]
+          ],
+          [
+            "assigns",
+            [
+              4,
+              2,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "glue",
+            [
+              0,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              1,
+              6
+            ]
+          ],
+          [
+            "glue",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "member",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "member",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "member",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "one_glue"
+    }
+  ]
+}

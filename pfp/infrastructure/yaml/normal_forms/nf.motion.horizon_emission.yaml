@@ -1,0 +1,156 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.motion.horizon_emission
+  name: Horizon Emission Normal Form
+  short_name: HENF
+  version: v0
+  status: draft
+  family: motion
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - horizon_boundary
+  - emission_stream
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: claiming exterior emission preserves interior state authority
+    without a horizon and loss ledger
+  preserves_invariant: boundary-crossing data declares interior exterior emission
+    channel conservation ledger and recoverability class
+  protected_skeleton:
+  - horizon_boundary
+  - interior_region
+  - exterior_observer
+  - emission_channel
+  - coarse_graining_map
+  - conservation_ledger
+  - recoverability_class
+  erased_structure: []
+  non_claims:
+  - does not resolve the black-hole information problem
+  - does not assert a physical Hawking spectrum unless a finite physical model supplies
+    that evidence
+  - does not let exterior summaries authorize inaccessible interior state without
+    a declared lift or refusal
+  - does not replace CODA-MUR loss-ledger obligations for ordinary representation
+    transport
+obstruction_substrate:
+  policy_ref: ../substrate/default_finite_obstruction_policy.yaml
+  finite_carrier:
+    description: finite boundary channel separating interior claims from exterior
+      emitted packets summaries tombstones or redactions
+  cochain_complex:
+    C0: admissible_decodings_lifts_tombstones_or_loss_ledgers
+    C1: horizon_crossing_loss_emission_mismatch_or_unledgered_redaction_defects
+    C2: conservation_recoverability_or_authority_closure_failures
+    d0: ledger_or_lift_to_emission_defect
+    d1: emission_defect_to_closure_failure
+    quotient: Q1 = C1 / im(d0)
+  obstruction_class:
+    notation: '[omega]'
+    exact: '[omega] == 0'
+    residual_closed: '[omega] != 0 and d1(omega) == 0'
+    open: d1(omega) != 0
+  carrier_realization: boundary_channel
+  geometry_module: null
+  gauge_metric_selector:
+    weights:
+    - recoverability
+    - loss
+    - conservation_violation
+    - authority_risk
+    selector_role: choose refusal or residual terminal when exterior evidence cannot
+      lift interior claims
+declarations_required:
+- horizon_boundary
+- interior_region
+- exterior_observer
+- crossing_rule
+- emission_channel
+- coarse_graining_map
+- conservation_ledger
+- recoverability_class
+- refusal_rule_for_interior_claims
+evidence_required:
+- boundary_crossing_trace
+- emitted_packet_log
+- loss_or_redaction_ledger
+- conservation_ledger
+- lift_witness_if_exterior_claim_mentions_interior_state
+validation_criteria:
+- exterior claims do not cite inaccessible interior state as authoritative without
+  a lift witness
+- emitted packets carry sufficient loss or conservation accounting
+- irreversible deletion redaction eviction or compaction terminalizes as LossLedgerRequired
+  unless exact lift exists
+- recoverability class is explicit before emitted data drives downstream authority
+proof_obligations:
+- id: henf.exterior_authority_soundness
+  statement: exterior authority is limited to emitted packets and declared finite
+    lifts
+  status: deferred
+terminal_routes:
+- ExteriorEmissionCertified
+- LossLedgerRequired
+- InteriorInaccessible
+- RecoverabilityUnknown
+- ConservationViolation
+- RefuseUnledgeredHorizon
+certification:
+  certificate_required: true
+  certificate_kind: horizon_emission_certificate
+  obstruction_class_required: true
+  loss_ledger_required: true
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: compacted log or redacted store serves an exterior summary as if the erased
+    interior rows remained reconstructable
+  diagnosis: unledgered horizon crossing
+  terminal: LossLedgerRequired
+- symptom: consumer relies on emitted aggregate to make a row-level claim across an
+    inaccessible boundary
+  diagnosis: exterior authority overreach
+  terminal: InteriorInaccessible
+references:
+- ../1b_gtmur_representation_transport.md
+- ../relnf.md
+- ../1_normal_forms.md
+terminal_route_map:
+  ExteriorEmissionCertified: Escalate
+  LossLedgerRequired: Escalate
+  InteriorInaccessible: Refuse
+  RecoverabilityUnknown: Preserve
+  ConservationViolation: Reject
+  RefuseUnledgeredHorizon: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: claiming exterior emission preserves interior state authority
+    without a horizon and loss ledger. boundary-crossing data declares interior exterior
+    emission channel conservation ledger and recoverability class
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: claiming exterior emission preserves interior state authority
+      without a horizon and loss ledger
+    lossless_join:
+      status: declared_reconstruction
+      statement: boundary-crossing data declares interior exterior emission channel
+        conservation ledger and recoverability class
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

@@ -1,0 +1,617 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "register_squares",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:1136aa4ae243b84ae52036c4fdcb2e04b2fc8e3e0707c739a6155fc09f80d071",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "equivalence",
+          "map": null,
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:ef0af88f94d97347714a09c6c5487947f30b3834c287b09566eabd32a11c7471",
+      "native_code": "FAILS:both_ways,mapped",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_no_map",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": null,
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:6d933fcdc40705d37794a4d772e4c1a08da654aa7eef8671f629d2094b079ee6",
+      "native_code": "FAILS:mapped",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_partial",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:d02cf7c9131450833d590c619b49503671dde4f6602b01be4abd42447b6a7703",
+      "native_code": "FAILS:map_total",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_step",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:0"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:be47e8e7fc0224c3f222d67aa66d6db6404142f11181beaf100f0d10949c0452",
+      "native_code": "FAILS:step_square",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_equiv",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "equivalence",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:6fd863c6ece30e0bb909431dc0168a3e2a80f3b78928d956bbd12d18c9aede5b",
+      "native_code": "FAILS:both_ways",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_state_sight",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "0"
+              ],
+              [
+                "1",
+                "1"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:2e343158c04f56033b81543a688dfa86618e9e1038baa2af7184ae5cde187485",
+      "native_code": "FAILS:sight_square",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-5"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "1"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "input_sha256": "sha256:e83cfa81673c8da3f6cfc1a49f3140a80533cbe010409b1c8ee815390f12e634",
+      "native_code": "FAILS:sight_square",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "ACCEPTED",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 65,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {
+    "lists_emptied": "needs_target_schema"
+  },
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_065"
+}

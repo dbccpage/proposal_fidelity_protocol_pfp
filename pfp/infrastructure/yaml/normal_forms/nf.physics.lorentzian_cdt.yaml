@@ -1,0 +1,132 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.lorentzian_cdt
+  name: 4D Lorentzian Regge Causal Triangulation Normal Form
+  short_name: LCNF
+  version: v0
+  theory_status: established
+  contract_status: draft
+  verification_status: absent
+  family: physics
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - lorentzian_simplicial_geometry
+  - causal_dynamical_triangulations
+  data_posture: in_motion
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: closed timelike curves (CTCs), spatial slice foliation branching,
+    unverified spatial Cauchy topology changes, and metric signature incompatibilities
+    under Lorentzian Pachner surgery
+  preserves_invariant: global proper time foliation t -> t+1, strictly verified causal
+    Pachner move legality preserving initial carrier topology, compatible Lorentzian
+    edge length assignments (l_s^2 > 0, l_t^2 < 0), and invariant spatial Euler characteristic
+  protected_skeleton:
+  - edge_signatures_and_squared_lengths
+  - simplex_causal_types
+  - cauchy_slice_foliation
+  - certified_initial_slice_topology
+  - causal_pachner_move_witnesses
+  - face_gluing_compatibility
+  erased_structure:
+  - continuous_spacetime_diffeomorphisms
+  - acausal_spacelike_topology_changes
+  non_claims:
+  - Euler characteristic conservation chi(Sigma_t) is an invariant consistency check,
+    not a complete topology certificate; topologies with identical Euler characteristics
+    (e.g., S^3 and T^3 with chi=0) are distinguished by checked move legality and initial
+    carrier homology
+  - monotonic time labels certify directed graph acyclicity; they do not alone establish
+    that simplices realize compatible nondegenerate Lorentzian metrics without explicit
+    metric data and face-gluing compatibility
+  - does not prove that discrete CDT converges to continuous 4D de Sitter spacetime
+    without quantum Monte Carlo infinite volume limits
+  - does not eliminate Wick rotation path integral measure ambiguities
+declarations_required:
+- edge_signature_map: edge_id -> {spacelike (l_s^2 > 0), timelike (l_t^2 < 0)}
+- simplex_type_map: simplex_id -> {(4,1), (3,2), (2,3), (1,4)}
+- initial_carrier_topology: declared manifold class and verified homology of Sigma_0
+- foliation_slice_registry: slice_id -> spatial 3-triangulation
+- lorentzian_metric_parameters: ratio alpha = -l_t^2 / l_s^2 satisfying Regge Lorentzian nondegeneracy (alpha > 7/12 in 4D)
+- causal_pachner_moves: sequence of local bistellar replacements with verified replacement complexes and boundary matches
+validation_criteria:
+- proper_foliation: all spacelike edges connect vertices at the same time slice t; all timelike edges connect t to t+1
+- no_ctc: causal vertex ordering is strictly irreflexive and transitive (t_u < t_v for all timelike edges (u,v))
+- lorentzian_metric_admissibility: ratio alpha = -l_t^2 / l_s^2 strictly satisfies simplex metric nondegeneracy on all simplex causal types
+- face_gluing_compatibility: shared faces between adjacent simplices possess identical induced piecewise-flat Lorentzian geometry
+- move_legality_topology_preservation: every spatial transition is composed of verified local causal Pachner moves that preserve PL 3-manifold homeomorphism to Sigma_0
+- euler_characteristic_conservation: spatial Euler characteristic chi(Sigma_t) remains constant across all slices as a necessary consistency check
+terminal_routes:
+- CausalFoliationPreserved
+- ClosedTimelikeCurveDetected
+- SpatialTopologyBreach
+- MetricCompatibilityDefect
+- IllegalPachnerMove
+- Unsupported
+terminal_route_map:
+  CausalFoliationPreserved: Preserve
+  ClosedTimelikeCurveDetected: Refuse
+  SpatialTopologyBreach: Reject
+  MetricCompatibilityDefect: Reject
+  IllegalPachnerMove: Refuse
+  Unsupported: Unsupported
+extensions:
+  condition_to_local_route_map:
+    all_valid: CausalFoliationPreserved
+    ctc_detected: ClosedTimelikeCurveDetected
+    move_topology_breach: SpatialTopologyBreach
+    lorentzian_metric_incompatibility: MetricCompatibilityDefect
+    unverified_pachner_surgery: IllegalPachnerMove
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: Lorentzian causal dynamical triangulation normal form preserving
+    global proper time foliation, acyclic causal ordering, compatible Lorentzian simplex
+    metrics, and certified spatial 3-manifold topology under verified causal Pachner surgeries.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: closed timelike curves (CTCs), spatial slice foliation branching,
+      spatial topology changes, and Lorentzian metric degeneracy
+    lossless_join:
+      status: declared_reconstruction
+      statement: global proper time foliation t -> t+1 and invariant spatial 3-manifold
+        topology certified through legal move sequence from Sigma_0
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+canonical_terminal_map:
+  CausalFoliationPreserved: Preserve
+  ClosedTimelikeCurveDetected: Refuse
+  SpatialTopologyBreach: Reject
+  MetricCompatibilityDefect: Reject
+  IllegalPachnerMove: Refuse
+  Unsupported: Unsupported
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+certification:
+  certificate_required: true
+  certificate_kind: nf.physics.lorentzian_cdt_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+evidence_required:
+- initial_carrier_topology: {manifold_type: string, homology_ranks: list}
+- slice_foliation_indices: list
+- edge_lengths_squared: dict
+- causal_pachner_moves_log: list
+- move_legality_witnesses: list
+- euler_characteristic_sequence: list
+- simplex_lorentzian_gram_signs: list
+- face_gluing_compatibility_verified: boolean
+- time_directed_acyclicity_witness: boolean
+schema_ref: ./normal_form_contract_schema.yaml

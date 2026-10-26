@@ -1,0 +1,61 @@
+# Epic: Contract Projection Custody and Bounded Build-Time Code Generation
+
+**Epic ID:** `EPIC-OE-GOV-CONTRACT-CODEGEN-001`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+
+**Lifecycle scope:** LIVE — residual verification
+**Domain Subfolder:** oegov
+**Consolidation Source:** EPIC-OE-GOV-001/002/003
+**Date:** October 2026
+
+## Current implementation
+
+The canonical contract home is [omega_engine_governance/contracts](../../../../omega_engine_governance/contracts/). Crate definitions are projections checked by [registry/projections.rs](../../../../omega_engine/crates_rs/omega_contracts/src/registry/projections.rs), not a second source of truth. [build.rs](../../../../omega_engine/crates_rs/omega_contracts/build.rs) already verifies projected corpus and emits generated vocabulary/images. Preserve this ownership; no ownership-declaration project is needed.
+
+The actual parser is [omega_contracts/src/nomos_urn.rs](../../../../omega_engine/crates_rs/omega_contracts/src/nomos_urn.rs), with [golden parity vectors](../../../../omega_engine/crates_rs/omega_contracts/src/nomos_urn_golden_parity.rs). Historical corpus counts and line counts are provenance snapshots, not permanent acceptance totals.
+
+[authority_effect.py](../../../../omega_engine_governance/contracts/authority_effect.py) recognizes None/EvidenceOnly/FactOnly/StateTransition metadata. Recognition does not authenticate a license, admit a candidate or authorize a state change.
+
+## Residual sequence and acceptance
+
+1. Extend one independently reviewed URN vector/refusal at a time.
+2. Verify source/projection binding and deterministic build output with a tiny temporary corpus, including malformed and transplanted entries.
+3. Keep code generation deterministic and source-bound. Do not mutate canonical contracts solely to make a projected check pass.
+4. Treat proc-macro/trait-law work as conditional: first choose a concrete expressible signature or finite const witness and demonstrate its compile-fail control. A generated trait binding establishes only what the Rust type/const checker actually checks; it cannot certify general associativity or norm preservation from a label.
+
+No runtime reflection, mass v1 rewrite or new derive framework follows from this plan. Static schema/type checks, mathematical proof and execution admission retain separate evidence ceilings.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** Canonical governance ownership and build-time projected-corpus validation already exist. Nomos URN parsing is in omega_contracts, not the absent omega_contract_core crate. Historical corpus counts are not stable live invariants; parsing an AuthorityEffect rung is metadata validation, not a license grant. A derive macro cannot prove arbitrary algebraic laws.
+
+**Bounded behavior and public port:** Call omega_contracts::nomos_urn parser against pinned golden vectors, registry::projections parse_manifest/verify_projected_corpus against a temporary two-entry corpus, and build.rs generated outputs through the smallest crate test. Compare parser values/refusal kinds, source/projection bytes and deterministic output independently. Keep procedural-law witness work separate and require a concrete representable law.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Hella checks malformed input; Jeremy/Techne implements the smallest production change; Koroviev and the Soviet Inspector challenge the independent oracle; Yaroslava checks custody before Woland records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | Unexpected file marker, bad semver and empty segment must refuse with declared kinds; implement one missing grammar branch; accept a valid pinned vector and recover after restoring the parser. | Existing `omega_engine/crates_rs/omega_contracts/src/nomos_urn_golden_parity.rs` tests; add one named vector at a time with literal expected parse/refusal, independently reviewed grammar. |
+| 2 | A projected entry with a transplanted source path/digest or missing canonical file must fail; implement minimum binding check; restore exact canonical bytes and pass. | Extend `omega_engine/crates_rs/omega_contracts/tests/contract_projections.rs::projection_transplant_and_recovery`; two-file temporary corpus and independent SHA-256, not hardcoded estate totals. |
+| 3 | Generate twice from the same pinned corpus and require identical output; change one source and require only the attributable image/digest to change; correct the smallest nondeterministic emission. | Proposed `omega_engine/crates_rs/omega_contracts/tests/codegen_determinism.rs::same_source_same_generated_bytes`; isolated scratch builds and sorted output byte comparison. |
+| 4 | Parsing StateTransition metadata must not authorize execution; preserve an explicit license/admission fence; malformed rung refuses while None remains a valid declarative value. | Proposed `omega_engine_governance/tests/test_contract_effect_metadata.py::test_parsed_effect_is_only_metadata` checks literal parser outputs/refusals; extend existing Rust `no_authority_firewall.rs::proposal_artifact_cannot_claim_authority` through the real NoAuthorityGuard::validate port. Neither test infers admission from metadata. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Change a refusal branch in [nomos_urn.rs](../../../../omega_engine/crates_rs/omega_contracts/src/nomos_urn.rs) or disable a source/projection binding check in [projections.rs](../../../../omega_engine/crates_rs/omega_contracts/src/registry/projections.rs); corresponding independent grammar/digest witnesses must fail. Changing an expected-count assertion in a test is not a production mutation. Remove the diagnostic effect refusal in [no_authority.rs](../../../../omega_engine/crates_rs/omega_contracts/src/no_authority.rs) and require the real guard's forged-effect witness to fail. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_contracts -j 1 nomos_urn
+cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_contracts -j 1 --test contract_projections
+cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_contracts -j 1 --test codegen_determinism
+py -3.12 -m pytest omega_engine_governance/tests/test_contract_effect_metadata.py -q
+cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_contracts -j 1 --test no_authority_firewall
+~~~
+
+**Cross-epic sink ownership:** Governance owns canonical contracts and decision schemas; Government Councils owns roster/attribution and deliberation applications; Operations owns classified packaging/parity; Woland owns digestion orchestration while omega_intelligence owns native lifecycle decisions. Skill/rule/antibody outputs enter their owning admission queue as candidates, with source/target digest custody. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Build validation covers parsed schema/projection obligations and generated types, not arbitrary mathematical laws or execution authority. Any proposed derive crate needs its own concrete type/compile-fail seam before adding architecture. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

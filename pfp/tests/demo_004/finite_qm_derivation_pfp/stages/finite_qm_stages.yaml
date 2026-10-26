@@ -1,0 +1,94 @@
+schema: "omega.pfp.finite_qm.stages.v1"
+authority_effect: "None"
+stage_controller_version: "pfp-staged.0.3"
+upstream_stage_directory: "omega_engine_pfp/infrastructure/yaml/stages"
+
+# Fast-path P* + Coloured Operad Stages (used by FAST_1TURN_TYPED, P_STAR_2TURN_TYPED, and MANUAL_CLIPBOARD_QUEUE)
+fast_stages:
+  - stage_id: "S0_HOST_CONGRUENCE_IDEAL_AND_P_STAR"
+    executor: "host"
+    requires: []
+    latency_budget_ms: 5
+    actions:
+      - "Apply CongruenceIdeal (I_distractor -> NullTree) to strip non-binding distractor spans"
+      - "Extract finite cochain carrier (V, E, c) and spanning tree T with cycle rank b_1 = |E| - |V| + 1"
+      - "Integrate spanning-tree potentials p_T^* = B_T^{-1} c|_T over Z"
+      - "Compute depth-1 chord differences c_hat_m^* = p_T^*(v_m) - p_T^*(u_m) and syndromes r^* = c_hat^* - c|_{E\\T}"
+      - "Decode single-edge or minimum-L1 coboundary repair and verify d_1 d_0 = 0"
+      - "Materialize exact sector lift (Phi_1, Gamma_2, Xi), Gaussian holonomy intensity, Sorkin I_2/I_3, K_{2,3} trace-zero duality, Mermin-Peres F_2 obstruction, and DAG route status"
+      - "Graft materialized values as immutable LeafTextSpan operands via o_i into the 6-colour ColouredOperadPrompt with AnnihilatorDecoy refutations (O^-)"
+
+  - stage_id: "S1A_MODEL_TREE_POTENTIAL_SLOTS"
+    executor: "model"
+    requires: ["S0_HOST_CONGRUENCE_IDEAL_AND_P_STAR"]
+    guard_id: "G_T_PATH_INTEGRATED_TREE_COBOUNDARY"
+    max_retries: 1
+    output_contract: "JSON array of |V|-1 signed integers [r(v_1)..r(v_{|V|-1})]"
+
+  - stage_id: "S1B_MODEL_CHORD_DIFFERENCE_SLOTS"
+    executor: "model"
+    requires: ["S1A_MODEL_TREE_POTENTIAL_SLOTS"]
+    guard_id: "G_C_DEPTH1_CHORD_SUBTRACTION"
+    max_retries: 1
+    output_contract: "JSON array of b_1 signed integers [c_hat_1..c_hat_{b_1}]"
+
+  - stage_id: "S2_OPERAD_GRAFTED_EXTRACTION"
+    executor: "model"
+    requires: ["S0_HOST_CONGRUENCE_IDEAL_AND_P_STAR"]
+    guard_id: "G0_TO_G9_SOVEREIGN_FINITE_QM_GATES"
+    max_retries: 1
+    output_contract: "Strict JSON object conforming to FiniteQmDerivationCertificateV1"
+
+  - stage_id: "S5_HOST_EVALUATION_AND_OPERAD_MINING"
+    executor: "host"
+    requires: ["S2_OPERAD_GRAFTED_EXTRACTION"]
+    latency_budget_ms: 2
+    actions:
+      - "Execute Sovereign Finite-QM Gate Engine (G0..G9)"
+      - "Emit typed GateReceiptV1 (PASS | FAIL | REFUSAL) with SHA-256 digest"
+      - "Mine reusable Coloured Operad composition rule and AnnihilatorDecoy witness into mined_operads.jsonl"
+
+# Full 11-Stage Fable 5.5 bindings (`pfp-staged.0.3`)
+pfp_staged_0_3_bindings:
+  stage_1_admit:
+    executor: "host"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_1_admit.yaml"
+    grammar: "derivation_dag_finite_qm_certificate_v1"
+    equality_test: "exact_integer_and_rational_tuple_equality"
+    coefficient_profile: "Z_and_Q_exact_cochain_v1"
+  stage_2_ideation:
+    executor: "model"
+    seat: "seat_begemot"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_2_ideation.yaml"
+  stage_3_audit:
+    executor: "model"
+    seat: "seat_koroviev"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_3_audit.yaml"
+  stage_4_l2_extraction:
+    executor: "model"
+    seat: "seat_begemot"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_4_l2_extraction.yaml"
+  stage_5_evaluation:
+    executor: "host"
+    seat: "seat_woland"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_5_evaluation.yaml"
+  stage_6_adversarial:
+    executor: "model"
+    seat: "seat_margarita"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_6_adversarial.yaml"
+  stage_7_challenge_replay:
+    executor: "host"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_7_challenge_replay.yaml"
+  stage_8_selection:
+    executor: "host"
+    seat: "seat_the_master"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_8_selection.yaml"
+  stage_9_receipt:
+    executor: "host"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_9_receipt.yaml"
+  stage_10_hand_off:
+    executor: "host"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_10_hand_off.yaml"
+  stage_11_evidence_plan:
+    executor: "model"
+    contract_file: "omega_engine_pfp/infrastructure/yaml/stages/stage_11_evidence_plan.yaml"

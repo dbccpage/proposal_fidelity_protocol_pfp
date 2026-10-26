@@ -1,0 +1,104 @@
+{
+  "input": {
+    "case_id": "ex05_idempotent_operator_completion",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "f(f(x))",
+        "f(x)"
+      ],
+      [
+        "g(f(x))",
+        "g(x)"
+      ]
+    ],
+    "precedence": {
+      "g": 60,
+      "f": 50
+    }
+  },
+  "expected_output": {
+    "case_id": "ex05_idempotent_operator_completion",
+    "status": "SOLVED",
+    "task": "COMPLETE",
+    "converged": true,
+    "steps": 4,
+    "rules_count": 2,
+    "rules": [
+      {
+        "lhs": "f(f(x))",
+        "rhs": "f(x)"
+      },
+      {
+        "lhs": "g(f(x))",
+        "rhs": "g(x)"
+      }
+    ],
+    "joinability_certificates_count": 2,
+    "joinability_certificates": [
+      {
+        "equation": [
+          "f(f(r0_x))",
+          "f(f(r0_x))"
+        ],
+        "joined_normal_form": "f(r0_x)"
+      },
+      {
+        "equation": [
+          "g(f(r0_x))",
+          "g(f(r0_x))"
+        ],
+        "joined_normal_form": "g(r0_x)"
+      }
+    ],
+    "ddc_trace": {
+      "case_id": "ex05_idempotent_operator_completion",
+      "trace_string": "ELambdaDCIMT",
+      "step_count": 7,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task COMPLETE for case ex05_idempotent_operator_completion",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "Lambda",
+          "detail": "Initialized TermOrder with 2 precedence levels",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "D",
+          "detail": "Starting completion saturation with max_steps=200",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "C",
+          "detail": "Generated and joined 2 critical pairs",
+          "meta": {}
+        },
+        {
+          "step_index": 4,
+          "op": "I",
+          "detail": "Canonical convergent TRS reached with 2 rules",
+          "meta": {}
+        },
+        {
+          "step_index": 5,
+          "op": "M",
+          "detail": "All critical pairs validated joinable",
+          "meta": {}
+        },
+        {
+          "step_index": 6,
+          "op": "T",
+          "detail": "Emitted completion result",
+          "meta": {}
+        }
+      ]
+    }
+  }
+}

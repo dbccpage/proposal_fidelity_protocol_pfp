@@ -1,0 +1,38 @@
+schema_id: "LGGR-DEFECT-PACKET-v1.0"
+title: "Local Green Global Red (LGGR) Evaluator Defect Packet"
+authority_effect: "None"
+reference_monograph: "F004_papers/001_finite_obstruction_calculus/001_local_green_global_red_foundational_series"
+doi: "10.5281/zenodo.22881911"
+
+description: >
+  Captures the evaluator defect Delta_E = E_g - prod_{i=1}^k E_i in {-1, 0, 1}.
+  Specifically witnesses the failure mode where all local evaluators pass (E_i = 1)
+  yet the global composite pipeline fails (E_g = 0), yielding Delta_E = -1.
+
+defect_taxonomy:
+  delta_minus_1: "Local-Green / Global-Red: Local monitors report green across all subsystems, yet composite fails."
+  delta_0: "Locally and globally consistent (both pass or at least one local failure triggers global failure)."
+  delta_plus_1: "Local-Red / Global-Green: Spurious local alarm overridden by global repair."
+
+packet_schema:
+  packet_id: "string"
+  system_name: "string"
+  local_evaluators:
+    - name: "string"
+      verdict: "int (0 or 1)"
+      scope: "string"
+  global_evaluator:
+    name: "string"
+    verdict: "int (0 or 1)"
+    scope: "composite end-to-end"
+  defect_functional:
+    delta_e: "int (-1, 0, or 1)"
+    is_lggr_witness: "bool (true if delta_e == -1)"
+  six_role_overlay:
+    planner_vote: "int (0 or 1)"
+    proposer_vote: "int (0 or 1)"
+    governor_vote: "int (0 or 1)"
+    worker_vote: "int (0 or 1)"
+    arbiter_vote: "int (0 or 1)"
+    auditor_vote: "int (0 or 1)"
+    anti_collusion_penalty_applied: "bool"

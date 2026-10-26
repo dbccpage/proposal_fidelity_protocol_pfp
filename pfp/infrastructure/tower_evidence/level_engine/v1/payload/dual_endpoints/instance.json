@@ -1,0 +1,979 @@
+{
+  "fixtures": [
+    {
+      "id": "pos",
+      "note": "the first endpoint sends num then receives ack, forever; the second receives num then sends ack; both start final",
+      "role": "positive",
+      "structure": {
+        "sorts": [
+          [
+            "here",
+            3
+          ],
+          [
+            "there",
+            2
+          ],
+          [
+            "kind",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "here_start",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_start",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_final",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_final",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_send",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "here_receive",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "there_send",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          },
+          {
+            "name": "there_receive",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "here_final",
+            [
+              0
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              1,
+              6,
+              0
+            ]
+          ],
+          [
+            "here_send",
+            [
+              0,
+              5,
+              1
+            ]
+          ],
+          [
+            "here_start",
+            [
+              0
+            ]
+          ],
+          [
+            "there_final",
+            [
+              3
+            ]
+          ],
+          [
+            "there_receive",
+            [
+              3,
+              5,
+              4
+            ]
+          ],
+          [
+            "there_send",
+            [
+              4,
+              6,
+              3
+            ]
+          ],
+          [
+            "there_start",
+            [
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": null
+    },
+    {
+      "id": "own_neg",
+      "note": "both endpoints wait to receive at the start",
+      "role": "own_negative",
+      "structure": {
+        "sorts": [
+          [
+            "here",
+            3
+          ],
+          [
+            "there",
+            2
+          ],
+          [
+            "kind",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "here_start",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_start",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_final",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_final",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_send",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "here_receive",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "there_send",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          },
+          {
+            "name": "there_receive",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "here_final",
+            [
+              0
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              0,
+              5,
+              1
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              1,
+              6,
+              0
+            ]
+          ],
+          [
+            "here_start",
+            [
+              0
+            ]
+          ],
+          [
+            "there_final",
+            [
+              3
+            ]
+          ],
+          [
+            "there_receive",
+            [
+              3,
+              5,
+              4
+            ]
+          ],
+          [
+            "there_send",
+            [
+              4,
+              6,
+              3
+            ]
+          ],
+          [
+            "there_start",
+            [
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": null
+    },
+    {
+      "id": "near_unmatched",
+      "note": "the first endpoint sends ack where the second can receive only num",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "here",
+            3
+          ],
+          [
+            "there",
+            2
+          ],
+          [
+            "kind",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "here_start",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_start",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_final",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_final",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_send",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "here_receive",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "there_send",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          },
+          {
+            "name": "there_receive",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "here_final",
+            [
+              0
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              1,
+              6,
+              0
+            ]
+          ],
+          [
+            "here_send",
+            [
+              0,
+              6,
+              1
+            ]
+          ],
+          [
+            "here_start",
+            [
+              0
+            ]
+          ],
+          [
+            "there_final",
+            [
+              3
+            ]
+          ],
+          [
+            "there_receive",
+            [
+              3,
+              5,
+              4
+            ]
+          ],
+          [
+            "there_send",
+            [
+              4,
+              6,
+              3
+            ]
+          ],
+          [
+            "there_start",
+            [
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "sends_matched"
+    },
+    {
+      "id": "near_stuck",
+      "note": "after ack the first endpoint moves to s2, where it has no move and is not final",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "here",
+            3
+          ],
+          [
+            "there",
+            2
+          ],
+          [
+            "kind",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "here_start",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_start",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_final",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_final",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_send",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "here_receive",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "there_send",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          },
+          {
+            "name": "there_receive",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "here_final",
+            [
+              0
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              1,
+              6,
+              2
+            ]
+          ],
+          [
+            "here_send",
+            [
+              0,
+              5,
+              1
+            ]
+          ],
+          [
+            "here_start",
+            [
+              0
+            ]
+          ],
+          [
+            "there_final",
+            [
+              3
+            ]
+          ],
+          [
+            "there_receive",
+            [
+              3,
+              5,
+              4
+            ]
+          ],
+          [
+            "there_send",
+            [
+              4,
+              6,
+              3
+            ]
+          ],
+          [
+            "there_start",
+            [
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "never_stuck"
+    },
+    {
+      "id": "near_no_end",
+      "note": "the first endpoint is final only at s1, where the second never is",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "here",
+            3
+          ],
+          [
+            "there",
+            2
+          ],
+          [
+            "kind",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "here_start",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_start",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_final",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_final",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_send",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "here_receive",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "there_send",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          },
+          {
+            "name": "there_receive",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "here_final",
+            [
+              1
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              1,
+              6,
+              0
+            ]
+          ],
+          [
+            "here_send",
+            [
+              0,
+              5,
+              1
+            ]
+          ],
+          [
+            "here_start",
+            [
+              0
+            ]
+          ],
+          [
+            "there_final",
+            [
+              3
+            ]
+          ],
+          [
+            "there_receive",
+            [
+              3,
+              5,
+              4
+            ]
+          ],
+          [
+            "there_send",
+            [
+              4,
+              6,
+              3
+            ]
+          ],
+          [
+            "there_start",
+            [
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "end_reached"
+    },
+    {
+      "id": "near_startless",
+      "note": "the second endpoint has no start",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "here",
+            3
+          ],
+          [
+            "there",
+            2
+          ],
+          [
+            "kind",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "here_start",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_start",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_final",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_final",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_send",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "here_receive",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "there_send",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          },
+          {
+            "name": "there_receive",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "here_final",
+            [
+              0
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              1,
+              6,
+              0
+            ]
+          ],
+          [
+            "here_send",
+            [
+              0,
+              5,
+              1
+            ]
+          ],
+          [
+            "here_start",
+            [
+              0
+            ]
+          ],
+          [
+            "there_final",
+            [
+              3
+            ]
+          ],
+          [
+            "there_receive",
+            [
+              3,
+              5,
+              4
+            ]
+          ],
+          [
+            "there_send",
+            [
+              4,
+              6,
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "starts_given"
+    },
+    {
+      "id": "near_two",
+      "note": "the first endpoint may send num from s0 to two states",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "here",
+            3
+          ],
+          [
+            "there",
+            2
+          ],
+          [
+            "kind",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "here_start",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_start",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_final",
+            "sorts": [
+              "here"
+            ]
+          },
+          {
+            "name": "there_final",
+            "sorts": [
+              "there"
+            ]
+          },
+          {
+            "name": "here_send",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "here_receive",
+            "sorts": [
+              "here",
+              "kind",
+              "here"
+            ]
+          },
+          {
+            "name": "there_send",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          },
+          {
+            "name": "there_receive",
+            "sorts": [
+              "there",
+              "kind",
+              "there"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "here_final",
+            [
+              0
+            ]
+          ],
+          [
+            "here_receive",
+            [
+              1,
+              6,
+              0
+            ]
+          ],
+          [
+            "here_send",
+            [
+              0,
+              5,
+              1
+            ]
+          ],
+          [
+            "here_send",
+            [
+              0,
+              5,
+              2
+            ]
+          ],
+          [
+            "here_start",
+            [
+              0
+            ]
+          ],
+          [
+            "there_final",
+            [
+              3
+            ]
+          ],
+          [
+            "there_receive",
+            [
+              3,
+              5,
+              4
+            ]
+          ],
+          [
+            "there_send",
+            [
+              4,
+              6,
+              3
+            ]
+          ],
+          [
+            "there_start",
+            [
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "one_here_send"
+    }
+  ]
+}

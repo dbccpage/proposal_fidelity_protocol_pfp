@@ -1,0 +1,121 @@
+# Schema definition for Granular Pilot Test Specification (test_spec.yaml)
+# AuthorityEffect: None.
+# Required fields and enums follow omega_engine_pfp.domain.types.test_spec.
+
+$schema: https://json-schema.org/draft/2020-12/schema
+schema: pfp.test-spec.v1
+title: PilotTestSpecSchema
+description: |
+  Metadata, ingress source references, model parameters, expected oracle outcomes,
+  actual evaluation receipts, and runtime execution metrics for a single self-contained
+  test capsule under tests/test_XX/ in accordance with MODUS_OPERANDI.md.
+
+$defs:
+  AuthorityEffect:
+    type: string
+    enum: ["None"]
+
+  EvaluationStatus:
+    type: string
+    enum: [ACCEPTED, WRONG_ANSWER, FALSE_CERTAINTY, MALFORMED, NOT_RUN, REFUSED]
+
+  ExpectedOutcome:
+    type: object
+    additionalProperties: false
+    properties:
+      answer: {}
+      status:
+        type: string
+        default: ACCEPTED
+
+  ActualOutcome:
+    type: object
+    additionalProperties: false
+    properties:
+      extracted_answer: {}
+      gate_status:
+        anyOf:
+          - $ref: '#/$defs/EvaluationStatus'
+          - type: string
+        default: NOT_RUN
+      reason:
+        type: [string, "null"]
+      status:
+        type: [string, "null"]
+      refusal_code:
+        type: [string, "null"]
+      transport_code:
+        type: [string, "null"]
+      parsed_json: {}
+      witness_verified:
+        type: [boolean, "null"]
+
+  TestMetrics:
+    type: object
+    additionalProperties: false
+    properties:
+      duration_seconds:
+        type: number
+      prompt_tokens:
+        type: integer
+      completion_tokens:
+        type: integer
+      reasoning_tokens:
+        type: integer
+      cost_usd:
+        type: number
+      provider_calls:
+        type: integer
+      billing:
+        type: [string, "null"]
+      total_tokens:
+        type: [integer, "null"]
+
+type: object
+additionalProperties: false
+required:
+  - test_id
+  - case_id
+  - model_id
+  - expected_outcome
+  - actual_outcome
+properties:
+  schema:
+    type: string
+    const: pfp.test-spec.v1
+  authority_effect:
+    anyOf:
+      - $ref: '#/$defs/AuthorityEffect'
+      - type: string
+      - type: "null"
+  test_folder:
+    type: string
+  test_id:
+    type: string
+  pilot_id:
+    type: string
+  case_id:
+    type: string
+  test_index:
+    type: integer
+    minimum: 0
+    maximum: 99
+  generation_id:
+    type: integer
+    minimum: 0
+  dialect_name:
+    type: string
+  input_source_file:
+    type: string
+  response_file:
+    type: string
+  model_id:
+    type: string
+  expected_outcome:
+    $ref: '#/$defs/ExpectedOutcome'
+  actual_outcome:
+    $ref: '#/$defs/ActualOutcome'
+  metrics:
+    $ref: '#/$defs/TestMetrics'
+  notes:
+    type: string

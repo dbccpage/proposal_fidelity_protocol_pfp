@@ -1,0 +1,335 @@
+schema: "pfp.bqnf.average-maintenance-fixtures.v1"
+authority_effect: "None"
+governing_standard: "Boundary-Quotient Normal Form (BQNF v0), Change Boundary Invariant"
+title: "BQNF Incremental Average Maintenance CDC Stream Fixtures"
+description: >
+  Canonical fixtures validating report insufficiency in unextended scalar-mean regimes,
+  exact coboundary repairs in extended (SUM, COUNT) regimes, and stream convergence
+  under CDC INSERT, UPDATE, and DELETE operations.
+canonical_state_extension_contract:
+  required_carrier_tuple:
+    - "SUM(value)"
+    - "COUNT(value)"
+  quotient_descent_preserved: true
+  fail_closed_unextended_scalar: true
+  unextended_terminal_route: "Unsupported"
+
+fixtures:
+  # ===========================================================================
+  # 1. REPORT INSUFFICIENCY: UNEXTENDED SCALAR MEAN REGIME
+  # ===========================================================================
+  - fixture_id: "fix_bqnf_avg_01_unextended_history_a_insufficiency"
+    description: "Unextended regime: History A {1, 5} with scalar mean 3 receives INSERT 9. Exposes report insufficiency."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "AVG(value)"
+    initial_state:
+      mean: 3.0
+    event:
+      op: "INSERT"
+      relation: "Dataset"
+      old: null
+      new:
+        dataset_id: "hist_a"
+        value: 9.0
+    expected:
+      decision: "Unsupported"
+      terminal_route: "Unsupported"
+      obstruction_class: "[NonZero - LimitOfSubstrate]"
+      certified: false
+      evidence_sufficient: true
+
+  - fixture_id: "fix_bqnf_avg_02_unextended_history_b_insufficiency"
+    description: "Unextended regime: History B {2, 3, 4} with scalar mean 3 receives INSERT 9. Exposes report insufficiency."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "AVG(value)"
+    initial_state:
+      mean: 3.0
+    event:
+      op: "INSERT"
+      relation: "Dataset"
+      old: null
+      new:
+        dataset_id: "hist_b"
+        value: 9.0
+    expected:
+      decision: "Unsupported"
+      terminal_route: "Unsupported"
+      obstruction_class: "[NonZero - LimitOfSubstrate]"
+      certified: false
+      evidence_sufficient: true
+
+  # ===========================================================================
+  # 2. EXACT COBOUNDARY REPAIR: EXTENDED REGIME (SUM, COUNT)
+  # ===========================================================================
+  - fixture_id: "fix_bqnf_avg_03_extended_history_a_exact_repair"
+    description: "Extended regime B': History A {1, 5} with (SUM=6, COUNT=2) receives INSERT 9. Exact coboundary repair to mean 5.0."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "SUM(value)"
+        - "COUNT(value)"
+    initial_state:
+      sum: 6.0
+      count: 2
+      mean: 3.0
+    event:
+      op: "INSERT"
+      relation: "Dataset"
+      old: null
+      new:
+        dataset_id: "hist_a"
+        value: 9.0
+    expected:
+      decision: "Repair"
+      terminal_route: "Repair"
+      obstruction_class: "[0]"
+      certified: true
+      evidence_sufficient: true
+      repair:
+        group_key: "hist_a"
+        delta_sum: 9.0
+        delta_count: 1
+        new_sum: 15.0
+        new_count: 3
+        new_mean: 5.0
+
+  - fixture_id: "fix_bqnf_avg_04_extended_history_b_exact_repair"
+    description: "Extended regime B': History B {2, 3, 4} with (SUM=9, COUNT=3) receives INSERT 9. Exact coboundary repair to mean 4.5."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "SUM(value)"
+        - "COUNT(value)"
+    initial_state:
+      sum: 9.0
+      count: 3
+      mean: 3.0
+    event:
+      op: "INSERT"
+      relation: "Dataset"
+      old: null
+      new:
+        dataset_id: "hist_b"
+        value: 9.0
+    expected:
+      decision: "Repair"
+      terminal_route: "Repair"
+      obstruction_class: "[0]"
+      certified: true
+      evidence_sufficient: true
+      repair:
+        group_key: "hist_b"
+        delta_sum: 9.0
+        delta_count: 1
+        new_sum: 18.0
+        new_count: 4
+        new_mean: 4.5
+
+  - fixture_id: "fix_bqnf_avg_05_extended_cdc_update"
+    description: "Extended regime B': Update value 1 to 4 on dataset {1, 5, 9}. Exact coboundary repair delta_sum=3, delta_count=0."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "SUM(value)"
+        - "COUNT(value)"
+    initial_state:
+      sum: 15.0
+      count: 3
+      mean: 5.0
+    event:
+      op: "UPDATE"
+      relation: "Dataset"
+      old:
+        dataset_id: "hist_a"
+        value: 1.0
+      new:
+        dataset_id: "hist_a"
+        value: 4.0
+    expected:
+      decision: "Repair"
+      terminal_route: "Repair"
+      obstruction_class: "[0]"
+      certified: true
+      evidence_sufficient: true
+      repair:
+        group_key: "hist_a"
+        delta_sum: 3.0
+        delta_count: 0
+        new_sum: 18.0
+        new_count: 3
+        new_mean: 6.0
+
+  - fixture_id: "fix_bqnf_avg_06_extended_cdc_delete"
+    description: "Extended regime B': Delete value 9 from {4, 5, 9}. Exact coboundary repair delta_sum=-9, delta_count=-1."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "SUM(value)"
+        - "COUNT(value)"
+    initial_state:
+      sum: 18.0
+      count: 3
+      mean: 6.0
+    event:
+      op: "DELETE"
+      relation: "Dataset"
+      old:
+        dataset_id: "hist_a"
+        value: 9.0
+      new: null
+    expected:
+      decision: "Repair"
+      terminal_route: "Repair"
+      obstruction_class: "[0]"
+      certified: true
+      evidence_sufficient: true
+      repair:
+        group_key: "hist_a"
+        delta_sum: -9.0
+        delta_count: -1
+        new_sum: 9.0
+        new_count: 2
+        new_mean: 4.5
+
+  # ===========================================================================
+  # 3. BOUNDARY PRESERVATION AND FAIL-CLOSED GUARDS
+  # ===========================================================================
+  - fixture_id: "fix_bqnf_avg_07_non_boundary_update_preserve"
+    description: "Extended regime B': updated_at change only. Non-boundary attribute routes to Preserve."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "SUM(value)"
+        - "COUNT(value)"
+    initial_state:
+      sum: 9.0
+      count: 2
+      mean: 4.5
+    event:
+      op: "UPDATE"
+      relation: "Dataset"
+      old:
+        dataset_id: "hist_a"
+        value: 4.0
+        updated_at: "2026-10-14T10:00:00Z"
+      new:
+        dataset_id: "hist_a"
+        value: 4.0
+        updated_at: "2026-10-14T10:05:00Z"
+    expected:
+      decision: "Preserve"
+      terminal_route: "Preserve"
+      obstruction_class: "[0]"
+      certified: true
+      evidence_sufficient: true
+      repair: null
+
+  - fixture_id: "fix_bqnf_avg_08_missing_evidence_invalidate"
+    description: "Extended regime B': UPDATE event missing required attribute value fails closed to Invalidate."
+    view: "dataset_avg_view"
+    boundary:
+      relations:
+        - "Dataset"
+      attributes:
+        - "dataset_id"
+        - "value"
+      predicates: []
+      groups:
+        - "dataset_id"
+      aggregates:
+        - "AVG(value)"
+      retained_structure:
+        - "SUM(value)"
+        - "COUNT(value)"
+    initial_state:
+      sum: 9.0
+      count: 2
+      mean: 4.5
+    event:
+      op: "UPDATE"
+      relation: "Dataset"
+      old:
+        dataset_id: "hist_a"
+      new:
+        dataset_id: "hist_a"
+    expected:
+      decision: "Invalidate"
+      terminal_route: "Invalidate"
+      obstruction_class: "[NonZero - MissingEvidence]"
+      certified: false
+      evidence_sufficient: false
+      repair: null

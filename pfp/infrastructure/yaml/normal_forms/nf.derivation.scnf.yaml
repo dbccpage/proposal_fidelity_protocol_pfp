@@ -1,0 +1,136 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: form_contract
+identity:
+  id: nf.derivation.scnf
+  name: Separation Cost Normal Form
+  short_name: SCNF
+  version: v0
+  status: draft
+  family: derivation
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - delta
+  - cost_measure
+  - separation_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a minimum reported without the measure that made it minimal, or a tie
+    silently resolved
+  preserves_invariant: a cost claim names its measure, and whether the minimizer is unique
+    is a property of that measure rather than of the separation
+  protected_skeleton:
+  - delta
+  - cost_measure
+  - minimizer_set
+  - isomorphism_relation
+  - tie_record
+  erased_structure: []
+  non_claims:
+  - does not derive the cost measure; the measure is declared, and a different measure can
+    change both the minimum and its uniqueness
+  - does not derive the grammar, the isomorphism relation, or the closure and continuation
+    policies
+  - does not report a unique minimizer under a measure that admits several
+  - does not treat the count of tied classes as fixed across readings of admission
+  - does not imply authorization
+quadrilateral:
+  qualifies_as_true_normal_form: false
+  qualification_gap: no_project_join_theorem
+  anomaly_exclusion: a minimum reported without its measure, or a tie reduced to one member
+    by silence
+  lossless_join:
+    status: not_a_relational_decomposition
+    statement: the minimizer set is reported in full up to the declared isomorphism
+  dependency_preservation:
+    status: measure_stays_attached
+    statement: a different declared measure is a different claim
+  syntactic_decision:
+    status: declaration_decidable
+    statement: the check reads the measure, the values, and the isomorphism, not an unrecorded
+      preference
+declarations_required:
+- cost_measure
+- grammar
+- isomorphism_relation
+- closure_policy
+- continuation_policy
+- reading_of_admission
+evidence_required:
+- delta_contents
+- measure_value_per_candidate
+- minimizer_set
+- isomorphism_classes_of_minimizers
+validation_criteria:
+- every cost claim names the measure under which it was computed
+- the minimizer set is reported in full, not by one representative
+- minimizers are counted up to the declared isomorphism relation
+- a minimizer set of size greater than one is recorded as a tie and no member is preferred
+- the count of tied classes is reported together with the reading of admission that produced
+  it
+- a claim of uniqueness names the measure that makes it unique
+proof_obligations:
+- id: scnf.first_separation_costs_two_items
+  status: upstream_theorem
+  ref: 19L57G1
+  section: paper/paper.md
+- id: scnf.item_count_measure_admits_tied_minimizers
+  status: upstream_theorem
+  ref: 19L57G1
+  section: paper/paper.md
+- id: scnf.lexicographic_measure_is_unique_up_to_isomorphism
+  status: upstream_theorem
+  ref: 19L57G1
+  section: paper/paper.md
+- id: scnf.measures_are_declared_not_derived
+  status: declared_upstream
+  ref: 19L57G1
+  section: paper/paper.md
+terminal_routes:
+- AcceptUniqueMinimizer
+- RecordTie
+- RequireMeasureDeclaration
+- RejectUnmeasuredMinimum
+- Escalate
+certification:
+  certificate_required: true
+  certificate_kind: cost_certificate
+  obstruction_class_required: false
+  loss_ledger_required: true
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: a cheapest separation is reported with no measure named
+  diagnosis: minimality asserted outside any declared order
+  terminal: RejectUnmeasuredMinimum
+- symptom: one of several tied minimizers is reported as the minimizer
+  diagnosis: a tie was resolved by enumeration order
+  terminal: RecordTie
+- symptom: two reports of the same separation disagree on uniqueness
+  diagnosis: different measures were in force and only one was recorded
+  terminal: RequireMeasureDeclaration
+- symptom: the number of minimizers changes when the grammar is restated
+  diagnosis: the isomorphism relation was left undeclared
+  terminal: RequireMeasureDeclaration
+examples:
+- ref: 19L57G1
+  section: paper/paper.md
+  note: the first separation and the tied minimum under the item-count measure
+references:
+- 19L/PIN.md
+- ./nf.derivation.aonf.yaml
+- ./README.md
+schema_ref: ./normal_form_contract_schema.yaml
+terminal_route_map:
+  AcceptUniqueMinimizer: Preserve
+  RecordTie: Preserve
+  RequireMeasureDeclaration: Refuse
+  RejectUnmeasuredMinimum: Reject
+  Escalate: Preserve

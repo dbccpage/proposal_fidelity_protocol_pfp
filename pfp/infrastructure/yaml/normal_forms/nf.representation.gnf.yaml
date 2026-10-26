@@ -1,0 +1,124 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.representation.gnf
+  name: Gauge Normal Form
+  short_name: GNF
+  version: v0
+  status: draft
+  family: transport
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - representation_transport
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: gauge drift, unverified loss of protected authority fields under
+    representation rewrites, semantic divergence masked by byte hashes, and unrecorded
+    schema projection loss
+  preserves_invariant: representation changes preserve exact authority-relevant semantic
+    content under declared gauge transformations, or record scoped field loss in a verified
+    loss ledger under explicit degradation policy
+  protected_skeleton:
+  - authority_relevant_attributes
+  - equivalence_class_id
+  - semantic_field_correspondence_witness
+  - update_commutation_witness
+  - loss_ledger_policy
+  erased_structure:
+  - representation_syntax
+  - wire_encoding_format
+  non_claims:
+  - does not guarantee physical transmission integrity
+  - a loss ledger merely records field loss; it does not make the original equivalence
+    statement true. Any loss of a protected field fails strict preservation and produces
+    only a scoped degraded outcome under declared policy
+  - a target hash establishes byte consistency of the output, not that its semantics
+    match the source
+  - "'gauge' in this contract refers strictly to serialization, encoding, and representation
+    equivalence across data schemas (e.g. JSON vs Protobuf vs wire tokens), not to
+    physical gauge theory or continuous spacetime gauge symmetries"
+declarations_required:
+- source_representation: declared schema and data instance
+- target_representation: target schema and encoded instance
+- gauge_transformation: bijective or projective mapping between schemas
+- authority_skeleton: list of protected attributes required for decision currency
+- loss_policy: explicit policy defining allowed field drops and degradation rules
+evidence_required:
+- semantic_correspondence_witness: mapping source fields to target fields
+- update_commutation_witness: proof that updates commute with gauge mapping on protected fields
+- target_validation_hash: cryptographic digest of serialized target representation
+- loss_ledger_record: null if strictly lossless, or explicit list of dropped fields with trigger id
+validation_criteria:
+- strict_semantic_equivalence: all declared authority skeleton attributes match exactly across representations
+- loss_governance: any missing protected field must be declared in an active loss ledger with policy authorization, routing to DegradedLossRecorded rather than strict preservation
+- update_commutation: state transitions on source representation commute with target transitions on the authority skeleton
+terminal_routes:
+- StrictEquivalencePreserved
+- DegradedLossRecorded
+- GaugeDriftViolation
+- MissingLossLedger
+- Unsupported
+terminal_route_map:
+  StrictEquivalencePreserved: Preserve
+  DegradedLossRecorded: Quarantine
+  GaugeDriftViolation: Reject
+  MissingLossLedger: Refuse
+  Unsupported: Unsupported
+extensions:
+  condition_to_local_route_map:
+    exact_match_no_loss: StrictEquivalencePreserved
+    authorized_loss_with_ledger: DegradedLossRecorded
+    unauthorized_attribute_mismatch: GaugeDriftViolation
+    loss_detected_without_ledger: MissingLossLedger
+certification:
+  certificate_required: true
+  certificate_kind: gauge_certificate
+  obstruction_class_required: true
+  loss_ledger_required: conditional
+  loss_ledger_trigger_id: gnf.hyperedge_projection_loss
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: two representations (e.g. JSON and Protobuf) are claimed equivalent but
+    differ in key currency attributes
+  diagnosis: gauge drift
+  terminal: Reject
+references:
+- ../1_normal_forms.md
+- ../1b_gtmur_representation_transport.md
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: Gauge normal form asserting that representation changes preserve
+    authority-relevant content under gauge transformations, requiring explicit semantic
+    correspondence and routing un-ledgered loss to refusal.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: gauge drift, unrecorded authority attribute loss, and semantic
+      divergence
+    lossless_join:
+      status: declared_reconstruction
+      statement: representation changes preserve authority-relevant content under
+        gauge transformations
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+canonical_terminal_map:
+  StrictEquivalencePreserved: Preserve
+  DegradedLossRecorded: Quarantine
+  GaugeDriftViolation: Reject
+  MissingLossLedger: Refuse
+  Unsupported: Unsupported
+schema_ref: ./normal_form_contract_schema.yaml

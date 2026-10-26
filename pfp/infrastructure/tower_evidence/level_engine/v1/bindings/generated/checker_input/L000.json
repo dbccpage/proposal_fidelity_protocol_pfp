@@ -1,0 +1,73 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "bare_inscription",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": "<>"
+      },
+      "input_sha256": "sha256:ae91d8548590fe3a5ed08a3fdd2ea5627ba401693fcdb3fb0db490e6bdeba6e5",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": "<<>>"
+      },
+      "input_sha256": "sha256:f5c837dca152061892b08001943c399cfc780b26504e55766499907e3951f1b0",
+      "native_code": "FAILS:bytes_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_glyph",
+      "input": {
+        "packet": "<a>"
+      },
+      "input_sha256": "sha256:16a9e62ae5eb408a7e9aeaa8a188cea1c3cff704af9d6b8a078a2d26319240d8",
+      "native_code": "FAILS:bytes_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": "<0>"
+      },
+      "input_sha256": "sha256:ee4712596c29406da3723578c4b3aff86c74dd6913a9d2fd0e6e76cdffc36540",
+      "native_code": "FAILS:bytes_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "PROBE-IDENTICAL-TO-POSITIVE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 0,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "PROBE-IDENTICAL-TO-POSITIVE",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_000"
+}

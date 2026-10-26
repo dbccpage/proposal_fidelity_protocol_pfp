@@ -1,0 +1,193 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.mssn.bqnf
+  name: MSS-N Boundary-Quotient Normal Form
+  short_name: MSSN-BQNF
+  version: v0
+  theory_status: proposed
+  contract_status: draft
+  verification_status: executable
+  family: change
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - mssn_boundary_packet
+  - k0_cycle_repair
+  - glyph_path_transition
+  - homology_repair_candidate
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: uncertified local repair / unverified coboundary lift during MSS-N
+    level transitions and cycle repairs
+  preserves_invariant: incremental repair of MSS-N complexes and level transitions
+    preserves declared boundary containment, boundary nilpotence (d1 . d0 == 0), and
+    integer homology exactness (omega = d2_ext c)
+  protected_skeleton:
+  - boundary_fingerprint
+  - c0_repair_potentials
+  - c1_defects
+  - d1_incidence_matrix
+  - d2_ext_repair_image
+  - quotient_homology_class
+  erased_structure:
+  - raw_comment_lines
+  - cosmetic_vertex_relabeling
+  non_claims:
+  - does not authorize execution permissions or terminal semantic decisions
+  - does not guarantee generic simplicial complex homology without pinned finite incidence
+  - syntactic acceptance of qed<exact> leaves receipt UNVERIFIED; independent exact
+    rational solver replay is required before establishing truth
+  - does not permit unverified boundary enlargement; repair candidates must lie within
+    declared candidate 2-cells
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: An MSS-N boundary transition or cycle-repair candidate is in Boundary-Quotient
+    Normal Form (MSSN-BQNF) when each state modification or cycle candidate is classified
+    against a declared boundary complex before any carrier state is patched. In K0
+    cycle repair (cycle_repair.ebnf and mssn_transcoder.py), the 1-cycle z is closed
+    when d1 z = 0 (z in Z1 = ker d1). The defect z is exact when z = d2_ext c for
+    an external 2-cell preimage c, equivalently when its class in Q1 = Z1 / im(d2_ext)
+    is zero ([z] = 0). Exact defects repair. A zero defect preserves state. A closed
+    non-exact defect (d1 z = 0 but [z] != 0) cannot be repaired locally and escalates.
+    A defect with d1 z != 0 is an invalid cycle. Stamping qed<exact> submits the exactness
+    assertion; parsing leaves the receipt UNVERIFIED until independent exact solver
+    replay certifies that [z] = 0.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_exact_homological_repair_not_relational_project_join
+    anomaly_exclusion: A local complex patch that was not shown to be an exact boundary,
+      a silent under-invalidation in a boundary composite, or an unverified qed<exact>
+      claim.
+    lossless_join:
+      status: recomputation_agreement
+      statement: The repaired simplicial complex agrees with a full exact computation
+        of H_1(K) on the declared complex. That agreement is the reconstruction theorem
+        for this form.
+    dependency_preservation:
+      status: boundary_declared_before_runtime
+      statement: The 4 vertices, 5 edges, 1 face, and incidence matrices d_1, d_2
+        are declared and pinned before runtime; a candidate write does not enlarge
+        that boundary.
+    syntactic_decision:
+      status: declaration_plus_event_decidable
+      statement: The route is computed from the declared boundary matrices and the
+        cycle candidate vector. It is syntactically decidable via integer matrix multiplication.
+declarations_required:
+- boundary_fingerprint:
+    vertices: 4
+    edges: 5
+    faces: 1
+- incidence_d1
+- incidence_d2
+- repair_operator_d2_ext
+- quotient_space: Q1 = Z1 / im(d2_ext)
+- terminal_routes
+evidence_required:
+- candidate_wire_text
+- parsed_cycle_b
+- computed_d1_b
+- obstruction_vector_z
+- preimage_candidate_c
+- computed_d2_ext_c
+- exactness_receipt_status
+validation_criteria:
+- boundary complex incidence matrices d_1, d_2 are declared and pinned before intake
+- boundary nilpotence d1 . d2 == 0 holds identically over integers
+- candidate chain b is closed: d1 * b == 0
+- defect z maps to computable obstruction class in Q1 = Z1 / im(d2_ext)
+- repair allowed only when obstruction_class == '[0]', equivalently z = d2_ext(c)
+- unverified qed<exact> literal does not authorize state change without independent
+  solver replay
+- nonzero unknown or non-closed obstruction terminalizes loudly
+proof_obligations:
+- id: mssn.bqnf.nilpotence
+  status: theorem_shaped
+  ref: omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_pre_genesis_to_mssn/paper.md
+  section: 13.3 (the explicitly declared triangle face)
+- id: mssn.bqnf.exactness_solvability
+  status: theorem_shaped
+  ref: omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_pre_genesis_to_mssn/paper.md
+  section: 13 (finite examples; general exact-solver obligations remain separate)
+- id: mssn.bqnf.receipt_unverified_firewall
+  status: theorem_shaped
+  ref: ow/omega_engine_pfp_v0.2/grammar/README.md
+  section: Source and wire boundaries
+terminal_routes:
+- Preserve
+- Repair
+- Invalidate
+- Recompute
+- Serialize
+- Lift
+- Unsupported
+- ConservativeInvalidate
+- Escalate
+- ClosureFailure
+- Residual
+terminal_route_map:
+  Preserve: Preserve
+  Repair: Repair
+  Invalidate: Invalidate
+  Recompute: Recompute
+  Serialize: Serialize
+  Lift: Lift
+  Unsupported: Unsupported
+  ConservativeInvalidate: ConservativeInvalidate
+  Escalate: Escalate
+  ClosureFailure: ClosureFailure
+  Residual: Escalate
+certification:
+  certificate_required: true
+  certificate_kind: exact_homology_certificate
+  obstruction_class_required: true
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: candidate cycle b has d1 * b != 0
+  diagnosis: cycle closure failure
+  terminal: ClosureFailure
+- symptom: closed cycle z cannot be expressed as d2_ext(c)
+  diagnosis: non-trivial homology class; unrepairable locally
+  terminal: Escalate
+- symptom: qed<exact> present but solver replay unexecuted or failing
+  diagnosis: unverified claim promotion attempt
+  terminal: Invalidate
+- symptom: candidate adds edge outside pinned 5-edge complex
+  diagnosis: undeclared boundary enlargement
+  terminal: Unsupported
+references:
+- ../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_pre_genesis_to_mssn/paper.md
+- ../../../ow/omega_engine_pfp_v0.2/grammar/cycle_repair.ebnf
+- ../../../ow/omega_engine_pfp_v0.2/grammar/README.md
+- ./nf.change.bqnf.yaml
+- ./normal_form_contract_schema.yaml
+obstruction_substrate:
+  policy_ref: ../substrate/default_finite_obstruction_policy.yaml
+  finite_carrier:
+    description: pinned K0 simplicial complex with 4 vertices, 5 edges, 1 face
+    max_rank: 5
+  cochain_complex:
+    C0: 2_cell_preimages_c
+    C1: 1_cycles_z
+    C2: 0_boundary_checks_d1_z
+    d0: d2_ext maps external 2-cells to 1-boundaries
+    d1: d1 maps 1-simplices to 0-boundaries
+    quotient: Q1 = Z1 / im(d2_ext)
+  obstruction_class:
+    notation: '[z]'
+    exact: '[z] == 0'
+    residual_closed: d1(z) == 0 and [z] != 0
+    open: d1(z) != 0
+  carrier_realization:
+    ref: geom.directed_graph_transition.v0
+    path: ../geometry_modules/geom.directed_graph_transition.v0.yaml
+  geometry_module: null
+  gauge_metric_selector: null

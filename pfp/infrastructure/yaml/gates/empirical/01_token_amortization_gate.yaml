@@ -1,0 +1,26 @@
+gate_id: "PFP-EMP-GATE-001"
+kind: "EmpiricalBenchmarkGate"
+suite_id: "PFP-PILOT-002"
+name: "Batched Token Amortization Gate"
+authority_effect: "None"
+version: "0.1.0"
+objective: >
+  Verify whether repeating the MSS-N dialect legend across K >= 10 batched instances
+  reduces marginal token cost below raw text.
+metric: "marginal_token_diff"
+target_assertion: "Δtok_symbolic < Δtok_raw"
+comparison_operator: "LT"
+fences:
+  - "Legend Amortization Fence: Marginal token consumption per instance must decrease as K increases."
+  - "Cost Parity Fence: At K >= 10, total batched symbolic tokens must be less than raw unpartitioned tokens."
+input_schema:
+  batch_size_k: "int"
+  marginal_token_symbolic: "int"
+  marginal_token_raw: "int"
+expected_behavior: >
+  Evaluates summary evidence. If marginal_token_symbolic < marginal_token_raw at K >= 10,
+  emits EmpiricalGateReceipt(status='PASS'). Otherwise emits RefusalCode.AMORTIZATION_GATE_FAILED.
+narrowest_defensible_claim: >
+  MSS-N wire legends produce net token savings only when amortized across batched prompt dispatches (K >= 10).
+next_test_needed: >
+  Dispatch 10-instance batched benchmark sweeps across 4 models and verify receipt pass status.

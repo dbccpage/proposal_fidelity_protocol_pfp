@@ -1,0 +1,94 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.location
+  name: Location Normal Form
+  short_name: LNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: ghost locality
+  preserves_invariant: logical identity maps to declared physical placement and movement
+    policy
+  protected_skeleton:
+  - logical_identity
+  - physical_placement
+  - replica_set
+  - storage_tier
+  erased_structure: []
+  non_claims:
+  - does not prove data is correct only where it lives
+declarations_required:
+- logical_identity
+- physical_locations
+- replica_set
+- storage_tier
+- relocation_policy
+- encryption_domain
+evidence_required:
+- placement_witness per location
+- epoch or timestamp on placement claim
+validation_criteria:
+- every logical object has at least one declared location witness
+- placement claims include timestamp or epoch
+- relocation does not erase lineage
+- unknown placement terminalizes
+proof_obligations: []
+terminal_routes:
+- Located
+- Relocating
+- LocationUnknown
+- ReplicaDivergence
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: placement_certificate
+  obstruction_class_required: false
+  loss_ledger_required: conditional
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: user told data is in table X but copy lives in cache WAL vector store
+  diagnosis: ghost locality
+  terminal: LocationUnknown
+references:
+- ../1_normal_forms.md
+terminal_route_map:
+  Located: Preserve
+  Relocating: Repair
+  LocationUnknown: BudgetUnknown
+  ReplicaDivergence: Escalate
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: ghost locality. logical identity maps to declared physical placement
+    and movement policy
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: ghost locality
+    lossless_join:
+      status: declared_reconstruction
+      statement: logical identity maps to declared physical placement and movement
+        policy
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

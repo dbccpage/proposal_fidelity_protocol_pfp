@@ -1,0 +1,23 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-realification-fallacy
+canonical_name: Anti-Realification Fallacy
+failure_class: math:realification_fallacy
+target_pattern: (realification.*preserves.*all.*complex|complex.*relations.*hold.*trivially.*in.*real|real.*moments.*equal.*complex)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects claims that real coordinate moments trivially preserve complex
+  C*-algebra projector relations without explicit commutator tracking.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: Realification preserves all complex C* relations automatically,
+  so real moments suffice without checking phase commutators.
+repaired_invariant_fixture: The 180 quadratic residuals (108 MU + 72 orthonormality)
+  in 72 real variables explicitly constrain real and imaginary blocks with rank degree1
+  = degree2 = 6.
+source_pilot: pilot_046
+evidence_sha256: a15b10f3a90548aa5901bdcdd03ce6d8bafda8d76c1533b386176179612c2803

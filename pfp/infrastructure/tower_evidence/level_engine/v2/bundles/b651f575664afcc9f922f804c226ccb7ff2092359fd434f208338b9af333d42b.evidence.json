@@ -1,0 +1,422 @@
+{
+  "answer_type_computed": "M",
+  "answer_type_declared": "M",
+  "authority_effect": "None",
+  "caps": [
+    "CAP-SUPPLIED:claims_match"
+  ],
+  "carrier_part": "harness_computation",
+  "challenge_id": "joint_payoffs",
+  "clause_census": {
+    "claims_match": {
+      "census": "decoded",
+      "changed_on": []
+    },
+    "claims_owned": {
+      "census": "derivability",
+      "changed_on": [
+        "own_neg"
+      ]
+    },
+    "moves_given": {
+      "census": "derivability",
+      "changed_on": [
+        "near_idle"
+      ]
+    },
+    "one_payoff": {
+      "census": "derivability",
+      "changed_on": [
+        "mut",
+        "near_gap",
+        "near_idle",
+        "near_stray_pay",
+        "near_two",
+        "near_value",
+        "own_neg",
+        "pos"
+      ]
+    },
+    "pays_owned": {
+      "census": "derivability",
+      "changed_on": [
+        "near_stray_pay"
+      ]
+    },
+    "table_complete": {
+      "census": "derivability",
+      "changed_on": [
+        "near_gap"
+      ]
+    },
+    "typed": {
+      "census": "derivability",
+      "changed_on": [
+        "near_value"
+      ]
+    }
+  },
+  "evidence_ceiling": "LEAN_HARNESS_BUILD",
+  "extra": {
+    "clause_evidence": {
+      "claims_match": "LEAN",
+      "claims_owned": "COMPUTED",
+      "moves_given": "COMPUTED",
+      "one_payoff": "COMPUTED",
+      "pays_owned": "COMPUTED",
+      "table_complete": "COMPUTED",
+      "typed": "COMPUTED"
+    },
+    "decoded_values": {
+      "mut": {
+        "claims": 1,
+        "joint_moves_paid": 4
+      },
+      "near_gap": {
+        "claims": 1,
+        "joint_moves_paid": 3
+      },
+      "near_idle": {
+        "claims": 0,
+        "joint_moves_paid": 0
+      },
+      "near_stray_pay": {
+        "claims": 1,
+        "joint_moves_paid": 5
+      },
+      "near_two": {
+        "claims": 1,
+        "joint_moves_paid": 5
+      },
+      "near_value": {
+        "claims": 1,
+        "joint_moves_paid": 4
+      },
+      "own_neg": {
+        "claims": 1,
+        "joint_moves_paid": 4
+      },
+      "pos": {
+        "claims": 1,
+        "joint_moves_paid": 4
+      }
+    }
+  },
+  "hosting_down_check": {
+    "defaulted": 0,
+    "non_descent_cases": 16,
+    "old_image_cases": 8
+  },
+  "intake_probes": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "mismatches": [],
+  "missing_components": [],
+  "native_share": "6 of 7",
+  "restatement_sha256": "sha256:a3c9cca6de78fb9a6bf670583cfd77ceece3fe518886ee4ef18d5f01c5b3374d",
+  "schema": "challenge-evidence/2",
+  "stage": {
+    "bound_note": "at most three items (embargo)",
+    "name": "base"
+  },
+  "status": "EXPECTED",
+  "target": "named in the binding layer",
+  "verdicts": [
+    {
+      "admitted": true,
+      "code": "ACCEPT",
+      "decoded": {
+        "claims_match": "PASS"
+      },
+      "detail": "",
+      "failed": [],
+      "fixture": "pos",
+      "refutations": {},
+      "role": "positive",
+      "satisfied": true,
+      "witness": {
+        "classes": [
+          {
+            "representative": [],
+            "size": 1
+          }
+        ],
+        "cost": [
+          0,
+          -1
+        ],
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "sha256:71d200d8ffab1b98ab940769da680c27d48873242f3f141a4910e6e10766e84b",
+          "class_size": 1,
+          "class_size_expected": 1,
+          "cost_found": 0,
+          "pruned": true,
+          "stage": "base",
+          "status": "FOUND",
+          "theorem": null
+        },
+        "grade": "unique_delta",
+        "literal_minima": 1,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:claims_owned",
+      "decoded": {
+        "claims_match": "NOT_EVALUATED"
+      },
+      "detail": "",
+      "failed": [
+        "claims_owned"
+      ],
+      "fixture": "own_neg",
+      "refutations": {
+        "claims_owned": "(((('a', 2), ('b', 3), ('u', 6), ('v', 6)), ((3, (1, 3)),)),)"
+      },
+      "role": "own_negative",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:table_complete",
+      "decoded": {
+        "claims_match": "NOT_EVALUATED"
+      },
+      "detail": "",
+      "failed": [
+        "table_complete"
+      ],
+      "fixture": "near_gap",
+      "refutations": {
+        "table_complete": "((('a', 3), ('b', 5)),)"
+      },
+      "role": "near_miss",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:pays_owned",
+      "decoded": {
+        "claims_match": "NOT_EVALUATED"
+      },
+      "detail": "",
+      "failed": [
+        "pays_owned"
+      ],
+      "fixture": "near_stray_pay",
+      "refutations": {
+        "pays_owned": "(((('a', 4), ('b', 2), ('u', 7), ('v', 7)), ((3, (0, 4)), (3, (1, 2)))),)"
+      },
+      "role": "near_miss",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:one_payoff",
+      "decoded": {
+        "claims_match": "NOT_EVALUATED"
+      },
+      "detail": "",
+      "failed": [
+        "one_payoff"
+      ],
+      "fixture": "near_two",
+      "refutations": {
+        "one_payoff": "(((2, 4), ((2, 4, 6, 6), (2, 4, 9, 9))),)"
+      },
+      "role": "near_miss",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:moves_given",
+      "decoded": {
+        "claims_match": "NOT_EVALUATED"
+      },
+      "detail": "",
+      "failed": [
+        "moves_given"
+      ],
+      "fixture": "near_idle",
+      "refutations": {
+        "moves_given": "((('p', 1),),)"
+      },
+      "role": "near_miss",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:typed",
+      "decoded": {
+        "claims_match": "NOT_EVALUATED"
+      },
+      "detail": "",
+      "failed": [
+        "typed"
+      ],
+      "fixture": "near_value",
+      "refutations": {
+        "typed": "(((('a', 2), ('b', 4), ('u', 2), ('v', 3)), ((2, (2,)), (2, (3,)))),)"
+      },
+      "role": "near_miss",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:claims_match",
+      "decoded": {
+        "claims_match": "FAIL"
+      },
+      "detail": "",
+      "failed": [
+        "claims_match"
+      ],
+      "fixture": "mut",
+      "refutations": {},
+      "role": "mutation",
+      "satisfied": false,
+      "witness": {
+        "classes": [
+          {
+            "representative": [],
+            "size": 1
+          }
+        ],
+        "cost": [
+          0,
+          -1
+        ],
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "sha256:71d200d8ffab1b98ab940769da680c27d48873242f3f141a4910e6e10766e84b",
+          "class_size": 1,
+          "class_size_expected": 1,
+          "cost_found": 0,
+          "pruned": true,
+          "stage": "base",
+          "status": "FOUND",
+          "theorem": null
+        },
+        "grade": "unique_delta",
+        "literal_minima": 1,
+        "measure": "mu1"
+      }
+    }
+  ]
+}

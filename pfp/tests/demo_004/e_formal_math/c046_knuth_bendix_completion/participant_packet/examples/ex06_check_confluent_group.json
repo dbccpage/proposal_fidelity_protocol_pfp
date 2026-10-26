@@ -1,0 +1,199 @@
+{
+  "input": {
+    "case_id": "ex06_check_confluent_group",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ],
+      [
+        "mul(inv(x), mul(x, y))",
+        "y"
+      ],
+      [
+        "inv(e)",
+        "e"
+      ],
+      [
+        "mul(x, e)",
+        "x"
+      ],
+      [
+        "mul(x, inv(x))",
+        "e"
+      ],
+      [
+        "inv(inv(x))",
+        "x"
+      ],
+      [
+        "mul(x, mul(inv(x), y))",
+        "y"
+      ],
+      [
+        "mul(x, inv(mul(y, x)))",
+        "inv(y)"
+      ]
+    ]
+  },
+  "expected_output": {
+    "case_id": "ex06_check_confluent_group",
+    "status": "SOLVED",
+    "task": "CHECK_CONFLUENCE",
+    "is_confluent": false,
+    "critical_pairs_count": 58,
+    "unjoinable_count": 10,
+    "unjoinable_critical_pairs": [
+      {
+        "critical_pair": [
+          "mul(x, mul(y, mul(inv(mul(x, y)), r8_y)))",
+          "r8_y"
+        ],
+        "normal_forms": [
+          "mul(x, mul(y, mul(inv(mul(x, y)), r8_y)))",
+          "r8_y"
+        ],
+        "source": "Rule 2 at path () with Rule 8"
+      },
+      {
+        "critical_pair": [
+          "mul(x, mul(y, inv(mul(r9_y, mul(x, y)))))",
+          "inv(r9_y)"
+        ],
+        "normal_forms": [
+          "mul(x, mul(y, inv(mul(r9_y, mul(x, y)))))",
+          "inv(r9_y)"
+        ],
+        "source": "Rule 2 at path () with Rule 9"
+      },
+      {
+        "critical_pair": [
+          "mul(r9_x, mul(inv(mul(r9_y, r9_x)), z))",
+          "mul(inv(r9_y), z)"
+        ],
+        "normal_forms": [
+          "mul(r9_x, mul(inv(mul(r9_y, r9_x)), z))",
+          "mul(inv(r9_y), z)"
+        ],
+        "source": "Rule 2 at path (0,) with Rule 9"
+      },
+      {
+        "critical_pair": [
+          "r2_z",
+          "mul(inv(mul(r2_x, r2_y)), mul(r2_x, mul(r2_y, r2_z)))"
+        ],
+        "normal_forms": [
+          "r2_z",
+          "mul(inv(mul(r2_x, r2_y)), mul(r2_x, mul(r2_y, r2_z)))"
+        ],
+        "source": "Rule 3 at path (1,) with Rule 2"
+      },
+      {
+        "critical_pair": [
+          "inv(mul(r9_y, r9_x))",
+          "mul(inv(r9_x), inv(r9_y))"
+        ],
+        "normal_forms": [
+          "inv(mul(r9_y, r9_x))",
+          "mul(inv(r9_x), inv(r9_y))"
+        ],
+        "source": "Rule 3 at path (1,) with Rule 9"
+      },
+      {
+        "critical_pair": [
+          "y",
+          "mul(r2_x, mul(r2_y, mul(inv(mul(r2_x, r2_y)), y)))"
+        ],
+        "normal_forms": [
+          "y",
+          "mul(r2_x, mul(r2_y, mul(inv(mul(r2_x, r2_y)), y)))"
+        ],
+        "source": "Rule 8 at path () with Rule 2"
+      },
+      {
+        "critical_pair": [
+          "inv(mul(r9_y, inv(x)))",
+          "mul(x, inv(r9_y))"
+        ],
+        "normal_forms": [
+          "inv(mul(r9_y, inv(x)))",
+          "mul(x, inv(r9_y))"
+        ],
+        "source": "Rule 8 at path (1,) with Rule 9"
+      },
+      {
+        "critical_pair": [
+          "inv(y)",
+          "mul(r2_x, mul(r2_y, inv(mul(y, mul(r2_x, r2_y)))))"
+        ],
+        "normal_forms": [
+          "inv(y)",
+          "mul(r2_x, mul(r2_y, inv(mul(y, mul(r2_x, r2_y)))))"
+        ],
+        "source": "Rule 9 at path () with Rule 2"
+      },
+      {
+        "critical_pair": [
+          "inv(mul(r2_x, r2_y))",
+          "mul(r2_z, inv(mul(r2_x, mul(r2_y, r2_z))))"
+        ],
+        "normal_forms": [
+          "inv(mul(r2_x, r2_y))",
+          "mul(r2_z, inv(mul(r2_x, mul(r2_y, r2_z))))"
+        ],
+        "source": "Rule 9 at path (1, 0) with Rule 2"
+      },
+      {
+        "critical_pair": [
+          "inv(r9_x)",
+          "mul(inv(mul(r9_y, r9_x)), inv(inv(r9_y)))"
+        ],
+        "normal_forms": [
+          "inv(r9_x)",
+          "mul(inv(mul(r9_y, r9_x)), r9_y)"
+        ],
+        "source": "Rule 9 at path (1, 0) with Rule 9"
+      }
+    ],
+    "ddc_trace": {
+      "case_id": "ex06_check_confluent_group",
+      "trace_string": "ECMT",
+      "step_count": 4,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task CHECK_CONFLUENCE for case ex06_check_confluent_group",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "C",
+          "detail": "Computing critical pairs for 10 rules",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "M",
+          "detail": "Confluence verdict: False (unjoinable count: 10)",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "T",
+          "detail": "Emitted confluence determination",
+          "meta": {}
+        }
+      ]
+    }
+  }
+}

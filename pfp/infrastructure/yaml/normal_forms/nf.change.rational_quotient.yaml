@@ -1,0 +1,76 @@
+schema_version: smplx.nf.contract.v1
+contract_kind: normal_form_contract
+identity:
+  version: v1
+  status: active
+  theory_status: proposed
+  contract_status: active
+  verification_status: executable
+  family: change
+  id: nf.change.rational_quotient
+  name: Rational cochain quotient section
+  short_name: RATIONAL_QUOTIENT
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - finite_quotient
+  data_posture: in_transformation
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: Different representatives of a declared equivalence class appearing
+    as distinct normal representatives
+  preserves_invariant: The declared equivalence class
+  protected_skeleton:
+  - fixed_ordered_ambient_carrier
+  - declared_gauge_action
+  erased_structure:
+  - declared_gauge_redundancy
+  non_claims:
+  - No polynomial algorithm for arbitrary succinct fermionic Hamiltonians
+  - No normalization across changes of labels, bases, carrier size, or equivalence
+    relation
+declarations_required:
+- ordered finite carrier
+- exact input
+- declared gauge action
+evidence_required:
+- exact_gauge_witness: rational_vector
+validation_criteria:
+- replay the returned gauge witness exactly
+- check the representative condition
+terminal_routes:
+- Normalized
+- Refused
+terminal_route_map:
+  Normalized: Preserve
+  Refused: Refuse
+certification:
+  certificate_required: true
+  certificate_kind: explicit_gauge_witness
+  obstruction_class_required: true
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+extensions:
+  normalization:
+    kind: canonicalizer
+    claim_scope: A normal form for the finite rational additive quotient; its L1 norm
+      is not generally the quotient distance.
+    domain: Q^m with a fixed exact rational matrix d0 and ordered coordinates
+    equivalence: c ~ c_prime iff c-c_prime lies in im(d0)
+    normalizer: code/bqnf_sign_evaluator.py:BQNFSignEvaluator.normalize_cochain
+    representative_condition: All pivot coordinates of RREF(d0 transpose) are zero
+    laws:
+      soundness: c - N(c) = d0 * returned_gauge
+      idempotence: N(N(c)) = N(c)
+      completeness: N(c) = N(c_prime) iff c-c_prime lies in im(d0)
+      determinism: Fixed coordinate order and the unique RREF row-space basis determine
+        N
+    evidence:
+    - ../docs/normal_form_audit.md
+    - ../code/tests/test_normal_form_laws.py
+quadrilateral:
+  qualifies_as_true_normal_form: false

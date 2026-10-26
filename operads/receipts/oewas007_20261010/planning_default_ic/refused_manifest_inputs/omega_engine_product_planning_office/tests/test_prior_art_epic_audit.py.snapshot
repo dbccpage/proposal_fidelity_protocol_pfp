@@ -1,0 +1,244 @@
+"""Custody mutations must invalidate proposed-epic linkage. AuthorityEffect: None."""
+import json
+from pathlib import Path
+
+import pytest
+
+from omega_engine_product_planning_office.use_cases.prior_art_epic_audit import MAP_PATH, audit
+
+
+def root():
+    return next(p for p in Path(__file__).resolve().parents if (p / "pyproject.toml").is_file())
+
+
+def _pin_fixture_predecessor(repo, mapping, monkeypatch):
+    import hashlib
+
+    from omega_engine_product_planning_office.use_cases import prior_art_epic_audit as module
+
+    predecessor = {"base_revision": mapping["original_inventory_base_revision"],
+                   "prior_epic_inventory": mapping["prior_epic_inventory"], "epics": mapping["epics"]}
+    path = repo / module.PREDECESSOR_PATH
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(predecessor), encoding="utf-8")
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    monkeypatch.setattr(module, "PREDECESSOR_SHA256", digest)
+    mapping["predecessor"] = {"path": module.PREDECESSOR_PATH, "sha256": digest}
+
+
+def test_current_map_resolves_all_declared_systems():
+    result = audit(root())
+    assert result["status"] == "PASS" and result["registry_rows"] == 880
+    assert result["epics"] == 32 and result["direct_systems"] == 15
+    mapping = json.loads((root() / MAP_PATH).read_bytes())
+    assert len(mapping["declared_system_paths"]) == 31
+
+
+@pytest.mark.parametrize("mutation", ["digest", "coverage", "identity", "assignment", "registry_system", "rows", "systems", "declarations", "prior_inventory"])
+def test_custody_mutations_are_detected(tmp_path, mutation):
+    mapping = json.loads((root() / MAP_PATH).read_bytes())
+    match mutation:
+        case "digest":
+            mapping["epics"][0]["sources"][0]["sha256"] = "0" * 64
+        case "coverage":
+            mapping["epics"].pop()
+        case "identity":
+            mapping["epics"][0]["epic_id"] = mapping["epics"][1]["epic_id"]
+        case "assignment":
+            mapping["epics"][0]["direct_registry_rows"] += 1
+        case "registry_system":
+            mapping["epics"][0]["sources"][0]["registry_system"] = "invented_system"
+        case "rows":
+            mapping["registry_file_rows"] += 1
+        case "systems":
+            mapping["direct_system_count"] += 1
+        case "declarations":
+            mapping["declared_system_paths"].pop()
+        case "prior_inventory":
+            mapping["prior_epic_inventory"][0]["sha256"] = "0" * 64
+    path = tmp_path / "mutated_map.json"
+    path.write_text(json.dumps(mapping), encoding="utf-8")
+    with pytest.raises(ValueError):
+        audit(root(), path)
+
+
+@pytest.fixture
+def linked_repository(tmp_path, monkeypatch):
+    import hashlib
+    import os
+
+    import yaml
+
+    from omega_engine_product_planning_office.use_cases.prior_art_epic_audit import INDEX_PATH
+
+    def put(name, text):
+        path = tmp_path / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+        return path
+
+    def digest(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    source = put("source.md", "finite source")
+    prior = put("prior.md", "existing plan")
+    (tmp_path / "system").mkdir()
+    epic_path = "omega_engine_product_planning_office/plans/epics/suite/epic.md"
+    epic = tmp_path / epic_path
+    def link(document, target):
+        return "[target](" + Path(os.path.relpath(target, document.parent)).as_posix() + ")"
+    put(epic_path, "E1 AuthorityEffect:** None RESEARCH_HOLD INVARIANT BREAK WITNESS MUTATION\n"
+        + link(epic, source) + "\n" + link(epic, tmp_path / "system"))
+    suite = epic.parent / "README.md"
+    put(str(suite.relative_to(tmp_path)), link(suite, epic))
+    index = tmp_path / INDEX_PATH
+    put(INDEX_PATH, link(index, epic) + "\n" + link(index, tmp_path / "system"))
+    registry = put("registry.yaml", yaml.safe_dump({"files": [{"file_location": "source.md", "omega_engine_folder": "system"}],
+        "summary": {"omega_engine_folders_covered": ["system"]}}))
+    mapping = {"authority_effect": "None", "registry_path": "registry.yaml", "registry_sha256": digest(registry),
+        "registry_file_rows": 1, "direct_system_count": 1, "declared_system_paths": ["system"],
+        "original_inventory_base_revision": "1" * 40,
+        "prior_epic_inventory": [{"path": "prior.md", "sha256": digest(prior), "base_sha256": digest(prior)}],
+        "epics": [{"epic_id": "E1", "epic_path": epic_path, "system_path": "system",
+                   "direct_registry_rows": 1, "registry_relationship": "DIRECT_REGISTRY_ASSIGNMENT",
+                   "sources": [{"path": "source.md", "sha256": digest(source), "registry_system": "system", "transfer": "direct"}]}]}
+    _pin_fixture_predecessor(tmp_path, mapping, monkeypatch)
+    map_path = put("map.json", json.dumps(mapping))
+    return tmp_path, map_path, epic, suite, index
+
+
+def test_linked_fixture_is_valid(linked_repository):
+    repo, mapping, *_ = linked_repository
+    assert audit(repo, mapping)["status"] == "PASS"
+
+
+@pytest.fixture
+def shared_owner_repository(linked_repository, monkeypatch):
+    from copy import deepcopy
+
+    repo, map_path, epic, suite, index = linked_repository
+    second = epic.with_name("epic2.md")
+    second.write_text(epic.read_text().replace("E1 ", "E2 "), encoding="utf-8")
+    suite.write_text(suite.read_text() + "\n[second epic](epic2.md)", encoding="utf-8")
+    index.write_text(index.read_text() + "\n[second epic](suite/epic2.md)", encoding="utf-8")
+    mapping = json.loads(map_path.read_bytes())
+    row = deepcopy(mapping["epics"][0])
+    row.update(epic_id="E2", epic_path=second.relative_to(repo).as_posix())
+    mapping["epics"].append(row)
+    _pin_fixture_predecessor(repo, mapping, monkeypatch)
+    map_path.write_text(json.dumps(mapping), encoding="utf-8")
+    return repo, map_path, mapping, suite
+
+
+def test_distinct_epics_may_share_one_current_owner(shared_owner_repository):
+    repo, map_path, *_ = shared_owner_repository
+    result = audit(repo, map_path)
+    assert result["status"] == "PASS"
+    assert result["epics"] == 2 and result["direct_systems"] == 1
+
+
+@pytest.mark.parametrize("index", [0, 1])
+def test_each_shared_owner_epic_must_remain_covered(shared_owner_repository, index):
+    repo, map_path, mapping, _ = shared_owner_repository
+    mapping["epics"].pop(index)
+    map_path.write_text(json.dumps(mapping), encoding="utf-8")
+    with pytest.raises(ValueError, match="Successor epic identity/path coverage mismatch"):
+        audit(repo, map_path)
+
+
+@pytest.mark.parametrize("mutation,reason", [
+    ("base_revision", "Original inventory base revision mismatch"),
+    ("base_digest", "Original inventory custody mismatch"),
+    ("predecessor_bytes", "Predecessor digest mismatch"),
+    ("repinned_predecessor", "Unexpected predecessor custody pin"),
+])
+def test_successor_cannot_relabel_or_repin_historical_custody(linked_repository, mutation, reason):
+    import hashlib
+
+    repo, map_path, *_ = linked_repository
+    mapping = json.loads(map_path.read_bytes())
+    match mutation:
+        case "base_revision":
+            mapping["original_inventory_base_revision"] = "2" * 40
+        case "base_digest":
+            mapping["prior_epic_inventory"][0]["base_sha256"] = "0" * 64
+        case "predecessor_bytes" | "repinned_predecessor":
+            path = repo / mapping["predecessor"]["path"]
+            predecessor = json.loads(path.read_bytes())
+            predecessor["epics"] = []
+            path.write_text(json.dumps(predecessor), encoding="utf-8")
+            if mutation == "repinned_predecessor":
+                mapping["predecessor"]["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+    map_path.write_text(json.dumps(mapping), encoding="utf-8")
+    with pytest.raises(ValueError, match=reason):
+        audit(repo, map_path)
+
+
+@pytest.mark.parametrize("mutation,reason", [
+    ("identity", "Duplicate epic identity"),
+    ("path", "Duplicate epic path"),
+    ("source_digest", "Source digest mismatch"),
+    ("suite_link", "Missing local link"),
+])
+def test_shared_owner_keeps_each_epic_custody(shared_owner_repository, mutation, reason):
+    repo, map_path, mapping, suite = shared_owner_repository
+    first, second = mapping["epics"]
+    match mutation:
+        case "identity":
+            second["epic_id"] = first["epic_id"]
+        case "path":
+            second["epic_path"] = first["epic_path"]
+        case "source_digest":
+            second["sources"][0]["sha256"] = "0" * 64
+        case "suite_link":
+            suite.write_text("[first epic](epic.md)", encoding="utf-8")
+    map_path.write_text(json.dumps(mapping), encoding="utf-8")
+    with pytest.raises(ValueError, match=reason):
+        audit(repo, map_path)
+
+
+def test_shared_owner_cannot_hide_an_uncovered_system(shared_owner_repository):
+    import hashlib
+
+    import yaml
+
+    repo, map_path, mapping, _ = shared_owner_repository
+    registry_path = repo / mapping["registry_path"]
+    registry = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    registry["summary"]["omega_engine_folders_covered"].append("uncovered_system")
+    registry_path.write_text(yaml.safe_dump(registry), encoding="utf-8")
+    mapping["registry_sha256"] = hashlib.sha256(registry_path.read_bytes()).hexdigest()
+    mapping["declared_system_paths"].append("uncovered_system")
+    map_path.write_text(json.dumps(mapping), encoding="utf-8")
+    with pytest.raises(ValueError, match="Epic system coverage mismatch"):
+        audit(repo, map_path)
+
+
+def test_inflected_contract_markers_do_not_count(linked_repository):
+    repo, mapping, epic, *_ = linked_repository
+    text = epic.read_text(encoding="utf-8")
+    epic.write_text(
+        text.replace("INVARIANT", "INVARIANTLY").replace(" BREAK ", " UNBREAKABLE ")
+        .replace("WITNESS", "WITNESSED").replace("MUTATION", "MUTATIONS"),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="Missing plan contract"):
+        audit(repo, mapping)
+
+
+@pytest.mark.parametrize("mutation", ["epic_source", "epic_system", "suite", "index", "broken_target"])
+def test_navigation_mutations_fail(linked_repository, mutation):
+    repo, mapping, epic, suite, index = linked_repository
+    match mutation:
+        case "epic_source":
+            epic.write_text(epic.read_text().replace("source.md", "prior.md"), encoding="utf-8")
+        case "epic_system":
+            epic.write_text(epic.read_text().replace("/system)", "/prior.md)"), encoding="utf-8")
+        case "suite":
+            suite.write_text("registration removed", encoding="utf-8")
+        case "index":
+            index.write_text("registration removed", encoding="utf-8")
+        case "broken_target":
+            epic.write_text(epic.read_text() + "\n[missing](absent.md)", encoding="utf-8")
+    with pytest.raises(ValueError):
+        audit(repo, mapping)

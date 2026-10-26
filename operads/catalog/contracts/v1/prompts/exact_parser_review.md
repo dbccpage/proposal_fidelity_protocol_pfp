@@ -1,0 +1,3 @@
+# Exact parser review
+
+Read the actual candidate parser and its declared grammar. Trace each public entry to the arithmetic constructor. Check type, lexical and work limits before construction; inspect the retained malformed-input control and an admitted large-cost control. Do not run an unbounded exponent payload in this IDE. Report the exact source path and the deciding checker evidence or unavailable check. Decimal/exponent support may be intentional under another resource contract. This prompt is candidate review guidance: it supplies neither independent danger evidence nor OEEIS admission.

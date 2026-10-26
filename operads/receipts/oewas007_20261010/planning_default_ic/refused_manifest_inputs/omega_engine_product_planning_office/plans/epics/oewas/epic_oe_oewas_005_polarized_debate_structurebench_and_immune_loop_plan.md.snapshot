@@ -1,0 +1,61 @@
+# Epic: Production-bound StructureBench evidence and candidate-only immune feedback
+
+**Epic ID:** `EPIC-OE-OEWAS-005`
+**AuthorityEffect:** None
+**Status:** `RESEARCH_HOLD`
+**Reviewed:** 2026-10-10
+**Owner:** OEWAS maintainers, with the dependency owners named below.
+
+The [shared-review reconciliation](../../../receipts/epic_design_review_20261010.md) records the readable review and unavailable attachment boundary. Full-scope readiness is held; this document specifies the next bounded production experiment. Existing test names are source references, not execution receipts.
+
+## Source inspection and repaired obstructions
+
+[StructureBenchEvaluator.evaluate](../../../../omega_engine_workflows_agents_skills/structurebench/evaluator.py) already evaluates eleven relational constraints over a bout bundle. [existing nonvacuity regressions](../../../../omega_engine_workflows_agents_skills/tests/unit/test_structurebench_no_vacuous_decisions.py) explicitly accept a fully measured all-clean bundle. The old requirement to reject every all-pass/zero-variance report was wrong. Nonvacuity means constraints were actually decided: UNVERIFIABLE and NOT_APPLICABLE are not SATISFIED or measured coverage.
+
+Python sorted-key JSON is not automatically RFC-8785, and narrative timestamps are not proof provenance. [persist_bout_run_folder](../../../../omega_engine_woland/use_cases/persistence.py) delegates sealed bundle custody to the native writer. [OeeisImmuneAdapter.record_candidates](../../../../omega_engine_woland/infrastructure/estates/oeeis_immune.py) emits CANDIDATE antibodies; it never admits them. Do not introduce a second PolarizedDebateHarness when the existing [Woland swarm](../../../../omega_engine_woland/use_cases/base_swarm/woland_swarm.py) owns the bout and its budget.
+
+## Bounded contract and ownership decisions
+
+Input: a bundle produced through the actual persistence port, with candidate identity, receipt/content digests and exact terminal evidence. Output: StructureBenchReport with per-constraint outcomes and `(decided, declared)` coverage. Oracle: independently hash the on-disk files and examine the terminal payload, preserving distinction between syntactic structure and challenge truth.
+
+Choose one finite challenge and one immutable admitted detector snapshot for the integration experiment. OEWAS005 owns report/feedback correlation; Woland owns candidate checking and round limits; OEEIS owns external human admission. Keep multi-tenant state separation, detector activation trust and prospective external-review tests held until their source definitions are retrieved and bound. A zero-obstruction telemetry value alone is not a solved challenge.
+
+## Obstruction review and TDD test plan
+
+**Independent oracle for these slices:** independently hash the on-disk files and examine the terminal payload, preserving distinction between syntactic structure and challenge truth.
+
+Candidate file: `omega_engine_workflows_agents_skills/tests/integration/test_structurebench_production_bundle_contract.py`.
+
+1. **RED → minimal GREEN:** persist a real finite bout bundle and evaluate it through `evaluate_run_folder`; require independently matched file hashes and explicit coverage. A fully measured valid bundle may be clean. Add only the missing binding if demonstrated; do not force a statistical variance refusal.
+2. **RED → minimal GREEN:** copy one receipt from run A into run B while retaining B's candidate; require violated or unverifiable hash/identity binding. Remove a required terminal field and require UNVERIFIABLE, never SATISFIED. Restore original bytes and recompute only through the real writer under a new run key as the recovery control.
+3. **RED → minimal GREEN:** invoke `OeeisImmuneAdapter.record_candidates` for one actual recorded failed candidate. Require source run/task correlation and CANDIDATE custody; add an unrelated healthy control and confirm no human admission or blocking authority is created. Keep raw dissent and the observed failure witness. Exact feedback correlation schema is an OEWAS005/OEEIS design prerequisite before writing this slice.
+
+| Theoretical minimum | Concrete obligation |
+| --- | --- |
+| INVARIANT | Measured report fields bind to the emitted bundle; feedback does not confer admission. |
+| BREAK | Count an unverifiable terminal obligation as SATISFIED, or transplant another bundle's receipt. |
+| WITNESS | Coverage excludes the unmeasured obligation and the transplanted bundle is not clean. |
+| MUTATION | Linked `StructureBenchReport.is_clean` excludes undecided outcomes and `_c2_hash_binding` checks file bindings; bypass either in isolation and require RED. These code targets were inspected; mutation was not executed. |
+
+Landau controls: measured clean run (1), missing field (2), cross-run receipt transplant (3), undecided-as-pass counterexample (4), native persistence→evaluator integration and production mutation (5). No local test result may inherit the third-party review's reported80 tests.
+
+### Execution and evidence discipline
+
+Use the explicitly invoked [ext-mattpocock-tdd skill](../../../../.agents/skills/ext-mattpocock-tdd/SKILL.md). Its current entry declares an operadic Code-to-Code operation; the concrete TDD sequence above is this plan's local design. Run one behavior test to observed RED, make the smallest production change to reach GREEN, then refactor with that test and its adjacent controls. A test already GREEN establishes reuse and is not fabricated RED evidence. No tests in this plan have been authored or run by this review.
+
+Run from the repository root, after authoring the named candidate test file:
+
+```powershell
+& 'C:/Users/a343o/source/repos/the_symbol_game/.venv/Scripts/python.exe' -X utf8 -m pytest omega_engine_workflows_agents_skills/tests/integration/test_structurebench_production_bundle_contract.py -q
+```
+
+Route in four stages: DOC_MGR binds source bytes and checks UTF-8/links; DEV_MGR with Hella/Azazello selects the existing public port and bounded implementation; QA_MGR/Soviet Inspector execute one-to-three files per batch and at most three repair attempts; BUILDER checks the invariant/falsifier and Woland adjudicates the recorded evidence, preserving Koroviev's dissent. Rust work uses one named crate and `-j 1`. A SoftwareQaReceiptV1 requires its actual production writer and schema; this Markdown is not one.
+
+## Claim discipline
+
+- Supports: a source-inspected residual scope and prospective behavior tests.
+- Does not support: completed implementation, authored/executed tests, automatic admission, full design readiness, or a mathematical theorem.
+- Narrowest claim: A measured, bound bundle can be structurally clean while scientific correctness and detector admission remain separate obligations.
+- Next evidence: bind the candidate test to the stated public port, observe a real failure, and retain source/candidate/test digests, command, exit status and mutation/restoration receipts under `receipts/`.
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

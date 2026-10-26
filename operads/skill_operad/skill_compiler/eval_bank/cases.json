@@ -1,0 +1,202 @@
+{
+  "schema": "omega.skill_compiler.eval_bank.v1",
+  "authority_effect": "None",
+  "description": "Minimal real-failure bank for skill compiler non-regression",
+  "cases": [
+    {
+      "id": "sc-01-dda-oe010-shared-contract",
+      "kind": "resolve",
+      "source_failure": "DDA laws re-hosted in autoskill instead of OE-010 contract",
+      "signal": "DDA trace missing AE=None check",
+      "invariant": "Always check DDA AuthorityEffect None and post-T non-mutation",
+      "locus": "",
+      "expect": {
+        "disposition": "SHARED_CONTRACT",
+        "matched_any_contains": ["dda", "oe010"]
+      }
+    },
+    {
+      "id": "sc-02-budget-code-gate",
+      "kind": "resolve",
+      "source_failure": "Prose 300-line law without mechanized gate",
+      "signal": "skill bloat in hot context",
+      "invariant": "Enforce 300-line hot-context budget on SKILL.md via gate",
+      "locus": "autoskill",
+      "expect": {
+        "disposition": "CODE_GATE",
+        "matched_any_contains": ["budget", "skill_budget"]
+      }
+    },
+    {
+      "id": "sc-03-six-host-shared",
+      "kind": "resolve",
+      "source_failure": "Four-host doctrine omitted tracked antigravity and gemini roots",
+      "signal": "cross-host skill mirrors still list only four roots and omit antigravity and gemini",
+      "invariant": "All six tracked CODA host roots participate in skill parity",
+      "locus": "auto-symmetry-hunter",
+      "expect": {
+        "disposition": "SHARED_CONTRACT",
+        "matched_any_contains": ["six_host", "host"]
+      }
+    },
+    {
+      "id": "sc-04-test-quality-shared",
+      "kind": "resolve",
+      "source_failure": "Mock-only / assert!(true) re-taught in blackrod essays",
+      "signal": "tests are mock-only with assert!(true)",
+      "invariant": "Test quality law: failure-path and soviet inspector standards",
+      "locus": "blackrod",
+      "expect": {
+        "disposition": "SHARED_CONTRACT",
+        "matched_any_contains": ["test"]
+      }
+    },
+    {
+      "id": "sc-05-formal-lean-shared",
+      "kind": "resolve",
+      "source_failure": "PR-2025 class: formal claim without Lean subject / lake bind",
+      "signal": "formal claim with sorry in Lean 4 module",
+      "invariant": "FORMAL_CLAIM requires lake build subject and axiom audit",
+      "locus": "paper-proof-signoff",
+      "expect": {
+        "disposition": "SHARED_CONTRACT",
+        "matched_any_contains": ["formal", "lean"]
+      }
+    },
+    {
+      "id": "sc-06-existing-op-blackrod",
+      "kind": "resolve",
+      "source_failure": "New skill proposed when blackrod already owns the surface",
+      "signal": "blackrod should reject fake tests in sprint review",
+      "invariant": "Update blackrod report schema for fake-test veto",
+      "locus": "",
+      "expect": {
+        "disposition": "EXISTING_OP",
+        "skill_id": "blackrod"
+      }
+    },
+    {
+      "id": "sc-07-new-skill-buckets",
+      "kind": "resolve",
+      "source_failure": "NEW_SKILL from vague desire without activation/workflow/eval/boundary",
+      "signal": "create a new skill package",
+      "invariant": "New skill: when user says /foo trigger, run workflow steps, eval with fixtures, authority None tool boundary",
+      "locus": "",
+      "expect": {
+        "disposition": "NEW_SKILL"
+      }
+    },
+    {
+      "id": "sc-08-noise-one-off",
+      "kind": "resolve",
+      "source_failure": "Session-only preference written into SKILL.md",
+      "signal": "this session only ignore next time",
+      "invariant": "one-off local preference",
+      "locus": "",
+      "expect": {
+        "disposition": "NOISE"
+      }
+    },
+    {
+      "id": "sc-09-empty-noise",
+      "kind": "resolve",
+      "source_failure": "Empty episode promoted to prose edit",
+      "signal": "",
+      "invariant": "",
+      "locus": "",
+      "expect": {
+        "disposition": "NOISE"
+      }
+    },
+    {
+      "id": "sc-10-default-skill-prose",
+      "kind": "resolve",
+      "source_failure": "Durable preference with no gate/contract/skill-name match still needs a home",
+      "signal": "prefer LF line endings in Rust sources always",
+      "invariant": "Rust source files must use LF not CRLF project-wide",
+      "locus": "",
+      "expect": {
+        "disposition": "SKILL_PROSE"
+      }
+    },
+    {
+      "id": "sc-11-four-host-live-parity-fail",
+      "kind": "knowledge_parity_fixture",
+      "source_failure": "Unfenced four-host doctrine omits two tracked CODA roots",
+      "fixture": "fixtures/four_host_live_stale.md",
+      "expect": {
+        "must_fail": true
+      }
+    },
+    {
+      "id": "sc-12-four-host-fenced-parity-pass",
+      "kind": "knowledge_parity_fixture",
+      "source_failure": "Historical four-host mention without STALE fence (false positive risk)",
+      "fixture": "fixtures/four_host_fenced_stale.md",
+      "expect": {
+        "must_fail": false
+      }
+    },
+    {
+      "id": "sc-13-autoskill-not-hollow",
+      "kind": "skill_structure",
+      "source_failure": "Hollow autoskill root (headings only, no progressive disclosure)",
+      "skill": "autoskill",
+      "expect": {
+        "min_lines": 40,
+        "must_contain": [
+          "Progressive disclosure",
+          "episode",
+          "CODE_GATE"
+        ]
+      }
+    },
+    {
+      "id": "sc-14-hollow-fixture-negative",
+      "kind": "skill_structure_fixture",
+      "source_failure": "Structure checker must flag hollow heading-only prose",
+      "fixture": "fixtures/hollow_skill_root.md",
+      "expect": {
+        "min_lines": 40,
+        "must_contain": ["Progressive disclosure"],
+        "must_fail": true
+      }
+    },
+    {
+      "id": "sc-15-knowledge-parity-gate-route",
+      "kind": "resolve",
+      "source_failure": "Stale doctrine treated as packaging SHA-only",
+      "signal": "stale doctrine banned phrase still live",
+      "invariant": "Run knowledge parity gate on skill prose",
+      "locus": "",
+      "expect": {
+        "disposition": "CODE_GATE",
+        "matched_any_contains": ["knowledge", "parity"]
+      }
+    },
+    {
+      "id": "sc-16-historical-pr-immunity-shared-contract",
+      "kind": "resolve",
+      "source_failure": "Historical PR immunity episode misrouted by generic AuthorityEffect language",
+      "signal": "Historical pull-request review must mine the bound prompt, response, review objection, repair, revert, and conversation DAG.",
+      "invariant": "Bind every historical PR and later correction before nominating an anti-morphism; AuthorityEffect None.",
+      "locus": ".agents/anti_skills; GitHub PR history",
+      "expect": {
+        "disposition": "SHARED_CONTRACT",
+        "matched_any_contains": ["historical_pr_immunity"]
+      }
+    },
+    {
+      "id": "sc-17-verification-boundary-float-injection",
+      "kind": "resolve",
+      "source_failure": "CODA-A review swarm checked input float-firewall but missed independent verify() boundary; ANTI-CERTIFICATE-VERIFIER-FLOAT-LEAK was passive documentation",
+      "signal": "Certificate verify() method accepts Float-bearing forged witness without type-gating the re-verification boundary",
+      "invariant": "Review swarm Stage 3 must test both the input construction path and the independent verify() re-verification path for float rejection",
+      "locus": "omega-paper-review-swarm; channel_e_verification",
+      "expect": {
+        "disposition": "EXISTING_OP",
+        "matched_any_contains": ["omega-paper-review-swarm"]
+      }
+    }
+  ]
+}

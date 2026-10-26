@@ -1,0 +1,150 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+
+identity:
+  id: nf.ai.ascnf
+  name: Agent-State Cohomology Normal Form
+  short_name: ASCNF
+  version: v0
+  status: draft
+  family: experimental
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - agent_context_relvar
+    - inference_boundary
+    - cognitive_nine_dot_boundary
+  data_posture: in_motion
+  mathematical_posture: operational
+
+purpose:
+  excludes_anomaly: uncertified logic merges and contradictory agent narratives
+  preserves_invariant: local agent reasoning patches glue to a global section on overlap
+    relative to declared boundary adapters and repair actions; potentials are defined
+    modulo ker(d_0)
+  protected_skeleton:
+    - inference_fingerprint
+    - c0_logic_potentials
+    - c1_narrative_defects
+    - d0_global_image
+  erased_structure:
+    - ephemeral_agent_memory
+  non_claims:
+    - does not prove the logical truth of the agent's external claims
+    - does not govern execution speed or resource allocation
+    - does not imply authorization
+    - existence of potential alpha does not imply its uniqueness; potentials are defined
+      modulo ker(d_0) and require a declared gauge selector for canonical representation
+    - exactness certifies repair relative only to the declared defect extraction adapter;
+      it does not guarantee semantic preservation if the adapter omits protected state
+    - erased ephemeral memory is unsealed session scratchpad that does not alter verified
+      semantics and is exempt from formal loss ledger tracking under the declared policy
+
+obstruction_substrate:
+  finite_carrier:
+    description: per-agent local reasoning patch; defects from overlapping narrative writes
+    max_rank: null
+  cochain_complex:
+    C0: local_reasoning_potentials_alpha
+    C1: narrative_merge_defects_omega
+    C2: logical_contradiction_failures
+    d0: maps local inference to global state defect
+    d1: evaluates multi-agent consensus closure
+    quotient: "Q1 = C1 / im(d0)"
+  obstruction_class:
+    notation: "[omega(e)]"
+    exact: "[omega] == 0"
+    residual_closed: "d1(omega) == 0 and [omega] != 0"
+    open: "d1(omega) != 0"
+
+declarations_required:
+  - cognitive_boundary:
+      relations: [agent_id, active_context]
+      attributes: [confidence_score, entropy]
+      predicates: []
+  - delta_program
+  - quotient_space: "Q1 = C1 / im(d0)"
+  - global_consensus_image
+
+evidence_required:
+  - prior_global_state
+  - local_agent_patch
+  - logical_predicate_before_after
+  - collision_context
+
+validation_criteria:
+  - cognitive boundary is declared before runtime orchestration
+  - boundary intersection (overlap between agents) is computed for each merge event
+  - defect maps to computable obstruction class in Q1
+  - merge allowed only when obstruction_class is exact zero [omega] == 0 equivalently omega = d0(alpha)
+  - nonzero contradiction terminalizes into a localized reasoning loop
+
+proof_obligations:
+  - id: ascnf.sheaf_gluing_exactness
+    status: theorem_shaped
+
+terminal_routes:
+  - MergeConsensus
+  - IsolateContradiction
+  - Reevaluate
+  - Serialize
+  - EmitToAutoPCompiler
+  - ClosureFailure
+
+terminal_route_map:
+  MergeConsensus: Preserve
+  IsolateContradiction: Quarantine
+  Reevaluate: Repair
+  Serialize: Serialize
+  EmitToAutoPCompiler: Lift
+  ClosureFailure: ClosureFailure
+
+certification:
+  certificate_required: true
+  certificate_kind: consensus_certificate
+  obstruction_class_required: true
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+
+failure_modes:
+  - symptom: global state enters infinite loop resolving agent updates
+    diagnosis: defects do not commute; non-trivial cocycle detected
+    terminal: IsolateContradiction
+  - symptom: downstream AutoP compilation fails on syntax mapping
+    diagnosis: repair attempted without exact potential omega = d0 alpha
+    terminal: Reevaluate
+
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: >
+    Under the declared cognitive boundary and defect extraction adapter, local agent
+    reasoning patches admit consistent multi-agent consensus if and only if the narrative
+    defect cochain omega in C^1 is exact under coboundary operator d_0 (omega = d_0 alpha).
+    Potentials are unique up to ker(d_0). Non-exact closed cochains represent irreconcilable
+    narrative contradictions requiring quarantine.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_sheaf_gluing_not_a_relational_natural_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: uncertified logic merges and contradictory agent narratives
+    lossless_join:
+      status: sheaf_gluing
+      statement: local reasoning patches agreeing on overlaps reconstruct a global state section
+        relative to the declared adapter and gauge selector
+    dependency_preservation:
+      status: cocycle_condition_preserved
+      statement: nilpotence of the consensus complex d1 d0 = 0 is preserved across agent boundaries
+    syntactic_decision:
+      status: transition_certificate
+      statement: the obstruction class in Q1 is computable from declared boundary complexes,
+        adapter definitions, and patch schemas

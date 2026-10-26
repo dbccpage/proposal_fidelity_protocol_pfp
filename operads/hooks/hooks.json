@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0",
+  "description": "Cross-host mechanical hook specifications for Antigravity, Claude Code, and Codex.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py -3.12 omega_engine_operads/hooks/scripts/pre_tool_git_guard.py",
+            "description": "Mechanically blocks forbidden git commands and whole-suite pytest sweeps."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content|Write|Edit|EditMultipleFiles|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "py -3.12 omega_engine_operads/hooks/scripts/post_tool_bom_linter.py",
+            "description": "Enforces strict UTF-8 validation, BOM detection/stripping, and local Ruff verification."
+          }
+        ]
+      }
+    ]
+  }
+}

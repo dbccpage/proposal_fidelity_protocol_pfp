@@ -1,0 +1,253 @@
+{
+  "schema_version": "omega.qddc.output-contract-validation.v1",
+  "authority_effect": "None",
+  "recorded_at_utc": "2026-10-16T03:34:49.153242+00:00",
+  "base_commit": "869d2714e8495d5337f73e424d4c7ba091821a7a",
+  "reviewed_pr": "https://github.com/dbccpage/the_symbol_game/pull/1079",
+  "finding": "P2: native QDDC success results could exceed the Python output rational bounds and lose host outcome evidence on schema rejection.",
+  "historical_receipt": "qddc_validation.json (2026-10-16); preserved unchanged, applies only to its recorded sources.",
+  "before_correction": [
+    {
+      "name": "density defect reproduced before correction",
+      "command": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        "/tmp/qddc-output-repro.py"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {
+        "PYTHONPATH": "/workspace/the_symbol_game",
+        "OMEGA_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/omega_engine/crates_rs/target/debug/omega_symbol_game"
+      },
+      "tool_version": "Python 3.12.14; Pydantic 2.13.4",
+      "exit_status": 0,
+      "scope": "Review fixture: valid 7x7 density, input maximum 255 bits, purity 8570/8572 bits and 5162 characters. Existing compiled host returned exact success; adapter raised uncaught ValidationError.",
+      "output": "input_model: accepted; strictly diagonally dominant trace-one Hermitian\nmax_input_bits: 255\npurity_bits: 8570 8572 text_length: 5162\nwire_bytes: 3358\ncompiled_host: success with exact oversized result\nadapter: uncaught ValidationError: Value error, rational exceeds output bit bound\ncompiled_host_sha256: 29d6814e65da9e8013f48728f69373c48f111b76f4eecff31c7e42f4a22b77ea",
+      "output_sha256": "146eafe5420927ac891e36b920d1e22c4820cd8a00372f0748669ac82d5b850c",
+      "script_sha256": "024f85b8a6a77627a852bbd23e47d913873c14d63276905ccf411dd20393d983",
+      "reproduction_source": "Equivalent fixture and oracle retained in omega_engine_pfp/tests/test_qddc_output_contract.py; these before-correction scripts are local diagnostics."
+    },
+    {
+      "name": "Lindblad defect reproduced before correction",
+      "command": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        "/tmp/qddc-lindblad-before.py"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {
+        "PYTHONPATH": "/workspace/the_symbol_game",
+        "OMEGA_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/omega_engine/crates_rs/target/debug/omega_symbol_game"
+      },
+      "tool_version": "Python 3.12.14; Pydantic 2.13.4",
+      "exit_status": 0,
+      "scope": "Valid two-level density and 16 jumps; exact derivative denominator 8323 bits. Existing compiled host returned exact success.",
+      "output": "expected derivative bits: 7576 8323\ncompiled host: success with oversized Lindblad derivative",
+      "output_sha256": "9f41465bcc81f8e9b597d208e72aedc7df2e35a320df571f7fb0e4034936accd",
+      "script_sha256": "824bf4f15e6e19802ac923a7bac83a969607b42c205e75b2ec41b6d91bf583c4",
+      "reproduction_source": "Equivalent fixture and oracle retained in omega_engine_pfp/tests/test_qddc_output_contract.py; these before-correction scripts are local diagnostics."
+    }
+  ],
+  "checks": [
+    {
+      "name": "native output boundary tests",
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "-j",
+        "1",
+        "-p",
+        "omega_symbol_game",
+        "--lib",
+        "invoke::qddc::tests"
+      ],
+      "cwd": "/workspace/the_symbol_game/omega_engine/crates_rs",
+      "environment": {
+        "PATH": "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "CARGO_HOME": "/workspace/.toolchains/cargo"
+      },
+      "tool_version": "cargo 1.99.0 (5f94df478 2026-08-27); rustc 1.99.0 (b940084d7 2026-09-28)",
+      "exit_status": 0,
+      "scope": "2 tests: inclusive 8192-bit signed numerator/denominator outputs; distinct 256-bit input gate; oversized real/imaginary entries in later matrix/list positions.",
+      "output_sha256": "6db3f9907c3262b441a94c54803d87272ef1af8d3531d9d693873f8c90723939",
+      "output_tail": "    Finished `test` profile [unoptimized + debuginfo] target(s) in 51.79s\n     Running unittests src/lib.rs (target/debug/deps/omega_symbol_game-bea91689cf8197f8)\n\nrunning 2 tests\ntest invoke::qddc::tests::operator_output_checks_both_parts_and_later_entries ... ok\ntest invoke::qddc::tests::output_bit_boundary_is_inclusive_and_distinct_from_input ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 442 filtered out; finished in 0.00s"
+    },
+    {
+      "name": "compiled canonical host build",
+      "command": [
+        "cargo",
+        "build",
+        "--offline",
+        "-j",
+        "1",
+        "-p",
+        "omega_symbol_game",
+        "--bin",
+        "omega_symbol_game"
+      ],
+      "cwd": "/workspace/the_symbol_game/omega_engine/crates_rs",
+      "environment": {
+        "PATH": "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "CARGO_HOME": "/workspace/.toolchains/cargo"
+      },
+      "tool_version": "cargo 1.99.0 (5f94df478 2026-08-27); rustc 1.99.0 (b940084d7 2026-09-28)",
+      "exit_status": 0,
+      "scope": "Canonical host binary used by the Python subprocess integration tests. Existing warnings in omega_engines remain.",
+      "output_sha256": "941f629857616a8706a5707dff61a5e166a2c8f2b90f5a81897c1ebabff265db",
+      "output_tail": "84 |             .fold(f64::INFINITY, f64::min);\n   |                        ^^^^^^^^\n   |\n   = note: `#[warn(deprecated)]` on by default\n\nwarning: `omega_engines` (lib) generated 2 warnings (run `cargo fix --lib -p omega_engines` to apply 1 suggestion)\n   Compiling omega_symbol_game v0.1.0 (/workspace/the_symbol_game/omega_engine/crates_rs/omega_symbol_game)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.91s"
+    },
+    {
+      "name": "focused Python integration and output contracts",
+      "command": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        "-m",
+        "pytest",
+        "omega_engine_pfp/tests/test_qddc_native.py",
+        "omega_engine_pfp/tests/test_qddc_output_contract.py",
+        "-q",
+        "-o",
+        "addopts=",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=/workspace/scratch/qddc-output-contract-final-tests"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+        "PYTHONPATH": "/workspace/the_symbol_game",
+        "OMEGA_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/omega_engine/crates_rs/target/debug/omega_symbol_game"
+      },
+      "tool_version": "Python 3.12.14; pytest 9.1.1; Pydantic 2.13.4",
+      "exit_status": 0,
+      "scope": "62 tests: existing 26 plus 36 output-contract cases. Actual compiled-host density/Lindblad overflows and successful seven-action calls, including nonzero and zero-probability probes. Nonconforming success replies are explicitly labeled fixtures.",
+      "output_sha256": "d934f155bba41d1e1cd573944cac503702448f532d21157a12b5c0e303997927",
+      "output_tail": "..............................................................           [100%]\n62 passed in 4.00s"
+    },
+    {
+      "name": "Python lint",
+      "command": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "--extend-select",
+        "F401,F841,I,C901",
+        "--config",
+        "lint.mccabe.max-complexity=10",
+        "omega_engine_pfp/domain/homology/qddc.py",
+        "omega_engine_pfp/infrastructure/adapters/qddc_rust_adapter.py",
+        "omega_engine_pfp/tests/test_qddc_output_contract.py"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {},
+      "tool_version": "ruff 0.17.1",
+      "exit_status": 0,
+      "scope": "Three changed Python files; repository rules plus explicit import, unused-binding and complexity checks.",
+      "output_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "output_tail": "All checks passed!"
+    },
+    {
+      "name": "Python format",
+      "command": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "omega_engine_pfp/domain/homology/qddc.py",
+        "omega_engine_pfp/infrastructure/adapters/qddc_rust_adapter.py",
+        "omega_engine_pfp/tests/test_qddc_output_contract.py"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {},
+      "tool_version": "ruff 0.17.1",
+      "exit_status": 0,
+      "scope": "Three changed Python files.",
+      "output_sha256": "eee76f865de5a9f2456950f710ae5d5f9b5bd0ea02aa54f614c5eed6642a0bfd",
+      "output_tail": "3 files already formatted"
+    },
+    {
+      "name": "Rust format",
+      "command": [
+        "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustfmt",
+        "--edition",
+        "2021",
+        "--check",
+        "omega_engine/crates_rs/omega_symbol_game/src/invoke/qddc.rs"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {},
+      "tool_version": "rustfmt 1.10.0-stable (b940084d7e 2026-09-28)",
+      "exit_status": 0,
+      "scope": "Changed dispatcher source only.",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_tail": ""
+    },
+    {
+      "name": "exact-solvers skill sanity",
+      "command": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        ".agents/skills/governance-exact-solvers/scripts/check_exact_solvers.py"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {},
+      "tool_version": "Python 3.12.14",
+      "exit_status": 0,
+      "scope": "Existing rational arithmetic and primal/dual sanity fixture; not QDDC output verification.",
+      "output_sha256": "dc9abb617fc8358be21dd7de4275598d027fdf8bf6c956c1ef837fae8a5b745b",
+      "output_tail": "PASS: Exact rational solver arithmetic and primal-dual certificate verified."
+    },
+    {
+      "name": "repository fast PR gate",
+      "command": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        "omega_engine_operations/use_cases/cicd/pr_fast_gate.py",
+        "--base",
+        "origin/main",
+        "--workers",
+        "1"
+      ],
+      "cwd": "/workspace/the_symbol_game",
+      "environment": {
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+        "PYTHONPATH": "/workspace/the_symbol_game",
+        "OMEGA_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/omega_engine/crates_rs/target/debug/omega_symbol_game"
+      },
+      "tool_version": "Python 3.12.14; pytest 9.1.1; ruff 0.17.1",
+      "exit_status": 0,
+      "scope": "Six branch files (three Python); syntax, lint, line endings and all 36 tests in the changed output-contract test file. Untriggered checks explicitly NOT_CHECKED. Run at source commit 34222a098d5d9e41b62313a824ba1f9f8eaf5aa5",
+      "output_sha256": "2d8b5c7882785fcbd3949f98281cb730cec9763949dede16c6deb67f2ed16982",
+      "output_tail": "pr_fast_gate: 6 changed files (3 Python) vs origin/main\n[PASS] syntax\n[PASS] ruff\n[PASS] line-endings\n[NOT_CHECKED] rule-gate\n    no input of this check changed\n[NOT_CHECKED] op-inventory\n    no input of this check changed\n[NOT_CHECKED] skill-listing\n    no input of this check changed\n[NOT_CHECKED] lesson-folders\n    no input of this check changed\n[NOT_CHECKED] dual-text-parity\n    no input of this check changed\n[PASS] tests\n    PASS omega_engine_pfp/tests/test_qddc_output_contract.py\npr_fast_gate: PASS in 5s"
+    }
+  ],
+  "source_sha256": {
+    "omega_engine/crates_rs/omega_symbol_game/src/invoke/qddc.rs": "cd713fc278909f1ea0a95b91c178417b1e70c4b5924d4b3050933ec76967db10",
+    "omega_engine_pfp/domain/homology/qddc.py": "7377aa76acba01960fc3c68970674b05068e5f06b44446345c8b31a9ae705e70",
+    "omega_engine_pfp/infrastructure/adapters/qddc_rust_adapter.py": "dbe904f5aace5d7f9d9fadce01f68c4af78774e20670b72fdd7497cb4226b95c",
+    "omega_engine_pfp/tests/test_qddc_output_contract.py": "b45b550c99cdba3f71d00d64887efd7cc7eac1bfd78c3ad9b3699b0e31a6fa2b",
+    "omega_engine_pfp/documentation/qddc_finite_calculus.md": "1ca2194cf09c8cdcfd545501776a7181b6ea9de9186c9fe9306d748ca912042e",
+    "omega_engine_pfp/tests/test_qddc_native.py": "acaf7984feaa043927a33e1f40dd80bc7337078ee0bfb68b8512f2c524e6bcf9",
+    "omega_engine_pfp/documentation/qddc_validation.json": "f76050f31cd780536b9687ae57ea4df447a227e7cfcd464394b1c3deb8f9e858",
+    "omega_engine/crates_rs/Cargo.lock": "8169c0a6351b72ffd201fa9c245f78bf8cb72a19f321c242e42ef99077b53c7e",
+    "omega_engine/crates_rs/omega_symbol_game/src/invoke.rs": "5bc255806a54d11d31f1036b098fc39c1a6adfc2e52429c1d5010c7b3b6d2e64",
+    "omega_engine/crates_rs/omega_quantum_physics/src/qddc.rs": "d8c3601d76c6ff9dbcf6b86b7edb6e31b1962847ed081a2ecca9ec9f8ac6372f",
+    "omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs": "a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a",
+    "omega_engine/crates_rs/omega_quantum_physics/src/exact_operator.rs": "3af2547a882a4bca86a0991d76d3f367d1db5254c4da71c0fcf515b6fbdbf626",
+    "omega_engine_operating_system/adapters/rust_host/ffi.py": "da18f5391a62e8098c679c1c6211a43dc9e3b67d28d239e84593b6f562252d48",
+    "omega_engine_operating_system/adapters/rust_host/majorana_math.py": "835a84549b3682ad7b93297666941ece43819ac164a8ad36e5de76356765c5fc",
+    ".agents/skills/governance-exact-solvers/scripts/check_exact_solvers.py": "dd8578759d9a028c1dc3303a6e09b143c11e6682e121daf45b9a326190ad2526",
+    "omega_engine_operations/use_cases/cicd/pr_fast_gate.py": "be99021181d7521d8ffe3fb6f656c79900e854d6560ee2af9f30672386d12796",
+    "pyproject.toml": "e89f179a87b2a46e1aca9285d415e6baff14ad6be0e73ab9bf2f55bc699ac9f6"
+  },
+  "compiled_host_sha256": "cceb9537ac8a1e7a2d4865178f07a99b139afe7703c7da56cb1a55715bba58e7",
+  "scope_limits": [
+    "The output gate checks completed exact results; it does not add a budget to intermediate arithmetic outside the existing Hodge budget.",
+    "The 256-bit input limit remains separate from the inclusive 8192-bit output limit.",
+    "No whole-workspace test run or fresh Lean proof execution; no mathematical kernel or Lean source changed.",
+    "An exploratory dense complex probe input timed out after 120 seconds before producing a result. No oversized probe execution is claimed. Probe coverage is positive compiled execution, shared scalar/operator serializer tests, and explicitly malformed reply fixtures.",
+    "The historical PR receipt records unrelated missing documentation-path checks; those checks were not rerun for this output-bound correction."
+  ],
+  "review": {
+    "scope": "All seven output paths use checked scalar/operator serialization; complete outcome and chained schema exception are retained; tests distinguish compiled execution from nonconforming fixtures.",
+    "remaining_blocking_findings": []
+  }
+}

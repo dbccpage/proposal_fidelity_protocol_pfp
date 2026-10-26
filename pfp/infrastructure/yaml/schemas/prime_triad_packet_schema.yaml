@@ -1,0 +1,44 @@
+schema_id: "PRIME-TRIAD-PACKET-v1.0"
+title: "Algorithm Prime Triad Protocol Packet (Prime 000, 001, 002)"
+authority_effect: "None"
+reference_monograph: "omega_engine_prime_algos"
+doi: "10.5281/zenodo.pending"
+
+description: >
+  Formalizes bounded candidate intake, adapter descent soundness, and continuation control.
+  Enforces Prime 000 (Admission Precedes Measurement), Prime 001 (Loss Ledgers),
+  and Prime 002 (CanContinue_n and Six Anti-Cheat Halting Laws).
+
+laws:
+  admission_precedes_measurement: >
+    An unadmitted candidate packet cannot be measured; any attempt to evaluate Phi1 or Gamma2
+    prior to formal admission raises RefusalCode.UNADMITTED_PACKET.
+  bounded_operational_termination: >
+    Total operations cannot exceed floor(B_tot / delta_control).
+  continuation_conjunction_reduction: >
+    The nine canonical conjuncts of CanContinue imply the three summary conditions (structural, budget, no-stop).
+
+packet_schema:
+  packet_id: "string"
+  phase: "CandidateIntake | AdmittedDeclaration | AdapterDescent | ContinuationControl"
+  candidate:
+    proposal_id: "string"
+    untrusted_payload: "string"
+    declared_claims: "list[string]"
+  admission_gate:
+    is_admitted: "bool"
+    rejection_reason: "optional string"
+    admission_timestamp: "string"
+  budget_tracker:
+    total_budget_b_tot: "int | Fraction"
+    control_cost_delta: "int | Fraction"
+    max_operations: "int"
+    operations_consumed: "int"
+    can_continue: "bool"
+  adapter_descent:
+    source_representation: "string"
+    target_representation: "string"
+    loss_ledger:
+      lost_distinctions: "list[string]"
+      is_sound: "bool"
+      digest: "sha256 hex string"

@@ -1,0 +1,9 @@
+{
+  "code": "AB",
+  "name": "ab_checked_arithmetic_every_estimate_producer",
+  "title": "Checked arithmetic across every estimate producer",
+  "text": "Numerical-range repairs must cover every production path calculating the same quantity, including stored solver metadata. A protected reporting helper does not protect an unchecked upstream accumulator.",
+  "trigger": "Adaptive accumulator uses overflow-prone trapezoid formula returning inf when correct floating-point result is finite",
+  "check": "Extend code/tests/test_numerical_refusal.py::test_large_finite_trapezoid_does_not_overflow_its_mean with the adaptive fixture, requiring a finite estimate near 1.2e305. Include an unrepresentable case that must raise NumericalRefusalError.",
+  "scope": "paper_release"
+}

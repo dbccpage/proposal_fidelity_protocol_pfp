@@ -1,0 +1,116 @@
+# OEOP operad type registry, family 2 of 6: colours, ports and wire types.
+# AuthorityEffect: None.
+schema_version: omega.oeop.operad-types.v1
+family: colours_and_wires
+authority_effect: None
+types:
+  - id: operad_colour
+    description: The sorts of the OEOP coloured planar multicategory.
+    canonical:
+      status: PROPOSED
+      closed: true
+      values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      decision: >-
+        Seven Python and data sources close the set at these ten colours, but the Rust
+        omega_operad_theory OperadColour accepts any non-empty name. Proposed: make the Rust
+        constructor refuse names outside these ten (or generate a Rust enum from this file), so
+        Rust and Python reject the same colours.
+    sources:
+      - python: omega_engine_operads.domain.operad.colours:ADMITTED_FINITE_COLOURS
+        values: [State, Proof, Paper, Code, Contract, Receipt, Ledger, Diagram, Audit, Post]
+      - python: omega_engine_operads.skill_operad.domain.colours:ADMITTED_FINITE_COLOURS
+        values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      - python: omega_engine_operads.infrastructure.legacy.models:ADMITTED_COLOURS
+        values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      - python: omega_engine_operads.domain.ddc_execution.enums:OperadColour
+        values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      - python: omega_engine_operads.contracts.typed_capabilities_v1:Colour
+        values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      - data: .agents/skill_operads/operad_data_type.yaml
+        select: $defs.OperadColour.enum
+        values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      - data: omega_engine_operads/skill_operad/json/operad_signature.json
+        select: colours
+        mode: keys
+        values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      - rust_struct: omega_engine/crates_rs/omega_operad_theory/src/foundation/colour.rs#OperadColour
+        values: []
+  - id: operad_subcolour
+    description: Typed sub-wires inside a colour, written Colour.subcolour.
+    canonical:
+      status: SETTLED
+      closed: true
+      values: [Audit.hype_hits, Audit.lint_diff, Audit.sfh_findings, Audit.shadow_violations,
+               Audit.layout_findings, Audit.verdict, Code.purged, Ledger.source_hashes]
+    sources:
+      - data: omega_engine_operads/skill_operad/yaml/op_inventory.yaml
+        select: subcolours
+        mode: qualified
+        values: [Audit.hype_hits, Audit.lint_diff, Audit.sfh_findings, Audit.shadow_violations,
+                 Audit.layout_findings, Audit.verdict, Code.purged, Ledger.source_hashes]
+  - id: operand_colour
+    description: Source and target colours that registered operands declare; they should be operad colours.
+    canonical:
+      status: PROPOSED
+      closed: true
+      values: [Audit, Code, Contract, Diagram, Ledger, Paper, Post, Proof, Receipt, State]
+      decision: >-
+        Four of the seven operands use Open and Closed as colours. These are not colours: they
+        describe the obstruction before and after the operand (an open obstruction, then a
+        closed one). Proposed: replace them with the operad colours of the actual input and
+        output, and keep before and after in obstruction_signature.
+    sources:
+      - data: .agents/skill_operads/operand_registry.json
+        select: operands.*.source_colours
+        mode: distinct
+        role: uses
+        values: [Audit, Code, Open, Proof]
+      - data: .agents/skill_operads/operand_registry.json
+        select: operands.*.target_colour
+        mode: distinct
+        role: uses
+        values: [Audit, Closed, Receipt, State]
+  - id: prompt_colour
+    description: Colours of the Symbol Game prompt operad; Custom carries a free name, so the set is open.
+    canonical:
+      status: SETTLED
+      closed: false
+      values: [RawTextSpan, Equation, IsolatedVariable, SubstitutionStep, RationalValue, InvariantWitness,
+               TargetResult, Custom]
+    note: >-
+      A separate vocabulary from operad_colour. It types spans inside one prompt, not skill
+      ports, so the two are not reconciled.
+    sources:
+      - rust_enum: omega_engine/crates_rs/omega_symbol_game_runtime/src/operad.rs#PromptColour
+        values: [RawTextSpan, Equation, IsolatedVariable, SubstitutionStep, RationalValue, InvariantWitness,
+                 TargetResult, Custom]
+  - id: capability_wire_type
+    description: Wire types of typed capability ports.
+    canonical: {status: SETTLED, closed: true, values: [anti_skill_subject, anti_skill_hits, typed_audit_receipt, code_text]}
+    sources:
+      - python: omega_engine_operads.contracts.typed_capabilities_v1:WireType
+        values: [anti_skill_subject, anti_skill_hits, typed_audit_receipt, code_text]
+  - id: woland_port
+    description: Estate ports a Woland specialisation may license.
+    canonical:
+      status: SETTLED
+      closed: true
+      values: [WolandRuntime, NativeBout, SeatTransport, SgtEmission, ImmuneAntibodies, OeopLearning,
+               OeopAntiSkill, PromptGenealogy, CodaEvaluation, LggrGluing, EnvelopeStore]
+    sources:
+      - rust_enum: omega_engine/crates_rs/omega_woland/src/specialization.rs#PortName
+        values: [WolandRuntime, NativeBout, SeatTransport, SgtEmission, ImmuneAntibodies, OeopLearning,
+                 OeopAntiSkill, PromptGenealogy, CodaEvaluation, LggrGluing, EnvelopeStore]
+  - id: woland_wire_type
+    description: Value types on Woland mission operation wires; each maps to one operad colour.
+    canonical:
+      status: SETTLED
+      closed: true
+      values: [CandidateProposal, CochainDefect, Context, Contract, DualMultiplier, DualityReceipt, FlawAudit,
+               GateWitness, GroundTruth, PrimalResidual, RawPacket, RawSpan, SanitizedPacket,
+               SessionHintRequest, SessionHintResult, TerminalStatus]
+    sources:
+      - python: omega_engine_woland.infrastructure.typed_operad:_COLOURS
+        values: [CandidateProposal, CochainDefect, Context, Contract, DualMultiplier, DualityReceipt, FlawAudit,
+                 GateWitness, GroundTruth, PrimalResidual, RawPacket, RawSpan, SanitizedPacket,
+                 SessionHintRequest, SessionHintResult, TerminalStatus]

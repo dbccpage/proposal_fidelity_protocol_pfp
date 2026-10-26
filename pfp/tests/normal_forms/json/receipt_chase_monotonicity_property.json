@@ -1,0 +1,58 @@
+{
+  "schema": "chase_monotonicity_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying the monotonicity of the relational Chase algorithm under functional dependency and candidate key lattice extensions (F1 ⊆ F2 => chase(F1, J) => chase(F2, J)) across random small relational schemas",
+  "created_utc": "2026-09-25T16:05:00Z",
+  "generator_spec": {
+    "attributes_range": [3, 6],
+    "keys_range": [1, 4],
+    "fds_range": [0, 4],
+    "components_range": [2, 4],
+    "iterations": 100,
+    "seed_range": [0, 99]
+  },
+  "properties_verified": [
+    {
+      "property_name": "randomized_chase_monotonicity_100_trials",
+      "test_function": "test_randomized_chase_monotonicity_property",
+      "status": "PASS",
+      "iterations": 100,
+      "details": "Verified 100 randomized trials across schemas with 3-6 attributes, 1-4 keys, 0-4 FDs, and 2-4 components: 0 violations of F1 ⊆ F2 => (chase(F1, J) => chase(F2, J)), with both active implication and strict promotion states verified."
+    },
+    {
+      "property_name": "candidate_key_expansion_monotonicity",
+      "test_function": "test_candidate_key_expansion_monotonicity",
+      "status": "PASS",
+      "details": "Verified that strictly expanding candidate key sets K1 ⊂ K2 ⊂ K3 monotonically preserves and promotes join dependency satisfaction."
+    },
+    {
+      "property_name": "transitive_fd_cascade_monotonicity",
+      "test_function": "test_transitive_fd_cascade_monotonicity",
+      "status": "PASS",
+      "details": "Verified that prefix extensions of transitive dependency cascades monotonically propagate symbol unification across the tableau."
+    },
+    {
+      "property_name": "darwen_date_fagin_frontier_promotion",
+      "test_function": "test_darwen_date_fagin_frontier_promotion",
+      "status": "PASS",
+      "details": "Verified on Darwen-Date-Fagin Theorem 6.1 ternary join: the unimplied chase state under pairwise keys {AB, BC, AC} is strictly promoted to implied upon adding determinant A -> B."
+    },
+    {
+      "property_name": "empty_dependencies_base_soundness",
+      "test_function": "test_empty_dependencies_base_soundness",
+      "status": "PASS",
+      "details": "Verified that under empty dependencies F = ∅, the chase refutes non-trivial join dependencies and admits only trivial components."
+    }
+  ],
+  "lean4_theorems_aligned": [
+    "NormalForms.chase_partition_refinement_preserves_distinguished_row",
+    "NormalForms.chase_monotonicity_distinguished_row_exists"
+  ],
+  "contracts_aligned": [
+    "nf.classical.5nf",
+    "nf.classical.sknf",
+    "nf.classical.rfnf",
+    "nf.classical.bcnf"
+  ],
+  "all_properties_satisfied": true
+}

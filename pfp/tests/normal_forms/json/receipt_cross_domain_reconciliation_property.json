@@ -1,0 +1,55 @@
+{
+  "schema": "cross_domain_reconciliation_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying bidirectional reconciliation morphisms, sealed loss ledgers, target verifier authority gates, and obstruction class certificates under BQNF invariants (Demo 04)",
+  "created_utc": "2026-09-25T15:35:45Z",
+  "properties_verified": [
+    {
+      "property_name": "canonical_reconciliation_fixtures",
+      "test_function": "test_canonical_reconciliation_fixtures",
+      "status": "PASS",
+      "case_count": 5,
+      "details": "All 5 canonical cases from data/cross_domain_reconciliation.json verified. Case 1 (zero obstruction) routes to Preserve ([0], Authorized); Case 2 (exact coboundary defect) routes to Repair ([0], Authorized); Case 3 (unreconciled divergence) routes to Refuse ([NonZero - UnreconciledDiscrepancy], NotAuthorized); Case 4 (missing loss ledger) routes to LossLedgerMissing ([NonZero - MissingLossLedger], NotAuthorized); Case 5 (pending target verifier) routes to AuthorityLaundering (NotAuthorized)."
+    },
+    {
+      "property_name": "zero_obstruction_exact_commute",
+      "test_function": "test_zero_obstruction_exact_commute_property",
+      "status": "PASS",
+      "iterations": 50,
+      "details": "Verified bidirectional exact commute across 50 multi-account transaction graphs: when target state B strictly equals projected source state F(A), the obstruction class is [0] and routes to Preserve with reconciled=True and authorized=True."
+    },
+    {
+      "property_name": "exact_coboundary_repair",
+      "test_function": "test_exact_coboundary_repair_property",
+      "status": "PASS",
+      "iterations": 50,
+      "details": "Verified coboundary defect exactness across 50 trials: when discrepancy Delta = B - F(A) is matched by verified compensating witnesses d(alpha), the morphism routes to Repair with obstruction [0] and returns compensating cochain payloads."
+    },
+    {
+      "property_name": "unreconciled_homological_obstruction",
+      "test_function": "test_unreconciled_homological_obstruction_property",
+      "status": "PASS",
+      "iterations": 50,
+      "details": "Verified non-trivial cycle obstruction across 50 trials: unmatched discrepancy defects [Delta] != 0 fail closed to Refuse with obstruction [NonZero - UnreconciledDiscrepancy], reconciled=False, and authorized=False."
+    },
+    {
+      "property_name": "missing_loss_ledger_fails_closed",
+      "test_function": "test_missing_loss_ledger_fails_closed",
+      "status": "PASS",
+      "details": "Verified that quotient projections omitting or nullifying the LossLedger fail closed to LossLedgerMissing, strictly enforcing that erased attributes must be sealed in a declared ledger."
+    },
+    {
+      "property_name": "target_verifier_precedence_gate",
+      "test_function": "test_target_verifier_precedence_gate",
+      "status": "PASS",
+      "details": "Verified that target authorization requires an active, successful target verifier. Pending verifier status routes to AuthorityLaundering, and missing or failed verifier routes to MissingVerifier."
+    }
+  ],
+  "contracts_aligned": [
+    "nf.coda.mur.transport",
+    "nf.change.bqnf",
+    "nf.evidence.certificate",
+    "nf.evidence.loss_ledger"
+  ],
+  "all_properties_satisfied": true
+}

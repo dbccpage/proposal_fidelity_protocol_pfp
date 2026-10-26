@@ -1,0 +1,304 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "edge_endpoints",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [
+          [
+            0,
+            2
+          ]
+        ],
+        "relations": [
+          [
+            "arc",
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "node",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "arc",
+            "sorts": [
+              "node",
+              "node"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:86e5b15b6cb3b5c6ded750080544ff669e2b90ac35ff4dd2af83916df7d9f6fd",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [
+          [
+            0,
+            2
+          ]
+        ],
+        "relations": [
+          [
+            "arc",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "arc",
+            [
+              1,
+              3
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "node",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "arc",
+            "sorts": [
+              "node",
+              "node"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:a0b4e3a0057a942ec6c220b32979a82a71f509c2ddfee3df1f27277217abc790",
+      "native_code": "NON_ADMISSIBLE",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_source",
+      "input": {
+        "protected": [
+          [
+            0,
+            1
+          ]
+        ],
+        "relations": [
+          [
+            "arc",
+            [
+              2,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "node",
+            2
+          ],
+          [
+            "mark",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "arc",
+            "sorts": [
+              "node",
+              "node"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:9276305e9584bad34ac3ea795b5b337dd8d4517ae69955388a6468b94914fe89",
+      "native_code": "FAILS:endpoint_source",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_target",
+      "input": {
+        "protected": [
+          [
+            0,
+            1
+          ]
+        ],
+        "relations": [
+          [
+            "arc",
+            [
+              0,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "node",
+            2
+          ],
+          [
+            "mark",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "arc",
+            "sorts": [
+              "node",
+              "node"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:1fc0b290d12f877f0990cce3a40ea3e9132df6395100d442c4685cc7e8b2fc9a",
+      "native_code": "FAILS:endpoint_target",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_protect",
+      "input": {
+        "protected": [
+          [
+            0,
+            1
+          ]
+        ],
+        "relations": [
+          [
+            "arc",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "arc",
+            [
+              2,
+              1
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "node",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "arc",
+            "sorts": [
+              "node",
+              "node"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:49271cb2b5a7713356506b8ca527b5b291c1206d5bf1d0ea235d1aae7115c35a",
+      "native_code": "FAILS:protect",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [
+          [
+            0,
+            2
+          ]
+        ],
+        "relations": [
+          [
+            "arc",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "arc",
+            [
+              2,
+              1
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "node",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "arc",
+            "sorts": [
+              "node",
+              "node"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:2d13ecf6ecc22b4f9b13592e8f8cb9f6f766443488189b42014957ebac6b7aa7",
+      "native_code": "FAILS:protect",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 2,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_002"
+}

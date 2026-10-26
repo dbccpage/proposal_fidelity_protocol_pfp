@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1020">
+    <meta name="description" content="A live, bounded Symbol Game candidate workbench.">
+    <title>Symbol Game | Search Workbench</title>
+    <link rel="stylesheet" href="/assets/app.css">
+    <script src="/assets/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="brand" aria-label="Symbol Game">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <div>
+            <div class="brand-name">SYMBOL GAME</div>
+            <div class="brand-subtitle">SEARCH WORKBENCH <span aria-hidden="true">/</span> 001</div>
+          </div>
+        </div>
+        <div class="masthead-right">
+          <span class="mode-tag"><span class="mode-dot" aria-hidden="true"></span>Finite diagonal Z₂ graph control</span>
+          <span class="mode-tag mode-tag-muted">No live LLM</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <div class="intro-copy">
+            <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> A bounded search, in the open</p>
+            <h1 id="page-title">Watch every candidate <em>take shape.</em></h1>
+            <p class="intro-description">Generate finite graph ideas, inspect their scores, and see exactly why the host retains or prunes each one. Every result stays inside the declared control.</p>
+          </div>
+          <div class="intro-annotation" aria-label="Workbench scope">
+            <span class="annotation-index">CONTROL / 01</span>
+            <span class="annotation-title">Diagonal Z₂</span>
+            <span class="annotation-foot">Finite graph witness search</span>
+          </div>
+        </section>
+
+        <section class="setup-panel panel" aria-labelledby="setup-title">
+          <div class="section-heading setup-heading">
+            <div>
+              <p class="section-kicker">01 / Configure</p>
+              <h2 id="setup-title">Start an experiment</h2>
+            </div>
+            <span id="api-state" class="connection-state" role="status"><span class="connection-dot" aria-hidden="true"></span>Connecting to host</span>
+          </div>
+          <div class="setup-grid">
+            <div class="field field-fixture">
+              <label for="fixture-select">Graph fixture</label>
+              <select id="fixture-select" disabled><option value="">Loading fixtures…</option></select>
+              <p id="fixture-description" class="field-help">Choose a finite graph to inspect.</p>
+            </div>
+            <div class="field">
+              <label for="node-budget">Candidate budget</label>
+              <input id="node-budget" type="number" min="1" max="256" step="1" value="8" inputmode="numeric">
+              <p class="field-help">Fills the YAML packet</p>
+            </div>
+            <div class="field">
+              <label for="pace-ms">Pace</label>
+              <div class="input-suffix"><input id="pace-ms" type="number" min="0" max="2000" step="20" value="180" inputmode="numeric"><span>ms</span></div>
+              <p class="field-help">Fills the YAML packet</p>
+            </div>
+            <div class="field field-action">
+              <button id="start-button" class="primary-button" type="button" disabled><span>Start search</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+              <p id="run-hint" class="field-help">Waiting for the host</p>
+            </div>
+          </div>
+          <div id="fixture-meta" class="fixture-meta" aria-live="polite"></div>
+          <div class="packet-editor">
+            <div class="packet-heading"><label for="input-yaml">Input packet <span>YAML</span></label><span>Editable · the exact text below is submitted</span></div>
+            <textarea id="input-yaml" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="packet-help">schema: symbol_game.finite_gauge_input.v1
+fixture_id: gauge_even_triangle
+node_budget: 8
+pace_ms: 180</textarea>
+            <p id="packet-help" class="packet-help">Choose a fixture above to fill this packet, or edit it directly. Changing a helper control rewrites the packet.</p>
+            <details class="packet-example"><summary>Custom graph packet shape</summary><pre>schema: symbol_game.finite_gauge_input.v1
+graph:
+  vertices: [v0, v1, v2]
+  edges:
+    - [v0, v1, 1]
+    - [v1, v2, 1]
+    - [v0, v2, 0]
+node_budget: 8
+pace_ms: 180</pre></details>
+          </div>
+        </section>
+
+        <section class="run-section" aria-labelledby="run-title">
+          <div class="run-header">
+            <div>
+              <p class="section-kicker">02 / Observe</p>
+              <h2 id="run-title">Search telemetry</h2>
+            </div>
+            <div class="run-identifiers">
+              <span id="run-status" class="status-pill status-idle"><span class="status-dot" aria-hidden="true"></span>Ready</span>
+              <span id="run-id" class="run-id">No run selected</span>
+            </div>
+          </div>
+
+          <div class="metrics-grid" aria-label="Candidate counts">
+            <article class="metric-card"><span class="metric-label">Generated</span><strong id="count-generated">0</strong><span class="metric-caption">candidate ideas</span></article>
+            <article class="metric-card"><span class="metric-label">Scored</span><strong id="count-scored">0</strong><span class="metric-caption">host evaluations</span></article>
+            <article class="metric-card metric-pruned"><span class="metric-label">Pruned</span><strong id="count-pruned">0</strong><span class="metric-caption">failed exact edge parity</span></article>
+            <article class="metric-card metric-retained"><span class="metric-label">Retained</span><strong id="count-retained">0</strong><span class="metric-caption">passed edge equations</span></article>
+            <article class="metric-card metric-certified"><span class="metric-label">Gauge witnesses</span><strong id="count-certified">0</strong><span class="metric-caption">verified by replay</span></article>
+            <article class="metric-card metric-anti"><span class="metric-label">Anti-morphisms</span><strong id="count-anti">0</strong><span class="metric-caption">typed findings</span></article>
+          </div>
+
+          <div class="progress-panel panel">
+            <div class="progress-heading"><span>Candidate funnel</span><span id="progress-label">0 of 8 budgeted</span></div>
+            <div class="progress-track" role="progressbar" aria-label="Generated candidates" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0" id="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+            <div class="progress-legend"><span><i class="legend-dot legend-generated"></i>Generated</span><span><i class="legend-dot legend-scored"></i>Scored</span><span><i class="legend-dot legend-pruned"></i>Pruned</span><span><i class="legend-dot legend-retained"></i>Retained</span></div>
+          </div>
+        </section>
+
+        <section class="inspection-grid" aria-label="Search inspection">
+          <div class="left-stack">
+            <section class="panel graph-panel" aria-labelledby="graph-title">
+              <div class="panel-heading"><div><p class="section-kicker">The object</p><h2 id="graph-title">Graph control</h2></div><span id="graph-size" class="panel-aside">—</span></div>
+              <div id="graph-view" class="graph-view" role="img" aria-label="Selected graph fixture"><div class="empty-small">Choose a graph fixture to preview its vertices and edges.</div></div>
+              <div class="graph-legend"><span><i class="graph-odd-key" aria-hidden="true"></i>Odd edge · flip bits</span><span><i class="graph-even-key" aria-hidden="true"></i>Even edge · equal bits</span></div>
+              <p class="scope-note">The host checks a finite diagonal Z₂ representation. A candidate here is not a general MUB(6) classification.</p>
+            </section>
+
+            <section class="panel anti-panel" aria-labelledby="anti-title">
+              <div class="panel-heading"><div><p class="section-kicker">Failure anatomy</p><h2 id="anti-title">Anti-morphism kinds</h2></div><span id="anti-total" class="panel-aside">0 findings</span></div>
+              <div id="anti-list" class="anti-list"><div class="empty-small">Typed failure modes appear as candidates are checked.</div></div>
+              <p class="scope-note">These are host labels for failed parity equations, not reverse morphisms.</p>
+            </section>
+          </div>
+
+          <section class="panel candidates-panel" aria-labelledby="candidates-title">
+            <div class="panel-heading"><div><p class="section-kicker">The search space</p><h2 id="candidates-title">Candidate ledger</h2></div><span id="candidate-total" class="panel-aside">0 candidates</span></div>
+            <div class="table-scroll">
+              <table id="candidate-table">
+                <thead><tr><th scope="col">#</th><th scope="col">Candidate</th><th scope="col">Score</th><th scope="col">Mismatch</th><th scope="col">Disposition</th></tr></thead>
+                <tbody id="candidate-body"><tr><td colspan="5"><div class="table-empty">The ledger will populate when a run begins.</div></td></tr></tbody>
+              </table>
+            </div>
+            <p id="candidate-limit" class="table-footnote" hidden></p>
+            <div id="candidate-inspector" class="candidate-inspector" hidden>
+              <div class="inspector-heading"><span>Selected candidate</span><button id="inspector-close" class="icon-button" type="button" aria-label="Close candidate details">×</button></div>
+              <div id="inspector-content"></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="bottom-grid" aria-label="Run evidence">
+          <section class="panel event-panel" aria-labelledby="events-title">
+            <div class="panel-heading"><div><p class="section-kicker">Live record</p><h2 id="events-title">Event timeline</h2></div><span id="event-total" class="panel-aside">0 events</span></div>
+            <ol id="event-list" class="event-list" aria-live="polite" aria-relevant="additions"><li class="empty-small">Run events will appear here as the host emits them.</li></ol>
+          </section>
+
+          <section class="panel receipt-panel" aria-labelledby="receipt-title">
+            <div class="panel-heading"><div><p class="section-kicker">Claim boundary</p><h2 id="receipt-title">Scope &amp; receipt</h2></div><span class="panel-aside">AuthorityEffect: None</span></div>
+            <div id="scope-content" class="scope-content"><p>This workbench displays a finite graph control. No candidate has been checked yet.</p></div>
+            <div id="submitted-input" class="submitted-input" hidden><div class="submitted-input-label">Submitted input packet</div><pre id="submitted-input-code"></pre></div>
+            <div id="receipt-content" class="receipt-content"><div class="receipt-empty"><span class="receipt-icon" aria-hidden="true">◇</span><div><strong>Awaiting a host receipt</strong><p>Results and remaining uncertainty will appear after the run.</p></div></div></div>
+          </section>
+        </section>
+        <p id="global-message" class="global-message" role="alert" hidden></p>
+      </main>
+      <footer class="site-footer"><span>THE SYMBOL GAME <span aria-hidden="true">·</span> FINITE CONTROL WORKBENCH</span><span>Candidate proposals carry no mathematical authority by themselves.</span></footer>
+    </div>
+  </body>
+</html>

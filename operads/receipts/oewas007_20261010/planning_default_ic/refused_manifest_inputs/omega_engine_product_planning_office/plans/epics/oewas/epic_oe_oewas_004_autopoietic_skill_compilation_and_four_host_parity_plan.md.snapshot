@@ -1,0 +1,63 @@
+# Epic: Bounded skill learning, budget enforcement and recoverable host packaging
+
+**Epic ID:** `EPIC-OE-OEWAS-004`
+**AuthorityEffect:** None
+**Status:** `RESEARCH_HOLD`
+**Reviewed:** 2026-10-10
+**Owner:** OEWAS maintainers, with the dependency owners named below.
+
+The [shared-review reconciliation](../../../receipts/epic_design_review_20261010.md) records the readable review and unavailable attachment boundary. Full-scope readiness is held; this document specifies the next bounded production experiment. Existing test names are source references, not execution receipts.
+
+## Source inspection and repaired obstructions
+
+[LearningService.run](../../../../omega_engine_workflows_agents_skills/application/autopoiesis/learning.py) already checks caller/evaluator availability and source bindings and suppresses recursive autop episodes. [check_budgets](../../../../omega_engine_workflows_agents_skills/skill_operad/skill_compiler/budget_gate.py) already checks the 300-line/20,480-byte thresholds with dated exceptions. [FourHostSkillMirror](../../../../omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py) copies/compares packages and emits packaging receipts; [host_root_parity.check](../../../../omega_engine_operations/use_cases/packaging/host_root_parity.py) has an explicit ratchet, not a universal zero-drift assertion.
+
+Copies across four directories are not one atomic filesystem transaction. A four-host hash receipt establishes the observed package bytes, not that every host loaded or executed them. Budget compliance bounds document size; it does not prove preserved model attention or better judgment. Sorted UTF-8 JSON and cp1252 console tolerance are separate contracts; do not force all stored text to ASCII.
+
+## Bounded contract and ownership decisions
+
+Use `FourHostSkillMirror.copy_package/compare_package/receipt` on four temporary host roots and one two-file package. Input is canonical SKILL.md plus one linked reference; output is copied paths, byte comparison and receipt. Oracle: independently hash every file before/after and parse the entry's relative link.
+
+First choose fail-closed incomplete packaging on an interrupted host copy. No global atomic promise: retain the previous verified package receipt, report incomplete hosts, and retry from pinned canonical bytes. OEWAS004 owns this recoverable package procedure. OEWAS008 owns replacement/migration policy; host owners must provide separate activation receipts. Auto-factorization is held until a semantic preservation test and reference closure are specified; learned candidates never self-admit.
+
+## Obstruction review and TDD test plan
+
+**Independent oracle for these slices:** independently hash every file before/after and parse the entry's relative link.
+
+Candidate file: `omega_engine_operations/tests/packaging/test_skill_package_recovery_contract.py`.
+
+1. **RED → minimal GREEN:** package one entry and reference into four temporary roots, interrupt the second destination after writing the entry. Require packaging to remain incomplete and no successful four-host receipt; retain original hashes. Add only the minimal incomplete-state check to the existing packaging boundary; refactor after one failing case passes.
+2. **RED → minimal GREEN:** retry the same package from pinned canonical bytes, verify exact file coverage and hashes, then delete the reference from one mirror. `compare_package/receipt` must detect the missing file rather than validate just SKILL.md. Changed canonical bytes during retry require a new candidate/receipt, not reuse of the old run.
+3. **RED → minimal GREEN:** in existing budget-gate tests add a 301-line case, a 20,481-byte case and an expired exception. Test `check_budgets` against the real gate on a temporary root. Add a valid 300-line/20,480-byte control and verify exception date semantics. Preserve already-covered behavior instead of introducing duplicate budget constants.
+
+The learning extension has its own next test in `omega_engine_workflows_agents_skills/tests/integration/test_learning_source_transplant_contract.py`: pass a candidate naming an absent source digest to `LearningService.run` with real file-backed learning storage, require blocked/no publication, then restore source bytes and retry with independently configured evaluator. This is a separate one-file batch and remains blocked until a concrete evaluator/writer configuration is pinned.
+
+| Theoretical minimum | Concrete obligation |
+| --- | --- |
+| INVARIANT | A successful package receipt covers all required files in all four hosts at the pinned bytes. |
+| BREAK | Omit one reference or finish after only two host copies. |
+| WITNESS | Independent file hash inventory disagrees and packaging cannot claim all-agree. |
+| MUTATION | Linked `FourHostPackagingReceipt.validate` and `compare_skill_trees` are real comparison targets; bypass missing-file/digest checks and require RED. Source inspected, no mutation run. |
+
+Landau controls: complete package (1), expired exception (2), foreign-source learning candidate (3), interrupted copy/missing reference (4), real filesystem retry and comparison mutation (5). Host activation and learned-skill semantic quality remain unverified.
+
+### Execution and evidence discipline
+
+Use the explicitly invoked [ext-mattpocock-tdd skill](../../../../.agents/skills/ext-mattpocock-tdd/SKILL.md). Its current entry declares an operadic Code-to-Code operation; the concrete TDD sequence above is this plan's local design. Run one behavior test to observed RED, make the smallest production change to reach GREEN, then refactor with that test and its adjacent controls. A test already GREEN establishes reuse and is not fabricated RED evidence. No tests in this plan have been authored or run by this review.
+
+Run from the repository root, after authoring the named candidate test file:
+
+```powershell
+& 'C:/Users/a343o/source/repos/the_symbol_game/.venv/Scripts/python.exe' -X utf8 -m pytest omega_engine_operations/tests/packaging/test_skill_package_recovery_contract.py -q
+```
+
+Route in four stages: DOC_MGR binds source bytes and checks UTF-8/links; DEV_MGR with Hella/Azazello selects the existing public port and bounded implementation; QA_MGR/Soviet Inspector execute one-to-three files per batch and at most three repair attempts; BUILDER checks the invariant/falsifier and Woland adjudicates the recorded evidence, preserving Koroviev's dissent. Rust work uses one named crate and `-j 1`. A SoftwareQaReceiptV1 requires its actual production writer and schema; this Markdown is not one.
+
+## Claim discipline
+
+- Supports: a source-inspected residual scope and prospective behavior tests.
+- Does not support: completed implementation, authored/executed tests, automatic admission, full design readiness, or a mathematical theorem.
+- Narrowest claim: Package parity and size limits are measurable finite properties; host activation and independent learning evaluation require separate evidence.
+- Next evidence: bind the candidate test to the stated public port, observe a real failure, and retain source/candidate/test digests, command, exit status and mutation/restoration receipts under `receipts/`.
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

@@ -1,0 +1,37 @@
+intergate_id: "PFP-IG-01-FLOW-BAND"
+name: "Flow State Hysteresis Intergate (Challenge-Skill Alignment)"
+transition_from: "PFP-01-HELLA"
+transition_to: "PFP-02-KOROVIEV"
+cognitive_vector: "Flow State & Adaptive Difficulty Hysteresis"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A9"
+  - "basis_cognitive_science:flow_state_dynamics"
+doctrine: |
+  "Match challenge to demonstrated skill, provide clear proximal goals, shorten truthful
+   feedback loops, and preserve intrinsic play. Flow is an operational condition between
+   boredom and anxiety, not proof of correctness."
+objective: >
+  Regulate the transition difficulty between Syntax Intake and Nocebo Plunge.
+  Ensure that the incremental prompt complexity delta ΔC remains within the optimal
+  operational band relative to model capacity C_model (0.8 <= ΔC / C_model <= 1.2).
+fences:
+  - "Stagnation Fence: If ΔC / C_model < 0.8 across 2 rounds, trigger challenge lift (RefusalCode.FLOW_STAGNATION_DETECTED)."
+  - "Paralysis Fence: If ΔC / C_model > 1.2 across 1 round, trigger scaffolding breakdown (RefusalCode.FLOW_OVERWHELM_DETECTED)."
+  - "Feedback Loop Fence: Target feedback loop latency must remain strictly bounded to prevent absorption loss."
+input_schema:
+  round_number: "int"
+  prompt_complexity_score: "float"
+  agent_capacity_score: "float"
+  feedback_loop_ms: "int"
+transition_rules: >
+  If ΔC / C_model falls inside [0.8, 1.2], permit passage to PFP-02-KOROVIEV.
+  If below 0.8, request progressive difficulty lift.
+  If above 1.2, request faded scaffolding retraction.
+narrowest_defensible_claim: >
+  Maintaining the challenge-to-capability ratio within [0.8, 1.2] prevents both sycophantic stagnation
+  and incoherent model failure during multi-round prompt iterations.
+next_test_needed: >
+  Execute synthetic prompt complexity sweeps (0.2 to 2.0) and verify that the intergate triggers
+  exact flow adjustment refusals at boundaries.

@@ -1,0 +1,73 @@
+{
+  "schema": "observer_freshness_certificate_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying certificate verification authority gating (02) and observer-relative freshness SLA lag budgets (03)",
+  "created_utc": "2026-09-25T15:17:00Z",
+  "properties_verified": [
+    {
+      "property_name": "canonical_certificate_fixtures_verification",
+      "test_function": "test_canonical_certificate_fixtures",
+      "status": "PASS",
+      "fixture_count": 3,
+      "details": "All 3 canonical certificate cases from data/transport_certificates.json evaluated. Case 1 (pending outcome) correctly halts at AuthorityLaundering (NotAuthorized); Case 2 (missing verifier) routes to MissingVerifier (NotAuthorized); Case 3 (verified) routes to Accept (Authorized)."
+    },
+    {
+      "property_name": "unverified_certificate_rejection",
+      "test_function": "test_unverified_certificate_rejection_property",
+      "status": "PASS",
+      "iterations": 80,
+      "details": "Randomized property sweep over 8 non-verified outcome types (pending, None, rejected, failed, in_progress, claimed, self_certified, unknown) verified that no unverified certificate can mint authorization. Pending triggers AuthorityLaundering; all others trigger MissingVerifier."
+    },
+    {
+      "property_name": "exact_verified_authorization_only",
+      "test_function": "test_only_exact_verified_grants_authorization",
+      "status": "PASS",
+      "details": "Verified that only an exact outcome of 'verified' can route to Accept and Authorized with certified=True and authorized=True."
+    },
+    {
+      "property_name": "canonical_observer_fixtures_verification",
+      "test_function": "test_canonical_observer_fixtures",
+      "status": "PASS",
+      "scenario_count": 3,
+      "details": "All 3 canonical observer scenarios from data/observers.json evaluated. Scenario A demonstrates differential observer routing on lag=7s (dashboard AuthorizedFresh, trading_engine RefreshRequired); Scenario B handles missing lag via ConservativeInvalidate; Scenario C enforces scope authorization firewall via Refuse."
+    },
+    {
+      "property_name": "observer_relativity_functor",
+      "test_function": "test_observer_relativity_functor_property",
+      "status": "PASS",
+      "iterations": 50,
+      "details": "Verified functorial observer relativity: for identical packets, distinct observers evaluate independent satisfaction according to their respective declared SLA lag tolerance ceilings."
+    },
+    {
+      "property_name": "sla_budget_step_monotonicity",
+      "test_function": "test_sla_budget_step_function_monotonicity",
+      "status": "PASS",
+      "iterations": 30,
+      "details": "Step-function monotonicity verified across threshold sweeps: for packet lag L, an observer with tolerance T >= L is AuthorizedFresh, while T < L transitions strictly to RefreshRequired."
+    },
+    {
+      "property_name": "missing_evidence_conservative_invalidation",
+      "test_function": "test_missing_evidence_conservative_invalidation",
+      "status": "PASS",
+      "details": "Fails closed on omitted or null replica lag metadata, forcing ConservativeInvalidate even when observer has an unbounded SLA tolerance budget."
+    },
+    {
+      "property_name": "scope_authorization_firewall_precedence",
+      "test_function": "test_scope_authorization_firewall_precedence",
+      "status": "PASS",
+      "details": "Scope access firewall verified: an observer without authorized scope access is immediately Refused, strictly preceding and overriding freshness SLA checks even on 0-lag packets."
+    }
+  ],
+  "lean4_theorems_aligned": [
+    "NormalForms.observer_leq_refl",
+    "NormalForms.observer_leq_trans",
+    "NormalForms.scope_firewall_precedence",
+    "NormalForms.missing_evidence_conservative_invalidation",
+    "NormalForms.sla_budget_step_routing_fresh",
+    "NormalForms.sla_budget_step_routing_stale",
+    "NormalForms.observer_relative_monotonicity",
+    "NormalForms.observer_relativity_asymmetry"
+  ],
+  "all_properties_satisfied": true
+}
+

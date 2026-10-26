@@ -1,0 +1,53 @@
+{
+  "mutation_id": "mut_13_length_exceeds_target_len_by_one",
+  "description": "Candidate length 2 exceeds target_len 1",
+  "case": {
+    "case_id": "c058_b01_xor_sub",
+    "width": 8,
+    "inputs": [
+      "x",
+      "y"
+    ],
+    "ops": [
+      [
+        "t1",
+        "or",
+        "x",
+        "y"
+      ],
+      [
+        "t2",
+        "and",
+        "x",
+        "y"
+      ],
+      [
+        "t3",
+        "sub",
+        "t1",
+        "t2"
+      ]
+    ],
+    "out": "t3",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b01_xor_sub",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "t1",
+        "xor",
+        "x",
+        "y"
+      ],
+      [
+        "res",
+        "or",
+        "t1",
+        "t1"
+      ]
+    ],
+    "out": "res"
+  }
+}

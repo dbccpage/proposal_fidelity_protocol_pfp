@@ -1,0 +1,33 @@
+intergate_id: "PFP-IG-02-EPISTEMIC-SURPRISE"
+name: "Epistemic Surprise & Frame Break Intergate"
+transition_from: "PFP-02-KOROVIEV"
+transition_to: "PFP-03-BEGEMOT"
+cognitive_vector: "Epistemic Surprise & Gauge Transformation"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A3"
+  - "ADR-OE-DIALOGUE-PLAY-001:Section_5.3"
+  - "basis_cognitive_science:epistemic_surprise_delta"
+doctrine: |
+  "Cultivate representational escape, gauge change, and unexpected routes.
+   A dialogue move without epistemic surprise is a echo-chamber loop."
+objective: >
+  Evaluate the information-theoretic surprise delta ΔH(P*_{k+1} || P*_k) between prompt rewrite turns.
+  Require non-zero frame shift to guarantee adversarial dialectic progress while rejecting non-sequitur derailment.
+fences:
+  - "Sycophancy Fence: If KL divergence ΔH < 0.15 between rounds, trigger RefusalCode.EPISTEMIC_STAGNATION."
+  - "Derailment Fence: If KL divergence ΔH > 3.5 without carrier bridge, trigger RefusalCode.EPISTEMIC_DERAILMENT."
+  - "Gauge-Return Fence: Adversarial frame flips must preserve reversible carrier mapping (RETURN_THE_GAUGE)."
+input_schema:
+  round_number: "int"
+  previous_prompt_kl_divergence: "float"
+  carrier_isomorphism_valid: "bool"
+transition_rules: >
+  If 0.15 <= ΔH <= 3.5 and carrier isomorphism holds, admit transition to PFP-03-BEGEMOT.
+  Otherwise, refuse transition and demand explicit counter-presentation.
+narrowest_defensible_claim: >
+  Enforcing a bounded epistemic surprise window prevents models from falling into sycophantic agreement loops
+  without allowing arbitrary context switching.
+next_test_needed: >
+  Replay a 3-turn multi-agent debate with identical responses and verify that Intergate 02 halts execution on Turn 2.

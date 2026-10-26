@@ -1,0 +1,94 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: form_contract
+identity:
+  id: nf.wdp.wdnf
+  name: Witnessed Difference Normal Form
+  short_name: WDNF
+  version: v0
+  status: draft
+  family: derivation
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - difference_claim
+  - witness_pair
+  - support_carrier
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: ghost distinctions asserted without an explicit witness pair or on carriers of size less than two
+  preserves_invariant: every admitted difference is irreflexive and witnessed by an explicit pair with support size >= 2
+  protected_skeleton:
+  - carrier
+  - distinction_relation
+  - witness_map
+  erased_structure:
+  - observation_path_transients
+  non_claims:
+  - does not claim infinite continuous separations
+  - does not grant execution authority
+declarations_required:
+- carrier
+- distinction_relation
+- witness_map
+evidence_required:
+- carrier_size
+- witness_pair_presence
+validation_criteria:
+- carrier size satisfies |carrier| >= 2
+- distinction relation is strictly irreflexive (no element differs from itself)
+- every asserted distinction carries at least one verified witness pair
+proof_obligations:
+- id: wdnf.support_size_floor
+  status: upstream_theorem
+  ref: 070_witnessed_difference_programme_wdp
+  section: levels/level_00_admitted_cut.md
+terminal_routes:
+- AcceptWitnessedDifference
+- RejectGhostDistinction
+- RejectSelfDifference
+- RequireSupportDeclaration
+terminal_route_map:
+  AcceptWitnessedDifference: Preserve
+  RejectGhostDistinction: Reject
+  RejectSelfDifference: Reject
+  RequireSupportDeclaration: Refuse
+certification:
+  certificate_required: true
+  certificate_kind: witnessed_difference_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: distinction claimed on a singleton carrier
+  diagnosis: subsingleton distinction violation
+  terminal: RequireSupportDeclaration
+- symptom: distinction claimed without an empirical or formal witness pair
+  diagnosis: ghost distinction
+  terminal: RejectGhostDistinction
+- symptom: term claimed distinct from itself
+  diagnosis: irreflexivity violation
+  terminal: RejectSelfDifference
+definition:
+  formal_statement: a difference claim is in Witnessed Difference Normal Form iff it is defined on a carrier with support size at least 2, is irreflexive, and every distinction is witnessed by an explicit non-identical pair
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: ontological_boundary_not_relational_project_join
+    anomaly_exclusion: ghost distinctions, subsingleton claims, and self-difference
+    lossless_join:
+      status: quotient_reconstruction
+      statement: quotient carrier is reconstructed modulo the indistinguishability relation
+    dependency_preservation:
+      status: irreflexivity_preserved
+      statement: irreflexivity and witness presence are preserved locally on carrier pairs
+    syntactic_decision:
+      status: witness_decidable
+      statement: decidable from the finite incidence matrix of witness pairs
+schema_ref: ./normal_form_contract_schema.yaml

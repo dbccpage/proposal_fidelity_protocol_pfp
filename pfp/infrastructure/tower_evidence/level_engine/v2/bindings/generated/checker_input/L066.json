@@ -1,0 +1,1284 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "signed_totals",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:9cf2b81ae1e8ad9b5b1ab82cf49b6c070a2357b8b06b6f70d989918b353eaab5",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "rest",
+            [
+              0
+            ]
+          ],
+          [
+            "rest",
+            [
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "total",
+            [
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            3
+          ],
+          [
+            "val",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "-1/1"
+          ],
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:b0d195596e312901e900742885ac48713093422e1cca65c8e00fcd384607b8bd",
+      "native_code": "FAILS:rest_one_sign",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_partition",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:26b863f836fafc359a8d690a778aa04fb99bc214e9beea0528d64283d4ea831b",
+      "native_code": "FAILS:partition",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_opposite",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:a40ce29111398240400a11e8bf93504195e1fec8f9a35cf4cd9038928cba470a",
+      "native_code": "FAILS:opposite_pairs,total_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_opposite"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_mixed",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              9
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            6
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ],
+          [
+            9,
+            "-3/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:904bc9e3fd4ff1904973576a11898662c317f964718489ac08e5ff39edd03a81",
+      "native_code": "FAILS:rest_one_sign,total_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_mixed"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_gap",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:cbf72997af625d65b3e2f90ee6a90c407608b1591ce1f5393a37c87be684e5d6",
+      "native_code": "FAILS:weights_given",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_two",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              7
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:b05bc918f759acb4248bf864c626dd71a9fe8946e22f1b2aa3855ad66393efa7",
+      "native_code": "FAILS:one_total",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_stray",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "paired",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:d85ca25827dd78450e43b081856e7f105ff14a2fb8bb8264ef34c7fcbb8d0d97",
+      "native_code": "FAILS:pairs_typed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_value_weight",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              8
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "weight",
+            [
+              8,
+              8
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:8963290b81baebd71bcdce79b6a010f5f6724d89cf2171d62fef67b342618603",
+      "native_code": "FAILS:typed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-5"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "paired",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "rest",
+            [
+              2
+            ]
+          ],
+          [
+            "rest",
+            [
+              3
+            ]
+          ],
+          [
+            "total",
+            [
+              7
+            ]
+          ],
+          [
+            "weight",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "weight",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "weight",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "weight",
+            [
+              3,
+              7
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "term",
+            4
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "weight",
+            "sorts": [
+              "term",
+              "val"
+            ]
+          },
+          {
+            "name": "paired",
+            "sorts": [
+              "term",
+              "term"
+            ]
+          },
+          {
+            "name": "rest",
+            "sorts": [
+              "term"
+            ]
+          },
+          {
+            "name": "total",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            4,
+            "2/1"
+          ],
+          [
+            5,
+            "-2/1"
+          ],
+          [
+            6,
+            "1/1"
+          ],
+          [
+            7,
+            "3/1"
+          ],
+          [
+            8,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:efd98a79c17541dc8f36997b44340b01fc02742814207e8ba337389245180a96",
+      "native_code": "FAILS:total_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 66,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_066"
+}

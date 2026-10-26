@@ -1,0 +1,146 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.3nf
+  name: Third Normal Form
+  short_name: 3NF
+  version: v0
+  theory_status: established
+  contract_status: active
+  verification_status: executable
+  family: shape
+  status: active
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a non-prime attribute transitively dependent on a candidate key
+  preserves_invariant: for every non-trivial functional dependency X -> A, either
+    X is a superkey or A is a prime attribute
+  protected_skeleton:
+  - candidate_keys
+  - functional_dependencies
+  - prime_attributes
+  erased_structure: []
+  non_claims:
+  - does not certify runtime repair
+  - does not imply authorization
+  - does not eliminate all redundancy where a non-superkey determines a prime attribute
+    (see BCNF)
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    author: Edgar F. Codd
+    year: 1971
+    work: Further Normalization of the Data Base Relational Model
+  formal_statement: 'Codd''s statement: the relvar is in second normal form, and no
+    non-prime attribute A is transitively dependent on a candidate key K. Transitive
+    dependence means K determines X, X determines A, X is not a superkey, and A lies
+    outside both K and X. Zaniolo''s statement, which defines the same class of schemas
+    under functional dependencies: for every functional dependency X -> A in which
+    A is a single attribute outside X, either X is a superkey or A is prime. The decision
+    procedure in this contract is Zaniolo''s statement.
+
+    '
+  same_class_as:
+    statement: Codd's transitive-dependence statement
+    scope: functional dependencies
+    citation: Zaniolo 1982
+    proved_in_this_tree: false
+  quadrilateral:
+    qualifies_as_true_normal_form: true
+    anomaly_exclusion: 'Update and deletion anomalies from a non-prime attribute that
+      depends on a candidate key only through another non-superkey set.
+
+      '
+    lossless_join:
+      status: heath
+      theorem: Heath 1971
+      statement: 'A violating dependency X -> A yields the lossless split (XA, heading
+        without A), because X determines A.
+
+        '
+    dependency_preservation:
+      status: preserved_by_synthesis
+      canonical_tie_breaking: lexicographic_attribute_ordering
+      statement: 'Bernstein''s synthesis algorithm (1976) with deterministic lexicographic
+        attribute tie-breaking produces a unique lossless decomposition into third
+        normal form in which every functional dependency of the minimal cover is
+        local to one component. Boyce-Codd normal form does not inherit this preservation
+        guarantee.
+
+        '
+    syntactic_decision:
+      status: schema_decidable
+      statement: 'Decided from a cover of the functional dependencies, the superkeys,
+        and the prime attributes. One stored body is not the decider.
+
+        '
+  chain:
+    requires:
+    - 1NF
+    - 2NF
+    implied_by:
+    - EKNF
+    - BCNF
+    - 4NF
+    - ETNF
+    - 5NF
+    - 6NF
+declarations_required:
+- heading
+- candidate_keys
+- functional_dependencies
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- for every non-trivial functional dependency X -> A (where A is not a subset of X),
+  either X is a superkey or A is a prime attribute (member of some candidate key)
+- dependency violations terminalize as decomposition requirements rather than being
+  ignored
+- minimal cover synthesis and extraneous attribute elimination use deterministic lexicographic
+  attribute tie-breaking
+proof_obligations:
+- id: 3nf.zaniolo_membership
+  status: theorem_shaped
+  ref: coda_all_universe/mssn_sn_tower/definitions.md
+  statement: 'Under functional dependencies, Codd''s transitive-dependence condition
+    and Zaniolo''s superkey-or-prime condition define the same schemas. The Lean checker
+    is_3nf_compliant implements the second condition on a caller-supplied list of
+    non-trivial dependencies.
+
+    '
+terminal_routes:
+- Accept
+- RejectTransitiveDependency
+- RequireDecomposition
+terminal_route_map:
+  Accept: Preserve
+  RejectTransitiveDependency: Reject
+  RequireDecomposition: Decompose
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: non-prime attribute depends on another non-key attribute set where determinant
+    is not a superkey
+  diagnosis: transitive dependency violating 3NF condition
+  terminal: RequireDecomposition
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 3.0 Running example
+  note: Orders / Customers decomposition sketch
+references:
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md

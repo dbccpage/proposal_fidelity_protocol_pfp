@@ -1,0 +1,17 @@
+{
+  "antibody_id": "ab_packaging_deposit_verifier_silent_skip_unmanifested_files",
+  "failure_class": "packaging:deposit_verifier_silent_skip_unmanifested_files",
+  "target_pattern": "packaging:deposit_verifier_silent_skip_unmanifested_files",
+  "constraint_type": "AssertTwoWayManifestBijection",
+  "operatorizability": "repairable",
+  "action": "refuse",
+  "severity": "P0",
+  "description": "Refuses deposit verifiers that accept unmanifested root files or payload files without failing closed.",
+  "negative_fixture": "Adding an unmanifested dummy.txt file to paper root passes verify_deposit.py without error.",
+  "positive_fixture": "Verifier sweeps disk and asserts two-way bijection: every on-disk payload file must be in SHA256SUMS.",
+  "times_seen": 1,
+  "evidence_sha256": "10af3734ebf85bef048ca6a5b7acee78e37c2f0e18ffc3312ce74c3520847db8",
+  "pharmacy_status": "candidate",
+  "authority_effect": "None",
+  "created_at": "2026-09-30T01:10:09.200560+00:00"
+}

@@ -1,0 +1,239 @@
+{
+  "authority_effect": "None",
+  "budget_initial": 2,
+  "carrier": {
+    "evidence": "research/record_reading/evidence/record.json",
+    "lean_evidence": "research/record_reading/evidence/lean.json",
+    "tree": "research/record_reading"
+  },
+  "class": "lifts/record_reading/CLASS.json",
+  "note": "each step is re-derived from a demand the rung below cannot write; the demand is the carrier's own exhibit tape, supplied from its evidence",
+  "pre_registration": "predictions/FROZEN_P2.json",
+  "schema": "level-engine.lift-proposals.v1",
+  "setting": {
+    "n": 3,
+    "n_pointer": [
+      "record_runs",
+      0,
+      "setting_json",
+      "n"
+    ],
+    "ops": [
+      [
+        1,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2
+      ]
+    ],
+    "ops_pointer": [
+      "record_runs",
+      0,
+      "ops_in_index_order"
+    ]
+  },
+  "steps": [
+    {
+      "answer": [
+        [
+          [
+            0,
+            0
+          ],
+          0
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          1
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          1
+        ]
+      ],
+      "budget_after": 1,
+      "budget_before": 2,
+      "context_witness": {
+        "positions": [
+          0,
+          2
+        ],
+        "separating_offset": 1
+      },
+      "demand": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "demand_pointer": [
+        "record_runs",
+        0,
+        "tape"
+      ],
+      "down_map": "forget",
+      "dual_witness": [
+        0,
+        2
+      ],
+      "exhibit_pointer": [
+        "record_runs",
+        0,
+        "enablements"
+      ],
+      "id": "step0",
+      "lean": [
+        "Record.twist_tape",
+        "Record.record_is_read",
+        "Record.memoryless_functional",
+        "Record.robs_functional",
+        "Record.lift_RStep",
+        "Record.forget_twist"
+      ],
+      "move_universe_size": 64,
+      "new_entry_offset": 1,
+      "old_certificates": [
+        {
+          "class": "refined",
+          "id": "ceiling_rung0"
+        },
+        {
+          "class": "preserved",
+          "id": "tapes_rung0"
+        }
+      ],
+      "price": {
+        "enablements": 3,
+        "key_width_added": 1
+      },
+      "source": "rung0",
+      "stop": "continued",
+      "target": "rung1",
+      "tied_minima": 2
+    },
+    {
+      "answer": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          0
+        ],
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          0
+        ],
+        [
+          [
+            0,
+            1,
+            2
+          ],
+          0
+        ],
+        [
+          [
+            1,
+            2,
+            0
+          ],
+          0
+        ],
+        [
+          [
+            2,
+            0,
+            1
+          ],
+          1
+        ]
+      ],
+      "budget_after": 0,
+      "budget_before": 1,
+      "context_witness": {
+        "positions": [
+          1,
+          4
+        ],
+        "separating_offset": 2
+      },
+      "demand": [
+        0,
+        1,
+        2,
+        0,
+        1,
+        0
+      ],
+      "demand_pointer": [
+        "depth_two",
+        "exhibit",
+        "tape"
+      ],
+      "down_map": null,
+      "dual_witness": [
+        1,
+        4
+      ],
+      "exhibit_pointer": [
+        "depth_two",
+        "exhibit",
+        "enablements"
+      ],
+      "id": "step1",
+      "lean": [
+        "Depth.twist2_tape",
+        "Depth.no_record_run_realises",
+        "Depth.depth_two_is_deeper",
+        "Depth.r2obs_functional",
+        "Depth.lift2_R2Step",
+        "Depth.the_ladder"
+      ],
+      "move_universe_size": 262144,
+      "new_entry_offset": 2,
+      "old_certificates": [
+        {
+          "class": "preserved",
+          "id": "demand_step0"
+        },
+        {
+          "class": "refined",
+          "id": "ceiling_rung1"
+        },
+        {
+          "class": "preserved",
+          "id": "tapes_rung1"
+        }
+      ],
+      "price": {
+        "enablements": 5,
+        "key_width_added": 1
+      },
+      "source": "rung1",
+      "stop": "budget_exhausted",
+      "target": "rung2",
+      "tied_minima": 16
+    }
+  ]
+}

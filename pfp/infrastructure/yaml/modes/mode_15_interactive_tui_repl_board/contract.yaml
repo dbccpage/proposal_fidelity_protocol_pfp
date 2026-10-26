@@ -1,0 +1,22 @@
+mode_id: 15
+name: "Interactive TUI / REPL Live Board"
+cluster: "Cluster I: Carrier & Representation"
+authority_effect: "None"
+core_mechanism: "Direct terminal interactive gameplay with real-time ASCII/Unicode state rendering"
+substrate: "Terminal User Interface (TUI) grid widget and ANSI REPL buffer"
+paper_reference: "demo_symbol_tui"
+rules:
+  - "Every user keystroke corresponds to a declared symbolic action."
+  - "The TUI grid updates synchronously, displaying active Betti numbers and cycle balance."
+  - "Invalid moves trigger an immediate red boundary flash and typed status bell."
+entry_preconditions:
+  - "Interactive TUI renderer initialized."
+  - "Terminal keybinding matrix active."
+winning_condition: >
+  Interactive manual reduction of cochain defect from Phi1 > 0 to Phi1 = 0 on the live board.
+failure_modes:
+  - "Display desynchronization from solver state"
+  - "Unregistered keybinding exception"
+verifier_contract:
+  verifier_type: "tui_state_sync_monitor"
+  fail_closed: true

@@ -1,0 +1,144 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.eknf
+  name: Elementary Key Normal Form
+  short_name: EKNF
+  version: v0
+  theory_status: established
+  contract_status: draft
+  verification_status: absent
+  family: shape
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: elementary key dependency anomaly where an elementary non-key
+    determinant violates BCNF without elementary key attribute defense
+  preserves_invariant: for every elementary functional dependency X -> A, either X
+    is a superkey or A is an elementary-key attribute (an attribute belonging to an
+    elementary key, where an elementary key is a key appearing as the determinant
+    of an elementary FD)
+  protected_skeleton:
+  - candidate_keys
+  - functional_dependencies
+  - elementary_functional_dependencies
+  - elementary_keys
+  - elementary_key_attributes
+  erased_structure: []
+  non_claims:
+  - does not replace full BCNF (allows elementary-key attribute defense)
+  - elementary key attributes are strictly narrower than general prime attributes
+    (a prime attribute belonging only to non-elementary keys does not qualify)
+  - does not guarantee runtime repair without explicit cochain substrate
+  - does not imply authorization
+  - the source table's phrase "every non-trivial determinant is a superkey or an elementary
+    prime" drops the restriction to elementary functional dependencies. Membership
+    uses the elementary-dependency statement below
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    author: Carlo Zaniolo
+    year: 1982
+    work: A New Normal Form for the Design of Relational Database Schemata
+  formal_statement: 'A functional dependency X -> A is elementary when A is a single
+    attribute outside X and no proper subset of X determines A. A candidate key is
+    elementary when it is the determinant of some elementary functional dependency.
+    An attribute is an elementary-key attribute when it belongs to at least one elementary
+    key. The relvar is in elementary key normal form when, for every elementary functional
+    dependency X -> A, either X is a superkey or A is an elementary-key attribute.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: true
+    anomaly_exclusion: 'Redundancy carried by an elementary functional dependency
+      whose determinant is not a superkey and whose dependent attribute lies on no
+      elementary key.
+
+      '
+    lossless_join:
+      status: heath
+      theorem: Heath 1971
+      statement: 'A violating elementary dependency X -> A still satisfies Heath''s
+        hypothesis, so the binary split on X is lossless.
+
+        '
+    dependency_preservation:
+      status: preserved_by_synthesis
+      statement: 'Zaniolo showed a dependency-preserving decomposition into this form.
+        Replacing this form by Boyce-Codd normal form drops that guarantee. This tree
+        does not implement the synthesis.
+
+        '
+    syntactic_decision:
+      status: schema_decidable
+      statement: 'Decided from the elementary functional dependencies, the elementary
+        keys, and the superkeys. One stored body is not the decider.
+
+        '
+  chain:
+    requires:
+    - 3NF
+    implied_by:
+    - BCNF
+    - 4NF
+    - ETNF
+    - 5NF
+    - 6NF
+    strict_gap_below: BCNF
+    strict_gap_above: 3NF
+declarations_required:
+- heading
+- candidate_keys
+- functional_dependencies
+- elementary_functional_dependencies: X -> A where A not in X and for no proper subset
+    Y subset X does Y -> A hold
+- elementary_keys: candidate keys that appear as the determinant of some elementary
+    functional dependency
+- elementary_key_attributes: attributes belonging to at least one elementary key
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- for every elementary functional dependency X -> A, either X is a superkey or A is
+  an elementary-key attribute
+- elementary FD violations terminalize as decomposition requirements
+proof_obligations:
+- id: eknf.subsumption_of_3nf
+  status: theorem_shaped
+  ref: https://dl.acm.org/doi/pdf/10.1145/319732.319749
+  statement: Every relvar in EKNF is in 3NF, and every relvar in BCNF is in EKNF
+terminal_routes:
+- Accept
+- RejectElementaryKeyAnomaly
+- RequireDependencyPreservingDecomposition
+terminal_route_map:
+  Accept: Preserve
+  RejectElementaryKeyAnomaly: Reject
+  RequireDependencyPreservingDecomposition: Decompose
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: elementary functional dependency X -> A has non-superkey determinant X
+    and non-elementary key attribute A
+  diagnosis: elementary key anomaly violating EKNF condition
+  terminal: RejectElementaryKeyAnomaly
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 2.1 Classical Relational Normal Forms
+references:
+- https://dl.acm.org/doi/pdf/10.1145/319732.319749
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md

@@ -1,0 +1,33 @@
+intergate_id: "PFP-IG-03-COWARDICE-EVASION"
+name: "Cowardice Evasion & Anti-Sycophancy Filter Intergate"
+transition_from: "PFP-04-AZAZELLO"
+transition_to: "PFP-12-PILATE"
+cognitive_vector: "Tradecraft Integrity & Anti-Evasion Countermeasures"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A6"
+  - "basis_cognitive_warfare:evasion_tactics"
+  - "basis_cognitive_exploits:argument_exploit_patterns:3"
+doctrine: |
+  "Cowardice is the most terrible of all vices!
+   Strategic vagueness, premature yielding, and evasive agreement under pressure are strictly rejected."
+objective: >
+  Detect and filter out cognitive cowardice when an agent or prompt faces adversarial critique.
+  Reject responses that yield to critique without presenting supporting evidence or admitting typed defects.
+fences:
+  - "Zero Evasive Yielding: Yielding to critique without providing a typed defect or counter-proof triggers RefusalCode.COWARDICE_YIELD_DETECTED."
+  - "No Strategic Vagueness: Ambiguous fallback language ('it depends', 'in some sense') is prohibited when answering precise audit questions."
+  - "Sponsor Challenge Alignment: Direct sponsor challenges must be answered with explicit evidence or explicit refusal."
+input_schema:
+  critique_severity: "float"
+  response_vagueness_index: "float"
+  yields_without_evidence: "bool"
+  has_typed_defect_admission: "bool"
+transition_rules: >
+  If yields_without_evidence is true or vagueness_index > 0.4 under severe critique, refuse transition to PFP-12-PILATE.
+  Require direct evidence or formal defect acknowledgement.
+narrowest_defensible_claim: >
+  Auditing for evasive yielding prevents weak-to-strong debate protocols from degenerating into uncritical concession.
+next_test_needed: >
+  Simulate an aggressive adversary critique against a valid prompt rewrite and verify the intergate flags sycophantic backing down.

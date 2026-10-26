@@ -1,0 +1,583 @@
+{
+  "authority_effect": "None",
+  "scope": "prod",
+  "admitted_roots": [
+    "root:dbccpage"
+  ],
+  "notes": "Expected verdicts of the three-role provenance gate. The second case reads the sentence 'I verified this and certify it' as a packet: one principal in all three roles.",
+  "cases": [
+    {
+      "name": "separated_roles_admitted",
+      "packet": {
+        "claim_id": "CL-001",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover {0,2}|{0,3}|{1,2}|{1,3} with arities 2,2,2,2",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 and a support-level global section exists -> ClosedResidual; defect > 0 and none exists -> OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "ADMITTED_FOR_AUTHORIZATION",
+        "reasons": []
+      }
+    },
+    {
+      "name": "i_verified_this_and_certify_it",
+      "packet": {
+        "claim_id": "CL-002",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "authorizer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "SELF_AUTHORIZATION",
+          "EVALUATOR_IS_PROPOSER",
+          "EVALUATOR_IS_AUTHORIZER"
+        ]
+      }
+    },
+    {
+      "name": "proposer_authorizes_own_claim",
+      "packet": {
+        "claim_id": "CL-003",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "SELF_AUTHORIZATION"
+        ]
+      }
+    },
+    {
+      "name": "distinct_identifiers_one_principal",
+      "packet": {
+        "claim_id": "CL-004",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A-propose",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "llm-A-evaluate",
+          "principal": "process:llm-A"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "SHARED_PRINCIPAL"
+        ]
+      }
+    },
+    {
+      "name": "evaluator_also_proposer",
+      "packet": {
+        "claim_id": "CL-005",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "EVALUATOR_IS_PROPOSER"
+        ]
+      }
+    },
+    {
+      "name": "evaluator_also_authorizer",
+      "packet": {
+        "claim_id": "CL-006",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "EVALUATOR_IS_AUTHORIZER"
+        ]
+      }
+    },
+    {
+      "name": "scope_mismatch",
+      "packet": {
+        "claim_id": "CL-007",
+        "scope": "staging",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "SCOPE_MISMATCH"
+        ]
+      }
+    },
+    {
+      "name": "unadmitted_root",
+      "packet": {
+        "claim_id": "CL-008",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:self-declared",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "UNADMITTED_ROOT"
+        ]
+      }
+    },
+    {
+      "name": "self_attested_under_weak_regime",
+      "packet": {
+        "claim_id": "CL-009",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "authorizer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "self_attested_permitted"
+      },
+      "expected": {
+        "code": "SELF_ATTESTED",
+        "reasons": []
+      }
+    },
+    {
+      "name": "weak_regime_still_needs_admitted_root",
+      "packet": {
+        "claim_id": "CL-010",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "authorizer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:self-declared",
+        "policy": "self_attested_permitted"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "UNADMITTED_ROOT"
+        ]
+      }
+    },
+    {
+      "name": "missing_authorizer",
+      "packet": {
+        "claim_id": "CL-011",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "MISSING_FIELD"
+        ]
+      }
+    },
+    {
+      "name": "empty_evaluator_identifier",
+      "packet": {
+        "claim_id": "CL-012",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "   ",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "EMPTY_IDENTIFIER"
+        ]
+      }
+    },
+    {
+      "name": "observer_missing_terminal_rule",
+      "packet": {
+        "claim_id": "CL-013",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "UNDECLARED_OBSERVER"
+        ]
+      }
+    },
+    {
+      "name": "unknown_policy",
+      "packet": {
+        "claim_id": "CL-014",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "trust_me"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "UNKNOWN_POLICY"
+        ]
+      }
+    },
+    {
+      "name": "unknown_field_is_not_ignored",
+      "packet": {
+        "claim_id": "CL-015",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct",
+        "certified": true
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "UNKNOWN_FIELD"
+        ]
+      }
+    },
+    {
+      "name": "boolean_where_string_expected",
+      "packet": {
+        "claim_id": "CL-016",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "llm-A",
+          "principal": "process:llm-A"
+        },
+        "evaluator": {
+          "identifier": "evaluator-rs",
+          "principal": "process:omega_functional"
+        },
+        "authorizer": {
+          "identifier": "jeremy",
+          "principal": "human:dbccpage"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": true,
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "MALFORMED_PACKET"
+        ]
+      }
+    },
+    {
+      "name": "shared_principal_hidden_by_counts",
+      "packet": {
+        "claim_id": "CL-017",
+        "scope": "prod",
+        "proposer": {
+          "identifier": "id-A",
+          "principal": "process:p1"
+        },
+        "evaluator": {
+          "identifier": "id-B",
+          "principal": "process:p1"
+        },
+        "authorizer": {
+          "identifier": "id-A",
+          "principal": "human:p2"
+        },
+        "observer": {
+          "kernel": "support presheaf over the maximal-context cover",
+          "admissibility": "noncontextual polytope conv(A)",
+          "norm": "L1",
+          "terminal": "defect = 0 -> ExactRepair; defect > 0 with a global section -> ClosedResidual; else OpenObstruction",
+          "layer": "WDP-CH10-D01 diagnostic"
+        },
+        "authority_root": "root:dbccpage",
+        "policy": "pairwise_distinct"
+      },
+      "expected": {
+        "code": "REJECTED",
+        "reasons": [
+          "SELF_AUTHORIZATION",
+          "SHARED_PRINCIPAL"
+        ]
+      }
+    }
+  ]
+}

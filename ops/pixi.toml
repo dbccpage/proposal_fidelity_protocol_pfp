@@ -1,0 +1,69 @@
+[project]
+name = "the-symbol-game"
+version = "0.1.0"
+description = "Three-layer sovereignty architecture, discrete L1 projection governor, and exact consistency gate for constraint-shaped LLM tasks"
+authors = ["The Symbol Game Contributors"]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+license = "PolyForm-Noncommercial-1.0.0"
+readme = "README.md"
+
+[system-requirements]
+linux = "5.10"
+macos = "12.0"
+
+[dependencies]
+python = "3.12.*"
+rust = ">=1.75.0"
+cargo = "*"
+elan = "*"
+compilers = "*"
+cxx-compiler = "*"
+numpy = ">=1.24.0"
+scipy = ">=1.10.0"
+networkx = ">=3.0"
+
+[pypi-dependencies]
+the-symbol-game = { path = ".", editable = true }
+
+[feature.dev.dependencies]
+pytest = ">=7.4.0"
+pytest-cov = ">=4.1.0"
+pytest-xdist = ">=3.3.0"
+ruff = ">=0.1.0"
+pre-commit = ">=3.5.0"
+
+[feature.bench.dependencies]
+python-dotenv = ">=1.0.0"
+tabulate = ">=0.9.0"
+
+[feature.bench.pypi-dependencies]
+anthropic = ">=0.18.0"
+openai = ">=1.0.0"
+
+[feature.notebooks.dependencies]
+jupyter = ">=1.0.0"
+ipywidgets = ">=8.0.0"
+matplotlib = ">=3.7.0"
+nbclient = ">=0.8.0"
+nbformat = ">=5.9.0"
+
+[environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+bench = { features = ["bench"], solve-group = "default" }
+notebooks = { features = ["notebooks"], solve-group = "default" }
+all = { features = ["dev", "bench", "notebooks"], solve-group = "default" }
+
+[tasks]
+test = { cmd = "python -I -B scripts/run_scoped_python_task.py test", description = "Test 1-3 explicit Python file/node selectors; no directory sweep" }
+test-fast = { cmd = "python -I -B scripts/run_scoped_python_task.py test", description = "Alias: test 1-3 explicit Python selectors; speed depends on selection" }
+cargo-test = { cmd = "cargo test --manifest-path omega_engine/crates_rs/Cargo.toml", description = "Explicit opt-in: full Rust workspace tests; not part of check" }
+cargo-check = { cmd = "cargo check --manifest-path omega_engine/crates_rs/Cargo.toml", description = "Explicit opt-in: Rust workspace check; not part of check" }
+lake-build-core = { cmd = "lake --dir lean4 build", description = "Explicit opt-in: root Lean library build; not part of check" }
+lake-build = { depends-on = ["lake-build-core"], description = "Build the lean4 library" }
+build-lake = { depends-on = ["lake-build-core"], description = "Build the lean4 library" }
+test-lean = { cmd = "lake --dir lean4 build", description = "Explicit opt-in: root Lean library build; not a scoped Python check" }
+lint = { cmd = "python -I -B scripts/run_scoped_python_task.py lint", description = "Lint 1-3 explicit Python files; no repository-wide check" }
+format = { cmd = "python -I -B scripts/run_scoped_python_task.py format", description = "Format 1-3 explicit Python files; writes selected files" }
+check = { cmd = "python -I -B scripts/run_scoped_python_task.py lint", description = "Lint 1-3 explicit Python files only; native/formal tasks are separate" }

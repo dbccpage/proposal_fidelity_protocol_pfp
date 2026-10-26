@@ -1,0 +1,72 @@
+{
+  "input": {
+    "case_id": "ex07_check_non_confluent_system",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ]
+  },
+  "expected_output": {
+    "case_id": "ex07_check_non_confluent_system",
+    "status": "SOLVED",
+    "task": "CHECK_CONFLUENCE",
+    "is_confluent": false,
+    "critical_pairs_count": 3,
+    "unjoinable_count": 1,
+    "unjoinable_critical_pairs": [
+      {
+        "critical_pair": [
+          "mul(inv(r1_x), mul(r1_x, z))",
+          "mul(e, z)"
+        ],
+        "normal_forms": [
+          "mul(inv(r1_x), mul(r1_x, z))",
+          "z"
+        ],
+        "source": "Rule 2 at path (0,) with Rule 1"
+      }
+    ],
+    "ddc_trace": {
+      "case_id": "ex07_check_non_confluent_system",
+      "trace_string": "ECMT",
+      "step_count": 4,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task CHECK_CONFLUENCE for case ex07_check_non_confluent_system",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "C",
+          "detail": "Computing critical pairs for 3 rules",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "M",
+          "detail": "Confluence verdict: False (unjoinable count: 1)",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "T",
+          "detail": "Emitted confluence determination",
+          "meta": {}
+        }
+      ]
+    }
+  }
+}

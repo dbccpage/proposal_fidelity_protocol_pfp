@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "challenge_id": "C005",
+  "challenge_name": "Hosted Decoding Controls Bake-off",
+  "protocol": "SG-CP v1",
+  "authority_effect": "None",
+  "budget_ceiling_usd": 0.10,
+  "target_spend_usd": 0.05,
+  "hard_kill_usd": 0.25,
+  "routing": {
+    "provider": "openrouter",
+    "allow_fallbacks": false,
+    "require_parameters": true
+  },
+  "models": {
+    "primary_baseline_8b": "meta-llama/llama-3.1-8b-instruct",
+    "replication_baseline_7b": "qwen/qwen-2.5-7b-instruct",
+    "frontier_open_weights_405b": "meta-llama/llama-3.1-405b-instruct",
+    "frontier_open_weights_72b": "qwen/qwen-2.5-72b-instruct",
+    "frontier_closed_sonnet": "anthropic/claude-3.5-sonnet",
+    "frontier_closed_gemini": "google/gemini-pro-1.5"
+  },
+  "controls": {
+    "none": {
+      "kind": "none",
+      "description": "Unconstrained decoding with no decoding-time restrictions"
+    },
+    "logit_bias": {
+      "kind": "logit_bias",
+      "suppress_bias": -100,
+      "boost_bias": 5,
+      "target_categories": {
+        "suppress": ["prose_starters", "conversational_openers"],
+        "boost": ["digits", "signs", "json_syntax"]
+      }
+    },
+    "json_schema": {
+      "kind": "json_schema",
+      "strict": true,
+      "schemas": ["consistency_verdict", "cycle_repair_solution"]
+    },
+    "gbnf": {
+      "kind": "gbnf",
+      "exact": true,
+      "roots": ["consistency_gbnf", "cycle_repair_gbnf"]
+    }
+  },
+  "probes": {
+    "count": 10,
+    "pass_rule": "10_of_10_required",
+    "failure_action": "downgrade_to_UNCONSTRAINED"
+  },
+  "poisoned_suite": {
+    "count": 16,
+    "purpose": "detect_schema_valid_false_witness_laundering"
+  }
+}

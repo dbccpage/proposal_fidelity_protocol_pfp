@@ -1,0 +1,353 @@
+"""Exact certificate-generating stabilizer quantum Hamiltonian solver.
+
+Solves finite quantum Hamiltonians:
+    H = sum_i w_i * (I - s_i * P_i) / 2
+for 1 to 8 qubits, at most 24 terms, w_i in Q+, s_i in {-1, +1}.
+
+Outputs:
+    - Commuting family: 'SOLVED', exact rational ground state energy,
+      dimension of the complete ground eigenspace, independent generators,
+      signed term decompositions, and all minimizing eigenvalue assignments.
+    - Noncommuting family: 'OUT_OF_SCOPE' with a witnessed anticommuting pair.
+    - Malformed / Out of bounds: 'UNKNOWN' with explicit refusal reason.
+
+AuthorityEffect: None.
+"""
+
+from __future__ import annotations
+
+from fractions import Fraction
+from typing import Any, Mapping, Sequence
+
+from .hamiltonian import ChallengeParseError, HamiltonianTerm, parse_challenge
+from .pauli import PauliString
+
+
+def _solve_gf2_linear_system(basis_matrix: list[list[int]], target_vector: list[int]) -> list[int] | None:
+    """Solves M * x = b over GF(2) where columns of basis_matrix are basis vectors.
+
+    basis_matrix is of shape (rows, cols) where rows = 2*n, cols = k.
+    target_vector is of length rows.
+    Returns solution x of length k in GF(2), or None if no solution.
+    """
+    rows = len(basis_matrix)
+    cols = len(basis_matrix[0]) if rows > 0 else 0
+    if cols == 0:
+        return [] if all(v % 2 == 0 for v in target_vector) else None
+
+    # Augmented matrix [M | b] of size rows x (cols + 1)
+    aug = [
+        [basis_matrix[r][c] % 2 for c in range(cols)] + [target_vector[r] % 2]
+        for r in range(rows)
+    ]
+
+    # Gaussian elimination to row echelon form
+    lead = 0
+    pivot_cols: list[int] = []
+    pivot_rows: list[int] = []
+    for c in range(cols):
+        # find pivot
+        pivot_r = -1
+        for r in range(lead, rows):
+            if aug[r][c] == 1:
+                pivot_r = r
+                break
+        if pivot_r == -1:
+            continue
+        aug[lead], aug[pivot_r] = aug[pivot_r], aug[lead]
+        pivot_cols.append(c)
+        pivot_rows.append(lead)
+
+        for r in range(rows):
+            if r != lead and aug[r][c] == 1:
+                for j in range(c, cols + 1):
+                    aug[r][j] ^= aug[lead][j]
+        lead += 1
+
+    # Check consistency: if any row has zeros in cols but 1 in aug col
+    for r in range(lead, rows):
+        if aug[r][cols] == 1:
+            return None
+
+    # Extract solution
+    x = [0] * cols
+    for r, c in zip(pivot_rows, pivot_cols):
+        x[c] = aug[r][cols]
+    return x
+
+
+def _find_generators(
+    terms: Sequence[HamiltonianTerm], num_qubits: int
+) -> tuple[list[PauliString], list[list[int]], list[int]]:
+    """Finds an independent basis of commuting generators, binary symplectic vectors, and term indices."""
+    generators: list[PauliString] = []
+    basis_vectors: list[list[int]] = []  # each vector is a column of length 2*n
+    basis_indices: list[int] = []
+
+    for i, term in enumerate(terms):
+        p = term.pauli
+        # Skip pure identity terms as generators
+        if p.word == "I" * num_qubits:
+            continue
+
+        vec = list(p.to_symplectic_vector())
+        # Check if vec is already in the span of current basis
+        if not basis_vectors:
+            basis_vectors.append(vec)
+            generators.append(p)
+            basis_indices.append(i)
+        else:
+            # Check linear independence over GF(2)
+            cols = len(basis_vectors)
+            m_matrix = [[basis_vectors[c][r] for c in range(cols)] for r in range(2 * num_qubits)]
+            sol = _solve_gf2_linear_system(m_matrix, vec)
+            if sol is None:
+                # Linearly independent! Add as new generator
+                basis_vectors.append(vec)
+                generators.append(p)
+                basis_indices.append(i)
+                if len(generators) == num_qubits:
+                    # Maximum isotropic subspace dimension is n
+                    break
+
+    return generators, basis_vectors, basis_indices
+
+
+def _decompose_term(
+    p: PauliString,
+    generators: list[PauliString],
+    basis_vectors: list[list[int]],
+    num_qubits: int,
+) -> tuple[list[int], int]:
+    """Expresses p = sigma * prod_j G_j^{a_j}.
+
+    Returns (a, sigma) where a is list of exponents in {0, 1} and sigma in {+1, -1}.
+    """
+    k = len(generators)
+    if k == 0:
+        return [0] * k, 1
+
+    vec = list(p.to_symplectic_vector())
+    cols = k
+    m_matrix = [[basis_vectors[c][r] for c in range(cols)] for r in range(2 * num_qubits)]
+    sol = _solve_gf2_linear_system(m_matrix, vec)
+    if sol is None:
+        raise ValueError(f"Term {p.word} is unexpectedly not in generator span")
+
+    # Compute prod_j G_j^{sol[j]} with exact phase
+    phase_acc = 0
+    res_pauli = PauliString.identity(num_qubits)
+    for j, exponent in enumerate(sol):
+        if exponent == 1:
+            step_phase, res_pauli = res_pauli.multiply(generators[j])
+            phase_acc = (phase_acc + step_phase) % 4
+
+    # Because generators commute and span p, res_pauli.word MUST equal p.word
+    if res_pauli.word != p.word:
+        raise ValueError(
+            f"Algebraic reconstruction error: expected {p.word}, reconstructed {res_pauli.word}"
+        )
+
+    # phase_acc is power of i: 0 -> +1, 2 -> -1
+    # res_pauli = i^phase_acc * (raw product) = p
+    # So raw_product = (i^phase_acc)^(-1) * p.
+    # Therefore p = i^phase_acc * prod(G_j)
+    # If phase_acc == 0: sigma = +1
+    # If phase_acc == 2: sigma = -1
+    if phase_acc == 0:
+        sigma = 1
+    elif phase_acc == 2:
+        sigma = -1
+    else:
+        raise ValueError(f"Non-Hermitian product phase i^{phase_acc} in commuting group")
+
+    return sol, sigma
+
+
+def solve(case: Mapping[str, Any]) -> dict[str, Any]:
+    """Solves a finite quantum Hamiltonian challenge case.
+
+    Parameters:
+        case: dict containing 'num_qubits', 'terms', and optional 'case_id'.
+
+    Returns:
+        dict with status ('SOLVED', 'OUT_OF_SCOPE', or 'UNKNOWN') and certificate.
+    """
+    case_id = str(case.get("case_id") or case.get("id") or "case_unnamed")
+    try:
+        parsed = parse_challenge(case)
+    except ChallengeParseError as ex:
+        return {
+            "status": "UNKNOWN",
+            "case_id": case_id,
+            "id": case_id,
+            "refusal_code": ex.code,
+            "message": str(ex),
+        }
+
+    num_qubits = parsed.num_qubits
+    term_ids = list(parsed.term_ids)
+    hamiltonian = parsed.hamiltonian
+
+    if len(hamiltonian.terms) == 0:
+        deg = 1 << num_qubits
+        return {
+            "status": "SOLVED",
+            "case_id": case_id,
+            "id": case_id,
+            "num_qubits": num_qubits,
+            "n": num_qubits,
+            "num_terms": 0,
+            "ground_state_energy": "0",
+            "ground_state_energy_rational": {
+                "numerator": 0,
+                "denominator": 1,
+            },
+            "energy": [0, 1],
+            "E": [0, 1],
+            "ground_eigenspace_dimension": deg,
+            "degeneracy": deg,
+            "deg": deg,
+            "basis": [],
+            "decomposition": [],
+            "minimizers": [0],
+            "certificate": {
+                "num_generators": 0,
+                "generators": [],
+                "basis": [],
+                "term_decompositions": [],
+                "minimizing_assignments": [
+                    {
+                        "assignment_index": 0,
+                        "eigenvalues": [],
+                    }
+                ],
+            },
+        }
+
+    # Step 1: Commutation check
+    anticommuting = hamiltonian.find_anticommuting_pair()
+    if anticommuting is not None:
+        idx_i, idx_j, term_i, term_j = anticommuting
+        return {
+            "status": "OUT_OF_SCOPE",
+            "case_id": case_id,
+            "id": case_id,
+            "refusal_code": "NONCOMMUTING_HAMILTONIAN",
+            "message": (
+                f"Hamiltonian contains anticommuting Pauli pair: "
+                f"term {idx_i} ({term_i.pauli.word}) and term {idx_j} ({term_j.pauli.word})"
+            ),
+            "anticommuting_pair": {
+                "term_i": {"index": idx_i, "id": term_ids[idx_i], "pauli": term_i.pauli.word},
+                "term_j": {"index": idx_j, "id": term_ids[idx_j], "pauli": term_j.pauli.word},
+            },
+            "witness": [term_ids[idx_i], term_ids[idx_j]],
+            "pair": [term_ids[idx_i], term_ids[idx_j]],
+        }
+
+    # Step 2: Commuting family solver
+    generators, basis_vectors, basis_indices = _find_generators(hamiltonian.terms, num_qubits)
+    k = len(generators)
+    basis_term_ids = [term_ids[idx] for idx in basis_indices]
+
+    # Decompose every term into generator coordinates and exact sign
+    decompositions: list[dict[str, Any]] = []
+    decomp_data: list[tuple[list[int], int, Fraction, int]] = []
+
+    for idx, term in enumerate(hamiltonian.terms):
+        exponents, sigma = _decompose_term(
+            term.pauli, generators, basis_vectors, num_qubits
+        )
+        decomp_data.append((exponents, sigma, term.weight, term.target_sign))
+        mask = 0
+        for b_i, exp in enumerate(exponents):
+            if exp == 1:
+                mask |= (1 << b_i)
+        decompositions.append({
+            "term_index": idx,
+            "term_id": term_ids[idx],
+            "id": term_ids[idx],
+            "pauli": term.pauli.word,
+            "weight": str(term.weight) if term.weight.denominator != 1 else str(term.weight.numerator),
+            "weight_rational": {"numerator": term.weight.numerator, "denominator": term.weight.denominator},
+            "target_sign": term.target_sign,
+            "generator_exponents": exponents,
+            "sign": sigma,
+            "mask": mask,
+        })
+
+    # Step 3: Bounded exhaustive search over all 2^k joint eigenvalue assignments
+    # (Since k <= num_qubits <= 8, 2^k <= 256)
+    num_assignments = 1 << k
+    min_energy: Fraction | None = None
+    minimizing_assignments: list[dict[str, Any]] = []
+
+    for assignment_idx in range(num_assignments):
+        # b_j in {+1, -1}
+        eigenvalues = [
+            1 if ((assignment_idx >> j) & 1) == 0 else -1
+            for j in range(k)
+        ]
+
+        # Calculate energy
+        total_energy = Fraction(0)
+        for exponents, sigma, weight, target_sign in decomp_data:
+            # lambda_i = sigma * prod_j (b_j ^ a_ij)
+            term_lambda = sigma
+            for j, exp in enumerate(exponents):
+                if exp == 1:
+                    term_lambda *= eigenvalues[j]
+            # penalty = weight * (1 - s_i * lambda_i) / 2
+            viol_factor = (1 - target_sign * term_lambda) // 2
+            penalty = weight * viol_factor
+            total_energy += penalty
+
+        if min_energy is None or total_energy < min_energy:
+            min_energy = total_energy
+            minimizing_assignments = [{
+                "assignment_index": assignment_idx,
+                "eigenvalues": eigenvalues,
+            }]
+        elif total_energy == min_energy:
+            minimizing_assignments.append({
+                "assignment_index": assignment_idx,
+                "eigenvalues": eigenvalues,
+            })
+
+    assert min_energy is not None
+    # Dimension of each joint eigenspace is 2^(num_qubits - k)
+    subspace_dim = 1 << (num_qubits - k)
+    ground_eigenspace_dim = len(minimizing_assignments) * subspace_dim
+
+    energy_str = str(min_energy) if min_energy.denominator != 1 else str(min_energy.numerator)
+    energy_pair = [min_energy.numerator, min_energy.denominator]
+
+    return {
+        "status": "SOLVED",
+        "case_id": case_id,
+        "id": case_id,
+        "num_qubits": num_qubits,
+        "n": num_qubits,
+        "num_terms": len(hamiltonian.terms),
+        "ground_state_energy": energy_str,
+        "ground_state_energy_rational": {
+            "numerator": min_energy.numerator,
+            "denominator": min_energy.denominator,
+        },
+        "energy": energy_pair,
+        "E": energy_pair,
+        "ground_eigenspace_dimension": ground_eigenspace_dim,
+        "degeneracy": ground_eigenspace_dim,
+        "deg": ground_eigenspace_dim,
+        "basis": basis_term_ids,
+        "decomposition": decompositions,
+        "minimizers": [m["assignment_index"] for m in minimizing_assignments],
+        "certificate": {
+            "num_generators": k,
+            "generators": [g.word for g in generators],
+            "basis": basis_term_ids,
+            "term_decompositions": decompositions,
+            "minimizing_assignments": minimizing_assignments,
+        },
+    }

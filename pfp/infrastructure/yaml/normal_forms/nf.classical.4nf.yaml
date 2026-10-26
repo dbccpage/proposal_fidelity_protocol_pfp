@@ -1,0 +1,135 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.4nf
+  name: Multivalued Dependency Fourth Normal Form
+  short_name: 4NF
+  version: v0
+  theory_status: established
+  contract_status: active
+  verification_status: absent
+  family: shape
+  status: active
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a non-trivial multivalued dependency whose determinant is not
+    a superkey
+  preserves_invariant: every non-trivial multivalued dependency has a superkey determinant,
+    so independent multivalued facts are not stored as one cross product
+  protected_skeleton:
+  - candidate_keys
+  - superkeys
+  - multivalued_dependencies
+  erased_structure: []
+  non_claims:
+  - does not resolve all join dependencies (see ETNF, 5NF, 6NF)
+  - does not certify runtime repair without cochain substrate
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    author: Ronald Fagin
+    year: 1977
+    work: Multivalued Dependencies and a New Normal Form for Relational Databases
+  formal_statement: 'Let Z be the heading with X and Y removed. The multivalued dependency
+    X ->-> Y holds when any two tuples that agree on X have a third tuple that keeps
+    the first tuple''s Y values and the second tuple''s Z values. The dependency is
+    trivial when Y is contained in X, or when X union Y is the whole heading. The
+    relvar is in fourth normal form when every non-trivial multivalued dependency
+    in the consequence closure has a superkey as its determinant. Read as multivalued
+    dependencies, the functional dependencies then have superkey determinants as well,
+    which is Boyce-Codd normal form.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: true
+    anomaly_exclusion: 'Cartesian growth from two independent multivalued facts that
+      share a determinant and are stored in one relvar.
+
+      '
+    lossless_join:
+      status: fagin
+      theorem: Fagin 1977
+      statement: 'For a heading split into XY and XZ, the binary decomposition is
+        lossless if and only if the multivalued dependency X ->-> Y holds (equivalently
+        X ->-> Z).
+
+        '
+    dependency_preservation:
+      status: split_mvd_preserved_embedded_mvds_not_guaranteed
+      statement: 'The multivalued dependency used in the Fagin split is local to that
+        decomposition. An embedded multivalued dependency, one that holds in a projection
+        and is not the projection of a multivalued dependency of the original heading,
+        is not guaranteed to remain expressible after the split. Membership of the
+        original schema is still decided from its own multivalued dependencies.
+
+        '
+    syntactic_decision:
+      status: schema_decidable
+      statement: 'Decided from a cover of the multivalued dependencies and the superkeys,
+        by the dependency basis. One stored body is not the decider.
+
+        '
+  chain:
+    requires:
+    - BCNF
+    implied_by:
+    - ETNF
+    - 5NF
+    - 6NF
+declarations_required:
+- heading
+- candidate_keys
+- superkeys
+- multivalued_dependencies
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- for every non-trivial multivalued dependency X ->-> Y (where Y is not a subset of
+  X and X union Y does not equal the full heading), X is a superkey
+- independent multivalued facts are decomposed into separate relvars with lossless
+  reconstruction
+proof_obligations:
+- id: 4nf.fagin_multivalued_dependency_theorem
+  status: theorem_shaped
+  ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  statement: 'Every non-trivial multivalued dependency has a superkey determinant.
+    The Fagin split on a violating multivalued dependency is lossless.
+
+    '
+terminal_routes:
+- Accept
+- RejectMultivaluedDependency
+- RequireDecomposition
+terminal_route_map:
+  Accept: Preserve
+  RejectMultivaluedDependency: Reject
+  RequireDecomposition: Decompose
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: employee skills and employee languages are stored in one relvar, creating
+    all pairwise cross-product combinations
+  diagnosis: independent multivalued dependencies share a non-superkey determinant
+  terminal: RejectMultivaluedDependency
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 2.1 Classical Relational Normal Forms
+references:
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md
+- ./normal_form_contract_schema.yaml

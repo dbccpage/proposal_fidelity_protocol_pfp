@@ -1,0 +1,71 @@
+{
+  "schema": "cochain_physics_epistemic_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying discrete Hodge cochains (DHNF), binary sign-switching (BSS-NF), meron involutive cancellation (MIC-NF), zero-float rational LP duality (ZFNF), and epistemic quotient invariance (EQNF)",
+  "created_utc": "2026-09-25T15:35:00Z",
+  "properties_verified": [
+    {
+      "property_name": "discrete_hodge_orthogonal_decomposition",
+      "test_function": "test_discrete_hodge_orthogonal_decomposition",
+      "status": "PASS",
+      "iterations": 25,
+      "details": "Verified discrete Hodge decomposition on cycle C_4: composite 1-cochain omega = d0(alpha) + h satisfies exact orthogonality <d0(alpha), h> = 0, divergence-free harmonic flow delta(h) = 0 at every vertex, and invariant cycle circulation 4*k."
+    },
+    {
+      "property_name": "spanning_tree_gauge_elimination",
+      "test_function": "test_spanning_tree_gauge_elimination",
+      "status": "PASS",
+      "iterations": 30,
+      "details": "Verified binary vertex gauge transformation v in {0, 1}^V on signed Hamiltonian graphs: on cycle-free trees and zero-holonomy graphs, gauge propagation strictly eliminates all negative edge signs, yielding transformed sign +1 on all edges."
+    },
+    {
+      "property_name": "frustrated_odd_negative_cycle_rejection",
+      "test_function": "test_frustrated_odd_negative_cycle_rejection",
+      "status": "PASS",
+      "details": "Exhaustive verification across all 2^3 = 8 vertex gauge configurations on an odd-negative cycle (holonomy = -1): confirmed that frustration prevents sign elimination, correctly rejecting non-negative gauge existence."
+    },
+    {
+      "property_name": "meron_involution_exact_cancellation_and_survivor_positivity",
+      "test_function": "test_meron_involution_exact_cancellation_and_survivor_positivity",
+      "status": "PASS",
+      "iterations": 30,
+      "details": "Verified fixed-point-free, weight-preserving, sign-reversing involution I on uncancelled sector S0: algebraic cancellation sum_{x in S0} w(x)*sgn(x) = 0 holds exactly in Q, preserving positive survivor partition function Z_surv > 0."
+    },
+    {
+      "property_name": "rational_duality_gap_zero_certified_optimal",
+      "test_function": "test_rational_duality_gap_zero_certified_optimal",
+      "status": "PASS",
+      "scale_sweeps": [1, 2, 5, 7, 13],
+      "details": "Verified exact rational LP duality: certified optimal primal and dual vectors achieve exact zero duality gap (c^T x - b^T y = 0) with zero floating-point approximation drift."
+    },
+    {
+      "property_name": "positive_duality_gap_escalates",
+      "test_function": "test_positive_duality_gap_escalates",
+      "status": "PASS",
+      "details": "Verified that any sub-optimal or perturbed primal-dual pair with strictly positive duality gap (gap > 0) routes strictly to Escalate, never Preserve."
+    },
+    {
+      "property_name": "kernel_variation_quotient_invariance",
+      "test_function": "test_kernel_variation_quotient_invariance",
+      "status": "PASS",
+      "iterations": 25,
+      "details": "Verified epistemic quotient invariance: perturbations delta lying strictly in the null space of observer measurement operator M (ker(M)) preserve the observed equivalence class identically."
+    },
+    {
+      "property_name": "orthogonal_variation_generates_distinct_quotient",
+      "test_function": "test_orthogonal_variation_generates_distinct_quotient",
+      "status": "PASS",
+      "iterations": 25,
+      "details": "Verified epistemic quotient separation: perturbations with non-zero projection onto the measurement row space resolve strictly to distinct observable classes."
+    }
+  ],
+  "lean4_theorems_aligned": [
+    "NormalForms.hodge_orthogonal_decomposition",
+    "NormalForms.bssnf_gauge_sign_elimination",
+    "NormalForms.micnf_involutive_cancellation",
+    "NormalForms.zfnf_rational_duality_gap_zero",
+    "NormalForms.zfnf_positive_gap_escalates",
+    "NormalForms.eqnf_kernel_quotient_invariance"
+  ],
+  "all_properties_satisfied": true
+}

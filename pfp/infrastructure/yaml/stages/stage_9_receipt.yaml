@@ -1,0 +1,18 @@
+stage: 9
+name: receipt
+executor: host
+requires:
+- 1
+- 5
+- 7
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: stages/README.md
+system_prompt: 'Host receipt. The terminal follows from host facts only: no Stage 5 PASS is BLOCKED_BY_EVIDENCE,
+  a Stage 7 open obstruction is OPEN_OBSTRUCTION, otherwise VERIFIED when no obligation remains and VERIFIED_WITH_RESIDUALS
+  when one does. Each obligation names its kill-condition refusal-map key.'
+user_prompt: No model prompt is dispatched at this stage. The host writes the receipt.
+obligation_rules:
+  ADVERSARY_CHECKED_NOTHING: NO_TEST_IMPLIES_PROVED_SAME
+  DECLARATION_FROM_MODEL_REPAIR: ONE_RULE_BUNDLES_UNDECLARED_PRIMITIVES

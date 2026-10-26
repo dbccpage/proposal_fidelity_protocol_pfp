@@ -1,0 +1,117 @@
+# E-Graph Normal Form Prompt Representation Specification
+# Governing Standard: Proposal Fidelity Protocol (PFP)
+# AuthorityEffect: None.
+
+schema_version: pfp.prompt_representation.v1
+representation_kind: egraph
+authority_effect: None
+
+classification:
+  family: prompt_wire_encoding
+  encoding_posture: equational_saturation_egraph
+  token_overhead_posture: saturated_equivalence_classes
+  carrier_type: application/x-egraph-yaml
+
+description: >
+  Equational saturation e-graph representation partitioning prompt spans into
+  equivalence classes (e0, e1, ...) across normal form levels (0NF through 6NF, ENF).
+  Enforces 100% constraint span preservation under confluent rewrite operations.
+  Derived from Mode 13 confluent relational chase and Gate 03 equational saturation.
+
+empirical_performance_baseline:
+  evidence_status: gate_names_a_target_not_a_measured_numerator
+  general_efficacy_established: false
+  source_study: infrastructure/yaml/gates/empirical/03_egraph_preservation_gate.yaml
+  measured_rate_recorded: false
+
+invariants:
+  - id: EGR-INV-001
+    name: MonotonicEclassSequence
+    rule: Equivalence class identifiers must follow monotonic naming ('e0', 'e1', ...).
+  - id: EGR-INV-002
+    name: ValidEclassReferences
+    rule: All prompt spans must reference defined e-class identifiers.
+  - id: EGR-INV-003
+    name: MandatoryTaskSpan
+    rule: At least one span in the e-graph representation must carry role='task'.
+  - id: EGR-INV-004
+    name: ConstraintSpanPreservation
+    rule: Equational rewriting must preserve 100% of declared constraint spans.
+
+specification:
+  fields:
+    source_id:
+      type: string
+      required: true
+      pattern: "^[a-zA-Z0-9_-]+$"
+    source_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    proposal_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    representation_kind:
+      type: string
+      required: true
+      const: egraph
+    authority_effect:
+      type: string
+      required: true
+      const: None
+    normal_form_level:
+      type: string
+      required: true
+      enum: ["0NF", "1NF", "2NF", "3NF", "4NF", "5NF", "6NF", "ENF"]
+    eclasses:
+      type: object
+      required: true
+    rewrite_rules:
+      type: array
+      items:
+        type: string
+    spans:
+      type: array
+      required: true
+      items:
+        type: object
+        required:
+          - slot
+          - role
+          - eclass_id
+          - text
+        properties:
+          slot:
+            type: string
+            pattern: "^s[0-9]+$"
+          role:
+            type: string
+            enum: [task, constraint, context, output, unresolved]
+          eclass_id:
+            type: string
+            pattern: "^e[0-9]+$"
+          text:
+            type: string
+
+canonical_example:
+  source_id: "case0:egraph"
+  source_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  proposal_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  representation_kind: "egraph"
+  authority_effect: "None"
+  normal_form_level: "ENF"
+  eclasses:
+    e0: ["task_target", "primary_goal"]
+    e1: ["rational_domain", "Q_coordinates"]
+  rewrite_rules:
+    - "canonical_domain(x) -> Q"
+  spans:
+    - slot: "s0"
+      role: "task"
+      eclass_id: "e0"
+      text: "Solve system over rational field."
+    - slot: "s1"
+      role: "constraint"
+      eclass_id: "e1"
+      text: "Coefficients must be exact fractions."

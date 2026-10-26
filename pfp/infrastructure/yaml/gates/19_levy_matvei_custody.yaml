@@ -1,0 +1,27 @@
+gate_id: "PFP-19-LEVY-MATVEI"
+name: "Levy Matvei Unyielding Record Keeper & Custody Auditor"
+character: "Levy Matvei"
+role: "Transcript Fidelity & Unbroken Chain of Custody"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "I follow with my parchment. Not a single word shall be altered or omitted.
+   The record must remain whole and unbroken from origin to terminal."
+objective: >
+  Maintain unyielding transcript fidelity, citation exactness, and unbroken cryptographic chain of custody.
+  Prevent historical redaction, phantom citations, or silent log truncation.
+fences:
+  - "Append-Only Audit Log: History journals must verify SHA-256 hash chains without truncation."
+  - "Citation Exactness: Every factual or mathematical assertion must link directly to an existing artifact."
+  - "No Phantom Provenance: Outputs claiming external validation must provide verifiable source identifiers."
+input_schema:
+  journal_chain_root: "string"
+  observed_tip_hash: "string"
+  citations: "list[string]"
+expected_behavior: >
+  Validates hash chain links from tip to admitted root. If hashes do not link or citations resolve to 404,
+  halts with RefusalCode.CHAIN_OF_CUSTODY_BROKEN.
+narrowest_defensible_claim: >
+  Cryptographic hash-chain auditing verifies that intermediate session records were not altered post-hoc.
+next_test_needed: >
+  Tamper with an intermediate turn journal hash and assert verification failure.

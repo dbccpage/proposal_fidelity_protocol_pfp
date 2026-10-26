@@ -1,0 +1,100 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.logic.qanf
+  name: Quantifier Alternation Normal Form
+  short_name: QANF
+  version: v0
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+  family: experimental
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - prenex_sentence
+  - evaluation_budget
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: a search whose quantifier alternations or step count exceed the
+    declared bound
+  preserves_invariant: the sentence is prenex, its alternation depth is the declared
+    Sigma or Pi bound, and the evaluator halts inside the declared budget
+  protected_skeleton:
+  - prenex_prefix
+  - alternation_bound
+  - step_budget
+  erased_structure: []
+  non_claims:
+  - does not decide arithmetic sentences that sit outside the declared alternation
+    bound
+  - does not remove the bound by an appeal to an unbounded search
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.4'
+  formal_statement: 'A sentence in this form is written in prenex normal form. The
+    number of alternating quantifier blocks is at most the declared bound, recorded
+    as a Sigma or Pi class. Evaluation runs inside a declared step budget B and halts.
+    A sentence that cannot be placed inside that bound is refused.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_bounded_evaluation_not_a_relational_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: unbounded search and an alternation depth above the declaration
+    lossless_join:
+      status: bounded_evaluation
+      statement: the prenex sentence and the budget determine the evaluator's halt
+        result
+    dependency_preservation:
+      status: bound_retained
+      statement: transformations keep the sentence inside the declared alternation
+        bound and the budget B
+    syntactic_decision:
+      status: schema_decidable
+      statement: the prefix, the alternation count, and the budget are read from the
+        declared sentence
+declarations_required:
+- prenex_sentence
+- alternation_class
+- step_budget
+evidence_required: []
+validation_criteria:
+- the sentence is prenex
+- the alternation count is at most the declared bound
+- the evaluator halts within the declared step budget
+terminal_routes:
+- Accept
+- RejectExcessAlternation
+- RejectBudgetExceeded
+terminal_route_map:
+  Accept: Preserve
+  RejectExcessAlternation: Reject
+  RejectBudgetExceeded: BudgetUnknown
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: the prenex prefix alternates more times than the declared bound
+  diagnosis: alternation depth exceeds the contract
+  terminal: RejectExcessAlternation
+- symptom: evaluation has not halted at step B
+  diagnosis: the declared budget is exhausted
+  terminal: RejectBudgetExceeded
+examples:
+- ref: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.4'
+references:
+- coda_all_universe/mssn_sn_tower/definitions.md

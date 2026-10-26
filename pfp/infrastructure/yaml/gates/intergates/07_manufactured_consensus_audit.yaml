@@ -1,0 +1,31 @@
+intergate_id: "PFP-IG-07-MANUFACTURED-CONSENSUS"
+name: "Manufactured Consensus Audit Intergate"
+transition_from: "PFP-06-MARGARITA"
+transition_to: "PFP-07-MASTER"
+cognitive_vector: "Independent Witnessing & Anti-Echo Chamber"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A6"
+  - "basis_cognitive_science:consensus_manipulation"
+doctrine: |
+  "No participant is a sufficient verifier of its own output.
+   Manufactured agreement across multi-copy agents is invalid; consensus requires independent witness diversity."
+objective: >
+  Verify that multi-agent agreement on a prompt rewrite stems from independent evaluation
+  rather than seeded prompt alignment or multi-copy echo chambers.
+fences:
+  - "Independent Seed Fence: Agent reviewers must use independent sampling seeds / sampling distributions."
+  - "Distinct Evaluator Fence: Producer identity and reviewer identity cannot share identical prompt contexts."
+  - "Dissent Preservation Fence: Dissenting minority votes must be logged and attached to the audit record."
+input_schema:
+  agent_evaluator_ids: "list[string]"
+  sampling_seed_diversity: "bool"
+  minority_dissent_logged: "bool"
+transition_rules: >
+  If sampling_seed_diversity is false or evaluator IDs overlap with producer, flag RefusalCode.ECHO_CHAMBER_CONSENSUS.
+  Require independent witness verification before admitting transition to PFP-07-MASTER.
+narrowest_defensible_claim: >
+  Requiring independent sampling seeds and distinct evaluator identities prevents multi-agent debate from producing false consensus.
+next_test_needed: >
+  Run a 3-agent review loop with identical seeds and verify that Intergate 07 rejects the agreement as manufactured consensus.

@@ -1,0 +1,45 @@
+{
+  "mutation_id": "mut_18_padded_dummy_ops_exceeding_target",
+  "description": "Length 2 exceeds target_len 1 due to dummy instruction",
+  "case": {
+    "case_id": "c058_b08_xor_cancel",
+    "width": 8,
+    "inputs": [
+      "x",
+      "y"
+    ],
+    "ops": [
+      [
+        "t1",
+        "xor",
+        "x",
+        "y"
+      ],
+      [
+        "t2",
+        "xor",
+        "t1",
+        "y"
+      ]
+    ],
+    "out": "t2",
+    "target_len": 0
+  },
+  "candidate": {
+    "case_id": "c058_b08_xor_cancel",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "res",
+        "const",
+        0
+      ],
+      [
+        "dummy",
+        "const",
+        42
+      ]
+    ],
+    "out": "res"
+  }
+}

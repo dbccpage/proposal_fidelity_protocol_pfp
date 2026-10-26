@@ -1,0 +1,37 @@
+{
+  "authority_effect": "None",
+  "carrier_tree": "research/record_reading",
+  "declared_before_the_run": true,
+  "members": [
+    {
+      "index": 0,
+      "key_width": 1,
+      "name": "rung0",
+      "reads": "the active datum"
+    },
+    {
+      "index": 1,
+      "key_width": 2,
+      "name": "rung1",
+      "reads": "the active datum and the entry before it"
+    },
+    {
+      "index": 2,
+      "key_width": 3,
+      "name": "rung2",
+      "reads": "the active datum and the two entries before it"
+    }
+  ],
+  "move_universe": "every deterministic program of the source rung on the setting: at most one operation per key",
+  "order": "a rung is below another when its key is strictly shorter",
+  "run": {
+    "fuel": "the demand's length minus one",
+    "start": "the demand's first entry"
+  },
+  "schema": "level-engine.lift-class.v1",
+  "setting": {
+    "path": "research/record_reading/evidence/record.json",
+    "read": "the observed three-point setting with its operations in index order"
+  },
+  "short_key_rule": "a key reaching before the first entry repeats the earliest entry it can reach, as the carrier's previous and before do"
+}

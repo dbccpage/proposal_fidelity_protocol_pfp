@@ -1,0 +1,188 @@
+# Cycle-balance four-object lifecycle type catalog (matches pfp_cycle_balance_quartet.py)
+# AuthorityEffect: None.
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: omega.symbol_game.cycle_balance.quartet.v1
+title: Cycle Balance Quartet Types
+authority_effect: None
+digest_encoding: sorted-key compact UTF-8 JSON sha256 (not RFC 8785)
+receipt_digest_rule: compute with receipt_digest set to the empty string
+$defs:
+  ArithmeticDomain:
+    type: string
+    enum: [EXACT_INTEGER]
+  ClaimedMove:
+    type: string
+    enum: [ATTACH_2CELL]
+  VerificationRule:
+    type: string
+    enum:
+      - STATIC_CELL_BOUNDS_CHECK
+      - CHAIN_COMPLEX_NILPOTENCY_CHECK
+      - INTEGER_SMITH_NORMAL_FORM_CYCLE_BALANCE
+  VerificationStatus:
+    type: string
+    enum: [UNVERIFIED, VERIFIED]
+  StaticCellBounds:
+    type: object
+    additionalProperties: false
+    required: [max_vertices, max_edges, max_faces]
+    properties:
+      max_vertices: {type: integer, minimum: 0}
+      max_edges: {type: integer, minimum: 0}
+      max_faces: {type: integer, minimum: 0}
+  Edge:
+    type: object
+    additionalProperties: false
+    required: [id, source, target]
+    properties:
+      id: {type: string, minLength: 1}
+      source: {type: integer}
+      target: {type: integer}
+  Face:
+    type: object
+    additionalProperties: false
+    required: [id, boundary_edges]
+    properties:
+      id: {type: string, minLength: 1}
+      boundary_edges: {type: array, items: {type: string, minLength: 1}}
+  Carrier:
+    type: object
+    additionalProperties: false
+    required: [name, vertices, edges, faces, static_cell_bounds]
+    properties:
+      name: {type: string, minLength: 1}
+      vertices: {type: array, items: {type: integer}}
+      edges: {type: array, items: {$ref: '#/$defs/Edge'}}
+      faces: {type: array, items: {$ref: '#/$defs/Face'}}
+      static_cell_bounds: {$ref: '#/$defs/StaticCellBounds'}
+    invariants:
+      - 'counts bounded by static_cell_bounds'
+      - 'edge endpoints are declared vertices and differ (irreflexive)'
+      - 'face boundary references declared edges (leading minus marks reversed orientation)'
+  BoundaryMatrices:
+    type: object
+    additionalProperties: false
+    required: [d1, d2]
+    properties:
+      d1: {type: array, items: {type: array, items: {type: integer}}}
+      d2: {type: array, items: {type: array, items: {type: integer}}}
+  ActiveObstruction:
+    type: object
+    additionalProperties: false
+    required: [cycle_z, cycle_edges, d1_z, homology_status]
+    properties:
+      cycle_z: {type: array, items: {type: integer}}
+      cycle_edges: {type: array, items: {type: string, minLength: 1}}
+      d1_z: {type: array, items: {type: integer}}
+      homology_status: {$ref: '#/$defs/VerificationStatus'}
+  CycleBalanceProblem:
+    type: object
+    additionalProperties: false
+    required:
+      - schema_version
+      - problem_id
+      - case_id
+      - authority_effect
+      - arithmetic_domain
+      - carrier
+      - boundary_matrices
+      - active_obstruction
+    properties:
+      schema_version: {const: omega.symbol_game.cycle_balance.problem.v1}
+      problem_id: {type: string, minLength: 1}
+      case_id: {type: string, minLength: 1}
+      authority_effect: {const: None}
+      arithmetic_domain: {$ref: '#/$defs/ArithmeticDomain'}
+      carrier: {$ref: '#/$defs/Carrier'}
+      boundary_matrices: {$ref: '#/$defs/BoundaryMatrices'}
+      active_obstruction: {$ref: '#/$defs/ActiveObstruction'}
+    invariants:
+      - 'd1 is |V| x |E| and d2 is |E| x |faces|'
+      - 'chain law d1 * d2 = 0'
+      - 'd1_z = d1 * cycle_z and equals zero (cycle_z in ker d1)'
+  CycleBalanceCandidate:
+    type: object
+    additionalProperties: false
+    required:
+      - schema_version
+      - candidate_id
+      - problem_digest
+      - authority_effect
+      - claimed_move
+      - repair_face_name
+      - constituent_edges
+      - repair_boundary_column
+      - preserves_chain_law
+      - claimed_integer_preimage_c
+      - claimed_h1_status
+    properties:
+      schema_version: {const: omega.symbol_game.cycle_balance.candidate.v1}
+      candidate_id: {type: string, minLength: 1}
+      problem_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+      authority_effect: {const: None}
+      claimed_move: {$ref: '#/$defs/ClaimedMove'}
+      repair_face_name: {type: string, minLength: 1}
+      constituent_edges: {type: array, items: {type: string, pattern: '^[^:\s]+:-?\d+->-?\d+$'}}
+      repair_boundary_column: {type: array, items: {type: integer}}
+      preserves_chain_law: {type: boolean}
+      claimed_integer_preimage_c: {type: array, items: {type: integer}}
+      claimed_h1_status: {type: string, minLength: 1}
+  CycleBalanceVerifier:
+    type: object
+    additionalProperties: false
+    required: [schema_version, verifier_id, arithmetic_domain, problem_digest, verification_rules, static_bounds]
+    properties:
+      schema_version: {const: omega.symbol_game.cycle_balance.verifier.v1}
+      verifier_id: {type: string, minLength: 1}
+      arithmetic_domain: {$ref: '#/$defs/ArithmeticDomain'}
+      problem_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+      verification_rules: {type: array, minItems: 1, uniqueItems: true, items: {$ref: '#/$defs/VerificationRule'}}
+      static_bounds: {$ref: '#/$defs/StaticCellBounds'}
+  ClaimHygiene:
+    type: object
+    additionalProperties: false
+    required: [what_it_supports, what_it_does_not_support, next_test_needed]
+    properties:
+      what_it_supports: {type: string, minLength: 1}
+      what_it_does_not_support: {type: string, minLength: 1}
+      next_test_needed: {type: string, minLength: 1}
+  CycleBalanceReceipt:
+    type: object
+    additionalProperties: false
+    required:
+      - schema_version
+      - receipt_id
+      - authority_effect
+      - problem_digest
+      - candidate_digest
+      - verifier_digest
+      - verification_status
+      - terminal_status
+      - residuals
+      - exact_witness
+      - claim_hygiene
+      - receipt_digest
+    properties:
+      schema_version: {const: omega.symbol_game.cycle_balance.receipt.v1}
+      receipt_id: {type: string, minLength: 1}
+      authority_effect: {const: None}
+      problem_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+      candidate_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+      verifier_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+      verification_status: {$ref: '#/$defs/VerificationStatus'}
+      terminal_status: {type: [string, 'null']}
+      residuals: {}
+      exact_witness: {}
+      claim_hygiene: {$ref: '#/$defs/ClaimHygiene'}
+      receipt_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+    invariants:
+      - 'UNVERIFIED receipt has null terminal_status, residuals and exact_witness'
+  CycleBalanceQuartet:
+    type: object
+    additionalProperties: false
+    required: [problem, candidate, verifier, receipt]
+    properties:
+      problem: {$ref: '#/$defs/CycleBalanceProblem'}
+      candidate: {$ref: '#/$defs/CycleBalanceCandidate'}
+      verifier: {$ref: '#/$defs/CycleBalanceVerifier'}
+      receipt: {$ref: '#/$defs/CycleBalanceReceipt'}

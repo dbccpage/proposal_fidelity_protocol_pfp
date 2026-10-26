@@ -1,0 +1,59 @@
+schema_version: "omega.immune.antibody-spec.v1"
+antibody_id: "ab_rust_capture_completion_loss"
+canonical_name: "Rust Capture Completion Loss"
+failure_class: "sandbox:missing_capture_promoted_to_success"
+target_pattern: '(?:recv_timeout|recv)\s*\([^;]{0,180}\)\s*\.\s*unwrap_or_default\s*\(\s*\)'
+constraint_type: "Restrain"
+operatorizability: "repairable"
+action: "repair"
+severity: "P1"
+pharmacy_status: "candidate"
+authority_effect: "None"
+description: >
+  Inert review candidate for sandbox output-reader channels whose timeout,
+  disconnection or I/O failure is promoted to successful empty output.
+  A regex match is Signal 1 only; independently executed native regression
+  evidence is needed for Signal 2, and neither admits or activates this candidate.
+  Scope is sandbox capture channels, not ordinary Option defaults.
+
+governing_invariants:
+  - ".agents/rules/engineering/rl_rust_engineering_standards.md"
+  - ".agents/patterns/anti/rust/ap_rs_007_assumed_boundary_completion.md"
+
+adversarial_mutation_fixture: |
+  let (stdout_bytes, stdout_exceeded) = out_rx
+      .recv_timeout(Duration::from_millis(1_000))
+      .unwrap_or_default();
+  SandboxOutcome::Completed { stdout: stdout_bytes, ..completed }
+
+repaired_invariant_fixture: |
+  let captured = match out_rx.recv_timeout(remaining_deadline) {
+      Ok(Ok(captured)) => captured,
+      Ok(Err(error)) => return capture_io_failure(error),
+      Err(error) => return capture_timeout_or_disconnect(error),
+  };
+  check_output_limit_before_completion(captured)
+
+benign_control_fixture: |
+  let optional_label = configured_label.unwrap_or_default();
+  let captured = Ok((Vec::<u8>::new(), false));
+  preserve_successful_empty_capture(captured)
+
+implementation_binding: "omega_engine/crates_rs/omega_sandbox/src/windows.rs"
+native_test_binding: "omega_engine/crates_rs/tests/omega_sandbox/windows_capture.rs"
+harmful_control_tests:
+  - "delayed_descendant_overflow_is_not_success"
+  - "inherited_pipe_timeout_is_not_success"
+benign_control_tests:
+  - "benign_output_and_nonzero_exit_are_preserved"
+  - "delayed_bounded_descendant_output_is_captured"
+additional_failure_control:
+  source: "omega_engine/crates_rs/omega_sandbox/src/windows.rs"
+  test: "read_output_errors_are_not_success"
+detection_mechanisms:
+  regex_triggers:
+    - '(?:recv_timeout|recv)\s*\([^;]{0,180}\)\s*\.\s*unwrap_or_default\s*\(\s*\)'
+qualification_limit: >
+  Candidate YAML and fixture checks do not establish OS confinement or general
+  memory safety. Native controls bind current source and must be executed under
+  the declared Windows test profile. Historical audit probes remain historical.

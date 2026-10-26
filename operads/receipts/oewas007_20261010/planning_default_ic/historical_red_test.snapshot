@@ -1,0 +1,47 @@
+"""Real portable-source navigation controls; AuthorityEffect: None."""
+from __future__ import annotations
+import hashlib
+from pathlib import Path
+import pytest
+from omega_engine_operating_system.adapters.intelligence_custody.ic_migration import (
+    InventoryFile, MigrationInventory,
+)
+from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+    HISTORY, historical_snapshot_path, ic_relative_path, json_bytes,
+    resolve_historical_path,
+)
+from omega_engine_product_planning_office.use_cases.prior_art_epic_audit import _path
+
+@pytest.fixture
+def portable_source(tmp_path):
+    root = tmp_path / "new-checkout"
+    root.mkdir()
+    origin = "_intelligence/research/briefs/source.pdf"
+    raw = b"%PDF-1.7\r\noriginal\x00bytes"
+    destination = ic_relative_path(origin)
+    inventory = MigrationInventory(
+        str(tmp_path / "old-checkout"), "dbccpage/the_symbol_game", "a" * 40,
+        (InventoryFile(origin, destination, hashlib.sha256(raw).hexdigest(), len(raw)),),
+        (), (),
+    )
+    history = root / HISTORY
+    history.mkdir(parents=True)
+    (history / "inventory.json").write_bytes(inventory.bytes)
+    (history / "receipt.json").write_bytes(json_bytes({
+        "schema": "omega.ic.portable_history.v1", "repository": inventory.repository,
+        "source_revision": inventory.source_revision,
+        "inventory_sha256": inventory.digest, "authority_effect": "None",
+    }))
+    canonical = root / destination
+    canonical.parent.mkdir(parents=True)
+    canonical.write_bytes(raw)
+    snapshot = root / historical_snapshot_path(origin)
+    snapshot.parent.mkdir(parents=True)
+    snapshot.write_bytes(raw)
+    return root, origin, raw, canonical, snapshot, history, inventory
+
+def test_missing_legacy_registry_source_uses_bound_canonical_bytes(portable_source):
+    root, origin, raw, canonical, *_ = portable_source
+    selected = _path(root, origin, historical_source_resolver=resolve_historical_path)
+    assert selected == canonical
+    assert selected.read_bytes() == raw

@@ -1,0 +1,21 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-groebner-incomplete-truncation
+canonical_name: Anti-Groebner Incomplete Truncation
+failure_class: math:groebner_incomplete_truncation
+target_pattern: (truncate.*S-polynomial|partial.*Groebner.*basis.*sufficient|drop.*S-pair)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects truncated Groebner basis reduction chains where S-polynomial
+  pairs do not reduce to zero modulo the candidate basis.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+adversarial_mutation_fixture: S-polynomial chain truncated at degree 2; remaining
+  4 pairs omitted for efficiency.
+repaired_invariant_fixture: All 6 pairwise S-polynomial reductions rem(S(g_i, g_j),
+  G) evaluated and confirmed equal to 0.
+source_pilot: pilot_033
+evidence_sha256: a3e06557996552510a70c2abfc570c2cd545f2e59579027bc50f8ecee7e0b866

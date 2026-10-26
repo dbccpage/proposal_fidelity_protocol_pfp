@@ -1,0 +1,69 @@
+# Epic: Genesis Boundary Inventory and Residual Level Engine Verification
+
+**Epic ID:** `EPIC-OE-PFP-006`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+
+**Lifecycle scope:** LIVE — residual verification and native backlog
+**Domain Subfolder:** [oepfp](.)
+**Date:** October 2026
+**Target Subsystems:** `omega_engine_symbol_game`, `omega_engine_operations`, `omega_engine_governance/contracts/level_engine`, Genesis documentation
+
+## Current estate and bounded claim
+
+The Level Engine migration has already completed. Its research runtime lives under [tower_research/level_engine](../../../../omega_engine_symbol_game/infrastructure/tower_research/level_engine/), its versioned custody adapter under [tower_evidence/level_engine](../../../../omega_engine_symbol_game/infrastructure/tower_evidence/level_engine/), and active declarative evidence under [contracts/level_engine/v2](../../../../omega_engine_governance/contracts/level_engine/v2/). Do not re-import the external repository or recreate the retired `research/level_engine` tree.
+
+The [v2 validation record](../../../../omega_engine_governance/contracts/level_engine/v2/_docs/VALIDATION.md) and [migration validation](../../../../omega_engine_governance/contracts/level_engine/v2/migration/validation.json) record a previous finite verification run: 1,647 relocated files, 716 tests, 93 specifications/808 parity checks, 837 artifacts, 84 historical replays and 52 Lean files/1,019 declarations. These are historical receipt claims, not results executed by this epic revision. Review their individual scope and source pins before relying on them.
+
+The narrow claim of this epic is preservation of versioned evidence custody and explicit classification of remaining work. The [native port backlog](../../../../omega_engine_governance/contracts/level_engine/v2/migration/rust_port_backlog.json) records unported modules; a Python research relocation does not establish native runtime completion.
+
+## Residual delivery sequence
+
+1. Verify the [disposition map](../../../../omega_engine_governance/contracts/level_engine/v2/migration/disposition.json) against current target paths/digests in read-only bounded batches. Report missing or changed bytes; do not manufacture historical bytes by copying current v2 content.
+2. Preserve v1 historical Git reads and explicit HISTORICAL_BYTES_UNAVAILABLE refusal. Preserve v2 package-resource reads without cross-version fallback.
+3. Select one native-port backlog entry, pin its Python behavior and independently specified inputs/outputs, then propose a separate smallest Rust slice. Do not treat all 326 research modules or six infrastructure entries as one implementation unit.
+4. Inventory [Genesis adversarial_verification](../../../../omega_engine_education/documentation/001_oegen/adversarial_verification/) and [research_extension](../../../../omega_engine_education/documentation/001_oegen/research_extension/) by file role, import dependencies, fixtures, manifests and Lean source before proposing relocation. Keep original source/digest custody and author review. Adapter extraction is conditional on a concrete consumer; no directory move or deletion follows from this plan.
+5. Keep PFP prompt/evaluation contracts separated from research runtime and proof evidence. Any PFP consumer uses an explicit adapter and reports its finite evidence ceiling.
+
+## Acceptance and limitations
+
+The resolver must return exact requested bytes or a typed refusal, including missing historical repository/revision/object, unsafe path, wrong digest and v2 historical-revision misuse. The disposition inventory must identify missing/transplanted targets with an independently checked digest. Native progress is recorded per selected module.
+
+This epic does not issue v1 evidence, prove all 100 levels, establish new Lean theorem counts, authorize destruction of source fixtures, or declare Genesis/native migration complete. Preserve historical validation receipts and their original finite boundaries.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** Level Engine relocation is already implemented. Current v2 validation/disposition documents record 1,647 files, 716 historical passing tests and finite parity/replay counts; these are recorded prior-run evidence, not tests rerun for this plan. Active v2 package resources, historical v1 Git custody and the remaining native port backlog must stay distinct.
+
+**Bounded behavior and public port:** Use LevelEngineEvidenceResolver.read_bytes(version,path,revision,sha256) as the public custody port. v1 requires repository plus a full pinned commit and reads historical Git bytes; v2 reads active package resources and rejects a historical revision. Separately inventory the two Genesis documentation sub-applications before designing any relocation; no new migration is authorized by directory names alone.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Hella checks malformed input; Jeremy/Techne implements the smallest production change; Koroviev and the Soviet Inspector challenge the independent oracle; Yaroslava checks custody before Woland records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | Read a v1 blob after deleting its working-tree counterpart; a resolver that reads current files must fail. Preserve the existing Git-object lookup, then refactor only with identical committed bytes. | Extend existing `omega_engine_operations/tests/level_engine/test_evidence_resolver.py::test_v1_never_falls_back_to_active_v2`; create a temporary Git repository with different historical/current contents and hash bytes independently. |
+| 2 | Missing v1 bytes, invalid/short revision, unsafe path and wrong digest must refuse; add only the missing typed branch; restore the valid revision and recover the exact original bytes. | Extend `omega_engine_operations/tests/level_engine/test_evidence_resolver.py::test_missing_historical_bytes_refuses_without_fallback`; assert HISTORICAL_BYTES_UNAVAILABLE or the specific input/digest refusal and prohibit a v2 read spy. |
+| 3 | Transplant a historical revision into a v2 request must fail; preserve version-specific resource lookup; valid v2 request recovers the package bytes without Git. | Extend `omega_engine_operations/tests/level_engine/test_evidence_resolver.py::test_v2_rejects_historical_revision`; compare importlib resource bytes independently, not resolver-generated expectations. |
+| 4 | A disposition entry whose target is absent or digest differs must fail a read-only inventory; implement a bounded two-entry checker before scanning more. Select one native backlog module only after its Python source and port oracle are pinned. | Proposed `omega_engine_operations/tests/level_engine/test_relocation_disposition_custody.py::test_missing_or_transplanted_disposition_target`; temporary two-file tree and independently computed digests. No generator or deletion runs on the live estate. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Remove the v1 no-fallback boundary or v2 revision rejection in [resolver.py](../../../../omega_engine_symbol_game/infrastructure/tower_evidence/level_engine/resolver.py); a historical-byte/transplant witness must fail and recover after restoration. The inventory checker/native port target is prospective until selected; no blanket native-completion mutation is claimed. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+py -3.12 -m pytest omega_engine_operations/tests/level_engine/test_evidence_resolver.py -q
+py -3.12 -m pytest omega_engine_operations/tests/level_engine/test_relocation_disposition_custody.py -q
+~~~
+
+**Cross-epic sink ownership:** Education owns prompt/spec/checker and four-file source bundles; Providers owns admission/reservation/dispatch/settlement; Symbol Game owns the proposed durable pilot application and observation/evaluation journal. PFP-005 consumes reconciled paired evidence and cannot relabel PFP-000 regrading as efficacy evidence. Contracts/schema changes go to Governance; execution evidence stays outside epics. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Recorded 716-test, parity, replay and Lean counts retain their original finite scope and date. A read-only disposition check neither repeats them nor establishes all levels. v1 issues no new authority, v2 metadata is not a reachability theorem, and the native backlog remains open. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+## Local reconciliation and first consumer dependency
+
+The standalone Windows checkout has not been compared in this campaign. Before importing a delta, PFP006 owns a read-only source/hash crosswalk against current central destinations, with unchanged, moved, modified, novel, missing and conflicting classifications. The supplied review reports a later P7A 108-receipt addendum and P7B finite fixtures; the older 84-replay count above is historical initial-cutover scope, not a current total. Reproduce the applicable exact-revision baseline before adopting any count.
+
+PFP003 and Woland verification saga2 own the first bounded consumer through the existing LevelEngineRunner. Bind candidate/fixture/challenge/checker/source/resource identities and RESEARCH_FIXTURE_REPLAY; test missing, invalid, tampered, wrong-candidate, stale-checker and zero-provider replay cases. Separate worker processes own different resource contexts. Current context safety, installed-wheel resources and full Rust/Lean health need their own receipts. New reach-v2 generation remains unavailable and has separate acceptance criteria. This is an explicit dependency, not a newly completed adapter.
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

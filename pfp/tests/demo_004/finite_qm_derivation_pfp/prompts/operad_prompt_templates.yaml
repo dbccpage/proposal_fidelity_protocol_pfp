@@ -1,0 +1,59 @@
+schema: "omega.coda.categorical-operad-prompt.v2"
+authority_effect: "None"
+family_name: "finite_qm_derivation_and_operad_mining_v1"
+
+colours:
+  - id: "RawTextSpan"
+    symbol: "C_0"
+    description: "Filtered derivation carrier span after CongruenceIdeal distractor annihilation"
+  - id: "IsolatedVariable"
+    symbol: "C_1"
+    description: "Stage-1 P* spanning-tree potentials p_T^*, chord syndromes r^*, and repaired edge witness"
+  - id: "Equation"
+    symbol: "C_2"
+    description: "Exact Finite-QM algebraic relations (Phi_1, Gamma_2, Xi, fiber interference, Z[i] holonomy)"
+  - id: "RationalValue"
+    symbol: "C_3"
+    description: "Exact Z and Q invariants (Sorkin I_2/I_3, K_{2,3} gap 3/2, Mermin-Peres F_2 defect 1, DAG route status)"
+  - id: "SubstitutionStep"
+    symbol: "C_4"
+    description: "Slot-grafted (o_i) multi-node derivation certificate composition"
+  - id: "NullTree"
+    symbol: "0_C"
+    description: "Absorbing failure state triggered when G_T, G_C, or CongruenceIdeal fails"
+
+operators:
+  - id: "op_bind_derivation_carrier_and_cochain"
+    source_colours: ["RawTextSpan", "IsolatedVariable"]
+    target_colour: "IsolatedVariable"
+    arity: 2
+    description: "Bind filtered derivation carrier and P* tree/chord cochain variables"
+  - id: "op_compose_cochain_with_lift_and_holonomy"
+    source_colours: ["IsolatedVariable", "Equation"]
+    target_colour: "SubstitutionStep"
+    arity: 2
+    description: "Graft P* cochain variables into density lift and Gaussian holonomy equations"
+  - id: "op_finalize_finite_qm_derivation_packet"
+    source_colours: ["SubstitutionStep", "RationalValue"]
+    target_colour: "SubstitutionStep"
+    arity: 2
+    description: "Graft Sorkin, K_{2,3} duality, Mermin-Peres F_2, and DAG route status invariants"
+
+congruence_ideals:
+  - id: "I_DISTRACTOR_ANNIHILATION"
+    target_colour: "RawTextSpan"
+    rule: "Any bracketed [Note ...] or [Decoy-Claim ...] span is projected to NullTree before P* integration."
+  - id: "I_NO_FLOAT_COERCION"
+    target_colour: "RationalValue"
+    rule: "Any floating-point approximation in place of exact integer/rational tuples is projected to NullTree."
+
+annihilator_decoys:
+  - id: "O_MINUS_FALSE_ROUTE_PROMOTION"
+    decoy_claim: "Route L1-R-RESIDUAL-TO-WEIGHTS is DERIVED_EXACT without an external selector."
+    counterexample_witness: "On C_4 with holonomy 2, L1 minimizers (1,1,0,0) and (0,0,1,1) yield distinct sector weights (2,0) vs (0,2) with L1 gap 2."
+  - id: "O_MINUS_QUARTIC_SORKIN_LEAK"
+    decoy_claim: "Quartic readout beta |c|^4 satisfies third-order Sorkin I_3 = 0."
+    counterexample_witness: "I_3^{(4)}(1,1,1) = 3^4 - 3(2^4) + 3(1^4) = 81 - 48 + 3 = 36 != 0, forcing beta = 0."
+  - id: "O_MINUS_MERMIN_PERES_GLOBAL_SECTION"
+    decoy_claim: "The 3x3 Mermin-Peres parity grid admits a global +/-1 valuation."
+    counterexample_witness: "Row parities (+1,+1,+1) and column parities (+1,+1,-1) have product -1 != +1 (cohomological defect 1 in H^2(X; F_2))."

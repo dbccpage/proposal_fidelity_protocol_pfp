@@ -1,0 +1,170 @@
+# Epic: Master 2,500 Pilot Matrix Estate, 4-Artifact Anatomy & Phased Rollout
+
+> Source boundary at `6c44a0ddd330d827d989eaefad4215d03a88ed9a`: the legacy `pfp/python` modules cited below were removed by the merged PFP retirement. These are historical implementation anchors, not current production seams. Rebinding to surviving production ports is a prerequisite for the proposed tests and mutations; no implementation completion follows from this plan.
+
+**Epic ID:** `EPIC-OE-PFP-004`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+**Domain Subfolder:** [`omega_engine_product_planning_office/plans/epics/oepfp/`](.)
+**Date:** October 2026
+**Target Subsystems:** `omega_engine_education/pilots`, `omega_engine_education/pfp`
+
+---
+
+## 1. Claim Discipline & Bounded Evaluation Envelope
+
+1. **What this epic supports:**
+   - Architectural governance for the complete 2,500-pilot estate (`pilot_00000` to `pilot_02499`), governed by canonical files in [`omega_engine_education/pilots/matrix/`](../../../../omega_engine_education/pilots/matrix/).
+   - Frozen split: 500 development cases and 2,000 heldout cases with prompt lineage isolation (no heldout case inherits from a development ancestor).
+   - Strict 4-artifact anatomy across all 2,500 pilot directories: `spec.yaml`, `run.py`, `tests/test_pilot.py`, and `README.md`.
+   - Coverage across 6 core task families (`linear_algebra`, `graph_facts`, `graph_repair`, `refusal`, `cochain_defect`, `magma_associativity`), 5 difficulty rungs, 6 representation rewrites, and 20 operational modes.
+   - Three-phase materialization schedule: Phase 0 Bedrock Remake (150 pilots), Phase 1 Scaling Wave (1,000 pilots), and Phase 2 Scaling Wave (1,350 pilots).
+
+2. **What this epic does not support:**
+   - Does not claim that a finite 2,500-pilot campaign establishes universal reasoning capabilities across foundation models.
+   - Does not permit placeholder pilot stubs that lack executable tests or ground-truth checkers.
+   - Does not allow cosmetic string variations to count as distinct substantive scenarios.
+
+3. **Narrowest defensible claim:**
+   - Four-artifact structure permits inspection; deterministic execution and mutation resistance require independent runner/checker witnesses.
+
+4. **Next test needed:**
+   - Materialize one frozen record into scratch, execute its runner with independent positive/negative replies, then review the next bounded family slice.
+
+---
+
+## 2. Executive Summary & Architectural Motivation
+
+Historically, the pilot estate suffered from inconsistency: legacy pilots used varying folder structures, inconsistent naming (`pilot_000001` vs. `pilot_00001`), missing test suites, and undocumented prompt engineering.
+
+This epic standardizes the entire pilot estate:
+1. **Canonical Matrix:** All 2,500 pilots are generated deterministically by `gen_pilot_matrix_2500.py` into `omega_engine_education/pilots/matrix/pilots_2500_matrix.yaml` and `.csv`.
+2. **Standardized 4-Artifact Anatomy:** Every pilot directory is hermetic and self-contained with explicit spec, runner, test, and claim hygiene envelope.
+3. **Phased Rollout:** Remakes legacy bedrock pilots first before scaling into the 2,500 parameter space.
+
+---
+
+## 3. The 4-Artifact Standard Anatomy
+
+Every pilot directory under `omega_engine_education/pilots/pilot_XXXXX/` must contain exactly these four files:
+
+```
+pilot_XXXXX/
+├── spec.yaml           # Matrix coordinates, prompt IDs, mode, gate binding
+├── run.py              # Self-contained runner calling SPK-001 & sanitizer
+├── tests/
+│   └── test_pilot.py   # Hermetic offline tests for applicable production mutations
+└── README.md           # Claim Hygiene envelope (supports, does not support, etc.)
+```
+
+### 3.1 Artifact Specifications
+
+1. **`spec.yaml`**: Machine-readable specification adhering to `pfp.pilot-spec.v1`:
+   - `pilot_id`: Zero-padded 5-digit identifier (`pilot_00000` to `pilot_02499`).
+   - `prompt_id` / `parent_prompt_id` / `generation_id`: Prompt tree lineage.
+   - `coordinates`: `task_family`, `difficulty_rung`, `representation_rewrite`, `mode`, `model_class`, `target_spend_usd`.
+   - `checker_binding`: Identifier of the sovereign gate verifier.
+
+2. **`run.py`**: Clean execution entrypoint:
+   - Calls `p_star_builder.build_p_star(stimulus)` under `SPK-001`.
+   - Dispatches via `TracedGateway` / `ConfinedGateway`.
+   - Parses model replies with `pilot_response_sanitizer.py`.
+   - Records non-schema chatter in `residual_text_ledger.json`.
+   - Evaluates response against registered checker and emits typed `Receipt`.
+
+3. **`tests/test_pilot.py`**: Hermetic pytest/unittest module:
+   - Evaluates offline positive control (valid solution).
+   - Evaluates corrupted negative control (boundary violation, invalid arithmetic).
+   - Evaluates abstention / refusal control.
+   - Kills applicable production mutations with recorded independent witnesses.
+
+4. **`README.md`**: Standard four-part claim envelope:
+   - What this pilot supports.
+   - What this pilot does not support.
+   - Narrowest defensible claim.
+   - Next test needed.
+
+---
+
+## 4. Phased Materialization Schedule
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                   2,500 PILOT MATERIALIZATION PHASES                   │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│   Phase 0: Bedrock Foundation (Pilots 00000 - 00149, 150 Pilots)       │
+│     - Remake legacy pilots 000001 to 000057 into 4-artifact anatomy    │
+│     - Remake legacy demos (demo_000 to demo_004, demo_sn_000)          │
+│     - Resolve D01-D12 discrepancies and freeze bedrock types           │
+│         │                                                              │
+│         ▼                                                              │
+│   Phase 1: First Scaling Wave (Pilots 00150 - 01149, 1,000 Pilots)     │
+│     - Cross-tabulate initial calibration families across rungs 1-5     │
+│     - Inoculate epistemic antibodies across development split          │
+│     - Run batch replays and verify zero-cost OpenRouter routes         │
+│         │                                                              │
+│         ▼                                                              │
+│   Phase 2: Second Scaling Wave (Pilots 01150 - 02499, 1,350 Pilots)    │
+│     - Scale out modes 11-20 and hieroglyphic / symbolic wire profiles  │
+│     - Materialize complete 2,000-case heldout evaluation cohort        │
+│     - Execute final matrix verification and lock release manifest      │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 5. Lineage Isolation Invariant
+
+In accordance with strict empirical discipline, prompt tree expansion enforces complete split isolation:
+- No heldout pilot may have an ancestor node in the development set:
+  $$\forall p \in \text{Heldout}, \quad \text{Ancestors}(p) \cap \text{Development} = \emptyset$$
+- Lineage integrity is verified programmatically by `test_gen_pilot_matrix_2500.py` across all 2,500 nodes.
+
+---
+
+## 6. Acceptance Criteria & Gate Verification
+
+1. `omega_engine_education/pilots/matrix/pilots_2500_matrix.yaml` contains exactly 2,500 records with 500 development and 2,000 heldout cases.
+2. All 150 Phase 0 pilots are materialized on disk and their `tests/test_pilot.py` pass without network access.
+3. Every materialized pilot contains all four artifacts (`spec.yaml`, `run.py`, `tests/test_pilot.py`, `README.md`).
+4. Each applicable production mutation is detected by an independent oracle; anatomy and generator-created expected values do not count as integration evidence.
+
+## Four-file bundle version and custody dependency
+
+The four required source files are a versioned bundle, not a ban on separately stored runtime artifacts. Before materialization, propose a Governance-owned `pfp.pilot-bundle.v1` manifest contract and an Education-owned canonical matrix-side manifest binding the four relative paths/digests, generator revision, spec schema and checker revision. The manifest lives beside the canonical matrix, not as a fifth source file or dataset in epics. Existing schemas retain their original version; an incompatible bundle changes the explicit bundle version. Runtime replies, ledgers and SoftwareQaReceiptV1 evidence remain in their owned evidence stores.
+
+Extend the one-record materialization slice with a run.py transplanted from another bundle, a missing tests/test_pilot.py, an unknown bundle version and recovery of the original four hashes. Proposed `omega_engine_education/pfp/python/tests/test_estate_materialized_contract.py::test_versioned_four_file_bundle_custody` must fail RED before the manifest validator exists, implement only the one-record validator, then compare independent SHA-256 values. The new validator is a pending mutation target; the historical generator above is retired and must be rebound to a surviving producer seam before acceptance.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** The matrix generator and estate generator already exist. Matrix determinism and four files do not imply that runners use SPK-001, the common transport or independent checkers. The matrix writer defaults to copying into epics; use --no-sync-epic so generated data stays in its canonical home.
+
+**Bounded behavior and public port:** Call load_dimension_register/generate_pilots_2500/validate_coordinates_against_register and write_matrix_files against temporary outputs; call materialize_pilot for one frozen record into a temporary directory, then execute its run.py with supplied replies and blocked network. Dependencies: current dimension register and a pinned one-record family/checker binding, then PFP-002 for service integration.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Hella checks malformed input; Jeremy/Techne implements the smallest production change; Koroviev and the Soviet Inspector challenge the independent oracle; Yaroslava checks custody before Woland records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | An unknown coordinate or duplicate pilot ID must fail; implement the smallest register validation; accept a known coordinate and recover unchanged deterministic output. | `omega_engine_education/pfp/python/tests/test_matrix_obstruction_controls.py::test_unknown_coordinate_and_duplicate_id`; independently enumerate IDs/counts and compare two rendered byte sequences. |
+| 2 | A heldout grandchild whose development ancestor is two hops away must fail; implement transitive ancestry validation; accept an isolated heldout root and reject cycles/missing parents. | `omega_engine_education/pfp/python/tests/test_matrix_obstruction_controls.py::test_transitive_split_leak_refuses`; explicit three-node graph with a hand-enumerated ancestor set. |
+| 3 | Materialize one record; malformed/duplicate JSON and missing reply must refuse without sends; implement only that family binding and accept the literal correct answer. | `omega_engine_education/pfp/python/tests/test_estate_materialized_contract.py::test_one_generated_runner_accepts_and_refuses`; subprocess output, exit code and independently specified arithmetic/graph facts, not generator-produced expected answers. |
+| 4 | Transplant another record's checker/spec or truncate an output must be detected; add the minimal check/readback; regenerate into scratch and recover byte equality with no writes under epics. | `omega_engine_education/pfp/python/tests/test_matrix_output_custody.py::test_check_detects_transplant_and_recovers`; separate SHA-256 computation and an epics-directory before/after digest. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Remove the ancestor walk from gen_pilot_matrix_2500.py (retired source: `../../../../omega_engine_education/pfp/python/infrastructure/generators/gen_pilot_matrix_2500.py`) and require the two-hop leak witness to fail. Remove duplicate-key rejection from the runner generated by gen_pilot_estate_250.py (retired source: `../../../../omega_engine_education/pfp/python/infrastructure/generators/gen_pilot_estate_250.py`) and require the executed generated runner to expose the defect. Source existence was checked for the earlier review, but the legacy producer modules are now retired. Rebind the production targets before mutation execution and RED recovery; both remain prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+```powershell
+py -3.12 -m pytest omega_engine_education/pfp/python/tests/test_matrix_obstruction_controls.py -q
+py -3.12 -m pytest omega_engine_education/pfp/python/tests/test_estate_materialized_contract.py -q
+py -3.12 omega_engine_education/pfp/python/infrastructure/generators/gen_pilot_matrix_2500.py --check --no-sync-epic
+```
+
+**Cross-epic sink ownership:** Education owns prompt/spec/checker and four-file source bundles; Providers owns admission/reservation/dispatch/settlement; Symbol Game owns the proposed durable pilot application and observation/evaluation journal. PFP-005 consumes reconciled paired evidence and cannot relabel PFP-000 regrading as efficacy evidence. Contracts/schema changes go to Governance; execution evidence stays outside epics. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** One generated family and finite matrix shape are separate claims. Broad 150/2,500-pilot rollout remains blocked on independent family oracles, common-service integration and complete per-family mutation receipts. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

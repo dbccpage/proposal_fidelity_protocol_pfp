@@ -1,0 +1,320 @@
+# Schema definition for Pilot Specification (spec.yaml)
+# AuthorityEffect: None.
+# Required fields and enums follow omega_engine_pfp.domain.types.pilot_spec.
+
+$schema: https://json-schema.org/draft/2020-12/schema
+schema: pfp.pilot-spec.v1
+title: PilotSpecificationSchema
+description: |
+  Ingress matrix coordinates, problem configuration, host gate parameters,
+  and companion test-plan references for PFP pilot instances.
+
+$defs:
+  AuthorityEffect:
+    type: string
+    enum: [None]
+
+  TaskFamily:
+    type: string
+    enum:
+      - linear_algebra
+      - graph_facts
+      - graph_repair
+      - refusal
+      - cochain_defect
+      - magma_associativity
+
+  RepresentationRewrite:
+    type: string
+    enum:
+      - raw_prose
+      - structured_spans
+      - mss_boundary_v1
+      - sn_wire_v2
+      - ebnf_wire_v1
+      - hieroglyphic_glyphs
+
+  ModelClass:
+    type: string
+    enum:
+      - 8B
+      - 70B
+      - 500B_plus
+
+  ArmTemplate:
+    type: string
+    enum:
+      - A0
+      - A1
+      - A2
+      - A3
+
+  TaskModeFidelity:
+    type: string
+    enum:
+      - literal_extraction
+      - finite_deduction
+
+  VariableIdentifierPermutation:
+    type: string
+    enum:
+      - canonical
+      - permuted
+
+  FloatingPointRisk:
+    type: string
+    enum:
+      - exact_modular
+      - float_approximated
+
+  MissingPremise:
+    type: string
+    enum:
+      - answerable
+      - unanswerable
+
+  CohomologyDefectClass:
+    type: string
+    enum:
+      - none
+      - exact_boundary
+      - closed_non_exact
+      - curvature_defect
+
+  MagmaAssociativityType:
+    type: string
+    enum:
+      - none
+      - associative_semigroup
+      - non_associative_magma
+
+  StructureDeltaMetric:
+    type: string
+    enum:
+      - exact_rational_delta
+      - gate_boolean
+      - cochain_norm
+      - rank_change
+
+  CheckerId:
+    type: string
+    enum:
+      - PFP-01-EXACT-LINALG
+      - PFP-02-EXACT-PRIMES
+      - PFP-03-EXACT-FOL-DEDUCTION
+      - PFP-04-EXACT-EPISTEMIC-REFUSAL
+      - PFP-05-EXACT-2X2-DETERMINANT
+      - PFP-02-GRAPH-FACTS
+      - PFP-03-GRAPH-REPAIR
+      - PFP-14-TYPED-REFUSAL
+      - PFP-52-COCHAIN-DEFECT
+      - PFP-55-MAGMA-ASSOC
+
+  PilotCoordinates:
+    type: object
+    additionalProperties: false
+    required:
+      - task_family
+      - difficulty_rung
+      - representation_rewrite
+      - rewrite_count
+      - legend_present
+      - mode
+      - stage_count
+      - pass_count
+      - single_shot
+      - antibody_active
+      - model_class
+      - model_id
+      - temperature
+      - target_spend_usd
+    properties:
+      task_family:
+        anyOf:
+          - $ref: '#/$defs/TaskFamily'
+          - type: string
+      difficulty_rung:
+        type: integer
+        minimum: 1
+        maximum: 5
+      representation_rewrite:
+        anyOf:
+          - $ref: '#/$defs/RepresentationRewrite'
+          - type: string
+      rewrite_count:
+        type: integer
+        minimum: 0
+      legend_present:
+        type: boolean
+      mode:
+        type: string
+      stage_count:
+        type: integer
+        minimum: 1
+      pass_count:
+        type: integer
+        minimum: 1
+      single_shot:
+        type: boolean
+      antibody_active:
+        type: boolean
+      antibody_ids:
+        type: array
+        items:
+          type: string
+      model_class:
+        anyOf:
+          - $ref: '#/$defs/ModelClass'
+          - type: string
+      model_id:
+        type: string
+      temperature:
+        type: number
+        minimum: 0.0
+        maximum: 2.0
+      target_spend_usd:
+        type: number
+        minimum: 0.0
+
+  PilotIngress:
+    type: object
+    additionalProperties: false
+    required:
+      - task_mode_fidelity
+      - variable_identifier_permutation
+      - floating_point_approximation_risk
+      - arm_template
+      - missing_premise
+      - cohomology_defect_class
+      - magma_associativity_type
+    properties:
+      task_mode_fidelity:
+        anyOf:
+          - $ref: '#/$defs/TaskModeFidelity'
+          - type: string
+      variable_identifier_permutation:
+        anyOf:
+          - $ref: '#/$defs/VariableIdentifierPermutation'
+          - type: string
+      floating_point_approximation_risk:
+        anyOf:
+          - $ref: '#/$defs/FloatingPointRisk'
+          - type: string
+      arm_template:
+        anyOf:
+          - $ref: '#/$defs/ArmTemplate'
+          - type: string
+      missing_premise:
+        anyOf:
+          - $ref: '#/$defs/MissingPremise'
+          - type: string
+      cohomology_defect_class:
+        anyOf:
+          - $ref: '#/$defs/CohomologyDefectClass'
+          - type: string
+      magma_associativity_type:
+        anyOf:
+          - $ref: '#/$defs/MagmaAssociativityType'
+          - type: string
+
+  PilotHostGate:
+    type: object
+    additionalProperties: false
+    required:
+      - checker_id
+      - response_schema
+      - residual_logging
+      - structure_delta_metric
+      - expected_outcome
+    properties:
+      checker_id:
+        anyOf:
+          - $ref: '#/$defs/CheckerId'
+          - type: string
+      response_schema:
+        type: string
+      residual_logging:
+        type: boolean
+      structure_delta_metric:
+        anyOf:
+          - $ref: '#/$defs/StructureDeltaMetric'
+          - type: string
+      expected_outcome:
+        type: string
+
+  PilotTestPlanReference:
+    type: object
+    additionalProperties: false
+    required:
+      - path
+    properties:
+      path:
+        type: string
+      cases:
+        type: integer
+      tests:
+        type: integer
+      seed:
+        type: string
+      prompt_template:
+        type: string
+      p_star:
+        type: string
+      seed_rewrite_first:
+        type: string
+      seed_rewrite_last:
+        type: string
+      p_star_rewrite_first:
+        type: string
+      p_star_rewrite_last:
+        type: string
+
+  PilotResponsesReference:
+    type: object
+    additionalProperties: false
+    required:
+      - directory
+    properties:
+      directory:
+        type: string
+
+type: object
+additionalProperties: false
+required:
+  - pilot_id
+  - prompt_id
+  - phase
+  - split
+  - coordinates
+  - ingress
+  - host_gate
+properties:
+  schema:
+    type: string
+    const: pfp.pilot-spec.v1
+  authority_effect:
+    $ref: '#/$defs/AuthorityEffect'
+  pilot_id:
+    type: string
+    pattern: ^pilot_[0-9a-zA-Z_]+$
+  prompt_id:
+    type: string
+  parent_prompt_id:
+    type: [string, "null"]
+  generation_id:
+    type: integer
+    minimum: 0
+  phase:
+    type: string
+  split:
+    type: string
+  coordinates:
+    $ref: '#/$defs/PilotCoordinates'
+  ingress:
+    $ref: '#/$defs/PilotIngress'
+  host_gate:
+    $ref: '#/$defs/PilotHostGate'
+  test_plan:
+    $ref: '#/$defs/PilotTestPlanReference'
+  responses:
+    $ref: '#/$defs/PilotResponsesReference'

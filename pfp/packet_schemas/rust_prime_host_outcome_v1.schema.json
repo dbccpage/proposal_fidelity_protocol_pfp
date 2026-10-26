@@ -1,0 +1,622 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "omega.oesos.rust-prime-host-outcome.v1",
+  "title": "Rust Prime/OESOS Host Outcome V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id_sha256",
+    "challenge_hex",
+    "outcome_root_sha256",
+    "host_registry_hash_sha256",
+    "host_source_revision",
+    "authority_effect",
+    "execution_status",
+    "source_bindings",
+    "carrier_manifest",
+    "prime001_result",
+    "oesos_result",
+    "prime000_result",
+    "prime002_result",
+    "diagnostic_kind",
+    "admission",
+    "attestation",
+    "refusal"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omega.oesos.rust-prime-host-outcome.v1"
+    },
+    "request_id_sha256": {
+      "$ref": "#/$defs/optionalDigest"
+    },
+    "challenge_hex": {
+      "$ref": "#/$defs/optionalDigest"
+    },
+    "outcome_root_sha256": {
+      "$ref": "#/$defs/digest"
+    },
+    "host_registry_hash_sha256": {
+      "$ref": "#/$defs/digest"
+    },
+    "host_source_revision": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "authority_effect": {
+      "const": "None"
+    },
+    "execution_status": {
+      "enum": ["REFUSED", "EXECUTED_REPLAYED_EXACT_LAB_EVIDENCE"]
+    },
+    "source_bindings": {
+      "oneOf": [
+        {"$ref": "#/$defs/sourceBindingChecks"},
+        {"type": "null"}
+      ]
+    },
+    "carrier_manifest": {
+      "oneOf": [
+        {"$ref": "#/$defs/carrierManifest"},
+        {"type": "null"}
+      ]
+    },
+    "prime001_result": {
+      "oneOf": [
+        {"$ref": "#/$defs/prime001"},
+        {"type": "null"}
+      ]
+    },
+    "oesos_result": {
+      "oneOf": [
+        {"$ref": "#/$defs/oesos"},
+        {"type": "null"}
+      ]
+    },
+    "prime000_result": {
+      "oneOf": [
+        {"$ref": "#/$defs/prime000"},
+        {"type": "null"}
+      ]
+    },
+    "prime002_result": {
+      "oneOf": [
+        {"$ref": "#/$defs/prime002"},
+        {"type": "null"}
+      ]
+    },
+    "diagnostic_kind": {
+      "type": ["string", "null"]
+    },
+    "admission": {
+      "$ref": "#/$defs/admission"
+    },
+    "attestation": {
+      "const": "unsigned_lab"
+    },
+    "refusal": {
+      "oneOf": [
+        {"$ref": "#/$defs/refusal"},
+        {"type": "null"}
+      ]
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "optionalDigest": {
+      "oneOf": [
+        {"$ref": "#/$defs/digest"},
+        {"type": "null"}
+      ]
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "digestArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/digest"
+      }
+    },
+    "exactRational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["n", "d"],
+      "properties": {
+        "n": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$"
+        },
+        "d": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    "commitmentCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supplied", "derived", "verdict"],
+      "properties": {
+        "supplied": {
+          "$ref": "#/$defs/digest"
+        },
+        "derived": {
+          "$ref": "#/$defs/digest"
+        },
+        "verdict": {
+          "enum": ["MATCH", "MISMATCH"]
+        }
+      }
+    },
+    "carrierManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_version",
+        "carrier_hash_blake3",
+        "d0_hash_blake3",
+        "d1_hash_blake3",
+        "weights_hash_blake3",
+        "witness_hash_blake3",
+        "provenance_hash_blake3",
+        "coefficient_domain",
+        "coefficient_representation",
+        "c0_dim",
+        "c1_dim",
+        "c2_dim",
+        "rank_d0",
+        "dim_q1",
+        "dim_h1"
+      ],
+      "properties": {
+        "manifest_version": {
+          "const": 2
+        },
+        "carrier_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "d0_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "d1_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "weights_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "witness_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "provenance_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "coefficient_domain": {
+          "const": "Q"
+        },
+        "coefficient_representation": {
+          "const": "BigRational"
+        },
+        "c0_dim": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "c1_dim": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "c2_dim": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rank_d0": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dim_q1": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dim_h1": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "sourceBindingChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packet_id",
+        "runtime_id_sha256",
+        "runtime_id_verdict",
+        "candidate_id_sha256",
+        "candidate_id_verdict",
+        "candidate_state_hash_sha256",
+        "candidate_state_verdict",
+        "source_event_root_sha256",
+        "source_event_root_verdict",
+        "source_wire_receipt_id_sha256",
+        "source_wire_receipt_verdict",
+        "solver_registry_hash_sha256",
+        "solver_registry_verdict",
+        "source_revision",
+        "source_revision_verdict"
+      ],
+      "properties": {
+        "packet_id": {
+          "$ref": "#/$defs/commitmentCheck"
+        },
+        "runtime_id_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "runtime_id_verdict": {
+          "const": "BOUND_ONLY_RUNTIME_ARTIFACT_SCHEMA_NOT_YET_PUBLISHED"
+        },
+        "candidate_id_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "candidate_id_verdict": {
+          "const": "BOUND_ONLY_CANDIDATE_ARTIFACT_BYTES_NOT_SUPPLIED"
+        },
+        "candidate_state_hash_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "candidate_state_verdict": {
+          "const": "BOUND_ONLY_PYTHON_IDENTITY;HOST_VECTOR_HASH_REPORTED_SEPARATELY"
+        },
+        "source_event_root_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "source_event_root_verdict": {
+          "const": "BOUND_ONLY_EVENT_BUNDLE_SCHEMA_NOT_YET_PUBLISHED"
+        },
+        "source_wire_receipt_id_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "source_wire_receipt_verdict": {
+          "const": "BOUND_ONLY_SOURCE_RECEIPT_BYTES_NOT_SUPPLIED"
+        },
+        "solver_registry_hash_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "solver_registry_verdict": {
+          "const": "BOUND_ONLY_SOURCE_REGISTRY_MANIFEST_NOT_SUPPLIED"
+        },
+        "source_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_revision_verdict": {
+          "enum": [
+            "MATCH_HOST_BUILD_STAMP",
+            "BOUND_ONLY_DISTINCT_SOURCE_REVISION"
+          ]
+        }
+      }
+    },
+    "prime001": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "carrier_hash_blake3",
+        "identity_commitment_sha256",
+        "loss_ledger_commitment_sha256",
+        "transport_called",
+        "transport_same_carrier_refusal_checked"
+      ],
+      "properties": {
+        "kind": {
+          "const": "same_carrier_identity"
+        },
+        "carrier_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "identity_commitment_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "loss_ledger_commitment_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "transport_called": {
+          "const": false
+        },
+        "transport_same_carrier_refusal_checked": {
+          "const": true
+        }
+      }
+    },
+    "exactStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "raw_weighted_l1", "phi1", "gamma2"],
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "raw_weighted_l1": {
+          "$ref": "#/$defs/exactRational"
+        },
+        "phi1": {
+          "$ref": "#/$defs/exactRational"
+        },
+        "gamma2": {
+          "$ref": "#/$defs/exactRational"
+        }
+      }
+    },
+    "candidateRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "candidate_vector_sha256",
+        "normal_form_sha256",
+        "exact_match"
+      ],
+      "properties": {
+        "kind": {
+          "const": "exact_host_normal_form"
+        },
+        "candidate_vector_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "normal_form_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "exact_match": {
+          "type": "boolean"
+        }
+      }
+    },
+    "oesos": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "input_commitment_sha256",
+        "fresh_solve_commitment_sha256",
+        "replay_commitment_sha256",
+        "pipeline_declaration_carrier_hash_blake3",
+        "gauge",
+        "final_stage",
+        "normal_form",
+        "b1_over_q",
+        "span_distance",
+        "closure_premium",
+        "candidate_relation"
+      ],
+      "properties": {
+        "kind": {
+          "const": "replayed"
+        },
+        "input_commitment_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "fresh_solve_commitment_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "replay_commitment_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "pipeline_declaration_carrier_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        },
+        "gauge": {
+          "$ref": "#/$defs/exactStage"
+        },
+        "final_stage": {
+          "$ref": "#/$defs/exactStage"
+        },
+        "normal_form": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/exactRational"
+          }
+        },
+        "b1_over_q": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "span_distance": {
+          "$ref": "#/$defs/exactRational"
+        },
+        "closure_premium": {
+          "$ref": "#/$defs/exactRational"
+        },
+        "candidate_relation": {
+          "$ref": "#/$defs/candidateRelation"
+        }
+      }
+    },
+    "prime000Conformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "conforms",
+        "no_decidable_violation",
+        "violations",
+        "unchecked_laws"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": ["Conforms", "Partial", "Violated"]
+        },
+        "conforms": {
+          "type": "boolean"
+        },
+        "no_decidable_violation": {
+          "type": "boolean"
+        },
+        "violations": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "unchecked_laws": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    },
+    "prime000": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "receipt_commitment_sha256",
+        "terminal",
+        "evidence_provenance",
+        "letter_tape",
+        "phi1_u64",
+        "gamma2_u64",
+        "conformance"
+      ],
+      "properties": {
+        "kind": {
+          "const": "executed"
+        },
+        "receipt_commitment_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "terminal": {
+          "type": "string"
+        },
+        "evidence_provenance": {
+          "type": "string"
+        },
+        "letter_tape": {
+          "type": "string"
+        },
+        "phi1_u64": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gamma2_u64": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conformance": {
+          "$ref": "#/$defs/prime000Conformance"
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_ops", "spent"],
+      "properties": {
+        "max_ops": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "spent": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "prime002": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "scope_commitments_sha256",
+        "claim_commitments_sha256",
+        "evidence_commitments_sha256",
+        "permit_bindings_sha256",
+        "rust_letters",
+        "terminal_head_sha256",
+        "budget_before",
+        "budget_after",
+        "refusal_laws",
+        "evidence_caveat"
+      ],
+      "properties": {
+        "kind": {
+          "const": "exact_step_written_then_terminalized"
+        },
+        "scope_commitments_sha256": {
+          "$ref": "#/$defs/digestArray"
+        },
+        "claim_commitments_sha256": {
+          "$ref": "#/$defs/digestArray"
+        },
+        "evidence_commitments_sha256": {
+          "$ref": "#/$defs/digestArray"
+        },
+        "permit_bindings_sha256": {
+          "$ref": "#/$defs/digestArray"
+        },
+        "rust_letters": {
+          "const": ["E", "T"]
+        },
+        "terminal_head_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "budget_before": {
+          "$ref": "#/$defs/budget"
+        },
+        "budget_after": {
+          "$ref": "#/$defs/budget"
+        },
+        "refusal_laws": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "evidence_caveat": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "codes", "reason_commitment_sha256"],
+      "properties": {
+        "kind": {
+          "const": "Refused"
+        },
+        "codes": {
+          "type": "array",
+          "minItems": 1,
+          "contains": {
+            "const": "UNSIGNED_LAB_ATTESTATION"
+          },
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "reason_commitment_sha256": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "refusal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage", "code", "detail", "laws"],
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "code": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "laws": {
+          "$ref": "#/$defs/stringArray"
+        }
+      }
+    }
+  }
+}

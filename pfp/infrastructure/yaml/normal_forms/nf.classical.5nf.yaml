@@ -1,0 +1,154 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.5nf
+  name: Project-Join Normal Form / Fifth Normal Form
+  short_name: 5NF
+  version: v0
+  theory_status: established
+  contract_status: active
+  verification_status: absent
+  family: shape
+  status: active
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a join dependency that is not implied by the candidate keys
+  preserves_invariant: every non-trivial join dependency implied by the constraints
+    is logically implied by the candidate keys
+  protected_skeleton:
+  - candidate_keys
+  - join_dependencies
+  - superkeys
+  - projections
+  erased_structure: []
+  non_claims:
+  - does not imply practical performance benefit
+  - does not certify runtime repair without cochain substrate
+  - does not imply authorization
+  - the shell-versus-fill query on one body is a witness that this body obeys or fails
+    one ternary join dependency. It is not the membership test for the schema
+  - every component containing a candidate key (SKNF) does not establish that candidate keys
+    logically imply the join dependency; pairwise keys permit a 4-tuple parity instance
+    whose ternary join yields 4 spurious tuples (Darwen, Date, Fagin 2012 Theorem 6.1)
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    author: Ronald Fagin
+    year: 1979
+    work: Normal Forms and Relational Database Operators
+  formal_statement: 'A relvar schema is in fifth normal form, also called projection-join
+    normal form, when every non-trivial join dependency implied by its constraints
+    is logically implied by its candidate keys. A join dependency is trivial when one of its
+    components is the whole heading.
+
+    '
+  membership_test: implied by the candidate keys
+  sufficient_key_component_test:
+    statement: 'If every component of a join dependency contains a candidate key, then that
+      join dependency is implied by the candidate keys.
+
+      '
+    strength: sufficient
+    necessary: false
+  quadrilateral:
+    qualifies_as_true_normal_form: true
+    anomaly_exclusion: 'Spurious tuples and cyclic join redundancy from a join dependency
+      that the candidate keys do not imply.
+
+      '
+    lossless_join:
+      status: join_dependency
+      statement: 'The decomposition into the named projections is lossless exactly
+        when the join dependency holds. Heath''s theorem and Fagin''s multivalued
+        theorem are the binary cases. The join dependency itself is the n-ary losslessness
+        condition. Rissanen (1977) studies the further demand that the components
+        also be independent.
+
+        '
+    dependency_preservation:
+      status: not_asserted
+      statement: 'Membership does not promise a decomposition that preserves every
+        functional dependency inside a single component. A schema can be taken to
+        Boyce-Codd normal form, or to this form, by splits that drop a dependency
+        as a local constraint.
+
+        '
+    syntactic_decision:
+      status: schema_decidable
+      statement: 'For a finite set of candidate keys and a finite join-dependency
+        cover, implication is decidable by the chase. Comparing the cardinality of
+        one body with the cardinality of the join of its projections decides that
+        body only.
+
+        '
+  chain:
+    requires:
+    - SKNF
+    - RFNF
+    - ETNF
+    - 4NF
+    - BCNF
+    implied_by:
+    - 6NF
+declarations_required:
+- heading
+- candidate_keys
+- explicitly_declared_join_dependencies: '*(R_1, R_2, ..., R_n)'
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- every non-trivial join dependency implied by the declared constraints is logically implied
+  by the candidate keys
+- the condition "every component is a superkey" defines SKNF, not 5NF
+- a four-tuple parity instance satisfying pairwise candidate keys can generate spurious
+  tuples under ternary join, showing candidate keys alone do not imply the join dependency
+- a body that is a proper subset of the join of its three binary projections is a
+  witness against that join dependency on that body
+- a decomposition used to reach this form must be lossless for the join dependency
+  it removes
+proof_obligations:
+- id: 5nf.fagin_project_join_theorem
+  status: theorem_shaped
+  ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  statement: 'Fifth normal form means every non-trivial join dependency implied by
+    the constraints is logically implied by the candidate keys. The superkey component screen
+    defines SKNF and is strictly weaker than 5NF. Constraints that are not join dependencies remain
+    the subject of domain-key normal form.
+
+    '
+terminal_routes:
+- Accept
+- RejectNonKeyJoinDependency
+- RequireProjectionJoinDecomposition
+terminal_route_map:
+  Accept: Preserve
+  RejectNonKeyJoinDependency: Reject
+  RequireProjectionJoinDecomposition: Decompose
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: supplier-part-project ternary facts are constrained by a cyclic 3-way join
+    dependency where no component is a candidate key
+  diagnosis: non-key join dependency violating 5NF
+  terminal: RejectNonKeyJoinDependency
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 2.1 Classical Relational Normal Forms
+references:
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md
+- ./normal_form_contract_schema.yaml

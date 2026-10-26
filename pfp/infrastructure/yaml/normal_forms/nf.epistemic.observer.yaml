@@ -1,0 +1,90 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.observer
+  name: Observer Normal Form
+  short_name: ObsNF
+  version: v1
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - observer_relative_claim
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: observer overreach
+  preserves_invariant: every_claim_declares_by_whom
+  protected_skeleton:
+  - observer_id
+  - measurement_context
+  - equivalence_relation
+  - visibility_boundary
+  - comparison_envelope
+  - challenge_terminal
+  erased_structure: []
+  non_claims:
+  - does not claim observer-independent global sameness
+declarations_required:
+- observer_id
+- measurement_context
+- equivalence_relation
+- visibility_boundary
+- comparison_envelope
+- challenge_terminal
+evidence_required:
+- observer_packet
+- measurement_trace
+- comparison_witness_when_crossing_observers
+validation_criteria:
+- every_claim_declares_by_whom
+- cross_observer_sameness_requires_comparison_witness
+- missing_visibility_boundary_terminalizes
+terminal_routes:
+- Preserve
+- Lift
+- Escalate
+- Quarantine
+- Decompose
+- Refuse
+- Abstain
+certification:
+  certificate_required: true
+  certificate_kind: observer_claim_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+terminal_route_map:
+  Preserve: Preserve
+  Lift: Lift
+  Escalate: Escalate
+  Quarantine: Quarantine
+  Decompose: Decompose
+  Refuse: Refuse
+  Abstain: Abstain
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: observer overreach. every_claim_declares_by_whom
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: observer overreach
+    lossless_join:
+      status: declared_reconstruction
+      statement: every_claim_declares_by_whom
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

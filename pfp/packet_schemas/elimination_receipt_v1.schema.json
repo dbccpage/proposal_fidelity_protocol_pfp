@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "omega.symbol-game.elimination-receipt.v1",
+  "title": "EliminationReceiptV1",
+  "description": "Host-issued residual elimination receipt for accepted turn steps. AuthorityEffect: None.",
+  "type": "object",
+  "required": [
+    "elimination_receipt_id",
+    "schema_version",
+    "family",
+    "packet_id",
+    "eliminated_obstruction_ids",
+    "prior_residual_colour",
+    "new_residual_colour",
+    "evidence_root",
+    "dual_witness_ref",
+    "authority_effect"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "elimination_receipt_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Layer A domain digest of identity fields."
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "omega.symbol-game.elimination-receipt.v1"
+    },
+    "family": {
+      "type": "string",
+      "const": "elimination_receipt"
+    },
+    "packet_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Digest of the evaluated task packet."
+    },
+    "eliminated_obstruction_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+      },
+      "maxItems": 64,
+      "uniqueItems": true,
+      "description": "Obstruction IDs eliminated in this turn step (sorted unique)."
+    },
+    "prior_residual_colour": {
+      "type": "string",
+      "enum": ["Open", "Closed", "Exact"],
+      "description": "Residual colour prior to turn step evaluation."
+    },
+    "new_residual_colour": {
+      "type": "string",
+      "enum": ["Open", "Closed", "Exact"],
+      "description": "Residual colour after turn step evaluation."
+    },
+    "evidence_root": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 digest of content-addressed replayable evidence."
+    },
+    "dual_witness_ref": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 digest of dual-witness certificate. Required if new_residual_colour is Exact."
+    },
+    "authority_effect": {
+      "type": "string",
+      "const": "None",
+      "description": "Must be None. Elimination receipts record lab residual accounting only."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "new_residual_colour": { "const": "Exact" } }
+      },
+      "then": {
+        "properties": {
+          "dual_witness_ref": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        },
+        "required": ["dual_witness_ref"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "new_residual_colour": { "enum": ["Open", "Closed"] } }
+      },
+      "then": {
+        "properties": {
+          "dual_witness_ref": { "type": "null" }
+        }
+      }
+    }
+  ],
+  "$comment": "Elimination receipts are host-authored upon verifying an elimination step. Model never authors elimination receipts. AuthorityEffect is const None."
+}

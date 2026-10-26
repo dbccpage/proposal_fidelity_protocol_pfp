@@ -1,0 +1,195 @@
+# Schema definition for Seed Prompt and AST/Wire Rewrites (seed.yaml & seed_rewrite_*.yaml)
+# AuthorityEffect: None.
+# Required fields and enums follow omega_engine_pfp.domain.types.seed_prompts.
+
+$schema: https://json-schema.org/draft/2020-12/schema
+schema: pfp.seed-prompt.v1
+title: SeedPromptAndRewritesSchema
+description: |
+  Ingress stimulus, AST rewrite metadata, formal typing, and expected oracle outcomes
+  across all 10 PFP rewrite dialects and plain seed prompts.
+
+$defs:
+  AuthorityEffect:
+    type: string
+    enum: [None]
+
+  ExpectedOutcome:
+    type: object
+    additionalProperties: false
+    required:
+      - answer
+    properties:
+      answer: {}
+      status:
+        type: string
+        default: ACCEPTED
+
+  CodebookSlotModel:
+    type: object
+    additionalProperties: true
+    required:
+      - role
+      - source_text_span
+    properties:
+      role:
+        type: string
+      source_text_span:
+        type: string
+      binding_value:
+        type: [string, integer, number, boolean, object, array, "null"]
+      carrier_type:
+        type: string
+
+  RewriteMetadataModel:
+    type: object
+    additionalProperties: true
+    required:
+      - rewrite_id
+      - name
+      - governing_specification
+      - governing_strategy
+      - target_stratum
+      - explanation
+    properties:
+      rewrite_id:
+        type: string
+        pattern: ^rewrite_[0-9]{2}$
+      name:
+        type: string
+      governing_specification:
+        type: string
+      governing_strategy:
+        type: string
+      target_stratum:
+        type: string
+      explanation:
+        type: string
+      codebook_slots:
+        type: object
+        additionalProperties:
+          $ref: '#/$defs/CodebookSlotModel'
+
+  InputTypingModel:
+    type: object
+    additionalProperties: true
+    required:
+      - lexical_alphabet
+      - syntactic_category
+      - semantic_carrier
+      - dialect_tier
+      - boundary_format
+    properties:
+      lexical_alphabet:
+        type: string
+      syntactic_category:
+        type: string
+      semantic_carrier:
+        type: string
+      dialect_tier:
+        type: string
+      boundary_format:
+        type: string
+
+  # 10 Dialect Subtypes represented in pilot_0000000
+  DialectTierHSubtype:
+    description: Tier H - Head-Word Presentation Form (HeadedApplicationAST)
+    properties:
+      dialect_tier: { const: Tier H }
+      boundary_format: { const: mss-headword-v1 }
+      syntactic_category: { const: HeadedApplicationAST }
+
+  DialectTierDSubtype:
+    description: Tier D - PFP Directive Command Form (DirectiveCommandStream)
+    properties:
+      dialect_tier: { const: Tier D }
+      boundary_format: { const: pfp-directive-v1 }
+      syntactic_category: { const: DirectiveCommandStream }
+
+  DialectTierSCodebookSubtype:
+    description: Strategy R2 - Prose Enclosure Quarantine with Codebook Mapping
+    properties:
+      dialect_tier: { const: Tier S Envelope with Sidecar Codebook }
+      boundary_format: { const: mss-boundary-v1 }
+      syntactic_category: { const: QuarantinedProposalEnvelope }
+
+  DialectTierSStrictBoundarySubtype:
+    description: Strategy R6 - Strict Boundary Wire AST
+    properties:
+      dialect_tier: { const: Tier S }
+      boundary_format: { const: mss-boundary-v1 }
+      syntactic_category: { const: StrictBoundaryPacketAST }
+
+  DialectTierSCarrierRoleTypedSubtype:
+    description: Strategy R1 & R7 - Carrier-Declared & Role-Typed Wire Form
+    properties:
+      dialect_tier: { const: Tier S }
+      boundary_format: { const: mss-boundary-v1 }
+      syntactic_category: { const: CarrierDeclaredRoleTypedPacket }
+
+  DialectTierSMatrixVectorSubtype:
+    description: Strategy R10 - Discrete Matrix/Vector Linear System Wire
+    properties:
+      dialect_tier: { const: Tier S }
+      boundary_format: { const: mss-boundary-v1 }
+      syntactic_category: { const: MatrixVectorLinearSystemPacket }
+
+  DialectPreGenesisWireSubtype:
+    description: Strategy PG5 & PG7 - Pre-Genesis Quiescent Inscription & Observation
+    properties:
+      dialect_tier: { const: Pre-Genesis Wire }
+      boundary_format: { const: pregen-regime-v1 }
+      syntactic_category: { const: PreGenesisRegime }
+
+  DialectGenesisDeltaWireSubtype:
+    description: Strategy G2 & G8 - Genesis Metatheoretic Admission & Candidate Delta Stream
+    properties:
+      dialect_tier: { const: Genesis Delta Wire }
+      boundary_format: { const: genesis-delta-v1 }
+      syntactic_category: { const: GenesisDeltaCandidate }
+
+  DialectSnStageWireSubtype:
+    description: S(n) Section-Retraction Reduction Laws & Retraction Down-Map Form
+    properties:
+      dialect_tier: { const: S(n) Stage Wire }
+      boundary_format: { const: sn-presentation-v1 }
+      syntactic_category: { const: SnPresentationTerm }
+
+  DialectCrossCosmosConduitSubtype:
+    description: Multi-Cosmos Passage Conduit (Pre-Genesis -> Genesis -> S(n) -> MSS-N)
+    properties:
+      dialect_tier: { const: Tier S Multi-Cosmos Conduit }
+      boundary_format: { const: mss-boundary-v1 }
+      syntactic_category: { const: CrossCosmosPassagePacket }
+
+type: object
+additionalProperties: false
+required:
+  - pilot_id
+  - task_family
+  - difficulty_rung
+  - request_id
+  - seed_prompt
+  - expected_outcome
+properties:
+  schema:
+    type: string
+    const: pfp.seed-prompt.v1
+  authority_effect:
+    $ref: '#/$defs/AuthorityEffect'
+  pilot_id:
+    type: string
+  task_family:
+    type: string
+  difficulty_rung:
+    type: integer
+  request_id:
+    type: string
+  rewrite_metadata:
+    $ref: '#/$defs/RewriteMetadataModel'
+  input_typing:
+    $ref: '#/$defs/InputTypingModel'
+  seed_prompt:
+    type: string
+  expected_outcome:
+    $ref: '#/$defs/ExpectedOutcome'

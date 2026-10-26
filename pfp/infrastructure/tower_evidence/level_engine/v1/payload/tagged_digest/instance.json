@@ -1,0 +1,139 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the first count changed to 3 under its unchanged digest",
+      "role": "own_negative",
+      "set": {
+        "containers": [
+          {
+            "body": {
+              "n": 3
+            },
+            "digest": "sha256:c86f7e281892b3ae78205c1ea57d096909ba59319893a369b7084cab5cd7b510",
+            "tag": "t0"
+          },
+          {
+            "body": {
+              "n": 2
+            },
+            "digest": "sha256:c86f7e281892b3ae78205c1ea57d096909ba59319893a369b7084cab5cd7b510",
+            "tag": "t0"
+          },
+          {
+            "body": {
+              "word": "11"
+            },
+            "digest": "sha256:79562de8239720395845a33753eb5f96f6acdf5e156d83b61d4a210b283d13f1",
+            "tag": "t1"
+          },
+          {
+            "body": {
+              "word": "00"
+            },
+            "digest": "sha256:cf391b632b520f381a2d3fa8c8af882c8a424e509a82efed123e94fb9efff903",
+            "tag": "t1"
+          },
+          {
+            "body": {
+              "word": "00"
+            },
+            "digest": "sha256:cf391b632b520f381a2d3fa8c8af882c8a424e509a82efed123e94fb9efff903",
+            "tag": "t1"
+          }
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_word",
+      "note": "a signature word carries a digit that is not binary",
+      "role": "near_miss",
+      "set": {
+        "containers": [
+          {
+            "body": {
+              "n": 2
+            },
+            "digest": "sha256:c86f7e281892b3ae78205c1ea57d096909ba59319893a369b7084cab5cd7b510",
+            "tag": "t0"
+          },
+          {
+            "body": {
+              "n": 2
+            },
+            "digest": "sha256:c86f7e281892b3ae78205c1ea57d096909ba59319893a369b7084cab5cd7b510",
+            "tag": "t0"
+          },
+          {
+            "body": {
+              "word": "12"
+            },
+            "digest": "sha256:79562de8239720395845a33753eb5f96f6acdf5e156d83b61d4a210b283d13f1",
+            "tag": "t1"
+          },
+          {
+            "body": {
+              "word": "00"
+            },
+            "digest": "sha256:cf391b632b520f381a2d3fa8c8af882c8a424e509a82efed123e94fb9efff903",
+            "tag": "t1"
+          },
+          {
+            "body": {
+              "word": "00"
+            },
+            "digest": "sha256:cf391b632b520f381a2d3fa8c8af882c8a424e509a82efed123e94fb9efff903",
+            "tag": "t1"
+          }
+        ]
+      },
+      "violates": "bodies_decode"
+    },
+    {
+      "id": "near_digest",
+      "note": "the second count's digest is the first word's",
+      "role": "extra",
+      "set": {
+        "containers": [
+          {
+            "body": {
+              "n": 2
+            },
+            "digest": "sha256:c86f7e281892b3ae78205c1ea57d096909ba59319893a369b7084cab5cd7b510",
+            "tag": "t0"
+          },
+          {
+            "body": {
+              "n": 2
+            },
+            "digest": "sha256:79562de8239720395845a33753eb5f96f6acdf5e156d83b61d4a210b283d13f1",
+            "tag": "t0"
+          },
+          {
+            "body": {
+              "word": "11"
+            },
+            "digest": "sha256:79562de8239720395845a33753eb5f96f6acdf5e156d83b61d4a210b283d13f1",
+            "tag": "t1"
+          },
+          {
+            "body": {
+              "word": "00"
+            },
+            "digest": "sha256:cf391b632b520f381a2d3fa8c8af882c8a424e509a82efed123e94fb9efff903",
+            "tag": "t1"
+          },
+          {
+            "body": {
+              "word": "00"
+            },
+            "digest": "sha256:cf391b632b520f381a2d3fa8c8af882c8a424e509a82efed123e94fb9efff903",
+            "tag": "t1"
+          }
+        ]
+      },
+      "violates": null
+    }
+  ]
+}

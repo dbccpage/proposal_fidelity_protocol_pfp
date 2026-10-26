@@ -1,0 +1,66 @@
+{
+  "input": {
+    "case_id": "ex10_refusal_unorientable_commutativity",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(x, y)",
+        "mul(y, x)"
+      ]
+    ],
+    "precedence": {
+      "mul": 50
+    }
+  },
+  "expected_output": {
+    "case_id": "ex10_refusal_unorientable_commutativity",
+    "status": "REFUSED",
+    "reason": "ORDER_FAILURE",
+    "witness": {
+      "reason": "ORDER_FAILURE",
+      "unorientable_equation": [
+        "mul(x, y)",
+        "mul(y, x)"
+      ],
+      "step": 1
+    },
+    "ddc_trace": {
+      "case_id": "ex10_refusal_unorientable_commutativity",
+      "trace_string": "ELambdaDR",
+      "step_count": 4,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task COMPLETE for case ex10_refusal_unorientable_commutativity",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "Lambda",
+          "detail": "Initialized TermOrder with 1 precedence levels",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "D",
+          "detail": "Starting completion saturation with max_steps=200",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "R",
+          "detail": "Completion halted: ORDER_FAILURE",
+          "meta": {
+            "reason": "ORDER_FAILURE",
+            "unorientable_equation": [
+              "mul(x, y)",
+              "mul(y, x)"
+            ],
+            "step": 1
+          }
+        }
+      ]
+    }
+  }
+}

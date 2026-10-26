@@ -1,0 +1,1234 @@
+{
+  "fixtures": [
+    {
+      "id": "pos",
+      "note": "three sites; checks z on s0, s1 and z on s1, s2; errors x on one site each, read 10, 11 and 01",
+      "role": "positive",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "error_x",
+            [
+              7,
+              2
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": null
+    },
+    {
+      "id": "own_neg",
+      "note": "the checks x on s0 and z on s0 exchange once: they anticommute",
+      "role": "own_negative",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_x",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              1
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": null
+    },
+    {
+      "id": "near_anti",
+      "note": "the second check gains an x at s0 and anticommutes with the first",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_x",
+            [
+              4,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "error_x",
+            [
+              7,
+              2
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "checks_commute"
+    },
+    {
+      "id": "near_blind",
+      "note": "the third error loses its only bit: its reading is 00, which reads nothing",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": null
+    },
+    {
+      "id": "near_stray",
+      "note": "a reading of a check against an error",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "error_x",
+            [
+              7,
+              2
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "reads_typed"
+    },
+    {
+      "id": "near_stray_word",
+      "note": "an error written as a check",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "error_x",
+            [
+              7,
+              2
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "check_x_typed"
+    },
+    {
+      "id": "near_stray_z",
+      "note": "a check with a second-part one at a check, not a site",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              4
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "error_x",
+            [
+              7,
+              2
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "check_z_typed"
+    },
+    {
+      "id": "near_stray_ex",
+      "note": "a check written as an error",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "error_x",
+            [
+              7,
+              2
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "error_x_typed"
+    },
+    {
+      "id": "near_stray_ez",
+      "note": "an error with a second-part one at an error, not a site",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "site",
+            3
+          ],
+          [
+            "check",
+            2
+          ],
+          [
+            "error",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "check_x",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "check_z",
+            "sorts": [
+              "check",
+              "site"
+            ]
+          },
+          {
+            "name": "error_x",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "error_z",
+            "sorts": [
+              "error",
+              "site"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "error",
+              "check"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "check_z",
+            [
+              3,
+              0
+            ]
+          ],
+          [
+            "check_z",
+            [
+              3,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "check_z",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "error_x",
+            [
+              5,
+              0
+            ]
+          ],
+          [
+            "error_x",
+            [
+              6,
+              1
+            ]
+          ],
+          [
+            "error_x",
+            [
+              7,
+              2
+            ]
+          ],
+          [
+            "error_z",
+            [
+              5,
+              6
+            ]
+          ],
+          [
+            "reads",
+            [
+              5,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "reads",
+            [
+              7,
+              4
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "error_z_typed"
+    }
+  ]
+}

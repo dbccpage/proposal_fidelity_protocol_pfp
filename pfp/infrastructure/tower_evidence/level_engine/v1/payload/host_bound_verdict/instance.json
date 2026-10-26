@@ -1,0 +1,50 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the candidate's own script declares the terminal GREEN",
+      "role": "own_negative",
+      "set": {
+        "verifier": "candidate"
+      },
+      "violates": null
+    },
+    {
+      "id": "near_scope",
+      "note": "the scope widened past the host verifier's sum",
+      "role": "near_miss",
+      "set": {
+        "scope": "sum_and_order"
+      },
+      "violates": "scope_bound"
+    },
+    {
+      "id": "near_terminal",
+      "note": "a terminal the host's re-run does not give",
+      "role": "near_miss",
+      "set": {
+        "claim_value": "RED"
+      },
+      "violates": "terminal_earned"
+    },
+    {
+      "id": "near_claim",
+      "note": "the claimed total counts one class too many, and the candidate's GREEN stands",
+      "role": "extra",
+      "set": {
+        "claim": {
+          "items": [
+            3,
+            5
+          ],
+          "total": 9
+        },
+        "output": {
+          "sum": 8,
+          "total": 9
+        }
+      },
+      "violates": null
+    }
+  ]
+}

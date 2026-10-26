@@ -1,0 +1,16 @@
+{
+  "action": "repair",
+  "antibody_id": "ab_floating_point_tolerance_leak",
+  "authority_effect": "None",
+  "constraint_type": "ProjectOut",
+  "description": "Floating-point tolerance leak in exact algebraic carrier or detector band check. Mandates exact decimal rational constructors.",
+  "evidence_sha256": "430c77fc0ebb411081f976fa409813b4fb2f",
+  "failure_class": "numerical:float_tolerance_leak",
+  "negative_fixture": "def verify_winding(w: float) -> bool:\n    return abs(w - 1.0) < 1e-7\n",
+  "operatorizability": "repairable",
+  "pharmacy_status": "candidate",
+  "positive_fixture": "from fractions import Fraction\ndef verify_winding(w: Fraction) -> bool:\n    return w == Fraction(1, 1)\n",
+  "severity": "P0",
+  "source_file": "omega_types/exact_rational.rs",
+  "target_pattern": "(\\bfloat\\b|\\bf64\\b|abs\\([^)]+\\)\\s*<\\s*1e-\\d+|\\b1e-[3-9]\\b)"
+}

@@ -1,0 +1,70 @@
+# OEOP operad type registry, family 5 of 6: operands.
+# AuthorityEffect: None.
+schema_version: omega.oeop.operad-types.v1
+family: operands
+authority_effect: None
+types:
+  - id: registered_operand
+    description: Operands in the operand registry.
+    canonical:
+      status: SETTLED
+      closed: true
+      values: [op_exact_cochain_coboundary_repair, op_f2_gauge_board_classification, op_meron_surgery_sign_inversion,
+               op_unpromoted_candidate_template, op_woland_hermetic_task_evidence_attestation,
+               op_woland_strict_typed_input_refusal, op_lean4_constructive_kernel_axiom_audit]
+    sources:
+      - data: .agents/skill_operads/operand_registry.json
+        select: operands.*.operand_id
+        values: [op_exact_cochain_coboundary_repair, op_f2_gauge_board_classification, op_meron_surgery_sign_inversion,
+                 op_unpromoted_candidate_template, op_woland_hermetic_task_evidence_attestation,
+                 op_woland_strict_typed_input_refusal, op_lean4_constructive_kernel_axiom_audit]
+  - id: obstruction_class
+    description: The diagnostic class an operand addresses (GTLA invariant 6, diagnostic class axis).
+    canonical:
+      status: PROPOSED
+      closed: true
+      values: [ExactRepair, ClosedResidual, OpenObstruction]
+      decision: >-
+        The schema and GTLA invariant 6 fix the diagnostic axis at three values, but three
+        operands use EvidenceLeakage, SchemaCoercion and SmuggledAxiom. These are failure
+        classes, not diagnostic classes. Using them here mixes the failure axis into the
+        diagnostic axis, which GTLA invariant 4 forbids. Proposed: give each of those operands
+        a diagnostic class, and record its failure class in a separate failure_class field.
+    sources:
+      - data: .agents/skill_operads/operad_data_type.yaml
+        select: $defs.ObstructionClass.enum
+        values: [ExactRepair, ClosedResidual, OpenObstruction]
+      - data: .agents/skill_operads/operand_registry.json
+        select: operands.*.obstruction_class
+        mode: distinct
+        role: uses
+        values: [ClosedResidual, EvidenceLeakage, ExactRepair, OpenObstruction, SchemaCoercion, SmuggledAxiom]
+  - id: operand_carrier_kind
+    description: Carrier an operand's obstruction lives on; open, one per operand family.
+    canonical:
+      status: SETTLED
+      closed: false
+      values: [evidence_record, f2_gauge_board, graph_cochain, meron_cluster, proof_term, schema_mapping,
+               unverified_proposal]
+    sources:
+      - data: .agents/skill_operads/operand_registry.json
+        select: operands.*.obstruction_signature.carrier_kind
+        mode: distinct
+        values: [evidence_record, f2_gauge_board, graph_cochain, meron_cluster, proof_term, schema_mapping,
+                 unverified_proposal]
+  - id: operand_ddc_motif
+    description: DDC letter sequence an operand applies; every letter must be a ddc_letter.
+    canonical:
+      status: PROPOSED
+      closed: false
+      letters_of: ddc_letter
+      values: [CE, CM, CP, CR, EM, ID]
+      decision: >-
+        op_lean4_constructive_kernel_axiom_audit declares motif CP, but P is not a DDC letter.
+        An axiom audit that refuses a smuggled axiom reads as C then M. Proposed: CM, which the
+        operand's owner should confirm.
+    sources:
+      - data: .agents/skill_operads/operand_registry.json
+        select: operands.*.ddc_motif
+        mode: distinct
+        values: [CE, CM, CP, CR, EM, ID]

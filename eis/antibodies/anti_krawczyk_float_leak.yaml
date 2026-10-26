@@ -1,0 +1,22 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-krawczyk-float-leak
+canonical_name: Anti-Krawczyk Float Leak Fallacy
+failure_class: math:krawczyk_float_leak
+target_pattern: (float.*Newton-Raphson.*proves|approximate.*inversion.*sufficient|floating.*point.*interval.*bounds)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects using floating-point evaluations in interval Newton or Krawczyk
+  operators without exact rational rounding guards.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: Running float64 Newton-Raphson converges to 1e-16 so
+  the box contains an exact zero.
+repaired_invariant_fixture: Exact rational interval arithmetic over Q proves K(X)
+  intersect X = empty across all 56 cells at depth 64.
+source_pilot: pilot_039
+evidence_sha256: 84073f12d543d577e61728c9524c8377fff9d7aa3e15d97e298a73cb4a66b0cd

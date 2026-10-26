@@ -1,0 +1,59 @@
+schema: "omega.pfp.finite_qm.modes.v1"
+authority_effect: "None"
+system_id: "FINITE_QM_DERIVATION_PFP_V1"
+dag_source: "C:\\Users\\a343o\\source\\repos\\theory_of_finite_quantum_mechanics\\dag\\derivation_dag.json"
+operad_binding_source: "C:\\Users\\a343o\\source\\repos\\theory_of_finite_quantum_mechanics\\dag\\derivation_dag_operads.binding.yaml"
+stage_controller_ref: "omega_engine_pfp/infrastructure/yaml/stages/controller.yaml"
+stage_controller_version: "pfp-staged.0.3"
+
+modes:
+  - mode_id: "FAST_1TURN_TYPED"
+    title: "Host P* Materialization + 1-Turn Coloured Operad Extraction + Host Gate (G0..G9)"
+    model_turns_per_derivation: 1
+    host_stages: ["S0_CONGRUENCE_IDEAL_AND_P_STAR_BASIS", "S5_HOST_EVALUATION_G0_G9", "S9_RECEIPT"]
+    model_stages: ["S2_OPERAD_GRAFTED_EXTRACTION"]
+    target_latency_sec: 8.0
+    daily_throughput_estimate: 1000
+    description: >-
+      Host deterministically executes Step 0 (CongruenceIdeal distractor annihilation I_distractor -> NullTree,
+      P* spanning-tree integration B_T^{-1} c|_T, depth-1 chord differences, and Coloured Operad o_i slot-grafting)
+      in < 2 ms, then dispatches a single compact typed JSON extraction turn to the LLM (DeepSeek V4 Flash,
+      DeepSeek V4.1 Flash, GLM-5.3, or Qwen) and verifies the returned JSON certificate against G0..G9.
+
+  - mode_id: "P_STAR_2TURN_TYPED"
+    title: "2-Stage Model P* Basis (1a/1b) + Coloured Operad Extraction + Host Gate (G0..G9)"
+    model_turns_per_derivation: 3
+    host_stages: ["S0_CONGRUENCE_IDEAL_FILTER", "G_T_TREE_GUARD", "G_C_CHORD_GUARD", "S5_HOST_EVALUATION_G0_G9"]
+    model_stages: ["S1A_TREE_POTENTIAL_SLOTS", "S1B_CHORD_DIFFERENCE_SLOTS", "S2_OPERAD_GRAFTED_EXTRACTION"]
+    target_latency_sec: 28.0
+    daily_throughput_estimate: 500
+    description: >-
+      Model computes the 8 spanning-tree potentials p_T^* (guarded by path-integrated B_T^{-1} diagnostic retry G_T)
+      and 5 depth-1 chord differences c_hat^* (guarded by G_C); if G_complete passes, the host grafts p_T^* and r^*
+      into the 6-colour ColouredOperadPrompt and runs a single typed JSON extraction turn.
+
+  - mode_id: "PFP_STAGED_0_3"
+    title: "Full 11-Stage Fable 5.5 Proposal Fidelity Protocol (pfp-staged.0.3)"
+    model_turns_per_derivation: 4
+    host_stages: [1, 5, 7, 8, 9, 10]
+    model_stages: [2, 3, 4, 6]
+    conditional_stages: [11]
+    target_latency_sec: 45.0
+    daily_throughput_estimate: 250
+    description: >-
+      Executes all 11 stages of pfp-staged.0.3 (Admit -> Ideation -> Audit -> L2 Extraction -> Host Evaluation
+      -> Adversarial Negative-Control Challenges -> Host Challenge Replay -> Selection -> Receipt -> Hand-off
+      -> Conditional Evidence Plan) over the P*-materialized Coloured Operad seed.
+
+  - mode_id: "MANUAL_CLIPBOARD_QUEUE"
+    title: "Zero-Friction Manual Copy-Paste / File-Drop Queue (1,000+ Derivations/Day by Hand or Script)"
+    model_turns_per_derivation: 1
+    host_stages: ["EXPORT_DRESSED_OPERAD_PROMPT", "VERIFY_PASTED_JSON_REPLY_G0_G9", "MINE_OPERAD_COMPOSITION_RULE"]
+    model_stages: ["EXTERNAL_CHAT_OR_API_TURN"]
+    target_latency_sec: 0.002
+    daily_throughput_estimate: 1000
+    description: >-
+      Pre-compiles any slice, route, or all 177 nodes / 172 routes (or 1,000 parameterized work-units) into
+      self-contained single-turn prompt markdown files (`prompts_out/<work_id>_prompt.md`) with embedded
+      Coloured Operad leaf spans, Annihilator Decoys (O^-), and strict JSON response schema. Any JSON reply
+      pasted into `replies_in/<work_id>_reply.json` (or passed via `--verify-reply`) is checked by G0..G9 in < 2 ms.

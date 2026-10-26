@@ -1,0 +1,199 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the tree's own pair over the same three sites, every site flipped and every site signed, which its test and its Lean find do not commute (an odd exchange count of three)",
+      "role": "own_negative",
+      "set": {
+        "checks": [
+          [
+            "111",
+            "000"
+          ],
+          [
+            "000",
+            "111"
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_short",
+      "note": "the second check's first half is two bits long; it is refused before any comparison, never cut",
+      "role": "near_miss",
+      "set": {
+        "checks": [
+          [
+            "000",
+            "110"
+          ],
+          [
+            "00",
+            "011"
+          ]
+        ]
+      },
+      "violates": "lengths"
+    },
+    {
+      "id": "near_odd",
+      "note": "the second check also flips the middle site, so the two checks meet once there; the readings of the flips are unchanged",
+      "role": "near_miss",
+      "set": {
+        "checks": [
+          [
+            "000",
+            "110"
+          ],
+          [
+            "010",
+            "011"
+          ]
+        ]
+      },
+      "violates": "checks_commute"
+    },
+    {
+      "id": "near_quiet",
+      "note": "the tree's own unseen error, a sign at the first site, declared with its reading 00: the checks do not see it",
+      "role": "near_miss",
+      "set": {
+        "errors": [
+          [
+            "100",
+            "000"
+          ],
+          [
+            "010",
+            "000"
+          ],
+          [
+            "001",
+            "000"
+          ],
+          [
+            "000",
+            "100"
+          ]
+        ],
+        "readings": [
+          "10",
+          "11",
+          "01",
+          "00"
+        ]
+      },
+      "violates": "readings_distinct"
+    },
+    {
+      "id": "quiet_unread",
+      "note": "the tree's own unseen error added to the errors alone; the claimed readings are unchanged",
+      "role": "extra",
+      "set": {
+        "errors": [
+          [
+            "100",
+            "000"
+          ],
+          [
+            "010",
+            "000"
+          ],
+          [
+            "001",
+            "000"
+          ],
+          [
+            "000",
+            "100"
+          ]
+        ]
+      },
+      "violates": "readings_distinct"
+    },
+    {
+      "id": "four_site_code",
+      "note": "the tree's four-site code: two commuting checks and its twelve single-site errors, whose readings name the kind of error and not its site",
+      "role": "extra",
+      "set": {
+        "checks": [
+          [
+            "0000",
+            "1111"
+          ],
+          [
+            "1111",
+            "0000"
+          ]
+        ],
+        "errors": [
+          [
+            "1000",
+            "0000"
+          ],
+          [
+            "1000",
+            "1000"
+          ],
+          [
+            "0000",
+            "1000"
+          ],
+          [
+            "0100",
+            "0000"
+          ],
+          [
+            "0100",
+            "0100"
+          ],
+          [
+            "0000",
+            "0100"
+          ],
+          [
+            "0010",
+            "0000"
+          ],
+          [
+            "0010",
+            "0010"
+          ],
+          [
+            "0000",
+            "0010"
+          ],
+          [
+            "0001",
+            "0000"
+          ],
+          [
+            "0001",
+            "0001"
+          ],
+          [
+            "0000",
+            "0001"
+          ]
+        ],
+        "readings": [
+          "10",
+          "11",
+          "01",
+          "10",
+          "11",
+          "01",
+          "10",
+          "11",
+          "01",
+          "10",
+          "11",
+          "01"
+        ],
+        "sites": 4
+      },
+      "violates": "readings_distinct"
+    }
+  ]
+}

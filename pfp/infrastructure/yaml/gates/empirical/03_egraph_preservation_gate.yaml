@@ -1,0 +1,27 @@
+gate_id: "PFP-EMP-GATE-003"
+kind: "EmpiricalBenchmarkGate"
+suite_id: "PFP-PILOT-004"
+name: "E-Graph Equational Constraint Preservation Gate"
+authority_effect: "None"
+version: "0.1.0"
+objective: >
+  Verify that Egglog e-graph equality saturation preserves 100% of constraint spans
+  across multi-stage prompt rewrites without semantic loss.
+metric: "constraint_preservation_rate"
+target_assertion: "constraint_loss == 0"
+threshold: 0.0
+comparison_operator: "EQ"
+fences:
+  - "Zero Constraint Loss: No constraint span may be dropped during equational rewrite."
+  - "Semantic Isomorphism: Rewritten prompts must preserve exact operational semantics."
+input_schema:
+  total_rewrites: "int"
+  dropped_constraints: "int"
+  constraint_loss_rate: "float"
+expected_behavior: >
+  If dropped_constraints == 0, emits EmpiricalGateReceipt(status='PASS').
+  Otherwise emits RefusalCode.EGRAPH_CONSTRAINT_LOSS.
+narrowest_defensible_claim: >
+  Equational saturation via e-graphs optimizes prompt representations while preserving 100% of declared constraint spans.
+next_test_needed: >
+  Pass 50 complex multi-constraint prompts through Egglog rewriter and audit output ASTs for span completeness.

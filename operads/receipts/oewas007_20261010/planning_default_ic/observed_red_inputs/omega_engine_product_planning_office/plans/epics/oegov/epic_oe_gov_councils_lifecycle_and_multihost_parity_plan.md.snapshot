@@ -1,0 +1,59 @@
+# Epic: Council Terminal-State Custody and Classified Host Parity
+
+**Epic ID:** `EPIC-OE-GOV-COUNCILS-PARITY-001`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+
+**Lifecycle scope:** LIVE — residual verification
+**Consolidation Source:** EPIC-OE-GOV-004/005
+**Date:** October 2026
+
+## Current implementation and bounded scope
+
+[DeliberationSession](../../../../omega_engine_governance/domain/council_deliberation/deliberation_session.py) owns convened/deliberating/resolved/vetoed state. The actual interceptor is [blackrod_active_interceptor.py](../../../../omega_engine_governance/domain/council_deliberation/services/blackrod_active_interceptor.py). Test the executed transition and stored outcome; a narrative veto is not a state-machine witness.
+
+The [fibration projection reader](../../../../omega_engine_governance/anomalon_councils/fibration_projection_reader.py) now lives in governance after the package absorption. Its useful invariant is that enumerated members agree with the declared size of each bundle. Historical global counts must not force current membership or persona inventories to a stale number.
+
+[Host root parity](../../../../omega_engine_operations/use_cases/packaging/host_root_parity.py) already checks canonical content against mirrors with explicit exclusions. Preserve canonical ownership and classified intentional differences. Comparison and sync receipts do not prove an atomic multi-host transaction.
+
+## Residual work and acceptance
+
+Verify terminal veto/resolve behavior and store reopen custody in small sessions; verify one malformed fibration row; verify one scratch workflow package across four roots. If adding a session digest, first define exact canonical event order, fields and version, then test tampering/transplant/recovery without rewriting historical receipts.
+
+Resolved-decree immutability is an explicit lifecycle acceptance requirement. An identical request ID and identical decree/evidence may return the original recorded result without another event; a changed decree, changed evidence digest or reuse of a request ID with different bytes must refuse and preserve the original decree, event sequence and terminal state. The same behavior must hold after SQLite close/reopen. The current `ratify_resolution` only guards VETOED; its future RESOLVED guard must be introduced and falsified by this owner, then consumed by OEGOV003.
+
+No external consensus system, blanket mirror-exemption removal or sovereign math-crate council module is required. Council decisions retain AuthorityEffect None and remain separate from execution licensing.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** Lifecycle and parity code already exist. Fibration reader/documents now live under omega_engine_governance following the package absorption. Declared/listed membership agreement is the finite invariant; 92/12 and 51 personas are historical snapshots. Byte parity is canonical-to-mirror comparison, not atomic bidirectional replication.
+
+**Bounded behavior and public port:** Call DeliberationSession.cast_vote/apply_blackrod_veto/ratify_resolution, the real Blackrod active interceptor, in-memory/SQLite session stores, read_bundles(doc), and scratch compare_all. Output is typed session status, stored history and declared/listed fiber agreement; no council outcome substitutes for execution admission.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Hella checks malformed input; Jeremy/Techne implements the smallest production change; Koroviev and the Soviet Inspector challenge the independent oracle; Yaroslava checks custody before Woland records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | After veto, ratification and another vote must refuse; implement the minimum closed-state guard; a fresh convened session can deliberate and resolve under its explicit rule. | Proposed `omega_engine_governance/tests/integration/test_council_terminal_state_controls.py::test_veto_is_terminal`; literal state-transition table and unchanged vote/history on refusal. |
+| 2 | Persist/reopen a vetoed session and attempt ratification; any lost veto must fail; implement store round-trip only, then recover a normal resolved session independently. | Proposed `omega_engine_governance/tests/integration/test_council_store_custody.py::test_veto_survives_sqlite_reopen`; real temporary SQLite, serialized ordered events and status oracle. |
+| 2a | Resolve a session, repeat the exact request, then change its decree or evidence before and after SQLite reopen. RED any overwritten result; add the minimum RESOLVED/idempotency guard; exact repeat returns the original result without another event. | Proposed `omega_engine_governance/tests/integration/test_council_store_custody.py::test_resolved_decree_is_immutable_after_reopen`; compare literal original decree, independent evidence digest, event count and terminal state. Mutate the new RESOLVED guard or request-equality check to require RED; these future mutations are `PROPOSED_NOT_EXECUTED`. |
+| 3 | A fibration row with declared size different from listed members must disagree; preserve parser enumeration; restore the row and recover agreement without hardcoding global census counts. | Extend `omega_engine_governance/tests/test_fibration_projection_claims.py::test_mutated_row_declared_and_listed_disagree`; tiny literal document with hand-counted member IDs. |
+| 4 | A transplanted host workflow or omitted reference must report drift; correct the smallest comparison branch; exact scratch copies recover parity. | Extend `omega_engine_operations/tests/packaging/test_host_root_parity.py::test_council_workflow_transplant_reports_drift`; independent byte/path manifest. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Bypass apply_blackrod_veto's status assignment or ratify_resolution's veto guard in [deliberation_session.py](../../../../omega_engine_governance/domain/council_deliberation/deliberation_session.py). Suppress declared/listed disagreement in [fibration_projection_reader.py](../../../../omega_engine_governance/anomalon_councils/fibration_projection_reader.py). Require the respective terminal-state and enumerated-member witnesses to fail. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+py -3.12 -m pytest omega_engine_governance/tests/integration/test_council_terminal_state_controls.py -q
+py -3.12 -m pytest omega_engine_governance/tests/integration/test_council_store_custody.py -q
+py -3.12 -m pytest omega_engine_governance/tests/test_fibration_projection_claims.py -q
+py -3.12 -m pytest omega_engine_operations/tests/packaging/test_host_root_parity.py -q
+~~~
+
+**Cross-epic sink ownership:** Governance owns canonical contracts and decision schemas; Government Councils owns roster/attribution and deliberation applications; Operations owns classified packaging/parity; Woland owns digestion orchestration while omega_intelligence owns native lifecycle decisions. Skill/rule/antibody outputs enter their owning admission queue as candidates, with source/target digest custody. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Finite session transition and file membership checks are not a distributed consensus theorem. Any new session digest contract must pin canonical event ordering before implementation; no claim of cryptographic session receipts follows from current metadata. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

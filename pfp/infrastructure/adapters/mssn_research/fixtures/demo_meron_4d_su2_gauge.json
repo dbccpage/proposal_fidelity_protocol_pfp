@@ -1,0 +1,44 @@
+{
+  "expected_cancelled_pairs": 3,
+  "expected_duality_gap": "0",
+  "expected_neutral_clusters": 3,
+  "expected_partition_sum": 450,
+  "gauge_group": "SU(2)",
+  "kind": "meron-4d-su2",
+  "lattice": {
+    "l0": 8,
+    "l1": 8,
+    "l2": 4,
+    "l3": 4,
+    "links": 4096,
+    "plaquettes": 6144,
+    "sites": 1024
+  },
+  "scope": "4D SU(2) gauge-coupled topological cluster solver on 8x8x4x4 torus (V=1024); non-abelian link holonomy updates, exact Delta S_W in Q, gauge invariance, second Chern number c_2 in (1/2)Z, and exact sign cancellation under orientation flip tau; AuthorityEffect: None.",
+  "wire_turns": [
+    {
+      "expected_response_wire": "op<<101><100><0><1><10><11><100>>",
+      "input_wire": "op<<11>op<<1><10000000000>>op<<10><0><1>>>",
+      "stage": "CARRIER_DECLARATION",
+      "turn": 1
+    },
+    {
+      "expected_response_wire": "op<<100><>op<<11>op<<1><100>>op<<1><1000>>>>",
+      "input_wire": "op<<101><100><0><1><10><11><100>>",
+      "stage": "SU2_GAUGE_UPDATE",
+      "turn": 2
+    },
+    {
+      "expected_response_wire": "op<<1100><liftreq>>",
+      "input_wire": "op<<100><>op<<11>op<<1><100>>op<<1><1000>>>>",
+      "stage": "LIFT_REQUEST",
+      "turn": 3
+    },
+    {
+      "expected_response_wire": "op<<10010><0><111000010><1>>",
+      "input_wire": "op<<0><><0><1>>",
+      "stage": "EXACT_REPAIR",
+      "turn": 4
+    }
+  ]
+}

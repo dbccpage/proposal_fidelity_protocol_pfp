@@ -1,0 +1,17 @@
+{
+  "authority_effect": "None",
+  "schema_id": "omega.pfp.terminal-routing.v1",
+  "note": "Maps every PFP terminal status onto omega_types::routing::RoutingTerminal. The Rust test in omega_types/src/routing.rs reads this file and checks it against PfpTerminal; omega_engine_pfp/tests/test_terminal_routing.py checks it against TerminalStatus. BudgetExhausted is kept as a PFP status and routes to BudgetUnknown, a resource record, never an obstruction.",
+  "routing": {
+    "Exact": "CheckPassed",
+    "Verified": "CheckPassed",
+    "VerifiedWithResiduals": "CheckPassed",
+    "StabilizedSurvivor": "RequiresLift",
+    "NeedsExternalOracle": "RequiresLift",
+    "OpenObstruction": "Refusal",
+    "BlockedByEvidence": "Refusal",
+    "InfrastructureFailure": "Refusal",
+    "Refused": "Refused",
+    "BudgetExhausted": "BudgetUnknown"
+  }
+}

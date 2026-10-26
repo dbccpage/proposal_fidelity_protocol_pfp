@@ -1,0 +1,104 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.transport.gtmur
+  name: CODA-MUR Representation Transport Contract
+  short_name: GTMUR
+  version: v1
+  status: draft
+  family: transport
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - representation_transport
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: gauge drift
+  preserves_invariant: 'chi_F: D_target F => bar F D_source must be declared'
+  protected_skeleton:
+  - source_representation
+  - target_representation
+  - transport_F
+  - finite_core_action_bar_F
+  - descent_compatibility_witness_chi_F
+  - loss_ledger_policy
+  erased_structure: []
+  non_claims:
+  - does not authorize a target representation without active verifier acceptance
+  - does not hide erased distinctions
+declarations_required:
+- source_representation
+- target_representation
+- transport_F
+- finite_core_action_bar_F
+- descent_compatibility_witness_chi_F
+- loss_ledger_policy
+evidence_required:
+- transport_certificate
+- chi_F_witness
+- Loss_F_when_distinctions_are_erased
+- target_verifier_record
+validation_criteria:
+- 'chi_F: D_target F => bar F D_source must be declared'
+- updates_commute_with_representation_change_up_to_declared_loss
+- lossy_transport_requires_Loss_F
+- target_verifier_must_not_be_bypassed
+terminal_routes:
+- Preserve
+- Lift
+- Escalate
+- Unsupported
+- ClosureFailure
+- BudgetUnknown
+- Quarantine
+- Refuse
+- Reject
+certification:
+  certificate_required: true
+  certificate_kind: transport_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+local_terminal_routes:
+- AuthorityLaundering
+- LossLedgerMissing
+- TransportViolation
+terminal_route_map:
+  Preserve: Preserve
+  Lift: Lift
+  Escalate: Escalate
+  Unsupported: Unsupported
+  ClosureFailure: ClosureFailure
+  BudgetUnknown: BudgetUnknown
+  Quarantine: Quarantine
+  Refuse: Refuse
+  Reject: Reject
+  AuthorityLaundering: Refuse
+  LossLedgerMissing: BudgetUnknown
+  TransportViolation: Reject
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: 'gauge drift. chi_F: D_target F => bar F D_source must be declared'
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: gauge drift
+    lossless_join:
+      status: declared_reconstruction
+      statement: 'chi_F: D_target F => bar F D_source must be declared'
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

@@ -1,0 +1,31 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: omega.pfp.prompt.v1
+title: PFP Raw Prompt Text Schema
+type: object
+additionalProperties: false
+required:
+  - schema_version
+  - prompt_id
+  - user_prompt
+  - content_sha256
+  - authority_effect
+properties:
+  schema_version:
+    const: omega.pfp.prompt.v1
+  prompt_id:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+    description: 64-character SHA-256 hash identifying this prompt text
+  system_prompt:
+    type: string
+    description: Optional system prompt framing
+  user_prompt:
+    type: string
+    minLength: 1
+    description: Raw prompt source text asking for work
+  content_sha256:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+    description: SHA-256 digest of exact prompt text bytes
+  authority_effect:
+    const: None

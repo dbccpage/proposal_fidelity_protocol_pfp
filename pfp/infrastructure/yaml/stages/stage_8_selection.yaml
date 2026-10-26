@@ -1,0 +1,15 @@
+stage: 8
+name: selection
+executor: host
+requires:
+- 5
+- 7
+seat: seat_the_master
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: stages/README.md
+system_prompt: Deterministic selection. The survivors are the Stage 5 surviving candidates less any candidate
+  with an open obstruction from Stage 7. One survivor is selected; none is a rejection. More than one
+  survivor needs a selector model turn, which this version refuses with SELECTION_NEEDS_MASTER_TURN.
+user_prompt: No model prompt is dispatched at this stage. The host writes the selection record.

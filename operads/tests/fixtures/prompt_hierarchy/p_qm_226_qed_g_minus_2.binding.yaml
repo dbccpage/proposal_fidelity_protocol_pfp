@@ -1,0 +1,44 @@
+schema_version: omega.prompt_hierarchy.binding.v1
+prompt_uri: "prompt://physics/finite_qm/derivation/stage_04/P_QM_226_QED_G_MINUS_2"
+title: "PFP Finite QM Goal 4 (QM-226) Schwinger g-2 and QED Ward Vertex Binding"
+description: "Binds operad signature, sub-channel pins, cross-layer witness equality, and antibodies to QM-226."
+
+oewas_anti_ops:
+  - op_id: "pfp.refuse_scalar_proxy_theorem_substitution"
+    inspects_slot: "candidate_text"
+    refusal_code: "ANTI_SCALAR_PROXY"
+  - op_id: "pfp.refuse_target_fitting_constant_compensation"
+    inspects_slot: "candidate_text"
+    refusal_code: "ANTI_TARGET_FITTING"
+  - op_id: "pfp.refuse_witness_certificate_desynchronization"
+    inspects_slot: "candidate_text"
+    refusal_code: "ANTI_WITNESS_DRIFT"
+
+oeeis_antibodies:
+  - antibody_id: "ab_scalar_proxy_theorem_substitution"
+    signal1_epitope: "three_ray_positivity_proxy"
+    signal2_required_danger: "PROXY_COUNTEREXAMPLE_SURVIVES"
+  - antibody_id: "ab_target_fitting_constant_compensation"
+    signal1_epitope: "unpinned_additive_residual"
+    signal2_required_danger: "COMPONENT_PIN_MISMATCH"
+  - antibody_id: "ab_witness_certificate_desynchronization"
+    signal1_epitope: "prose_certificate_witness_mismatch"
+    signal2_required_danger: "PROSE_WITNESS_FALSIFIED"
+
+operad_binding:
+  operation_id: "pfp.qm226_schwinger_g_minus_2_ward_vertex"
+  source_colours: ["Contract", "Code", "Proof"]
+  target_colour: "Paper"
+  slot_to_colour:
+    ward_contract: "Contract"
+    code_witness: "Code"
+    proof_witness: "Proof"
+  required_slot_pins:
+    - "schwinger_f2_zero"
+    - "f1_zero_ward_charge"
+  cross_slot_equality_groups:
+    - ["paper_witness", "code_witness", "proof_witness"]
+  required_boundary_witness_slots:
+    - "ir_regulator_positiveness_witness"
+  equivariant: true
+  residual_effect: "contractive"

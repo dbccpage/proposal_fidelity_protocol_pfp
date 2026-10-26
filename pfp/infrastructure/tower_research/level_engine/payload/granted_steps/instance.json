@@ -1,0 +1,79 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "an edge adds a view in the scope without the licence: the sealed step is inert there",
+      "role": "own_negative",
+      "set": {
+        "edges": [
+          [
+            "e1",
+            "licensed",
+            [
+              "add_view"
+            ]
+          ],
+          [
+            "e2",
+            "unlicensed",
+            [
+              "add_view",
+              "note"
+            ]
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_unknown",
+      "note": "an edge performs an operation with no effect row",
+      "role": "near_miss",
+      "set": {
+        "edges": [
+          [
+            "e1",
+            "licensed",
+            [
+              "add_view"
+            ]
+          ],
+          [
+            "e2",
+            "unlicensed",
+            [
+              "fold",
+              "note"
+            ]
+          ]
+        ]
+      },
+      "violates": "operations_known"
+    },
+    {
+      "id": "near_understated",
+      "note": "the mark's effect row is declared empty, though withdrawing the budget makes it inert",
+      "role": "near_miss",
+      "set": {
+        "operations": [
+          [
+            "add_view",
+            [
+              "augment",
+              "spend"
+            ]
+          ],
+          [
+            "mark",
+            []
+          ],
+          [
+            "note",
+            []
+          ]
+        ]
+      },
+      "violates": "rows_replayed"
+    }
+  ]
+}

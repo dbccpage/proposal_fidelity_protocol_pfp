@@ -1,0 +1,55 @@
+"""Independent real-port controls for typed canonical contract integration."""
+
+from __future__ import annotations
+
+import hashlib
+import shutil
+from pathlib import Path
+
+from omega_engine_workflows_agents_skills.contracts.typed_capabilities_v1 import (
+    ROOT as CONTRACT_ROOT,
+)
+from omega_engine_workflows_agents_skills.infrastructure.capability_catalog_compiler import (
+    compile_capability_catalog,
+)
+from omega_engine_workflows_agents_skills.infrastructure.typed_contract_compiler import (
+    compile_typed_contracts,
+)
+
+ROOT = next(path for path in Path(__file__).resolve().parents if (path / "pyproject.toml").is_file())
+
+
+def _generated_estate(tmp_path: Path) -> tuple[Path, set[str]]:
+    shutil.copytree(ROOT / CONTRACT_ROOT, tmp_path / CONTRACT_ROOT)
+    package = compile_typed_contracts(tmp_path)
+    tracked: set[str] = set()
+    for skill_id, raw in package.packages:
+        relative = f".agents/skills/{skill_id}/SKILL.md"
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True)
+        target.write_bytes(raw)
+        tracked.add(relative)
+    for skill in package.catalog.skills:
+        tracked.update(resource.path for resource in skill.package_resources)
+    return tmp_path, tracked
+
+
+def test_full_catalog_preserves_tracked_generated_package_resources(tmp_path: Path) -> None:
+    root, tracked = _generated_estate(tmp_path)
+    relative = ".agents/skills/woland-claim-audit/references/operator-note.md"
+    note = root / relative
+    note.parent.mkdir()
+    note.write_bytes(b"Host-maintained operator context.\n")
+    tracked.add(relative)
+
+    first = compile_capability_catalog(root, tracked_paths=tuple(sorted(tracked)))
+    skill = next(item for item in first.skills if item.skill_id == "woland-claim-audit")
+    resource = next((item for item in skill.package_resources if item.path == relative.removeprefix(".agents/")), None)
+    assert resource is not None, "Generated packages must retain the existing tracked-resource catalog contract"
+    assert resource.sha256 == hashlib.sha256(note.read_bytes()).hexdigest()
+    assert resource.byte_length == len(note.read_bytes())
+
+    note.write_bytes(b"Changed host-maintained operator context.\n")
+    second = compile_capability_catalog(root, tracked_paths=tuple(sorted(tracked)))
+    assert second.catalog_digest != first.catalog_digest
+    assert note.read_bytes() == b"Changed host-maintained operator context.\n"

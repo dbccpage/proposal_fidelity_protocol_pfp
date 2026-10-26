@@ -1,0 +1,366 @@
+{
+  "schema": "typed-contract-cli-relative-root-amendment-v1",
+  "authority_effect": "None",
+  "repair_author_and_operator": "runtime_review/Azazello, requested by parent root",
+  "historical_review_unchanged": {
+    "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_review.json",
+    "sha256": "0a7c93393a55ac0cc86664db7b0820cc2839fe76789b492e14a4aad15fa0e8ef",
+    "bytes": 18285
+  },
+  "historical_scope": "Prior50-control receipt remains the exact pre-repair observation; this amendment supplies final52-control source and outcomes.",
+  "actual_problem": "Documented --repo-root . --write passed relative Path to strict host writer and returned HOST_PROJECTION_INVALID_REQUEST: absolute Path required. No success or outputs were observed in the parent reproduction.",
+  "observed_red": {
+    "record": "compiler_cli_relative_root_red.json",
+    "exit_code": 1,
+    "result": "1 failed,50 deselected; actual main returned1 with absolute Path required"
+  },
+  "minimal_green": {
+    "record": "compiler_cli_relative_root_green.json",
+    "exit_code": 0,
+    "result": "51 passed"
+  },
+  "final_green": {
+    "record": "compiler_cli_relative_root_final.json",
+    "exit_code": 0,
+    "result": "52 passed including actual relative root junction refusal"
+  },
+  "minimal_production_change": "In main only, compute root=args.repo_root.absolute() once inside refusal boundary and pass it to compiler, audit compiler callback and host writer. No resolve() and no writer policy change.",
+  "added_controls": [
+    "chdir isolated canonical estate; actual main --repo-root . --write creates8 exact files, then --check succeeds without changes",
+    "chdir parent; relative repo path is a real Windows directory junction; actual main still returns SOURCE_LINK_REFUSED and unchanged estate"
+  ],
+  "final_lint": {
+    "record": "compiler_cli_ruff_relative_root.json",
+    "exit_code": 0,
+    "rules": "Ruff0.17.0 explicit E,F,W,I,C901; mccabe.max-complexity=10 on compiler and new test"
+  },
+  "tool_versions": {
+    "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions.json",
+    "sha256": "59bfe1f7f4735e24eb97cb2de0b2f4546806ce7f664f07f2024d71352c770f00",
+    "bytes": 4369
+  },
+  "final_source_inventory": [
+    {
+      "path": "omega_engine_workflows_agents_skills/infrastructure/typed_contract_compiler.py",
+      "sha256": "ae26f666eeccd79055a1469ff732ba9883a58fde8eee29882882bfa1d2f3c4f8",
+      "bytes": 15855
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py",
+      "sha256": "93a227a2f63eb066865c9da5d86e75d6ecce682e9664ef399e3679b83f007cd2",
+      "bytes": 17485
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/application/typed_contract_audit.py",
+      "sha256": "8502bfa8349ea5ea22ba042e036c746dd8de8c08744d8ce99a54c6a286f3e1a9",
+      "bytes": 12679
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/contracts/typed_capabilities_v1.py",
+      "sha256": "b2599a7909eae99b653306dca98aaa61d2aea1a3ed2fd643bdb15d541a645f1b",
+      "bytes": 5237
+    },
+    {
+      "path": "omega_engine_operations/use_cases/packaging/project_typed_contracts.py",
+      "sha256": "71ce0b73b88c3ac01547a03bd3258849a72e47a8d884eff633ffa25495df110e",
+      "bytes": 8147
+    }
+  ],
+  "command_records": [
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_red.json",
+        "sha256": "82957298b96ae85a0533850bc7ba78f5c27338de2d1461801fc536e57da11fc3",
+        "bytes": 3602
+      },
+      "argv": [
+        "C:/Users/a343o/.local/bin/uv.exe",
+        "run",
+        "--offline",
+        "--no-project",
+        "--python",
+        "C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe",
+        "--with",
+        "pytest==9.1.1",
+        "--with",
+        "pyyaml==6.0.3",
+        "--with",
+        "numpy",
+        "--with",
+        "pydantic==2.13.5",
+        "--with",
+        "scipy",
+        "--with",
+        "networkx",
+        "--with",
+        "sympy",
+        "--with",
+        "blake3",
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-o",
+        "filterwarnings=",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py",
+        "-q",
+        "--basetemp",
+        "C:\\Users\\a343o\\AppData\\Local\\Temp\\typed-contract-cli-relative_root_red",
+        "-k",
+        "relative_repository_root"
+      ],
+      "command_windows": "C:/Users/a343o/.local/bin/uv.exe run --offline --no-project --python C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe --with pytest==9.1.1 --with pyyaml==6.0.3 --with numpy --with pydantic==2.13.5 --with scipy --with networkx --with sympy --with blake3 python -X utf8 -m pytest -o addopts= -o filterwarnings= omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py -q --basetemp C:\\Users\\a343o\\AppData\\Local\\Temp\\typed-contract-cli-relative_root_red -k relative_repository_root",
+      "exit_code": 1,
+      "scope": "one assigned actual compiler CLI test file",
+      "logs": {
+        "stdout": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_red.stdout.log",
+          "sha256": "9df3f3c56d5c01020b6ee8665fb554bd669beb110b3a78ba9fbcf26710aa36ac",
+          "bytes": 1285
+        },
+        "stderr": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_red.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_green.json",
+        "sha256": "c7ec0baec72a78c7b15d3114fa108809016ed218ad4ba4653c8819f5fae5610a",
+        "bytes": 3539
+      },
+      "argv": [
+        "C:/Users/a343o/.local/bin/uv.exe",
+        "run",
+        "--offline",
+        "--no-project",
+        "--python",
+        "C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe",
+        "--with",
+        "pytest==9.1.1",
+        "--with",
+        "pyyaml==6.0.3",
+        "--with",
+        "numpy",
+        "--with",
+        "pydantic==2.13.5",
+        "--with",
+        "scipy",
+        "--with",
+        "networkx",
+        "--with",
+        "sympy",
+        "--with",
+        "blake3",
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-o",
+        "filterwarnings=",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py",
+        "-q",
+        "--basetemp",
+        "C:\\Users\\a343o\\AppData\\Local\\Temp\\typed-contract-cli-relative_root_green"
+      ],
+      "command_windows": "C:/Users/a343o/.local/bin/uv.exe run --offline --no-project --python C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe --with pytest==9.1.1 --with pyyaml==6.0.3 --with numpy --with pydantic==2.13.5 --with scipy --with networkx --with sympy --with blake3 python -X utf8 -m pytest -o addopts= -o filterwarnings= omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py -q --basetemp C:\\Users\\a343o\\AppData\\Local\\Temp\\typed-contract-cli-relative_root_green",
+      "exit_code": 0,
+      "scope": "one assigned actual compiler CLI test file",
+      "logs": {
+        "stdout": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_green.stdout.log",
+          "sha256": "459df3d7fe03513c32204e64a3470708a7ffcfc0ab46ac2e917a98f8e44fcde4",
+          "bytes": 101
+        },
+        "stderr": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_green.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_final.json",
+        "sha256": "dcd41898e5c53365112a0006cd15ea40c67631ce3b7e8c6a9398bfe0196058ed",
+        "bytes": 3539
+      },
+      "argv": [
+        "C:/Users/a343o/.local/bin/uv.exe",
+        "run",
+        "--offline",
+        "--no-project",
+        "--python",
+        "C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe",
+        "--with",
+        "pytest==9.1.1",
+        "--with",
+        "pyyaml==6.0.3",
+        "--with",
+        "numpy",
+        "--with",
+        "pydantic==2.13.5",
+        "--with",
+        "scipy",
+        "--with",
+        "networkx",
+        "--with",
+        "sympy",
+        "--with",
+        "blake3",
+        "python",
+        "-X",
+        "utf8",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-o",
+        "filterwarnings=",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py",
+        "-q",
+        "--basetemp",
+        "C:\\Users\\a343o\\AppData\\Local\\Temp\\typed-contract-cli-relative_root_final"
+      ],
+      "command_windows": "C:/Users/a343o/.local/bin/uv.exe run --offline --no-project --python C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe --with pytest==9.1.1 --with pyyaml==6.0.3 --with numpy --with pydantic==2.13.5 --with scipy --with networkx --with sympy --with blake3 python -X utf8 -m pytest -o addopts= -o filterwarnings= omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py -q --basetemp C:\\Users\\a343o\\AppData\\Local\\Temp\\typed-contract-cli-relative_root_final",
+      "exit_code": 0,
+      "scope": "one assigned actual compiler CLI test file",
+      "logs": {
+        "stdout": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_final.stdout.log",
+          "sha256": "2ee9d03536e28d7bc19ab0daa7615de748d5d2a5947da2888d2350a8c114ae51",
+          "bytes": 101
+        },
+        "stderr": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_final.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_relative_root.json",
+        "sha256": "b5d3152df9033794bcd862c7dcabd3c9aa188cdee4b82a48c8bffaea4c626a1b",
+        "bytes": 3411
+      },
+      "argv": [
+        "C:/Users/a343o/.local/bin/uv.exe",
+        "run",
+        "--offline",
+        "--no-project",
+        "--python",
+        "C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe",
+        "--with",
+        "ruff==0.17.0",
+        "ruff",
+        "check",
+        "--select",
+        "E,F,W,I,C901",
+        "--config",
+        "lint.mccabe.max-complexity=10",
+        "omega_engine_workflows_agents_skills/infrastructure/typed_contract_compiler.py",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py"
+      ],
+      "command_windows": "C:/Users/a343o/.local/bin/uv.exe run --offline --no-project --python C:\\Users\\a343o\\AppData\\Roaming\\uv\\python\\cpython-3.13.11-windows-x86_64-none\\python.exe --with ruff==0.17.0 ruff check --select E,F,W,I,C901 --config lint.mccabe.max-complexity=10 omega_engine_workflows_agents_skills/infrastructure/typed_contract_compiler.py omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py",
+      "exit_code": 0,
+      "scope": [
+        "check",
+        "--select",
+        "E,F,W,I,C901",
+        "--config",
+        "lint.mccabe.max-complexity=10",
+        "omega_engine_workflows_agents_skills/infrastructure/typed_contract_compiler.py",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py"
+      ],
+      "logs": {
+        "stdout": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_relative_root.stdout.log",
+          "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "bytes": 19
+        },
+        "stderr": {
+          "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_relative_root.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_final.json",
+      "sha256": "dcd41898e5c53365112a0006cd15ea40c67631ce3b7e8c6a9398bfe0196058ed",
+      "bytes": 3539
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_final.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_final.stdout.log",
+      "sha256": "2ee9d03536e28d7bc19ab0daa7615de748d5d2a5947da2888d2350a8c114ae51",
+      "bytes": 101
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_green.json",
+      "sha256": "c7ec0baec72a78c7b15d3114fa108809016ed218ad4ba4653c8819f5fae5610a",
+      "bytes": 3539
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_green.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_green.stdout.log",
+      "sha256": "459df3d7fe03513c32204e64a3470708a7ffcfc0ab46ac2e917a98f8e44fcde4",
+      "bytes": 101
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_red.json",
+      "sha256": "82957298b96ae85a0533850bc7ba78f5c27338de2d1461801fc536e57da11fc3",
+      "bytes": 3602
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_red.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_relative_root_red.stdout.log",
+      "sha256": "9df3f3c56d5c01020b6ee8665fb554bd669beb110b3a78ba9fbcf26710aa36ac",
+      "bytes": 1285
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_relative_root.json",
+      "sha256": "b5d3152df9033794bcd862c7dcabd3c9aa188cdee4b82a48c8bffaea4c626a1b",
+      "bytes": 3411
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_relative_root.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_relative_root.stdout.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    }
+  ],
+  "scope_limits": [
+    "Actual RED/GREEN applies to this relative-root composition defect. Earlier50 controls remain regression-only and are not relabeled TDD.",
+    "Compiler source bytes participate in contracts_digest: packages generated before this source repair would require new custody; parent reported no previous outputs.",
+    "No combined-coverage claim, provider, live dispatch, native host, Cargo, Git or whole-suite calls.",
+    "Host writer still has its declared non-atomic multi-file and concurrent-parent namespace residuals; no admission or native enforcement is established."
+  ]
+}

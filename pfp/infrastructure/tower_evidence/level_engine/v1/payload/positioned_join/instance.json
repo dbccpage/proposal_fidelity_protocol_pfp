@@ -1,0 +1,56 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "both arms empty, the join declared at one peak term, though the two peak terms differ",
+      "role": "own_negative",
+      "set": {
+        "join": "ha",
+        "left_arm": [],
+        "right_arm": []
+      },
+      "violates": null
+    },
+    {
+      "id": "near_redex",
+      "note": "the left step names a rule that does not occur at its position",
+      "role": "near_miss",
+      "set": {
+        "left_step": [
+          1,
+          3
+        ]
+      },
+      "violates": "steps_replayed"
+    },
+    {
+      "id": "near_join",
+      "note": "the declared join is a peak term, not where the arms end",
+      "role": "near_miss",
+      "set": {
+        "join": "ha"
+      },
+      "violates": "join_is_normal_form"
+    },
+    {
+      "id": "near_absorb_one",
+      "note": "absorption of one following letter where the sealed rule absorbs the whole tail: not a sealed one-step reduct",
+      "role": "extra",
+      "set": {
+        "join": "h",
+        "left_arm": [],
+        "left_step": [
+          0,
+          4
+        ],
+        "right_arm": [],
+        "right_step": [
+          0,
+          4
+        ],
+        "source": "hab"
+      },
+      "violates": null
+    }
+  ]
+}

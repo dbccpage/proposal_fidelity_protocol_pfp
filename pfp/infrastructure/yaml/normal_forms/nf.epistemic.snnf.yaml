@@ -1,0 +1,99 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.snnf
+  name: Stripe Normal Form
+  short_name: SnNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: unlocatable survivability
+  preserves_invariant: every logical object declares shards, erasure fragments, parity
+    layout, encryption domains, and failure groups
+  protected_skeleton:
+  - shards
+  - erasure_fragments
+  - parity_layout
+  - encryption_domains
+  - failure_groups
+  erased_structure:
+  - physical_disk_blocks
+  - raw_block_offsets
+  non_claims:
+  - does not prevent physical media degradation or network outages
+declarations_required:
+- shards
+- erasure_fragments
+- parity_layout
+- encryption_domains
+- failure_groups
+evidence_required:
+- checksums_per_fragment
+- placement_witnesses
+- encryption_key_handles
+validation_criteria:
+- logical objects must specify exact shard or erasure layout
+- encryption domains must be declared per fragment
+- failure groups must map to independent physical failure modes
+proof_obligations: []
+terminal_routes:
+- StripedAndReplicated
+- DegradedDurability
+- SurvivabilityUnknown
+- DecryptionKeyMissing
+- ParityMismatch
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: stripe_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: data is claimed durable without declaring shard layout or survived failure
+    modes
+  diagnosis: unlocatable survivability
+  terminal: SurvivabilityUnknown
+references:
+- ../1_normal_forms.md
+terminal_route_map:
+  StripedAndReplicated: Preserve
+  DegradedDurability: Escalate
+  SurvivabilityUnknown: BudgetUnknown
+  DecryptionKeyMissing: BudgetUnknown
+  ParityMismatch: Reject
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: unlocatable survivability. every logical object declares shards,
+    erasure fragments, parity layout, encryption domains, and failure groups
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: unlocatable survivability
+    lossless_join:
+      status: declared_reconstruction
+      statement: every logical object declares shards, erasure fragments, parity layout,
+        encryption domains, and failure groups
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

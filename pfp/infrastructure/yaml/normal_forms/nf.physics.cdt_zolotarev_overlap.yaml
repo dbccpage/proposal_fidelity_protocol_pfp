@@ -1,0 +1,147 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.cdt_zolotarev_overlap
+  name: 4D CDT Rational Zolotarev & Deflated Overlap Dirac Operator Contract
+  short_name: CDT-ZOLOTAREV-NF
+  version: v0
+  theory_status: established
+  contract_status: draft
+  verification_status: absent
+  family: physics
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - zolotarev_rational_minimax
+  - lanczos_krylov_subspace
+  - multishift_conjugate_gradient
+  - low_mode_deflation
+  - causal_dynamical_triangulations
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: un-isolated fermion doublers, sign-approximation errors on the
+    absolute spectral interval, false certification from trivial GW residual solutions
+    (R = I), unhandled intermediate spectral gaps, multishift solver nonconvergence,
+    and un-deflated spectral collapse
+  preserves_invariant: verified Zolotarev rational sign approximation on the certified
+    positive spectral interval [lambda_min(|H_w|), lambda_max(|H_w|)], multishift Krylov
+    convergence, Ginsparg-Wilson residual bound ||{D, gamma_5} - a D gamma_5 D|| <= tau_GW,
+    and scoped sparse matrix-vector action cost
+  protected_skeleton:
+  - simplicial_wilson_hermitian_hamiltonian_Hw
+  - absolute_spectral_gap_bound
+  - zolotarev_minimax_rational_coefficients
+  - multishift_conjugate_gradient_residuals
+  - low_mode_deflation_subspace
+  - ginsparg_wilson_residual
+  - single_action_flop_accounting
+  erased_structure:
+  - dense_spectral_diagonalization
+  - redundant_single_shift_linear_inversions
+  non_claims:
+  - a small Ginsparg-Wilson residual (1/a)*gamma_5*(I - R^2) does not alone establish
+    an overlap Dirac operator; the trivial assignment R = I yields zero GW residual
+    without approximating sign(H_w). The approximation must be certified against the
+    spectrum of H_w^2
+  - signed minimum eigenvalue lambda_min(H_w) is not the spectral gap around zero;
+    the gap must be certified as the positive lower bound min |lambda| = sqrt(lambda_min(H_w^2))
+    on the undeflated subspace
+  - the work formula O(N_iter * nnz(D_w)) bounds the cost of applying the operator
+    to a single vector, not constructing or inverting the full dense overlap matrix
+  - intermediate spectral gaps between stiffening and gapped thresholds represent
+    unresolved ranges requiring higher rational degree or deflation, not mathematical
+    obstructions
+  - does not claim uniform convergence on gapless triangulations without verified
+    low-mode deflation
+declarations_required:
+- hermitian_wilson_operator: H_w = gamma_5 D_w on simplicial complex
+- absolute_spectral_interval: certified lower bound lambda_min_abs > 0 and upper bound lambda_max_abs on undeflated subspace
+- zolotarev_rational_coefficients: degree-m optimal minimax rational approximation R_m(x) to sign(x) on [lambda_min_abs, lambda_max_abs] with error delta_Z
+- multishift_krylov_solver: simultaneous solution of (H_w^2 + d_l I) x_l = b across all rational poles d_l > 0
+- low_mode_deflation: projection Pi_low onto eigenspace with |lambda| < lambda_min_abs
+- single_action_cost_bound: per-vector application cost bound C_action = O(m * N_iter * nnz(H_w) + N_defl * N)
+validation_criteria:
+- absolute_spectral_gap_certified: "verified lower bound lambda_min_abs = sqrt(lambda_min(H_w^2|_{im(I - Pi_low)})) > 0"
+- rational_minimax_error_bound: "analytical Zolotarev error satisfies sup_{x in [lambda_min_abs, lambda_max_abs]} |R_m(x) - sign(x)| <= delta_Z <= 1e-8"
+- multishift_solve_convergence: "all shifted linear systems achieve relative residual ||(H_w^2 + d_l I)x_l - b|| / ||b|| <= tau_CG"
+- ginsparg_wilson_algebraic_consistency: "||D_rat gamma_5 + gamma_5 D_rat - a D_rat gamma_5 D_rat|| <= tau_GW as a necessary algebraic consistency check"
+- gapped_complex_routing: certified gap lambda_min_abs >= 0.05 routes to ZolotarevOverlapCertified
+- witnessed_stiffening_obstruction: certified closure lambda_min_abs < 1e-4 with exhibited low-mode witness routes to ZolotarevSpectralStiffeningObstruction
+- intermediate_spectral_range: gap between 1e-4 and 0.05 routes to IntermediateSpectralRange
+terminal_routes:
+- ZolotarevOverlapCertified
+- ZolotarevSpectralStiffeningObstruction
+- IntermediateSpectralRange
+- ZolotarevToleranceBreach
+- SolverConvergenceFailure
+- LanczosDivergenceDefect
+- Unsupported
+terminal_route_map:
+  ZolotarevOverlapCertified: Preserve
+  ZolotarevSpectralStiffeningObstruction: Refuse
+  IntermediateSpectralRange: Quarantine
+  ZolotarevToleranceBreach: Reject
+  SolverConvergenceFailure: Escalate
+  LanczosDivergenceDefect: Reject
+  Unsupported: Unsupported
+extensions:
+  condition_to_local_route_map:
+    gapped_subcubic_certified: ZolotarevOverlapCertified
+    gapless_stiffening_witnessed: ZolotarevSpectralStiffeningObstruction
+    intermediate_gap_unresolved: IntermediateSpectralRange
+    tolerance_breach: ZolotarevToleranceBreach
+    solver_failed_to_converge: SolverConvergenceFailure
+    lanczos_defect: LanczosDivergenceDefect
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: Overlap Dirac operator contract certifying degree-m Zolotarev rational
+    sign approximation over certified absolute spectral intervals [lambda_min(|H_w|),
+    lambda_max(|H_w|)], multishift Krylov pole convergence, explicit low-mode deflation,
+    and scoped per-vector operational complexity.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: un-isolated fermion doublers, broken GW relation, false sign
+      approximation certificates, and un-deflated spectral collapse
+    lossless_join:
+      status: declared_reconstruction
+      statement: certified rational Zolotarev overlap action with bounded minimax
+        error and low-mode deflation
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+canonical_terminal_map:
+  ZolotarevOverlapCertified: Preserve
+  ZolotarevSpectralStiffeningObstruction: Refuse
+  IntermediateSpectralRange: Quarantine
+  ZolotarevToleranceBreach: Reject
+  SolverConvergenceFailure: Escalate
+  LanczosDivergenceDefect: Reject
+  Unsupported: Unsupported
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+certification:
+  certificate_required: true
+  certificate_kind: nf.physics.cdt_zolotarev_overlap_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+evidence_required:
+- spectral_interval_bounds: {lambda_min_abs: float, lambda_max_abs: float}
+- rational_degree_m: integer
+- zolotarev_minimax_error_bound: float
+- multishift_cg_residuals: list
+- deflated_eigenvalues: list
+- deflated_eigenvectors_orthogonality: float
+- operator_vector_action_cost: {krylov_iterations: integer, nnz_count: integer, flops_per_action: integer}
+- ginsparg_wilson_algebraic_residual: float
+schema_ref: ./normal_form_contract_schema.yaml

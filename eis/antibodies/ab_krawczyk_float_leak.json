@@ -1,0 +1,18 @@
+{
+  "antibody_id": "ab_krawczyk_float_leak",
+  "failure_class": "math:krawczyk_float_leak",
+  "target_pattern": "(float.*Newton-Raphson.*proves|approximate.*inversion.*sufficient|floating.*point.*interval.*bounds)",
+  "constraint_type": "ProjectOut",
+  "operatorizability": "repairable",
+  "action": "refuse",
+  "severity": "P0",
+  "description": "Rejects using floating-point evaluations in interval Newton or Krawczyk operators without exact rational rounding guards.",
+  "negative_fixture": "Running float64 Newton-Raphson converges to 1e-16 so the box contains an exact zero.",
+  "positive_fixture": "Exact rational interval arithmetic over Q proves K(X) intersect X = empty across all 56 cells at depth 64.",
+  "times_seen": 1,
+  "evidence_sha256": "84073f12d543d577e61728c9524c8377fff9d7aa3e15d97e298a73cb4a66b0cd",
+  "pharmacy_status": "admitted",
+  "authority_effect": "None",
+  "created_at": "2026-10-15T19:18:17.192993+00:00",
+  "source_pilot": "pilot_039"
+}

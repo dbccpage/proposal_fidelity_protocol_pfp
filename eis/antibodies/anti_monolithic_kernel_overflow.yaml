@@ -1,0 +1,22 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-monolithic-kernel-overflow
+canonical_name: Anti-Monolithic Kernel Overflow Fallacy
+failure_class: math:monolithic_kernel_overflow
+target_pattern: (single.*monolithic.*rfl.*for.*all.*terms|pass.*100000.*terms.*directly.*to.*kernel|no.*chunking.*needed.*Lean.*handles.*any.*size)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects submitting unchunked certificates exceeding 10^5 terms directly
+  to Lean 4 kernel 'by rfl'.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: Lean 4 kernel can evaluate the 500,000 monomial Positivstellensatz
+  identity in a single 'by rfl' tactic invocation.
+repaired_invariant_fixture: Subgap R8 chunking architecture partitions the certificate
+  into binary sub-trees of <= 1024 terms, verified independently and stitched by transitivity.
+source_pilot: pilot_049
+evidence_sha256: c0609b838cdc017a17a00133dcf4799c7ab8b17f97defa31154968f383a6557a

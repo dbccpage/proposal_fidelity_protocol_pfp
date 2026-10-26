@@ -1,0 +1,40 @@
+{
+  "schema": "relational_confluence_and_4nf_mvd_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying Chase Confluence, Multivalued Dependency (4NF) losslessness, Armstrong closure axioms, and Candidate Key Antichain minimality",
+  "created_utc": "2026-09-25T16:20:00Z",
+  "properties_verified": [
+    {
+      "property_name": "chase_confluence_and_order_invariance",
+      "test_function": "test_diamond_fd_confluence, test_randomized_chase_order_confluence_property",
+      "status": "PASS",
+      "details": "Verified that permuting the execution order of functional dependencies preserves both the final tableau cell partition under fixpoint evaluation and the boolean implication outcome (Church-Rosser rewriting)."
+    },
+    {
+      "property_name": "multivalued_dependency_and_4nf_evaluation",
+      "test_function": "test_fagin_textbook_4nf_counterexample, test_mvd_triviality",
+      "status": "PASS",
+      "details": "Verified on Fagin (1977) Employee-Skill-Language schema: check_4nf identifies non-superkey MVD violations, chase_mvd proves losslessness of binary 4NF decomposition [ES, EL] via tuple generation, and refutes non-4NF splits."
+    },
+    {
+      "property_name": "armstrong_axioms_closure_properties",
+      "test_function": "test_armstrong_closure_axioms_on_sample_schemas, test_armstrong_axioms_randomized_schemas",
+      "status": "PASS",
+      "iterations": 25,
+      "details": "Verified across power set attribute combinations that attribute closure X^+ satisfies reflexivity, idempotence, monotonicity, augmentation, and transitivity."
+    },
+    {
+      "property_name": "candidate_key_antichain_minimality",
+      "test_function": "test_pairwise_keys_antichain, test_redundant_superkey_exclusion",
+      "status": "PASS",
+      "details": "Verified that candidate keys form strict antichains in the subset poset with zero proper supersets admitted and all components minimal."
+    }
+  ],
+  "contracts_aligned": [
+    "nf.classical.4nf",
+    "nf.classical.bcnf",
+    "nf.classical.3nf",
+    "nf.classical.5nf"
+  ],
+  "all_properties_satisfied": true
+}

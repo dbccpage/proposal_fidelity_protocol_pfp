@@ -1,0 +1,107 @@
+# Relational Prompt Representation Specification
+# Governing Standard: Proposal Fidelity Protocol (PFP)
+# AuthorityEffect: None.
+
+schema_version: pfp.prompt_representation.v1
+representation_kind: relational
+authority_effect: None
+
+classification:
+  family: prompt_wire_encoding
+  encoding_posture: relational_normal_form_sql
+  token_overhead_posture: ddl_and_insert_overhead
+  carrier_type: application/sql
+
+description: >
+  Relational Normal Form representation using an in-memory SQLite schema profile (sqlite_strict_text_set_v1).
+  Encapsulates source metadata in structured SQL comments and binds each span into an isolated row in `prompt_spans`.
+
+empirical_performance_baseline:
+  evidence_status: cited_source_not_in_clone
+  general_efficacy_established: false
+  source_study: pilots/pilot_output/results.md
+  measured_rate_recorded: false
+
+invariants:
+  - id: REL-INV-001
+    name: StrictTableCompatibility
+    rule: All span inserts must satisfy SQLite STRICT table column types (slot TEXT PRIMARY KEY, role TEXT NOT NULL, text TEXT NOT NULL).
+  - id: REL-INV-002
+    name: RoleDomainConstraint
+    rule: Column `role` must strictly belong to the set {'task', 'constraint', 'context', 'output', 'unresolved'}.
+  - id: REL-INV-003
+    name: MandatoryTaskSpan
+    rule: At least one row in `prompt_spans` must carry role='task'.
+  - id: REL-INV-004
+    name: EscapedTextSafety
+    rule: Text payload values must be strictly escaped to prevent SQL injection or unclosed string literal parse aborts.
+
+specification:
+  fields:
+    source_id:
+      type: string
+      required: true
+      pattern: "^[a-zA-Z0-9_-]+$"
+    source_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    proposal_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    profile:
+      type: string
+      required: true
+      const: sqlite_strict_text_set_v1
+    table_name:
+      type: string
+      required: true
+      const: prompt_spans
+    representation_kind:
+      type: string
+      required: true
+      const: relational
+    authority_effect:
+      type: string
+      required: true
+      const: None
+    spans:
+      type: array
+      required: true
+      items:
+        type: object
+        required:
+          - slot
+          - role
+          - text
+        properties:
+          slot:
+            type: string
+            pattern: "^s[0-9]+$"
+          role:
+            type: string
+            enum: [task, constraint, context, output, unresolved]
+          text:
+            type: string
+
+schema_ddl: |
+  CREATE TABLE IF NOT EXISTS prompt_spans (
+      slot TEXT PRIMARY KEY,
+      role TEXT NOT NULL CHECK(role IN ('task', 'constraint', 'context', 'output', 'unresolved')),
+      text TEXT NOT NULL
+  ) STRICT;
+
+canonical_example:
+  trial_id: "case0:relational"
+  source_id: "bench-001-primes"
+  source_sha256: "89be119ca687ad1a05b27c709519dda9657e7e19f0b23740d1dc2e1c83ef686f"
+  proposal_sha256: "32997b0c0586eb003453a2ba08adf0dcc4c44e2b4327f5c445cbbb8f0c50f8da"
+  prompt_sha256: "66928969d9ffb01c0dffcda7d78e3e3f4c1ee2e3e4dac650099a340f4a47ac15"
+  prompt: |
+    -- Prompt Relational Normal Form (profile: sqlite_strict_text_set_v1)
+    -- Source ID: bench-001-primes | Hash: 89be119ca687ad1a
+    -- Occurrences and role bindings:
+    INSERT INTO prompt_spans (slot, role, text) VALUES ('s0', 'task', "Task: Extract all primes less than 20. "::text);
+    INSERT INTO prompt_spans (slot, role, text) VALUES ('s1', 'constraint', "Constraint: Output must be a JSON array of integers strictly ordered ascending with key \"primes\". "::text);
+    INSERT INTO prompt_spans (slot, role, text) VALUES ('s2', 'output', "Output: JSON only without code fences."::text);

@@ -1,0 +1,99 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./_golden_nfs/normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.experimental.qm_classical
+  name: Quantum-Classical Experiment Normal Form
+  short_name: QCNF
+  version: v1
+  family: experimental
+  status: active
+  theory_status: experimental
+  contract_status: active
+  verification_status: executable
+classification:
+  hierarchy_level: normal_form
+  subject_kind: [finite_experiment_packet]
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: conflating report loss, signed linear feasibility, positive Bell gluing, and purification
+  preserves_invariant: complete declared experiment and a problem-bound replayable result
+  protected_skeleton:
+  - schema_version
+  - test.kind
+  - ordered carrier data
+  - exact scalars
+  - declared control, context or composition
+  erased_structure: []
+  non_claims:
+  - Not a relational join decomposition or a quotient by basis changes.
+  - No derivation of quantum ontology, Born probabilities, locality or actual outcome occurrence.
+  - Report sufficiency concerns only the listed states and supplied future measurement.
+  - Bell interpretation additionally needs causal locality and setting independence.
+  - Central bounds assume full positive complex block states and standard tensor composition.
+  - Spectra are declarations; they are not bound to an independently supplied matrix.
+  - A zero central obstruction does not prove universal purification.
+definition:
+  formal_statement: >-
+    Parse the closed omega.qm-classical.experiment.v1 sum type; require canonical
+    rational strings and ordered Gaussian-rational matrices, or fixed CHSH
+    coordinates, or declared central weights and normalized spectra. Validate
+    the mathematical carrier in Rust before producing a certificate. Serialize
+    the admitted sum type with canonical sorted object keys, preserving every
+    array order and every declared field. This serialization is lossless and
+    idempotent on admitted inputs. No labels, state, context, sign or premise
+    is forgotten. The normal form is relative to the declared presentation.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: canonical experiment representation, not a relational decomposition theorem
+    anomaly_exclusion: signed solutions and shape-valid packets cannot substitute for the requested positive or operational witness
+    lossless_join:
+      status: declared_reconstruction
+      statement: Decoding the canonical experiment reconstructs the complete admitted request; no join or gauge quotient is asserted.
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: State, effect, channel, context and tensor premises remain explicit in the tagged experiment.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: Finite schema and budget admission precede exact native evaluation; solver exhaustion is a refusal, not a negative theorem.
+declarations_required:
+- schema_version equals omega.qm-classical.experiment.v1
+- test.kind selects exactly one of report_sufficiency, positive_joint_extension, sector_purification
+- Report case supplies states, report POVM, Kraus control, and future POVM; outcome zero is the protected question.
+- Bell case supplies sixteen context probabilities in 00,01,10,11 and ++,+-,-+,-- order.
+- Sector case names complex_direct_sum_standard_tensor, central weights, normalized block spectra, and available ancilla block sizes.
+evidence_required:
+- Complete experiment retained in normal_form and bound by input_digest.
+- A replayed report decoder or explicit equal-report unequal-answer collision.
+- A positive joint decomposition or separating functional verified on all sixteen local vertices.
+- Central purity and distance bounds, distinguished from the specified available-ancilla capacity.
+validation_criteria:
+- Canonical rational strings; floats, booleans, zero denominators and unknown fields refuse.
+- Matrices are at most 8 by 8; matrix families and ancilla lists have at most 64 entries.
+- Density positivity and normalization, POVM completeness, and CPTP control replay before report comparison.
+- Bell probability positivity and per-context normalization replay before positive convex-hull membership.
+- Sector weights sum to one, block spectra normalize, and ancilla block sizes are positive and at most 64.
+- Verification re-evaluates the experiment and compares the complete certificate, including scope and authority fields.
+terminal_routes: [Preserve, Refuse, ReportCollision, NoPositiveJointExtension, CentralPurificationObstructed]
+terminal_route_map:
+  Preserve: Preserve
+  Refuse: Refuse
+  ReportCollision: Escalate
+  NoPositiveJointExtension: Escalate
+  CentralPurificationObstructed: Escalate
+certification:
+  certificate_required: true
+  certificate_kind: omega.qm-classical.certificate.v1
+  verifier_required: true
+  obstruction_class_required: false
+  loss_ledger_required: false
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+references:
+- omega_engine/crates_rs/omega_quantum_physics/src/carrier_tests.rs
+- omega_engine/crates_rs/omega_symbol_game/src/invoke/qm_classical.rs
+- omega_engine/crates_rs/tests/omega_symbol_game/data/qm_classical.json
+- omega_engine_pfp/infrastructure/normal_forms/qm_classical.py
+- lean4/quantum_mechanics/CarrierTests.lean

@@ -1,0 +1,99 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "first_separation",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "generators": [
+            "0",
+            "1"
+          ],
+          "source": "<>"
+        }
+      },
+      "input_sha256": "sha256:8eefaa93619d46e3b31f2168bfb67d58ac2ebe23f722c7c56ffbe24f097b8107",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "generators": [
+            "0",
+            "1"
+          ],
+          "source": null
+        }
+      },
+      "input_sha256": "sha256:0902a0677e63ed5d276d7d04b474c952c4c14791f8acb6f74e0c7de5160a4356",
+      "native_code": "FAILS:source_kept",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_swap",
+      "input": {
+        "packet": {
+          "generators": [
+            "1",
+            "0"
+          ],
+          "source": "<>"
+        }
+      },
+      "input_sha256": "sha256:02d2278c88fd1860b7340a90e8a13f8dd7895bb82ab73c3d242f50c10c08ec57",
+      "native_code": "FAILS:pairing",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "generators": [
+            "0",
+            "1"
+          ],
+          "source": "0"
+        }
+      },
+      "input_sha256": "sha256:ca7cec4b7a43b9cf20946f993d9feb9474617a40663270c03811729663416b4b",
+      "native_code": "FAILS:source_kept",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "ACCEPTED",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 1,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {
+    "lists_emptied": "needs_target_schema"
+  },
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_001"
+}

@@ -1,0 +1,1350 @@
+# Authoritative v2 type catalogue.
+meta_version: 2.0.0
+source: prompt_template_typed.yaml
+root: PromptPacket
+semantics:
+  slot_seed: Nullable in template; required on assert_filled unless optional.
+  fixed: Enforced by const where declared; fixed containers may contain seed children.
+  optional: May be omitted. Null is allowed unless nullable is explicitly false.
+  authority: Data and validation never authorize a host action.
+  source_of_truth: This catalogue owns types and constants. Typed YAML owns empty
+    seed layout; generator emits Python and JSON Schema.
+  tree: cardinality(n)=1+sum(cardinality(c)); nontrivial tree iff decomposition.subprompts
+    nonempty. No cardinality seed and no new genome identity.
+types:
+  PromptPacket:
+    kind: record
+    doc: V2 packet envelope. Containment is declared, not inferred. Tree and cardinality
+      are computed receipts. Family and mutation lineage are separate relations. Validation
+      grants no authority.
+    fields:
+      meta:
+        type: string
+        slot: fixed
+        const: prompt_types.yaml
+      packet_type:
+        type: PacketTypeTag
+        slot: fixed
+        const: PromptPacketV0_1
+      lineage:
+        type: PromptLineage
+        slot: seed
+      system_prompt:
+        type: SystemPrompt
+        slot: fixed
+      user_prompt:
+        type: UserPrompt
+        slot: seed
+      response_schema:
+        type: ResponseSchema
+        slot: fixed
+      schema_version:
+        type: string
+        const: 2.0.0
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+      source:
+        type: IncomingPrompt
+        slot: seed
+      civilization:
+        type: CivilizationBinding
+        optional: true
+      workflow:
+        type: WorkflowBinding
+        optional: true
+      immune:
+        type: ImmuneBinding
+        optional: true
+      execution:
+        type: ExecutionData
+        optional: true
+      extensions:
+        type: list<ExtensionRecord>
+        default: []
+      migration:
+        type: MigrationData
+        optional: true
+      decomposition:
+        type: PromptDecomposition
+        optional: true
+  PacketTypeTag:
+    kind: enum
+    values:
+    - PromptPacketV0_1
+  PromptLineage:
+    kind: record
+    doc: Mutation ancestry only. Containment and execution occurrences are stored
+      separately. prompt_id is a local packet identity until bound to an external
+      genome.
+    fields:
+      family_name:
+        type: NonEmpty
+      generation_id:
+        type: Natural
+      prompt_id:
+        type: Identifier
+      parents:
+        type: list<ParentPrompt>
+        default: []
+      root_prompt_ids:
+        type: list<Identifier>
+        constraints:
+          min_length: 1
+      template_id:
+        type: string
+        const: prompt_template_typed
+      template_version:
+        type: string
+        const: 2.0.0
+      mutation_kind:
+        type: MutationKind
+      mutation_note:
+        type: NonEmpty
+        optional: true
+      status:
+        type: PromptStatus
+      created_at_utc:
+        type: UtcTimestamp
+      author:
+        type: NonEmpty
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+  MutationKind:
+    kind: enum
+    values:
+    - root_seed
+    - edit
+    - antibody_injection
+    - schema_change
+    - crossover
+    - fork
+    - decompose
+  PromptStatus:
+    kind: enum
+    values:
+    - draft
+    - assembled
+    - executed
+    - retired
+  AuthorityEffect:
+    kind: enum
+    values:
+    - None
+  SystemPrompt:
+    kind: record
+    fields:
+      semantic_policy_manifest:
+        type: SemanticPolicyManifest
+        slot: fixed
+      mss0_grammar_constraint:
+        type: Mss0GrammarConstraint
+        slot: fixed
+      op_semantics:
+        type: OpSemantics
+        slot: fixed
+      import_boundary:
+        type: string
+        slot: fixed
+        const: Do not import continuous physics, Lie algebras, or differential geometry
+          unless explicitly mapping them FROM the 38 SYM SYS primitives.
+      mss0_typing_rules:
+        type: Mss0TypingRules
+        slot: fixed
+      evaluator_scope_rule:
+        type: EvaluatorScopeRule
+        slot: fixed
+      evidence_levels:
+        type: list<EvidenceLevel>
+        slot: fixed
+        const:
+        - code: F0
+          meaning: unverified idea
+        - code: F1
+          meaning: internally consistent
+        - code: F2
+          meaning: structurally validated
+        - code: F3
+          meaning: mechanically-verified (within verification scope)
+        - code: F4
+          meaning: independently reproduced
+      claim_hygiene:
+        type: ClaimHygiene
+        slot: fixed
+      role:
+        type: Role
+        slot: seed
+      antibody_injections:
+        type: list<AntibodyInsertion>
+        default: []
+        slot: seed
+        optional: true
+  SemanticPolicyManifest:
+    kind: record
+    fields:
+      policy_id:
+        type: string
+        slot: fixed
+        const: SPK-001
+      required_stamp:
+        type: string
+        slot: fixed
+        const: 'derived_under_policy: SPK-001'
+  Mss0GrammarConstraint:
+    kind: record
+    fields:
+      system_name:
+        type: string
+        slot: fixed
+        const: SYM SYS
+      atomic_glyph_count:
+        type: int
+        slot: fixed
+        const: 38
+      node_labels:
+        type: string
+        slot: fixed
+        const: a..z
+      numeric_labels:
+        type: string
+        slot: fixed
+        const: 0..9
+      delimiters:
+        type: list<string>
+        slot: fixed
+        const:
+        - <
+        - '>'
+      pair_note:
+        type: string
+        slot: fixed
+        const: The written form <> is a two-glyph expression, not a 39th atomic glyph.
+      numeric_license_rule:
+        type: string
+        slot: fixed
+        const: Numeric labels acquire arithmetic or weight semantics only through
+          an explicit license.
+      derived_patterns_note:
+        type: string
+        slot: fixed
+        const: Category-theoretic structures (functors, limits, adjunctions, monads)
+          are derived patterns, not new primitives.
+  OpSemantics:
+    kind: record
+    fields:
+      default_layer:
+        type: int
+        slot: fixed
+        const: 1
+      default_meaning:
+        type: string
+        slot: fixed
+        const: syntactic_binary_operator
+      forbidden_unlicensed_interpretations:
+        type: list<ForbiddenInterpretation>
+        slot: fixed
+        const:
+        - arithmetic
+        - multiplication
+        - tensor_product
+        - boundary
+        - coboundary
+        - causality
+        - optimization
+        - physical_transition
+      license_required_for:
+        type: list<LicensedInterpretation>
+        slot: fixed
+        const:
+        - cohomological_interpretation
+        - category_theoretic_interpretation
+  ForbiddenInterpretation:
+    kind: enum
+    values:
+    - arithmetic
+    - multiplication
+    - tensor_product
+    - boundary
+    - coboundary
+    - causality
+    - optimization
+    - physical_transition
+  LicensedInterpretation:
+    kind: enum
+    values:
+    - cohomological_interpretation
+    - category_theoretic_interpretation
+  Mss0TypingRules:
+    kind: record
+    fields:
+      preamble:
+        type: string
+        slot: fixed
+        const: 'Whenever formalizing structures, adhere to the MSS-0 topological hierarchy:'
+      levels:
+        type: list<Mss0Level>
+        slot: fixed
+        const:
+        - level: 1
+          code: N
+          name: Node
+          meaning: 0-simplex
+        - level: 2
+          code: L
+          name: Edge
+          meaning: 1-simplex
+        - level: 3
+          code: C2
+          name: Cycle
+          meaning: 1-chain closed loop; strictly distinct from a filled region
+        - level: 4
+          code: F1
+          name: Face
+          meaning: 2-simplex / triangle; strictly requires a declared 2-cell
+        - level: 5
+          code: M1
+          name: Mass
+          meaning: Topological lock; requires LockStructure, ObstructionClass, and
+            ConstraintInvariant
+        - level: 6
+          code: H1
+          name: SelfModel
+          meaning: Recursive Locus; requires explicit declaration of recursive equivalence
+            semantics
+  Mss0Level:
+    kind: record
+    fields:
+      level:
+        type: int
+        slot: fixed
+      code:
+        type: string
+        slot: fixed
+      name:
+        type: string
+        slot: fixed
+      meaning:
+        type: string
+        slot: fixed
+  EvaluatorScopeRule:
+    kind: record
+    fields:
+      principle:
+        type: string
+        slot: fixed
+        const: An evaluator may promote only the claim type it directly tests.
+      bindings:
+        type: list<EvaluatorBinding>
+        slot: fixed
+        const:
+        - evaluator: cargo test
+          promotes: implementation behavior
+          does_not_promote: mathematical truth
+        - evaluator: SymPy
+          promotes: symbolic computation
+          does_not_promote: empirical reality
+        - evaluator: Lean/Coq/Isabelle
+          promotes: formal theorem validity relative to stated axioms
+          does_not_promote: null
+        - evaluator: Reference checks
+          promotes: provenance support
+          does_not_promote: proof
+        - evaluator: Confidence scores
+          promotes: nothing
+          does_not_promote: evidence
+  EvaluatorBinding:
+    kind: record
+    fields:
+      evaluator:
+        type: string
+        slot: fixed
+      promotes:
+        type: string
+        slot: fixed
+      does_not_promote:
+        type: string
+        slot: fixed
+        optional: true
+  EvidenceLevel:
+    kind: record
+    fields:
+      code:
+        type: EvidenceCode
+        slot: fixed
+      meaning:
+        type: string
+        slot: fixed
+  EvidenceCode:
+    kind: enum
+    values:
+    - F0
+    - F1
+    - F2
+    - F3
+    - F4
+  ClaimHygiene:
+    kind: record
+    fields:
+      discipline:
+        type: string
+        slot: fixed
+        const: You must write with strict claim discipline.
+      forbidden_words:
+        type: list<string>
+        slot: fixed
+        const:
+        - proves
+        - guarantees
+        - mathematically verifies
+        - fundamentally
+        - true intelligence
+        - impossible
+        - universal
+        - flawless
+        - perfectly
+        - clearly
+        - obviously
+        - simply
+        - merely
+        - weaponized
+      forbidden_word_exceptions:
+        type: string
+        slot: fixed
+        const: unless explicitly scoped as speculative or nested inside user quotes
+      replacement_defaults:
+        type: list<Replacement>
+        slot: fixed
+        const:
+        - from: proves
+          to: supports or shows in this model
+        - from: guarantees
+          to: guarantees under the declared assumptions
+        - from: fundamental flaw
+          to: failure mode
+        - from: mathematically verified
+          to: checked by this oracle/test
+      default_posture:
+        type: string
+        slot: fixed
+        const: Prefer narrow claims over broad claims. Do not promote speculative
+          ideas into theorems. Do not describe toy tests or implementation checks
+          as mathematical proofs of universal results.
+  Replacement:
+    kind: record
+    fields:
+      from:
+        type: string
+        slot: fixed
+      to:
+        type: string
+        slot: fixed
+  Role:
+    kind: record
+    fields:
+      persona:
+        type: string
+        slot: fixed
+        const: You are a restrained SymSys auditor and theory-forge assistant.
+      goal:
+        type: string
+        slot: seed
+        optional: true
+  UserPrompt:
+    kind: record
+    fields:
+      question:
+        type: NonEmpty
+        slot: seed
+      theoretical_context:
+        type: string
+        slot: seed
+        optional: true
+      audit_elements:
+        type: list<string>
+        slot: seed
+        optional: true
+      audit_instruction:
+        type: string
+        slot: fixed
+        const: Run an audit checking whether each listed element can be derived from
+          the declared framework, or must be marked as a candidate primitive or open
+          layer.
+      output_instruction:
+        type: string
+        slot: fixed
+        const: Return ONLY the following YAML structure. No markdown code blocks,
+          no conversational filler.
+  ResponseSchema:
+    kind: record
+    fields:
+      derived_under_policy:
+        type: string
+        slot: fixed
+        const: SPK-001
+      summary:
+        type: ResponseSummary
+        slot: fixed
+      seed_sections:
+        type: list<ResponseSection>
+        slot: seed
+        optional: true
+      process_integrity:
+        type: ProcessIntegrity
+        slot: fixed
+  ResponseSummary:
+    kind: record
+    fields:
+      narrowest_defensible_thesis:
+        type: string
+        slot: fixed
+        const: The narrowest defensible claim.
+      evidence_scope:
+        type: string
+        slot: fixed
+        const: What the current evidence supports, and what it does not support.
+      next_concrete_test:
+        type: string
+        slot: fixed
+        const: The next test needed to advance the evidence level.
+  ResponseSection:
+    kind: record
+    doc: Seed-specific response block (e.g. models_evaluated, primitive_audit, lean_integration).
+    fields:
+      name:
+        type: Identifier
+        slot: seed
+      repeats_per:
+        type: string
+        slot: seed
+        optional: true
+      fields:
+        type: list<ResponseField>
+        slot: seed
+      expands_to_subprompt:
+        type: bool
+        default: false
+  ResponseField:
+    kind: record
+    fields:
+      name:
+        type: Identifier
+        slot: seed
+      value_type:
+        type: ResponseValueType
+        slot: seed
+      description:
+        type: NonEmpty
+        slot: seed
+      item_type:
+        type: ResponseItemType
+        optional: true
+      required:
+        type: bool
+        default: true
+  ResponseValueType:
+    kind: enum
+    values:
+    - string
+    - bool
+    - tristate
+    - int
+    - list
+  ProcessIntegrity:
+    kind: record
+    fields:
+      seed_allows_theory_refutation:
+        type: bool_placeholder
+        slot: fixed
+        const: true|false
+      detected_prompt_biases:
+        type: list<string>
+        slot: fixed
+        const: []
+      should_continue:
+        type: bool_placeholder
+        slot: fixed
+        const: true|false
+  bool_placeholder:
+    kind: enum
+    doc: Response-schema fields the model must fill with true or false.
+    values:
+    - true|false
+  NonEmpty:
+    kind: scalar
+    type: string
+    constraints:
+      min_length: 1
+      pattern: \S
+  Identifier:
+    kind: scalar
+    type: string
+    constraints:
+      min_length: 1
+      max_length: 240
+      pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+  Digest:
+    kind: scalar
+    type: string
+    constraints:
+      pattern: ^sha256:[0-9a-f]{64}$
+  Natural:
+    kind: scalar
+    type: int
+    constraints:
+      ge: 0
+  PositiveInt:
+    kind: scalar
+    type: int
+    constraints:
+      ge: 1
+  UtcTimestamp:
+    kind: scalar
+    type: string
+    constraints:
+      pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+  CustodyTier:
+    kind: enum
+    values:
+    - Wild
+    - Candidate
+    - Reviewed
+    - Admitted
+    - Suspended
+    - Revoked
+  PopulationTier:
+    kind: enum
+    values:
+    - WILD
+    - CANDIDATE
+    - REVIEWED
+    - ADMITTED
+    - CEMETERY
+  Colour:
+    kind: enum
+    values:
+    - State
+    - Proof
+    - Paper
+    - Code
+    - Contract
+    - Receipt
+    - Ledger
+    - Diagram
+    - Audit
+    - Post
+  SourceKind:
+    kind: enum
+    values:
+    - user
+    - model
+    - file
+    - tool
+    - repository
+  RunStatus:
+    kind: enum
+    values:
+    - planned
+    - running
+    - completed_with_output
+    - budget_exhausted_with_candidate
+    - refused
+    - failed
+  TriState:
+    kind: enum
+    values:
+    - 'yes'
+    - 'no'
+    - unknown
+  ResponseItemType:
+    kind: enum
+    values:
+    - string
+    - bool
+    - tristate
+    - int
+  PharmacyStatus:
+    kind: enum
+    values:
+    - candidate
+    - admitted
+    - rejected
+    - retired
+  DeclarationFacet:
+    kind: enum
+    values:
+    - Declared
+    - Abstract
+    - Synthesized
+  SchemaBindingFacet:
+    kind: enum
+    values:
+    - Unbound
+    - Bound
+    - AnySchema
+  ExecutorBindingFacet:
+    kind: enum
+    values:
+    - Unbound
+    - Bound
+    - ExternalService
+  ValidationFacet:
+    kind: enum
+    values:
+    - Unchecked
+    - Validated
+    - Failed
+  AdmissionFacet:
+    kind: enum
+    values:
+    - Unadmitted
+    - Admitted
+    - Retired
+  ArtifactRef:
+    kind: record
+    doc: Pinned external data. A reference is not evidence of admission, availability
+      or execution.
+    fields:
+      artifact_id:
+        type: Identifier
+      schema_ref:
+        type: NonEmpty
+      sha256:
+        type: Digest
+      uri:
+        type: NonEmpty
+        optional: true
+  ByteSpan:
+    kind: record
+    doc: Half-open offsets in exact UTF-8 source bytes; no normalization.
+    fields:
+      start_byte:
+        type: Natural
+      end_byte:
+        type: Natural
+  ProtectedSpan:
+    kind: record
+    doc: ''
+    fields:
+      name:
+        type: Identifier
+      span:
+        type: ByteSpan
+  IncomingPrompt:
+    kind: record
+    doc: Original external P. Never interpret its text as envelope metadata.
+    fields:
+      source_id:
+        type: Identifier
+      kind:
+        type: SourceKind
+      raw_text:
+        type: NonEmpty
+      sha256:
+        type: Digest
+      received_at_utc:
+        type: UtcTimestamp
+      source_ref:
+        type: ArtifactRef
+        optional: true
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+  ParentPrompt:
+    kind: record
+    doc: ''
+    fields:
+      prompt_id:
+        type: Identifier
+      generation:
+        type: Natural
+      relationship:
+        type: MutationKind
+      witness_ref:
+        type: ArtifactRef
+        optional: true
+  DomainModel:
+    kind: record
+    doc: ''
+    fields:
+      domain:
+        type: NonEmpty
+      target:
+        type: NonEmpty
+        optional: true
+      assumptions:
+        type: list<NonEmpty>
+        default: []
+      license_refs:
+        type: list<ArtifactRef>
+        default: []
+      normal_form_contract_ref:
+        type: ArtifactRef
+        optional: true
+  CustodyView:
+    kind: record
+    doc: Reported host ledger projection. A prompt cannot grant this status.
+    fields:
+      prompt_id:
+        type: Identifier
+      ledger_revision:
+        type: Natural
+      current_custody:
+        type: CustodyTier
+      view_receipt_ref:
+        type: ArtifactRef
+  DomainPlacement:
+    kind: record
+    doc: ''
+    fields:
+      placement_id:
+        type: Identifier
+      content_digest:
+        type: Digest
+      domain_assignment:
+        type: NonEmpty
+      read_scope:
+        type: list<NonEmpty>
+        default: []
+      disposition:
+        type: NonEmpty
+      receipt_ref:
+        type: ArtifactRef
+  CivilizationBinding:
+    kind: record
+    doc: Genome content and host views are distinct; observed tiers never authorize
+      transitions.
+    fields:
+      domain_model:
+        type: DomainModel
+      birth_custody:
+        type: string
+        const: Wild
+        default: Wild
+      genome_ref:
+        type: ArtifactRef
+        optional: true
+      protected_spans:
+        type: list<ProtectedSpan>
+        default: []
+      view:
+        type: CustodyView
+        optional: true
+      population_tier:
+        type: PopulationTier
+        optional: true
+      population_receipt_ref:
+        type: ArtifactRef
+        optional: true
+      placement:
+        type: DomainPlacement
+        optional: true
+      fitness_receipt_refs:
+        type: list<ArtifactRef>
+        default: []
+      rank_certificate_refs:
+        type: list<ArtifactRef>
+        default: []
+      cemetery_refs:
+        type: list<ArtifactRef>
+        default: []
+      genealogy_receipt_refs:
+        type: list<ArtifactRef>
+        default: []
+  PortSpec:
+    kind: record
+    doc: ''
+    fields:
+      name:
+        type: Identifier
+      colour_id:
+        type: Colour
+      schema_ref:
+        type: NonEmpty
+      schema_digest:
+        type: Digest
+      validator_ref:
+        type: NonEmpty
+      validator_digest:
+        type: Digest
+  SkillLifecycle:
+    kind: record
+    doc: ''
+    fields:
+      declaration:
+        type: DeclarationFacet
+      schema_binding:
+        type: SchemaBindingFacet
+      executor_binding:
+        type: ExecutorBindingFacet
+      validation:
+        type: ValidationFacet
+      admission:
+        type: AdmissionFacet
+      schema_digest:
+        type: Digest
+        optional: true
+      executor_digest:
+        type: Digest
+        optional: true
+  OperationBinding:
+    kind: record
+    doc: Snapshot for OEWAS. Actual catalog verification and execution stay in OEWAS
+      and the host.
+    fields:
+      operation_id:
+        type: Identifier
+      operation_ref:
+        type: ArtifactRef
+      inputs:
+        type: list<PortSpec>
+        default: []
+      output:
+        type: PortSpec
+      operand_refs:
+        type: list<ArtifactRef>
+        default: []
+      lifecycle:
+        type: SkillLifecycle
+      residual_status:
+        type: NonEmpty
+      effects:
+        type: list<NonEmpty>
+        default: []
+      tool_refs:
+        type: list<ArtifactRef>
+        default: []
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+      authority_ceiling:
+        type: AuthorityEffect
+        const: None
+        default: None
+      invocation_grade:
+        type: NonEmpty
+  WorkflowStep:
+    kind: record
+    doc: Ordered planar substitution step. Dependencies refer to step occurrences,
+      not skill names.
+    fields:
+      step_id:
+        type: Identifier
+      operation_id:
+        type: Identifier
+      prompt_node_id:
+        type: Identifier
+      slot:
+        type: Natural
+      depends_on_step_ids:
+        type: list<Identifier>
+        default: []
+  WorkflowBinding:
+    kind: record
+    doc: References and data for existing OEWAS/PFP contracts; this is not a second
+      workflow engine.
+    fields:
+      workflow_ref:
+        type: ArtifactRef
+      catalog_ref:
+        type: ArtifactRef
+      composition_ref:
+        type: ArtifactRef
+        optional: true
+      agent_refs:
+        type: list<ArtifactRef>
+        default: []
+      skill_refs:
+        type: list<ArtifactRef>
+        default: []
+      anti_skill_refs:
+        type: list<ArtifactRef>
+        default: []
+      operations:
+        type: list<OperationBinding>
+        default: []
+      steps:
+        type: list<WorkflowStep>
+        default: []
+      source_colours:
+        type: list<Colour>
+        default: []
+      target_colour:
+        type: Colour
+      composition_check_ref:
+        type: ArtifactRef
+        optional: true
+      gate_refs:
+        type: list<ArtifactRef>
+        default: []
+      mode_refs:
+        type: list<ArtifactRef>
+        default: []
+      numbered_stage_refs:
+        type: list<ArtifactRef>
+        default: []
+  AntibodyCandidate:
+    kind: record
+    doc: Candidate data only. Never rendered automatically into a system prompt.
+    fields:
+      antibody_id:
+        type: Identifier
+      failure_class:
+        type: Identifier
+      target_pattern:
+        type: NonEmpty
+      constraint_type:
+        type: ConstraintType
+      operatorizability:
+        type: Operatorizability
+      action:
+        type: RuntimeAction
+      severity:
+        type: Severity
+      description:
+        type: NonEmpty
+      negative_fixture_ref:
+        type: ArtifactRef
+      positive_fixture_ref:
+        type: ArtifactRef
+      reproduction_receipt_ref:
+        type: ArtifactRef
+      candidate_instruction:
+        type: NonEmpty
+        optional: true
+      pharmacy_status:
+        type: string
+        const: candidate
+        default: candidate
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+  ConstraintType:
+    kind: enum
+    values:
+    - ProjectOut
+    - Restrain
+    - Enforce
+  Operatorizability:
+    kind: enum
+    values:
+    - repairable
+    - fatal
+  RuntimeAction:
+    kind: enum
+    values:
+    - repair
+    - abort
+  Severity:
+    kind: enum
+    values:
+    - P0
+    - P1
+    - P2
+    - P3
+  GuardBinding:
+    kind: record
+    doc: Independent records are resolved by OEEIS. No self-authored active/admitted/danger
+      boolean.
+    fields:
+      profile_ref:
+        type: ArtifactRef
+      antibody_ref:
+        type: ArtifactRef
+      subject_sha256:
+        type: Digest
+      external_admission_ref:
+        type: ArtifactRef
+        optional: true
+      detector_hit_ref:
+        type: ArtifactRef
+        optional: true
+      danger_receipt_ref:
+        type: ArtifactRef
+        optional: true
+      activation_receipt_ref:
+        type: ArtifactRef
+        optional: true
+      custody_view_ref:
+        type: ArtifactRef
+        optional: true
+      negative_selection_ref:
+        type: ArtifactRef
+        optional: true
+      holdout_receipt_ref:
+        type: ArtifactRef
+        optional: true
+  ImmuneBinding:
+    kind: record
+    doc: Pharmacy candidates, two-signal evidence, negative selection, quarantine
+      and retirement custody.
+    fields:
+      candidate_antibodies:
+        type: list<AntibodyCandidate>
+        default: []
+      guards:
+        type: list<GuardBinding>
+        default: []
+      detector_registry_ref:
+        type: ArtifactRef
+        optional: true
+      self_panel_ref:
+        type: ArtifactRef
+        optional: true
+      holdout_bank_ref:
+        type: ArtifactRef
+        optional: true
+      quarantine_receipt_refs:
+        type: list<ArtifactRef>
+        default: []
+      retirement_receipt_refs:
+        type: list<ArtifactRef>
+        default: []
+      propagation_receipt_refs:
+        type: list<ArtifactRef>
+        default: []
+  Budget:
+    kind: record
+    doc: One shared envelope budget; children do not reset it. Enforcement belongs
+      to the host.
+    fields:
+      max_model_calls:
+        type: Natural
+      max_total_tokens:
+        type: Natural
+      max_cost_microusd:
+        type: Natural
+  ExecutionOccurrence:
+    kind: record
+    doc: ''
+    fields:
+      occurrence_id:
+        type: Identifier
+      run_id:
+        type: Identifier
+      session_id:
+        type: Identifier
+      prompt_node_id:
+        type: Identifier
+      genome_ref:
+        type: ArtifactRef
+        optional: true
+      input_packet_ref:
+        type: ArtifactRef
+      rendered_prompt_sha256:
+        type: Digest
+      provider:
+        type: NonEmpty
+      model:
+        type: NonEmpty
+      status:
+        type: RunStatus
+      output_packet_ref:
+        type: ArtifactRef
+        optional: true
+      evaluation_receipt_refs:
+        type: list<ArtifactRef>
+        default: []
+      started_at_utc:
+        type: UtcTimestamp
+        optional: true
+      completed_at_utc:
+        type: UtcTimestamp
+        optional: true
+      cost_microusd:
+        type: Natural
+        default: 0
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+  ExecutionData:
+    kind: record
+    doc: ''
+    fields:
+      budget:
+        type: Budget
+      occurrences:
+        type: list<ExecutionOccurrence>
+        default: []
+  ExtensionRecord:
+    kind: record
+    doc: Opaque, schema-pinned data; never rendered or treated as validated executable
+      instructions.
+    fields:
+      namespace:
+        type: Identifier
+      contract_ref:
+        type: ArtifactRef
+      payload:
+        type: json
+  LegacySnapshot:
+    kind: record
+    doc: Lossless original input retained by migration. Untrusted data, never instructions.
+    fields:
+      source_file:
+        type: NonEmpty
+      sha256:
+        type: Digest
+      raw_yaml:
+        type: string
+  MigrationData:
+    kind: record
+    doc: ''
+    fields:
+      source_version:
+        type: NonEmpty
+      snapshots:
+        type: list<LegacySnapshot>
+      unresolved:
+        type: list<NonEmpty>
+        default: []
+  ResponseSummaryValue:
+    kind: record
+    doc: ''
+    fields:
+      narrowest_defensible_thesis:
+        type: NonEmpty
+      evidence_scope:
+        type: NonEmpty
+      next_concrete_test:
+        type: NonEmpty
+  ProcessIntegrityValue:
+    kind: record
+    doc: ''
+    fields:
+      seed_allows_theory_refutation:
+        type: bool
+      detected_prompt_biases:
+        type: list<NonEmpty>
+        default: []
+      should_continue:
+        type: bool
+  ResponseSectionValue:
+    kind: record
+    doc: Rows validated against the packet response contract by validate_response.
+    fields:
+      name:
+        type: Identifier
+      rows:
+        type: list<json>
+  PromptResponse:
+    kind: record
+    doc: Actual model response. Descriptive strings and true|false placeholders belong
+      only to the template.
+    fields:
+      derived_under_policy:
+        type: string
+        const: SPK-001
+      summary:
+        type: ResponseSummaryValue
+      sections:
+        type: list<ResponseSectionValue>
+        default: []
+      process_integrity:
+        type: ProcessIntegrityValue
+  SplitterKind:
+    kind: enum
+    values:
+    - none
+    - declared
+  AntibodyPlacement:
+    kind: enum
+    values:
+    - system_prompt_end
+    - before_role
+    - user_prompt_start
+  SubpromptSlot:
+    kind: record
+    fields:
+      subprompt_id:
+        type: SlotId
+      role:
+        type: NonEmpty
+      source_field:
+        type: NonEmpty
+      ordinal:
+        type: Natural
+      packet_id:
+        type: Identifier
+        optional: true
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+    doc: Explicit containment declaration. Dotted source_field resolves within the
+      containing packet; ordinal is zero-based, unique and contiguous. A referenced
+      child packet owns its own declarations.
+  PromptDecomposition:
+    kind: record
+    fields:
+      splitter:
+        type: SplitterKind
+      subprompts:
+        type: list<SubpromptSlot>
+        default: []
+      agreement_ref:
+        type: ArtifactRef
+        optional: true
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+    doc: Absent or none/[] is a leaf. declared requires children. expand_prompt computes
+      a proposed receipt; host agreement is required to adopt it.
+    json_schema_extra:
+      allOf:
+      - if:
+          properties:
+            splitter:
+              const: none
+          required:
+          - splitter
+        then:
+          properties:
+            subprompts:
+              maxItems: 0
+      - if:
+          properties:
+            splitter:
+              const: declared
+          required:
+          - splitter
+        then:
+          required:
+          - subprompts
+          properties:
+            subprompts:
+              minItems: 1
+  AntibodyInsertion:
+    kind: record
+    fields:
+      antibody_ref:
+        type: ArtifactRef
+      injection_text:
+        type: NonEmpty
+      placement:
+        type: AntibodyPlacement
+      admission_ref:
+        type: ArtifactRef
+      activation_ref:
+        type: ArtifactRef
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+        default: None
+    doc: System-prompt insertion data. Host verifies actual admission, independent
+      evidence, activation and current custody before rendering. It is not a child
+      unless explicitly declared with role antibody.
+  SlotId:
+    kind: scalar
+    type: string
+    constraints:
+      min_length: 1
+      max_length: 120
+      pattern: ^[A-Za-z0-9][A-Za-z0-9._-]*$

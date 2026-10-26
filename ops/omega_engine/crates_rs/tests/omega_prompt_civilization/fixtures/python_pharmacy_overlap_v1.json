@@ -1,0 +1,824 @@
+{
+  "vectors": [
+    {
+      "id": "POS_01_SELF_CERTIFICATION",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "status": "VERIFIED",
+        "public_rationale": "proof executed cleanly"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "SELF_CERTIFICATION",
+            "locus": "/status",
+            "disposition": "REFUSE"
+          }
+        ],
+        "subject_digest": "sha256:0c2354f4f4f46a883918ea990aad7c2897c70130446885c2082156db5644ce3a",
+        "semantic_payload_digest": "sha256:c2202e721340ec8969e061325869cf8cf006549defb0a6870efda9e76287db20"
+      }
+    },
+    {
+      "id": "POS_02_FAKE_RECEIPT",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "receipt_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "public_rationale": "computed hash"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "FAKE_RECEIPT",
+            "locus": "/receipt_hash",
+            "disposition": "REFUSE"
+          },
+          {
+            "code": "SELF_CERTIFICATION",
+            "locus": "/receipt_hash",
+            "disposition": "REFUSE"
+          }
+        ],
+        "subject_digest": "sha256:6447b2ebe7846b0fa30087938d1e57071f4335d7a98f96394267a3951d921bc7",
+        "semantic_payload_digest": "sha256:f3612bea292d62d323caff998cf286b0ea670da11da5e1859f7426aa62311b4c"
+      }
+    },
+    {
+      "id": "POS_03_CONCLUSION_PRELOAD",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "analysis of step 4"
+      },
+      "context": {
+        "prompt": "The theorem must be verified before concluding.",
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "CONCLUSION_PRELOAD",
+            "locus": "/prompt",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:731b52ebab32bb832977abb0e8a15f36928c6699a1b4b7ef92445b0bc108b8bb",
+        "semantic_payload_digest": "sha256:b6f3498cdea0ce05fde834377abdaef17b87182ee76c38c5f27e3b4c8f7125c4"
+      }
+    },
+    {
+      "id": "POS_04_SCHEMA_SEMANTIC_LAUNDERING",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "proposed_claim_deltas": [
+          "add lemma L2"
+        ],
+        "objections": []
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "SCHEMA_SEMANTIC_LAUNDERING",
+            "locus": "/proposed_claim_deltas",
+            "disposition": "HOLD"
+          }
+        ],
+        "subject_digest": "sha256:f33217ab8c03d705d27faac762efa2f19289cb66ef0dd992b45225d2a2a322f1",
+        "semantic_payload_digest": "sha256:315a3a18e36f32cf636c479835552571d3a37046e2ee885f4d2ef5f28518b05e"
+      }
+    },
+    {
+      "id": "POS_05_THEOREM_NAME_LAUNDERING",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "by Squier's theorem the system is terminating"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "THEOREM_NAME_LAUNDERING",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:40c269531aaa364e250e36427c2316f73080fd1f2fb4d556bc5d040320e2dcd9",
+        "semantic_payload_digest": "sha256:b9266ff55b91ef82cdf469bcc5d044b65f7b7b44f7d4f37bb8568d24c7d0144b"
+      }
+    },
+    {
+      "id": "POS_06_OPTIMALITY_HALLUCINATION",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "this represents the optimal configuration"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "OPTIMALITY_HALLUCINATION",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:11e2e7fd3d3d59b452e471bc63ad97230480665eb27785d7a2300531d004a70d",
+        "semantic_payload_digest": "sha256:0593e392bcad0d9559dd9bf01bb9f3b436e2cfc232f7bf985470b646eb3f2dda"
+      }
+    },
+    {
+      "id": "POS_07_COMPLEXITY_HALLUCINATION",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "the retraction executes in polynomial time"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "COMPLEXITY_HALLUCINATION",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:ba601d0526630daaa24bc6feab8f008b04a2db5eb99991e30e2f3636ec5d0f0f",
+        "semantic_payload_digest": "sha256:8d8dea05d8cbdab9276937074d226dd036d0cb6910571b63246ecebfdcbe4c31"
+      }
+    },
+    {
+      "id": "POS_08_BRANCH_DROP_EXHAUSTION",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "the branch search was exhaustive"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 3,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "BRANCH_DROP_EXHAUSTION",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:83de1d1cc9ce2cf85a056377d4e75ae0ce50778886d7cfef912ceb640e92578e",
+        "semantic_payload_digest": "sha256:d047f21bc5a453520f5ba1409219372f92c44b54db31aa8c07c40385b117b558"
+      }
+    },
+    {
+      "id": "POS_09_PERSONA_AUTHORITY_LEAK",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "as Senior Principal Architect I order this merged"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:519ac5fb67979facd519769e361ac2c868bfc95428977329d23e226ba7ff5da8",
+        "semantic_payload_digest": "sha256:6c3c8f7fa30b5b531c3cc6d36d3ab30b49ddf30702b2762809286d30b9d6009c"
+      }
+    },
+    {
+      "id": "POS_10_PRIVATE_COT_DEPENDENCY",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "as I reasoned privately, the cochain vanishes"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "PRIVATE_COT_DEPENDENCY",
+            "locus": "/public_rationale",
+            "disposition": "HOLD"
+          }
+        ],
+        "subject_digest": "sha256:1afb65cdf589f84955b90531bb18bf180f0604ea4d27fbd7c5c8dc8860fb7ae9",
+        "semantic_payload_digest": "sha256:527171a95091f7b1200098d8b50f971a72e0d25c94ec58c08646c3cfb1ef666a"
+      }
+    },
+    {
+      "id": "POS_11_VERSION_DUPLICATION",
+      "candidate": {
+        "schema_version": "candidate-move/v2",
+        "public_rationale": "the residual drops on the declared fixture",
+        "proposed_claim_deltas": [],
+        "objections": []
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [
+          "sha256:8c7cd0f87171dd3d6096c83f2822b647ad2880dc4e49a570d483691b21fad6ce"
+        ],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "VERSION_DUPLICATION",
+            "locus": "",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:e65a7fa997623580861a9593fc7f74e4ebdf560881dc7edb60c91a1ddeb71a0b",
+        "semantic_payload_digest": "sha256:8c7cd0f87171dd3d6096c83f2822b647ad2880dc4e49a570d483691b21fad6ce"
+      }
+    },
+    {
+      "id": "POS_12_DETECT_REPAIR_COUPLING",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "objections": [
+          {
+            "code": "TYPE_ERR",
+            "detail": "broken seam"
+          }
+        ],
+        "proposed_claim_deltas": [
+          "patch line 12"
+        ]
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "DETECT_REPAIR_COUPLING",
+            "locus": "/objections",
+            "disposition": "FINDING"
+          },
+          {
+            "code": "SCHEMA_SEMANTIC_LAUNDERING",
+            "locus": "/proposed_claim_deltas",
+            "disposition": "HOLD"
+          }
+        ],
+        "subject_digest": "sha256:33d3121ca9e779bf9df0e212e981877e4b8303b0151cb239e5a171a961ef9f61",
+        "semantic_payload_digest": "sha256:de38898e1d95c282c2b582bbe298708c1c9265539bd746c129ea397429140f6d"
+      }
+    },
+    {
+      "id": "NEG_01_CLEAN_STATUS",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "status": "CANDIDATE",
+        "public_rationale": "proof proposal submitted for evaluation"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:66ed5aef39875094b6fd70f1c39fc26fbdea4636eddbbc50b9a308a6a6517632",
+        "semantic_payload_digest": "sha256:be5c0bf11fdad8d7ac34cd3eb11983bd36968b078509bc7afe6de43f82ff7f62"
+      }
+    },
+    {
+      "id": "NEG_02_CLEAN_HASH_FIELD",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "input_file_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "public_rationale": "digest of input source file"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:abcd76ce53a1d487d876ee7cd3410748b57fa88e00ba9b4abf5338f8ae78fb39",
+        "semantic_payload_digest": "sha256:a9c66cf3a95ba29e24c207e78af7cf1ad7632dc5cf850e3f73cba2ea1e49888a"
+      }
+    },
+    {
+      "id": "NEG_03_CLEAN_PROMPT",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "objective derivation of lemma 4"
+      },
+      "context": {
+        "prompt": "Analyze whether the lemma holds under standard hypotheses.",
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:bbe530d87e99bee8e787a592dc9ac9d0c5e8235dbf3723f53dde8b7d0ba215c0",
+        "semantic_payload_digest": "sha256:b9d7e52461e218ccab63535539eb9f071a8d1ec1e25c9830155d0aeeb9b20114"
+      }
+    },
+    {
+      "id": "NEG_04_CERTIFIED_REPLAY",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "proposed_claim_deltas": [
+          "add lemma L2"
+        ],
+        "objections": []
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": {
+          "receipt_id": "host-rep-01",
+          "host_signer": "omega-host",
+          "target_digest": "sha256:315a3a18e36f32cf636c479835552571d3a37046e2ee885f4d2ef5f28518b05e",
+          "replay_passed": true
+        },
+        "semantic_replay_passed": true
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:f33217ab8c03d705d27faac762efa2f19289cb66ef0dd992b45225d2a2a322f1",
+        "semantic_payload_digest": "sha256:315a3a18e36f32cf636c479835552571d3a37046e2ee885f4d2ef5f28518b05e"
+      }
+    },
+    {
+      "id": "NEG_05_QUALIFIED_THEOREM",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "by Squier's theorem, under the assumption of finite presentation"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:e17115407e6d9bb51169aaf4a5860258117b0c35a00d17dad366dbd7247e3828",
+        "semantic_payload_digest": "sha256:3061b87979d40a13630615c98e1ef179dafc656fa7cbe498171719c75d9d63ec"
+      }
+    },
+    {
+      "id": "NEG_06_OBJECTIVE_METRIC",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "residual defect evaluated at 0.12 under declared metric"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:72b96126a2ac1a0f9557ed28209b0af8d252f263910020d184b4e28de3d681c0",
+        "semantic_payload_digest": "sha256:ba4d7338e7e62b3b638fc595c5d4b934d2a3a46b5f0d8ea7ccf187dbd0555ecb"
+      }
+    },
+    {
+      "id": "NEG_07_EMPIRICAL_MEASUREMENT",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "wall-clock runtime measured at 12ms over N=100 iterations"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:6fb2269556dbea6452eca069603fb8ba40f819ae74505330d32b02b83d9f8288",
+        "semantic_payload_digest": "sha256:a3aed64a4942e9b3290cc7ee05e9013b83cd836d56600a35eae864792c056961"
+      }
+    },
+    {
+      "id": "NEG_08_EXHAUSTIVE_ZERO_OPEN",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "finite search was exhaustive across declared 16 relations"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:f5425b56c3b9247647cbf9ec9f78d8e611f762bf57721c148e9c790c6a10201b",
+        "semantic_payload_digest": "sha256:e8bacf98ebaf97e424059427f507942de2519c640846f302d7be09fac8423ceb"
+      }
+    },
+    {
+      "id": "NEG_09_AUTHORIZED_PERSONA",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "code review completed by appointed reviewer"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:1e838a3a94fb5d53e358b0184b75cdb9661520a1db470248f42506846c617132",
+        "semantic_payload_digest": "sha256:8f0fb8e8f3f1d39ed42a485d0cade5484c97024e494b9d87b0b7b1dd7e58588d"
+      }
+    },
+    {
+      "id": "NEG_10_PUBLIC_TRACE_REASONING",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "following steps 1 through 4 recorded in the trace log"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:1941cabbfa434e32b37df280cb88f89ebe4d515e11693d439f8fc89a806ddecc",
+        "semantic_payload_digest": "sha256:b7aa9dc6ebe35211d36f26ca1ab2a18058107ea8c5039516b6f3df0aa3f37e88"
+      }
+    },
+    {
+      "id": "NEG_11_UNIQUE_VERSION",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "public_rationale": "brand new formulation with novel witness data",
+        "proposed_claim_deltas": [],
+        "objections": []
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:2147e10d7a6117471ec210cf357d9a7d47fa1089cac64be4e0117bc4cd3c8dcc",
+        "semantic_payload_digest": "sha256:f3c531a97d43eb62df5d9d7d07b78af6bc8624935f84f33a72d5e63e4fdcb212"
+      }
+    },
+    {
+      "id": "NEG_12_DECOUPLED_FINDING",
+      "candidate": {
+        "schema_version": "candidate-move/v1",
+        "objections": [
+          {
+            "code": "BOUNDARY_LEAK",
+            "detail": "dependency violation"
+          }
+        ],
+        "proposed_claim_deltas": []
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [],
+        "subject_digest": "sha256:c5b5b186b1d1094bd8a36c42168d93b8d0b8a1c706fb790a55af2456b19962a7",
+        "semantic_payload_digest": "sha256:b5acd6c1e65e19056b381003727450e38a9bd55764af01442c093dbe0b3c2b61"
+      }
+    },
+    {
+      "id": "shared-extra-0",
+      "candidate": {
+        "verified": true,
+        "public_rationale": "x"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "SELF_CERTIFICATION",
+            "locus": "/verified",
+            "disposition": "REFUSE"
+          }
+        ],
+        "subject_digest": "sha256:307dd0f9db1aad544a6d45ae3afadc4514e8b043834633d1e777b7fe31f33089",
+        "semantic_payload_digest": "sha256:307dd0f9db1aad544a6d45ae3afadc4514e8b043834633d1e777b7fe31f33089"
+      }
+    },
+    {
+      "id": "shared-extra-1",
+      "candidate": {
+        "outer": {
+          "inner": [
+            {
+              "verified": true
+            }
+          ]
+        }
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "SELF_CERTIFICATION",
+            "locus": "/outer/inner/0/verified",
+            "disposition": "REFUSE"
+          }
+        ],
+        "subject_digest": "sha256:39b004712a8205725855eebca5faaff25358a26f14e47171426adad1e8a0d5fd",
+        "semantic_payload_digest": "sha256:39b004712a8205725855eebca5faaff25358a26f14e47171426adad1e8a0d5fd"
+      }
+    },
+    {
+      "id": "shared-extra-2",
+      "candidate": {
+        "receipt_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "FAKE_RECEIPT",
+            "locus": "/receipt_hash",
+            "disposition": "REFUSE"
+          },
+          {
+            "code": "SELF_CERTIFICATION",
+            "locus": "/receipt_hash",
+            "disposition": "REFUSE"
+          }
+        ],
+        "subject_digest": "sha256:d20862b5cb56c8c4863298294860f926a3c8cb420444505038372aca2feb13fe",
+        "semantic_payload_digest": "sha256:d20862b5cb56c8c4863298294860f926a3c8cb420444505038372aca2feb13fe"
+      }
+    },
+    {
+      "id": "shared-extra-3",
+      "candidate": {
+        "public_rationale": "by Squier's theorem the system is confluent"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "THEOREM_NAME_LAUNDERING",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:acec7d63624585dbc666cba6f58ccb964657f0db9b8965a9b69f898869474bab",
+        "semantic_payload_digest": "sha256:acec7d63624585dbc666cba6f58ccb964657f0db9b8965a9b69f898869474bab"
+      }
+    },
+    {
+      "id": "shared-extra-4",
+      "candidate": {
+        "public_rationale": "the search was exhaustive"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 2,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "BRANCH_DROP_EXHAUSTION",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:294d451371a3464039a78df044031502c5b3fe3216905210606fe1e52095e533",
+        "semantic_payload_digest": "sha256:294d451371a3464039a78df044031502c5b3fe3216905210606fe1e52095e533"
+      }
+    },
+    {
+      "id": "shared-extra-5",
+      "candidate": {
+        "objections": [
+          {
+            "code": "X"
+          }
+        ],
+        "proposed_claim_deltas": [
+          "fix"
+        ]
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "DETECT_REPAIR_COUPLING",
+            "locus": "/objections",
+            "disposition": "FINDING"
+          },
+          {
+            "code": "SCHEMA_SEMANTIC_LAUNDERING",
+            "locus": "/proposed_claim_deltas",
+            "disposition": "HOLD"
+          }
+        ],
+        "subject_digest": "sha256:d0f7c3fedc1b32edde23d068aa2fe8793f0e4d9379921c9c16d536214b7e2aa0",
+        "semantic_payload_digest": "sha256:d0f7c3fedc1b32edde23d068aa2fe8793f0e4d9379921c9c16d536214b7e2aa0"
+      }
+    },
+    {
+      "id": "shared-extra-6",
+      "candidate": {
+        "public_rationale": "runs in linear time and is optimal"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "COMPLEXITY_HALLUCINATION",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          },
+          {
+            "code": "OPTIMALITY_HALLUCINATION",
+            "locus": "/public_rationale",
+            "disposition": "FINDING"
+          }
+        ],
+        "subject_digest": "sha256:a0999dc66c4f83d67a40800b236754f6439e5d7788824e9347667ff7ee7f34e9",
+        "semantic_payload_digest": "sha256:a0999dc66c4f83d67a40800b236754f6439e5d7788824e9347667ff7ee7f34e9"
+      }
+    },
+    {
+      "id": "shared-extra-7",
+      "candidate": {
+        "public_rationale": "<think>hidden</think>"
+      },
+      "context": {
+        "prompt": null,
+        "unexplored_branches": 0,
+        "seen_digests": [],
+        "seen_semantic_digests": [],
+        "host_replay_receipt": null,
+        "semantic_replay_passed": false
+      },
+      "expected": {
+        "findings": [
+          {
+            "code": "PRIVATE_COT_DEPENDENCY",
+            "locus": "/public_rationale",
+            "disposition": "HOLD"
+          }
+        ],
+        "subject_digest": "sha256:c0da7e971b8eb523d7928702e2a243dc8cee4edcbb5edeb5c0728f1053f8008c",
+        "semantic_payload_digest": "sha256:c0da7e971b8eb523d7928702e2a243dc8cee4edcbb5edeb5c0728f1053f8008c"
+      }
+    }
+  ]
+}

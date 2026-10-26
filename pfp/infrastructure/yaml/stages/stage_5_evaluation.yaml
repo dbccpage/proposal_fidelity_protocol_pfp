@@ -1,0 +1,21 @@
+stage: 5
+name: evaluation
+executor: host
+requires:
+- 2
+- 4
+seat: seat_woland
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: yaml/mode_2_proofer/stage_5_mss_mu_evaluator.yaml
+system_prompt: Host-only evaluation. Replay the actual Stage 4 candidate against the original problem
+  using the matching domain checker. Missing declarations, profile mismatch, invalid witness and unsupported
+  evaluator are distinct outcomes.
+user_prompt: No model prompt is dispatched at this stage. The host produces its own receipt and retains
+  source, candidate, verifier and policy bindings.
+input_contract:
+  preserve_original_seed: true
+  retain_stage_2_candidates: true
+  candidate_source_stage: 4
+  independent_checker_required: true

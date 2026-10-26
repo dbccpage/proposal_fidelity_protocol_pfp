@@ -1,0 +1,34 @@
+schema_version: "omega.immune.antibody-spec.v1"
+antibody_id: "anti-blanket-mypy-ignore"
+canonical_name: "Anti-Blanket Mypy Type Ignore"
+failure_class: "typing:blanket_mypy_ignore"
+target_pattern: "#\\s*type:\\s*ignore(?!\\s*\\[)"
+constraint_type: "ProjectOut"
+operatorizability: "repairable"
+action: "repair"
+severity: "P1"
+pharmacy_status: "candidate"
+authority_effect: "None"
+description: >
+  Rejects blanket `# type: ignore` comments that suppress all type checks across a line.
+  Mandates scoped error codes, e.g. `# type: ignore[assignment]`, or pyproject.toml
+  overrides to preserve static type contracts.
+
+governing_invariants:
+  - ".agents/rules/engineering/rl_python_engineering_standards.md"
+
+adversarial_mutation_fixture: |
+  # Hostile specimen: blanket type ignore suppresses all checks
+  def compute(x: int) -> int:
+      res: str = x * 2  # type: ignore
+      return 0
+
+repaired_invariant_fixture: |
+  # Repaired invariant: scoped ignore with explicit error code
+  def compute(x: int) -> int:
+      res: str = x * 2  # type: ignore[assignment]
+      return 0
+
+detection_mechanisms:
+  regex_triggers:
+    - "#\\s*type:\\s*ignore(?!\\s*\\[)"

@@ -1,0 +1,143 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.query.spja
+  name: Selection Projection Join Aggregate Form
+  short_name: SPJA
+  version: v0
+  status: draft
+  family: query
+  theory_status: proposed
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - query_shape
+  - derived_relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: implicit aggregate evidence, unmodeled join multiplicity drift,
+    conflation of non-null argument counts with total row counts, or untracked group migration
+  preserves_invariant: aggregate lanes expose sufficient incremental repair statistics,
+    including exact bag join multiplicities, SQL-standard non-null argument accounting,
+    and before/after group key transitions
+  protected_skeleton:
+  - relations
+  - predicates
+  - projections
+  - joins
+  - groups
+  - aggregate_lanes
+  - join_multiplicities
+  - non_null_argument_counts
+  erased_structure: []
+  non_claims:
+  - query shape alone does not certify repairability of a particular CDC event; event
+    repair is delegated to BQNF
+  - does not decide general query containment or equivalence for non-monotone queries
+  - "does not imply authority minting (AuthorityEffect: None)"
+declarations_required:
+- source_relations
+- selected_attributes
+- predicates
+- join_conditions
+- group_keys
+- aggregate_lanes
+- query_semantics:
+    algebra_posture: bag_semantics_with_join_multiplicity
+    null_handling: sql_standard_null_elimination
+    avg_count_semantics: non_null_argument_count
+    group_mutation_tracking: before_after_group_keys
+extensions:
+  aggregate_evidence_specifications:
+    SUM:
+    - old_value
+    - new_value
+    - group_key_before_after
+    - predicate_before_after
+    - join_multiplicity
+    COUNT:
+    - membership_before_after
+    - non_null_predicate
+    - group_key_before_after
+    - join_multiplicity
+    AVG:
+    - sum_statistic
+    - non_null_count_statistic
+    - join_multiplicity
+    MIN_MAX:
+    - extremum_witness_state
+    - second_extremum_candidate
+    - group_partition_witness
+evidence_required:
+- old_new_attribute_values
+- joined_partner_multiplicities
+- before_after_group_membership
+- non_null_argument_indicators
+validation_criteria:
+- query parses into supported SPJ or SPJA fragment
+- every aggregate lane declares sufficient statistics including join multiplicity scaling
+- AVG explicitly distinguishes non-null argument count from total join row count
+- group key mutations provide both before and after group partitions
+- unsupported aggregate types declare typed terminal at compile time
+proof_obligations: []
+terminal_routes:
+- Accept
+- UnsupportedAggregate
+- RequireAuxiliaryState
+- ConservativeInvalidate
+terminal_route_map:
+  Accept: Preserve
+  UnsupportedAggregate: Refuse
+  RequireAuxiliaryState: Repair
+  ConservativeInvalidate: ConservativeInvalidate
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: AVG repaired from amount delta without explicit non-null argument COUNT
+  diagnosis: insufficient statistics for aggregate lane; non-null count required for exact division
+  terminal: ConservativeInvalidate
+- symptom: join partner multiplicity omitted on joined SUM update
+  diagnosis: missing join multiplicity; source row change delta must scale by matching partners
+  terminal: ConservativeInvalidate
+- symptom: aggregate operator outside supported algebra (e.g. median, non-algebraic window)
+  diagnosis: unsupported aggregate operator lacking finite differential update statistics
+  terminal: UnsupportedAggregate
+examples:
+- ref: ../1a_bqnf_incremental_repair.md
+  section: 5. SPJA fragment
+references:
+- ../1a_bqnf_incremental_repair.md
+- ../1_normal_forms.md
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: >
+    An SPJA query expression satisfies the form if all aggregate lanes specify sufficient
+    first-order repair statistics under bag semantics. For a source change delta d and join
+    multiplicity m, the joined aggregate updates by m * d. The AVG lane computes sum / non_null_count,
+    where non_null_count tracks the cardinality of non-null arguments rather than raw join rows.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_incremental_view_maintenance_not_a_relational_project_join
+    anomaly_exclusion: implicit aggregate evidence and unmodeled multiplicity drift
+    lossless_join:
+      status: declared_reconstruction
+      statement: aggregate lanes expose sufficient repair statistics to reconstruct updated view values
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared query schema.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check inspects declared aggregate lane definitions and multiplicity bindings.
+

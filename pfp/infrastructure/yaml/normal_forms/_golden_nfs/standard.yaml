@@ -1,0 +1,422 @@
+standard_id: coda.normal_form_standard.v1
+source: coda_all_universe/mssn_sn_tower/definitions.md
+authority_effect: None
+
+summary: >
+  A normal form, in the sense of the foundational definitions, names the
+  anomaly it excludes, states how a legal value is reconstructed, says
+  whether the original dependencies stay checkable on the pieces, and is
+  decided from declared constraints or certificates. One stored body is not the decider.
+  Qualification under the repository's relational schema profile is distinguished
+  from mathematical classification and runtime verifier availability.
+
+profile:
+  name: relational_schema_profile
+  scope: relational_schemas_and_dependencies
+  description: >
+    The four-pillar profile defines qualification requirements for relational schema
+    normal forms under supported decision procedures. Qualification under this profile
+    is distinct from general mathematical classification (e.g. DKNF is an established
+    mathematical normal form despite lacking a general decision procedure) and from
+    runtime verifier availability.
+
+reconstruction_targets:
+  - original_source_value
+  - equivalence_class
+  - selected_representative
+  - protected_invariant
+  - replayed_target_artifact
+
+decision_subjects:
+  - schema_membership
+  - instance_constraint_check
+  - decomposition_certificate
+  - normalization_result
+  - transition_certificate
+
+decision_modes:
+  - defined_predicate
+  - supported_decision_procedure
+  - certificate_checker
+  - bounded_search
+
+decision_status_semantics:
+  budget_unknown_policy: >
+    A BudgetUnknown result indicates incomplete search or budget exhaustion,
+    not proof of non-implication or disqualification from normal form.
+
+pillars:
+  - id: anomaly_exclusion
+    name: Explicit anomaly exclusion
+    requirement: >
+      Name the class of insertion, deletion, or update redundancy the form
+      removes. A carrier that removes nothing is not a true normal form.
+  - id: lossless_join
+    name: Lossless reconstruction
+    requirement: >
+      State what is reconstructed (original_source_value, equivalence_class,
+      selected_representative, protected_invariant, or replayed_target_artifact).
+      For a flat relvar decomposition this is a lossless natural join. Heath's
+      theorem covers binary decomposition under functional dependency theory,
+      Fagin's theorem covers binary decomposition under multivalued dependencies,
+      and a join dependency is itself the losslessness condition for its projections.
+      A bijection, a replay, or a cache recomputation is a reconstruction of another kind
+      and does not by itself make the form a relational true normal form.
+  - id: dependency_preservation
+    name: Dependency preservation analysis
+    requirement: >
+      Say whether the union of dependencies enforceable on the decomposed components
+      implies the original dependency theory under the declared dependency language:
+      (\bigcup_i \pi_{R_i}(\Sigma))^+ = \Sigma^+. Individual implied dependencies need
+      not each fit inside one component. Dependency preservation is a property of a
+      specific decomposition, not an automatic guarantee of an NF name: 3NF admits
+      dependency-preserving synthesis, whereas BCNF does not always preserve every
+      functional dependency. The analysis must be stated either way.
+  - id: syntactic_decision
+    name: Decision from declared constraints / certificates
+    requirement: >
+      For relational schemas, membership is a property of the heading and declared
+      constraints, decided without instance data. For extended carriers, the subject
+      must declare its decision subject (schema_membership, instance_constraint_check,
+      decomposition_certificate, normalization_result, transition_certificate) and
+      decision mode. A BudgetUnknown search cutoff must not be recorded as non-membership.
+
+true_normal_form_reconstruction_statuses:
+  - identity
+  - heath
+  - fagin
+  - join_dependency
+  - trivial_decompositions_only
+
+document:
+  schema_version: smplx.nf.contract.v0
+  contract_kinds:
+    - normal_form_contract
+    - genesis_contract
+    - bridge_contract
+    - form_contract
+    - transformation_contract
+    - authority_contract
+    - evidence_contract
+  identity_required:
+    - id
+    - name
+    - short_name
+    - version
+    - family
+  purpose_required:
+    - excludes_anomaly
+    - preserves_invariant
+    - protected_skeleton
+    - non_claims
+  quadrilateral_required:
+    - qualifies_as_true_normal_form
+    - anomaly_exclusion
+    - lossless_join
+    - dependency_preservation
+    - syntactic_decision
+  pillar_fields:
+    - status
+    - statement
+  authorization:
+    certified_implies_authorized: false
+  terminal_route_mapping_rule: >
+    The mapping m from declared local terminal routes to canonical terminals must satisfy
+    dom(m) = declared_local_routes and im(m) \subseteq canonical_terminals. Many local
+    routes may share a canonical destination; local disposition and evidence must be
+    preserved when emitting the canonical route.
+
+canonical_terminals:
+  - Preserve
+  - Repair
+  - Invalidate
+  - Recompute
+  - Serialize
+  - Lift
+  - Escalate
+  - Unsupported
+  - ClosureFailure
+  - BudgetUnknown
+  - ConservativeInvalidate
+  - Quarantine
+  - Decompose
+  - Refuse
+  - Reject
+  - Abstain
+
+uniqueness:
+  id_matches_filename: true
+  one_file_per_id: true
+
+spectrum:
+  - id: nf.classical.0nf
+    short_name: 0NF
+    author: pedagogical pre-form
+    mathematical_normal_form: false
+    qualifies_as_true_normal_form: false
+    invariant: a finite carrier before a heading, domain, key, or predicate is declared
+    anomaly: none
+    reconstruction: not_applicable
+  - id: nf.classical.1nf
+    short_name: 1NF
+    author: Codd
+    year: 1970
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: scalar domains, a set of tuples, and a declared candidate key
+    anomaly: positional identity and repeating groups
+    reconstruction: identity
+  - id: nf.classical.2nf
+    short_name: 2NF
+    author: Codd
+    year: 1971
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: no non-prime attribute depends on a proper subset of a candidate key
+    anomaly: partial-key redundancy
+    reconstruction: heath
+  - id: nf.classical.3nf
+    short_name: 3NF
+    author: Codd
+    year: 1971
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: >
+      for every non-trivial functional dependency X -> A, X is a superkey
+      or A is prime. Under functional dependencies this is the same class
+      as Codd's transitive-dependence condition.
+    anomaly: transitive dependence of a non-prime attribute
+    reconstruction: heath
+    dependency_preservation: preserved_by_synthesis
+  - id: nf.classical.eknf
+    short_name: EKNF
+    author: Zaniolo
+    year: 1982
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: >
+      for every elementary functional dependency X -> A, X is a superkey
+      or A lies on an elementary key
+    anomaly: elementary-dependency redundancy
+    reconstruction: heath
+    dependency_preservation: preserved_by_synthesis
+  - id: nf.classical.bcnf
+    short_name: BCNF
+    author: Boyce and Codd
+    year: 1974
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: every non-trivial functional dependency has a superkey determinant
+    anomaly: a functional dependency whose determinant is not a superkey
+    reconstruction: heath
+    dependency_preservation: not_always
+  - id: nf.classical.4nf
+    short_name: 4NF
+    author: Fagin
+    year: 1977
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: every non-trivial multivalued dependency has a superkey determinant
+    anomaly: independent multivalued facts stored as one cross product
+    reconstruction: fagin
+  - id: nf.classical.etnf
+    short_name: ETNF
+    author: Darwen, Date, and Fagin
+    year: 2012
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: >
+      The schema is in BCNF, and every explicitly declared (or implied non-trivial)
+      join dependency has at least one component that is a superkey under the declared
+      dependency theory, ensuring every tuple is essential (neither partly redundant
+      under an FD nor fully redundant under a JD)
+    anomaly: partial tuple redundancy under FDs and full tuple redundancy under JDs
+    reconstruction: join_dependency
+  - id: nf.classical.rfnf
+    short_name: RFNF
+    author: Vincent (origin); Darwen, Date, and Fagin (characterization)
+    year: 2012
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: >
+      a schema in BCNF where for every join dependency implied by the constraints,
+      the union of its superkey components equals the entire heading (syntactically
+      equivalent to KCNF)
+    anomaly: redundancy from join dependencies whose superkey components do not cover the heading
+    reconstruction: join_dependency
+  - id: nf.classical.sknf
+    short_name: SKNF
+    author: Normann (origin); Darwen, Date, and Fagin (characterization)
+    year: 2012
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: >
+      every component of every irreducible join dependency implied by the
+      constraints is a superkey (also called 5NF-Restricted / 5NFR)
+    anomaly: join dependencies with non-superkey components; strictly weaker than 5NF
+    reconstruction: join_dependency
+  - id: nf.classical.5nf
+    short_name: 5NF
+    author: Fagin
+    year: 1979
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: >
+      every non-trivial join dependency implied by the constraints is
+      logically implied by the candidate keys
+    anomaly: a join dependency the candidate keys do not imply
+    reconstruction: join_dependency
+    key_component_screen:
+      note: >
+        every component being a superkey does not establish that candidate keys imply
+        the join dependency, as shown by Darwen, Date, and Fagin's 4-tuple parity counterexample
+  - id: nf.classical.6nf
+    short_name: 6NF
+    author: Date, Darwen, and Lorentzos
+    year: 2002
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: true
+    invariant: every join dependency that holds is trivial
+    anomaly: a non-trivial join dependency
+    reconstruction: trivial_decompositions_only
+    binary_fact_shape_defines_membership: false
+  - id: nf.classical.dknf
+    short_name: DKNF
+    author: Fagin
+    year: 1981
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: false
+    qualification_gap: pillar_IV_lacks_general_decision_procedure_under_arbitrary_constraints
+    invariant: every constraint on a satisfiable 1NF schema follows logically from domain constraints and key constraints
+    anomaly: an insertion or deletion anomaly expressible by those constraints
+    reconstruction: enclosure
+    syntactic_decision: undecidable_for_arbitrary_constraints
+    decidable_subclass_fence: monadic_or_guarded_fd_key_domain_fragment
+    unrestricted_first_order_status: aspirational_non_executable
+  - id: nf.classical.nf2
+    short_name: NF2
+    author: Schek and Scholl
+    year: 1986
+    mathematical_normal_form: true
+    qualifies_as_true_normal_form: false
+    qualification_gap: orthogonal_to_the_flat_chain
+    invariant: >
+      nest and unnest invert one another on partitioned normal form
+    anomaly: a hierarchy that cannot be recovered after flattening
+    reconstruction: nest_unnest_on_partitioned_normal_form
+
+extended_forms_defined_by_the_source:
+  - id: nf.representation.tbnf
+    short_name: TBNF
+  - id: nf.representation.dbcnf
+    short_name: DBCNF
+  - id: nf.evidence.ddanf
+    short_name: DDANF
+  - id: nf.logic.qanf
+    short_name: QANF
+  - id: nf.cochain.dhnf
+    short_name: DHNF
+  - id: nf.runtime.zfnf
+    short_name: ZFNF
+  - id: nf.cohomology.acnf
+    short_name: ACNF
+    status: deprecated
+    alias_of: nf.recursion.asrf
+  - id: nf.recursion.asrf
+    short_name: ASRF
+  - id: nf.fsp.bssnf
+    short_name: BSS-NF
+  - id: nf.fsp.micnf
+    short_name: MIC-NF
+  - id: nf.ddc.hodge_canonical
+    short_name: HCNF
+  - id: nf.ddc.trace_merkle
+    short_name: TMNF
+  - id: nf.ddc.context_boundary
+    short_name: CBNF
+  - id: nf.ddc.loss_ledger
+    short_name: LLNF
+  - id: nf.ddc.refusal_receipt
+    short_name: RRNF
+  - id: nf.ddc.terminal_partition
+    short_name: TPNF
+  - id: nf.ddc.lift_ledger
+    short_name: LNLF
+  - id: nf.ddc.dual_witness
+    short_name: DWNF
+
+named_in_the_source_without_a_definition:
+  - RBGNF
+  - IZQNF
+  - RBNF
+
+documentation_lints:
+  - id: nf.classical.0nf
+    qualifies_as_true_normal_form: false
+  - id: nf.classical.3nf
+    fields:
+      definition.quadrilateral.dependency_preservation.status: preserved_by_synthesis
+  - id: nf.classical.bcnf
+    fields:
+      definition.quadrilateral.dependency_preservation.status: not_always
+  - id: nf.classical.etnf
+    formal_statement_contains:
+      - bcnf
+      - superkey
+  - id: nf.classical.rfnf
+    formal_statement_contains:
+      - union
+      - superkey
+  - id: nf.classical.sknf
+    formal_statement_contains:
+      - irreducible
+      - superkey
+  - id: nf.classical.5nf
+    formal_statement_contains:
+      - implied by
+      - candidate keys
+  - id: nf.classical.6nf
+    formal_statement_contains:
+      - trivial
+    fields:
+      definition.binary_fact_shape.defines_membership: false
+  - id: nf.classical.dknf
+    qualifies_as_true_normal_form: false
+    fields:
+      definition.quadrilateral.syntactic_decision.status: undecidable_for_arbitrary_constraints
+
+# Backward compatibility alias for legacy parsers expecting membership_checks key
+membership_checks:
+  - id: nf.classical.0nf
+    qualifies_as_true_normal_form: false
+  - id: nf.classical.3nf
+    fields:
+      definition.quadrilateral.dependency_preservation.status: preserved_by_synthesis
+  - id: nf.classical.bcnf
+    fields:
+      definition.quadrilateral.dependency_preservation.status: not_always
+  - id: nf.classical.etnf
+    formal_statement_contains:
+      - bcnf
+      - superkey
+  - id: nf.classical.rfnf
+    formal_statement_contains:
+      - union
+      - superkey
+  - id: nf.classical.sknf
+    formal_statement_contains:
+      - irreducible
+      - superkey
+  - id: nf.classical.5nf
+    formal_statement_contains:
+      - implied by
+      - candidate keys
+  - id: nf.classical.6nf
+    formal_statement_contains:
+      - trivial
+    fields:
+      definition.binary_fact_shape.defines_membership: false
+  - id: nf.classical.dknf
+    qualifies_as_true_normal_form: false
+    fields:
+      definition.quadrilateral.syntactic_decision.status: undecidable_for_arbitrary_constraints

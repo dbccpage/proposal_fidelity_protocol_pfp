@@ -1,0 +1,252 @@
+"""PFP Canonical Data Types Package.
+
+AuthorityEffect: None.
+"""
+
+from __future__ import annotations
+
+import importlib
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    PfpUniversalPromptTemplate = PromptTemplate
+    from .base import ArmTemplate, AuthorityEffect, CheckerId, CohomologyDefectClass, ConstraintType, EvaluationStatus, ExecutionMode, FloatingPointRisk, MagmaAssociativityType, MissingPremise, ModelClass, Operatorizability, PfpAuthorityEffect, PfpBaseModel, RepresentationRewrite, RuntimeAction, Severity, StructureDeltaMetric, TaskFamily, TaskModeFidelity, TrialStatus, VariableIdentifierPermutation, object_digest
+    from .cycle_balance import ActiveObstruction, ArithmeticDomain, BoundaryMatrices, Carrier, ClaimedMove, CycleBalanceCandidate, CycleBalanceProblem, CycleBalanceQuartet, CycleBalanceReceipt, CycleBalanceVerifier, Edge, Face, PfpActiveObstruction, PfpArithmeticDomain, PfpBoundaryMatrices, PfpCarrier, PfpClaimedMove, PfpCycleBalanceCandidate, PfpCycleBalanceProblem, PfpCycleBalanceQuartet, PfpCycleBalanceReceipt, PfpCycleBalanceVerifier, PfpEdge, PfpFace, PfpStaticCellBounds, PfpVerificationRule, PfpVerificationStatus, StaticCellBounds, VerificationRule, VerificationStatus
+    from .modes import ClusterEntry, ClusterIndex, ManifestMode, ModeCatalog, ModeCatalogEntry, ModeCluster, ModeFile, PfpClusterEntry, PfpClusterIndex, PfpManifestMode, PfpModeCatalog, PfpModeCatalogEntry, PfpModeCluster, PfpModeFile, PfpVerifierContract, VerifierContract
+    from .normal_forms import NfDomainIndex, NfFamily, NfIndexEntry, NormalFormClassification, NormalFormContract, NormalFormContractIdentity, PfpNfDomainIndex, PfpNfFamily, PfpNfIndexEntry, PfpNormalFormClassification, PfpNormalFormContract, PfpNormalFormContractIdentity
+    from .pilot_comparison import ComparisonAggregates, ComparisonRatios, PilotComparisonResults, TestComparisonEntry, TestKindAggregate
+    from .pilot_response import EvaluationReport, ExecutionReceipt, PilotResponse, ProcessIntegrityPayload, PromptResponsePayload, ResponseSectionPayload, ResponseSummaryPayload, SanitizationReport
+    from .pilot_spec import PilotCoordinates, PilotHostGate, PilotIngress, PilotSpec
+    from .rewrite_test_plan import RewriteTestCase, RewriteTestItem, RewriteTestPlan, TestPlanCounts, TestPlanExpectedOutcome, TestPlanSeedRef, TestPlanTemplateRef
+    from .test_spec import ActualTestOutcome, ExpectedTestOutcome, TestMetrics, TestSpec
+    from .prompt_templates import AntibodySlot, AntipatternSlot, ClaimHygiene, EvaluatorBinding, EvaluatorScopeRule, EvidenceLevel, GuidanceSlot, HelpfulPatternSlot, Mss0GrammarConstraint, Mss0Level, Mss0TypingRules, NegativeMutationFixture, OpSemantics, PStarPrompt, PfpClaimHygiene, PfpEvaluatorBinding, PfpEvaluatorScopeRule, PfpEvidenceLevel, PfpMss0GrammarConstraint, PfpMss0Level, PfpMss0TypingRules, PfpOpSemantics, PfpSemanticPolicyManifest, PromptLineageSlot, PromptTemplate, ReplacementDefault, RoleManifest, RuleSlot, SemanticPolicyManifest, SystemPromptManifest
+    from .rewriting import BoundaryWire, ByteSpan, PfpBoundaryWire, PfpByteSpan, PfpRewritingContract, PfpSpanPartition, PfpSpanRole, PfpSymbolMapping, RewritingContract, SpanPartition, SpanRole, SymbolMapping
+    from .schemas import EnvelopeSchemaEntry, GrammarSchemaEntry, PfpEnvelopeSchemaEntry, PfpGrammarSchemaEntry, PfpSchemaRegister, SchemaRegister
+    from .seed_prompts import CodebookSlotModel, ExpectedOutcome, InputTypingModel, RewriteMetadataModel, SeedPrompt
+    from .stages import PfpStageController, PfpStageExecutor, PfpStageFile, PfpStageInputContract, PfpStageName, PfpStageReference, StageController, StageExecutor, StageFile, StageInputContract, StageName, StageReference
+    from .task_packets import AllowedTransform, EvidenceCeiling, FableLongHorizonTaskPacket, FramingMode, NextWorkItem, OraclePolicy, PacketKind, PfpAllowedTransform, PfpEvidenceCeiling, PfpFableLongHorizonTaskPacket, PfpFramingMode, PfpNextWorkItem, PfpOraclePolicy, PfpPacketKind
+    from .type_register import ModuleRow, ModuleSource, ModuleStatus, ModuleWorld, PfpModuleRow, PfpModuleSource, PfpModuleStatus, PfpModuleWorld, PfpTypeRegister, PfpYamlRef, PfpYamlRole, TypeRegister, YamlRef, YamlRole
+
+
+__all__ = ['PfpBaseModel', 'object_digest', 'PfpAuthorityEffect', 'AuthorityEffect', 'TaskFamily', 'ExecutionMode', 'TrialStatus', 'EvaluationStatus', 'ConstraintType', 'Operatorizability', 'RuntimeAction', 'Severity', 'TaskModeFidelity', 'VariableIdentifierPermutation', 'FloatingPointRisk', 'ArmTemplate', 'MissingPremise', 'CohomologyDefectClass', 'MagmaAssociativityType', 'CheckerId', 'StructureDeltaMetric', 'RepresentationRewrite', 'ModelClass', 'PilotCoordinates', 'PilotIngress', 'PilotHostGate', 'PilotSpec', 'ExpectedTestOutcome', 'ActualTestOutcome', 'TestMetrics', 'TestSpec', 'TestPlanTemplateRef', 'TestPlanSeedRef', 'TestPlanExpectedOutcome', 'TestPlanCounts', 'RewriteTestCase', 'RewriteTestItem', 'RewriteTestPlan', 'TestKindAggregate', 'ComparisonRatios', 'ComparisonAggregates', 'TestComparisonEntry', 'PilotComparisonResults', 'ResponseSummaryPayload', 'ProcessIntegrityPayload', 'ResponseSectionPayload', 'PromptResponsePayload', 'SanitizationReport', 'EvaluationReport', 'ExecutionReceipt', 'PilotResponse', 'PromptLineageSlot', 'RuleSlot', 'AntibodySlot', 'AntipatternSlot', 'HelpfulPatternSlot', 'GuidanceSlot', 'NegativeMutationFixture', 'PromptTemplate', 'PfpUniversalPromptTemplate', 'PStarPrompt', 'PfpSemanticPolicyManifest', 'SemanticPolicyManifest', 'PfpMss0GrammarConstraint', 'Mss0GrammarConstraint', 'PfpOpSemantics', 'OpSemantics', 'PfpMss0Level', 'Mss0Level', 'PfpMss0TypingRules', 'Mss0TypingRules', 'PfpEvaluatorBinding', 'EvaluatorBinding', 'PfpEvaluatorScopeRule', 'EvaluatorScopeRule', 'PfpEvidenceLevel', 'EvidenceLevel', 'ReplacementDefault', 'PfpClaimHygiene', 'ClaimHygiene', 'RoleManifest', 'SystemPromptManifest', 'CodebookSlotModel', 'RewriteMetadataModel', 'InputTypingModel', 'ExpectedOutcome', 'SeedPrompt', 'PfpArithmeticDomain', 'ArithmeticDomain', 'PfpClaimedMove', 'ClaimedMove', 'PfpVerificationRule', 'VerificationRule', 'PfpVerificationStatus', 'VerificationStatus', 'PfpStaticCellBounds', 'StaticCellBounds', 'PfpEdge', 'Edge', 'PfpFace', 'Face', 'PfpCarrier', 'Carrier', 'PfpBoundaryMatrices', 'BoundaryMatrices', 'PfpActiveObstruction', 'ActiveObstruction', 'PfpCycleBalanceProblem', 'CycleBalanceProblem', 'PfpCycleBalanceCandidate', 'CycleBalanceCandidate', 'PfpCycleBalanceVerifier', 'CycleBalanceVerifier', 'PfpCycleBalanceReceipt', 'CycleBalanceReceipt', 'PfpCycleBalanceQuartet', 'CycleBalanceQuartet', 'PfpAllowedTransform', 'AllowedTransform', 'PfpFramingMode', 'FramingMode', 'PfpEvidenceCeiling', 'EvidenceCeiling', 'PfpOraclePolicy', 'OraclePolicy', 'PfpPacketKind', 'PacketKind', 'PfpNextWorkItem', 'NextWorkItem', 'PfpFableLongHorizonTaskPacket', 'FableLongHorizonTaskPacket', 'PfpModeCluster', 'ModeCluster', 'PfpModeCatalogEntry', 'ModeCatalogEntry', 'PfpModeCatalog', 'ModeCatalog', 'PfpVerifierContract', 'VerifierContract', 'PfpModeFile', 'ModeFile', 'PfpClusterEntry', 'ClusterEntry', 'PfpClusterIndex', 'ClusterIndex', 'PfpManifestMode', 'ManifestMode', 'PfpNfFamily', 'NfFamily', 'PfpNfIndexEntry', 'NfIndexEntry', 'PfpNfDomainIndex', 'NfDomainIndex', 'PfpNormalFormContractIdentity', 'NormalFormContractIdentity', 'PfpNormalFormClassification', 'NormalFormClassification', 'PfpNormalFormContract', 'NormalFormContract', 'PfpSpanRole', 'SpanRole', 'PfpByteSpan', 'ByteSpan', 'PfpSpanPartition', 'SpanPartition', 'PfpBoundaryWire', 'BoundaryWire', 'PfpSymbolMapping', 'SymbolMapping', 'PfpRewritingContract', 'RewritingContract', 'PfpEnvelopeSchemaEntry', 'EnvelopeSchemaEntry', 'PfpGrammarSchemaEntry', 'GrammarSchemaEntry', 'PfpSchemaRegister', 'SchemaRegister', 'PfpStageName', 'StageName', 'PfpStageExecutor', 'StageExecutor', 'PfpStageInputContract', 'StageInputContract', 'PfpStageFile', 'StageFile', 'PfpStageReference', 'StageReference', 'PfpStageController', 'StageController', 'PfpModuleWorld', 'ModuleWorld', 'PfpModuleSource', 'ModuleSource', 'PfpYamlRole', 'YamlRole', 'PfpModuleStatus', 'ModuleStatus', 'PfpYamlRef', 'YamlRef', 'PfpModuleRow', 'ModuleRow', 'PfpTypeRegister', 'TypeRegister']
+
+_LAZY_IMPORTS: dict[str, tuple[str, str]] = {
+    'PfpUniversalPromptTemplate': ('.prompt_templates', 'PromptTemplate'),
+    'ArmTemplate': ('.base', 'ArmTemplate'),
+    'AuthorityEffect': ('.base', 'AuthorityEffect'),
+    'CheckerId': ('.base', 'CheckerId'),
+    'CohomologyDefectClass': ('.base', 'CohomologyDefectClass'),
+    'ConstraintType': ('.base', 'ConstraintType'),
+    'EvaluationStatus': ('.base', 'EvaluationStatus'),
+    'ExecutionMode': ('.base', 'ExecutionMode'),
+    'FloatingPointRisk': ('.base', 'FloatingPointRisk'),
+    'MagmaAssociativityType': ('.base', 'MagmaAssociativityType'),
+    'MissingPremise': ('.base', 'MissingPremise'),
+    'ModelClass': ('.base', 'ModelClass'),
+    'Operatorizability': ('.base', 'Operatorizability'),
+    'PfpAuthorityEffect': ('.base', 'PfpAuthorityEffect'),
+    'PfpBaseModel': ('.base', 'PfpBaseModel'),
+    'RepresentationRewrite': ('.base', 'RepresentationRewrite'),
+    'RuntimeAction': ('.base', 'RuntimeAction'),
+    'Severity': ('.base', 'Severity'),
+    'StructureDeltaMetric': ('.base', 'StructureDeltaMetric'),
+    'TaskFamily': ('.base', 'TaskFamily'),
+    'TaskModeFidelity': ('.base', 'TaskModeFidelity'),
+    'TrialStatus': ('.base', 'TrialStatus'),
+    'VariableIdentifierPermutation': ('.base', 'VariableIdentifierPermutation'),
+    'object_digest': ('.base', 'object_digest'),
+    'ActiveObstruction': ('.cycle_balance', 'ActiveObstruction'),
+    'ArithmeticDomain': ('.cycle_balance', 'ArithmeticDomain'),
+    'BoundaryMatrices': ('.cycle_balance', 'BoundaryMatrices'),
+    'Carrier': ('.cycle_balance', 'Carrier'),
+    'ClaimedMove': ('.cycle_balance', 'ClaimedMove'),
+    'CycleBalanceCandidate': ('.cycle_balance', 'CycleBalanceCandidate'),
+    'CycleBalanceProblem': ('.cycle_balance', 'CycleBalanceProblem'),
+    'CycleBalanceQuartet': ('.cycle_balance', 'CycleBalanceQuartet'),
+    'CycleBalanceReceipt': ('.cycle_balance', 'CycleBalanceReceipt'),
+    'CycleBalanceVerifier': ('.cycle_balance', 'CycleBalanceVerifier'),
+    'Edge': ('.cycle_balance', 'Edge'),
+    'Face': ('.cycle_balance', 'Face'),
+    'PfpActiveObstruction': ('.cycle_balance', 'PfpActiveObstruction'),
+    'PfpArithmeticDomain': ('.cycle_balance', 'PfpArithmeticDomain'),
+    'PfpBoundaryMatrices': ('.cycle_balance', 'PfpBoundaryMatrices'),
+    'PfpCarrier': ('.cycle_balance', 'PfpCarrier'),
+    'PfpClaimedMove': ('.cycle_balance', 'PfpClaimedMove'),
+    'PfpCycleBalanceCandidate': ('.cycle_balance', 'PfpCycleBalanceCandidate'),
+    'PfpCycleBalanceProblem': ('.cycle_balance', 'PfpCycleBalanceProblem'),
+    'PfpCycleBalanceQuartet': ('.cycle_balance', 'PfpCycleBalanceQuartet'),
+    'PfpCycleBalanceReceipt': ('.cycle_balance', 'PfpCycleBalanceReceipt'),
+    'PfpCycleBalanceVerifier': ('.cycle_balance', 'PfpCycleBalanceVerifier'),
+    'PfpEdge': ('.cycle_balance', 'PfpEdge'),
+    'PfpFace': ('.cycle_balance', 'PfpFace'),
+    'PfpStaticCellBounds': ('.cycle_balance', 'PfpStaticCellBounds'),
+    'PfpVerificationRule': ('.cycle_balance', 'PfpVerificationRule'),
+    'PfpVerificationStatus': ('.cycle_balance', 'PfpVerificationStatus'),
+    'StaticCellBounds': ('.cycle_balance', 'StaticCellBounds'),
+    'VerificationRule': ('.cycle_balance', 'VerificationRule'),
+    'VerificationStatus': ('.cycle_balance', 'VerificationStatus'),
+    'ClusterEntry': ('.modes', 'ClusterEntry'),
+    'ClusterIndex': ('.modes', 'ClusterIndex'),
+    'ManifestMode': ('.modes', 'ManifestMode'),
+    'ModeCatalog': ('.modes', 'ModeCatalog'),
+    'ModeCatalogEntry': ('.modes', 'ModeCatalogEntry'),
+    'ModeCluster': ('.modes', 'ModeCluster'),
+    'ModeFile': ('.modes', 'ModeFile'),
+    'PfpClusterEntry': ('.modes', 'PfpClusterEntry'),
+    'PfpClusterIndex': ('.modes', 'PfpClusterIndex'),
+    'PfpManifestMode': ('.modes', 'PfpManifestMode'),
+    'PfpModeCatalog': ('.modes', 'PfpModeCatalog'),
+    'PfpModeCatalogEntry': ('.modes', 'PfpModeCatalogEntry'),
+    'PfpModeCluster': ('.modes', 'PfpModeCluster'),
+    'PfpModeFile': ('.modes', 'PfpModeFile'),
+    'PfpVerifierContract': ('.modes', 'PfpVerifierContract'),
+    'VerifierContract': ('.modes', 'VerifierContract'),
+    'NfDomainIndex': ('.normal_forms', 'NfDomainIndex'),
+    'NfFamily': ('.normal_forms', 'NfFamily'),
+    'NfIndexEntry': ('.normal_forms', 'NfIndexEntry'),
+    'NormalFormClassification': ('.normal_forms', 'NormalFormClassification'),
+    'NormalFormContract': ('.normal_forms', 'NormalFormContract'),
+    'NormalFormContractIdentity': ('.normal_forms', 'NormalFormContractIdentity'),
+    'PfpNfDomainIndex': ('.normal_forms', 'PfpNfDomainIndex'),
+    'PfpNfFamily': ('.normal_forms', 'PfpNfFamily'),
+    'PfpNfIndexEntry': ('.normal_forms', 'PfpNfIndexEntry'),
+    'PfpNormalFormClassification': ('.normal_forms', 'PfpNormalFormClassification'),
+    'PfpNormalFormContract': ('.normal_forms', 'PfpNormalFormContract'),
+    'PfpNormalFormContractIdentity': ('.normal_forms', 'PfpNormalFormContractIdentity'),
+    'ComparisonAggregates': ('.pilot_comparison', 'ComparisonAggregates'),
+    'ComparisonRatios': ('.pilot_comparison', 'ComparisonRatios'),
+    'PilotComparisonResults': ('.pilot_comparison', 'PilotComparisonResults'),
+    'TestComparisonEntry': ('.pilot_comparison', 'TestComparisonEntry'),
+    'TestKindAggregate': ('.pilot_comparison', 'TestKindAggregate'),
+    'EvaluationReport': ('.pilot_response', 'EvaluationReport'),
+    'ExecutionReceipt': ('.pilot_response', 'ExecutionReceipt'),
+    'PilotResponse': ('.pilot_response', 'PilotResponse'),
+    'ProcessIntegrityPayload': ('.pilot_response', 'ProcessIntegrityPayload'),
+    'PromptResponsePayload': ('.pilot_response', 'PromptResponsePayload'),
+    'ResponseSectionPayload': ('.pilot_response', 'ResponseSectionPayload'),
+    'ResponseSummaryPayload': ('.pilot_response', 'ResponseSummaryPayload'),
+    'SanitizationReport': ('.pilot_response', 'SanitizationReport'),
+    'PilotCoordinates': ('.pilot_spec', 'PilotCoordinates'),
+    'PilotHostGate': ('.pilot_spec', 'PilotHostGate'),
+    'PilotIngress': ('.pilot_spec', 'PilotIngress'),
+    'PilotSpec': ('.pilot_spec', 'PilotSpec'),
+    'RewriteTestCase': ('.rewrite_test_plan', 'RewriteTestCase'),
+    'RewriteTestItem': ('.rewrite_test_plan', 'RewriteTestItem'),
+    'RewriteTestPlan': ('.rewrite_test_plan', 'RewriteTestPlan'),
+    'TestPlanCounts': ('.rewrite_test_plan', 'TestPlanCounts'),
+    'TestPlanExpectedOutcome': ('.rewrite_test_plan', 'TestPlanExpectedOutcome'),
+    'TestPlanSeedRef': ('.rewrite_test_plan', 'TestPlanSeedRef'),
+    'TestPlanTemplateRef': ('.rewrite_test_plan', 'TestPlanTemplateRef'),
+    'ActualTestOutcome': ('.test_spec', 'ActualTestOutcome'),
+    'ExpectedTestOutcome': ('.test_spec', 'ExpectedTestOutcome'),
+    'TestMetrics': ('.test_spec', 'TestMetrics'),
+    'TestSpec': ('.test_spec', 'TestSpec'),
+    'AntibodySlot': ('.prompt_templates', 'AntibodySlot'),
+    'AntipatternSlot': ('.prompt_templates', 'AntipatternSlot'),
+    'ClaimHygiene': ('.prompt_templates', 'ClaimHygiene'),
+    'EvaluatorBinding': ('.prompt_templates', 'EvaluatorBinding'),
+    'EvaluatorScopeRule': ('.prompt_templates', 'EvaluatorScopeRule'),
+    'EvidenceLevel': ('.prompt_templates', 'EvidenceLevel'),
+    'GuidanceSlot': ('.prompt_templates', 'GuidanceSlot'),
+    'HelpfulPatternSlot': ('.prompt_templates', 'HelpfulPatternSlot'),
+    'Mss0GrammarConstraint': ('.prompt_templates', 'Mss0GrammarConstraint'),
+    'Mss0Level': ('.prompt_templates', 'Mss0Level'),
+    'Mss0TypingRules': ('.prompt_templates', 'Mss0TypingRules'),
+    'NegativeMutationFixture': ('.prompt_templates', 'NegativeMutationFixture'),
+    'OpSemantics': ('.prompt_templates', 'OpSemantics'),
+    'PStarPrompt': ('.prompt_templates', 'PStarPrompt'),
+    'PfpClaimHygiene': ('.prompt_templates', 'PfpClaimHygiene'),
+    'PfpEvaluatorBinding': ('.prompt_templates', 'PfpEvaluatorBinding'),
+    'PfpEvaluatorScopeRule': ('.prompt_templates', 'PfpEvaluatorScopeRule'),
+    'PfpEvidenceLevel': ('.prompt_templates', 'PfpEvidenceLevel'),
+    'PfpMss0GrammarConstraint': ('.prompt_templates', 'PfpMss0GrammarConstraint'),
+    'PfpMss0Level': ('.prompt_templates', 'PfpMss0Level'),
+    'PfpMss0TypingRules': ('.prompt_templates', 'PfpMss0TypingRules'),
+    'PfpOpSemantics': ('.prompt_templates', 'PfpOpSemantics'),
+    'PfpSemanticPolicyManifest': ('.prompt_templates', 'PfpSemanticPolicyManifest'),
+    'PromptLineageSlot': ('.prompt_templates', 'PromptLineageSlot'),
+    'PromptTemplate': ('.prompt_templates', 'PromptTemplate'),
+    'ReplacementDefault': ('.prompt_templates', 'ReplacementDefault'),
+    'RoleManifest': ('.prompt_templates', 'RoleManifest'),
+    'RuleSlot': ('.prompt_templates', 'RuleSlot'),
+    'SemanticPolicyManifest': ('.prompt_templates', 'SemanticPolicyManifest'),
+    'SystemPromptManifest': ('.prompt_templates', 'SystemPromptManifest'),
+    'BoundaryWire': ('.rewriting', 'BoundaryWire'),
+    'ByteSpan': ('.rewriting', 'ByteSpan'),
+    'PfpBoundaryWire': ('.rewriting', 'PfpBoundaryWire'),
+    'PfpByteSpan': ('.rewriting', 'PfpByteSpan'),
+    'PfpRewritingContract': ('.rewriting', 'PfpRewritingContract'),
+    'PfpSpanPartition': ('.rewriting', 'PfpSpanPartition'),
+    'PfpSpanRole': ('.rewriting', 'PfpSpanRole'),
+    'PfpSymbolMapping': ('.rewriting', 'PfpSymbolMapping'),
+    'RewritingContract': ('.rewriting', 'RewritingContract'),
+    'SpanPartition': ('.rewriting', 'SpanPartition'),
+    'SpanRole': ('.rewriting', 'SpanRole'),
+    'SymbolMapping': ('.rewriting', 'SymbolMapping'),
+    'EnvelopeSchemaEntry': ('.schemas', 'EnvelopeSchemaEntry'),
+    'GrammarSchemaEntry': ('.schemas', 'GrammarSchemaEntry'),
+    'PfpEnvelopeSchemaEntry': ('.schemas', 'PfpEnvelopeSchemaEntry'),
+    'PfpGrammarSchemaEntry': ('.schemas', 'PfpGrammarSchemaEntry'),
+    'PfpSchemaRegister': ('.schemas', 'PfpSchemaRegister'),
+    'SchemaRegister': ('.schemas', 'SchemaRegister'),
+    'CodebookSlotModel': ('.seed_prompts', 'CodebookSlotModel'),
+    'ExpectedOutcome': ('.seed_prompts', 'ExpectedOutcome'),
+    'InputTypingModel': ('.seed_prompts', 'InputTypingModel'),
+    'RewriteMetadataModel': ('.seed_prompts', 'RewriteMetadataModel'),
+    'SeedPrompt': ('.seed_prompts', 'SeedPrompt'),
+    'PfpStageController': ('.stages', 'PfpStageController'),
+    'PfpStageExecutor': ('.stages', 'PfpStageExecutor'),
+    'PfpStageFile': ('.stages', 'PfpStageFile'),
+    'PfpStageInputContract': ('.stages', 'PfpStageInputContract'),
+    'PfpStageName': ('.stages', 'PfpStageName'),
+    'PfpStageReference': ('.stages', 'PfpStageReference'),
+    'StageController': ('.stages', 'StageController'),
+    'StageExecutor': ('.stages', 'StageExecutor'),
+    'StageFile': ('.stages', 'StageFile'),
+    'StageInputContract': ('.stages', 'StageInputContract'),
+    'StageName': ('.stages', 'StageName'),
+    'StageReference': ('.stages', 'StageReference'),
+    'AllowedTransform': ('.task_packets', 'AllowedTransform'),
+    'EvidenceCeiling': ('.task_packets', 'EvidenceCeiling'),
+    'FableLongHorizonTaskPacket': ('.task_packets', 'FableLongHorizonTaskPacket'),
+    'FramingMode': ('.task_packets', 'FramingMode'),
+    'NextWorkItem': ('.task_packets', 'NextWorkItem'),
+    'OraclePolicy': ('.task_packets', 'OraclePolicy'),
+    'PacketKind': ('.task_packets', 'PacketKind'),
+    'PfpAllowedTransform': ('.task_packets', 'PfpAllowedTransform'),
+    'PfpEvidenceCeiling': ('.task_packets', 'PfpEvidenceCeiling'),
+    'PfpFableLongHorizonTaskPacket': ('.task_packets', 'PfpFableLongHorizonTaskPacket'),
+    'PfpFramingMode': ('.task_packets', 'PfpFramingMode'),
+    'PfpNextWorkItem': ('.task_packets', 'PfpNextWorkItem'),
+    'PfpOraclePolicy': ('.task_packets', 'PfpOraclePolicy'),
+    'PfpPacketKind': ('.task_packets', 'PfpPacketKind'),
+    'ModuleRow': ('.type_register', 'ModuleRow'),
+    'ModuleSource': ('.type_register', 'ModuleSource'),
+    'ModuleStatus': ('.type_register', 'ModuleStatus'),
+    'ModuleWorld': ('.type_register', 'ModuleWorld'),
+    'PfpModuleRow': ('.type_register', 'PfpModuleRow'),
+    'PfpModuleSource': ('.type_register', 'PfpModuleSource'),
+    'PfpModuleStatus': ('.type_register', 'PfpModuleStatus'),
+    'PfpModuleWorld': ('.type_register', 'PfpModuleWorld'),
+    'PfpTypeRegister': ('.type_register', 'PfpTypeRegister'),
+    'PfpYamlRef': ('.type_register', 'PfpYamlRef'),
+    'PfpYamlRole': ('.type_register', 'PfpYamlRole'),
+    'TypeRegister': ('.type_register', 'TypeRegister'),
+    'YamlRef': ('.type_register', 'YamlRef'),
+    'YamlRole': ('.type_register', 'YamlRole'),
+}
+
+
+def __getattr__(name: str) -> Any:
+    target = _LAZY_IMPORTS.get(name)
+    if target is not None:
+        mod_name, attr_name = target
+        mod = importlib.import_module(mod_name, __name__)
+        val = getattr(mod, attr_name)
+        globals()[name] = val
+        return val
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | set(__all__))

@@ -1,0 +1,753 @@
+{
+  "fixtures": [
+    {
+      "id": "pos",
+      "note": "vertices p, q, r; edges a: p to q, b: q to r, c: p to r; the face +a +b -c, whose boundary's boundary is zero",
+      "role": "positive",
+      "structure": {
+        "sorts": [
+          [
+            "cell",
+            7
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "vertex",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "edge",
+            "sorts": [
+              "cell",
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "face",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "plus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "minus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "edge",
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          [
+            "edge",
+            [
+              4,
+              1,
+              2
+            ]
+          ],
+          [
+            "edge",
+            [
+              5,
+              0,
+              2
+            ]
+          ],
+          [
+            "face",
+            [
+              6
+            ]
+          ],
+          [
+            "minus",
+            [
+              6,
+              5
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "vertex",
+            [
+              0
+            ]
+          ],
+          [
+            "vertex",
+            [
+              1
+            ]
+          ],
+          [
+            "vertex",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "own_neg",
+      "note": "edge b runs to s, a cell no one declared a vertex",
+      "role": "own_negative",
+      "structure": {
+        "sorts": [
+          [
+            "cell",
+            8
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "vertex",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "edge",
+            "sorts": [
+              "cell",
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "face",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "plus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "minus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "edge",
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          [
+            "edge",
+            [
+              4,
+              1,
+              7
+            ]
+          ],
+          [
+            "edge",
+            [
+              5,
+              0,
+              2
+            ]
+          ],
+          [
+            "face",
+            [
+              6
+            ]
+          ],
+          [
+            "minus",
+            [
+              6,
+              5
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "vertex",
+            [
+              0
+            ]
+          ],
+          [
+            "vertex",
+            [
+              1
+            ]
+          ],
+          [
+            "vertex",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "near_face",
+      "note": "the face takes s, which is no declared edge",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "cell",
+            8
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "vertex",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "edge",
+            "sorts": [
+              "cell",
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "face",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "plus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "minus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "edge",
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          [
+            "edge",
+            [
+              4,
+              1,
+              2
+            ]
+          ],
+          [
+            "edge",
+            [
+              5,
+              0,
+              2
+            ]
+          ],
+          [
+            "face",
+            [
+              6
+            ]
+          ],
+          [
+            "minus",
+            [
+              6,
+              7
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "vertex",
+            [
+              0
+            ]
+          ],
+          [
+            "vertex",
+            [
+              1
+            ]
+          ],
+          [
+            "vertex",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "minus_declared"
+    },
+    {
+      "id": "near_kinds",
+      "note": "edge a is also declared a vertex",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "cell",
+            7
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "vertex",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "edge",
+            "sorts": [
+              "cell",
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "face",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "plus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "minus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "edge",
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          [
+            "edge",
+            [
+              4,
+              1,
+              2
+            ]
+          ],
+          [
+            "edge",
+            [
+              5,
+              0,
+              2
+            ]
+          ],
+          [
+            "face",
+            [
+              6
+            ]
+          ],
+          [
+            "minus",
+            [
+              6,
+              5
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "vertex",
+            [
+              0
+            ]
+          ],
+          [
+            "vertex",
+            [
+              1
+            ]
+          ],
+          [
+            "vertex",
+            [
+              2
+            ]
+          ],
+          [
+            "vertex",
+            [
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "kinds_apart"
+    },
+    {
+      "id": "near_two",
+      "note": "edge a has two pairs of ends",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "cell",
+            7
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "vertex",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "edge",
+            "sorts": [
+              "cell",
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "face",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "plus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "minus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "edge",
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          [
+            "edge",
+            [
+              3,
+              0,
+              2
+            ]
+          ],
+          [
+            "edge",
+            [
+              4,
+              1,
+              2
+            ]
+          ],
+          [
+            "edge",
+            [
+              5,
+              0,
+              2
+            ]
+          ],
+          [
+            "face",
+            [
+              6
+            ]
+          ],
+          [
+            "minus",
+            [
+              6,
+              5
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "vertex",
+            [
+              0
+            ]
+          ],
+          [
+            "vertex",
+            [
+              1
+            ]
+          ],
+          [
+            "vertex",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": []
+      }
+    },
+    {
+      "id": "near_stray",
+      "note": "an edge takes a signed term",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "cell",
+            7
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "vertex",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "edge",
+            "sorts": [
+              "cell",
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "face",
+            "sorts": [
+              "cell"
+            ]
+          },
+          {
+            "name": "plus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          },
+          {
+            "name": "minus",
+            "sorts": [
+              "cell",
+              "cell"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "edge",
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          [
+            "edge",
+            [
+              4,
+              1,
+              2
+            ]
+          ],
+          [
+            "edge",
+            [
+              5,
+              0,
+              2
+            ]
+          ],
+          [
+            "face",
+            [
+              6
+            ]
+          ],
+          [
+            "minus",
+            [
+              3,
+              4
+            ]
+          ],
+          [
+            "minus",
+            [
+              6,
+              5
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              3
+            ]
+          ],
+          [
+            "plus",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "vertex",
+            [
+              0
+            ]
+          ],
+          [
+            "vertex",
+            [
+              1
+            ]
+          ],
+          [
+            "vertex",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": []
+      }
+    }
+  ]
+}

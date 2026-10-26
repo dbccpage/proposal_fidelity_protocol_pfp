@@ -1,0 +1,100 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.bianchi_regge
+  name: Regge-Bianchi Normal Form (arXiv:1904.01966 Recovery)
+  short_name: RBNF
+  version: v0
+  theory_status: admitted
+  contract_status: draft
+  verification_status: absent
+  family: physics
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - simplicial_riemann_curvature
+  - bianchi_identities
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: discrete Riemann tensor antisymmetry violations, non-vanishing
+    cyclic Jacobi sums, and unclosed bone boundary flux
+  preserves_invariant: exact discrete 1st and 2nd Bianchi identities and discrete
+    vacuum Einstein field equations
+  protected_skeleton:
+  - discrete_riemann_tensor
+  - ricci_tensor_contraction
+  - ricci_scalar_curvature
+  - bone_boundary_closure
+  - discrete_einstein_residuals
+  erased_structure:
+  - continuous_christoffel_symbols
+  non_claims:
+  - does not prove that discrete Bianchi identities imply continuum Einstein-Hilbert
+    solutions without continuum limits
+  - does not eliminate non-local holonomy effects around finite simplicial loops
+declarations_required:
+- bone_density: rho_p
+- deficit_angle: epsilon_p
+- bone_orientation_tensor: U_{alpha beta}^p
+- hinge_length_or_area: L_p
+validation_criteria:
+- riemann_antisymmetry: R_{alpha beta mu nu} = - R_{beta alpha mu nu} = - R_{alpha
+    beta nu mu}
+- first_bianchi_cyclic: R_{[alpha beta mu] nu} = R_{alpha beta mu nu} + R_{beta mu
+    alpha nu} + R_{mu alpha beta nu} = 0
+- ricci_scalar_relation: R = 2 * rho_p * epsilon_p
+- second_bianchi_closure: sum_p epsilon_p * U^p = 0
+- discrete_einstein_vacuum: sum_{p \supset e} epsilon_p * (dL_p / dl_e) = 0
+terminal_routes:
+- Unsupported
+- BianchiExact
+- FirstBianchiViolation
+- SecondBianchiViolation
+- EinsteinResidualNonZero
+terminal_route_map:
+  all_satisfied: BianchiExact
+  first_violation: FirstBianchiViolation
+  second_violation: SecondBianchiViolation
+  einstein_residual: EinsteinResidualNonZero
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: discrete Riemann tensor antisymmetry violations, non-vanishing
+    cyclic Jacobi sums, and unclosed bone boundary flux. exact discrete 1st and 2nd
+    Bianchi identities and discrete vacuum Einstein field equations
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: discrete Riemann tensor antisymmetry violations, non-vanishing
+      cyclic Jacobi sums, and unclosed bone boundary flux
+    lossless_join:
+      status: declared_reconstruction
+      statement: exact discrete 1st and 2nd Bianchi identities and discrete vacuum
+        Einstein field equations
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+canonical_terminal_map:
+  Unsupported: Unsupported
+  BianchiExact: Preserve
+  FirstBianchiViolation: Reject
+  SecondBianchiViolation: Reject
+  EinsteinResidualNonZero: Reject
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+certification:
+  certificate_required: true
+  certificate_kind: nf.physics.bianchi_regge_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+evidence_required: []
+schema_ref: ./normal_form_contract_schema.yaml

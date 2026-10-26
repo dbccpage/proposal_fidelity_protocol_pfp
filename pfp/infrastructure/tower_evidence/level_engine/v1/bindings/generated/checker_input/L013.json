@@ -1,0 +1,986 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "route_replay",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": [
+                "0/1",
+                "1/1",
+                "2/1",
+                "3/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "residual_closed",
+              "witness": [
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1",
+                "1/1"
+              ]
+            },
+            {
+              "cochain": [
+                "1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            3
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:09ae3cb51b14fab7ca382e093ef0368059d97961eb91771942186b177e6fdf28",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": [
+                "0/1",
+                "1/1",
+                "2/1",
+                "3/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": null
+            },
+            {
+              "cochain": [
+                "1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            3
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:19c4794d75d0f6f4228109e3fa57b1215511f19208c47197189776d92eab7383",
+      "native_code": "FAILS:exact_replayed,repeat_replayed,route_is_class",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_board",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": [
+                "0/1",
+                "1/1",
+                "2/1",
+                "3/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "residual_closed",
+              "witness": [
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1",
+                "1/1"
+              ]
+            },
+            {
+              "cochain": [
+                "1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            3
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "-1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:7b738861a2dcbf921305312c3bfebdc81bdcafb5ac073e3964777cf9c1750aff",
+      "native_code": "FAILS:board_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_unwitnessed",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": null
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "residual_closed",
+              "witness": [
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1",
+                "1/1"
+              ]
+            },
+            {
+              "cochain": [
+                "1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            3
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:035ab83072f5c07fc22366d3f5247b93dd913d2819400becb6788f2b9959c1e1",
+      "native_code": "FAILS:exact_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_exact",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": [
+                "0/1",
+                "1/1",
+                "2/1",
+                "4/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "residual_closed",
+              "witness": [
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1",
+                "1/1"
+              ]
+            },
+            {
+              "cochain": [
+                "1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            3
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:436b50bac65709d39ca27bdb5649272e3b15a80ab6fcc7ff0b8358ae67b7603a",
+      "native_code": "FAILS:exact_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_dual",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": [
+                "0/1",
+                "1/1",
+                "2/1",
+                "3/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "residual_closed",
+              "witness": [
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1",
+                "2/1"
+              ]
+            },
+            {
+              "cochain": [
+                "1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            3
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:f0a8667608c6f2860c7c1e2068defbcbff55fafd7f51c0516cdc934798fa0b99",
+      "native_code": "FAILS:dual_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_open",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": [
+                "0/1",
+                "1/1",
+                "2/1",
+                "3/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "residual_closed",
+              "witness": [
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1",
+                "1/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            3
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:3ec0eb014720cad542fd16c075995e5264304e2b3622f9e2e4117c64556661ab",
+      "native_code": "FAILS:route_is_class",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_open"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "cases": [
+            {
+              "cochain": [
+                "1/1",
+                "2/1",
+                "1/1",
+                "2/1",
+                "1/1"
+              ],
+              "route": "exact",
+              "witness": [
+                "0/1",
+                "1/1",
+                "2/1",
+                "3/1"
+              ]
+            },
+            {
+              "cochain": [
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "1/1"
+              ],
+              "route": "residual_closed",
+              "witness": [
+                "0/1",
+                "0/1",
+                "1/1",
+                "-1/1",
+                "1/1"
+              ]
+            },
+            {
+              "cochain": [
+                "1/1",
+                "0/1",
+                "0/1",
+                "0/1",
+                "0/1"
+              ],
+              "route": "open",
+              "witness": null
+            }
+          ],
+          "cycle": [
+            0,
+            1
+          ],
+          "d0": [
+            [
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ],
+            [
+              "-1/1",
+              "0/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "1/1",
+              "0/1"
+            ],
+            [
+              "0/1",
+              "-1/1",
+              "0/1",
+              "1/1"
+            ],
+            [
+              "0/1",
+              "0/1",
+              "-1/1",
+              "1/1"
+            ]
+          ],
+          "d1": [
+            [
+              "1/1",
+              "-1/1",
+              "1/1",
+              "0/1",
+              "0/1"
+            ]
+          ],
+          "trace": [
+            [
+              0,
+              "exact"
+            ],
+            [
+              1,
+              "residual_closed"
+            ],
+            [
+              2,
+              "open"
+            ],
+            [
+              0,
+              "exact"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:88b8304ffccc435b9338c6dda9448986377067e0231c6cf50d2978448031bbca",
+      "native_code": "FAILS:repeat_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 13,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_013"
+}

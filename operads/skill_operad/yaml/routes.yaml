@@ -1,0 +1,159 @@
+# Keyword routes for resolve.py (SHARED_CONTRACT / CODE_GATE).
+# Prefer contracts and gates over new skills. AuthorityEffect: None.
+
+shared_contracts:
+  - id: historical_pr_immunity
+    patterns:
+      - "\\bhistorical\\b[\\s\\S]*\\bpull(?:[ _-]?requests?)\\b"
+      - "\\bhistorical\\b[\\s\\S]*\\bprs?\\b"
+      - "\\bpull(?:[ _-]?requests?)\\b[\\s\\S]*immun"
+      - "\\bconversation(?:[ _-]?dags?)\\b"
+      - "\\banti-?morphisms?\\b[\\s\\S]*\\bprs?\\b"
+      - "\\bprs?\\b[\\s\\S]*\\banti-?morphisms?\\b"
+    target: ".agents/skills/_shared/historical_pr_immunity_campaign.md"
+    cite: "Historical PR and conversation-DAG mining -> shared immunity campaign contract; candidates remain proposed."
+
+  - id: oe010_dda
+    patterns:
+      - "\\bdda\\b"
+      - "authorityeffect\\s*:?\\s*none"
+      - "post-?t\\s+non-?mutation"
+      - "oe-?010"
+      - "intake\\s+exclusion"
+    target: ".agents/skills/panep-math-and-physics-prof/SKILL.md"
+    cite: "DDA finding → validate against OE-010 / panep-math-and-physics-prof; do not re-host laws in autoskill."
+
+  - id: six_host_parity
+    patterns:
+      - "four-?host"
+      - "four-?root"
+      - "\\.gemini"
+      - "\\.antigravity"
+      - "five-?host"
+      - "five-?root"
+      - "host.?parity"
+      - "cross-?host\\s+skill"
+    target: "omega_engine_operads/skill_operad/skill_compiler/knowledge_parity.py"
+    cite: "Host doctrine -> knowledge_parity; not a new skill essay."
+
+  - id: coda_gtla_paper
+    patterns:
+      - "coda_gtla"
+      - "gtla"
+      - "claim.?ledger"
+      - "research_layout"
+      - "paper.?compliance"
+    target: ".agents/skills/_shared/coda_gtla_paper_compliance.md"
+    cite: "Paper hygiene → _shared/coda_gtla_paper_compliance.md once; stages cite only."
+
+  - id: test_quality
+    patterns:
+      - "assert!\\s*\\(\\s*true\\s*\\)"
+      - "mock-?only"
+      - "test.?quality"
+      - "soviet.?inspector"
+      - "failure-?path"
+      # A test that reports ok while verifying nothing is the same class as a
+      # tautological assert. These were added after five silent-skip guards and
+      # a nonportable conformance fixture routed to default SKILL_PROSE.
+      - "silent(?:ly)?.?skip"
+      - "self-?skip"
+      - "skipp(?:ed|ing)\\b[\\s\\S]*\\btest"
+      - "\\btest\\b[\\s\\S]*\\breturn(?:ed|s)?\\s+early"
+      - "vacuous(?:ly)?\\s+pass"
+      - "never\\s+passed"
+      - "green\\s+no-?op"
+    target: ".agents/skills/_shared/test_quality_law.md"
+    cite: "Test quality → _shared/test_quality_law.md; Blackrod enforces, does not re-host."
+
+  - id: canonical_value_validation
+    patterns:
+      - "canonical\\s+(?:form|spelling)"
+      - "two\\s+spellings"
+      - "newtype"
+      - "digest\\s+equality"
+      - "normalis|normaliz"
+      - "unforgeable"
+    target: ".agents/skills/_shared/test_quality_law.md"
+    cite: "A validator for a value with more than one spelling returns a canonical form, not a bool; at a trust boundary make it a newtype whose only constructor is the parser."
+
+  - id: append_only_log_integrity
+    patterns:
+      - "hash\\s+chain"
+      - "append-?only"
+      # "truncat" alone fired on "truncation bound" and "truncated integral" --
+      # ordinary mathematics with nothing to do with log integrity. Require the
+      # word to actually be about a log, chain or entry.
+      - "truncat\\w*[\\s\\S]{0,40}?(?:log|chain|ledger|entr(?:y|ies)|receipt)"
+      - "(?:log|chain|ledger)[\\s\\S]{0,40}?truncat"
+      - "\\btrace\\s+log\\b"
+      - "tamper"
+    target: ".agents/skills/_shared/test_quality_law.md"
+    cite: "A hash chain cannot detect its own truncation; record the head outside the log, and test by removing the LAST entry rather than only a middle one."
+
+  - id: pipeline_exit_code
+    patterns:
+      - "pipestatus"
+      - "exit\\s+code[\\s\\S]*pipe"
+      - "\\|\\s*(?:tail|head|grep)\\b[\\s\\S]*exit"
+      - "masked?\\s+(?:the\\s+)?(?:exit|failure)"
+    target: ".agents/skills/_shared/rust_build_policy.md"
+    cite: "The PIPESTATUS trap applies to every gated producer, including cargo, pytest, and ad-hoc audit scripts; do not trust the final filter's exit code."
+
+  - id: formal_lean
+    patterns:
+      - "\\blean\\s*4\\b"
+      - "\\bsorry\\b"
+      - "formal.?claim"
+      - "lake\\s+build"
+      - "axiom.?audit"
+    target: ".agents/skills/_shared/coda_gtla_paper_compliance.md"
+    cite: "FORMAL_CLAIM ⇒ model subject ∧ bound build ∧ axiom audit (contract/route, not autoskill prose)."
+
+code_gates:
+  - id: skill_budget
+    patterns:
+      - "300.?line"
+      - "skill.?budget"
+      - "hot.?context"
+      - "skill\\.md.*bloat"
+    target: "omega_engine_operads/skill_operad/skill_compiler/budget_gate.py"
+    cite: "Budget → budget_gate.py (mechanized)."
+
+  - id: knowledge_parity_gate
+    patterns:
+      - "stale.?doctrine"
+      - "knowledge.?parity"
+      - "banned.?phrase"
+    target: "omega_engine_operads/skill_operad/skill_compiler/knowledge_parity.py"
+    cite: "Semantic host law → knowledge_parity.py."
+
+  - id: skill_name_verify
+    patterns:
+      - "frontmatter\\s+name"
+      - "name:.*directory"
+      - "verify_skill_names"
+    target: "omega_engine_operads/skill_operad/verify_skill_names.py"
+    cite: "name: vs directory → verify_skill_names.py."
+
+  - id: rule_gate
+    patterns:
+      - "rules?.?registry"
+      - "rule.?gate"
+      - "rules?.as.code"
+      - "rule.?(file|folder).?(taxonomy|ceiling|size)"
+    target: "omega_engine_operads/skill_operad/skill_compiler/rule_gate.py"
+    cite: "Rule trees vs rules_registry.yaml (taxonomy, ownership, size, links, host parity) → rule_gate.py."
+
+noise_patterns:
+  - "^\\s*$"
+  - "\\bone-?off\\b"
+  - "\\bthis\\s+session\\s+only\\b"
+  - "\\bignore\\b.*\\bnext\\s+time\\b"
+
+new_skill_require_all:
+  # NEW_SKILL only if text suggests distinct activation + workflow + eval + boundary
+  activation: ["trigger", "when to", "activate", "invoke", "user says"]
+  workflow: ["steps", "workflow", "pipeline", "stage"]
+  eval: ["test", "eval", "fixture", "assert", "gate"]
+  boundary: ["authority", "tool", "reference", "scope", "does not"]

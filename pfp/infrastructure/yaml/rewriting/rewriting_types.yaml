@@ -1,0 +1,43 @@
+schema_id: omega.pfp.rewriting.types.v1
+title: PFP Prompt Rewriting Typed Contracts
+authority_effect: None
+source: README.md
+span_roles:
+  - task
+  - constraint
+  - context
+  - output
+  - unresolved
+partition_rules:
+  - contiguous
+  - disjoint
+  - byte_exact
+  - no_gaps
+  - no_overlap
+  - no_duplication
+  - spans_cover_whole_utf8_prompt
+wire_profile:
+  name: mss-boundary-v1
+  shape: '<<p><v1>(<<role><sN>>)+>'
+  symbols_in_order_from_s0: true
+  natural_language_location: external_codebook
+receipt_guarantees_checked_by_model:
+  - prompt_sha256_matches_utf8_bytes
+  - partition_length_matches_prompt
+  - one_symbol_per_span
+  - symbol_text_equals_source_substring
+example:
+  prompt: Summarize it.Be brief now
+  prompt_sha256: a0bb245db4170cbba1126ea7ce6a8734e85aeb34e469cae2a17089de15da64da
+  partition:
+    prompt_byte_length: 25
+    spans:
+      - {start_byte: 0, end_byte: 13, role: task}
+      - {start_byte: 13, end_byte: 25, role: constraint}
+  wire:
+    profile: mss-boundary-v1
+    term: '<<p><v1><<q><s0>><<c><s1>>>'
+  symbols:
+    - {symbol_token: s0, start_byte: 0, end_byte: 13, text: Summarize it.}
+    - {symbol_token: s1, start_byte: 13, end_byte: 25, text: Be brief now}
+  authority_effect: None

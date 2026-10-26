@@ -1,0 +1,51 @@
+{
+  "schema": "quantile_sketch_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying higher-order non-linear aggregate projection models (median / quantile sketch cochains) under dynamic streaming deletions and epsilon-BQNF tolerance routing",
+  "created_utc": "2026-09-25T15:52:00Z",
+  "properties_verified": [
+    {
+      "property_name": "streaming_insert_delete_conservation",
+      "test_function": "test_streaming_insert_delete_conservation",
+      "status": "PASS",
+      "iterations": 30,
+      "details": "Verified count conservation across dynamic streaming insertions and deletions: sketch.total_count strictly equals the sum of non-zero bucket frequencies and the exact count of surviving elements, with empty buckets cleanly pruned."
+    },
+    {
+      "property_name": "piecewise_linear_median_bounded_error",
+      "test_function": "test_piecewise_linear_median_bounded_error",
+      "status": "PASS",
+      "iterations": 30,
+      "details": "Verified interpolation error bound across continuous distributions: the absolute difference between estimated quantile and true median |q_est - q_true| is strictly bounded by the declared bucket width W (10.0)."
+    },
+    {
+      "property_name": "epsilon_bqnf_tolerance_routing",
+      "test_function": "test_epsilon_bqnf_tolerance_routing_property",
+      "status": "PASS",
+      "details": "Verified exact routing: when interpolation error lies within the declared quotient tolerance ball (|err| <= tolerance), routes to Repair; when error breaches tolerance, routes to Recompute."
+    },
+    {
+      "property_name": "empty_and_missing_sketch_fail_closed",
+      "test_function": "test_empty_and_missing_sketch_fail_closed",
+      "status": "PASS",
+      "details": "Verified fail-closed routing under deficient evidence: missing sketch (None) routes to Recompute (MissingQuantileSketch); empty sketch (count=0) routes to Recompute (EmptyQuantileSketch)."
+    },
+    {
+      "property_name": "sqlite_evaluator_dynamic_cdc_quantile_repair",
+      "test_function": "test_sqlite_evaluator_dynamic_cdc_quantile_repair",
+      "status": "PASS",
+      "details": "Verified full SQLite CDC integration in NormalFormsEvaluator: dynamic insertions, deletions, cache median synchronization, and exact audit records in quantile_repair_log for both Repair and Recompute fallback executions."
+    }
+  ],
+  "lean4_theorems_aligned": [
+    "NormalForms.quantile_within_tolerance_repairs",
+    "NormalForms.quantile_exceeding_tolerance_forces_recompute",
+    "NormalForms.empty_quantile_sketch_forces_recompute",
+    "NormalForms.missing_quantile_sketch_forces_recompute"
+  ],
+  "contracts_aligned": [
+    "nf.change.bqnf",
+    "nf.query.spja"
+  ],
+  "all_properties_satisfied": true
+}

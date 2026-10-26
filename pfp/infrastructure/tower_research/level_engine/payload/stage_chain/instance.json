@@ -1,0 +1,204 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the last stage states an equation between the first two data; the maps stay injective",
+      "role": "own_negative",
+      "set": {
+        "stages": [
+          {
+            "generators": [
+              "<>"
+            ],
+            "relations": []
+          },
+          {
+            "generators": [
+              "<>",
+              "<a>"
+            ],
+            "relations": []
+          },
+          {
+            "generators": [
+              "<>",
+              "<a>",
+              "<ab>"
+            ],
+            "relations": [
+              [
+                "<>",
+                "<a>"
+              ]
+            ]
+          }
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_partial",
+      "note": "the second map forgets one datum",
+      "role": "near_miss",
+      "set": {
+        "maps": [
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ]
+            ],
+            "source": 0,
+            "target": 1
+          },
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ]
+            ],
+            "source": 1,
+            "target": 2
+          },
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ]
+            ],
+            "source": 0,
+            "target": 2
+          }
+        ]
+      },
+      "violates": "maps_total"
+    },
+    {
+      "id": "near_collapse",
+      "note": "the second map sends two data kept apart to one",
+      "role": "near_miss",
+      "set": {
+        "maps": [
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ]
+            ],
+            "source": 0,
+            "target": 1
+          },
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ],
+              [
+                "<a>",
+                "<>"
+              ]
+            ],
+            "source": 1,
+            "target": 2
+          },
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ]
+            ],
+            "source": 0,
+            "target": 2
+          }
+        ]
+      },
+      "violates": "keeps_apart"
+    },
+    {
+      "id": "near_incoherent",
+      "note": "the direct map disagrees with the composite",
+      "role": "near_miss",
+      "set": {
+        "maps": [
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ]
+            ],
+            "source": 0,
+            "target": 1
+          },
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<>"
+              ],
+              [
+                "<a>",
+                "<a>"
+              ]
+            ],
+            "source": 1,
+            "target": 2
+          },
+          {
+            "on_generators": [
+              [
+                "<>",
+                "<a>"
+              ]
+            ],
+            "source": 0,
+            "target": 2
+          }
+        ]
+      },
+      "violates": "coherent"
+    },
+    {
+      "id": "near_equation",
+      "note": "the middle stage states an equation between its two data, which the last stage does not keep",
+      "role": "near_miss",
+      "set": {
+        "stages": [
+          {
+            "generators": [
+              "<>"
+            ],
+            "relations": []
+          },
+          {
+            "generators": [
+              "<>",
+              "<a>"
+            ],
+            "relations": [
+              [
+                "<>",
+                "<a>"
+              ]
+            ]
+          },
+          {
+            "generators": [
+              "<>",
+              "<a>",
+              "<ab>"
+            ],
+            "relations": []
+          }
+        ]
+      },
+      "violates": "stages_replayed"
+    }
+  ]
+}

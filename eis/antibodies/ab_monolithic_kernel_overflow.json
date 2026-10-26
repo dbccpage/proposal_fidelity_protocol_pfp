@@ -1,0 +1,18 @@
+{
+  "antibody_id": "ab_monolithic_kernel_overflow",
+  "failure_class": "math:monolithic_kernel_overflow",
+  "target_pattern": "(single.*monolithic.*rfl.*for.*all.*terms|pass.*100000.*terms.*directly.*to.*kernel|no.*chunking.*needed.*Lean.*handles.*any.*size)",
+  "constraint_type": "ProjectOut",
+  "operatorizability": "repairable",
+  "action": "refuse",
+  "severity": "P0",
+  "description": "Rejects submitting unchunked certificates exceeding 10^5 terms directly to Lean 4 kernel 'by rfl'.",
+  "negative_fixture": "Lean 4 kernel can evaluate the 500,000 monomial Positivstellensatz identity in a single 'by rfl' tactic invocation.",
+  "positive_fixture": "Subgap R8 chunking architecture partitions the certificate into binary sub-trees of <= 1024 terms, verified independently and stitched by transitivity.",
+  "times_seen": 1,
+  "evidence_sha256": "c0609b838cdc017a17a00133dcf4799c7ab8b17f97defa31154968f383a6557a",
+  "pharmacy_status": "admitted",
+  "authority_effect": "None",
+  "created_at": "2026-10-15T19:18:17.192993+00:00",
+  "source_pilot": "pilot_049"
+}

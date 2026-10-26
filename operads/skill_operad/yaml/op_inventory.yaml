@@ -1,0 +1,256 @@
+# Current bounded host bindings; historical v2 remains readable. AuthorityEffect: None.
+schema_version: omega.oewas.op_inventory.v3
+subcolours:
+  Audit:
+  - hype_hits
+  - lint_diff
+  - sfh_findings
+  - shadow_violations
+  - layout_findings
+  - verdict
+  Code:
+  - purged
+  Ledger:
+  - source_hashes
+skills:
+- skill_id: glossa-claim-hygiene-linter
+  ops:
+  - op_id: glossa.scan_hype_prose
+    summary: Find forbidden hype words and unbounded generalisations in prose.
+    inputs:
+    - Paper
+    output: Audit.hype_hits
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_glossa_prose
+  - op_id: glossa.scan_hype_code
+    summary: Find the same words in docstrings and comments.
+    inputs:
+    - Code
+    output: Audit.hype_hits
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_glossa_code
+  - op_id: glossa.merge_hits
+    summary: Merge two hit lists, ordered by file and line.
+    inputs:
+    - Audit.hype_hits
+    - Audit.hype_hits
+    output: Audit.hype_hits
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_glossa_merge
+  - op_id: glossa.propose_replacements
+    summary: Turn each hit into a bounded replacement diff.
+    inputs:
+    - Audit.hype_hits
+    output: Audit.lint_diff
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_glossa_replacements
+  - op_id: glossa.report
+    summary: Emit COMPLIANT, LINT_DIFF_PRODUCED or UNRESOLVED_VIOLATIONS.
+    inputs:
+    - Audit.lint_diff
+    output: Audit
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_glossa_report
+  anti_ops:
+  - op_id: glossa.refuse_missing_claim_envelope
+    summary: Refuse a summary that lacks supports / does not support / narrowest claim
+      / next test.
+    guards: glossa.scan_hype_prose
+    slot: 0
+    inspects: Paper
+    refusal: UNRESOLVED_VIOLATIONS
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_claim_envelope_missing
+  wiring:
+    op: glossa.report
+    args:
+    - op: glossa.propose_replacements
+      args:
+      - op: glossa.merge_hits
+        args:
+        - op: glossa.scan_hype_prose
+          args:
+          - Paper
+        - op: glossa.scan_hype_code
+          args:
+          - Code
+- skill_id: techne-silent-failure-hunter
+  ops:
+  - op_id: sfh.scan
+    summary: Scan Python and Rust files for swallowed failures.
+    inputs:
+    - Code
+    output: Audit.sfh_findings
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_scan
+  - op_id: sfh.report
+    summary: Group findings by rule and file; a non-empty set is a failing audit.
+    inputs:
+    - Audit.sfh_findings
+    output: Audit
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_report
+  anti_ops:
+  - op_id: sfh.refuse_bare_except
+    summary: 'SFH-PY-001: a bare except.'
+    guards: sfh.scan
+    slot: 0
+    inspects: Code
+    refusal: SFH-PY-001
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_fires_on
+  - op_id: sfh.refuse_pass_handler
+    summary: 'SFH-PY-002: a handler whose body is only pass or ...'
+    guards: sfh.scan
+    slot: 0
+    inspects: Code
+    refusal: SFH-PY-002
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_fires_on
+  - op_id: sfh.refuse_rust_unwrap
+    summary: 'SFH-RS-001: unwrap or expect outside tests.'
+    guards: sfh.scan
+    slot: 0
+    inspects: Code
+    refusal: SFH-RS-001
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_fires_on
+  wiring:
+    op: sfh.report
+    args:
+    - op: sfh.scan
+      args:
+      - Code
+- skill_id: governance-test-isolation
+  ops:
+  - op_id: gti.shadow_scan
+    summary: Find modules that shadow the standard library.
+    inputs:
+    - Code
+    output: Audit.shadow_violations
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_gti_shadow
+  - op_id: gti.layout_check
+    summary: Check scoped tests/<bc>/ layout and that omega_engine/tests holds no
+      Python.
+    inputs:
+    - State
+    output: Audit.layout_findings
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_gti_layout
+  - op_id: gti.receipt
+    summary: Combine both audits into one isolation receipt.
+    inputs:
+    - Audit.shadow_violations
+    - Audit.layout_findings
+    output: Receipt
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_gti_receipt
+  anti_ops:
+  - op_id: gti.refuse_sys_path_hack
+    summary: Refuse sys.path edits inside tests.
+    guards: gti.shadow_scan
+    slot: 0
+    inspects: Code
+    refusal: TEST_SYS_PATH_HACK
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_gti_path_hack
+  - op_id: gti.refuse_duplicate_test_basename
+    summary: Refuse two test files with one basename.
+    guards: gti.layout_check
+    slot: 0
+    inspects: State
+    refusal: TEST_BASENAME_COLLISION
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_gti_collision
+  wiring:
+    op: gti.receipt
+    args:
+    - op: gti.shadow_scan
+      args:
+      - Code
+    - op: gti.layout_check
+      args:
+      - State
+- skill_id: adversarial-receipt-audit
+  ops:
+  - op_id: ara.bind_source_hashes
+    summary: Hash every source a claim rests on.
+    inputs:
+    - State
+    output: Ledger.source_hashes
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_ara_bind
+  - op_id: ara.refute
+    summary: Try to refute each claim against the hashed sources; default REFUTED.
+    inputs:
+    - Ledger.source_hashes
+    - Audit
+    output: Audit.verdict
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_ara_refute
+  - op_id: ara.receipt
+    summary: Emit the receipt with the verdict and the hashes it was checked against.
+    inputs:
+    - Audit.verdict
+    output: Receipt
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_ara_receipt
+  anti_ops:
+  - op_id: ara.refuse_unrecomputed_hash
+    summary: Refuse when a hash was not recomputed just before emission.
+    guards: ara.refute
+    slot: 0
+    inspects: Ledger.source_hashes
+    refusal: ANTI-POST-AUDIT-MUTATION-RACE
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_ara_mutated
+  - op_id: ara.refuse_undeclared_omission
+    summary: Refuse a state digest that omits variables without declaring them.
+    guards: ara.bind_source_hashes
+    slot: 0
+    inspects: State
+    refusal: UNDECLARED_OMITTED_VARIABLES
+    binding: omega_engine_operads/skill_operad/resolver/executors.py::_ara_omissions
+  wiring:
+    op: ara.receipt
+    args:
+    - op: ara.refute
+      args:
+      - op: ara.bind_source_hashes
+        args:
+        - State
+      - Audit
+- skill_id: meta-no-comments
+  ops:
+  - op_id: mnc.purge
+    summary: Remove comments from Python, Rust and C sources, skipping docs and tests.
+    inputs:
+    - Code
+    output: Code.purged
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_mnc_purge
+  - op_id: mnc.gate
+    summary: Accept the purge only if the bound evaluator reports zero findings.
+    inputs:
+    - Code.purged
+    - Audit
+    output: Code
+    binding:
+      kind: host
+      target: omega_engine_operads/skill_operad/resolver/executors.py::_mnc_gate
+  anti_ops: []
+  wiring:
+    op: mnc.gate
+    args:
+    - op: mnc.purge
+      args:
+      - Code
+    - Audit

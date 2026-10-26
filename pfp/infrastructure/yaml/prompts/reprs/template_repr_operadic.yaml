@@ -1,0 +1,179 @@
+# Operadic Prompt Representation Specification
+# Governing Standard: Proposal Fidelity Protocol (PFP)
+# AuthorityEffect: None.
+
+schema_version: pfp.prompt_representation.v1
+representation_kind: operadic
+authority_effect: None
+
+classification:
+  family: prompt_wire_encoding
+  encoding_posture: 3_layer_compact_operad
+  token_overhead_posture: minimal_typed_algebraic_scaffolding
+  carrier_type: application/x-operad-yaml
+
+description: >
+  3-Layer compact operad prompt representation partitioning prompt instructions into
+  Layer 0 (Environment / algebraic ring), Layer 1 (TreeSkeleton / typed operator signatures),
+  and Layer 2 (SpanTable / bound spans, congruence ideals, and epistemic antibodies).
+  A design used by historical MUB(6) and PFP pilot examples; benchmark coverage
+  and general prompting benefit are not established by this specification.
+
+empirical_performance_baseline:
+  source_study: omega_engine_atlas/coda_atlas/prompts/pilot_master_review_and_multiturn_findings.md
+  source_study_status: historical_narrative_with_unreplayed_provider_claims
+  evidence_status: historical_stored_records_not_provider_attestation
+  source_head: c1960e8cd5256aed9303aa5979f33b69a45f313f
+  source_units: input_tokens
+  baseline_arm: arm2_monolithic_template
+  compressed_arm: arm3_compressed_operad
+  sample_denominator: 7
+  baseline_input_tokens_total: 18162
+  compressed_input_tokens_total: 1270
+  ratio_of_input_token_totals: "18162/1270 = 14.3007874016x"
+  compressed_stored_lexical_pass_count: 7
+  sources:
+    - path: omega_engine_atlas/coda_atlas/prompts/pilots/pilot_004/completions/live_benchmark_metrics.json
+      sha256: 0f51278d56937708124eef62fb3556080ed8ba5fa0156f58b1401ad31d140a4f
+    - path: omega_engine_atlas/coda_atlas/prompts/pilots/pilot_005/completions/live_benchmark_metrics.json
+      sha256: 3b51ee3fb412440849607ce4c31c32171472030efe754ad1a0a6deb47e414fe6
+    - path: omega_engine_atlas/coda_atlas/prompts/pilots/pilot_006/completions/live_benchmark_metrics.json
+      sha256: 379d3e05caf0fccedc6ba55acc14c75375c57a1a5d918ed9151d6ce5e0b867bc
+    - path: omega_engine_atlas/coda_atlas/prompts/pilots/pilot_007/completions/live_benchmark_metrics.json
+      sha256: 061c6844db757f5262dc786e8290994a28ac647195121bcfbf6b1825c131bf91
+    - path: omega_engine_atlas/coda_atlas/prompts/pilots/pilot_008/completions/live_benchmark_metrics.json
+      sha256: 1601b25bd7dcbfa5ab6ca06932877b42ebced44b4ec723baff1c7e5e63b07189
+    - path: omega_engine_atlas/coda_atlas/prompts/pilots/pilot_009/completions/live_benchmark_metrics.json
+      sha256: f6cae9e42bc41049b280f95f44ff65b51c106e5aacfa2a978c66e162ed461156
+    - path: omega_engine_atlas/coda_atlas/prompts/pilots/pilot_010/completions/live_benchmark_metrics.json
+      sha256: 5db0eaaa2bf574a46920f2fbd2729475d9a36e976c6deedcfe4c6f8df078b1ae
+  scope: >
+    These seven retained JSON records report seven compressed-arm lexical PASS
+    flags. This summary does not authenticate provider/model identity, replay a
+    provider request, establish mathematical correctness, or measure a general
+    causal improvement. The historical lexical classifier can accept empty
+    text; pilot_008 records a zero-output seed arm with passed=true.
+  fresh_provider_replay: false
+  general_efficacy_established: false
+  mathematical_candidate_verification: separate_obligation
+  provider_refusal_elimination: not_established
+  float_drift_elimination: not_established
+  compression_factor: "14.3007874016x ratio of stored input-token totals for pilots 004-010"
+  historical_pilot003_byte_comparison: "18432/1038 bytes, approximately 17.8x; a different unit and pilot"
+  historical_pilot003_comparison_scope: "Attributed to the master narrative only; byte-source custody not rechecked here"
+  float_drift_mitigation: "Design goal; no guaranteed model arithmetic or zero-drift claim"
+  authority_firewall: "Proposal declaration; independent host checks must enforce admission and authority boundaries"
+
+invariants:
+  - id: OPR-INV-001
+    name: ExplicitEnvironmentRing
+    rule: Layer 0 must explicitly declare the environment ring (defaults to exact rational 'Q' without unhedged float).
+  - id: OPR-INV-002
+    name: TypedOperatorSignatures
+    rule: Layer 1 must declare at least one typed operation signature.
+  - id: OPR-INV-003
+    name: MandatoryTaskSpan
+    rule: Layer 2 SpanTable must contain at least one span carrying role='task'.
+  - id: OPR-INV-004
+    name: CongruenceIdealDeclaration
+    rule: Layer 2 SpanTable must declare at least one congruence ideal or safety fence invariant.
+
+specification:
+  fields:
+    source_id:
+      type: string
+      required: true
+      pattern: "^[a-zA-Z0-9_-]+$"
+    source_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    proposal_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    representation_kind:
+      type: string
+      required: true
+      const: operadic
+    authority_effect:
+      type: string
+      required: true
+      const: None
+    environment:
+      type: object
+      required:
+        - ring
+      properties:
+        ring:
+          type: string
+        region:
+          type: string
+        constants:
+          type: object
+    skeleton:
+      type: object
+      required:
+        - operations
+      properties:
+        operations:
+          type: array
+          items:
+            type: string
+    span_table:
+      type: object
+      required:
+        - spans
+        - ideals
+      properties:
+        spans:
+          type: array
+          items:
+            type: object
+            required:
+              - slot
+              - role
+              - text
+            properties:
+              slot:
+                type: string
+                pattern: "^s[0-9]+$"
+              role:
+                type: string
+                enum: [task, constraint, context, output, unresolved]
+              text:
+                type: string
+        ideals:
+          type: array
+          items:
+            type: string
+        antibodies:
+          type: array
+          items:
+            type: string
+
+canonical_example:
+  source_id: "pilot_004:operadic"
+  source_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  proposal_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  representation_kind: "operadic"
+  authority_effect: "None"
+  environment:
+    ring: "Q[x, y]"
+    region: "[-3, 3] x [-3, 3] over Q^2"
+    constants:
+      deltoid_poly: "(x^2+y^2)^2 + 18*(x^2+y^2) - 8*(x^3 - 3*x*y^2) - 27"
+  skeleton:
+    operations:
+      - "Op_subdivide(B) -> {B_00, B_10, B_01, B_11}"
+      - "Op_collar(B, cusps) -> CuspCollarReceipt"
+  span_table:
+    spans:
+      - slot: "s0"
+        role: "task"
+        text: "Isolate deltoid cusps and verify collar box boundary."
+    ideals:
+      - "RULE_DELTOID_SINGULARITY_COLLAR_FENCE"
+      - "IDEAL_EXACT_RATIONAL_DOMAIN"
+    antibodies:
+      - "AB_DELTOID_SINGULARITY_LEAK"

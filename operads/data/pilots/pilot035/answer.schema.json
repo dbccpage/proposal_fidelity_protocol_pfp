@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["matrix_id","scope","cross_ratio_count","distinct_exponents_mod24","all_cubic","no_minus_one","claims","explanation"],
+  "properties": {
+    "matrix_id": {"type":"string"},
+    "scope": {"type":"string"},
+    "cross_ratio_count": {"type":"integer","minimum":0},
+    "distinct_exponents_mod24": {"type":"array","items":{"type":"integer","minimum":0,"maximum":23},"maxItems":24},
+    "all_cubic": {"type":"boolean"},
+    "no_minus_one": {"type":"boolean"},
+    "claims": {"type":"object","additionalProperties":false,"required":["all_chm","mub6_exclusion"],"properties":{"all_chm":{"type":"boolean"},"mub6_exclusion":{"type":"boolean"}}},
+    "explanation": {"type":"string","minLength":1,"maxLength":2000}
+  }
+}

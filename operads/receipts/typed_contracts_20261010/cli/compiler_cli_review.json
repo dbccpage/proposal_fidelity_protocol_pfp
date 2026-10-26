@@ -1,0 +1,389 @@
+{
+  "schema": "typed-contract-cli-independent-controls-v1",
+  "authority_effect": "None",
+  "test_author_and_operator": "runtime_review/Azazello",
+  "production_author": "parent root and audit agent; no production edits in this assignment",
+  "base_parent_supplied": "9c7460168 (not independently queried; no Git operations permitted)",
+  "public_port": "omega_engine_workflows_agents_skills.infrastructure.typed_contract_compiler.main(argv)",
+  "stdout_boundary": "real main with binary-capable TextIOWrapper/BytesIO stdout and actual stderr; compiler, audit replay, predicate and host writer execute without substitutes",
+  "test_count": 50,
+  "observations": [
+    {
+      "record": "compiler_cli_initial_controls.json",
+      "result": "GREEN39; all first ran after implementation"
+    },
+    {
+      "record": "compiler_cli_expanded_controls.json",
+      "result": "GREEN47"
+    },
+    {
+      "record": "compiler_cli_red_recursion.json",
+      "result": "GREEN3, 47 deselected; exploratory filename label contains red but no failure was observed and no RED claim is made"
+    },
+    {
+      "record": "compiler_cli_final_controls.json",
+      "result": "GREEN50 against stabilized current source"
+    }
+  ],
+  "red_observed": false,
+  "tdd_claim": "These are additional real-port regression controls, not a new RED/GREEN implementation cycle or full TDD claim.",
+  "branches_exercised": [
+    "schema mode emits exact actual closed schema and creates no missing repository",
+    "write/check/idempotent modes call actual compiler and four-host writer, exact8 files; missing check and late-host conflict refuse without partial preflight writes",
+    "audit CLEAN/FINDING replay actual detector/evaluation; source/subject hashes bind; both remain Unadmitted/HOLD/None and create no projections",
+    "missing/malformed/duplicate/nonfinite/BOM/invalidUTF8/staleID/oversizedfield/boolean/unknown subject wire refusal",
+    "current-source failure during audit cannot emit a success receipt",
+    "missing and >131072-byte canonical source/resource refusal, matchinghash-but-wronglength refusal, ordinary resource hash drift and directory/file type confusion",
+    "rebound instruction invalidUTF8/BOM/CRLF/blank/>2048-byte refusal, multibyte UTF8 byte limit, exact2048-byte success",
+    "rebound malformed fixture banks, wellformed bank false oracle, unknown spec ID: actual parse and evaluator refusal",
+    "actual Windows instruction-directory junction refuses outside canonical bytes; POSIX symlink branch present but not executed on this platform",
+    "swapped kinds, missing guard dependency, and mutually exclusive/required CLI modes",
+    "1100-level JSON arrays reach a refusal in subject/contract/fixture modes; not claimed to trigger a Python RecursionError"
+  ],
+  "final_test_record": {
+    "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_final_controls.json",
+    "sha256": "048096780f3a83d89a83b42861996cd2f8fc8b9d7097eb6a35ef6d0ee3e5136f",
+    "bytes": 3519
+  },
+  "final_lint_record": {
+    "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_final.json",
+    "sha256": "05041ac4dd801bbbbe53c88b601f55aa3e834961ea56bf8b6c19f06abd91e72b",
+    "bytes": 2984
+  },
+  "lint_rules": "Ruff0.17.0 explicit E,F,W,I on the one new test file",
+  "tool_versions": {
+    "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions.json",
+    "sha256": "59bfe1f7f4735e24eb97cb2de0b2f4546806ce7f664f07f2024d71352c770f00",
+    "bytes": 4369
+  },
+  "final_source_inventory": [
+    {
+      "path": "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py",
+      "sha256": "6c6b3ea90ec4860189ad1e066ad64d0f643c4627e6108690cfc17014d2792d2e",
+      "bytes": 16114
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/infrastructure/typed_contract_compiler.py",
+      "sha256": "b327578fbb6a7f1499b77629ed5a1738fb802bbc99fbc90844775e78e6227dcf",
+      "bytes": 15844
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/application/typed_contract_audit.py",
+      "sha256": "8502bfa8349ea5ea22ba042e036c746dd8de8c08744d8ce99a54c6a286f3e1a9",
+      "bytes": 12679
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/contracts/typed_capabilities_v1.py",
+      "sha256": "b2599a7909eae99b653306dca98aaa61d2aea1a3ed2fd643bdb15d541a645f1b",
+      "bytes": 5237
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/domain/entities/typed_contract_package.py",
+      "sha256": "65b2a28dfaebf94c2b0af43a9b7507e56454b6d4fe2b35142037f4da379e6c91",
+      "bytes": 696
+    },
+    {
+      "path": "omega_engine_operations/use_cases/packaging/project_typed_contracts.py",
+      "sha256": "71ce0b73b88c3ac01547a03bd3258849a72e47a8d884eff633ffa25495df110e",
+      "bytes": 8147
+    },
+    {
+      "path": "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py",
+      "sha256": "8e5b03fdab456658eb01e5adab0ee087b1a045c7057bd3da537aa45dd3b36fc0",
+      "bytes": 29752
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/domain/anti_skills/anti_skill_v2.py",
+      "sha256": "30f3dd3cc385204aed3040f9e4ce4486923406a05cc96dd27c5d78537fa9c943",
+      "bytes": 50518
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/domain/anti_skills/json_wire.py",
+      "sha256": "9b9e85d4a52f3238172d358b2a17e564b06cfce2df9c67bd0791935e1f287dea",
+      "bytes": 935
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/domain/anti_skills/canonical.py",
+      "sha256": "5adb239167f6e479e4f3364570014c0d879119bacfa3a08ff07912ccde53be29",
+      "bytes": 2335
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/application/anti_skill/anti_skill_v2.py",
+      "sha256": "60084d15d573abb980899b57d842d9b43ce07c96236b8b4270152a62265b6642",
+      "bytes": 9193
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/domain/capability_catalog_v1.py",
+      "sha256": "6f13989e6c5c6393e34020b9861aa51890882b13a73b23ebc5995cf68535a3c7",
+      "bytes": 26465
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "00637b4b5a4c01e765916b326b9c3e70ad3aa6752a6fd5272f8f538a3ca2c3a4",
+      "bytes": 3562
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/catalog/contracts/v1/instructions/woland_claim_audit.md",
+      "sha256": "b6ddc910c65b8dc10fc613dfade53cad040a5d9a56040221f129ab4a17c3f5fc",
+      "bytes": 641
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/catalog/contracts/v1/instructions/woland_scope_falsifier.md",
+      "sha256": "bf714a1cd336b9c0a8ce642dad195d0fd74ee98893f708aa49a2ad8962326530",
+      "bytes": 505
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/catalog/contracts/v1/scope_falsifier_fixtures.json",
+      "sha256": "2cf4e4763403f57297ff7cb1c0f7211c55f15a72dd760accb06c883476f0c192",
+      "bytes": 2822
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/catalog/contracts/v1/typed_capability.schema.json",
+      "sha256": "4e6c3765fcf8050e182162d7cc9e6f65f07f618bec68d60dedbd4b84fa65a3d5",
+      "bytes": 4658
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/catalog/contracts/v1/woland_claim_audit.json",
+      "sha256": "6325b87ab2f5a419f504033ae051cb0ef8fefd3facb58d11eebe8fd45434192f",
+      "bytes": 879
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/catalog/contracts/v1/woland_scope_falsifier.json",
+      "sha256": "8670aa988b8997b518ad2be2d9196b5fc4cc9fda88fbeb6c57f290581bbd3da4",
+      "bytes": 1140
+    }
+  ],
+  "command_records": [
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_expanded_controls.json",
+        "sha256": "b81bfbd8903531bfe4edc1f15d4da465c868f1db564d294c5fdd3c93e7af953b",
+        "bytes": 3531
+      },
+      "exit_code": 0,
+      "scope": "one assigned actual compiler CLI test file"
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_final_controls.json",
+        "sha256": "048096780f3a83d89a83b42861996cd2f8fc8b9d7097eb6a35ef6d0ee3e5136f",
+        "bytes": 3519
+      },
+      "exit_code": 0,
+      "scope": "one assigned actual compiler CLI test file"
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_initial_controls.json",
+        "sha256": "65bf24d49548eccf1d73aa8e8c7faa77318b2474446bf502f2ee2781936a1e8e",
+        "bytes": 3527
+      },
+      "exit_code": 0,
+      "scope": "one assigned actual compiler CLI test file"
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_red_recursion.json",
+        "sha256": "0e515a5f0a6640bd28a809a88be1cfc0c65a39076edd94bd3775d7d47e8ad9a5",
+        "bytes": 3565
+      },
+      "exit_code": 0,
+      "scope": "one assigned actual compiler CLI test file"
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_controls.json",
+        "sha256": "2cffd72c7aeb8338a0ea3cdfed8356f3969b9391a293b214f675794590153749",
+        "bytes": 2990
+      },
+      "exit_code": 0,
+      "scope": [
+        "check",
+        "--select",
+        "E,F,W,I",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py"
+      ]
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_final.json",
+        "sha256": "05041ac4dd801bbbbe53c88b601f55aa3e834961ea56bf8b6c19f06abd91e72b",
+        "bytes": 2984
+      },
+      "exit_code": 0,
+      "scope": [
+        "check",
+        "--select",
+        "E,F,W,I",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py"
+      ]
+    },
+    {
+      "record": {
+        "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_format.json",
+        "sha256": "19cc00147713f199322a9938bf4a77bceac6ea89541486f9133e2526f2924b5a",
+        "bytes": 2910
+      },
+      "exit_code": 0,
+      "scope": [
+        "format",
+        "omega_engine_workflows_agents_skills/tests/unit/test_typed_contract_cli.py"
+      ]
+    }
+  ],
+  "authored_source_encoding": "test and receipt JSON LF/no BOM; raw logs are original captured bytes",
+  "artifacts": [
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/.gitattributes",
+      "sha256": "1f57ac563092101b6d97c60c3e4ff298c011daceb694cfb2ac17804f788df4ef",
+      "bytes": 43
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_expanded_controls.json",
+      "sha256": "b81bfbd8903531bfe4edc1f15d4da465c868f1db564d294c5fdd3c93e7af953b",
+      "bytes": 3531
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_expanded_controls.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_expanded_controls.stdout.log",
+      "sha256": "eb8081be10f8e29d90796be1c41ed290ed1a8d4f827821dee87d8b413af08540",
+      "bytes": 101
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_final_controls.json",
+      "sha256": "048096780f3a83d89a83b42861996cd2f8fc8b9d7097eb6a35ef6d0ee3e5136f",
+      "bytes": 3519
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_final_controls.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_final_controls.stdout.log",
+      "sha256": "d191723949d0494c7c3d2adf8eb0c7f86dc5a922c9513a24bd847afafe1a2254",
+      "bytes": 101
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_initial_controls.json",
+      "sha256": "65bf24d49548eccf1d73aa8e8c7faa77318b2474446bf502f2ee2781936a1e8e",
+      "bytes": 3527
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_initial_controls.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_initial_controls.stdout.log",
+      "sha256": "c5ed163341db66f62073e219a0daff315e171f79fccdf93d142ad15e3925738e",
+      "bytes": 101
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_red_recursion.json",
+      "sha256": "0e515a5f0a6640bd28a809a88be1cfc0c65a39076edd94bd3775d7d47e8ad9a5",
+      "bytes": 3565
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_red_recursion.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_red_recursion.stdout.log",
+      "sha256": "65d16bae0af30d7e383cc727b8bcc33aa5d4c10188920005458373344284ec2f",
+      "bytes": 115
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_controls.json",
+      "sha256": "2cffd72c7aeb8338a0ea3cdfed8356f3969b9391a293b214f675794590153749",
+      "bytes": 2990
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_controls.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_controls.stdout.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_final.json",
+      "sha256": "05041ac4dd801bbbbe53c88b601f55aa3e834961ea56bf8b6c19f06abd91e72b",
+      "bytes": 2984
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_final.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_final.stdout.log",
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "bytes": 19
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_format.json",
+      "sha256": "19cc00147713f199322a9938bf4a77bceac6ea89541486f9133e2526f2924b5a",
+      "bytes": 2910
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_format.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_ruff_format.stdout.log",
+      "sha256": "413a709001976657cb743636fd34e48fc41d8d302d665460d3f874b3313da127",
+      "bytes": 19
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions.json",
+      "sha256": "59bfe1f7f4735e24eb97cb2de0b2f4546806ce7f664f07f2024d71352c770f00",
+      "bytes": 4369
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions_0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions_0.stdout.log",
+      "sha256": "42c0d59c28841c75c226179c35cf4ae818725793a39814ddf344e40ad826552b",
+      "bytes": 236
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions_1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions_1.stdout.log",
+      "sha256": "f09c21f1e62a1bda72d8f05f1353e972f8500da8eabed36095ce850b5bec4cd3",
+      "bytes": 33
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions_2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "omega_engine_workflows_agents_skills/receipts/typed_contracts_20261010/cli/compiler_cli_versions_2.stdout.log",
+      "sha256": "d1ccb1573d6c2a91d2fa990d76269a7c9f5953e436c2ee5636e8721fd2b4d942",
+      "bytes": 12
+    }
+  ],
+  "scope_limits": [
+    "Only the one named new test file ran here; combined branch coverage remains parent-owned and is not claimed.",
+    "No source mutations or production code edits in this CLI assignment. Controls first ran after implementation; no newly uncovered defect or observed RED.",
+    "No paid/live providers, Woland dispatch, native host, Cargo, Git operations or whole-suite execution.",
+    "These CLI modes compile finite evidence and project IDE bytes; no AntiSkill registry admission, native live enforcement or general theorem is established.",
+    "Historical command records carry actual then-current hashes and raw outputs; separate snapshots of every earlier source revision were not archived."
+  ]
+}

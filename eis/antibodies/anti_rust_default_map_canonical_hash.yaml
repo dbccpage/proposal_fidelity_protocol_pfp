@@ -1,0 +1,45 @@
+schema_version: omega.immune.antibody-spec.v1
+constraint_type: Restrain
+operatorizability: repairable
+action: repair
+severity: P2
+pharmacy_status: candidate
+authority_effect: None
+governing_invariants:
+- .agents/rules/engineering/rl_rust_engineering_standards.md
+- .agents/patterns/anti/rust/AP_RS_002_domain_enum_missing_ord.md
+antibody_id: ab_rust_default_map_canonical_hash
+canonical_name: Rust Default Map Canonical Hash
+failure_class: identity:feature_dependent_json_key_order
+target_pattern: pub\s+fn\s+canonical_sha256\([^\{]{0,240}\{\s*let\s+raw\s*=\s*serde_json::to_string\(payload\)
+description: Inert review candidate for the three captured canonical_sha256 functions that serialized
+  the unsorted payload directly. Cargo preserve_order changes default map iteration and nested
+  object digests. This signature is Signal1 only, not a general JSON semantic detector. Feature-profile
+  actual hash tests provide Signal2 without admission or activation.
+adversarial_mutation_fixture: "pub fn canonical_sha256(domain: &str, payload: &Value) -> Result<String,\
+  \ Error> {\n let raw = serde_json::to_string(payload)?;\n hash_domain_payload(domain, raw)\n\
+  }"
+repaired_invariant_fixture: "pub fn canonical_sha256(domain: &str, payload: &Value) -> Result<String,\
+  \ Error> {\n let mut canonical = payload.clone();\n canonical.sort_all_objects();\n let raw\
+  \ = serde_json::to_string(&canonical)?;\n hash_domain_payload(domain, raw)\n}"
+benign_control_fixture: "pub fn presentation_bytes(payload: &Value) -> Result<String, Error> {\n\
+  \ serde_json::to_string(payload)\n}\n// Intentional source-order display is not a canonical\
+  \ identity boundary."
+implementation_binding: omega_engine/crates_rs/omega_homology/src/cochain_realization.rs
+additional_implementation_bindings:
+- omega_engine/crates_rs/omega_solvers/src/router_plan_grammar.rs
+- omega_engine/crates_rs/omega_solvers/src/router_structure_extension.rs
+native_test_binding: omega_engine/crates_rs/omega_homology/src/cochain_realization.rs
+harmful_control_tests:
+- canonical_sha256_sorts_nested_maps_without_reordering_arrays
+benign_control_tests:
+- canonical_sha256_sorts_nested_maps_without_reordering_arrays
+test_profile: --offline --features serde_json/preserve_order -j1; compare the same filter under
+  the default feature profile
+qualification_limit: Native test contains deciding array-order, domain and caller-payload controls,
+  not only map equivalence. Candidate scope is these captured direct-hash functions. Other canonical
+  boundaries use different normalization and need their own witnesses. Do not sort source-order
+  display or arrays; no universal canonical-JSON or downstream interoperability certification.
+detection_mechanisms:
+  regex_triggers:
+  - pub\s+fn\s+canonical_sha256\([^\{]{0,240}\{\s*let\s+raw\s*=\s*serde_json::to_string\(payload\)

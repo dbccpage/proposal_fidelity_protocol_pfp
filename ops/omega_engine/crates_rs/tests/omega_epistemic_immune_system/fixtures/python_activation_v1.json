@@ -1,0 +1,1505 @@
+{
+  "records": [
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "detector.one",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "ok": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "",
+        "spec_id": "detector.one",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: hit_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": " invalid ",
+        "spec_id": "detector.one",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: hit_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: spec_id must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": " invalid ",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: spec_id must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "detector.one",
+        "failure_code": "",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: failure_code must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "detector.one",
+        "failure_code": " invalid ",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: failure_code must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "detector.one",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": ""
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: subject_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "detector.one",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": " invalid "
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: subject_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "café",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: spec_id must be a canonical identifier"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "detector.one",
+        "failure_code": "1legal:/@-",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "expected": {
+        "ok": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "1legal:/@-",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      }
+    },
+    {
+      "kind": "hit",
+      "input": {
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "spec_id": "detector.one",
+        "failure_code": "CHECK_FAILURE",
+        "subject_id": "sha256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: subject_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "observer_id": "host.check",
+          "producer_kind": "HOST",
+          "schema_version": "omega.antiskill.danger-signal-receipt.v1",
+          "signal_kind": "REPLAY_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: danger signal_kind is not in the closed registry: MALFORMED_PAYLOAD, MANIFEST_CONTAMINATION, PROTECTED_FIELD_VIOLATION, REPLAY_FAILURE"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": " invalid ",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: danger signal_kind is not in the closed registry: MALFORMED_PAYLOAD, MANIFEST_CONTAMINATION, PROTECTED_FIELD_VIOLATION, REPLAY_FAILURE"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: observer_id must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": " invalid ",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: observer_id must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: subject_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": " invalid ",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: subject_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": ""
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: evidence_digest must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": " invalid "
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: evidence_digest must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "PROTECTED_FIELD_VIOLATION",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "observer_id": "host.check",
+          "producer_kind": "HOST",
+          "schema_version": "omega.antiskill.danger-signal-receipt.v1",
+          "signal_kind": "PROTECTED_FIELD_VIOLATION",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:82c99c706e161bf8f995cd03c5c9b4f845f081a42ecbf2a6900d116eccb8c348"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "MANIFEST_CONTAMINATION",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "observer_id": "host.check",
+          "producer_kind": "HOST",
+          "schema_version": "omega.antiskill.danger-signal-receipt.v1",
+          "signal_kind": "MANIFEST_CONTAMINATION",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:deb5028fbb176250750ced9e378c2d2935eed62ba01bf756cb285eb80581e430"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "MALFORMED_PAYLOAD",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "observer_id": "host.check",
+          "producer_kind": "HOST",
+          "schema_version": "omega.antiskill.danger-signal-receipt.v1",
+          "signal_kind": "MALFORMED_PAYLOAD",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:d1298e60f0afaea33f01cdb239256e01af3d10744c851251db351e8cb350cc17"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "producer_kind": "MODEL"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: a danger signal may not be authored by MODEL; danger is observed by a host, not proposed by a model"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "producer_kind": "LLM"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: a danger signal may not be authored by LLM; danger is observed by a host, not proposed by a model"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "producer_kind": "AGENT"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: a danger signal may not be authored by AGENT; danger is observed by a host, not proposed by a model"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "producer_kind": "DETECTOR"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: a danger signal may not be authored by DETECTOR; danger is observed by a host, not proposed by a model"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "producer_kind": "MATCHER"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: danger signal producer_kind must be HOST"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "producer_kind": "host"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: danger signal producer_kind must be HOST"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "authority_effect": "Granted"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: danger signal authority_effect must be None"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "schema_version": "old"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: unsupported danger signal schema"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "host.check",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "receipt_id": "sha256:9999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: receipt_id does not match canonical content"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "authority_effect": "None",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "observer_id": "host.check",
+        "producer_kind": "HOST",
+        "schema_version": "omega.antiskill.danger-signal-receipt.v1",
+        "signal_kind": "REPLAY_FAILURE",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "observer_id": "host.check",
+          "producer_kind": "HOST",
+          "schema_version": "omega.antiskill.danger-signal-receipt.v1",
+          "signal_kind": "REPLAY_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479"
+        }
+      }
+    },
+    {
+      "kind": "danger",
+      "input": {
+        "signal_kind": "REPLAY_FAILURE",
+        "observer_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: observer_id exceeds the text limit"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "FINDING",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "FINDING",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "bad",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: profile_digest must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "bad",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: hit_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "bad",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: danger_receipt_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "bad",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: subject_id must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "bad",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: activation disposition is not closed; activation may select only FINDING, HOLD or REFUSE"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "bad",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: receipt_id does not match canonical content"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "bad",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: guard activation authority_effect must be None"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "bad",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: unsupported guard activation schema"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": "bad"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: receipt_id does not match canonical content"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": ""
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: independence_basis must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": " bad ",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": ""
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: independence_basis must be a normalized nonempty string"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "é",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": ""
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "FINDING",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "é",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:5778833d83f12c1a469468960dd52a50d675575b017b92cfa96839cdb85f394a"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "é",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": ""
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "FINDING",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "é",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:5778833d83f12c1a469468960dd52a50d675575b017b92cfa96839cdb85f394a"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "line\ninside",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": ""
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "FINDING",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "line\ninside",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:6577b50d7f97971ca966fcbd7de4a9ca73488b5cf0f60c58407cb8292d84a737"
+        }
+      }
+    },
+    {
+      "kind": "activation",
+      "input": {
+        "authority_effect": "None",
+        "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+        "disposition": "FINDING",
+        "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "independence_basis": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+        "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "receipt_id": ""
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: independence_basis exceeds the text limit"
+        }
+      }
+    }
+  ],
+  "activations": [
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "FINDING",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:1dfdc753ba2ff60ec8f417325c82b469470eba78f795485719fa30102daf5a1c"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "HOLD"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "HOLD",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:38e4e9795bf64d04830189a8e1b563d0eccf3d5f93510e0d613e0b7a3a4de9b3"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "REFUSE"
+      },
+      "expected": {
+        "ok": {
+          "authority_effect": "None",
+          "danger_receipt_id": "sha256:84c5cc7617943cf7f946c2a3054afb0499c056ebce70996eaaba6c89c294b479",
+          "disposition": "REFUSE",
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "independence_basis": "host observer host.check reported REPLAY_FAILURE with evidence sha256:3333333333333333..., distinct from detector spec detector.one and its finding",
+          "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "schema_version": "omega.antiskill.guard-activation-receipt.v1",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "receipt_id": "sha256:835273c418288a8e39be318299efa40151b809b303e326a86b9932084967f41f"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "EXECUTE"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: activation may select only FINDING, HOLD or REFUSE; 'EXECUTE' is not closed"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": ""
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: activation may select only FINDING, HOLD or REFUSE; '' is not closed"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "bad",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "EIS_VALUE_ERROR",
+          "message": "EIS_VALUE_ERROR: profile_digest must be a lowercase sha256 digest"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": false,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "NOT_EXTERNALLY_ADMITTED",
+          "message": "NOT_EXTERNALLY_ADMITTED: the guard has no external admission for this subject scope"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": null,
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "NO_DETECTOR_MATCH",
+          "message": "NO_DETECTOR_MATCH: a danger signal without a detector match cannot activate a guard"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": null,
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "NO_DANGER_SIGNAL",
+          "message": "NO_DANGER_SIGNAL: a detector match without an independent danger receipt stays a finding and does not activate the learned guard"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": true,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "SUSPENDED",
+          "message": "SUSPENDED: the guard is suspended in this subject scope"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "SUBJECT_MISMATCH",
+          "message": "SUBJECT_MISMATCH: the danger signal observes a different subject than the detector"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "TWO_SIGNAL_COLLAPSE",
+          "message": "TWO_SIGNAL_COLLAPSE: the danger receipt's evidence is the detector's own finding; that is one signal counted twice"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "DETECTOR.ONE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "TWO_SIGNAL_COLLAPSE",
+          "message": "TWO_SIGNAL_COLLAPSE: the danger signal was observed by 'DETECTOR.ONE', which is the detector spec itself; the danger bit is derived from the match"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "check_failure",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": false,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "TWO_SIGNAL_COLLAPSE",
+          "message": "TWO_SIGNAL_COLLAPSE: the danger observer is the detector's own failure code"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": null,
+        "danger": null,
+        "externally_admitted": false,
+        "suspended": true,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "NOT_EXTERNALLY_ADMITTED",
+          "message": "NOT_EXTERNALLY_ADMITTED: the guard has no external admission for this subject scope"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": null,
+        "danger": null,
+        "externally_admitted": true,
+        "suspended": true,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "NO_DETECTOR_MATCH",
+          "message": "NO_DETECTOR_MATCH: a danger signal without a detector match cannot activate a guard"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": null,
+        "externally_admitted": true,
+        "suspended": true,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "NO_DANGER_SIGNAL",
+          "message": "NO_DANGER_SIGNAL: a detector match without an independent danger receipt stays a finding and does not activate the learned guard"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+          "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "externally_admitted": true,
+        "suspended": true,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "SUBJECT_MISMATCH",
+          "message": "SUBJECT_MISMATCH: the danger signal observes a different subject than the detector"
+        }
+      }
+    },
+    {
+      "input": {
+        "profile_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "hit": {
+          "hit_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "spec_id": "detector.one",
+          "failure_code": "CHECK_FAILURE",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "danger": {
+          "signal_kind": "REPLAY_FAILURE",
+          "observer_id": "host.check",
+          "subject_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "evidence_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "externally_admitted": true,
+        "suspended": true,
+        "disposition": "FINDING"
+      },
+      "expected": {
+        "error": {
+          "code": "SUSPENDED",
+          "message": "SUSPENDED: the guard is suspended in this subject scope"
+        }
+      }
+    }
+  ],
+  "legacy_thymus_overlap": [
+    {
+      "panel": [
+        "clean_alpha",
+        "clean_beta",
+        "exact rational gap"
+      ],
+      "pattern": "defect",
+      "expected": {
+        "self_tolerant": true,
+        "is_admitted": false
+      }
+    },
+    {
+      "panel": [
+        "clean_alpha",
+        "clean_beta",
+        "exact rational gap"
+      ],
+      "pattern": "exact rational",
+      "expected": {
+        "self_tolerant": false,
+        "is_admitted": false
+      }
+    },
+    {
+      "panel": [
+        "clean_alpha",
+        "clean_beta",
+        "exact rational gap"
+      ],
+      "pattern": "^clean",
+      "expected": {
+        "self_tolerant": false,
+        "is_admitted": false
+      }
+    },
+    {
+      "panel": [
+        "clean_alpha",
+        "clean_beta",
+        "exact rational gap"
+      ],
+      "pattern": "bad|fraud",
+      "expected": {
+        "self_tolerant": true,
+        "is_admitted": false
+      }
+    },
+    {
+      "panel": [
+        "clean_alpha",
+        "clean_beta",
+        "exact rational gap"
+      ],
+      "pattern": "clean_[ab]",
+      "expected": {
+        "self_tolerant": false,
+        "is_admitted": false
+      }
+    },
+    {
+      "panel": [
+        "clean_alpha",
+        "clean_beta",
+        "exact rational gap"
+      ],
+      "pattern": "^absent$",
+      "expected": {
+        "self_tolerant": true,
+        "is_admitted": false
+      }
+    }
+  ]
+}

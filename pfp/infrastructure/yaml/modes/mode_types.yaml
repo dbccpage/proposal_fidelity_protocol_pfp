@@ -1,0 +1,126 @@
+meta_version: 1.0.0
+source: mode_types.yaml
+root: ModeFile
+types:
+  AuthorityEffect:
+    kind: enum
+    values:
+    - None
+  ModeCluster:
+    kind: enum
+    values:
+    - 'Cluster I: Carrier & Representation'
+    - 'Cluster II: Internal Steering'
+    - 'Cluster III: Group & Cochain Structure'
+    - 'Cluster IV: Dialectical & Adversarial'
+    - 'Cluster V: Foundational Mechanization'
+  VerifierContract:
+    kind: record
+    fields:
+      verifier_type:
+        type: string
+        schema:
+          minLength: 1
+      fail_closed:
+        type: bool
+  ModeFile:
+    kind: record
+    doc: One canonical play mode (modes/mode_NN_*.yaml).
+    fields:
+      mode_id:
+        type: int
+        schema:
+          minimum: 1
+          maximum: 20
+      name:
+        type: string
+        schema:
+          minLength: 1
+      cluster:
+        type: ModeCluster
+      authority_effect:
+        type: AuthorityEffect
+      core_mechanism:
+        type: string
+        schema:
+          minLength: 1
+      substrate:
+        type: string
+        schema:
+          minLength: 1
+      paper_reference:
+        type: string
+        schema:
+          minLength: 1
+      rules:
+        type: list<string>
+      entry_preconditions:
+        type: list<string>
+      winning_condition:
+        type: string
+        schema:
+          minLength: 1
+      failure_modes:
+        type: list<string>
+      verifier_contract:
+        type: VerifierContract
+  ClusterEntry:
+    kind: record
+    fields:
+      name:
+        type: string
+        schema:
+          minLength: 1
+      modes:
+        type: list<int>
+  ClusterIndex:
+    kind: record
+    fields:
+      cluster_1_carrier_representation:
+        type: ClusterEntry
+      cluster_2_internal_steering:
+        type: ClusterEntry
+      cluster_3_group_cochain_structure:
+        type: ClusterEntry
+      cluster_4_dialectical_adversarial:
+        type: ClusterEntry
+      cluster_5_foundational_mechanization:
+        type: ClusterEntry
+  ManifestMode:
+    kind: record
+    fields:
+      id:
+        type: int
+        schema:
+          minimum: 1
+          maximum: 20
+      file:
+        type: string
+        schema:
+          minLength: 1
+      name:
+        type: string
+        schema:
+          minLength: 1
+      cluster:
+        type: ModeCluster
+  ModesManifest:
+    kind: record
+    doc: modes/modes_manifest.yaml
+    fields:
+      manifest_version:
+        type: string
+        schema:
+          minLength: 1
+      title:
+        type: string
+        schema:
+          minLength: 1
+      description:
+        type: string
+        schema:
+          minLength: 1
+      clusters:
+        type: ClusterIndex
+      modes:
+        type: list<ManifestMode>

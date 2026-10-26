@@ -1,0 +1,164 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.etnf
+  name: Essential Tuple Normal Form
+  short_name: ETNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  verification_status: absent
+  family: shape
+  status: active
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: partial tuple redundancy under functional dependencies and full
+    tuple redundancy under join dependencies in legal instances
+  preserves_invariant: every tuple of every legal instance is essential (neither partly
+    redundant under an FD nor fully redundant under a JD), which for FD/JD schemas
+    holds if and only if the schema is in BCNF and every explicitly declared non-trivial
+    join dependency has at least one superkey component
+  protected_skeleton:
+  - candidate_keys
+  - functional_dependencies
+  - join_dependencies
+  - essential_tuples
+  erased_structure: []
+  non_claims:
+  - does not replace full 5NF/PJNF (which requires every implied non-trivial JD
+    to be logically implied by candidate keys)
+  - ETNF requires at least one superkey component of each implied non-trivial join
+    dependency. Requiring every component to be a superkey is the condition for SKNF (5NFR),
+    which is strictly stronger than ETNF and RFNF
+  - a check of only the join dependencies written down by hand is incomplete unless
+    that list is closed under implication or the schema is known to be in BCNF
+  - the source table's phrase "join dependencies with components at most two" is not
+    the Darwen-Date-Fagin membership test
+  - does not certify runtime repair without cochain substrate
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    authors: Hugh Darwen, C. J. Date, and Ronald Fagin
+    year: 2012
+    work: A Normal Form for Relational Databases, Essential Tuple Normal Form
+  formal_statement: 'A tuple t in a legal instance r is redundant for the constraint
+    set when every relation that contains r without t and obeys the constraints also
+    contains t. An essential tuple is one that is neither partly redundant under a
+    functional dependency nor fully redundant under a join dependency. The schema is
+    in essential tuple normal form when every tuple of every legal instance is essential.
+    When the constraints are functional dependencies and join dependencies, this holds
+    if and only if the schema is in Boyce-Codd normal form (BCNF) and every non-trivial join
+    dependency implied by the constraints has at least one component that is a superkey
+    (Darwen, Date, Fagin 2012 Definitions 1.4, 1.6, 1.12 and Theorem 1.13).
+
+    '
+  source_table_reading:
+    phrase: join dependencies with components at most two, each a key component
+    status: not_the_membership_test
+    published_test: 'The schema is in BCNF and at least one component of every
+      explicitly declared non-trivial join dependency is a superkey. Theorem 1.13
+      guarantees the condition holds for all implied join dependencies as well.
+
+      '
+  quadrilateral:
+    qualifies_as_true_normal_form: true
+    anomaly_exclusion: 'A stored tuple that is partly redundant under a functional
+      dependency or fully redundant under a join dependency, so deleting or modifying
+      it does not change the legal information.
+
+      '
+    lossless_join:
+      status: join_dependency
+      statement: 'A join dependency holds exactly when the natural join of those projections
+        returns the original instance. That is the definition of lossless join for
+        the decomposition. Rissanen (1977) adds independence of the components, losslessness
+        together with local dependency checking. This contract uses the join-dependency
+        definition for losslessness.
+
+        '
+    dependency_preservation:
+      status: not_asserted
+      statement: 'This form is a membership condition on one schema. It does not promise
+        a synthesis algorithm that preserves every dependency.
+
+        '
+    syntactic_decision:
+      status: schema_decidable
+      statement: 'For a finite cover of functional and join dependencies, consequence
+        closure is decidable by the chase. Membership is read from that closure and
+        the superkeys. One stored body is not the decider.
+
+        '
+  chain:
+    requires:
+    - 4NF
+    - BCNF
+    implied_by:
+    - RFNF
+    - SKNF
+    - 5NF
+    - 6NF
+    strict_gap_below: 5NF
+    strict_gap_above: 4NF
+declarations_required:
+- heading
+- candidate_keys
+- functional_dependencies
+- explicitly_declared_join_dependencies: '*(R_1, R_2, ..., R_n)'
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- relvar satisfies Boyce-Codd normal form
+- for every non-trivial join dependency implied by the declared functional dependencies
+  and join dependencies, at least one component is a superkey
+- a listed join dependency that was not closed under implication is not yet the membership
+  test
+- redundant-tuple witnesses terminalize as a join-dependency decomposition obligation
+proof_obligations:
+- id: etnf.between_4nf_and_5nf
+  status: theorem_shaped
+  ref: https://research.ibm.com/publications/a-normal-form-for-preventing-redundant-tuples-in-relational-databases
+  statement: 'For functional and join dependencies, essential tuple normal form holds
+    exactly when every implied non-trivial join dependency has at least one superkey
+    component. Fifth normal form implies this form, and this form implies fourth normal
+    form. Both inclusions are strict in the literature. This tree does not prove those
+    inclusions.
+
+    '
+terminal_routes:
+- Accept
+- RejectNonEssentialTupleRedundancy
+- RequireJoinDependencyDecomposition
+terminal_route_map:
+  Accept: Preserve
+  RejectNonEssentialTupleRedundancy: Reject
+  RequireJoinDependencyDecomposition: Decompose
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: relvar in BCNF contains redundant tuples constructible from sub-projections
+    because an explicitly declared non-trivial JD lacks any superkey component
+  diagnosis: essential tuple redundancy violating ETNF
+  terminal: RejectNonEssentialTupleRedundancy
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 2.1 Classical Relational Normal Forms
+references:
+- https://research.ibm.com/publications/a-normal-form-for-preventing-redundant-tuples-in-relational-databases
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md

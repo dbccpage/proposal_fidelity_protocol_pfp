@@ -1,0 +1,99 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.representation.tbnf
+  name: Token-Bounded Normal Form
+  short_name: TBNF
+  version: v0
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+  family: representation
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - wire_string
+  - token_alphabet
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a wire string that contains whitespace, a non-printable character,
+    or a token outside the declared alphabet, and a string with two prefix readings
+  preserves_invariant: every admitted string is a concatenation of the 38-symbol alphabet
+    and has one prefix decoding
+  protected_skeleton:
+  - alphabet
+  - prefix_decoder
+  erased_structure:
+  - whitespace
+  - non_printable_bytes
+  - out_of_alphabet_tokens
+  non_claims:
+  - the 38-symbol alphabet is the alphabet declared by the source treatise
+  - does not supply the production rules of a grammar beyond unique prefix decoding
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.1'
+  formal_statement: 'The alphabet is the 26 letters a through z, the 10 digits 0 through
+    9, and the two brackets < and >. An admitted wire string is a finite concatenation
+    of that alphabet. The declared decoder has exactly one way to cut the string into
+    tokens. The structured value and the byte string determine each other.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_a_decoding_bijection_not_a_relational_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: lexical injection and an ambiguous parse
+    lossless_join:
+      status: decoding_bijection
+      statement: the decoder and its inverse relate structured values and admitted
+        byte strings in both directions
+    dependency_preservation:
+      status: alphabet_membership_retained
+      statement: decoding does not introduce a symbol outside the alphabet
+    syntactic_decision:
+      status: schema_decidable
+      statement: membership is the alphabet check plus the unique-prefix check on
+        the declared decoder
+declarations_required:
+- alphabet
+- prefix_decoder
+evidence_required: []
+validation_criteria:
+- every character of an admitted string belongs to the 38-symbol alphabet
+- the declared decoder returns one tokenization
+- the inverse of that tokenization returns the same string
+terminal_routes:
+- Accept
+- RejectOutOfAlphabet
+- RejectAmbiguousPrefix
+terminal_route_map:
+  Accept: Preserve
+  RejectOutOfAlphabet: Reject
+  RejectAmbiguousPrefix: Reject
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: the string contains a space or a byte outside the alphabet
+  diagnosis: token alphabet violation
+  terminal: RejectOutOfAlphabet
+- symptom: two token cuts are both accepted by the decoder
+  diagnosis: prefix decoding is not unique
+  terminal: RejectAmbiguousPrefix
+examples:
+- ref: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.1'
+references:
+- coda_all_universe/mssn_sn_tower/definitions.md

@@ -1,0 +1,103 @@
+# Archetypal Antibody Templates
+#
+# Declares standard repair/restrain templates for common failure classes
+# and architectural/formal defects across languages and kernels.
+#
+# AuthorityEffect: None.
+
+schema_version: "omega.immune.definitions.antibody-templates.v1"
+authority_effect: "None"
+
+templates:
+  clean_arch_violation:
+    constraint_type: "ProjectOut"
+    operatorizability: "repairable"
+    action: "repair"
+    severity: "P1"
+    description: "Clean Architecture Layer Violation: Inner layers (domain/entities) must not import outer layers (infrastructure/adapters). Invert via Port interface."
+    negative_fixture: |
+      from infrastructure.database import query_db
+      class Order: pass
+    positive_fixture: |
+      from domain.ports import OrderRepositoryPort
+      class Order: pass
+
+  circular_import:
+    constraint_type: "ProjectOut"
+    operatorizability: "repairable"
+    action: "repair"
+    severity: "P0"
+    description: "Circular Module Dependency: Cycle detected between modules (gamma_2 > 0). Decouple via intermediary port or event bus."
+    negative_fixture: "module_a imports module_b AND module_b imports module_a"
+    positive_fixture: "module_a and module_b import shared interface from module_c"
+
+  syntax_error:
+    constraint_type: "Restrain"
+    operatorizability: "fatal"
+    action: "abort"
+    severity: "P0"
+    description: "Unparseable Python AST Syntax Error: File contains invalid tokens or unterminated blocks."
+    negative_fixture: "def broken_syntax( \n"
+    positive_fixture: "def broken_syntax(): pass\n"
+
+  unpriced_semantic_grounding:
+    constraint_type: "Enforce"
+    operatorizability: "repairable"
+    action: "repair"
+    severity: "P2"
+    description: "Ungrounded Indexical Ambiguity: Text requires priced semantic carrier import rather than unassisted cochain lift."
+    negative_fixture: "The trophy would not fit in the brown suitcase because it was too big."
+    positive_fixture: "The trophy would not fit in the brown suitcase [carrier_ref: spatial_containment_ontology_v1]."
+
+  sorry_used:
+    constraint_type: "ProjectOut"
+    operatorizability: "fatal"
+    action: "abort"
+    severity: "P0"
+    description: "Lean 4 sorry placeholder detected in non-toy proof kernel."
+    negative_fixture: "theorem foo : P := by sorry"
+    positive_fixture: "theorem foo : P := by exact proof_term"
+
+  typeclass_synthesis_failure:
+    constraint_type: "Restrain"
+    operatorizability: "repairable"
+    action: "repair"
+    severity: "P1"
+    description: "Typeclass instance resolution failure in formal proof elaboration."
+    negative_fixture: "instance resolution failed for Decidable P"
+    positive_fixture: "open scoped Classical in theorem foo ..."
+
+  float_tolerance_leak:
+    constraint_type: "ProjectOut"
+    operatorizability: "repairable"
+    action: "repair"
+    severity: "P0"
+    description: "Floating-point tolerance leak in exact algebraic carrier or detector band check. Mandates exact decimal rational constructors."
+    negative_fixture: |
+      def verify_winding(w: float) -> bool:
+          return abs(w - 1.0) < 1e-7
+    positive_fixture: |
+      from fractions import Fraction
+      def verify_winding(w: Fraction) -> bool:
+          return w == Fraction(1, 1)
+
+  implicit_credential_discovery:
+    constraint_type: "Restrain"
+    operatorizability: "fatal"
+    action: "abort"
+    severity: "P0"
+    description: "Implicit parent credential traversal or unconfigured .env loading. Mandates fail-closed typed refusal."
+    negative_fixture: |
+      api_key = os.getenv('OPENROUTER_API_KEY') or load_dotenv('../.env')
+    positive_fixture: |
+      if not config.api_key:
+          return Err(Refusal(code='CREDENTIAL_NOT_CONFIGURED', locus='provider.adapter'))
+
+  limit_honesty_violation:
+    constraint_type: "Restrain"
+    operatorizability: "repairable"
+    action: "repair"
+    severity: "P0"
+    description: "Unhedged thermodynamic limit or asymptotic claim without finite observation realization proof."
+    negative_fixture: "Claiming infinite-volume thermodynamic limit convergence without discrete cost tracking."
+    positive_fixture: "Finite difference envelope with explicit bounded state transitions and non-zero residual recording."

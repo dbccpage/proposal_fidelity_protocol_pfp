@@ -1,0 +1,122 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.coda.eqnf
+  name: Epistemic Quotient Normal Form
+  short_name: EQNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - claim_ledger
+  - epistemic_receipt
+  - verification_boundary
+  - audit_envelope
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: authority laundering, ungrounded hype verbs, promotion of implementation
+    tests to universal mathematical theorems, and arbitrary breaking of tied minimal models
+  preserves_invariant: 'every claim is explicitly quotiented by its declared assumptions,
+    satisfies the 4-point epistemic audit structure, and declares AuthorityEffect: None unless
+    authorized by an explicit external gate'
+  protected_skeleton:
+  - supported_scope
+  - non_supported_scope
+  - narrowest_defensible_claim
+  - next_test_needed
+  - authority_effect_header
+  - tied_minima_register
+  erased_structure:
+  - hype_verbs
+  - unverified_universal_quantifiers
+  non_claims:
+  - does not mint authority or certify genesis jewels
+  - does not eliminate the need for interactive theorem proving in Lean 4
+  - does not treat a green test suite as a mathematical proof of unbounded theorems
+  - 'AuthorityEffect: None'
+quadrilateral:
+  qualifies_as_true_normal_form: false
+  qualification_gap: claim_record_not_a_relvar_decomposition
+  anomaly_exclusion: a claim whose scope, failure, or authority header is missing or overstated
+  lossless_join:
+    status: not_a_relational_decomposition
+    statement: the four-part audit is retained with the claim; nothing is reconstructed by
+      a join
+  dependency_preservation:
+    status: assumptions_stay_attached
+    statement: a claim keeps the assumptions it was quotiented by
+  syntactic_decision:
+    status: declaration_decidable
+    statement: the check reads the claim record and its audit fields
+declarations_required:
+- claim_id
+- domain_key
+- operation_kind
+- declared_assumptions
+- test_suite_receipt
+evidence_required:
+- test_execution_log
+- lean_elaboration_receipt
+- what_it_supports
+- what_it_does_not_support
+- narrowest_defensible_claim
+- next_test_needed
+validation_criteria:
+- contains explicit "AuthorityEffect: None" header
+- contains no unhedged hype verbs (proves, guarantees, fundamentally, universal, flawless,
+  weaponized)
+- implementation tests are described as tests/receipts, not mathematical proofs
+- mathematical toy models are scoped to the declared finite setting
+- every receipt includes all 4 points of the epistemic audit
+- tied minimal candidates are retained as sets rather than broken by arbitrary position
+proof_obligations:
+- id: eqnf.claim_hygiene_invariant
+  status: declared_upstream
+  ref: AGENTS.md
+  section: Claim Hygiene Rule
+terminal_routes:
+- Accept
+- WeakenClaim
+- StripHypeVerbs
+- RetainTie
+- Refuse
+terminal_route_map:
+  Accept: Preserve
+  WeakenClaim: Repair
+  StripHypeVerbs: Repair
+  RetainTie: Preserve
+  Refuse: Refuse
+certification:
+  certificate_required: true
+  certificate_kind: epistemic_audit_certificate
+  obstruction_class_required: false
+  loss_ledger_required: true
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: test receipt uses forbidden verb "proves" or "guarantees"
+  diagnosis: ungrounded hype verb violating claim discipline
+  terminal: StripHypeVerbs
+- symptom: toy setting described as universal theorem
+  diagnosis: overclaim failure mode
+  terminal: WeakenClaim
+- symptom: tie broken without declared selection rule
+  diagnosis: arbitrary symmetry breaking violating SCNF
+  terminal: RetainTie
+examples:
+- ref: coda_all_universe/1_the_tower/9_ansi_sql/bisimulation_receipt.md
+  section: 3. Epistemic Audit (Claim Hygiene)
+references:
+- ./nf.derivation.scnf.yaml
+- ./nf.derivation.aonf.yaml
+- AGENTS.md

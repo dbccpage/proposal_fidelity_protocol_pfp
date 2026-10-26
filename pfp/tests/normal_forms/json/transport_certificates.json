@@ -1,0 +1,42 @@
+[
+  {
+    "description": "Case 1: Pending certificate (no verifier has processed it)",
+    "certificate_id": "cert_001",
+    "source_regime": "sql_query",
+    "target_regime": "cache_shape",
+    "morphism_kind": "project",
+    "loss_ledger_ref": "ledger_001",
+    "descent_witness_ref": "chi_001",
+    "verifier_outcome": "pending"
+  },
+  {
+    "description": "Case 2: Missing verifier altogether",
+    "certificate_id": "cert_002",
+    "source_regime": "sql_query",
+    "target_regime": "cache_shape",
+    "morphism_kind": "project",
+    "loss_ledger_ref": "ledger_002",
+    "descent_witness_ref": "chi_002",
+    "verifier_outcome": null
+  },
+  {
+    "description": "Case 3: Verifier exists and has validated the certificate",
+    "certificate_id": "cert_003",
+    "source_regime": "sql_query",
+    "target_regime": "cache_shape",
+    "morphism_kind": "project",
+    "loss_ledger_ref": "ledger_003",
+    "descent_witness_ref": "chi_003",
+    "verifier_outcome": "verified",
+    "independent_verifier": {
+      "verifier_id": "morphism_verifier_v1",
+      "executed": true,
+      "outcome": "verified"
+    },
+    "policy_decision": {
+      "policy_id": "transport_policy_v1",
+      "accepted": true,
+      "authorized_scope": "cache_shape"
+    }
+  }
+]

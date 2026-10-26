@@ -1,0 +1,123 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.cdt_fermion_sign
+  name: 4D CDT Fermionic Grassmann Path Integrals & BQNF Sign Normal Form
+  short_name: CDT-FSIGN-NF
+  version: v0
+  theory_status: admitted
+  contract_status: draft
+  verification_status: absent
+  family: physics
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - fermionic_matter_fields
+  - grassmann_path_integrals
+  - fermion_determinant_sign_problem
+  - boundary_quotient_normal_form
+  - cochain_involution_witness
+  - causal_dynamical_triangulations
+  data_posture: in_motion
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: un-isolated sign problem divergences, unverified determinant sign
+    flips, unbounded fermion sign fluctuations, and conflation of statistical sign
+    cancellation with topological pairing invariants
+  preserves_invariant: Berezin Grassmann Gaussian scaling det(D), exact BQNF involution
+    pairing w(i)*s(i) + w(xi(i))*s(xi(i)) = 0, Banach quotient norm lower bound <Sign>
+    >= 1 - Phi_1 / ||c_1||_1, and formal classification of un-cancelled ensembles
+    under FermionSignProblemComplexityObstruction
+  protected_skeleton:
+  - simplicial_complex_geometry
+  - discrete_dirac_operator
+  - grassmann_determinant_signs
+  - bqnf_cochain_involution_witness
+  - banach_quotient_norm_bounds
+  - fermionic_partition_functions
+  erased_structure:
+  - continuous_spinor_manifolds
+  - infinite_dimensional_grassmann_algebras
+  non_claims:
+  - does not claim polynomial-time solution of generic NP-hard fermion sign problems
+    on arbitrary non-bipartite 4D triangulations
+  - does not claim absence of exponential sign decay in chiral or magnetically frustrated
+    simplicial geometries without global parity or reflection symmetries
+declarations_required:
+- dirac_operator: anti-Hermitian discrete or Kähler-Dirac operator D[T] on simplicial
+    complex
+- grassmann_path_integral: Berezin integral over Grassmann variables yielding det(D[T])
+- fermion_sign: sign of real part of determinant sgn(Re(det(D))) in {-1, 1}
+- bqnf_involution_witness: pairing involution Xi satisfying involutive, fixed-point-free,
+    sign-reversing, and weight-preserving conditions
+- banach_quotient_norm: Phi_1 = inf_alpha ||c_1 - d_0 alpha||_1 bounding average sign
+    <Sign>
+validation_criteria:
+- dirac_antihermitian: discrete Dirac operator satisfies D^dagger = -D or (gamma^5
+    D)^dagger = gamma^5 D
+- grassmann_scaling_verified: Grassmann path integral evaluates to det(D[T]) with
+    exact Berezin scaling
+- exact_involution_certified: for bipartite/reflection-symmetric complexes, involution
+    Xi achieves exact pair-wise cancellation w(i)*s(i) + w(Xi(i))*s(Xi(i)) = 0
+- quotient_bound_satisfied: for generic ensembles, average sign satisfies <Sign> >=
+    1 - Phi_1 / ||c_1||_1
+- obstruction_registered: ensembles with Phi_1 > 0 and decaying <Sign> ~ exp(-beta
+    V_4 Delta f) are routed to OpenSignObstruction
+terminal_routes:
+- Unsupported
+- ExactCancellation
+- OpenSignObstruction
+- InvalidInvolutionWitness
+- DivergentSignDecay
+terminal_route_map:
+  exact_involution: ExactCancellation
+  bounded_obstruction: OpenSignObstruction
+  invalid_witness: InvalidInvolutionWitness
+  divergent_decay: DivergentSignDecay
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: un-isolated sign problem divergences, unverified determinant sign
+    flips, unbounded fermion sign fluctuations, and conflation of statistical sign
+    cancellation with topological pairing invariants. Berezin Grassmann Gaussian scaling
+    det(D), exact BQNF involution pairing w(i)*s(i) + w(xi(i))*s(xi(i)) = 0, Banach
+    quotient norm lower bound <Sign> >= 1 - Phi_1 / ||c_1||_1, and formal classification
+    of un-cancelled ensembles under FermionSignProblemComplexityObstruction
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: un-isolated sign problem divergences, unverified determinant
+      sign flips, unbounded fermion sign fluctuations, and conflation of statistical
+      sign cancellation with topological pairing invariants
+    lossless_join:
+      status: declared_reconstruction
+      statement: Berezin Grassmann Gaussian scaling det(D), exact BQNF involution
+        pairing w(i)*s(i) + w(xi(i))*s(xi(i)) = 0, Banach quotient norm lower bound
+        <Sign> >= 1 - Phi_1 / ||c_1||_1, and formal classification of un-cancelled
+        ensembles under FermionSignProblemComplexityObstruction
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+canonical_terminal_map:
+  Unsupported: Unsupported
+  ExactCancellation: Preserve
+  OpenSignObstruction: Reject
+  InvalidInvolutionWitness: Escalate
+  DivergentSignDecay: Reject
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+certification:
+  certificate_required: true
+  certificate_kind: nf.physics.cdt_fermion_sign_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+evidence_required: []
+schema_ref: ./normal_form_contract_schema.yaml

@@ -1,0 +1,40 @@
+{
+  "mutation_id": "mut_07_lshr_instead_of_ashr",
+  "description": "Uses logical right shift instead of arithmetic right shift for sign replication",
+  "case": {
+    "case_id": "c058_b15_ashr_sign",
+    "width": 8,
+    "inputs": [
+      "x"
+    ],
+    "ops": [
+      [
+        "t1",
+        "ashr",
+        "x",
+        3
+      ],
+      [
+        "t2",
+        "ashr",
+        "t1",
+        4
+      ]
+    ],
+    "out": "t2",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b15_ashr_sign",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "res",
+        "lshr",
+        "x",
+        7
+      ]
+    ],
+    "out": "res"
+  }
+}

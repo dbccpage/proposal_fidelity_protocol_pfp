@@ -1,0 +1,102 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.pfp.pfnf
+  name: Proposal Fidelity Normal Form
+  short_name: PFNF
+  version: v0
+  status: draft
+  family: coda
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - proposal_packet
+  - lift_morphism
+  - retraction_morphism
+  - defect_vector
+  data_posture: in_transformation
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: counterfeit proposals that silently corrupt base state, inflate defect cochains, or bypass retraction verification
+  preserves_invariant: proposal fidelity tuple (u, r, delta) with base identity r o u = id and bounded defect evolution
+  protected_skeleton:
+  - base_carrier
+  - proposed_diff
+  - lift_morphism
+  - retraction_morphism
+  - defect_cochain
+  erased_structure:
+  - transient_scratchpad_history
+  non_claims:
+  - does not guarantee proposal optimality or convergence in all settings
+  - does not mint authority
+declarations_required:
+- base_carrier
+- proposed_diff
+- lift_morphism
+- retraction_morphism
+evidence_required:
+- base_retraction_receipt
+- defect_cochain_bounds
+validation_criteria:
+- retraction morphism r restricts to identity on base carrier B (r(u(b)) = b for all b in B)
+- mutation footprint is strictly confined to declared diff support
+- defect norm does not exceed declared loss budget (Phi_1(P) <= Phi_1(B) + budget)
+- verifier evaluation receipt carries AuthorityEffect None
+proof_obligations:
+- id: pfnf.base_retraction_invariance
+  status: upstream_theorem
+  ref: 030_the_symbol_game_proposal_fidelity_protocol_pfp
+  section: 0_how_to_play_the_symbol_game
+terminal_routes:
+- AcceptFidelityProposal
+- RejectBaseCorruption
+- RejectRetractionFailure
+- RejectDefectInflation
+- RejectUndeclaredSideEffect
+- EscalateToArbiter
+terminal_route_map:
+  AcceptFidelityProposal: Preserve
+  RejectBaseCorruption: Reject
+  RejectRetractionFailure: Reject
+  RejectDefectInflation: Refuse
+  RejectUndeclaredSideEffect: Reject
+  EscalateToArbiter: Escalate
+certification:
+  certificate_required: true
+  certificate_kind: proposal_fidelity_certificate
+  obstruction_class_required: true
+  loss_ledger_required: true
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: applying proposal modifies elements of the base carrier outside declared diff
+  diagnosis: base state corruption
+  terminal: RejectBaseCorruption
+- symptom: down-map retraction r fails to invert lift u on base carrier
+  diagnosis: broken proposal retraction
+  terminal: RejectRetractionFailure
+- symptom: proposal results in unbudgeted defect norm increase
+  diagnosis: defect inflation
+  terminal: RejectDefectInflation
+definition:
+  formal_statement: a proposal packet is in Proposal Fidelity Normal Form iff it supplies lift u, retraction r, and defect delta such that r(u(b)) = b on base carrier B, diff support is bounded, and defect evolution satisfies declared budgets
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: operational_protocol_not_relational_project_join
+    anomaly_exclusion: counterfeit proposals, base state corruption, and unbudgeted defect inflation
+    lossless_join:
+      status: dual_state_reconstruction
+      statement: base state is recovered losslessly via retraction r, proposed state via lift u
+    dependency_preservation:
+      status: base_invariants_preserved
+      statement: base carrier invariants are preserved under retraction
+    syntactic_decision:
+      status: certificate_decidable
+      statement: decidable by evaluating retraction on base support and verifying defect certificates
+schema_ref: ./normal_form_contract_schema.yaml

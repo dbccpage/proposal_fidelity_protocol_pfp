@@ -1,0 +1,320 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "conservative_embedding",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "arrows": [],
+          "cells": [],
+          "embedding": [
+            [
+              "<x>",
+              "<x>"
+            ],
+            [
+              "<y>",
+              "<y>"
+            ]
+          ],
+          "new_generators": [
+            "<x>",
+            "<y>",
+            "<z>"
+          ],
+          "new_relations": [
+            [
+              "<x>",
+              "<z>"
+            ]
+          ],
+          "old_generators": [
+            "<x>",
+            "<y>"
+          ],
+          "old_relations": []
+        }
+      },
+      "input_sha256": "sha256:9e193dfdf02c9573ca19a2b2710f8db9b447c08a203a805a945a28c6d9bf16fd",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "arrows": [],
+          "cells": [],
+          "embedding": [
+            [
+              "<x>",
+              "<x>"
+            ],
+            [
+              "<y>",
+              "<y>"
+            ]
+          ],
+          "new_generators": [
+            "<x>",
+            "<y>",
+            "<z>"
+          ],
+          "new_relations": [
+            [
+              "<x>",
+              "<y>"
+            ]
+          ],
+          "old_generators": [
+            "<x>",
+            "<y>"
+          ],
+          "old_relations": []
+        }
+      },
+      "input_sha256": "sha256:a03ce228360d7f209f441e18de321661f0df424d90b3e0ab370f1eddb81aa1a9",
+      "native_code": "FAILS:keeps_apart,sealed_valid",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_lost",
+      "input": {
+        "packet": {
+          "arrows": [],
+          "cells": [],
+          "embedding": [
+            [
+              "<x>",
+              "<x>"
+            ],
+            [
+              "<y>",
+              "<y>"
+            ]
+          ],
+          "new_generators": [
+            "<x>",
+            "<y>",
+            "<z>"
+          ],
+          "new_relations": [
+            [
+              "<x>",
+              "<z>"
+            ]
+          ],
+          "old_generators": [
+            "<x>",
+            "<y>"
+          ],
+          "old_relations": [
+            [
+              "<x>",
+              "<y>"
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:9f6c274dbe9f6d21b44ff4c71ffdb3633ee2581c18ab09ed5b022dcd0e494509",
+      "native_code": "FAILS:keeps_equations,old_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_lost"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_invalid",
+      "input": {
+        "packet": {
+          "arrows": [],
+          "cells": [],
+          "embedding": [
+            [
+              "<x>",
+              "<x>"
+            ],
+            [
+              "<y>",
+              "<y>"
+            ]
+          ],
+          "new_generators": [
+            "<x>",
+            "<y>",
+            "<z>",
+            "w3"
+          ],
+          "new_relations": [
+            [
+              "<y>",
+              "<z>"
+            ],
+            [
+              "<y>",
+              "w3"
+            ],
+            [
+              "<z>",
+              "w3"
+            ]
+          ],
+          "old_generators": [
+            "<x>",
+            "<y>"
+          ],
+          "old_relations": []
+        }
+      },
+      "input_sha256": "sha256:335136ea61a3dc014809e3d3087e50872c68423b3ca25ed8c432d5952a7d50a4",
+      "native_code": "FAILS:sealed_valid",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_unrelated",
+      "input": {
+        "packet": {
+          "arrows": [],
+          "cells": [],
+          "embedding": [
+            [
+              "<x>",
+              "<x>"
+            ],
+            [
+              "<y>",
+              "<y>"
+            ]
+          ],
+          "new_generators": [
+            "<x>",
+            "<y>",
+            "<z>"
+          ],
+          "new_relations": [],
+          "old_generators": [
+            "<x>",
+            "<y>"
+          ],
+          "old_relations": []
+        }
+      },
+      "input_sha256": "sha256:3a268b2e41e610b639eb5544aaf03eb6385e14af1f13ebbb2549e043de5424d1",
+      "native_code": "FAILS:new_is_a_response",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_arrow",
+      "input": {
+        "packet": {
+          "arrows": [
+            [
+              "f",
+              0,
+              1
+            ]
+          ],
+          "cells": [],
+          "embedding": [
+            [
+              "<x>",
+              "<x>"
+            ],
+            [
+              "<y>",
+              "<y>"
+            ]
+          ],
+          "new_generators": [
+            "<x>",
+            "<y>",
+            "<z>"
+          ],
+          "new_relations": [
+            [
+              "<x>",
+              "<z>"
+            ]
+          ],
+          "old_generators": [
+            "<x>",
+            "<y>"
+          ],
+          "old_relations": []
+        }
+      },
+      "input_sha256": "sha256:37146af56b98cee4a98f7eb1260deedaa12a4445df61bf641910a933e0e7eab1",
+      "native_code": "FAILS:no_cells",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "arrows": [],
+          "cells": [],
+          "embedding": [
+            [
+              "<x>",
+              "<x>"
+            ]
+          ],
+          "new_generators": [
+            "<x>",
+            "<y>",
+            "<z>"
+          ],
+          "new_relations": [
+            [
+              "<x>",
+              "<z>"
+            ]
+          ],
+          "old_generators": [
+            "<x>",
+            "<y>"
+          ],
+          "old_relations": []
+        }
+      },
+      "input_sha256": "sha256:2dc5c1695bb4f1166e8a77ae5936f7808b8c061df64da264a57e7a828ae604c3",
+      "native_code": "FAILS:embedding_total",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 6,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_006"
+}

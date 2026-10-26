@@ -1,0 +1,17 @@
+{
+  "antibody_id": "ab_checker_outage_is_not_certificate_refutation",
+  "failure_class": "verification:checker_outage_conflated_with_certificate_refutation",
+  "target_pattern": "verification:conflating_checker_failure_with_refutation",
+  "constraint_type": "AssertCheckerOutageTypedRefusal",
+  "operatorizability": "repairable",
+  "action": "refuse",
+  "severity": "P0",
+  "description": "Ensures an unavailable, timed-out, or malfunctioning native checker produces a verification-unavailable (NO_RULE) or resource refusal (BUDGET_EXHAUSTED), never a mathematical certificate rejection (CERTIFICATE_MISMATCH).",
+  "negative_fixture": "Checker binary not found or timed out, returning Refused(code=CERTIFICATE_MISMATCH) for a valid certificate.",
+  "positive_fixture": "Checker binary missing returns Refused(code=NO_RULE); timeout returns Refused(code=BUDGET_EXHAUSTED). CERTIFICATE_MISMATCH reserved strictly for completed checks finding certificate defects.",
+  "times_seen": 1,
+  "evidence_sha256": "4736f905df1c2d0f04c66e2c38580004505f9cbaf4bf999942bf9d2d0b5e0321",
+  "pharmacy_status": "candidate",
+  "authority_effect": "None",
+  "created_at": "2026-10-12T16:53:00.000000+00:00"
+}

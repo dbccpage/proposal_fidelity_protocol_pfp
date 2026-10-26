@@ -1,0 +1,442 @@
+{
+  "authority_effect": "None",
+  "awaiting": [
+    "a checker of record for this level",
+    "an adapter to the checker's input schema",
+    "the harness commit holding the adapter and the positive"
+  ],
+  "carrier_part": "repo_content",
+  "challenge_id": "pairing_certificates",
+  "draft_fixtures": [
+    {
+      "id": "pos",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "native_code": "ACCEPT",
+      "role": "positive"
+    },
+    {
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "pairs": [],
+          "rest": [
+            0,
+            1,
+            2
+          ],
+          "terms": [
+            "2/1",
+            "-1/1",
+            "-1/1"
+          ],
+          "total": "0/1"
+        }
+      },
+      "native_code": "FAILS:single_signed_rest",
+      "role": "own_negative"
+    },
+    {
+      "id": "near_wedge",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              4
+            ]
+          ],
+          "rest": [
+            2,
+            5
+          ],
+          "terms": [
+            "-2/1",
+            "-2/1",
+            "-1/1",
+            "2/1",
+            "2/1",
+            "2/1"
+          ],
+          "total": "1/1"
+        }
+      },
+      "native_code": "FAILS:single_signed_rest",
+      "role": "near_miss"
+    },
+    {
+      "id": "near_partition",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "native_code": "FAILS:partition",
+      "role": "near_miss"
+    },
+    {
+      "id": "near_opposite",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "native_code": "FAILS:opposite_pairs",
+      "role": "near_miss"
+    },
+    {
+      "id": "zero_certified",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              4,
+              5
+            ]
+          ],
+          "rest": [],
+          "terms": [
+            "2/1",
+            "1/1",
+            "-1/1",
+            "-2/1",
+            "-1/1",
+            "1/1"
+          ],
+          "total": "0/1"
+        }
+      },
+      "native_code": "ACCEPT",
+      "role": "extra"
+    },
+    {
+      "id": "pair_off",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-2/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "native_code": "FAILS:opposite_pairs,total",
+      "role": "extra"
+    },
+    {
+      "id": "rest_mixed",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "-1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "native_code": "FAILS:single_signed_rest,total",
+      "role": "extra"
+    },
+    {
+      "id": "mut",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "0/1"
+        }
+      },
+      "native_code": "FAILS:total",
+      "role": "mutation"
+    }
+  ],
+  "framing": "SC",
+  "inputs": {
+    "receipts_consumed": []
+  },
+  "ladder": {
+    "level": 66,
+    "registry_version": 1,
+    "row_sha256": "sha256:750f6456620a8d16bdb54b2c364aaf3b17a41d0621a72f3ddf6b7837fe576b9b",
+    "table_sha256": "sha256:3cdcabe424ac12a11d70db3dfd697239f8a6f93b98f059cacf511553e14698e7"
+  },
+  "lean_theorems": [],
+  "loss_ledger": {
+    "authority_effect": "None",
+    "changed_assumptions": [
+      "the challenge is supplied; no demand for it is derived",
+      "values are decided outside the grammar"
+    ],
+    "count": {
+      "DROPPED": 2,
+      "PRESERVED": 4,
+      "UNKNOWN": 1,
+      "WEAKENED": 8
+    },
+    "fields": [
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.opposite_pairs",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.partition",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.single_signed_rest",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.total",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "source.admission_reading",
+        "not_applicable_reason": null,
+        "source_value": "hosting admits by explicit events only",
+        "target_value": "same"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "source.carrier_part",
+        "not_applicable_reason": null,
+        "source_value": "credit as recorded in the bundle",
+        "target_value": "same"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.claim_class",
+        "not_applicable_reason": null,
+        "source_value": "bounded computation or cited theorem",
+        "target_value": "target verdict"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.continuation_policy",
+        "not_applicable_reason": null,
+        "source_value": "demands endogenous, payments exogenous",
+        "target_value": "challenge supplied"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "source.cost_measure",
+        "not_applicable_reason": "the answer is decided per fixture; no minimum is chosen among ties",
+        "source_value": "witness grade with its tie structure",
+        "target_value": "verdict per fixture"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.declared_bounds",
+        "not_applicable_reason": null,
+        "source_value": "responses of at most three items (embargo)",
+        "target_value": "unbounded obligation"
+      },
+      {
+        "classification": "DROPPED",
+        "field_or_law": "source.name_blindness",
+        "not_applicable_reason": null,
+        "source_value": "not blind: the challenge is supplied and named",
+        "target_value": "named level"
+      },
+      {
+        "classification": "DROPPED",
+        "field_or_law": "source.presentation_tokens",
+        "not_applicable_reason": null,
+        "source_value": "tokens of hosted elements",
+        "target_value": "not presented"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.witness_custody",
+        "not_applicable_reason": null,
+        "source_value": "research-tree evidence: research/fresh_characters, research/natural_sections at the pinned 19L57G1 commit, outside the seal and its gates",
+        "target_value": "a replay under the 19L57G1 key, admitted by the author's ruling of 2026-09-25"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "target.obligation_origin",
+        "not_applicable_reason": null,
+        "source_value": "curated catalogue at the pinned commit",
+        "target_value": "same"
+      },
+      {
+        "classification": "UNKNOWN",
+        "field_or_law": "target.terminal_vocabulary",
+        "not_applicable_reason": null,
+        "source_value": "native refusal codes",
+        "target_value": "target codes, not yet published"
+      }
+    ],
+    "measure": null,
+    "open_obligations": [
+      "target replay by the receiving side's checker"
+    ],
+    "reframe_decision": "NONE",
+    "schema": "mssn.loss-ledger.v2",
+    "status_ceiling": "PROPOSED"
+  },
+  "non_claims": [
+    "answers a supplied challenge; not a derivation from the seed",
+    "Mode E: the carrier commit is the harness commit in the_symbol_game; 19L57G1 is pinned inside it",
+    "no independent convergence with any outside list is claimed",
+    "the witness is research-tree evidence (research/fresh_characters, research/natural_sections at the pinned 19L57G1 commit), not sealed; it is admitted for a replay under the 19L57G1 key by the author's ruling of 2026-09-25",
+    "value clauses are decided outside the grammar (supplied capability)"
+  ],
+  "placement": "the_symbol_game",
+  "provenance": {
+    "isolation": "NOT_APPLICABLE",
+    "purity": "NOT_APPLICABLE",
+    "source_blindness": "NOT_BLIND"
+  },
+  "receipt_schema": "reach-receipt/1",
+  "schema": "level-engine.reach-stub.v1"
+}

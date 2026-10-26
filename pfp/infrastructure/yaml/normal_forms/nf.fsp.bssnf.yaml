@@ -1,0 +1,135 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.fsp.bssnf
+  name: Binary Sign-Switching Normal Form
+  short_name: BSS-NF
+  version: v0
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+  family: representation
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - real_symmetric_matrix
+  - diagonal_sign_gauge
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: a Monte Carlo sign problem that a diagonal sign gauge removes
+  preserves_invariant: off-diagonal non-positive entries after a diagonal sign conjugation,
+    with the spectrum unchanged by that conjugation
+  protected_skeleton:
+  - edge_sign_bits
+  - gauge_potential
+  - cycle_space
+  erased_structure: []
+  non_claims:
+  - an odd cycle of positive-sign edges is a witness that no such gauge exists. The
+    form does not remove that obstruction
+  - the matrix is real and symmetric in a fixed finite basis. Continuous basis changes
+    are outside the form
+  - the normal-form packaging is local to the source treatise. The holonomy criterion
+    itself is the standard GF(2) switching condition
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '4.1'
+  formal_statement: 'Let H be a real symmetric N by N matrix. A diagonal sign gauge
+    is a diagonal matrix D with diagonal entries +1 or -1. The gauged matrix is D
+    H D. It is stoquastic when every off-diagonal entry is less than or equal to zero.
+    For each off-diagonal nonzero entry, the edge bit is 1 when the entry is positive
+    and 0 when the entry is negative. A gauge with bits alpha exists if and only if
+    alpha_i XOR alpha_j equals the edge bit on every edge, if and only if every cycle
+    has edge-bit sum even. A positive witness is a 0-1 potential on a spanning forest
+    that meets every edge equation. A negative witness is one cycle whose edge-bit
+    sum is odd.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_a_diagonal_similarity_not_a_relational_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: running a sign-problem method on a presentation that a diagonal
+      sign gauge makes stoquastic
+    lossless_join:
+      status: similarity
+      statement: D H D has the same spectrum as H, and the gauge is inverted by applying
+        it twice
+    dependency_preservation:
+      status: edge_equations_retained
+      statement: every nonzero off-diagonal edge keeps its sign equation under the
+        gauge search
+    syntactic_decision:
+      status: matrix_decidable
+      statement: 'The decision reads the sign pattern of H. It builds a spanning forest,
+        propagates the edge equations, and checks the remaining edges. A Monte Carlo
+        sample is not the decider.
+
+        '
+declarations_required:
+- matrix_dimension
+- nonzero_off_diagonal_entries
+- edge_sign_bits
+evidence_required: []
+validation_criteria:
+- H is real and symmetric
+- each nonzero off-diagonal entry contributes its edge bit
+- a proposed gauge satisfies alpha_i XOR alpha_j equals the edge bit on every edge
+- the gauged matrix has non-positive off-diagonal entries
+- if no gauge exists, an odd cycle is exhibited
+terminal_routes:
+- AcceptStoquastic
+- RejectOddCycle
+- RejectNonSymmetric
+terminal_route_map:
+  AcceptStoquastic: Repair
+  RejectOddCycle: Reject
+  RejectNonSymmetric: Refuse
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: a cycle has odd edge-bit sum
+  diagnosis: no diagonal sign gauge makes H stoquastic
+  terminal: RejectOddCycle
+- symptom: an off-diagonal pair disagrees
+  diagnosis: H is not symmetric
+  terminal: RejectNonSymmetric
+examples:
+- ref: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '4.1'
+references:
+- coda_all_universe/mssn_sn_tower/definitions.md
+obstruction_substrate:
+  policy_ref: ../substrate/default_finite_obstruction_policy.yaml
+  finite_carrier:
+    description: real symmetric matrix H over finite basis V
+    max_rank: null
+  cochain_complex:
+    C0: vertex_gauge_potentials_alpha_in_Z2
+    C1: edge_sign_bits_s_in_Z2
+    C2: cycle_holonomies_in_Z2
+    d0: 'maps vertex signs to edge differentials: (d0 alpha)_ij = alpha_i XOR alpha_j'
+    d1: maps edge bits to cycle sums modulo 2
+    quotient: H1(G, Z2) = ker(d1) / im(d0)
+  obstruction_class:
+    notation: '[holonomy(C)]'
+    exact: 'all_cycles_even: [s] == 0'
+    residual_closed: 'frustrated_odd_cycle: [s] != 0'
+    open: unbounded_graph_or_non_hermitian
+proof_obligations:
+- id: bssnf.holonomy_soundness
+  status: theorem_shaped
+  ref: ../demos/demo_2/sign_switching.py
+  section: 4. Binary graph switching

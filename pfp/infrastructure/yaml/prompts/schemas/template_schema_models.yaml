@@ -1,0 +1,2387 @@
+# GENERATED from prompt_types.yaml via the Python models. Structural schema only.
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: urn:omega:prompt-packet:2
+$defs:
+  AntibodyCandidate:
+    additionalProperties: false
+    description: Candidate data only. Never rendered automatically into a system prompt.
+    properties:
+      antibody_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Antibody Id
+        type: string
+        x-slot: data
+      failure_class:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Failure Class
+        type: string
+        x-slot: data
+      target_pattern:
+        minLength: 1
+        pattern: \S
+        title: Target Pattern
+        type: string
+        x-slot: data
+      constraint_type:
+        enum:
+        - ProjectOut
+        - Restrain
+        - Enforce
+        title: Constraint Type
+        type: string
+        x-slot: data
+      operatorizability:
+        enum:
+        - repairable
+        - fatal
+        title: Operatorizability
+        type: string
+        x-slot: data
+      action:
+        enum:
+        - repair
+        - abort
+        title: Action
+        type: string
+        x-slot: data
+      severity:
+        enum:
+        - P0
+        - P1
+        - P2
+        - P3
+        title: Severity
+        type: string
+        x-slot: data
+      description:
+        minLength: 1
+        pattern: \S
+        title: Description
+        type: string
+        x-slot: data
+      negative_fixture_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      positive_fixture_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      reproduction_receipt_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      candidate_instruction:
+        anyOf:
+        - minLength: 1
+          pattern: \S
+          type: string
+        - type: 'null'
+        default: null
+        title: Candidate Instruction
+        x-slot: data
+      pharmacy_status:
+        const: candidate
+        default: candidate
+        title: Pharmacy Status
+        type: string
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+    required:
+    - antibody_id
+    - failure_class
+    - target_pattern
+    - constraint_type
+    - operatorizability
+    - action
+    - severity
+    - description
+    - negative_fixture_ref
+    - positive_fixture_ref
+    - reproduction_receipt_ref
+    title: AntibodyCandidate
+    type: object
+  AntibodyInsertion:
+    additionalProperties: false
+    description: System-prompt insertion data. Host verifies actual admission, independent
+      evidence, activation and current custody before rendering. It is not a child
+      unless explicitly declared with role antibody.
+    properties:
+      antibody_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      injection_text:
+        minLength: 1
+        pattern: \S
+        title: Injection Text
+        type: string
+        x-slot: data
+      placement:
+        enum:
+        - system_prompt_end
+        - before_role
+        - user_prompt_start
+        title: Placement
+        type: string
+        x-slot: data
+      admission_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      activation_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+    required:
+    - antibody_ref
+    - injection_text
+    - placement
+    - admission_ref
+    - activation_ref
+    title: AntibodyInsertion
+    type: object
+  ArtifactRef:
+    additionalProperties: false
+    description: Pinned external data. A reference is not evidence of admission, availability
+      or execution.
+    properties:
+      artifact_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Artifact Id
+        type: string
+        x-slot: data
+      schema_ref:
+        minLength: 1
+        pattern: \S
+        title: Schema Ref
+        type: string
+        x-slot: data
+      sha256:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Sha256
+        type: string
+        x-slot: data
+      uri:
+        anyOf:
+        - minLength: 1
+          pattern: \S
+          type: string
+        - type: 'null'
+        default: null
+        title: Uri
+        x-slot: data
+    required:
+    - artifact_id
+    - schema_ref
+    - sha256
+    title: ArtifactRef
+    type: object
+  Budget:
+    additionalProperties: false
+    description: One shared envelope budget; children do not reset it. Enforcement
+      belongs to the host.
+    properties:
+      max_model_calls:
+        minimum: 0
+        title: Max Model Calls
+        type: integer
+        x-slot: data
+      max_total_tokens:
+        minimum: 0
+        title: Max Total Tokens
+        type: integer
+        x-slot: data
+      max_cost_microusd:
+        minimum: 0
+        title: Max Cost Microusd
+        type: integer
+        x-slot: data
+    required:
+    - max_model_calls
+    - max_total_tokens
+    - max_cost_microusd
+    title: Budget
+    type: object
+  ByteSpan:
+    additionalProperties: false
+    description: Half-open offsets in exact UTF-8 source bytes; no normalization.
+    properties:
+      start_byte:
+        minimum: 0
+        title: Start Byte
+        type: integer
+        x-slot: data
+      end_byte:
+        minimum: 0
+        title: End Byte
+        type: integer
+        x-slot: data
+    required:
+    - start_byte
+    - end_byte
+    title: ByteSpan
+    type: object
+  CivilizationBinding:
+    additionalProperties: false
+    description: Genome content and host views are distinct; observed tiers never
+      authorize transitions.
+    properties:
+      domain_model:
+        $ref: '#/$defs/DomainModel'
+        x-slot: data
+      birth_custody:
+        const: Wild
+        default: Wild
+        title: Birth Custody
+        type: string
+        x-slot: data
+      genome_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      protected_spans:
+        default: []
+        items:
+          $ref: '#/$defs/ProtectedSpan'
+        title: Protected Spans
+        type: array
+        x-slot: data
+      view:
+        anyOf:
+        - $ref: '#/$defs/CustodyView'
+        - type: 'null'
+        default: null
+        x-slot: data
+      population_tier:
+        anyOf:
+        - enum:
+          - WILD
+          - CANDIDATE
+          - REVIEWED
+          - ADMITTED
+          - CEMETERY
+          type: string
+        - type: 'null'
+        default: null
+        title: Population Tier
+        x-slot: data
+      population_receipt_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      placement:
+        anyOf:
+        - $ref: '#/$defs/DomainPlacement'
+        - type: 'null'
+        default: null
+        x-slot: data
+      fitness_receipt_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Fitness Receipt Refs
+        type: array
+        x-slot: data
+      rank_certificate_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Rank Certificate Refs
+        type: array
+        x-slot: data
+      cemetery_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Cemetery Refs
+        type: array
+        x-slot: data
+      genealogy_receipt_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Genealogy Receipt Refs
+        type: array
+        x-slot: data
+    required:
+    - domain_model
+    title: CivilizationBinding
+    type: object
+  ClaimHygiene:
+    additionalProperties: false
+    properties:
+      discipline:
+        const: You must write with strict claim discipline.
+        title: Discipline
+        type: string
+        x-slot: fixed
+      forbidden_words:
+        const:
+        - proves
+        - guarantees
+        - mathematically verifies
+        - fundamentally
+        - true intelligence
+        - impossible
+        - universal
+        - flawless
+        - perfectly
+        - clearly
+        - obviously
+        - simply
+        - merely
+        - weaponized
+        items:
+          type: string
+        title: Forbidden Words
+        type: array
+        x-slot: fixed
+      forbidden_word_exceptions:
+        const: unless explicitly scoped as speculative or nested inside user quotes
+        title: Forbidden Word Exceptions
+        type: string
+        x-slot: fixed
+      replacement_defaults:
+        const:
+        - from: proves
+          to: supports or shows in this model
+        - from: guarantees
+          to: guarantees under the declared assumptions
+        - from: fundamental flaw
+          to: failure mode
+        - from: mathematically verified
+          to: checked by this oracle/test
+        items:
+          $ref: '#/$defs/Replacement'
+        title: Replacement Defaults
+        type: array
+        x-slot: fixed
+      default_posture:
+        const: Prefer narrow claims over broad claims. Do not promote speculative
+          ideas into theorems. Do not describe toy tests or implementation checks
+          as mathematical proofs of universal results.
+        title: Default Posture
+        type: string
+        x-slot: fixed
+    required:
+    - discipline
+    - forbidden_words
+    - forbidden_word_exceptions
+    - replacement_defaults
+    - default_posture
+    title: ClaimHygiene
+    type: object
+  CustodyView:
+    additionalProperties: false
+    description: Reported host ledger projection. A prompt cannot grant this status.
+    properties:
+      prompt_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Prompt Id
+        type: string
+        x-slot: data
+      ledger_revision:
+        minimum: 0
+        title: Ledger Revision
+        type: integer
+        x-slot: data
+      current_custody:
+        enum:
+        - Wild
+        - Candidate
+        - Reviewed
+        - Admitted
+        - Suspended
+        - Revoked
+        title: Current Custody
+        type: string
+        x-slot: data
+      view_receipt_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+    required:
+    - prompt_id
+    - ledger_revision
+    - current_custody
+    - view_receipt_ref
+    title: CustodyView
+    type: object
+  DomainModel:
+    additionalProperties: false
+    properties:
+      domain:
+        minLength: 1
+        pattern: \S
+        title: Domain
+        type: string
+        x-slot: data
+      target:
+        anyOf:
+        - minLength: 1
+          pattern: \S
+          type: string
+        - type: 'null'
+        default: null
+        title: Target
+        x-slot: data
+      assumptions:
+        default: []
+        items:
+          minLength: 1
+          pattern: \S
+          type: string
+        title: Assumptions
+        type: array
+        x-slot: data
+      license_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: License Refs
+        type: array
+        x-slot: data
+      normal_form_contract_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+    required:
+    - domain
+    title: DomainModel
+    type: object
+  DomainPlacement:
+    additionalProperties: false
+    properties:
+      placement_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Placement Id
+        type: string
+        x-slot: data
+      content_digest:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Content Digest
+        type: string
+        x-slot: data
+      domain_assignment:
+        minLength: 1
+        pattern: \S
+        title: Domain Assignment
+        type: string
+        x-slot: data
+      read_scope:
+        default: []
+        items:
+          minLength: 1
+          pattern: \S
+          type: string
+        title: Read Scope
+        type: array
+        x-slot: data
+      disposition:
+        minLength: 1
+        pattern: \S
+        title: Disposition
+        type: string
+        x-slot: data
+      receipt_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+    required:
+    - placement_id
+    - content_digest
+    - domain_assignment
+    - disposition
+    - receipt_ref
+    title: DomainPlacement
+    type: object
+  EvaluatorBinding:
+    additionalProperties: false
+    properties:
+      evaluator:
+        title: Evaluator
+        type: string
+        x-slot: fixed
+      promotes:
+        title: Promotes
+        type: string
+        x-slot: fixed
+      does_not_promote:
+        anyOf:
+        - type: string
+        - type: 'null'
+        default: null
+        title: Does Not Promote
+        x-slot: fixed
+    required:
+    - evaluator
+    - promotes
+    title: EvaluatorBinding
+    type: object
+  EvaluatorScopeRule:
+    additionalProperties: false
+    properties:
+      principle:
+        const: An evaluator may promote only the claim type it directly tests.
+        title: Principle
+        type: string
+        x-slot: fixed
+      bindings:
+        const:
+        - does_not_promote: mathematical truth
+          evaluator: cargo test
+          promotes: implementation behavior
+        - does_not_promote: empirical reality
+          evaluator: SymPy
+          promotes: symbolic computation
+        - does_not_promote: null
+          evaluator: Lean/Coq/Isabelle
+          promotes: formal theorem validity relative to stated axioms
+        - does_not_promote: proof
+          evaluator: Reference checks
+          promotes: provenance support
+        - does_not_promote: evidence
+          evaluator: Confidence scores
+          promotes: nothing
+        items:
+          $ref: '#/$defs/EvaluatorBinding'
+        title: Bindings
+        type: array
+        x-slot: fixed
+    required:
+    - principle
+    - bindings
+    title: EvaluatorScopeRule
+    type: object
+  EvidenceLevel:
+    additionalProperties: false
+    properties:
+      code:
+        enum:
+        - F0
+        - F1
+        - F2
+        - F3
+        - F4
+        title: Code
+        type: string
+        x-slot: fixed
+      meaning:
+        title: Meaning
+        type: string
+        x-slot: fixed
+    required:
+    - code
+    - meaning
+    title: EvidenceLevel
+    type: object
+  ExecutionData:
+    additionalProperties: false
+    properties:
+      budget:
+        $ref: '#/$defs/Budget'
+        x-slot: data
+      occurrences:
+        default: []
+        items:
+          $ref: '#/$defs/ExecutionOccurrence'
+        title: Occurrences
+        type: array
+        x-slot: data
+    required:
+    - budget
+    title: ExecutionData
+    type: object
+  ExecutionOccurrence:
+    additionalProperties: false
+    properties:
+      occurrence_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Occurrence Id
+        type: string
+        x-slot: data
+      run_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Run Id
+        type: string
+        x-slot: data
+      session_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Session Id
+        type: string
+        x-slot: data
+      prompt_node_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Prompt Node Id
+        type: string
+        x-slot: data
+      genome_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      input_packet_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      rendered_prompt_sha256:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Rendered Prompt Sha256
+        type: string
+        x-slot: data
+      provider:
+        minLength: 1
+        pattern: \S
+        title: Provider
+        type: string
+        x-slot: data
+      model:
+        minLength: 1
+        pattern: \S
+        title: Model
+        type: string
+        x-slot: data
+      status:
+        enum:
+        - planned
+        - running
+        - completed_with_output
+        - budget_exhausted_with_candidate
+        - refused
+        - failed
+        title: Status
+        type: string
+        x-slot: data
+      output_packet_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      evaluation_receipt_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Evaluation Receipt Refs
+        type: array
+        x-slot: data
+      started_at_utc:
+        anyOf:
+        - pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          type: string
+        - type: 'null'
+        default: null
+        title: Started At Utc
+        x-slot: data
+      completed_at_utc:
+        anyOf:
+        - pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          type: string
+        - type: 'null'
+        default: null
+        title: Completed At Utc
+        x-slot: data
+      cost_microusd:
+        default: 0
+        minimum: 0
+        title: Cost Microusd
+        type: integer
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+    required:
+    - occurrence_id
+    - run_id
+    - session_id
+    - prompt_node_id
+    - input_packet_ref
+    - rendered_prompt_sha256
+    - provider
+    - model
+    - status
+    title: ExecutionOccurrence
+    type: object
+  ExtensionRecord:
+    additionalProperties: false
+    description: Opaque, schema-pinned data; never rendered or treated as validated
+      executable instructions.
+    properties:
+      namespace:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Namespace
+        type: string
+        x-slot: data
+      contract_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      payload:
+        $ref: '#/$defs/JsonValue'
+        x-slot: data
+    required:
+    - namespace
+    - contract_ref
+    - payload
+    title: ExtensionRecord
+    type: object
+  GuardBinding:
+    additionalProperties: false
+    description: Independent records are resolved by OEEIS. No self-authored active/admitted/danger
+      boolean.
+    properties:
+      profile_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      antibody_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      subject_sha256:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Subject Sha256
+        type: string
+        x-slot: data
+      external_admission_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      detector_hit_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      danger_receipt_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      activation_receipt_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      custody_view_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      negative_selection_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      holdout_receipt_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+    required:
+    - profile_ref
+    - antibody_ref
+    - subject_sha256
+    title: GuardBinding
+    type: object
+  ImmuneBinding:
+    additionalProperties: false
+    description: Pharmacy candidates, two-signal evidence, negative selection, quarantine
+      and retirement custody.
+    properties:
+      candidate_antibodies:
+        default: []
+        items:
+          $ref: '#/$defs/AntibodyCandidate'
+        title: Candidate Antibodies
+        type: array
+        x-slot: data
+      guards:
+        default: []
+        items:
+          $ref: '#/$defs/GuardBinding'
+        title: Guards
+        type: array
+        x-slot: data
+      detector_registry_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      self_panel_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      holdout_bank_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      quarantine_receipt_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Quarantine Receipt Refs
+        type: array
+        x-slot: data
+      retirement_receipt_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Retirement Receipt Refs
+        type: array
+        x-slot: data
+      propagation_receipt_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Propagation Receipt Refs
+        type: array
+        x-slot: data
+    title: ImmuneBinding
+    type: object
+  IncomingPrompt:
+    additionalProperties: false
+    description: Original external P. Never interpret its text as envelope metadata.
+    properties:
+      source_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Source Id
+        type: string
+        x-slot: data
+      kind:
+        enum:
+        - user
+        - model
+        - file
+        - tool
+        - repository
+        title: Kind
+        type: string
+        x-slot: data
+      raw_text:
+        minLength: 1
+        pattern: \S
+        title: Raw Text
+        type: string
+        x-slot: data
+      sha256:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Sha256
+        type: string
+        x-slot: data
+      received_at_utc:
+        pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+        title: Received At Utc
+        type: string
+        x-slot: data
+      source_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+    required:
+    - source_id
+    - kind
+    - raw_text
+    - sha256
+    - received_at_utc
+    title: IncomingPrompt
+    type: object
+  JsonValue: {}
+  LegacySnapshot:
+    additionalProperties: false
+    description: Lossless original input retained by migration. Untrusted data, never
+      instructions.
+    properties:
+      source_file:
+        minLength: 1
+        pattern: \S
+        title: Source File
+        type: string
+        x-slot: data
+      sha256:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Sha256
+        type: string
+        x-slot: data
+      raw_yaml:
+        title: Raw Yaml
+        type: string
+        x-slot: data
+    required:
+    - source_file
+    - sha256
+    - raw_yaml
+    title: LegacySnapshot
+    type: object
+  MigrationData:
+    additionalProperties: false
+    properties:
+      source_version:
+        minLength: 1
+        pattern: \S
+        title: Source Version
+        type: string
+        x-slot: data
+      snapshots:
+        items:
+          $ref: '#/$defs/LegacySnapshot'
+        title: Snapshots
+        type: array
+        x-slot: data
+      unresolved:
+        default: []
+        items:
+          minLength: 1
+          pattern: \S
+          type: string
+        title: Unresolved
+        type: array
+        x-slot: data
+    required:
+    - source_version
+    - snapshots
+    title: MigrationData
+    type: object
+  Mss0GrammarConstraint:
+    additionalProperties: false
+    properties:
+      system_name:
+        const: SYM SYS
+        title: System Name
+        type: string
+        x-slot: fixed
+      atomic_glyph_count:
+        const: 38
+        title: Atomic Glyph Count
+        type: integer
+        x-slot: fixed
+      node_labels:
+        const: a..z
+        title: Node Labels
+        type: string
+        x-slot: fixed
+      numeric_labels:
+        const: 0..9
+        title: Numeric Labels
+        type: string
+        x-slot: fixed
+      delimiters:
+        const:
+        - <
+        - '>'
+        items:
+          type: string
+        title: Delimiters
+        type: array
+        x-slot: fixed
+      pair_note:
+        const: The written form <> is a two-glyph expression, not a 39th atomic glyph.
+        title: Pair Note
+        type: string
+        x-slot: fixed
+      numeric_license_rule:
+        const: Numeric labels acquire arithmetic or weight semantics only through
+          an explicit license.
+        title: Numeric License Rule
+        type: string
+        x-slot: fixed
+      derived_patterns_note:
+        const: Category-theoretic structures (functors, limits, adjunctions, monads)
+          are derived patterns, not new primitives.
+        title: Derived Patterns Note
+        type: string
+        x-slot: fixed
+    required:
+    - system_name
+    - atomic_glyph_count
+    - node_labels
+    - numeric_labels
+    - delimiters
+    - pair_note
+    - numeric_license_rule
+    - derived_patterns_note
+    title: Mss0GrammarConstraint
+    type: object
+  Mss0Level:
+    additionalProperties: false
+    properties:
+      level:
+        title: Level
+        type: integer
+        x-slot: fixed
+      code:
+        title: Code
+        type: string
+        x-slot: fixed
+      name:
+        title: Name
+        type: string
+        x-slot: fixed
+      meaning:
+        title: Meaning
+        type: string
+        x-slot: fixed
+    required:
+    - level
+    - code
+    - name
+    - meaning
+    title: Mss0Level
+    type: object
+  Mss0TypingRules:
+    additionalProperties: false
+    properties:
+      preamble:
+        const: 'Whenever formalizing structures, adhere to the MSS-0 topological hierarchy:'
+        title: Preamble
+        type: string
+        x-slot: fixed
+      levels:
+        const:
+        - code: N
+          level: 1
+          meaning: 0-simplex
+          name: Node
+        - code: L
+          level: 2
+          meaning: 1-simplex
+          name: Edge
+        - code: C2
+          level: 3
+          meaning: 1-chain closed loop; strictly distinct from a filled region
+          name: Cycle
+        - code: F1
+          level: 4
+          meaning: 2-simplex / triangle; strictly requires a declared 2-cell
+          name: Face
+        - code: M1
+          level: 5
+          meaning: Topological lock; requires LockStructure, ObstructionClass, and
+            ConstraintInvariant
+          name: Mass
+        - code: H1
+          level: 6
+          meaning: Recursive Locus; requires explicit declaration of recursive equivalence
+            semantics
+          name: SelfModel
+        items:
+          $ref: '#/$defs/Mss0Level'
+        title: Levels
+        type: array
+        x-slot: fixed
+    required:
+    - preamble
+    - levels
+    title: Mss0TypingRules
+    type: object
+  OpSemantics:
+    additionalProperties: false
+    properties:
+      default_layer:
+        const: 1
+        title: Default Layer
+        type: integer
+        x-slot: fixed
+      default_meaning:
+        const: syntactic_binary_operator
+        title: Default Meaning
+        type: string
+        x-slot: fixed
+      forbidden_unlicensed_interpretations:
+        const:
+        - arithmetic
+        - multiplication
+        - tensor_product
+        - boundary
+        - coboundary
+        - causality
+        - optimization
+        - physical_transition
+        items:
+          enum:
+          - arithmetic
+          - multiplication
+          - tensor_product
+          - boundary
+          - coboundary
+          - causality
+          - optimization
+          - physical_transition
+          type: string
+        title: Forbidden Unlicensed Interpretations
+        type: array
+        x-slot: fixed
+      license_required_for:
+        const:
+        - cohomological_interpretation
+        - category_theoretic_interpretation
+        items:
+          enum:
+          - cohomological_interpretation
+          - category_theoretic_interpretation
+          type: string
+        title: License Required For
+        type: array
+        x-slot: fixed
+    required:
+    - default_layer
+    - default_meaning
+    - forbidden_unlicensed_interpretations
+    - license_required_for
+    title: OpSemantics
+    type: object
+  OperationBinding:
+    additionalProperties: false
+    description: Snapshot for OEWAS. Actual catalog verification and execution stay
+      in OEWAS and the host.
+    properties:
+      operation_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Operation Id
+        type: string
+        x-slot: data
+      operation_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      inputs:
+        default: []
+        items:
+          $ref: '#/$defs/PortSpec'
+        title: Inputs
+        type: array
+        x-slot: data
+      output:
+        $ref: '#/$defs/PortSpec'
+        x-slot: data
+      operand_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Operand Refs
+        type: array
+        x-slot: data
+      lifecycle:
+        $ref: '#/$defs/SkillLifecycle'
+        x-slot: data
+      residual_status:
+        minLength: 1
+        pattern: \S
+        title: Residual Status
+        type: string
+        x-slot: data
+      effects:
+        default: []
+        items:
+          minLength: 1
+          pattern: \S
+          type: string
+        title: Effects
+        type: array
+        x-slot: data
+      tool_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Tool Refs
+        type: array
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+      authority_ceiling:
+        const: None
+        default: None
+        title: Authority Ceiling
+        type: string
+        x-slot: data
+      invocation_grade:
+        minLength: 1
+        pattern: \S
+        title: Invocation Grade
+        type: string
+        x-slot: data
+    required:
+    - operation_id
+    - operation_ref
+    - output
+    - lifecycle
+    - residual_status
+    - invocation_grade
+    title: OperationBinding
+    type: object
+  ParentPrompt:
+    additionalProperties: false
+    properties:
+      prompt_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Prompt Id
+        type: string
+        x-slot: data
+      generation:
+        minimum: 0
+        title: Generation
+        type: integer
+        x-slot: data
+      relationship:
+        enum:
+        - root_seed
+        - edit
+        - antibody_injection
+        - schema_change
+        - crossover
+        - fork
+        - decompose
+        title: Relationship
+        type: string
+        x-slot: data
+      witness_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+    required:
+    - prompt_id
+    - generation
+    - relationship
+    title: ParentPrompt
+    type: object
+  PortSpec:
+    additionalProperties: false
+    properties:
+      name:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Name
+        type: string
+        x-slot: data
+      colour_id:
+        enum:
+        - State
+        - Proof
+        - Paper
+        - Code
+        - Contract
+        - Receipt
+        - Ledger
+        - Diagram
+        - Audit
+        - Post
+        title: Colour Id
+        type: string
+        x-slot: data
+      schema_ref:
+        minLength: 1
+        pattern: \S
+        title: Schema Ref
+        type: string
+        x-slot: data
+      schema_digest:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Schema Digest
+        type: string
+        x-slot: data
+      validator_ref:
+        minLength: 1
+        pattern: \S
+        title: Validator Ref
+        type: string
+        x-slot: data
+      validator_digest:
+        pattern: ^sha256:[0-9a-f]{64}$
+        title: Validator Digest
+        type: string
+        x-slot: data
+    required:
+    - name
+    - colour_id
+    - schema_ref
+    - schema_digest
+    - validator_ref
+    - validator_digest
+    title: PortSpec
+    type: object
+  ProcessIntegrity:
+    additionalProperties: false
+    properties:
+      seed_allows_theory_refutation:
+        const: true|false
+        title: Seed Allows Theory Refutation
+        type: string
+        x-slot: fixed
+      detected_prompt_biases:
+        const: []
+        items:
+          type: string
+        title: Detected Prompt Biases
+        type: array
+        x-slot: fixed
+      should_continue:
+        const: true|false
+        title: Should Continue
+        type: string
+        x-slot: fixed
+    required:
+    - seed_allows_theory_refutation
+    - detected_prompt_biases
+    - should_continue
+    title: ProcessIntegrity
+    type: object
+  PromptDecomposition:
+    additionalProperties: false
+    description: Absent or none/[] is a leaf. declared requires children. expand_prompt
+      computes a proposed receipt; host agreement is required to adopt it.
+    properties:
+      splitter:
+        enum:
+        - none
+        - declared
+        title: Splitter
+        type: string
+        x-slot: data
+      subprompts:
+        default: []
+        items:
+          $ref: '#/$defs/SubpromptSlot'
+        title: Subprompts
+        type: array
+        x-slot: data
+      agreement_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+    required:
+    - splitter
+    title: PromptDecomposition
+    type: object
+    allOf:
+    - if:
+        properties:
+          splitter:
+            const: none
+        required:
+        - splitter
+      then:
+        properties:
+          subprompts:
+            maxItems: 0
+    - if:
+        properties:
+          splitter:
+            const: declared
+        required:
+        - splitter
+      then:
+        required:
+        - subprompts
+        properties:
+          subprompts:
+            minItems: 1
+  PromptLineage:
+    additionalProperties: false
+    description: Mutation ancestry only. Containment and execution occurrences are
+      stored separately. prompt_id is a local packet identity until bound to an external
+      genome.
+    properties:
+      family_name:
+        minLength: 1
+        pattern: \S
+        title: Family Name
+        type: string
+        x-slot: data
+      generation_id:
+        minimum: 0
+        title: Generation Id
+        type: integer
+        x-slot: data
+      prompt_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Prompt Id
+        type: string
+        x-slot: data
+      parents:
+        default: []
+        items:
+          $ref: '#/$defs/ParentPrompt'
+        title: Parents
+        type: array
+        x-slot: data
+      root_prompt_ids:
+        items:
+          maxLength: 240
+          minLength: 1
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+          type: string
+        minItems: 1
+        title: Root Prompt Ids
+        type: array
+        x-slot: data
+      template_id:
+        const: prompt_template_typed
+        title: Template Id
+        type: string
+        x-slot: data
+      template_version:
+        const: 2.0.0
+        title: Template Version
+        type: string
+        x-slot: data
+      mutation_kind:
+        enum:
+        - root_seed
+        - edit
+        - antibody_injection
+        - schema_change
+        - crossover
+        - fork
+        - decompose
+        title: Mutation Kind
+        type: string
+        x-slot: data
+      mutation_note:
+        anyOf:
+        - minLength: 1
+          pattern: \S
+          type: string
+        - type: 'null'
+        default: null
+        title: Mutation Note
+        x-slot: data
+      status:
+        enum:
+        - draft
+        - assembled
+        - executed
+        - retired
+        title: Status
+        type: string
+        x-slot: data
+      created_at_utc:
+        pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+        title: Created At Utc
+        type: string
+        x-slot: data
+      author:
+        minLength: 1
+        pattern: \S
+        title: Author
+        type: string
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+    required:
+    - family_name
+    - generation_id
+    - prompt_id
+    - root_prompt_ids
+    - template_id
+    - template_version
+    - mutation_kind
+    - status
+    - created_at_utc
+    - author
+    title: PromptLineage
+    type: object
+  ProtectedSpan:
+    additionalProperties: false
+    properties:
+      name:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Name
+        type: string
+        x-slot: data
+      span:
+        $ref: '#/$defs/ByteSpan'
+        x-slot: data
+    required:
+    - name
+    - span
+    title: ProtectedSpan
+    type: object
+  Replacement:
+    additionalProperties: false
+    properties:
+      from:
+        title: From
+        type: string
+        x-slot: fixed
+      to:
+        title: To
+        type: string
+        x-slot: fixed
+    required:
+    - from
+    - to
+    title: Replacement
+    type: object
+  ResponseField:
+    additionalProperties: false
+    properties:
+      name:
+        anyOf:
+        - maxLength: 240
+          minLength: 1
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+          type: string
+        - type: 'null'
+        default: null
+        title: Name
+        x-slot: seed
+      value_type:
+        anyOf:
+        - enum:
+          - string
+          - bool
+          - tristate
+          - int
+          - list
+          type: string
+        - type: 'null'
+        default: null
+        title: Value Type
+        x-slot: seed
+      description:
+        anyOf:
+        - minLength: 1
+          pattern: \S
+          type: string
+        - type: 'null'
+        default: null
+        title: Description
+        x-slot: seed
+      item_type:
+        anyOf:
+        - enum:
+          - string
+          - bool
+          - tristate
+          - int
+          type: string
+        - type: 'null'
+        default: null
+        title: Item Type
+        x-slot: data
+      required:
+        default: true
+        title: Required
+        type: boolean
+        x-slot: data
+    title: ResponseField
+    type: object
+  ResponseSchema:
+    additionalProperties: false
+    properties:
+      derived_under_policy:
+        const: SPK-001
+        title: Derived Under Policy
+        type: string
+        x-slot: fixed
+      summary:
+        $ref: '#/$defs/ResponseSummary'
+        x-slot: fixed
+      seed_sections:
+        anyOf:
+        - items:
+            $ref: '#/$defs/ResponseSection'
+          type: array
+        - type: 'null'
+        default: null
+        title: Seed Sections
+        x-slot: seed
+      process_integrity:
+        $ref: '#/$defs/ProcessIntegrity'
+        x-slot: fixed
+    required:
+    - derived_under_policy
+    - summary
+    - process_integrity
+    title: ResponseSchema
+    type: object
+  ResponseSection:
+    additionalProperties: false
+    description: Seed-specific response block (e.g. models_evaluated, primitive_audit,
+      lean_integration).
+    properties:
+      name:
+        anyOf:
+        - maxLength: 240
+          minLength: 1
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+          type: string
+        - type: 'null'
+        default: null
+        title: Name
+        x-slot: seed
+      repeats_per:
+        anyOf:
+        - type: string
+        - type: 'null'
+        default: null
+        title: Repeats Per
+        x-slot: seed
+      fields:
+        anyOf:
+        - items:
+            $ref: '#/$defs/ResponseField'
+          type: array
+        - type: 'null'
+        default: null
+        title: Fields
+        x-slot: seed
+      expands_to_subprompt:
+        default: false
+        title: Expands To Subprompt
+        type: boolean
+        x-slot: data
+    title: ResponseSection
+    type: object
+  ResponseSummary:
+    additionalProperties: false
+    properties:
+      narrowest_defensible_thesis:
+        const: The narrowest defensible claim.
+        title: Narrowest Defensible Thesis
+        type: string
+        x-slot: fixed
+      evidence_scope:
+        const: What the current evidence supports, and what it does not support.
+        title: Evidence Scope
+        type: string
+        x-slot: fixed
+      next_concrete_test:
+        const: The next test needed to advance the evidence level.
+        title: Next Concrete Test
+        type: string
+        x-slot: fixed
+    required:
+    - narrowest_defensible_thesis
+    - evidence_scope
+    - next_concrete_test
+    title: ResponseSummary
+    type: object
+  Role:
+    additionalProperties: false
+    properties:
+      persona:
+        const: You are a restrained SymSys auditor and theory-forge assistant.
+        title: Persona
+        type: string
+        x-slot: fixed
+      goal:
+        anyOf:
+        - type: string
+        - type: 'null'
+        default: null
+        title: Goal
+        x-slot: seed
+    required:
+    - persona
+    title: Role
+    type: object
+  SemanticPolicyManifest:
+    additionalProperties: false
+    properties:
+      policy_id:
+        const: SPK-001
+        title: Policy Id
+        type: string
+        x-slot: fixed
+      required_stamp:
+        const: 'derived_under_policy: SPK-001'
+        title: Required Stamp
+        type: string
+        x-slot: fixed
+    required:
+    - policy_id
+    - required_stamp
+    title: SemanticPolicyManifest
+    type: object
+  SkillLifecycle:
+    additionalProperties: false
+    properties:
+      declaration:
+        enum:
+        - Declared
+        - Abstract
+        - Synthesized
+        title: Declaration
+        type: string
+        x-slot: data
+      schema_binding:
+        enum:
+        - Unbound
+        - Bound
+        - AnySchema
+        title: Schema Binding
+        type: string
+        x-slot: data
+      executor_binding:
+        enum:
+        - Unbound
+        - Bound
+        - ExternalService
+        title: Executor Binding
+        type: string
+        x-slot: data
+      validation:
+        enum:
+        - Unchecked
+        - Validated
+        - Failed
+        title: Validation
+        type: string
+        x-slot: data
+      admission:
+        enum:
+        - Unadmitted
+        - Admitted
+        - Retired
+        title: Admission
+        type: string
+        x-slot: data
+      schema_digest:
+        anyOf:
+        - pattern: ^sha256:[0-9a-f]{64}$
+          type: string
+        - type: 'null'
+        default: null
+        title: Schema Digest
+        x-slot: data
+      executor_digest:
+        anyOf:
+        - pattern: ^sha256:[0-9a-f]{64}$
+          type: string
+        - type: 'null'
+        default: null
+        title: Executor Digest
+        x-slot: data
+    required:
+    - declaration
+    - schema_binding
+    - executor_binding
+    - validation
+    - admission
+    title: SkillLifecycle
+    type: object
+  SubpromptSlot:
+    additionalProperties: false
+    description: Explicit containment declaration. Dotted source_field resolves within
+      the containing packet; ordinal is zero-based, unique and contiguous. A referenced
+      child packet owns its own declarations.
+    properties:
+      subprompt_id:
+        maxLength: 120
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._-]*$
+        title: Subprompt Id
+        type: string
+        x-slot: data
+      role:
+        minLength: 1
+        pattern: \S
+        title: Role
+        type: string
+        x-slot: data
+      source_field:
+        minLength: 1
+        pattern: \S
+        title: Source Field
+        type: string
+        x-slot: data
+      ordinal:
+        minimum: 0
+        title: Ordinal
+        type: integer
+        x-slot: data
+      packet_id:
+        anyOf:
+        - maxLength: 240
+          minLength: 1
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+          type: string
+        - type: 'null'
+        default: null
+        title: Packet Id
+        x-slot: data
+      authority_effect:
+        const: None
+        default: None
+        title: Authority Effect
+        type: string
+        x-slot: data
+    required:
+    - subprompt_id
+    - role
+    - source_field
+    - ordinal
+    title: SubpromptSlot
+    type: object
+  SystemPrompt:
+    additionalProperties: false
+    properties:
+      semantic_policy_manifest:
+        $ref: '#/$defs/SemanticPolicyManifest'
+        x-slot: fixed
+      mss0_grammar_constraint:
+        $ref: '#/$defs/Mss0GrammarConstraint'
+        x-slot: fixed
+      op_semantics:
+        $ref: '#/$defs/OpSemantics'
+        x-slot: fixed
+      import_boundary:
+        const: Do not import continuous physics, Lie algebras, or differential geometry
+          unless explicitly mapping them FROM the 38 SYM SYS primitives.
+        title: Import Boundary
+        type: string
+        x-slot: fixed
+      mss0_typing_rules:
+        $ref: '#/$defs/Mss0TypingRules'
+        x-slot: fixed
+      evaluator_scope_rule:
+        $ref: '#/$defs/EvaluatorScopeRule'
+        x-slot: fixed
+      evidence_levels:
+        const:
+        - code: F0
+          meaning: unverified idea
+        - code: F1
+          meaning: internally consistent
+        - code: F2
+          meaning: structurally validated
+        - code: F3
+          meaning: mechanically-verified (within verification scope)
+        - code: F4
+          meaning: independently reproduced
+        items:
+          $ref: '#/$defs/EvidenceLevel'
+        title: Evidence Levels
+        type: array
+        x-slot: fixed
+      claim_hygiene:
+        $ref: '#/$defs/ClaimHygiene'
+        x-slot: fixed
+      role:
+        anyOf:
+        - $ref: '#/$defs/Role'
+        - type: 'null'
+        default: null
+        x-slot: seed
+      antibody_injections:
+        anyOf:
+        - items:
+            $ref: '#/$defs/AntibodyInsertion'
+          type: array
+        - type: 'null'
+        default: []
+        title: Antibody Injections
+        x-slot: seed
+    required:
+    - semantic_policy_manifest
+    - mss0_grammar_constraint
+    - op_semantics
+    - import_boundary
+    - mss0_typing_rules
+    - evaluator_scope_rule
+    - evidence_levels
+    - claim_hygiene
+    title: SystemPrompt
+    type: object
+  UserPrompt:
+    additionalProperties: false
+    properties:
+      question:
+        anyOf:
+        - minLength: 1
+          pattern: \S
+          type: string
+        - type: 'null'
+        default: null
+        title: Question
+        x-slot: seed
+      theoretical_context:
+        anyOf:
+        - type: string
+        - type: 'null'
+        default: null
+        title: Theoretical Context
+        x-slot: seed
+      audit_elements:
+        anyOf:
+        - items:
+            type: string
+          type: array
+        - type: 'null'
+        default: null
+        title: Audit Elements
+        x-slot: seed
+      audit_instruction:
+        const: Run an audit checking whether each listed element can be derived from
+          the declared framework, or must be marked as a candidate primitive or open
+          layer.
+        title: Audit Instruction
+        type: string
+        x-slot: fixed
+      output_instruction:
+        const: Return ONLY the following YAML structure. No markdown code blocks,
+          no conversational filler.
+        title: Output Instruction
+        type: string
+        x-slot: fixed
+    required:
+    - audit_instruction
+    - output_instruction
+    title: UserPrompt
+    type: object
+  WorkflowBinding:
+    additionalProperties: false
+    description: References and data for existing OEWAS/PFP contracts; this is not
+      a second workflow engine.
+    properties:
+      workflow_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      catalog_ref:
+        $ref: '#/$defs/ArtifactRef'
+        x-slot: data
+      composition_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      agent_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Agent Refs
+        type: array
+        x-slot: data
+      skill_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Skill Refs
+        type: array
+        x-slot: data
+      anti_skill_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Anti Skill Refs
+        type: array
+        x-slot: data
+      operations:
+        default: []
+        items:
+          $ref: '#/$defs/OperationBinding'
+        title: Operations
+        type: array
+        x-slot: data
+      steps:
+        default: []
+        items:
+          $ref: '#/$defs/WorkflowStep'
+        title: Steps
+        type: array
+        x-slot: data
+      source_colours:
+        default: []
+        items:
+          enum:
+          - State
+          - Proof
+          - Paper
+          - Code
+          - Contract
+          - Receipt
+          - Ledger
+          - Diagram
+          - Audit
+          - Post
+          type: string
+        title: Source Colours
+        type: array
+        x-slot: data
+      target_colour:
+        enum:
+        - State
+        - Proof
+        - Paper
+        - Code
+        - Contract
+        - Receipt
+        - Ledger
+        - Diagram
+        - Audit
+        - Post
+        title: Target Colour
+        type: string
+        x-slot: data
+      composition_check_ref:
+        anyOf:
+        - $ref: '#/$defs/ArtifactRef'
+        - type: 'null'
+        default: null
+        x-slot: data
+      gate_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Gate Refs
+        type: array
+        x-slot: data
+      mode_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Mode Refs
+        type: array
+        x-slot: data
+      numbered_stage_refs:
+        default: []
+        items:
+          $ref: '#/$defs/ArtifactRef'
+        title: Numbered Stage Refs
+        type: array
+        x-slot: data
+    required:
+    - workflow_ref
+    - catalog_ref
+    - target_colour
+    title: WorkflowBinding
+    type: object
+  WorkflowStep:
+    additionalProperties: false
+    description: Ordered planar substitution step. Dependencies refer to step occurrences,
+      not skill names.
+    properties:
+      step_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Step Id
+        type: string
+        x-slot: data
+      operation_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Operation Id
+        type: string
+        x-slot: data
+      prompt_node_id:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Prompt Node Id
+        type: string
+        x-slot: data
+      slot:
+        minimum: 0
+        title: Slot
+        type: integer
+        x-slot: data
+      depends_on_step_ids:
+        default: []
+        items:
+          maxLength: 240
+          minLength: 1
+          pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+          type: string
+        title: Depends On Step Ids
+        type: array
+        x-slot: data
+    required:
+    - step_id
+    - operation_id
+    - prompt_node_id
+    - slot
+    title: WorkflowStep
+    type: object
+  PromptResponse:
+    additionalProperties: false
+    description: Actual model response. Descriptive strings and true|false placeholders
+      belong only to the template.
+    properties:
+      derived_under_policy:
+        const: SPK-001
+        title: Derived Under Policy
+        type: string
+        x-slot: data
+      summary:
+        $ref: '#/$defs/ResponseSummaryValue'
+        x-slot: data
+      sections:
+        default: []
+        items:
+          $ref: '#/$defs/ResponseSectionValue'
+        title: Sections
+        type: array
+        x-slot: data
+      process_integrity:
+        $ref: '#/$defs/ProcessIntegrityValue'
+        x-slot: data
+    required:
+    - derived_under_policy
+    - summary
+    - process_integrity
+    title: PromptResponse
+    type: object
+  ProcessIntegrityValue:
+    additionalProperties: false
+    properties:
+      seed_allows_theory_refutation:
+        title: Seed Allows Theory Refutation
+        type: boolean
+        x-slot: data
+      detected_prompt_biases:
+        default: []
+        items:
+          minLength: 1
+          pattern: \S
+          type: string
+        title: Detected Prompt Biases
+        type: array
+        x-slot: data
+      should_continue:
+        title: Should Continue
+        type: boolean
+        x-slot: data
+    required:
+    - seed_allows_theory_refutation
+    - should_continue
+    title: ProcessIntegrityValue
+    type: object
+  ResponseSectionValue:
+    additionalProperties: false
+    description: Rows validated against the packet response contract by validate_response.
+    properties:
+      name:
+        maxLength: 240
+        minLength: 1
+        pattern: ^[A-Za-z0-9][A-Za-z0-9._:/@-]*$
+        title: Name
+        type: string
+        x-slot: data
+      rows:
+        items:
+          $ref: '#/$defs/JsonValue'
+        title: Rows
+        type: array
+        x-slot: data
+    required:
+    - name
+    - rows
+    title: ResponseSectionValue
+    type: object
+  ResponseSummaryValue:
+    additionalProperties: false
+    properties:
+      narrowest_defensible_thesis:
+        minLength: 1
+        pattern: \S
+        title: Narrowest Defensible Thesis
+        type: string
+        x-slot: data
+      evidence_scope:
+        minLength: 1
+        pattern: \S
+        title: Evidence Scope
+        type: string
+        x-slot: data
+      next_concrete_test:
+        minLength: 1
+        pattern: \S
+        title: Next Concrete Test
+        type: string
+        x-slot: data
+    required:
+    - narrowest_defensible_thesis
+    - evidence_scope
+    - next_concrete_test
+    title: ResponseSummaryValue
+    type: object
+additionalProperties: false
+description: V2 packet envelope. Containment is declared, not inferred. Tree and cardinality
+  are computed receipts. Family and mutation lineage are separate relations. Validation
+  grants no authority.
+properties:
+  meta:
+    const: prompt_types.yaml
+    title: Meta
+    type: string
+    x-slot: fixed
+  packet_type:
+    const: PromptPacketV0_1
+    title: Packet Type
+    type: string
+    x-slot: fixed
+  lineage:
+    anyOf:
+    - $ref: '#/$defs/PromptLineage'
+    - type: 'null'
+    default: null
+    x-slot: seed
+  system_prompt:
+    $ref: '#/$defs/SystemPrompt'
+    x-slot: fixed
+  user_prompt:
+    anyOf:
+    - $ref: '#/$defs/UserPrompt'
+    - type: 'null'
+    default: null
+    x-slot: seed
+  response_schema:
+    $ref: '#/$defs/ResponseSchema'
+    x-slot: fixed
+  schema_version:
+    const: 2.0.0
+    title: Schema Version
+    type: string
+    x-slot: data
+  authority_effect:
+    const: None
+    default: None
+    title: Authority Effect
+    type: string
+    x-slot: data
+  source:
+    anyOf:
+    - $ref: '#/$defs/IncomingPrompt'
+    - type: 'null'
+    default: null
+    x-slot: seed
+  civilization:
+    anyOf:
+    - $ref: '#/$defs/CivilizationBinding'
+    - type: 'null'
+    default: null
+    x-slot: data
+  workflow:
+    anyOf:
+    - $ref: '#/$defs/WorkflowBinding'
+    - type: 'null'
+    default: null
+    x-slot: data
+  immune:
+    anyOf:
+    - $ref: '#/$defs/ImmuneBinding'
+    - type: 'null'
+    default: null
+    x-slot: data
+  execution:
+    anyOf:
+    - $ref: '#/$defs/ExecutionData'
+    - type: 'null'
+    default: null
+    x-slot: data
+  extensions:
+    default: []
+    items:
+      $ref: '#/$defs/ExtensionRecord'
+    title: Extensions
+    type: array
+    x-slot: data
+  migration:
+    anyOf:
+    - $ref: '#/$defs/MigrationData'
+    - type: 'null'
+    default: null
+    x-slot: data
+  decomposition:
+    anyOf:
+    - $ref: '#/$defs/PromptDecomposition'
+    - type: 'null'
+    default: null
+    x-slot: data
+required:
+- meta
+- packet_type
+- system_prompt
+- response_schema
+- schema_version
+title: PromptPacket
+type: object
+x-runtime-checks:
+- source digests
+- declared containment and computed cardinality
+- lineage generations
+- cross references
+- external agreement
+- dynamic response sections

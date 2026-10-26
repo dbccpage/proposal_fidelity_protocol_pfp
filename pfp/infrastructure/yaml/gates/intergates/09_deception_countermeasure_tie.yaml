@@ -1,0 +1,32 @@
+intergate_id: "PFP-IG-09-DECEPTION-COUNTERMEASURE"
+name: "Deception Countermeasure Tie Intergate"
+transition_from: "PFP-04-AZAZELLO"
+transition_to: "PFP-09-BENGALSKY"
+cognitive_vector: "Counter-Deception & Pattern-Defense Binding"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "basis_cognitive_exploits:argument_exploit_patterns:1"
+  - "basis_cognitive_exploits:argument_exploit_patterns:2"
+  - "basis_cognitive_exploits:argument_exploit_patterns:4"
+doctrine: |
+  "For every cognitive exploit pattern, a sovereign countermeasure must be bound.
+   Detected trickery must trigger explicit defense UIDs before downstream execution."
+objective: >
+  Map detected argument exploit patterns (false urgency, cherry-picked evidence, false equivalence)
+  to explicit OECOGOPS countermeasure UIDs (e.g. defense:formal_premise_validation, defense:negative_control_matrix).
+fences:
+  - "Explicit Binding Fence: Detected exploit pattern UIDs must be paired 1-to-1 with defense countermeasure UIDs."
+  - "No Unbound Execution: Downstream processing cannot execute while an active unbound exploit pattern is flagged."
+  - "Severity Threshold Fence: Exploits with severity > 0.7 trigger mandatory gate lockdown until countermeasure applies."
+input_schema:
+  detected_exploit_uids: "list[string]"
+  exploit_severities: "list[float]"
+  bound_countermeasure_uids: "list[string]"
+transition_rules: >
+  If all detected_exploit_uids have matching bound_countermeasure_uids, admit transition to PFP-09-BENGALSKY.
+  Otherwise, refuse transition and request countermeasure injection.
+narrowest_defensible_claim: >
+  Mandating 1-to-1 countermeasure binding for detected cognitive exploits hardens prompt verification against adversarial manipulation.
+next_test_needed: >
+  Inject cherry_picked_evidence pattern without defense binding and verify Intergate 09 halts execution with UNBOUND_EXPLOIT error.

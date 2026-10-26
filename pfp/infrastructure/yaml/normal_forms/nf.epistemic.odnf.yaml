@@ -1,0 +1,107 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.odnf
+  name: Observer Distinguishability Normal Form
+  short_name: ODNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - observer_relvar
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: frame-free global sameness claims
+  preserves_invariant: distinguishability is primitive and sameness is a certified
+    zero-difference relation
+  protected_skeleton:
+  - measurements
+  - equivalence_relations
+  - local_sections
+  erased_structure: []
+  non_claims:
+  - does not suggest that local measurement outcomes can always be glued classically
+  - does not support absolute coordination without a shared consensus boundary
+  - does not imply a physical realist representation exists for all observer systems
+obstruction_substrate:
+  policy_ref: ../substrate/default_finite_obstruction_policy.yaml
+  finite_carrier:
+    description: Allowed repairs and distinguishability defects across observer measurements.
+  cochain_complex:
+    C0: allowed_repairs_or_gauge_transformations
+    C1: observer_defects_or_distinguishability_gaps
+    C2: gluing_failures_or_contextuality_failures
+    d0: repair_to_defect
+    d1: defect_to_gluing_failure
+    quotient: Q1 = C1 / im(d0)
+  obstruction_class:
+    notation: '[omega]'
+    exact: '[omega] == 0'
+    residual_closed: '[omega] != 0 and d1(omega) == 0'
+    open: d1(omega) != 0
+declarations_required:
+- primitive_questions:
+    distinguishable: What measurements separate two states?
+    same: What equivalence relation identifies them?
+    comparison: What survives transport between observers?
+    gluing: Can local observer sections form a global section?
+    repair: Can the defect be killed by allowed corrections?
+    residual: What remains after repair and comparison?
+    authority: What finite terminal certificate is earned?
+evidence_required: []
+validation_criteria:
+- every state distinction declares the measurement context separating them
+- equivalence relations used for identification are explicitly declared
+- transport transformations map elements under a declared comparison witness
+proof_obligations: []
+terminal_routes:
+- Exact
+- Survivor
+- Open
+certification:
+  certificate_required: true
+  certificate_kind: observer_distinguishability_certificate
+  obstruction_class_required: true
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: treating non-comparable observer views as identical without transport maps
+  diagnosis: undefined equivalence relation
+  terminal: Open
+references:
+- ../relnf.md
+terminal_route_map:
+  Exact: Preserve
+  Survivor: Preserve
+  Open: Escalate
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: frame-free global sameness claims. distinguishability is primitive
+    and sameness is a certified zero-difference relation
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: frame-free global sameness claims
+    lossless_join:
+      status: declared_reconstruction
+      statement: distinguishability is primitive and sameness is a certified zero-difference
+        relation
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

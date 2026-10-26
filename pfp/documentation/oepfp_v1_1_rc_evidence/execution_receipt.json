@@ -1,0 +1,511 @@
+{
+  "schema_version": "oepfp.v1_1rc.delivery-execution.v1",
+  "authority_effect": "None",
+  "integrity_mode": "benchmark",
+  "recorded_at_utc": "2026-10-16T02:04:17.870095+00:00",
+  "status": "SPECIFICATION_DELIVERED_WITH_EXPLICIT_BASELINE_FAILURES_AND_OPEN_IMPLEMENTATION_OBLIGATIONS",
+  "whole_estate_acceptance": "not_established",
+  "base_commit": "58a6a1ef92e155b1fa3783081becb41de3e07734",
+  "branch": "codex/oepfp-v1-1rc-architecture",
+  "manifest_sha256": "fffb3bdf8e9916b60b7a518a7c9eb65e9e0525db68e746999db216ff354e629f",
+  "attachment_sha256": "35ce08387f118ab5de170f3341a91e4fae962ed27bac2a818597796b10007f5d",
+  "working_directory": "/workspace/the_symbol_game",
+  "local_reference_tests": {
+    "metadata_contracts": {
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=/workspace/the_symbol_game /workspace/scratch/mub6-five-venv/bin/python -m pytest -p no:cacheprovider -o addopts= --basetemp=/workspace/scratch/oepfp-pr1078-final-metadata -q omega_engine_pfp/tests/test_operad_specification.py > /workspace/scratch/oepfp-audit/pr1078_metadata_tests.txt 2>&1",
+      "tool_version": "Python3.12.14; pytest9.1.1; Pydantic2.13.4",
+      "exit_code": 0,
+      "tested_scope": "44 cases in omega_engine_pfp/tests/test_operad_specification.py; metadata, binding and refusal contracts only",
+      "test_count": 44,
+      "output_artifact": "omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence/metadata_tests.txt",
+      "output_sha256": "686ae531db5001bafa998955fb6c7d232168ed110366300c3935871162b06d84"
+    },
+    "artifact_custody": {
+      "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=/workspace/the_symbol_game /workspace/scratch/mub6-five-venv/bin/python -m pytest -p no:cacheprovider -o addopts= --basetemp=/workspace/scratch/oepfp-pr1078-final-custody -q omega_engine_pfp/tests/test_v1_1_rc_specification_integrity.py > /workspace/scratch/oepfp-audit/pr1078_custody_tests.txt 2>&1",
+      "tool_version": "Python 3.12.14; pytest 9.1.1",
+      "exit_code": 0,
+      "tested_scope": "34 isolated custody, pinned-revision, output-publication and static-census refusal tests; no pilot evaluator or mathematical correctness claim",
+      "test_count": 34,
+      "output_artifact": "omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence/custody_tests.txt",
+      "output_sha256": "fd6748a2ce5b37842f9e2468ddf062338512db9b4ecff2885b1cd052b0ac8c4b"
+    },
+    "total_distinct_cases_passed": 78
+  },
+  "final_reference_check": {
+    "argv": [
+      "/workspace/scratch/mub6-five-venv/bin/python",
+      "omega_engine_pfp/scripts/check_v1_1_rc_references.py",
+      "--rustc",
+      "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc"
+    ],
+    "authority_effect": "None",
+    "checks": {
+      "embedded_parity": {
+        "python": "exact bytes",
+        "status": "PASS",
+        "yaml": "exact bytes"
+      },
+      "math_delimiters": {
+        "code_blocks_excluded": true,
+        "delimiters_checked": 304,
+        "status": "PASS"
+      },
+      "reference_metadata": {
+        "architecture_spec": "strict metadata validation only",
+        "artifacts_checked": [
+          {
+            "byte_length": 5,
+            "path": "omega_engine_pfp/fixtures/operad_specification/source.txt",
+            "sha256": "32d25cb1b3cee4c807ca5652068c3a24d9ce33c2bc486e106a7cfa1fc37a4e50"
+          },
+          {
+            "byte_length": 150,
+            "path": "omega_engine_pfp/fixtures/operad_specification/declaration_evidence.txt",
+            "sha256": "2df6db1cc17dfd28443888bea2b2dca1774eaca26cc2932e709d542e867bd2cb"
+          },
+          {
+            "byte_length": 770,
+            "path": "omega_engine_pfp/fixtures/operad_specification/density_fine.json",
+            "sha256": "30f544d0ec54f8fe2e80ef899bc5ad1f24655971ddd50b33928ff8a37103f334"
+          },
+          {
+            "byte_length": 242,
+            "path": "omega_engine_pfp/fixtures/operad_specification/density_coarse.json",
+            "sha256": "00b2e8b9be3173358c499428d2b9c5516e1a6227b9410e3f06e9e3db506cb6d9"
+          },
+          {
+            "byte_length": 10917,
+            "path": "omega_engine_pfp/domain/rewriting/finite_dpo.py",
+            "sha256": "f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a"
+          },
+          {
+            "byte_length": 45213,
+            "path": "omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs",
+            "sha256": "a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a"
+          },
+          {
+            "byte_length": 16522,
+            "path": "omega_engine/crates_rs/omega_epistemic_immune_system/src/authenticated.rs",
+            "sha256": "4df14061991d31681a0b835e96111ad66370bb224825746714a5a03c30b2d8e1"
+          }
+        ],
+        "json_schema": "generated parity and Draft 2020-12 validation",
+        "json_yaml_parity": "exact typed JSON values",
+        "status": "PASS"
+      },
+      "relative_links": {
+        "files_checked": 523,
+        "line_links_checked": 197,
+        "status": "PASS"
+      },
+      "rust_interface": {
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "scope": "trait/reference syntax compilation only; no engine behavior checked",
+        "source_sha256": "2dee2468fb3312ffb4fa1eb562e73abb402dd06760c7de847eb6368a3cc81295",
+        "status": "PASS"
+      }
+    },
+    "command": "/workspace/scratch/mub6-five-venv/bin/python omega_engine_pfp/scripts/check_v1_1_rc_references.py --rustc /workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc",
+    "exit_code": 0,
+    "mathematical_claims_verified": false,
+    "repository_root": "/workspace/the_symbol_game",
+    "schema_version": "oepfp.reference-check-receipt.v1",
+    "scope": "strict reference metadata; JSON/YAML and generated schema parity; seven artifact byte hashes; embedded Python/YAML parity; monograph local file/line links and math delimiters; Rust interface metadata compilation only",
+    "status": "PASS",
+    "subprocesses": [
+      {
+        "argv": [
+          "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc",
+          "--version"
+        ],
+        "command": "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --version",
+        "cwd": "/workspace/the_symbol_game",
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "rustc 1.99.0 (b940084d7 2026-09-28)\n"
+      },
+      {
+        "argv": [
+          "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc",
+          "--edition",
+          "2021",
+          "--crate-type",
+          "lib",
+          "--emit",
+          "metadata",
+          "--crate-name",
+          "oepfp_v1_1rc_reference",
+          "/tmp/oepfp-reference-qx4orqc6/reference.rs",
+          "-o",
+          "/tmp/oepfp-reference-qx4orqc6/reference.rmeta"
+        ],
+        "command": "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustc --edition 2021 --crate-type lib --emit metadata --crate-name oepfp_v1_1rc_reference /tmp/oepfp-reference-qx4orqc6/reference.rs -o /tmp/oepfp-reference-qx4orqc6/reference.rmeta",
+        "cwd": "/workspace/the_symbol_game",
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": ""
+      }
+    ],
+    "tests_executed": 0,
+    "versions": {
+      "PyYAML": "6.0.3",
+      "checker": "oepfp.references.v1",
+      "jsonschema": "4.26.0",
+      "pydantic": "2.13.4",
+      "python": "3.12.14"
+    }
+  },
+  "final_source_and_artifact_check": {
+    "argv": [
+      "/workspace/scratch/mub6-five-venv/bin/python",
+      "omega_engine_pfp/scripts/verify_v1_1_rc_specification.py",
+      "--pinned-sources"
+    ],
+    "artifact_files_checked": 32,
+    "authority_effect": "None",
+    "base_commit": "58a6a1ef92e155b1fa3783081becb41de3e07734",
+    "census_counts": {
+      "antibodies": 19,
+      "curriculum": 13,
+      "pilots": 75,
+      "woland_modules": 308
+    },
+    "command": "/workspace/scratch/mub6-five-venv/bin/python omega_engine_pfp/scripts/verify_v1_1_rc_specification.py --pinned-sources",
+    "execution_output_artifacts_checked": 2,
+    "exit_code": 0,
+    "gzip_json_files_checked": 7,
+    "invocation_kind": "process",
+    "schema": "oepfp.v1_1_rc.artifact-integrity.v1",
+    "scope": "artifact custody and census coverage only; no mathematical or runtime certification",
+    "source_binding": "pinned_git_revision",
+    "source_files_checked": 7176,
+    "status": "PASS",
+    "tested_scope": {
+      "census": "/workspace/the_symbol_game/omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence/census.json",
+      "checks": "manifest custody, exact census coverage, evidence provenance and gzip metadata",
+      "excluded": "mathematical correctness, pilot execution, model calls and production runtime certification",
+      "manifest": "/workspace/the_symbol_game/omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence/source_manifest.json",
+      "repository_root": "/workspace/the_symbol_game"
+    },
+    "tool_version": "Python 3.12.14; oepfp.v1_1_rc.artifact-integrity.v1",
+    "working_directory": "/workspace/the_symbol_game",
+    "working_tree_sources_verified": false
+  },
+  "missing_compiler_negative_control": {
+    "argv": [
+      "/workspace/scratch/mub6-five-venv/bin/python",
+      "omega_engine_pfp/scripts/check_v1_1_rc_references.py",
+      "--rustc",
+      "/tmp/oepfp-reference-missing-rustc"
+    ],
+    "authority_effect": "None",
+    "checks": {
+      "embedded_parity": {
+        "python": "exact bytes",
+        "status": "PASS",
+        "yaml": "exact bytes"
+      },
+      "math_delimiters": {
+        "code_blocks_excluded": true,
+        "delimiters_checked": 304,
+        "status": "PASS"
+      },
+      "reference_metadata": {
+        "architecture_spec": "strict metadata validation only",
+        "artifacts_checked": [
+          {
+            "byte_length": 5,
+            "path": "omega_engine_pfp/fixtures/operad_specification/source.txt",
+            "sha256": "32d25cb1b3cee4c807ca5652068c3a24d9ce33c2bc486e106a7cfa1fc37a4e50"
+          },
+          {
+            "byte_length": 150,
+            "path": "omega_engine_pfp/fixtures/operad_specification/declaration_evidence.txt",
+            "sha256": "2df6db1cc17dfd28443888bea2b2dca1774eaca26cc2932e709d542e867bd2cb"
+          },
+          {
+            "byte_length": 770,
+            "path": "omega_engine_pfp/fixtures/operad_specification/density_fine.json",
+            "sha256": "30f544d0ec54f8fe2e80ef899bc5ad1f24655971ddd50b33928ff8a37103f334"
+          },
+          {
+            "byte_length": 242,
+            "path": "omega_engine_pfp/fixtures/operad_specification/density_coarse.json",
+            "sha256": "00b2e8b9be3173358c499428d2b9c5516e1a6227b9410e3f06e9e3db506cb6d9"
+          },
+          {
+            "byte_length": 10917,
+            "path": "omega_engine_pfp/domain/rewriting/finite_dpo.py",
+            "sha256": "f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a"
+          },
+          {
+            "byte_length": 45213,
+            "path": "omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs",
+            "sha256": "a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a"
+          },
+          {
+            "byte_length": 16522,
+            "path": "omega_engine/crates_rs/omega_epistemic_immune_system/src/authenticated.rs",
+            "sha256": "4df14061991d31681a0b835e96111ad66370bb224825746714a5a03c30b2d8e1"
+          }
+        ],
+        "json_schema": "generated parity and Draft 2020-12 validation",
+        "json_yaml_parity": "exact typed JSON values",
+        "status": "PASS"
+      },
+      "relative_links": {
+        "files_checked": 523,
+        "line_links_checked": 197,
+        "status": "PASS"
+      }
+    },
+    "command": "/workspace/scratch/mub6-five-venv/bin/python omega_engine_pfp/scripts/check_v1_1_rc_references.py --rustc /tmp/oepfp-reference-missing-rustc",
+    "error": "rustc is missing or not executable: /tmp/oepfp-reference-missing-rustc",
+    "error_type": "ReferenceError",
+    "exit_code": 1,
+    "mathematical_claims_verified": false,
+    "repository_root": "/workspace/the_symbol_game",
+    "schema_version": "oepfp.reference-check-receipt.v1",
+    "scope": "strict reference metadata; JSON/YAML and generated schema parity; seven artifact byte hashes; embedded Python/YAML parity; monograph local file/line links and math delimiters; Rust interface metadata compilation only",
+    "status": "FAIL",
+    "subprocesses": [],
+    "tests_executed": 0,
+    "versions": {
+      "PyYAML": "6.0.3",
+      "checker": "oepfp.references.v1",
+      "jsonschema": "4.26.0",
+      "pydantic": "2.13.4",
+      "python": "3.12.14"
+    },
+    "interpretation": "Expected missing-compiler refusal observed; no fallback or successful Rust check was reported."
+  },
+  "auxiliary_checks": [
+    {
+      "command": "/workspace/scratch/mub6-five-venv/bin/python -m ruff check --select F401,F841,I omega_engine_pfp/domain/operad/specification.py omega_engine_pfp/scripts/verify_v1_1_rc_specification.py omega_engine_pfp/scripts/check_v1_1_rc_references.py omega_engine_pfp/tests/test_operad_specification.py omega_engine_pfp/tests/test_v1_1_rc_specification_integrity.py",
+      "tool_version": "ruff0.17.1",
+      "exit_code": 0,
+      "tested_scope": [
+        "omega_engine_pfp/domain/operad/specification.py",
+        "omega_engine_pfp/scripts/verify_v1_1_rc_specification.py",
+        "omega_engine_pfp/scripts/check_v1_1_rc_references.py",
+        "omega_engine_pfp/tests/test_operad_specification.py",
+        "omega_engine_pfp/tests/test_v1_1_rc_specification_integrity.py"
+      ],
+      "stdout": "All checks passed!"
+    },
+    {
+      "command": "/workspace/scratch/mub6-five-venv/bin/python -m ruff format --check omega_engine_pfp/domain/operad/specification.py omega_engine_pfp/scripts/verify_v1_1_rc_specification.py omega_engine_pfp/scripts/check_v1_1_rc_references.py omega_engine_pfp/tests/test_operad_specification.py omega_engine_pfp/tests/test_v1_1_rc_specification_integrity.py",
+      "tool_version": "ruff0.17.1",
+      "exit_code": 0,
+      "tested_scope": [
+        "omega_engine_pfp/domain/operad/specification.py",
+        "omega_engine_pfp/scripts/verify_v1_1_rc_specification.py",
+        "omega_engine_pfp/scripts/check_v1_1_rc_references.py",
+        "omega_engine_pfp/tests/test_operad_specification.py",
+        "omega_engine_pfp/tests/test_v1_1_rc_specification_integrity.py"
+      ],
+      "stdout": "5 files already formatted"
+    },
+    {
+      "command": "PYTHONPATH=/workspace/the_symbol_game /workspace/scratch/mub6-five-venv/bin/python .agents/skills/governance-exact-solvers/scripts/check_exact_solvers.py",
+      "tool_version": "Python3.12.14; checker source at synced HEAD",
+      "exit_code": 0,
+      "tested_scope": "Skill arithmetic/primal-dual sanity check only; not the proposed architecture or full math estate",
+      "stdout": "PASS: Exact rational solver arithmetic and primal-dual certificate verified."
+    },
+    {
+      "command": "/workspace/scratch/mub6-five-venv/bin/python - <<'PY'\nfrom pathlib import Path\nimport json,subprocess\nm=json.loads(Path(\"omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence/source_manifest.json\").read_text())\nfor item in m[\"artifacts\"]:\n    result=subprocess.run([\"git\",\"diff\",\"--no-index\",\"--check\",\"/dev/null\",item[\"path\"]],capture_output=True,text=True)\n    if result.returncode not in (0,1) or result.stdout or result.stderr:\n        raise SystemExit(\"whitespace check failed: \"+item[\"path\"])\n    if Path(item[\"path\"]).read_bytes().startswith(bytes([239,187,191])):\n        raise SystemExit(\"BOM: \"+item[\"path\"])\nprint(\"30 artifact files: no whitespace diagnostics or new BOMs\")\nPY",
+      "tool_version": "Python3.12.14; git2.52.0 where used",
+      "exit_code": 0,
+      "tested_scope": "30 delivered artifact files: whitespace diagnostics and new BOMs",
+      "stdout": "30 artifact files: no whitespace diagnostics or new BOMs\n"
+    },
+    {
+      "command": "/workspace/scratch/mub6-five-venv/bin/python - <<'PY'\nfrom pathlib import Path\nimport re\nbase=Path(\"omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence\")\ncount=0\nfor doc in base.glob(\"*.md\"):\n    for target in re.findall(r\"\\]\\(([^)]+)\\)\",doc.read_text()):\n        if \"://\" in target or target.startswith(\"#\"):\n            continue\n        file=(doc.parent/target.split(\"#\")[0]).resolve()\n        if not file.is_file():\n            raise SystemExit(\"missing link: \"+target)\n        if \"#L\" in target:\n            line=int(target.split(\"#L\")[1])\n            if not 1<=line<=len(file.read_bytes().splitlines()):\n                raise SystemExit(\"invalid line: \"+target)\n        count+=1\nprint(str(count)+\" appendix links checked\")\nPY",
+      "tool_version": "Python3.12.14; git2.52.0 where used",
+      "exit_code": 0,
+      "tested_scope": "Relative file and source-line links in seven readable audit appendices",
+      "stdout": "671 appendix links checked\n"
+    }
+  ],
+  "baseline_governance_checks": [
+    {
+      "command": "PYTHONPATH=/workspace/the_symbol_game /workspace/scratch/mub6-five-venv/bin/python .agents/skills/governance-clean-arch/scripts/check_inward_dependencies.py",
+      "tool_version": "Python3.12.14; checker at synced HEAD",
+      "exit_code": 1,
+      "tested_scope": "All domain packages under the repository scanner configuration",
+      "status": "FAIL_BASELINE",
+      "reported_dependency_violations": 14,
+      "files": [
+        {
+          "path": "omega_engine_epistemic_immune_system/domain/external_admission.py",
+          "lines_reported": [
+            89,
+            109,
+            116,
+            161,
+            178,
+            214,
+            243,
+            270,
+            323,
+            346
+          ],
+          "sha256": "78a17f035f1ca9851fa532570bf66bd3c92b5f77f8d339d2fe62d5d1b328b7f8",
+          "byte_identical_to_synced_head": true
+        },
+        {
+          "path": "omega_engine_epistemic_immune_system/domain/guard_activation.py",
+          "lines_reported": [
+            270
+          ],
+          "sha256": "a3a68353e6af50804c82aeadae36fb5b0d6dbdbbb9f4703f1ae69d08f575e7c8",
+          "byte_identical_to_synced_head": true
+        },
+        {
+          "path": "omega_engine_epistemic_immune_system/domain/provisional_promotion.py",
+          "lines_reported": [
+            34,
+            71,
+            76
+          ],
+          "sha256": "8c6d65bf8244e947f5d29f53247ecf28680f8b7e191fe38b11ee8ffdb8dfa8b0",
+          "byte_identical_to_synced_head": true
+        }
+      ]
+    },
+    {
+      "command": "PYTHONPATH=/workspace/the_symbol_game /workspace/scratch/mub6-five-venv/bin/python .agents/skills/governance-clean-arch/scripts/check_clean_arch.py",
+      "tool_version": "Python3.12.14; checker at synced HEAD",
+      "exit_code": 1,
+      "tested_scope": "Single-root roster followed by operations-office scanner",
+      "status": "FAIL_BASELINE",
+      "reported_dependency_violations": 4,
+      "files": [
+        {
+          "path": "omega_engine_operations/use_cases/cicd/truth_gate/filesystem_cache.py",
+          "lines_reported": [
+            73
+          ],
+          "sha256": "2e345e3436e6f8957ed8aa6ae720d642857012bad92d5a6db511e64d06b60da2",
+          "byte_identical_to_synced_head": true
+        },
+        {
+          "path": "omega_engine_operations/use_cases/packaging/skill_mirror_recovery.py",
+          "lines_reported": [
+            15,
+            16
+          ],
+          "sha256": "23234a48233cce1f0f9b1ffddfafbf3105ae168d88d12450ec699602ca6d086e",
+          "byte_identical_to_synced_head": true
+        },
+        {
+          "path": "omega_engine_operations/use_cases/verification/soviet_gate_runner.py",
+          "lines_reported": [
+            25
+          ],
+          "sha256": "f6320b98d3a2d8b7b5c15fb667df1f79c15e0b5038614d5dbf808aa881991072",
+          "byte_identical_to_synced_head": true
+        }
+      ]
+    }
+  ],
+  "baseline_comparison": {
+    "command": "/workspace/scratch/mub6-five-venv/bin/python - <<'PY'\nfrom pathlib import Path\nimport subprocess\npaths=[\"omega_engine_epistemic_immune_system/domain/external_admission.py\",\"omega_engine_epistemic_immune_system/domain/guard_activation.py\",\"omega_engine_epistemic_immune_system/domain/provisional_promotion.py\",\"omega_engine_operations/use_cases/cicd/truth_gate/filesystem_cache.py\",\"omega_engine_operations/use_cases/packaging/skill_mirror_recovery.py\",\"omega_engine_operations/use_cases/verification/soviet_gate_runner.py\"]\nfor path in paths:\n    if Path(path).read_bytes()!=subprocess.check_output([\"git\",\"show\",\"HEAD:\"+path]):\n        raise SystemExit(\"baseline mismatch: \"+path)\nprint(\"6 reported files are byte-identical to synchronized HEAD\")\nPY",
+    "tool_version": "Python3.12.14; git2.52.0 where used",
+    "exit_code": 0,
+    "tested_scope": "Six reported architecture files: compare current bytes with the synchronized HEAD",
+    "stdout": "6 reported files are byte-identical to synchronized HEAD\n"
+  },
+  "audit_scope": {
+    "curriculum_tracks": 13,
+    "curriculum_files": 2655,
+    "coda_pilot_ids": 75,
+    "coda_present_ids": 32,
+    "coda_planned_no_directory": 18,
+    "coda_absent_unmaterialized": 25,
+    "woland_test_files_source_inspected": 308,
+    "woland_static_test_functions": 2771,
+    "woland_static_assertions": 10131,
+    "canonical_antibodies": 19,
+    "audited_source_files_hashed": 7176,
+    "delivery_artifacts_hashed": 32
+  },
+  "execution_limits": {
+    "estate_pytest_modules_executed": 0,
+    "provider_calls_executed": 0,
+    "historical_model_runs_replayed": 0,
+    "cargo_tests_executed": 0,
+    "lean_builds_executed": 0,
+    "rust_action": "Standalone proposed trait/interface metadata compilation only"
+  },
+  "open_obligations": [
+    "43 requested coda pilot IDs have no materialized directories",
+    "Full current runtime cutover from lexical/attestation and input-free success paths",
+    "Per-antibody executable detector/control/guard-equivalence evidence",
+    "General DPO confluence and native/Lean realization of the restricted phase profile",
+    "Calibrated semantic density encoding, Wilsonian flow and ENF/BQNF identification",
+    "Input-bound independent Lean proof reflection and authenticated production receipts"
+  ],
+  "preservation": {
+    "preexisting_dirty_paths": 183,
+    "byte_hash_mismatches": 0,
+    "included_in_delivery": 0
+  },
+  "excluded_from_source_manifest": [
+    "source_manifest.json",
+    "execution_receipt.json"
+  ],
+  "exclusion_reason": "No self-hash or execution-output cycle; this unsigned benchmark receipt commits the source manifest digest.",
+  "self_review": {
+    "pr": "https://github.com/dbccpage/the_symbol_game/pull/1078",
+    "method": "Full branch diff plus complete new source and forensic artifact inspection; targeted adversarial regressions; validation on a branch containing the latest fetched main",
+    "upstream_main": "ae38eaa89df22dc557c415049b48ddb685dec70b",
+    "findings": [
+      {
+        "priority": "P1",
+        "problem": "Ignored .log test outputs were not included in the commit and were not required by custody verification.",
+        "resolution": "Publish both output files as .txt, bind them in the manifest, and verify every execution receipt output reference/digest.",
+        "status": "fixed"
+      },
+      {
+        "priority": "P1",
+        "problem": "Frozen audit sources could not be revalidated after normal upstream source evolution.",
+        "resolution": "Add explicit pinned Git-source mode with no working-tree fallback; artifacts always verify against delivered files. Default working-tree mode still detects drift.",
+        "status": "fixed"
+      },
+      {
+        "priority": "P2",
+        "problem": "A static census could claim fresh execution by changing both internally consistent flags, or declare a different source revision.",
+        "resolution": "Require static audit mode and matching census/base revision and forbid current-execution flags in this census.",
+        "status": "fixed"
+      }
+    ],
+    "regression_cases_added": 14,
+    "remaining_blocking_findings": [],
+    "baseline_governance_failures": "The previously reported18 unchanged-file dependency edges remain separate from this PR; no exception or false green introduced.",
+    "working_tree_drift_control": {
+      "argv": [
+        "/workspace/scratch/mub6-five-venv/bin/python",
+        "omega_engine_pfp/scripts/verify_v1_1_rc_specification.py"
+      ],
+      "authority_effect": "None",
+      "command": "/workspace/scratch/mub6-five-venv/bin/python omega_engine_pfp/scripts/verify_v1_1_rc_specification.py",
+      "error": "SHA-256 mismatch: omega_engine/crates_rs/omega_quantum_physics/src/qm_207_211_finite_maps.rs",
+      "exit_code": 1,
+      "invocation_kind": "process",
+      "schema": "oepfp.v1_1_rc.artifact-integrity.v1",
+      "status": "FAIL",
+      "tested_scope": {
+        "census": "/workspace/the_symbol_game/omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence/census.json",
+        "checks": "manifest custody, exact census coverage, evidence provenance and gzip metadata",
+        "excluded": "mathematical correctness, pilot execution, model calls and production runtime certification",
+        "manifest": "/workspace/the_symbol_game/omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence/source_manifest.json",
+        "repository_root": "/workspace/the_symbol_game"
+      },
+      "tool_version": "Python 3.12.14; oepfp.v1_1_rc.artifact-integrity.v1",
+      "working_directory": "/workspace/the_symbol_game",
+      "interpretation": "Expected refusal: upstream QM source changed after the frozen audit; pinned mode validates the historical audit without asserting current source equivalence."
+    }
+  }
+}

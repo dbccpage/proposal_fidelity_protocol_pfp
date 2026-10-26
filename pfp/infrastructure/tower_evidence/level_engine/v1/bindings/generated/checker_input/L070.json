@@ -1,0 +1,1162 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "table_roots",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              0,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              3
+            ]
+          ],
+          [
+            "root",
+            [
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            2
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            "3/1"
+          ],
+          [
+            5,
+            "-4/1"
+          ],
+          [
+            6,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:2a6ab6533a37991ef363246edd283b75bd2b483563227ff2822c9e1519ea424b",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "coef",
+            [
+              1,
+              0
+            ]
+          ],
+          [
+            "coef",
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            "root",
+            [
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            0
+          ],
+          [
+            "val",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "1/1"
+          ],
+          [
+            1,
+            "0/1"
+          ],
+          [
+            2,
+            "2/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:d1612a521b09715e7abdc2ee812723ffd246899ff0b854b72c683baed9d0cd04",
+      "native_code": "FAILS:table_given",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_no_table",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "coef",
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              4,
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              1
+            ]
+          ],
+          [
+            "root",
+            [
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            0
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            0,
+            "2/1"
+          ],
+          [
+            1,
+            "1/1"
+          ],
+          [
+            2,
+            "3/1"
+          ],
+          [
+            3,
+            "-4/1"
+          ],
+          [
+            4,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:16a172bcbe16c1552331378c98d27e906e6b72b6c21699a5d5ae0a7ae59212bf",
+      "native_code": "FAILS:table_given",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_coef",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              0,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              3
+            ]
+          ],
+          [
+            "root",
+            [
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            2
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            "3/1"
+          ],
+          [
+            5,
+            "-4/1"
+          ],
+          [
+            6,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:b6e2cc291359b200476a516cba02c2aa2b1174a12dcdf2a8b53798cc290a0539",
+      "native_code": "FAILS:polynomial",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_gap",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              3
+            ]
+          ],
+          [
+            "root",
+            [
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            2
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            "3/1"
+          ],
+          [
+            5,
+            "-4/1"
+          ],
+          [
+            6,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:867b1cff4dc15cd53a9aebb80139b075f1d62aaa447318e3efef8839667ca2a9",
+      "native_code": "FAILS:entries_complete",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_two",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              2
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              0,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              3
+            ]
+          ],
+          [
+            "root",
+            [
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            2
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            "3/1"
+          ],
+          [
+            5,
+            "-4/1"
+          ],
+          [
+            6,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:9070d748669655b44806bde26cdf268e127320f3670568f68cb6fc95231f6eb3",
+      "native_code": "FAILS:one_coef",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_stray",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              0,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              6,
+              0,
+              3
+            ]
+          ],
+          [
+            "root",
+            [
+              3
+            ]
+          ],
+          [
+            "root",
+            [
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            2
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            "3/1"
+          ],
+          [
+            5,
+            "-4/1"
+          ],
+          [
+            6,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:4d4f54015ef20131c9ece3c6bdaea33cbed5cb9a034f4475a5d32330228530b3",
+      "native_code": "FAILS:entries_typed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-5"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_stray_coef",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              0,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              3
+            ]
+          ],
+          [
+            "root",
+            [
+              4
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            2
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            "3/1"
+          ],
+          [
+            5,
+            "-4/1"
+          ],
+          [
+            6,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:781dd0d51ec811ac378836a311677d5c0b72c42ab00bbeb786e7aca10408fd08",
+      "native_code": "FAILS:coef_typed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-6"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "coef",
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            "coef",
+            [
+              3,
+              5
+            ]
+          ],
+          [
+            "coef",
+            [
+              6,
+              4
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            "entry",
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              0,
+              3
+            ]
+          ],
+          [
+            "entry",
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              2
+            ]
+          ],
+          [
+            "root",
+            [
+              3
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "slot",
+            2
+          ],
+          [
+            "val",
+            5
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "entry",
+            "sorts": [
+              "slot",
+              "slot",
+              "val"
+            ]
+          },
+          {
+            "name": "coef",
+            "sorts": [
+              "val",
+              "val"
+            ]
+          },
+          {
+            "name": "root",
+            "sorts": [
+              "val"
+            ]
+          }
+        ],
+        "values": [
+          [
+            2,
+            "2/1"
+          ],
+          [
+            3,
+            "1/1"
+          ],
+          [
+            4,
+            "3/1"
+          ],
+          [
+            5,
+            "-4/1"
+          ],
+          [
+            6,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:4f3872b4b609c0c39f045cc4900770f9cc01446c1f733d2da03ffb9b37771cc4",
+      "native_code": "FAILS:roots_vanish",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 70,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_070"
+}

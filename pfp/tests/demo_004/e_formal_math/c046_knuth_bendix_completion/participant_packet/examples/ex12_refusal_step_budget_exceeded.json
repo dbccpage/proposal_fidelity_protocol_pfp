@@ -1,0 +1,73 @@
+{
+  "input": {
+    "case_id": "ex12_refusal_step_budget_exceeded",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "precedence": {
+      "inv": 100,
+      "mul": 50,
+      "e": 10
+    },
+    "max_steps": 2
+  },
+  "expected_output": {
+    "case_id": "ex12_refusal_step_budget_exceeded",
+    "status": "REFUSED",
+    "reason": "MAX_STEPS_EXCEEDED",
+    "witness": {
+      "reason": "MAX_STEPS_EXCEEDED",
+      "steps": 2,
+      "remaining_equations_count": 1,
+      "current_rules_count": 2
+    },
+    "ddc_trace": {
+      "case_id": "ex12_refusal_step_budget_exceeded",
+      "trace_string": "ELambdaDR",
+      "step_count": 4,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task COMPLETE for case ex12_refusal_step_budget_exceeded",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "Lambda",
+          "detail": "Initialized TermOrder with 3 precedence levels",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "D",
+          "detail": "Starting completion saturation with max_steps=2",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "R",
+          "detail": "Completion halted: MAX_STEPS_EXCEEDED",
+          "meta": {
+            "reason": "MAX_STEPS_EXCEEDED",
+            "steps": 2,
+            "remaining_equations_count": 1,
+            "current_rules_count": 2
+          }
+        }
+      ]
+    }
+  }
+}

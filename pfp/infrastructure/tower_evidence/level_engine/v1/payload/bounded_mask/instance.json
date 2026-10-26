@@ -1,0 +1,78 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the obstruction claimed over an unbounded domain with a finite budget",
+      "role": "own_negative",
+      "set": {
+        "formula": [
+          "forall",
+          "k",
+          "nat",
+          [
+            "and",
+            [
+              "neq",
+              "k",
+              1
+            ],
+            [
+              "neq",
+              "k",
+              2
+            ]
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_truncated",
+      "note": "the search cut at the first menu entry reports the obstruction the full search refutes",
+      "role": "near_miss",
+      "set": {
+        "budget": 2,
+        "formula": [
+          "forall",
+          "k",
+          1,
+          [
+            "and",
+            [
+              "neq",
+              "k",
+              1
+            ],
+            [
+              "neq",
+              "k",
+              2
+            ]
+          ]
+        ],
+        "value": "true"
+      },
+      "violates": "menu_replayed"
+    },
+    {
+      "id": "near_mask",
+      "note": "the declared mask names an existential",
+      "role": "near_miss",
+      "set": {
+        "mask": [
+          "exists"
+        ]
+      },
+      "violates": "mask_replayed"
+    },
+    {
+      "id": "near_budget",
+      "note": "the budget stops one step short of full enumeration",
+      "role": "near_miss",
+      "set": {
+        "budget": 5
+      },
+      "violates": "within_budget"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+mode_id: 17
+name: "Polygraph Confluence & Multi-Examiner Consensus"
+cluster: "Cluster IV: Dialectical & Adversarial"
+authority_effect: "None"
+core_mechanism: "Simultaneous cross-examination by independent persona gates with anti-collusion penalty"
+substrate: "Multi-examiner scorecards and evidence voting vectors"
+paper_reference: "demo_polygraph_confluence"
+rules:
+  - "Multiple independent examiner gates evaluate the candidate concurrently."
+  - "Consensus conveys zero authority; every vote must be backed by an exact mathematical receipt."
+  - "Collusive agreement without receipt triggers an anti-collusion penalty."
+entry_preconditions:
+  - "At least 3 independent examiner gates active."
+  - "Scorecard aggregation contract declared."
+winning_condition: >
+  Unanimous verification across all examiner scorecards with independent receipt verification.
+failure_modes:
+  - "Collusive consensus without receipt"
+  - "Examiner deadlock without receipt explanation"
+verifier_contract:
+  verifier_type: "polygraph_confluence_aggregator"
+  fail_closed: true

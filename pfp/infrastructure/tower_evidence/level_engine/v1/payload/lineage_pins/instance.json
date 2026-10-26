@@ -1,0 +1,1370 @@
+{
+  "fixtures": [
+    {
+      "id": "pos",
+      "note": "sources r0 = 3 and r1 = 4; r2 = r0 + r1 = 7; r3 = r2 times r0 = 21; every record sealed by the digest of its content, and every input pinned at its digest when used",
+      "role": "positive",
+      "structure": {
+        "digests": [
+          [
+            4,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            5,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            6,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            7,
+            "sha256:eaa4c09f9bf3bb59c51399e922ad49604b43f4be8085a6ef2f8ebbb670cea7cf"
+          ],
+          [
+            8,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            9,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            10,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            11,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ]
+        ],
+        "sorts": [
+          [
+            "record",
+            4
+          ],
+          [
+            "seal",
+            4
+          ],
+          [
+            "pin",
+            4
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "source",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sums",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "multiplies",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sealed",
+            "sorts": [
+              "record",
+              "seal"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "record",
+              "record",
+              "pin"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "multiplies",
+            [
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              0,
+              8
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              1,
+              9
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              0,
+              11
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              2,
+              10
+            ]
+          ],
+          [
+            "sealed",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "sealed",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "sealed",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "sealed",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "source",
+            [
+              0
+            ]
+          ],
+          [
+            "source",
+            [
+              1
+            ]
+          ],
+          [
+            "sums",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": [
+          [
+            0,
+            "3/1"
+          ],
+          [
+            1,
+            "4/1"
+          ],
+          [
+            2,
+            "7/1"
+          ],
+          [
+            3,
+            "21/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "own_neg",
+      "note": "r2 reads something that is no record: a missing source",
+      "role": "own_negative",
+      "structure": {
+        "digests": [
+          [
+            4,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            5,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            6,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            7,
+            "sha256:eaa4c09f9bf3bb59c51399e922ad49604b43f4be8085a6ef2f8ebbb670cea7cf"
+          ],
+          [
+            8,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            9,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            10,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            11,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ]
+        ],
+        "sorts": [
+          [
+            "record",
+            4
+          ],
+          [
+            "seal",
+            4
+          ],
+          [
+            "pin",
+            4
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "source",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sums",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "multiplies",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sealed",
+            "sorts": [
+              "record",
+              "seal"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "record",
+              "record",
+              "pin"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "multiplies",
+            [
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              0,
+              8
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              5,
+              9
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              0,
+              11
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              2,
+              10
+            ]
+          ],
+          [
+            "sealed",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "sealed",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "sealed",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "sealed",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "source",
+            [
+              0
+            ]
+          ],
+          [
+            "source",
+            [
+              1
+            ]
+          ],
+          [
+            "sums",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": [
+          [
+            0,
+            "3/1"
+          ],
+          [
+            1,
+            "4/1"
+          ],
+          [
+            2,
+            "7/1"
+          ],
+          [
+            3,
+            "21/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "near_later",
+      "note": "r2 reads r3, listed after it",
+      "role": "extra",
+      "structure": {
+        "digests": [
+          [
+            4,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            5,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            6,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            7,
+            "sha256:eaa4c09f9bf3bb59c51399e922ad49604b43f4be8085a6ef2f8ebbb670cea7cf"
+          ],
+          [
+            8,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            9,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            10,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            11,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ]
+        ],
+        "sorts": [
+          [
+            "record",
+            4
+          ],
+          [
+            "seal",
+            4
+          ],
+          [
+            "pin",
+            4
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "source",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sums",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "multiplies",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sealed",
+            "sorts": [
+              "record",
+              "seal"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "record",
+              "record",
+              "pin"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "multiplies",
+            [
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              0,
+              8
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              3,
+              9
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              0,
+              11
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              2,
+              10
+            ]
+          ],
+          [
+            "sealed",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "sealed",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "sealed",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "sealed",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "source",
+            [
+              0
+            ]
+          ],
+          [
+            "source",
+            [
+              1
+            ]
+          ],
+          [
+            "sums",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": [
+          [
+            0,
+            "3/1"
+          ],
+          [
+            1,
+            "4/1"
+          ],
+          [
+            2,
+            "7/1"
+          ],
+          [
+            3,
+            "21/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "near_value",
+      "note": "r3 is claimed as 20",
+      "role": "extra",
+      "structure": {
+        "digests": [
+          [
+            4,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            5,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            6,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            7,
+            "sha256:eaa4c09f9bf3bb59c51399e922ad49604b43f4be8085a6ef2f8ebbb670cea7cf"
+          ],
+          [
+            8,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            9,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            10,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            11,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ]
+        ],
+        "sorts": [
+          [
+            "record",
+            4
+          ],
+          [
+            "seal",
+            4
+          ],
+          [
+            "pin",
+            4
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "source",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sums",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "multiplies",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sealed",
+            "sorts": [
+              "record",
+              "seal"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "record",
+              "record",
+              "pin"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "multiplies",
+            [
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              0,
+              8
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              1,
+              9
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              0,
+              11
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              2,
+              10
+            ]
+          ],
+          [
+            "sealed",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "sealed",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "sealed",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "sealed",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "source",
+            [
+              0
+            ]
+          ],
+          [
+            "source",
+            [
+              1
+            ]
+          ],
+          [
+            "sums",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": [
+          [
+            0,
+            "3/1"
+          ],
+          [
+            1,
+            "4/1"
+          ],
+          [
+            2,
+            "7/1"
+          ],
+          [
+            3,
+            "20/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "near_seal",
+      "note": "r1 is sealed by the digest of the value 5",
+      "role": "extra",
+      "structure": {
+        "digests": [
+          [
+            4,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            5,
+            "sha256:137ae412ce13f1c09e235da9c3c445dde8283bcda3ffc6702bae0666560bd5e8"
+          ],
+          [
+            6,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            7,
+            "sha256:eaa4c09f9bf3bb59c51399e922ad49604b43f4be8085a6ef2f8ebbb670cea7cf"
+          ],
+          [
+            8,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            9,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            10,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            11,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ]
+        ],
+        "sorts": [
+          [
+            "record",
+            4
+          ],
+          [
+            "seal",
+            4
+          ],
+          [
+            "pin",
+            4
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "source",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sums",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "multiplies",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sealed",
+            "sorts": [
+              "record",
+              "seal"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "record",
+              "record",
+              "pin"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "multiplies",
+            [
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              0,
+              8
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              1,
+              9
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              0,
+              11
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              2,
+              10
+            ]
+          ],
+          [
+            "sealed",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "sealed",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "sealed",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "sealed",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "source",
+            [
+              0
+            ]
+          ],
+          [
+            "source",
+            [
+              1
+            ]
+          ],
+          [
+            "sums",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": [
+          [
+            0,
+            "3/1"
+          ],
+          [
+            1,
+            "4/1"
+          ],
+          [
+            2,
+            "7/1"
+          ],
+          [
+            3,
+            "21/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "near_pin",
+      "note": "r3's pin on r0 is not r0's digest",
+      "role": "near_miss",
+      "structure": {
+        "digests": [
+          [
+            4,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            5,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            6,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            7,
+            "sha256:eaa4c09f9bf3bb59c51399e922ad49604b43f4be8085a6ef2f8ebbb670cea7cf"
+          ],
+          [
+            8,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            9,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            10,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            11,
+            "sha256:f91a6aeff049715d4ce1341b34b4cacfec44317f25e5c13cd0f04732a370fc84"
+          ]
+        ],
+        "sorts": [
+          [
+            "record",
+            4
+          ],
+          [
+            "seal",
+            4
+          ],
+          [
+            "pin",
+            4
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "source",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sums",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "multiplies",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sealed",
+            "sorts": [
+              "record",
+              "seal"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "record",
+              "record",
+              "pin"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "multiplies",
+            [
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              0,
+              8
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              1,
+              9
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              0,
+              11
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              2,
+              10
+            ]
+          ],
+          [
+            "sealed",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "sealed",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "sealed",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "sealed",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "source",
+            [
+              0
+            ]
+          ],
+          [
+            "source",
+            [
+              1
+            ]
+          ],
+          [
+            "sums",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": [
+          [
+            0,
+            "3/1"
+          ],
+          [
+            1,
+            "4/1"
+          ],
+          [
+            2,
+            "7/1"
+          ],
+          [
+            3,
+            "21/1"
+          ]
+        ]
+      },
+      "violates": "pins_hold"
+    },
+    {
+      "id": "near_both_ops",
+      "note": "r2 both sums and multiplies",
+      "role": "near_miss",
+      "structure": {
+        "digests": [
+          [
+            4,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            5,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            6,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            7,
+            "sha256:eaa4c09f9bf3bb59c51399e922ad49604b43f4be8085a6ef2f8ebbb670cea7cf"
+          ],
+          [
+            8,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ],
+          [
+            9,
+            "sha256:6a216c0e367207abd7869cbac5094b2075d33af6dd9731bb05614aabb4e626f5"
+          ],
+          [
+            10,
+            "sha256:6bc852d5a020660851ff25565d907e8c7aa459e52f2e1fbf9c1d280f2b5ec29b"
+          ],
+          [
+            11,
+            "sha256:54cdf63201608c0ee426ec509be99dbe868580f36ffc75b90997930c022fced0"
+          ]
+        ],
+        "sorts": [
+          [
+            "record",
+            4
+          ],
+          [
+            "seal",
+            4
+          ],
+          [
+            "pin",
+            4
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "source",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sums",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "multiplies",
+            "sorts": [
+              "record"
+            ]
+          },
+          {
+            "name": "sealed",
+            "sorts": [
+              "record",
+              "seal"
+            ]
+          },
+          {
+            "name": "reads",
+            "sorts": [
+              "record",
+              "record",
+              "pin"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "multiplies",
+            [
+              2
+            ]
+          ],
+          [
+            "multiplies",
+            [
+              3
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              0,
+              8
+            ]
+          ],
+          [
+            "reads",
+            [
+              2,
+              1,
+              9
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              0,
+              11
+            ]
+          ],
+          [
+            "reads",
+            [
+              3,
+              2,
+              10
+            ]
+          ],
+          [
+            "sealed",
+            [
+              0,
+              4
+            ]
+          ],
+          [
+            "sealed",
+            [
+              1,
+              5
+            ]
+          ],
+          [
+            "sealed",
+            [
+              2,
+              6
+            ]
+          ],
+          [
+            "sealed",
+            [
+              3,
+              7
+            ]
+          ],
+          [
+            "source",
+            [
+              0
+            ]
+          ],
+          [
+            "source",
+            [
+              1
+            ]
+          ],
+          [
+            "sums",
+            [
+              2
+            ]
+          ]
+        ],
+        "values": [
+          [
+            0,
+            "3/1"
+          ],
+          [
+            1,
+            "4/1"
+          ],
+          [
+            2,
+            "7/1"
+          ],
+          [
+            3,
+            "21/1"
+          ]
+        ]
+      },
+      "violates": "one_operation"
+    }
+  ]
+}

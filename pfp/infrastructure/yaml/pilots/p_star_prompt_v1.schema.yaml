@@ -1,0 +1,198 @@
+# Schema definition for Instantiated P* Prompts and Universal Prompt Templates (p_star*.yaml & prompt_template.yaml)
+# AuthorityEffect: None.
+# Required fields and enums follow omega_engine_pfp.domain.types.prompt_templates.
+
+$schema: https://json-schema.org/draft/2020-12/schema
+schema: pfp.p-star-prompt.v1
+title: PStarPromptAndTemplateSchema
+description: |
+  Universal prompt template and concrete instantiated P* prompts carrying lineage slots,
+  behavioral guidance defenses (rules, antibodies, antipatterns, helpful patterns),
+  the sovereign SPK-001 policy manifest, stimulus, and typed response schema.
+
+$defs:
+  AuthorityEffect:
+    type: string
+    enum: [None]
+
+  PromptLineageSlot:
+    type: object
+    additionalProperties: false
+    required:
+      - prompt_id
+      - family_id
+    properties:
+      prompt_id:
+        type: string
+      generation_id: {}
+      family_id:
+        type: string
+      parent_id:
+        type: [string, "null"]
+      template_id:
+        type: [string, "null"]
+      template_version:
+        type: [string, "null"]
+      mutation_kind:
+        type: [string, "null"]
+      mutation_notes:
+        type: [string, "null"]
+      mutation_note:
+        type: [string, "null"]
+      status:
+        type: [string, "null"]
+      created_at_utc:
+        type: [string, "null"]
+      author:
+        type: [string, "null"]
+      authority_effect:
+        anyOf:
+          - $ref: '#/$defs/AuthorityEffect'
+          - type: string
+
+  RuleSlot:
+    type: object
+    additionalProperties: false
+    required:
+      - rule_id
+      - statement
+    properties:
+      rule_id:
+        type: string
+      name:
+        type: string
+      statement:
+        type: string
+      authority_effect:
+        $ref: '#/$defs/AuthorityEffect'
+        default: None
+
+  AntibodySlot:
+    type: object
+    additionalProperties: true
+    required:
+      - antibody_id
+    properties:
+      antibody_id:
+        type: string
+      failure_class:
+        type: string
+      target_pattern:
+        type: string
+      constraint_type:
+        type: string
+        default: Restrain
+      operatorizability:
+        type: string
+        default: repairable
+      action:
+        type: string
+        default: repair
+      severity:
+        type: string
+        default: P2
+      description:
+        type: [string, "null"]
+      negative_fixture:
+        type: [string, "null"]
+      positive_fixture:
+        type: [string, "null"]
+      times_seen:
+        type: [integer, "null"]
+      evidence_sha256:
+        type: [string, "null"]
+      pharmacy_status:
+        type: [string, "null"]
+      case_id:
+        type: [string, "null"]
+      failed_proof:
+        type: [string, "null"]
+      diagnostic:
+        type: [string, "null"]
+      timestamp:
+        type: [string, "null"]
+      authority_effect:
+        anyOf:
+          - $ref: '#/$defs/AuthorityEffect'
+          - type: string
+          - type: "null"
+
+  AntipatternSlot:
+    type: object
+    additionalProperties: false
+    required:
+      - antipattern_id
+      - name
+      - description
+    properties:
+      antipattern_id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      target_pattern:
+        type: [string, "null"]
+
+  HelpfulPatternSlot:
+    type: object
+    additionalProperties: false
+    required:
+      - pattern_id
+      - name
+      - description
+    properties:
+      pattern_id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      enforcement:
+        type: [string, "null"]
+
+  GuidanceSlot:
+    type: object
+    additionalProperties: false
+    properties:
+      rules:
+        type: array
+        items:
+          $ref: '#/$defs/RuleSlot'
+      antibodies:
+        type: array
+        items:
+          anyOf:
+            - $ref: '#/$defs/AntibodySlot'
+            - type: string
+      antipatterns:
+        type: array
+        items:
+          $ref: '#/$defs/AntipatternSlot'
+      helpful_patterns:
+        type: array
+        items:
+          $ref: '#/$defs/HelpfulPatternSlot'
+
+type: object
+additionalProperties: false
+required:
+  - lineage
+  - guidance
+  - system_prompt
+  - user_prompt
+  - response_schema
+properties:
+  lineage:
+    $ref: '#/$defs/PromptLineageSlot'
+  guidance:
+    $ref: '#/$defs/GuidanceSlot'
+  system_prompt:
+    type: string
+    description: Verbatim SPK-001 policy manifest, grammar, typing rules, and claim hygiene.
+  user_prompt:
+    type: string
+    description: Stimulus string (seed or rewritten AST/wire representation).
+  response_schema:
+    type: string
+    description: YAML/JSON Schema string constraining the model response.

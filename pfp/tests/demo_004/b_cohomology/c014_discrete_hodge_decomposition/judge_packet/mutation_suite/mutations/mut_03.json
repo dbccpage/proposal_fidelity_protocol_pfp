@@ -1,0 +1,75 @@
+{
+  "mutation_id": "mut_03",
+  "description": "curl_perturbed_psi",
+  "explanation": "Perturbed psi alters curl",
+  "input_case": {
+    "vertices": [
+      "v0",
+      "v1",
+      "v2"
+    ],
+    "edges": [
+      "e0_1",
+      "e1_2",
+      "e2_0"
+    ],
+    "faces": [
+      "f0"
+    ],
+    "edge_endpoints": {
+      "e0_1": [
+        "v0",
+        "v1"
+      ],
+      "e1_2": [
+        "v1",
+        "v2"
+      ],
+      "e2_0": [
+        "v2",
+        "v0"
+      ]
+    },
+    "face_boundaries": {
+      "f0": {
+        "e0_1": 1,
+        "e1_2": 1,
+        "e2_0": 1
+      }
+    },
+    "flow": {
+      "e0_1": "1",
+      "e1_2": "1",
+      "e2_0": "1"
+    },
+    "weights": {
+      "e0_1": "10",
+      "e1_2": "1",
+      "e2_0": "1"
+    },
+    "id": "case_poisoned_01"
+  },
+  "corrupted_output": {
+    "status": "SOLVED",
+    "phi": {
+      "v0": "-3/7",
+      "v1": "3/7"
+    },
+    "psi": {
+      "f0": "10"
+    },
+    "h": {},
+    "harmonic_dim": "0",
+    "harmonic_basis": [],
+    "id": "case_poisoned_01"
+  },
+  "eval_verdict": "FAIL",
+  "checker1": {
+    "valid": false,
+    "message": "FAIL: Hodge decomposition identity violated on edge e0_1: flow=1 != g(6/7) + c(1) + h(0) = 13/7"
+  },
+  "checker2": {
+    "valid": false,
+    "message": "FAIL: curl flow mismatch on edge e0_1: cand=1 != ind=1/7"
+  }
+}

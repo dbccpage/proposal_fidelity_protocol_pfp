@@ -1,0 +1,31 @@
+{
+  "schema": "physics_and_observer_lattice_properties_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying Zero-Float Rational Duality scaling invariance (ZFNF), Discrete Hodge 2D simplicial decomposition (DHNF), and Multi-Observer freshness lattice monotonicity",
+  "created_utc": "2026-09-25T16:20:00Z",
+  "properties_verified": [
+    {
+      "property_name": "zero_float_duality_scaling_invariance",
+      "test_function": "test_exact_zero_gap_invariance_across_scales, test_positive_gap_escalation_invariance, test_non_positive_scale_raises",
+      "status": "PASS",
+      "details": "Verified that rational LP duality gap classification (CertifiedOptimalZeroGap vs SuboptimalPositiveGap) is strictly invariant under positive rational scaling factors from 10^-18 to 10^18 in Q without float leakage."
+    },
+    {
+      "property_name": "simplicial_discrete_hodge_decomposition",
+      "test_function": "test_planar_triangulation_nilpotency_and_orthogonality, test_discrete_cycle_dhnf_orthogonality",
+      "status": "PASS",
+      "details": "Verified on 2D simplicial complexes: coboundary nilpotency d1(d0(alpha)) == 0 holds identically for all vertex potentials, and exact coboundaries are orthogonal to harmonic circulations (<d0(alpha), h> == 0)."
+    },
+    {
+      "property_name": "observer_lattice_poset_monotonicity",
+      "test_function": "test_three_observer_poset_chain_monotonicity, test_scope_firewall_precedence_in_poset",
+      "status": "PASS",
+      "details": "Verified that authorization is a monotonic functor over observer poset chains (O_i <= O_{i+1} => (auth(O_i) => auth(O_{i+1}))), with scope access firewalls taking strict precedence over SLA lag size."
+    }
+  ],
+  "contracts_aligned": [
+    "nf.optimization.zfnf",
+    "nf.physics.dhnf"
+  ],
+  "all_properties_satisfied": true
+}

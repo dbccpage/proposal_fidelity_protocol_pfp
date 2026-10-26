@@ -1,0 +1,421 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "site_checks",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "000",
+              "110"
+            ],
+            [
+              "000",
+              "011"
+            ]
+          ],
+          "errors": [
+            [
+              "100",
+              "000"
+            ],
+            [
+              "010",
+              "000"
+            ],
+            [
+              "001",
+              "000"
+            ]
+          ],
+          "readings": [
+            "10",
+            "11",
+            "01"
+          ],
+          "sites": 3
+        }
+      },
+      "input_sha256": "sha256:ce476869e2d1674579505a14183823e0021fda7e7143d5223c310d4e20bf5b74",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "111",
+              "000"
+            ],
+            [
+              "000",
+              "111"
+            ]
+          ],
+          "errors": [
+            [
+              "100",
+              "000"
+            ],
+            [
+              "010",
+              "000"
+            ],
+            [
+              "001",
+              "000"
+            ]
+          ],
+          "readings": [
+            "10",
+            "11",
+            "01"
+          ],
+          "sites": 3
+        }
+      },
+      "input_sha256": "sha256:36fe7cd70325ffa15428aef67930231bd7a9692e876adaccc91a36dbf0abe67c",
+      "native_code": "FAILS:checks_commute,readings_distinct,readings_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_short",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "000",
+              "110"
+            ],
+            [
+              "00",
+              "011"
+            ]
+          ],
+          "errors": [
+            [
+              "100",
+              "000"
+            ],
+            [
+              "010",
+              "000"
+            ],
+            [
+              "001",
+              "000"
+            ]
+          ],
+          "readings": [
+            "10",
+            "11",
+            "01"
+          ],
+          "sites": 3
+        }
+      },
+      "input_sha256": "sha256:916e12712cc1a13f0d54f82b4e05f5425981393d54e6086c919d4122201b8f9b",
+      "native_code": "FAILS:lengths",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_odd",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "000",
+              "110"
+            ],
+            [
+              "010",
+              "011"
+            ]
+          ],
+          "errors": [
+            [
+              "100",
+              "000"
+            ],
+            [
+              "010",
+              "000"
+            ],
+            [
+              "001",
+              "000"
+            ]
+          ],
+          "readings": [
+            "10",
+            "11",
+            "01"
+          ],
+          "sites": 3
+        }
+      },
+      "input_sha256": "sha256:e204cd42e77b383d396b1e485c1d25fe9ffc11da3022e29b2b6c4f4664eaaa57",
+      "native_code": "FAILS:checks_commute",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_quiet",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "000",
+              "110"
+            ],
+            [
+              "000",
+              "011"
+            ]
+          ],
+          "errors": [
+            [
+              "100",
+              "000"
+            ],
+            [
+              "010",
+              "000"
+            ],
+            [
+              "001",
+              "000"
+            ],
+            [
+              "000",
+              "100"
+            ]
+          ],
+          "readings": [
+            "10",
+            "11",
+            "01",
+            "00"
+          ],
+          "sites": 3
+        }
+      },
+      "input_sha256": "sha256:2bc8913f365779bae226f0cd58426f02cc70dbfae393df7e174677c780594b33",
+      "native_code": "FAILS:readings_distinct",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "quiet_unread",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "000",
+              "110"
+            ],
+            [
+              "000",
+              "011"
+            ]
+          ],
+          "errors": [
+            [
+              "100",
+              "000"
+            ],
+            [
+              "010",
+              "000"
+            ],
+            [
+              "001",
+              "000"
+            ],
+            [
+              "000",
+              "100"
+            ]
+          ],
+          "readings": [
+            "10",
+            "11",
+            "01"
+          ],
+          "sites": 3
+        }
+      },
+      "input_sha256": "sha256:ab97ef06690273763e9486df8475b61f2a49bdd60d777f08bb28a4170adeb295",
+      "native_code": "FAILS:readings_distinct,readings_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-quiet_unread"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "four_site_code",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "0000",
+              "1111"
+            ],
+            [
+              "1111",
+              "0000"
+            ]
+          ],
+          "errors": [
+            [
+              "1000",
+              "0000"
+            ],
+            [
+              "1000",
+              "1000"
+            ],
+            [
+              "0000",
+              "1000"
+            ],
+            [
+              "0100",
+              "0000"
+            ],
+            [
+              "0100",
+              "0100"
+            ],
+            [
+              "0000",
+              "0100"
+            ],
+            [
+              "0010",
+              "0000"
+            ],
+            [
+              "0010",
+              "0010"
+            ],
+            [
+              "0000",
+              "0010"
+            ],
+            [
+              "0001",
+              "0000"
+            ],
+            [
+              "0001",
+              "0001"
+            ],
+            [
+              "0000",
+              "0001"
+            ]
+          ],
+          "readings": [
+            "10",
+            "11",
+            "01",
+            "10",
+            "11",
+            "01",
+            "10",
+            "11",
+            "01",
+            "10",
+            "11",
+            "01"
+          ],
+          "sites": 4
+        }
+      },
+      "input_sha256": "sha256:20b3f62e74d7dc23c6373f0ad265936243c43426cb3e5f547c45e02f15b1fd13",
+      "native_code": "FAILS:readings_distinct",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-four_site_code"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "checks": [
+            [
+              "000",
+              "110"
+            ],
+            [
+              "000",
+              "011"
+            ]
+          ],
+          "errors": [
+            [
+              "100",
+              "000"
+            ],
+            [
+              "010",
+              "000"
+            ],
+            [
+              "001",
+              "000"
+            ]
+          ],
+          "readings": [
+            "01",
+            "11",
+            "01"
+          ],
+          "sites": 3
+        }
+      },
+      "input_sha256": "sha256:5cdaa5c09618ed5015c006959ac1cede7763e4cac87d0571e7d8b52eac3674b2",
+      "native_code": "FAILS:readings_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "ACCEPTED",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 60,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {
+    "lists_emptied": "needs_target_schema"
+  },
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_060"
+}

@@ -1,0 +1,91 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.bqnf_regge
+  name: Boundary-Quotient Normal Form for Regge Geometrodynamics
+  short_name: BQNF-REGGE
+  version: v0
+  theory_status: admitted
+  contract_status: draft
+  verification_status: absent
+  family: physics
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - pachner_moves
+  - curvature_defects
+  - regge_action
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: silent under-invalidation of deficit angles and uncertified curvature
+    reallocation during Pachner moves or metric deformations
+  preserves_invariant: exact discrete Einstein-Regge equations of motion and O(1)
+    incremental repair under local diffeomorphism coboundaries
+  protected_skeleton:
+  - c0_local_edge_potentials
+  - c1_deficit_variations
+  - d0_coboundary_image
+  - d1_schlafli_nilpotence
+  erased_structure: []
+  non_claims:
+  - does not guarantee O(1) repair for global topological changes or black hole horizon
+    transitions
+  - does not claim continuum general covariance without discrete gauge quotienting
+declarations_required:
+- hinge_deficit_vector: list of deficit angles epsilon_h = 2*pi - sum(theta_h)
+- regge_action: sum(A_h * epsilon_h) - Lambda * sum(V_sigma)
+- schlafli_invariant: sum(A_h * d_epsilon_h) = 0
+- quotient_space: Q1 = C1 / im(d0)
+validation_criteria:
+- exact_repair_route: when deficit variation omega in im(d0), local potential alpha
+    repairs curvature in O(1)
+- closed_residual_route: when [omega] != 0 in Q1 and d1 omega = 0, routes to bounded
+    partition recomputation
+- closure_failure_route: when d1 omega != 0 (Schlafli breach), terminalizes as Refuse
+terminal_routes:
+- Unsupported
+- Repair
+- Recompute
+- Refuse
+- Preserve
+terminal_route_map:
+  exact_coboundary: Repair
+  closed_cohomology_class: Recompute
+  schlafli_violation: Refuse
+  zero_variation: Preserve
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: silent under-invalidation of deficit angles and uncertified curvature
+    reallocation during Pachner moves or metric deformations. exact discrete Einstein-Regge
+    equations of motion and O(1) incremental repair under local diffeomorphism coboundaries
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: silent under-invalidation of deficit angles and uncertified
+      curvature reallocation during Pachner moves or metric deformations
+    lossless_join:
+      status: declared_reconstruction
+      statement: exact discrete Einstein-Regge equations of motion and O(1) incremental
+        repair under local diffeomorphism coboundaries
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+certification:
+  certificate_required: true
+  certificate_kind: nf.physics.bqnf_regge_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+evidence_required: []
+schema_ref: ./normal_form_contract_schema.yaml

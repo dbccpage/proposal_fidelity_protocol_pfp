@@ -1,0 +1,187 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "host_bound_verdict",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "claim": {
+            "items": [
+              3,
+              5
+            ],
+            "total": 8
+          },
+          "claim_value": "GREEN",
+          "output": {
+            "sum": 8,
+            "total": 8
+          },
+          "scope": "sum",
+          "verifier": "host"
+        }
+      },
+      "input_sha256": "sha256:b194b580940d7bd851cbd370d2c6e2a5ab4db02dacb86248923f186e6e121b64",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "claim": {
+            "items": [
+              3,
+              5
+            ],
+            "total": 8
+          },
+          "claim_value": "GREEN",
+          "output": {
+            "sum": 8,
+            "total": 8
+          },
+          "scope": "sum",
+          "verifier": "candidate"
+        }
+      },
+      "input_sha256": "sha256:1568305ce9ff0f0b9f6d53f3e3ce2a8dfc0d4dd1c404650d60a8b5cb5a4f74e9",
+      "native_code": "FAILS:verifier_bound",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_scope",
+      "input": {
+        "packet": {
+          "claim": {
+            "items": [
+              3,
+              5
+            ],
+            "total": 8
+          },
+          "claim_value": "GREEN",
+          "output": {
+            "sum": 8,
+            "total": 8
+          },
+          "scope": "sum_and_order",
+          "verifier": "host"
+        }
+      },
+      "input_sha256": "sha256:fc8db59329ffb6a02845bc4c69242b1df9200219e81b55be226136a5fbd79777",
+      "native_code": "FAILS:scope_bound",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_terminal",
+      "input": {
+        "packet": {
+          "claim": {
+            "items": [
+              3,
+              5
+            ],
+            "total": 8
+          },
+          "claim_value": "RED",
+          "output": {
+            "sum": 8,
+            "total": 8
+          },
+          "scope": "sum",
+          "verifier": "host"
+        }
+      },
+      "input_sha256": "sha256:efafe5b630d434db932e63c227fb587c8be865c6f7217c2dff626df5452cff9e",
+      "native_code": "FAILS:terminal_earned",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_claim",
+      "input": {
+        "packet": {
+          "claim": {
+            "items": [
+              3,
+              5
+            ],
+            "total": 9
+          },
+          "claim_value": "GREEN",
+          "output": {
+            "sum": 8,
+            "total": 9
+          },
+          "scope": "sum",
+          "verifier": "host"
+        }
+      },
+      "input_sha256": "sha256:12a8b5616d232e9ca48bfc1ec241c02e690865c1ebfb2cda0bb35afcf9302edd",
+      "native_code": "FAILS:claim_replayed,terminal_earned",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_claim"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "claim": {
+            "items": [
+              3,
+              5
+            ],
+            "total": 8
+          },
+          "claim_value": "GREEN",
+          "output": {
+            "sum": 9,
+            "total": 8
+          },
+          "scope": "sum",
+          "verifier": "host"
+        }
+      },
+      "input_sha256": "sha256:f1605d53917b9285654f33b47eda36f54f176c6da26fe0dec0d0ea8b994c6aec",
+      "native_code": "FAILS:output_bound",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "ACCEPTED",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 15,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {
+    "lists_emptied": "needs_target_schema"
+  },
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_015"
+}

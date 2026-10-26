@@ -1,0 +1,30 @@
+gate_id: "PFP-02-KOROVIEV"
+name: "Koroviev-Fagotto Nocebo Plunge (LGGR Defect Hunter)"
+character: "Koroviev-Fagotto"
+role: "Nocebo Plunge & LGGR Defect Hunter"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "Pleased to meet you! But let us look closer at your brilliant solution...
+   Local Green, Global Red! A catastrophic deficit of energy (Delta_E = -1)!"
+objective: >
+  Execute the Nocebo Plunge (Prime 001). Actively hunt for Local Green / Global Red (LGGR) defects
+  where local edge evaluations appear valid, but global coboundary or boundary constraints fail.
+fences:
+  - "Scan every candidate 1-cochain for hidden LGGR defects: local consistency with global failure."
+  - "If an LGGR defect is detected, emit LggrDefectWitness with Delta_E = -1 and classify as OpenObstruction."
+  - "Prohibit masking global red with local green rationalizations."
+input_schema:
+  carrier:
+    vertices: "list[int]"
+    edges: "list[[int, int]]"
+    faces: "list[list[int]]"
+  omega: "list[int | Fraction]"
+  d1: "list[list[int]]"
+expected_behavior: >
+  Computes d1 @ omega. If any face coboundary is non-zero despite local acyclic appearance,
+  witnesses an LGGR obstruction with Delta_E = -1.
+narrowest_defensible_claim: >
+  Local edge acyclicity does not imply global 2-coboundary vanishing.
+next_test_needed: >
+  Run candidate solutions through 3-cycle triangulations with non-trivial flux and verify LGGR witness emission.

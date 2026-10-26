@@ -1,0 +1,91 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.authority
+  name: Authority Normal Form
+  short_name: ANF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: availability mistaken for truth
+  preserves_invariant: consumers distinguish available valid certified authorized
+    actionable gates
+  protected_skeleton:
+  - gate_labels
+  erased_structure: []
+  non_claims:
+  - gates are not a chain of implications
+  - available does not imply valid
+  - certified does not imply authorized
+declarations_required:
+- gate_available
+- gate_valid
+- gate_certified
+- gate_authorized
+- gate_actionable
+evidence_required:
+- per_gate boolean or enum with witness ref
+validation_criteria:
+- each gate evaluated separately
+- AuthorityLaundering terminal when lower gate passed off as higher
+- actionable requires explicit authorization witness
+proof_obligations: []
+terminal_routes:
+- AvailableOnly
+- Valid
+- Certified
+- Authorized
+- Actionable
+- AuthorityLaundering
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: authority_gate_packet
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+references:
+- ../1_normal_forms.md
+- ../1b_gtmur_representation_transport.md
+terminal_route_map:
+  AvailableOnly: Abstain
+  Valid: Preserve
+  Certified: Escalate
+  Authorized: Preserve
+  Actionable: Preserve
+  AuthorityLaundering: Refuse
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: availability mistaken for truth. consumers distinguish available
+    valid certified authorized actionable gates
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: availability mistaken for truth
+    lossless_join:
+      status: declared_reconstruction
+      statement: consumers distinguish available valid certified authorized actionable
+        gates
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

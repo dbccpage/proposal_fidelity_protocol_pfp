@@ -1,0 +1,86 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.evidence.provenance
+  name: Provenance Form
+  short_name: ProvF
+  version: v0
+  status: draft
+  family: evidence
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - certificate_packet
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: unprovenanced tuple derivation
+  preserves_invariant: query tuples map to elements in a declared algebraic semiring
+  protected_skeleton:
+  - tuple_provenance_map
+  - semiring_domain
+  erased_structure: []
+  non_claims:
+  - does not guarantee privacy or security policies are satisfied by provenance annotations
+    alone
+declarations_required:
+- semiring_operators
+- identity_elements
+evidence_required:
+- tuple_derivations
+- semiring_annotations
+validation_criteria:
+- algebraic properties of semiring (distributivity, commutativity) hold under projection/join
+  rewrites
+- unknown provenance terminalizes rather than guessing values
+proof_obligations: []
+terminal_routes:
+- ProvenanceValid
+- ProvenanceUnknown
+- SemiringViolation
+- Refuse
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: query result contains tuples whose provenance annotations violate semiring
+    distributivity
+  diagnosis: unprovenanced tuple derivation
+  terminal: SemiringViolation
+references:
+- ../1_normal_forms.md
+- ../1b_gtmur_representation_transport.md
+terminal_route_map:
+  ProvenanceValid: Preserve
+  ProvenanceUnknown: BudgetUnknown
+  SemiringViolation: Reject
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: unprovenanced tuple derivation. query tuples map to elements in
+    a declared algebraic semiring
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: unprovenanced tuple derivation
+    lossless_join:
+      status: declared_reconstruction
+      statement: query tuples map to elements in a declared algebraic semiring
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

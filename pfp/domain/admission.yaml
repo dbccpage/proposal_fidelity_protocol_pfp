@@ -1,0 +1,142 @@
+# Shared-kernel admission allowlist.
+# AuthorityEffect: None
+#
+# A type may stay in shared_kernel only if it is used by two or more
+# bounded contexts and it carries a cross-cutting invariant.
+# Tags: keep | evict:symbol_game | review | reexport
+# PR-1 freezes the current file set. Later PRs may only decrease
+# snapshot counts and must update this file in the same pathspec.
+
+rule: ">=2 bounded contexts AND cross-cutting invariant"
+package: omega_engine_pfp.domain.shared_kernel
+
+modules:
+  __init__.py:
+    tag: reexport
+    note: package re-exports; not a value object
+  authority_effect.py:
+    tag: keep
+    invariant: payload AuthorityEffect is only None
+  budget.py:
+    tag: keep
+    invariant: budget exhaustion ceilings
+  byte_payload.py:
+    tag: keep
+    invariant: payload size ceiling
+  bytes.py:
+    tag: keep
+    invariant: non-negative byte counts
+  coboundary_score.py:
+    tag: evict:symbol_game
+    note: coboundary score result is Symbol Game packet scoring
+  code.py:
+    tag: keep
+    invariant: refusal/code identifier shape
+  content_digest.py:
+    tag: keep
+    invariant: digest format
+  data.py:
+    tag: review
+    note: DataRecord is generic; confirm a second context before keep
+  demand_item.py:
+    tag: evict:symbol_game
+    note: DemandItemV1 is a Symbol Game packet field
+  description.py:
+    tag: review
+    note: string ceiling VO; currently Symbol Game consumed
+  disposition.py:
+    tag: keep
+    invariant: disposition state vocabulary
+  field.py:
+    tag: review
+    note: FieldName is generic; confirm a second context before keep
+  gate.py:
+    tag: review
+    note: GateId is an Identifier alias used by Symbol Game gates
+  hash.py:
+    tag: keep
+    invariant: content hash format
+  id.py:
+    tag: keep
+    invariant: typed identifier shape
+  key.py:
+    tag: review
+    note: ContextKey/WireKey VO overlap with wire_key.py
+  key_type.py:
+    tag: review
+    note: key-kind enum; confirm a second context before keep
+  kill_condition.py:
+    tag: evict:symbol_game
+    note: kill-condition registry is Symbol Game control
+  kind.py:
+    tag: review
+    note: generic Kind/Role; currently a Symbol Game turn substrate
+  llm_payload.py:
+    tag: evict:symbol_game
+    note: LLM turn payload is Symbol Game context
+  media_type.py:
+    tag: keep
+    invariant: media type token
+  objective_typed.py:
+    tag: evict:symbol_game
+    note: typed objective is a Symbol Game packet field
+  obstruction.py:
+    tag: review
+    note: obstruction family hints; obstruction_theory has its own types
+  patch.py:
+    tag: review
+    note: patch text size ceiling; currently Symbol Game code-change
+  path.py:
+    tag: keep
+    invariant: path traversal / ownership
+  path_manifest.py:
+    tag: keep
+    invariant: path-set membership uses path security
+  regime.py:
+    tag: review
+    note: RegimeKind is Symbol Game residual-regime vocabulary
+  required_reply_fields.py:
+    tag: evict:symbol_game
+    note: required reply fields are Symbol Game LLM turn contract
+  residual_colour.py:
+    tag: keep
+    invariant: residual colour vocabulary
+  residual_drop.py:
+    tag: keep
+    invariant: residual drop triple shape
+  revision.py:
+    tag: review
+    note: revision token; currently Symbol Game code-change
+  schema.py:
+    tag: keep
+    invariant: schema version token
+  severity.py:
+    tag: keep
+    invariant: severity vocabulary
+  summary.py:
+    tag: review
+    note: string ceiling VO; currently Symbol Game consumed
+  task_objective.py:
+    tag: review
+    note: task objective string; currently Symbol Game consumed
+  turn.py:
+    tag: evict:symbol_game
+    note: turn role/modality/kind are Symbol Game LLM turns
+  turn_type.py:
+    tag: evict:symbol_game
+    note: turn type classification is Symbol Game
+  wire_key.py:
+    tag: keep
+    invariant: wire-key vocabulary
+
+snapshots:
+  scan_root: omega_engine
+  exclude_dir_names:
+    - _experiments
+    - target
+    - __pycache__
+  # Module-level ClassDef or Assign/AnnAssign. Parsed with utf-8-sig.
+  # Later PRs may only decrease these numbers and must update this block.
+  authority_effect: 5
+  result: 3
+  refusal: 2

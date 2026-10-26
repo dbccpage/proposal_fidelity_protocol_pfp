@@ -1,0 +1,58 @@
+{
+  "mutation_id": "mut_16_double_length_exceeds_target",
+  "description": "Length 3 when target_len is 1",
+  "case": {
+    "case_id": "c058_b17_xor_sub_w32",
+    "width": 32,
+    "inputs": [
+      "x",
+      "y"
+    ],
+    "ops": [
+      [
+        "t1",
+        "or",
+        "x",
+        "y"
+      ],
+      [
+        "t2",
+        "and",
+        "x",
+        "y"
+      ],
+      [
+        "t3",
+        "sub",
+        "t1",
+        "t2"
+      ]
+    ],
+    "out": "t3",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b17_xor_sub_w32",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "t1",
+        "xor",
+        "x",
+        "y"
+      ],
+      [
+        "t2",
+        "const",
+        0
+      ],
+      [
+        "t3",
+        "or",
+        "t1",
+        "t2"
+      ]
+    ],
+    "out": "t3"
+  }
+}

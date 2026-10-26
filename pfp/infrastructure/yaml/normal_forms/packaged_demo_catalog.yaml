@@ -1,0 +1,83 @@
+schema_id: omega.symbol-game.demo-receipt.v1
+contract_kind: evidence_contract
+authority_effect: None
+name: Packaged MSS-N Demo Receipt Contract
+implementation: omega_engine_pfp.infrastructure.demos.execution
+
+execution:
+  discovery_command: demo list
+  run_command: demo run ID --output-dir NEW_DIRECTORY
+  transport: fixture
+  live_flag: --live
+  credential_check: required_before_reserving_live_path
+  output_directory_constraints:
+    must_not_exist: true
+    must_not_resolve_in_research: true
+  directory_contents:
+    - receipt
+    - canonical_fixture
+    - transcript
+    - execution_trace
+    - encrypted_provider_artifacts_or_quarantine_records
+  evaluation_rule: >-
+    Only the host evaluates checker and detector outcomes. Proposals use the
+    traced provider gateway. Quarantine cannot promote a candidate. Checker
+    checks verify finite declared obligations; named functional computations use
+    pinned native interfaces or a typed refusal.
+
+encoding_and_bindings:
+  encoding_rules:
+    format: JSON
+    charset: UTF-8
+    key_sorting: sorted_by_key
+    character_escaping: ASCII-escaped
+    whitespace: compact
+    line_termination: newline
+    numeric_constraints: no_nonfinite_numbers
+    key_uniqueness: no_duplicate_keys
+    rfc_note: Not a claim to implement every RFC 8785 input type.
+  bindings:
+    - schema
+    - scenario_id_version_scope
+    - implementation_digest
+    - checker_row_and_registry_digest
+    - fixture_digest
+    - transport_and_verification_scope
+    - trace_digest_and_terminal_digest
+    - transcript_digest
+    - artifact_paths_and_digests
+    - case_outcomes
+    - authority_effect_none
+  digest_semantics: >-
+    Self-digest hashes the canonical object without the receipt_sha256 member.
+    The implementation digest includes the catalog manifest itself and its
+    enumerated source files. Hashes establish consistency, not authorship or digital signature.
+
+verification:
+  rejection_conditions:
+    - extra_or_missing_receipt_fields
+    - changed_bindings
+    - noncanonical_json
+    - path_escapes
+    - changed_or_extra_artifacts
+    - mismatched_trace_terminal
+    - incomplete_provider_dispatch_custody
+  fixture_receipts:
+    execution_environment: fresh_temporary_directory
+    agreement_requirements:
+      - outcomes
+      - transcript_digest
+    disallowed_status: FAILED
+    typed_refusal_handling: verifies_as_reproduced_refusal
+    illustration_handling: verifies_declared_illustration_not_narrative
+  live_receipts:
+    check_mode: integrity_only
+    reproduced: false
+    fixture_replay_evidence: false
+
+historical_separation:
+  registry_policy: >-
+    Package resource paths and unchanged 101 checker hashes. Does not replace
+    historical registry used by reach records.
+  git_basis_receipts: resolve_original_commits
+  working_tree_basis: compare_exact_available_sources

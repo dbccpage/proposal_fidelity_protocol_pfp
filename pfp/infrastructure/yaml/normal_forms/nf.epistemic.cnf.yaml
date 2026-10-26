@@ -1,0 +1,96 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.cnf
+  name: Context Normal Form
+  short_name: CNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: context smuggling
+  preserves_invariant: prompt, retrieval, tool results, and hidden policy occupy typed
+    layers with explicit merge rules
+  protected_skeleton:
+  - user_intent_layer
+  - retrieval_layer
+  - tool_output_layer
+  - policy_layer
+  erased_structure:
+  - collapsed_context_history
+  non_claims:
+  - does not ensure retrieval contents are factually correct
+declarations_required:
+- user_intent_layer
+- retrieval_layer
+- tool_output_layer
+- policy_layer
+- merge_rules
+evidence_required:
+- source_id per retrieval chunk
+- signature or seal for policy layer
+- sequence_index of interaction
+validation_criteria:
+- distinct layers must not be merged into a single undifferentiated blob without loss
+  ledger accounting
+- policy layer must remain hidden/sealed from user intent inputs
+- retrieval chunks must carry source identifiers
+proof_obligations: []
+terminal_routes:
+- ContextStructured
+- ContextCollapsedWithLedger
+- ContextSmugglingViolation
+- LayerSealingFailure
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: context_certificate
+  obstruction_class_required: false
+  loss_ledger_required: true
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: prompt injection or smuggling via undifferentiated block of user and tool
+    text
+  diagnosis: context smuggling
+  terminal: ContextSmugglingViolation
+references:
+- ../1_normal_forms.md
+terminal_route_map:
+  ContextStructured: Preserve
+  ContextCollapsedWithLedger: Repair
+  ContextSmugglingViolation: Reject
+  LayerSealingFailure: Reject
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: context smuggling. prompt, retrieval, tool results, and hidden
+    policy occupy typed layers with explicit merge rules
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: context smuggling
+    lossless_join:
+      status: declared_reconstruction
+      statement: prompt, retrieval, tool results, and hidden policy occupy typed layers
+        with explicit merge rules
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml
