@@ -1,0 +1,118 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.representation.dbcnf
+  name: De Bruijn Cyclic Normal Form
+  short_name: DBCNF
+  version: v0
+  theory_status: established
+  contract_status: draft
+  verification_status: absent
+  family: representation
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - cyclic_binary_word
+  - necklace
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: storing several rotations of one cycle as if they were different
+    orbits, ambiguous necklace canonicalization, and conflation of periodic powers with
+    strictly aperiodic Lyndon words
+  preserves_invariant: each admitted cycle is stored as its unique lexicographically
+    least rotation, with clear empty-word policy and explicit subshift transition rules
+  protected_skeleton:
+  - cycle_necklace
+  - least_rotation_representative
+  - periodicity_degree
+  - orbit_elements
+  erased_structure:
+  - non_least_cyclic_rotations
+  non_claims:
+  - the stored representative is the lexicographically least rotation. That rotation
+    is the Lyndon word of the necklace if and only if the word is strictly aperiodic.
+    This contract does not label a proper periodic power (e.g. 0101) as a Lyndon word
+  - the carrier is the full binary subshift B(2, 1) over {0, 1} where all local block
+    transitions of length 1 are permitted; any subshift with forbidden words must declare
+    an explicit transition adjacency matrix
+  - does not imply authorization
+declarations_required:
+- word: finite string of symbols
+- alphabet: declared set {0, 1}
+- subshift_specification: full binary shift on 2 symbols, with all transition edges permitted
+- empty_word_policy: non_empty_required (words must satisfy length |w| >= 1; empty word routes to RejectEmptyWord)
+evidence_required:
+- input_word: string
+- word_length: integer
+- alphabet_valid: boolean
+- is_aperiodic: boolean
+- lyndon_word_certification: boolean
+- canonical_least_rotation: string
+- rotation_orbit_elements: list
+validation_criteria:
+- non_empty_word: word length satisfies |w| >= 1
+- alphabet_membership: every symbol in the word belongs strictly to {0, 1}
+- least_rotation_canonical: the stored representative is strictly lexicographically less than or equal to all its |w| cyclic shifts
+- orbit_equivalence: all cyclic shifts of the word map to the identical unique representative
+terminal_routes:
+- Accept
+- RewriteToLeastRotation
+- RejectEmptyWord
+- RejectNonBinary
+- Unsupported
+terminal_route_map:
+  Accept: Preserve
+  RewriteToLeastRotation: Repair
+  RejectEmptyWord: Reject
+  RejectNonBinary: Reject
+  Unsupported: Unsupported
+extensions:
+  condition_to_local_route_map:
+    is_least_rotation: Accept
+    is_rotation_but_not_least: RewriteToLeastRotation
+    is_empty_string: RejectEmptyWord
+    contains_non_binary_symbols: RejectNonBinary
+certification:
+  certificate_required: true
+  certificate_kind: least_rotation_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: a rotation that is lexicographically smaller than the stored word exists
+  diagnosis: the representative is not the least rotation
+  terminal: RewriteToLeastRotation
+- symptom: input word is empty (length 0)
+  diagnosis: empty word policy violation
+  terminal: RejectEmptyWord
+- symptom: word contains symbols other than '0' and '1'
+  diagnosis: alphabet membership violation
+  terminal: RejectNonBinary
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.2'
+  formal_statement: De Bruijn cyclic normal form storing each non-empty binary cycle
+    as its unique lexicographically least rotation, distinguishing aperiodic Lyndon
+    words from periodic powers, with instance-decidable Duval/Booth canonicalization.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_the_cyclic_orbit_not_a_relational_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: duplicate storage of phase-shifted copies of one periodic orbit
+    lossless_join:
+      status: orbit_reconstruction
+      statement: the cyclic shifts of the least rotation are exactly the orbit
+    dependency_preservation:
+      status: orbit_membership_retained
+      statement: replacing a word by another rotation does not change the stored representative
+    syntactic_decision:
+      status: declaration_decidable
+      statement: the least rotation of a finite word is instance-decidable and computed
+        in linear time from the word

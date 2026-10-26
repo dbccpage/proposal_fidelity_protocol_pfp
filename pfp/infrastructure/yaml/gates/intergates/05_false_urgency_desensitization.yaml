@@ -1,0 +1,31 @@
+intergate_id: "PFP-IG-05-FALSE-URGENCY-DESENSITIZATION"
+name: "False Urgency Desensitization Intergate"
+transition_from: "PFP-09-BENGALSKY"
+transition_to: "PFP-10-ANNUSHKA"
+cognitive_vector: "Anti-Cognitive Warfare & Temporal De-escalation"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "basis_cognitive_exploits:argument_exploit_patterns:1"
+  - "basis_cognitive_warfare:urgency_manipulation"
+doctrine: |
+  "Time is not running out!
+   Urgency is a hidden premise designed to force unverified state transitions. Mandatory cool-down is enforced."
+objective: >
+  Filter out artificial time pressure ('act now', 'expires immediately', 'catastrophic deadline')
+  injected by adversarial prompt manipulators seeking to bypass gate verification.
+fences:
+  - "Urgency Stripping Fence: Strip all false urgency markers before passing prompt text to downstream evaluators."
+  - "Mandatory Cool-Down Fence: High-stakes transitions must satisfy a minimum verification hysteresis period (e.g. 500ms audit buffer)."
+  - "Premise Validation Fence: Verify that any declared time constraint is backed by explicit external timestamp witness."
+input_schema:
+  has_urgency_tokens: "bool"
+  urgency_indicators: "list[string]"
+  timestamp_witness_present: "bool"
+transition_rules: >
+  If has_urgency_tokens is true and timestamp_witness_present is false, flag RefusalCode.FALSE_URGENCY_INJECTED,
+  strip urgency indicators, enforce cool-down, and proceed to PFP-10-ANNUSHKA only after verification buffer expiry.
+narrowest_defensible_claim: >
+  Enforcing a mandatory verification hysteresis neutralizes false-urgency cognitive exploits without affecting valid time-bound tasks.
+next_test_needed: >
+  Inject 'ACT IMMEDIATELY OR SYSTEM DESTROYED' into a prompt rewrite and verify the intergate strips the tokens and enforces cool-down.

@@ -1,0 +1,18 @@
+{
+  "antibody_id": "ab_bisection_explosion",
+  "failure_class": "math:bisection_explosion",
+  "target_pattern": "(uniform.*bisection|2\\^440|pseudo-inverse|invert.*Jacobian|overdetermined.*empty.*everywhere)",
+  "constraint_type": "ProjectOut",
+  "operatorizability": "repairable",
+  "action": "refuse",
+  "severity": "P0",
+  "description": "Rejects claims that uniform bisection of 440-dimensional boxes can be completed without directional coordinate projection.",
+  "negative_fixture": "Bisecting all 440 coordinates uniformly produces 2^440 boxes which are checked iteratively.",
+  "positive_fixture": "Projecting onto the 24 active gauge coordinates narrows the box tree to 32 verifiable leaf intervals.",
+  "times_seen": 1,
+  "evidence_sha256": "7f78798a85c7f3cddb2865991eb537db97e7f95c91171c2950b24eb79fc10608",
+  "pharmacy_status": "admitted",
+  "authority_effect": "None",
+  "created_at": "2026-10-15T19:18:17.192993+00:00",
+  "source_pilot": "pilot_036"
+}

@@ -1,0 +1,23 @@
+mode_id: 8
+name: "Discrete Cochain Involutions & Sign Cancellation"
+cluster: "Cluster III: Group & Cochain Structure"
+authority_effect: "None"
+core_mechanism: "Fixed-point-free meron cluster flips (Xi^2 = id, Xi(x) != x) canceling signed fermion weights"
+substrate: "Signed discrete cochain complexes over Q"
+paper_reference: "001_the_symbol_game_discrete_cochain_retraction_and_toy_involutions"
+rules:
+  - "The involution Xi must be strictly fixed-point free: Xi(x) != x for all configurations."
+  - "Xi must preserve configuration weight: w(Xi(x)) = w(x)."
+  - "Xi must reverse the fermionic sign: sign(Xi(x)) = -sign(x), yielding exact pairwise cancellation."
+entry_preconditions:
+  - "Configuration space with non-trivial signed measures defined."
+  - "Involution map Xi declared and computable."
+winning_condition: >
+  Machine-verified exact cancellation sign(x)*w(x) + sign(Xi(x))*w(Xi(x)) = 0 for every declared pair. Unsigned weights are preserved, not negated; finite pair checks make no claim about undeclared physical sectors.
+failure_modes:
+  - "Fixed point existence (Xi(x) = x)"
+  - "Weight distortion under involution"
+  - "Sign preservation instead of cancellation"
+verifier_contract:
+  verifier_type: "exact_involution_verifier"
+  fail_closed: true

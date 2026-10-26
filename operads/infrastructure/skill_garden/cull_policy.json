@@ -1,0 +1,32 @@
+{
+  "schema": "omega.skill_garden.cull_policy.v1",
+  "authority_effect": "None",
+  "approved_by": "",
+  "approved_at": "",
+  "why": [
+    "A human approves this policy once; the candidate list is reviewed every run.",
+    "That split is what AuthorityEffect: None permits -- automation performs a",
+    "lifecycle move under a standing human policy, and never promotes or certifies.",
+    "Until approved_by is filled in, the report refuses to nominate anything."
+  ],
+  "window_days": 30,
+  "sensor_epoch": "2026-08-11",
+  "minimum_ledger_days": 30,
+  "new_skill_grace_days": 45,
+  "max_candidate_fraction": 0.25,
+  "sensor_notes": [
+    "sensor_epoch is the earliest real observation in the ledger, not the day the",
+    "policy was written. Backdating it would credit the sensor with days it did",
+    "not watch, and every skill would look dead for the difference.",
+    "new_skill_grace_days deliberately exceeds window_days so nothing newly",
+    "created can be nominated by the first run that could reach it."
+  ],
+  "exempt": [
+    {"id": "_shared", "reason": "library consumed by every package; not a skill"},
+    {"id": "_templates", "reason": "scaffolding source; not a skill"},
+    {"id": "ooutwire", "reason": "inbox and register; read, not invoked"},
+    {"id": "autoskill", "reason": "compiler surface; driven by auto-oe-autop, not called directly"},
+    {"id": "blackrod", "reason": "constitutional enforcer; invoked by other skills"},
+    {"id": "session", "reason": "session-scoped law; read, not invoked"}
+  ]
+}

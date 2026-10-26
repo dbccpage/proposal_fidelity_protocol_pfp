@@ -1,0 +1,413 @@
+{
+  "fixtures": [
+    {
+      "id": "pos",
+      "note": "one two-dimensional cell with its three sides",
+      "role": "positive",
+      "structure": {
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": null
+    },
+    {
+      "id": "own_neg",
+      "note": "a two-dimensional cell given only two elements",
+      "role": "own_negative",
+      "structure": {
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "admission"
+    },
+    {
+      "id": "near_side_first",
+      "note": "the side on the first two elements is missing",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "side_first"
+    },
+    {
+      "id": "near_side_last",
+      "note": "the side on the last two elements is missing",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "side_last"
+    },
+    {
+      "id": "near_side_outer",
+      "note": "the side on the first and last elements is missing",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "side_outer"
+    },
+    {
+      "id": "near_ends",
+      "note": "a side names an element that is not a point",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "pt",
+            3
+          ],
+          [
+            "mark",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              3
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "side_ends"
+    },
+    {
+      "id": "near_repeat",
+      "note": "a cell repeating an element; its repeated side is degenerate",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "pt",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "side",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        ],
+        "values": []
+      },
+      "violates": "side_distinct"
+    }
+  ]
+}

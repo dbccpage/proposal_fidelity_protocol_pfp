@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anomalon.local/schemas/anti-skill-v1.json",
+  "title": "OE anti-skill v1 wire contracts",
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+    },
+    "uniqueStrings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "maxItems": 256
+    },
+    "annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "failure_code",
+        "proposed_invariant",
+        "counterexamples",
+        "protected_fields",
+        "evidence_refs"
+      ],
+      "properties": {
+        "failure_code": { "type": "string" },
+        "proposed_invariant": { "type": "string" },
+        "counterexamples": { "$ref": "#/$defs/uniqueStrings" },
+        "protected_fields": { "$ref": "#/$defs/uniqueStrings" },
+        "evidence_refs": { "$ref": "#/$defs/uniqueStrings" }
+      }
+    },
+    "conversationEpisode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_digest",
+        "source_format",
+        "ordinal",
+        "user_label",
+        "user_text",
+        "assistant_label",
+        "assistant_text",
+        "session_id",
+        "task_id",
+        "model_id",
+        "annotation",
+        "authority_effect",
+        "schema_version",
+        "episode_id"
+      ],
+      "properties": {
+        "source_digest": { "$ref": "#/$defs/digest" },
+        "source_format": { "$ref": "#/$defs/identifier" },
+        "ordinal": { "type": "integer", "minimum": 1 },
+        "user_label": { "type": "string", "minLength": 1 },
+        "user_text": { "type": "string", "minLength": 1 },
+        "assistant_label": { "type": "string", "minLength": 1 },
+        "assistant_text": { "type": "string", "minLength": 1 },
+        "session_id": { "type": "string" },
+        "task_id": { "type": "string" },
+        "model_id": { "type": "string" },
+        "annotation": { "$ref": "#/$defs/annotation" },
+        "authority_effect": { "const": "None" },
+        "schema_version": {
+          "const": "omega.antiskill.conversation-episode.v1"
+        },
+        "episode_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "failure_code",
+        "proposed_invariant",
+        "episode_ids",
+        "context_keys",
+        "evidence_refs",
+        "counterexamples",
+        "protected_fields",
+        "activation_kind",
+        "status",
+        "authority_effect",
+        "schema_version",
+        "candidate_id"
+      ],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "failure_code": { "$ref": "#/$defs/identifier" },
+        "proposed_invariant": { "type": "string", "minLength": 1 },
+        "episode_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/digest" },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "context_keys": { "$ref": "#/$defs/uniqueStrings" },
+        "evidence_refs": { "$ref": "#/$defs/uniqueStrings" },
+        "counterexamples": { "$ref": "#/$defs/uniqueStrings" },
+        "protected_fields": { "$ref": "#/$defs/uniqueStrings" },
+        "activation_kind": { "const": "human_review_required" },
+        "status": { "const": "PROPOSED" },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.antiskill.candidate.v1" },
+        "candidate_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "spec_id",
+        "version",
+        "failure_code",
+        "detector_kind",
+        "activation_fields",
+        "repair_kind",
+        "protected_fields",
+        "episode_ids",
+        "context_keys",
+        "evidence_refs",
+        "counterexamples",
+        "evaluation_receipt_ref",
+        "composition_order",
+        "commutes_with",
+        "authority_effect",
+        "schema_version",
+        "spec_digest"
+      ],
+      "properties": {
+        "spec_id": { "$ref": "#/$defs/identifier" },
+        "version": { "type": "integer", "minimum": 1 },
+        "failure_code": { "$ref": "#/$defs/identifier" },
+        "detector_kind": {
+          "enum": [
+            "requires_field",
+            "requires_evidence_for_claim_mode",
+            "requires_nonclaim",
+            "requires_operator_approval"
+          ]
+        },
+        "activation_fields": { "$ref": "#/$defs/uniqueStrings" },
+        "repair_kind": {
+          "enum": [
+            "add_evidence_request",
+            "add_nonclaim",
+            "populate_typed_field",
+            "request_operator_approval",
+            "finding_only"
+          ]
+        },
+        "protected_fields": { "$ref": "#/$defs/uniqueStrings" },
+        "episode_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/digest" },
+          "uniqueItems": true,
+          "minItems": 2
+        },
+        "context_keys": {
+          "allOf": [
+            { "$ref": "#/$defs/uniqueStrings" },
+            { "minItems": 2 }
+          ]
+        },
+        "evidence_refs": { "$ref": "#/$defs/uniqueStrings" },
+        "counterexamples": { "$ref": "#/$defs/uniqueStrings" },
+        "evaluation_receipt_ref": { "$ref": "#/$defs/digest" },
+        "composition_order": {
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "commutes_with": { "$ref": "#/$defs/uniqueStrings" },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.antiskill.spec.v1" },
+        "spec_digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "specs",
+        "authority_effect",
+        "schema_version",
+        "registry_id"
+      ],
+      "properties": {
+        "specs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/spec" },
+          "maxItems": 256
+        },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.antiskill.registry.v1" },
+        "registry_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "evaluationCaseResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "case_digest",
+        "expected_codes",
+        "forbidden_codes",
+        "observed_codes",
+        "negative_control",
+        "passed",
+        "authority_effect",
+        "schema_version",
+        "result_id"
+      ],
+      "properties": {
+        "case_id": { "$ref": "#/$defs/identifier" },
+        "case_digest": { "$ref": "#/$defs/digest" },
+        "expected_codes": { "$ref": "#/$defs/uniqueStrings" },
+        "forbidden_codes": { "$ref": "#/$defs/uniqueStrings" },
+        "observed_codes": { "$ref": "#/$defs/uniqueStrings" },
+        "negative_control": { "type": "boolean" },
+        "passed": { "type": "boolean" },
+        "authority_effect": { "const": "None" },
+        "schema_version": {
+          "const": "omega.antiskill.evaluation-case-result.v1"
+        },
+        "result_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "evaluationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fixture_digest",
+        "proposal_fixture_digest",
+        "registry_id",
+        "policy_digest",
+        "implementation_digest",
+        "case_results",
+        "outcome",
+        "authority_effect",
+        "schema_version",
+        "receipt_id"
+      ],
+      "properties": {
+        "fixture_digest": { "$ref": "#/$defs/digest" },
+        "proposal_fixture_digest": { "$ref": "#/$defs/digest" },
+        "registry_id": { "$ref": "#/$defs/digest" },
+        "policy_digest": { "$ref": "#/$defs/digest" },
+        "implementation_digest": { "$ref": "#/$defs/digest" },
+        "case_results": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evaluationCaseResult" },
+          "minItems": 1
+        },
+        "outcome": { "enum": ["COMPUTED_PASS", "COMPUTED_FAIL"] },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.antiskill.evaluation-receipt.v1" },
+        "receipt_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "typedPrompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_text",
+        "source_digest",
+        "objective",
+        "claim_mode",
+        "in_scope",
+        "out_of_scope",
+        "inputs",
+        "constraints",
+        "acceptance_criteria",
+        "evidence_requirements",
+        "requested_effects",
+        "candidate_budget",
+        "operation_budget",
+        "nonclaims",
+        "unresolved_questions",
+        "proposed_prompt",
+        "authority_effect",
+        "schema_version",
+        "prompt_id"
+      ],
+      "properties": {
+        "original_text": { "type": "string" },
+        "source_digest": { "$ref": "#/$defs/digest" },
+        "objective": { "type": "string" },
+        "claim_mode": { "enum": ["none", "investigate", "verify", "prove"] },
+        "in_scope": { "$ref": "#/$defs/uniqueStrings" },
+        "out_of_scope": { "$ref": "#/$defs/uniqueStrings" },
+        "inputs": { "$ref": "#/$defs/uniqueStrings" },
+        "constraints": { "$ref": "#/$defs/uniqueStrings" },
+        "acceptance_criteria": { "$ref": "#/$defs/uniqueStrings" },
+        "evidence_requirements": { "$ref": "#/$defs/uniqueStrings" },
+        "requested_effects": { "$ref": "#/$defs/uniqueStrings" },
+        "candidate_budget": { "type": "integer", "minimum": 1, "maximum": 32 },
+        "operation_budget": { "type": "integer", "minimum": 1, "maximum": 4096 },
+        "nonclaims": { "$ref": "#/$defs/uniqueStrings" },
+        "unresolved_questions": { "$ref": "#/$defs/uniqueStrings" },
+        "proposed_prompt": { "type": "string" },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.prompt.typed.v1" },
+        "prompt_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "promptFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "severity",
+        "field",
+        "message",
+        "repair_hint",
+        "detector_ref",
+        "authority_effect",
+        "schema_version",
+        "finding_id"
+      ],
+      "properties": {
+        "code": { "$ref": "#/$defs/identifier" },
+        "severity": { "enum": ["ERROR", "WARNING", "INFO"] },
+        "field": { "$ref": "#/$defs/identifier" },
+        "message": { "type": "string", "minLength": 1 },
+        "repair_hint": { "type": "string", "minLength": 1 },
+        "detector_ref": { "$ref": "#/$defs/identifier" },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.prompt.finding.v1" },
+        "finding_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "promptReviewReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_digest",
+        "prompt_id",
+        "registry_id",
+        "policy_digest",
+        "implementation_digest",
+        "finding_ids",
+        "outcome",
+        "protected_fields_ok",
+        "authority_effect",
+        "schema_version",
+        "receipt_id"
+      ],
+      "properties": {
+        "source_digest": { "$ref": "#/$defs/digest" },
+        "prompt_id": { "$ref": "#/$defs/digest" },
+        "registry_id": { "$ref": "#/$defs/digest" },
+        "policy_digest": { "$ref": "#/$defs/digest" },
+        "implementation_digest": { "$ref": "#/$defs/digest" },
+        "finding_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/digest" },
+          "uniqueItems": true,
+          "maxItems": 256
+        },
+        "outcome": {
+          "enum": ["READY_FOR_OPERATOR_REVIEW", "NEEDS_CLARIFICATION"]
+        },
+        "protected_fields_ok": { "type": "boolean" },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.prompt.review-receipt.v1" },
+        "receipt_id": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "promptReviewBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt", "findings", "receipt", "registry", "schema_version"],
+      "properties": {
+        "prompt": { "$ref": "#/$defs/typedPrompt" },
+        "findings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/promptFinding" },
+          "maxItems": 256
+        },
+        "receipt": { "$ref": "#/$defs/promptReviewReceipt" },
+        "registry": { "$ref": "#/$defs/registry" },
+        "schema_version": { "const": "omega.prompt.review-bundle.v1" }
+      }
+    },
+    "approvedPrompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prompt_id",
+        "review_receipt_id",
+        "approved_by",
+        "objective",
+        "claim_mode",
+        "rendered_prompt",
+        "rendered_digest",
+        "candidate_budget",
+        "operation_budget",
+        "requested_effects",
+        "authority_effect",
+        "schema_version",
+        "approved_prompt_id"
+      ],
+      "properties": {
+        "prompt_id": { "$ref": "#/$defs/digest" },
+        "review_receipt_id": { "$ref": "#/$defs/digest" },
+        "approved_by": { "$ref": "#/$defs/identifier" },
+        "objective": { "type": "string", "minLength": 1 },
+        "claim_mode": { "enum": ["none", "investigate", "verify", "prove"] },
+        "rendered_prompt": { "type": "string", "minLength": 1 },
+        "rendered_digest": { "$ref": "#/$defs/digest" },
+        "candidate_budget": { "type": "integer", "minimum": 1, "maximum": 32 },
+        "operation_budget": { "type": "integer", "minimum": 1, "maximum": 4096 },
+        "requested_effects": { "$ref": "#/$defs/uniqueStrings" },
+        "authority_effect": { "const": "None" },
+        "schema_version": { "const": "omega.prompt.approved.v1" },
+        "approved_prompt_id": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

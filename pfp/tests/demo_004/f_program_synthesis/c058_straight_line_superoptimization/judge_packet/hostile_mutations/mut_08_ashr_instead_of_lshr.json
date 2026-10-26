@@ -1,0 +1,40 @@
+{
+  "mutation_id": "mut_08_ashr_instead_of_lshr",
+  "description": "Uses ashr where shl was required",
+  "case": {
+    "case_id": "c058_b10_shl_combine",
+    "width": 8,
+    "inputs": [
+      "x"
+    ],
+    "ops": [
+      [
+        "t1",
+        "shl",
+        "x",
+        1
+      ],
+      [
+        "t2",
+        "shl",
+        "t1",
+        1
+      ]
+    ],
+    "out": "t2",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b10_shl_combine",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "t1",
+        "ashr",
+        "x",
+        5
+      ]
+    ],
+    "out": "t1"
+  }
+}

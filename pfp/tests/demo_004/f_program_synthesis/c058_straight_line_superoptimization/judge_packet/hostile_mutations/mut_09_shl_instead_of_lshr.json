@@ -1,0 +1,40 @@
+{
+  "mutation_id": "mut_09_shl_instead_of_lshr",
+  "description": "Uses left shift instead of right shift",
+  "case": {
+    "case_id": "c058_b15_ashr_sign",
+    "width": 8,
+    "inputs": [
+      "x"
+    ],
+    "ops": [
+      [
+        "t1",
+        "ashr",
+        "x",
+        3
+      ],
+      [
+        "t2",
+        "ashr",
+        "t1",
+        4
+      ]
+    ],
+    "out": "t2",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b15_ashr_sign",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "res",
+        "shl",
+        "x",
+        7
+      ]
+    ],
+    "out": "res"
+  }
+}

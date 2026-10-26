@@ -1,0 +1,137 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.6nf
+  name: Sixth Normal Form
+  short_name: 6NF
+  version: v0
+  theory_status: established
+  contract_status: active
+  verification_status: executable
+  family: shape
+  status: active
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a non-trivial join dependency, including independent properties
+    of one key that can be projected apart and joined back
+  preserves_invariant: every join dependency that holds is trivial
+  protected_skeleton:
+  - candidate_keys
+  - irreducible_attributes
+  - trivial_join_dependencies
+  erased_structure: []
+  non_claims:
+  - does not imply practical performance optimality for wide OLTP tables
+  - does not require every production schema to decompose to 6NF
+  - does not certify runtime repair without cochain substrate
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    authors: C. J. Date, Hugh Darwen, and Nikos A. Lorentzos
+    year: 2002
+    work: Temporal Data and the Relational Model
+  formal_statement: 'A relvar is in sixth normal form when it satisfies no non-trivial
+    join dependency. Equivalently, every lossless decomposition has a component whose
+    heading is the whole heading. The form is aimed at independent properties of one
+    key, including properties that vary over distinct temporal intervals.
+
+    '
+  binary_fact_shape:
+    statement: 'A heading that is one candidate key plus a single attribute outside
+      that key satisfies the form when the key constraint is the only constraint,
+      because there is no second attribute with which to build a non-trivial join
+      dependency.
+
+      '
+    defines_membership: false
+    note: 'A wider heading can still satisfy the form when a further constraint blocks
+      every non-trivial join dependency. An all-key heading can still fail the form
+      when a non-trivial join dependency holds among the key attributes.
+
+      '
+  quadrilateral:
+    qualifies_as_true_normal_form: true
+    anomaly_exclusion: 'Independent facts, including distinct interval properties
+      of one key, that a non-trivial join dependency can separate.
+
+      '
+    lossless_join:
+      status: trivial_decompositions_only
+      statement: 'The only lossless decompositions are the trivial ones. There is
+        no non-trivial project-join reconstruction because no non-trivial join dependency
+        holds.
+
+        '
+    dependency_preservation:
+      status: not_applicable
+      statement: 'There is no non-trivial decomposition across which a dependency
+        would have to be preserved. Constraints that are not join dependencies are
+        outside this form. Domain-key normal form is the separate test for those constraints.
+
+        '
+    syntactic_decision:
+      status: schema_decidable_for_a_finite_jd_cover
+      statement: 'Decided by showing that every join dependency implied by the declared
+        cover is trivial. One stored body is not the decider. The shape "key plus
+        one other attribute" is not a substitute for that check.
+
+        '
+  chain:
+    requires:
+    - 5NF
+    implied_by: []
+declarations_required:
+- heading
+- candidate_keys
+- join_dependencies: asserted that all JDs are trivial
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- every join dependency that holds has one component equal to the whole heading
+- a non-trivial join dependency terminalizes as a decomposition obligation
+- key-plus-one-attribute shape is recorded only as a sufficient pattern under a pure
+  key constraint, and it is not accepted as the membership test
+proof_obligations:
+- id: 6nf.trivial_jd_characterization
+  status: theorem_shaped
+  ref: coda_all_universe/mssn_sn_tower/definitions.md
+  statement: 'A relvar is in sixth normal form when every join dependency it satisfies
+    is trivial.
+
+    '
+terminal_routes:
+- Accept
+- RejectNonTrivialJoinDependency
+- RequireIrreducibleFactDecomposition
+terminal_route_map:
+  Accept: Preserve
+  RejectNonTrivialJoinDependency: Reject
+  RequireIrreducibleFactDecomposition: Decompose
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: relvar contains candidate key and two non-key attributes that can be nonloss
+    decomposed into two separate 6NF relvars
+  diagnosis: presence of non-trivial join dependency violating 6NF
+  terminal: RequireIrreducibleFactDecomposition
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 2.1 Classical Relational Normal Forms
+references:
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md

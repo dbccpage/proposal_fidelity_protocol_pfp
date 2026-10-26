@@ -1,0 +1,90 @@
+# OEOP operad type registry, family 4 of 6: signature families, polarity and routes.
+# AuthorityEffect: None.
+schema_version: omega.oeop.operad-types.v1
+family: signature_families
+authority_effect: None
+types:
+  - id: contractive_meta_operad
+    description: Meta skills named meta-<source colours>--<target colour>--contractive.
+    canonical:
+      status: SETTLED
+      closed: true
+      values: [meta-code-audit--code--contractive, meta-contract-audit--contract--contractive,
+               meta-contract-code--audit--contractive, meta-paper--audit--contractive,
+               meta-paper--receipt--contractive, meta-proof-code--proof--contractive,
+               meta-state--receipt--contractive, meta-state--state--contractive]
+    sources:
+      - skills: '^meta-.*--contractive$'
+        values: [meta-code-audit--code--contractive, meta-contract-audit--contract--contractive,
+                 meta-contract-code--audit--contractive, meta-paper--audit--contractive,
+                 meta-paper--receipt--contractive, meta-proof-code--proof--contractive,
+                 meta-state--receipt--contractive, meta-state--state--contractive]
+  - id: contractive_meta_operad_residual
+    description: The residual effect the contractive meta operads declare.
+    canonical:
+      status: PROPOSED
+      closed: true
+      values: [contractive]
+      decision: >-
+        All eight skills named --contractive declare operad_residual unknown. Proposed: once
+        residual_effect is settled, set operad_residual to contractive in these eight SKILL.md
+        files, or drop the suffix from the names.
+    sources:
+      - skills: '^meta-.*--contractive$'
+        field: operad_residual
+        values: [unknown]
+  - id: x_to_y_verifier
+    description: Meta skills named meta-<domain>-<x>-to-<y>-verifier; the name gives only the first source colour.
+    canonical:
+      status: SETTLED
+      closed: true
+      values: [meta-atlas-state-to-state-verifier, meta-auto-paper-to-paper-verifier,
+               meta-auto-state-to-receipt-verifier, meta-blackrod-contract-to-audit-verifier,
+               meta-glossa-proof-to-proof-verifier, meta-goo-ledger-to-ledger-verifier,
+               meta-goo-paper-to-paper-verifier, meta-goo-proof-to-audit-verifier,
+               meta-kybernesis-paper-to-post-verifier, meta-proof-to-paper-verifier,
+               meta-techne-code-to-audit-verifier, meta-techne-code-to-code-verifier]
+    sources:
+      - skills: '^meta-.*-to-.*-verifier$'
+        values: [meta-atlas-state-to-state-verifier, meta-auto-paper-to-paper-verifier,
+                 meta-auto-state-to-receipt-verifier, meta-blackrod-contract-to-audit-verifier,
+                 meta-glossa-proof-to-proof-verifier, meta-goo-ledger-to-ledger-verifier,
+                 meta-goo-paper-to-paper-verifier, meta-goo-proof-to-audit-verifier,
+                 meta-kybernesis-paper-to-post-verifier, meta-proof-to-paper-verifier,
+                 meta-techne-code-to-audit-verifier, meta-techne-code-to-code-verifier]
+  - id: pfp_polarity
+    description: Polarity of a PFP operad morphism.
+    canonical: {status: SETTLED, closed: true, values: [CONSTRUCTIVE, INTERROGATIVE, CORRECTIVE, GATE]}
+    note: >-
+      PolarizedOperadTriad holds sub-operads for constructive, interrogative and corrective
+      only. GATE morphisms have no sub-operad there, so whether gates belong in the triad is an
+      open design question.
+    sources:
+      - python: omega_engine_pfp.domain.operad.polarity:Polarity
+        values: [CONSTRUCTIVE, INTERROGATIVE, CORRECTIVE, GATE]
+  - id: polarity_pair_provenance
+    description: How a declared constructive and adversarial skill pair was established.
+    canonical: {status: SETTLED, closed: true, values: [declared, inferred]}
+    sources:
+      - data: omega_engine_operads/skill_operad/yaml/polarity_pairs.yaml
+        select: pairs.*.provenance
+        mode: distinct
+        values: [declared, inferred]
+  - id: resolver_route
+    description: Keyword routes from a request to a shared contract or a code gate.
+    canonical:
+      status: SETTLED
+      closed: true
+      values: [historical_pr_immunity, oe010_dda, six_host_parity, coda_gtla_paper, test_quality,
+               canonical_value_validation, append_only_log_integrity, pipeline_exit_code, formal_lean,
+               skill_budget, knowledge_parity_gate, skill_name_verify, rule_gate]
+    sources:
+      - data: omega_engine_operads/skill_operad/yaml/routes.yaml
+        select: shared_contracts.*.id
+        role: part
+        values: [historical_pr_immunity, oe010_dda, six_host_parity, coda_gtla_paper, test_quality,
+                 canonical_value_validation, append_only_log_integrity, pipeline_exit_code, formal_lean]
+      - data: omega_engine_operads/skill_operad/yaml/routes.yaml
+        select: code_gates.*.id
+        role: part
+        values: [skill_budget, knowledge_parity_gate, skill_name_verify, rule_gate]

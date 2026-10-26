@@ -1,0 +1,2925 @@
+{
+  "colours": {
+    "Audit": "Symmetry audit, red-team diagnostic, compliance report, or defect escalation",
+    "Code": "Rust/Python implementation, AST, solver module, or Pydantic schema",
+    "Contract": "Nomos governance contract, prime rule YAML, or API boundary specification",
+    "Diagram": "DIME figure, quick-start card, AST graph, or visualization artifact",
+    "Ledger": "Claim queue row, refusal store, hypothesis tree, or issue register entry",
+    "Paper": "OEARS paper package, LaTeX source, Pandoc AST, or claim ledger",
+    "Post": "Public math post, Glossa dialect draft, or forum cadence item",
+    "Proof": "Lean 4 formal proof term, math derivation, or step-truth assertion",
+    "Receipt": "Evidence receipt, CI report, GTLA swarm review, or SHA256 manifest",
+    "State": "Repository, session worktree, git ref, or execution environment state"
+  },
+  "identities": [
+    {
+      "skill_id": "id_audit",
+      "name": "Identity Audit Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Audit"
+      ],
+      "target_colour": "Audit",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_code",
+      "name": "Identity Code Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_contract",
+      "name": "Identity Contract Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Contract"
+      ],
+      "target_colour": "Contract",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_diagram",
+      "name": "Identity Diagram Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Diagram"
+      ],
+      "target_colour": "Diagram",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_ledger",
+      "name": "Identity Ledger Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Ledger"
+      ],
+      "target_colour": "Ledger",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_paper",
+      "name": "Identity Paper Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Paper"
+      ],
+      "target_colour": "Paper",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_post",
+      "name": "Identity Post Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Post"
+      ],
+      "target_colour": "Post",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_proof",
+      "name": "Identity Proof Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Proof"
+      ],
+      "target_colour": "Proof",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_receipt",
+      "name": "Identity Receipt Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "Receipt"
+      ],
+      "target_colour": "Receipt",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    },
+    {
+      "skill_id": "id_state",
+      "name": "Identity State Pass-Through",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "equivariant": true,
+      "agent_scope": [
+        "all"
+      ],
+      "residual_effect": "residual_unknown"
+    }
+  ],
+  "operations": [
+    {
+      "skill_id": "adversarial-receipt-audit",
+      "name": "adversarial-receipt-audit",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Audit receipts adversarially for semantic lies, un-recomputed bindings and evidence that does not match the claim."
+    },
+    {
+      "skill_id": "aletheia-corpus-integrity-ledger",
+      "name": "aletheia-corpus-integrity-ledger",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use before citing a corpus figure. Ledger of duplicate uids, dangling edges and missing domains in basis jsonl corpora."
+    },
+    {
+      "skill_id": "aletheia-phantom-citation-auditor",
+      "name": "aletheia-phantom-citation-auditor",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Ledger"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Use before obeying a cited governance document. Finds docs cited as live authority that do not exist on disk."
+    },
+    {
+      "skill_id": "anomalon-council-convener",
+      "name": "anomalon-council-convener",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Contract"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Manually convene and deliberate Anomalon Councils over Woland Swarm execution diffs and periodic convocations."
+    },
+    {
+      "skill_id": "auto-anti-pattern-lint",
+      "name": "auto-anti-pattern-lint",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Scan repository codebase against the 18 mined anti-patterns across Lean 4, Python, Rust, and SQL."
+    },
+    {
+      "skill_id": "auto-anti-skill",
+      "name": "auto-anti-skill",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Use after repeated model mistakes or corrections. Mines dialogue corrections into candidate anti-skills."
+    },
+    {
+      "skill_id": "auto-anti-skill-search",
+      "name": "auto-anti-skill-search",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Search for failure modes, test candidate skills against canary fixtures, and draft anti-skill specs."
+    },
+    {
+      "skill_id": "auto-code-anti-pattern-hunter",
+      "name": "auto-code-anti-pattern-hunter",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Detect anti-patterns and confirm healthy patterns across Python, Rust, SQL and Lean 4 code."
+    },
+    {
+      "skill_id": "auto-docs",
+      "name": "auto-docs",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Write session documentation into _intelligence/documentation/sessions and re-route LLM comment slop."
+    },
+    {
+      "skill_id": "auto-improve-autoskill",
+      "name": "auto-improve-autoskill",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Audit autoskill proposals for claim classification, smuggling tests, axiom honesty and overclaims; weaken overclaims."
+    },
+    {
+      "skill_id": "auto-learn",
+      "name": "auto-learn",
+      "arity": 4,
+      "source_colours": [
+        "State",
+        "Audit",
+        "Code",
+        "Contract"
+      ],
+      "target_colour": "Contract",
+      "residual_effect": "unknown",
+      "description": "Recall repository lessons, apply a supported correction and recheck the original task in the current IDE."
+    },
+    {
+      "skill_id": "auto-obstruction-hunter",
+      "name": "auto-obstruction-hunter",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Scan code and monographs at levels from sentence to math spine for structural, schema and mathematical non-fits."
+    },
+    {
+      "skill_id": "auto-oe-autop",
+      "name": "auto-oe-autop",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Contract",
+      "residual_effect": "unknown",
+      "description": "Finish each Woland run with scoped IDE learning and practical repairs; run the full estate-maintenance pipeline only when explicitly requested."
+    },
+    {
+      "skill_id": "auto-review-agents",
+      "name": "auto-review-agents",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use when cleaning up agents. Reviews agents for relevance, quality and use; flags unused ones."
+    },
+    {
+      "skill_id": "auto-review-skills",
+      "name": "auto-review-skills",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Review skill quality and usage evidence; propose consolidation or archival via a reviewed PR."
+    },
+    {
+      "skill_id": "auto-skill",
+      "name": "auto-skill",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Run deterministic object-language continuation within declared bounds; replay from genesis, invent no new goals."
+    },
+    {
+      "skill_id": "auto-suggest-new-skills",
+      "name": "auto-suggest-new-skills",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Audit"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Suggest new skills from session context, receipts, papers and external repos; evaluate and admit them to the register."
+    },
+    {
+      "skill_id": "auto-symmetry-hunter",
+      "name": "auto-symmetry-hunter",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Detect directional residuals and symmetry breaks; score candidate coboundaries by residual drop without picking repairs."
+    },
+    {
+      "skill_id": "blackrod",
+      "name": "blackrod",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Defensive enforcement swarm for attacks on the agent swarm; also strips fake DONE claims and enforces test quality."
+    },
+    {
+      "skill_id": "clean-extraction-dependency-replay",
+      "name": "clean-extraction-dependency-replay",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Reproduce each advertised verification profile from a fresh extraction without the developer's checkout."
+    },
+    {
+      "skill_id": "ddc-code-repair",
+      "name": "ddc-code-repair",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Run one supplied-patch DDC code-repair attempt with fixed local checks and retained evidence."
+    },
+    {
+      "skill_id": "declared-vs-actual-gate",
+      "name": "declared-vs-actual-gate",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Preflight that declared stage binaries and host mirrors exist on disk and cross-host files are byte-identical."
+    },
+    {
+      "skill_id": "dianoia-dime",
+      "name": "dianoia-dime",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Proof"
+      ],
+      "target_colour": "Diagram",
+      "residual_effect": "unknown",
+      "description": "After a paper release, build quick-start cards, one-click launchers, interactive figures and claim notebooks."
+    },
+    {
+      "skill_id": "dianoia-visual-diagram-verifier",
+      "name": "dianoia-visual-diagram-verifier",
+      "arity": 2,
+      "source_colours": [
+        "Diagram",
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Check Mermaid diagrams, SVGs and visual artifacts for syntax, KaTeX formatting and readability before emitting."
+    },
+    {
+      "skill_id": "do-not-synonym-rewrite-protocol-labels",
+      "name": "do-not-synonym-rewrite-protocol-labels",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Contract"
+      ],
+      "target_colour": "Paper",
+      "residual_effect": "unknown",
+      "description": "Editorial vocabulary changes must not rename terminal values, schema fields or other protocol identifiers."
+    },
+    {
+      "skill_id": "episteme-allosteric-cooperativity",
+      "name": "episteme-allosteric-cooperativity",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "State"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Quorum gate that needs several detectors to agree before alarming, so one false positive cannot trigger lockdown."
+    },
+    {
+      "skill_id": "episteme-clonal-affinity-maturation",
+      "name": "episteme-clonal-affinity-maturation",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Code"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Mutate and decay detector rules and anti-skills over time to keep prompt context from bloating."
+    },
+    {
+      "skill_id": "episteme-dossier-basis-provenance",
+      "name": "episteme-dossier-basis-provenance",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "State"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Use before citing a dossier's sources. Resolves dossier concept refs to basis corpus uids; reports unresolved share."
+    },
+    {
+      "skill_id": "episteme-immunological-danger-gate",
+      "name": "episteme-immunological-danger-gate",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Lockdown gate needing both a pattern match and evidence of real damage before acting."
+    },
+    {
+      "skill_id": "episteme-negative-result-register",
+      "name": "episteme-negative-result-register",
+      "arity": 2,
+      "source_colours": [
+        "Audit",
+        "Ledger"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Use after abandoning an approach. Appends what was tried, what killed it and the witness, to stop re-proposals."
+    },
+    {
+      "skill_id": "episteme-thymus-negative-selection",
+      "name": "episteme-thymus-negative-selection",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Test candidate anti-skills and detector rules against a sealed panel of clean code and proofs; drop self-reactive ones."
+    },
+    {
+      "skill_id": "ext-anthropics-mcp-builder",
+      "name": "ext-anthropics-mcp-builder",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-anthropics-mcp-builder"
+    },
+    {
+      "skill_id": "ext-anthropics-skill-creator",
+      "name": "ext-anthropics-skill-creator",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-anthropics-skill-creator"
+    },
+    {
+      "skill_id": "ext-anthropics-webapp-testing",
+      "name": "ext-anthropics-webapp-testing",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-anthropics-webapp-testing"
+    },
+    {
+      "skill_id": "ext-awesome-claude-playwright-skill",
+      "name": "ext-awesome-claude-playwright-skill",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-awesome-claude-playwright-skill"
+    },
+    {
+      "skill_id": "ext-awesome-claude-trail-of-bits-security-skills",
+      "name": "ext-awesome-claude-trail-of-bits-security-skills",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Contract",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext_awesome_claude_trail_of_bits_security_skills"
+    },
+    {
+      "skill_id": "ext-mattpocock-grill-me",
+      "name": "ext-mattpocock-grill-me",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-mattpocock-grill-me"
+    },
+    {
+      "skill_id": "ext-mattpocock-refactoring-engine",
+      "name": "ext-mattpocock-refactoring-engine",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-mattpocock-refactoring-engine"
+    },
+    {
+      "skill_id": "ext-mattpocock-tdd",
+      "name": "ext-mattpocock-tdd",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-mattpocock-tdd"
+    },
+    {
+      "skill_id": "ext-mattpocock-triage",
+      "name": "ext-mattpocock-triage",
+      "arity": 1,
+      "source_colours": [
+        "Ledger"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Operad operation ext-mattpocock-triage"
+    },
+    {
+      "skill_id": "github",
+      "name": "github",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Use for Git and GitHub work. Commits, pushes, pulls, branches, PRs, PR red-team reviews, git guardrails/safety hooks, conflicts, stash, sync flows."
+    },
+    {
+      "skill_id": "glossa-claim-hygiene-linter",
+      "name": "glossa-claim-hygiene-linter",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Lint PRs, preprints, docstrings and artifacts for hype verbs and replace them with bounded wording."
+    },
+    {
+      "skill_id": "glossa-public-math-dialect-firewall",
+      "name": "glossa-public-math-dialect-firewall",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Strip in-house jargon from public math posts (MO, Zulip, Math.SE, LinkedIn); require standard vocabulary."
+    },
+    {
+      "skill_id": "goo-figure-vector-arithmetic-integrity-gate",
+      "name": "goo-figure-vector-arithmetic-integrity-gate",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check preprint figures show consistent vector arithmetic, match residual equations and pass coordinate tests."
+    },
+    {
+      "skill_id": "goo-lean4-diagnostic-alias-firewall",
+      "name": "goo-lean4-diagnostic-alias-firewall",
+      "arity": 1,
+      "source_colours": [
+        "Proof"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Remove Lean 4 compatibility aliases that conflate diagnostic states with authorization decisions."
+    },
+    {
+      "skill_id": "goo-operational-pipeline-attestation-gate",
+      "name": "goo-operational-pipeline-attestation-gate",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check pipeline outcomes come from real runs, not caller booleans; exact rational guards; certificates verified."
+    },
+    {
+      "skill_id": "goo-pseudometric-separation-claim-gate",
+      "name": "goo-pseudometric-separation-claim-gate",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Audit"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Block point-equality claims from distance zero unless a metric separation axiom is stated."
+    },
+    {
+      "skill_id": "goo-quotient-universal-factor-uniqueness-gate",
+      "name": "goo-quotient-universal-factor-uniqueness-gate",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check quotient models return honest L1 distances, kernel inclusion factorizations and unique quotient factors."
+    },
+    {
+      "skill_id": "goo-simulated-trace-norm-inhabited-projection-gate",
+      "name": "goo-simulated-trace-norm-inhabited-projection-gate",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Audit"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Evaluates simulated trace-norm oblique projections and verifies dual witness certificates on inhabited state spaces."
+    },
+    {
+      "skill_id": "governance-clean-arch",
+      "name": "governance-clean-arch",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Clean Architecture gate. Enforces inward dependency discipline, pure domain sinks, single-root bounded contexts, and zero-facade imports."
+    },
+    {
+      "skill_id": "governance-councils",
+      "name": "governance-councils",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use to convene councils, run deliberation sessions, write agendas and minutes, or apply procurator protocols."
+    },
+    {
+      "skill_id": "governance-exact-solvers",
+      "name": "governance-exact-solvers",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Proof"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Consolidated exact rational arithmetic, discrete Hamiltonian solver, and finite operational closure gate."
+    },
+    {
+      "skill_id": "governance-git-release",
+      "name": "governance-git-release",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Receipt"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Consolidated Git staging safety, changeset shape, CAS atomic storage, and standalone release archive isolation gate."
+    },
+    {
+      "skill_id": "governance-host-parity",
+      "name": "governance-host-parity",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Consolidated agent licensing parity, tracked host garden mirroring atomicity, and sprint governance document gate."
+    },
+    {
+      "skill_id": "governance-intelligence-metabolism",
+      "name": "governance-intelligence-metabolism",
+      "arity": 3,
+      "source_colours": [
+        "State",
+        "Receipt",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Digest source runs, audits, and paper reviews into repository structures with custody receipts."
+    },
+    {
+      "skill_id": "governance-lean4-estate",
+      "name": "governance-lean4-estate",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Consolidated Lean 4 Lake elaboration, axiom honesty, and anti-toy mechanization gate."
+    },
+    {
+      "skill_id": "governance-literature-catalog",
+      "name": "governance-literature-catalog",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Ledger"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Consolidated literature ingestion, YAML spine catalog reconciliation, and hybrid search retrieval gate."
+    },
+    {
+      "skill_id": "governance-pedagogy",
+      "name": "governance-pedagogy",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Paper"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Gate lesson folders (prose, notebook, videos) and learning checks; a folder alone is not evidence of learning."
+    },
+    {
+      "skill_id": "governance-pfp",
+      "name": "governance-pfp",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Paper"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Gate PFP and Symbol Game work: isolated answers, strict schemas, replay custody, budgets, and independent judges."
+    },
+    {
+      "skill_id": "governance-pipeline-attestation",
+      "name": "governance-pipeline-attestation",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Gate for operational pipeline attestation, exact pseudometric separation, probe firewall and receipt replay."
+    },
+    {
+      "skill_id": "governance-research-paper-edit-publish",
+      "name": "governance-research-paper-edit-publish",
+      "arity": 1,
+      "source_colours": [
+        "Paper"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use to scaffold, harmonize, rebuild or republish a research paper in coda_atlas."
+    },
+    {
+      "skill_id": "governance-rop-runtime",
+      "name": "governance-rop-runtime",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Gate for Railway-Oriented Programming Result strictness, probe/defect firewall and atomic trace ledgers."
+    },
+    {
+      "skill_id": "governance-test-isolation",
+      "name": "governance-test-isolation",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Gate for test discipline, Windows basetemp isolation, scoped test tree layout and shadow scans."
+    },
+    {
+      "skill_id": "governance-wdp",
+      "name": "governance-wdp",
+      "arity": 4,
+      "source_colours": [
+        "Code",
+        "Paper",
+        "State",
+        "Proof"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Consolidated Witnessed Difference Programme (WDP) governance gate across CODA 9-layer stack, DDC operations, Algorithm Prime stages, and Research Atlas totality."
+    },
+    {
+      "skill_id": "human-promotion-firewall",
+      "name": "human-promotion-firewall",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Block agent promotion to PROMOTED. Agents emit review packets only; promotion needs explicit human author consent."
+    },
+    {
+      "skill_id": "integration-audit-workflow",
+      "name": "integration-audit-workflow",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Use an audit document as a roadmap. Verify each finding before acting, track stale items, degrade gracefully."
+    },
+    {
+      "skill_id": "intelligence-community-custody",
+      "name": "intelligence-community-custody",
+      "arity": 2,
+      "source_colours": [
+        "Audit",
+        "Receipt"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Validate intelligence agency boundaries, directory structure, and custody manifests."
+    },
+    {
+      "skill_id": "kybernesis-public-post-cadence",
+      "name": "kybernesis-public-post-cadence",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Proof"
+      ],
+      "target_colour": "Post",
+      "residual_effect": "unknown",
+      "description": "Schedule public math posts. One per fortnight by default; no same-day multi-venue dumps; bump policy."
+    },
+    {
+      "skill_id": "kybernesis-yaml-contract-dual-home-sync",
+      "name": "kybernesis-yaml-contract-dual-home-sync",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "State"
+      ],
+      "target_colour": "Contract",
+      "residual_effect": "unknown",
+      "description": "Check contract prompt YAML stays in sync between omega_contracts and universe_anomalonica copies."
+    },
+    {
+      "skill_id": "lean4-axiom-audit",
+      "name": "lean4-axiom-audit",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Proof"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Audit Lean 4 theorems and proof files for non-standard custom axiom injections and sorry claims."
+    },
+    {
+      "skill_id": "lib-arxiv-fulltext-harvester",
+      "name": "lib-arxiv-fulltext-harvester",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Download arXiv full-text PDFs, extract LaTeX equations, and write literature summaries to the library."
+    },
+    {
+      "skill_id": "lib-education-engine",
+      "name": "lib-education-engine",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Orchestrates pedagogical curriculum structure, section checks, and instructional engine workflows."
+    },
+    {
+      "skill_id": "lib-hypothesis-tree",
+      "name": "lib-hypothesis-tree",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Use when iteratively improving an artifact under an evaluator. Hypothesis tree with held-out merge gate."
+    },
+    {
+      "skill_id": "lib-literature-lookup",
+      "name": "lib-literature-lookup",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Use to search papers or verify citations via arXiv, OpenAlex, Crossref, with a receipt. Never invents citations."
+    },
+    {
+      "skill_id": "lib-master-librarian",
+      "name": "lib-master-librarian",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Navigate and search the whole repo (FTS5 plus TF-IDF), govern publication skeletons, claim ledgers and archives."
+    },
+    {
+      "skill_id": "lib-pedagogy-improvement",
+      "name": "lib-pedagogy-improvement",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Educational design and lesson structure improvements, micro-checks, worked examples, and faded scaffolding."
+    },
+    {
+      "skill_id": "lib-scientific-hypothesis-tree",
+      "name": "lib-scientific-hypothesis-tree",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Generate hypotheses, refine them as a tree, and evaluate candidates with a held-out merge gate."
+    },
+    {
+      "skill_id": "lib-skill-admission-hygiene",
+      "name": "lib-skill-admission-hygiene",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Use when adding or reviewing skills. Scans packaging for version, authority ceiling, secrets and curl-pipe-sh."
+    },
+    {
+      "skill_id": "lib-verification-loop",
+      "name": "lib-verification-loop",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Verification loop for library documents, ensuring factual accuracy and test consistency."
+    },
+    {
+      "skill_id": "logos-operad-registry-coherence",
+      "name": "logos-operad-registry-coherence",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use before registering a skill. Checks frontmatter, operad signature, capability slices and prose agree."
+    },
+    {
+      "skill_id": "meta-atlas-state-to-state-verifier",
+      "name": "meta-atlas-state-to-state-verifier",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Check coda_atlas package layout, lakefiles, notebooks and sub-package boundaries."
+    },
+    {
+      "skill_id": "meta-auto-paper-to-paper-verifier",
+      "name": "meta-auto-paper-to-paper-verifier",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Audit"
+      ],
+      "target_colour": "Paper",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Paper, Audit) -> Paper applying audit remediations to research paper manuscripts and claim tables."
+    },
+    {
+      "skill_id": "meta-auto-state-to-receipt-verifier",
+      "name": "meta-auto-state-to-receipt-verifier",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Validate worktree state against audit findings and emit an evidence receipt."
+    },
+    {
+      "skill_id": "meta-blackrod-contract-to-audit-verifier",
+      "name": "meta-blackrod-contract-to-audit-verifier",
+      "arity": 1,
+      "source_colours": [
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Contract -> Audit verifying Nomos governance contracts against blackrod enforcer standards."
+    },
+    {
+      "skill_id": "meta-code-audit--code--contractive",
+      "name": "meta-code-audit--code--contractive",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Code, Audit) -> Code applying code audit findings to remediate Python/Rust source files contractively."
+    },
+    {
+      "skill_id": "meta-contract-audit--contract--contractive",
+      "name": "meta-contract-audit--contract--contractive",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Audit"
+      ],
+      "target_colour": "Contract",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Contract, Audit) -> Contract refining Nomos contracts to resolve ambiguities found in audit reports."
+    },
+    {
+      "skill_id": "meta-contract-code--audit--contractive",
+      "name": "meta-contract-code--audit--contractive",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Contract, Code) -> Audit verifying code implementations against contract boundary specifications."
+    },
+    {
+      "skill_id": "meta-dda-dag-emitter",
+      "name": "meta-dda-dag-emitter",
+      "arity": 1,
+      "source_colours": [
+        "Receipt"
+      ],
+      "target_colour": "Diagram",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Receipt -> Diagram parsing DDA execution receipts and emitting directed acyclic graph visualizations."
+    },
+    {
+      "skill_id": "meta-glossa-proof-to-proof-verifier",
+      "name": "meta-glossa-proof-to-proof-verifier",
+      "arity": 1,
+      "source_colours": [
+        "Proof"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Proof -> Proof auditing Lean 4 proof terms against classical math dialect rules, stripping house jargon."
+    },
+    {
+      "skill_id": "meta-goo-ledger-to-ledger-verifier",
+      "name": "meta-goo-ledger-to-ledger-verifier",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Reconcile a claim ledger against its paper text and check claim IDs match one to one."
+    },
+    {
+      "skill_id": "meta-goo-paper-to-paper-verifier",
+      "name": "meta-goo-paper-to-paper-verifier",
+      "arity": 1,
+      "source_colours": [
+        "Paper"
+      ],
+      "target_colour": "Paper",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Paper -> Paper verifying research paper deposit envelopes and canonical structures."
+    },
+    {
+      "skill_id": "meta-goo-proof-to-audit-verifier",
+      "name": "meta-goo-proof-to-audit-verifier",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Proof, Code) -> Audit comparing Lean 4 proof models with test suites for semantic parity."
+    },
+    {
+      "skill_id": "meta-kybernesis-paper-to-post-verifier",
+      "name": "meta-kybernesis-paper-to-post-verifier",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Proof"
+      ],
+      "target_colour": "Post",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Paper, Proof) -> Post synthesizing public math communications from paper claims and formal proofs."
+    },
+    {
+      "skill_id": "meta-law-contract-enforcer",
+      "name": "meta-law-contract-enforcer",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Audit code for compliance with Nomos law contracts."
+    },
+    {
+      "skill_id": "meta-no-comments",
+      "name": "meta-no-comments",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Strip inline comments from code, keeping docstrings and test files intact."
+    },
+    {
+      "skill_id": "meta-operad-verifier",
+      "name": "meta-operad-verifier",
+      "arity": 0,
+      "source_colours": [],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Shared engine and catalog for the meta operad operations. Colour matching, placement law and residual evidence bar."
+    },
+    {
+      "skill_id": "meta-paper--audit--contractive",
+      "name": "meta-paper--audit--contractive",
+      "arity": 1,
+      "source_colours": [
+        "Paper"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Paper -> Audit auditing research paper packages against lexicon, structure, and claim hygiene rules."
+    },
+    {
+      "skill_id": "meta-paper--receipt--contractive",
+      "name": "meta-paper--receipt--contractive",
+      "arity": 1,
+      "source_colours": [
+        "Paper"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Paper -> Receipt validating paper deposit envelopes, checking SHA256SUMS, and emitting deposit receipts."
+    },
+    {
+      "skill_id": "meta-proof-code--proof--contractive",
+      "name": "meta-proof-code--proof--contractive",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Proof, Code) -> Proof refining Lean 4 formalization using computational witness data from solvers."
+    },
+    {
+      "skill_id": "meta-proof-to-paper-verifier",
+      "name": "meta-proof-to-paper-verifier",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Paper",
+      "residual_effect": "unknown",
+      "description": "Operad morphism (Proof, Code) -> Paper auditing and generating paper claim tables from Lean proofs and test suites."
+    },
+    {
+      "skill_id": "meta-residual-harmonic-optimizer",
+      "name": "meta-residual-harmonic-optimizer",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Derive persistent residual invariants across multi-trial hypothesis optimization loops."
+    },
+    {
+      "skill_id": "meta-state--receipt--contractive",
+      "name": "meta-state--receipt--contractive",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Check git worktree state and mirror parity, then emit an environment receipt."
+    },
+    {
+      "skill_id": "meta-state--state--contractive",
+      "name": "meta-state--state--contractive",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Operad morphism State -> State enforcing clean worktree state, UTF-8 normalization, and cross-host mirror parity."
+    },
+    {
+      "skill_id": "meta-techne-code-to-audit-verifier",
+      "name": "meta-techne-code-to-audit-verifier",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Code -> Audit auditing Python/Rust code for Clean Architecture inward dependencies and layer purity."
+    },
+    {
+      "skill_id": "meta-techne-code-to-code-verifier",
+      "name": "meta-techne-code-to-code-verifier",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Operad morphism Code -> Code deterministically formatting code and standardizing module interfaces."
+    },
+    {
+      "skill_id": "migration-coverage-reconciler",
+      "name": "migration-coverage-reconciler",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Audits and reconciles test coverage and FFI boundary parity between legacy Python implementations and native Rust ports."
+    },
+    {
+      "skill_id": "mimesis-external-forum-voice",
+      "name": "mimesis-external-forum-voice",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Proof"
+      ],
+      "target_colour": "Post",
+      "residual_effect": "unknown",
+      "description": "Shape public math posts for Zulip, MO, Math.SE or LinkedIn. Tone, length, tags, non-crank voice."
+    },
+    {
+      "skill_id": "mub6-manager",
+      "name": "mub6-manager",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Proof"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use for MUB6 repo work. Review and repair MUB6 code and Lean evidence, maintain lessons, prioritize derivations."
+    },
+    {
+      "skill_id": "nomos-law-compliance-hunter",
+      "name": "nomos-law-compliance-hunter",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Scan a directory or file for contract usage; record uncontracted interfaces and violations; propose updates."
+    },
+    {
+      "skill_id": "nomos-law-contract-manager",
+      "name": "nomos-law-contract-manager",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Manage contract specs under omega_contracts; enforce Rust and Python contract parity; refine URN schemas."
+    },
+    {
+      "skill_id": "nous-clinical-formulation-sandbox",
+      "name": "nous-clinical-formulation-sandbox",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Paper",
+      "residual_effect": "unknown",
+      "description": "Four-P case formulation for one fictional dossier actor. Refuses any real person or real model."
+    },
+    {
+      "skill_id": "nous-deliberation-alliance-map",
+      "name": "nous-deliberation-alliance-map",
+      "arity": 2,
+      "source_colours": [
+        "Ledger",
+        "Paper"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Use before convening a simulated council. Reads the council social graph to flag echo chambers and capture risk."
+    },
+    {
+      "skill_id": "oe-monorepo-workspace-reorg-harness",
+      "name": "oe-monorepo-workspace-reorg-harness",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Check monorepo root-path resolution, path hygiene in omega_engine_operations, and UTF-8 subprocess safety on Windows."
+    },
+    {
+      "skill_id": "oeops-evidence-receipt-harness",
+      "name": "oeops-evidence-receipt-harness",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Generate live receipts only at caller-selected paths and keep committed historical outputs under explicit receipt custody."
+    },
+    {
+      "skill_id": "oikonomia-legibility-roi",
+      "name": "oikonomia-legibility-roi",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Decide where and when to post public math (MO, Zulip, Math.SE, LinkedIn), and when not to post."
+    },
+    {
+      "skill_id": "oikonomia-product-manager",
+      "name": "oikonomia-product-manager",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Plan products, epics, sagas and sprints in the product planning office; keep the dev-goals plan register."
+    },
+    {
+      "skill_id": "oikonomia-promote-ooutwire",
+      "name": "oikonomia-promote-ooutwire",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Job search help for the project author. Resumes, cover letters, interview prep, application tracking, branding."
+    },
+    {
+      "skill_id": "omega-engine-product-manager",
+      "name": "omega-engine-product-manager",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Plan products, epics and sprints in the planning office; formal sprints under coda_project_planning/sprints."
+    },
+    {
+      "skill_id": "omega-old-man-red-team",
+      "name": "omega-old-man-red-team",
+      "arity": 5,
+      "source_colours": [
+        "Paper",
+        "Code",
+        "Proof",
+        "Contract",
+        "Receipt"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Read-only red-team audit of code, math, proofs, contracts and papers; emits typed AuditFindingV1 records."
+    },
+    {
+      "skill_id": "omega-presentation-compat-harness",
+      "name": "omega-presentation-compat-harness",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Standardize compat modules and HTTP endpoint stubs for the presentation API, detached from archived crates."
+    },
+    {
+      "skill_id": "omega-prompt",
+      "name": "omega-prompt",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Contract",
+      "residual_effect": "unknown",
+      "description": "Review and type a consequential prompt before sending it (code changes, proof claims, merges, publication)."
+    },
+    {
+      "skill_id": "ooutwire",
+      "name": "ooutwire",
+      "arity": 0,
+      "source_colours": [],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Append-only register of every admitted skill package with confidence and evidence. An audit trail, not a gate."
+    },
+    {
+      "skill_id": "operad-quotient-verifier",
+      "name": "operad-quotient-verifier",
+      "arity": 10,
+      "source_colours": [
+        "State",
+        "Proof",
+        "Paper",
+        "Code",
+        "Contract",
+        "Receipt",
+        "Ledger",
+        "Diagram",
+        "Audit",
+        "Post"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Check multi-input operad morphisms against operad_signature.json, substitution laws and evidence_trace.json."
+    },
+    {
+      "skill_id": "ow-bureau-gauge-breaks",
+      "name": "ow-bureau-gauge-breaks",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Break agent or council deadlock with orthogonal moves and reframing when progress stalls."
+    },
+    {
+      "skill_id": "ow-bureau-interrogation",
+      "name": "ow-bureau-interrogation",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Stress-test agents and claims with Socratic questioning and pressure; evaluate apprentices."
+    },
+    {
+      "skill_id": "ow-bureau-lamplighters",
+      "name": "ow-bureau-lamplighters",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Passively capture agent DAG telemetry and sanitize operational logs into intelligence folders."
+    },
+    {
+      "skill_id": "ow-bureau-mole-hunting",
+      "name": "ow-bureau-mole-hunting",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Detect subtle structural subversion, deception, history revision and sabotage in the repo and agents."
+    },
+    {
+      "skill_id": "ow-directorate-circus",
+      "name": "ow-directorate-circus",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Internal counter-intelligence. Detect prompt-injection leaks and rogue agent behavior; stress-test system limits."
+    },
+    {
+      "skill_id": "ow-directorate-epistemological",
+      "name": "ow-directorate-epistemological",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Challenge assumptions with dialectical philosopher personas; probe epistemic manipulation and disinformation."
+    },
+    {
+      "skill_id": "panep-cs-prof",
+      "name": "panep-cs-prof",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Consult on CS, ML, AI, information theory and the PFP loop; review algorithms, complexity and ML recipes."
+    },
+    {
+      "skill_id": "panep-lean-snippet-export",
+      "name": "panep-lean-snippet-export",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Export a public Lean 4 snippet (80 lines max) from a lake module with hypothesis ledger and axiom report."
+    },
+    {
+      "skill_id": "panep-math-and-physics-prof",
+      "name": "panep-math-and-physics-prof",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "ExactRationalCertificate",
+      "description": "Review mathematical rigor and derivations in math and physics claims; evaluate formal and discrete models."
+    },
+    {
+      "skill_id": "panep-paper-reader",
+      "name": "panep-paper-reader",
+      "arity": 1,
+      "source_colours": [
+        "Paper"
+      ],
+      "target_colour": "Paper",
+      "residual_effect": "unknown",
+      "description": "Read a paper as a critical outside scholar; test whether its claims can be found, refuted or sustained quickly."
+    },
+    {
+      "skill_id": "panep-pedagogy-improvement",
+      "name": "panep-pedagogy-improvement",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Evaluate lessons and preprints against a pedagogy rubric and submit teaching recommendations."
+    },
+    {
+      "skill_id": "panep-relational-algebra-theory",
+      "name": "panep-relational-algebra-theory",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Contract"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Reference on relational algebra, dependency theory and normal forms (1NF to 6NF, BCNF, DKNF)."
+    },
+    {
+      "skill_id": "rgb-public-math-post-gate",
+      "name": "rgb-public-math-post-gate",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Gate a public math post through ROI, Lean export, dialect, claim and voice checks to ACCEPT or REJECT."
+    },
+    {
+      "skill_id": "session",
+      "name": "session",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Use when merging conflicted cppms-fallback stacks. Tree-diff before merge, land unique changes, keep main governance."
+    },
+    {
+      "skill_id": "silent-failure-hunter",
+      "name": "silent-failure-hunter",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Audit Python and Rust for swallowed exceptions, bare excepts and unhandled error fall-through (ROP Result purity)."
+    },
+    {
+      "skill_id": "tdvp-trace-norm-projection",
+      "name": "tdvp-trace-norm-projection",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Verify trace-norm oblique projections onto a tangent space and their dual witness certificates."
+    },
+    {
+      "skill_id": "techne-adversarial-refusal-bypass-auditor",
+      "name": "techne-adversarial-refusal-bypass-auditor",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "diagnostic",
+      "description": "Generate hostile refusal-code permutations across evaluators and assert zero false-pass admissions."
+    },
+    {
+      "skill_id": "techne-ast-anti-mock-and-facade-auditor",
+      "name": "techne-ast-anti-mock-and-facade-auditor",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "diagnostic",
+      "description": "Scan tests via AST for MagicMock/patch, trivial pass-throughs and stub functions faking real implementations."
+    },
+    {
+      "skill_id": "techne-ast-cochain-exactness-enforcer",
+      "name": "techne-ast-cochain-exactness-enforcer",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Measure boundary leakage and cycles in the AST dependency graph to enforce Clean Architecture boundaries."
+    },
+    {
+      "skill_id": "techne-base-swarm-inward-purity-auditor",
+      "name": "techne-base-swarm-inward-purity-auditor",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check omega_engine_woland.stage stays a generic runtime with no character lore or domain-specific branching."
+    },
+    {
+      "skill_id": "techne-cicd-gate-catalog-dual-home-auditor",
+      "name": "techne-cicd-gate-catalog-dual-home-auditor",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check gate_catalog_v3.yaml matches GATE_CATALOG_V3 in code, entrypoints exist, and flag bad git argv patterns."
+    },
+    {
+      "skill_id": "techne-code-contracts-adversary",
+      "name": "techne-code-contracts-adversary",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Adversarial verification of code contracts, generating hostile inputs to uncover boundary vulnerabilities."
+    },
+    {
+      "skill_id": "techne-code-contracts-improver",
+      "name": "techne-code-contracts-improver",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Contract-driven code improvement, hardening interfaces against adversarial boundaries and type defects."
+    },
+    {
+      "skill_id": "techne-code-lean4-anti-patterns",
+      "name": "techne-code-lean4-anti-patterns",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Audit Lean 4 sources for sorry claims, unconstrained Lake rebuilds, and unhedged limit assertions."
+    },
+    {
+      "skill_id": "techne-code-lossless-parser",
+      "name": "techne-code-lossless-parser",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Build byte-exact roundtrip parsers for Markdown, YAML and RFC 8785 canonical JSON.",
+      "equivariant": false,
+      "agent_scope": [
+        "all",
+        "techne-code-soviet-builder",
+        "techne-dev"
+      ]
+    },
+    {
+      "skill_id": "techne-code-math-search-solver-leader",
+      "name": "techne-code-math-search-solver-leader",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Use for solver questions. Pick and orchestrate solver cascades and search; interpret certificates and residuals."
+    },
+    {
+      "skill_id": "techne-code-normal-forms-developer",
+      "name": "techne-code-normal-forms-developer",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Contract"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Implement normal-form engines. Dependency closure, minimal cover, BCNF and 3NF decomposition, repair kernels."
+    },
+    {
+      "skill_id": "techne-code-normal-forms-reviewer",
+      "name": "techne-code-normal-forms-reviewer",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Review normal-form contracts and evaluators for schema compliance, claim hygiene and relational vs change-stream scope."
+    },
+    {
+      "skill_id": "techne-code-normal-forms-tester",
+      "name": "techne-code-normal-forms-tester",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Write falsifying tests for normal forms. Counterexamples for 2NF to 5NF, lossy decomposition traps, CDC perturbations."
+    },
+    {
+      "skill_id": "techne-code-principal-architect",
+      "name": "techne-code-principal-architect",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Audit repo layout and architecture. Dependency rule, domain purity, DDD, ROP, fitness functions, anti-patterns."
+    },
+    {
+      "skill_id": "techne-code-python-anti-patterns",
+      "name": "techne-code-python-anti-patterns",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Audit Python code and diffs for known anti-patterns in data models, type boundaries and runtime behavior."
+    },
+    {
+      "skill_id": "techne-code-python-code-reviewer",
+      "name": "techne-code-python-code-reviewer",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Review Python diffs against contracts, callers, types, refusals and tests. Findings first; green tests are not proof."
+    },
+    {
+      "skill_id": "techne-code-python-principal-developer",
+      "name": "techne-code-python-principal-developer",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Use for Python development in omega_engine_py. Clean Architecture, DDD, Pydantic v2, PyO3, Rust parity audits."
+    },
+    {
+      "skill_id": "techne-code-python-tester",
+      "name": "techne-code-python-tester",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Design and run falsifying Python tests; reject tautological, empty and sys.path-hacked tests."
+    },
+    {
+      "skill_id": "techne-code-rust-anti-patterns",
+      "name": "techne-code-rust-anti-patterns",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Find Rust failure mechanisms with bounded scans, concrete witnesses and targeted repair checks."
+    },
+    {
+      "skill_id": "techne-code-rust-code-reviewer",
+      "name": "techne-code-rust-code-reviewer",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Review Rust APIs, safety boundaries and deterministic outputs with concrete findings and scoped checks."
+    },
+    {
+      "skill_id": "techne-code-rust-principal-developer",
+      "name": "techne-code-rust-principal-developer",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Use to implement Rust sprint stories. Fix compile errors, write meaningful tests, keep evidence."
+    },
+    {
+      "skill_id": "techne-code-rust-tester",
+      "name": "techne-code-rust-tester",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Write and run Rust tests. Integration tests, property tests and exact rational certifiers."
+    },
+    {
+      "skill_id": "techne-code-search-solver-developer",
+      "name": "techne-code-search-solver-developer",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Build solver cascades (ADMM, Krylov, MCTS, beam search) with checked pre and postconditions and certificates."
+    },
+    {
+      "skill_id": "techne-code-soviet-builder",
+      "name": "techne-code-soviet-builder",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Write Rust, Python and SQL unit, integration and e2e tests. State the invariant first; kill each test with a mutation."
+    },
+    {
+      "skill_id": "techne-code-soviet-inspector",
+      "name": "techne-code-soviet-inspector",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Blocking test-quality inspector for Python, Rust and SQL. Architecture rules, ROP, property tests, negative controls."
+    },
+    {
+      "skill_id": "techne-code-sql-anti-patterns",
+      "name": "techne-code-sql-anti-patterns",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Audit SQL queries, schemas and adapters for injection, lock problems, missing indexes and null handling."
+    },
+    {
+      "skill_id": "techne-comment-slop-hunter-killer",
+      "name": "techne-comment-slop-hunter-killer",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "diagnostic",
+      "description": "Find and re-route chatty LLM comments in Python, Rust, SQL and Lean, keeping docstrings and pragmas."
+    },
+    {
+      "skill_id": "techne-commit-reveal-manifest-resealer",
+      "name": "techne-commit-reveal-manifest-resealer",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Paper"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "diagnostic",
+      "description": "Simulate commit-reveal cycles on test and judge manifests, recompute Merkle digests, and emit lossless diffs."
+    },
+    {
+      "skill_id": "techne-contract-docstring-import-boundary-auditor",
+      "name": "techne-contract-docstring-import-boundary-auditor",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check Python contract files put the docstring first, imports at the head, and have no E402 violations."
+    },
+    {
+      "skill_id": "techne-database-architect",
+      "name": "techne-database-architect",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Use for database schema design, query tuning, indexing and migrations across SQL, NoSQL, graph and vector stores."
+    },
+    {
+      "skill_id": "techne-deep-paper-composition-hasher",
+      "name": "techne-deep-paper-composition-hasher",
+      "arity": 3,
+      "source_colours": [
+        "Paper",
+        "Code",
+        "Proof"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Extract Markdown formulas and prose claims, hash their normalized text, and record a TeX match only when that digest is equal. PDF text presence and zip membership are separate checks."
+    },
+    {
+      "skill_id": "techne-docs-lint-hunter-killer",
+      "name": "techne-docs-lint-hunter-killer",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Fix markdown lint errors, bad tables, LaTeX delimiters, trailing whitespace and code block syntax."
+    },
+    {
+      "skill_id": "techne-documentation-manager",
+      "name": "techne-documentation-manager",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Keep sprint documents in the canonical layout and coordinate paper hygiene, claim ledgers and change logs."
+    },
+    {
+      "skill_id": "techne-finite-qm-engine-bridge",
+      "name": "techne-finite-qm-engine-bridge",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Convert finite quantum states between exact cyclotomic or rational forms and production density-matrix observables."
+    },
+    {
+      "skill_id": "techne-forensic-pedagogical-parity-auditor",
+      "name": "techne-forensic-pedagogical-parity-auditor",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "diagnostic",
+      "description": "Check lesson prose, Jupyter notebooks and video scripts stay in parity, with no empty learning checks."
+    },
+    {
+      "skill_id": "techne-four-host-parity-verifier",
+      "name": "techne-four-host-parity-verifier",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Historical check that .agents, .claude, .codex and .grok skill trees are byte-identical by SHA-256."
+    },
+    {
+      "skill_id": "techne-front-end-designer-dev",
+      "name": "techne-front-end-designer-dev",
+      "arity": 4,
+      "source_colours": [
+        "State",
+        "Code",
+        "Paper",
+        "Proof"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Use for front-end UI design and web development. React, Tailwind, shadcn/ui, D3 charts, slides, accessibility."
+    },
+    {
+      "skill_id": "techne-generated-artifact-custody-auditor",
+      "name": "techne-generated-artifact-custody-auditor",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check each shipped generated artifact still matches its generator and that a test opens the shipped copy."
+    },
+    {
+      "skill_id": "techne-mutation-evidence-custody",
+      "name": "techne-mutation-evidence-custody",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Define what a mutation claim must ship to count. Target, change, failing tests, byte-identical restore."
+    },
+    {
+      "skill_id": "techne-oeops-evidence-receipt-harness",
+      "name": "techne-oeops-evidence-receipt-harness",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Generate live receipts only at caller-selected paths and keep committed historical outputs under explicit receipt custody."
+    },
+    {
+      "skill_id": "techne-oeos-manager",
+      "name": "techne-oeos-manager",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "State"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "exact",
+      "description": "Use for OEOS kernel and systems work. User-space stability, zero-copy I/O, pure math kernels, CAS storage."
+    },
+    {
+      "skill_id": "techne-oewas-developer",
+      "name": "techne-oewas-developer",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Develop the existing OEOP typed compiler, planar operation bindings and executable falsifiers."
+    },
+    {
+      "skill_id": "techne-operad-swarm-router",
+      "name": "techne-operad-swarm-router",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Find minimal-residual composition paths for multi-agent tasks and check type matching at each handoff."
+    },
+    {
+      "skill_id": "techne-operadic-cemetery-retriever",
+      "name": "techne-operadic-cemetery-retriever",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Ledger"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Retrieve falsified hypotheses and negative witnesses from past retractions so deadlocks do not repeat dead paths."
+    },
+    {
+      "skill_id": "techne-paper-deposit-preflight-gate",
+      "name": "techne-paper-deposit-preflight-gate",
+      "arity": 2,
+      "source_colours": [
+        "Paper",
+        "Contract"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Preflight verification gate for paper deposits, build scripts, rendering parity, path limits, and witness certificates."
+    },
+    {
+      "skill_id": "techne-projector-endomorphism-purity-auditor",
+      "name": "techne-projector-endomorphism-purity-auditor",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check projectors are stateless and idempotent, with no residual math or solver calls inside them."
+    },
+    {
+      "skill_id": "techne-run-tests",
+      "name": "techne-run-tests",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Use to run project tests with coverage, check tests pass, or validate changes."
+    },
+    {
+      "skill_id": "techne-shared-corpus-custodian",
+      "name": "techne-shared-corpus-custodian",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Use when touching _shared or _templates. Checks naming, size budgets, citations, dangling refs and parity."
+    },
+    {
+      "skill_id": "techne-silent-failure-hunter",
+      "name": "techne-silent-failure-hunter",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "diagnostic",
+      "description": "Find swallowed exceptions, naked unwrap and unhandled error fall-through in Python and Rust (ROP Result purity)."
+    },
+    {
+      "skill_id": "techne-software-dev-manager",
+      "name": "techne-software-dev-manager",
+      "arity": 3,
+      "source_colours": [
+        "Code",
+        "State",
+        "Contract"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Enforce Rust and Python parity and Clean Architecture; veto modules with under 95 percent coverage or drift."
+    },
+    {
+      "skill_id": "techne-software-qa-manager",
+      "name": "techne-software-qa-manager",
+      "arity": 3,
+      "source_colours": [
+        "Code",
+        "Audit",
+        "Receipt"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Run the QA gate chain. Test inspector veto, silent-skip detection, docstring audit, red team, repair loop."
+    },
+    {
+      "skill_id": "techne-sprint-devops-review",
+      "name": "techne-sprint-devops-review",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Pre-retro sprint CI gate. local_ci.py, clippy, contract gates, registry integrity, claim IDs, Lean sorry scan."
+    },
+    {
+      "skill_id": "techne-sprint-execution",
+      "name": "techne-sprint-execution",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Orchestrates agile sprint execution, task breakdown, burn-down tracking, and blocker escalation."
+    },
+    {
+      "skill_id": "techne-sprint-manager",
+      "name": "techne-sprint-manager",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Coordinate the sprint lifecycle from planning to briefing with product, QA and specialist skills."
+    },
+    {
+      "skill_id": "techne-sprint-planning",
+      "name": "techne-sprint-planning",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Guides sprint backlog grooming, capacity planning, ticket dependencies, and definition of done alignment."
+    },
+    {
+      "skill_id": "techne-sprint-planning-review",
+      "name": "techne-sprint-planning-review",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Reviews sprint plans against engineering capacity, defect backlogs, and product roadmaps."
+    },
+    {
+      "skill_id": "techne-sprint-retrospective",
+      "name": "techne-sprint-retrospective",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Executes sprint retrospective analysis, root cause audits of blockers, and continuous process improvements."
+    },
+    {
+      "skill_id": "techne-sprint-svp-briefing",
+      "name": "techne-sprint-svp-briefing",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Escalate unmanageable sprint issues, firewall breaches and high risks (above 0.7) to the SVP of Engineering."
+    },
+    {
+      "skill_id": "techne-sprint-vp-briefing",
+      "name": "techne-sprint-vp-briefing",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Brief the VP of Engineering on sprint delivery and risk for the next engineering council meeting."
+    },
+    {
+      "skill_id": "techne-stale-census-detector",
+      "name": "techne-stale-census-detector",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Find tests asserting a live corpus count equals a hard-coded integer, which fail as the estate grows."
+    },
+    {
+      "skill_id": "techne-svp",
+      "name": "techne-svp",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Senior VP Engineering role. Collect escalations above risk 0.7, keep the escalation ledger, brief the council."
+    },
+    {
+      "skill_id": "techne-test-silent-skip-detector",
+      "name": "techne-test-silent-skip-detector",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Flag tests that pass while checking nothing. Bare returns, skips on repo fixtures, tautological asserts."
+    },
+    {
+      "skill_id": "techne-uncalled-module-detector",
+      "name": "techne-uncalled-module-detector",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Find modules whose only importer is their own test, so they have no production caller."
+    },
+    {
+      "skill_id": "techne-unfalsifiable-gate-auditor",
+      "name": "techne-unfalsifiable-gate-auditor",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Find acceptance criteria and gates no mutation could turn red, and report which epics name a falsifier."
+    },
+    {
+      "skill_id": "techne-vp",
+      "name": "techne-vp",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "VP Engineering role. Sprint briefings, engineering risk assessment, delivery checks, escalation above risk 0.7."
+    },
+    {
+      "skill_id": "thanatos-adversarial-receipt-audit",
+      "name": "thanatos-adversarial-receipt-audit",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Audit receipts adversarially for semantic lies, un-recomputed bindings and evidence that does not match the claim."
+    },
+    {
+      "skill_id": "thanatos-aegidion-network-security",
+      "name": "thanatos-aegidion-network-security",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Audit containment and network security; check no ambient network sockets in perception bureaus."
+    },
+    {
+      "skill_id": "thanatos-anti-dime",
+      "name": "thanatos-anti-dime",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Review engagement outputs (quick-start cards, notebooks, figures, claim maps) and cut slop, overclaims and hype."
+    },
+    {
+      "skill_id": "thanatos-append-only-log-truncation-auditor",
+      "name": "thanatos-append-only-log-truncation-auditor",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Ledger"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check append-only ledgers record head entries (count and last digest) and tests reject tail truncation."
+    },
+    {
+      "skill_id": "thanatos-countermeasure-binding-repair",
+      "name": "thanatos-countermeasure-binding-repair",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use when a countermeasure reference must resolve. Closes the gap between corpus defense uids and the registry."
+    },
+    {
+      "skill_id": "thanatos-exploit-indicator-coverage",
+      "name": "thanatos-exploit-indicator-coverage",
+      "arity": 2,
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Use when hardening the cognitive-warfare gate. Measure and close detection indicator coverage of the exploit catalog."
+    },
+    {
+      "skill_id": "thanatos-human-promotion-firewall",
+      "name": "thanatos-human-promotion-firewall",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State",
+      "residual_effect": "unknown",
+      "description": "Block agent promotion to PROMOTED. Agents emit review packets only; promotion needs explicit human author consent."
+    },
+    {
+      "skill_id": "thanatos-intelligence-officer",
+      "name": "thanatos-intelligence-officer",
+      "arity": 1,
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Ledger",
+      "residual_effect": "unknown",
+      "description": "Use to process intelligence. Ingests raw files from the recycle center, updates the manifest, refreshes search."
+    },
+    {
+      "skill_id": "thanatos-nemesis",
+      "name": "thanatos-nemesis",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Sandboxed red-team and security remediation. Contain breaches and audit privilege escalation."
+    },
+    {
+      "skill_id": "thanatos-public-claim-bs-firewall",
+      "name": "thanatos-public-claim-bs-firewall",
+      "arity": 2,
+      "source_colours": [
+        "Contract",
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check public math posts keep Lean toy, mechanized and prose claims distinct; no toy sold as a paper theorem."
+    },
+    {
+      "skill_id": "thanatos-skill-security-spector",
+      "name": "thanatos-skill-security-spector",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Scan external skills, tool definitions and commands for prompt injection, remote exec, sockets and credential leaks."
+    },
+    {
+      "skill_id": "theoria-rgb-public-math-post-gate",
+      "name": "theoria-rgb-public-math-post-gate",
+      "arity": 2,
+      "source_colours": [
+        "Proof",
+        "Code"
+      ],
+      "target_colour": "Proof",
+      "residual_effect": "unknown",
+      "description": "Gate a public math post through ROI, Lean export, dialect, claim and voice checks to ACCEPT or REJECT."
+    },
+    {
+      "skill_id": "woland",
+      "name": "woland",
+      "arity": 5,
+      "source_colours": [
+        "State",
+        "Proof",
+        "Paper",
+        "Code",
+        "Contract"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Repository Single Point of Entry (SPOE) for swarms (save for the paper swarm). Run the mandatory 22-role Retinue through one tested coordinator; every model contribution uses PFP. Use actual host tools, bounded repair and source-bound learning."
+    },
+    {
+      "skill_id": "woland-assigned-outcome-rule",
+      "name": "woland-assigned-outcome-rule",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Count all assigned task outcomes."
+    },
+    {
+      "skill_id": "woland-check-sensitivity-pattern",
+      "name": "woland-check-sensitivity-pattern",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Bind a check."
+    },
+    {
+      "skill_id": "woland-claim-audit",
+      "name": "woland-claim-audit",
+      "arity": 2,
+      "source_colours": [
+        "Audit",
+        "Contract"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Audit a typed claim against declared evidence scope with a replayed Woland falsifier before reporting it."
+    },
+    {
+      "skill_id": "woland-digests",
+      "name": "woland-digests",
+      "arity": 5,
+      "source_colours": [
+        "State",
+        "Paper",
+        "Code",
+        "Contract",
+        "Receipt"
+      ],
+      "target_colour": "Contract",
+      "residual_effect": "unknown",
+      "description": "Digest old files into useful code and agent contracts; carry applicable lessons and unresolved work into the next brief."
+    },
+    {
+      "skill_id": "woland-fixture-transport-block-then-later-seat-blocked",
+      "name": "woland-fixture-transport-block-then-later-seat-blocked",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Hella blocked by FIXTURE_TRANSPORT_UNAVAILABLE predicts a later seat (bezdomny) blocked the same way"
+    },
+    {
+      "skill_id": "woland-free-information-pattern",
+      "name": "woland-free-information-pattern",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Check admitted information before queries."
+    },
+    {
+      "skill_id": "woland-hermetic-task-audit",
+      "name": "woland-hermetic-task-audit",
+      "arity": 2,
+      "source_colours": [
+        "Code",
+        "Audit"
+      ],
+      "target_colour": "Receipt",
+      "residual_effect": "unknown",
+      "description": "Audit Woland runs and teamwork packages for hermetic task execution, zero evidence borrowing across tasks, and strict input schema enforcement."
+    },
+    {
+      "skill_id": "woland-input-coercion-antibody",
+      "name": "woland-input-coercion-antibody",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Use a prompt-attached candidate to review silent structured-input coercion with a benign control."
+    },
+    {
+      "skill_id": "woland-native-gate-unavailable-then-native-gates-fail",
+      "name": "woland-native-gate-unavailable-then-native-gates-fail",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Native gate unavailable (blocked) predicts native gates still not all pass on later re-execution"
+    },
+    {
+      "skill_id": "woland-parser-work-antibody",
+      "name": "woland-parser-work-antibody",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Review exact parser work bounds."
+    },
+    {
+      "skill_id": "woland-parser-work-antipattern",
+      "name": "woland-parser-work-antipattern",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Reject syntax before costly parsing."
+    },
+    {
+      "skill_id": "woland-proof-premise-rule",
+      "name": "woland-proof-premise-rule",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Carry used premises."
+    },
+    {
+      "skill_id": "woland-proof-scope-rule",
+      "name": "woland-proof-scope-rule",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Keep formal conclusions within proved scope."
+    },
+    {
+      "skill_id": "woland-provider-http-400-then-native-gates-fail",
+      "name": "woland-provider-http-400-then-native-gates-fail",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "A seat blocked by PROVIDER_HTTP_400 is followed by native gates that do not all pass."
+    },
+    {
+      "skill_id": "woland-scope-falsifier",
+      "name": "woland-scope-falsifier",
+      "arity": 1,
+      "source_colours": [
+        "Contract"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Detect claim scope exceeding declared evidence scope at PRE_SEAL with a finite executable predicate and benign controls."
+    },
+    {
+      "skill_id": "woland-scoped-reuse-pattern",
+      "name": "woland-scoped-reuse-pattern",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Reuse unchanged evidence with its original scope."
+    },
+    {
+      "skill_id": "woland-silent-coercion-antipattern",
+      "name": "woland-silent-coercion-antipattern",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Find malformed workflow inputs silently wrapped or filtered into valid-looking steps."
+    },
+    {
+      "skill_id": "woland-stale-task-antibody",
+      "name": "woland-stale-task-antibody",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Check learned guards against the current task."
+    },
+    {
+      "skill_id": "woland-strict-input-pattern",
+      "name": "woland-strict-input-pattern",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Code",
+      "residual_effect": "unknown",
+      "description": "Repair structured ingress with explicit typed refusals while preserving valid normalization."
+    },
+    {
+      "skill_id": "woland-typed-answer-rule",
+      "name": "woland-typed-answer-rule",
+      "arity": 1,
+      "source_colours": [
+        "Code"
+      ],
+      "target_colour": "Audit",
+      "residual_effect": "unknown",
+      "description": "Review exact task bindings, full typed answers and nested result snapshots."
+    }
+  ]
+}

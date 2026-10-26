@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "omega.symbol-game.prompt-artifact.v1",
+  "title": "PromptArtifactV1",
+  "description": "Content-addressed prompt artifact for L1 swarm-to-LLM communication. AuthorityEffect: None.",
+  "type": "object",
+  "required": [
+    "prompt_artifact_id",
+    "schema_version",
+    "family",
+    "regime_id",
+    "regime_kind",
+    "prompt_body_sha256",
+    "prompt_body_byte_count",
+    "parent_packet_id",
+    "conversation_root_id",
+    "admitted_constructors",
+    "open_obstructions",
+    "demand_set",
+    "kill_conditions",
+    "required_reply_fields",
+    "objective_typed",
+    "residual_colour",
+    "dual_witness_required",
+    "dual_witness_ref",
+    "authority_effect"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "prompt_artifact_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Content-addressed SHA-256 digest of identity fields."
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "omega.symbol-game.prompt-artifact.v1"
+    },
+    "family": {
+      "type": "string",
+      "const": "prompt_artifact"
+    },
+    "regime_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 of frozen regime definition bytes."
+    },
+    "regime_kind": {
+      "type": "string",
+      "enum": [
+        "branch_u_undecidable",
+        "branch_o_observational",
+        "branch_q_opaque_normalizer",
+        "fence_only",
+        "code_change",
+        "research_claim",
+        "custom_bound"
+      ],
+      "description": "Closed enum of supported regime kinds."
+    },
+    "prompt_body_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Exact SHA-256 digest of UTF-8 prompt body shown to the model."
+    },
+    "prompt_body_byte_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1048576,
+      "description": "Exact byte count of prompt body."
+    },
+    "parent_packet_id": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Optional parent packet digest."
+    },
+    "conversation_root_id": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Optional conversation root digest."
+    },
+    "admitted_constructors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+      },
+      "maxItems": 64,
+      "uniqueItems": true,
+      "description": "Constructors admitted for this turn. Admission != decomposition."
+    },
+    "open_obstructions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ObstructionHintV1" },
+      "maxItems": 256,
+      "description": "Typed obstruction hints included in the prompt."
+    },
+    "demand_set": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/DemandItemV1" },
+      "maxItems": 64,
+      "description": "Demand set forcing specific obligations."
+    },
+    "kill_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+      },
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "description": "Active kill conditions (min 1, sorted unique)."
+    },
+    "required_reply_fields": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "description": "Machine-block fields required in model reply."
+    },
+    "objective_typed": {
+      "$ref": "#/$defs/ObjectiveTypedV1",
+      "description": "Structured typed objective."
+    },
+    "residual_colour": {
+      "type": "string",
+      "enum": ["Open", "Closed", "Exact"],
+      "description": "Residual trichotomy. Exact requires dual witness."
+    },
+    "dual_witness_required": {
+      "type": "boolean",
+      "description": "True if dual witness certification is required."
+    },
+    "dual_witness_ref": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 digest of dual-witness receipt."
+    },
+    "authority_effect": {
+      "type": "string",
+      "const": "None",
+      "description": "Must be None. Prompt artifacts carry no authority."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "residual_colour": { "const": "Exact" } }
+      },
+      "then": {
+        "properties": {
+          "dual_witness_required": { "const": true },
+          "dual_witness_ref": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        },
+        "required": ["dual_witness_ref"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "residual_colour": { "enum": ["Open", "Closed"] } }
+      },
+      "then": {
+        "properties": {
+          "dual_witness_ref": { "type": "null" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "ObstructionHintV1": {
+      "type": "object",
+      "required": [
+        "obstruction_id",
+        "family",
+        "residual_colour",
+        "magnitude",
+        "demand_id",
+        "prior_report_digests"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "obstruction_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        "family": {
+          "type": "string",
+          "enum": [
+            "continuum_from_finite",
+            "synthetic_curve",
+            "lean_toy_as_mechanized",
+            "coverage_as_proof",
+            "dual_witness_missing",
+            "claim_evaluator_required",
+            "ontology_smuggling",
+            "proposal_execution_collapse",
+            "receipt_without_replay",
+            "authority_promotion",
+            "undecidable_treated_as_equal",
+            "opaque_whole_decomposed",
+            "custom_open"
+          ]
+        },
+        "residual_colour": {
+          "type": "string",
+          "enum": ["Open", "Closed", "Exact"]
+        },
+        "magnitude": {
+          "type": ["integer", "null"],
+          "description": "Exact integer or null. A JSON number with a fraction part or an exponent is refused by the native compiler, so it never enters the artifact identity."
+        },
+        "demand_id": {
+          "type": ["string", "null"],
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        "prior_report_digests": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        }
+      }
+    },
+    "DemandItemV1": {
+      "type": "object",
+      "required": [
+        "demand_id",
+        "kind",
+        "note"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "demand_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        "note": {
+          "type": ["string", "null"],
+          "maxLength": 1024
+        }
+      }
+    },
+    "ObjectiveTypedV1": {
+      "type": "object",
+      "required": [
+        "kind",
+        "summary",
+        "target_obstruction_ids",
+        "target_demand_ids"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "target_obstruction_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "target_demand_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        }
+      }
+    }
+  },
+  "$comment": "Forbidden fields: passed, verified, promotion_eligible, trusted. Model never authors prompt artifacts; host compiles them with AuthorityEffect None."
+}

@@ -1,0 +1,178 @@
+# CATEGORICAL OPERAD PROMPT PACKET (COPP-v1)
+# Mathematical Representation: Planar Coloured Operad Over Text Spans
+# AuthorityEffect: None (Candidate Derivation Morphism Only)
+# Standard: Proposal Fidelity Protocol (PFP v0.3), Categorical Multicategory Envelope
+
+schema_id: omega.coda.categorical-operad-prompt.v1
+operad_meta:
+  family_name: categorical_operad_family
+  prompt_id: P_STAR_OPERADIC_ROOT
+  generation_id: 0
+  parents: []
+  authority_effect: None
+  polarity_structure: polarized_triad # O = O^+ \sqcup O^- \sqcup O_repair
+  symmetry: planar                    # Strictly ordered input slots (no argument confusion)
+
+# ---------------------------------------------------------------------------
+# 1. COLOURS (The Types / Objects in the Multicategory)
+# ---------------------------------------------------------------------------
+colours:
+  - id: RawTextSpan
+    carrier: text_interval
+    description: "Atomic substring slice extracted from the incoming prompt container."
+  - id: Equation
+    carrier: "Q[x, y]"
+    description: "Exact rational polynomial equality relation f(x, y) = c."
+  - id: IsolatedVariable
+    carrier: "var_assignment(x, term)"
+    description: "An isolated variable expression derived from an equation."
+  - id: SubstitutionStep
+    carrier: substituted_equality
+    description: "Equation after direct syntactic substitution of an isolated variable."
+  - id: RationalValue
+    carrier: "Q"
+    description: "Exact rational scalar number (no floating-point approximations)."
+  - id: InvariantWitness
+    carrier: boolean_receipt
+    description: "Cryptographic or exact substitution equality receipt (LHS == RHS)."
+  - id: TargetResult
+    carrier: composite_witness
+    description: "Terminal verified composite evaluation."
+
+# ---------------------------------------------------------------------------
+# 2. OPERANDS (The Leaf Spans Extracted from the Prompt Container)
+# ---------------------------------------------------------------------------
+operands:
+  - id: span_eq1
+    colour: RawTextSpan
+    content: "x + 2*y = 5"
+    source_offsets: [0, 11]
+  - id: span_eq2
+    colour: RawTextSpan
+    content: "2*x - y = 0"
+    source_offsets: [12, 23]
+  - id: span_target
+    colour: RawTextSpan
+    content: "x + y"
+    source_offsets: [24, 29]
+
+# ---------------------------------------------------------------------------
+# 3. OPERATORS (Morphisms in O^+ : Forward Generative Transformations / Skills)
+# ---------------------------------------------------------------------------
+operators:
+  - id: parse_equation
+    source_colours: [RawTextSpan]
+    target_colour: Equation
+    arity: 1
+    description: "Parses a raw text span into an immutable algebraic equation over Q."
+
+  - id: isolate_variable
+    source_colours: [Equation]
+    target_colour: IsolatedVariable
+    arity: 1
+    description: "Algebraically isolates one variable in terms of others without modifying equations."
+
+  - id: substitute_and_solve
+    source_colours: [Equation, IsolatedVariable]
+    target_colour: RationalValue
+    arity: 2
+    description: "Substitutes an isolated variable expression into a companion equation and solves for scalar root."
+
+  - id: back_substitute
+    source_colours: [IsolatedVariable, RationalValue]
+    target_colour: RationalValue
+    arity: 2
+    description: "Evaluates an isolated variable expression at a known rational scalar value."
+
+  - id: verify_substitution
+    source_colours: [Equation, RationalValue, RationalValue]
+    target_colour: InvariantWitness
+    arity: 3
+    description: "Substitutes candidate values into original equation and checks LHS == RHS over Q."
+
+  - id: compute_composite_witness
+    source_colours: [RawTextSpan, RationalValue, RationalValue, InvariantWitness, InvariantWitness]
+    target_colour: TargetResult
+    arity: 5
+    description: "Computes final requested composite only after all invariant witness checks evaluate to true."
+
+# ---------------------------------------------------------------------------
+# 4. PARTIAL COMPOSITIONS (The Grafting Tree / Composition Laws \circ_i)
+# ---------------------------------------------------------------------------
+composition_tree:
+  root_operator: compute_composite_witness
+  grafts:
+    - parent: compute_composite_witness
+      slot: 0
+      operand_ref: span_target
+    - parent: compute_composite_witness
+      slot: 1
+      producer_ref: substitute_and_solve
+    - parent: compute_composite_witness
+      slot: 2
+      producer_ref: back_substitute
+    - parent: compute_composite_witness
+      slot: 3
+      producer_ref: verify_substitution_eq1
+    - parent: compute_composite_witness
+      slot: 4
+      producer_ref: verify_substitution_eq2
+
+# ---------------------------------------------------------------------------
+# 5. CONGRUENCE IDEALS (Rules / Boundary Invariants / Quotient Fences I)
+# ---------------------------------------------------------------------------
+congruence_ideals:
+  - id: IDEAL_EXACT_RATIONAL_DOMAIN
+    target_colour: RationalValue
+    assertion: "isinstance(val, Fraction) and not isinstance(val, (float, complex))"
+    on_violation: "null_tree (Refuse float approximation)"
+
+  - id: IDEAL_IMMUTABLE_LEAF_SPANS
+    target_colour: Equation
+    assertion: "equation.tokens == original_span.tokens"
+    on_violation: "null_tree (Refuse coefficient or symbol mutation)"
+
+  - id: IDEAL_WITNESS_PRECEDENCE
+    target_colour: TargetResult
+    assertion: "witness_eq1.is_valid and witness_eq2.is_valid"
+    on_violation: "null_tree (Refuse emitting composite sum without valid substitution witnesses)"
+
+# ---------------------------------------------------------------------------
+# 6. ANNIHILATORS & WITNESSES (Antibodies in O^- : Decoy Hunters & Refutations)
+# ---------------------------------------------------------------------------
+annihilators:
+  - id: AB_FALSE_CERTAINTY_DECOY
+    description: "Catches decoy candidates that yield the target sum but violate original equations."
+    decoy_candidate:
+      bindings: { x: "3", y: "0" }
+      claimed_sum: "3"
+    refutation_witness:
+      equation: "x + 2*y = 5"
+      evaluation: "3 + 2*(0) = 3 != 5"
+      action: "annihilate_tree (rejection confirmed)"
+
+# ---------------------------------------------------------------------------
+# 7. TERMINAL WITNESS SCHEMA (Expected Output)
+# ---------------------------------------------------------------------------
+terminal_schema:
+  type: object
+  required:
+    - intermediate_bindings
+    - invariant_witnesses
+    - target_result
+  properties:
+    intermediate_bindings:
+      type: object
+      description: "Isolated rational values for all variables."
+    invariant_witnesses:
+      type: array
+      items:
+        type: object
+        properties:
+          equation: { type: string }
+          lhs_value: { type: string }
+          rhs_value: { type: string }
+          verified: { type: boolean }
+    target_result:
+      type: string
+      description: "Final evaluated target value."

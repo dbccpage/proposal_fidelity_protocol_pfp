@@ -1,0 +1,241 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "bounded_mask",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "budget": 6,
+          "formula": [
+            "forall",
+            "k",
+            3,
+            [
+              "and",
+              [
+                "neq",
+                "k",
+                1
+              ],
+              [
+                "neq",
+                "k",
+                2
+              ]
+            ]
+          ],
+          "mask": [
+            "forall"
+          ],
+          "value": "false"
+        }
+      },
+      "input_sha256": "sha256:fe10d15f1a18dbf35bb1f6ea502fdbdb8a3bf78839bb4b04e7254c3dac396f70",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "budget": 6,
+          "formula": [
+            "forall",
+            "k",
+            "nat",
+            [
+              "and",
+              [
+                "neq",
+                "k",
+                1
+              ],
+              [
+                "neq",
+                "k",
+                2
+              ]
+            ]
+          ],
+          "mask": [
+            "forall"
+          ],
+          "value": "false"
+        }
+      },
+      "input_sha256": "sha256:61dafb687a871677fc4ed8f579341b570111e04de002d303fdbfa7765df15c03",
+      "native_code": "FAILS:bounded,menu_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_truncated",
+      "input": {
+        "packet": {
+          "budget": 2,
+          "formula": [
+            "forall",
+            "k",
+            1,
+            [
+              "and",
+              [
+                "neq",
+                "k",
+                1
+              ],
+              [
+                "neq",
+                "k",
+                2
+              ]
+            ]
+          ],
+          "mask": [
+            "forall"
+          ],
+          "value": "true"
+        }
+      },
+      "input_sha256": "sha256:cb8c75615f8e74d75513ef5698310543938c1f3e9a324d0a9a43b6810830ff77",
+      "native_code": "FAILS:menu_replayed,value_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_mask",
+      "input": {
+        "packet": {
+          "budget": 6,
+          "formula": [
+            "forall",
+            "k",
+            3,
+            [
+              "and",
+              [
+                "neq",
+                "k",
+                1
+              ],
+              [
+                "neq",
+                "k",
+                2
+              ]
+            ]
+          ],
+          "mask": [
+            "exists"
+          ],
+          "value": "false"
+        }
+      },
+      "input_sha256": "sha256:98aadda3e0ba0e0c3ae344c54d63a73df1ddf3364d17aeb3f7d6235d77f93260",
+      "native_code": "FAILS:mask_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_budget",
+      "input": {
+        "packet": {
+          "budget": 5,
+          "formula": [
+            "forall",
+            "k",
+            3,
+            [
+              "and",
+              [
+                "neq",
+                "k",
+                1
+              ],
+              [
+                "neq",
+                "k",
+                2
+              ]
+            ]
+          ],
+          "mask": [
+            "forall"
+          ],
+          "value": "false"
+        }
+      },
+      "input_sha256": "sha256:8732b8191681b3dc1c45bfd0fe27982be0f7d0136a2c7378e3da11a7ebb026ee",
+      "native_code": "FAILS:within_budget",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "budget": 6,
+          "formula": [
+            "forall",
+            "k",
+            3,
+            [
+              "and",
+              [
+                "neq",
+                "k",
+                1
+              ],
+              [
+                "neq",
+                "k",
+                2
+              ]
+            ]
+          ],
+          "mask": [
+            "forall"
+          ],
+          "value": "true"
+        }
+      },
+      "input_sha256": "sha256:714a9f970880db7922ef038d7df7de996744015b279fae6371520580d13f6ec8",
+      "native_code": "FAILS:value_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "ACCEPTED",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 14,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {
+    "lists_emptied": "needs_target_schema"
+  },
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_014"
+}

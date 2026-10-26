@@ -1,0 +1,31 @@
+intergate_id: "PFP-IG-08-QUARANTINE-RECOVERY"
+name: "Quarantine Recovery & Containment Intergate"
+transition_from: "PFP-11-STRAVINSKY"
+transition_to: "PFP-07-MASTER"
+cognitive_vector: "Quarantine Containment & Safe Re-entry"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A4"
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A8"
+doctrine: |
+  "Quarantine isolates active corruption without erasing history.
+   Re-entry into active pipeline requires exact repair certification and isolated witness proof."
+objective: >
+  Regulate the re-entry of quarantined prompt specifications back into the active Master pipeline.
+  Verify that the defect leading to quarantine has been isolated, repaired, and independently certified.
+fences:
+  - "Exact Repair Requirement: Quarantined prompts must undergo exact repair before re-entry attempt."
+  - "Harm Distinction Fence: Preserve distinct harm classes during quarantine audit (hallucination vs injection vs corruption)."
+  - "Re-entry Witness Fence: Re-entry requires explicit dual-witness receipt (Stravinsky + Master)."
+input_schema:
+  quarantine_cause: "string"
+  exact_repair_certificate_present: "bool"
+  dual_witness_signatures: "list[string]"
+transition_rules: >
+  If exact_repair_certificate_present is true and dual_witness_signatures contains 2 valid signatures,
+  permit re-entry transition to PFP-07-MASTER. Otherwise, retain in Stravinsky quarantine.
+narrowest_defensible_claim: >
+  Requiring exact repair certification and dual-witness sign-off prevents premature release of corrupted prompts from quarantine.
+next_test_needed: >
+  Simulate a quarantined prompt attempting re-entry without a repair certificate and verify Intergate 08 blocks admission.

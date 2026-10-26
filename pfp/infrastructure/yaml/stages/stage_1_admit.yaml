@@ -1,0 +1,66 @@
+stage: 1
+name: admit
+executor: host
+requires: []
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: yaml/mode_2_proofer/stage_1_compression_gate.yaml
+system_prompt: Host admission. The host reads the seed's declaration (finite grammar, equality test, coefficient
+  profile) and admits only when all three are stated. This prompt reaches a model only when the seed carries
+  no declaration, as a repair turn. Separate syntactic equality from domain-specific equivalence. A finite
+  alphabet does not prove its word problem decidable. Your admission status is a proposal for host checking,
+  and a repaired declaration stays a remaining obligation on the receipt.
+user_prompt: The seed has no declaration. Read the preserved seed and profile. State the finite grammar/equality
+  test, explicit interpretations, and missing declarations. Propose admit, refuse, or needs_declaration
+  without inventing inputs.
+response_schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  additionalProperties: false
+  properties:
+    derived_under_policy:
+      const: SPK-001
+    demo_id:
+      const: DEMO_ID_BOUND_BY_HOST
+    stage:
+      const: 1
+    authority_effect:
+      const: None
+    admission_proposal:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          enum:
+          - admit
+          - refuse
+          - needs_declaration
+        grammar:
+          type: string
+        equality_test:
+          type: string
+        coefficient_profile:
+          type: string
+        missing_declarations:
+          type: array
+          items:
+            type: string
+        reason:
+          type: string
+      required:
+      - status
+      - grammar
+      - equality_test
+      - coefficient_profile
+      - missing_declarations
+      - reason
+    should_continue:
+      type: boolean
+  required:
+  - derived_under_policy
+  - demo_id
+  - stage
+  - authority_effect
+  - admission_proposal
+  - should_continue

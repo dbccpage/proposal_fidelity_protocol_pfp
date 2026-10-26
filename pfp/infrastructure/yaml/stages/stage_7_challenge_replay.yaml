@@ -1,0 +1,15 @@
+stage: 7
+name: challenge_replay
+executor: host
+requires:
+- 4
+- 5
+- 6
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: stages/README.md
+system_prompt: Host-only replay. The host runs every Stage 6 witness through the same checker as Stage
+  5 and grades it CONTROL, DISCARDED or OPEN_OBSTRUCTION. A host-accepted witness that is not the Stage
+  4 candidate is an open obstruction, whatever the adversary predicted.
+user_prompt: No model prompt is dispatched at this stage. The host writes the replay record.

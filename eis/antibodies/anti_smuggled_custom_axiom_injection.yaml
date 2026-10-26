@@ -1,0 +1,36 @@
+schema_version: "omega.immune.antibody-spec.v1"
+antibody_id: "ab_smuggled_custom_axiom_injection"
+canonical_name: "Smuggled Custom Axiom Injection"
+failure_class: "mechanization:smuggled_custom_axiom"
+target_pattern: "axiom\\s+(?!propext\\b|Classical\\.choice\\b|Quot\\.sound\\b)\\w+"
+constraint_type: "Restrain"
+operatorizability: "repairable"
+action: "repair"
+severity: "P0"
+pharmacy_status: "candidate"
+authority_effect: "None"
+description: >
+  Refuses Lean 4 mechanization files that introduce synthetic custom axiom declarations
+  outside the admitted standard foundational axioms (propext, Classical.choice, Quot.sound).
+
+governing_invariants:
+  - ".agents/rules/engineering/rl_fail_closed_epistemic_oracle_verification.md"
+  - ".agents/patterns/anti/lean4/AP_LN_004_smuggled_custom_axiom_injection.md"
+
+adversarial_mutation_fixture: |
+  import Mathlib
+
+  axiom tao_fails_conjecture2 : ∀ (n : Nat), n > 6 → False
+
+  theorem matolcsi_weiner_resolved : True := by
+    trivial
+
+repaired_invariant_fixture: |
+  import Mathlib
+
+  theorem matolcsi_weiner_constructive (n : Nat) (h : n > 6) : True := by
+    trivial
+
+detection_mechanisms:
+  regex_triggers:
+    - "axiom\\s+(?!propext\\b|Classical\\.choice\\b|Quot\\.sound\\b)\\w+"

@@ -1,0 +1,108 @@
+{
+  "authority_effect": "None",
+  "carrier": {
+    "commit": "77ad2a7839aff8c9ec9b0204a5e9d6927fe8ae38",
+    "part": "repo_content",
+    "repo": "19L57G1",
+    "sources": [
+      {
+        "blob": "b67cf6899c62c84c8447cd10aeea884a25f80bbf",
+        "path": "code/derivation/represented.py",
+        "sha256": "sha256:1ea752ef021cde06fec1b7e3f451a31d05e3a965820666a954623add6f00fcb3"
+      },
+      {
+        "blob": "",
+        "path": "challenge-evidence:bounded_mask",
+        "sha256": "sha256:61972a096fd7251808d039139d75b79c085206763ee46c32b3efddfc851dec44"
+      }
+    ]
+  },
+  "carrier_refusals": [
+    {
+      "evidence": "bounded_mask:own_neg:FAILS:bounded,menu_replayed",
+      "of": "own_neg"
+    },
+    {
+      "evidence": "bounded_mask:near_truncated:FAILS:menu_replayed,value_replayed",
+      "of": "near_truncated"
+    },
+    {
+      "evidence": "bounded_mask:near_mask:FAILS:mask_replayed",
+      "of": "near_mask"
+    },
+    {
+      "evidence": "bounded_mask:near_budget:FAILS:within_budget",
+      "of": "near_budget"
+    },
+    {
+      "evidence": "bounded_mask:mut:FAILS:value_replayed",
+      "of": "mut"
+    }
+  ],
+  "encoding": {
+    "decoder_path": "payload/bounded_mask/spec.py",
+    "decoder_sha256": "sha256:80f300521381aa2a07ed93c85a7496f0ae4ab0bad503600f8a412cc43135fcdc",
+    "input_schema": "draft:harness.packet.v1"
+  },
+  "lineage": {
+    "model_families": [
+      "claude"
+    ],
+    "note": "the harness and any draft checker share an author and a model family; agreement between them is correlated evidence",
+    "shared_author": true
+  },
+  "loss_ledger_sha256": "sha256:5894cfa91924044d4f99952535bdfb62582f7b019344fc3a4c199c47e1a531ec",
+  "native_claims": [
+    {
+      "id": "incomplete_search_false_alarm",
+      "lean": [
+        {
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ],
+          "name": "Represented.incomplete_search_false_alarm"
+        }
+      ],
+      "status": "PROVED_THEOREM"
+    }
+  ],
+  "non_claims": [
+    "answers a supplied challenge; not a derivation from the seed",
+    "no independent convergence with any outside list is claimed"
+  ],
+  "provenance": {
+    "isolation": "NOT_APPLICABLE",
+    "purity": "NOT_APPLICABLE",
+    "source_blindness": "NOT_BLIND"
+  },
+  "schema": "mssn.witness-bundle.v1",
+  "stage_change": null,
+  "target_input": {
+    "packet": {
+      "budget": 6,
+      "formula": [
+        "forall",
+        "k",
+        3,
+        [
+          "and",
+          [
+            "neq",
+            "k",
+            1
+          ],
+          [
+            "neq",
+            "k",
+            2
+          ]
+        ]
+      ],
+      "mask": [
+        "forall"
+      ],
+      "value": "false"
+    }
+  }
+}

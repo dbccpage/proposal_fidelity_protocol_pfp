@@ -1,0 +1,209 @@
+{
+  "schema": "tranche3_advanced_relational_nfs_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted execution of Tranche 3 test suite covering PNF, SNF, EKNF, 6NF, DKNF, RFNF, ETNF, and algebraic synthesis/decomposition boundary invariants",
+  "created_utc": "2026-09-25T18:20:00Z",
+  "tester_role": "techne-code-normal-forms-tester",
+  "harness_module": "research/mssn_sn_tower/code/python/normal_forms/nf_harness.py",
+  "test_module": "research/mssn_sn_tower/code/python/tests/normal_forms/test_tranche3_advanced_relational_nfs.py",
+  "summary": {
+    "total_tests": 25,
+    "passed": 25,
+    "failed": 0,
+    "errors": 0,
+    "execution_time_seconds": 0.004
+  },
+  "tests_verified": [
+    {
+      "id": 1,
+      "test_function": "test_pnf_nest_unnest_bijectivity",
+      "category": "PNF / NF²",
+      "status": "PASS",
+      "details": "Verified Roth, Korth, & Silberschatz (1988) PNF nest/unnest bijectivity: unnest(nest(R)) = R on partitioned relations."
+    },
+    {
+      "id": 2,
+      "test_function": "test_pnf_non_partitioned_nest_loss",
+      "category": "PNF / NF²",
+      "status": "PASS",
+      "details": "Verified that un-nesting non-partitioned relations loses functional scope and creates ambiguous associations."
+    },
+    {
+      "id": 3,
+      "test_function": "test_snf_set_valued_attribute_atomicity",
+      "category": "SNF",
+      "status": "PASS",
+      "details": "Verified that Set Normal Form treats frozenset values as atomic domain elements under commutative scalar equality in 1NF."
+    },
+    {
+      "id": 4,
+      "test_function": "test_eknf_elementary_key_dependency_admittance",
+      "category": "EKNF",
+      "status": "PASS",
+      "details": "Verified Carlo Zaniolo (1982) EKNF admittance of non-superkey dependencies where dependent belongs to an elementary key."
+    },
+    {
+      "id": 5,
+      "test_function": "test_eknf_strict_separation_from_3nf_and_bcnf",
+      "category": "EKNF",
+      "status": "PASS",
+      "details": "Separated BCNF ⊂ EKNF ⊂ 3NF via enrollment counterexample (satisfies 3NF but fails EKNF) and composite schema (satisfies EKNF but fails BCNF)."
+    },
+    {
+      "id": 6,
+      "test_function": "test_6nf_irreducible_temporal_decomposition",
+      "category": "6NF",
+      "status": "PASS",
+      "details": "Verified Date, Darwen, & Lorentzos (2002) 6NF irreducibility: schema with single non-prime attribute passes while multi-attribute relvars fail."
+    },
+    {
+      "id": 7,
+      "test_function": "test_6nf_temporal_interval_deconstruction",
+      "category": "6NF",
+      "status": "PASS",
+      "details": "Verified decomposition of wide temporal tables into independent 6NF relvars with trivial join dependencies."
+    },
+    {
+      "id": 8,
+      "test_function": "test_6nf_join_reconstruction_temporal_losslessness",
+      "category": "6NF",
+      "status": "PASS",
+      "details": "Verified interval join of 6NF temporal relvars reconstructs the complete historical state losslessly."
+    },
+    {
+      "id": 9,
+      "test_function": "test_dknf_satisfiable_constraint_solvability",
+      "category": "DKNF",
+      "status": "PASS",
+      "details": "Verified Fagin (1981) DKNF holds when all dependencies are consequences of domain types and candidate keys."
+    },
+    {
+      "id": 10,
+      "test_function": "test_dknf_pillar_iv_undecidability_refusal",
+      "category": "DKNF",
+      "status": "PASS",
+      "details": "Verified that non-superkey dependencies trip typed violation refusal under DKNF evaluation."
+    },
+    {
+      "id": 11,
+      "test_function": "test_rfnf_redundancy_free_normal_form_evaluation",
+      "category": "RFNF",
+      "status": "PASS",
+      "details": "Verified Vincent (1999) RFNF asserts no tuple value can be predicted from other tuple values under BCNF."
+    },
+    {
+      "id": 12,
+      "test_function": "test_etnf_essential_tuple_superkey_component_check",
+      "category": "ETNF",
+      "status": "PASS",
+      "details": "Verified Darwen, Date, & Fagin (2012) ETNF join dependency superkey component requirements."
+    },
+    {
+      "id": 13,
+      "test_function": "test_etnf_separation_between_bcnf_and_5nf",
+      "category": "ETNF",
+      "status": "PASS",
+      "details": "Evaluated separating boundaries between BCNF, ETNF, and 5NF on candidate relation instances."
+    },
+    {
+      "id": 14,
+      "test_function": "test_bernstein_3nf_synthesis_algorithm",
+      "category": "Synthesis",
+      "status": "PASS",
+      "details": "Verified Bernstein (1976) 3NF synthesis produces dependency-preserving subschemas with lossless candidate key preservation."
+    },
+    {
+      "id": 15,
+      "test_function": "test_bcnf_decomposition_lossless_tree",
+      "category": "Decomposition",
+      "status": "PASS",
+      "details": "Verified Tsou & Fischer (1982) BCNF decomposition tree recursively isolates violating dependencies into lossless subschemas."
+    },
+    {
+      "id": 16,
+      "test_function": "test_minimal_cover_canonical_uniqueness",
+      "category": "Algebra",
+      "status": "PASS",
+      "details": "Verified minimal cover canonical reduction is invariant under random dependency orderings."
+    },
+    {
+      "id": 17,
+      "test_function": "test_spurious_tuple_detection_under_non_5nf_join",
+      "category": "5NF",
+      "status": "PASS",
+      "details": "Detected and materialized 4 spurious tuples resulting from cyclic 3-way natural join on non-5NF relations."
+    },
+    {
+      "id": 18,
+      "test_function": "test_join_dependency_hypergraph_cyclicity_graham_reduction",
+      "category": "Hypergraphs",
+      "status": "PASS",
+      "details": "Verified Graham-Yu-Ozsoyoglu (GYO) algorithm correctly identifies alpha-acyclic chains and cyclic triangle hypergraphs."
+    },
+    {
+      "id": 19,
+      "test_function": "test_gyo_reduction_step_trace",
+      "category": "Hypergraphs",
+      "status": "PASS",
+      "details": "Verified GYO ear elimination emits deterministic, reproducible step traces."
+    },
+    {
+      "id": 20,
+      "test_function": "test_acyclic_join_dependency_pairwise_consistency",
+      "category": "Hypergraphs",
+      "status": "PASS",
+      "details": "Verified Beeri et al. (1983) property: for alpha-acyclic schemas, pairwise consistency implies global join consistency."
+    },
+    {
+      "id": 21,
+      "test_rissanen_independent_decomposition_check",
+      "category": "Decomposition",
+      "status": "PASS",
+      "details": "Verified Rissanen (1977) decomposition independence condition under functional dependencies."
+    },
+    {
+      "id": 22,
+      "test_function": "test_functional_dependency_project_to_subschema",
+      "category": "FD Projection",
+      "status": "PASS",
+      "details": "Verified exact projection of functional dependencies onto attribute subsets."
+    },
+    {
+      "id": 23,
+      "test_function": "test_candidate_keys_antichain_sperner_bound",
+      "category": "Posets",
+      "status": "PASS",
+      "details": "Verified that candidate key sets never violate Sperner's theorem antichain upper bound C(n, floor(n/2))."
+    },
+    {
+      "id": 24,
+      "test_function": "test_inclusion_dependency_chase_acyclicity",
+      "category": "INDs",
+      "status": "PASS",
+      "details": "Verified inclusion dependency chase cycle detection on referential foreign key chains."
+    },
+    {
+      "id": 25,
+      "test_function": "test_foreign_key_referential_integrity_normal_form",
+      "category": "Relational",
+      "status": "PASS",
+      "details": "Verified foreign key referential integrity constraints as exact 1-cochain boundary maps between relvars."
+    }
+  ],
+  "contracts_aligned": [
+    "nf.classical.1nf",
+    "nf.classical.2nf",
+    "nf.classical.3nf",
+    "nf.classical.bcnf",
+    "nf.classical.4nf",
+    "nf.classical.5nf",
+    "nf.classical.6nf",
+    "nf.classical.eknf",
+    "nf.classical.etnf",
+    "nf.classical.dknf",
+    "nf.classical.rfnf",
+    "nf.classical.sknf",
+    "nf.classical.0nf",
+    "nf.classical.nf2"
+  ]
+}

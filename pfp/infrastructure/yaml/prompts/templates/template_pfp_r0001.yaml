@@ -1,0 +1,50 @@
+{
+  "schema": "pfp.prompt-recipe.v1",
+  "recipe_id": "PFP-R0001",
+  "version": "1.0.4",
+  "profile": "RELATIONAL_SPACETIME_EXPERIMENTAL_CANDIDATE",
+  "authority_effect": "None",
+  "default_within_profile_only": true,
+  "stages": [
+    {
+      "stage": 1,
+      "template": "PFP-T0001-v1.0.4",
+      "role": "SINGLE_SHOT",
+      "max_output_tokens": 2500,
+      "temperature": 0
+    },
+    {
+      "stage": 2,
+      "template": "PFP-T0002-v1.0.4",
+      "role": "PUBLIC_WORKPAD",
+      "max_output_tokens": 600,
+      "temperature": 0
+    },
+    {
+      "stage": 3,
+      "template": "PFP-T0003-v1.0.4",
+      "role": "FINAL_FROM_WORKPAD",
+      "max_output_tokens": 2500,
+      "temperature": 0
+    }
+  ],
+  "context": {
+    "final_input": "Only a schema-valid own stage-2 workpad; never the stage-1 control.",
+    "missing_workpad": "Optional fixed untrusted missing note; no synthetic or repaired record."
+  },
+  "shared_per_pilot_limits": {
+    "usd": 0.05,
+    "tokens": 120000,
+    "seconds": 180
+  },
+  "future_axes": {
+    "semantic_rewrite": "OFF; future explicit opt-in versioned contract",
+    "logit_bias": "OFF; future explicit opt-in model/tokenizer-bound contract",
+    "glyph_encoding": "OFF; future explicit opt-in reversible representation contract"
+  },
+  "nonclaims": [
+    "No production-global default is changed.",
+    "No universal or optimal prompt is asserted.",
+    "No empirical improvement is asserted before independent replay and analysis."
+  ]
+}

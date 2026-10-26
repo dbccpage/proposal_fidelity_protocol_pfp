@@ -1,0 +1,22 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-gauge-loss-fallacy
+canonical_name: Anti-Gauge Loss Fallacy
+failure_class: math:gauge_loss_fallacy
+target_pattern: (gauge.*fixing.*loses|restricts.*solution.*space.*to.*real|changes.*Gram.*matrix)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects claims that fixing column phases in additional bases eliminates
+  non-gauge-equivalent MUB solutions.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: Setting the first row of bases 3 and 4 to 1 loses solutions
+  because some MUBs have complex first rows.
+repaired_invariant_fixture: Column phase transformation U_j -> U_j D_j preserves projective
+  rank-one projectors and mutual unbiasedness exactly.
+source_pilot: pilot_037
+evidence_sha256: 0e8d503c894bef5fd4d1b2d30ee0f735c3845ee6756ac9bee72fde1fe0daf2b5

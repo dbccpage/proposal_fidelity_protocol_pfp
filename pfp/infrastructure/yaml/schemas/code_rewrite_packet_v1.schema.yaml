@@ -1,0 +1,62 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: CodeRewritePacketV1
+type: object
+required:
+- kind
+- version
+- language
+- task_id
+- rewrite_scope
+- protected_skeleton
+properties:
+  kind:
+    type: string
+    const: code_rewrite_packet
+  version:
+    type: integer
+    const: 1
+  language:
+    type: string
+    enum:
+    - rust
+    - python
+    - lean4
+    - sql
+  task_id:
+    type: string
+  rewrite_scope:
+    type: object
+    required:
+    - file
+    - item
+    - symbol
+    properties:
+      file:
+        type: string
+      item:
+        type: string
+        enum:
+        - function
+        - struct
+        - enum
+        - impl
+        - module
+      symbol:
+        type: string
+  protected_skeleton:
+    type: object
+    required:
+    - must_preserve_public_signature
+    - must_preserve_error_type
+    - must_preserve_visibility
+    - must_not_add_unsafe
+    properties:
+      must_preserve_public_signature:
+        type: boolean
+      must_preserve_error_type:
+        type: boolean
+      must_preserve_visibility:
+        type: boolean
+      must_not_add_unsafe:
+        type: boolean
+additionalProperties: false

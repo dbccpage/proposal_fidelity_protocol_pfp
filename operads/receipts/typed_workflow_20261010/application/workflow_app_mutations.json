@@ -1,0 +1,37 @@
+{
+  "mutations": [
+    {
+      "name": "source_pin",
+      "original_sha256": "6903caf7ea325411a47424e8af9d2b96eae8c0789fcde2e0d49f20135dbbad39",
+      "mutant_sha256": "e21a535590da3f7401c51d82e4f676010e6cbf6adc56ad37ab985075f7ef71bd",
+      "replacement_before": "if node.source_digest != str(doc.raw_digest):",
+      "replacement_after": "if False:",
+      "selected_controls": "stale_pins",
+      "test_exit_code": 1,
+      "command_record": "workflow_app_mutation_source_pin.json"
+    },
+    {
+      "name": "entry_boundary",
+      "original_sha256": "6903caf7ea325411a47424e8af9d2b96eae8c0789fcde2e0d49f20135dbbad39",
+      "mutant_sha256": "62bc7e9e3c8cf101a8c64e8255adb728644de6fb1f98ab269a98f9340c5cdf0c",
+      "replacement_before": "if tuple(open_inputs) != workflow.inputs:",
+      "replacement_after": "if False:",
+      "selected_controls": "equal_colour_entry",
+      "test_exit_code": 1,
+      "command_record": "workflow_app_mutation_entry_boundary.json"
+    },
+    {
+      "name": "negative_verdict",
+      "original_sha256": "6903caf7ea325411a47424e8af9d2b96eae8c0789fcde2e0d49f20135dbbad39",
+      "mutant_sha256": "bb8ccf81c573a919badb80c11f32e328aa5de64f5305f28beb5267a5a30a0d5a",
+      "replacement_before": "not report.is_valid",
+      "replacement_after": "False",
+      "selected_controls": "well_shaped_native_negative",
+      "test_exit_code": 1,
+      "command_record": "workflow_app_mutation_negative_verdict.json"
+    }
+  ],
+  "restored_sha256": "6903caf7ea325411a47424e8af9d2b96eae8c0789fcde2e0d49f20135dbbad39",
+  "exact_restoration": true,
+  "scope": "three literal production-source guard mutations; injected unit graph port, no native calls"
+}

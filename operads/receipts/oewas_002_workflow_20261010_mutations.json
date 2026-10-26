@@ -1,0 +1,58 @@
+[
+  {
+    "label": "step_guard_bypass",
+    "source": "omega_engine_workflows_agents_skills/domain/workflow_graph.py",
+    "old": "step = _pipeline_step(step, index)",
+    "new": "step = step",
+    "selector": "omega_engine_workflows_agents_skills/tests/unit/test_workflow_step_contract.py::test_non_object_step_has_indexed_bad_step_refusal",
+    "before_sha256": "eb4b89775fd9797effa4a0656f8782714c0d78a1c6b6fda9e94ae259fe350646",
+    "mutated_sha256": "64bcb18eb0817ef6ef88e092b0473392f6c28ae673e1747277a5120d4c1273f9",
+    "restored_sha256": "eb4b89775fd9797effa4a0656f8782714c0d78a1c6b6fda9e94ae259fe350646",
+    "pytest_exit": 1,
+    "detected": true,
+    "restored": true,
+    "log": "omega_engine_workflows_agents_skills/receipts/oewas_002_workflow_20261010_mutation_step_guard_bypass.log"
+  },
+  {
+    "label": "unguarded_operation_lookup",
+    "source": "omega_engine_workflows_agents_skills/domain/workflow_graph.py",
+    "old": "known.get(name) if isinstance(name, str) else None",
+    "new": "known.get(name)",
+    "selector": "omega_engine_workflows_agents_skills/tests/unit/test_workflow_step_contract.py::test_non_string_operation_is_unknown_without_raw_type_error",
+    "before_sha256": "eb4b89775fd9797effa4a0656f8782714c0d78a1c6b6fda9e94ae259fe350646",
+    "mutated_sha256": "b3e3646655f6e74809035d7f1fc253806a28a715ea2da33d41308af5337fc152",
+    "restored_sha256": "eb4b89775fd9797effa4a0656f8782714c0d78a1c6b6fda9e94ae259fe350646",
+    "pytest_exit": 1,
+    "detected": true,
+    "restored": true,
+    "log": "omega_engine_workflows_agents_skills/receipts/oewas_002_workflow_20261010_mutation_unguarded_operation_lookup.log"
+  },
+  {
+    "label": "inventory_type_guard_removed",
+    "source": "omega_engine_workflows_agents_skills/domain/workflow_graph.py",
+    "old": "and isinstance(finding.operation, str)",
+    "new": "and True",
+    "selector": "omega_engine_workflows_agents_skills/tests/unit/test_workflow_step_contract.py::test_non_string_operation_is_unknown_without_raw_type_error",
+    "before_sha256": "eb4b89775fd9797effa4a0656f8782714c0d78a1c6b6fda9e94ae259fe350646",
+    "mutated_sha256": "55dd79d3bda7abb8970e90c7102549d1845fd61b4ad060e451009590697d94bf",
+    "restored_sha256": "eb4b89775fd9797effa4a0656f8782714c0d78a1c6b6fda9e94ae259fe350646",
+    "pytest_exit": 1,
+    "detected": true,
+    "restored": true,
+    "log": "omega_engine_workflows_agents_skills/receipts/oewas_002_workflow_20261010_mutation_inventory_type_guard_removed.log"
+  },
+  {
+    "label": "nonzero_slot_shift_removed",
+    "source": "omega_engine_workflows_agents_skills/domain/planar_substitution.py",
+    "old": "right = substitute(outer, i + j, psi)",
+    "new": "right = substitute(outer, j, psi)",
+    "selector": "omega_engine_workflows_agents_skills/tests/unit/test_planar_nested_contract.py::test_nested_nonzero_slots_use_i_plus_j_and_the_literal_ordered_boundary",
+    "before_sha256": "9bdd402d94e5009d731f89f4646ed38a6271723b326dd6143f496e9094c8b4e1",
+    "mutated_sha256": "b167bf3819b5ae1fbbb7762eeb5b14da9dd5e07ad2da54ba35a6e9ae5898058a",
+    "restored_sha256": "9bdd402d94e5009d731f89f4646ed38a6271723b326dd6143f496e9094c8b4e1",
+    "pytest_exit": 1,
+    "detected": true,
+    "restored": true,
+    "log": "omega_engine_workflows_agents_skills/receipts/oewas_002_workflow_20261010_mutation_nonzero_slot_shift_removed.log"
+  }
+]

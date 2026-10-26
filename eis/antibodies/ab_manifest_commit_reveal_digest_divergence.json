@@ -1,0 +1,16 @@
+{
+  "action": "refuse",
+  "antibody_id": "ab_manifest_commit_reveal_digest_divergence",
+  "authority_effect": "None",
+  "constraint_type": "AssertStrictOnDiskCommitmentParity",
+  "description": "Refuses test manifests whose sealed case commitments differ from byte digests of actual test files on disk.",
+  "evidence_sha256": "f95c93917477a374a60e2ee12ab569c09c76eda34ad327361b23beeb03cc1006",
+  "failure_class": "manifest:commit_reveal_digest_divergence",
+  "negative_fixture": "Manifest declares digest 0xABC but on-disk file yields 0xDEF.",
+  "operatorizability": "repairable",
+  "pharmacy_status": "candidate",
+  "positive_fixture": "Every manifest entry strictly equals hashlib.sha256(file.bytes).hexdigest().",
+  "severity": "P0",
+  "source_file": "explorer_m2_c038_iter3_1/generate_resync_manifest.py",
+  "target_pattern": "manifest:commit_reveal_digest_divergence"
+}

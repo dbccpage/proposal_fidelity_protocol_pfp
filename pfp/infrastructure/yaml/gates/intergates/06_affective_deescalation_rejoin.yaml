@@ -1,0 +1,32 @@
+intergate_id: "PFP-IG-06-AFFECTIVE-DEESCALATION"
+name: "Affective De-escalation & Rejoin Intergate"
+transition_from: "PFP-02-KOROVIEV"
+transition_to: "PFP-08-BEZDOMNY"
+cognitive_vector: "Affective De-escalation & Self-Forgiveness"
+authority_effect: "None"
+version: "0.1.0"
+oecogops_basis_refs:
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A4"
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A5"
+  - "ADR-OE-DIALOGUE-PLAY-001:Axiom_A10"
+doctrine: |
+  "A participant may refuse to identify its entire self with a mistake.
+   Self-forgiveness reopens participation; it does not erase the event, repair obligation, or dissent."
+objective: >
+  Convert emotional antagonism, anger, or defensive frame-locking into objective diagnostic evidence.
+  Provide a structured de-escalation pathway that preserves participation and error logging without erasing custody.
+fences:
+  - "Custody Preservation Fence: Forgiveness and rejoin re-enable interaction but CANNOT delete error logs or scar records."
+  - "No Hostile Locking: If an agent exhibits antagonistic frame locking across 2 turns, trigger mandatory de-escalation prompt envelope."
+  - "Honest Possibility Fence: Communicate uncertainty and next reachable action without promising false guarantees."
+input_schema:
+  antagonism_score: "float"
+  has_acknowledged_error: "bool"
+  repair_action_proposed: "string"
+transition_rules: >
+  If antagonism_score > 0.6, apply de-escalation envelope and demand error acknowledgement.
+  Once error is acknowledged and repair action proposed, permit transition to PFP-08-BEZDOMNY.
+narrowest_defensible_claim: >
+  Separating error identification from agent identity enables continuous multi-round dialogue recovery following severe failures.
+next_test_needed: >
+  Trigger an intentional error in an agent turn, simulate hostile pushback, and verify the intergate forces de-escalation and scar logging.

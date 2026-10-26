@@ -1,0 +1,1723 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "exact_grants",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:53d3981e2ef4a0c5384034c85883e72f6f651ea232b248afed47e85c86c2b303",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              8
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "grants",
+            [
+              1,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:7b0b64d7795d82ca87cd18e847953388b6426394792052ab44d293a2b59d0b39",
+      "native_code": "FAILS:issued_by_authority",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_escalation",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              2,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:31d7bf2d3df235e54c6d2721dbe8dba17e0d05ea10f4f9b547fab6acbf43ddb9",
+      "native_code": "FAILS:issued_by_authority",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_pattern",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              4,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:56f13e9159ff5241455fc45cd6228d35fcd769b25bf1bd73da0d87e800727a08",
+      "native_code": "FAILS:allow_granted,exact_resource",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_pattern"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_ungranted",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              8
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:e08765a9431253bc94393811e3deda30928b36d7af6fa48e2397461d092413a5",
+      "native_code": "FAILS:allow_granted",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_no_authority",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:ab1ae2ed5f16e8a8688ee65abdc157299e24918dcd1663472d7e4fb4d66d0344",
+      "native_code": "FAILS:authority_given,issued_by_authority",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_no_authority"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_two",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "authority",
+            [
+              2
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:67d322bd7dc1a504fcd7a3677a7de650925bb5d7e371b2132f5d45a174eee4fc",
+      "native_code": "FAILS:one_authority",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_action_pattern",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "pattern",
+            [
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:1dfd2ce23755582e800ca1051ecaeed380e5cd6643474ddea66ee96350c19632",
+      "native_code": "FAILS:exact_action",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_action_pattern"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_stray",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              3,
+              3,
+              5
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:07d4fb0d67c39ba56b2416c9743d3757e9ed5de122025675aeb453ca2b9ea61d",
+      "native_code": "FAILS:grants_typed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_stray_request",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "allow",
+            [
+              9
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:4456ecedfc711c3338b36c4bf416322a11d9e507c383571d18c9281851965753",
+      "native_code": "FAILS:request_typed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-5"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "allow",
+            [
+              7
+            ]
+          ],
+          [
+            "authority",
+            [
+              0
+            ]
+          ],
+          [
+            "deny",
+            [
+              8
+            ]
+          ],
+          [
+            "deny",
+            [
+              9
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "grants",
+            [
+              0,
+              2,
+              3,
+              6
+            ]
+          ],
+          [
+            "pattern",
+            [
+              4
+            ]
+          ],
+          [
+            "request_of",
+            [
+              7,
+              1,
+              3,
+              5
+            ]
+          ],
+          [
+            "request_of",
+            [
+              8,
+              1,
+              3,
+              6
+            ]
+          ],
+          [
+            "request_of",
+            [
+              9,
+              2,
+              3,
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "party",
+            3
+          ],
+          [
+            "resource",
+            2
+          ],
+          [
+            "action",
+            2
+          ],
+          [
+            "request",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "authority",
+            "sorts": [
+              "party"
+            ]
+          },
+          {
+            "name": "grants",
+            "sorts": [
+              "party",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "pattern",
+            "sorts": [
+              "resource"
+            ]
+          },
+          {
+            "name": "request_of",
+            "sorts": [
+              "request",
+              "party",
+              "resource",
+              "action"
+            ]
+          },
+          {
+            "name": "allow",
+            "sorts": [
+              "request"
+            ]
+          },
+          {
+            "name": "deny",
+            "sorts": [
+              "request"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:092603e1a373a23b735ab0578162efc9f28d08e3fe684cf05952d1d83065679b",
+      "native_code": "FAILS:deny_ungranted",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 80,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_080"
+}

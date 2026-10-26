@@ -1,0 +1,87 @@
+"""Mutations of walk coverage/claims must fail. AuthorityEffect: None."""
+import hashlib
+import json
+
+import pytest
+
+from omega_engine_product_planning_office.use_cases.epic_tdd_plan_audit import (
+    EPICS,
+    HEADING,
+    SKILL,
+    audit,
+)
+
+
+@pytest.fixture
+def walk(tmp_path):
+    epic = tmp_path / EPICS / "suite/epic_fixture.md"
+    epic.parent.mkdir(parents=True)
+    epic.write_text("# Fixture\n\n" + HEADING + "\nRED GREEN oracle mutation refactor", encoding="utf-8")
+    skill = tmp_path / SKILL
+    skill.parent.mkdir(parents=True)
+    skill.write_text("signature only", encoding="utf-8")
+    def digest(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    data = {"authority_effect": "None", "certifies_obstruction_free_implementation": False, "epic_count": 1,
+            "tdd_skill_sha256": digest(skill), "epics": [{"path": epic.relative_to(tmp_path).as_posix(),
+            "sha256": digest(epic), "retained_residuals": ["semantic oracle required"],
+            "test_plan_status": "PROPOSED_NOT_EXECUTED"}]}
+    receipt = tmp_path / "receipt.json"
+    receipt.write_text(json.dumps(data), encoding="utf-8")
+    return tmp_path, receipt, epic, data
+
+
+def test_valid_plan_custody_is_scoped(walk):
+    root, receipt, _, _ = walk
+    result = audit(root, receipt)
+    assert result["status"] == "PASS" and result["epics"] == 1
+    assert result["certifies_obstruction_free_implementation"] is False
+
+
+@pytest.mark.parametrize("mutation", ["coverage", "digest", "hype", "executed", "skill", "section", "link", "tokens"])
+def test_mutations_are_refused(walk, mutation):
+    root, receipt, epic, data = walk
+    match mutation:
+        case "coverage":
+            data["epics"] = []
+        case "digest":
+            epic.write_text(epic.read_text() + "changed", encoding="utf-8")
+        case "hype":
+            data["certifies_obstruction_free_implementation"] = True
+        case "executed":
+            data["epics"][0]["test_plan_status"] = "GREEN"
+        case "skill":
+            data["tdd_skill_sha256"] = "0" * 64
+        case "section":
+            epic.write_text("# Missing behavior plan", encoding="utf-8")
+            data["epics"][0]["sha256"] = hashlib.sha256(epic.read_bytes()).hexdigest()
+        case "link":
+            epic.write_text(epic.read_text() + "\n[absent](absent.py)", encoding="utf-8")
+            data["epics"][0]["sha256"] = hashlib.sha256(epic.read_bytes()).hexdigest()
+        case "tokens":
+            epic.write_text(
+                "# Fixture\n\n" + HEADING + "\npredicted greenhouse preoracle mutationless refactoring",
+                encoding="utf-8",
+            )
+            data["epics"][0]["sha256"] = hashlib.sha256(epic.read_bytes()).hexdigest()
+    receipt.write_text(json.dumps(data), encoding="utf-8")
+    with pytest.raises(ValueError):
+        audit(root, receipt)
+
+
+def test_shipped_walk_covers_every_reviewed_epic():
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2]
+    report = audit(root)
+    assert report["epics"] == 61
+    assert report["certifies_obstruction_free_implementation"] is False
+
+
+@pytest.mark.parametrize("count", [0, 2, True, 1.0, "1"])
+def test_declared_count_must_match_exact_inventory(walk, count):
+    root, receipt, _, data = walk
+    data["epic_count"] = count
+    receipt.write_text(json.dumps(data), encoding="utf-8")
+    with pytest.raises(ValueError, match="Epic walk declared count mismatch"):
+        audit(root, receipt)

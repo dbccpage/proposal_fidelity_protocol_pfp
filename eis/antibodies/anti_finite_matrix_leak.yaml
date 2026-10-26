@@ -1,0 +1,23 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-finite-matrix-leak
+canonical_name: Anti-Finite Matrix Leak
+failure_class: math:finite_matrix_leak
+target_pattern: (checking.*row-count.*proves|single.*column.*implies.*no.*MUB|4-element.*table.*proves.*MUB)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects the Finite-to-Matrix Promotion Fallacy where checking a small
+  row-count table or a single column is asserted to prove non-existence of a fourth
+  MUB without evaluating all 36 vector unbiasing constraints.
+governing_invariants:
+- .agents/rules/claims/rl_claim_disciplined_compaction.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: The 4-element row-count table for F_6 has no compatible
+  row, proving MUB(6)=3.
+repaired_invariant_fixture: Evaluating exact Jaming (2009) bound and Tao Eisenstein
+  norm N(3) = 9 != 0 excludes fourth MUB extension.
+source_pilot: pilot_034
+evidence_sha256: 8dde20b262130a21c07847f26193ad08a10eb0e01415c5e006821689e01fc0b1

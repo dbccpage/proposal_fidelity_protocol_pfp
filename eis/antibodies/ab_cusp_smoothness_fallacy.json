@@ -1,0 +1,18 @@
+{
+  "antibody_id": "ab_cusp_smoothness_fallacy",
+  "failure_class": "math:cusp_smoothness_fallacy",
+  "target_pattern": "(deltoid.*is.*smooth.*everywhere|derivative.*diverges.*to.*infinity.*no.*algorithm|smooth.*gradient.*at.*cusp)",
+  "constraint_type": "ProjectOut",
+  "operatorizability": "repairable",
+  "action": "refuse",
+  "severity": "P0",
+  "description": "Rejects applying smooth Taylor expansions or standard implicit function theorems across non-smooth deltoid cusps.",
+  "negative_fixture": "The gradient of det(H(theta)) is smooth at theta=0, so linear Taylor expansion gives valid interval bounds.",
+  "positive_fixture": "At the 3 deltoid cusps, d/dtheta det(H(theta)) vanishes; exact fractional Lipschitz collars of radius 1/256 seal the singular locus.",
+  "times_seen": 1,
+  "evidence_sha256": "34df7876f7dd8d276ead2daadec20f2c08eed5800271adb8bddd2d84675b96dc",
+  "pharmacy_status": "admitted",
+  "authority_effect": "None",
+  "created_at": "2026-10-15T19:18:17.192993+00:00",
+  "source_pilot": "pilot_040"
+}

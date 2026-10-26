@@ -1,0 +1,22 @@
+mode_id: 18
+name: "MUB(6) Moduli Variety & Orthogonal Basis Play"
+cluster: "Cluster V: Foundational Mechanization"
+authority_effect: "None"
+core_mechanism: "Exploring equiangular lines, complex Hadamard matrices, and mutually unbiased bases in C^6"
+substrate: "Complex Hilbert space C^6 and complex Hadamard variety"
+paper_reference: "demo_3_mub6"
+rules:
+  - "Bases B_i must satisfy mutual unbiasedness: |<u, v>|^2 = 1/6 for u in B_i, v in B_j (i != j)."
+  - "Calculations must use exact algebraic cyclotomic number fields, not floating approximations."
+  - "The unproven conjecture of whether 7 MUBs exist in dimension 6 must remain bounded as an open problem."
+entry_preconditions:
+  - "Exact cyclotomic field solver initialized."
+  - "Candidate basis set declared."
+winning_condition: >
+  Machine verification of mutually unbiased property for candidate basis triads without exceeding known algebraic bounds.
+failure_modes:
+  - "Float rounding masquerading as exact orthogonality"
+  - "Unverified claim of solving the full MUB(6) problem"
+verifier_contract:
+  verifier_type: "mub_algebraic_orthogonality_checker"
+  fail_closed: true

@@ -1,0 +1,40 @@
+# Native Anti-Skill Pharmacy Mappings and Wire Specifications
+#
+# Declares serde variant-to-code mappings, routing dispositions, and typed
+# refusal codes for the native Symbol Game host pharmacy crossing.
+#
+# AuthorityEffect: None.
+
+schema_version: "omega.immune.definitions.native-pharmacy.v1"
+authority_effect: "None"
+
+native_class_codes:
+  SelfCertification: "SELF_CERTIFICATION"
+  FakeReceipt: "FAKE_RECEIPT"
+  ConclusionPreload: "CONCLUSION_PRELOAD"
+  SchemaSemanticLaundering: "SCHEMA_SEMANTIC_LAUNDERING"
+  TheoremNameLaundering: "THEOREM_NAME_LAUNDERING"
+  OptimalityHallucination: "OPTIMALITY_HALLUCINATION"
+  ComplexityHallucination: "COMPLEXITY_HALLUCINATION"
+  BranchDropExhaustion: "BRANCH_DROP_EXHAUSTION"
+  PersonaAuthorityLeak: "PERSONA_AUTHORITY_LEAK"
+  PrivateCotDependency: "PRIVATE_COT_DEPENDENCY"
+  VersionDuplication: "VERSION_DUPLICATION"
+  DetectRepairCoupling: "DETECT_REPAIR_COUPLING"
+
+native_dispositions:
+  Finding: "FINDING"
+  Hold: "HOLD"
+  Refuse: "REFUSE"
+
+native_refusal_codes:
+  - "HOST_BINARY_NOT_FOUND"
+  - "FFI_CROSSING_FAILED"
+  - "NATIVE_PHARMACY_REFUSED"
+  - "NATIVE_REPLY_MALFORMED"
+
+refusal_descriptions:
+  HOST_BINARY_NOT_FOUND: "The compiled sovereign Rust host binary could not be located on disk."
+  FFI_CROSSING_FAILED: "The FFI call to RustSymbolGameHost.pharmacy_detect failed across the boundary."
+  NATIVE_PHARMACY_REFUSED: "The native pharmacy returned an unsuccessful or refused outcome record."
+  NATIVE_REPLY_MALFORMED: "The response object from the native host did not conform to the expected schema."

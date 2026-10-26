@@ -1,0 +1,28 @@
+contract_id: pfp_stage_transition_contract_v1
+title: PFP Discrete Stage Transition & Retraction Invariance Contract
+version: 1.0.0
+authority_effect: None
+entry_preconditions:
+- name: prime_000_admission
+  predicate: is_admitted == true
+  description: Candidate admission strictly precedes measurement.
+- name: carrier_support
+  predicate: len(carrier.vertices) > 0
+  description: Carrier must have nonempty vertex set.
+exit_postconditions:
+- name: retraction_invariance
+  predicate: retract(lift(state)) == state
+  description: Old-image retraction r o u = id.
+- name: monotone_defect
+  predicate: defect_out <= defect_in + budget
+  description: Defect does not exceed declared loss budget.
+invariants:
+- 'Diagonal excision: no self-loops in directed edges.'
+- 'Nilpotency: d1 @ d0 == 0 everywhere.'
+- 'Dual feasibility: optimal certificate has zero duality gap.'
+winning_condition: All 8 stages execute to terminal status Exact or Verified without
+  unresolved blockers.
+failure_modes:
+- 'REFUSED_FLOAT: floating point coercion detected in exact rational pipeline.'
+- 'NILPOTENCY_BROKEN: boundary operator square non-zero.'
+- 'GATE_REJECTED: rejected by Woland tribunal gate.'

@@ -1,0 +1,22 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-vector-basis-gap
+canonical_name: Anti-Vector Basis Gap Fallacy
+failure_class: math:vector_basis_gap
+target_pattern: (single.*vector.*fails.*so.*no.*basis|one.*vector.*obstruction.*proves.*basis.*impossible|vector.*level.*directly.*implies.*basis)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects asserting that a single vector obstruction implies basis non-existence
+  without proving unitary mutual orthogonality.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: Because one vector v in C^6 fails mutual unbiasedness,
+  no 4th basis can exist.
+repaired_invariant_fixture: The Gluing.lean bridge aggregates all 6 columns under
+  BasisVectorMUContract, proving no orthonormal frame can avoid the curvature wall.
+source_pilot: pilot_043
+evidence_sha256: 6782c5c76b938cfccdad1a130c87973402d37125f9aaeaeffd58471588ba7ca8

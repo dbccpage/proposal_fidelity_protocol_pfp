@@ -1,0 +1,175 @@
+# Schema definition for Pilot Comparison Results (comparison_results.yaml)
+# AuthorityEffect: None.
+# Required fields and enums follow omega_engine_pfp.domain.types.pilot_comparison.
+
+$schema: https://json-schema.org/draft/2020-12/schema
+schema: pfp.pilot-comparison-results.v1
+title: PilotComparisonResultsSchema
+description: |
+  Comparative performance, cost, token volume, and latency aggregates across plain inputs
+  versus templated P* prompts for multi-case pilot matrices.
+
+$defs:
+  AuthorityEffect:
+    type: string
+    enum: ["None"]
+
+  TestKindAggregate:
+    type: object
+    additionalProperties: false
+    required:
+      - count
+      - avg_time_sec
+      - total_time_sec
+      - avg_cost_usd
+      - total_cost_usd
+      - avg_prompt_tokens
+      - avg_completion_tokens
+      - avg_total_tokens
+      - avg_payload_kb
+      - accuracy_ratio
+      - accuracy_percent
+    properties:
+      count:
+        type: integer
+      avg_time_sec:
+        type: number
+      total_time_sec:
+        type: number
+      avg_cost_usd:
+        type: number
+      total_cost_usd:
+        type: number
+      avg_prompt_tokens:
+        type: number
+      avg_completion_tokens:
+        type: number
+      avg_total_tokens:
+        type: number
+      avg_payload_kb:
+        type: number
+      accuracy_ratio:
+        type: string
+      accuracy_percent:
+        type: number
+
+  ComparisonRatios:
+    type: object
+    additionalProperties: false
+    properties:
+      cost_ratio:
+        type: [number, "null"]
+      latency_ratio:
+        type: [number, "null"]
+      tokens_ratio:
+        type: [number, "null"]
+      payload_kb_ratio:
+        type: [number, "null"]
+
+  ComparisonAggregates:
+    type: object
+    additionalProperties: false
+    required:
+      - plain_inputs
+      - p_star_templated
+      - overall
+      - ratios_templated_vs_plain
+    properties:
+      plain_inputs:
+        $ref: '#/$defs/TestKindAggregate'
+      p_star_templated:
+        $ref: '#/$defs/TestKindAggregate'
+      overall:
+        $ref: '#/$defs/TestKindAggregate'
+      ratios_templated_vs_plain:
+        $ref: '#/$defs/ComparisonRatios'
+
+  TestComparisonEntry:
+    type: object
+    additionalProperties: false
+    required:
+      - test_id
+      - test_kind
+      - case_id
+      - source_file
+      - response_file
+      - payload_kb
+      - duration_seconds
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+      - cost_usd
+      - gate_status
+    properties:
+      test_id:
+        type: string
+      test_kind:
+        type: string
+      case_id:
+        type: string
+      source_file:
+        type: string
+      response_file:
+        type: string
+      payload_kb:
+        type: number
+      source_kb:
+        type: number
+      duration_seconds:
+        type: number
+      prompt_tokens:
+        type: integer
+      completion_tokens:
+        type: integer
+      reasoning_tokens:
+        type: integer
+      total_tokens:
+        type: integer
+      cost_usd:
+        type: number
+      cost_microusd:
+        type: integer
+      tokens_per_second:
+        type: number
+      extracted_answer: {}
+      expected_answer: {}
+      gate_status:
+        type: string
+      gate_reason:
+        type: [string, "null"]
+      answer_match:
+        type: [boolean, "null"]
+      is_correct:
+        type: [boolean, "null"]
+
+type: object
+additionalProperties: false
+properties:
+  schema:
+    type: string
+    const: pfp.pilot-comparison-results.v1
+  authority_effect:
+    anyOf:
+      - $ref: '#/$defs/AuthorityEffect'
+      - type: string
+      - type: "null"
+  pilot_id:
+    type: string
+  model_id:
+    type: string
+  checker_id:
+    type: string
+  timestamp_utc:
+    type: string
+  total_tests:
+    type: integer
+  aggregates:
+    $ref: '#/$defs/ComparisonAggregates'
+  tests:
+    type: array
+    items:
+      $ref: '#/$defs/TestComparisonEntry'
+  comparison_table:
+    type: array
+    items:
+      $ref: '#/$defs/TestComparisonEntry'

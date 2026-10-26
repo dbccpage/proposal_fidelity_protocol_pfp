@@ -1,0 +1,99 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.experimental.bell_contextuality
+  name: Bell Contextuality Observer Contract
+  short_name: BellCNF
+  version: v1
+  status: draft
+  family: experimental
+  theory_status: experimental
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_observer_claim
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: illicit_global_state; local_validity_laundered_into_global_authority
+  preserves_invariant: local_observer_packets_do_not_authorize_global_state_without_gluing_witness
+  protected_skeleton:
+  - local_observer_packets
+  - measurement_contexts
+  - pairwise_comparison_rules
+  - gluing_or_comparison_envelope
+  - residual_policy
+  erased_structure: []
+  non_claims:
+  - does_not_settle_quantum_interpretation
+  - does_not_replace_physics
+  - does_not_conflict_with_boyce_codd_normal_form_because_it_is_quarantined_and_not_core_bcnf
+  - only_disciplines_local_packet_to_global_authority_promotion
+declarations_required:
+- local_observer_packets
+- measurement_contexts
+- pairwise_comparison_rules
+- gluing_or_comparison_envelope
+- residual_policy
+evidence_required:
+- local_probability_or_claim_packets
+- comparison_witnesses_when_claimed
+- terminal_event_or_refusal
+validation_criteria:
+- local_observer_packets_do_not_authorize_global_state_without_gluing_witness
+- pairwise_validity_does_not_imply_global_authority
+- global_joint_packet_requires_comparison_or_gluing_envelope
+terminal_routes:
+- Preserve
+- Lift
+- Refuse
+- Reject
+certification:
+  certificate_required: true
+  certificate_kind: bell_contextuality_observer_packet
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+local_terminal_routes:
+- LocalOnly
+- ComparisonRequired
+- NoGlobalSection
+- BellResidual
+- LiftRequired
+- RefuseGlobalClaim
+terminal_route_map:
+  Preserve: Preserve
+  Lift: Lift
+  Refuse: Refuse
+  Reject: Reject
+  LocalOnly: Escalate
+  ComparisonRequired: Escalate
+  NoGlobalSection: Escalate
+  BellResidual: Escalate
+  LiftRequired: Escalate
+  RefuseGlobalClaim: Refuse
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: illicit_global_state; local_validity_laundered_into_global_authority.
+    local_observer_packets_do_not_authorize_global_state_without_gluing_witness
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: illicit_global_state; local_validity_laundered_into_global_authority
+    lossless_join:
+      status: declared_reconstruction
+      statement: local_observer_packets_do_not_authorize_global_state_without_gluing_witness
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

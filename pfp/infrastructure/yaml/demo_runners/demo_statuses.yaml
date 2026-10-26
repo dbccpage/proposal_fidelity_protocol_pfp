@@ -1,0 +1,33 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+schema: pfp.demo-runners-statuses.v1
+authority_effect: None
+title: "PFP Demo Runners Statuses and Attestations Taxonomy"
+description: "Authoritative lifecycle statuses and attestation modes for MSS-N demonstration runners."
+
+pfp_stage_statuses:
+  - id: "PASS"
+    description: "Stage execution passed all internal verification gates."
+  - id: "FAIL"
+    description: "Stage execution failed one or more assertions or verification checks."
+  - id: "STOPPED"
+    description: "Stage execution halted cleanly due to upstream termination or policy constraint."
+  - id: "SKIPPED"
+    description: "Stage execution skipped per run configuration or prerequisite condition."
+
+proposal_statuses:
+  - id: "ACCEPTED"
+    description: "Candidate proposal accepted with certified boundary or topological descent."
+  - id: "NON_DESCENT"
+    description: "Candidate proposal rejected due to non-descent or energy increase."
+  - id: "TYPED_REFUSAL"
+    description: "Candidate proposal halted with an immutable typed refusal certificate."
+  - id: "OBSTRUCTION_FOUND"
+    description: "Candidate proposal encountered an unresolvable topological or algebraic obstruction."
+
+execution_attestation_modes:
+  - id: "LIVE_PROVIDER"
+    is_live: true
+    description: "Live external API provider dispatch under GATE_EXECUTION_HONESTY_001."
+  - id: "FIXTURE_REPLAY"
+    is_live: false
+    description: "Deterministic local replay from static JSON/YAML test fixtures."

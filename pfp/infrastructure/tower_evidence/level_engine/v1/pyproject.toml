@@ -1,0 +1,26 @@
+[project]
+name = "level-engine"
+version = "0.0.0"
+description = "External level-engine harness (Mode E). AuthorityEffect: None."
+requires-python = ">=3.14"
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "payload"]
+python_files = ["test_*.py"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.mypy]
+strict = true
+python_version = "3.14"
+mypy_path = "vendor/19L57G1/code,vendor/19L57G1/research/partial_decide"
+files = ["engine", "outward", "payload", "tools", "tests", "gate.py", "run_bootstrap.py"]
+explicit_package_bases = true
+exclude = ["tests/checkers/", "tests/reach_draft/checker_L002.py"]
+
+[tool.coverage.run]
+branch = true
+source = ["engine", "outward"]
+
+[tool.coverage.report]
+show_missing = false

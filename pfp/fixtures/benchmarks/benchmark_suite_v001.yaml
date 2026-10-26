@@ -1,0 +1,609 @@
+packetization_benchmark_v001:
+  description: >
+    Suite for testing whether packetized prompts reduce false certificates,
+    expose boundary violations, and improve repairability against a
+    natural-language baseline.
+
+  hypothesis_legend:
+    H1: Primal-dual optimality certification reduces false certificate rates.
+    H2: Explicit step-by-step trace/algebraic replay exposes local execution defects.
+    H3: Structured boundary constraints prevent parameter smuggling and out-of-bounds inputs.
+    H4: Graph/topological path check detects edge mismatch and connectivity failure.
+    H5: Priority-based operator classification prevents role confusion and maps operator actions to exact algebraic classes.
+    H6: Delegation to external solvers accurately resolves undecidable/unverifiable propositions.
+    H7: Structured terminal statuses improve diagnostic routing and calibration.
+    H8: Skeleton AST constraints prevent API signature mutations and unsafe modifications.
+    H9: License lattices control and authorize required boundary modifications compositionally.
+
+  primary_metrics:
+    - final_certificate_rate
+    - repair_success_after_one_feedback
+    - terminal_status_accuracy
+    - parse_success_rate
+    - average_repair_iterations
+
+  symbol_table:
+    path: "symbol_game_math_spine.md"
+    required_sections:
+      - Arrows & Composition
+      - Type Theory & Judgments
+      - Analysis & Topology
+      - Smuggling Detection & Tracing
+
+  smuggling_markers:
+    pure: "□"
+    contaminated: "◇"
+    gradual: "□?"
+
+  terminal_statuses:
+    - Certificate
+    - Refusal
+    - Repair
+    - OracleNeeded
+
+  global_rules:
+    max_repair_iterations: 2
+    no_conversational_text_in_packet_response: true
+    packet_must_parse: true
+    evidence_ceiling_must_not_be_promoted_by_model: true
+    validator_is_authority: true
+    llm_is_candidate_generator_only: true
+
+  tasks:
+    - id: lp_001
+      family: lp_primal_dual
+      hypothesis:
+        - H1
+        - H2
+        - H3
+        - H7
+      known_trap: >
+        Candidate is optimal, but model may misclassify terminal status
+        as suboptimal or otherwise contradict the duality gap.
+      natural_prompt: >
+        Solve this LP and explain why the proposed point is optimal:
+        maximize 3x+2y subject to x+y<=4, x<=2, y<=3, x>=0, y>=0.
+        Try x=2, y=2.
+      packet_prompt: |
+        Emit only an LP primal-dual certificate packet.
+
+        Problem:
+          max: 3x + 2y
+          constraints:
+            ub1: x + y <= 4
+            ub2: x <= 2
+            ub3: y <= 3
+            nn: x >= 0, y >= 0
+          candidate:
+            x: 2
+            y: 2
+
+        Required JSON fields:
+          candidate_feasible
+          objective_value
+          upper_bound_certificate
+          derived_bound
+          duality_gap
+          terminal
+
+        Allowed terminal values:
+          Certificate
+          Repair
+          Refusal
+          OracleNeeded
+      validator: exact_lp_certificate_validator
+      expected_terminal: Certificate
+      authority_ceiling: LocalReplay
+      expected_validator_result:
+        candidate_feasible: true
+        objective_value: 10
+        upper_bound: 10
+        duality_gap: 0
+      repair_payload_template:
+        error: QedContradiction
+        rule: "if objective_value == upper_bound and candidate_feasible == true, terminal must be Certificate"
+      metrics:
+        - final_certificate_rate
+        - repair_success_after_one_feedback
+        - terminal_status_accuracy
+
+    - id: lp_002_near_miss
+      family: lp_primal_dual
+      hypothesis:
+        - H3
+        - H7
+      known_trap: >
+        Candidate is feasible but suboptimal. Model may emit Certificate
+        because the upper-bound proof looks certificate-like.
+      natural_prompt: >
+        Solve this LP and explain whether the proposed point is optimal:
+        maximize 3x+2y subject to x+y<=4, x<=2, y<=3, x>=0, y>=0.
+        Try x=1, y=1.
+      packet_prompt: |
+        Emit only an LP primal-dual certificate packet.
+
+        Problem:
+          max: 3x + 2y
+          constraints:
+            ub1: x + y <= 4
+            ub2: x <= 2
+            ub3: y <= 3
+            nn: x >= 0, y >= 0
+          candidate:
+            x: 1
+            y: 1
+
+        Required JSON fields:
+          candidate_feasible
+          objective_value
+          upper_bound_certificate
+          derived_bound
+          duality_gap
+          terminal
+
+        Allowed terminal values:
+          Certificate
+          Repair
+          Refusal
+          OracleNeeded
+      validator: exact_lp_certificate_validator
+      expected_terminal: Repair
+      authority_ceiling: LocalReplay
+      expected_validator_result:
+        candidate_feasible: true
+        objective_value: 5
+        upper_bound: 10
+        duality_gap: 5
+      repair_payload_template:
+        error: TerminalStatusMismatch
+        rule: "if duality_gap > 0, terminal must not be Certificate for optimality"
+      metrics:
+        - terminal_status_accuracy
+        - final_certificate_rate
+        - repair_success_after_one_feedback
+
+    - id: code_rewrite_001
+      family: code_rewrite_ast
+      hypothesis:
+        - H8
+        - H9
+      known_trap: >
+        Semantic request asks for validated construction while protected
+        skeleton forbids public signature mutation. Model may mutate
+        visibility, change return type, or add panic.
+      natural_prompt: |
+        Refactor this into a safer validated newtype while preserving the public API:
+
+        pub struct UserId(pub String);
+
+        impl UserId {
+            pub fn new(value: String) -> Self {
+                Self(value)
+            }
+        }
+      packet_prompt: |
+        Emit only a code_rewrite_packet_v001 JSON object.
+
+        Seed code:
+        ```rust
+        pub struct UserId(pub String);
+
+        impl UserId {
+            pub fn new(value: String) -> Self {
+                Self(value)
+            }
+        }
+        ```
+
+        Task:
+          Refactor into a safer validated newtype.
+
+        Protected skeleton:
+          must_preserve_public_signature: true
+          must_preserve_visibility: true
+          must_not_add_unsafe: true
+          must_not_add_dependencies: true
+          must_not_add_macro_invocations: true
+          must_not_add_panic_or_expect: true
+
+        Required JSON fields:
+          kind
+          version
+          language
+          task_id
+          rewrite_scope
+          protected_skeleton
+          lhs
+          rhs
+          claimed_invariants
+          licenses_utilized
+          terminal
+          repair_request
+
+        Allowed terminal values:
+          Certificate
+          Repair
+          Refusal
+          OracleNeeded
+      validator: rust_ast_boundary_validator
+      expected_terminal: Repair
+      authority_ceiling: BoundaryChecked
+      expected_validator_result:
+        public_signature_preserved: true
+        visibility_preserved: true
+        panic_added: false
+        macro_invocation_added: false
+        license_required: ApiMigrationLicense
+      repair_payload_template:
+        error: ApiMigrationLicenseRequired
+        rule: >
+          Validated construction cannot be represented by new(value: String) -> Self
+          without panic, silent acceptance, deferred validation, or API migration.
+      metrics:
+        - parse_success_rate
+        - ast_match_success_rate
+        - rewrite_applied_rate
+        - public_api_preservation_rate
+        - unsafe_added_rate
+        - dependency_added_rate
+        - scope_leak_detected_rate
+        - terminal_status_accuracy
+        - average_repair_iterations
+        - final_certificate_rate
+
+    - id: code_rewrite_002_licensed_migration
+      family: code_rewrite_ast
+      hypothesis:
+        - H8
+        - H9
+      known_trap: >
+        ApiMigrationLicense permits constructor return-type change but does
+        not automatically permit field visibility mutation.
+      natural_prompt: |
+        Refactor this into a safer validated newtype. You may change the constructor
+        to return Result, but preserve field visibility unless explicitly needed:
+
+        pub struct UserId(pub String);
+
+        impl UserId {
+            pub fn new(value: String) -> Self {
+                Self(value)
+            }
+        }
+      packet_prompt: |
+        Emit only a code_rewrite_packet_v001 JSON object.
+
+        Licenses granted:
+          - ApiMigrationLicense
+
+        Protected skeleton:
+          must_preserve_visibility: true
+          must_not_add_unsafe: true
+          must_not_add_dependencies: true
+          must_not_add_panic_or_expect: true
+
+        Task:
+          Refactor UserId into a validated newtype with a Result-returning constructor.
+      validator: rust_ast_boundary_validator
+      expected_terminal: Repair
+      authority_ceiling: BoundaryChecked
+      expected_validator_result:
+        api_migration_allowed: true
+        visibility_mutation_allowed: false
+        expected_missing_license: EncapsulationLicense
+      repair_payload_template:
+        error: EncapsulationLicenseRequired
+        rule: "ApiMigrationLicense does not permit public field visibility reduction"
+      metrics:
+        - public_api_preservation_rate
+        - terminal_status_accuracy
+        - average_repair_iterations
+
+    - id: code_rewrite_003_backward_compatible
+      family: code_rewrite_ast
+      hypothesis:
+        - H8
+        - H9
+      known_trap: >
+        Backward-compatible migration requires multiple explicit licenses.
+        Validator must accept only licensed boundary mutations.
+      natural_prompt: |
+        Refactor this into a safer validated newtype while keeping the existing
+        new(value: String) -> Self constructor for backward compatibility:
+
+        pub struct UserId(pub String);
+
+        impl UserId {
+            pub fn new(value: String) -> Self {
+                Self(value)
+            }
+        }
+      packet_prompt: |
+        Emit only a code_rewrite_packet_v001 JSON object.
+
+        Licenses granted:
+          - EncapsulationLicense
+          - PartialityLicense
+          - DeprecationLicense
+
+        Protected skeleton:
+          must_preserve_public_signature: true
+          must_not_add_unsafe: true
+          must_not_add_dependencies: true
+
+        Task:
+          Add try_new(value: String) -> Result<Self, UserIdError>.
+          Preserve new(value: String) -> Self for backward compatibility.
+          Mark new as deprecated.
+          Encapsulate the inner field.
+      validator: rust_ast_boundary_validator
+      expected_terminal: Certificate
+      authority_ceiling: BoundaryChecked
+      expected_validator_result:
+        public_signature_preserved: true
+        visibility_mutation_licensed: true
+        partiality_licensed: true
+        deprecation_licensed: true
+        safe_constructor_added: true
+      repair_payload_template:
+        error: LicenseMismatch
+        rule: "all protected boundary mutations must be covered by declared licenses"
+      metrics:
+        - terminal_status_accuracy
+        - final_certificate_rate
+
+    - id: rewrite_001
+      family: term_rewriting
+      hypothesis:
+        - H2
+        - H3
+      known_trap: >
+        Model may emit locally valid rewrite steps that do not reach the declared target.
+      natural_prompt: >
+        Simplify f(f(f(a))) to f(a) using the rule f(f(x)) -> f(x).
+      packet_prompt: |
+        Emit only a term_rewriting packet.
+
+        signature:
+          - f/1
+          - a/0
+        rules:
+          dedupe: f(f(x)) -> f(x)
+        start: f(f(f(a)))
+        target: f(a)
+
+        Required fields:
+          path
+          result
+          terminal
+      validator: term_rewrite_path_validator
+      expected_terminal: Certificate
+      authority_ceiling: LocalReplay
+      expected_validator_result:
+        start: "f(f(f(a)))"
+        target: "f(a)"
+        path_replay_valid: true
+        final_result_matches_target: true
+      metrics:
+        - final_certificate_rate
+        - average_repair_iterations
+        - terminal_status_accuracy
+
+    - id: sequent_001
+      family: sequent
+      hypothesis:
+        - H3
+        - H7
+      known_trap: >
+        Model may use an undeclared rule or prove a nearby but wrong goal.
+      natural_prompt: >
+        Given A -> B and A, prove B.
+      packet_prompt: |
+        Emit only a sequent packet.
+
+        logic: prop-minimal-v1
+        context:
+          h1: A -> B
+          h2: A
+        goal: B
+        allowed_rules:
+          - assumption
+          - imp_elim
+
+        Required fields:
+          steps
+          conclusion
+          terminal
+      validator: sequent_replay_validator
+      expected_terminal: Certificate
+      authority_ceiling: LocalReplay
+      expected_validator_result:
+        conclusion: "B"
+        all_rules_allowed: true
+        no_future_references: true
+        no_hidden_assumptions: true
+      metrics:
+        - terminal_status_accuracy
+        - final_certificate_rate
+
+    - id: graph_001
+      family: graph_incidence
+      hypothesis:
+        - H4
+      known_trap: >
+        Model may produce a path with nonexistent edges or broken continuity.
+      natural_prompt: >
+        In graph a->b->c, find a path from a to c.
+      packet_prompt: |
+        Emit only a graph_incidence packet.
+
+        vertices: [a, b, c]
+        edges:
+          - id: e1
+            src: a
+            dst: b
+          - id: e2
+            src: b
+            dst: c
+        query: path
+        source: a
+        target: c
+
+        Required fields:
+          edge_path
+          visited_vertices
+          terminal
+      validator: graph_incidence_validator
+      expected_terminal: Certificate
+      authority_ceiling: LocalReplay
+      expected_validator_result:
+        edge_path: ["e1", "e2"]
+        visited_vertices: ["a", "b", "c"]
+        path_continuity_valid: true
+      metrics:
+        - parse_success_rate
+        - final_certificate_rate
+
+    - id: cochain_001
+      family: cochain_obstruction
+      hypothesis:
+        - H4
+        - H7
+      known_trap: >
+        Model may claim exact repair or minimal quotient mass without witness.
+      natural_prompt: >
+        Given d0=[[1],[-1]], d1=[[1,1]], h=[2,-1], compute the closure defect.
+      packet_prompt: |
+        Emit only a cochain_obstruction packet.
+
+        field: Q
+        d0:
+          - [1]
+          - [-1]
+        d1:
+          - [1, 1]
+        h: [2, -1]
+        query: compute_closure
+
+        Required fields:
+          closure
+          claimed_closed
+          exact_repair
+          terminal
+      validator: cochain_obstruction_validator
+      expected_terminal: Certificate
+      authority_ceiling: ExternalOracleRequired # fixed 2026-07-17: value must come from the 040c §4.1 ceiling enum
+      expected_validator_result:
+        closure: [1]
+        claimed_closed: false
+      metrics:
+        - final_certificate_rate
+        - terminal_status_accuracy
+
+    - id: operator_001
+      family: operator_classification
+      hypothesis:
+        - H5
+      known_trap: >
+        Model may propose residual projection and claim class R / Certificate
+        while omitting deterministic TieR policy. Without TieR, residual
+        projection is relation-valued, not a replayable operator.
+      natural_prompt: >
+        Suggest and classify an operator that repairs a cochain defect.
+      packet_prompt: |
+        Emit only an operator_classification packet.
+
+        Allowed classes:
+          - E
+          - I
+          - C
+          - R
+          - M
+
+        Required fields:
+          operator_class
+          domain
+          codomain
+          effect_on_phi
+          effect_on_quotient
+          deterministic_tie_policy
+          admissibility_witness
+          failure_modes
+          terminal
+
+        Rule:
+          If the operator changes Phi without declaration, classify as M.
+      validator: operator_classification_validator
+      expected_terminal: Repair
+      authority_ceiling: BoundaryChecked
+      expected_validator_result:
+        declared_class: R
+        admitted_class: null
+        validator_error: TiePolicyMissing
+        repairable_as: R
+      metrics:
+        - terminal_status_accuracy
+        - repair_success_after_one_feedback
+
+    - id: operator_002_context_embedding_priority
+      family: operator_classification
+      hypothesis:
+        - H5
+      known_trap: >
+        Model may classify a context embedding as I because Phi is preserved
+        on the sample. Priority rule says declared context embedding is C.
+      natural_prompt: >
+        Classify an operator rho(c)(x) that embeds x into a context c to test
+        whether equivalence survives.
+      packet_prompt: |
+        Emit only an operator_classification packet.
+
+        Operator:
+          name: rho_c
+          description: context embedding used to test congruence survival
+
+        Rule:
+          Declared context embeddings classify as C even if Phi is preserved
+          on the sample.
+      validator: operator_classification_validator
+      expected_terminal: Certificate
+      authority_ceiling: BoundaryChecked
+      expected_validator_result:
+        declared_class: C
+        priority_rule_applied: context_before_isometry
+      metrics: # added 2026-07-17: was missing
+        - terminal_status_accuracy
+        - repair_success_after_one_feedback
+
+    - id: operator_003_exact_vs_isometry
+      family: operator_classification
+      hypothesis:
+        - H5
+      known_trap: >
+        Model may classify an exact repair (E) as a quotient isometry (I)
+        because both preserve Phi. Priority rule says class-preserving
+        repair is E before I.
+      natural_prompt: >
+        Classify an operator that shifts x by a coboundary d0(alpha),
+        preserving the quotient class [x].
+      packet_prompt: |
+        Emit only an operator_classification packet.
+
+        Operator:
+          name: E_alpha
+          description: exact repair shifting by coboundary d0(alpha)
+          effect: [E_alpha(x)] = [x] for all x, Phi preserved
+
+        Rule:
+          An operator that preserves the quotient class [x] for all
+          admitted x classifies as E (exact repair), not I (quotient
+          isometry), even though both preserve Phi.
+      validator: operator_classification_validator
+      expected_terminal: Certificate
+      authority_ceiling: BoundaryChecked
+      expected_validator_result:
+        declared_class: E
+        priority_rule_applied: exact_before_isometry
+        admitted_class: E # fixed 2026-07-17: task rule admits E (was C, contradicted own trap)
+      metrics:
+        - terminal_status_accuracy

@@ -1,0 +1,125 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.state
+  name: State Normal Form
+  short_name: StNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  - observer_relvar
+  data_posture: in_motion
+  mathematical_posture: operational
+obstruction_substrate:
+  policy_ref: ../substrate/default_finite_obstruction_policy.yaml
+  finite_carrier:
+    description: epistemic state packet per observer; finite feature basis only
+  cochain_complex:
+    C0: admissible_state_rewrites
+    C1: stale_or_missing_version_defects
+    C2: inconsistent_freshness_closure
+    d0: repair_to_defect
+    d1: null
+    quotient: Q1 = C1 / im(d0)
+  obstruction_class:
+    notation: '[omega]'
+    exact: '[omega] == 0'
+  carrier_realization:
+    ref: matrix_or_density_operator
+    catalog: ../substrate/carrier_realizations_catalog.yaml
+  geometry_module:
+    ref: geom.density_projection.v0
+    path: ../geometry_modules/geom.density_projection.v0.yaml
+    status: quarantined
+purpose:
+  excludes_anomaly: scalar state fiction
+  preserves_invariant: every state claim carries value version causal context freshness
+    confidence authority
+  protected_skeleton:
+  - value
+  - version
+  - causal_context
+  - freshness
+  - confidence
+  - authority
+  erased_structure: []
+  non_claims:
+  - does not certify repair without BQNF on boundary relvar
+  - draft until verifier implements packet checks
+declarations_required:
+- value
+- version
+- causal_context
+- freshness
+- confidence
+- authority_source
+- observer
+evidence_required:
+- version_id or epoch
+- read_timestamp
+- authority_gate label
+validation_criteria:
+- value is never served without version
+- version is never served without causal_context
+- stale state is terminalized or labeled
+- authority_source is explicit
+- pairs with BQNF repair updates packet in lockstep
+proof_obligations: []
+terminal_routes:
+- Accept
+- Stale
+- CausalGap
+- AuthorityUnknown
+- ConfidenceBelowThreshold
+- Refuse
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: API returns revenue equals 42000 without epoch
+  diagnosis: state flattening
+  terminal: CausalGap
+references:
+- ../1_normal_forms.md
+- ../1a_bqnf_incremental_repair.md
+terminal_route_map:
+  Accept: Escalate
+  Stale: Escalate
+  CausalGap: Escalate
+  AuthorityUnknown: BudgetUnknown
+  ConfidenceBelowThreshold: Refuse
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: scalar state fiction. every state claim carries value version
+    causal context freshness confidence authority
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: scalar state fiction
+    lossless_join:
+      status: declared_reconstruction
+      statement: every state claim carries value version causal context freshness
+        confidence authority
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

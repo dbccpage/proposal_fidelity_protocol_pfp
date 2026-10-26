@@ -1,0 +1,55 @@
+[
+  {
+    "description": "Scenario A: Normal read within replica lag SLA bounds for dashboard but stale for trading engine",
+    "packet": {
+      "value": 42,
+      "read_at": "2026-05-19T12:00:00Z",
+      "replica_lag_seconds": 7,
+      "packet_scope": "public"
+    },
+    "observers": [
+      {
+        "observer_id": "dashboard",
+        "max_lag_seconds": 10,
+        "authorized_scopes": ["public"]
+      },
+      {
+        "observer_id": "trading_engine",
+        "max_lag_seconds": 2,
+        "authorized_scopes": ["public"]
+      }
+    ]
+  },
+  {
+    "description": "Scenario B: Incomplete lag metadata in read packet",
+    "packet": {
+      "value": 99,
+      "read_at": "2026-05-19T12:00:00Z",
+      "replica_lag_seconds": null,
+      "packet_scope": "public"
+    },
+    "observers": [
+      {
+        "observer_id": "dashboard",
+        "max_lag_seconds": 10,
+        "authorized_scopes": ["public"]
+      }
+    ]
+  },
+  {
+    "description": "Scenario C: Read outside authorized scope",
+    "packet": {
+      "value": 150,
+      "read_at": "2026-05-19T12:00:00Z",
+      "replica_lag_seconds": 1,
+      "packet_scope": "restricted"
+    },
+    "observers": [
+      {
+        "observer_id": "external_analyst",
+        "max_lag_seconds": 30,
+        "authorized_scopes": ["public_only"]
+      }
+    ]
+  }
+]

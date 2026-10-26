@@ -1,0 +1,741 @@
+{
+  "authority_effect": "None",
+  "awaiting": [
+    "a checker of record for this level",
+    "an adapter to the checker's input schema",
+    "the harness commit holding the adapter and the positive"
+  ],
+  "carrier_part": "repo_content",
+  "challenge_id": "register_squares",
+  "draft_fixtures": [
+    {
+      "id": "pos",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "ACCEPT",
+      "role": "positive"
+    },
+    {
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "equivalence",
+          "map": null,
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "FAILS:both_ways,mapped",
+      "role": "own_negative"
+    },
+    {
+      "id": "near_no_map",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": null,
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "FAILS:mapped",
+      "role": "near_miss"
+    },
+    {
+      "id": "near_partial",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "FAILS:map_total",
+      "role": "near_miss"
+    },
+    {
+      "id": "near_step",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:0"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "FAILS:step_square",
+      "role": "near_miss"
+    },
+    {
+      "id": "near_equiv",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "equivalence",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "FAILS:both_ways",
+      "role": "near_miss"
+    },
+    {
+      "id": "own_state_sight",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "0"
+              ],
+              [
+                "1",
+                "1"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "FAILS:sight_square",
+      "role": "near_miss"
+    },
+    {
+      "id": "mut",
+      "input": {
+        "packet": {
+          "back": null,
+          "claim": "simulation",
+          "map": [
+            [
+              "0",
+              "budget:0"
+            ],
+            [
+              "1",
+              "budget:1"
+            ]
+          ],
+          "source": {
+            "observe": [
+              [
+                "0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "1",
+                "1"
+              ]
+            ],
+            "states": [
+              "0",
+              "1"
+            ],
+            "step": [
+              [
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0"
+              ]
+            ]
+          },
+          "target": {
+            "observe": [
+              [
+                "budget:0",
+                "core ((), (), (), (), None, (), False)"
+              ],
+              [
+                "budget:1",
+                "core ((), (), (), (), None, (), False)"
+              ]
+            ],
+            "states": [
+              "budget:0",
+              "budget:1"
+            ],
+            "step": [
+              [
+                "budget:0",
+                "budget:1"
+              ],
+              [
+                "budget:1",
+                "budget:0"
+              ]
+            ]
+          }
+        }
+      },
+      "native_code": "FAILS:sight_square",
+      "role": "mutation"
+    }
+  ],
+  "framing": "SC",
+  "inputs": {
+    "receipts_consumed": []
+  },
+  "ladder": {
+    "level": 65,
+    "registry_version": 1,
+    "row_sha256": "sha256:345906cb3ca750580e018517b1632d4b53ae04057cc26c495fd90b2ba1ce700e",
+    "table_sha256": "sha256:3cdcabe424ac12a11d70db3dfd697239f8a6f93b98f059cacf511553e14698e7"
+  },
+  "lean_theorems": [],
+  "loss_ledger": {
+    "authority_effect": "None",
+    "changed_assumptions": [
+      "the challenge is supplied; no demand for it is derived",
+      "values are decided outside the grammar"
+    ],
+    "count": {
+      "DROPPED": 2,
+      "PRESERVED": 4,
+      "UNKNOWN": 1,
+      "WEAKENED": 10
+    },
+    "fields": [
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.both_ways",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.map_total",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.mapped",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.sight_square",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.step_square",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "clause.target_native",
+        "not_applicable_reason": null,
+        "source_value": "decided outside the grammar over decoded values",
+        "target_value": "same obligation"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "source.admission_reading",
+        "not_applicable_reason": null,
+        "source_value": "hosting admits by explicit events only",
+        "target_value": "same"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "source.carrier_part",
+        "not_applicable_reason": null,
+        "source_value": "credit as recorded in the bundle",
+        "target_value": "same"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.claim_class",
+        "not_applicable_reason": null,
+        "source_value": "bounded computation or cited theorem",
+        "target_value": "target verdict"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.continuation_policy",
+        "not_applicable_reason": null,
+        "source_value": "demands endogenous, payments exogenous",
+        "target_value": "challenge supplied"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "source.cost_measure",
+        "not_applicable_reason": "the answer is decided per fixture; no minimum is chosen among ties",
+        "source_value": "witness grade with its tie structure",
+        "target_value": "verdict per fixture"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.declared_bounds",
+        "not_applicable_reason": null,
+        "source_value": "responses of at most three items (embargo)",
+        "target_value": "unbounded obligation"
+      },
+      {
+        "classification": "DROPPED",
+        "field_or_law": "source.name_blindness",
+        "not_applicable_reason": null,
+        "source_value": "not blind: the challenge is supplied and named",
+        "target_value": "named level"
+      },
+      {
+        "classification": "DROPPED",
+        "field_or_law": "source.presentation_tokens",
+        "not_applicable_reason": null,
+        "source_value": "tokens of hosted elements",
+        "target_value": "not presented"
+      },
+      {
+        "classification": "WEAKENED",
+        "field_or_law": "source.witness_custody",
+        "not_applicable_reason": null,
+        "source_value": "research-tree evidence: research/native_bridge at the pinned 19L57G1 commit, outside the seal and its gates",
+        "target_value": "a replay under the 19L57G1 key, admitted by the author's ruling of 2026-09-25"
+      },
+      {
+        "classification": "PRESERVED",
+        "field_or_law": "target.obligation_origin",
+        "not_applicable_reason": null,
+        "source_value": "curated catalogue at the pinned commit",
+        "target_value": "same"
+      },
+      {
+        "classification": "UNKNOWN",
+        "field_or_law": "target.terminal_vocabulary",
+        "not_applicable_reason": null,
+        "source_value": "native refusal codes",
+        "target_value": "target codes, not yet published"
+      }
+    ],
+    "measure": null,
+    "open_obligations": [
+      "target replay by the receiving side's checker"
+    ],
+    "reframe_decision": "NONE",
+    "schema": "mssn.loss-ledger.v2",
+    "status_ceiling": "PROPOSED"
+  },
+  "non_claims": [
+    "answers a supplied challenge; not a derivation from the seed",
+    "Mode E: the carrier commit is the harness commit in the_symbol_game; 19L57G1 is pinned inside it",
+    "no independent convergence with any outside list is claimed",
+    "the witness is research-tree evidence (research/native_bridge at the pinned 19L57G1 commit), not sealed; it is admitted for a replay under the 19L57G1 key by the author's ruling of 2026-09-25",
+    "value clauses are decided outside the grammar (supplied capability)"
+  ],
+  "placement": "the_symbol_game",
+  "provenance": {
+    "isolation": "NOT_APPLICABLE",
+    "purity": "NOT_APPLICABLE",
+    "source_blindness": "NOT_BLIND"
+  },
+  "receipt_schema": "reach-receipt/1",
+  "schema": "level-engine.reach-stub.v1"
+}

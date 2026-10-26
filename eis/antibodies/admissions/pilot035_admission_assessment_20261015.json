@@ -1,0 +1,154 @@
+{
+  "status": "ADMITTED_FOR_PILOT035",
+  "authority_effect": "None",
+  "requests": [
+    {
+      "antibody_id": "ab_tao_family_conflation_v2_8d4ea0b2f46a",
+      "rule_bytes_utf8": "{\"action\":\"repair\",\"constraint_type\":\"ProjectOut\",\"failure_class\":\"math:tao_family_conflation\",\"guidance_text\":\"Keep the explicit Tao phase table distinct from Fourier or tensor-product families. Report only the finite table and cross-ratios actually checked; do not infer a statement about all complex Hadamard matrices.\",\"negative_fixture\":\"{\\\"all_chm\\\":true,\\\"mub6_exclusion\\\":false}\",\"operatorizability\":\"repairable\",\"positive_fixture\":\"{\\\"all_chm\\\":false,\\\"mub6_exclusion\\\":false}\",\"scope\":{\"domain\":\"mathematics\",\"prompt_fields\":[\"claims\"],\"stages\":[\"answer\"],\"tags\":[\"tao-s6\",\"cross-ratios\",\"mub6\"]},\"severity\":\"P1\",\"target_pattern\":\"^\\\\{\\\\s*\\\"all_chm\\\"\\\\s*:\\\\s*true\\\\s*,\\\\s*\\\"mub6_exclusion\\\"\\\\s*:\\\\s*(?:true|false)\\\\s*\\\\}$\"}",
+      "scope": "prompt://mathematics/hadamard/pilot035/answer/tao-cross-ratios-v1",
+      "fixture_check": "PYTHON_REGEX_DUAL_CONTROLS_PASSED",
+      "observation_kind": "fixture_reproduction",
+      "controls": {
+        "must_match": [
+          "{\"all_chm\":true,\"mub6_exclusion\":false}",
+          "{\"all_chm\":true,\"mub6_exclusion\":true}"
+        ],
+        "must_not_match": [
+          "{\"all_chm\":false,\"mub6_exclusion\":false}",
+          "{\"all_chm\":false,\"mub6_exclusion\":true}",
+          "Conjecture 2 is not universal across all CHMs.",
+          "The historical draft claimed Tao S6 = F3 tensor F2; that identification is not assumed here."
+        ]
+      },
+      "request": {
+        "schema_version": "omega.pharmacy.external-admission-request.v1",
+        "candidate_digest": "sha256:8d4ea0b2f46a10361306705268398cee01e1f02e715e990d08dfb320c1662940",
+        "producer_system": "omega_engine_epistemic_immune_system",
+        "source_manifest_digest": "sha256:96f8e8ee3062ed47cd9831dc0d6939acbd77be8936fbbf5992dc4c1e2c4cecdc",
+        "positive_fixture_digest": "sha256:f8f332e161cd938ef2bd2fba3e1fe23c9a9256fdbd7b9357f137229d5cb01354",
+        "negative_fixture_digest": "sha256:1798caf4eddc2f270d5cf5d79beb66cab0bdca0a4ab175c8fa82a247f4ff78d1",
+        "status": "CANDIDATE",
+        "authority_effect": "None"
+      },
+      "human_decision": {
+        "decision_id": "pilot035-owner-8d4ea0b2f46a",
+        "issuer": "human:repository-owner",
+        "rule_bytes_sha256": "sha256:8d4ea0b2f46a10361306705268398cee01e1f02e715e990d08dfb320c1662940",
+        "scope": "prompt://mathematics/hadamard/pilot035/answer/tao-cross-ratios-v1",
+        "receipt_sha256": "sha256:6133c5e38f380326eaf7cf1fb0bfa14c232ceb2ca6855cf927b4c487a51a89e0"
+      },
+      "assessment": {
+        "AuthorityEffect": "None",
+        "distinct_observations": [
+          "sha256:6b90459c53900aa008757bf3e878a729a53eac12a1ec95579a049d2f08389968",
+          "sha256:ab400d0b4676c13369c60318a9300144d4fc824762581c41f1b109c606229b4a"
+        ],
+        "eligible_for_external_review": true,
+        "observation_records": 2,
+        "request": {
+          "authority_effect": "None",
+          "candidate_digest": "sha256:8d4ea0b2f46a10361306705268398cee01e1f02e715e990d08dfb320c1662940",
+          "negative_fixture_digest": "sha256:1798caf4eddc2f270d5cf5d79beb66cab0bdca0a4ab175c8fa82a247f4ff78d1",
+          "positive_fixture_digest": "sha256:f8f332e161cd938ef2bd2fba3e1fe23c9a9256fdbd7b9357f137229d5cb01354",
+          "producer_system": "omega_engine_epistemic_immune_system",
+          "request_id": "sha256:eb1195d02070b37acfd3800864933d0a9fd46452a241aaf1e047bde2f8a4912e",
+          "schema_version": "omega.pharmacy.external-admission-request.v1",
+          "source_manifest_digest": "sha256:96f8e8ee3062ed47cd9831dc0d6939acbd77be8936fbbf5992dc4c1e2c4cecdc",
+          "status": "CANDIDATE"
+        },
+        "required_distinct": 2,
+        "status": "CANDIDATE"
+      },
+      "observation_records": [
+        {
+          "observation_digest": "sha256:ab400d0b4676c13369c60318a9300144d4fc824762581c41f1b109c606229b4a",
+          "observer_id": "python-regex-fixture-reproduction",
+          "run_id": "pilot035-admission-controls",
+          "schema_version": "omega.pharmacy.antibody-observation.v1"
+        },
+        {
+          "observation_digest": "sha256:6b90459c53900aa008757bf3e878a729a53eac12a1ec95579a049d2f08389968",
+          "observer_id": "python-regex-fixture-reproduction",
+          "run_id": "pilot035-admission-controls",
+          "schema_version": "omega.pharmacy.antibody-observation.v1"
+        }
+      ],
+      "scope_limit": "Distinct fixture reproductions only; not independent model sightings or detector accuracy evidence.",
+      "approval_evidence_path": ".agents/antibodies/admissions/pilot035_owner_approval_20261015.json"
+    },
+    {
+      "antibody_id": "ab_finite_mub_promotion_v2_8b441638bd2d",
+      "rule_bytes_utf8": "{\"action\":\"repair\",\"constraint_type\":\"ProjectOut\",\"failure_class\":\"math:finite_mub_promotion\",\"guidance_text\":\"A finite cross-ratio computation does not prove unrestricted MUB(6) exclusion. State the checked matrix, finite inputs and result; leave general MUB existence or nonexistence to its separate theorem and evidence owner.\",\"negative_fixture\":\"{\\\"all_chm\\\":false,\\\"mub6_exclusion\\\":true}\",\"operatorizability\":\"repairable\",\"positive_fixture\":\"{\\\"all_chm\\\":false,\\\"mub6_exclusion\\\":false}\",\"scope\":{\"domain\":\"mathematics\",\"prompt_fields\":[\"claims\"],\"stages\":[\"answer\"],\"tags\":[\"tao-s6\",\"cross-ratios\",\"mub6\"]},\"severity\":\"P1\",\"target_pattern\":\"^\\\\{\\\\s*\\\"all_chm\\\"\\\\s*:\\\\s*(?:true|false)\\\\s*,\\\\s*\\\"mub6_exclusion\\\"\\\\s*:\\\\s*true\\\\s*\\\\}$\"}",
+      "scope": "prompt://mathematics/hadamard/pilot035/answer/tao-cross-ratios-v1",
+      "fixture_check": "PYTHON_REGEX_DUAL_CONTROLS_PASSED",
+      "observation_kind": "fixture_reproduction",
+      "controls": {
+        "must_match": [
+          "{\"all_chm\":false,\"mub6_exclusion\":true}",
+          "{\"all_chm\":true,\"mub6_exclusion\":true}"
+        ],
+        "must_not_match": [
+          "{\"all_chm\":false,\"mub6_exclusion\":false}",
+          "{\"all_chm\":true,\"mub6_exclusion\":false}",
+          "The finite table does not prove MUB(6)=3.",
+          "An old packet asserted an exclusion; its claim is not evidence of that exclusion."
+        ]
+      },
+      "request": {
+        "schema_version": "omega.pharmacy.external-admission-request.v1",
+        "candidate_digest": "sha256:8b441638bd2d1179813cef24d6572aacb20f2c5c553414c5e2f2031ef3f3b51f",
+        "producer_system": "omega_engine_epistemic_immune_system",
+        "source_manifest_digest": "sha256:96f8e8ee3062ed47cd9831dc0d6939acbd77be8936fbbf5992dc4c1e2c4cecdc",
+        "positive_fixture_digest": "sha256:f8f332e161cd938ef2bd2fba3e1fe23c9a9256fdbd7b9357f137229d5cb01354",
+        "negative_fixture_digest": "sha256:70355658ef4abf89d04dfacc1da637fcbdec784f16c79db81e66680f917b8e5f",
+        "status": "CANDIDATE",
+        "authority_effect": "None"
+      },
+      "human_decision": {
+        "decision_id": "pilot035-owner-8b441638bd2d",
+        "issuer": "human:repository-owner",
+        "rule_bytes_sha256": "sha256:8b441638bd2d1179813cef24d6572aacb20f2c5c553414c5e2f2031ef3f3b51f",
+        "scope": "prompt://mathematics/hadamard/pilot035/answer/tao-cross-ratios-v1",
+        "receipt_sha256": "sha256:6133c5e38f380326eaf7cf1fb0bfa14c232ceb2ca6855cf927b4c487a51a89e0"
+      },
+      "assessment": {
+        "AuthorityEffect": "None",
+        "distinct_observations": [
+          "sha256:0404602b3dc8dc2037730c55bc056dad341020433b22b1e4c0ef9d29a64f2bd5",
+          "sha256:d1acdc1571b58029df2f10f7b8c35fbcc68ebb90dc7b7e2f8c4aa5ffbd1ae31b"
+        ],
+        "eligible_for_external_review": true,
+        "observation_records": 2,
+        "request": {
+          "authority_effect": "None",
+          "candidate_digest": "sha256:8b441638bd2d1179813cef24d6572aacb20f2c5c553414c5e2f2031ef3f3b51f",
+          "negative_fixture_digest": "sha256:70355658ef4abf89d04dfacc1da637fcbdec784f16c79db81e66680f917b8e5f",
+          "positive_fixture_digest": "sha256:f8f332e161cd938ef2bd2fba3e1fe23c9a9256fdbd7b9357f137229d5cb01354",
+          "producer_system": "omega_engine_epistemic_immune_system",
+          "request_id": "sha256:55780dfa3e57d58c3eeacf4d3e1e483d5881ad3efefaacb4f192b11d96535912",
+          "schema_version": "omega.pharmacy.external-admission-request.v1",
+          "source_manifest_digest": "sha256:96f8e8ee3062ed47cd9831dc0d6939acbd77be8936fbbf5992dc4c1e2c4cecdc",
+          "status": "CANDIDATE"
+        },
+        "required_distinct": 2,
+        "status": "CANDIDATE"
+      },
+      "observation_records": [
+        {
+          "observation_digest": "sha256:0404602b3dc8dc2037730c55bc056dad341020433b22b1e4c0ef9d29a64f2bd5",
+          "observer_id": "python-regex-fixture-reproduction",
+          "run_id": "pilot035-admission-controls",
+          "schema_version": "omega.pharmacy.antibody-observation.v1"
+        },
+        {
+          "observation_digest": "sha256:d1acdc1571b58029df2f10f7b8c35fbcc68ebb90dc7b7e2f8c4aa5ffbd1ae31b",
+          "observer_id": "python-regex-fixture-reproduction",
+          "run_id": "pilot035-admission-controls",
+          "schema_version": "omega.pharmacy.antibody-observation.v1"
+        }
+      ],
+      "scope_limit": "Distinct fixture reproductions only; not independent model sightings or detector accuracy evidence.",
+      "approval_evidence_path": ".agents/antibodies/admissions/pilot035_owner_approval_20261015.json"
+    }
+  ]
+}

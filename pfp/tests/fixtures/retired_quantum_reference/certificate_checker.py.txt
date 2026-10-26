@@ -1,0 +1,839 @@
+"""Independent algebraic certificate checker for quantum stabilizer solver solutions.
+
+Verifies:
+1. Generator commutativity and linear independence over GF(2).
+2. Exact 1-to-1 bijection between input terms and decomposition rows.
+3. Algebraic product correctness of generators with exact phase tracking.
+4. Exhaustive evaluation and exact contents verification of minimizing assignments.
+5. Strict ground-state energy and eigenspace degeneracy checks.
+6. Witnessed anticommuting pair verification for OUT_OF_SCOPE refusals.
+7. Rejection of UNKNOWN or inconsistent status fall-through.
+8. Support for empty Hamiltonians (H = 0, deg = 2^n).
+
+AuthorityEffect: None.
+"""
+
+from __future__ import annotations
+
+from fractions import Fraction
+from typing import Any, Mapping
+
+from .hamiltonian import ChallengeParseError, HamiltonianTerm, parse_challenge
+from .pauli import PauliString
+
+
+def _sequence_length(value: Any) -> str:
+    """Length of a list or tuple for an error message; never raises on other types."""
+    if isinstance(value, (list, tuple)):
+        return str(len(value))
+    return f"non-sequence {type(value).__name__}"
+
+
+def _exponent_error(exponents: Any, k: int | None = None) -> str | None:
+    """Why a model-supplied exponent list is malformed, or None when it is a list of 0/1 integers."""
+    if not isinstance(exponents, (list, tuple)):
+        return f"Exponents must be a list, got {_sequence_length(exponents)}"
+    if k is not None and len(exponents) != k:
+        return f"Exponents length {len(exponents)} != k {k}"
+    for exp in exponents:
+        if isinstance(exp, bool) or not isinstance(exp, int) or exp not in (0, 1):
+            return f"Invalid exponent {exp!r} (must be non-boolean 0 or 1)"
+    return None
+
+
+def check_certificate(case: Mapping[str, Any], result: Mapping[str, Any]) -> dict[str, Any]:
+    """Strictly validates a solver output against the input case.
+
+    Returns dict with verdict ('PASS' or 'FAIL') and detailed validation log.
+    Model-supplied values of any JSON shape yield a FAIL, never an exception.
+    """
+    case_id = str(case.get("case_id") or case.get("id") or "unnamed")
+    if not isinstance(result, Mapping):
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Result must be a JSON object, got {type(result).__name__}",
+        }
+    status = result.get("status")
+
+    if status not in ("SOLVED", "OUT_OF_SCOPE", "UNKNOWN"):
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Invalid status: {status!r}",
+        }
+
+    is_malformed = False
+    malformed_reason = ""
+    parsed_terms: list[HamiltonianTerm] = []
+    num_qubits = 0
+
+    try:
+        parsed = parse_challenge(case)
+    except ChallengeParseError as ex:
+        is_malformed = True
+        malformed_reason = str(ex)
+        parsed = None
+    else:
+        num_qubits = parsed.num_qubits
+        parsed_terms = list(parsed.hamiltonian.terms)
+        hamiltonian = parsed.hamiltonian
+
+    # --- Verification for UNKNOWN ---
+    if status == "UNKNOWN":
+        refusal_code = result.get("refusal_code")
+        if not refusal_code:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Status is UNKNOWN but refusal_code is missing",
+            }
+        if not is_malformed:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Case is well-formed and within bounds, but solver reported UNKNOWN",
+            }
+        return {
+            "verdict": "PASS",
+            "case_id": case_id,
+            "status": "UNKNOWN",
+            "refusal_witness_verified": True,
+            "refusal_code": str(refusal_code),
+        }
+
+    # If the case was malformed, solver must report UNKNOWN, not SOLVED or OUT_OF_SCOPE
+    if is_malformed:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Case is malformed ({malformed_reason}) but solver reported {status!r} instead of UNKNOWN",
+        }
+
+    # Term ID resolution mapping - strictly separate literal IDs from positional indices
+    assert parsed is not None
+    # Same term list parse_challenge read, so ids and indices cannot drift apart
+    raw_terms = case.get("terms")
+    if raw_terms is None:
+        raw_terms = case.get("paulis") or []
+    literal_term_id_to_idx: dict[Any, int] = {}
+    has_explicit_term_ids = False
+    for idx, t in enumerate(raw_terms):
+        if isinstance(t, Mapping) and "id" in t:
+            has_explicit_term_ids = True
+            literal_term_id_to_idx[str(t["id"])] = idx
+            literal_term_id_to_idx[t["id"]] = idx
+
+    def resolve_term_ref(ref: Any) -> int | None:
+        """Resolves term ID or positional index strictly without namespace collisions."""
+        # bool hashes equal to 0/1, so a dict lookup would silently accept True/False as ids;
+        # anything other than a string or an integer (a list, a dict) is not a term reference
+        if ref is None or isinstance(ref, bool) or not isinstance(ref, (str, int)):
+            return None
+        # 1. Match explicit term IDs
+        if has_explicit_term_ids:
+            if ref in literal_term_id_to_idx:
+                return literal_term_id_to_idx[ref]
+            if type(ref) is int and 0 <= ref < len(parsed_terms) and ref not in literal_term_id_to_idx:
+                return ref
+            return None
+        else:
+            # 2. Terms had no explicit IDs: allow int or canonical int str
+            if type(ref) is int and 0 <= ref < len(parsed_terms):
+                return ref
+            if isinstance(ref, str) and ref.isdigit():
+                val = int(ref)
+                if 0 <= val < len(parsed_terms):
+                    return val
+            return None
+
+    # --- Verification for OUT_OF_SCOPE ---
+    if status == "OUT_OF_SCOPE":
+        witness_raw = result.get("witness") or result.get("anticommuting_pair") or result.get("pair")
+        if not witness_raw:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "OUT_OF_SCOPE result missing witness or anticommuting_pair",
+            }
+
+        # Extract pair indices
+        if isinstance(witness_raw, (list, tuple)) and len(witness_raw) == 2:
+            w_i, w_j = witness_raw[0], witness_raw[1]
+            idx_i = resolve_term_ref(w_i)
+            idx_j = resolve_term_ref(w_j)
+        elif isinstance(witness_raw, dict):
+            t_i = witness_raw.get("term_i", {})
+            t_j = witness_raw.get("term_j", {})
+            if not isinstance(t_i, Mapping) or not isinstance(t_j, Mapping):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": "Witness term_i and term_j must be objects",
+                }
+            val_i = t_i.get("id") if "id" in t_i else t_i.get("index", t_i.get("term_index"))
+            val_j = t_j.get("id") if "id" in t_j else t_j.get("index", t_j.get("term_index"))
+            idx_i = resolve_term_ref(val_i)
+            idx_j = resolve_term_ref(val_j)
+        else:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Malformed witness or anticommuting_pair format",
+            }
+
+        if idx_i is None or idx_j is None:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Witness terms {witness_raw!r} could not be resolved to input terms",
+            }
+
+        if not (0 <= idx_i < len(parsed_terms)) or not (0 <= idx_j < len(parsed_terms)):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Witness indices {idx_i}, {idx_j} out of bounds for terms count {len(parsed_terms)}",
+            }
+
+        if idx_i == idx_j:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Witness terms {idx_i} and {idx_j} are identical",
+            }
+
+        p_i = parsed_terms[idx_i].pauli
+        p_j = parsed_terms[idx_j].pauli
+        if p_i.commutes_with(p_j):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Terms at {idx_i} ({p_i.word}) and {idx_j} ({p_j.word}) actually commute; invalid refusal",
+            }
+
+        return {
+            "verdict": "PASS",
+            "case_id": case_id,
+            "status": "OUT_OF_SCOPE",
+            "refusal_witness_verified": True,
+            "witness_indices": [idx_i, idx_j],
+        }
+
+    # Strict check: status must be SOLVED
+    if status != "SOLVED":
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Unrecognized or non-solvable status {status!r}; expected SOLVED, OUT_OF_SCOPE, or UNKNOWN",
+        }
+
+    # --- Verification for SOLVED ---
+    assert hamiltonian is not None
+    anticommuting = hamiltonian.find_anticommuting_pair()
+    if anticommuting is not None:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": "Hamiltonian has anticommuting pair but was reported as SOLVED",
+        }
+
+    # 1. Validate Dimension / Degeneracy aliases and types
+    dim_candidates: list[tuple[str, Any]] = []
+    for k_dim in ("ground_eigenspace_dimension", "degeneracy", "deg"):
+        if k_dim in result:
+            dim_candidates.append((k_dim, result[k_dim]))
+
+    if not dim_candidates:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": "Missing ground eigenspace dimension or degeneracy in result",
+        }
+
+    validated_dim: int | None = None
+    for name, v in dim_candidates:
+        # Must be an exact integer, NOT float (e.g. 1.9), NOT bool (e.g. True)
+        if isinstance(v, bool) or not isinstance(v, int):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Invalid type for {name}: {v!r} ({type(v).__name__}); must be exact integer",
+            }
+        if v <= 0:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Non-positive value for {name}: {v}",
+            }
+        if validated_dim is None:
+            validated_dim = v
+        elif validated_dim != v:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Contradictory degeneracy aliases: {dim_candidates[0][0]}={validated_dim} != {name}={v}",
+            }
+
+    reported_dim = validated_dim
+    assert reported_dim is not None
+
+    # 2. Validate Energy aliases and types
+    energy_candidates: list[tuple[str, Fraction]] = []
+    for name in ("ground_state_energy", "energy", "E", "ground_state_energy_rational"):
+        if name in result:
+            raw_e = result[name]
+            try:
+                if isinstance(raw_e, (list, tuple)):
+                    if len(raw_e) != 2:
+                        raise ValueError(f"Energy pair must have length 2, got {len(raw_e)}")
+                    if type(raw_e[0]) is not int or type(raw_e[1]) is not int:
+                        raise TypeError("Energy pair elements must be exact integers")
+                    if raw_e[1] == 0:
+                        raise ZeroDivisionError("Denominator cannot be 0")
+                    f_val = Fraction(raw_e[0], raw_e[1])
+                elif isinstance(raw_e, dict):
+                    num_i = raw_e["numerator"]
+                    den_i = raw_e["denominator"]
+                    if type(num_i) is not int or type(den_i) is not int:
+                        raise TypeError("Energy numerator and denominator must be exact integers")
+                    f_val = Fraction(num_i, den_i)
+                elif type(raw_e) is bool or type(raw_e) is float:
+                    raise TypeError("Energy must be an exact rational, not bool or float")
+                elif type(raw_e) is int or type(raw_e) is str:
+                    f_val = Fraction(raw_e)
+                else:
+                    raise TypeError(f"Unsupported energy type: {type(raw_e).__name__}")
+                energy_candidates.append((name, f_val))
+            except Exception as e:
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Failed to parse energy field {name}={raw_e!r}: {e}",
+                }
+
+    if not energy_candidates:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": "Missing ground state energy field in result",
+        }
+
+    reported_energy: Fraction | None = None
+    for name, f_val in energy_candidates:
+        if reported_energy is None:
+            reported_energy = f_val
+        elif reported_energy != f_val:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": (
+                    f"Contradictory energy representations: "
+                    f"{energy_candidates[0][0]}={reported_energy} != {name}={f_val}"
+                ),
+            }
+
+    assert reported_energy is not None
+
+    # 3. Resolve generators and basis
+    cert = result.get("certificate") if isinstance(result.get("certificate"), dict) else {}
+    basis_raw = result["basis"] if "basis" in result else cert.get("basis")
+    generators_raw = cert.get("generators")
+
+    generators: list[PauliString] = []
+
+    if basis_raw is not None:
+        if not isinstance(basis_raw, (list, tuple)):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Basis must be a list of input term IDs",
+            }
+        for b_id in basis_raw:
+            idx = resolve_term_ref(b_id)
+            if idx is None or not (0 <= idx < len(parsed_terms)):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Basis term ID {b_id!r} not found in input terms",
+                }
+            generators.append(parsed_terms[idx].pauli)
+
+        # If generators_raw is also provided, verify agreement
+        if generators_raw is not None:
+            if not isinstance(generators_raw, (list, tuple)) or len(generators_raw) != len(generators):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Generators list length {_sequence_length(generators_raw)} != basis length {len(generators)}",
+                }
+            for j, g_str in enumerate(generators_raw):
+                if str(g_str) != generators[j].word:
+                    return {
+                        "verdict": "FAIL",
+                        "case_id": case_id,
+                        "error": f"Generator {j} ({g_str}) != basis Pauli ({generators[j].word})",
+                    }
+    elif generators_raw is not None:
+        if not isinstance(generators_raw, (list, tuple)):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Generators entry must be a list",
+            }
+        for g_item in generators_raw:
+            if not isinstance(g_item, str):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Generator is not a string: {g_item!r} ({type(g_item).__name__})",
+                }
+            if len(g_item) != num_qubits:
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Generator {g_item!r} length != num_qubits {num_qubits}",
+                }
+            try:
+                generators.append(PauliString(g_item))
+            except Exception as exc:
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Invalid Pauli string in generators: {exc}",
+                }
+    else:
+        # If no terms in case, generators is empty
+        if len(parsed_terms) == 0:
+            generators = []
+        else:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Missing generators or basis in certificate",
+            }
+
+    k = len(generators)
+
+    # 4. Check generators pairwise commute and linear independence
+    for i in range(k):
+        for j in range(i + 1, k):
+            if not generators[i].commutes_with(generators[j]):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Generators {i} ({generators[i].word}) and {j} ({generators[j].word}) anticommute",
+                }
+
+    # GF(2) linear independence
+    gen_vecs = [g.to_symplectic_vector() for g in generators]
+    aug = [list(v) for v in gen_vecs]
+    rank = 0
+    rows = len(aug)
+    cols = len(aug[0]) if rows > 0 else 0
+    for c in range(cols):
+        piv = -1
+        for r in range(rank, rows):
+            if aug[r][c] == 1:
+                piv = r
+                break
+        if piv == -1:
+            continue
+        aug[rank], aug[piv] = aug[piv], aug[rank]
+        for r in range(rows):
+            if r != rank and aug[r][c] == 1:
+                for j in range(c, cols):
+                    aug[r][j] ^= aug[rank][j]
+        rank += 1
+
+    if rank != k:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Generators are linearly dependent: rank {rank} != count {k}",
+        }
+
+    # 5. Check term decompositions
+    decomps_primary = result.get("decomposition")
+    decomps_cert = cert.get("term_decompositions")
+
+    if decomps_primary is not None and decomps_cert is not None:
+        if not isinstance(decomps_primary, (list, tuple)) or not isinstance(decomps_cert, (list, tuple)):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": (
+                    "Decomposition representations must be lists, got "
+                    f"{_sequence_length(decomps_primary)} and {_sequence_length(decomps_cert)}"
+                ),
+            }
+        if len(decomps_primary) != len(decomps_cert):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Contradictory decomposition representations: count {len(decomps_primary)} != {len(decomps_cert)}",
+            }
+        for d1, d2 in zip(decomps_primary, decomps_cert):
+            if not isinstance(d1, Mapping) or not isinstance(d2, Mapping):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Decomposition entries must be objects, got {type(d1).__name__} and {type(d2).__name__}",
+                }
+            s1 = d1.get("phase") if "phase" in d1 else d1.get("sign")
+            s2 = d2.get("phase") if "phase" in d2 else d2.get("sign")
+            if s1 != s2:
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Contradictory decomposition sign representations: {s1} != {s2}",
+                }
+            m1 = d1.get("mask")
+            exps2 = d2.get("generator_exponents") or d2.get("generator_powers")
+            if m1 is not None and exps2 is not None:
+                exps2_error = _exponent_error(exps2)
+                if exps2_error is not None:
+                    return {
+                        "verdict": "FAIL",
+                        "case_id": case_id,
+                        "error": f"Alternative decomposition exponents are malformed: {exps2_error}",
+                    }
+                m2 = sum(e << j for j, e in enumerate(exps2))
+                if m1 != m2:
+                    return {
+                        "verdict": "FAIL",
+                        "case_id": case_id,
+                        "error": f"Contradictory decomposition mask representations: {m1} != {m2}",
+                    }
+
+    decomps_raw = decomps_primary if decomps_primary is not None else decomps_cert
+    if decomps_raw is None:
+        decomps_raw = []
+
+    if not isinstance(decomps_raw, (list, tuple)) or len(decomps_raw) != len(parsed_terms):
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Decompositions count {_sequence_length(decomps_raw)} != terms count {len(parsed_terms)}",
+        }
+
+    decomps_by_term: dict[int, dict[str, Any]] = {}
+    for d_idx, d in enumerate(decomps_raw):
+        if not isinstance(d, dict):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Decomposition entry is not a dict: {type(d).__name__}",
+            }
+        t_key = d.get("id") if "id" in d else d.get("term_id", d.get("term_index", d_idx))
+        term_idx = resolve_term_ref(t_key)
+        if term_idx is None or not (0 <= term_idx < len(parsed_terms)):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Invalid or unresolvable term identifier {t_key!r} in decomposition",
+            }
+        if term_idx in decomps_by_term:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Duplicate decomposition for term_index {term_idx} (term {term_idx})",
+            }
+
+        # Check sign / phase
+        sigma = d.get("phase") if "phase" in d else d.get("sign")
+        if isinstance(sigma, bool) or sigma not in (1, -1):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": f"Sign/Phase {sigma!r} not in {{+1, -1}} for term {term_idx}",
+            }
+
+        # Check mask and exponents
+        exps_val = d.get("generator_exponents") or d.get("generator_powers")
+        mask_val = d.get("mask")
+
+        if exps_val is not None:
+            exps_error = _exponent_error(exps_val, k)
+            if exps_error is not None:
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"{exps_error} for term {term_idx}",
+                }
+            comp_mask = sum(exp << j for j, exp in enumerate(exps_val))
+            if mask_val is not None:
+                if isinstance(mask_val, bool) or not isinstance(mask_val, int):
+                    return {
+                        "verdict": "FAIL",
+                        "case_id": case_id,
+                        "error": f"Mask {mask_val!r} is not an integer for term {term_idx}",
+                    }
+                if mask_val != comp_mask:
+                    return {
+                        "verdict": "FAIL",
+                        "case_id": case_id,
+                        "error": f"Contradictory mask {mask_val} != generator_exponents mask {comp_mask} for term {term_idx}",
+                    }
+            exps = [int(exp) for exp in exps_val]
+        elif mask_val is not None:
+            if isinstance(mask_val, bool) or not isinstance(mask_val, int):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Mask {mask_val!r} is not an integer for term {term_idx}",
+                }
+            if not (0 <= mask_val < (1 << k)):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Mask {mask_val} out of bounds for k={k} on term {term_idx}",
+                }
+            exps = [(mask_val >> j) & 1 for j in range(k)]
+        else:
+            if k == 0:
+                exps = []
+            else:
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Missing exponents and mask in decomposition for term {term_idx}",
+                }
+
+        # Multiply generators with exact phase
+        phase_acc = 0
+        res_pauli = PauliString.identity(num_qubits)
+        for j, exp in enumerate(exps):
+            if exp == 1:
+                step_phase, res_pauli = res_pauli.multiply(generators[j])
+                phase_acc = (phase_acc + step_phase) % 4
+
+        exp_phase = 0 if sigma == 1 else 2
+        expected_pauli = parsed_terms[term_idx].pauli
+        if phase_acc != exp_phase or res_pauli.word != expected_pauli.word:
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": (
+                    f"Decomposition algebraic mismatch for term {term_idx}: "
+                    f"expected {sigma}*{expected_pauli.word}, reconstructed phase {phase_acc} and {res_pauli.word}"
+                ),
+            }
+
+        decomps_by_term[term_idx] = {
+            "sign": sigma,
+            "generator_exponents": exps,
+            "mask": mask_val if mask_val is not None else sum(exp << j for j, exp in enumerate(exps)),
+        }
+
+    # 6. Re-evaluate true minimum energy and true minimizing set across all 2^k assignments
+    num_all = 1 << k
+    true_min_energy: Fraction | None = None
+    true_minimizing_indices: set[int] = set()
+    true_minimizing_tuples: set[tuple[int, ...]] = set()
+
+    for a_idx in range(num_all):
+        b_vec = tuple(1 if ((a_idx >> j) & 1) == 0 else -1 for j in range(k))
+        tot_e = Fraction(0)
+        for term_idx, term in enumerate(parsed_terms):
+            d = decomps_by_term[term_idx]
+            lam = d["sign"]
+            for j, exp in enumerate(d["generator_exponents"]):
+                if exp == 1:
+                    lam *= b_vec[j]
+            tot_e += term.penalty_for_eigenvalue(lam)
+
+        if true_min_energy is None or tot_e < true_min_energy:
+            true_min_energy = tot_e
+            true_minimizing_indices = {a_idx}
+            true_minimizing_tuples = {b_vec}
+        elif tot_e == true_min_energy:
+            true_minimizing_indices.add(a_idx)
+            true_minimizing_tuples.add(b_vec)
+
+    if true_min_energy is None:
+        true_min_energy = Fraction(0)
+        true_minimizing_indices = {0}
+        true_minimizing_tuples = {()}
+
+    if reported_energy != true_min_energy:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Reported energy {reported_energy} != true ground energy {true_min_energy}",
+        }
+
+    expected_ground_dim = len(true_minimizing_indices) * (1 << (num_qubits - k))
+    if reported_dim != expected_ground_dim:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Reported dimension {reported_dim} != expected dimension {expected_ground_dim}",
+        }
+
+    # 7. Check submitted minimizers / minimizing assignments
+    minimizers_raw = result.get("minimizers")
+    assignments_raw = cert.get("minimizing_assignments")
+
+    if minimizers_raw is None and assignments_raw is None and k > 0:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": "No minimizing assignments provided in certificate",
+        }
+
+    submitted_indices: list[int] = []
+
+    minimizers_indices: list[int] | None = None
+    if minimizers_raw is not None:
+        if not isinstance(minimizers_raw, (list, tuple)):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Minimizers must be a list of assignment integers",
+            }
+        minimizers_indices = []
+        for m in minimizers_raw:
+            if isinstance(m, bool) or not isinstance(m, int):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Minimizer {m!r} is not an integer",
+                }
+            if not (0 <= m < (1 << k)):
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Minimizer index {m} out of bounds for k={k}",
+                }
+            minimizers_indices.append(m)
+
+    assignments_indices: list[int] | None = None
+    if assignments_raw is not None:
+        if not isinstance(assignments_raw, (list, tuple)):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": "Minimizing assignments must be a list",
+            }
+        assignments_indices = []
+        for a_i, a in enumerate(assignments_raw):
+            if isinstance(a, dict):
+                evs = a.get("eigenvalues")
+                a_idx = a.get("assignment_index")
+                if a_idx is not None:
+                    if isinstance(a_idx, bool) or not isinstance(a_idx, int):
+                        return {
+                            "verdict": "FAIL",
+                            "case_id": case_id,
+                            "error": f"Assignment index {a_idx!r} is not an integer",
+                        }
+                if evs is not None:
+                    if isinstance(evs, bool) or not isinstance(evs, (list, tuple)):
+                        return {
+                            "verdict": "FAIL",
+                            "case_id": case_id,
+                            "error": f"Assignment {a_i} eigenvalues must be a list or tuple, got {type(evs).__name__}",
+                        }
+                    if len(evs) != k:
+                        return {
+                            "verdict": "FAIL",
+                            "case_id": case_id,
+                            "error": f"Assignment {a_i} eigenvalues length != k {k}",
+                        }
+                    for v in evs:
+                        if isinstance(v, bool) or not isinstance(v, int) or v not in (1, -1):
+                            return {
+                                "verdict": "FAIL",
+                                "case_id": case_id,
+                                "error": f"Assignment {a_i} has invalid eigenvalue {v!r}; must be integer +1 or -1",
+                            }
+                    if a_idx is not None:
+                        expected_evs = [1 if ((a_idx >> j) & 1) == 0 else -1 for j in range(k)]
+                        if list(evs) != expected_evs:
+                            return {
+                                "verdict": "FAIL",
+                                "case_id": case_id,
+                                "error": f"Contradictory assignment_index {a_idx} and eigenvalues {list(evs)}",
+                            }
+                    idx_from_evs = sum((0 if ev == 1 else 1) << j for j, ev in enumerate(evs))
+                    if a_idx is None:
+                        a_idx = idx_from_evs
+                if a_idx is not None:
+                    assignments_indices.append(a_idx)
+            elif isinstance(a, (list, tuple)):
+                if len(a) != k:
+                    return {
+                        "verdict": "FAIL",
+                        "case_id": case_id,
+                        "error": f"Assignment {a_i} eigenvalues length != k {k}",
+                    }
+                for v in a:
+                    if isinstance(v, bool) or not isinstance(v, int) or v not in (1, -1):
+                        return {
+                            "verdict": "FAIL",
+                            "case_id": case_id,
+                            "error": f"Assignment {a_i} has invalid eigenvalue {v!r}; must be integer +1 or -1",
+                        }
+                idx_from_evs = sum((0 if ev == 1 else 1) << j for j, ev in enumerate(a))
+                assignments_indices.append(idx_from_evs)
+            else:
+                return {
+                    "verdict": "FAIL",
+                    "case_id": case_id,
+                    "error": f"Assignment {a_i} is of unsupported type {type(a).__name__}",
+                }
+
+    if minimizers_indices is not None and assignments_indices is not None:
+        if sorted(minimizers_indices) != sorted(assignments_indices):
+            return {
+                "verdict": "FAIL",
+                "case_id": case_id,
+                "error": (
+                    f"Contradictory minimizers representations: "
+                    f"minimizers {sorted(minimizers_indices)} != minimizing_assignments {sorted(assignments_indices)}"
+                ),
+            }
+        submitted_indices = minimizers_indices
+    elif minimizers_indices is not None:
+        submitted_indices = minimizers_indices
+    elif assignments_indices is not None:
+        submitted_indices = assignments_indices
+
+    # Check for duplicates
+    if len(set(submitted_indices)) != len(submitted_indices):
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": "Duplicate minimizing assignments submitted in certificate",
+        }
+
+    # Check exhaustiveness & minimality
+    submitted_set = set(submitted_indices)
+    non_minimal = submitted_set - true_minimizing_indices
+    missing = true_minimizing_indices - submitted_set
+    if non_minimal:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": f"Submitted assignment(s) {sorted(non_minimal)} are not minimal (do not achieve ground state energy)",
+        }
+    if missing:
+        return {
+            "verdict": "FAIL",
+            "case_id": case_id,
+            "error": (
+                f"Submitted minimizing assignments incomplete: "
+                f"submitted count {len(submitted_set)} != true count {len(true_minimizing_indices)} (missing {sorted(missing)})"
+            ),
+        }
+
+    return {
+        "verdict": "PASS",
+        "case_id": case_id,
+        "status": "SOLVED",
+        "ground_state_energy": str(reported_energy),
+        "ground_eigenspace_dimension": reported_dim,
+        "generators_count": k,
+        "assignments_verified": len(submitted_indices),
+    }

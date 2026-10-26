@@ -1,0 +1,52 @@
+stage: 11
+name: evidence_plan
+executor: model
+requires:
+- 9
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: yaml/mode_2_proofer/stage_8_evidence_plan.yaml
+system_prompt: Runs only when the Stage 9 receipt marks the turn diagnostic_only. Report only the scope
+  of available host receipts. List remaining obligations, a concrete next seed and proposed tests. Proposed
+  tests and licenses are not execution. A diagnostic-only lineage cannot be described as completed mathematical
+  success.
+user_prompt: Read the full preserved lineage. Distinguish rejected candidate, unresolved instance, checked
+  refutation and accepted scoped result. Give the next explicit question without demanding endless continuation.
+response_schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  additionalProperties: false
+  properties:
+    derived_under_policy:
+      const: SPK-001
+    demo_id:
+      const: DEMO_ID_BOUND_BY_HOST
+    stage:
+      const: 11
+    authority_effect:
+      const: None
+    scoped_summary:
+      type: string
+    remaining_obligations:
+      type: array
+      items:
+        type: string
+    next_seed:
+      type: string
+    proposed_tests:
+      type: array
+      items:
+        type: string
+    should_continue:
+      type: boolean
+  required:
+  - derived_under_policy
+  - demo_id
+  - stage
+  - authority_effect
+  - scoped_summary
+  - remaining_obligations
+  - next_seed
+  - proposed_tests
+  - should_continue

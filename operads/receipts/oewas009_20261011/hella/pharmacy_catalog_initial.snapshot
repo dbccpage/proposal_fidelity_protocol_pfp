@@ -1,0 +1,119 @@
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Sequence
+
+from .pharmacy_models import Antibody, PharmacyStatus
+
+
+class PharmacyCatalogRepository:
+    """Filesystem persistence for individual antibodies and the aggregate catalog."""
+
+    @staticmethod
+    def catalog_path(repo_root: Path) -> Path:
+        """Where the catalog lives under ``repo_root``; computing it creates nothing."""
+        agents_catalog = Path(repo_root) / ".agents" / "antibodies" / "pharmacy_catalog.json"
+        if agents_catalog.is_file():
+            return agents_catalog
+        intel_catalog = Path(repo_root) / "_ic/cdc/antibodies" / "pharmacy_catalog.json"
+        if intel_catalog.is_file():
+            return intel_catalog
+        return agents_catalog
+
+    def __init__(
+        self, repo_root: Path, *, catalog_file: Path | None = None,
+        telemetry_dir: Path | None = None,
+    ):
+        self.repo_root = Path(repo_root)
+        self.catalog_file = Path(catalog_file) if catalog_file is not None else self.catalog_path(self.repo_root)
+        self.antibodies_dir = self.catalog_file.parent
+        self.antibodies_dir.mkdir(parents=True, exist_ok=True)
+        # Sighting telemetry directory for farmed candidate antibodies
+        self.telemetry_dir = (
+            Path(telemetry_dir) if telemetry_dir is not None else
+            self.repo_root / "_ic/nara/_archive" / "telemetry" / "antibodies"
+        )
+        self.telemetry_dir.mkdir(parents=True, exist_ok=True)
+        self.candidates_dir = self.telemetry_dir
+        self.specs_dir = self.antibodies_dir / "specs"
+        self.specs_dir.mkdir(parents=True, exist_ok=True)
+
+    def target_dir_for_status(self, pharmacy_status: str) -> Path:
+        """Isolate candidate telemetry into the telemetry directory; non-candidates remain in antibodies_dir."""
+        if pharmacy_status == PharmacyStatus.CANDIDATE.value:
+            return self.candidates_dir
+        return self.antibodies_dir
+
+    def get_antibody_path(self, antibody_id: str, status: str | None = None) -> Path:
+        """Locates the path of an antibody file, checking telemetry candidates first, then specs, then antibodies_dir."""
+        cand_path = self.candidates_dir / f"{antibody_id}.json"
+        if cand_path.is_file():
+            return cand_path
+        # Check specs subfolder and root antibodies directory for YAML/JSON specs
+        for directory in (self.specs_dir, self.antibodies_dir):
+            for ext in (".yaml", ".json"):
+                spec_path = directory / f"{antibody_id}{ext}"
+                if spec_path.is_file():
+                    return spec_path
+        # Check legacy candidates/ subfolder if it exists
+        legacy_cand = self.antibodies_dir / "candidates" / f"{antibody_id}.json"
+        if legacy_cand.is_file():
+            return legacy_cand
+        if status == PharmacyStatus.CANDIDATE.value:
+            return cand_path
+        return self.antibodies_dir / f"{antibody_id}.json"
+
+    def save_antibody(self, antibody: Antibody) -> Path:
+        """Saves an antibody record. Farmed candidates are isolated into the candidates/ subfolder."""
+        dest_dir = self.target_dir_for_status(antibody.pharmacy_status)
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        path = dest_dir / f"{antibody.antibody_id}.json"
+        path.write_text(json.dumps(antibody.to_dict(), indent=2), encoding="utf-8")
+        return path
+
+    def load_catalog(self) -> Dict[str, Any]:
+        if not self.catalog_file.exists():
+            return self._empty_catalog(with_timestamp=True)
+        try:
+            return json.loads(self.catalog_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as exc:
+            raise ValueError(
+                f"Corrupt or unreadable pharmacy catalog detected at {self.catalog_file}: {exc}"
+            ) from exc
+
+    def update_catalog(
+        self,
+        antibodies: Sequence[Antibody],
+        *,
+        run_id: str,
+        task_id: str,
+    ) -> None:
+        catalog = self.load_catalog()
+        catalog["updated_at"] = datetime.now(timezone.utc).isoformat()
+        catalog["last_mined_run_id"] = run_id
+        catalog["last_mined_task_id"] = task_id
+        entries = catalog.setdefault("antibodies", {})
+        for antibody in antibodies:
+            entries[antibody.antibody_id] = antibody.to_dict()
+
+        # Atomic write with rolling backup
+        tmp_file = self.catalog_file.with_suffix(".tmp")
+        bak_file = self.catalog_file.with_suffix(".json.bak")
+        tmp_file.write_text(json.dumps(catalog, indent=2), encoding="utf-8")
+        if self.catalog_file.exists():
+            import shutil
+            shutil.copy2(self.catalog_file, bak_file)
+        tmp_file.replace(self.catalog_file)
+
+    @staticmethod
+    def _empty_catalog(*, with_timestamp: bool) -> Dict[str, Any]:
+        catalog: Dict[str, Any] = {
+            "catalog_version": "1.0.0",
+            "authority_effect": "None",
+            "antibodies": {},
+        }
+        if with_timestamp:
+            catalog["updated_at"] = datetime.now(timezone.utc).isoformat()
+        return catalog

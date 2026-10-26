@@ -1,0 +1,68 @@
+stage: 2
+name: ideation
+executor: model
+requires:
+- 1
+seat: seat_begemot
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: yaml/mode_2_proofer/stage_2_ideation.yaml
+system_prompt: Generate five to seven identified, meaningfully different candidate questions or constructions.
+  Include at least one refutation or weakening and at least two routes checkable without a model. Evidence
+  remains unverified.
+user_prompt: Use the original seed and the host-admitted Stage 1 artifact. Preserve candidate identities
+  and assumptions; do not emit expected host outcomes.
+response_schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  additionalProperties: false
+  properties:
+    derived_under_policy:
+      const: SPK-001
+    demo_id:
+      const: DEMO_ID_BOUND_BY_HOST
+    stage:
+      const: 2
+    authority_effect:
+      const: None
+    candidates:
+      type: array
+      minItems: 5
+      maxItems: 7
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          candidate_id:
+            type: string
+            minLength: 1
+          kind:
+            enum:
+            - construction
+            - refutation
+            - weakening
+          statement:
+            type: string
+            minLength: 1
+          assumptions:
+            type: array
+            items:
+              type: string
+          check_without_llm:
+            type: boolean
+        required:
+        - candidate_id
+        - kind
+        - statement
+        - assumptions
+        - check_without_llm
+    should_continue:
+      type: boolean
+  required:
+  - derived_under_policy
+  - demo_id
+  - stage
+  - authority_effect
+  - candidates
+  - should_continue

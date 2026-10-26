@@ -1,0 +1,188 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "an arrow between the two points marked as obstructed; its reversal keeps the reversed endpoints and drops the mark",
+      "role": "own_negative",
+      "set": {
+        "arrows": [
+          [
+            "a00",
+            0,
+            0,
+            "marked"
+          ],
+          [
+            "a01",
+            0,
+            1,
+            "marked"
+          ],
+          [
+            "a10",
+            1,
+            0,
+            "plain"
+          ],
+          [
+            "a11",
+            1,
+            1,
+            "marked"
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_directed",
+      "note": "the directed datum alone: its reversal is not an arrow of it, so the dagger is empty",
+      "role": "near_miss",
+      "set": {
+        "arrows": [
+          [
+            "a01",
+            0,
+            1,
+            "plain"
+          ]
+        ],
+        "composites": [],
+        "dagger": []
+      },
+      "violates": "dagger_is_transpose"
+    },
+    {
+      "id": "near_partial",
+      "note": "the dagger forgets the second loop",
+      "role": "extra",
+      "set": {
+        "dagger": [
+          [
+            "a00",
+            "a00"
+          ],
+          [
+            "a01",
+            "a10"
+          ],
+          [
+            "a10",
+            "a01"
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_not_involution",
+      "note": "the reversal of the return arrow is itself",
+      "role": "near_miss",
+      "set": {
+        "dagger": [
+          [
+            "a00",
+            "a00"
+          ],
+          [
+            "a01",
+            "a10"
+          ],
+          [
+            "a10",
+            "a10"
+          ],
+          [
+            "a11",
+            "a11"
+          ]
+        ]
+      },
+      "violates": "dagger_is_transpose"
+    },
+    {
+      "id": "near_endpoints",
+      "note": "the outgoing arrow is stated as a loop",
+      "role": "near_miss",
+      "set": {
+        "arrows": [
+          [
+            "a00",
+            0,
+            0,
+            "marked"
+          ],
+          [
+            "a01",
+            0,
+            0,
+            "plain"
+          ],
+          [
+            "a10",
+            1,
+            0,
+            "plain"
+          ],
+          [
+            "a11",
+            1,
+            1,
+            "marked"
+          ]
+        ]
+      },
+      "violates": "arrows_replayed"
+    },
+    {
+      "id": "near_typing",
+      "note": "a composite names the wrong loop",
+      "role": "near_miss",
+      "set": {
+        "composites": [
+          [
+            "a00",
+            "a00",
+            "a00"
+          ],
+          [
+            "a00",
+            "a01",
+            "a01"
+          ],
+          [
+            "a01",
+            "a10",
+            "a11"
+          ],
+          [
+            "a01",
+            "a11",
+            "a01"
+          ],
+          [
+            "a10",
+            "a00",
+            "a10"
+          ],
+          [
+            "a10",
+            "a01",
+            "a11"
+          ],
+          [
+            "a11",
+            "a10",
+            "a10"
+          ],
+          [
+            "a11",
+            "a11",
+            "a11"
+          ]
+        ]
+      },
+      "violates": "composites_replayed"
+    }
+  ]
+}

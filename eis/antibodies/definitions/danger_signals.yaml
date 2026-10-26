@@ -1,0 +1,57 @@
+# Host Danger Signals, Two-Signal Gates, and Safety Boundaries
+#
+# Declares closed vocabularies of danger signal kinds, forbidden observers,
+# independence refusal codes, regex parser bounds, and allosteric parameters.
+#
+# AuthorityEffect: None.
+
+schema_version: "omega.immune.definitions.danger-signals.v1"
+authority_effect: "None"
+
+host_danger_signal_kinds:
+  - "REPLAY_FAILURE"
+  - "PROTECTED_FIELD_VIOLATION"
+  - "MANIFEST_CONTAMINATION"
+  - "MALFORMED_PAYLOAD"
+
+danger_signal_descriptions:
+  REPLAY_FAILURE: "A replayed host computation disagreed with the candidate."
+  PROTECTED_FIELD_VIOLATION: "The payload writes a field only the host may fill (functionals, verdicts, receipts)."
+  MANIFEST_CONTAMINATION: "A manifest or custody record does not match the bytes it names."
+  MALFORMED_PAYLOAD: "The payload is not strict JSON: duplicate keys, non-finite numbers, or syntax errors."
+
+forbidden_danger_observers:
+  - "MODEL"
+  - "LLM"
+  - "AGENT"
+  - "DETECTOR"
+  - "MATCHER"
+
+independence_refusal_codes:
+  - "TWO_SIGNAL_COLLAPSE"
+  - "UNWITNESSED_DANGER_SIGNAL"
+  - "UNREGISTERED_DANGER_KIND"
+
+safe_pattern_bounds:
+  max_pattern_length: 256
+  max_repeat_bound: 64
+  max_choice_product: 256
+  unsafe_pattern_codes:
+    - "PATTERN_NOT_A_STRING"
+    - "PATTERN_EMPTY"
+    - "PATTERN_TOO_LONG"
+    - "PATTERN_SYNTAX"
+    - "PATTERN_BACKREFERENCE"
+    - "PATTERN_NESTED_QUANTIFIER"
+    - "PATTERN_QUANTIFIED_ALTERNATION"
+    - "PATTERN_UNBOUNDED_REPEAT"
+    - "PATTERN_REPEAT_BOUND"
+    - "PATTERN_CHOICE_PRODUCT"
+    - "PATTERN_ZERO_WIDTH"
+
+allostery_defaults:
+  hill_coefficient: 2
+  half_maximal_constant: 2
+  activation_threshold: "1/2"
+  per_sensor_cap: 1
+  max_sensors: 4096

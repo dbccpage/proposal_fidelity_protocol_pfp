@@ -1,0 +1,264 @@
+# Schema definition for Pilot Model Responses (response.yaml & response_*.yaml)
+# AuthorityEffect: None.
+# Required fields and enums follow omega_engine_pfp.domain.types.pilot_response.
+
+$schema: https://json-schema.org/draft/2020-12/schema
+schema: pfp.pilot-response.v1
+title: PilotResponseSchema
+description: |
+  Model output envelope preserving raw string reply verbatim, sanitization report,
+  sovereign host checker evaluation verdict, and provider cryptographic/spend receipt.
+
+$defs:
+  AuthorityEffect:
+    type: string
+    enum: ["None"]
+
+  TrialStatus:
+    type: string
+    enum: [NOT_RUN, RUNNING, COMPLETED, FAILED, REFUSED]
+
+  EvaluationStatus:
+    type: string
+    enum: [ACCEPTED, WRONG_ANSWER, FALSE_CERTAINTY, MALFORMED, NOT_RUN, REFUSED]
+
+  ExecutionMode:
+    type: string
+    enum: [offline_fixture, live_manual_dispatch, live_gateway_dispatch]
+
+  ResponseSummaryPayload:
+    type: object
+    additionalProperties: false
+    required:
+      - narrowest_defensible_thesis
+      - evidence_scope
+      - next_concrete_test
+    properties:
+      narrowest_defensible_thesis:
+        type: string
+      evidence_scope:
+        type: string
+      next_concrete_test:
+        type: string
+
+  ProcessIntegrityPayload:
+    type: object
+    additionalProperties: false
+    required:
+      - seed_allows_theory_refutation
+      - should_continue
+    properties:
+      seed_allows_theory_refutation:
+        type: boolean
+      detected_prompt_biases:
+        type: array
+        items:
+          type: string
+        default: []
+      should_continue:
+        type: boolean
+
+  PromptResponsePayload:
+    type: object
+    additionalProperties: false
+    required:
+      - summary
+      - process_integrity
+    properties:
+      derived_under_policy:
+        anyOf:
+          - type: string
+            const: SPK-001
+          - type: string
+        default: SPK-001
+      summary:
+        $ref: '#/$defs/ResponseSummaryPayload'
+      process_integrity:
+        $ref: '#/$defs/ProcessIntegrityPayload'
+      sections:
+        type: array
+        default: []
+      answer: {}
+
+  SanitizationReport:
+    type: object
+    additionalProperties: false
+    required:
+      - fence_stripped
+      - is_valid_json
+      - structure_leakage_debt_chars
+    properties:
+      fence_stripped:
+        type: boolean
+      is_valid_json:
+        type: boolean
+      structure_leakage_debt_chars:
+        type: integer
+        default: 0
+
+  EvaluationReport:
+    type: object
+    additionalProperties: false
+    required:
+      - checker_id
+      - expected
+      - received
+      - status
+    properties:
+      checker_id:
+        type: string
+      expected: {}
+      received: {}
+      status:
+        $ref: '#/$defs/EvaluationStatus'
+      reason:
+        type: [string, "null"]
+
+  TokenUsageDetails:
+    type: object
+    additionalProperties: false
+    required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+    properties:
+      prompt_tokens:
+        type: integer
+      completion_tokens:
+        type: integer
+      reasoning_tokens:
+        type: integer
+        default: 0
+      total_tokens:
+        type: integer
+
+  CostDetails:
+    type: object
+    additionalProperties: false
+    required:
+      - total_cost_usd
+    properties:
+      total_cost_usd:
+        type: number
+      total_cost_microusd:
+        type: integer
+      cost_details:
+        type: object
+        additionalProperties: true
+
+  InputMetadata:
+    type: object
+    additionalProperties: false
+    required:
+      - source_file
+      - payload_kb
+    properties:
+      source_file:
+        type: string
+      source_file_bytes:
+        type: integer
+      source_file_kb:
+        type: number
+      payload_bytes:
+        type: integer
+      payload_kb:
+        type: number
+      messages_count:
+        type: integer
+
+  ExecutionReceipt:
+    type: object
+    additionalProperties: false
+    properties:
+      provider:
+        type: string
+      dispatch_kind:
+        type: string
+      upstream_model:
+        type: string
+      upstream_provider:
+        type: string
+      dispatch_id:
+        type: string
+      system_fingerprint:
+        type: [string, "null"]
+      duration_seconds:
+        type: number
+      tokens_per_second:
+        type: number
+      cost_microusd:
+        type: integer
+      evidence:
+        type: string
+      timestamp_utc:
+        type: string
+      provider_calls:
+        type: integer
+      usage:
+        $ref: '#/$defs/TokenUsageDetails'
+      cost:
+        $ref: '#/$defs/CostDetails'
+
+type: object
+additionalProperties: false
+required:
+  - pilot_id
+  - request_id
+  - trial_status
+  - sanitization
+  - evaluation
+  - receipt
+properties:
+  schema:
+    type: string
+    const: pfp.pilot-response.v1
+  authority_effect:
+    anyOf:
+      - $ref: '#/$defs/AuthorityEffect'
+      - type: string
+      - type: "null"
+  test_id:
+    type: [string, "null"]
+  test_kind:
+    type: [string, "null"]
+  pilot_id:
+    type: string
+  case_id:
+    type: string
+  request_id:
+    type: string
+  execution_mode:
+    anyOf:
+      - $ref: '#/$defs/ExecutionMode'
+      - type: string
+      - type: "null"
+  model_id:
+    type: [string, "null"]
+  trial_status:
+    anyOf:
+      - $ref: '#/$defs/TrialStatus'
+      - type: string
+  input_metadata:
+    $ref: '#/$defs/InputMetadata'
+  raw_reply:
+    type: string
+  reasoning_content:
+    type: [string, "null"]
+  parsed_response:
+    anyOf:
+      - $ref: '#/$defs/PromptResponsePayload'
+      - type: object
+      - type: array
+      - type: integer
+      - type: number
+      - type: string
+      - type: "null"
+  parsed_json:
+    type: [object, array, integer, number, string, "null"]
+  extracted_answer: {}
+  sanitization:
+    $ref: '#/$defs/SanitizationReport'
+  evaluation:
+    $ref: '#/$defs/EvaluationReport'
+  receipt:
+    $ref: '#/$defs/ExecutionReceipt'

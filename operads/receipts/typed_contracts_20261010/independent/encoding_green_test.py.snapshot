@@ -1,0 +1,149 @@
+"""Independent real-port controls for typed canonical contract integration."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import shutil
+from dataclasses import replace
+from pathlib import Path
+
+import pytest
+
+from omega_engine_workflows_agents_skills.application.woland_candidate_plan import (
+    PlanNodeV01,
+    PlanRefusal,
+    compile_candidate_plan,
+)
+from omega_engine_workflows_agents_skills.contracts.typed_capabilities_v1 import (
+    ROOT as CONTRACT_ROOT,
+    canonical_bytes,
+)
+from omega_engine_workflows_agents_skills.domain.anti_skills import AntiSkillSubjectV1
+from omega_engine_workflows_agents_skills.domain.value_objects.content_digest import ContentDigest
+from omega_engine_workflows_agents_skills.infrastructure.capability_catalog_compiler import (
+    CatalogCompileRefusal,
+    compile_capability_catalog,
+)
+from omega_engine_workflows_agents_skills.infrastructure.typed_contract_compiler import (
+    TypedContractCompileRefusal,
+    compile_typed_contracts,
+)
+
+ROOT = next(path for path in Path(__file__).resolve().parents if (path / "pyproject.toml").is_file())
+
+
+def _generated_estate(tmp_path: Path) -> tuple[Path, set[str]]:
+    shutil.copytree(ROOT / CONTRACT_ROOT, tmp_path / CONTRACT_ROOT)
+    package = compile_typed_contracts(tmp_path)
+    tracked: set[str] = set()
+    for skill_id, raw in package.packages:
+        relative = f".agents/skills/{skill_id}/SKILL.md"
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True)
+        target.write_bytes(raw)
+        tracked.add(relative)
+    for skill in package.catalog.skills:
+        tracked.update(resource.path for resource in skill.package_resources)
+    return tmp_path, tracked
+
+
+def test_full_catalog_preserves_tracked_generated_package_resources(tmp_path: Path) -> None:
+    root, tracked = _generated_estate(tmp_path)
+    relative = ".agents/skills/woland-claim-audit/references/operator-note.md"
+    note = root / relative
+    note.parent.mkdir()
+    note.write_bytes(b"Host-maintained operator context.\n")
+    tracked.add(relative)
+
+    first = compile_capability_catalog(root, tracked_paths=tuple(sorted(tracked)))
+    skill = next(item for item in first.skills if item.skill_id == "woland-claim-audit")
+    resource = next((item for item in skill.package_resources if item.path == relative.removeprefix(".agents/")), None)
+    assert resource is not None, "Generated packages must retain the existing tracked-resource catalog contract"
+    assert resource.sha256 == hashlib.sha256(note.read_bytes()).hexdigest()
+    assert resource.byte_length == len(note.read_bytes())
+
+    note.write_bytes(b"Changed host-maintained operator context.\n")
+    second = compile_capability_catalog(root, tracked_paths=tuple(sorted(tracked)))
+    assert second.catalog_digest != first.catalog_digest
+    assert note.read_bytes() == b"Changed host-maintained operator context.\n"
+
+
+@pytest.mark.parametrize("raw_body", [b"Invalid UTF-8: \xff\n", b"Unexpected CRLF.\r\n"])
+def test_bound_instruction_encoding_errors_are_typed_refusals(tmp_path: Path, raw_body: bytes) -> None:
+    root, _tracked = _generated_estate(tmp_path)
+    source = root / CONTRACT_ROOT / "woland_claim_audit.json"
+    value = json.loads(source.read_bytes())
+    body = root / value["instruction"]["path"]
+    body.write_bytes(raw_body)
+    value["instruction"].update(sha256=hashlib.sha256(raw_body).hexdigest(), byte_length=len(raw_body))
+    source.write_bytes(canonical_bytes(value))
+
+    with pytest.raises(TypedContractCompileRefusal):
+        compile_typed_contracts(root)
+
+
+def test_untracked_canonical_fixture_cannot_enter_the_estate_catalog(tmp_path: Path) -> None:
+    root, tracked = _generated_estate(tmp_path)
+    tracked.remove(f"{CONTRACT_ROOT}/scope_falsifier_fixtures.json")
+    with pytest.raises(CatalogCompileRefusal, match="TYPED_SOURCE_UNTRACKED"):
+        compile_capability_catalog(root, tracked_paths=tuple(sorted(tracked)))
+
+
+@pytest.mark.parametrize(("claim", "evidence", "expected"), [
+    (("code",), ("code", "paper"), False),
+    (("code", "paper"), ("code", "paper"), False),
+    (("code", "paper"), ("code",), True),
+])
+def test_scope_subset_binding_obeys_independent_membership_oracle(claim, evidence, expected) -> None:
+    package = compile_typed_contracts(ROOT)
+    subject = AntiSkillSubjectV1(
+        claim_scope=claim, evidence_scope=evidence,
+        producer_identity="independent.producer", verifier_identity="independent.verifier",
+        claim_mode="PROPOSAL", requested_effect="NONE",
+    )
+    assert package.anti_spec.predicate.matches(subject) is expected
+    assert package.anti_spec.status == "PROPOSED"
+    assert package.anti_spec.runtime_enforcement is False
+
+
+def test_compiled_document_provenance_binds_real_contract_and_instruction_bytes() -> None:
+    package = compile_typed_contracts(ROOT)
+    for document in package.documents:
+        raw = (ROOT / document.source_relative_path).read_bytes()
+        assert document.raw_digest.hex_digest == hashlib.sha256(raw).hexdigest()
+        operand, = document.operands
+        declared_resource = json.loads(raw)["instruction"]
+        # The span names the JSON reference; the external body is separately bound.
+        assert json.loads(raw[operand.span.start_byte:operand.span.end_byte]) == declared_resource
+        assert (operand.span.start_line, operand.span.start_col) == (1, operand.span.start_byte)
+        assert (operand.span.end_line, operand.span.end_col) == (1, operand.span.end_byte)
+        instruction = (ROOT / declared_resource["path"]).read_bytes()
+        assert hashlib.sha256(instruction).hexdigest() == declared_resource["sha256"]
+        assert len(instruction) == declared_resource["byte_length"]
+        assert operand.instruction_body.startswith(instruction.decode("utf-8").rstrip() + "\n")
+
+
+def test_same_colour_foreign_schema_cannot_be_transplanted_into_composition() -> None:
+    package = compile_typed_contracts(ROOT)
+    documents = list(package.documents)
+    falsifier = documents[1]
+    operation, = falsifier.operations
+    foreign_output = replace(operation.output, schema_digest=ContentDigest.sha256("a" * 64))
+    documents[1] = replace(falsifier, operations=(replace(operation, output=foreign_output),))
+    with pytest.raises(PlanRefusal, match="BOUNDARY_MISMATCH"):
+        compile_candidate_plan(
+            tuple(documents),
+            PlanNodeV01("woland-claim-audit", ((0, PlanNodeV01("woland-scope-falsifier")),)),
+            allowed_effects=frozenset({"read_subject", "emit_finding"}),
+        )
+
+
+
+def test_empty_claim_remains_an_invalid_subject_without_widening_the_domain() -> None:
+    with pytest.raises(ValueError, match="claim_scope must not be empty"):
+        AntiSkillSubjectV1(
+            claim_scope=(), evidence_scope=("code",),
+            producer_identity="independent.producer", verifier_identity="independent.verifier",
+            claim_mode="PROPOSAL", requested_effect="NONE",
+        )

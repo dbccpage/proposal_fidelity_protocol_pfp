@@ -1,0 +1,27 @@
+mode_id: 13
+name: "Normal Form Confluent Chase (0NF -> 6NF)"
+cluster: "Cluster III: Group & Cochain Structure"
+authority_effect: "None"
+core_mechanism: "Pushing relational schemas through Church-Rosser rewrite rules into confluent normal forms"
+substrate: "Relational attribute dependency graph and normal form rulesets"
+paper_reference: "4_symbol_game_normal_forms"
+rules:
+  - "Transformations must be confluent: order of rule application cannot alter the final normal form."
+  - "Decompositions must be lossless: natural join of decomposed relations exactly reconstructs the original."
+  - "Functional dependencies must be fully preserved across normal form lifts."
+entry_preconditions:
+  - "0NF relational schema and functional dependency set declared."
+  - "Church-Rosser rewrite system active."
+winning_condition: >
+  Reaching unique irreducible 6NF canonical state under terminating confluent chase.
+failure_modes:
+  - "Lossy decomposition"
+  - "Lost functional dependency"
+  - "Non-confluent rewrite loop"
+verifier_contract:
+  verifier_type: "confluent_normal_form_chase_engine"
+  fail_closed: true
+quotient_descent_guards:
+  modulus_tracking_guard: "Z/2^k Z carrier required when k integer divisions by 2 occur downstream"
+  reject_insufficient_modulus_carrier: true
+  canonical_tie_breaking: "lexicographic_attribute_ordering"

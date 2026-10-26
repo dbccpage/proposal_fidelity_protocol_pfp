@@ -1,0 +1,101 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: omega.symbol-game.code-change-proposal.v1
+title: Symbol Game CodeChangeProposalPayloadV1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- family
+- objective
+- source_revision
+- owned_paths
+- protected_paths
+- allowed_transforms
+- candidate_budget
+- operation_budget
+- required_gates
+- terminal_target
+- evidence_ceiling
+- parent_packet_id
+- path_manifest_root
+- authority_effect
+properties:
+  schema_version:
+    const: omega.symbol-game.code-change-proposal.v1
+  family:
+    const: code_change_proposal
+  objective:
+    type: string
+    minLength: 1
+    maxLength: 8192
+  source_revision:
+    type: string
+    minLength: 1
+    maxLength: 128
+    pattern: ^[A-Za-z0-9][A-Za-z0-9_./+-]*$
+  owned_paths:
+    type: array
+    minItems: 1
+    maxItems: 256
+    uniqueItems: true
+    items:
+      $ref: '#/$defs/repoRelativePosixPath'
+  protected_paths:
+    type: array
+    maxItems: 256
+    uniqueItems: true
+    items:
+      $ref: '#/$defs/repoRelativePosixPath'
+  allowed_transforms:
+    type: array
+    minItems: 1
+    maxItems: 256
+    uniqueItems: true
+    items:
+      enum:
+      - edit
+      - emit_evidence
+      - test
+  candidate_budget:
+    type: integer
+    minimum: 1
+    maximum: 32
+  operation_budget:
+    type: integer
+    minimum: 1
+    maximum: 4096
+  required_gates:
+    type: array
+    minItems: 1
+    maxItems: 256
+    uniqueItems: true
+    items:
+      enum:
+      - focused_tests
+      - gate_contract
+      - gate_ownership
+      - gate_syntax
+      - lint
+      - replay
+  terminal_target:
+    const: TransportValidatedOrTypedRefusal
+  evidence_ceiling:
+    const: ReplayableLabEvidence
+  parent_packet_id:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  path_manifest_root:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  authority_effect:
+    const: None
+$defs:
+  repoRelativePosixPath:
+    type: string
+    minLength: 1
+    maxLength: 2048
+    pattern: ^(?!.*(?:^|/)(?:\.|\.\.)(?:/|$))(?!.*\\)(?!.*:)(?!.*\. $)[A-Za-z0-9][A-Za-z0-9_.+-]*(?:/[A-Za-z0-9][A-Za-z0-9_.+-]*)*$
+$comment: Path sort order, owned/protected disjointness, and path_manifest_root binding are enforced by the typed Python parser.
+  Model-authored passed/verified/promotion_eligible fields are forbidden and fail closed.

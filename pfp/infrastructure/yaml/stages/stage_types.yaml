@@ -1,0 +1,579 @@
+meta_version: 1.0.0
+source: stage_types.yaml
+root: StageFile
+types:
+  AuthorityEffect:
+    kind: enum
+    values:
+    - None
+  StageName:
+    kind: enum
+    values:
+    - admit
+    - ideation
+    - audit
+    - l2_extraction
+    - evaluation
+    - adversarial
+    - challenge_replay
+    - selection
+    - receipt
+    - hand_off
+    - evidence_plan
+  SeatId:
+    kind: enum
+    values:
+    - seat_begemot
+    - seat_koroviev
+    - seat_woland
+    - seat_margarita
+    - seat_the_master
+  Executor:
+    kind: enum
+    values:
+    - model
+    - host
+  InputContract:
+    kind: record
+    doc: Host-stage input requirements (stage 5).
+    fields:
+      preserve_original_seed:
+        type: bool
+      retain_stage_2_candidates:
+        type: bool
+      candidate_source_stage:
+        type: int
+      independent_checker_required:
+        type: bool
+  StageFile:
+    kind: record
+    doc: One stage definition (stages/stage_N_*.yaml). response_schema is a JSON Schema
+      object for a model turn (stage 1 uses it only for the declaration repair turn).
+      seat names the core retinue seat that owns the stage.
+    constraints:
+    - if_field: executor
+      equals: model
+      then_required:
+      - response_schema
+      then_forbidden:
+      - input_contract
+    fields:
+      stage:
+        type: int
+        schema:
+          minimum: 1
+          maximum: 11
+      name:
+        type: StageName
+      executor:
+        type: Executor
+      requires:
+        type: list<int>
+      seat:
+        type: SeatId
+        optional: true
+      version:
+        type: string
+        schema:
+          minLength: 1
+      derived_under_policy:
+        type: string
+        schema:
+          const: SPK-001
+      authority_effect:
+        type: AuthorityEffect
+      source_template:
+        type: string
+        schema:
+          minLength: 1
+      system_prompt:
+        type: string
+        schema:
+          minLength: 1
+      user_prompt:
+        type: string
+        schema:
+          minLength: 1
+      response_schema:
+        type: object
+        optional: true
+      input_contract:
+        type: InputContract
+        optional: true
+      obligation_rules:
+        type: map<string,string>
+        optional: true
+    json_schema_extra:
+      allOf:
+      - if:
+          properties:
+            stage:
+              const: 1
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: admit
+            executor:
+              const: host
+            requires:
+              const: &id001 []
+          required:
+          - response_schema
+          not:
+            anyOf:
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 2
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: ideation
+            executor:
+              const: model
+            requires:
+              const: &id002
+              - 1
+            seat:
+              const: seat_begemot
+          required:
+          - response_schema
+          not:
+            anyOf:
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 3
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: audit
+            executor:
+              const: model
+            requires:
+              const: &id003
+              - 1
+              - 2
+            seat:
+              const: seat_koroviev
+          required:
+          - response_schema
+          not:
+            anyOf:
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 4
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: l2_extraction
+            executor:
+              const: model
+            requires:
+              const: &id004
+              - 2
+              - 3
+            seat:
+              const: seat_begemot
+          required:
+          - response_schema
+          not:
+            anyOf:
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 5
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: evaluation
+            executor:
+              const: host
+            requires:
+              const: &id005
+              - 2
+              - 4
+            seat:
+              const: seat_woland
+          required:
+          - input_contract
+          not:
+            anyOf:
+            - required:
+              - response_schema
+      - if:
+          properties:
+            stage:
+              const: 6
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: adversarial
+            executor:
+              const: model
+            requires:
+              const: &id006
+              - 2
+              - 4
+              - 5
+            seat:
+              const: seat_margarita
+          required:
+          - response_schema
+          not:
+            anyOf:
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 7
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: challenge_replay
+            executor:
+              const: host
+            requires:
+              const: &id007
+              - 4
+              - 5
+              - 6
+          required: []
+          not:
+            anyOf:
+            - required:
+              - response_schema
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 8
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: selection
+            executor:
+              const: host
+            requires:
+              const: &id008
+              - 5
+              - 7
+            seat:
+              const: seat_the_master
+          required: []
+          not:
+            anyOf:
+            - required:
+              - response_schema
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 9
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: receipt
+            executor:
+              const: host
+            requires:
+              const: &id009
+              - 1
+              - 5
+              - 7
+          required:
+          - obligation_rules
+          not:
+            anyOf:
+            - required:
+              - response_schema
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 10
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: hand_off
+            executor:
+              const: host
+            requires:
+              const: &id010
+              - 9
+          required: []
+          not:
+            anyOf:
+            - required:
+              - response_schema
+            - required:
+              - input_contract
+      - if:
+          properties:
+            stage:
+              const: 11
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: evidence_plan
+            executor:
+              const: model
+            requires:
+              const: &id011
+              - 9
+          required:
+          - response_schema
+          not:
+            anyOf:
+            - required:
+              - input_contract
+  ControllerStageRef:
+    kind: record
+    fields:
+      stage:
+        type: int
+        schema:
+          minimum: 1
+          maximum: 11
+      name:
+        type: StageName
+      executor:
+        type: Executor
+      requires:
+        type: list<int>
+      seat:
+        type: SeatId
+        optional: true
+    json_schema_extra:
+      allOf:
+      - if:
+          properties:
+            stage:
+              const: 1
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: admit
+            executor:
+              const: host
+            requires:
+              const: *id001
+      - if:
+          properties:
+            stage:
+              const: 2
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: ideation
+            executor:
+              const: model
+            requires:
+              const: *id002
+            seat:
+              const: seat_begemot
+      - if:
+          properties:
+            stage:
+              const: 3
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: audit
+            executor:
+              const: model
+            requires:
+              const: *id003
+            seat:
+              const: seat_koroviev
+      - if:
+          properties:
+            stage:
+              const: 4
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: l2_extraction
+            executor:
+              const: model
+            requires:
+              const: *id004
+            seat:
+              const: seat_begemot
+      - if:
+          properties:
+            stage:
+              const: 5
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: evaluation
+            executor:
+              const: host
+            requires:
+              const: *id005
+            seat:
+              const: seat_woland
+      - if:
+          properties:
+            stage:
+              const: 6
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: adversarial
+            executor:
+              const: model
+            requires:
+              const: *id006
+            seat:
+              const: seat_margarita
+      - if:
+          properties:
+            stage:
+              const: 7
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: challenge_replay
+            executor:
+              const: host
+            requires:
+              const: *id007
+      - if:
+          properties:
+            stage:
+              const: 8
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: selection
+            executor:
+              const: host
+            requires:
+              const: *id008
+            seat:
+              const: seat_the_master
+      - if:
+          properties:
+            stage:
+              const: 9
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: receipt
+            executor:
+              const: host
+            requires:
+              const: *id009
+      - if:
+          properties:
+            stage:
+              const: 10
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: hand_off
+            executor:
+              const: host
+            requires:
+              const: *id010
+      - if:
+          properties:
+            stage:
+              const: 11
+          required:
+          - stage
+        then:
+          properties:
+            name:
+              const: evidence_plan
+            executor:
+              const: model
+            requires:
+              const: *id011
+  StageController:
+    kind: record
+    doc: stages/controller.yaml. Not the root of this schema; use $defs/StageController.
+    fields:
+      policy_id:
+        type: string
+        schema:
+          const: SPK-001
+      version:
+        type: string
+        schema:
+          minLength: 1
+      public_stage_count:
+        type: int
+      authority_effect:
+        type: AuthorityEffect
+      system_prompt:
+        type: string
+        schema:
+          minLength: 1
+      worked_example:
+        type: string
+        schema:
+          minLength: 1
+      stages:
+        type: list<ControllerStageRef>
+      source_golden_sha256:
+        type: string
+        schema:
+          pattern: ^[0-9a-f]{64}$

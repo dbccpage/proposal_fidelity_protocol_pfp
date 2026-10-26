@@ -1,0 +1,91 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.enf
+  name: Epistemic Normal Form
+  short_name: ENF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: certified_normal_form
+  subject_kind:
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: omniscience fiction
+  preserves_invariant: every outward claim decomposes into known by_whom as_of_when
+    authority uncertainty challenge_terminal
+  protected_skeleton:
+  - what_is_known
+  - by_whom
+  - as_of_when
+  - under_authority
+  - uncertainty
+  - terminal_if_challenged
+  erased_structure: []
+  non_claims:
+  - master packet; defers operational checks to LNF RNF StNF FNF ANF BQNF CODA-MUR
+    until composed
+declarations_required:
+- what_is_known
+- by_whom
+- as_of_when
+- under_which_authority
+- with_what_uncertainty
+- terminal_route_if_challenged
+evidence_required:
+- subordinate NF packets or refs
+validation_criteria:
+- no field omitted on outward claims
+- challenge routes reuse BQNF CODA-MUR terminals
+- composition of subordinate contracts verified
+proof_obligations: []
+terminal_routes:
+- ClaimOk
+- Escalate
+- Invalidate
+- Refuse
+- Recompute
+certification:
+  certificate_required: true
+  certificate_kind: epistemic_claim_packet
+  obstruction_class_required: true
+  loss_ledger_required: conditional
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+references:
+- ../1_normal_forms.md
+terminal_route_map:
+  ClaimOk: Escalate
+  Escalate: Escalate
+  Invalidate: Invalidate
+  Refuse: Refuse
+  Recompute: Recompute
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: omniscience fiction. every outward claim decomposes into known
+    by_whom as_of_when authority uncertainty challenge_terminal
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: omniscience fiction
+    lossless_join:
+      status: declared_reconstruction
+      statement: every outward claim decomposes into known by_whom as_of_when authority
+        uncertainty challenge_terminal
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

@@ -1,0 +1,159 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.runtime.zfnf
+  name: Zero-Float Rational Normal Form
+  short_name: ZFNF
+  version: v0
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+  family: runtime
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - rational_number
+  - primal_dual_pair
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: a floating-point representation, a non-reduced rational, or an optimality
+    claim without feasibility witnesses or whose primal and dual objectives differ
+  preserves_invariant: every numerical quantity is an exact reduced rational, feasible pairs
+    obey weak duality (P(x) >= D(y)), and an optimality certificate has checked primal/dual
+    feasibility with duality gap exactly zero (P(x) - D(y) = 0)
+  protected_skeleton:
+  - numerator
+  - denominator
+  - primal_feasibility_witness
+  - dual_feasibility_witness
+  - recomputed_primal_objective
+  - recomputed_dual_objective
+  - duality_gap
+  erased_structure:
+  - floating_point_representations
+  - unreduced_denominators
+  non_claims:
+  - reduced rational representation is a canonical form for scalar values independently of whether
+    an LP problem or optimality certificate is declared
+  - weak duality and the zero-gap optimality certificate are distinct statements. For minimization
+    primal P(x) and maximization dual D(y), weak duality establishes D(y) <= P(x) for all feasible
+    pairs, so the nonnegative duality gap is g = P(x) - D(y) >= 0. A positive gap g > 0 denotes a
+    feasible suboptimal pair; g = 0 with verified feasibility certifies optimality
+  - equal objective numbers without checked primal and dual feasibility witnesses do not certify
+    optimality (infeasible pairs can have equal objective values)
+  - a finite binary float mathematically denotes a rational number, but violates the repository's
+    exact rational representation policy and arithmetic path
+  - "does not imply authorization (AuthorityEffect: None)"
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.6'
+  formal_statement: >
+    Each scalar is canonically represented as an irreducible rational a/b with b in Z_{>0}
+    and gcd(|a|, b) = 1. For a linear program with declared convention minimize_primal_maximize_dual,
+    candidate vectors x and y must satisfy independently checked primal feasibility (Ax >= b, x >= 0)
+    and dual feasibility (A^T y <= c, y >= 0). Under weak duality, the dual objective D(y) = b^T y
+    provides a lower bound on the primal objective P(x) = c^T x, so the exact duality gap
+    g = P(x) - D(y) satisfies g >= 0. The pair (x, y) constitutes an optimality certificate if and
+    only if both candidates are feasible and g = 0. A negative gap P(x) - D(y) < 0 indicates a
+    duality formulation error or infeasible candidate.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_exact_arithmetic_not_a_relational_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: rounding drift, inexact float representation, and optimality claims lacking
+      verified feasibility or having non-zero duality gap
+    lossless_join:
+      status: denominator_clearing
+      statement: integer scaling by a positive common multiple preserves rational equalities
+        and polyhedral ordering
+    dependency_preservation:
+      status: reduced_form_retained
+      statement: each rational is stored in canonical reduced form, and floating-point representations
+        are prohibited across the execution pipeline
+    syntactic_decision:
+      status: schema_decidable
+      statement: reduction, feasibility checking, and exact rational arithmetic evaluation of the
+        gap g = P(x) - D(y) are decidable operations on finite rational data
+declarations_required:
+- values_as_reduced_rationals
+- problem_matrices: {A: rational_matrix, b: rational_vector, c: rational_vector}
+- primal_candidate_vector: x
+- dual_candidate_vector: y
+- objective_convention: minimize_primal_maximize_dual
+evidence_required:
+- primal_feasibility_check: evaluation that x satisfies primal constraints Ax >= b, x >= 0
+- dual_feasibility_check: evaluation that y satisfies dual constraints A^T y <= c, y >= 0
+- recomputed_primal_objective: c^T x in Q
+- recomputed_dual_objective: b^T y in Q
+- recomputed_duality_gap: P(x) - D(y) in Q
+validation_criteria:
+- every scalar is a reduced rational a/b with b > 0 and gcd(|a|, b) = 1, with zero floating-point values
+- primal candidate x satisfies all primal constraints in exact rational arithmetic
+- dual candidate y satisfies all dual constraints in exact rational arithmetic
+- under minimization primal and maximization dual, weak duality P(x) - D(y) >= 0 is verified
+- an optimality certificate has both candidates feasible and duality gap P(x) - D(y) == 0
+- any gap violation P(x) - D(y) < 0 or candidate infeasibility is refused
+terminal_routes:
+- CertifiedOptimal
+- FeasiblePositiveGap
+- RejectNegativeGap
+- InfeasibleCandidateViolation
+- RejectFloat
+terminal_route_map:
+  CertifiedOptimal: Preserve
+  FeasiblePositiveGap: Escalate
+  RejectNegativeGap: Refuse
+  InfeasibleCandidateViolation: Refuse
+  RejectFloat: Refuse
+certification:
+  certificate_required: true
+  certificate_kind: exact_rational_primal_dual_certificate
+  obstruction_class_required: true
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: a value is represented as a binary or decimal floating-point number
+  diagnosis: forbidden representation policy; floating-point representation or inexact arithmetic path detected where exact reduced rational is required
+  terminal: RejectFloat
+- symptom: candidate vector fails primal or dual feasibility constraints
+  diagnosis: candidate is infeasible; equal objective values cannot certify optimality without verified feasibility
+  terminal: InfeasibleCandidateViolation
+- symptom: the primal objective is strictly less than the dual objective (P(x) - D(y) < 0)
+  diagnosis: weak duality violated for declared minimize_primal_maximize_dual convention (indicates formulation defect or infeasibility)
+  terminal: RejectNegativeGap
+- symptom: candidates are feasible and the gap g = P(x) - D(y) is a strictly positive rational
+  diagnosis: the pair is feasible but suboptimal; gap remains unclosed
+  terminal: FeasiblePositiveGap
+examples:
+- ref: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.6'
+references:
+- coda_all_universe/mssn_sn_tower/definitions.md
+- https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf
+obstruction_substrate:
+  policy_ref: ../substrate/default_finite_obstruction_policy.yaml
+  finite_carrier:
+    description: LP solution state over rationals Q represented as reduced integer pairs (a, b) with b > 0
+    max_rank: null
+  cochain_complex:
+    description: Polyhedral feasibility and duality gap evaluation over exact rational vector spaces
+    C0: primal_dual_candidate_spaces_Q
+    C1: constraint_residual_space_Q
+    C2: duality_gap_space_Q
+  obstruction_class:
+    notation: '[duality_gap]'
+    exact: feasibility_verified and P(x) - D(y) == 0 (certified primal-dual optimality)
+    residual_closed: feasibility_verified and P(x) - D(y) > 0 (suboptimal feasible pair with exact positive gap)
+    open: not feasibility_verified or P(x) - D(y) < 0 (infeasible or duality violation)
+proof_obligations:
+- id: zfnf.zero_float_optimality
+  status: theorem_shaped
+  ref: ../math/18_math_zero_float_law_and_exact_rational_lp_solvers.md
+  section: 1. The Zero-Float Law and Exact Duality

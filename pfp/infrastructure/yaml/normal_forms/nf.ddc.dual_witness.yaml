@@ -1,0 +1,100 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.ddc.dual_witness
+  name: Dual Witness Normal Form
+  short_name: DWNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  status: active
+  verification_status: executable
+  family: evidence
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - dual_circulation_flow
+    - phi1_certificate
+    - xi_tie_break
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: primal-only defect claims without dual circulation certificates, or unprincipled tie-breaking overriding primary defect worsening
+  preserves_invariant: exact rational dual circulation flow certificate g₃ certifying Φ₁([x]) and strict primary equality precondition on secondary metric Ξ
+  protected_skeleton:
+    - primal_defect_vector
+    - dual_flow_witness_g3
+    - spanning_forest_tight_potentials
+    - xi_tie_precondition
+  erased_structure:
+    - dual_solver_pivot_sequence
+  non_claims:
+    - does not permit secondary metric Ξ to break ties when Φ₁ or Γ₂ differ between candidates
+    - does not assert quotient norm without certifying both primal bound and dual witness
+    - does not confer operational authority; authority_effect is unconditionally None
+definition:
+  source: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/normal_forms/README.md
+  section: '2.0'
+  formal_statement: >
+    On a 1-cochain complex with boundary coboundaries over ℚ, Dual Witness Normal Form (DWNF)
+    certifies the quotient residual norm Φ₁([x]) by producing an exact rational dual circulation
+    flow g₃ such that the duality gap is certified zero. When multiple repair moves compete,
+    secondary harmonic metric Ξ is admissible if and only if primary metrics Φ₁ and Γ₂ are
+    strictly equal across competing candidates.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: dual_witness_certification_not_relational_project_join
+    anomaly_exclusion: uncertified quotient claims, inadequate detector masking, or secondary metric overriding primary defect worsening
+    lossless_join:
+      status: primal_dual_duality_gap_zero
+      statement: the exact rational duality gap between primal circulation cost and dual flow witness is certified identically zero
+    dependency_preservation:
+      status: circulation_cycle_preserved
+      statement: cycle flow g₃ is verified locally against edge capacities and flow conservation at internal vertices
+    syntactic_decision:
+      status: rational_duality_decidable
+      statement: membership is decidable by checking primal-dual gap and evaluating XiTiePrecondition.is_satisfied()
+declarations_required:
+  - phi1_value
+  - dual_witness_g3
+  - xi_precondition
+  - tie_break_certificate
+evidence_required: []
+validation_criteria:
+  - dual flow g₃ satisfies capacity constraints and vertex conservation laws
+  - primal cost matches dual flow objective in exact rational arithmetic
+  - secondary metric tie-break is invoked only when candidate Φ₁ and Γ₂ are identical
+terminal_routes:
+  - AdmitDualWitness
+  - RejectNonZeroDualityGap
+  - RejectUncertifiedPrimal
+  - RejectInvalidTieBreak
+terminal_route_map:
+  AdmitDualWitness: Preserve
+  RejectNonZeroDualityGap: Invalidate
+  RejectUncertifiedPrimal: Refuse
+  RejectInvalidTieBreak: Reject
+certification:
+  certificate_required: true
+  certificate_kind: dual_circulation_receipt
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+  - symptom: primal objective exceeds dual circulation flow value
+    diagnosis: duality gap non-zero; certificate invalid
+    terminal: RejectNonZeroDualityGap
+  - symptom: candidate selected by Ξ metric when Φ₁ or Γ₂ are unequal
+    diagnosis: secondary metric overrode primary defect worsening; violates tie-break invariant
+    terminal: RejectInvalidTieBreak
+examples:
+  - ref: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+    section: '2.8'
+references:
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/quotient_mass.contract.yaml
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/tie_r.contract.yaml

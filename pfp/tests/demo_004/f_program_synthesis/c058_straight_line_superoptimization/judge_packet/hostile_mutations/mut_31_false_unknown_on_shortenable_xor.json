@@ -1,0 +1,39 @@
+{
+  "mutation_id": "mut_31_false_unknown_on_shortenable_xor",
+  "description": "Claims UNKNOWN when (x|y)-(x&y) is trivially shortenable to x^y",
+  "case": {
+    "case_id": "c058_b01_xor_sub",
+    "width": 8,
+    "inputs": [
+      "x",
+      "y"
+    ],
+    "ops": [
+      [
+        "t1",
+        "or",
+        "x",
+        "y"
+      ],
+      [
+        "t2",
+        "and",
+        "x",
+        "y"
+      ],
+      [
+        "t3",
+        "sub",
+        "t1",
+        "t2"
+      ]
+    ],
+    "out": "t3",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b01_xor_sub",
+    "status": "UNKNOWN",
+    "code": "NO_SHORTER_FOUND"
+  }
+}

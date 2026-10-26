@@ -1,0 +1,1056 @@
+{
+  "fixtures": [
+    {
+      "id": "pos",
+      "note": "move r0 into r1: 0: dec r0, then 1, else 2; 1: inc r1, then 0; 2: halt; from (2, 0) the run halts after 5 steps at (0, 2), within 10 steps and values up to 100",
+      "role": "positive",
+      "structure": {
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "own_neg",
+      "note": "a loop that only increments, stopped by the 10-step bound, captured as halted",
+      "role": "own_negative",
+      "structure": {
+        "sorts": [
+          [
+            "instr",
+            1
+          ],
+          [
+            "register",
+            1
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            1
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "final_of",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "halted",
+            [
+              5
+            ]
+          ],
+          [
+            "inc",
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        ],
+        "values": [
+          [
+            1,
+            "0/1"
+          ],
+          [
+            2,
+            "10/1"
+          ],
+          [
+            3,
+            "100/1"
+          ],
+          [
+            4,
+            "10/1"
+          ],
+          [
+            5,
+            "10/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "near_timeout",
+      "note": "a 3-step bound: the run times out, but the capture still says halted",
+      "role": "extra",
+      "structure": {
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "3/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "near_exit",
+      "note": "the halted run is captured as stopped at the value limit",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "at_limit",
+            [
+              9
+            ]
+          ],
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "violates": "exit_exact"
+    },
+    {
+      "id": "near_state",
+      "note": "r1 is captured as 1",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "1/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "violates": "state_exact"
+    },
+    {
+      "id": "near_steps",
+      "note": "4 steps are captured",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "4/1"
+          ]
+        ]
+      },
+      "violates": "steps_exact"
+    },
+    {
+      "id": "near_jump",
+      "note": "the increment jumps to a register, not an instruction",
+      "role": "near_miss",
+      "structure": {
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "tuples": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              3
+            ]
+          ]
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "violates": "inc_targets"
+    }
+  ]
+}

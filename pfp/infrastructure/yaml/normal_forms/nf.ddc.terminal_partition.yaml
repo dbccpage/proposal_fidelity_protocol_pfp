@@ -1,0 +1,100 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.ddc.terminal_partition
+  name: Terminal Partition Normal Form
+  short_name: TPNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  status: active
+  verification_status: executable
+  family: authority
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - terminal_sink
+    - halting_predicate
+    - four_axis_separation
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: post-terminal mutation, continuation past halting criteria, or conflating routing terminal verdicts with sovereign authority
+  preserves_invariant: evaluation of 9-way CanContinue_n predicate into immutable terminal sink with four-axis separation firewall
+  protected_skeleton:
+    - routing_terminal_verdict
+    - continuation_predicate_witnesses
+    - final_tape_digest
+    - authority_effect_sentinel
+  erased_structure:
+    - post_terminal_execution_proposals
+  non_claims:
+    - does not claim terminal verdict confers external authority; authority_effect is unconditionally None
+    - does not claim open residuals can be sealed as resolved
+    - does not permit further execution once terminal rune T is emitted
+definition:
+  source: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/normal_forms/README.md
+  section: '2.0'
+  formal_statement: >
+    Terminal Partition Normal Form (TPNF) partitions execution traces into terminal sinks
+    via the 9-way CanContinue_n predicate. Terminal rune T closes active mutation (Law 2),
+    absorbing all subsequent moves into the identity. TPNF enforces four-axis separation:
+    DiagnosticClass != RoutingTerminal != ExtensionStatus != AuthorityStatus, strictly setting
+    authority_effect to None.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: halting_sink_partition_not_relational_project_join
+    anomaly_exclusion: downstream agent hallucination of continued execution after trace termination, or authority leaks
+    lossless_join:
+      status: sink_absorption_reconstruction
+      statement: once terminalized, any subsequent operation maps identically to the terminal state
+    dependency_preservation:
+      status: predicate_conjuncts_preserved
+      statement: each of the 9 continuation conjuncts is evaluated against explicit step metrics
+    syntactic_decision:
+      status: boolean_predicate_decidable
+      statement: membership is decidable by evaluating CanContinue_n and checking authority_effect == 'None'
+declarations_required:
+  - routing_terminal
+  - final_phi1
+  - final_gamma2
+  - can_continue_eval
+  - authority_effect
+evidence_required: []
+validation_criteria:
+  - no further step entries follow terminal rune T on the tape
+  - authority_effect field is set explicitly and unconditionally to 'None'
+  - terminal route is partitioned strictly into canonical terminal vocabulary
+terminal_routes:
+  - AdmitTerminalPartition
+  - RejectPostTerminalMutation
+  - RejectAuthorityConflation
+  - RejectPredicateFailure
+terminal_route_map:
+  AdmitTerminalPartition: Preserve
+  RejectPostTerminalMutation: Refuse
+  RejectAuthorityConflation: Invalidate
+  RejectPredicateFailure: Reject
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: true
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+  - symptom: step entry attempted after terminal rune T has been committed
+    diagnosis: post-terminal mutation attempted; violates Law 2 terminal absorption
+    terminal: RejectPostTerminalMutation
+  - symptom: terminal verdict claims authority_effect other than 'None'
+    diagnosis: authority conflation defect; violates four-axis separation
+    terminal: RejectAuthorityConflation
+examples:
+  - ref: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+    section: '2.9'
+references:
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/dda_packets.contract.yaml

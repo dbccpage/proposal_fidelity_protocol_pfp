@@ -1,0 +1,302 @@
+{
+  "input": {
+    "case_id": "ex01_group_completion",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "precedence": {
+      "inv": 100,
+      "mul": 50,
+      "e": 10
+    }
+  },
+  "expected_output": {
+    "case_id": "ex01_group_completion",
+    "status": "SOLVED",
+    "task": "COMPLETE",
+    "converged": true,
+    "steps": 147,
+    "rules_count": 10,
+    "rules": [
+      {
+        "lhs": "mul(e, x)",
+        "rhs": "x"
+      },
+      {
+        "lhs": "mul(inv(x), x)",
+        "rhs": "e"
+      },
+      {
+        "lhs": "mul(mul(x, y), z)",
+        "rhs": "mul(x, mul(y, z))"
+      },
+      {
+        "lhs": "mul(inv(x), mul(x, y))",
+        "rhs": "y"
+      },
+      {
+        "lhs": "inv(e)",
+        "rhs": "e"
+      },
+      {
+        "lhs": "mul(x, e)",
+        "rhs": "x"
+      },
+      {
+        "lhs": "mul(x, inv(x))",
+        "rhs": "e"
+      },
+      {
+        "lhs": "inv(inv(x))",
+        "rhs": "x"
+      },
+      {
+        "lhs": "mul(x, mul(inv(x), y))",
+        "rhs": "y"
+      },
+      {
+        "lhs": "inv(mul(x, y))",
+        "rhs": "mul(inv(y), inv(x))"
+      }
+    ],
+    "joinability_certificates_count": 130,
+    "joinability_certificates": [
+      {
+        "equation": [
+          "mul(e, mul(r0_x, z))",
+          "mul(r0_x, z)"
+        ],
+        "joined_normal_form": "mul(r0_x, z)"
+      },
+      {
+        "equation": [
+          "e",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "e",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "mul(e, r3_y)",
+          "r3_y"
+        ],
+        "joined_normal_form": "r3_y"
+      },
+      {
+        "equation": [
+          "y",
+          "mul(e, y)"
+        ],
+        "joined_normal_form": "y"
+      },
+      {
+        "equation": [
+          "e",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "e",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "e",
+          "inv(e)"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "e",
+          "mul(e, e)"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "x",
+          "mul(e, x)"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "mul(inv(e), r3_y)",
+          "r3_y"
+        ],
+        "joined_normal_form": "r3_y"
+      },
+      {
+        "equation": [
+          "y",
+          "mul(inv(e), y)"
+        ],
+        "joined_normal_form": "y"
+      },
+      {
+        "equation": [
+          "e",
+          "mul(inv(e), e)"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "x",
+          "mul(inv(e), x)"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "mul(inv(e), x)",
+          "x"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "y",
+          "mul(e, mul(e, y))"
+        ],
+        "joined_normal_form": "y"
+      },
+      {
+        "equation": [
+          "mul(inv(inv(e)), x)",
+          "x"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "e",
+          "inv(e)"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "inv(e)",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "e",
+          "mul(inv(inv(e)), e)"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "r6_x",
+          "mul(inv(inv(inv(e))), r6_x)"
+        ],
+        "joined_normal_form": "r6_x"
+      },
+      {
+        "equation": [
+          "e",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "e",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "inv(e)",
+          "e"
+        ],
+        "joined_normal_form": "e"
+      },
+      {
+        "equation": [
+          "e",
+          "inv(e)"
+        ],
+        "joined_normal_form": "e"
+      }
+    ],
+    "ddc_trace": {
+      "case_id": "ex01_group_completion",
+      "trace_string": "ELambdaDCIMT",
+      "step_count": 7,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task COMPLETE for case ex01_group_completion",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "Lambda",
+          "detail": "Initialized TermOrder with 3 precedence levels",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "D",
+          "detail": "Starting completion saturation with max_steps=200",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "C",
+          "detail": "Generated and joined 130 critical pairs",
+          "meta": {}
+        },
+        {
+          "step_index": 4,
+          "op": "I",
+          "detail": "Canonical convergent TRS reached with 10 rules",
+          "meta": {}
+        },
+        {
+          "step_index": 5,
+          "op": "M",
+          "detail": "All critical pairs validated joinable",
+          "meta": {}
+        },
+        {
+          "step_index": 6,
+          "op": "T",
+          "detail": "Emitted completion result",
+          "meta": {}
+        }
+      ]
+    }
+  }
+}

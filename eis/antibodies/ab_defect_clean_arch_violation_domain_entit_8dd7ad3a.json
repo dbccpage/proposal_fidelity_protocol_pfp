@@ -1,0 +1,17 @@
+{
+  "antibody_id": "ab_defect_clean_arch_violation_domain_entit_8dd7ad3a",
+  "failure_class": "architecture:clean_arch_inward_dependency_violation",
+  "target_pattern": "from\\s+(\\w+)\\s+import.*(?:where\\s+layer\\(\\1\\)\\s*>\\s*layer\\(self\\))",
+  "constraint_type": "ProjectOut",
+  "operatorizability": "repairable",
+  "action": "repair",
+  "severity": "P0",
+  "description": "Inward dependency rule violated: inner layer depends on outer layer. Invert dependency via Domain Protocol / Port.",
+  "negative_fixture": "from infrastructure.db import DBClient\n\nclass Order:\n    pass\n",
+  "positive_fixture": "from domain.ports import OrderRepositoryPort\n\nclass Order:\n    pass\n",
+  "times_seen": 1,
+  "evidence_sha256": "8dd7ad3a3b78920cd04ffbd99273ca930df60707033db7a22f091768e5b70a98",
+  "pharmacy_status": "candidate",
+  "authority_effect": "None",
+  "created_at": "2026-09-23T14:25:43.575772+00:00"
+}

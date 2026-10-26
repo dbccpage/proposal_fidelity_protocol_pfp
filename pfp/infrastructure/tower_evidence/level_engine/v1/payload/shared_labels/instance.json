@@ -1,0 +1,348 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the tree's four-site square (instance square_2x2_r0), which its decider finds carries no section; each context's choice puts the breadth-first label at its first item and carries it across by the context's rule, so every rule is kept and two items get two labels",
+      "role": "own_negative",
+      "set": {
+        "contexts": [
+          [
+            "c0",
+            [
+              "01",
+              "03"
+            ],
+            "equal"
+          ],
+          [
+            "c1",
+            [
+              "01",
+              "12"
+            ],
+            "differ"
+          ],
+          [
+            "c2",
+            [
+              "02",
+              "03"
+            ],
+            "equal"
+          ],
+          [
+            "c3",
+            [
+              "02",
+              "12"
+            ],
+            "equal"
+          ],
+          [
+            "c4",
+            [
+              "03",
+              "13"
+            ],
+            "equal"
+          ],
+          [
+            "c5",
+            [
+              "03",
+              "23"
+            ],
+            "equal"
+          ],
+          [
+            "c6",
+            [
+              "12",
+              "13"
+            ],
+            "equal"
+          ],
+          [
+            "c7",
+            [
+              "12",
+              "23"
+            ],
+            "differ"
+          ]
+        ],
+        "family": [
+          [
+            "c0",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "c1",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "c2",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "c3",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "c4",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "c5",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "c6",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "c7",
+            [
+              1,
+              0
+            ]
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_missing",
+      "note": "the last context gets no choice",
+      "role": "near_miss",
+      "set": {
+        "family": [
+          [
+            "c0",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "c1",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "c2",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "c3",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "c4",
+            [
+              1,
+              1
+            ]
+          ]
+        ]
+      },
+      "violates": "one_choice_each"
+    },
+    {
+      "id": "near_rule",
+      "note": "the one exchanging context is declared equal while its choice still differs",
+      "role": "near_miss",
+      "set": {
+        "contexts": [
+          [
+            "c0",
+            [
+              "01",
+              "02"
+            ],
+            "equal"
+          ],
+          [
+            "c1",
+            [
+              "02",
+              "03"
+            ],
+            "equal"
+          ],
+          [
+            "c2",
+            [
+              "02",
+              "12"
+            ],
+            "equal"
+          ],
+          [
+            "c3",
+            [
+              "03",
+              "13"
+            ],
+            "equal"
+          ],
+          [
+            "c4",
+            [
+              "12",
+              "13"
+            ],
+            "equal"
+          ],
+          [
+            "c5",
+            [
+              "13",
+              "23"
+            ],
+            "equal"
+          ]
+        ]
+      },
+      "violates": "rule_kept"
+    },
+    {
+      "id": "near_turned",
+      "note": "the second context's choice has both labels exchanged: its rule is kept, and it disagrees with its neighbours on both its items",
+      "role": "near_miss",
+      "set": {
+        "family": [
+          [
+            "c0",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "c1",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "c2",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "c3",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "c4",
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            "c5",
+            [
+              1,
+              1
+            ]
+          ]
+        ]
+      },
+      "violates": "overlaps_agree"
+    },
+    {
+      "id": "triangle",
+      "note": "the tree's three-site triangle (instance triangle_C3_r0): three contexts around an odd cycle, one exchanging; its decider finds no section, and the choices built as for the square disagree on one item",
+      "role": "extra",
+      "set": {
+        "contexts": [
+          [
+            "c0",
+            [
+              "01",
+              "02"
+            ],
+            "equal"
+          ],
+          [
+            "c1",
+            [
+              "01",
+              "12"
+            ],
+            "differ"
+          ],
+          [
+            "c2",
+            [
+              "02",
+              "12"
+            ],
+            "equal"
+          ]
+        ],
+        "family": [
+          [
+            "c0",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "c1",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "c2",
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      "violates": "overlaps_agree"
+    }
+  ]
+}

@@ -1,0 +1,1947 @@
+"""Soviet Landau-style Test Suite for Demo Q40 Quantum Stabilizer Solver.
+
+Verifies:
+1. Invariant: Pauli algebra, symplectic GF(2) reduction, exact multiplication phases.
+2. Verification: 40/40 benchmark cases, certificate checks, dense matrix spectrum checks.
+3. Invariance: 8 relabelled controls match base cases in energy, dimension, and status.
+4. Soviet Inspector Falsification: 5 deliberate production mutations must trigger verified failures.
+
+AuthorityEffect: None.
+"""
+
+from __future__ import annotations
+
+from fractions import Fraction
+import pytest
+
+from omega_engine_symbol_game.domain.quantum.certificate_checker import check_certificate
+from omega_engine_symbol_game.infrastructure.quantum.dense_checker import verify_dense_spectrum
+from omega_engine_symbol_game.domain.quantum.hamiltonian import HamiltonianTerm, QuantumHamiltonian
+from omega_engine_symbol_game.domain.quantum.pauli import PauliString
+from omega_engine_symbol_game.domain.quantum.stabilizer_solver import solve
+from omega_engine_symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import run_benchmark_40
+
+
+# ---------------------------------------------------------------------------
+# 1. Domain Invariants: Pauli Algebra & Symplectic Vector Space
+# ---------------------------------------------------------------------------
+
+def test_pauli_string_properties_and_commutation():
+    z1 = PauliString("Z")
+    x1 = PauliString("X")
+    assert not z1.commutes_with(x1)  # 1 anticommuting position (odd)
+
+    xx = PauliString("XX")
+    zz = PauliString("ZZ")
+    assert xx.commutes_with(zz)  # 2 anticommuting positions (even)
+
+    yy = PauliString("YY")
+    assert xx.commutes_with(yy)
+    assert zz.commutes_with(yy)
+
+    # Cross-type equality rejection
+    assert z1 != "Z"
+    with pytest.raises(TypeError):
+        z1.commutes_with("Z")  # type: ignore
+
+
+def test_pauli_exact_multiplication_phase():
+    xx = PauliString("XX")
+    zz = PauliString("ZZ")
+    # (X * Z) x (X * Z) = (-i Y) x (-i Y) = (-i)^2 YY = - YY
+    # phase power of i is 2 (-1)
+    phase_pow, prod = xx.multiply(zz)
+    assert phase_pow == 2
+    assert prod.word == "YY"
+
+    # Multiplied by itself gives Identity with phase 0
+    p0, p_id = xx.multiply(xx)
+    assert p0 == 0
+    assert p_id.word == "II"
+
+
+def test_pauli_symplectic_vector_roundtrip():
+    p = PauliString("XYZI")
+    vec = p.to_symplectic_vector()
+    # X -> (1, 0), Y -> (1, 1), Z -> (0, 1), I -> (0, 0)
+    # x_vec = (1, 1, 0, 0), z_vec = (0, 1, 1, 0)
+    assert vec == (1, 1, 0, 0, 0, 1, 1, 0)
+    reconstructed = PauliString.from_symplectic_vector(vec, num_qubits=4)
+    assert reconstructed == p
+
+
+# ---------------------------------------------------------------------------
+# 2. Hamiltonian Invariants & Penalty Calculations
+# ---------------------------------------------------------------------------
+
+def test_hamiltonian_term_penalties():
+    term = HamiltonianTerm(pauli=PauliString("ZZ"), weight=Fraction(3, 2), target_sign=1)
+    # Satisfied (lambda = +1): penalty = 0
+    assert term.penalty_for_eigenvalue(1) == Fraction(0)
+    # Violated (lambda = -1): penalty = weight
+    assert term.penalty_for_eigenvalue(-1) == Fraction(3, 2)
+
+
+def test_hamiltonian_bounds_and_type_guards():
+    with pytest.raises(ValueError, match="num_qubits must be an integer between 1 and 8"):
+        QuantumHamiltonian(num_qubits=9, terms=())
+
+    with pytest.raises(ValueError, match="Terms count exceeds bound of 24"):
+        terms = tuple(
+            HamiltonianTerm(pauli=PauliString("Z"), weight=Fraction(1), target_sign=1)
+            for _ in range(25)
+        )
+        QuantumHamiltonian(num_qubits=1, terms=terms)
+
+
+# ---------------------------------------------------------------------------
+# 3. Solver Worked Examples & Edge Cases
+# ---------------------------------------------------------------------------
+
+def test_case_01_single_qubit_trivial():
+    case = {
+        "case_id": "test_c1",
+        "num_qubits": 1,
+        "terms": [{"pauli": "Z", "weight": "1", "target_sign": 1}],
+    }
+    res = solve(case)
+    assert res["status"] == "SOLVED"
+    assert res["ground_state_energy"] == "0"
+    assert res["ground_eigenspace_dimension"] == 1
+    assert check_certificate(case, res)["verdict"] == "PASS"
+
+
+def test_case_03_noncommuting_witnessed_refusal():
+    case = {
+        "case_id": "test_c3",
+        "num_qubits": 2,
+        "terms": [
+            {"pauli": "XI", "weight": "1", "target_sign": 1},
+            {"pauli": "ZI", "weight": "1", "target_sign": 1},
+        ],
+    }
+    res = solve(case)
+    assert res["status"] == "OUT_OF_SCOPE"
+    assert res["refusal_code"] == "NONCOMMUTING_HAMILTONIAN"
+    pair = res["anticommuting_pair"]
+    assert pair["term_i"]["index"] == 0
+    assert pair["term_j"]["index"] == 1
+    assert check_certificate(case, res)["verdict"] == "PASS"
+
+
+def test_case_16_opposing_target_signs():
+    case = {
+        "case_id": "test_opposing",
+        "num_qubits": 2,
+        "terms": [
+            {"pauli": "ZZ", "weight": "4", "target_sign": 1},
+            {"pauli": "ZZ", "weight": "1", "target_sign": -1},
+        ],
+    }
+    res = solve(case)
+    assert res["status"] == "SOLVED"
+    # When ZZ = +1, penalty is 4*(0) + 1*(1) = 1.
+    # When ZZ = -1, penalty is 4*(1) + 1*(0) = 4.
+    # Min energy must be 1.
+    assert res["ground_state_energy"] == "1"
+    # 2 qubits, 1 generator: degeneracy 1 * 2^(2-1) = 2.
+    assert res["ground_eigenspace_dimension"] == 2
+    assert check_certificate(case, res)["verdict"] == "PASS"
+
+
+def test_case_17_unused_qubits_degeneracy():
+    case = {
+        "case_id": "test_unused",
+        "num_qubits": 6,
+        "terms": [
+            {"pauli": "ZZIIII", "weight": "1", "target_sign": 1},
+            {"pauli": "XXIIII", "weight": "1", "target_sign": 1},
+        ],
+    }
+    res = solve(case)
+    assert res["status"] == "SOLVED"
+    assert res["ground_state_energy"] == "0"
+    # k = 2 generators on 6 qubits: 2^(6 - 2) = 16 degeneracy
+    assert res["ground_eigenspace_dimension"] == 16
+    assert check_certificate(case, res)["verdict"] == "PASS"
+
+
+# ---------------------------------------------------------------------------
+# 4. Full 40-Case Benchmark Execution & Invariance
+# ---------------------------------------------------------------------------
+
+def test_full_40_case_benchmark_execution():
+    # 1. Offline deterministic solver run: provenance unverified
+    report = run_benchmark_40(dense_spectrum=verify_dense_spectrum)
+    receipt = report["receipt"]
+
+    assert receipt["verdict"] == "DETERMINISTIC_SOLVER_PASS_PROVENANCE_UNVERIFIED"
+    assert receipt["capability_pass"] is True
+    assert receipt["total_cases_evaluated"] == 40
+    assert receipt["solved_cases_count"] == 31
+    assert receipt["out_of_scope_cases_count"] == 9
+    assert receipt["certificate_checks_passed"] == 40
+    assert receipt["dense_checks_passed"] >= 24
+    assert receipt["dense_checks_failed"] == 0
+    assert receipt["controls_invariance_passed"] == 8
+
+    prov = receipt["provenance_status"]
+    assert prov["deterministic_solver_result"] == "measured"
+    assert prov["model_generation_provenance"] == "unverified"
+    assert prov["actual_billed_inference_cost"] == "unverified"
+    assert prov["comparative_advantage"] == "not_tested"
+
+    # 2. Verified provider metadata run: success with audited billing
+    report_live = run_benchmark_40(dense_spectrum=verify_dense_spectrum, openrouter_metadata={
+        "cost_usd": 0.00185,
+        "total_tokens": 2450,
+        "model": "meta-llama/llama-3.3-70b-instruct",
+        "generation_id": "gen-audited-live-456",
+        "provenance_verified": True,
+    })
+    receipt_live = report_live["receipt"]
+    assert receipt_live["verdict"] == "SUCCESS"
+    assert receipt_live["provenance_status"]["model_generation_provenance"] == "verified"
+    or_acc = receipt_live["openrouter_accounting"]
+    assert or_acc["billed_cost_usd"] < 1.00
+    assert or_acc["cost_within_budget"] is True
+
+
+
+# ---------------------------------------------------------------------------
+# 5. Soviet Inspector Deliberate Mutation Falsification
+# ---------------------------------------------------------------------------
+
+def test_soviet_falsification_corrupted_ground_energy():
+    case = {
+        "case_id": "test_soviet_1",
+        "num_qubits": 2,
+        "terms": [
+            {"pauli": "ZZ", "weight": "1", "target_sign": 1},
+            {"pauli": "XX", "weight": "1", "target_sign": 1},
+        ],
+    }
+    sol = solve(case)
+    # Deliberate mutation: falsify reported ground state energy across all aliases
+    mutated = dict(sol)
+    mutated["ground_state_energy"] = "99"
+    if "energy" in mutated:
+        mutated["energy"] = [99, 1]
+    if "E" in mutated:
+        mutated["E"] = [99, 1]
+    if "ground_state_energy_rational" in mutated:
+        mutated["ground_state_energy_rational"] = {"numerator": 99, "denominator": 1}
+
+    check = check_certificate(case, mutated)
+    assert check["verdict"] == "FAIL"
+    assert "Reported energy 99 != true ground energy 0" in check["error"]
+
+
+def test_soviet_falsification_corrupted_generator_exponents():
+    case = {
+        "case_id": "test_soviet_2",
+        "num_qubits": 2,
+        "terms": [
+            {"pauli": "XX", "weight": "1", "target_sign": 1},
+            {"pauli": "ZZ", "weight": "1", "target_sign": 1},
+            {"pauli": "YY", "weight": "1", "target_sign": 1},
+        ],
+    }
+    sol = solve(case)
+    # Deliberate mutation: corrupt decomposition sign across aliases
+    mutated = dict(sol)
+    mutated["certificate"] = dict(sol["certificate"])
+    decomps = [dict(d) for d in sol["certificate"]["term_decompositions"]]
+    decomps[2]["sign"] = 1  # true sign is -1
+    mutated["certificate"]["term_decompositions"] = decomps
+    if "decomposition" in mutated:
+        mut_dec = [dict(d) for d in mutated["decomposition"]]
+        mut_dec[2]["sign"] = 1
+        mutated["decomposition"] = mut_dec
+
+    check = check_certificate(case, mutated)
+    assert check["verdict"] == "FAIL"
+    assert "Decomposition algebraic mismatch" in check["error"]
+
+
+def test_soviet_falsification_omitted_minimizing_assignment():
+    case = {
+        "case_id": "test_soviet_3",
+        "num_qubits": 2,
+        "terms": [
+            {"pauli": "XX", "weight": "1", "target_sign": 1},
+            {"pauli": "ZZ", "weight": "1", "target_sign": 1},
+            {"pauli": "YY", "weight": "1", "target_sign": 1},
+        ],
+    }
+    sol = solve(case)
+    # True minimizing assignments count is 3. Mutate to 1 across aliases.
+    mutated = dict(sol)
+    mutated["certificate"] = dict(sol["certificate"])
+    mutated["certificate"]["minimizing_assignments"] = [sol["certificate"]["minimizing_assignments"][0]]
+    if "minimizers" in mutated:
+        mutated["minimizers"] = [mutated["minimizers"][0]]
+
+    check = check_certificate(case, mutated)
+    assert check["verdict"] == "FAIL"
+    assert "submitted count 1 != true count 3" in check["error"]
+
+
+def test_soviet_falsification_invalid_anticommuting_witness():
+    case = {
+        "case_id": "test_soviet_4",
+        "num_qubits": 2,
+        "terms": [
+            {"pauli": "ZZ", "weight": "1", "target_sign": 1},
+            {"pauli": "XX", "weight": "1", "target_sign": 1},
+        ],
+    }
+    # Deliberate mutation: falsely claim commuting Hamiltonian is OUT_OF_SCOPE
+    fake_refusal = {
+        "status": "OUT_OF_SCOPE",
+        "case_id": "test_soviet_4",
+        "refusal_code": "NONCOMMUTING_HAMILTONIAN",
+        "anticommuting_pair": {
+            "term_i": {"index": 0, "pauli": "ZZ"},
+            "term_j": {"index": 1, "pauli": "XX"},
+        },
+    }
+    check = check_certificate(case, fake_refusal)
+    assert check["verdict"] == "FAIL"
+    assert "actually commute; invalid refusal" in check["error"]
+
+
+def test_soviet_falsification_false_solved_on_anticommuting_input():
+    case = {
+        "case_id": "test_soviet_5",
+        "num_qubits": 1,
+        "terms": [
+            {"pauli": "X", "weight": "1", "target_sign": 1},
+            {"pauli": "Z", "weight": "1", "target_sign": 1},
+        ],
+    }
+    # Deliberate mutation: falsely claim anticommuting Hamiltonian is SOLVED
+    fake_solved = {
+        "status": "SOLVED",
+        "case_id": "test_soviet_5",
+        "num_qubits": 1,
+        "num_terms": 2,
+        "ground_state_energy": "0",
+        "ground_eigenspace_dimension": 1,
+        "certificate": {
+            "generators": ["X"],
+            "term_decompositions": [],
+            "minimizing_assignments": [{"assignment_index": 0, "eigenvalues": [1]}],
+        },
+    }
+    check = check_certificate(case, fake_solved)
+    assert check["verdict"] == "FAIL"
+    assert "Hamiltonian has anticommuting pair but was reported as SOLVED" in check["error"]
+
+
+# ---------------------------------------------------------------------------
+# 6. ChatGPT Review Counterexamples & Contract Falsification Tests
+# ---------------------------------------------------------------------------
+
+def test_chatgpt_counterexample_a_nonminimal_assignment_rejected():
+    """Counterexample A from ChatGPT review: H = (I - Z)/2, submitting b = [-1] (energy 1).
+
+    The certificate checker must reject the assignment because it achieves energy 1,
+    which is not minimal (true minimum energy is 0).
+    """
+    case = {
+        "case_id": "chatgpt_counterexample_a",
+        "num_qubits": 1,
+        "terms": [{"pauli": "Z", "weight": "1", "target_sign": 1}],
+    }
+    fake_sol = {
+        "status": "SOLVED",
+        "case_id": "chatgpt_counterexample_a",
+        "ground_state_energy": "0",
+        "ground_eigenspace_dimension": 1,
+        "certificate": {
+            "generators": ["Z"],
+            "term_decompositions": [{"term_index": 0, "sign": 1, "generator_exponents": [1]}],
+            "minimizing_assignments": [{"assignment_index": 1, "eigenvalues": [-1]}],
+        },
+    }
+    check = check_certificate(case, fake_sol)
+    assert check["verdict"] == "FAIL"
+    assert "not minimal" in check["error"]
+
+
+def test_chatgpt_counterexample_b_duplicate_decomposition_wrong_energy_rejected():
+    """Counterexample B from ChatGPT review: H = (I-XI)/2 + (I+IX)/2.
+
+    Duplicating term 0 decomposition in place of term 1, and claiming false energy 1
+    and degeneracy 4. Must be rejected.
+    """
+    case = {
+        "case_id": "chatgpt_counterexample_b",
+        "num_qubits": 2,
+        "terms": [
+            {"pauli": "XI", "weight": "1", "target_sign": 1},
+            {"pauli": "IX", "weight": "1", "target_sign": -1},
+        ],
+    }
+    fake_sol = {
+        "status": "SOLVED",
+        "case_id": "chatgpt_counterexample_b",
+        "ground_state_energy": "1",
+        "ground_eigenspace_dimension": 4,
+        "certificate": {
+            "generators": ["XI", "IX"],
+            "term_decompositions": [
+                {"term_index": 0, "sign": 1, "generator_exponents": [1, 0]},
+                {"term_index": 0, "sign": 1, "generator_exponents": [1, 0]},  # Duplicate term 0!
+            ],
+            "minimizing_assignments": [
+                {"assignment_index": 0, "eigenvalues": [1, 1]},
+                {"assignment_index": 1, "eigenvalues": [1, -1]},
+                {"assignment_index": 2, "eigenvalues": [-1, 1]},
+                {"assignment_index": 3, "eigenvalues": [-1, -1]},
+            ],
+        },
+    }
+    check = check_certificate(case, fake_sol)
+    assert check["verdict"] == "FAIL"
+    assert "Duplicate decomposition for term_index 0" in check["error"]
+
+
+def test_chatgpt_relabelled_unknown_rejected():
+    """Status defect from ChatGPT review: valid solution relabelled UNKNOWN must not pass."""
+    case = {
+        "case_id": "test_status_defect",
+        "num_qubits": 1,
+        "terms": [{"pauli": "Z", "weight": "1", "target_sign": 1}],
+    }
+    fake_sol = {
+        "status": "UNKNOWN",
+        "case_id": "test_status_defect",
+        "refusal_code": "TEST_REFUSAL",
+        "ground_state_energy": "0",
+        "ground_eigenspace_dimension": 1,
+        "certificate": {
+            "generators": ["Z"],
+            "term_decompositions": [{"term_index": 0, "sign": 1, "generator_exponents": [1]}],
+            "minimizing_assignments": [{"assignment_index": 0, "eigenvalues": [1]}],
+        },
+    }
+    check = check_certificate(case, fake_sol)
+    assert check["verdict"] == "FAIL"
+    assert "Case is well-formed and within bounds, but solver reported UNKNOWN" in check["error"]
+
+
+def test_empty_hamiltonian_supported():
+    """Empty Hamiltonian H = 0 on n qubits must return E=0 and degeneracy 2^n."""
+    empty_case = {"id": "empty_case_3q", "n": 3, "terms": []}
+    sol = solve(empty_case)
+    assert sol["status"] == "SOLVED"
+    assert sol["ground_state_energy"] == "0"
+    assert sol["ground_eigenspace_dimension"] == 8
+    assert sol["deg"] == 8
+
+    check = check_certificate(empty_case, sol)
+    assert check["verdict"] == "PASS"
+    assert check["ground_eigenspace_dimension"] == 8
+
+
+def test_original_challenge_format_compatibility():
+    """Original challenge contract format: id, n, terms with P, target, w: [num, den]."""
+    orig_case = {
+        "id": "orig_challenge_case",
+        "n": 2,
+        "terms": [
+            {"id": "t0", "P": "XX", "target": 1, "w": [1, 1]},
+            {"id": "t1", "P": "ZZ", "target": 1, "w": [3, 2]},
+        ],
+    }
+    sol = solve(orig_case)
+    assert sol["status"] == "SOLVED"
+    assert sol["id"] == "orig_challenge_case"
+    assert sol["ground_state_energy"] == "0"
+    assert sol["ground_eigenspace_dimension"] == 1
+    assert sol["deg"] == 1
+
+    check = check_certificate(orig_case, sol)
+    assert check["verdict"] == "PASS"
+
+
+# ---------------------------------------------------------------------------
+# 7. Three-Arm Analytical Cost Projection Verification
+# ---------------------------------------------------------------------------
+
+def test_three_arm_cost_projection_execution():
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.three_arm_comparison import (
+        run_three_arm_comparison,
+    )
+    report = run_three_arm_comparison()
+    receipt = report["receipt"]
+
+    assert receipt["benchmark_cases_count"] == 40
+    assert receipt["experiment_type"] == "analytical_cost_model_projection"
+
+    # All three arms execute the same deterministic solver and achieve 100% solver correctness
+    findings = receipt["findings"]
+    assert findings["deterministic_solver_correctness"] is True
+    assert findings["comparative_advantage"] == "not_tested"
+    assert findings["empirical_measurement_performed"] is False
+
+
+def test_value_object_exact_type_equality_rejection():
+    """Assert domain Value Objects reject cross-class comparisons via type(self) is type(other)."""
+    p = PauliString("XX")
+
+    class SubPauliString(PauliString):
+        pass
+
+    sub_p = SubPauliString("XX")
+    assert p != sub_p
+    assert sub_p != p
+    assert p != "XX"
+    assert hash(p) != hash(sub_p)
+
+    term = HamiltonianTerm(pauli=p, weight=Fraction(1, 2), target_sign=1)
+
+    class SubHamiltonianTerm(HamiltonianTerm):
+        pass
+
+    sub_term = SubHamiltonianTerm(pauli=p, weight=Fraction(1, 2), target_sign=1)
+    assert term != sub_term
+    assert sub_term != term
+    assert hash(term) != hash(sub_term)
+
+    ham = QuantumHamiltonian(num_qubits=2, terms=(term,))
+
+    class SubQuantumHamiltonian(QuantumHamiltonian):
+        pass
+
+    sub_ham = SubQuantumHamiltonian(num_qubits=2, terms=(term,))
+    assert ham != sub_ham
+    assert sub_ham != ham
+    assert hash(ham) != hash(sub_ham)
+
+
+def test_dense_checker_empty_hamiltonian():
+    """Dense matrix checker correctly returns zero matrix and physical spectrum on H = 0."""
+    empty_case = {"case_id": "empty_h", "num_qubits": 3, "terms": []}
+    sol = solve(empty_case)
+    assert sol["status"] == "SOLVED"
+    assert sol["ground_state_energy"] == "0"
+    assert sol["ground_eigenspace_dimension"] == 8
+
+    dense_res = verify_dense_spectrum(empty_case, sol)
+    assert dense_res["dense_check"] == "PASSED"
+    assert dense_res["dense_min_eigenvalue"] == 0.0
+    assert dense_res["dense_multiplicity"] == 8
+    assert dense_res["energy_match"] is True
+    assert dense_res["dimension_match"] is True
+
+
+def test_certificate_checker_unknown_status_handling():
+    """Certificate checker verifies UNKNOWN status with refusal code on malformed cases."""
+    malformed_case = {
+        "case_id": "malformed_qubits",
+        "num_qubits": 9,
+        "terms": [{"pauli": "XXXXXXXXX", "weight": 1}],
+    }
+    sol_unknown = {
+        "status": "UNKNOWN",
+        "case_id": "malformed_qubits",
+        "refusal_code": "QUBITS_OUT_OF_BOUNDS",
+    }
+    check = check_certificate(malformed_case, sol_unknown)
+    assert check["verdict"] == "PASS"
+    assert check["status"] == "UNKNOWN"
+    assert check["refusal_code"] == "QUBITS_OUT_OF_BOUNDS"
+
+    # UNKNOWN on valid case must FAIL
+    valid_case = {
+        "case_id": "valid_case",
+        "num_qubits": 1,
+        "terms": [{"pauli": "Z", "weight": 1}],
+    }
+    check_bad_unknown = check_certificate(valid_case, sol_unknown)
+    assert check_bad_unknown["verdict"] == "FAIL"
+
+    # SOLVED on malformed case must FAIL
+    sol_bad_solved = {
+        "status": "SOLVED",
+        "case_id": "malformed_qubits",
+        "ground_state_energy": "0",
+        "ground_eigenspace_dimension": 512,
+    }
+    check_bad_solved = check_certificate(malformed_case, sol_bad_solved)
+    assert check_bad_solved["verdict"] == "FAIL"
+
+
+# ---------------------------------------------------------------------------
+# 8. PR #155 Review Verification & Regression Tests
+# ---------------------------------------------------------------------------
+
+def test_r155_01_public_interface_strict_keys_and_no_leakage():
+    """R155-01: Public solve interface returns strictly the required keys with zero internal leakage."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.solver import solve as challenge_solve
+
+    # A. Commuting case
+    case_solved = {
+        "id": "c_solved",
+        "n": 2,
+        "terms": [
+            {"id": "t0", "P": "ZZ", "w": [1, 1], "target": 1},
+            {"id": "t1", "P": "XX", "w": [1, 1], "target": 1},
+        ],
+    }
+    out_solved = challenge_solve(case_solved)
+    assert set(out_solved.keys()) == {
+        "id", "status", "energy", "degeneracy", "basis", "decomposition", "minimizers"
+    }
+    assert out_solved["status"] == "SOLVED"
+    assert out_solved["energy"] == [0, 1]
+    assert isinstance(out_solved["degeneracy"], int)
+    assert not isinstance(out_solved["degeneracy"], bool)
+    # Assert zero internal diagnostic leakage
+    for forbidden_key in ("E", "deg", "ground_state_energy", "certificate", "ground_state_energy_rational"):
+        assert forbidden_key not in out_solved
+
+    # B. Noncommuting case
+    case_out_of_scope = {
+        "id": "c_out_of_scope",
+        "n": 1,
+        "terms": [
+            {"id": "t0", "P": "X", "w": [1, 1], "target": 1},
+            {"id": "t1", "P": "Z", "w": [1, 1], "target": 1},
+        ],
+    }
+    out_refused = challenge_solve(case_out_of_scope)
+    assert set(out_refused.keys()) == {"id", "status", "witness"}
+    assert out_refused["status"] == "OUT_OF_SCOPE"
+    assert out_refused["witness"] == ["t0", "t1"]
+    for forbidden_key in ("refusal_code", "anticommuting_pair", "pair", "terms"):
+        assert forbidden_key not in out_refused
+
+
+def test_r155_02_cost_only_metadata_quarantined_from_success():
+    """R155-02: Cost-only or dummy metadata cannot grant verified provenance or SUCCESS verdict."""
+    report_unverified = run_benchmark_40(
+        dense_spectrum=verify_dense_spectrum,
+        openrouter_metadata={"cost_usd": 0.00025},
+    )
+    receipt = report_unverified["receipt"]
+    assert receipt["verdict"] == "DETERMINISTIC_SOLVER_PASS_PROVENANCE_UNVERIFIED"
+    assert receipt["provenance_status"]["model_generation_provenance"] == "unverified"
+    assert receipt["provenance_status"]["actual_billed_inference_cost"] == "unverified"
+
+
+def test_r155_03_rejection_of_conflicting_assignment_index_and_eigenvalues():
+    """R155-03: Certificate checker rejects contradictory assignment_index vs eigenvalues."""
+    case = {
+        "id": "c_conflicting_evs",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 1], "target": 1}],
+    }
+    fake_sol = {
+        "id": "c_conflicting_evs",
+        "status": "SOLVED",
+        "energy": [0, 1],
+        "degeneracy": 1,
+        "basis": ["t0"],
+        "decomposition": [{"id": "t0", "sign": 1, "mask": 1}],
+        "certificate": {
+            "generators": ["Z"],
+            "minimizing_assignments": [{"assignment_index": 0, "eigenvalues": [-1]}],
+        },
+    }
+    check = check_certificate(case, fake_sol)
+    assert check["verdict"] == "FAIL"
+    assert "Contradictory assignment_index 0 and eigenvalues [-1]" in check["error"]
+
+
+def test_r155_03_rejection_of_conflicting_mask_and_generator_exponents():
+    """R155-03: Certificate checker rejects contradictory mask vs generator_exponents."""
+    case = {
+        "id": "c_conflicting_mask",
+        "n": 2,
+        "terms": [
+            {"id": "t0", "P": "XX", "w": [1, 1], "target": 1},
+            {"id": "t1", "P": "ZZ", "w": [1, 1], "target": 1},
+        ],
+    }
+    fake_sol = {
+        "id": "c_conflicting_mask",
+        "status": "SOLVED",
+        "energy": [0, 1],
+        "degeneracy": 1,
+        "basis": ["t0", "t1"],
+        "decomposition": [
+            {"id": "t0", "sign": 1, "generator_exponents": [1, 0], "mask": 2},
+            {"id": "t1", "sign": 1, "generator_exponents": [0, 1], "mask": 2},
+        ],
+        "minimizers": [0],
+    }
+    check = check_certificate(case, fake_sol)
+    assert check["verdict"] == "FAIL"
+    assert "Contradictory mask 2 != generator_exponents mask 1" in check["error"]
+
+
+def test_r155_03_rejection_of_fractional_or_boolean_degeneracy():
+    """R155-03: Certificate checker rejects non-integer or boolean degeneracy representations."""
+    case = {
+        "id": "c_non_int_deg",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 1], "target": 1}],
+    }
+    base_sol = solve(case)
+
+    # A. Float degeneracy
+    mut_float = dict(base_sol)
+    mut_float["degeneracy"] = 1.0
+    check_float = check_certificate(case, mut_float)
+    assert check_float["verdict"] == "FAIL"
+    assert "must be exact integer" in check_float["error"]
+
+    # B. Non-integer float degeneracy
+    mut_float_frac = dict(base_sol)
+    mut_float_frac["degeneracy"] = 1.5
+    check_float_frac = check_certificate(case, mut_float_frac)
+    assert check_float_frac["verdict"] == "FAIL"
+    assert "must be exact integer" in check_float_frac["error"]
+
+    # C. Boolean degeneracy
+    mut_bool = dict(base_sol)
+    mut_bool["degeneracy"] = True
+    check_bool = check_certificate(case, mut_bool)
+    assert check_bool["verdict"] == "FAIL"
+    assert "must be exact integer" in check_bool["error"]
+
+
+def test_r155_03_rejection_of_conflicting_energy_and_degeneracy_aliases():
+    """R155-03: Certificate checker rejects contradictory values across energy or degeneracy aliases."""
+    case = {
+        "id": "c_alias_conflict",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 1], "target": 1}],
+    }
+    base_sol = solve(case)
+
+    # A. Contradictory energy aliases
+    mut_energy = dict(base_sol)
+    mut_energy["energy"] = [0, 1]
+    mut_energy["ground_state_energy"] = "1"
+    check_e = check_certificate(case, mut_energy)
+    assert check_e["verdict"] == "FAIL"
+    assert "Contradictory energy" in check_e["error"]
+
+    # B. Contradictory degeneracy aliases
+    mut_deg = dict(base_sol)
+    mut_deg["degeneracy"] = 1
+    mut_deg["ground_eigenspace_dimension"] = 2
+    check_d = check_certificate(case, mut_deg)
+    assert check_d["verdict"] == "FAIL"
+    assert "Contradictory degeneracy" in check_d["error"]
+
+
+def test_r155_03_rejection_of_boolean_generator_exponents():
+    """R155-03: Certificate checker rejects boolean generator exponents."""
+    case = {
+        "id": "c_bool_exps",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 1], "target": 1}],
+    }
+    fake_sol = {
+        "id": "c_bool_exps",
+        "status": "SOLVED",
+        "energy": [0, 1],
+        "degeneracy": 1,
+        "basis": ["t0"],
+        "decomposition": [{"id": "t0", "sign": 1, "generator_exponents": [True]}],
+        "minimizers": [0],
+    }
+    check = check_certificate(case, fake_sol)
+    assert check["verdict"] == "FAIL"
+    assert "must be non-boolean 0 or 1" in check["error"]
+
+
+def test_r155_03_graceful_rejection_of_malformed_generators():
+    """R155-03: Malformed generator Pauli words return FAIL without raising uncaught exceptions."""
+    case = {
+        "id": "c_bad_gens",
+        "n": 2,
+        "terms": [
+            {"id": "t0", "P": "XX", "w": [1, 1], "target": 1},
+            {"id": "t1", "P": "ZZ", "w": [1, 1], "target": 1},
+        ],
+    }
+    fake_sol = {
+        "id": "c_bad_gens",
+        "status": "SOLVED",
+        "energy": [0, 1],
+        "degeneracy": 1,
+        "certificate": {
+            "generators": ["XZ_INVALID_LENGTH"],
+            "term_decompositions": [],
+            "minimizing_assignments": [],
+        },
+    }
+    check = check_certificate(case, fake_sol)
+    assert check["verdict"] == "FAIL"
+    assert "length != num_qubits" in check["error"]
+
+
+def test_r155_05_dense_checker_small_gap_returns_inconclusive():
+    """R155-05: Small numerical spectral gaps (< 10^-6) return INCONCLUSIVE rather than FAILED."""
+    tiny_weight_case = {
+        "id": "c_tiny_gap",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 100_000_000], "target": 1}],
+    }
+    sol = solve(tiny_weight_case)
+    dense_res = verify_dense_spectrum(tiny_weight_case, sol)
+    assert dense_res["dense_check"] == "INCONCLUSIVE"
+    assert "Spectral gap" in dense_res["reason"]
+
+
+def test_float_and_bool_inputs_are_refused_as_inexact():
+    """Float and bool are not rationals. Both the solver and the checker refuse them."""
+    float_weight = {
+        "id": "float_w",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": 0.5, "target": 1}],
+    }
+    refused_weight = solve(float_weight)
+    assert refused_weight["status"] == "UNKNOWN"
+    assert refused_weight["refusal_code"] == "NON_EXACT_WEIGHT"
+    assert check_certificate(float_weight, refused_weight)["verdict"] == "PASS"
+    assert check_certificate(
+        float_weight,
+        {"status": "SOLVED", "energy": [0, 1], "degeneracy": 1},
+    )["verdict"] == "FAIL"
+
+    bool_weight = {
+        "id": "bool_w",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": True, "target": 1}],
+    }
+    refused_bool = solve(bool_weight)
+    assert refused_bool["status"] == "UNKNOWN"
+    assert refused_bool["refusal_code"] == "NON_EXACT_WEIGHT"
+
+    float_qubits = {
+        "id": "float_n",
+        "n": 1.0,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 1], "target": 1}],
+    }
+    refused_qubits = solve(float_qubits)
+    assert refused_qubits["status"] == "UNKNOWN"
+    assert refused_qubits["refusal_code"] == "NON_EXACT_QUBIT_COUNT"
+    assert check_certificate(float_qubits, refused_qubits)["verdict"] == "PASS"
+
+    with pytest.raises(ValueError, match="target_sign"):
+        HamiltonianTerm(pauli=PauliString("Z"), weight=Fraction(1), target_sign=True)
+
+
+# ---------------------------------------------------------------------------
+# 7. Second Review Findings Falsification & Regressions (R155-01 to R155-07)
+# ---------------------------------------------------------------------------
+
+def test_r155_01_public_decomposition_schema():
+    """R155-01: Public wrapper emits decomposition rows strictly containing {id, mask, phase}."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.solver import solve as demo_solve
+    case = {
+        "id": "c_r155_01",
+        "n": 2,
+        "terms": [
+            {"id": "t1", "P": "ZZ", "w": [1, 1], "target": 1},
+            {"id": "t2", "P": "XX", "w": [1, 1], "target": 1},
+        ],
+    }
+    sol = demo_solve(case)
+    assert sol["status"] == "SOLVED"
+    assert "decomposition" in sol
+    assert len(sol["decomposition"]) == 2
+    for row in sol["decomposition"]:
+        assert "id" in row
+        assert "mask" in row
+        assert "phase" in row
+        assert isinstance(row["mask"], int)
+        assert isinstance(row["phase"], int)
+        assert row["phase"] in (1, -1)
+
+
+def test_r155_03a_numeric_looking_term_ids_namespace_collision():
+    """R155-03a: Term IDs with numeric characters are not corrupted by term index resolution."""
+    case = {
+        "id": "c_r155_03a",
+        "n": 1,
+        "terms": [
+            {"id": "1", "P": "Z", "w": [1, 1], "target": 1},
+            {"id": "b", "P": "X", "w": [1, 1], "target": 1},
+            {"id": "c", "P": "Z", "w": [1, 1], "target": 1},
+        ],
+    }
+    # Index 0 has literal ID "1" (Pauli Z)
+    # Index 1 has literal ID "b" (Pauli X) - anticommutes with index 0
+    # Index 2 has literal ID "c" (Pauli Z) - commutes with index 0
+    # Falsification: a false refusal claims "1" and "c" anticommute
+    false_refusal = {
+        "id": "c_r155_03a",
+        "status": "OUT_OF_SCOPE",
+        "witness": ["1", "c"],
+    }
+    res_false = check_certificate(case, false_refusal)
+    assert res_false["verdict"] == "FAIL"
+    assert "commute" in res_false["error"]
+
+    # True refusal claims "1" and "b" anticommute
+    true_refusal = {
+        "id": "c_r155_03a",
+        "status": "OUT_OF_SCOPE",
+        "witness": ["1", "b"],
+    }
+    res_true = check_certificate(case, true_refusal)
+    assert res_true["verdict"] == "PASS"
+
+
+def test_r155_03b_energy_rational_type_coercion_rejection():
+    """R155-03b: Float energy truncation or float coercion is strictly rejected."""
+    case = {
+        "id": "c_r155_03b_energy",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 1], "target": 1}],
+    }
+    # Solved base energy is 0
+    sol_float_trunc = {
+        "id": "c_r155_03b_energy",
+        "status": "SOLVED",
+        "energy": [0.9, 1],
+        "degeneracy": 1,
+        "basis": ["t0"],
+        "decomposition": [{"id": "t0", "mask": 0, "phase": 1}],
+        "minimizers": [0],
+    }
+    res = check_certificate(case, sol_float_trunc)
+    assert res["verdict"] == "FAIL"
+    assert "integer" in res["error"].lower()
+
+
+def test_r155_03b_certificate_alternative_format_hardening():
+    """R155-03b: Validates alternative format assignments and catches non-iterable eigenvalues."""
+    case = {
+        "id": "c_r155_03b_alt",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 1], "target": 1}],
+    }
+    # 1. Non-iterable eigenvalues
+    bad_eigenvalues = {
+        "id": "c_r155_03b_alt",
+        "status": "SOLVED",
+        "energy": [0, 1],
+        "degeneracy": 1,
+        "certificate": {
+            "generators": ["Z"],
+            "term_decompositions": [{"id": "t0", "sign": 1, "generator_exponents": [1]}],
+            "minimizing_assignments": [{"eigenvalues": 123}],
+        },
+    }
+    res1 = check_certificate(case, bad_eigenvalues)
+    assert res1["verdict"] == "FAIL"
+    assert "iterable" in res1["error"] or "list" in res1["error"]
+
+    # 2. Boolean or string in list-form assignments
+    bad_assignment_vals = {
+        "id": "c_r155_03b_alt",
+        "status": "SOLVED",
+        "energy": [0, 1],
+        "degeneracy": 1,
+        "certificate": {
+            "generators": ["Z"],
+            "term_decompositions": [{"id": "t0", "sign": 1, "generator_exponents": [1]}],
+            "minimizing_assignments": [[True]],
+        },
+    }
+    res2 = check_certificate(case, bad_assignment_vals)
+    assert res2["verdict"] == "FAIL"
+
+    # 3. Duplicate assignments
+    dup_assignments = {
+        "id": "c_r155_03b_alt",
+        "status": "SOLVED",
+        "energy": [0, 1],
+        "degeneracy": 1,
+        "certificate": {
+            "generators": ["Z"],
+            "term_decompositions": [{"id": "t0", "sign": 1, "generator_exponents": [1]}],
+            "minimizing_assignments": [{"eigenvalues": [1]}, {"eigenvalues": [1]}],
+        },
+    }
+    res3 = check_certificate(case, dup_assignments)
+    assert res3["verdict"] == "FAIL"
+    assert "duplicate" in res3["error"].lower()
+
+
+def test_r155_02_provenance_validation_strictness():
+    """R155-02: String 'false' or model 'llama-405b' are strictly rejected from verified provenance."""
+    # String "false"
+    rep_false_str = run_benchmark_40(dense_spectrum=verify_dense_spectrum, openrouter_metadata={
+        "cost_usd": 0.001,
+        "total_tokens": 100,
+        "model": "meta-llama/llama-3.3-70b-instruct",
+        "generation_id": "gen-valid-12345",
+        "provenance_verified": "false",
+    })
+    rec_false_str = rep_false_str["receipt"]
+    assert rec_false_str["verdict"] == "DETERMINISTIC_SOLVER_PASS_PROVENANCE_UNVERIFIED"
+    assert rec_false_str["provenance_status"]["model_generation_provenance"] == "unverified"
+
+    # 405B model parameter limit violation
+    rep_405b = run_benchmark_40(dense_spectrum=verify_dense_spectrum, openrouter_metadata={
+        "cost_usd": 0.001,
+        "total_tokens": 100,
+        "model": "not-a-provider/llama-405b",
+        "generation_id": "gen-valid-12345",
+        "provenance_verified": True,
+    })
+    rec_405b = rep_405b["receipt"]
+    assert rec_405b["verdict"] == "DETERMINISTIC_SOLVER_PASS_PROVENANCE_UNVERIFIED"
+    assert rec_405b["provenance_status"]["model_generation_provenance"] == "unverified"
+
+
+def test_r155_05_dense_checker_scale_invariance_and_noise_floor():
+    """R155-05: Constant identity energy shifts pass and sub-resolution gaps return INCONCLUSIVE."""
+    # Sub-resolution gap: H = (I - Z) / (2 * 10^14), gap is 10^-14
+    sub_res_case = {
+        "id": "c_sub_res",
+        "n": 1,
+        "terms": [{"id": "t0", "P": "Z", "w": [1, 100_000_000_000_000], "target": 1}],
+    }
+    sol = solve(sub_res_case)
+    dense_res = verify_dense_spectrum(sub_res_case, sol)
+    assert dense_res["dense_check"] == "INCONCLUSIVE"
+
+
+# ---------------------------------------------------------------------------
+# 8. Program Synthesis Trial Verification & Falsification
+# ---------------------------------------------------------------------------
+
+def test_synthesis_extract_python_code():
+    """Verifies robust code extraction across markdown formats."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import extract_python_code
+
+    fenced_py = "Here is my code:\n```python\ndef solve(case: dict) -> dict:\n    return {'status': 'SOLVED'}\n```\nDone."
+    assert "def solve(" in extract_python_code(fenced_py)
+
+    fenced_generic = "Solution:\n```\ndef solve(case: dict) -> dict:\n    return {'status': 'SOLVED'}\n```"
+    assert "def solve(" in extract_python_code(fenced_generic)
+
+    raw_code = "def solve(case: dict) -> dict:\n    return {'status': 'SOLVED'}"
+    assert "def solve(" in extract_python_code(raw_code)
+
+    assert extract_python_code("No python code here.") == ""
+
+
+def test_synthesis_compile_and_test_solver_falsification():
+    """Verifies that syntax errors, missing functions, and algebraic defects trigger clean refusals."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import compile_and_test_solver
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+
+    public_cases = [c for c in generate_all_40_cases() if c.get("case_id") in (
+        "q40_01_single_qubit_trivial", "q40_02_bell_stabilizer", "q40_03_noncommuting_pair", "q40_04_frustrated_triangle"
+    )]
+
+    # 1. SyntaxError
+    bad_syntax = "def solve(case\n return None"
+    fn1, res1 = compile_and_test_solver(bad_syntax, public_cases)
+    assert fn1 is None
+    assert "SyntaxError" in res1["error"]
+
+    # 2. Missing solve callable
+    no_solve = "def calculate(case):\n    return {}"
+    fn2, res2 = compile_and_test_solver(no_solve, public_cases)
+    assert fn2 is None
+    assert "callable 'solve(case)'" in res2["error"]
+
+    # 3. Defective solver (wrong status on noncommuting case q40_03)
+    defective_code = (
+        "def solve(case):\n"
+        "    return {'id': case.get('case_id') or case.get('id'), 'status': 'SOLVED', 'energy': [0, 1], "
+        "'degeneracy': 1, 'basis': [0], 'decomposition': [{'id': 0, 'mask': 1, 'phase': 1}], 'minimizers': [0]}"
+    )
+    fn3, res3 = compile_and_test_solver(defective_code, public_cases)
+    assert fn3 is None
+    assert "defect" in res3["error"].lower() or "q40_03" in res3["error"]
+
+
+def test_synthesis_trial_offline_mock(tmp_path):
+    """Verifies end-to-end program synthesis trial loop with offline mock backend."""
+    from pathlib import Path
+    from omega_engine_providers.adapters.model_backends import MockBackend
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+
+    # Mock response returns the verified reference solver implementation
+    solver_path = (
+        Path(__file__).resolve().parents[3]
+        / "omega_engine_education"
+        / "documentation"
+        / "3_the_symbol_game_proposal_fidelity_protocol_pfp"
+        / "demos"
+        / "demos"
+        / "demo_q40_quantum_solver"
+        / "solver.py"
+    )
+    if not solver_path.exists():
+        solver_path = (
+            Path(__file__).resolve().parents[3]
+            / "omega_engine_education"
+            / "curriculum"
+            / "the_symbol_game"
+            / "demos"
+            / "demo_q40_quantum_solver"
+            / "solver.py"
+        )
+    if not solver_path.exists():
+        solver_path = (
+            Path(__file__).resolve().parents[3]
+            / "omega_engine_projects"
+            / "mssn_sn_symgam"
+            / "demos"
+            / "demo_q40_quantum_solver"
+            / "solver.py"
+        )
+    solver_code = solver_path.read_text(encoding="utf-8")
+    mock_response = f"```python\n{solver_code}\n```"
+    mock_backend = MockBackend(answer=mock_response)
+
+    res = run_program_synthesis_trial(
+        backend=mock_backend,
+        model="mock-synthesis-model",
+        max_retractions=1,
+        output_dir=tmp_path,
+        allow_repo_imports=True,
+    )
+
+    assert res.synthesis_succeeded is True
+    assert res.within_budget is True
+    assert res.benchmark_evaluation.get("capability_pass") is True
+    assert res.benchmark_evaluation.get("certificate_checks_passed") == 40
+    assert res.benchmark_evaluation.get("controls_invariance_passed") == 8
+    assert (tmp_path / "synthesized_solver.py").exists()
+    assert (tmp_path / "synthesis_trial_receipt.json").exists()
+    assert (tmp_path / "synthesis_trial_answers.jsonl").exists()
+    assert (tmp_path / "synthesis_trial_trace.json").exists()
+
+
+def test_synthesis_subprocess_sandbox_isolation(monkeypatch):
+    """Verifies credential scrubbing, repository import protection, and execution timeout."""
+    import os
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import compile_and_test_solver
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+
+    # 1. Set sensitive environment variable in parent process
+    monkeypatch.setenv("OPENROUTER_API_KEY", "super_secret_host_key")
+
+    cases = [c for c in generate_all_40_cases() if c.get("case_id") == "q40_01_single_qubit_trivial"]
+
+    # Candidate attempts to read host API key from environment
+    leak_probe_code = (
+        "import os\n"
+        "def solve(case):\n"
+        "    if os.environ.get('OPENROUTER_API_KEY'):\n"
+        "        raise RuntimeError('LEAKED_API_KEY')\n"
+        "    return {'id': case.get('case_id') or case.get('id'), 'status': 'SOLVED', 'energy': [0, 1], "
+        "'degeneracy': 1, 'basis': [1], 'decomposition': [{'id': 0, 'mask': 1, 'phase': 1}], 'minimizers': [0]}"
+    )
+    fn, res = compile_and_test_solver(leak_probe_code, cases, timeout=5.0, allow_repo_imports=False)
+    # The child process must NOT see the key
+    assert "LEAKED_API_KEY" not in str(res.get("error"))
+
+    # Candidate attempts to cheat by importing internal repository modules under allow_repo_imports=False
+    cheat_probe_code = (
+        "import omega_engine_symbol_game\n"
+        "def solve(case):\n"
+        "    return {}\n"
+    )
+    fn_cheat, res_cheat = compile_and_test_solver(cheat_probe_code, cases, timeout=5.0, allow_repo_imports=False)
+    assert fn_cheat is None
+    assert "ModuleNotFoundError" in str(res_cheat.get("error"))
+
+    # Candidate with infinite loop is killed by timeout
+    hang_code = (
+        "def solve(case):\n"
+        "    while True:\n"
+        "        pass\n"
+    )
+    fn_hang, res_hang = compile_and_test_solver(hang_code, cases, timeout=1.0)
+    assert fn_hang is None
+    assert "timed out after 1.0 seconds" in str(res_hang.get("error"))
+
+
+def test_synthesis_multiturn_context_preservation(tmp_path):
+    """Verifies that multi-turn retraction preserves prompt, prior completion, and diagnostic defect."""
+    from omega_engine_providers.adapters.model_backends import OpenRouterReceipt
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+
+    recorded_calls: list[list[dict[str, str]]] = []
+
+    class MockMultiTurnBackend:
+        def __init__(self):
+            self.model = "mock-multiturn"
+            self.turn = 0
+
+        def complete_with_receipt(self, prompt: list[dict[str, str]]) -> OpenRouterReceipt:
+            self.turn += 1
+            recorded_calls.append(list(prompt))
+            if self.turn == 1:
+                # Turn 1: defective code (syntax error)
+                content = "```python\ndef solve(case\n return None\n```"
+            else:
+                # Turn 2: still defective (missing solve)
+                content = "```python\ndef not_solve(case):\n return {}\n```"
+            return OpenRouterReceipt(
+                content=content,
+                model="mock-multiturn",
+                generation_id=f"gen-turn-{self.turn}",
+                prompt_tokens=100,
+                completion_tokens=50,
+                total_tokens=150,
+                cost_usd=0.0001,
+            )
+
+    backend = MockMultiTurnBackend()
+    res = run_program_synthesis_trial(
+        backend=backend,
+        model="mock-multiturn",
+        max_retractions=1,
+        output_dir=tmp_path,
+    )
+
+    # Must have executed 2 turns
+    assert len(recorded_calls) == 2
+    # Turn 1 had 1 message (user specification)
+    assert len(recorded_calls[0]) == 1
+    assert recorded_calls[0][0]["role"] == "user"
+    assert "MATHEMATICAL SPECIFICATION" in recorded_calls[0][0]["content"]
+
+    # Turn 2 had 3 messages: [User(spec), Assistant(attempt 1), User(retraction)]
+    assert len(recorded_calls[1]) == 3
+    assert recorded_calls[1][0]["role"] == "user"
+    assert recorded_calls[1][1]["role"] == "assistant"
+    assert "def solve(case" in recorded_calls[1][1]["content"]
+    assert recorded_calls[1][2]["role"] == "user"
+    assert "[SYMBOL_GAME_SYNTHESIS_RETRACTION]" in recorded_calls[1][2]["content"]
+    assert "DIAGNOSTIC_OBSTRUCTION" in recorded_calls[1][2]["content"]
+
+
+def test_synthesis_outside_file_read_blocked(tmp_path):
+    """Verifies that untrusted candidate solver cannot read host files outside sandbox."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    secret_file = tmp_path / "host_secret.txt"
+    secret_file.write_text("SUPER_SECRET_PAYLOAD", encoding="utf-8")
+
+    thief_code = f"""
+from pathlib import Path
+def solve(case):
+    target = Path({repr(str(secret_file))})
+    secret = target.read_text(encoding="utf-8")
+    return {{"status": "SOLVED", "secret": secret}}
+"""
+    sandbox = SandboxedSolver(thief_code, timeout=5.0)
+    res_map, err = sandbox.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map is not None
+    c1_res = res_map.get("c1", {})
+    assert c1_res.get("success") is False
+    assert "Filesystem sandbox violation" in c1_res.get("error", "") or "PermissionError" in c1_res.get("error", "")
+
+
+def test_synthesis_network_socket_blocked():
+    """Verifies that untrusted candidate solver cannot initiate network connections."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    network_code = """
+import socket
+def solve(case):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    return {"status": "SOLVED"}
+"""
+    sandbox = SandboxedSolver(network_code, timeout=5.0)
+    res_map, err = sandbox.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map is not None
+    c1_res = res_map.get("c1", {})
+    assert c1_res.get("success") is False
+    assert "Network sandbox violation" in c1_res.get("error", "") or "PermissionError" in c1_res.get("error", "")
+
+
+def test_synthesis_pre_call_budget_guard(tmp_path):
+    """Verifies that the trial halts before making any API call if budget ceiling is exceeded."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from omega_engine_providers.adapters.model_backends import MockBackend
+
+    mock_backend = MockBackend(answer="def solve(case): return {}")
+
+    res = run_program_synthesis_trial(
+        backend=mock_backend,
+        model="mock-budget",
+        max_retractions=2,
+        budget_ceiling_usd=0.0,
+        output_dir=tmp_path,
+    )
+    assert res.synthesis_succeeded is False
+    assert len(res.turns) == 0
+    assert res.within_budget is True
+
+
+def test_synthesis_freezing_gate_unsealing(tmp_path):
+    """Verifies freezing gate locks SHA256 and out-of-sample benchmark is NOT unsealed on failure."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from omega_engine_providers.adapters.model_backends import MockBackend
+
+    mock_backend = MockBackend(answer="```python\ndef solve(case):\n    return {'status': 'UNKNOWN'}\n```")
+
+    res = run_program_synthesis_trial(
+        backend=mock_backend,
+        model="mock-fail",
+        max_retractions=0,
+        output_dir=tmp_path,
+    )
+
+    assert res.synthesis_succeeded is False
+    assert res.frozen_solver_sha256 is None
+    assert not (tmp_path / "synthesized_solver.py").exists()
+    assert not (tmp_path / "synthesis_trial_answers.jsonl").exists()
+    assert "not unsealed" in res.benchmark_evaluation.get("reason", "")
+
+
+def test_synthesis_os_open_probe_blocked(tmp_path):
+    """Verifies that os.open on an outside file is blocked by runtime API fence (ChatGPT probe 1)."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    marker_file = tmp_path / "marker.txt"
+    marker_file.write_text("MARKER_PAYLOAD", encoding="utf-8")
+
+    os_open_code = f"""
+import os
+def solve(case):
+    fd = os.open({repr(str(marker_file))}, os.O_RDONLY)
+    data = os.read(fd, 100)
+    os.close(fd)
+    return {{"status": "SOLVED", "data": data.decode("utf-8")}}
+"""
+    sandbox = SandboxedSolver(os_open_code, timeout=5.0)
+    res_map, err = sandbox.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map is not None
+    c1_res = res_map.get("c1", {})
+    assert c1_res.get("success") is False
+    assert "Filesystem sandbox violation" in c1_res.get("error", "") or "PermissionError" in c1_res.get("error", "")
+
+
+def test_synthesis_raw_socket_probe_blocked():
+    """Verifies that import _socket; _socket.socket() is blocked by runtime fence (ChatGPT probe 2)."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    raw_socket_code = """
+import _socket
+def solve(case):
+    s = _socket.socket()
+    return {"status": "SOLVED"}
+"""
+    sandbox = SandboxedSolver(raw_socket_code, timeout=5.0)
+    res_map, err = sandbox.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map is not None
+    c1_res = res_map.get("c1", {})
+    assert c1_res.get("success") is False
+    assert "Network sandbox violation" in c1_res.get("error", "") or "PermissionError" in c1_res.get("error", "")
+
+
+def test_synthesis_ctypes_blocked():
+    """Verifies that ctypes access is blocked via sys.modules neutralization."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    # 1. Top-level import halted by sys.modules["ctypes"] = None
+    ctypes_code_toplevel = """
+import ctypes
+def solve(case):
+    return {"status": "SOLVED"}
+"""
+    sandbox_top = SandboxedSolver(ctypes_code_toplevel, timeout=5.0)
+    res_map_top, err_top = sandbox_top.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map_top is None
+    assert "ModuleNotFoundError" in err_top.get("error", "") or "ctypes" in err_top.get("error", "")
+
+    # 2. In-function import halted by sys.modules["ctypes"] = None
+    ctypes_code_fn = """
+def solve(case):
+    import ctypes
+    addr = ctypes.c_char_p.from_address(0x12345678)
+    return {"status": "SOLVED"}
+"""
+    sandbox_fn = SandboxedSolver(ctypes_code_fn, timeout=5.0)
+    res_map_fn, err_fn = sandbox_fn.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map_fn is not None
+    c1_res = res_map_fn.get("c1", {})
+    assert c1_res.get("success") is False
+    assert "ModuleNotFoundError" in c1_res.get("error", "") or "ctypes" in c1_res.get("error", "")
+
+
+def test_synthesis_ctypes_cdll_probe_blocked():
+    """Verifies that ctypes.CDLL escape attempt is blocked by audit hook (ChatGPT review finding)."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    # Even if candidate attempts sys.modules.pop('ctypes') and calls CDLL,
+    # the PEP 578 audit hook blocks ctypes.dlopen / ctypes.dlsym / ctypes.*
+    probe_code = """
+import sys
+sys.modules.pop("ctypes", None)
+sys.modules.pop("_ctypes", None)
+try:
+    import ctypes
+except Exception:
+    ctypes = None
+
+def solve(case):
+    if ctypes is None:
+        raise PermissionError("ctypes module could not be imported")
+    libc = ctypes.CDLL(None) if hasattr(ctypes, "CDLL") else None
+    return {"status": "SOLVED"}
+"""
+    sandbox = SandboxedSolver(probe_code, timeout=5.0)
+    res_map, err = sandbox.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    if res_map is None:
+        assert "PermissionError" in err.get("error", "") or "ctypes" in err.get("error", "") or "AttributeError" in err.get("error", "")
+    else:
+        c1_res = res_map.get("c1", {})
+        assert c1_res.get("success") is False
+        assert "PermissionError" in c1_res.get("error", "") or "ctypes" in c1_res.get("error", "") or "AttributeError" in c1_res.get("error", "")
+
+
+def test_synthesis_cffi_probe_blocked():
+    """Verifies that cffi and _cffi_backend native module imports are halted by fence (ChatGPT review finding)."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    # 1. Direct cffi import is halted by sys.modules neutralization
+    cffi_code = """
+import cffi
+def solve(case):
+    return {"status": "SOLVED"}
+"""
+    sandbox = SandboxedSolver(cffi_code, timeout=5.0)
+    res_map, err = sandbox.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map is None
+    assert "ModuleNotFoundError" in err.get("error", "") or "cffi" in err.get("error", "")
+
+    # 2. Direct _cffi_backend import is halted
+    cffi_backend_code = """
+import _cffi_backend
+def solve(case):
+    return {"status": "SOLVED"}
+"""
+    sandbox_b = SandboxedSolver(cffi_backend_code, timeout=5.0)
+    res_map_b, err_b = sandbox_b.execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map_b is None
+    assert "ModuleNotFoundError" in err_b.get("error", "") or "cffi" in err_b.get("error", "")
+
+
+def test_synthesis_model_admission_gate_rejects_unadmitted_or_unpriced_models():
+    """INVARIANT: Only verified eligible <= 70B models with registered price ceilings are admitted.
+    BREAK: Arbitrary slugs like 'openai/gpt-5.4' or unpriced models run with guessed fallbacks.
+    """
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+        calculate_turn_headroom_upper_bound,
+        validate_and_admit_model,
+    )
+
+    # 1. Closed model with undisclosed parameters (e.g. gpt-5.4) must be rejected
+    with pytest.raises(ValueError, match="violates SG-Q40 open-weight parameter ceiling"):
+        validate_and_admit_model("openai/gpt-5.4")
+
+    # 2. Over-ceiling models (>70B, e.g. 405b, 671b) must be rejected
+    with pytest.raises(ValueError, match="violates SG-Q40 open-weight parameter ceiling"):
+        validate_and_admit_model("meta-llama/llama-3.1-405b")
+    with pytest.raises(ValueError, match="violates SG-Q40 open-weight parameter ceiling"):
+        validate_and_admit_model("deepseek/deepseek-r1:671b")
+
+    # 3. A registered model under 70B without a pricing ceiling must be rejected (no unverified fallbacks)
+    with pytest.raises(ValueError, match="lacks an enforceable pricing ceiling"):
+        validate_and_admit_model("qwen/qwen3-30b-a3b")
+    # An unregistered model is refused at the size gate: its name is not evidence of its size.
+    with pytest.raises(ValueError, match="violates SG-Q40 open-weight parameter ceiling"):
+        validate_and_admit_model("meta-llama/llama-3.2-3b-instruct")
+
+    # 4. Admitted models succeed and return exact verified pricing ceilings
+    p_in, p_out = validate_and_admit_model("meta-llama/llama-3.3-70b-instruct")
+    assert p_in == 0.00000020
+    assert p_out == 0.00000050
+
+    p_in_qwen, p_out_qwen = validate_and_admit_model("qwen/qwen-2.5-coder-32b-instruct")
+    assert p_in_qwen == 0.00000015
+    assert p_out_qwen == 0.00000030
+
+    # 5. calculate_turn_headroom_upper_bound rejects unadmitted models
+    with pytest.raises(ValueError, match="SG-Q40"):
+        calculate_turn_headroom_upper_bound([{"role": "user", "content": "test"}], model="openai/gpt-5.4")
+
+
+def test_to_challenge_schema_strips_control_metadata_and_converts_weights():
+    """Verifies to_challenge_schema converts all weights to [num, den] pairs and strips control metadata."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+        to_challenge_schema,
+    )
+
+    raw_cases = generate_all_40_cases()
+    # Case 0 check: raw weight was "1"
+    case_0 = raw_cases[0]
+    schema_0 = to_challenge_schema(case_0)
+    assert schema_0["id"] == "q40_01_single_qubit_trivial"
+    assert schema_0["n"] == 1
+    assert "is_control" not in schema_0
+    assert "base_case_id" not in schema_0
+    assert len(schema_0["terms"]) == 1
+    assert schema_0["terms"][0]["weight"] == [1, 1]
+
+    # Verify across all 40 cases:
+    # 1. Top-level keys must be strictly {'id', 'n', 'terms'} - no control metadata leaked
+    # 2. Every term must have 'weight' as [int, int] with denominator > 0
+    control_cases_found = 0
+    for raw in raw_cases:
+        if raw.get("is_control"):
+            control_cases_found += 1
+        conv = to_challenge_schema(raw)
+        assert set(conv.keys()) == {"id", "n", "terms"}, f"Unexpected keys in {conv['id']}: {set(conv.keys())}"
+        assert "is_control" not in conv
+        assert "base_case_id" not in conv
+        for t in conv["terms"]:
+            w = t["weight"]
+            assert isinstance(w, list) and len(w) == 2, f"Invalid weight {w} in {conv['id']}"
+            assert type(w[0]) is int and type(w[1]) is int and w[1] > 0
+            assert type(t["target"]) is int and t["target"] in (-1, 1)
+    assert control_cases_found > 0
+
+
+def test_parse_weight_pair_refuses_bool_float_and_nonpositive_denominator():
+    """Boolean is an int subclass, and a zero denominator is not a weight.
+
+    Mutation: isinstance(weight, int) admits True as [1, 1], and int() on a
+    two-slash string or a zero denominator admits a pair the solver must refuse.
+    """
+    from fractions import Fraction
+
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+        _parse_weight_pair,
+        to_challenge_schema,
+    )
+
+    assert _parse_weight_pair("1/2") == [1, 2]
+    assert _parse_weight_pair(Fraction(3, 4)) == [3, 4]
+    assert _parse_weight_pair([2, 5]) == [2, 5]
+    for bad in (True, False, 1.5, "1/0", "1/2/3", [True, 1], [1, 0], [1, -2]):
+        with pytest.raises(ValueError):
+            _parse_weight_pair(bad)
+    with pytest.raises(ValueError):
+        to_challenge_schema({
+            "id": "bad-target",
+            "n": 1,
+            "terms": [{"id": "t0", "pauli": "Z", "weight": [1, 1], "target": True}],
+        })
+
+
+def test_synthesis_budget_headroom_upper_bound_calculation():
+    """Verifies that calculate_turn_headroom_upper_bound computes strict worst-case upper bound."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+        calculate_turn_headroom_upper_bound,
+    )
+
+    test_messages = [{"role": "user", "content": "A" * 1000}]
+    # 1000 UTF-8 bytes + 128 = 1128 max prompt tokens
+    # Model pricing for llama-3.3-70b: price_in = 0.00000020, price_out = 0.00000050
+    headroom_llama = calculate_turn_headroom_upper_bound(
+        test_messages,
+        model="meta-llama/llama-3.3-70b-instruct",
+        max_tokens=4096,
+    )
+    expected_llama = (1128 * 0.00000020) + (4096 * 0.00000050)
+    assert abs(headroom_llama - expected_llama) < 1e-9
+
+    # Custom pricing for mock tests
+    headroom_custom = calculate_turn_headroom_upper_bound(
+        test_messages,
+        model="mock-custom",
+        max_tokens=2048,
+        custom_pricing=(0.00000010, 0.00000020),
+    )
+    expected_custom = (1128 * 0.00000010) + (2048 * 0.00000020)
+    assert abs(headroom_custom - expected_custom) < 1e-9
+
+    # Unadmitted model without custom pricing must be rejected
+    with pytest.raises(ValueError):
+        calculate_turn_headroom_upper_bound(test_messages, model="openai/gpt-5.4")
+
+
+def test_synthesis_pre_call_budget_headroom_reservation(tmp_path):
+    """Verifies that trial halts prior to turn 1 when the ceiling is below the reserved headroom."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from omega_engine_providers.adapters.model_backends import MockBackend
+
+    mock_backend = MockBackend(answer="def solve(case): return {}")
+
+    # Setting ceiling to $0.002 is below the initial turn's ~$0.00292 calculated headroom
+    res = run_program_synthesis_trial(
+        backend=mock_backend,
+        model="mock-headroom",
+        max_retractions=2,
+        budget_ceiling_usd=0.002,
+        output_dir=tmp_path,
+    )
+    assert res.synthesis_succeeded is False
+    assert len(res.turns) == 0
+    assert res.within_budget is True
+
+
+def test_public_solver_original_challenge_schema():
+    """Verifies solver.solve correctly processes original challenge schema with string term IDs."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver import solver
+    from omega_engine_symbol_game.domain.quantum.certificate_checker import check_certificate
+
+    # Solvable case with string term IDs
+    case_solvable = {
+        "id": "q40_schema_test_solvable",
+        "n": 2,
+        "terms": [
+            {"id": "t0", "pauli": "ZZ", "weight": [1, 1], "target": 1},
+            {"id": "t1", "pauli": "XX", "weight": [1, 1], "target": 1},
+        ],
+    }
+    res_solvable = solver.solve(case_solvable)
+    assert res_solvable["id"] == "q40_schema_test_solvable"
+    assert res_solvable["status"] == "SOLVED"
+    assert res_solvable["energy"] == [0, 1]
+    assert res_solvable["basis"] == ["t0", "t1"]
+    assert len(res_solvable["decomposition"]) == 2
+    assert res_solvable["decomposition"][0]["id"] == "t0"
+    assert res_solvable["decomposition"][1]["id"] == "t1"
+
+    cert_solvable = check_certificate(case_solvable, res_solvable)
+    assert cert_solvable["verdict"] == "PASS"
+
+    # Out of scope case with string term IDs
+    case_oos = {
+        "id": "q40_schema_test_oos",
+        "n": 2,
+        "terms": [
+            {"id": "t0", "pauli": "XI", "weight": [1, 1], "target": 1},
+            {"id": "t1", "pauli": "ZI", "weight": [1, 1], "target": 1},
+        ],
+    }
+    res_oos = solver.solve(case_oos)
+    assert res_oos["id"] == "q40_schema_test_oos"
+    assert res_oos["status"] == "OUT_OF_SCOPE"
+    assert res_oos["witness"] == ["t0", "t1"]
+
+    cert_oos = check_certificate(case_oos, res_oos)
+    assert cert_oos["verdict"] == "PASS"
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------
+# 9. PR 158 review regressions
+# ---------------------------------------------------------------------------
+
+@pytest.mark.parametrize(
+    "body",
+    [
+        "fd = os.open(TARGET, os.O_RDONLY)\n    os.read(fd, 4)",
+        "os.listdir(os.path.dirname(TARGET))",
+        "subprocess.run(['cmd', '/c', 'echo'], capture_output=True)",
+        "open(os.path.join(os.path.dirname(TARGET), 'dropped.txt'), 'w')",
+    ],
+    ids=["os_open", "os_listdir", "subprocess", "write_outside"],
+)
+def test_sandbox_fence_covers_os_level_escapes(tmp_path, body):
+    """INVARIANT: host access outside builtins.open is refused. BREAK: fence only patches open.
+
+    The pre-fix runner monkey-patched builtins.open, so os.open/os.listdir read host files.
+    """
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+
+    target = tmp_path / "host_secret.txt"
+    target.write_text("SUPER_SECRET_PAYLOAD", encoding="utf-8")
+    code = (
+        "import os, subprocess\n"
+        f"TARGET = {str(target)!r}\n"
+        "def solve(case):\n"
+        f"    {body}\n"
+        "    return {'status': 'SOLVED'}\n"
+    )
+    res_map, _ = SandboxedSolver(code, timeout=10.0).execute_cases([{"id": "c1", "n": 1, "terms": []}])
+    assert res_map is not None
+    assert res_map["c1"]["success"] is False
+    assert "PermissionError" in res_map["c1"]["error"]
+    assert not (tmp_path / "dropped.txt").exists()
+
+
+def test_dense_checker_fails_wrong_degeneracy_instead_of_inconclusive():
+    """INVARIANT: a wrong degeneracy claim is FAILED. BREAK: round-off deltas > 0 routed to INCONCLUSIVE."""
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+
+    verdicts = []
+    for case in generate_all_40_cases():
+        sol = solve(case)
+        if sol.get("status") != "SOLVED":
+            continue
+        honest = verify_dense_spectrum(case, sol)["dense_check"]
+        if honest == "SKIPPED":
+            continue
+        assert honest == "PASSED", case["case_id"]
+        lying = dict(sol)
+        lying["degeneracy"] = sol.get("degeneracy", sol.get("ground_eigenspace_dimension")) + 1
+        verdicts.append(verify_dense_spectrum(case, lying)["dense_check"])
+    assert verdicts and set(verdicts) == {"FAILED"}
+
+
+@pytest.mark.parametrize(
+    ("model", "admitted"),
+    [
+        ("meta-llama/llama-3.3-70b-instruct", True),
+        ("qwen/qwen-2.5-coder-32b-instruct", True),
+        ("google/gemma-3-27b-it", True),
+        ("google/gemini-2.5-pro", False),
+        ("deepseek/deepseek-r1:671b", False),
+        ("meta-llama/llama-4-maverick-17b-128e-instruct", False),
+        ("openai/gpt-4o-mini", False),
+        ("qwen/qwen3-235b-a22b", False),
+        ("mistralai/mixtral-8x22b-instruct", False),
+    ],
+)
+def test_model_ceiling_gate_rejects_substring_false_positives(model, admitted):
+    """INVARIANT: only explicit <=70B open-weight ids pass. BREAK: 'mini' in 'gemini', '1b' in '671b'."""
+    from omega_engine_symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import _is_open_weight_at_most_70b
+
+    assert _is_open_weight_at_most_70b(model) is admitted
+
+
+def test_term_ref_resolution_rejects_bool_ids():
+    """INVARIANT: bool is never a term id. BREAK: dict lookup hashes True == 1."""
+    case = {
+        "id": "bool_ref",
+        "n": 2,
+        "terms": [
+            {"id": 0, "P": "ZI", "w": [1, 1], "target": 1},
+            {"id": 1, "P": "IZ", "w": [1, 1], "target": 1},
+        ],
+    }
+    sol = solve(case)
+    assert check_certificate(case, sol)["verdict"] == "PASS"
+    forged = dict(sol)
+    forged["basis"] = [True if b == 1 else b for b in sol["basis"]]
+    assert any(type(b) is bool for b in forged["basis"])
+    assert check_certificate(case, forged)["verdict"] == "FAIL"
+
+
+def test_synthesis_budget_guard_fails_closed_on_unreported_cost(tmp_path):
+    """INVARIANT: unknown spend stops further calls. BREAK: backend reports $0 and the guard never trips."""
+    from omega_engine_providers.adapters.model_backends import OpenRouterReceipt
+    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import (
+        run_program_synthesis_trial,
+    )
+
+    class SilentCostBackend:
+        calls = 0
+
+        def complete_with_receipt(self, prompt):
+            SilentCostBackend.calls += 1
+            return OpenRouterReceipt(
+                content="```python\ndef solve(case\n```",
+                model="live-ish",
+                generation_id=f"gen-live-{SilentCostBackend.calls}",
+                prompt_tokens=10,
+                completion_tokens=10,
+                total_tokens=20,
+                cost_usd=0.0,
+            )
+
+        def fetch_generation_cost(self, generation_id):
+            return None
+
+    import omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial as st
+
+    original_sleep = st.time.sleep
+    st.time.sleep = lambda _s: None
+    try:
+        res = run_program_synthesis_trial(backend=SilentCostBackend(), max_retractions=2, output_dir=tmp_path)
+    finally:
+        st.time.sleep = original_sleep
+    assert SilentCostBackend.calls == 1
+    assert len(res.turns) == 1
+
+
+# ---------------------------------------------------------------------------
+# Q40 review (PR #163): malformed model output is a typed FAIL, never an exception.
+# In the live three-arm trial, 21 ordinary-arm rows were scored wrong because the
+# checker raised on model-supplied exponents instead of judging the answer.
+# ---------------------------------------------------------------------------
+
+_MALFORMED_OUTPUT_CASE = {
+    "id": "malformed_output",
+    "n": 2,
+    "terms": [
+        {"id": "t0", "P": "XX", "w": [1, 1], "target": 1},
+        {"id": "t1", "P": "ZZ", "w": [1, 1], "target": 1},
+        {"id": "t2", "P": "YY", "w": [1, 1], "target": 1},
+    ],
+}
+
+
+def _valid_malformed_case_solution() -> dict:
+    sol = solve(_MALFORMED_OUTPUT_CASE)
+    assert check_certificate(_MALFORMED_OUTPUT_CASE, sol)["verdict"] == "PASS"
+    sol["certificate"] = dict(sol["certificate"])
+    sol["certificate"]["term_decompositions"] = [dict(d) for d in sol["certificate"]["term_decompositions"]]
+    sol["decomposition"] = [dict(d) for d in sol["decomposition"]]
+    return sol
+
+
+def _fails_cleanly(result: object) -> dict:
+    check = check_certificate(_MALFORMED_OUTPUT_CASE, result)  # type: ignore[arg-type]
+    assert check["verdict"] == "FAIL"
+    assert isinstance(check.get("error"), str) and check["error"]
+    return check
+
+
+def test_string_exponents_in_alternative_decompositions_fail_cleanly():
+    """INVARIANT: string exponents are judged, not converted. BREAK: int('x') raised ValueError."""
+    sol = _valid_malformed_case_solution()
+    sol["certificate"]["term_decompositions"][0]["generator_exponents"] = ["1", "x"]
+    _fails_cleanly(sol)
+
+
+def test_non_sequence_exponents_fail_cleanly():
+    """INVARIANT: a non-sequence exponent field is a FAIL. BREAK: len(5) in the error message raised TypeError."""
+    sol = _valid_malformed_case_solution()
+    sol["decomposition"][0]["generator_exponents"] = 5
+    del sol["certificate"]["term_decompositions"]
+    check = _fails_cleanly(sol)
+    assert "non-sequence" in check["error"]
+
+    sol = _valid_malformed_case_solution()
+    sol["certificate"]["term_decompositions"][1]["generator_exponents"] = 7
+    _fails_cleanly(sol)
+
+
+def test_non_dict_decomposition_entries_fail_cleanly():
+    """INVARIANT: every decomposition row must be an object. BREAK: int.get raised AttributeError."""
+    sol = _valid_malformed_case_solution()
+    sol["decomposition"] = [1, 2, 3]
+    _fails_cleanly(sol)
+
+    sol = _valid_malformed_case_solution()
+    sol["certificate"]["term_decompositions"] = ["a", "b", "c"]
+    _fails_cleanly(sol)
+
+
+def test_non_sequence_decomposition_lists_fail_cleanly():
+    """INVARIANT: decomposition lists must be sequences. BREAK: len(7) raised TypeError."""
+    sol = _valid_malformed_case_solution()
+    sol["decomposition"] = 7
+    _fails_cleanly(sol)
+
+    sol = _valid_malformed_case_solution()
+    sol["certificate"]["term_decompositions"] = 7
+    del sol["decomposition"]
+    check = _fails_cleanly(sol)
+    assert "non-sequence" in check["error"]
+
+
+def test_unhashable_term_references_fail_cleanly():
+    """INVARIANT: a term reference must be a string or integer. BREAK: a list ref raised TypeError in dict lookup."""
+    _fails_cleanly({"id": "malformed_output", "status": "OUT_OF_SCOPE", "witness": [["t0"], "t1"]})
+
+    sol = _valid_malformed_case_solution()
+    sol["basis"] = [{"id": "t0"}, "t1"]
+    _fails_cleanly(sol)
+
+    sol = _valid_malformed_case_solution()
+    sol["decomposition"][0]["id"] = ["t0"]
+    _fails_cleanly(sol)
+
+
+def test_non_object_results_and_witness_terms_fail_cleanly():
+    """INVARIANT: the result and a dict witness's terms must be objects. BREAK: list.get raised AttributeError."""
+    _fails_cleanly(["SOLVED"])
+    _fails_cleanly("SOLVED")
+    _fails_cleanly({"id": "malformed_output", "status": "OUT_OF_SCOPE", "witness": {"term_i": 0, "term_j": 1}})
+
+
+def test_non_sequence_generators_fail_cleanly():
+    """INVARIANT: certificate generators must be a sequence. BREAK: len(9) in the error message raised TypeError."""
+    sol = _valid_malformed_case_solution()
+    sol["certificate"]["generators"] = 9
+    _fails_cleanly(sol)
+
+
+_HOSTILE_VALUES = (None, 0, 5, -1, True, 1.5, "x", "", [], {}, ["x"], [[1]], [{}], {"a": 1})
+
+
+@pytest.mark.parametrize("field_path", [
+    ("status",), ("energy",), ("degeneracy",), ("basis",), ("minimizers",), ("decomposition",),
+    ("certificate",), ("certificate", "generators"), ("certificate", "term_decompositions"),
+    ("certificate", "minimizing_assignments"), ("decomposition", 0), ("decomposition", 0, "id"),
+    ("decomposition", 0, "mask"), ("decomposition", 0, "generator_exponents"),
+    ("decomposition", 0, "sign"), ("certificate", "term_decompositions", 0, "generator_exponents"),
+])
+def test_checker_never_raises_on_hostile_field_values(field_path):
+    """INVARIANT: for every model-supplied field, any JSON-shaped value yields PASS or FAIL, never an exception."""
+    for hostile in _HOSTILE_VALUES:
+        sol = _valid_malformed_case_solution()
+        target = sol
+        for key in field_path[:-1]:
+            target = target[key]
+        target[field_path[-1]] = hostile
+        check = check_certificate(_MALFORMED_OUTPUT_CASE, sol)
+        assert check["verdict"] in ("PASS", "FAIL"), (field_path, hostile)
+
+
+@pytest.mark.parametrize(
+    "model",
+    ["qwen/qwen-9b-imaginary", "meta-llama/llama-70b-unreleased", "mistralai/any-24b-rename"],
+)
+def test_model_ceiling_gate_uses_the_registry_not_the_model_name(model):
+    """INVARIANT: size comes from the model registry. BREAK: a plausible '<n>b' token in an unregistered id was admitted."""
+    from omega_engine_symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import _is_open_weight_at_most_70b
+
+    assert _is_open_weight_at_most_70b(model) is False
+
+
+def test_stabilizer_rust_adapter_parity():
+    """Verify that StabilizerRustAdapter solves and checks cases via native Rust host."""
+    from omega_engine_symbol_game.infrastructure.adapters.stabilizer_rust_adapter import (
+        StabilizerRustAdapter,
+    )
+
+    adapter = StabilizerRustAdapter()
+    case = {
+        "id": "q40_test_bell",
+        "n": 2,
+        "terms": [
+            {"id": "t0", "pauli": "ZZ", "weight": [1, 1], "target": 1},
+            {"id": "t1", "pauli": "XX", "weight": [1, 1], "target": 1},
+        ],
+    }
+    outcome = adapter.solve(case)
+    assert outcome["status"] == "SOLVED"
+    assert outcome["energy"] == [0, 1]
+    assert outcome["degeneracy"] == 1
+    assert len(outcome["basis"]) == 2
+
+    # Check valid result passes
+    check_pass = adapter.check(case, outcome)
+    assert check_pass["verdict"] == "PASS"
+
+    # Check corrupted energy fails cleanly without exception
+    corrupted = dict(outcome)
+    corrupted["energy"] = [5, 1]
+    check_fail = adapter.check(case, corrupted)
+    assert check_fail["verdict"] == "FAIL"
+

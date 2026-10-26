@@ -1,0 +1,112 @@
+{
+  "schema_version": "omega.pharmacy.pilot-candidates.v1",
+  "admission_scope": "prompt://mathematics/hadamard/pilot035/answer/tao-cross-ratios-v1",
+  "source_limit": "Detector repairs and finite fixture reproductions, not observations of a new paid model run or a mathematical proof.",
+  "authority_effect": "None",
+  "candidates": [
+    {
+      "constraint_type": "ProjectOut",
+      "operatorizability": "repairable",
+      "action": "repair",
+      "severity": "P1",
+      "scope": {
+        "domain": "mathematics",
+        "tags": [
+          "tao-s6",
+          "cross-ratios",
+          "mub6"
+        ],
+        "stages": [
+          "answer"
+        ],
+        "prompt_fields": [
+          "claims"
+        ]
+      },
+      "pharmacy_status": "candidate",
+      "authority_effect": "None",
+      "admission": null,
+      "source_pilot": "pilot_035",
+      "detector_input": "Canonical sorted-key JSON of the claims object only; never explanation or prompt text.",
+      "failure_class": "math:tao_family_conflation",
+      "target_pattern": "^\\{\\s*\"all_chm\"\\s*:\\s*true\\s*,\\s*\"mub6_exclusion\"\\s*:\\s*(?:true|false)\\s*\\}$",
+      "guidance_text": "Keep the explicit Tao phase table distinct from Fourier or tensor-product families. Report only the finite table and cross-ratios actually checked; do not infer a statement about all complex Hadamard matrices.",
+      "description": "A scoped signal for an unsupported all-family claim in the Pilot 035 claims object.",
+      "negative_fixture": "{\"all_chm\":true,\"mub6_exclusion\":false}",
+      "positive_fixture": "{\"all_chm\":false,\"mub6_exclusion\":false}",
+      "supersedes": "ab_tao_universal_conflation",
+      "historical_source": {
+        "repository_revision": "6430d647dde76769496486e9d82621067100ecab",
+        "path": ".agents/antibodies/ab_tao_universal_conflation.json",
+        "sha256": "752f433f7f962ae94699e7fcc85dfd6f54a89516fc55a1fd2f75eff9d2471452"
+      },
+      "controls": {
+        "must_match": [
+          "{\"all_chm\":true,\"mub6_exclusion\":false}",
+          "{\"all_chm\":true,\"mub6_exclusion\":true}"
+        ],
+        "must_not_match": [
+          "{\"all_chm\":false,\"mub6_exclusion\":false}",
+          "{\"all_chm\":false,\"mub6_exclusion\":true}",
+          "Conjecture 2 is not universal across all CHMs.",
+          "The historical draft claimed Tao S6 = F3 tensor F2; that identification is not assumed here."
+        ]
+      },
+      "rule_sha256": "8d4ea0b2f46a10361306705268398cee01e1f02e715e990d08dfb320c1662940",
+      "antibody_id": "ab_tao_family_conflation_v2_8d4ea0b2f46a",
+      "evidence_sha256": "8d4ea0b2f46a10361306705268398cee01e1f02e715e990d08dfb320c1662940"
+    },
+    {
+      "constraint_type": "ProjectOut",
+      "operatorizability": "repairable",
+      "action": "repair",
+      "severity": "P1",
+      "scope": {
+        "domain": "mathematics",
+        "tags": [
+          "tao-s6",
+          "cross-ratios",
+          "mub6"
+        ],
+        "stages": [
+          "answer"
+        ],
+        "prompt_fields": [
+          "claims"
+        ]
+      },
+      "pharmacy_status": "candidate",
+      "authority_effect": "None",
+      "admission": null,
+      "source_pilot": "pilot_035",
+      "detector_input": "Canonical sorted-key JSON of the claims object only; never explanation or prompt text.",
+      "failure_class": "math:finite_mub_promotion",
+      "target_pattern": "^\\{\\s*\"all_chm\"\\s*:\\s*(?:true|false)\\s*,\\s*\"mub6_exclusion\"\\s*:\\s*true\\s*\\}$",
+      "guidance_text": "A finite cross-ratio computation does not prove unrestricted MUB(6) exclusion. State the checked matrix, finite inputs and result; leave general MUB existence or nonexistence to its separate theorem and evidence owner.",
+      "description": "A scoped signal for promoting finite Pilot 035 results to unrestricted MUB exclusion.",
+      "negative_fixture": "{\"all_chm\":false,\"mub6_exclusion\":true}",
+      "positive_fixture": "{\"all_chm\":false,\"mub6_exclusion\":false}",
+      "supersedes": "ab_finite_matrix_leak",
+      "historical_source": {
+        "repository_revision": "6430d647dde76769496486e9d82621067100ecab",
+        "path": ".agents/antibodies/ab_finite_matrix_leak.json",
+        "sha256": "b7e0ba707a20bc67602a8eac78da0d08c7abdfccc64a2b9da7f8c262413f0a03"
+      },
+      "controls": {
+        "must_match": [
+          "{\"all_chm\":false,\"mub6_exclusion\":true}",
+          "{\"all_chm\":true,\"mub6_exclusion\":true}"
+        ],
+        "must_not_match": [
+          "{\"all_chm\":false,\"mub6_exclusion\":false}",
+          "{\"all_chm\":true,\"mub6_exclusion\":false}",
+          "The finite table does not prove MUB(6)=3.",
+          "An old packet asserted an exclusion; its claim is not evidence of that exclusion."
+        ]
+      },
+      "rule_sha256": "8b441638bd2d1179813cef24d6572aacb20f2c5c553414c5e2f2031ef3f3b51f",
+      "antibody_id": "ab_finite_mub_promotion_v2_8b441638bd2d",
+      "evidence_sha256": "8b441638bd2d1179813cef24d6572aacb20f2c5c553414c5e2f2031ef3f3b51f"
+    }
+  ]
+}

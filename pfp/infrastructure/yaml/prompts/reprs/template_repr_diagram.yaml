@@ -1,0 +1,160 @@
+# Monoidal String Diagram Prompt Representation Specification
+# Governing Standard: Proposal Fidelity Protocol (PFP)
+# AuthorityEffect: None.
+
+schema_version: pfp.prompt_representation.v1
+representation_kind: diagram
+authority_effect: None
+
+classification:
+  family: prompt_wire_encoding
+  encoding_posture: monoidal_string_diagram
+  token_overhead_posture: planar_port_and_wire_syntax
+  carrier_type: application/x-diagram-yaml
+
+description: >
+  Monoidal Category String Diagram prompt representation formalizing prompts as planar
+  wire-and-box graphs. Boxes represent generating operations with input/output ports;
+  wires carry typed object colors connecting boxes or external boundary ports.
+  Derived from colored multicategory operads and categorical string diagram calculi.
+
+empirical_performance_baseline:
+  source_study: infrastructure/yaml/prompts/templates/template_operad_categorical.yaml
+  design_posture: "Planar colored operad morphisms with explicit port wiring"
+
+invariants:
+  - id: DIA-INV-001
+    name: MonotonicBoxAndWireSequences
+    rule: Box identifiers must follow 'b0, b1, ...' and wire identifiers must follow 'w0, w1, ...'.
+  - id: DIA-INV-002
+    name: PortWireTotality
+    rule: Every wire must connect declared boxes or boundary ports ('IN' / 'OUT').
+  - id: DIA-INV-003
+    name: MandatoryTaskSpan
+    rule: At least one prompt span must carry role='task'.
+  - id: DIA-INV-004
+    name: DeclaredColorConformity
+    rule: All wire colors must belong to the declared colors inventory.
+
+specification:
+  fields:
+    source_id:
+      type: string
+      required: true
+      pattern: "^[a-zA-Z0-9_-]+$"
+    source_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    proposal_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    representation_kind:
+      type: string
+      required: true
+      const: diagram
+    authority_effect:
+      type: string
+      required: true
+      const: None
+    colors:
+      type: array
+      required: true
+      items:
+        type: string
+    boxes:
+      type: array
+      required: true
+      items:
+        type: object
+        required:
+          - box_id
+          - label
+          - inputs
+          - outputs
+        properties:
+          box_id:
+            type: string
+            pattern: "^b[0-9]+$"
+          label:
+            type: string
+          inputs:
+            type: array
+            items:
+              type: string
+          outputs:
+            type: array
+            items:
+              type: string
+    wires:
+      type: array
+      required: true
+      items:
+        type: object
+        required:
+          - wire_id
+          - color
+          - source
+          - target
+        properties:
+          wire_id:
+            type: string
+            pattern: "^w[0-9]+$"
+          color:
+            type: string
+          source:
+            type: string
+          target:
+            type: string
+    spans:
+      type: array
+      required: true
+      items:
+        type: object
+        required:
+          - slot
+          - role
+          - box_id
+          - text
+        properties:
+          slot:
+            type: string
+            pattern: "^s[0-9]+$"
+          role:
+            type: string
+            enum: [task, constraint, context, output, unresolved]
+          box_id:
+            type: string
+            pattern: "^b[0-9]+$"
+          text:
+            type: string
+
+canonical_example:
+  source_id: "case0:diagram"
+  source_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  proposal_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  representation_kind: "diagram"
+  authority_effect: "None"
+  colors:
+    - "State"
+    - "Receipt"
+  wires:
+    - wire_id: "w0"
+      color: "State"
+      source: "IN"
+      target: "b0"
+    - wire_id: "w1"
+      color: "Receipt"
+      source: "b0"
+      target: "OUT"
+  boxes:
+    - box_id: "b0"
+      label: "Op_verify"
+      inputs: ["w0"]
+      outputs: ["w1"]
+  spans:
+    - slot: "s0"
+      role: "task"
+      box_id: "b0"
+      text: "Verify candidate proposal transition."

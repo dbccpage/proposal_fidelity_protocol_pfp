@@ -1,0 +1,141 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.cdt_wick_mc
+  name: Wick-Rotated Lorentzian CDT Monte Carlo Statistical Weight Sampler Contract
+  short_name: CDT-WMC-NF
+  version: v0
+  theory_status: experimental
+  contract_status: draft
+  verification_status: absent
+  family: physics
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - wick_rotation
+  - lorentzian_cdt_sandwiches
+  - quantum_path_integral_mcmc
+  - discrete_einstein_convergence
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: acausal move proposals, invalid analytical continuation outside
+    the CDT domain, detailed balance violations, unaddressed non-ergodicity, and conflation
+    of statistical equilibrium with semiclassical gravitational convergence
+  preserves_invariant: verified Wick rotation on causal triangulations yielding real
+    Euclidean action S_E, normalizable partition function on volume-fixed ensembles,
+    and reversible MCMC kernel satisfying detailed balance and empirical mixing
+  protected_skeleton:
+  - cdt_sandwich_complex
+  - wick_rotation_continuation_parameter
+  - euclidean_regge_action
+  - volume_fixing_constraint
+  - transition_kernel_detailed_balance
+  - mcmc_trajectory_evidence
+  - semiclassical_observable_records
+  erased_structure:
+  - microscopic_sweep_orderings
+  - unverified_acausal_triangulations
+  non_claims:
+  - detailed balance does not imply sampling convergence; an identity transition satisfies
+    detailed balance while failing to mix or sample the target distribution
+  - positive Gibbs weights exp(-beta * S_E) do not analytically force the classical
+    Einstein residual to contract; convergence of <||E||>_beta is a distinct empirical
+    hypothesis requiring explicit experimental evidence
+  - Wick rotation in CDT is an explicit analytical continuation on causal, foliated
+    geometries, not a generic erasure of oscillatory phases
+  - positive weights alone do not establish a finite partition function; normalizability
+    requires volume-fixing or explicit finite support
+  - does not claim continuum quantum general relativity without infinite-volume and
+    continuum scaling limits
+declarations_required:
+- sandwich_complex: spatial Cauchy boundaries Sigma_t, Sigma_{t+1} and causal interior simplices
+- wick_continuation: analytical rotation alpha -> -alpha in lower half-plane on strictly foliated simplices
+- volume_stabilization: volume-fixing potential V(N_4) = epsilon * (N_4 - N_4^target)^2 ensuring normalizability
+- transition_kernel: proposal distribution q(T'|T) and acceptance probability p(T->T')
+- coupling_parameter: inverse quantum coupling beta = 1/hbar
+- semiclassical_hypothesis: declared threshold tau_E for mean Einstein residual norm <||E||>_beta
+validation_criteria:
+- analytical_wick_validity: Euclidean action S_E is real-valued and bounded from below on the volume-stabilized carrier
+- volume_normalizability: total 4-simplex count N_4 is bounded within declared envelope, ensuring normalizable measure
+- detailed_balance_exact: kernel satisfies W(T) * q(T'|T) * p(T->T') = W(T') * q(T|T') * p(T'->T) within declared tolerance
+- ergodicity_and_mixing: chain demonstrates finite integrated autocorrelation time and Gelman-Rubin convergence R_hat < 1.05
+- foliation_integrity: proposals introducing CTCs, foliation branching, or spatial topology changes are rejected
+- semiclassical_hypothesis_test: records whether empirical mean residual <||E||>_beta contracts below tau_E at high beta as a scoped experimental finding
+terminal_routes:
+- StatisticalSamplingValidated
+- SemiclassicalEinsteinHypothesisSupported
+- QuantumFluctuationRegime
+- DetailedBalanceViolation
+- ErgodicityOrMixingDefect
+- AcausalMoveRefusal
+- Unsupported
+terminal_route_map:
+  StatisticalSamplingValidated: Preserve
+  SemiclassicalEinsteinHypothesisSupported: Preserve
+  QuantumFluctuationRegime: Escalate
+  DetailedBalanceViolation: Reject
+  ErgodicityOrMixingDefect: Refuse
+  AcausalMoveRefusal: Refuse
+  Unsupported: Unsupported
+extensions:
+  condition_to_local_route_map:
+    sampler_valid_stationary: StatisticalSamplingValidated
+    sampler_valid_converged_experimental: SemiclassicalEinsteinHypothesisSupported
+    sampler_valid_fluctuating: QuantumFluctuationRegime
+    detailed_balance_error: DetailedBalanceViolation
+    chain_non_ergodic: ErgodicityOrMixingDefect
+    acausal_move_proposed: AcausalMoveRefusal
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: Wick-rotated Lorentzian CDT Monte Carlo contract evaluating analytical
+    continuation on causal sandwiches, volume-stabilized positive Gibbs measures, reversible
+    Markov kernels satisfying detailed balance and empirical mixing, and scoped testing
+    of semiclassical Einstein convergence.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: acausal move proposals, detailed balance violations, non-ergodic
+      trapping, and unnormalizable Gibbs measures
+    lossless_join:
+      status: declared_reconstruction
+      statement: stationary distribution sampling of volume-stabilized Euclidean CDT
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+canonical_terminal_map:
+  StatisticalSamplingValidated: Preserve
+  SemiclassicalEinsteinHypothesisSupported: Preserve
+  QuantumFluctuationRegime: Escalate
+  DetailedBalanceViolation: Reject
+  ErgodicityOrMixingDefect: Refuse
+  AcausalMoveRefusal: Refuse
+  Unsupported: Unsupported
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+certification:
+  certificate_required: true
+  certificate_kind: nf.physics.cdt_wick_mc_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+evidence_required:
+- sandwich_triangulation_metadata: {slices: integer, vertices: integer, simplices: integer}
+- wick_rotation_parameter_alpha: float
+- euclidean_action_values: list
+- detailed_balance_residuals: list
+- chain_autocorrelation_time: float
+- gelman_rubin_r_hat: float
+- inverse_temperature_beta_series: list
+- mean_einstein_residual_series: list
+- variance_einstein_residual_series: list
+- semiclassical_hypothesis_verdict: string
+schema_ref: ./normal_form_contract_schema.yaml

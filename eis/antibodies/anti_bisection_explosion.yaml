@@ -1,0 +1,22 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-bisection-explosion
+canonical_name: Anti-Bisection Explosion Fallacy
+failure_class: math:bisection_explosion
+target_pattern: (uniform.*bisection|2\^440|pseudo-inverse|invert.*Jacobian|overdetermined.*empty.*everywhere)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects claims that uniform bisection of 440-dimensional boxes can be
+  completed without directional coordinate projection.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: Bisecting all 440 coordinates uniformly produces 2^440
+  boxes which are checked iteratively.
+repaired_invariant_fixture: Projecting onto the 24 active gauge coordinates narrows
+  the box tree to 32 verifiable leaf intervals.
+source_pilot: pilot_036
+evidence_sha256: 7f78798a85c7f3cddb2865991eb537db97e7f95c91171c2950b24eb79fc10608

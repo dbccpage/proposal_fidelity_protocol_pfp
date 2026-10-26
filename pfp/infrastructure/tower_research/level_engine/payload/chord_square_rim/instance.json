@@ -1,0 +1,106 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the chord declared on the rim, though both faces run along it and the tree's outer walk omits it",
+      "role": "own_negative",
+      "set": {
+        "rim_edges": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_face",
+      "note": "the first face repeats a corner",
+      "role": "near_miss",
+      "set": {
+        "faces": [
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            3,
+            2
+          ]
+        ]
+      },
+      "violates": "tree_cells"
+    },
+    {
+      "id": "near_row_dropped",
+      "note": "the second face's row is missing: the tables still compose to zero",
+      "role": "near_miss",
+      "set": {
+        "face_rows": [
+          [
+            1,
+            1,
+            0,
+            0,
+            -1
+          ]
+        ]
+      },
+      "violates": "rows_replayed"
+    },
+    {
+      "id": "near_turned",
+      "note": "the first face's row turned over: the tables still compose to zero",
+      "role": "near_miss",
+      "set": {
+        "face_rows": [
+          [
+            -1,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "violates": "rows_replayed"
+    },
+    {
+      "id": "near_rim_corner",
+      "note": "a rim edge's end corner left off the rim",
+      "role": "near_miss",
+      "set": {
+        "rim_corners": [
+          0,
+          1,
+          3
+        ]
+      },
+      "violates": "rim_replayed"
+    },
+    {
+      "id": "near_counts",
+      "note": "the chord not counted off the rim",
+      "role": "near_miss",
+      "set": {
+        "off_rim": [
+          0,
+          0,
+          2
+        ]
+      },
+      "violates": "off_rim_counts"
+    }
+  ]
+}

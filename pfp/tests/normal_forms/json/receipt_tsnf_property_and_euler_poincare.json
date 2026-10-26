@@ -1,0 +1,35 @@
+{
+  "schema": "tsnf_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying Topological Simplex Normal Form (TSNF), integer Smith Normal Form reduction, and Euler-Poincare invariance across random finite simplicial complexes (3-8 vertices)",
+  "created_utc": "2026-09-25T17:50:00Z",
+  "properties_verified": [
+    {
+      "property_name": "euler_poincare_invariance_random_complexes",
+      "test_function": "test_euler_poincare_invariance_property",
+      "status": "PASS",
+      "iterations": 100,
+      "details": "Verified exact equality chi_cells == chi_homology (len(V) - len(E) + len(F) == b0 - b1 + b2) across 100 random simplicial complexes with 3 to 8 vertices, arbitrary face counts, and valid face orientations."
+    },
+    {
+      "property_name": "independent_connected_components_oracle",
+      "test_function": "test_euler_poincare_invariance_property",
+      "status": "PASS",
+      "details": "Verified 0-th Betti number b0 strictly equals the count of connected components derived from an independent BFS graph traversal oracle."
+    },
+    {
+      "property_name": "canonical_topological_manifolds_and_torsion",
+      "test_function": "test_canonical_topological_benchmarks",
+      "status": "PASS",
+      "details": "Verified S^2 (chi=2, b0=1, b1=0, b2=1), D^2 (chi=1, b0=1, b1=0, b2=0), and RP^2 (chi=1, b0=1, b1=0, b2=0 with Z_2 torsion coefficient 2) via exact integer Smith Normal Form reduction."
+    },
+    {
+      "property_name": "negative_ordering_and_closure_guards",
+      "test_function": "test_negative_simplex_ordering_and_uniqueness_violations",
+      "status": "PASS",
+      "details": "Verified that non-canonical vertex orderings, duplicate simplex declarations, and simplicial closure boundary omissions fail closed with Reject and descriptive defect diagnostics."
+    }
+  ],
+  "contract_aligned": "nf.coda.tsnf",
+  "all_properties_satisfied": true
+}

@@ -1,0 +1,1 @@
+"""Payload package.  AuthorityEffect: None."""

@@ -1,0 +1,25 @@
+mode_id: 1
+name: "Hieroglyphics & Glyph Alphabets"
+cluster: "Cluster I: Carrier & Representation"
+authority_effect: "None"
+core_mechanism: "Declared DDC alphabet {E, R, C, I, Λ, D, M, T} representing typed state transitions"
+substrate: "DDC tape, discrete character string"
+paper_reference: "000_the_symbol_game_introduction"
+rules:
+  - "Every turn must emit exactly one valid glyph or valid sequence from the declared alphabet."
+  - "Expressions must conform strictly to the selected glyph profile without additional explanatory prose."
+  - "Transitions must obey the DDC eight-letter state machine."
+entry_preconditions:
+  - "Declared alphabet Sigma_k must be finite and initialized."
+  - "Initial carrier state must be bound."
+winning_condition: >
+  Replay every admitted step and its witnesses. T seals an adequate exact or closed
+  state under the declared terminal policy; M is a valid typed-refusal outcome.
+  A tape string alone is not a verified state transition trace.
+failure_modes:
+  - "Unregistered glyph emission"
+  - "Non-conforming tokens or explanatory prose outside selected profile"
+  - "Syntax boundary breach"
+verifier_contract:
+  verifier_type: "exact_glyph_matcher"
+  fail_closed: true

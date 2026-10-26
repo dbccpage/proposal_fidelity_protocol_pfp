@@ -1,0 +1,90 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: form_contract
+identity:
+  id: nf.epistemic.nar_nf
+  name: Non-Authoritative Realization Normal Form
+  short_name: NAR-NF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - mathematical_realization
+  - representation_arrow
+  - genesis_state
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: shadow-authority leakage where downstream mathematical realizations R(S(n)) inject unforced structure into Genesis
+  preserves_invariant: one-way representation arrow S(n) -> R(S(n)) with zero reverse generative authority
+  protected_skeleton:
+  - genesis_state
+  - representation_arrow
+  - realization_target
+  erased_structure:
+  - realization_specific_auxiliaries
+  non_claims:
+  - does not deny the mathematical validity of R(S(n)) within its external framework
+  - does not grant execution authority
+declarations_required:
+- genesis_state
+- representation_arrow
+- external_realization
+evidence_required:
+- provenance_trace
+- extension_forcing_witness
+validation_criteria:
+- no extension rule in S(n+1) cites an external realization R(S(n)) as its generating authority
+- representation arrows are strictly covariant and non-generative in reverse
+- discovery of continuous or algebraic symmetries in R(S(n)) does not force new discrete symbols into S(n)
+proof_obligations:
+- id: narnf.boxed_law_two
+  status: upstream_theorem
+  ref: 002_s_n
+  section: sn.md
+terminal_routes:
+- AcceptEndogenousGenesis
+- RejectShadowAuthorityLeakage
+- RejectReverseGenerativeArrow
+- QuarantineRealizationProposal
+terminal_route_map:
+  AcceptEndogenousGenesis: Preserve
+  RejectShadowAuthorityLeakage: Reject
+  RejectReverseGenerativeArrow: Refuse
+  QuarantineRealizationProposal: Quarantine
+certification:
+  certificate_required: true
+  certificate_kind: realization_boundary_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: an extension S(n) -> S(n+1) is justified by properties of continuous manifolds or Hilbert spaces
+  diagnosis: shadow-authority leakage violating Boxed Law 2
+  terminal: RejectShadowAuthorityLeakage
+- symptom: realization mapping R contains an arrow R(S(n)) -> S(n+1)
+  diagnosis: illegal reverse generative arrow
+  terminal: RejectReverseGenerativeArrow
+definition:
+  formal_statement: a derivation step is in Non-Authoritative Realization Normal Form iff all generative morphisms are strictly endogenous to S(n) and every external mathematical realization R(S(n)) has zero authority to extend S(n)
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: epistemic_boundary_not_relational_project_join
+    anomaly_exclusion: shadow-authority leakage and reverse generative arrows
+    lossless_join:
+      status: one_way_representation
+      statement: realization is uniquely determined by representation arrow rho and Genesis state
+    dependency_preservation:
+      status: endogenous_preservation
+      statement: endogenous Genesis invariants are preserved without external axioms
+    syntactic_decision:
+      status: provenance_decidable
+      statement: decidable by checking whether generating authorities in the provenance graph belong to Genesis
+schema_ref: ./normal_form_contract_schema.yaml

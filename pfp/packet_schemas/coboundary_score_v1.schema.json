@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "omega.symbol-game.coboundary-score.v1",
+  "title": "CoboundaryScoreV1",
+  "description": "Host-side coboundary score result ranking candidate proposals against open obstruction cochains. AuthorityEffect: None.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "family",
+    "proposal_id",
+    "prior_residual_norm",
+    "post_residual_norm",
+    "residual_drop",
+    "structural_cost",
+    "normalized_efficiency",
+    "is_legal",
+    "is_exact_candidate",
+    "authority_effect"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "omega.symbol-game.coboundary-score.v1"
+    },
+    "family": {
+      "type": "string",
+      "const": "coboundary_score"
+    },
+    "proposal_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier or digest of the evaluated candidate proposal."
+    },
+    "prior_residual_norm": {
+      "type": "string",
+      "pattern": "^-?[0-9]+(/[0-9]+)?$",
+      "description": "Norm ||omega|| of open obstruction cochain prior to repair. Exact rational in canonical string form; a JSON number is a float in most readers and omega-sorted-json-no-float-v1 refuses floats."
+    },
+    "post_residual_norm": {
+      "type": "string",
+      "pattern": "^-?[0-9]+(/[0-9]+)?$",
+      "description": "Norm ||omega - d alpha|| of residual cochain after repair. Exact rational in canonical string form."
+    },
+    "residual_drop": {
+      "type": "string",
+      "pattern": "^-?[0-9]+(/[0-9]+)?$",
+      "description": "Delta = ||omega|| - ||omega - d alpha||. Exact rational in canonical string form. Positive indicates progress."
+    },
+    "structural_cost": {
+      "type": "string",
+      "pattern": "^[0-9]+(/[0-9]+)?$",
+      "description": "Cost penalty c(alpha) >= 0 for new primitives, arity, assumptions. Exact rational in canonical string form."
+    },
+    "normalized_efficiency": {
+      "type": ["string", "null"],
+      "pattern": "^-?[0-9]+(/[0-9]+)?$",
+      "description": "s(alpha) = Delta / (1 + c(alpha)). Exact rational in canonical string form; null when the proposal is illegal, which does not rank at all."
+    },
+    "is_legal": {
+      "type": "boolean",
+      "description": "Whether the proposal passed all hard legality fences."
+    },
+    "refusal_reason": {
+      "type": ["string", "null"],
+      "description": "Refusal code if illegal, else null."
+    },
+    "is_exact_candidate": {
+      "type": "boolean",
+      "description": "True only if post_residual_norm is exactly 0 over Q and dual_witness_ref is valid. Never decided by a tolerance."
+    },
+    "dual_witness_ref": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 digest of verified dual-witness certificate if Exact."
+    },
+    "authority_effect": {
+      "type": "string",
+      "const": "None",
+      "description": "Const None. Scores never confer execution or promotion authority."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "is_exact_candidate": { "const": true } }
+      },
+      "then": {
+        "properties": {
+          "dual_witness_ref": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "post_residual_norm": { "const": "0" }
+        },
+        "required": ["dual_witness_ref"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "is_legal": { "const": false } }
+      },
+      "then": {
+        "properties": {
+          "normalized_efficiency": { "const": null },
+          "refusal_reason": { "type": "string", "minLength": 1 }
+        },
+        "required": ["refusal_reason"]
+      }
+    }
+  ]
+}

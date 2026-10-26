@@ -1,0 +1,53 @@
+schema_id: "DDC-TAPE-PACKET-v1.0"
+title: "Discrete Deformation Calculus (DDC) Tape Execution Packet"
+authority_effect: "None"
+reference_monograph: "omega_engine_discrete_deformation_calculus"
+doi: "10.5281/zenodo.pending"
+
+description: >
+  Records the finite step tape of a computation handling declared obstructions
+  using the eight canonical letters: Exact repair E, Residual projection R,
+  Context exposure C, Integration I, Licensed lift Λ, Descent D, Typed refusal M,
+  and Terminalization T.
+
+control_states:
+  - "Open: Active computation in progress."
+  - "Refused: Absorbed into typed refusal after letter M."
+  - "Terminalized: Absorbed into terminal certificate after letter T."
+
+diagnostic_classes:
+  EXACT: "Gamma == 0 and Phi == 0. Allows E, T, I."
+  CLOSED: "Gamma == 0 and Phi > 0. Allows R, Λ, T, I."
+  ACTIVE: "Gamma > 0. Allows R, C, D, M, I."
+  INADEQUATE: "Detector inadequate. Allows Λ, M, C, I."
+
+driver_tapes:
+  autopoietic: "CREIT"
+  refusal: "CRMT"
+  self_examination: "CRΛIT"
+  allopoietic: "DIT"
+
+packet_schema:
+  packet_id: "string (UUID or deterministic hash)"
+  genesis_carrier: "string (carrier complex name)"
+  initial_state:
+    carrier: "string"
+    residual: "list[int | Fraction]"
+    phi: "int | Fraction"
+    gamma: "int | Fraction"
+    adequate: "bool"
+  steps:
+    - letter: "E | R | C | I | Λ | D | M | T"
+      after:
+        carrier: "string"
+        residual: "list[int | Fraction]"
+        phi: "int | Fraction"
+        gamma: "int | Fraction"
+        adequate: "bool"
+      witness:
+        receipt: "bool"
+        loss_ledger: "bool"
+        lift_licence: "bool"
+        reason: "optional string"
+  terminal_control: "Open | Refused | Terminalized"
+  merkle_digest: "sha256 hex string"

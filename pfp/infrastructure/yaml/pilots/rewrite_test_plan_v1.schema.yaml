@@ -1,0 +1,183 @@
+# Schema definition for Rewrite Test Plan (testplan.yaml)
+# AuthorityEffect: None.
+# Required fields and enums follow omega_engine_pfp.domain.types.rewrite_test_plan.
+
+$schema: https://json-schema.org/draft/2020-12/schema
+schema: pfp.rewrite-test-plan.v1
+title: RewriteTestPlanSchema
+description: |
+  Comprehensive mapping of seed prompts through prompt_template.yaml onto AST/wire rewrite cases
+  and individual execution test items.
+
+$defs:
+  AuthorityEffect:
+    type: string
+    enum: [None]
+
+  TestPlanTemplateReference:
+    type: object
+    additionalProperties: false
+    required:
+      - path
+    properties:
+      path:
+        type: string
+      shared_by_all_tests:
+        type: boolean
+
+  TestPlanSeedReference:
+    type: object
+    additionalProperties: false
+    required:
+      - path
+      - seed_prompt
+    properties:
+      path:
+        type: string
+      seed_prompt:
+        type: string
+      instantiated_template:
+        type: string
+      prompt_id:
+        type: string
+      signature:
+        type: string
+
+  TestPlanExpectedOutcome:
+    type: object
+    additionalProperties: false
+    properties:
+      answer: {}
+      status:
+        type: string
+        default: ACCEPTED
+
+  TestPlanCounts:
+    type: object
+    additionalProperties: false
+    required:
+      - unique_cases
+      - tests
+    properties:
+      unique_cases:
+        type: integer
+      rewrite_files:
+        type: integer
+        default: 0
+      tests:
+        type: integer
+
+  TestCaseModel:
+    type: object
+    additionalProperties: false
+    required:
+      - case_id
+    properties:
+      case_id:
+        type: string
+      rewrite_id:
+        type: [string, "null"]
+      signature:
+        type: string
+      grammar: {}
+      name:
+        type: string
+      governing_strategy:
+        type: string
+      governing_specification:
+        type: string
+      dialect_tier:
+        type: string
+      boundary_format:
+        type: string
+      semantic_carrier: {}
+      seed_prompt:
+        type: string
+      rewritten_seed_prompt:
+        type: string
+      artifact:
+        type: string
+      instantiated_template:
+        type: string
+      prompt_id:
+        type: string
+      tests:
+        type: array
+        items:
+          type: string
+
+  TestPlanEntryModel:
+    type: object
+    additionalProperties: false
+    required:
+      - test_id
+    properties:
+      test_id:
+        type: string
+      kind:
+        type: [string, "null"]
+      rewrite_id:
+        type: [string, "null"]
+      signature:
+        type: string
+      grammar: {}
+      seed_prompt:
+        type: string
+      prompt_template:
+        type: string
+      rewritten_seed_prompt:
+        type: string
+      artifact:
+        type: string
+      request_id:
+        type: string
+      prompt_id:
+        type: string
+      parent_prompt_id:
+        type: string
+      user_prompt_equals_rewritten_seed:
+        type: boolean
+      case_id:
+        type: string
+
+type: object
+additionalProperties: false
+required:
+  - pilot_id
+  - prompt_template
+  - seed
+  - expected_outcome
+  - counts
+properties:
+  schema:
+    type: string
+    const: pfp.rewrite-test-plan.v1
+  authority_effect:
+    anyOf:
+      - $ref: '#/$defs/AuthorityEffect'
+      - type: string
+      - type: "null"
+  pilot_id:
+    type: string
+  spec:
+    type: string
+  responses:
+    type: string
+  description:
+    type: string
+  prompt_template:
+    $ref: '#/$defs/TestPlanTemplateReference'
+  seed:
+    $ref: '#/$defs/TestPlanSeedReference'
+  expected_outcome:
+    $ref: '#/$defs/TestPlanExpectedOutcome'
+  counts:
+    $ref: '#/$defs/TestPlanCounts'
+  cases:
+    type: array
+    items:
+      $ref: '#/$defs/TestCaseModel'
+  tests:
+    type: array
+    items:
+      $ref: '#/$defs/TestPlanEntryModel'

@@ -1,0 +1,97 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.ddc.refusal_receipt
+  name: Refusal Receipt Normal Form
+  short_name: RRNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  status: active
+  verification_status: executable
+  family: evidence
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - operational_refusal
+    - typed_receipt
+    - state_preservation
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: untyped failure states, unhandled execution crashes, state-mutating refusals, or unconstrained retry loops
+  preserves_invariant: closed 7-member refusal vocabulary, state identity preservation step(s, M) = s, and Law 3 refusal absorption
+  protected_skeleton:
+    - refusal_reason
+    - unmutated_state_digest
+    - permitted_next_set
+    - receipt_signature
+  erased_structure:
+    - failed_execution_scratchpad
+  non_claims:
+    - does not claim refusal fixes the underlying obstruction
+    - does not permit retry of the identical failed operation without structural modification
+    - does not confer operational authority; authority_effect is unconditionally None
+definition:
+  source: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/normal_forms/README.md
+  section: '2.0'
+  formal_statement: >
+    When a proposed transition violates pre-conditions or exceeds budget, Refusal Receipt Normal Form (RRNF)
+    types the abort under operational rune M. The refusal emits an explicit typed receipt containing one of
+    seven closed reasons, leaves the underlying state digest strictly identical (step(s, M) = s), and
+    enforces refusal absorption: only {C, Λ, T} may follow a refusal without illegal retry (Law 3).
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: failure_algebra_typing_not_relational_project_join
+    anomaly_exclusion: untyped exceptions, state corruption during refusal, or self-loop retries without context expansion
+    lossless_join:
+      status: state_identity_preservation
+      statement: the state before refusal is identical to the state after refusal; step is mathematically an identity on state
+    dependency_preservation:
+      status: invariant_firewall_preserved
+      statement: refusal reason is verified locally against the violated pre-condition fence
+    syntactic_decision:
+      status: closed_vocabulary_decidable
+      statement: membership is decidable by membership in the closed 7-element enum and checking permitted_next == {C, Lambda, T}
+declarations_required:
+  - refusal_reason
+  - state_preserved
+  - permitted_next
+evidence_required: []
+validation_criteria:
+  - refusal reason belongs to the closed 7-member diagnostic enum
+  - state hash after refusal matches state hash prior to transition identically
+  - subsequent transition routes strictly to context exposure C, structural lift Λ, or terminal sink T
+terminal_routes:
+  - AdmitRefusalReceipt
+  - RejectIllegalRetry
+  - RejectMutatedState
+  - RejectUntypedRefusal
+terminal_route_map:
+  AdmitRefusalReceipt: Preserve
+  RejectIllegalRetry: Refuse
+  RejectMutatedState: Invalidate
+  RejectUntypedRefusal: Reject
+certification:
+  certificate_required: true
+  certificate_kind: refusal_step_receipt
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+  - symptom: identical refused operation retried without state modification or context expansion
+    diagnosis: illegal retry loop; violates Law 3 refusal absorption
+    terminal: RejectIllegalRetry
+  - symptom: state digest differs across refusal transition
+    diagnosis: refusal mutated active state
+    terminal: RejectMutatedState
+examples:
+  - ref: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+    section: '2.7'
+references:
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/mutation_operator.contract.yaml

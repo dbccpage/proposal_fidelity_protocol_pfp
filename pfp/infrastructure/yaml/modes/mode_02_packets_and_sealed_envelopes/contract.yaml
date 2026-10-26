@@ -1,0 +1,23 @@
+mode_id: 2
+name: "Packets & Sealed Envelopes"
+cluster: "Cluster I: Carrier & Representation"
+authority_effect: "None"
+core_mechanism: "Content-addressed JSON/YAML envelopes with SHA-256 hash commitments"
+substrate: "Structured wire packets (Problem, Candidate, Contract, Receipt)"
+paper_reference: "004_the_symbol_game_native_verification_and_evidence_custody"
+rules:
+  - "Packets must conform strictly to the four-object lifecycle (Problem, Candidate, Contract, Receipt)."
+  - "Every packet carries an immutable SHA-256 Merkle digest."
+  - "Payload modifications require minting a new envelope with distinct digest."
+entry_preconditions:
+  - "Valid schema definition in packets/."
+  - "Host receipt issuer configured."
+winning_condition: >
+  Successful end-to-end receipt sealing with bit-level digest verification across all stages.
+failure_modes:
+  - "Digest mismatch (tampered payload)"
+  - "Missing envelope envelope metadata"
+  - "Unregistered schema identifier"
+verifier_contract:
+  verifier_type: "content_addressed_envelope_verifier"
+  fail_closed: true

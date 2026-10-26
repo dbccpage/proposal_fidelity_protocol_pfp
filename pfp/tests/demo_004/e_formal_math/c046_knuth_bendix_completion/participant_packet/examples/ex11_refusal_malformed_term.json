@@ -1,0 +1,63 @@
+{
+  "input": {
+    "case_id": "ex11_refusal_malformed_term",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(x, inv(y",
+        "x"
+      ]
+    ]
+  },
+  "expected_output": {
+    "case_id": "ex11_refusal_malformed_term",
+    "status": "REFUSED",
+    "reason": "ORDER_FAILURE",
+    "witness": {
+      "reason": "ORDER_FAILURE",
+      "unorientable_equation": [
+        "mul(x, inv(y",
+        "x"
+      ],
+      "step": 1
+    },
+    "ddc_trace": {
+      "case_id": "ex11_refusal_malformed_term",
+      "trace_string": "ELambdaDR",
+      "step_count": 4,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task COMPLETE for case ex11_refusal_malformed_term",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "Lambda",
+          "detail": "Initialized TermOrder with 10 precedence levels",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "D",
+          "detail": "Starting completion saturation with max_steps=200",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "R",
+          "detail": "Completion halted: ORDER_FAILURE",
+          "meta": {
+            "reason": "ORDER_FAILURE",
+            "unorientable_equation": [
+              "mul(x, inv(y",
+              "x"
+            ],
+            "step": 1
+          }
+        }
+      ]
+    }
+  }
+}

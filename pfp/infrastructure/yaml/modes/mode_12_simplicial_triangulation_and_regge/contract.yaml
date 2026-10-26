@@ -1,0 +1,25 @@
+mode_id: 12
+name: "Simplicial Triangulation & Deficit Geometry"
+cluster: "Cluster III: Group & Cochain Structure"
+authority_effect: "None"
+core_mechanism: "Simplicial complexes, Regge action, and Cayley-Menger determinants over exact rationals"
+substrate: "Triangulated piecewise-linear cell complexes"
+paper_reference: "010_the_symbol_game_holonomy_checks_and_model_pilots"
+rules:
+  - "Validate declared squared lengths and every required face. For a k-simplex use (-1)^(k+1)*det(CM)/(2^k*(k!)^2) as squared volume; determinant sign depends on dimension."
+  - "Dihedral and deficit angles require declared exact algebraic/transcendental semantics or certified interval bounds; rational squared lengths do not imply rational angles."
+  - "State the particular discrete conservation identity and its assumptions before checking it; do not infer a Bianchi identity from positive simplex volumes."
+entry_preconditions:
+  - "Triangulated complex with boundary declared."
+  - "Squared edge length metric initialized."
+winning_condition: >
+  Positive squared volumes with consistent incidence and orientation, followed by the
+  explicitly declared curvature checks. Geometry witnesses do not establish physical
+  truth or a general gravitational conservation theorem.
+failure_modes:
+  - "Invalid or degenerate simplex (dimension-correct squared volume <= 0)"
+  - "Hinged curvature imbalance"
+  - "Orientation mismatch on adjacent faces"
+verifier_contract:
+  verifier_type: "regge_simplicial_geometry_engine"
+  fail_closed: true

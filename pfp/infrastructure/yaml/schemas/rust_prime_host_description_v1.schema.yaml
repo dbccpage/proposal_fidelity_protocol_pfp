@@ -1,0 +1,47 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: omega.oesos.rust-prime-host-description.v1
+title: Rust Prime/OESOS Host Description V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- logical_id
+- crate_version
+- request_schema
+- outcome_schema
+- host_registry_hash_sha256
+- source_revision
+- max_request_bytes
+- outer_dialects
+- authority_effect
+- attestation
+properties:
+  schema_version:
+    const: omega.oesos.rust-prime-host-description.v1
+  logical_id:
+    const: omega-prime-oesos-host
+  crate_version:
+    type: string
+    minLength: 1
+  request_schema:
+    const: omega.oesos.rust-prime-host-request.v1
+  outcome_schema:
+    const: omega.oesos.rust-prime-host-outcome.v1
+  host_registry_hash_sha256:
+    $ref: '#/$defs/digest'
+  source_revision:
+    type: string
+    minLength: 1
+  max_request_bytes:
+    const: 1048576
+  outer_dialects:
+    const:
+    - experimental-z-v1
+  authority_effect:
+    const: None
+  attestation:
+    const: unsigned_lab
+$defs:
+  digest:
+    type: string
+    pattern: ^[0-9a-f]{64}$

@@ -1,0 +1,35 @@
+schema_version: "omega.immune.antibody-spec.v1"
+antibody_id: "ab_silent_input_schema_coercion"
+canonical_name: "Silent Input Schema Coercion"
+failure_class: "schema:silent_input_coercion"
+target_pattern: "if\\s+not\\s+isinstance\\(\\w+,\\s*dict\\):[\\s\\S]{0,100}?=\\s*\\{[\\\"']op[\\\"']:\\s*str\\("
+constraint_type: "Restrain"
+operatorizability: "repairable"
+action: "repair"
+severity: "P0"
+pharmacy_status: "candidate"
+authority_effect: "None"
+description: >
+  Refuses parsers and workflow runners that silently coerce malformed input types
+  (e.g. wrapping a bare scalar into a nullary operation) or silently filter out
+  invalid items rather than emitting a typed refusal.
+
+governing_invariants:
+  - ".agents/rules/engineering/rl_fail_closed_epistemic_oracle_verification.md"
+  - ".agents/patterns/anti/python/AP_PY_013_silent_input_schema_coercion.md"
+
+adversarial_mutation_fixture: |
+  def parse_step(raw_step):
+      if not isinstance(raw_step, dict):
+          raw_step = {"op": str(raw_step), "args": []}
+      return WorkflowStep(op=raw_step["op"], args=raw_step.get("args", []))
+
+repaired_invariant_fixture: |
+  def parse_step(raw_step):
+      if not isinstance(raw_step, dict):
+          return Err(RefusalRecord(code="BAD_STEP", reason="Step must be a mapping"))
+      return Ok(WorkflowStep(op=raw_step["op"], args=raw_step.get("args", [])))
+
+detection_mechanisms:
+  regex_triggers:
+    - "if\\s+not\\s+isinstance\\(\\w+,\\s*dict\\):[\\s\\S]{0,100}?=\\s*\\{[\\\"']op[\\\"']:\\s*str\\("

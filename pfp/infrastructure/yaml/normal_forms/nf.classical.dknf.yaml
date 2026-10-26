@@ -1,0 +1,149 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.dknf
+  name: Domain-Key Normal Form
+  short_name: DKNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  verification_status: absent
+  family: shape
+  status: active
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: general integrity constraints not logically implied by domain constraints
+    and key constraints alone
+  preserves_invariant: all relvar constraints on a satisfiable 1NF schema are logical consequences
+    of declared domains and candidate keys alone
+  protected_skeleton:
+  - domains
+  - candidate_keys
+  - domain_constraints
+  - key_constraints
+  erased_structure: []
+  non_claims:
+  - general DKNF reachability is undecidable for arbitrary predicates; no general synthesis
+    algorithm exists
+  - does not imply sixth normal form. A non-trivial join dependency that the keys
+    imply is still allowed
+  - sixth normal form does not imply this form. A constraint other than a join dependency
+    can fail to follow from domains and keys
+  - does not certify runtime repair without cochain substrate
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    author: Ronald Fagin
+    year: 1981
+    work: A Normal Form for Relational Databases That Is Based on Domains and Keys
+  formal_statement: 'A relvar is in domain-key normal form when every constraint on
+    it is a logical consequence of its domain constraints and its key constraints.
+    Fagin''s anomaly theorem (Theorem 3.13) establishes that for satisfiable 1NF relation schemata,
+    DKNF is equivalent to the absence of insertion and deletion anomalies expressible
+    by those constraints.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: pillar_IV
+    anomaly_exclusion: 'Insertion and deletion anomalies that remain once domain constraints
+      and key constraints have been enforced. The anomaly theorem is Fagin''s (1981 Theorem 3.13).
+      It applies to schemas that meet the definition without supplying a general synthesis procedure.
+
+      '
+    lossless_join:
+      status: enclosure
+      statement: 'The form does not decompose the heading. The constraints that remain
+        are those already implied by domains and keys. A join dependency survives
+        only when the keys imply it.
+
+        '
+    dependency_preservation:
+      status: outside_constraints_are_not_retained
+      statement: 'A constraint that domains and keys do not imply is not kept as an
+        extra constraint of a schema in this form. If the application still requires
+        it, the schema is outside the form.
+
+        '
+    syntactic_decision:
+      status: undecidable_for_arbitrary_constraints
+      decidable_subclass_fence: monadic_or_guarded_fd_key_domain_fragment
+      unrestricted_first_order_status: aspirational_non_executable
+      statement: 'For an unrestricted constraint language, asking whether every constraint
+        follows from the domains and the keys is undecidable. The question is decidable
+        for restricted languages (specifically the monadic/guarded functional-dependency,
+        key, and finite-domain fragment). Functional dependencies alone reduce the question
+        to whether every functional dependency follows from the keys, which is Boyce-Codd
+        normal form, together with the domain declarations. One stored body is not
+        the decider.
+
+        '
+  chain:
+    implies_when_join_dependencies_are_constraints:
+    - 5NF
+    does_not_imply:
+    - 6NF
+    not_implied_by:
+    - 6NF
+declarations_required:
+- heading
+- domains
+- candidate_keys
+- general_constraints
+- domain_constraints
+- key_constraints
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- every declared constraint is logically deducible from domain constraints and candidate
+  key constraints alone
+- constraints requiring inter-attribute or table-wide predicates outside domains/keys
+  terminalize as constraint refactoring obligations
+proof_obligations:
+- id: dknf.fagin_ultimate_normal_form
+  status: theorem_shaped
+  ref: https://research.ibm.com/publications/a-normal-form-for-relational-databases-that-is-based-on-domains-and-keys
+  statement: 'Fagin''s theorem: a schema in which every constraint follows from domains
+    and keys has no insertion or deletion anomaly expressible by those constraints.
+    Membership for an arbitrary constraint language is not a decision procedure. The
+    source table''s enclosure phrase names this consequence relation, not an algorithm
+    that always produces the form.
+
+    '
+terminal_routes:
+- Accept
+- RejectNonDomainKeyConstraint
+- RequireConstraintRefactoring
+terminal_route_map:
+  Accept: Preserve
+  RejectNonDomainKeyConstraint: Reject
+  RequireConstraintRefactoring: Decompose
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: discount rule requires inter-attribute validation not expressible as domain
+    or key constraints
+  diagnosis: non-domain-key constraint violating DKNF
+  terminal: RejectNonDomainKeyConstraint
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 2.1 Classical Relational Normal Forms
+references:
+- https://research.ibm.com/publications/a-normal-form-for-relational-databases-that-is-based-on-domains-and-keys
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md

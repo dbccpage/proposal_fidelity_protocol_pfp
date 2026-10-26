@@ -1,0 +1,22 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-premature-fiber-exclusion
+canonical_name: Anti-Premature Fiber Exclusion Fallacy
+failure_class: math:premature_fiber_exclusion
+target_pattern: (first.*step.*exhausts.*all|unverified.*fiber.*empty|immediate.*vanishing.*without.*balance)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects asserting that candidate fiber points are excluded before evaluating
+  the 48 balance equations.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: The base 618-equation variety has no solutions so we
+  can discard the 48 balance constraints.
+repaired_invariant_fixture: The derived 666-equation system enforces all 48 balance
+  relations, yielding a certified positive separation gap > 0.
+source_pilot: pilot_038
+evidence_sha256: 710f61618292d78fe745577b5d5ae8542217c230184295ab19d540df8b4ed3ae

@@ -1,0 +1,92 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.compilation.cpnf
+  name: Compilation Normal Form
+  short_name: CpNF
+  version: v1
+  status: draft
+  family: compilation
+  contract_status: draft
+classification:
+  hierarchy_level: transformation_contract
+  subject_kind:
+  - representation_transport
+  - query_shape
+  data_posture: in_transformation
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a compile step that changes meaning without a declared ledger
+    entry
+  preserves_invariant: each compile step names its source regime, target regime, and
+    the distinctions it erases
+  protected_skeleton:
+  - source_regime
+  - target_regime
+  - morphism_chain
+  erased_structure: []
+  non_claims:
+  - this is not a relational true normal form
+  - this is not a runtime cache repair
+  - a compile certificate does not authorize the compiled artifact
+  - the archive file contract.compilation.cpnf.yaml set authorized_by to a policy
+    engine; this proposal leaves authorized_by null
+declarations_required:
+- morphism_chain
+- per_step_certificate
+- composed_preserved_skeleton
+- composed_erased_distinctions
+evidence_required:
+- transport_certificate_per_step
+- loss_ledger_when_a_distinction_is_erased
+validation_criteria:
+- every transformation is declared before it runs
+- every erased distinction has a ledger entry
+- a step without a descent witness is refused
+terminal_routes:
+- CompileOk
+- SilentMutation
+- LossLedgerMissing
+- NonComposableCertificate
+- Refuse
+terminal_route_map:
+  CompileOk: Preserve
+  SilentMutation: Reject
+  LossLedgerMissing: Refuse
+  NonComposableCertificate: Reject
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: 'A compilation is in this form when every step is a declared map
+    between two regimes and every distinction the step erases is written to a loss
+    ledger. Reconstruction is replay of that chain, not a relational join.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_replay_of_a_compile_chain
+    anomaly_exclusion: an unledgered change of meaning across compile steps
+    lossless_join:
+      status: declared_reconstruction
+      statement: replaying the declared chain reproduces the compiled artifact and
+        the loss ledger
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: erased distinctions stay on the ledger instead of being dropped silently
+    syntactic_decision:
+      status: declaration_decidable
+      statement: the check reads the morphism chain and the ledger, not one runtime
+        row
+certification:
+  certificate_required: true
+  certificate_kind: transport_certificate
+  obstruction_class_required: true
+  loss_ledger_required: true
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+references:
+- coda_all_universe/mssn_sn_tower/contracts/nf.compilation.cpnf.yaml
+- coda_all_universe/mssn_sn_tower/docs/papers/b-gtmur-representation-transport.md
+schema_ref: ./normal_form_contract_schema.yaml

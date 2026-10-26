@@ -1,0 +1,160 @@
+{
+  "authority_effect": "None",
+  "carrier": {
+    "commit": "77ad2a7839aff8c9ec9b0204a5e9d6927fe8ae38",
+    "part": "repo_content",
+    "repo": "19L57G1",
+    "sources": [
+      {
+        "blob": "b67cf6899c62c84c8447cd10aeea884a25f80bbf",
+        "path": "code/derivation/represented.py",
+        "sha256": "sha256:1ea752ef021cde06fec1b7e3f451a31d05e3a965820666a954623add6f00fcb3"
+      },
+      {
+        "blob": "",
+        "path": "challenge-evidence:granted_steps",
+        "sha256": "sha256:b10d5e91a54fcc9285633c60b2c86a598b9ca6508fd4407b2ea6cb9b10846ed8"
+      }
+    ]
+  },
+  "carrier_refusals": [
+    {
+      "evidence": "granted_steps:own_neg:FAILS:edges_progress",
+      "of": "own_neg"
+    },
+    {
+      "evidence": "granted_steps:near_unknown:FAILS:operations_known",
+      "of": "near_unknown"
+    },
+    {
+      "evidence": "granted_steps:near_understated:FAILS:rows_replayed",
+      "of": "near_understated"
+    },
+    {
+      "evidence": "granted_steps:mut:FAILS:scopes_replayed",
+      "of": "mut"
+    }
+  ],
+  "encoding": {
+    "decoder_path": "payload/granted_steps/spec.py",
+    "decoder_sha256": "sha256:c5d252d21996b0de2abe4796e8d0c4465ee81ffe7170858b9983276f56b02c8d",
+    "input_schema": "draft:harness.packet.v1"
+  },
+  "lineage": {
+    "model_families": [
+      "claude"
+    ],
+    "note": "the harness and any draft checker share an author and a model family; agreement between them is correlated evidence",
+    "shared_author": true
+  },
+  "loss_ledger_sha256": "sha256:9c714894362e3abf60c42137ace99ffbb8ea8f8dc93b2856be2ca9d7c3d8b981",
+  "native_claims": [
+    {
+      "id": "progress_needs_license",
+      "lean": [
+        {
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ],
+          "name": "Represented.progress_needs_license"
+        }
+      ],
+      "status": "PROVED_THEOREM"
+    },
+    {
+      "id": "progress_needs_budget",
+      "lean": [
+        {
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ],
+          "name": "Represented.progress_needs_budget"
+        }
+      ],
+      "status": "PROVED_THEOREM"
+    },
+    {
+      "id": "proposal_confers_no_execution",
+      "lean": [
+        {
+          "axioms": [
+            "propext",
+            "Quot.sound"
+          ],
+          "name": "GraphGenesis.proposal_confers_no_execution"
+        }
+      ],
+      "status": "PROVED_THEOREM"
+    }
+  ],
+  "non_claims": [
+    "answers a supplied challenge; not a derivation from the seed",
+    "no independent convergence with any outside list is claimed"
+  ],
+  "provenance": {
+    "isolation": "NOT_APPLICABLE",
+    "purity": "NOT_APPLICABLE",
+    "source_blindness": "NOT_BLIND"
+  },
+  "schema": "mssn.witness-bundle.v1",
+  "stage_change": null,
+  "target_input": {
+    "packet": {
+      "edges": [
+        [
+          "e1",
+          "licensed",
+          [
+            "add_view"
+          ]
+        ],
+        [
+          "e2",
+          "unlicensed",
+          [
+            "mark",
+            "note"
+          ]
+        ]
+      ],
+      "operations": [
+        [
+          "add_view",
+          [
+            "augment",
+            "spend"
+          ]
+        ],
+        [
+          "mark",
+          [
+            "spend"
+          ]
+        ],
+        [
+          "note",
+          []
+        ]
+      ],
+      "scopes": [
+        [
+          "licensed",
+          null,
+          [
+            "augment",
+            "spend"
+          ]
+        ],
+        [
+          "unlicensed",
+          "licensed",
+          [
+            "spend"
+          ]
+        ]
+      ]
+    }
+  }
+}

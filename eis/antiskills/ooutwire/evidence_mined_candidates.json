@@ -1,0 +1,640 @@
+{
+  "authority_effect": "None",
+  "auto_admit": false,
+  "candidates": [
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:5973322bc687ee96c21e6c382dfa22851a703d987d6052f5f190ddb4dd0290ca",
+      "context_keys": [
+        "symbol-game-mutation-m01|presentation-authority|evidence-replay",
+        "omega-campaign|payload-ordering|evidence-audit"
+      ],
+      "counterexamples": [
+        "A commutative algebraic structure may declare its generators in any permutation without changing mathematical isomorphism."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000001"
+      ],
+      "evidence_refs": [
+        "evidence:symbol_game_mutation_20260903.md#M01"
+      ],
+      "failure_code": "RULE_SET_PAYLOAD_SHUFFLING",
+      "name": "rule-set-payload-shuffling-candidate",
+      "proposed_invariant": "A producer cannot alter verification outcome or presentation digests by reordering rules in a payload; presentations must sort rules deterministically before hashing.",
+      "protected_fields": [
+        "authority_effect",
+        "canonical_digest",
+        "rules"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:d776850c9535ea19c3620f4c3c3d551cb698a83a0058ec6a4eb8d97517c5b62b",
+      "context_keys": [
+        "symbol-game-mutation-m04|receipt-custody|serde-audit",
+        "omega-campaign|hash-forgery|evidence-audit"
+      ],
+      "counterexamples": [
+        "An unsealed diagnostic telemetry packet may deserialize caller diagnostics for logging purposes only."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000002"
+      ],
+      "evidence_refs": [
+        "evidence:symbol_game_mutation_20260903.md#M04"
+      ],
+      "failure_code": "SEALED_RECEIPT_DESERIALIZATION",
+      "name": "sealed-receipt-deserialization-candidate",
+      "proposed_invariant": "Sealed execution receipts and round records must be write-only on the wire; they must not deserialize untrusted caller bytes into validated receipt objects.",
+      "protected_fields": [
+        "authority",
+        "canonical_digest",
+        "terminal"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:7ee0362c3e4c414bb181fa8b8e010834ba128a113568c07802778ff9562cf9b1",
+      "context_keys": [
+        "symbol-game-mutation-m05|carrier-authority|receipt-ladder",
+        "omega-campaign|carrier-widening|evidence-audit"
+      ],
+      "counterexamples": [
+        "A self-contained exploratory notebook may evaluate self-consistency against a locally defined carrier, reporting at most SELF_CONSISTENT_ONLY."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000003"
+      ],
+      "evidence_refs": [
+        "evidence:symbol_game_mutation_20260903.md#M05",
+        "evidence:symbol_game_mutation_20260903.md#M08"
+      ],
+      "failure_code": "PRODUCER_CARRIER_SELF_ELEVATION",
+      "name": "producer-carrier-self-elevation-candidate",
+      "proposed_invariant": "A candidate packet that declares or widens its own carrier cannot achieve Terminal.PASS; PASS requires evaluation against a host-pinned carrier.",
+      "protected_fields": [
+        "carrier_authored_by",
+        "pinned_carrier_digest",
+        "terminal"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:cae0c90c7f763db982fa7f9ebda2cf70d512a83268846c4f241d7cb3090680ca",
+      "context_keys": [
+        "symbol-game-mutation-m11|modulo-reduction|residue-parity",
+        "omega-campaign|discrete-arithmetic|evidence-audit"
+      ],
+      "counterexamples": [
+        "Hardware register operations may explicitly specify signed two's-complement truncating remainder when modelling C machine instructions."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000004"
+      ],
+      "evidence_refs": [
+        "evidence:symbol_game_mutation_20260903.md#M11"
+      ],
+      "failure_code": "TRUNCATING_REMAINDER_CONFUSION",
+      "name": "truncating-remainder-confusion-candidate",
+      "proposed_invariant": "Modular arithmetic in discrete cyclic groups must always compute the least non-negative residue, rejecting C-family truncating negative remainders.",
+      "protected_fields": [
+        "host_value",
+        "modulus",
+        "outcome"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:6df2478546f5682855fe1b0be922d057a66b59d997ce932598380cf716beba5e",
+      "context_keys": [
+        "symbol-game-mutation-m15|regex-anchoring|row-rederivation",
+        "omega-campaign|grammar-boundary|evidence-audit"
+      ],
+      "counterexamples": [
+        "A streaming lexer or token search scanner may find unanchored matches within an unbounded input stream."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000005"
+      ],
+      "evidence_refs": [
+        "evidence:symbol_game_mutation_20260903.md#M15"
+      ],
+      "failure_code": "UNANCHORED_REGEX_SEMANTIC_BLEED",
+      "name": "unanchored-regex-semantic-bleed-candidate",
+      "proposed_invariant": "Domain grammars, row matchers, and token deciders must anchor regular expressions at both start and end, preventing unvalidated trailing claims from passing.",
+      "protected_fields": [
+        "claimed_value",
+        "outcome",
+        "sentence"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:69b4e78ea82d733989c74577bf693630fbc923a1a98093d9ca5a07c14a2731ce",
+      "context_keys": [
+        "symbol-game-mutation|receipt-custody|evidence-audit",
+        "techne-mutation-evidence-custody|same-run-emission|audit"
+      ],
+      "counterexamples": [
+        "A post-hoc renderer may reformat an immutable, digest-verified JSON receipt into HTML/Markdown without re-executing the experiment."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000006"
+      ],
+      "evidence_refs": [
+        "evidence:symbol_game_mutation_20260903.md#L9-L10",
+        "skill:techne-mutation-evidence-custody#L129-L133"
+      ],
+      "failure_code": "MULTIFORMAT_RECEIPT_DESYNC",
+      "name": "multiformat-receipt-desync-candidate",
+      "proposed_invariant": "Dual-format receipts (JSON and Markdown) describing an execution must be emitted in the exact same process run from identical in-memory evidence structures.",
+      "protected_fields": [
+        "mutants_counted",
+        "mutants_killed",
+        "receipt_content_sha256"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:2b02c142436d20297d9f4909703bd8f427352374c86507abac8df8b44051ce14",
+      "context_keys": [
+        "python-linter-cleanliness|import-sorting|isort-audit",
+        "ast-cleanliness|unused-imports|ghost-typing-audit"
+      ],
+      "counterexamples": [
+        "A package __init__.py explicitly re-exporting public API symbols listed in __all__ or annotated with # noqa: F401 for external consumers."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000007"
+      ],
+      "evidence_refs": [
+        "evidence:dialogue_unused_and_unsorted_imports_20260928.md",
+        "rule:RULE_PYTHON_LINTER_CLEANLINESS_001"
+      ],
+      "failure_code": "UNUSED_AND_UNSORTED_IMPORT_BLEED",
+      "name": "unused-and-unsorted-import-bleed-candidate",
+      "proposed_invariant": "All newly written or modified Python modules must maintain zero unused imports (F401), zero unused variables (F841), and strictly sorted import blocks (I001). Shotgun imports of unreferenced typing symbols (e.g. typing.Dict, typing.Tuple, typing.Any) are strictly prohibited; agents must run ruff check --select F401,I prior to turn completion.",
+      "protected_fields": [
+        "imports",
+        "typing_symbols",
+        "linter_status"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:39449dea8a233de2731069e124f270de3dc4a38f9bdec72cacd5a29df9def1ef",
+      "context_keys": [
+        "execution-integrity|mock-prevention|live-run-audit",
+        "telemetry-custody|simulated-spend|evidence-audit"
+      ],
+      "counterexamples": [
+        "Unit tests explicitly exercising mock adapter playback in declared offline mode."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000008"
+      ],
+      "evidence_refs": [
+        "evidence:teamwork_auditor_1_mub6_target_c3.md",
+        "rule:RULE_PFP_LIVE_RUN_INTEGRITY_001"
+      ],
+      "failure_code": "CANNED_PILOT_THEATER",
+      "name": "canned-pilot-theater-candidate",
+      "proposed_invariant": "Execution runs claiming live model dispatch or empirical search must not pre-populate result dictionaries, simulate spend, or mock LLM turns without explicit mock environment declaration.",
+      "protected_fields": [
+        "packets",
+        "cemetery",
+        "spend_receipts"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:18a7ac4b1e6add9ab5ba2ac92066604770307bfc90fa31480bdb40b025634a65",
+      "context_keys": [
+        "static-analysis|mypy-hygiene|blanket-suppression-audit",
+        "type-safety|scoped-overrides|type-checker-discipline"
+      ],
+      "counterexamples": [
+        "Third-party vendor libraries lacking stub typing packages may use narrow, scoped module overrides."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000009"
+      ],
+      "evidence_refs": [
+        "evidence:anti_pattern_AP_PY_001.md",
+        "rule:RULE_PYTHON_ENGINEERING_STANDARDS_001"
+      ],
+      "failure_code": "BLANKET_SUPPRESSION_LEAK",
+      "name": "blanket-suppression-leak-candidate",
+      "proposed_invariant": "Static analysis suppressions (ignore_missing_imports, blanket type ignores, bare excepts) must not be applied globally to conceal regressions or circular imports; scoped module overrides must be used instead.",
+      "protected_fields": [
+        "pyproject_toml",
+        "mypy_ini",
+        "type_annotations"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:bc68636b571106e5d2cd04857da38f21d85c5b9805d7cbb59517ae10247ffb6c",
+      "context_keys": [
+        "paper-review|release-reproducibility|deposit-audit",
+        "omega-papers|packaging-verification|script-integrity"
+      ],
+      "counterexamples": [
+        "Development working drafts prior to release packaging tag are not required to contain standalone archive verifiers."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000a"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_RESEARCH_PAPER_AND_MONOGRAPH_PACKAGING_001"
+      ],
+      "failure_code": "UNVERIFIED_RELEASE_SCRIPT",
+      "name": "unverified-release-script-candidate",
+      "proposed_invariant": "Paper deposit releases must provide self-contained, executable rebuild and verification scripts (tools/rebuild_release.py or verify_deposit.py) matching SHA-256 payload manifests; releases lacking hermetic verification scripts cannot be certified.",
+      "protected_fields": [
+        "manifests",
+        "payload_hashes",
+        "rebuild_release_py"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:613d52516a11cadcf47634ee331c610f7417cbf460957a16eb0c7e7f831051da",
+      "context_keys": [
+        "paper-review|latex-compilation|pdf-consistency",
+        "omega-papers|artifact-parity|document-rendering"
+      ],
+      "counterexamples": [
+        "Headless continuous integration environments without installed XeLaTeX toolchains may run TeX static syntax audits independently."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000b"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_RESEARCH_PAPER_TEMPLATE_AND_HARMONIZATION_001"
+      ],
+      "failure_code": "TEX_PDF_HASH_DESYNCHRONIZATION",
+      "name": "tex-pdf-desync-candidate",
+      "proposed_invariant": "LaTeX source modifications must not be committed without compiling and verifying matching PDF artifacts, page geometry, title rendering, and table-of-contents alignment.",
+      "protected_fields": [
+        "compiled_pdf",
+        "table_of_contents",
+        "tex_source"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:a2066aa5a29f8ad6debb62315fd5cd60100f6e952798418e374cc4138b623e5d",
+      "context_keys": [
+        "paper-review|mathematical-rigor|dual-witness-audit",
+        "omega-math|exact-solvers|cochain-certificates"
+      ],
+      "counterexamples": [
+        "Informal motivation or expository introductory sections describing intuition do not require formal certificate payloads."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000c"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_MATHEMATICAL_SOLVERS_AND_EXACT_VERIFICATION_001"
+      ],
+      "failure_code": "EXACTNESS_WITHOUT_DUAL_WITNESS_CERTIFICATE",
+      "name": "exactness-without-dual-witness-candidate",
+      "proposed_invariant": "Mathematical papers claiming exactness, coboundary vanishing, or zero curvature must provide both primal and dual cochain certificates backed by deterministic solver receipts rather than analytic assertion.",
+      "protected_fields": [
+        "dual_certificate",
+        "primal_certificate",
+        "solver_receipt"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:d702dfee2c9582d9da40a773a3b454bf5dd8c826c3c6145b53dbb49315d4432d",
+      "context_keys": [
+        "paper-review|filesystem-portability|maxpath-audit",
+        "omega-papers|deposit-cleanliness|directory-fences"
+      ],
+      "counterexamples": [
+        "External test runners operating in deep temporary directories during sandbox execution before deposit packaging."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000d"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_RESEARCH_PAPER_AND_MONOGRAPH_PACKAGING_001"
+      ],
+      "failure_code": "DEPOSIT_MAXPATH_OVERFLOW_AND_DIR_POLLUTION",
+      "name": "deposit-path-pollution-candidate",
+      "proposed_invariant": "Deposit package structures must strictly adhere to Windows MAX_PATH limits (< 250 characters) and must not contain transient scratch directories (evidence/, tmp/, __pycache__) or unindexed build outputs.",
+      "protected_fields": [
+        "clean_directories",
+        "relative_path_lengths",
+        "tar_structure"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:bc68636b571106e5d2cd04857da38f21d85c5b9805d7cbb59517ae10247ffb6c",
+      "context_keys": [
+        "paper-review|release-reproducibility|deposit-audit",
+        "omega-papers|packaging-verification|script-integrity"
+      ],
+      "counterexamples": [
+        "Development working drafts prior to release packaging tag are not required to contain standalone archive verifiers."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000a"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_RESEARCH_PAPER_AND_MONOGRAPH_PACKAGING_001"
+      ],
+      "failure_code": "UNVERIFIED_RELEASE_SCRIPT",
+      "name": "unverified-release-script-candidate",
+      "proposed_invariant": "Paper deposit releases must provide self-contained, executable rebuild and verification scripts (tools/rebuild_release.py or verify_deposit.py) matching SHA-256 payload manifests; releases lacking hermetic verification scripts cannot be certified.",
+      "protected_fields": [
+        "manifests",
+        "payload_hashes",
+        "rebuild_release_py"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:613d52516a11cadcf47634ee331c610f7417cbf460957a16eb0c7e7f831051da",
+      "context_keys": [
+        "paper-review|latex-compilation|pdf-consistency",
+        "omega-papers|artifact-parity|document-rendering"
+      ],
+      "counterexamples": [
+        "Headless continuous integration environments without installed XeLaTeX toolchains may run TeX static syntax audits independently."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000b"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_RESEARCH_PAPER_TEMPLATE_AND_HARMONIZATION_001"
+      ],
+      "failure_code": "TEX_PDF_HASH_DESYNCHRONIZATION",
+      "name": "tex-pdf-desync-candidate",
+      "proposed_invariant": "LaTeX source modifications must not be committed without compiling and verifying matching PDF artifacts, page geometry, title rendering, and table-of-contents alignment.",
+      "protected_fields": [
+        "compiled_pdf",
+        "table_of_contents",
+        "tex_source"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:a2066aa5a29f8ad6debb62315fd5cd60100f6e952798418e374cc4138b623e5d",
+      "context_keys": [
+        "paper-review|mathematical-rigor|dual-witness-audit",
+        "omega-math|exact-solvers|cochain-certificates"
+      ],
+      "counterexamples": [
+        "Informal motivation or expository introductory sections describing intuition do not require formal certificate payloads."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000c"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_MATHEMATICAL_SOLVERS_AND_EXACT_VERIFICATION_001"
+      ],
+      "failure_code": "EXACTNESS_WITHOUT_DUAL_WITNESS_CERTIFICATE",
+      "name": "exactness-without-dual-witness-candidate",
+      "proposed_invariant": "Mathematical papers claiming exactness, coboundary vanishing, or zero curvature must provide both primal and dual cochain certificates backed by deterministic solver receipts rather than analytic assertion.",
+      "protected_fields": [
+        "dual_certificate",
+        "primal_certificate",
+        "solver_receipt"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:d702dfee2c9582d9da40a773a3b454bf5dd8c826c3c6145b53dbb49315d4432d",
+      "context_keys": [
+        "paper-review|filesystem-portability|maxpath-audit",
+        "omega-papers|deposit-cleanliness|directory-fences"
+      ],
+      "counterexamples": [
+        "External test runners operating in deep temporary directories during sandbox execution before deposit packaging."
+      ],
+      "episode_ids": [
+        "sha256:000000000000000000000000000000000000000000000000000000000000000d"
+      ],
+      "evidence_refs": [
+        "evidence:omega_paper_reviews_digest.jsonl",
+        "rule:RULE_RESEARCH_PAPER_AND_MONOGRAPH_PACKAGING_001"
+      ],
+      "failure_code": "DEPOSIT_MAXPATH_OVERFLOW_AND_DIR_POLLUTION",
+      "name": "deposit-path-pollution-candidate",
+      "proposed_invariant": "Deposit package structures must strictly adhere to Windows MAX_PATH limits (< 250 characters) and must not contain transient scratch directories (evidence/, tmp/, __pycache__) or unindexed build outputs.",
+      "protected_fields": [
+        "clean_directories",
+        "relative_path_lengths",
+        "tar_structure"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:0a7b45f1e3d928bc5c64219a1288b39417852109405dce8bca9170560249219b",
+      "context_keys": [
+        "omc-dag-verification|limit-honesty|evidence-audit",
+        "paper-claim-scope|thermodynamic-limit|finite-realization"
+      ],
+      "counterexamples": [
+        "A formal derivation may assert thermodynamic or continuum limits when accompanied by a finite difference realization proof and discrete residual envelope."
+      ],
+      "episode_ids": [
+        "sha256:0000000000000000000000000000000000000000000000000000000000000009"
+      ],
+      "evidence_refs": [
+        "evidence:omc_report_000_witnessed_difference_programme.jsonl"
+      ],
+      "failure_code": "LIMIT_HONESTY_VIOLATION",
+      "name": "truth-unhedged-limit-assertion",
+      "proposed_invariant": "No paper, monograph, or derivation shall assert an unrestricted thermodynamic or continuum limit without a companion finite difference envelope and explicit non-zero defect residual record.",
+      "protected_fields": [
+        "claim_mode",
+        "limit_honesty",
+        "residual_envelope"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:984ad26435d06a84b9fc8dcca7cfae9cc1fd5b5c03ebff69fb8eba0327f94ea2",
+      "context_keys": [
+        "woland-evidence-custody|hermetic-task-scope|evidence-audit",
+        "oewas009|cross-task-borrowing|anti-vacuity"
+      ],
+      "counterexamples": [
+        "A meta-evaluation runner aggregating summaries across multiple independent tasks after each task has completed its own hermetic execution."
+      ],
+      "episode_ids": [
+        "sha256:0a2860730c116407b533c078e14a04efecea134e4d13d440a1f13934a6ef8404"
+      ],
+      "evidence_refs": [
+        "evidence:_ic/darpa/woland/runs/oewas009_20261011_cross_engine_ingress/novella.md",
+        "rule:RL_ENG_ORACLE_001"
+      ],
+      "failure_code": "TASK_EVIDENCE_BORROWING_LEAK",
+      "name": "task-evidence-borrowing-leak-candidate",
+      "proposed_invariant": "A task or evaluation loop must never borrow, inherit, or reuse test digests or pass receipts from a prior or foreign task; every candidate must execute the verification suite against its own frozen candidate bytes within an isolated task context.",
+      "protected_fields": [
+        "candidate_digest",
+        "task_id",
+        "verification_receipt"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:d116639c0835f5cad50e07de9bd83958bbbb5aa5ee266b07c5b373552292767c",
+      "context_keys": [
+        "woland-workflow-parser|input-schema-validation|typed-refusal",
+        "step-substitution|mixed-list-filtering|schema-honesty"
+      ],
+      "counterexamples": [
+        "A lenient interactive REPL offering explicit user-confirmed auto-complete or migration suggestions before dispatch."
+      ],
+      "episode_ids": [
+        "sha256:e326660dfa41b2d03b3845f02a115c074366d4cc28cb83a28bba85980fe7d907"
+      ],
+      "evidence_refs": [
+        "evidence:_ic/darpa/woland/runs/woland_epic_implementation_20261010_launch/novella.md#Scene2",
+        "rule:RL_ENG_ORACLE_001"
+      ],
+      "failure_code": "SILENT_INPUT_SCHEMA_COERCION",
+      "name": "silent-input-schema-coercion-candidate",
+      "proposed_invariant": "Parsers and boundary ingress validators must reject malformed input structures with an immediate typed refusal, never coercing bare scalars into nullary operations or silently dropping non-matching elements from mixed collections.",
+      "protected_fields": [
+        "input_schema",
+        "refusal_record",
+        "step_validation"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:d2c359e7ba9d22e401d5acd928345899f0e0c4cc5d22e96b0928bdaa48ec08bf",
+      "context_keys": [
+        "lean4-mechanization|axiom-purging|kernel-honesty",
+        "mub6-verification|sporadic-literature|constructive-discharge"
+      ],
+      "counterexamples": [
+        "Declaring foundational mathematical axioms strictly within the admitted foundational axiom set (propext, Classical.choice, Quot.sound)."
+      ],
+      "episode_ids": [
+        "sha256:2dc95bf41fa318c3c73d7673ef5b772e555e589882666a2bcc60a94a896c707b"
+      ],
+      "evidence_refs": [
+        "evidence:_ic/darpa/woland/runs/task_woland_mub6_mission2_axiom_purge_20261009/novella.md#ActVIII",
+        "rule:RULE_LEAN4_AXIOM_AUDIT_001"
+      ],
+      "failure_code": "SMUGGLED_AXIOM_DECLARATION",
+      "name": "smuggled-axiom-declaration-candidate",
+      "proposed_invariant": "Lean 4 mechanization packages must never introduce synthetic custom axiom declarations to bypass unproved lemmas; all theorems must discharge constructively to standard foundational axioms and the Lean 4 proof kernel.",
+      "protected_fields": [
+        "axiom_allowlist",
+        "lean4_environment",
+        "proof_term"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    },
+    {
+      "activation_kind": "human_review_required",
+      "authority_effect": "None",
+      "candidate_id": "sha256:f9e4c57b043b2b770f25286492f1270b107e814bf5207f63e7e95326332f7efb",
+      "context_keys": [
+        "woland-dialectic-critique|value-object-spec|interface-completeness",
+        "python-future-annotations|forward-reference|name-resolution"
+      ],
+      "counterexamples": [
+        "Abstract base classes or protocol classes that explicitly define abstract method stubs without implementation."
+      ],
+      "episode_ids": [
+        "sha256:0f4175189ef79a893a84a3046f28ff4fa57ccbf8940dd41d464c2253d4cf5c6c"
+      ],
+      "evidence_refs": [
+        "evidence:_ic/darpa/woland/runs/critique_rational_1791553907/novella.md#ActV",
+        "rule:RL_ENG_ORACLE_001"
+      ],
+      "failure_code": "INCOMPLETE_INTERFACE_FORWARD_REF_DEFECT",
+      "name": "incomplete-interface-forward-ref-defect-candidate",
+      "proposed_invariant": "Candidate patches implementing value objects or domain interfaces must supply all methods required by the specification and must include future annotation imports for recursive or self-referential class type annotations before submitting to the review oracle.",
+      "protected_fields": [
+        "interface_methods",
+        "future_annotations",
+        "oracle_smoke_test"
+      ],
+      "schema_version": "omega.antiskill.candidate.v1",
+      "status": "PROPOSED"
+    }
+  ],
+  "schema_version": "omega.antiskill.candidate-set.v1"
+}

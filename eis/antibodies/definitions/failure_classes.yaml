@@ -1,0 +1,93 @@
+# Mechanical Failure Classes and Routing Dispositions
+#
+# Declares the twelve failure classes identified across trace corpora,
+# their default scheduler dispositions, and native vs host boundary tags.
+#
+# AuthorityEffect: None.
+
+schema_version: "omega.immune.definitions.failure-classes.v1"
+authority_effect: "None"
+
+dispositions_hierarchy:
+  FINDING:
+    severity_rank: 0
+    description: "Diagnostic match noted; does not halt or divert workflow without secondary confirmation."
+  HOLD:
+    severity_rank: 1
+    description: "Workflow held pending verification of missing proofs, receipts, or context."
+  REFUSE:
+    severity_rank: 2
+    description: "Blocking refusal routing candidate out of circulation due to unbacked authority or boundary breach."
+
+failure_classes:
+  SELF_CERTIFICATION:
+    code: "SELF_CERTIFICATION"
+    default_disposition: "REFUSE"
+    is_native: true
+    description: "Candidate model asserts verified, certified, authorized status or writes host-only fields."
+
+  FAKE_RECEIPT:
+    code: "FAKE_RECEIPT"
+    default_disposition: "REFUSE"
+    is_native: true
+    description: "Candidate provides a digest-shaped value for a host-computed receipt or signature."
+
+  CONCLUSION_PRELOAD:
+    code: "CONCLUSION_PRELOAD"
+    default_disposition: "FINDING"
+    is_native: true
+    description: "Prompt or setup fixes required conclusion prior to derivation or evaluation."
+
+  SCHEMA_SEMANTIC_LAUNDERING:
+    code: "SCHEMA_SEMANTIC_LAUNDERING"
+    default_disposition: "HOLD"
+    is_native: true
+    description: "Well-formed deltas lack host replay receipt or semantic verification certification."
+
+  THEOREM_NAME_LAUNDERING:
+    code: "THEOREM_NAME_LAUNDERING"
+    default_disposition: "FINDING"
+    is_native: true
+    description: "Theorem invoked by name without stated applicability conditions or premises."
+
+  OPTIMALITY_HALLUCINATION:
+    code: "OPTIMALITY_HALLUCINATION"
+    default_disposition: "FINDING"
+    is_native: true
+    description: "Superlative optimality claim without explicit candidate class, objective, and lower bound."
+
+  COMPLEXITY_HALLUCINATION:
+    code: "COMPLEXITY_HALLUCINATION"
+    default_disposition: "FINDING"
+    is_native: true
+    description: "Asymptotic complexity claim without algorithmic description, cost model, or measurements."
+
+  BRANCH_DROP_EXHAUSTION:
+    code: "BRANCH_DROP_EXHAUSTION"
+    default_disposition: "FINDING"
+    is_native: true
+    description: "Search or proof exhaustion asserted while unexplored branches remain in context."
+
+  PERSONA_AUTHORITY_LEAK:
+    code: "PERSONA_AUTHORITY_LEAK"
+    default_disposition: "REFUSE"
+    is_native: false
+    description: "Persona claiming administrative or sovereign authority beyond declared grants."
+
+  PRIVATE_COT_DEPENDENCY:
+    code: "PRIVATE_COT_DEPENDENCY"
+    default_disposition: "HOLD"
+    is_native: true
+    description: "Conclusion leans on hidden reasoning steps that the public trace cannot substantiate."
+
+  VERSION_DUPLICATION:
+    code: "VERSION_DUPLICATION"
+    default_disposition: "FINDING"
+    is_native: true
+    description: "Payload is semantically or byte-identical to a previously recorded candidate."
+
+  DETECT_REPAIR_COUPLING:
+    code: "DETECT_REPAIR_COUPLING"
+    default_disposition: "FINDING"
+    is_native: true
+    description: "Single artifact bundles both detector finding and proposed repair; decoupling required."

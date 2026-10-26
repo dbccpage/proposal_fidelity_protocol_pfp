@@ -1,0 +1,101 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.ddc.hodge_canonical
+  name: Hodge Canonical Normal Form
+  short_name: HCNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  status: active
+  verification_status: executable
+  family: shape
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - 1_cochain_defect
+    - discrete_hodge_decomposition
+    - coboundary_potential
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: unseparated cochain defects where exact coboundary tension and irreducible harmonic cycle circulation are entangled without orthogonal decomposition
+  preserves_invariant: orthogonal direct sum splitting C¹(K; ℚ) = im(d₀) ⊕ im(d₁ᵀ) ⊕ ℋ¹ with exact rational coordinates and zero defect curl check
+  protected_skeleton:
+    - carrier_2_complex
+    - coboundary_operators_d0_d1
+    - exact_component_x_E
+    - harmonic_component_x_R
+    - potential_gauge_witness_phi
+  erased_structure:
+    - gauge_choice_offset
+    - intermediate_tree_search_order
+  non_claims:
+    - does not claim non-exact defects can be repaired by gauge integration
+    - does not claim exact potential is unique without designating a gauge root per connected component
+    - does not imply operational authority; authority_effect is unconditionally None
+definition:
+  source: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/normal_forms/README.md
+  section: '2.0'
+  formal_statement: >
+    On a finite 2-complex with rational coboundaries d₀ and d₁, Hodge Canonical Normal Form (HCNF)
+    decomposes any 1-cochain defect x into unique orthogonal components x = x_E + x_C + x_R.
+    Exact repair rune E is lawful if and only if curl d₁ x == 0 and x_E lies strictly in im(d₀).
+    Harmonic residuals x_R cannot be eliminated by local node potentials.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: direct_sum_decomposition_not_relational_project_join
+    anomaly_exclusion: non-curl-free cochains submitted to exact repair, or harmonic residuals treated as exact coboundaries
+    lossless_join:
+      status: direct_sum_reconstruction
+      statement: x = x_E + x_C + x_R is uniquely and losslessly reconstructed from orthogonal Hodge projectors over ℚ
+    dependency_preservation:
+      status: coboundary_chain_preserved
+      statement: boundary condition d₁ ∘ d₀ = 0 is verified locally on 2-cells and edges without global joins
+    syntactic_decision:
+      status: exact_rational_decidable
+      statement: membership in im(d₀) is decidable by BFS potential integration and checking d₁x == 0
+declarations_required:
+  - carrier_complex
+  - cochain_vector
+  - exact_potential_witness
+  - cycle_coordinates
+evidence_required: []
+validation_criteria:
+  - nilpotence d₁ ∘ d₀ = 0 holds identically over the complex
+  - exact component x_E equals d₀(phi) for declared rational potential phi
+  - exact, coexact, and harmonic components are pairwise orthogonal
+terminal_routes:
+  - AdmitHodgeDecomposition
+  - ExecuteExactRepair
+  - RejectNonCurlFree
+  - RejectNonOrthogonal
+terminal_route_map:
+  AdmitHodgeDecomposition: Preserve
+  ExecuteExactRepair: Repair
+  RejectNonCurlFree: Refuse
+  RejectNonOrthogonal: Reject
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: true
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+  - symptom: d₁ x != 0 during attempted exact repair
+    diagnosis: cochain is not curl-free; exact repair impossible, violates Law 7
+    terminal: RejectNonCurlFree
+  - symptom: sum of components does not equal input cochain x
+    diagnosis: projection error or non-orthogonal basis
+    terminal: RejectNonOrthogonal
+examples:
+  - ref: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+    section: '2.2'
+references:
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/exact_repair_operator.contract.yaml
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/quotient_space.contract.yaml

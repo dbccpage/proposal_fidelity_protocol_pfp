@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simplex Normal Forms Demo</title>
+  <!-- Google Fonts Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: hsl(222, 47%, 7%);
+      --card-bg: hsla(222, 47%, 11%, 0.7);
+      --border-color: hsla(217, 30%, 18%, 0.6);
+      --text-main: hsl(210, 40%, 98%);
+      --text-muted: hsl(215, 20%, 65%);
+      --accent-blue: hsl(217, 91%, 60%);
+      --accent-purple: hsl(270, 91%, 65%);
+      --accent-green: hsl(142, 70%, 45%);
+      --accent-red: hsl(0, 72%, 51%);
+      --glow-blue: hsla(217, 91%, 60%, 0.15);
+      --glow-purple: hsla(270, 91%, 65%, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(at 10% 10%, hsla(217, 91%, 60%, 0.08) 0px, transparent 50%),
+        radial-gradient(at 90% 90%, hsla(270, 91%, 65%, 0.08) 0px, transparent 50%);
+    }
+
+    /* Top Center Title */
+    header {
+      text-align: center;
+      padding: 3rem 1.5rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--accent-blue) 70%, var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* Main Container Split Layout */
+    .container {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 2rem;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem;
+      flex: 1;
+    }
+
+    /* Left Sidebar: Demo Selectors */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .demo-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .demo-card:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px var(--glow-blue);
+      transform: translateY(-2px);
+    }
+
+    .demo-card.active {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 20px var(--glow-purple);
+      background: hsla(222, 47%, 14%, 0.85);
+    }
+
+    .demo-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .demo-title span {
+      background: var(--accent-blue);
+      color: var(--bg-color);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .demo-card.active .demo-title span {
+      background: var(--accent-purple);
+    }
+
+    .demo-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Sub-cases selection bar inside sidebar */
+    .case-selector {
+      margin-top: 1rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+    }
+
+    .demo-card.active .case-selector {
+      display: flex;
+    }
+
+    .case-btn {
+      background: hsla(222, 47%, 8%, 0.6);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .case-btn:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-main);
+    }
+
+    .case-btn.active {
+      background: var(--accent-blue);
+      color: var(--bg-color);
+      border-color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    /* Right Panel: Before & After Simulation Windows */
+    .preview-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    .panel-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .terminal-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .status-repair { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .status-preserve { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+    .status-invalidate { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+    .status-unsupported { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); border: 1px solid var(--accent-purple); }
+
+    .split-windows {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+    }
+
+    .window-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .window-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .window-label svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .code-window {
+      background: hsla(222, 47%, 4%, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.25rem;
+      flex: 1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      overflow: auto;
+      white-space: pre-wrap;
+      max-height: 550px;
+    }
+
+    .json-key { color: hsl(200, 100%, 75%); }
+    .json-string { color: hsl(95, 80%, 70%); }
+    .json-number { color: hsl(35, 100%, 70%); }
+    .json-boolean { color: hsl(270, 100%, 80%); }
+    .json-null { color: hsl(0, 100%, 80%); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: auto;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .split-windows {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Simplex Normal Forms Demo</h1>
+    <div class="subtitle">Observe boundary-certified database cochain evaluations and freshness outcomes in real time.</div>
+  </header>
+
+  <main class="container">
+    <!-- Left Column: Navigation / Buttons Stack -->
+    <div class="sidebar">
+      <!-- Demo 1 Button Card -->
+      <div id="card-bqnf" class="demo-card active" onclick="switchDemo('bqnf')">
+        <div class="demo-title">
+          <span>Demo 01</span> BQNF Orders View
+        </div>
+        <div class="demo-desc">
+          Evaluates Change Data Capture (CDC) events against BQNF contracts to compute incremental aggregate repairs.
+        </div>
+        <div id="selector-bqnf" class="case-selector" onclick="event.stopPropagation()">
+          <!-- Case buttons injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Demo 2 Button Card -->
+      <div id="card-cert" class="demo-card" onclick="switchDemo('cert')">
+        <div class="demo-title">
+          <span>Demo 02</span> Authority Verification
+        </div>
+        <div class="demo-desc">
+          Verifies boundary morphism certificates, showing that certified database states do not imply authorization.
+        </div>
+        <div id="selector-cert" class="case-selector" onclick="event.stopPropagation()">
+          <!-- Case buttons injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Demo 3 Button Card -->
+      <div id="card-fresh" class="demo-card" onclick="switchDemo('fresh')">
+        <div class="demo-title">
+          <span>Demo 03</span> Observer Freshness
+        </div>
+        <div class="demo-desc">
+          Evaluates whether read actions comply with observer-relative replica lag budgets and data scopes.
+        </div>
+        <div id="selector-fresh" class="case-selector" onclick="event.stopPropagation()">
+          <!-- Case buttons injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Split Display Window -->
+    <div class="preview-panel">
+      <div class="panel-header">
+        <div class="panel-title" id="panel-headline">Case Simulation</div>
+        <div id="terminal-badge" class="terminal-status status-preserve">Preserve</div>
+      </div>
+
+      <div class="split-windows">
+        <!-- Before: Input Packet -->
+        <div class="window-box">
+          <div class="window-label">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Input Payload (Before)
+          </div>
+          <div id="window-before" class="code-window"></div>
+        </div>
+
+        <!-- After: Output Certificate -->
+        <div class="window-box">
+          <div class="window-label">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            Result Certificate (After)
+          </div>
+          <div id="window-after" class="code-window"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Simplex-009 boundary certification specification &copy; 2026.
+  </footer>
+
+  <!-- Mock Database & Evaluators -->
+  <script>
+    // ----------------------------------------------------
+    // Test Data Sources
+    // ----------------------------------------------------
+    const bqnfCases = [
+      {
+        "name": "Case 1: Status Change (pending -> paid)",
+        "view": "paid_revenue_by_customer",
+        "boundary": {
+          "relations": ["Orders"],
+          "attributes": ["customer_id", "amount", "status"],
+          "predicates": ["status = paid"],
+          "groups": ["customer_id"],
+          "aggregates": ["SUM(amount)"]
+        },
+        "event": {
+          "op": "UPDATE",
+          "relation": "Orders",
+          "old": { "order_id": 42, "customer_id": 7, "amount": 100, "status": "pending" },
+          "new": { "order_id": 42, "customer_id": 7, "amount": 120, "status": "paid" }
+        }
+      },
+      {
+        "name": "Case 2: Amount Shift (paid -> paid)",
+        "view": "paid_revenue_by_customer",
+        "boundary": {
+          "relations": ["Orders"],
+          "attributes": ["customer_id", "amount", "status"],
+          "predicates": ["status = paid"],
+          "groups": ["customer_id"],
+          "aggregates": ["SUM(amount)"]
+        },
+        "event": {
+          "op": "UPDATE",
+          "relation": "Orders",
+          "old": { "order_id": 43, "customer_id": 7, "amount": 100, "status": "paid" },
+          "new": { "order_id": 43, "customer_id": 7, "amount": 120, "status": "paid" }
+        }
+      },
+      {
+        "name": "Case 3: Eviction (paid -> pending)",
+        "view": "paid_revenue_by_customer",
+        "boundary": {
+          "relations": ["Orders"],
+          "attributes": ["customer_id", "amount", "status"],
+          "predicates": ["status = paid"],
+          "groups": ["customer_id"],
+          "aggregates": ["SUM(amount)"]
+        },
+        "event": {
+          "op": "UPDATE",
+          "relation": "Orders",
+          "old": { "order_id": 43, "customer_id": 7, "amount": 100, "status": "paid" },
+          "new": { "order_id": 43, "customer_id": 7, "amount": 100, "status": "pending" }
+        }
+      },
+      {
+        "name": "Case 4: Out-of-Scope Column (updated_at only)",
+        "view": "paid_revenue_by_customer",
+        "boundary": {
+          "relations": ["Orders"],
+          "attributes": ["customer_id", "amount", "status"],
+          "predicates": ["status = paid"],
+          "groups": ["customer_id"],
+          "aggregates": ["SUM(amount)"]
+        },
+        "event": {
+          "op": "UPDATE",
+          "relation": "Orders",
+          "old": { "order_id": 43, "customer_id": 7, "amount": 100, "status": "paid", "updated_at": "2026-05-19T09:00:00Z" },
+          "new": { "order_id": 43, "customer_id": 7, "amount": 100, "status": "paid", "updated_at": "2026-05-19T09:05:00Z" }
+        }
+      },
+      {
+        "name": "Case 5: Missing Evidence",
+        "view": "paid_revenue_by_customer",
+        "boundary": {
+          "relations": ["Orders"],
+          "attributes": ["customer_id", "amount", "status"],
+          "predicates": ["status = paid"],
+          "groups": ["customer_id"],
+          "aggregates": ["SUM(amount)"]
+        },
+        "event": {
+          "op": "UPDATE",
+          "relation": "Orders",
+          "old": { "order_id": 43, "customer_id": 7 },
+          "new": { "order_id": 43, "customer_id": 7 }
+        }
+      },
+      {
+        "name": "Case 6: Unsupported (MAX aggregate bounds)",
+        "view": "max_revenue_by_customer",
+        "boundary": {
+          "relations": ["Orders"],
+          "attributes": ["customer_id", "amount", "status"],
+          "predicates": ["status = paid"],
+          "groups": ["customer_id"],
+          "aggregates": ["MAX(amount)"]
+        },
+        "event": {
+          "op": "UPDATE",
+          "relation": "Orders",
+          "old": { "order_id": 43, "customer_id": 7, "amount": 100, "status": "paid" },
+          "new": { "order_id": 43, "customer_id": 7, "amount": 80, "status": "paid" }
+        }
+      }
+    ];
+
+    const certCases = [
+      {
+        "name": "Case 1: Pending Certificate Status",
+        "certificate_id": "cert_001",
+        "source_regime": "sql_query",
+        "target_regime": "cache_shape",
+        "morphism_kind": "project",
+        "loss_ledger_ref": "ledger_001",
+        "descent_witness_ref": "chi_001",
+        "verifier_outcome": "pending"
+      },
+      {
+        "name": "Case 2: Missing Verifier Authority",
+        "certificate_id": "cert_002",
+        "source_regime": "sql_query",
+        "target_regime": "cache_shape",
+        "morphism_kind": "project",
+        "loss_ledger_ref": "ledger_002",
+        "descent_witness_ref": "chi_002",
+        "verifier_outcome": null
+      },
+      {
+        "name": "Case 3: Active Verifier Approved",
+        "certificate_id": "cert_003",
+        "source_regime": "sql_query",
+        "target_regime": "cache_shape",
+        "morphism_kind": "project",
+        "loss_ledger_ref": "ledger_003",
+        "descent_witness_ref": "chi_003",
+        "verifier_outcome": "verified"
+      }
+    ];
+
+    const freshCases = [
+      {
+        "name": "Scenario A: Active Read (within Dashboard SLA)",
+        "packet": { "value": 42, "read_at": "2026-05-19T12:00:00Z", "replica_lag_seconds": 7 },
+        "observers": [
+          { "observer_id": "dashboard", "max_lag_seconds": 10 },
+          { "observer_id": "trading_engine", "max_lag_seconds": 2 }
+        ]
+      },
+      {
+        "name": "Scenario B: Missing Lag Evidence",
+        "packet": { "value": 99, "read_at": "2026-05-19T12:00:00Z", "replica_lag_seconds": null },
+        "observers": [
+          { "observer_id": "dashboard", "max_lag_seconds": 10 }
+        ]
+      },
+      {
+        "name": "Scenario C: Out-of-Scope Authorization",
+        "packet": { "value": 150, "read_at": "2026-05-19T12:00:00Z", "replica_lag_seconds": 1, "packet_scope": "restricted" },
+        "observers": [
+          { "observer_id": "external_analyst", "max_lag_seconds": 30, "authorized_scopes": ["public_only"] }
+        ]
+      }
+    ];
+
+    // ----------------------------------------------------
+    // Business Logic Engine (mirrors Python logic)
+    // ----------------------------------------------------
+    function runBqnfLogic(caseData) {
+      const boundary = caseData.boundary || {};
+      const event = caseData.event || {};
+      const reqAttrs = boundary.attributes || [];
+      const oldVal = event.old || {};
+      const newVal = event.new || {};
+
+      // Check evidence completeness
+      const missingOld = reqAttrs.filter(a => !(a in oldVal));
+      const missingNew = reqAttrs.filter(a => !(a in newVal));
+
+      if (missingOld.length > 0 || missingNew.length > 0) {
+        return {
+          "normal_form": "BQNF",
+          "decision": "Invalidate",
+          "terminal_route": "Invalidate",
+          "obstruction_class": "[NonZero - MissingEvidence]",
+          "repair": null,
+          "evidence_sufficient": false,
+          "certified": false,
+          "authorized": false,
+          "reason": `Missing required columns. Old: [${missingOld}], New: [${missingNew}]`
+        };
+      }
+
+      // Check modified fields
+      let changed = false;
+      for (let a of reqAttrs) {
+        if (oldVal[a] !== newVal[a]) {
+          changed = true;
+          break;
+        }
+      }
+
+      if (!changed) {
+        return {
+          "normal_form": "BQNF",
+          "decision": "Preserve",
+          "terminal_route": "Preserve",
+          "obstruction_class": "[0]",
+          "repair": null,
+          "evidence_sufficient": true,
+          "certified": true,
+          "authorized": false,
+          "reason": "No tracked attributes were updated."
+        };
+      }
+
+      // Check aggregate capability
+      const aggs = boundary.aggregates || [];
+      const unsupported = aggs.filter(agg => !agg.startsWith("SUM"));
+      if (unsupported.length > 0) {
+        return {
+          "normal_form": "BQNF",
+          "decision": "Unsupported",
+          "terminal_route": "Unsupported",
+          "obstruction_class": "[NonZero - LimitOfSubstrate]",
+          "repair": null,
+          "evidence_sufficient": true,
+          "certified": false,
+          "authorized": false,
+          "reason": `Unsupported aggregate: ${unsupported.join(", ")}. Requires auxiliary state.`
+        };
+      }
+
+      // Calculate BQNF repairs
+      const wasPaid = oldVal.status === "paid";
+      const isNowPaid = newVal.status === "paid";
+      const oldAmt = oldVal.amount || 0;
+      const newAmt = newVal.amount || 0;
+      const oldCustomer = oldVal.customer_id;\n      const newCustomer = newVal.customer_id;\n\n      if (oldCustomer !== newCustomer && (wasPaid || isNowPaid)) {\n        return {\n          \"normal_form\": \"BQNF\",\n          \"decision\": \"Unsupported\",\n          \"terminal_route\": \"Unsupported\",\n          \"obstruction_class\": \"[NonZero - GroupMigration]\",\n          \"repair\": null,\n          \"evidence_sufficient\": true,\n          \"certified\": false,\n          \"authorized\": false,\n          \"reason\": \"Group migration (customer_id change) is not supported as a single repair.\"\n        };\n      }\n\n      const customer = isNowPaid ? newCustomer : oldCustomer;
+
+      let delta = 0;
+      let decision = "Repair";
+
+      if (wasPaid && isNowPaid) {
+        delta = newAmt - oldAmt;
+      } else if (!wasPaid && isNowPaid) {
+        delta = newAmt;
+      } else if (wasPaid && !isNowPaid) {
+        delta = -oldAmt;
+      } else {
+        decision = "Preserve";
+        delta = 0;
+      }
+
+      return {
+        "normal_form": "BQNF",
+        "decision": decision,
+        "terminal_route": decision,
+        "obstruction_class": "[0]",
+        "repair": decision === "Repair" ? { "customer_id": customer, "delta_revenue": delta } : null,
+        "evidence_sufficient": true,
+        "certified": true,
+        "authorized": false
+      };
+    }
+
+    function runCertLogic(caseData) {
+      const certId = caseData.certificate_id;
+      const outcome = caseData.verifier_outcome;
+
+      if (outcome === "verified") {
+        return {
+          "certificate_id": certId,
+          "decision": "Authorized",
+          "terminal_route": "Accept",
+          "reason": "Morphism certificate validated by active verifier policy",
+          "certified": true,
+          "authorized": true
+        };
+      } else if (outcome === "pending") {
+        return {
+          "certificate_id": certId,
+          "decision": "NotAuthorized",
+          "terminal_route": "AuthorityLaundering",
+          "reason": "Certificate exists but verifier has not completed verification",
+          "certified": true,
+          "authorized": false
+        };
+      } else {
+        return {
+          "certificate_id": certId,
+          "decision": "NotAuthorized",
+          "terminal_route": "MissingVerifier",
+          "reason": "No policy verifier is associated with this certificate schema",
+          "certified": false,
+          "authorized": false
+        };
+      }
+    }
+
+    function runFreshLogic(caseData) {
+      const packet = caseData.packet || {};
+      const observers = caseData.observers || [];
+      const lag = packet.replica_lag_seconds;
+      const scope = packet.packet_scope || "public";
+
+      return observers.map(obs => {
+        const id = obs.observer_id;
+        const maxLag = obs.max_lag_seconds || 0;
+        const authScopes = obs.authorized_scopes || ["public"];
+
+        // Check scope
+        if (!authScopes.includes(scope)) {
+          return {
+            "observer_id": id,
+            "terminal_route": "Refuse",
+            "authorized": false,
+            "reason": `Observer not authorized for scope: '${scope}'`
+          };
+        }
+
+        // Check lag evidence
+        if (lag === null || lag === undefined) {
+          return {
+            "observer_id": id,
+            "terminal_route": "ConservativeInvalidate",
+            "authorized": false,
+            "reason": "Replica lag is missing or null; unable to verify SLA budget"
+          };
+        }
+
+        if (lag <= maxLag) {
+          return {
+            "observer_id": id,
+            "terminal_route": "AuthorizedFresh",
+            "authorized": true,
+            "reason": `Replica lag (${lag}s) within the observer limit (${maxLag}s)`
+          };
+        } else {
+          return {
+            "observer_id": id,
+            "terminal_route": "RefreshRequired",
+            "authorized": false,
+            "reason": `Replica lag (${lag}s) exceeds the observer limit (${maxLag}s)`
+          };
+        }
+      });
+    }
+
+    // ----------------------------------------------------
+    // UI Interactions
+    // ----------------------------------------------------
+    let currentDemo = "bqnf";
+    let activeCases = [];
+
+    const selectors = {
+      bqnf: document.getElementById("selector-bqnf"),
+      cert: document.getElementById("selector-cert"),
+      fresh: document.getElementById("selector-fresh")
+    };
+
+    function switchDemo(demoType) {
+      currentDemo = demoType;
+      
+      // Update active cards
+      document.querySelectorAll(".demo-card").forEach(c => c.classList.remove("active"));
+      document.getElementById(`card-${demoType}`).classList.add("active");
+
+      // Load specific case list
+      loadCaseButtons(demoType);
+    }
+
+    function loadCaseButtons(demoType) {
+      // Clear all selector boxes
+      Object.values(selectors).forEach(el => el.innerHTML = "");
+
+      let cases = [];
+      if (demoType === "bqnf") cases = bqnfCases;
+      else if (demoType === "cert") cases = certCases;
+      else if (demoType === "fresh") cases = freshCases;
+
+      activeCases = cases;
+
+      const container = selectors[demoType];
+      cases.forEach((item, index) => {
+        const btn = document.createElement("button");
+        btn.className = `case-btn ${index === 0 ? 'active' : ''}`;
+        btn.textContent = item.name;
+        btn.onclick = () => selectCase(index);
+        container.appendChild(btn);
+      });
+
+      // Default load the first case
+      selectCase(0);
+    }
+
+    function selectCase(index) {
+      // Highlight active button
+      const container = selectors[currentDemo];
+      container.querySelectorAll(".case-btn").forEach((btn, idx) => {
+        if (idx === index) btn.classList.add("active");
+        else btn.classList.remove("active");
+      });
+
+      const caseData = activeCases[index];
+      document.getElementById("panel-headline").textContent = caseData.name;
+
+      // Extract raw data input (excluding case name for visualization cleanliness)
+      const inputPayload = {...caseData};
+      delete inputPayload.name;
+
+      // Run business logic engine
+      let outputCert = {};
+      let terminalRoute = "Preserve";
+
+      if (currentDemo === "bqnf") {
+        outputCert = runBqnfLogic(caseData);
+        terminalRoute = outputCert.terminal_route;
+      } else if (currentDemo === "cert") {
+        outputCert = runCertLogic(caseData);
+        terminalRoute = outputCert.terminal_route;
+      } else if (currentDemo === "fresh") {
+        outputCert = runFreshLogic(caseData);
+        // If multiple observers, show primary status
+        terminalRoute = outputCert[0].terminal_route;
+      }
+
+      // Update badge status
+      const badge = document.getElementById("terminal-badge");
+      badge.textContent = terminalRoute;
+      badge.className = "terminal-status";
+      
+      const trLower = terminalRoute.toLowerCase();
+      if (trLower.includes("repair") || trLower.includes("accept") || trLower.includes("fresh")) {
+        badge.classList.add("status-repair");
+      } else if (trLower.includes("preserve")) {
+        badge.classList.add("status-preserve");
+      } else if (trLower.includes("invalidate")) {
+        badge.classList.add("status-invalidate");
+      } else {
+        badge.classList.add("status-unsupported");
+      }
+
+      // Display code
+      document.getElementById("window-before").innerHTML = highlightJSON(inputPayload);
+      document.getElementById("window-after").innerHTML = highlightJSON(outputCert);
+    }
+
+    // Color highlight JSON keys and values
+    function highlightJSON(obj) {
+      let str = JSON.stringify(obj, null, 2);
+      str = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return str.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        let cls = 'json-number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'json-key';
+          } else {
+            cls = 'json-string';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+          cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+
+    // Initialize application
+    window.onload = () => {
+      switchDemo("bqnf");
+    };
+  </script>
+</body>
+</html>

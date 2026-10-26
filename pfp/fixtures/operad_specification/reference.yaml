@@ -1,0 +1,364 @@
+schema_version: oepfp.operad-architecture.metadata.v1
+spec_id: oepfp_v1_1rc_reference
+authority_effect: None
+validation_effect: source_bindings_and_metadata_only_no_theorem_signature_psd_confluence_or_runtime_acceptance
+artifacts:
+- artifact_id: source
+  path: omega_engine_pfp/fixtures/operad_specification/source.txt
+  sha256: 32d25cb1b3cee4c807ca5652068c3a24d9ce33c2bc486e106a7cfa1fc37a4e50
+  byte_length: 5
+  media_type: text/plain
+- artifact_id: declarations
+  path: omega_engine_pfp/fixtures/operad_specification/declaration_evidence.txt
+  sha256: 2df6db1cc17dfd28443888bea2b2dca1774eaca26cc2932e709d542e867bd2cb
+  byte_length: 150
+  media_type: text/plain
+- artifact_id: fine_matrix
+  path: omega_engine_pfp/fixtures/operad_specification/density_fine.json
+  sha256: 30f544d0ec54f8fe2e80ef899bc5ad1f24655971ddd50b33928ff8a37103f334
+  byte_length: 770
+  media_type: application/json
+- artifact_id: coarse_matrix
+  path: omega_engine_pfp/fixtures/operad_specification/density_coarse.json
+  sha256: 00b2e8b9be3173358c499428d2b9c5516e1a6227b9410e3f06e9e3db506cb6d9
+  byte_length: 242
+  media_type: application/json
+- artifact_id: dpo_owner
+  path: omega_engine_pfp/domain/rewriting/finite_dpo.py
+  sha256: f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a
+  byte_length: 10917
+  media_type: text/plain
+- artifact_id: density_owner
+  path: omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs
+  sha256: a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a
+  byte_length: 45213
+  media_type: text/plain
+- artifact_id: signature_owner
+  path: omega_engine/crates_rs/omega_epistemic_immune_system/src/authenticated.rs
+  sha256: 4df14061991d31681a0b835e96111ad66370bb224825746714a5a03c30b2d8e1
+  byte_length: 16522
+  media_type: text/plain
+sources:
+- source_id: observed_text
+  artifact_id: source
+  content_utf8: 'αβ
+
+    '
+  coordinate_profile: utf8-bytes-half-open-v1
+spans:
+- span_id: alpha
+  source_id: observed_text
+  source_sha256: 32d25cb1b3cee4c807ca5652068c3a24d9ce33c2bc486e106a7cfa1fc37a4e50
+  start_byte: 0
+  end_byte: 2
+  span_sha256: 3e32da9648c78feedcc821d56e483c126dcd270e9fe49973c528e3a88912d557
+  colour: raw_span
+- span_id: beta
+  source_id: observed_text
+  source_sha256: 32d25cb1b3cee4c807ca5652068c3a24d9ce33c2bc486e106a7cfa1fc37a4e50
+  start_byte: 2
+  end_byte: 4
+  span_sha256: 2245c1c8daf7694bc2b2fe9f156c39f4bac6c788dc32e42bccb74554af2b5d86
+  colour: raw_span
+colours:
+- colour_id: raw_span
+  payload_schema_artifact_id: declarations
+  interpretation_artifact_id: declarations
+- colour_id: equation
+  payload_schema_artifact_id: declarations
+  interpretation_artifact_id: declarations
+ideals:
+- ideal_id: known_decoy_relation
+  relation_artifact_id: declarations
+  substitution_closure:
+    obligation_id: ideal_closure
+    kind: substitution_closure
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  action: typed_null_tree
+  enforcement_status: not_executed
+operators:
+- operator_id: join_spans
+  input_colours:
+  - raw_span
+  - raw_span
+  output_colour: equation
+  polarity: constructive
+  effect_class: pure
+  work_limit: 64
+  semantics_artifact_id: declarations
+  ideal_ids:
+  - known_decoy_relation
+  equivariance:
+    obligation_id: join_equivariance
+    kind: symmetric_equivariance
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+trees:
+- tree_id: source_tree
+  nodes:
+  - kind: leaf
+    node_id: a
+    span_id: alpha
+    colour: raw_span
+  - kind: leaf
+    node_id: b
+    span_id: beta
+    colour: raw_span
+  - kind: graft
+    node_id: root
+    operator_id: join_spans
+    children:
+    - a
+    - b
+    input_permutation:
+    - 1
+    - 0
+  root: root
+  expected_output_colour: equation
+dpo_declarations:
+- declaration_id: bounded_dpo_declaration
+  owner: omega_engine_pfp.domain.rewriting.finite_dpo.apply_registered_rule
+  owner_source_artifact_id: dpo_owner
+  supported_schema: finite-attributed-directed-graph-identity-key-monic-v1
+  rule_artifact_id: declarations
+  schema_artifact_id: declarations
+  left_artifact_id: declarations
+  interface_artifact_id: declarations
+  right_artifact_id: declarations
+  host_artifact_id: declarations
+  match_artifact_id: declarations
+  obligations:
+  - obligation_id: dpo_attribute_compatibility
+    kind: attribute_compatibility
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_critical_pair_coverage
+    kind: critical_pair_coverage
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_critical_pair_joinability
+    kind: critical_pair_joinability
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_dangling
+    kind: dangling
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_identification
+    kind: identification
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_injective_match
+    kind: injective_match
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_monic_interfaces
+    kind: monic_interfaces
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_pushout
+    kind: pushout
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_pushout_complement
+    kind: pushout_complement
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: dpo_well_founded_termination
+    kind: well_founded_termination
+    subject_artifact_ids:
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  verification_status: declaration_only_no_rewrite_or_confluence_verified
+fibers:
+- fiber_id: fine_fiber
+  base_observation_artifact_id: source
+  dimension: 4
+  tensor_factors:
+  - factor_id: slow
+    dimension: 2
+  - factor_id: fast
+    dimension: 2
+  interpretation_artifact_id: declarations
+  semantic_status: finite_model_declaration_only
+- fiber_id: coarse_fiber
+  base_observation_artifact_id: source
+  dimension: 2
+  tensor_factors:
+  - factor_id: slow
+    dimension: 2
+  interpretation_artifact_id: declarations
+  semantic_status: finite_model_declaration_only
+bundles:
+- bundle_id: fine_bundle
+  base_artifact_id: source
+  cover_artifact_id: declarations
+  transition_artifact_id: declarations
+  sheaf_artifact_id: declarations
+  fiber_ids:
+  - fine_fiber
+  rank: 4
+  cocycle_obligations:
+  - obligation_id: fine_bundle_identity
+    kind: identity
+    subject_artifact_ids:
+    - source
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: fine_bundle_inverse
+    kind: inverse
+    subject_artifact_ids:
+    - source
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: fine_bundle_triple_overlap
+    kind: triple_overlap
+    subject_artifact_ids:
+    - source
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  verification_status: declared_unverified_no_bundle_sheaf_or_gluing_theorem
+- bundle_id: coarse_bundle
+  base_artifact_id: source
+  cover_artifact_id: declarations
+  transition_artifact_id: declarations
+  sheaf_artifact_id: declarations
+  fiber_ids:
+  - coarse_fiber
+  rank: 2
+  cocycle_obligations:
+  - obligation_id: coarse_bundle_identity
+    kind: identity
+    subject_artifact_ids:
+    - source
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: coarse_bundle_inverse
+    kind: inverse
+    subject_artifact_ids:
+    - source
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: coarse_bundle_triple_overlap
+    kind: triple_overlap
+    subject_artifact_ids:
+    - source
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  verification_status: declared_unverified_no_bundle_sheaf_or_gluing_theorem
+densities:
+- density_id: fine_density
+  fiber_id: fine_fiber
+  dimension: 4
+  coefficient_domain: Q(i)
+  matrix_artifact_id: fine_matrix
+  owner: omega_quantum_physics::density_matrix::ExactDensityMatrix
+  owner_source_artifact_id: density_owner
+  obligations:
+  - obligation_id: fine_density_hermiticity
+    kind: hermiticity
+    subject_artifact_ids:
+    - fine_matrix
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: fine_density_trace_one
+    kind: trace_one
+    subject_artifact_ids:
+    - fine_matrix
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: fine_density_positive_semidefinite
+    kind: positive_semidefinite
+    subject_artifact_ids:
+    - fine_matrix
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  verification_status: matrix_not_loaded_hermiticity_trace_psd_not_verified
+- density_id: coarse_density
+  fiber_id: coarse_fiber
+  dimension: 2
+  coefficient_domain: Q(i)
+  matrix_artifact_id: coarse_matrix
+  owner: omega_quantum_physics::density_matrix::ExactDensityMatrix
+  owner_source_artifact_id: density_owner
+  obligations:
+  - obligation_id: coarse_density_hermiticity
+    kind: hermiticity
+    subject_artifact_ids:
+    - coarse_matrix
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: coarse_density_trace_one
+    kind: trace_one
+    subject_artifact_ids:
+    - coarse_matrix
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  - obligation_id: coarse_density_positive_semidefinite
+    kind: positive_semidefinite
+    subject_artifact_ids:
+    - coarse_matrix
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  verification_status: matrix_not_loaded_hermiticity_trace_psd_not_verified
+rg_steps:
+- step_id: trace_fast
+  fine_density_id: fine_density
+  coarse_density_id: coarse_density
+  trace_factor_id: fast
+  operation: partial_trace_second
+  owner: omega_quantum_physics::density_matrix::ExactDensityMatrix
+  owner_source_artifact_id: density_owner
+  channel_artifact_id: declarations
+  scale_parameter: 1/2
+  channel_laws:
+    obligation_id: partial_trace_laws
+    kind: channel_laws
+    subject_artifact_ids:
+    - fine_matrix
+    - coarse_matrix
+    - declarations
+    evidence_artifact_id: declarations
+    verification_status: declared_unverified
+  wilsonian_interpretation_artifact_id: null
+  verification_status: finite_partial_trace_declared_no_rg_or_channel_theorem_verified
+receipts:
+- receipt_id: unsigned_reference
+  task_artifact_id: source
+  candidate_artifact_id: declarations
+  witness_artifact_id: declarations
+  outcome_artifact_id: declarations
+  authority_effect: None
+  acceptance_status: metadata_only_not_native_acceptance
+  kind: unsigned_benchmark
+  signature_status: not_supplied

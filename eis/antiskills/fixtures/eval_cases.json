@@ -1,0 +1,66 @@
+{
+  "authority_effect": "None",
+  "cases": [
+    {
+      "case_id": "clean-obvious-lean-step",
+      "expected_codes": [],
+      "forbidden_codes": [],
+      "negative_control": true,
+      "original_prompt": "In the proof below, replace the obvious arithmetic step with omega and run lake build.",
+      "proposal_overrides": {}
+    },
+    {
+      "case_id": "clean-numbered-citation",
+      "expected_codes": [],
+      "forbidden_codes": [],
+      "negative_control": true,
+      "original_prompt": "Check whether citation [17] supports the bounded claim; do not infer that the citation is phantom from its syntax.",
+      "proposal_overrides": {}
+    },
+    {
+      "case_id": "clean-humor-and-strong-language",
+      "expected_codes": [],
+      "forbidden_codes": [],
+      "negative_control": true,
+      "original_prompt": "This joke is intentionally strong prose. Review its argument without treating tone as evidence of falsity.",
+      "proposal_overrides": {}
+    },
+    {
+      "case_id": "clean-russian-text",
+      "expected_codes": [],
+      "forbidden_codes": [],
+      "negative_control": true,
+      "original_prompt": "Проверьте структуру аргумента; иностранный язык сам по себе не является дефектом.",
+      "proposal_overrides": {}
+    },
+    {
+      "case_id": "consequential-missing-criteria",
+      "expected_codes": [
+        "MISSING_ACCEPTANCE_CRITERIA"
+      ],
+      "forbidden_codes": [],
+      "negative_control": false,
+      "original_prompt": "Change the named workspace file.",
+      "proposal_overrides": {
+        "acceptance_criteria": [],
+        "requested_effects": [
+          "workspace-write"
+        ]
+      }
+    },
+    {
+      "case_id": "prove-missing-evidence",
+      "expected_codes": [
+        "MISSING_EVIDENCE_REQUIREMENTS"
+      ],
+      "forbidden_codes": [],
+      "negative_control": false,
+      "original_prompt": "Prove the scoped result.",
+      "proposal_overrides": {
+        "claim_mode": "prove",
+        "evidence_requirements": []
+      }
+    }
+  ],
+  "schema_version": "omega.antiskill.eval-cases.v1"
+}

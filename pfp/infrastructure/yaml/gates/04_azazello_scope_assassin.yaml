@@ -1,0 +1,31 @@
+gate_id: "PFP-04-AZAZELLO"
+name: "Azazello Scope & Resource Assassin"
+character: "Azazello"
+role: "Scope & Resource Assassin"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "A bullet through the heart of bloated complexes. Keep it small, keep it bounded.
+   Ten rounds, sixty-four vertices, one cent. Exceed it, and you are eliminated."
+objective: >
+  Enforce static complexity ceilings and resource bounds across the evaluation pipeline.
+  Prevent combinatorial explosion, runaway token generation, and infinite recursion.
+fences:
+  - "Static Cell Bounds: Vertices |V| <= 64, Edges |E| <= 128, Boundary Faces |B| <= 64."
+  - "Round Ceiling: Maximum 10 rounds per evaluation episode. Round 11 triggers hard termination."
+  - "Cost Ceiling: Maximum spend <= $0.01 per run."
+  - "Payload Size: Wire packets must not exceed 64 KB."
+input_schema:
+  round_number: "int"
+  vertex_count: "int"
+  edge_count: "int"
+  face_count: "int"
+  estimated_cost_usd: "exact decimal string; reservation is not proof of actual billed cost"
+expected_behavior: >
+  Audits complex dimensions and round metrics. If any bound is breached, halts immediately with
+  RefusalCode.COMPLEXITY_EXCEEDED or RefusalCode.RESOURCE_EXHAUSTED.
+narrowest_defensible_claim: >
+  Cell, payload, round, and spend checks bound admitted work. Cell counts alone do not
+  bound coefficient bit complexity or make combinatorial enumeration polynomial-time.
+next_test_needed: >
+  Submit complex with |V| = 65 and assert instant rejection before solver invocation.

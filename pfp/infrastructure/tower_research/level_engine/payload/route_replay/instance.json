@@ -1,0 +1,280 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the closed case called exact by its route code alone, with no potential",
+      "role": "own_negative",
+      "set": {
+        "cases": [
+          {
+            "cochain": [
+              "1/1",
+              "2/1",
+              "1/1",
+              "2/1",
+              "1/1"
+            ],
+            "route": "exact",
+            "witness": [
+              "0/1",
+              "1/1",
+              "2/1",
+              "3/1"
+            ]
+          },
+          {
+            "cochain": [
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "1/1"
+            ],
+            "route": "exact",
+            "witness": null
+          },
+          {
+            "cochain": [
+              "1/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1"
+            ],
+            "route": "open",
+            "witness": null
+          }
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_board",
+      "note": "one sign of the filled cell's rim flipped: its rim is not closed",
+      "role": "near_miss",
+      "set": {
+        "d1": [
+          [
+            "-1/1",
+            "-1/1",
+            "1/1",
+            "0/1",
+            "0/1"
+          ]
+        ]
+      },
+      "violates": "board_replayed"
+    },
+    {
+      "id": "near_unwitnessed",
+      "note": "the exact case carries no potential",
+      "role": "near_miss",
+      "set": {
+        "cases": [
+          {
+            "cochain": [
+              "1/1",
+              "2/1",
+              "1/1",
+              "2/1",
+              "1/1"
+            ],
+            "route": "exact",
+            "witness": null
+          },
+          {
+            "cochain": [
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "1/1"
+            ],
+            "route": "residual_closed",
+            "witness": [
+              "0/1",
+              "0/1",
+              "1/1",
+              "-1/1",
+              "1/1"
+            ]
+          },
+          {
+            "cochain": [
+              "1/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1"
+            ],
+            "route": "open",
+            "witness": null
+          }
+        ]
+      },
+      "violates": "exact_replayed"
+    },
+    {
+      "id": "near_exact",
+      "note": "the potential's last entry is off by one",
+      "role": "near_miss",
+      "set": {
+        "cases": [
+          {
+            "cochain": [
+              "1/1",
+              "2/1",
+              "1/1",
+              "2/1",
+              "1/1"
+            ],
+            "route": "exact",
+            "witness": [
+              "0/1",
+              "1/1",
+              "2/1",
+              "4/1"
+            ]
+          },
+          {
+            "cochain": [
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "1/1"
+            ],
+            "route": "residual_closed",
+            "witness": [
+              "0/1",
+              "0/1",
+              "1/1",
+              "-1/1",
+              "1/1"
+            ]
+          },
+          {
+            "cochain": [
+              "1/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1"
+            ],
+            "route": "open",
+            "witness": null
+          }
+        ]
+      },
+      "violates": "exact_replayed"
+    },
+    {
+      "id": "near_dual",
+      "note": "the balanced witness's last entry doubled: it no longer balances",
+      "role": "near_miss",
+      "set": {
+        "cases": [
+          {
+            "cochain": [
+              "1/1",
+              "2/1",
+              "1/1",
+              "2/1",
+              "1/1"
+            ],
+            "route": "exact",
+            "witness": [
+              "0/1",
+              "1/1",
+              "2/1",
+              "3/1"
+            ]
+          },
+          {
+            "cochain": [
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "1/1"
+            ],
+            "route": "residual_closed",
+            "witness": [
+              "0/1",
+              "0/1",
+              "1/1",
+              "-1/1",
+              "2/1"
+            ]
+          },
+          {
+            "cochain": [
+              "1/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1"
+            ],
+            "route": "open",
+            "witness": null
+          }
+        ]
+      },
+      "violates": "dual_replayed"
+    },
+    {
+      "id": "near_open",
+      "note": "the open case's load is zero, which is exact, not open",
+      "role": "extra",
+      "set": {
+        "cases": [
+          {
+            "cochain": [
+              "1/1",
+              "2/1",
+              "1/1",
+              "2/1",
+              "1/1"
+            ],
+            "route": "exact",
+            "witness": [
+              "0/1",
+              "1/1",
+              "2/1",
+              "3/1"
+            ]
+          },
+          {
+            "cochain": [
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "1/1"
+            ],
+            "route": "residual_closed",
+            "witness": [
+              "0/1",
+              "0/1",
+              "1/1",
+              "-1/1",
+              "1/1"
+            ]
+          },
+          {
+            "cochain": [
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1",
+              "0/1"
+            ],
+            "route": "open",
+            "witness": null
+          }
+        ]
+      },
+      "violates": null
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+mode_id: 3
+name: "Attention Head & Logit Steering"
+cluster: "Cluster II: Internal Steering"
+authority_effect: "None"
+core_mechanism: "Constraining transformer decoding boundaries via KV-cache masking and logit biases"
+substrate: "Transformer attention logits and activation vectors"
+paper_reference: "005_the_symbol_game_practitioners_field_manual"
+rules:
+  - "Logit suppression must strictly zero out tokens outside the allowed grammar production set."
+  - "KV-cache hooks must monitor internal representation drift before token emission."
+  - "No post-hoc text generation may circumvent the activation boundary."
+entry_preconditions:
+  - "Target vocabulary filter defined."
+  - "Grammar-guided decoding mask initialized."
+winning_condition: >
+  100% adherence to valid grammar tokens with zero out-of-alphabet token emissions.
+failure_modes:
+  - "Logit leakage (non-zero probability on illegal tokens)"
+  - "Attention drift across multi-step sequences"
+verifier_contract:
+  verifier_type: "token_mask_enforcer"
+  fail_closed: true

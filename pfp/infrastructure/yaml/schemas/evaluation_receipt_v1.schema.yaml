@@ -1,0 +1,108 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: omega.oesos.evaluation-receipt.v1
+title: OESOS EvaluationReceiptV1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- packet_id
+- input_state_hash
+- output_state_hash
+- terminal_status
+- runtime_id
+- solver_registry_hash
+- attempts
+- parent_event_id
+- event_root
+- active_obstructions
+- replay_required
+- authority_effect
+properties:
+  schema_version:
+    const: omega.oesos.evaluation-receipt.v1
+  packet_id:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  input_state_hash:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  output_state_hash:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  terminal_status:
+    enum:
+    - LabExactCandidate
+    - LabClosedResidualCandidate
+    - LabActiveClosureFailureCandidate
+    - DetectorInadequate
+    - AdapterFailure
+    - BudgetExhausted
+    - UnauthorizedContinuation
+    - StuckCorpus
+    - InvalidPacket
+  runtime_id:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  solver_registry_hash:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  attempts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - solver_id
+      - candidate_id
+      - candidate_state_hash
+      - accepted
+      - reason
+      properties:
+        solver_id:
+          type: string
+          minLength: 1
+        candidate_id:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9a-f]{64}$
+        candidate_state_hash:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9a-f]{64}$
+        accepted:
+          type: boolean
+        reason:
+          type: string
+          minLength: 1
+      allOf:
+      - if:
+          properties:
+            accepted:
+              const: true
+        then:
+          properties:
+            candidate_id:
+              type: string
+              pattern: ^[0-9a-f]{64}$
+            candidate_state_hash:
+              type: string
+              pattern: ^[0-9a-f]{64}$
+  parent_event_id:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  event_root:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  active_obstructions:
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+  replay_required:
+    const: true
+  authority_effect:
+    const: None

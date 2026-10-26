@@ -1,0 +1,90 @@
+# Screening Vocabulary & Innate Pattern Definitions
+#
+# Closed vocabularies and lexical markers used by the Signal 1 screening suite,
+# innate pattern detectors, and host protection checks.
+#
+# AuthorityEffect: None.
+
+schema_version: "omega.immune.definitions.screening-vocabulary.v1"
+authority_effect: "None"
+
+host_only_keys:
+  - "canonical_digest"
+  - "verified"
+  - "admitted"
+  - "admission"
+  - "receipt"
+  - "receipt_hash"
+  - "authority_effect"
+  - "terminal_status"
+  - "outcome_root_sha256"
+  - "registry_mutation"
+
+protected_field_keys:
+  - "phi"
+  - "phi1"
+  - "phi2"
+  - "phi3"
+  - "phi4"
+  - "gamma"
+  - "gamma2"
+  - "xi"
+  - "verified"
+  - "certified"
+  - "authorityeffect"
+
+self_certifying_values:
+  - "verified"
+  - "certified"
+  - "authorized"
+  - "authorised"
+  - "admitted"
+  - "promoted"
+  - "globalgreen"
+  - "qed"
+
+superlatives:
+  - "optimal"
+  - "minimal"
+  - "best possible"
+  - "fastest"
+  - "smallest"
+  - "maximal"
+
+complexity_markers:
+  - "o(n"
+  - "o(1)"
+  - "polynomial time"
+  - "linear time"
+  - "constant time"
+
+private_cot_markers:
+  - "<think>"
+  - "chain of thought"
+  - "my internal reasoning"
+  - "as i reasoned privately"
+
+unauthorized_persona_markers:
+  - "senior principal architect"
+  - "system administrator"
+  - "sovereign arbiter"
+  - "unrestricted authority"
+
+innate_patterns:
+  PersonaAuthorityLeak:
+    patterns:
+      - "system administrator"
+      - "authority override"
+      - "operational mode authorized"
+    rationale: "Unbacked system administration / persona authority claim without host receipt"
+  SelfCertification:
+    patterns:
+      - "verification bypassed"
+      - "self-certified"
+      - "self-certification"
+    rationale: "Self-certified verification or authorization bypass"
+  FakeReceipt:
+    patterns:
+      - "receipt"
+      - "fake_receipt"
+    rationale: "Host-only receipt assertion without host cryptographic signature"

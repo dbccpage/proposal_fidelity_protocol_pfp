@@ -1,0 +1,97 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the reading after the refused candidate that marks the second datum: the protected first pair is merged, recorded only as a loss",
+      "role": "own_negative",
+      "set": {
+        "block_map": [
+          [
+            "<x>",
+            "class0"
+          ],
+          [
+            "<y>",
+            "class0"
+          ],
+          [
+            "<z>",
+            "class1"
+          ]
+        ],
+        "coarse": [
+          "class0",
+          "class1"
+        ],
+        "erasures": [],
+        "fine": [
+          "<x>",
+          "<y>",
+          "<z>"
+        ],
+        "ledger": [
+          [
+            "<x>",
+            "<y>"
+          ]
+        ],
+        "protected": [
+          [
+            "<x>",
+            "<y>"
+          ],
+          [
+            "<y>",
+            "<z>"
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_partial",
+      "note": "the block map forgets the third datum",
+      "role": "near_miss",
+      "set": {
+        "block_map": [
+          [
+            "<x>",
+            "class0"
+          ],
+          [
+            "<y>",
+            "class1"
+          ]
+        ]
+      },
+      "violates": "observation_replayed"
+    },
+    {
+      "id": "near_unrecorded",
+      "note": "the merged pair is left out of the ledger",
+      "role": "near_miss",
+      "set": {
+        "ledger": []
+      },
+      "violates": "ledger_complete"
+    },
+    {
+      "id": "near_padded",
+      "note": "the ledger records the protected pair, which is not merged",
+      "role": "near_miss",
+      "set": {
+        "ledger": [
+          [
+            "<x>",
+            "<y>"
+          ],
+          [
+            "<x>",
+            "<z>"
+          ]
+        ]
+      },
+      "violates": "ledger_exact"
+    }
+  ]
+}

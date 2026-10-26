@@ -1,0 +1,55 @@
+schema: "omega.pfp.finite_qm.gates.v1"
+authority_effect: "None"
+engine_module: "omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.gates.gate_engine"
+
+gates:
+  - gate_id: "G0_STRICT_TYPED_JSON_SCHEMA"
+    category: "SCHEMA_AND_TYPES"
+    description: "Rejects non-JSON, extra keys, boolean-as-int subclassing, float values, or missing required fields."
+    dag_nodes: ["FQ-CARRIER-CONTRACT-V2", "FQ-IMPL-F64-GATING"]
+
+  - gate_id: "G1_COCHAIN_EXACT_SEQUENCE_D1D0"
+    category: "COCHAIN_COMPLEX"
+    description: "Verifies exact sequence d_1 d_0 = 0 on C^0 -> C^1 -> C^2 over Z and Q."
+    dag_nodes: ["L1-CHAIN-D1D0-AXIOM", "DS-QM093-QUANTUM-COCHAIN-D1D0-ZERO", "PG-WDP-QUOTIENT-EXACT-SEQUENCE"]
+
+  - gate_id: "G2_P_STAR_TREE_CHORD_SYNDROME_DECODE"
+    category: "P_STAR_BASIS_GUARD"
+    description: "Verifies p_T^* = B_T^{-1} c|_T, chord syndromes r^* = c_hat^* - c|_{E\\T}, and unique single-edge coboundary repair."
+    dag_nodes: ["L1-WDP-WINDOW-PHI1-GAMMA2", "L1-GS000-EDGEWISE-L1", "DS-QM102-SYNDROME-CAPACITY-BOUND"]
+
+  - gate_id: "G3_DAG_ROUTE_AND_SECTOR_GAP_HONESTY"
+    category: "ROUTE_STATUS_FIREWALL"
+    description: "Verifies C_4 minimizer non-uniqueness gap = 2 and refuses false promotion of GAP_NO_DERIVATION or CONDITIONAL_ON_IMPORT routes to DERIVED_EXACT."
+    dag_nodes: ["L1-RESIDUAL-SECTOR-WEIGHTS-DECLARED", "DS-QM090-092-AUTHORITY-FIREWALL"]
+    dag_routes: ["L1-R-RESIDUAL-TO-WEIGHTS"]
+
+  - gate_id: "G4_DENSITY_LIFT_PHI1_GAMMA2_XI_PURITY"
+    category: "L1_TO_L2_LIFT"
+    description: "Verifies Phi_1 = sum w_i, Gamma_2 = sum w_i^2, reduced rational Xi = Phi_1^2 / Gamma_2, and rank-1 vs diagonal purity gap."
+    dag_nodes: ["L1-DENSITY-LIFT-SIGNED-SQRT-PUB009", "L1-QM020-THM4-HILBERT-LIFT-REDUNDANCY"]
+
+  - gate_id: "G5_SUPERPOSITION_FIBER_INTERFERENCE_GAP"
+    category: "PHASE_FIBER_QUOTIENT"
+    description: "Verifies I_+ = (a+b)^2, I_- = (a-b)^2, and fiber interference gap I_+ - I_- = 4ab > 0 on L1-equivalent states."
+    dag_nodes: ["DS-QM060-SUPERPOSITION-QUOTIENT-FIBER", "DS-QM061-L1-CANNOT-COMPUTE-INTERFERENCE", "FQ-PHASE-FIBER-QUOTIENT"]
+
+  - gate_id: "G6_GAUSSIAN_HOLONOMY_COHERENT_INTENSITY"
+    category: "U1_GAUSSIAN_HOLONOMY"
+    description: "Verifies |z_1|^2, |z_2|^2, cross term 2 Re(z_1 conj(z_2)), and |z_1 + z_2|^2 over Z[i]."
+    dag_nodes: ["DS-QM063-HOLONOMY-COHERENT-INTENSITY", "DS-QM062-U1-SELECTOR-LAYERS", "GP-FIN-GAUSS-MATRIX-ALGEBRA"]
+
+  - gate_id: "G7_SORKIN_HIERARCHY_AND_QUARTIC_EXCLUSION"
+    category: "SORKIN_READOUT_CLASS"
+    description: "Verifies quadratic Sorkin I_2(s_1, s_2) = 2 s_1 s_2, I_3^{(2)} = 0, quartic I_3^{(4)}(1,1,1) = 36 != 0, and beta = 0."
+    dag_nodes: ["FQ-SORKIN-READOUT-CLASS-QM208"]
+
+  - gate_id: "G8_K23_TRACE_ZERO_PRIMAL_DUAL_DUALITY"
+    category: "TRACE_NORM_DUALITY"
+    description: "Verifies K_{2,3} scalar primal/dual value = 4 and trace-zero vs all-Hermitian repair gap = 6 - 9/2 = 3/2."
+    dag_nodes: ["FQ-TRACE-ZERO-DUALITY-K23", "DS-QM080-IMPORT-FREE-TRACE-NORM-CORE", "GP-GAP-EXACT-DUALITY"]
+
+  - gate_id: "G9_MERMIN_PERES_F2_CONTEXTUALITY_OBSTRUCTION"
+    category: "CONTEXTUALITY_COHOMOLOGY"
+    description: "Verifies 3x3 Mermin-Peres parity grid defect = 1 mod 2, global sections = 0, max satisfiable contexts = 5, and OBSTRUCTED_LOCAL_GREEN_GLOBAL_RED."
+    dag_nodes: ["DS-QM120-MERMIN-PERES-F2-OBSTRUCTION", "FQ-CONTEXTUALITY-CECH-F2"]

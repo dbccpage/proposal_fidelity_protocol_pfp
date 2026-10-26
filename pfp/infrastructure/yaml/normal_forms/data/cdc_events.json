@@ -1,0 +1,162 @@
+[
+  {
+    "description": "Case 1: pending -> paid (Row added to the paid aggregate)",
+    "view": "paid_revenue_by_customer",
+    "boundary": {
+      "relations": ["Orders"],
+      "attributes": ["customer_id", "amount", "status"],
+      "predicates": ["status = paid"],
+      "groups": ["customer_id"],
+      "aggregates": ["SUM(amount)"]
+    },
+    "event": {
+      "op": "UPDATE",
+      "relation": "Orders",
+      "old": {
+        "order_id": 42,
+        "customer_id": 7,
+        "amount": 100,
+        "status": "pending"
+      },
+      "new": {
+        "order_id": 42,
+        "customer_id": 7,
+        "amount": 120,
+        "status": "paid"
+      }
+    }
+  },
+  {
+    "description": "Case 2: paid -> paid with amount change (Row value updated within the aggregate)",
+    "view": "paid_revenue_by_customer",
+    "boundary": {
+      "relations": ["Orders"],
+      "attributes": ["customer_id", "amount", "status"],
+      "predicates": ["status = paid"],
+      "groups": ["customer_id"],
+      "aggregates": ["SUM(amount)"]
+    },
+    "event": {
+      "op": "UPDATE",
+      "relation": "Orders",
+      "old": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 100,
+        "status": "paid"
+      },
+      "new": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 120,
+        "status": "paid"
+      }
+    }
+  },
+  {
+    "description": "Case 3: paid -> pending (Row removed from the paid aggregate)",
+    "view": "paid_revenue_by_customer",
+    "boundary": {
+      "relations": ["Orders"],
+      "attributes": ["customer_id", "amount", "status"],
+      "predicates": ["status = paid"],
+      "groups": ["customer_id"],
+      "aggregates": ["SUM(amount)"]
+    },
+    "event": {
+      "op": "UPDATE",
+      "relation": "Orders",
+      "old": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 100,
+        "status": "paid"
+      },
+      "new": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 100,
+        "status": "pending"
+      }
+    }
+  },
+  {
+    "description": "Case 4: updated_at only change (No change to columns in the boundary)",
+    "view": "paid_revenue_by_customer",
+    "boundary": {
+      "relations": ["Orders"],
+      "attributes": ["customer_id", "amount", "status"],
+      "predicates": ["status = paid"],
+      "groups": ["customer_id"],
+      "aggregates": ["SUM(amount)"]
+    },
+    "event": {
+      "op": "UPDATE",
+      "relation": "Orders",
+      "old": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 100,
+        "status": "paid",
+        "updated_at": "2026-05-19T09:00:00Z"
+      },
+      "new": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 100,
+        "status": "paid",
+        "updated_at": "2026-05-19T09:05:00Z"
+      }
+    }
+  },
+  {
+    "description": "Case 5: Missing CDC status/amount evidence",
+    "view": "paid_revenue_by_customer",
+    "boundary": {
+      "relations": ["Orders"],
+      "attributes": ["customer_id", "amount", "status"],
+      "predicates": ["status = paid"],
+      "groups": ["customer_id"],
+      "aggregates": ["SUM(amount)"]
+    },
+    "event": {
+      "op": "UPDATE",
+      "relation": "Orders",
+      "old": {
+        "order_id": 43,
+        "customer_id": 7
+      },
+      "new": {
+        "order_id": 43,
+        "customer_id": 7
+      }
+    }
+  },
+  {
+    "description": "Case 6: Unsupported aggregate (MAX without extremum witness)",
+    "view": "max_revenue_by_customer",
+    "boundary": {
+      "relations": ["Orders"],
+      "attributes": ["customer_id", "amount", "status"],
+      "predicates": ["status = paid"],
+      "groups": ["customer_id"],
+      "aggregates": ["MAX(amount)"]
+    },
+    "event": {
+      "op": "UPDATE",
+      "relation": "Orders",
+      "old": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 100,
+        "status": "paid"
+      },
+      "new": {
+        "order_id": 43,
+        "customer_id": 7,
+        "amount": 80,
+        "status": "paid"
+      }
+    }
+  }
+]

@@ -1,0 +1,134 @@
+[
+  {
+    "case_id": "case_01_exact_reconciliation",
+    "description": "Case 1: Exact reconciliation with zero obstruction, sealed loss ledger, and active target verifier",
+    "source_domain": "relational_ledger",
+    "target_domain": "balance_sheet_summary",
+    "morphism": {
+      "morphism_id": "morph_ledger_to_summary_01",
+      "kind": "quotient_projection",
+      "source_records": [
+        {"account_id": "ACC-1001", "amount_cents": 50000, "currency": "USD", "tx_id": "TX-01", "audit_nonce": "n1"},
+        {"account_id": "ACC-1001", "amount_cents": -20000, "currency": "USD", "tx_id": "TX-02", "audit_nonce": "n2"},
+        {"account_id": "ACC-1002", "amount_cents": 75000, "currency": "USD", "tx_id": "TX-03", "audit_nonce": "n3"}
+      ],
+      "target_state": [
+        {"account_id": "ACC-1001", "balance_cents": 30000, "currency": "USD"},
+        {"account_id": "ACC-1002", "balance_cents": 75000, "currency": "USD"}
+      ]
+    },
+    "loss_ledger": {
+      "ledger_id": "loss_001",
+      "erased_attributes": ["tx_id", "audit_nonce"],
+      "kernel_dimension": 1,
+      "loss_policy": "explicit_projection"
+    },
+    "target_verifier": {
+      "verifier_id": "verifier_balance_v1",
+      "outcome": "verified"
+    }
+  },
+  {
+    "case_id": "case_02_coboundary_repairable_defect",
+    "description": "Case 2: Exact coboundary defect with compensating transaction witness",
+    "source_domain": "relational_ledger",
+    "target_domain": "balance_sheet_summary",
+    "morphism": {
+      "morphism_id": "morph_ledger_to_summary_02",
+      "kind": "quotient_projection",
+      "source_records": [
+        {"account_id": "ACC-2001", "amount_cents": 100000, "currency": "USD", "tx_id": "TX-10", "audit_nonce": "n10"}
+      ],
+      "target_state": [
+        {"account_id": "ACC-2001", "balance_cents": 125000, "currency": "USD"}
+      ],
+      "pending_compensations": [
+        {"account_id": "ACC-2001", "amount_cents": 25000, "currency": "USD", "witness_ref": "W-PENDING-01"}
+      ]
+    },
+    "loss_ledger": {
+      "ledger_id": "loss_002",
+      "erased_attributes": ["tx_id", "audit_nonce"],
+      "kernel_dimension": 0,
+      "loss_policy": "explicit_projection"
+    },
+    "target_verifier": {
+      "verifier_id": "verifier_balance_v1",
+      "outcome": "verified"
+    }
+  },
+  {
+    "case_id": "case_03_homological_obstruction_refusal",
+    "description": "Case 3: Non-trivial cycle obstruction (unreconciled phantom divergence without compensating witness)",
+    "source_domain": "relational_ledger",
+    "target_domain": "balance_sheet_summary",
+    "morphism": {
+      "morphism_id": "morph_ledger_to_summary_03",
+      "kind": "quotient_projection",
+      "source_records": [
+        {"account_id": "ACC-3001", "amount_cents": 40000, "currency": "USD", "tx_id": "TX-20", "audit_nonce": "n20"}
+      ],
+      "target_state": [
+        {"account_id": "ACC-3001", "balance_cents": 999999, "currency": "USD"}
+      ],
+      "pending_compensations": []
+    },
+    "loss_ledger": {
+      "ledger_id": "loss_003",
+      "erased_attributes": ["tx_id", "audit_nonce"],
+      "kernel_dimension": 0,
+      "loss_policy": "explicit_projection"
+    },
+    "target_verifier": {
+      "verifier_id": "verifier_balance_v1",
+      "outcome": "verified"
+    }
+  },
+  {
+    "case_id": "case_04_missing_loss_ledger",
+    "description": "Case 4: Lossy transport morphism with missing loss ledger (fails closed)",
+    "source_domain": "relational_ledger",
+    "target_domain": "balance_sheet_summary",
+    "morphism": {
+      "morphism_id": "morph_ledger_to_summary_04",
+      "kind": "quotient_projection",
+      "source_records": [
+        {"account_id": "ACC-4001", "amount_cents": 10000, "currency": "USD", "tx_id": "TX-30", "audit_nonce": "n30"}
+      ],
+      "target_state": [
+        {"account_id": "ACC-4001", "balance_cents": 10000, "currency": "USD"}
+      ]
+    },
+    "loss_ledger": null,
+    "target_verifier": {
+      "verifier_id": "verifier_balance_v1",
+      "outcome": "verified"
+    }
+  },
+  {
+    "case_id": "case_05_target_verifier_authority_laundering",
+    "description": "Case 5: Reconciled morphism with unconfirmed (pending) target verifier fails closed to AuthorityLaundering",
+    "source_domain": "relational_ledger",
+    "target_domain": "balance_sheet_summary",
+    "morphism": {
+      "morphism_id": "morph_ledger_to_summary_05",
+      "kind": "quotient_projection",
+      "source_records": [
+        {"account_id": "ACC-5001", "amount_cents": 20000, "currency": "USD", "tx_id": "TX-40", "audit_nonce": "n40"}
+      ],
+      "target_state": [
+        {"account_id": "ACC-5001", "balance_cents": 20000, "currency": "USD"}
+      ]
+    },
+    "loss_ledger": {
+      "ledger_id": "loss_005",
+      "erased_attributes": ["tx_id", "audit_nonce"],
+      "kernel_dimension": 0,
+      "loss_policy": "explicit_projection"
+    },
+    "target_verifier": {
+      "verifier_id": "verifier_balance_v1",
+      "outcome": "pending"
+    }
+  }
+]

@@ -1,0 +1,95 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: form_contract
+identity:
+  id: nf.classical.0nf
+  name: Raw / Unnormalized Form
+  short_name: 0NF
+  version: v0
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+  family: shape
+  status: draft
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: none
+  preserves_invariant: carrier is parseable as a finite data body before relational
+    discipline is asserted
+  protected_skeleton:
+  - finite_carrier
+  - parseable_values
+  erased_structure: []
+  non_claims:
+  - does not assert relation semantics
+  - does not assert tuple identity
+  - does not assert declared domains or keys
+  - does not certify runtime repair
+  - does not imply authorization
+  - does not meet the four-pillar test for a true normal form
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    label: pedagogical name for an unnormalized carrier
+  formal_statement: 'A carrier is called 0NF when a declared parse rule reads it as
+    a finite collection of values. No heading, domain, key, or predicate is required.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    anomaly_exclusion: no anomaly class is excluded
+    lossless_join:
+      status: not_applicable
+      statement: no decomposition is defined
+    dependency_preservation:
+      status: not_applicable
+      statement: no dependency set is declared
+    syntactic_decision:
+      status: parse_check
+      statement: 'The check is that the declared parse rule accepts the carrier. That
+        is not a decision about a relation schema.
+
+        '
+declarations_required:
+- finite_carrier_encoding
+- parse_rule
+evidence_required: []
+validation_criteria:
+- carrier can be parsed into finite values under the declared parse rule
+- unparseable carrier cannot be promoted to relational analysis
+- relational claims require explicit heading domains keys and predicate
+proof_obligations: []
+terminal_routes:
+- AcceptRawCarrier
+- RejectUnparseableCarrier
+- RequireRelationalDeclaration
+terminal_route_map:
+  AcceptRawCarrier: Preserve
+  RejectUnparseableCarrier: Reject
+  RequireRelationalDeclaration: Refuse
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: byte stream is treated as a relation before parse rule and heading are
+    declared
+  diagnosis: raw carrier promoted to relational claim
+  terminal: RequireRelationalDeclaration
+examples:
+- ref: coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+  section: 2.1 Classical Relational Normal Forms
+references:
+- coda_all_universe/1_the_tower/normal_forms/contracts/_book_09_full_normal_form_atlas.md
+- coda_all_universe/1_the_tower/normal_forms/contracts/_paper_0_relvar_relation_table_and_boundary_relvar.md

@@ -1,0 +1,45 @@
+{
+  "mutation_id": "mut_06_inverted_clear_lowest_bit",
+  "description": "Returns x instead of x & (x - 1)",
+  "case": {
+    "case_id": "c058_b04_clear_lowest_bit",
+    "width": 8,
+    "inputs": [
+      "x"
+    ],
+    "ops": [
+      [
+        "t1",
+        "const",
+        1
+      ],
+      [
+        "t2",
+        "sub",
+        "x",
+        "t1"
+      ],
+      [
+        "t3",
+        "and",
+        "x",
+        "t2"
+      ]
+    ],
+    "out": "t3",
+    "target_len": 2
+  },
+  "candidate": {
+    "case_id": "c058_b04_clear_lowest_bit",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "res",
+        "or",
+        "x",
+        "x"
+      ]
+    ],
+    "out": "res"
+  }
+}

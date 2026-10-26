@@ -1,0 +1,89 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.evidence.cdc
+  name: CDC Evidence Form
+  short_name: CDCEF
+  version: v0
+  status: draft
+  family: evidence
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - certificate_packet
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: uncertified write events
+  preserves_invariant: every write event carries old row, new row, changed attributes,
+    predicate membership, and group key before/after
+  protected_skeleton:
+  - old_row
+  - new_row
+  - changed_attributes
+  - predicate_before_after
+  - group_key_before_after
+  erased_structure: []
+  non_claims:
+  - does not guarantee physical disk-level ordering without a serializing verifier
+declarations_required:
+- relation_name
+- write_timestamp
+- changed_attributes
+evidence_required:
+- old_row_values
+- new_row_values
+validation_criteria:
+- changed attributes are non-empty for updates
+- group key changes must contain both before and after keys
+- predicate transitions must declare prior and post states
+proof_obligations: []
+terminal_routes:
+- EvidenceComplete
+- EvidenceMissing
+- Refuse
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: cache update attempted with missing status or customer ID columns in CDC
+    event
+  diagnosis: uncertified write events
+  terminal: EvidenceMissing
+references:
+- ../1_normal_forms.md
+- ../1a_bqnf_incremental_repair.md
+terminal_route_map:
+  EvidenceComplete: Preserve
+  EvidenceMissing: BudgetUnknown
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: uncertified write events. every write event carries old row, new
+    row, changed attributes, predicate membership, and group key before/after
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: uncertified write events
+    lossless_join:
+      status: declared_reconstruction
+      statement: every write event carries old row, new row, changed attributes, predicate
+        membership, and group key before/after
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

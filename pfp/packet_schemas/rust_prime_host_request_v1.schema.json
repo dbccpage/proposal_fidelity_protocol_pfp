@@ -1,0 +1,379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "omega.oesos.rust-prime-host-request.v1",
+  "title": "Rust Prime/OESOS Host Request V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id_sha256",
+    "challenge_hex",
+    "operation",
+    "canonicalization_profile",
+    "authority_effect",
+    "expected_host_registry_hash_sha256",
+    "expected_host_source_revision",
+    "outer_dda_dialect",
+    "packet_envelope",
+    "source",
+    "carrier",
+    "residual",
+    "prime_profiles",
+    "prime002",
+    "budgets"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omega.oesos.rust-prime-host-request.v1"
+    },
+    "request_id_sha256": {
+      "$ref": "#/$defs/digest"
+    },
+    "challenge_hex": {
+      "$ref": "#/$defs/digest"
+    },
+    "operation": {
+      "const": "evaluate_candidate"
+    },
+    "canonicalization_profile": {
+      "const": "omega-sorted-json-no-float-v1"
+    },
+    "authority_effect": {
+      "const": "None"
+    },
+    "expected_host_registry_hash_sha256": {
+      "$ref": "#/$defs/digest"
+    },
+    "expected_host_source_revision": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "outer_dda_dialect": {
+      "const": "experimental-z-v1"
+    },
+    "packet_envelope": {
+      "$ref": "omega.symbol-game.packet-envelope.v2"
+    },
+    "source": {
+      "$ref": "#/$defs/sourceBindings"
+    },
+    "carrier": {
+      "$ref": "#/$defs/carrierInput"
+    },
+    "residual": {
+      "$ref": "#/$defs/residualInput"
+    },
+    "prime_profiles": {
+      "$ref": "#/$defs/primeProfiles"
+    },
+    "prime002": {
+      "$ref": "#/$defs/prime002Profile"
+    },
+    "budgets": {
+      "$ref": "#/$defs/budgets"
+    }
+  },
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "i128": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*)$"
+    },
+    "candidateBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id_sha256",
+        "producer_id",
+        "witness_sha256",
+        "state_hash_sha256"
+      ],
+      "properties": {
+        "candidate_id_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "producer_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "witness_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "state_hash_sha256": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "sourceBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_id_sha256",
+        "source_event_root_sha256",
+        "source_wire_receipt_id_sha256",
+        "solver_registry_hash_sha256",
+        "source_revision",
+        "source_tree_sha256",
+        "candidate"
+      ],
+      "properties": {
+        "runtime_id_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "source_event_root_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "source_wire_receipt_id_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "solver_registry_hash_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "source_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_tree_sha256": {
+          "oneOf": [
+            {"$ref": "#/$defs/digest"},
+            {"type": "null"}
+          ]
+        },
+        "candidate": {
+          "$ref": "#/$defs/candidateBinding"
+        }
+      }
+    },
+    "carrierEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tail", "head", "weight_i128"],
+      "properties": {
+        "tail": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "head": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "weight_i128": {
+          "$ref": "#/$defs/i128"
+        }
+      }
+    },
+    "face": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "integer", "minimum": 0},
+        {"type": "integer", "minimum": 0},
+        {"type": "integer", "minimum": 0}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "carrierDeclaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "$comment": "The host also enforces vertices+faces against the declared budget and caps every reachable dense exact matrix at 1048576 cells.",
+      "required": [
+        "coefficient_domain",
+        "coefficient_representation",
+        "num_vertices",
+        "edges",
+        "faces"
+      ],
+      "properties": {
+        "coefficient_domain": {
+          "const": "Q"
+        },
+        "coefficient_representation": {
+          "const": "BigRational"
+        },
+        "num_vertices": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "edges": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/$defs/carrierEdge"
+          }
+        },
+        "faces": {
+          "type": "array",
+          "maxItems": 4095,
+          "items": {
+            "$ref": "#/$defs/face"
+          }
+        }
+      }
+    },
+    "carrierInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "declaration",
+        "expected_manifest_version",
+        "expected_carrier_hash_blake3"
+      ],
+      "properties": {
+        "declaration": {
+          "$ref": "#/$defs/carrierDeclaration"
+        },
+        "expected_manifest_version": {
+          "const": 2
+        },
+        "expected_carrier_hash_blake3": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "residualInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_omega_i128",
+        "candidate_omega_i128",
+        "candidate_acceptance_mode"
+      ],
+      "properties": {
+        "before_omega_i128": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/i128"
+          }
+        },
+        "candidate_omega_i128": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/i128"
+          }
+        },
+        "candidate_acceptance_mode": {
+          "const": "must_equal_replayed_normal_form-v1"
+        }
+      }
+    },
+    "primeProfiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prime000_revision",
+        "prime001_revision",
+        "prime002_revision",
+        "carrier_declaration",
+        "primitive_difference",
+        "zero_relation",
+        "observer_profile_id",
+        "witness_profile_id",
+        "integral_mass_policy"
+      ],
+      "properties": {
+        "prime000_revision": {
+          "const": "oeprmalg0"
+        },
+        "prime001_revision": {
+          "const": "oeprmalg1"
+        },
+        "prime002_revision": {
+          "const": "oeprmalg2"
+        },
+        "carrier_declaration": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "primitive_difference": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "zero_relation": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "observer_profile_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "witness_profile_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "integral_mass_policy": {
+          "const": "refuse_non_u64"
+        }
+      }
+    },
+    "prime002Profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route",
+        "detector_profile_id",
+        "detector_config_sha256",
+        "open_obligation_degrees"
+      ],
+      "properties": {
+        "route": {
+          "const": "write_exact_then_terminalize"
+        },
+        "detector_profile_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "detector_config_sha256": {
+          "$ref": "#/$defs/digest"
+        },
+        "open_obligation_degrees": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_request_bytes",
+        "max_edges",
+        "max_vertices_plus_faces",
+        "max_candidates",
+        "max_prime_writes",
+        "timeout_ms"
+      ],
+      "properties": {
+        "max_request_bytes": {
+          "const": 1048576
+        },
+        "max_edges": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "max_vertices_plus_faces": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "max_candidates": {
+          "const": 1
+        },
+        "max_prime_writes": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 64
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300000
+        }
+      }
+    }
+  }
+}

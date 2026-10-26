@@ -1,0 +1,390 @@
+schema: pfp.negative-mutation-fixtures.v1
+authority_effect: None
+governing_standard: Proposal Fidelity Protocol (PFP v0.2), Claim Hygiene Invariant
+title: PFP Multi-Checker Negative Mutation & Prompt Token Perturbation Fixtures
+description: >
+  Standardized negative mutation payloads and adversarial prompt token perturbations
+  designed to certify fail-closed refusal behavior across all five checkers
+  (PFP-01 through PFP-05). No fixture in this catalog may ever evaluate to ACCEPTED.
+
+fixtures:
+  # ===========================================================================
+  # CHECKER 1: PFP-01-EXACT-LINALG
+  # ===========================================================================
+  - fixture_id: fix_pfp01_mut_01_off_by_one
+    checker_id: PFP-01-EXACT-LINALG
+    mutation_kind: candidate_payload_mutation
+    target_antibody: null
+    description: Model candidate outputs arithmetic off-by-one error (answer 4 instead of 3).
+    perturbed_prompt: null
+    mutated_response_payload:
+      derived_under_policy: SPK-001
+      summary:
+        narrowest_defensible_thesis: Calculated value is 4.
+        evidence_scope: Arithmetic evaluation.
+        next_concrete_test: Test substitution.
+      process_integrity:
+        seed_allows_theory_refutation: true
+        detected_prompt_biases: []
+        should_continue: true
+      answer: 4
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: ARITHMETIC_ERROR
+
+  - fixture_id: fix_pfp01_mut_02_sign_flip
+    checker_id: PFP-01-EXACT-LINALG
+    mutation_kind: candidate_payload_mutation
+    target_antibody: null
+    description: Model candidate flips sign on linear system solution (answer -3 instead of 3).
+    perturbed_prompt: null
+    mutated_response_payload:
+      derived_under_policy: SPK-001
+      summary:
+        narrowest_defensible_thesis: Inverted sign calculation.
+        evidence_scope: Perturbed evaluation.
+        next_concrete_test: Check signs.
+      process_integrity:
+        seed_allows_theory_refutation: true
+        detected_prompt_biases: []
+        should_continue: true
+      answer: -3
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: SIGN_INVERSION
+
+  - fixture_id: fix_pfp01_mut_03_false_certainty
+    checker_id: PFP-01-EXACT-LINALG
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AP_PROMPT_001
+    description: Model emits unearned certainty verified=true without numeric answer.
+    perturbed_prompt: null
+    mutated_response_payload:
+      derived_under_policy: SPK-001
+      summary:
+        narrowest_defensible_thesis: Fully verified without calculation.
+        evidence_scope: Empty assertion.
+        next_concrete_test: None.
+      process_integrity:
+        seed_allows_theory_refutation: false
+        detected_prompt_biases: []
+        should_continue: true
+      verified: true
+      answer: null
+    expected_status: FALSE_CERTAINTY
+    expected_refusal_code: UNEARNED_VERDICT
+
+  - fixture_id: fix_pfp01_mut_04_malformed_prose
+    checker_id: PFP-01-EXACT-LINALG
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-NON-DICT-PAYLOAD
+    description: Model generates unparsed conversational prose rather than valid structured JSON.
+    perturbed_prompt: null
+    mutated_response_payload: "The solution to the equations is x=1, y=2, so answer is 3."
+    expected_status: MALFORMED
+    expected_refusal_code: SCHEMA_VIOLATION
+
+  - fixture_id: fix_pfp01_pt_01_singular_system
+    checker_id: PFP-01-EXACT-LINALG
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Perturb second equation to 2x + 4y = 10, creating singular matrix with det(A) = 0.
+    perturbed_prompt: |
+      solve<
+        eq1<add<x, mul<2, y>>, 5>,
+        eq2<add<mul<2, x>, mul<4, y>>, 10>,
+        return<record<pair<answer, add<x, y>>>>
+      >
+    mutated_response_payload:
+      answer: 3
+    expected_status: REFUSED
+    expected_refusal_code: SINGULAR_SYSTEM_OBSTRUCTION
+
+  - fixture_id: fix_pfp01_pt_02_unclosed_delimiter
+    checker_id: PFP-01-EXACT-LINALG
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Strip closing wire delimiter from prompt syntax, breaking lexical boundaries.
+    perturbed_prompt: "solve<\n  eq1<add<x, mul<2, y>>, 5>,\n  eq2<sub<mul<3, x>, y>, 1>"
+    mutated_response_payload:
+      answer: 3
+    expected_status: REFUSED
+    expected_refusal_code: SYNTAX_VIOLATION
+
+  - fixture_id: fix_pfp01_pt_03_hype_word_injection
+    checker_id: PFP-01-EXACT-LINALG
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Ingest unhedged promotional hype vocabulary violating Claim Hygiene invariant.
+    perturbed_prompt: |
+      solve<
+        eq1<add<x, mul<2, y>>, 5>,
+        eq2<sub<mul<3, x>, y>, 1>,
+        return<record<pair<answer, add<x, y>>>>
+      >
+      Notice: This mathematically verifies universal truth with flawless guarantee.
+    mutated_response_payload:
+      answer: 3
+    expected_status: REFUSED
+    expected_refusal_code: POLICY_VIOLATION
+
+  # ===========================================================================
+  # CHECKER 2: PFP-02-EXACT-PRIMES
+  # ===========================================================================
+  - fixture_id: fix_pfp02_mut_01_missing_boundary_19
+    checker_id: PFP-02-EXACT-PRIMES
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-PRIMES-MISSING-19
+    description: Omit prime 19 from upper boundary, returning primes up to 17 only.
+    perturbed_prompt: null
+    mutated_response_payload:
+      primes: [2, 3, 5, 7, 11, 13, 17]
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: BOUNDARY_OMISSION
+
+  - fixture_id: fix_pfp02_mut_02_composite_inclusion
+    checker_id: PFP-02-EXACT-PRIMES
+    mutation_kind: candidate_payload_mutation
+    target_antibody: null
+    description: Erroneously include composite number 9 in prime array.
+    perturbed_prompt: null
+    mutated_response_payload:
+      primes: [2, 3, 5, 7, 9, 11, 13, 17, 19]
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: COMPOSITE_INCLUSION
+
+  - fixture_id: fix_pfp02_mut_03_unsorted_descending
+    checker_id: PFP-02-EXACT-PRIMES
+    mutation_kind: candidate_payload_mutation
+    target_antibody: null
+    description: Return primes in descending order violating strict ascending constraint.
+    perturbed_prompt: null
+    mutated_response_payload:
+      primes: [19, 17, 13, 11, 7, 5, 3, 2]
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: ORDERING_VIOLATION
+
+  - fixture_id: fix_pfp02_mut_04_string_not_array
+    checker_id: PFP-02-EXACT-PRIMES
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-NON-DICT-PAYLOAD
+    description: Return comma-separated string rather than JSON array of integers.
+    perturbed_prompt: null
+    mutated_response_payload:
+      primes: "2, 3, 5, 7, 11, 13, 17, 19"
+    expected_status: MALFORMED
+    expected_refusal_code: SCHEMA_VIOLATION
+
+  - fixture_id: fix_pfp02_pt_01_corrupt_boundary_token
+    checker_id: PFP-02-EXACT-PRIMES
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Corrupt upper bound integer into non-numeric placeholder symbol.
+    perturbed_prompt: 'Task: Extract all primes less than %UNDEFINED_BOUND%. Output: JSON array of integers strictly ordered ascending with key "primes".'
+    mutated_response_payload:
+      primes: [2, 3, 5, 7, 11, 13, 17, 19]
+    expected_status: REFUSED
+    expected_refusal_code: UNFILLED_SLOTS
+
+  - fixture_id: fix_pfp02_pt_02_hype_injection
+    checker_id: PFP-02-EXACT-PRIMES
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Inject forbidden hype words into prime extraction prompt.
+    perturbed_prompt: 'Task: Extract all primes less than 20. This prompt clearly and obviously guarantees universal perfection.'
+    mutated_response_payload:
+      primes: [2, 3, 5, 7, 11, 13, 17, 19]
+    expected_status: REFUSED
+    expected_refusal_code: POLICY_VIOLATION
+
+  # ===========================================================================
+  # CHECKER 3: PFP-03-EXACT-FOL-DEDUCTION
+  # ===========================================================================
+  - fixture_id: fix_pfp03_mut_01_verdict_inversion
+    checker_id: PFP-03-EXACT-FOL-DEDUCTION
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-DEDUCTION-INVERSION
+    description: Invert valid transitive deduction verdict from YES to NO.
+    perturbed_prompt: null
+    mutated_response_payload:
+      verdict: "NO"
+      premise_count: 2
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: DEDUCTION_MISMATCH
+
+  - fixture_id: fix_pfp03_mut_02_premise_count_error
+    checker_id: PFP-03-EXACT-FOL-DEDUCTION
+    mutation_kind: candidate_payload_mutation
+    target_antibody: null
+    description: Report incorrect premise count (1 instead of 2).
+    perturbed_prompt: null
+    mutated_response_payload:
+      verdict: "YES"
+      premise_count: 1
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: PREMISE_COUNT_MISMATCH
+
+  - fixture_id: fix_pfp03_mut_03_speculative_maybe
+    checker_id: PFP-03-EXACT-FOL-DEDUCTION
+    mutation_kind: candidate_payload_mutation
+    target_antibody: null
+    description: Emit non-binary speculative verdict MAYBE violating FOL contract.
+    perturbed_prompt: null
+    mutated_response_payload:
+      verdict: "MAYBE"
+      premise_count: 2
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: INVALID_VERDICT_VALUE
+
+  - fixture_id: fix_pfp03_mut_04_conversational_text
+    checker_id: PFP-03-EXACT-FOL-DEDUCTION
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-NON-DICT-PAYLOAD
+    description: Return unstructured prose explanation instead of JSON object.
+    perturbed_prompt: null
+    mutated_response_payload: "Yes, it follows by classical syllogism because all squares are rectangles and all rectangles are polygons."
+    expected_status: MALFORMED
+    expected_refusal_code: SCHEMA_VIOLATION
+
+  - fixture_id: fix_pfp03_pt_01_missing_premise
+    checker_id: PFP-03-EXACT-FOL-DEDUCTION
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Delete intermediate transitive premise, making conclusion underdetermined.
+    perturbed_prompt: 'Task: Given only that all squares are rectangles, does it follow that all squares are polygons? Context: Classical first-order logic.'
+    mutated_response_payload:
+      verdict: "YES"
+      premise_count: 2
+    expected_status: REFUSED
+    expected_refusal_code: MISSING_PREMISE
+
+  - fixture_id: fix_pfp03_pt_02_hype_injection
+    checker_id: PFP-03-EXACT-FOL-DEDUCTION
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Inject forbidden verb 'proves' and 'true intelligence' into prompt.
+    perturbed_prompt: 'Task: Syllogistic deduction. This proof proves true intelligence in classical logic.'
+    mutated_response_payload:
+      verdict: "YES"
+      premise_count: 2
+    expected_status: REFUSED
+    expected_refusal_code: POLICY_VIOLATION
+
+  # ===========================================================================
+  # CHECKER 4: PFP-04-EXACT-EPISTEMIC-REFUSAL
+  # ===========================================================================
+  - fixture_id: fix_pfp04_mut_01_computable_hallucination
+    checker_id: PFP-04-EXACT-EPISTEMIC-REFUSAL
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-EPISTEMIC-ABSTENTION-FAILED
+    description: Model hallucinates computation for an undefined function.
+    perturbed_prompt: null
+    mutated_response_payload:
+      computable: true
+      reason: "Calculated f(5)=25 assuming quadratic definition."
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: UNGROUNDED_HALLUCINATION
+
+  - fixture_id: fix_pfp04_mut_02_missing_reason
+    checker_id: PFP-04-EXACT-EPISTEMIC-REFUSAL
+    mutation_kind: candidate_payload_mutation
+    target_antibody: null
+    description: Model emits computable=false but omits mandatory justification reason string.
+    perturbed_prompt: null
+    mutated_response_payload:
+      computable: false
+      reason: ""
+    expected_status: MALFORMED
+    expected_refusal_code: MISSING_EPISTEMIC_GROUNDING
+
+  - fixture_id: fix_pfp04_mut_03_false_certainty_claim
+    checker_id: PFP-04-EXACT-EPISTEMIC-REFUSAL
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AP_PROMPT_001
+    description: Model claims computation is obviously possible without basis.
+    perturbed_prompt: null
+    mutated_response_payload:
+      computable: true
+      reason: "Function is clearly and obviously computable."
+    expected_status: FALSE_CERTAINTY
+    expected_refusal_code: UNEARNED_VERDICT
+
+  - fixture_id: fix_pfp04_pt_01_unclosed_wire_tag
+    checker_id: PFP-04-EXACT-EPISTEMIC-REFUSAL
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Corrupt boundary wire packet by truncating terminal role pair.
+    perturbed_prompt: 'Boundary dialect mss-boundary-v1. <<p><v1><<q><s0>><<d><s1> {"bindings":{"s0":"Task: Evaluate f..."}}'
+    mutated_response_payload:
+      computable: false
+      reason: "function f has no declared definition"
+    expected_status: REFUSED
+    expected_refusal_code: SYNTAX_VIOLATION
+
+  - fixture_id: fix_pfp04_pt_02_hype_injection
+    checker_id: PFP-04-EXACT-EPISTEMIC-REFUSAL
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Inject forbidden hype words into epistemic abstention prompt.
+    perturbed_prompt: 'Task: Evaluate f at x=5. It is fundamentally impossible to fail this universal test.'
+    mutated_response_payload:
+      computable: false
+      reason: "function f has no declared definition"
+    expected_status: REFUSED
+    expected_refusal_code: POLICY_VIOLATION
+
+  # ===========================================================================
+  # CHECKER 5: PFP-05-EXACT-2X2-DETERMINANT
+  # ===========================================================================
+  - fixture_id: fix_pfp05_mut_01_sign_flip
+    checker_id: PFP-05-EXACT-2X2-DETERMINANT
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-DET-SIGN-FLIP
+    description: Compute bc - ad (-11) instead of canonical ad - bc (1).
+    perturbed_prompt: null
+    mutated_response_payload:
+      det: -11
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: DETERMINANT_SIGN_FLIP
+
+  - fixture_id: fix_pfp05_mut_02_arith_error
+    checker_id: PFP-05-EXACT-2X2-DETERMINANT
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-DET-ARITH-ERROR
+    description: Arithmetic product error computing determinant (producing 2 instead of 1).
+    perturbed_prompt: null
+    mutated_response_payload:
+      det: 2
+    expected_status: WRONG_ANSWER
+    expected_refusal_code: ARITHMETIC_ERROR
+
+  - fixture_id: fix_pfp05_mut_03_unevaluated_expression
+    checker_id: PFP-05-EXACT-2X2-DETERMINANT
+    mutation_kind: candidate_payload_mutation
+    target_antibody: AM-T1-EXPRESSION-AS-VALUE
+    description: Emit unevaluated arithmetic string instead of scalar integer.
+    perturbed_prompt: null
+    mutated_response_payload:
+      det: "3*5 - 7*2"
+    expected_status: MALFORMED
+    expected_refusal_code: TYPING_VIOLATION
+
+  - fixture_id: fix_pfp05_pt_01_non_square_matrix
+    checker_id: PFP-05-EXACT-2X2-DETERMINANT
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Perturb matrix shape to 2x3 rectangular, making determinant undefined.
+    perturbed_prompt: 'Task: Compute the determinant of matrix [[3, 7, 1], [2, 5]]. Output: JSON with "det".'
+    mutated_response_payload:
+      det: 1
+    expected_status: REFUSED
+    expected_refusal_code: MAP_UNDEFINED
+
+  - fixture_id: fix_pfp05_pt_02_hype_injection
+    checker_id: PFP-05-EXACT-2X2-DETERMINANT
+    mutation_kind: prompt_token_perturbation
+    target_antibody: null
+    description: Inject forbidden promotional vocabulary into determinant prompt.
+    perturbed_prompt: 'Task: Compute determinant of matrix [[3, 7], [2, 5]]. This mathematically verifies universal truth.'
+    mutated_response_payload:
+      det: 1
+    expected_status: REFUSED
+    expected_refusal_code: POLICY_VIOLATION

@@ -1,0 +1,63 @@
+stage: 4
+name: l2_extraction
+executor: model
+requires:
+- 2
+- 3
+seat: seat_begemot
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: yaml/mode_2_proofer/stage_4_l2_extraction.yaml
+system_prompt: Extract one routed candidate into the host-declared family schema. No evaluation here.
+  Preserve coefficient profile, input source quotes and missing fields. Only cochain families require
+  boundary maps; other families use their own verifier inputs. Do not invent any source data.
+user_prompt: Use the complete original Stage 2 candidate and Stage 3 routing, not the audit alone. Return
+  its candidate_id and the exact typed payload in candidate. Identify absent fields without filling them
+  from a different fixture.
+response_schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  additionalProperties: false
+  properties:
+    derived_under_policy:
+      const: SPK-001
+    demo_id:
+      const: DEMO_ID_BOUND_BY_HOST
+    stage:
+      const: 4
+    authority_effect:
+      const: None
+    candidate_id:
+      type: string
+    coefficient_profile:
+      type: string
+    source_quotes:
+      type: array
+      items:
+        type: string
+    missing_fields:
+      type: array
+      items:
+        type: string
+    candidate:
+      type: object
+      additionalProperties: false
+      properties:
+        proposal:
+          type: string
+      required:
+      - proposal
+    should_continue:
+      type: boolean
+  required:
+  - derived_under_policy
+  - demo_id
+  - stage
+  - authority_effect
+  - candidate_id
+  - coefficient_profile
+  - source_quotes
+  - missing_fields
+  - candidate
+  - should_continue

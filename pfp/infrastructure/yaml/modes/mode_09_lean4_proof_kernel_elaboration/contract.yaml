@@ -1,0 +1,25 @@
+mode_id: 9
+name: "Lean 4 Proof Kernel Elaboration"
+cluster: "Cluster V: Foundational Mechanization"
+authority_effect: "None"
+core_mechanism: "Interactive theorem proving bounded by standard foundational axioms {propext, Quot.sound, Classical.choice}"
+substrate: "Lean 4 Lake build environment and verified proof terms"
+paper_reference: "004_the_symbol_game_native_verification_and_evidence_custody"
+rules:
+  - "Zero unverified axioms: sorry and floating postulates are strictly forbidden."
+  - "Axiom dependency must stay within {propext, Quot.sound, Classical.choice}; sorryAx and custom axioms are refused. The separate Genesis repository's constructive restriction is not this repository's default."
+  - "Proof scripts must compile cleanly under lake build without warnings or legacy aliases."
+entry_preconditions:
+  - "Lean 4 package structure initialized."
+  - "Target theorem statement declared without sorry."
+winning_condition: >
+  Successful lake build plus a checked target theorem, exact source/dependency digests,
+  and an axiom census within the declared policy. Compiling a different or weaker
+  theorem does not discharge the target obligation.
+failure_modes:
+  - "Proof gap (sorry token present)"
+  - "Unaudited axiom introduced"
+  - "Type mismatch in conclusion"
+verifier_contract:
+  verifier_type: "lean4_kernel_auditor"
+  fail_closed: true

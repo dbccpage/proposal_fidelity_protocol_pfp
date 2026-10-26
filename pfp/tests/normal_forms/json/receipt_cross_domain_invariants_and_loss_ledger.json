@@ -1,0 +1,31 @@
+{
+  "schema": "cross_domain_invariants_and_loss_ledger_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying Cross-Domain Defect Cocycle classification, Sealed LossLedger cryptographic integrity, and Target Verifier Authority-Laundering firewall precedence",
+  "created_utc": "2026-09-25T16:20:00Z",
+  "properties_verified": [
+    {
+      "property_name": "bidirectional_defect_cocycle_classification",
+      "test_function": "test_zero_defect_preserves, test_exact_coboundary_repair, test_unreconciled_cycle_obstruction_refusal",
+      "status": "PASS",
+      "details": "Verified 1-cochain classification: zero defect routes to Preserve ([0]), exact coboundary defect matching compensating cochain routes to Repair ([0]), and unreconciled phantom imbalance routes to Refuse ([NonZero - UnreconciledDiscrepancy])."
+    },
+    {
+      "property_name": "sealed_loss_ledger_tamper_falsification",
+      "test_function": "test_valid_loss_ledger_integrity, test_missing_erased_attributes_fails_closed, test_payload_tampering_trips_digest_mismatch, test_tail_truncation_trips_record_count_mismatch, test_evaluate_reconciliation_tampered_ledger_fails_closed",
+      "status": "PASS",
+      "details": "Verified cryptographic custody: missing loss ledger fails closed to LossLedgerMissing; SHA-256 payload tampering and tail-truncation fail closed to LossLedgerTampered ([NonZero - TamperedLossLedger])."
+    },
+    {
+      "property_name": "target_verifier_precedence_and_authority_laundering",
+      "test_function": "test_pending_target_verifier_triggers_authority_laundering, test_missing_target_verifier_triggers_missing_verifier, test_verified_target_verifier_grants_authorization",
+      "status": "PASS",
+      "details": "Verified authority boundary: valid upstream provenance cannot bypass target verification; pending target verifier routes to AuthorityLaundering; absent verifier routes to MissingVerifier; only verified outcome grants Authorized=True."
+    }
+  ],
+  "contracts_aligned": [
+    "nf.change.bqnf",
+    "nf.query.spja"
+  ],
+  "all_properties_satisfied": true
+}

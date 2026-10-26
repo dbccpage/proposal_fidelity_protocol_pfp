@@ -1,0 +1,126 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "a claim labelled 14/5 over the tree's first fixed answer table (every answer +1), written as one-coordinate rows (1, 0): its entries are all 1 and total 2",
+      "role": "own_negative",
+      "set": {
+        "correlations": [
+          [
+            "1/1",
+            "1/1"
+          ],
+          [
+            "1/1",
+            "1/1"
+          ]
+        ],
+        "far": [
+          [
+            "1/1",
+            "0/1"
+          ],
+          [
+            "1/1",
+            "0/1"
+          ]
+        ],
+        "near": [
+          [
+            "1/1",
+            "0/1"
+          ],
+          [
+            "1/1",
+            "0/1"
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_stretched",
+      "note": "the first near row doubled to (2, 0), with its entries, total and margin recomputed from it: only its size is wrong",
+      "role": "near_miss",
+      "set": {
+        "correlations": [
+          [
+            "8/5",
+            "8/5"
+          ],
+          [
+            "3/5",
+            "-3/5"
+          ]
+        ],
+        "excess": "12/5",
+        "near": [
+          [
+            "2/1",
+            "0/1"
+          ],
+          [
+            "0/1",
+            "1/1"
+          ]
+        ],
+        "total": "22/5"
+      },
+      "violates": "unit_rows"
+    },
+    {
+      "id": "near_entry",
+      "note": "the entry of the second near row and the first far row claimed as 4/5; the rows give 3/5",
+      "role": "near_miss",
+      "set": {
+        "correlations": [
+          [
+            "4/5",
+            "4/5"
+          ],
+          [
+            "4/5",
+            "-3/5"
+          ]
+        ]
+      },
+      "violates": "entries_replayed"
+    },
+    {
+      "id": "near_ceiling",
+      "note": "the bound claimed as 4, the largest total any table of weights can reach, not the largest over the fixed answer tables",
+      "role": "near_miss",
+      "set": {
+        "bound": "4/1"
+      },
+      "violates": "bound_replayed"
+    },
+    {
+      "id": "near_margin",
+      "note": "the margin claimed as 0, as if the rows stayed within the bound",
+      "role": "near_miss",
+      "set": {
+        "excess": "0/1"
+      },
+      "violates": "excess_replayed"
+    },
+    {
+      "id": "row_stretched",
+      "note": "the first near row's first coordinate doubled and nothing else changed",
+      "role": "extra",
+      "set": {
+        "near": [
+          [
+            "2/1",
+            "0/1"
+          ],
+          [
+            "0/1",
+            "1/1"
+          ]
+        ]
+      },
+      "violates": "unit_rows"
+    }
+  ]
+}

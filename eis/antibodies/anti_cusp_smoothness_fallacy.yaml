@@ -1,0 +1,22 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-cusp-smoothness-fallacy
+canonical_name: Anti-Cusp Smoothness Fallacy
+failure_class: math:cusp_smoothness_fallacy
+target_pattern: (deltoid.*is.*smooth.*everywhere|derivative.*diverges.*to.*infinity.*no.*algorithm|smooth.*gradient.*at.*cusp)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects applying smooth Taylor expansions or standard implicit function
+  theorems across non-smooth deltoid cusps.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: The gradient of det(H(theta)) is smooth at theta=0,
+  so linear Taylor expansion gives valid interval bounds.
+repaired_invariant_fixture: At the 3 deltoid cusps, d/dtheta det(H(theta)) vanishes;
+  exact fractional Lipschitz collars of radius 1/256 seal the singular locus.
+source_pilot: pilot_040
+evidence_sha256: 34df7876f7dd8d276ead2daadec20f2c08eed5800271adb8bddd2d84675b96dc

@@ -1,0 +1,33 @@
+schema_version: "omega.immune.antibody-spec.v1"
+antibody_id: "ab_canonical_digest_ascii_drift"
+canonical_name: "Canonical Digest ASCII Drift"
+failure_class: "digest:ensure_ascii_drift"
+target_pattern: "ensure_ascii\\s*=\\s*False"
+constraint_type: "Restrain"
+operatorizability: "repairable"
+action: "repair"
+severity: "P0"
+pharmacy_status: "candidate"
+authority_effect: "None"
+description: >
+  Rejects a digest seam that serializes JSON with ensure_ascii=False.
+  Shared Python and Rust hashes use ensure_ascii=True, sorted keys, and
+  compact separators so one payload has one SHA-256 identity.
+
+governing_invariants:
+  - ".agents/rules/papers/rl_research_paper_and_monograph_packaging.md"
+  - ".agents/patterns/anti/python/AP_PY_008_canonical_digest_ascii_drift.md"
+
+adversarial_mutation_fixture: |
+  def instruction_request_digest(payload):
+      raw = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+      return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+repaired_invariant_fixture: |
+  def instruction_request_digest(payload):
+      raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+      return hashlib.sha256(raw.encode("ascii")).hexdigest()
+
+detection_mechanisms:
+  regex_triggers:
+    - "ensure_ascii\\s*=\\s*False"

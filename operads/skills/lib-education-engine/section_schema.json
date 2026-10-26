@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anomalon.dev/schemas/education/section.json",
+  "title": "Section Frontmatter Schema",
+  "description": "JSON Schema for validating section file YAML frontmatter in the Education Engine",
+  "type": "object",
+  "required": ["type", "lesson", "section", "title"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["section", "master_outline", "handout", "reference", "social_hooks"],
+      "description": "File type determines processing rules"
+    },
+    "lesson": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 999,
+      "description": "Lesson number (1-999)"
+    },
+    "section": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99,
+      "description": "Section number within lesson (0 for special files, 1-99 for content sections)"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Human-readable section title"
+    },
+    "part": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Part number (Roman numeral converted to integer)"
+    },
+    "part_title": {
+      "type": "string",
+      "maxLength": 255,
+      "description": "Part title (e.g., 'Foundations', 'The Math of the Turn')"
+    },
+    "duration_minutes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120,
+      "description": "Estimated reading/teaching time in minutes"
+    },
+    "tldr": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "One-line summary capturing the core insight"
+    },
+    "learning_objectives": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "description": "Learning objectives for this section"
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^\\d{3}\\.\\d{2}$"
+      },
+      "description": "Section codes that should be read first (format: NNN.XX)"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["historical", "supplementary", "academic", "video"]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "description": "External references and related materials"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      },
+      "description": "Tags for content discovery (lowercase, hyphenated)"
+    },
+    "big_idea": {
+      "type": "string",
+      "description": "The central insight or concept (for master_outline and handout types)"
+    },
+    "lexicon": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["term"],
+        "properties": {
+          "term": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Key terminology introduced in this section"
+    },
+    "key_formulas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "formula"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "formula": {
+            "type": "string"
+          },
+          "latex": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Key mathematical formulas (for master_outline type)"
+    },
+    "one_minute_summary": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Extended summary for master_outline files"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "type": { "const": "section" } }
+      },
+      "then": {
+        "required": ["type", "lesson", "section", "title"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "master_outline" } }
+      },
+      "then": {
+        "required": ["type", "lesson", "title"],
+        "properties": {
+          "section": { "const": 0 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "handout" } }
+      },
+      "then": {
+        "required": ["type", "lesson", "title"],
+        "properties": {
+          "section": { "const": 0 }
+        }
+      }
+    }
+  ]
+}

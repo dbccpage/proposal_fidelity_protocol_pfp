@@ -1,0 +1,302 @@
+{
+  "input": {
+    "case_id": "ex02_abelian_group_completion",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "add(0, x)",
+        "x"
+      ],
+      [
+        "add(neg(x), x)",
+        "0"
+      ],
+      [
+        "add(add(x, y), z)",
+        "add(x, add(y, z))"
+      ]
+    ],
+    "precedence": {
+      "neg": 100,
+      "add": 50,
+      "0": 10
+    }
+  },
+  "expected_output": {
+    "case_id": "ex02_abelian_group_completion",
+    "status": "SOLVED",
+    "task": "COMPLETE",
+    "converged": true,
+    "steps": 147,
+    "rules_count": 10,
+    "rules": [
+      {
+        "lhs": "add(0, x)",
+        "rhs": "x"
+      },
+      {
+        "lhs": "add(neg(x), x)",
+        "rhs": "0"
+      },
+      {
+        "lhs": "add(add(x, y), z)",
+        "rhs": "add(x, add(y, z))"
+      },
+      {
+        "lhs": "add(neg(x), add(x, y))",
+        "rhs": "y"
+      },
+      {
+        "lhs": "neg(0)",
+        "rhs": "0"
+      },
+      {
+        "lhs": "add(x, 0)",
+        "rhs": "x"
+      },
+      {
+        "lhs": "add(x, neg(x))",
+        "rhs": "0"
+      },
+      {
+        "lhs": "neg(neg(x))",
+        "rhs": "x"
+      },
+      {
+        "lhs": "add(x, add(neg(x), y))",
+        "rhs": "y"
+      },
+      {
+        "lhs": "neg(add(x, y))",
+        "rhs": "add(neg(y), neg(x))"
+      }
+    ],
+    "joinability_certificates_count": 130,
+    "joinability_certificates": [
+      {
+        "equation": [
+          "add(0, add(r0_x, z))",
+          "add(r0_x, z)"
+        ],
+        "joined_normal_form": "add(r0_x, z)"
+      },
+      {
+        "equation": [
+          "0",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "0",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "add(0, r3_y)",
+          "r3_y"
+        ],
+        "joined_normal_form": "r3_y"
+      },
+      {
+        "equation": [
+          "y",
+          "add(0, y)"
+        ],
+        "joined_normal_form": "y"
+      },
+      {
+        "equation": [
+          "0",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "0",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "0",
+          "neg(0)"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "0",
+          "add(0, 0)"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "x",
+          "add(0, x)"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "add(neg(0), r3_y)",
+          "r3_y"
+        ],
+        "joined_normal_form": "r3_y"
+      },
+      {
+        "equation": [
+          "y",
+          "add(neg(0), y)"
+        ],
+        "joined_normal_form": "y"
+      },
+      {
+        "equation": [
+          "0",
+          "add(neg(0), 0)"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "x",
+          "add(neg(0), x)"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "add(neg(0), x)",
+          "x"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "y",
+          "add(0, add(0, y))"
+        ],
+        "joined_normal_form": "y"
+      },
+      {
+        "equation": [
+          "add(neg(neg(0)), x)",
+          "x"
+        ],
+        "joined_normal_form": "x"
+      },
+      {
+        "equation": [
+          "0",
+          "neg(0)"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "neg(0)",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "0",
+          "add(neg(neg(0)), 0)"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "r6_x",
+          "add(neg(neg(neg(0))), r6_x)"
+        ],
+        "joined_normal_form": "r6_x"
+      },
+      {
+        "equation": [
+          "0",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "0",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "neg(0)",
+          "0"
+        ],
+        "joined_normal_form": "0"
+      },
+      {
+        "equation": [
+          "0",
+          "neg(0)"
+        ],
+        "joined_normal_form": "0"
+      }
+    ],
+    "ddc_trace": {
+      "case_id": "ex02_abelian_group_completion",
+      "trace_string": "ELambdaDCIMT",
+      "step_count": 7,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task COMPLETE for case ex02_abelian_group_completion",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "Lambda",
+          "detail": "Initialized TermOrder with 3 precedence levels",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "D",
+          "detail": "Starting completion saturation with max_steps=200",
+          "meta": {}
+        },
+        {
+          "step_index": 3,
+          "op": "C",
+          "detail": "Generated and joined 130 critical pairs",
+          "meta": {}
+        },
+        {
+          "step_index": 4,
+          "op": "I",
+          "detail": "Canonical convergent TRS reached with 10 rules",
+          "meta": {}
+        },
+        {
+          "step_index": 5,
+          "op": "M",
+          "detail": "All critical pairs validated joinable",
+          "meta": {}
+        },
+        {
+          "step_index": 6,
+          "op": "T",
+          "detail": "Emitted completion result",
+          "meta": {}
+        }
+      ]
+    }
+  }
+}

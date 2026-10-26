@@ -1,0 +1,103 @@
+# Draft declaration: no bound local contract evaluator is supplied; upstream mathematics and schema checks are separate evidence.
+schema_version: smplx.nf.contract.v0
+contract_kind: form_contract
+identity:
+  id: nf.runtime.mtnf
+  name: Mazurkiewicz Trace Normal Form
+  short_name: MTNF
+  version: v0
+  status: draft
+  family: runtime
+  theory_status: established
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - event_trace
+  - causal_partial_order
+  - mazurkiewicz_monoid
+  data_posture: in_transformation
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: spurious interleaving redundancy anomaly where causally independent concurrent events
+    are serialized in arbitrary permutations
+  preserves_invariant: traces are canonicalized under independent commutation into minimal Foata normal
+    form or causal dependency posets without external clocks
+  protected_skeleton:
+  - trace_records
+  - independence_relation
+  - causal_dependency_graph
+  - terminal_state_digest
+  erased_structure:
+  - arbitrary_sequential_serialization_order
+  non_claims:
+  - does not claim global Newtonian time or continuum clocks
+  - does not commute events with overlapping state store writes
+  - does not bypass step-level guard discharges
+  - does not imply operational authority
+quadrilateral:
+  qualifies_as_true_normal_form: false
+  qualification_gap: no_project_join_theorem
+  anomaly_exclusion: combinatorial trace proliferation from serializing non-interfering independent events
+    in arbitrary orders
+  lossless_join:
+    status: poset_replay_reconstruction
+    statement: under the accepted-swap diamond premises, every linearization of the declared dependency
+      poset replays to the same endpoint; original interleaving needs retained history
+  dependency_preservation:
+    status: causal_order_preserved
+    statement: conflicting events sharing state stores retain strict serial order
+  syntactic_decision:
+    status: declaration_decidable
+    statement: finite independence-table and trace checks; semantic independence needs the declared accepted-step
+      commutation evidence
+declarations_required:
+- event_alphabet
+- independence_relation
+- event_sequence
+- initial_state
+- accepted_step_semantics
+- guard_read_and_write_footprints
+evidence_required:
+- transition_records
+- commutation_proof_receipt
+- foata_normal_form_blocks
+validation_criteria:
+- the declared independence relation is symmetric and irreflexive
+- each permitted adjacent swap has both orders accepted and equal post-states at the reached prefix
+- guard reads as well as writes are included in any footprint argument
+- trace representation matches the declared Foata block decomposition
+terminal_routes:
+- AcceptCanonicalTrace
+- RecomputeFoataDecomposition
+- RejectConflictingCommutation
+- Undetermined
+terminal_route_map:
+  AcceptCanonicalTrace: Preserve
+  RecomputeFoataDecomposition: Recompute
+  RejectConflictingCommutation: Reject
+  Undetermined: Abstain
+certification:
+  certificate_required: true
+  certificate_kind: trace_commutation_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: events modifying overlapping state stores are commuted
+  diagnosis: commutation violates causal dependence
+  terminal: RejectConflictingCommutation
+- symptom: trace is presented in an un-normalized interleaving
+  diagnosis: trace was not reduced to its Foata normal form
+  terminal: RecomputeFoataDecomposition
+examples:
+- ref: https://github.com/dbccpage/19L57G1/blob/f1d56c010e6ba10a3b9418bd7cc5953c067250f2/lean4/Derivation/TraceAlgebra.lean
+  section: lean4/Derivation/TraceAlgebra.lean
+  note: independent event commutation and trace equivalence
+references:
+- https://github.com/dbccpage/19L57G1/blob/f1d56c010e6ba10a3b9418bd7cc5953c067250f2/docs/GENESIS_CLOSEOUT.md
+- ./README.md

@@ -1,0 +1,510 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "observer_glue",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "glued": [
+            [
+              "l1",
+              "100"
+            ],
+            [
+              "l2",
+              "200"
+            ],
+            [
+              "l3",
+              "300"
+            ],
+            [
+              "l4",
+              "400"
+            ]
+          ],
+          "patches": [
+            [
+              "l1",
+              "l2"
+            ],
+            [
+              "l2",
+              "l3"
+            ],
+            [
+              "l3",
+              "l4"
+            ]
+          ],
+          "points": [
+            "l1",
+            "l2",
+            "l3",
+            "l4"
+          ],
+          "sections": [
+            [
+              [
+                "l1",
+                "100"
+              ],
+              [
+                "l2",
+                "200"
+              ]
+            ],
+            [
+              [
+                "l2",
+                "200"
+              ],
+              [
+                "l3",
+                "300"
+              ]
+            ],
+            [
+              [
+                "l3",
+                "300"
+              ],
+              [
+                "l4",
+                "400"
+              ]
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:9ef1a2bbea2d529027f715d8ff0f33110b503b4bd7e5d05e75fba45068f45c8e",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "glued": [
+            [
+              "l1",
+              "100"
+            ],
+            [
+              "l2",
+              "200"
+            ],
+            [
+              "l3",
+              "300"
+            ],
+            [
+              "l4",
+              "400"
+            ]
+          ],
+          "patches": [
+            [
+              "l1",
+              "l2"
+            ],
+            [
+              "l2",
+              "l3"
+            ],
+            [
+              "l3",
+              "l4"
+            ]
+          ],
+          "points": [
+            "l1",
+            "l2",
+            "l3",
+            "l4"
+          ],
+          "sections": [
+            [
+              [
+                "l1",
+                "100"
+              ],
+              [
+                "l2",
+                "200"
+              ]
+            ],
+            [
+              [
+                "l2",
+                "201"
+              ],
+              [
+                "l3",
+                "300"
+              ]
+            ],
+            [
+              [
+                "l3",
+                "300"
+              ],
+              [
+                "l4",
+                "400"
+              ]
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:ce7f619f0fc2c4b7617dabecda570ae5e353879351a32a6d4ff9266b96a9a93c",
+      "native_code": "FAILS:glue_replayed,overlaps_agree",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_uncovered",
+      "input": {
+        "packet": {
+          "glued": [
+            [
+              "l1",
+              "100"
+            ],
+            [
+              "l2",
+              "200"
+            ],
+            [
+              "l3",
+              "300"
+            ],
+            [
+              "l4",
+              "400"
+            ]
+          ],
+          "patches": [
+            [
+              "l1",
+              "l2"
+            ],
+            [
+              "l2",
+              "l3"
+            ],
+            [
+              "l3",
+              "l4"
+            ]
+          ],
+          "points": [
+            "l1",
+            "l2",
+            "l3",
+            "l4",
+            "l5"
+          ],
+          "sections": [
+            [
+              [
+                "l1",
+                "100"
+              ],
+              [
+                "l2",
+                "200"
+              ]
+            ],
+            [
+              [
+                "l2",
+                "200"
+              ],
+              [
+                "l3",
+                "300"
+              ]
+            ],
+            [
+              [
+                "l3",
+                "300"
+              ],
+              [
+                "l4",
+                "400"
+              ]
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:9edd55a1c896b7d16bc941110e69dec2c6124aa9cf7711b3174bb4222f030cd2",
+      "native_code": "FAILS:covered",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_domain",
+      "input": {
+        "packet": {
+          "glued": [
+            [
+              "l1",
+              "100"
+            ],
+            [
+              "l2",
+              "200"
+            ],
+            [
+              "l3",
+              "300"
+            ]
+          ],
+          "patches": [
+            [
+              "l1",
+              "l2"
+            ],
+            [
+              "l2",
+              "l3"
+            ],
+            [
+              "l3",
+              "l4"
+            ]
+          ],
+          "points": [
+            "l1",
+            "l2",
+            "l3",
+            "l4"
+          ],
+          "sections": [
+            [
+              [
+                "l1",
+                "100"
+              ],
+              [
+                "l2",
+                "200"
+              ]
+            ],
+            [
+              [
+                "l2",
+                "200"
+              ],
+              [
+                "l3",
+                "300"
+              ]
+            ],
+            [
+              [
+                "l3",
+                "300"
+              ]
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:38d6a82fd26b024639598f860de1d3aa32ade4a01150763785c182f5dc234924",
+      "native_code": "FAILS:on_patch",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "short_record",
+      "input": {
+        "packet": {
+          "glued": [
+            [
+              "l1",
+              "100"
+            ],
+            [
+              "l2",
+              "200"
+            ],
+            [
+              "l3",
+              "300"
+            ],
+            [
+              "l4",
+              "400"
+            ]
+          ],
+          "patches": [
+            [
+              "l1",
+              "l2"
+            ],
+            [
+              "l2",
+              "l3"
+            ],
+            [
+              "l3",
+              "l4"
+            ]
+          ],
+          "points": [
+            "l1",
+            "l2",
+            "l3",
+            "l4"
+          ],
+          "sections": [
+            [
+              [
+                "l1",
+                "100"
+              ],
+              [
+                "l2",
+                "200"
+              ]
+            ],
+            [
+              [
+                "l2",
+                "200"
+              ],
+              [
+                "l3",
+                "300"
+              ]
+            ],
+            [
+              [
+                "l3",
+                "300"
+              ]
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:b9c3cbe0e82bfe1cb45ab406227aaa820ee4eb495aa33852e2eb7302e79d041b",
+      "native_code": "FAILS:glue_replayed,on_patch",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-short_record"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "glued": [
+            [
+              "l1",
+              "100"
+            ],
+            [
+              "l2",
+              "200"
+            ],
+            [
+              "l3",
+              "300"
+            ],
+            [
+              "l4",
+              "401"
+            ]
+          ],
+          "patches": [
+            [
+              "l1",
+              "l2"
+            ],
+            [
+              "l2",
+              "l3"
+            ],
+            [
+              "l3",
+              "l4"
+            ]
+          ],
+          "points": [
+            "l1",
+            "l2",
+            "l3",
+            "l4"
+          ],
+          "sections": [
+            [
+              [
+                "l1",
+                "100"
+              ],
+              [
+                "l2",
+                "200"
+              ]
+            ],
+            [
+              [
+                "l2",
+                "200"
+              ],
+              [
+                "l3",
+                "300"
+              ]
+            ],
+            [
+              [
+                "l3",
+                "300"
+              ],
+              [
+                "l4",
+                "400"
+              ]
+            ]
+          ]
+        }
+      },
+      "input_sha256": "sha256:11622a7155817b3c8246db4d35dfd4c9874979e950b5127e74c71831f3279421",
+      "native_code": "FAILS:glue_replayed",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 23,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_023"
+}

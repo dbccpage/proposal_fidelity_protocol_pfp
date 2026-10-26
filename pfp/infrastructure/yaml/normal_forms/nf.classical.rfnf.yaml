@@ -1,0 +1,109 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.classical.rfnf
+  name: Redundancy-Free Normal Form / Key-Component Normal Form
+  short_name: RFNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  verification_status: absent
+  family: shape
+  status: active
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - relvar
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: redundancy from join dependencies whose superkey components do not cover the heading
+  preserves_invariant: the schema is in BCNF and for every join dependency implied by the constraints,
+    the union of its superkey components equals the entire heading
+  protected_skeleton:
+  - candidate_keys
+  - functional_dependencies
+  - join_dependencies
+  - superkeys
+  erased_structure: []
+  non_claims:
+  - does not imply SKNF or 5NF. RFNF requires coverage of the heading by superkey components;
+    SKNF requires every component to be a superkey
+  - KCNF is an equivalent syntactic characterization, not an additional strict level
+  - does not certify runtime repair without cochain substrate
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  citation:
+    authors: Hugh Darwen, C. J. Date, and Ronald Fagin
+    year: 2012
+    work: A Normal Form for Relational Databases, Essential Tuple Normal Form
+  formal_statement: 'A relvar schema is in redundancy-free normal form (RFNF) when
+    it is in Boyce-Codd normal form and, for every join dependency implied by its
+    constraints, the union of the components that are superkeys covers the entire heading
+    (Darwen, Date, Fagin 2012 Theorem 1.19).
+
+    '
+  membership_test: in BCNF and union of superkey components covers heading for all implied JDs
+  quadrilateral:
+    qualifies_as_true_normal_form: true
+    anomaly_exclusion: 'Partial tuple redundancies that occur in BCNF/ETNF schemas when
+      superkey components do not span the entire attribute heading.
+
+      '
+    lossless_join:
+      status: join_dependency
+      statement: 'Decomposition follows the join dependencies implied by schema constraints.
+
+        '
+    dependency_preservation:
+      status: not_asserted
+      statement: 'Dependency preservation of all constraints within single components is
+        not guaranteed.
+
+        '
+    syntactic_decision:
+      status: schema_decidable
+      statement: 'Decidable by computing BCNF compliance and verifying heading coverage
+        across superkey components of implied join dependencies.
+
+        '
+  chain:
+    requires:
+    - ETNF
+    - 4NF
+    - BCNF
+    implied_by:
+    - SKNF
+    - 5NF
+    - 6NF
+declarations_required:
+- heading
+- candidate_keys
+- explicitly_declared_join_dependencies
+- relation_predicate
+evidence_required: []
+validation_criteria:
+- schema satisfies BCNF
+- for every implied join dependency, the union of its superkey components equals the heading
+terminal_routes:
+- Accept
+- Reject
+terminal_route_map:
+  Accept: Preserve
+  Reject: Reject
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: join dependency superkey components do not cover entire heading
+  diagnosis: superkey components fail heading coverage in BCNF schema
+  terminal: Reject

@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "omega.symbol-game.llm-turn.v1",
+  "title": "Symbol Game LlmTurnPayloadV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "family",
+    "objective",
+    "role",
+    "turn_kind",
+    "content_sha256",
+    "content_byte_count",
+    "candidate_budget",
+    "operation_budget",
+    "required_reply_fields",
+    "terminal_target",
+    "evidence_ceiling",
+    "parent_packet_id",
+    "conversation_root_id",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omega.symbol-game.llm-turn.v1"
+    },
+    "family": {
+      "const": "llm_turn"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8192
+    },
+    "role": {
+      "enum": ["user", "assistant", "system", "tool"]
+    },
+    "turn_kind": {
+      "enum": [
+        "prose",
+        "code_change",
+        "claimed_result",
+        "tool_result",
+        "status"
+      ]
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "content_byte_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1048576
+    },
+    "candidate_budget": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 32
+    },
+    "operation_budget": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4096
+    },
+    "required_reply_fields": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "PACKET_ID",
+          "PARENT",
+          "CANDIDATE",
+          "RUN_ROOT",
+          "OPEN_OBSTRUCTIONS",
+          "RESIDUAL_COLOUR",
+          "AUTHORITY_EFFECT"
+        ]
+      }
+    },
+    "terminal_target": {
+      "const": "TypedTurnOrProsePromptRefused"
+    },
+    "evidence_ceiling": {
+      "const": "ReplayableLabEvidence"
+    },
+    "parent_packet_id": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "conversation_root_id": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "authority_effect": {
+      "const": "None"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.:-]{1,128}$"
+    },
+    "prompt_artifact_id": {
+      "type": ["string", "null"],
+      "pattern": "^[A-Za-z0-9_.:-]{1,128}$"
+    },
+    "kill_conditions": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.:-]{1,128}$"
+      }
+    }
+  },
+  "$comment": "Consequential turn_kind values (code_change, claimed_result) require a valid packet or typed PROSE_PROMPT_REFUSED. Model-authored passed/verified/promotion_eligible fields are forbidden and fail closed. AuthorityEffect is always None."
+}

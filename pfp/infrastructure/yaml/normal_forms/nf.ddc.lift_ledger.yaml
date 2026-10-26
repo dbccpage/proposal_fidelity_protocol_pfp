@@ -1,0 +1,99 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.ddc.lift_ledger
+  name: Lift Ledger Normal Form
+  short_name: LNLF
+  version: v0
+  theory_status: established
+  contract_status: active
+  status: active
+  verification_status: executable
+  family: transport
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - structural_lift
+    - dimension_extension
+    - finite_lambda_ledger
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: unlicensed dimension expansions, broken step adjacency in multi-step descent/lift chains, or unresolved empty ledgers
+  preserves_invariant: FiniteLambdaLedger sequence chaining with step adjacency, intermediate descent enforcement, and ℓ¹ norm preservation
+  protected_skeleton:
+    - initial_state_endpoint
+    - terminal_state_endpoint
+    - finite_step_sequence
+    - adjacency_witnesses
+    - license_identifier
+  erased_structure:
+    - unreferenced_external_gauge_coordinates
+  non_claims:
+    - does not claim structural lift eliminates obstructions; non-exactness persists across extensions
+    - does not permit lift without an explicit discrete license LCE
+    - does not confer operational authority; authority_effect is unconditionally None
+definition:
+  source: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/normal_forms/README.md
+  section: '2.0'
+  formal_statement: >
+    On a discrete deformation trajectory involving dimension expansions, Lift Ledger Normal Form (LNLF)
+    organizes multi-step moves into an explicit FiniteLambdaLedger. Structural lift rune Λ is triggered
+    strictly from ClosedResidual (Φ₁ > 0, Γ₂ = 0) or DetectorInadequate states under Licensed Context
+    Extension (LCE), enforcing adjacent step continuity step[i].after == step[i+1].before.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: step_adjacency_chaining_not_relational_project_join
+    anomaly_exclusion: jumping coordinates without step continuity, unchained descent rows, or lifting without valid discrete license
+    lossless_join:
+      status: chained_sequence_reconstruction
+      statement: the sequence of intermediate states is reconstructed losslessly from step[0].before to step[-1].after
+    dependency_preservation:
+      status: pairwise_adjacency_preserved
+      statement: step[i].after == step[i+1].before is checked locally on adjacent step pairs
+    syntactic_decision:
+      status: finite_ledger_decidable
+      statement: membership is decidable by FiniteLambdaLedger.require_chained()
+declarations_required:
+  - initial_phi_gamma
+  - terminal_phi_gamma
+  - steps_array
+  - license_id
+evidence_required: []
+validation_criteria:
+  - lift rune Λ is initiated only from authorized trigger states (Law 4)
+  - consecutive step endpoints match exactly: step[i].after == step[i+1].before
+  - license ID resolves to an admitted Discrete Context Extension
+terminal_routes:
+  - AdmitLiftLedger
+  - ExecuteStructuralLift
+  - RejectUnlicensedLift
+  - RejectBrokenAdjacency
+terminal_route_map:
+  AdmitLiftLedger: Preserve
+  ExecuteStructuralLift: Lift
+  RejectUnlicensedLift: Refuse
+  RejectBrokenAdjacency: Reject
+certification:
+  certificate_required: true
+  certificate_kind: lambda_ledger_receipt
+  obstruction_class_required: true
+  loss_ledger_required: true
+  verifier_required: true
+  loss_ledger_trigger_id: descent_with_loss
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+  - symptom: step[i].after does not match step[i+1].before
+    diagnosis: broken step adjacency; unchained deformation sequence
+    terminal: RejectBrokenAdjacency
+  - symptom: lift proposed without ClosedResidual or DetectorInadequate
+    diagnosis: lift attempted from uncertified pre-state; violates Law 4
+    terminal: RejectUnlicensedLift
+examples:
+  - ref: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+    section: '2.5'
+references:
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/quotient_transport.contract.yaml

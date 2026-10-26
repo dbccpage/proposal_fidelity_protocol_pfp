@@ -1,0 +1,131 @@
+# Simplicial Complex Cochain Prompt Representation Specification
+# Governing Standard: Proposal Fidelity Protocol (PFP)
+# AuthorityEffect: None.
+
+schema_version: pfp.prompt_representation.v1
+representation_kind: cochain
+authority_effect: None
+
+classification:
+  family: prompt_wire_encoding
+  encoding_posture: simplicial_complex_exterior_calculus
+  token_overhead_posture: geometric_simplices_and_defect_chains
+  carrier_type: application/x-cochain-yaml
+
+description: >
+  Simplicial complex & discrete exterior calculus boundary representation mapping
+  prompts to 0-simplices (vertices), 1-simplices (edges), and 2-simplices (faces).
+  Carries exact rational cochains over Q to witness circulation, boundary defects, and curvature walls.
+  Derived from discrete Hodge theory (Pilot 006). Bianchi identity contractions
+  and simplicial cochain curvature walls are proposed motivations, not verified pilot evidence.
+
+empirical_performance_baseline:
+  source_study: coda_atlas/prompts/pilots/pilot_006/pilot_findings.md
+  associated_pilots: ["pilot_006"]
+  mathematical_domain: "Discrete Hodge decomposition, 4D Bianchi identities, simplicial curvature walls"
+
+invariants:
+  - id: COC-INV-001
+    name: SimplexTotality
+    rule: All edge and face endpoints must reference declared vertex identifiers.
+  - id: COC-INV-002
+    name: ExactRationalDomain
+    rule: All cochain values must evaluate as exact integers or fractions over Q (zero unhedged float).
+  - id: COC-INV-003
+    name: MandatoryTaskSpan
+    rule: At least one prompt span must carry role='task'.
+  - id: COC-INV-004
+    name: MonotonicSlotSequence
+    rule: Span slots must be ordered monotonically ('s0', 's1', ...).
+
+specification:
+  fields:
+    source_id:
+      type: string
+      required: true
+      pattern: "^[a-zA-Z0-9_-]+$"
+    source_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    proposal_sha256:
+      type: string
+      required: true
+      pattern: "^[0-9a-f]{64}$"
+    representation_kind:
+      type: string
+      required: true
+      const: cochain
+    authority_effect:
+      type: string
+      required: true
+      const: None
+    vertices:
+      type: array
+      required: true
+      items:
+        type: string
+    edges:
+      type: array
+      items:
+        type: array
+        items:
+          type: string
+    faces:
+      type: array
+      items:
+        type: array
+        items:
+          type: string
+    cochain_0:
+      type: object
+    cochain_1:
+      type: object
+    cochain_2:
+      type: object
+    spans:
+      type: array
+      required: true
+      items:
+        type: object
+        required:
+          - slot
+          - role
+          - simplex
+          - text
+        properties:
+          slot:
+            type: string
+            pattern: "^s[0-9]+$"
+          role:
+            type: string
+            enum: [task, constraint, context, output, unresolved]
+          simplex:
+            type: string
+          text:
+            type: string
+
+canonical_example:
+  source_id: "case0:cochain"
+  source_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  proposal_sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  representation_kind: "cochain"
+  authority_effect: "None"
+  vertices: ["v0", "v1", "v2"]
+  edges:
+    - ["v0", "v1"]
+    - ["v1", "v2"]
+    - ["v2", "v0"]
+  cochain_0:
+    v0: "0"
+    v1: "1"
+    v2: "0"
+  cochain_1:
+    "v0->v1": "1/2"
+    "v1->v2": "1/2"
+    "v2->v0": "-1"
+  spans:
+    - slot: "s0"
+      role: "task"
+      simplex: "v0"
+      text: "Compute discrete Hodge decomposition."

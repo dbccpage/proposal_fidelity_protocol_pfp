@@ -1,0 +1,23 @@
+mode_id: 7
+name: "S(n) Permutation & Braid Equivariance"
+cluster: "Cluster III: Group & Cochain Structure"
+authority_effect: "None"
+core_mechanism: "Transposition parity, carrier quotient orbits, and braided swap schedules"
+substrate: "Symmetric group S(n) and braid group B_n on discrete carrier elements"
+paper_reference: "002_the_symbol_game_signed_presentations_and_search_frontier"
+rules:
+  - "Physical observables must be strictly invariant under even permutations pi in A_n."
+  - "Odd permutations must invert signed boundary orientation registers strictly."
+  - "Braided moves must satisfy Yang-Baxter braid relations."
+entry_preconditions:
+  - "Carrier complex with n distinct elements defined."
+  - "S(n) action on cochain space specified."
+winning_condition: >
+  Invariance of terminal Betti numbers and cycle balance under all elements of the symmetry group.
+failure_modes:
+  - "Parity violation (even permutation altering observable)"
+  - "Braid relation collapse"
+  - "Asymmetric label preference"
+verifier_contract:
+  verifier_type: "permutation_equivariance_checker"
+  fail_closed: true

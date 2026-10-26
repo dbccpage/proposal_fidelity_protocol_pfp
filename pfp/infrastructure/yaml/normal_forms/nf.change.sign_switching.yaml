@@ -1,0 +1,77 @@
+schema_version: smplx.nf.contract.v1
+contract_kind: normal_form_contract
+identity:
+  version: v1
+  status: active
+  theory_status: proposed
+  contract_status: active
+  verification_status: executable
+  family: change
+  id: nf.change.sign_switching
+  name: Binary graph sign switching section
+  short_name: SIGN_SWITCHING
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - finite_quotient
+  data_posture: in_transformation
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: Different representatives of a declared equivalence class appearing
+    as distinct normal representatives
+  preserves_invariant: The declared equivalence class
+  protected_skeleton:
+  - fixed_ordered_ambient_carrier
+  - declared_gauge_action
+  erased_structure:
+  - declared_gauge_redundancy
+  non_claims:
+  - No polynomial algorithm for arbitrary succinct fermionic Hamiltonians
+  - No normalization across changes of labels, bases, carrier size, or equivalence
+    relation
+declarations_required:
+- ordered finite carrier
+- exact input
+- declared gauge action
+evidence_required:
+- exact_gauge_witness: binary_vector
+validation_criteria:
+- replay the returned gauge witness exactly
+- check the representative condition
+terminal_routes:
+- Normalized
+- Refused
+terminal_route_map:
+  Normalized: Preserve
+  Refused: Refuse
+certification:
+  certificate_required: true
+  certificate_kind: explicit_gauge_witness
+  obstruction_class_required: true
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+extensions:
+  normalization:
+    kind: canonicalizer
+    claim_scope: A normal form for diagonal +/-1 basis gauges on an explicitly supplied
+      sign graph; no claim for arbitrary unitary basis changes or succinct graph construction.
+    domain: F2^E for a fixed ordered labelled finite undirected multigraph, including
+      loops
+    equivalence: s ~ s_prime iff s_prime(uv) = s(uv) + a(u) + a(v) mod 2
+    normalizer: code/bqnf_sign_evaluator.py:normalize_sign_cochain
+    representative_condition: All edges in the edge-order spanning forest have parity
+      zero
+    laws:
+      soundness: N(s)(uv) = s(uv) xor returned_gauge(u) xor returned_gauge(v)
+      idempotence: N(N(s)) = N(s)
+      completeness: N(s) = N(s_prime) iff s and s_prime differ by vertex switching
+      determinism: Edge order fixes the forest; least-vertex roots fix its gauge
+    evidence:
+    - ../docs/normal_form_audit.md
+    - ../code/tests/test_normal_form_laws.py
+quadrilateral:
+  qualifies_as_true_normal_form: false

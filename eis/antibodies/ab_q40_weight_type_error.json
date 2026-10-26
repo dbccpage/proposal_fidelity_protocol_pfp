@@ -1,0 +1,17 @@
+{
+  "antibody_id": "ab_q40_weight_type_error",
+  "failure_class": "type_error:unsupported_operand_int_and_list",
+  "target_pattern": "unsupported operand type(s) for +=: 'int' and 'list'",
+  "constraint_type": "ProjectOut",
+  "operatorizability": "repairable",
+  "action": "repair",
+  "severity": "P0",
+  "description": "Prevents adding raw unparsed [num, den] weight lists to integers; mandates Fraction(w[0], w[1]).",
+  "negative_fixture": "total_energy += term['weight']",
+  "positive_fixture": "total_energy += Fraction(term['weight'][0], term['weight'][1])",
+  "times_seen": 2,
+  "pharmacy_status": "admitted",
+  "authority_effect": "None",
+  "created_at": "2026-09-27T19:42:05.602853+00:00",
+  "evidence_sha256": "3dec70a36ac65ef705471390d53cf2aebee79b5964205bc2a82e632dff9d7f52"
+}

@@ -1,0 +1,366 @@
+{
+  "answer_type_computed": "D",
+  "answer_type_declared": "D",
+  "authority_effect": "None",
+  "caps": [],
+  "carrier_part": "harness_computation",
+  "challenge_id": "merge_tables",
+  "clause_census": {
+    "associative": {
+      "census": "derivability",
+      "changed_on": [
+        "near_bracket",
+        "near_gap",
+        "near_two"
+      ]
+    },
+    "closed": {
+      "census": "derivability",
+      "changed_on": [
+        "near_outside"
+      ]
+    },
+    "commutative": {
+      "census": "derivability",
+      "changed_on": [
+        "mut",
+        "near_bracket",
+        "near_gap",
+        "near_outside"
+      ]
+    },
+    "idempotent": {
+      "census": "derivability",
+      "changed_on": [
+        "near_twice",
+        "own_neg"
+      ]
+    },
+    "one_result": {
+      "census": "derivability",
+      "changed_on": [
+        "mut",
+        "near_bracket",
+        "near_gap",
+        "near_outside",
+        "near_twice",
+        "near_two",
+        "own_neg",
+        "pos"
+      ]
+    },
+    "table_total": {
+      "census": "derivability",
+      "changed_on": [
+        "near_gap"
+      ]
+    }
+  },
+  "evidence_ceiling": "COMPUTED",
+  "extra": {},
+  "hosting_down_check": {
+    "defaulted": 0,
+    "non_descent_cases": 16,
+    "old_image_cases": 8
+  },
+  "intake_probes": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "mismatches": [],
+  "missing_components": [],
+  "native_share": "6 of 6",
+  "restatement_sha256": "sha256:e7b9767dfefc692b49af7a6b2e8a74a4394ba3401ecfdb96c91a0f38cf2557c9",
+  "schema": "challenge-evidence/1",
+  "stage": {
+    "bound_note": "at most three items (embargo)",
+    "name": "base"
+  },
+  "status": "EXPECTED",
+  "target": "named in the binding layer",
+  "verdicts": [
+    {
+      "admitted": true,
+      "code": "ACCEPT",
+      "decoded": {},
+      "detail": "",
+      "failed": [],
+      "fixture": "pos",
+      "refutations": {},
+      "role": "positive",
+      "satisfied": true,
+      "witness": {
+        "classes": [
+          {
+            "representative": [],
+            "size": 1
+          }
+        ],
+        "cost": [
+          0,
+          -1
+        ],
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "sha256:71d200d8ffab1b98ab940769da680c27d48873242f3f141a4910e6e10766e84b",
+          "class_size": 1,
+          "class_size_expected": 1,
+          "cost_found": 0,
+          "pruned": true,
+          "stage": "base",
+          "status": "FOUND",
+          "theorem": null
+        },
+        "grade": "unique_delta",
+        "literal_minima": 1,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:idempotent",
+      "decoded": {},
+      "detail": "",
+      "failed": [
+        "idempotent"
+      ],
+      "fixture": "own_neg",
+      "refutations": {
+        "idempotent": "(((('a', 1),), ((2, (1, 1, 1)),)),)"
+      },
+      "role": "own_negative",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:associative,commutative,table_total",
+      "decoded": {},
+      "detail": "",
+      "failed": [
+        "associative",
+        "commutative",
+        "table_total"
+      ],
+      "fixture": "near_gap",
+      "refutations": {
+        "associative": "(((('a', 0), ('b', 1), ('c', 2), ('d', 1), ('e', 2), ('f', 2)), ((2, (0, 2, 2)),)),)",
+        "commutative": "(((('a', 2), ('b', 0), ('c', 2)), ((2, (0, 2, 2)),)),)",
+        "table_total": "((('a', 0), ('b', 2)),)"
+      },
+      "role": "extra",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:idempotent",
+      "decoded": {},
+      "detail": "",
+      "failed": [
+        "idempotent"
+      ],
+      "fixture": "near_twice",
+      "refutations": {
+        "idempotent": "(((('a', 0),), ((2, (0, 0, 0)),)),)"
+      },
+      "role": "extra",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:associative,commutative",
+      "decoded": {},
+      "detail": "",
+      "failed": [
+        "associative",
+        "commutative"
+      ],
+      "fixture": "near_bracket",
+      "refutations": {
+        "associative": "(((('a', 0), ('b', 1), ('c', 2), ('d', 1), ('e', 2), ('f', 2)), ((2, (0, 2, 2)),)), ((('a', 0), ('b', 2), ('c', 1), ('d', 0), ('e', 1), ('f', 2)), ((2, (0, 2, 1)),)), ((('a', 1), ('b', 0), ('c', 2), ('d', 1), ('e', 2), ('f', 0)), ((2, (1, 0, 2)),)))",
+        "commutative": "(((('a', 0), ('b', 2), ('c', 0)), ((2, (2, 0, 0)),)), ((('a', 2), ('b', 0), ('c', 2)), ((2, (0, 2, 2)),)))"
+      },
+      "role": "extra",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:associative,one_result",
+      "decoded": {},
+      "detail": "",
+      "failed": [
+        "associative",
+        "one_result"
+      ],
+      "fixture": "near_two",
+      "refutations": {
+        "associative": "(((('a', 0), ('b', 0), ('c', 0), ('d', 0), ('e', 0), ('f', 1)), ((2, (0, 1, 0)),)),)",
+        "one_result": "(((0, 0), ((0, 0, 0), (0, 0, 1))),)"
+      },
+      "role": "extra",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:closed,commutative",
+      "decoded": {},
+      "detail": "",
+      "failed": [
+        "closed",
+        "commutative"
+      ],
+      "fixture": "near_outside",
+      "refutations": {
+        "closed": "(((('a', 0), ('b', 3), ('c', 3)), ((0, (3,)), (0, (3,)))),)",
+        "commutative": "(((('a', 0), ('b', 3), ('c', 3)), ((2, (3, 0, 3)),)),)"
+      },
+      "role": "extra",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    },
+    {
+      "admitted": true,
+      "code": "FAILS:commutative",
+      "decoded": {},
+      "detail": "",
+      "failed": [
+        "commutative"
+      ],
+      "fixture": "mut",
+      "refutations": {
+        "commutative": "(((('a', 0), ('b', 1), ('c', 0)), ((2, (1, 0, 0)),)), ((('a', 1), ('b', 0), ('c', 1)), ((2, (0, 1, 1)),)))"
+      },
+      "role": "mutation",
+      "satisfied": false,
+      "witness": {
+        "classes": [],
+        "cost": null,
+        "exhaustion": {
+          "bound_max_items": 2,
+          "class_sha256": "",
+          "class_size": 0,
+          "class_size_expected": 0,
+          "cost_found": null,
+          "pruned": true,
+          "stage": "base",
+          "status": "CLOSED_BY_THEOREM",
+          "theorem": "denied_terminal"
+        },
+        "grade": "none",
+        "literal_minima": 0,
+        "measure": "mu1"
+      }
+    }
+  ]
+}

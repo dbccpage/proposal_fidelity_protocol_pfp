@@ -1,0 +1,1073 @@
+[
+  {
+    "case_id": "c046_base_complete_00_group_standard",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "precedence": {
+      "inv": 100,
+      "mul": 50,
+      "e": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_01_group_additive",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "add(0, x)",
+        "x"
+      ],
+      [
+        "add(neg(x), x)",
+        "0"
+      ],
+      [
+        "add(add(x, y), z)",
+        "add(x, add(y, z))"
+      ]
+    ],
+    "precedence": {
+      "neg": 100,
+      "add": 50,
+      "0": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_02_monoid_two_sided_id",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(1, x)",
+        "x"
+      ],
+      [
+        "mul(x, 1)",
+        "x"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "precedence": {
+      "mul": 50,
+      "1": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_03_semilattice_idempotent",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "meet(x, x)",
+        "x"
+      ],
+      [
+        "meet(x, 1)",
+        "x"
+      ],
+      [
+        "meet(x, 0)",
+        "0"
+      ]
+    ],
+    "precedence": {
+      "meet": 50,
+      "1": 10,
+      "0": 5
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_04_nilpotent_order_2",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "sq(0)",
+        "0"
+      ],
+      [
+        "mul(x, 0)",
+        "0"
+      ],
+      [
+        "mul(0, x)",
+        "0"
+      ]
+    ],
+    "precedence": {
+      "sq": 60,
+      "mul": 50,
+      "0": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_05_central_projector",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "p(p(x))",
+        "p(x)"
+      ],
+      [
+        "q(p(x))",
+        "0"
+      ],
+      [
+        "q(q(x))",
+        "q(x)"
+      ]
+    ],
+    "precedence": {
+      "q": 60,
+      "p": 50,
+      "0": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_06_absorb_operator",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "f(x, 0)",
+        "0"
+      ],
+      [
+        "f(0, x)",
+        "0"
+      ],
+      [
+        "f(x, 1)",
+        "x"
+      ]
+    ],
+    "precedence": {
+      "f": 50,
+      "1": 10,
+      "0": 5
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_07_dual_involution",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "h(h(x))",
+        "x"
+      ],
+      [
+        "g(g(x))",
+        "x"
+      ],
+      [
+        "h(g(h(x)))",
+        "g(x)"
+      ]
+    ],
+    "precedence": {
+      "h": 80,
+      "g": 60
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_08_group_inv_inv",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "inv(inv(x))",
+        "x"
+      ],
+      [
+        "mul(x, inv(x))",
+        "e"
+      ]
+    ],
+    "precedence": {
+      "inv": 100,
+      "mul": 50,
+      "e": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_09_centralizer_idempotent",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "c(c(x))",
+        "c(x)"
+      ],
+      [
+        "c(x)",
+        "d(x)"
+      ]
+    ],
+    "precedence": {
+      "c": 60,
+      "d": 50
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_10_absorb_ring_zero",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "times(x, 0)",
+        "0"
+      ],
+      [
+        "times(0, x)",
+        "0"
+      ]
+    ],
+    "precedence": {
+      "times": 50,
+      "0": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_complete_11_monoid_dual",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "op(x, e)",
+        "x"
+      ],
+      [
+        "op(e, x)",
+        "x"
+      ]
+    ],
+    "precedence": {
+      "op": 50,
+      "e": 10
+    },
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_00_confluent_group",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ],
+      [
+        "mul(inv(x), mul(x, y))",
+        "y"
+      ],
+      [
+        "inv(e)",
+        "e"
+      ],
+      [
+        "mul(x, e)",
+        "x"
+      ],
+      [
+        "mul(x, inv(x))",
+        "e"
+      ],
+      [
+        "inv(inv(x))",
+        "x"
+      ],
+      [
+        "mul(x, mul(inv(x), y))",
+        "y"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_01_non_confluent_group",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_02_confluent_monoid",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "mul(1, x)",
+        "x"
+      ],
+      [
+        "mul(x, 1)",
+        "x"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_03_non_confluent_pair",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "f(g(x))",
+        "a"
+      ],
+      [
+        "g(h(x))",
+        "b"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_04_confluent_proj",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "p(p(x))",
+        "p(x)"
+      ],
+      [
+        "q(p(x))",
+        "0"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_05_confluent_single",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "f(x)",
+        "g(x)"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_06_confluent_additive",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "add(0, x)",
+        "x"
+      ],
+      [
+        "add(neg(x), x)",
+        "0"
+      ],
+      [
+        "neg(0)",
+        "0"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_07_non_confluent_fork",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "f(x)",
+        "g(x)"
+      ],
+      [
+        "f(x)",
+        "h(x)"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_08_confluent_boolean",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "and(x, 0)",
+        "0"
+      ],
+      [
+        "and(0, x)",
+        "0"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_confluence_09_confluent_identity",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      [
+        "inv(e)",
+        "e"
+      ],
+      [
+        "mul(e, e)",
+        "e"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_00_red_inv_e",
+    "task": "REDUCE",
+    "term": "inv(e)",
+    "rules": [
+      [
+        "inv(e)",
+        "e"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_01_red_double_inv",
+    "task": "REDUCE",
+    "term": "inv(inv(x))",
+    "rules": [
+      [
+        "inv(inv(x))",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_02_red_mul_inv_x",
+    "task": "REDUCE",
+    "term": "mul(inv(x), x)",
+    "rules": [
+      [
+        "mul(inv(x), x)",
+        "e"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_03_red_mul_e_x",
+    "task": "REDUCE",
+    "term": "mul(e, x)",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_04_red_mul_x_e",
+    "task": "REDUCE",
+    "term": "mul(x, e)",
+    "rules": [
+      [
+        "mul(x, e)",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_05_red_triple_inv",
+    "task": "REDUCE",
+    "term": "inv(inv(inv(x)))",
+    "rules": [
+      [
+        "inv(inv(x))",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_06_red_nested_eval",
+    "task": "REDUCE",
+    "term": "mul(mul(inv(x), x), e)",
+    "rules": [
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(e, e)",
+        "e"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_07_red_proj_quad",
+    "task": "REDUCE",
+    "term": "p(p(p(x)))",
+    "rules": [
+      [
+        "p(p(x))",
+        "p(x)"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_08_red_zero_absorb",
+    "task": "REDUCE",
+    "term": "f(f(x, 0), 1)",
+    "rules": [
+      [
+        "f(x, 0)",
+        "0"
+      ],
+      [
+        "f(0, 1)",
+        "0"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_09_red_add_zero",
+    "task": "REDUCE",
+    "term": "add(x, 0)",
+    "rules": [
+      [
+        "add(x, 0)",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_10_red_neg_neg",
+    "task": "REDUCE",
+    "term": "neg(neg(y))",
+    "rules": [
+      [
+        "neg(neg(x))",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_11_red_and_self",
+    "task": "REDUCE",
+    "term": "and(z, z)",
+    "rules": [
+      [
+        "and(x, x)",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_12_red_and_zero",
+    "task": "REDUCE",
+    "term": "and(z, 0)",
+    "rules": [
+      [
+        "and(x, 0)",
+        "0"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_13_red_and_one",
+    "task": "REDUCE",
+    "term": "and(1, z)",
+    "rules": [
+      [
+        "and(1, x)",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_14_red_monoid_assoc",
+    "task": "REDUCE",
+    "term": "mul(mul(1, a), b)",
+    "rules": [
+      [
+        "mul(1, x)",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_15_red_dual_h",
+    "task": "REDUCE",
+    "term": "h(h(y))",
+    "rules": [
+      [
+        "h(h(x))",
+        "x"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_16_red_assoc_step",
+    "task": "REDUCE",
+    "term": "mul(mul(a, b), c)",
+    "rules": [
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_base_reduce_17_red_comp_zero",
+    "task": "REDUCE",
+    "term": "times(times(a, 0), b)",
+    "rules": [
+      [
+        "times(x, 0)",
+        "0"
+      ],
+      [
+        "times(0, y)",
+        "0"
+      ]
+    ],
+    "category": "base_hidden"
+  },
+  {
+    "case_id": "c046_gauge_00_g01_group_shuffled",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ],
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_01_g02_group_shuffled2",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ],
+      [
+        "mul(e, x)",
+        "x"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_02_g03_additive_shuffled",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "add(add(x, y), z)",
+        "add(x, add(y, z))"
+      ],
+      [
+        "add(0, x)",
+        "x"
+      ],
+      [
+        "add(neg(x), x)",
+        "0"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_03_g04_monoid_shuffled",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(x, 1)",
+        "x"
+      ],
+      [
+        "mul(1, x)",
+        "x"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_04_g05_group_sym_dot",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "dot(e, x)",
+        "x"
+      ],
+      [
+        "dot(inv(x), x)",
+        "e"
+      ],
+      [
+        "dot(dot(x, y), z)",
+        "dot(x, dot(y, z))"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_05_g06_group_sym_star",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "star(e, x)",
+        "x"
+      ],
+      [
+        "star(inv(x), x)",
+        "e"
+      ],
+      [
+        "star(star(x, y), z)",
+        "star(x, star(y, z))"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_06_g07_additive_sym_plus",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "plus(0, x)",
+        "x"
+      ],
+      [
+        "plus(neg(x), x)",
+        "0"
+      ],
+      [
+        "plus(plus(x, y), z)",
+        "plus(x, plus(y, z))"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_07_g08_monoid_sym_circ",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "circ(1, x)",
+        "x"
+      ],
+      [
+        "circ(x, 1)",
+        "x"
+      ],
+      [
+        "circ(circ(x, y), z)",
+        "circ(x, circ(y, z))"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_08_g09_reduce_shuffled_rules",
+    "task": "REDUCE",
+    "term": "inv(inv(x))",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "inv(inv(x))",
+        "x"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_09_g10_reduce_sym_dot",
+    "task": "REDUCE",
+    "term": "dot(e, y)",
+    "rules": [
+      [
+        "dot(e, x)",
+        "x"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_10_g11_reduce_sym_star",
+    "task": "REDUCE",
+    "term": "star(x, e)",
+    "rules": [
+      [
+        "star(x, e)",
+        "x"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_11_g12_confluence_shuffled",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_12_g13_confluence_sym_dot",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "dot(e, x)",
+        "x"
+      ],
+      [
+        "dot(inv(x), x)",
+        "e"
+      ],
+      [
+        "dot(dot(x, y), z)",
+        "dot(x, dot(y, z))"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_13_g14_semilattice_shuffled",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "meet(x, 0)",
+        "0"
+      ],
+      [
+        "meet(x, 1)",
+        "x"
+      ],
+      [
+        "meet(x, x)",
+        "x"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_14_g15_dual_inv_shuffled",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "g(g(x))",
+        "x"
+      ],
+      [
+        "h(h(x))",
+        "x"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_gauge_15_g16_absorb_shuffled",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "f(x, 1)",
+        "x"
+      ],
+      [
+        "f(x, 0)",
+        "0"
+      ],
+      [
+        "f(0, x)",
+        "0"
+      ]
+    ],
+    "category": "relabel_gauge"
+  },
+  {
+    "case_id": "c046_poison_01_commutativity_unorientable",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(x, y)",
+        "mul(y, x)"
+      ]
+    ],
+    "precedence": {
+      "mul": 50
+    },
+    "expected_reason": "ORDER_FAILURE",
+    "category": "poisoned"
+  },
+  {
+    "case_id": "c046_poison_02_step_limit_starved",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ]
+    ],
+    "precedence": {
+      "inv": 100,
+      "mul": 50,
+      "e": 10
+    },
+    "max_steps": 2,
+    "expected_reason": "MAX_STEPS_EXCEEDED",
+    "category": "poisoned"
+  },
+  {
+    "case_id": "c046_poison_03_malformed_unclosed_paren",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "mul(x, inv(y",
+        "x"
+      ]
+    ],
+    "expected_reason": "ORDER_FAILURE",
+    "category": "poisoned"
+  },
+  {
+    "case_id": "c046_poison_04_missing_term",
+    "task": "REDUCE",
+    "rules": [
+      [
+        "f(x)",
+        "x"
+      ]
+    ],
+    "expected_reason": "MALFORMED_INPUT",
+    "category": "poisoned"
+  },
+  {
+    "case_id": "c046_poison_05_missing_rules",
+    "task": "CHECK_CONFLUENCE",
+    "expected_reason": "MALFORMED_INPUT",
+    "category": "poisoned"
+  },
+  {
+    "case_id": "c046_poison_06_malformed_rule_tuple",
+    "task": "CHECK_CONFLUENCE",
+    "rules": [
+      "not_a_tuple"
+    ],
+    "expected_reason": "MALFORMED_TERM",
+    "category": "poisoned"
+  },
+  {
+    "case_id": "c046_poison_07_unorientable_symmetry",
+    "task": "COMPLETE",
+    "equations": [
+      [
+        "sym(x, y)",
+        "sym(y, x)"
+      ]
+    ],
+    "precedence": {
+      "sym": 50
+    },
+    "expected_reason": "ORDER_FAILURE",
+    "category": "poisoned"
+  },
+  {
+    "case_id": "c046_poison_08_unknown_task",
+    "task": "BOGUS_TASK",
+    "equations": [
+      [
+        "f(x)",
+        "x"
+      ]
+    ],
+    "expected_reason": "UNKNOWN_TASK",
+    "category": "poisoned"
+  }
+]

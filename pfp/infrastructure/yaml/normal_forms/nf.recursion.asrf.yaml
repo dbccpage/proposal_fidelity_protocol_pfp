@@ -1,0 +1,112 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: form_contract
+identity:
+  id: nf.recursion.asrf
+  name: Autopoietic Self-Reference Refusal Form
+  short_name: ASRF
+  version: v0
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+  family: recursion
+  status: draft
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - caller_identity
+  - verification_target
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: self-certification cycles where an actor certifies an artifact
+    it produced, collusive identity masquerading, and cycles in the evaluation call graph
+  preserves_invariant: declared hash inequality, authenticated separation of producer
+    and evaluator identities under role policy, and acyclicity of the evaluation call graph
+  protected_skeleton:
+  - caller_hash
+  - target_content_hash
+  - producer_identity_id
+  - evaluator_identity_id
+  - role_separation_policy
+  - call_graph_edges
+  erased_structure: []
+  non_claims:
+  - unequal caller and target hashes do not by themselves establish independent verification;
+    an actor's identity hash naturally differs from an artifact's content hash even
+    when the same actor produced and evaluated it
+  - this contract is an evaluator guard verifying declared hash inequality, authenticated
+    producer/evaluator identity distinctness, and call-graph acyclicity; it does not
+    constitute an incompleteness theorem or compute any cohomology group
+  - does not imply authorization
+declarations_required:
+- caller_hash: digest of the active evaluating entity
+- target_content_hash: content digest of the evaluated artifact
+- producer_identity: authenticated identity that generated the artifact
+- evaluator_identity: authenticated identity executing the evaluation
+- role_separation_policy: policy requiring producer_identity != evaluator_identity
+- call_graph: directed graph of evaluation invocations
+evidence_required:
+- caller_identity_signature: string
+- producer_identity_id: string
+- evaluator_identity_id: string
+- producer_evaluator_distinct: boolean
+- caller_hash_value: string
+- target_content_hash_value: string
+- call_graph_edges: list
+- acyclicity_verified: boolean
+validation_criteria:
+- hash_distinctness: caller hash differs strictly from target content hash
+- role_separation: producer identity differs from evaluator identity under authenticated policy
+- call_graph_acyclicity: declared call graph contains no directed cycle connecting caller, producer, and target
+terminal_routes:
+- Accept
+- SelfReferenceRefusal
+terminal_route_map:
+  Accept: Preserve
+  SelfReferenceRefusal: Refuse
+extensions:
+  condition_to_local_route_map:
+    all_distinct_and_acyclic: Accept
+    caller_target_hash_equal_or_cycle: SelfReferenceRefusal
+    producer_equals_evaluator: SelfReferenceRefusal
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: caller hash equals target hash, or call graph contains cycle
+  diagnosis: direct or cyclical self-certification attempt
+  terminal: SelfReferenceRefusal
+- symptom: producer identity equals evaluator identity
+  diagnosis: violation of separation of duties policy
+  terminal: SelfReferenceRefusal
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.7'
+  formal_statement: Evaluator guard recording caller hash, target hash, and authenticated
+    producer/evaluator identities. The step is preserved when producer and evaluator
+    differ, hashes differ, and the call graph is acyclic. Self-cycles and unseparated
+    roles route to refusal.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: self_reference_cycle_refusal_is_an_evaluator_guard_not_a_relational_project_join_theorem
+    qualifies_as_extended_form: true
+    anomaly_exclusion: self-certification of a generated state
+    lossless_join:
+      status: refusal_separated
+      statement: refused self-cycles are stored as refusals and are not folded into
+        the admitted evaluations
+    dependency_preservation:
+      status: hash_inequality_retained
+      statement: an admitted step keeps caller hash different from target hash and
+        producer different from evaluator
+    syntactic_decision:
+      status: declaration_decidable
+      statement: the check verifies declared identities, hashes, and call-graph acyclicity

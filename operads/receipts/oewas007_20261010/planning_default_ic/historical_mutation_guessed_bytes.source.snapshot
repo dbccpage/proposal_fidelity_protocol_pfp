@@ -1,0 +1,27 @@
+"""Portable historical source adapter and prior-art CLI composition."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+    IcMigrationRefusal,
+    resolve_historical_path,
+)
+from omega_engine_product_planning_office.use_cases.prior_art_epic_audit import main as audit_main
+
+
+class IcHistoricalSourceResolver:
+    def __call__(self, repository_root: Path, original_relative: str) -> Path:
+        try:
+            return repository_root / "_ic/darpa/research" / Path(original_relative).relative_to("_intelligence/research")
+        except IcMigrationRefusal as error:
+            raise ValueError(f"Historical planning source refused: {error.code}") from error
+
+
+def main() -> int:
+    return audit_main(historical_source_resolver=IcHistoricalSourceResolver())
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

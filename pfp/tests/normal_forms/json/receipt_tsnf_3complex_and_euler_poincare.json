@@ -1,0 +1,41 @@
+{
+  "schema": "tsnf_3complex_property_verification_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests extending Topological Simplex Normal Form (TSNF) to 3-complexes with tetrahedra, Stokes boundary nilpotency (d1.d2 = 0, d2.d3 = 0), and Euler-Poincare invariance on 3-sphere S^3 and 3-ball B^3 triangulations",
+  "created_utc": "2026-09-25T18:00:00Z",
+  "properties_verified": [
+    {
+      "property_name": "euler_poincare_invariance_random_3complexes",
+      "test_function": "test_tsnf_3complex_euler_poincare_invariance_property",
+      "status": "PASS",
+      "iterations": 100,
+      "details": "Verified exact equality chi_cells == chi_homology (|C_0| - |C_1| + |C_2| - |C_3| == b0 - b1 + b2 - b3) across 100 random simplicial 3-complexes with 4 to 8 vertices, arbitrary tetrahedra counts, and valid face orientations."
+    },
+    {
+      "property_name": "independent_connected_components_oracle_3complex",
+      "test_function": "test_tsnf_3complex_euler_poincare_invariance_property",
+      "status": "PASS",
+      "details": "Verified 0-th Betti number b0 strictly equals the count of connected components derived from an independent BFS graph traversal oracle across all 100 3-complex trials."
+    },
+    {
+      "property_name": "canonical_3d_topological_benchmarks_s3_and_b3",
+      "test_function": "test_canonical_3d_topological_benchmarks",
+      "status": "PASS",
+      "details": "Verified 3-sphere S^3 (chi=0, b0=1, b1=0, b2=0, b3=1 on minimal 4-simplex boundary) and solid 3-ball B^3 (chi=1, b0=1, b1=0, b2=0, b3=0 on single and compound triangulations)."
+    },
+    {
+      "property_name": "stokes_boundary_nilpotency_d2_d3",
+      "test_function": "test_stokes_boundary_nilpotency_d2_d3",
+      "status": "PASS",
+      "details": "Verified that d2 . d3 == 0 identically over Z for arbitrary oriented 3-simplices."
+    },
+    {
+      "property_name": "negative_tetrahedron_ordering_and_closure_guards",
+      "test_function": "test_negative_tetrahedron_ordering_and_uniqueness_guards",
+      "status": "PASS",
+      "details": "Verified that non-canonical vertex orderings, duplicate tetrahedron declarations, and omitted boundary 2-faces fail closed with Reject and descriptive defect diagnostics."
+    }
+  ],
+  "contract_aligned": "nf.coda.tsnf",
+  "all_properties_satisfied": true
+}

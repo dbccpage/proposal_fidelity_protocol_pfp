@@ -1,0 +1,146 @@
+# Proposal Fidelity Protocol (PFP) - Pilot Types Catalog
+# AuthorityEffect: None.
+# Schema: pfp.pilot-types.v1
+
+meta:
+  schema: pfp.pilot-types.v1
+  authority_effect: None
+  version: 1.0.0
+  governing_standard: Proposal Fidelity Protocol (PFP v0.2), Single Prompt Standard (SPK-001)
+  description: >
+    Data type and subtype declarations covering all YAML assets in the PFP pilot
+    estate (e.g., omega_engine_education/pilots/pilot_0000000). Declares the canonical
+    type hierarchy and every dialect/format subtype for pilot specifications,
+    seed rewrite variants, P* wrapped prompts, test plans, live response captures,
+    and comparative evaluation records.
+
+types:
+  PilotSpec:
+    type_id: pfp.pilot-spec.v1
+    schema_ref: pilot_spec_v1.schema.yaml
+    doc: Formal pilot benchmark specification defining task family, ground truth, checker gates, and bounds.
+    subtypes:
+      linear_algebra_exact:
+        doc: Exact linear algebra 2x2 system evaluation (e.g. x + 2y = 5, 3x - y = 1).
+      graph_facts:
+        doc: Graph adjacency and reachability factual queries.
+      graph_repair:
+        doc: Graph cycle and defect repair under minimal perturbation.
+      refusal_boundary:
+        doc: Ungrounded or malformed input refusal verification.
+
+  SeedPrompt:
+    type_id: pfp.seed-prompt.v1
+    schema_ref: seed_prompt_v1.schema.yaml
+    doc: Raw input problem formulation across diverse linguistic, algebraic, and symbolic dialects.
+    subtypes:
+      pfp.seed-prompt.plain-text:
+        doc: Standard natural language problem statement (seed.yaml).
+        sample_file: seed.yaml
+      pfp.seed-prompt.math-formal:
+        doc: Formal mathematical notation with LaTeX symbols and strict operators.
+        sample_file: seed_rewrite_01.yaml
+      pfp.seed-prompt.word-problem:
+        doc: Applied story or narrative word problem embedding identical arithmetic.
+        sample_file: seed_rewrite_02.yaml
+      pfp.seed-prompt.codebook-cipher:
+        doc: Opaque alphanumeric codebook substitution without a provided dictionary.
+        sample_file: seed_rewrite_03.yaml
+      pfp.seed-prompt.ascii-tableau:
+        doc: Fixed-width ASCII art tableau or structured layout grid.
+        sample_file: seed_rewrite_04.yaml
+      pfp.seed-prompt.matrix-form:
+        doc: Formal matrix-vector equation form A * x = b.
+        sample_file: seed_rewrite_05.yaml
+      pfp.seed-prompt.reverse-polish:
+        doc: Stack-based Reverse Polish Notation (RPN) operator sequences.
+        sample_file: seed_rewrite_06.yaml
+      pfp.seed-prompt.s-expression:
+        doc: LISP-style nested S-expression syntax.
+        sample_file: seed_rewrite_07.yaml
+      pfp.seed-prompt.emoji-substitution:
+        doc: Unicode glyph / emoji token substitution for variables and operators.
+        sample_file: seed_rewrite_08.yaml
+      pfp.seed-prompt.interleaved-noise:
+        doc: Task equations interleaved with conversational and contextual distractor noise.
+        sample_file: seed_rewrite_09.yaml
+      pfp.seed-prompt.proof-style:
+        doc: Deductive proof / theorem format with explicit axioms and derivation goals.
+        sample_file: seed_rewrite_10.yaml
+
+  PStarPromptTemplate:
+    type_id: pfp.p-star-template.v1
+    schema_ref: p_star_prompt_v1.schema.yaml
+    doc: Template specification defining SPK-001 prompt envelope components.
+    subtypes:
+      single_prompt_standard:
+        doc: SPK-001 compliant prompt envelope with lineage, guidance, system prompt, and schema.
+
+  PStarPrompt:
+    type_id: pfp.p-star-prompt.v1
+    schema_ref: p_star_prompt_v1.schema.yaml
+    doc: Fully assembled SPK-001 single-prompt payload wrapping a dialect seed prompt.
+    subtypes:
+      pfp.p-star-prompt.seed:
+        doc: P* wrapper around plain-text seed prompt (p_star.yaml).
+      pfp.p-star-prompt.rewrite-01:
+        doc: P* wrapper around math-formal dialect (p_star_rewrite_01.yaml).
+      pfp.p-star-prompt.rewrite-02:
+        doc: P* wrapper around word-problem dialect (p_star_rewrite_02.yaml).
+      pfp.p-star-prompt.rewrite-03:
+        doc: P* wrapper around codebook-cipher dialect (p_star_rewrite_03.yaml).
+      pfp.p-star-prompt.rewrite-04:
+        doc: P* wrapper around ascii-tableau dialect (p_star_rewrite_04.yaml).
+      pfp.p-star-prompt.rewrite-05:
+        doc: P* wrapper around matrix-form dialect (p_star_rewrite_05.yaml).
+      pfp.p-star-prompt.rewrite-06:
+        doc: P* wrapper around reverse-polish dialect (p_star_rewrite_06.yaml).
+      pfp.p-star-prompt.rewrite-07:
+        doc: P* wrapper around s-expression dialect (p_star_rewrite_07.yaml).
+      pfp.p-star-prompt.rewrite-08:
+        doc: P* wrapper around emoji-substitution dialect (p_star_rewrite_08.yaml).
+      pfp.p-star-prompt.rewrite-09:
+        doc: P* wrapper around interleaved-noise dialect (p_star_rewrite_09.yaml).
+      pfp.p-star-prompt.rewrite-10:
+        doc: P* wrapper around proof-style dialect (p_star_rewrite_10.yaml).
+
+  RewriteTestPlan:
+    type_id: pfp.rewrite-test-plan.v1
+    schema_ref: rewrite_test_plan_v1.schema.yaml
+    doc: Plan specification for testing dialect invariance across plain and P* prompt presentations.
+    subtypes:
+      pfp.rewrite-test-plan.linear-system:
+        doc: Test plan spanning 11 dialects across 2 presentation formats (22 cases).
+
+  TestSpec:
+    type_id: pfp.test-spec.v1
+    schema_ref: test_spec_v1.schema.yaml
+    doc: Granular test specification and evaluation record for an encapsulated test capsule (tests/test_XX/test_spec.yaml).
+    subtypes:
+      pfp.test-spec.plain-seed:
+        doc: Plain-text baseline seed execution specification.
+      pfp.test-spec.plain-rewrite:
+        doc: Untemplated dialect rewrite execution specification.
+      pfp.test-spec.p-star-templated:
+        doc: SPK-001 templated prompt execution specification.
+      pfp.test-spec.obfuscated-lift:
+        doc: Obfuscated representation, rule application, or structural lift trial.
+
+  PilotResponse:
+    type_id: pfp.pilot-response.v1
+    schema_ref: pilot_response_v1.schema.yaml
+    doc: Captured raw model response payload including tokens, cost, latency, reasoning, and evaluation receipts housed in test capsules (tests/test_XX/response.yaml).
+    subtypes:
+      pfp.pilot-response.plain:
+        doc: Execution response to an untemplated raw seed/rewrite prompt.
+      pfp.pilot-response.p-star:
+        doc: Execution response to an SPK-001 structured P* prompt payload.
+
+  PilotComparisonResults:
+    type_id: pfp.pilot-comparison-results.v1
+    schema_ref: pilot_comparison_results_v1.schema.yaml
+    doc: Consolidated comparative benchmark metrics across plain vs P* presentation suites (results/comparison_results.yaml).
+    subtypes:
+      pfp.pilot-comparison-results.summary:
+        doc: Suite-level metrics summary and individual test case comparison matrix.
+

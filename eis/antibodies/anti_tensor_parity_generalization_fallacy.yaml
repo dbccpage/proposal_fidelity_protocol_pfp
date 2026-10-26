@@ -1,0 +1,26 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-tensor-parity-generalization-fallacy
+canonical_name: Anti-Tensor Parity Generalization Fallacy
+failure_class: math:tensor_parity_generalization_fallacy
+target_pattern: (B_6|Szollosi|2-circulant).*(\bU\s*[\u2297x]\s*V|Kronecker|tensor
+  product)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects falsely asserting that indecomposable 2-circulant complex Hadamard
+  matrices (such as Szollosi B_6) factor into a Kronecker tensor product U (x) V to
+  claim Conjecture 2(b) qubit block parity cancellation without evaluating the 2-circulant
+  Laurent monomials.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/coda/rl_coda_and_prime_algorithms_discipline.md
+adversarial_mutation_fixture: 'Claiming: B_6(theta) = U(phi) (x) V implies alpha_2
+  = 2m - 3 cancels qubit block.'
+repaired_invariant_fixture: For indecomposable 2-circulant H = [[A, B], [B^dagger,
+  -A^dagger]], odd exponent beta_2 = 3(2m - 3) guarantees (-1)^{beta_2} = -1, causing
+  both G_H and G_{H^*} to vanish independently via column Laurent monomial pairing.
+source_pilot: pilot_031
+evidence_sha256: e154995e784d1beacbeeb8ece7b56bf40fa764c4e96576e72e65de6c35e0f75a

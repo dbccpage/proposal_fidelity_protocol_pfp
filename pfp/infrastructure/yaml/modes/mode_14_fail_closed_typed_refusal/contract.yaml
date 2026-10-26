@@ -1,0 +1,23 @@
+mode_id: 14
+name: "Fail-Closed Typed Refusal as the Winning Move"
+cluster: "Cluster IV: Dialectical & Adversarial"
+authority_effect: "None"
+core_mechanism: "Submitting adversarial or ungrounded queries to assert deterministic typed refusal"
+substrate: "Railway-Oriented Programming (ROP) Result[T, RefusalError] monad"
+paper_reference: "003_the_symbol_game_host_admitted_failure_detectors"
+rules:
+  - "The winning outcome is asserting that an unsafe, illegal, or out-of-bounds input is safely refused."
+  - "Refusals must carry explicit typed error codes (e.g. MAP_UNDEFINED, CARRIER_REGRESS, POLICY_VIOLATION)."
+  - "The system state must remain 100% immutable and uncorrupted upon refusal."
+entry_preconditions:
+  - "Adversarial test payload declared."
+  - "ROP refusal handler configured."
+winning_condition: >
+  Immediate emission of the predicted typed refusal with zero side-effects and zero partial mutations.
+failure_modes:
+  - "Silent pass on hostile input"
+  - "Uncaught panic or untyped exception"
+  - "Partial state corruption"
+verifier_contract:
+  verifier_type: "fail_closed_refusal_oracle"
+  fail_closed: true

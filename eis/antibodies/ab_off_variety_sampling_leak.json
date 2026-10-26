@@ -1,0 +1,18 @@
+{
+  "antibody_id": "ab_off_variety_sampling_leak",
+  "failure_class": "math:off_variety_sampling_leak",
+  "target_pattern": "(g_sep\\s*<\\s*0|separating.*negative).*without.*(f_k\\s*==\\s*0|on.*variety)",
+  "constraint_type": "ProjectOut",
+  "operatorizability": "repairable",
+  "action": "refuse",
+  "severity": "P0",
+  "description": "Rejects evaluating a candidate separating polynomial g_sep on arbitrary ambient sample points (a, b, c, d) in Q^4 and claiming emptiness of {V, g_sep >= 0} without verifying that the point satisfies all defining generators of variety V.",
+  "negative_fixture": "Evaluating g_sep at sample point (1/2, 3/4, 5/6, 7/8) yields g_sep = -1/100, proving emptiness.",
+  "positive_fixture": "Evaluating g_sep on genuine variety points in {-1, 1}^4 where f_segre = 0 and k^2 - 1 = 0 yields g_sep = -1/1000 < 0; verified algebraically across Q[a,b,c,d] via Stengle Positivstellensatz identity on 5^4 grid.",
+  "times_seen": 1,
+  "evidence_sha256": "61cb5d9f3c110eae533c9eab187c5def563ded78feb918bbf959b876ada734d5",
+  "pharmacy_status": "admitted",
+  "authority_effect": "None",
+  "created_at": "2026-10-15T19:18:17.192993+00:00",
+  "source_pilot": "pilot_032"
+}

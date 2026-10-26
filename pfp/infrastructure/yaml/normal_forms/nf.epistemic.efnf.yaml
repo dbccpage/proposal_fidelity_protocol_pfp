@@ -1,0 +1,106 @@
+# Draft declaration: no bound local contract evaluator is supplied; upstream mathematics and schema checks are separate evidence.
+schema_version: smplx.nf.contract.v0
+contract_kind: form_contract
+identity:
+  id: nf.epistemic.efnf
+  name: Endogenous Fidelity Normal Form
+  short_name: EFNF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: established
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - world_state
+  - represented_support
+  - retraction_down_map
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: external state leakage anomaly where unrepresented metadata affects operational verdicts,
+    and non-retractive world extensions
+  preserves_invariant: the Effectual-Outside Dichotomy holds so that identical represented support guarantees
+    identical operational outcomes, and every extension proposal carries an explicit retraction down-map
+  protected_skeleton:
+  - represented_support
+  - observation_views
+  - requirement_store
+  - retraction_down_map
+  erased_structure:
+  - unrepresented_external_notes
+  - ambient_environmental_metadata
+  non_claims:
+  - does not claim complete knowledge of external reality
+  - does not grant operational authority to unrepresented variables
+  - does not allow proposals without base-carrier retractions
+  - does not imply operational authority
+quadrilateral:
+  qualifies_as_true_normal_form: false
+  qualification_gap: no_project_join_theorem
+  anomaly_exclusion: operational verdicts depending on unrepresented external variables, and non-contractive
+    extension proposals
+  lossless_join:
+    status: support_projection_reconstruction
+    statement: the operational behavior is reconstructed identically from the represented support tuple
+      without external notes
+  dependency_preservation:
+    status: base_carrier_identity_preserved
+    statement: the supplied inclusion and retraction satisfy r composed with u equals the identity on
+      the base
+  syntactic_decision:
+    status: declaration_decidable
+    statement: finite map checks when carriers and evaluator table are supplied; arbitrary evaluator invariance
+      requires proof
+declarations_required:
+- world_state
+- represented_support_mapping
+- extension_proposal
+- base_carrier
+- extension_carrier
+- inclusion_u
+- retraction_r
+- evaluator_factorization
+evidence_required:
+- support_equality_receipt
+- evaluator_invariance_receipt
+- retraction_identity_proof
+validation_criteria:
+- two world states with identical represented support yield identical evaluation results
+- r(u(b)) = b for every base b; no claim that u(r(e)) = e for every extension e
+- inert notes cannot alter requirement satisfaction or quiescence
+terminal_routes:
+- AcceptEndogenousFidelity
+- RejectExternalStateLeakage
+- RejectInvalidRetraction
+- Undetermined
+terminal_route_map:
+  AcceptEndogenousFidelity: Preserve
+  RejectExternalStateLeakage: Invalidate
+  RejectInvalidRetraction: Reject
+  Undetermined: Abstain
+certification:
+  certificate_required: true
+  certificate_kind: endogenous_fidelity_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: modifying unrepresented notes alters an operational evaluation
+  diagnosis: operational evaluator violates the No-Outside contract
+  terminal: RejectExternalStateLeakage
+- symptom: proposal down-map mutates an element of the base carrier
+  diagnosis: the supplied maps fail r composed with u equals id_B
+  terminal: RejectInvalidRetraction
+examples:
+- ref: https://github.com/dbccpage/19L57G1/blob/f1d56c010e6ba10a3b9418bd7cc5953c067250f2/lean4/Derivation/NoOutside.lean
+  section: lean4/Derivation/NoOutside.lean
+  note: the Effectual-Outside Dichotomy check and retraction down-map
+references:
+- https://github.com/dbccpage/19L57G1/blob/f1d56c010e6ba10a3b9418bd7cc5953c067250f2/docs/GENESIS_CLOSEOUT.md
+- ./README.md

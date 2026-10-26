@@ -1,0 +1,70 @@
+{
+  "schema": "chase_algebra_and_bqnf_streaming_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted evaluation of candidate relation instances, Chase algebra monotonicity, minimal cover reduction, and BQNF streaming cochains",
+  "created_utc": "2026-09-25T16:42:00Z",
+  "tester_role": "techne-code-normal-forms-tester",
+  "harness_module": "research/mssn_sn_tower/code/python/normal_forms/nf_harness.py",
+  "test_module": "research/mssn_sn_tower/code/python/tests/normal_forms/test_chase_algebra_and_bqnf_streaming.py",
+  "properties_verified": [
+    {
+      "property_name": "chase_monotonicity_under_fd_superset",
+      "test_function": "test_chase_monotonicity_under_fd_superset",
+      "status": "PASS",
+      "details": "Verified that F_1 ⊆ F_2 implies cell partitions under chase(F_1, J) are refined by chase(F_2, J) without regression."
+    },
+    {
+      "property_name": "chase_confluence_under_dependency_permutations",
+      "test_function": "test_chase_confluence_under_dependency_permutations",
+      "status": "PASS",
+      "details": "Verified that permuting dependency application order produces identical cell partitions at fixpoint."
+    },
+    {
+      "property_name": "chase_lossless_join_preservation",
+      "test_function": "test_chase_lossless_join_preservation",
+      "status": "PASS",
+      "details": "Verified that binary decomposition under Heath's Theorem produces a distinguished row in the tableau."
+    },
+    {
+      "property_name": "minimal_cover_canonical_reduction",
+      "test_function": "test_minimal_cover_canonical_reduction",
+      "status": "PASS",
+      "details": "Verified that extraneous LHS attributes and transitive dependencies reduce deterministically to canonical minimal covers."
+    },
+    {
+      "property_name": "candidate_key_antichain_minimality",
+      "test_function": "test_candidate_key_antichain_minimality",
+      "status": "PASS",
+      "details": "Verified that candidate keys form a Sperner family (antichain) with no proper subsets."
+    },
+    {
+      "property_name": "bqnf_cdc_out_of_order_deduplication",
+      "test_function": "test_bqnf_cdc_out_of_order_deduplication",
+      "status": "PASS",
+      "details": "Verified that streaming CDC events with monotonic version sequences converge to identical state under arbitrary shuffle."
+    },
+    {
+      "property_name": "bqnf_t_digest_quantile_scale_invariance",
+      "test_function": "test_bqnf_t_digest_quantile_scale_invariance",
+      "status": "PASS",
+      "details": "Verified that QuantileSketchCochain median repair is scale-invariant and error-bounded under streaming insertions."
+    },
+    {
+      "property_name": "bqnf_clustering_key_prefix_monomorphism",
+      "test_function": "test_bqnf_clustering_key_prefix_monomorphism",
+      "status": "PASS",
+      "details": "Verified that composite clustering keys preserve monotonic ordering under prefix projection."
+    }
+  ],
+  "contracts_aligned": [
+    "nf.change.bqnf",
+    "nf.classical.1nf",
+    "nf.classical.2nf",
+    "nf.classical.3nf",
+    "nf.classical.bcnf",
+    "nf.classical.4nf",
+    "nf.classical.5nf",
+    "nf.evidence.cdc"
+  ],
+  "all_properties_satisfied": true
+}

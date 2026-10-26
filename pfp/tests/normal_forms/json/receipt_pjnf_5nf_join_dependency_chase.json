@@ -1,0 +1,78 @@
+{
+  "schema": "pjnf_5nf_join_dependency_chase_receipt_v1",
+  "authority_effect": "None",
+  "scope": "Targeted property tests verifying Project-Join Normal Form (5NF), Non-Binary Chase Confluence, Darwen-Date-Fagin Spurious Tuple Witness, and SKNF Separation",
+  "created_utc": "2026-09-25T16:35:00Z",
+  "test_count": 25,
+  "properties_verified": [
+    {
+      "property_name": "fagin_5nf_classical_schemas",
+      "tests": [
+        "test_01",
+        "test_02",
+        "test_03",
+        "test_04",
+        "test_05",
+        "test_06"
+      ],
+      "status": "PASS",
+      "details": "Verified on Fagin SPJ schema and Darwen-Date-Fagin Theorem 6.1: 4-tuple parity instance generates 4 spurious tuples under ternary join, showing SKNF does not entail 5NF."
+    },
+    {
+      "property_name": "non_binary_chase_confluence",
+      "tests": [
+        "test_07",
+        "test_08",
+        "test_09",
+        "test_10",
+        "test_11",
+        "test_12"
+      ],
+      "status": "PASS",
+      "details": "Verified that permuting functional dependency execution order preserves tableau cell partitions identically across ternary, quaternary, and 5-way decompositions (RULE_NORMAL_FORMS_CHASE_001)."
+    },
+    {
+      "property_name": "candidate_key_entailment_and_sufficient_conditions",
+      "tests": [
+        "test_13",
+        "test_14",
+        "test_15",
+        "test_16",
+        "test_17",
+        "test_18"
+      ],
+      "status": "PASS",
+      "details": "Verified 5NF sufficient condition: candidate keys logically imply join dependencies when every component contains a candidate key, subsuming Heath and Fagin binary joins."
+    },
+    {
+      "property_name": "relational_normal_form_hierarchy_chain",
+      "tests": [
+        "test_19",
+        "test_20",
+        "test_21"
+      ],
+      "status": "PASS",
+      "details": "Verified strict relational hierarchy: 1NF -> 2NF -> 3NF -> BCNF -> 4NF -> 5NF with separating counterexamples."
+    },
+    {
+      "property_name": "lossless_join_synthesis_and_validation",
+      "tests": [
+        "test_22",
+        "test_23",
+        "test_24",
+        "test_25"
+      ],
+      "status": "PASS",
+      "details": "Verified tabular relation projection-join reconstruction, spurious tuple witness generation, AST parsing, and YAML contract validation against the Standard."
+    }
+  ],
+  "contracts_aligned": [
+    "nf.classical.5nf",
+    "nf.classical.4nf",
+    "nf.classical.bcnf",
+    "nf.classical.3nf",
+    "nf.classical.2nf",
+    "nf.classical.1nf"
+  ],
+  "all_properties_satisfied": true
+}

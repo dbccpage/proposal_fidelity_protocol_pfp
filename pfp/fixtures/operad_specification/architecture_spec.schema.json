@@ -1,0 +1,1380 @@
+{
+  "$defs": {
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_length": {
+          "maximum": 1048576,
+          "minimum": 0,
+          "title": "Byte Length",
+          "type": "integer"
+        },
+        "media_type": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "path",
+        "sha256",
+        "byte_length",
+        "media_type"
+      ],
+      "title": "ArtifactRef",
+      "type": "object"
+    },
+    "BoundObligation": {
+      "additionalProperties": false,
+      "properties": {
+        "obligation_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Obligation Id",
+          "type": "string"
+        },
+        "kind": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Kind",
+          "type": "string"
+        },
+        "subject_artifact_ids": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Subject Artifact Ids",
+          "type": "array"
+        },
+        "evidence_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Evidence Artifact Id",
+          "type": "string"
+        },
+        "verification_status": {
+          "const": "declared_unverified",
+          "default": "declared_unverified",
+          "title": "Verification Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "obligation_id",
+        "kind",
+        "subject_artifact_ids",
+        "evidence_artifact_id"
+      ],
+      "title": "BoundObligation",
+      "type": "object"
+    },
+    "CongruenceIdeal": {
+      "additionalProperties": false,
+      "properties": {
+        "ideal_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Ideal Id",
+          "type": "string"
+        },
+        "relation_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Relation Artifact Id",
+          "type": "string"
+        },
+        "substitution_closure": {
+          "$ref": "#/$defs/BoundObligation"
+        },
+        "action": {
+          "enum": [
+            "quotient_declaration",
+            "typed_null_tree"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "enforcement_status": {
+          "const": "not_executed",
+          "default": "not_executed",
+          "title": "Enforcement Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ideal_id",
+        "relation_artifact_id",
+        "substitution_closure",
+        "action"
+      ],
+      "title": "CongruenceIdeal",
+      "type": "object"
+    },
+    "DPODeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "declaration_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Declaration Id",
+          "type": "string"
+        },
+        "owner": {
+          "const": "omega_engine_pfp.domain.rewriting.finite_dpo.apply_registered_rule",
+          "default": "omega_engine_pfp.domain.rewriting.finite_dpo.apply_registered_rule",
+          "title": "Owner",
+          "type": "string"
+        },
+        "owner_source_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Owner Source Artifact Id",
+          "type": "string"
+        },
+        "supported_schema": {
+          "const": "finite-attributed-directed-graph-identity-key-monic-v1",
+          "title": "Supported Schema",
+          "type": "string"
+        },
+        "rule_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Rule Artifact Id",
+          "type": "string"
+        },
+        "schema_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Schema Artifact Id",
+          "type": "string"
+        },
+        "left_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Left Artifact Id",
+          "type": "string"
+        },
+        "interface_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Interface Artifact Id",
+          "type": "string"
+        },
+        "right_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Right Artifact Id",
+          "type": "string"
+        },
+        "host_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Host Artifact Id",
+          "type": "string"
+        },
+        "match_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Match Artifact Id",
+          "type": "string"
+        },
+        "obligations": {
+          "items": {
+            "$ref": "#/$defs/BoundObligation"
+          },
+          "maxItems": 32,
+          "minItems": 10,
+          "title": "Obligations",
+          "type": "array"
+        },
+        "verification_status": {
+          "const": "declaration_only_no_rewrite_or_confluence_verified",
+          "default": "declaration_only_no_rewrite_or_confluence_verified",
+          "title": "Verification Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "declaration_id",
+        "owner_source_artifact_id",
+        "supported_schema",
+        "rule_artifact_id",
+        "schema_artifact_id",
+        "left_artifact_id",
+        "interface_artifact_id",
+        "right_artifact_id",
+        "host_artifact_id",
+        "match_artifact_id",
+        "obligations"
+      ],
+      "title": "DPODeclaration",
+      "type": "object"
+    },
+    "DensityDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "density_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Density Id",
+          "type": "string"
+        },
+        "fiber_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Fiber Id",
+          "type": "string"
+        },
+        "dimension": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "coefficient_domain": {
+          "const": "Q(i)",
+          "default": "Q(i)",
+          "title": "Coefficient Domain",
+          "type": "string"
+        },
+        "matrix_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Matrix Artifact Id",
+          "type": "string"
+        },
+        "owner": {
+          "const": "omega_quantum_physics::density_matrix::ExactDensityMatrix",
+          "default": "omega_quantum_physics::density_matrix::ExactDensityMatrix",
+          "title": "Owner",
+          "type": "string"
+        },
+        "owner_source_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Owner Source Artifact Id",
+          "type": "string"
+        },
+        "obligations": {
+          "items": {
+            "$ref": "#/$defs/BoundObligation"
+          },
+          "maxItems": 16,
+          "minItems": 3,
+          "title": "Obligations",
+          "type": "array"
+        },
+        "verification_status": {
+          "const": "matrix_not_loaded_hermiticity_trace_psd_not_verified",
+          "default": "matrix_not_loaded_hermiticity_trace_psd_not_verified",
+          "title": "Verification Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "density_id",
+        "fiber_id",
+        "dimension",
+        "matrix_artifact_id",
+        "owner_source_artifact_id",
+        "obligations"
+      ],
+      "title": "DensityDeclaration",
+      "type": "object"
+    },
+    "EpistemicBundleDeclaration": {
+      "additionalProperties": false,
+      "description": "Finite vector-bundle/sheaf metadata; no gluing or cocycle solver runs.",
+      "properties": {
+        "bundle_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Bundle Id",
+          "type": "string"
+        },
+        "base_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Base Artifact Id",
+          "type": "string"
+        },
+        "cover_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Cover Artifact Id",
+          "type": "string"
+        },
+        "transition_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Transition Artifact Id",
+          "type": "string"
+        },
+        "sheaf_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Sheaf Artifact Id",
+          "type": "string"
+        },
+        "fiber_ids": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Fiber Ids",
+          "type": "array"
+        },
+        "rank": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "cocycle_obligations": {
+          "items": {
+            "$ref": "#/$defs/BoundObligation"
+          },
+          "maxItems": 32,
+          "minItems": 3,
+          "title": "Cocycle Obligations",
+          "type": "array"
+        },
+        "verification_status": {
+          "const": "declared_unverified_no_bundle_sheaf_or_gluing_theorem",
+          "default": "declared_unverified_no_bundle_sheaf_or_gluing_theorem",
+          "title": "Verification Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bundle_id",
+        "base_artifact_id",
+        "cover_artifact_id",
+        "transition_artifact_id",
+        "sheaf_artifact_id",
+        "fiber_ids",
+        "rank",
+        "cocycle_obligations"
+      ],
+      "title": "EpistemicBundleDeclaration",
+      "type": "object"
+    },
+    "FiniteFiber": {
+      "additionalProperties": false,
+      "properties": {
+        "fiber_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Fiber Id",
+          "type": "string"
+        },
+        "base_observation_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Base Observation Artifact Id",
+          "type": "string"
+        },
+        "dimension": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "tensor_factors": {
+          "items": {
+            "$ref": "#/$defs/TensorFactor"
+          },
+          "maxItems": 16,
+          "title": "Tensor Factors",
+          "type": "array"
+        },
+        "interpretation_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Interpretation Artifact Id",
+          "type": "string"
+        },
+        "semantic_status": {
+          "const": "finite_model_declaration_only",
+          "default": "finite_model_declaration_only",
+          "title": "Semantic Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fiber_id",
+        "base_observation_artifact_id",
+        "dimension",
+        "tensor_factors",
+        "interpretation_artifact_id"
+      ],
+      "title": "FiniteFiber",
+      "type": "object"
+    },
+    "GraftNode": {
+      "additionalProperties": false,
+      "description": "input_permutation[slot] indexes children for that operator input slot.",
+      "properties": {
+        "kind": {
+          "const": "graft",
+          "title": "Kind",
+          "type": "string"
+        },
+        "node_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Node Id",
+          "type": "string"
+        },
+        "operator_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Operator Id",
+          "type": "string"
+        },
+        "children": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Children",
+          "type": "array"
+        },
+        "input_permutation": {
+          "items": {
+            "maximum": 1048576,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 32,
+          "title": "Input Permutation",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "node_id",
+        "operator_id",
+        "children",
+        "input_permutation"
+      ],
+      "title": "GraftNode",
+      "type": "object"
+    },
+    "GraftTree": {
+      "additionalProperties": false,
+      "properties": {
+        "tree_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Tree Id",
+          "type": "string"
+        },
+        "nodes": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "graft": "#/$defs/GraftNode",
+                "leaf": "#/$defs/LeafNode",
+                "null_tree": "#/$defs/NullTreeNode"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/LeafNode"
+              },
+              {
+                "$ref": "#/$defs/GraftNode"
+              },
+              {
+                "$ref": "#/$defs/NullTreeNode"
+              }
+            ]
+          },
+          "maxItems": 256,
+          "minItems": 1,
+          "title": "Nodes",
+          "type": "array"
+        },
+        "root": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Root",
+          "type": "string"
+        },
+        "expected_output_colour": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Expected Output Colour",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tree_id",
+        "nodes",
+        "root",
+        "expected_output_colour"
+      ],
+      "title": "GraftTree",
+      "type": "object"
+    },
+    "LeafNode": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "leaf",
+          "title": "Kind",
+          "type": "string"
+        },
+        "node_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Node Id",
+          "type": "string"
+        },
+        "span_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Span Id",
+          "type": "string"
+        },
+        "colour": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Colour",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "node_id",
+        "span_id",
+        "colour"
+      ],
+      "title": "LeafNode",
+      "type": "object"
+    },
+    "NominalColour": {
+      "additionalProperties": false,
+      "properties": {
+        "colour_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Colour Id",
+          "type": "string"
+        },
+        "payload_schema_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Payload Schema Artifact Id",
+          "type": "string"
+        },
+        "interpretation_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Interpretation Artifact Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "colour_id",
+        "payload_schema_artifact_id",
+        "interpretation_artifact_id"
+      ],
+      "title": "NominalColour",
+      "type": "object"
+    },
+    "NullTreeNode": {
+      "additionalProperties": false,
+      "description": "A typed failed term; it is never a zero matrix or a density operator.",
+      "properties": {
+        "kind": {
+          "const": "null_tree",
+          "title": "Kind",
+          "type": "string"
+        },
+        "node_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Node Id",
+          "type": "string"
+        },
+        "colour": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Colour",
+          "type": "string"
+        },
+        "refusal_code": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Refusal Code",
+          "type": "string"
+        },
+        "evidence_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Evidence Artifact Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "node_id",
+        "colour",
+        "refusal_code",
+        "evidence_artifact_id"
+      ],
+      "title": "NullTreeNode",
+      "type": "object"
+    },
+    "OperatorSignature": {
+      "additionalProperties": false,
+      "properties": {
+        "operator_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Operator Id",
+          "type": "string"
+        },
+        "input_colours": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Input Colours",
+          "type": "array"
+        },
+        "output_colour": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Output Colour",
+          "type": "string"
+        },
+        "polarity": {
+          "enum": [
+            "constructive",
+            "annihilator",
+            "interrogative",
+            "verifier"
+          ],
+          "title": "Polarity",
+          "type": "string"
+        },
+        "effect_class": {
+          "enum": [
+            "pure",
+            "provider",
+            "clock",
+            "signing",
+            "external_write"
+          ],
+          "title": "Effect Class",
+          "type": "string"
+        },
+        "work_limit": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Work Limit",
+          "type": "integer"
+        },
+        "semantics_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Semantics Artifact Id",
+          "type": "string"
+        },
+        "ideal_ids": {
+          "default": [],
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Ideal Ids",
+          "type": "array"
+        },
+        "equivariance": {
+          "$ref": "#/$defs/BoundObligation"
+        }
+      },
+      "required": [
+        "operator_id",
+        "input_colours",
+        "output_colour",
+        "polarity",
+        "effect_class",
+        "work_limit",
+        "semantics_artifact_id",
+        "equivariance"
+      ],
+      "title": "OperatorSignature",
+      "type": "object"
+    },
+    "PartialTraceRGStep": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Step Id",
+          "type": "string"
+        },
+        "fine_density_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Fine Density Id",
+          "type": "string"
+        },
+        "coarse_density_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Coarse Density Id",
+          "type": "string"
+        },
+        "trace_factor_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Trace Factor Id",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "partial_trace_first",
+            "partial_trace_second"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "owner": {
+          "const": "omega_quantum_physics::density_matrix::ExactDensityMatrix",
+          "default": "omega_quantum_physics::density_matrix::ExactDensityMatrix",
+          "title": "Owner",
+          "type": "string"
+        },
+        "owner_source_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Owner Source Artifact Id",
+          "type": "string"
+        },
+        "channel_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Channel Artifact Id",
+          "type": "string"
+        },
+        "scale_parameter": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Scale Parameter",
+          "type": "string"
+        },
+        "channel_laws": {
+          "$ref": "#/$defs/BoundObligation"
+        },
+        "wilsonian_interpretation_artifact_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wilsonian Interpretation Artifact Id"
+        },
+        "verification_status": {
+          "const": "finite_partial_trace_declared_no_rg_or_channel_theorem_verified",
+          "default": "finite_partial_trace_declared_no_rg_or_channel_theorem_verified",
+          "title": "Verification Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_id",
+        "fine_density_id",
+        "coarse_density_id",
+        "trace_factor_id",
+        "operation",
+        "owner_source_artifact_id",
+        "channel_artifact_id",
+        "scale_parameter",
+        "channel_laws"
+      ],
+      "title": "PartialTraceRGStep",
+      "type": "object"
+    },
+    "SignedReceiptMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "receipt_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "task_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Task Artifact Id",
+          "type": "string"
+        },
+        "candidate_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Candidate Artifact Id",
+          "type": "string"
+        },
+        "witness_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Witness Artifact Id",
+          "type": "string"
+        },
+        "outcome_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Outcome Artifact Id",
+          "type": "string"
+        },
+        "authority_effect": {
+          "const": "None",
+          "default": "None",
+          "title": "Authority Effect",
+          "type": "string"
+        },
+        "acceptance_status": {
+          "const": "metadata_only_not_native_acceptance",
+          "default": "metadata_only_not_native_acceptance",
+          "title": "Acceptance Status",
+          "type": "string"
+        },
+        "kind": {
+          "const": "signed_metadata",
+          "title": "Kind",
+          "type": "string"
+        },
+        "algorithm": {
+          "const": "Ed25519",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "public_key_hex": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Public Key Hex",
+          "type": "string"
+        },
+        "signature_hex": {
+          "pattern": "^[0-9a-f]{128}$",
+          "title": "Signature Hex",
+          "type": "string"
+        },
+        "signed_payload_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Signed Payload Artifact Id",
+          "type": "string"
+        },
+        "trust_policy_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Trust Policy Artifact Id",
+          "type": "string"
+        },
+        "verifier_source_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Verifier Source Artifact Id",
+          "type": "string"
+        },
+        "signature_status": {
+          "const": "supplied_not_cryptographically_verified",
+          "default": "supplied_not_cryptographically_verified",
+          "title": "Signature Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "receipt_id",
+        "task_artifact_id",
+        "candidate_artifact_id",
+        "witness_artifact_id",
+        "outcome_artifact_id",
+        "kind",
+        "algorithm",
+        "public_key_hex",
+        "signature_hex",
+        "signed_payload_artifact_id",
+        "trust_policy_artifact_id",
+        "verifier_source_artifact_id"
+      ],
+      "title": "SignedReceiptMetadata",
+      "type": "object"
+    },
+    "SourceByteSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "span_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Span Id",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "start_byte": {
+          "maximum": 1048576,
+          "minimum": 0,
+          "title": "Start Byte",
+          "type": "integer"
+        },
+        "end_byte": {
+          "maximum": 1048576,
+          "minimum": 0,
+          "title": "End Byte",
+          "type": "integer"
+        },
+        "span_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Span Sha256",
+          "type": "string"
+        },
+        "colour": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Colour",
+          "type": "string"
+        }
+      },
+      "required": [
+        "span_id",
+        "source_id",
+        "source_sha256",
+        "start_byte",
+        "end_byte",
+        "span_sha256",
+        "colour"
+      ],
+      "title": "SourceByteSpan",
+      "type": "object"
+    },
+    "SourceDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "content_utf8": {
+          "maxLength": 65536,
+          "title": "Content Utf8",
+          "type": "string"
+        },
+        "coordinate_profile": {
+          "const": "utf8-bytes-half-open-v1",
+          "default": "utf8-bytes-half-open-v1",
+          "title": "Coordinate Profile",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "artifact_id",
+        "content_utf8"
+      ],
+      "title": "SourceDocument",
+      "type": "object"
+    },
+    "TensorFactor": {
+      "additionalProperties": false,
+      "properties": {
+        "factor_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Factor Id",
+          "type": "string"
+        },
+        "dimension": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Dimension",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "factor_id",
+        "dimension"
+      ],
+      "title": "TensorFactor",
+      "type": "object"
+    },
+    "UnsignedBenchmarkReceiptMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "receipt_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "task_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Task Artifact Id",
+          "type": "string"
+        },
+        "candidate_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Candidate Artifact Id",
+          "type": "string"
+        },
+        "witness_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Witness Artifact Id",
+          "type": "string"
+        },
+        "outcome_artifact_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "title": "Outcome Artifact Id",
+          "type": "string"
+        },
+        "authority_effect": {
+          "const": "None",
+          "default": "None",
+          "title": "Authority Effect",
+          "type": "string"
+        },
+        "acceptance_status": {
+          "const": "metadata_only_not_native_acceptance",
+          "default": "metadata_only_not_native_acceptance",
+          "title": "Acceptance Status",
+          "type": "string"
+        },
+        "kind": {
+          "const": "unsigned_benchmark",
+          "title": "Kind",
+          "type": "string"
+        },
+        "signature_status": {
+          "const": "not_supplied",
+          "default": "not_supplied",
+          "title": "Signature Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "receipt_id",
+        "task_artifact_id",
+        "candidate_artifact_id",
+        "witness_artifact_id",
+        "outcome_artifact_id",
+        "kind"
+      ],
+      "title": "UnsignedBenchmarkReceiptMetadata",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "oepfp.operad-architecture.metadata.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "spec_id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+      "title": "Spec Id",
+      "type": "string"
+    },
+    "authority_effect": {
+      "const": "None",
+      "default": "None",
+      "title": "Authority Effect",
+      "type": "string"
+    },
+    "validation_effect": {
+      "const": "source_bindings_and_metadata_only_no_theorem_signature_psd_confluence_or_runtime_acceptance",
+      "default": "source_bindings_and_metadata_only_no_theorem_signature_psd_confluence_or_runtime_acceptance",
+      "title": "Validation Effect",
+      "type": "string"
+    },
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/ArtifactRef"
+      },
+      "maxItems": 512,
+      "minItems": 1,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceDocument"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Sources",
+      "type": "array"
+    },
+    "spans": {
+      "items": {
+        "$ref": "#/$defs/SourceByteSpan"
+      },
+      "maxItems": 256,
+      "minItems": 1,
+      "title": "Spans",
+      "type": "array"
+    },
+    "colours": {
+      "items": {
+        "$ref": "#/$defs/NominalColour"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Colours",
+      "type": "array"
+    },
+    "ideals": {
+      "items": {
+        "$ref": "#/$defs/CongruenceIdeal"
+      },
+      "maxItems": 64,
+      "title": "Ideals",
+      "type": "array"
+    },
+    "operators": {
+      "items": {
+        "$ref": "#/$defs/OperatorSignature"
+      },
+      "maxItems": 128,
+      "minItems": 1,
+      "title": "Operators",
+      "type": "array"
+    },
+    "trees": {
+      "items": {
+        "$ref": "#/$defs/GraftTree"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Trees",
+      "type": "array"
+    },
+    "dpo_declarations": {
+      "items": {
+        "$ref": "#/$defs/DPODeclaration"
+      },
+      "maxItems": 32,
+      "title": "Dpo Declarations",
+      "type": "array"
+    },
+    "fibers": {
+      "items": {
+        "$ref": "#/$defs/FiniteFiber"
+      },
+      "maxItems": 64,
+      "title": "Fibers",
+      "type": "array"
+    },
+    "bundles": {
+      "items": {
+        "$ref": "#/$defs/EpistemicBundleDeclaration"
+      },
+      "maxItems": 64,
+      "title": "Bundles",
+      "type": "array"
+    },
+    "densities": {
+      "items": {
+        "$ref": "#/$defs/DensityDeclaration"
+      },
+      "maxItems": 64,
+      "title": "Densities",
+      "type": "array"
+    },
+    "rg_steps": {
+      "items": {
+        "$ref": "#/$defs/PartialTraceRGStep"
+      },
+      "maxItems": 64,
+      "title": "Rg Steps",
+      "type": "array"
+    },
+    "receipts": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "signed_metadata": "#/$defs/SignedReceiptMetadata",
+            "unsigned_benchmark": "#/$defs/UnsignedBenchmarkReceiptMetadata"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/UnsignedBenchmarkReceiptMetadata"
+          },
+          {
+            "$ref": "#/$defs/SignedReceiptMetadata"
+          }
+        ]
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Receipts",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "spec_id",
+    "artifacts",
+    "sources",
+    "spans",
+    "colours",
+    "ideals",
+    "operators",
+    "trees",
+    "dpo_declarations",
+    "fibers",
+    "bundles",
+    "densities",
+    "rg_steps",
+    "receipts"
+  ],
+  "title": "ArchitectureSpec",
+  "type": "object"
+}

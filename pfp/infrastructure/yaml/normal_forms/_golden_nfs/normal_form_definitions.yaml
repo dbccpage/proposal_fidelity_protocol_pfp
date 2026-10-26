@@ -1,0 +1,456 @@
+definitions_id: coda.normal_form_foundational_definitions.v1
+status: CANONICAL_SPECIFICATION
+authority_effect: None
+treatise_title: >-
+  Foundational Definitions of True Normal Forms: Relational Algebra,
+  Cochain Retraction, and the Fermion Sign Problem
+
+abstract: >-
+  Establishes the rigorous mathematical definition of a True Normal Form in
+  relational database theory, traces its algebraic evolution from Edgar F. Codd's
+  foundational 1970 paper through the projection-join and domain-key formulations
+  of Fagin, Date, and Darwen, and systematically extends the normal form paradigm
+  to discrete dynamical systems, cochain complexes, and quantum many-body physics
+  within the Symbol Game and MSS-N Tower.
+
+governing_councils:
+  - L3_logos_techne
+  - L3_logos_thanatos
+  - L2_dianoia
+
+quadrilateral_criterion:
+  summary: >-
+    A structural specification qualifies as a True Normal Form (TNF) if and only
+    if it satisfies the four foundational criteria: explicit anomaly exclusion,
+    lossless reconstruction theorem, dependency preservation analysis, and
+    syntactic decidability from declared constraints.
+  pillars:
+    - pillar_index: I
+      id: anomaly_exclusion
+      name: Explicit Anomaly Exclusion
+      requirement: >-
+        Name and eliminate a specific class of data-modification redundancies
+        (insertion, deletion, or update anomalies). A carrier that removes nothing
+        is not a true normal form.
+      formal_condition: >-
+        Eliminates partial key, transitive, multivalued, join, or boundary-defect redundancies.
+    - pillar_index: II
+      id: lossless_join
+      name: Lossless Join / Reconstruction Theorem
+      requirement: >-
+        Guaranteed non-loss reconstruction under declared operators. For relational
+        schemas this is a natural join without spurious tuples. For cochains or traces
+        it is an orthogonal direct sum or deterministic replay.
+      formal_condition: >-
+        r = \bowtie_i \pi_{R_i}(r) (Heath, Fagin, or Rissanen condition).
+    - pillar_index: III
+      id: dependency_preservation
+      name: Dependency Preservation Analysis
+      requirement: >-
+        Declare whether the union of dependencies enforceable on the decomposed
+        sub-schemas implies the original dependency theory without cross-relvar joins.
+      formal_condition: >-
+        (\bigcup_i \pi_{R_i}(\Sigma))^+ = \Sigma^+.
+    - pillar_index: IV
+      id: syntactic_decision
+      name: Syntactic Decidability from Constraints
+      requirement: >-
+        Membership is decidable from declared schema constraints, keys, and headings,
+        without inspecting live instance data rows. Bounded search cutoffs yield BudgetUnknown.
+      formal_condition: >-
+        Decided from (H(R), \Sigma) without row scanning.
+
+relational_substrate:
+  universe_of_attributes:
+    name: Universe of Attributes
+    formal_definition: U = {A_1, A_2, ..., A_n} is a finite set of attribute names.
+    description: Grounding set of attribute names.
+  domains:
+    name: Attribute Domains
+    formal_definition: Each A_i in U has declared domain dom(A_i) of valid scalar values.
+    description: Scalar sets of admissible values.
+  tuples:
+    name: Tuples
+    formal_definition: A mapping t over heading H associating each A in H with t[A] in dom(A).
+    description: Valuation over an attribute heading.
+  relations:
+    name: Relations
+    formal_definition: A finite set of tuples over heading H, r \subseteq \prod_{A in H} dom(A).
+    description: Immutable mathematical values.
+  relvars:
+    name: Relation Variables (Relvars)
+    formal_definition: Named variables whose permitted states are relation values subject to constraints \Sigma.
+    description: Mutable named containers for immutable relation values.
+  predicates_and_cwa:
+    name: Predicates & Closed World Assumption
+    formal_definition: Every relvar R has an intended first-order predicate P_R. Tuple t in r asserts P_R(t) is true; t not in r asserts false.
+    description: First-order logic correspondence for relational databases.
+
+dependency_algebra:
+  functional_dependency:
+    name: Functional Dependency (FD)
+    formal_definition: X -> Y holds in R if for all tuples t1, t2 in r, t1[X] = t2[X] implies t1[Y] = t2[Y].
+    description: Deterministic attribute determination.
+  armstrongs_axioms:
+    - 'Reflexivity: If Y \subseteq X, then X -> Y.'
+    - 'Augmentation: If X -> Y, then XZ -> YZ.'
+    - 'Transitivity: If X -> Y and Y -> Z, then X -> Z.'
+  superkeys_and_candidate_keys:
+    name: Superkeys & Candidate Keys
+    formal_definition: K is a superkey if K -> H(R) is in \Sigma^+. K is a candidate key if K is a minimal superkey.
+    description: Uniqueness determinants for relation instances.
+  prime_and_non_prime_attributes:
+    name: Prime and Non-Prime Attributes
+    formal_definition: Attribute A is prime if A belongs to at least one candidate key; otherwise non-prime.
+    description: Key membership classification.
+  multivalued_dependency:
+    name: Multivalued Dependency (MVD - Fagin 1977)
+    formal_definition: X ->> Y holds if t1[X]=t2[X] implies exists t3 with t3[X]=t1[X], t3[Y]=t1[Y], t3[Z]=t2[Z].
+    description: Independent orthogonal multivalued attributes.
+  join_dependency:
+    name: Join Dependency (JD - Fagin 1979)
+    formal_definition: \bowtie [R_1, ..., R_k] holds if every valid instance r equals \pi_{R_1}(r) \bowtie ... \bowtie \pi_{R_k}(r).
+    description: Multi-way lossless decomposition condition.
+  reconstruction_theorems:
+    heaths_theorem: >-
+      Heath (1971): A binary decomposition R = (XY, XZ) is lossless if and only
+      if X -> Y or X -> Z under functional dependencies.
+    fagins_theorem: >-
+      Fagin (1977): A binary decomposition R = (XY, XZ) is lossless if and only
+      if X ->> Y (equivalently X ->> Z) under multivalued dependencies.
+    rissanens_theorem: >-
+      Rissanen (1977): An n-ary decomposition is lossless if and only if the
+      join dependency \bowtie [R_1, ..., R_k] is satisfied by all valid instances.
+
+classical_spectrum:
+  - id: nf.classical.0nf
+    short_name: 0NF
+    author: Pedagogical pre-form
+    year: null
+    structural_invariant: Finite carrier before heading, domain, key, or predicate is declared.
+    anomaly_excluded: None.
+    lossless_join_property: Not applicable.
+    dependency_preservation: null
+    qualifies_as_true_normal_form: false
+    qualification_gap: Removes no anomalies; lacks schema constraints.
+  - id: nf.classical.1nf
+    short_name: 1NF
+    author: Codd
+    year: 1970
+    structural_invariant: Scalar domains, a set of tuples, and a declared candidate key.
+    anomaly_excluded: Positional identity and repeating groups.
+    lossless_join_property: Identity.
+    dependency_preservation: Preserved.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.2nf
+    short_name: 2NF
+    author: Codd
+    year: 1971
+    structural_invariant: No non-prime attribute depends on a proper subset of a candidate key.
+    anomaly_excluded: Partial-key redundancy.
+    lossless_join_property: Heath's Theorem.
+    dependency_preservation: Preserved.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.3nf
+    short_name: 3NF
+    author: Codd
+    year: 1971
+    structural_invariant: For every non-trivial FD X -> A, X is a superkey or A is prime.
+    anomaly_excluded: Transitive dependence of a non-prime attribute.
+    lossless_join_property: Heath's Theorem.
+    dependency_preservation: Preserved by synthesis.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.eknf
+    short_name: EKNF
+    author: Zaniolo
+    year: 1982
+    structural_invariant: For every elementary FD X -> A, X is a superkey or A lies on an elementary key.
+    anomaly_excluded: Elementary-dependency redundancy in overlapping composite keys.
+    lossless_join_property: Heath's Theorem.
+    dependency_preservation: Preserved by synthesis.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.bcnf
+    short_name: BCNF
+    author: Boyce and Codd
+    year: 1974
+    structural_invariant: Every non-trivial functional dependency has a superkey determinant.
+    anomaly_excluded: Functional dependencies whose determinants are not superkeys.
+    lossless_join_property: Heath's Theorem.
+    dependency_preservation: Not always preserved.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.4nf
+    short_name: 4NF
+    author: Fagin
+    year: 1977
+    structural_invariant: Every non-trivial multivalued dependency X ->> Y has X as a superkey.
+    anomaly_excluded: Independent multivalued Cartesian bloat.
+    lossless_join_property: Fagin's Theorem.
+    dependency_preservation: Preserved.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.etnf
+    short_name: ETNF
+    author: Darwen, Date, and Fagin
+    year: 2012
+    structural_invariant: Schema in BCNF, and every implied non-trivial JD has at least one superkey component.
+    anomaly_excluded: Partial tuple redundancy under FDs and full tuple redundancy under JDs.
+    lossless_join_property: Project-Join.
+    dependency_preservation: Analyzed.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.rfnf
+    short_name: RFNF
+    author: Vincent (origin); Darwen, Date, and Fagin (characterization)
+    year: 2012
+    structural_invariant: Schema in BCNF where the union of superkey components equals the entire heading for every JD.
+    anomaly_excluded: Redundancy from join dependencies whose superkey components do not cover heading.
+    lossless_join_property: Project-Join.
+    dependency_preservation: Analyzed.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.sknf
+    short_name: SKNF
+    author: Normann (origin); Darwen, Date, and Fagin (characterization)
+    year: 2012
+    structural_invariant: Every component of every irreducible join dependency implied by constraints is a superkey.
+    anomaly_excluded: Join dependencies with non-superkey components; strictly weaker than 5NF.
+    lossless_join_property: Project-Join.
+    dependency_preservation: Analyzed.
+    qualifies_as_true_normal_form: true
+    key_component_screen: Refutes key shortcut via 4-tuple parity counterexample.
+  - id: nf.classical.5nf
+    short_name: 5NF
+    author: Fagin
+    year: 1979
+    structural_invariant: Every non-trivial join dependency implied by constraints is logically implied by candidate keys.
+    anomaly_excluded: Join dependencies that candidate keys do not imply.
+    lossless_join_property: Rissanen's Theorem.
+    dependency_preservation: Analyzed.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.6nf
+    short_name: 6NF
+    author: Date, Darwen, and Lorentzos
+    year: 2002
+    structural_invariant: Relvar satisfies no non-trivial join dependencies whatsoever (completely irreducible).
+    anomaly_excluded: Non-trivial join dependencies.
+    lossless_join_property: Trivial decompositions only.
+    dependency_preservation: Preserved on irreducible binary relvars.
+    qualifies_as_true_normal_form: true
+  - id: nf.classical.dknf
+    short_name: DKNF
+    author: Fagin
+    year: 1981
+    structural_invariant: Every constraint follows logically from domain constraints and key constraints.
+    anomaly_excluded: All insertion and deletion anomalies expressible by declared constraints.
+    lossless_join_property: Complete Enclosure.
+    dependency_preservation: Preserved.
+    qualifies_as_true_normal_form: false
+    qualification_gap: Lacks general decision procedure under arbitrary first-order constraints (Pillar IV gap).
+  - id: nf.classical.nf2
+    short_name: NF2
+    author: Schek and Scholl
+    year: 1986
+    structural_invariant: Nest and unnest invert one another on partitioned normal form.
+    anomaly_excluded: Hierarchies that cannot be recovered after flattening.
+    lossless_join_property: Invertible Nest/Unnest.
+    dependency_preservation: Preserved under partitioned NF.
+    qualifies_as_true_normal_form: false
+    qualification_gap: Orthogonal to the flat relational decomposition chain.
+
+mssn_levels_spectrum:
+  - id: nf.representation.tbnf
+    short_name: TBNF
+    levels: Level 0 - 1
+    spec_files: [0_grammar.md, 1_grammar.md]
+    anomaly_excluded: Lexical injection and parsing ambiguity from non-printable or out-of-alphabet tokens.
+    preserved_invariant: Admitted wire strings strictly composed of 38-token alphabet with unique prefix decodability.
+    lossless_reconstruction: Unique bi-directional bijection between structured ASTs and raw byte streams.
+  - id: nf.representation.dbcnf
+    short_name: DBCNF
+    levels: Level 7
+    spec_files: [7_grammar.md, 7_math.md]
+    anomaly_excluded: Spurious cycle enumeration and redundant representation of phase-shifted periodic orbits.
+    preserved_invariant: Every binary sequence in cyclic shift orbit is represented by its lexicographically least rotation.
+    lossless_reconstruction: Cyclic shift operations faithfully reconstruct the complete orbit without state loss.
+  - id: nf.evidence.ddanf
+    short_name: DDANF
+    levels: Level 12
+    spec_files: [12_grammar.md, 12_math.md]
+    anomaly_excluded: State desynchronization, unverified side effects, and non-reproducible trace execution.
+    preserved_invariant: Every event record structured as immutable 13-tuple projecting to 4-field irredundant kernel.
+    lossless_reconstruction: Deterministic step-by-step replay reconstructs identical state hashes and defect vectors.
+  - id: nf.logic.qanf
+    short_name: QANF
+    levels: Level 13 - 14
+    spec_files: [13_grammar.md, 14_math.md]
+    anomaly_excluded: Undecidable looping and unbounded search explosions in higher-order logical specifications.
+    preserved_invariant: Quantifier alternation depth bounded by Sigma_k^0 / Pi_k^0 with strict induction budget B.
+    lossless_reconstruction: Primitive recursive evaluators decide bounded statements; budget overflow yields BudgetUnknown.
+  - id: nf.cochain.dhnf
+    short_name: DHNF
+    levels: Level 17 - 18
+    spec_files: [18_grammar.md, 17_math.md]
+    anomaly_excluded: Conflating exact gradient updates with topological loop obstructions or boundary curls.
+    preserved_invariant: Discrete 1-cochain admits unique orthogonal direct sum decomposition c = d_0 p + h + d_1^* q.
+    lossless_reconstruction: Summing exact, harmonic, and coexact components reconstructs original cochain identically.
+  - id: nf.runtime.zfnf
+    short_name: ZFNF
+    levels: Level 18
+    spec_files: [11_grammar.md, 18_math.md]
+    anomaly_excluded: Floating-point rounding drift, artificial epsilon tolerances, and false optimality certification.
+    preserved_invariant: All vectors, weights, and dual certificates represented as exact rationals q = a/b in Q with zero duality gap.
+    lossless_reconstruction: Integer scaling under least common denominators preserves full arithmetic exactness.
+  - id: nf.recursion.asrf
+    short_name: ASRF
+    levels: Level 20
+    spec_files: [20_grammar.md, 20_math.md]
+    anomaly_excluded: Self-referential infinite loops and counterfeit verification where an agent attempts to certify its own state.
+    preserved_invariant: System enforces caller-verifier non-identity (callerHash != targetHash) emitting GodelBreak refusal.
+    lossless_reconstruction: Refusal state cleanly separates valid grounded evaluations from self-referential loops.
+    claim_hygiene_note: >-
+      Caller-verifier hash inequality verifies distinct identity labels, but does not prove causal independence
+      without authenticated actor bindings and execution isolation.
+    nomenclature_note: >-
+      Renamed from Autopoietic Cohomology Normal Form (ACNF) to eliminate cohomology misnomer; computes no cohomology groups.
+
+fsp_normal_forms:
+  - id: nf.fsp.bssnf
+    short_name: BSS-NF
+    domain: Real symmetric matrices H in R^{N x N} in a fixed discrete basis.
+    transformation_group: Diagonal sign changes G_gauge = {diag((-1)^{alpha_1}, ..., (-1)^{alpha_N})}.
+    target_property: Stoquasticity (H_ij <= 0 for all i != j).
+    anomaly_excluded: Quantum Monte Carlo on artificially non-stoquastic presentation when diagonal gauge eliminates negative signs.
+    necessary_and_sufficient_criterion: >-
+      Cycle Holonomy Theorem: sum_{e in C} s_e == 0 mod 2 for every cycle C in the graph.
+    reconstruction_theorem: Transformed matrix H' = D_alpha H D_alpha is stoquastic; partition function sign weights are positive.
+    positive_witness: Spanning forest rooted potential alpha in {0, 1}^N satisfying edge equations.
+    negative_witness_obstruction: Explicit cycle C with odd sign-bit holonomy (sum_{e in C} s_e == 1 mod 2).
+  - id: nf.fsp.micnf
+    short_name: MIC-NF
+    domain: Finite signed configuration path sums Z = sum_{x in S} w(x) sgn(x).
+    transformation_group: 'Involutive sign-reversing pairing Xi: S_0 -> S_0.'
+    target_property: Exact cancellation of negative path sectors leaving non-negative survivor sector.
+    anomaly_excluded: Identity map fallacy, same-sign pairing, and unbudgeted global annihilation (Z == 0).
+    necessary_and_sufficient_criterion: >-
+      Exists cancellation subset S_0 and bijection Xi: S_0 -> S_0 such that Xi(Xi(x)) = x, Xi(x) != x,
+      sgn(Xi(x)) = -sgn(x), w(Xi(x)) = w(x), and sgn(y) = +1 for all y in S \ S_0.
+    reconstruction_theorem: Z = 0 + sum_{y in S_surv} w(y) >= 0. Strict positivity requires non-empty survivor sector.
+    positive_witness: Explicit involution table Xi and non-empty survivor set S_surv.
+    negative_witness_obstruction: Fixed points (Xi(x) = x), same-sign pairs, or weight mismatch (w(Xi(x)) != w(x)).
+
+ddc_alphabet:
+  - letter: I
+    name: Init
+    description: Base state initialization.
+  - letter: E
+    name: Exact step
+    description: Potential gradient descent (d_0 p) on 1-cochains.
+  - letter: R
+    name: Repair step
+    description: Discrete Hodge curl-free projection repair / cycle resolution.
+  - letter: LAMBDA
+    name: Lift step
+    description: Coarse-to-fine scale ascent under verified step adjacency.
+  - letter: D
+    name: Descent step
+    description: Fine-to-coarse scale descent with booked tail l^1 loss.
+  - letter: M
+    name: Malformed / Refusal
+    description: Refusal absorption with strict state identity (s' = s).
+  - letter: C
+    name: Context shift
+    description: Dynamic context boundary re-scoping and subcomplex embedding.
+  - letter: T
+    name: Terminal
+    description: Non-retract terminal sink under declared authority.
+
+ddc_operational_normal_forms:
+  - contract_id: nf.ddc.hodge_canonical.yaml
+    short_name: HCNF
+    name: Hodge Canonical Normal Form
+    family: shape
+    runes: [E, R]
+    target_runtime_law: Law 7 (Orthogonal Repair)
+    domain: Discrete 1-cochains c in C^1(K, Q) over cell complexes.
+    anomaly_excluded: Conflating exact gradient adjustments with non-trivial harmonic loops or boundary curls.
+    preserved_invariant: Orthogonal direct sum decomposition C^1 = im d_0 \oplus im d_1^* \oplus H^1.
+    reconstruction_theorem: c = d_0 p + h + d_1^* q without rational error.
+  - contract_id: nf.ddc.trace_merkle.yaml
+    short_name: TMNF
+    name: Trace Merkle Normal Form
+    family: runtime
+    runes: [I, T]
+    target_runtime_law: Laws 1 & 5 (Non-Empty Trace & Monotonic Identity)
+    domain: Operational execution tapes tau = (w_0, ..., w_n).
+    anomaly_excluded: Un-receipted state transitions, out-of-order execution, and non-reproducible trace execution.
+    preserved_invariant: Immutable RFC 8785 canonical JSON and SHA-256 Merkle chain at each step.
+    reconstruction_theorem: Deterministic replay from initial state and Merkle chain reconstructs identical terminal state.
+  - contract_id: nf.ddc.context_boundary.yaml
+    short_name: CBNF
+    name: Context Boundary Normal Form
+    family: topology
+    runes: [C]
+    target_runtime_law: Law 8 (Context Boundary Purity)
+    domain: Dynamic carrier subcomplexes K \subset K' and observation windows.
+    anomaly_excluded: Scope laundering, discarding inconvenient defects by re-scoping without lease contracts.
+    preserved_invariant: Disjoint partition E(K') = E_int \sqcup E_bnd with non-decreasing defect mass.
+    reconstruction_theorem: Re-embedding internal and boundary subcomplexes recovers global carrier losslessly.
+  - contract_id: nf.ddc.loss_ledger.yaml
+    short_name: LLNF
+    name: Loss Ledger Normal Form
+    family: transport
+    runes: [D]
+    target_runtime_law: Law 6 (Finite Loss Ledger)
+    domain: 'Scale descent transformations D: H_k -> H_{k-1}.'
+    anomaly_excluded: Silent dimension truncation and unaccounted projection energy loss.
+    preserved_invariant: Booked LossLedger record with dropped coordinates, exact rational l^1 loss, and tail bound.
+    reconstruction_theorem: Original state bounded within declared l^1 ball centered at projected state.
+  - contract_id: nf.ddc.refusal_receipt.yaml
+    short_name: RRNF
+    name: Refusal Receipt Normal Form
+    family: evidence
+    runes: [M]
+    target_runtime_law: Law 3 (Refusal Absorption)
+    domain: Operational failure modes, precondition violations, and out-of-budget halts.
+    anomaly_excluded: Untyped exceptions, unhandled panics, and silent retries mutating state during failure.
+    preserved_invariant: Closed 7-code typed receipt with strict state identity (s' = s) and routing in {C, LAMBDA, T}.
+    reconstruction_theorem: Failed attempt factored out of trajectory; re-execution from s is deterministic.
+  - contract_id: nf.ddc.terminal_partition.yaml
+    short_name: TPNF
+    name: Terminal Partition Normal Form
+    family: authority
+    runes: [T]
+    target_runtime_law: Law 2 (Terminal Sink)
+    domain: Terminal halting states under authority contracts.
+    anomaly_excluded: Post-terminal mutation, unauthorized continuation, and authority elevation.
+    preserved_invariant: Partition into 4 mutually exclusive axes (SUCCESS, REFUSAL, HALT, ABORT) with can_continue == 0 and AuthorityEffect None.
+    reconstruction_theorem: Terminal certificate uniquely seals the trace; no further morphisms can compose.
+  - contract_id: nf.ddc.lift_ledger.yaml
+    short_name: LNLF
+    name: Lift Ledger Normal Form
+    family: transport
+    runes: [LAMBDA, D]
+    target_runtime_law: Law 4 (Step Adjacency & Lift Coherence)
+    domain: 'Coarse-to-fine scale ascent transformations LAMBDA: H_{k-1} -> H_k.'
+    anomaly_excluded: Broken scale step adjacency (|k - k'| > 1) and unlicensed energy inflation.
+    preserved_invariant: Step adjacency verification (k' = k + 1) and exact rational norm tracking.
+    reconstruction_theorem: Projection \pi \circ LAMBDA recovers coarse state identically on supported subspace.
+  - contract_id: nf.ddc.dual_witness.yaml
+    short_name: DWNF
+    name: Dual Witness Normal Form
+    family: evidence
+    runes: [R, E]
+    target_runtime_law: Dual Certification Law
+    domain: Optimization problems and defect minimization on 1-complexes.
+    anomaly_excluded: Unilateral primal optimality assertions and heuristic defect claims lacking certificates.
+    preserved_invariant: Simultaneous emission of primal flow and dual circulation witness with zero duality gap and Xi tie-break.
+    reconstruction_theorem: Dual certificate independently verifies primal minimizer without re-running search.
+
+references:
+  - 'Codd, E. F. (1970). A Relational Model of Data for Large Shared Data Banks. CACM 13(6), 377-387.'
+  - 'Codd, E. F. (1971). Further Normalization of the Data Base Relational Model. Courant CS Symposia 6.'
+  - 'Boyce, R. F., & Codd, E. F. (1974). Recent Investigations in Relational Data Base Systems. IFIP Congress, 1017-1021.'
+  - 'Fagin, R. (1977). Multivalued Dependencies and a New Normal Form for Relational Databases. ACM TODS 2(3), 262-278.'
+  - 'Fagin, R. (1979). Normal Forms and Relational Database Operators. ACM SIGMOD, 153-160.'
+  - 'Fagin, R. (1981). A Normal Form for Relational Databases That Is Based on Domains and Keys. ACM TODS 6(3), 387-415.'
+  - 'Date, C. J. (2004). An Introduction to Database Systems (8th ed.). Addison-Wesley.'
+  - 'Darwen, H., Date, C. J., & Fagin, R. (2012). A New Normal Form for Relational Databases: Essential Tuple Normal Form (ETNF). Fundamenta Informaticae 120(3-4), 249-278.'
+  - 'Zaniolo, C. (1982). A New Normal Form for the Design of Relational Database Schemata. ACM TODS 7(3), 489-499.'
+  - 'Bulgakov, M. (1967). The Master and Margarita. YMCA Press / Harvill Press.'

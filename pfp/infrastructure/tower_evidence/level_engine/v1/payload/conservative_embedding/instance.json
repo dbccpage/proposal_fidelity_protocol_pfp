@@ -1,0 +1,84 @@
+{
+  "fixtures": [
+    {
+      "id": "own_neg",
+      "note": "the stage after the refused candidate that marks the second datum: the protected pair is identified",
+      "role": "own_negative",
+      "set": {
+        "new_relations": [
+          [
+            "<x>",
+            "<y>"
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_lost",
+      "note": "the old stage declares its protected pair equal, and the new stage drops it",
+      "role": "extra",
+      "set": {
+        "old_relations": [
+          [
+            "<x>",
+            "<y>"
+          ]
+        ]
+      },
+      "violates": null
+    },
+    {
+      "id": "near_invalid",
+      "note": "the stage after the candidate that adds a fresh datum: conservative on the old stage, but the demanded pair stays together",
+      "role": "near_miss",
+      "set": {
+        "new_generators": [
+          "<x>",
+          "<y>",
+          "<z>",
+          "w3"
+        ],
+        "new_relations": [
+          [
+            "<y>",
+            "<z>"
+          ],
+          [
+            "<y>",
+            "w3"
+          ],
+          [
+            "<z>",
+            "w3"
+          ]
+        ]
+      },
+      "violates": "sealed_valid"
+    },
+    {
+      "id": "near_unrelated",
+      "note": "a new stage no candidate of cost one makes",
+      "role": "near_miss",
+      "set": {
+        "new_relations": []
+      },
+      "violates": "new_is_a_response"
+    },
+    {
+      "id": "near_arrow",
+      "note": "an arrow the sealed grammar does not state",
+      "role": "near_miss",
+      "set": {
+        "arrows": [
+          [
+            "f",
+            0,
+            1
+          ]
+        ]
+      },
+      "violates": "no_cells"
+    }
+  ]
+}

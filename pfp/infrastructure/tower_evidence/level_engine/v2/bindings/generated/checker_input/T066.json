@@ -1,0 +1,335 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "pairing_certificates",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "input_sha256": "sha256:b52f0d177befdd56161ab927790e114e708ca8e5b313145aa283fbdb85d20773",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "packet": {
+          "pairs": [],
+          "rest": [
+            0,
+            1,
+            2
+          ],
+          "terms": [
+            "2/1",
+            "-1/1",
+            "-1/1"
+          ],
+          "total": "0/1"
+        }
+      },
+      "input_sha256": "sha256:bfb3bc2fba560a4f47ecd18b16067b0013c6d7ad34369fb105352ff1fbfdcb63",
+      "native_code": "FAILS:single_signed_rest",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_wedge",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              4
+            ]
+          ],
+          "rest": [
+            2,
+            5
+          ],
+          "terms": [
+            "-2/1",
+            "-2/1",
+            "-1/1",
+            "2/1",
+            "2/1",
+            "2/1"
+          ],
+          "total": "1/1"
+        }
+      },
+      "input_sha256": "sha256:5c43ffd515ed35b128f7d3eb31bd9db724fb45692604fa82017d970a75f99ea6",
+      "native_code": "FAILS:single_signed_rest",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_partition",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "input_sha256": "sha256:3547ebb4294f13cb3f3434205ad09d6c76fdf894eba20a0091d387d67fffb311",
+      "native_code": "FAILS:partition",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_opposite",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "input_sha256": "sha256:4b9e5381cd01b71a1c5ff70b84486879254b70da25f1f984f3f688d97d7a8910",
+      "native_code": "FAILS:opposite_pairs",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "PASS",
+      "id": "zero_certified",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              4,
+              5
+            ]
+          ],
+          "rest": [],
+          "terms": [
+            "2/1",
+            "1/1",
+            "-1/1",
+            "-2/1",
+            "-1/1",
+            "1/1"
+          ],
+          "total": "0/1"
+        }
+      },
+      "input_sha256": "sha256:720ce11469369498cf9bb5706b4b642b18b61604fc346f03ce94ceebd1bf2f2a",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "extra-zero_certified"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "pair_off",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-2/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "input_sha256": "sha256:69f4ee9126dab04a45425acf48df601434adbf85a7d367b48b486d1fa140d2c5",
+      "native_code": "FAILS:opposite_pairs,total",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-pair_off"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "rest_mixed",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "-1/1"
+          ],
+          "total": "2/1"
+        }
+      },
+      "input_sha256": "sha256:63fb8e90ffa58d61d19ac373ac6f44238a70d94dd02fb1ebee4ce085adf12b2c",
+      "native_code": "FAILS:single_signed_rest,total",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-rest_mixed"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "packet": {
+          "pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "rest": [
+            4,
+            5
+          ],
+          "terms": [
+            "1/1",
+            "2/1",
+            "-1/1",
+            "-2/1",
+            "1/1",
+            "1/1"
+          ],
+          "total": "0/1"
+        }
+      },
+      "input_sha256": "sha256:d2e52841974c3dec9cde62ee2cb562fd9df8145eee2b56b334a9fb161baad507",
+      "native_code": "FAILS:total",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "ACCEPTED",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.packet.v1",
+  "level": 66,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {
+    "lists_emptied": "needs_target_schema"
+  },
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_066"
+}

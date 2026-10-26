@@ -1,0 +1,103 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.evidence.ddanf
+  name: Deterministic Data-Flow Architecture Normal Form
+  short_name: DDANF
+  version: v0
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+  family: evidence
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - trace_record
+  - replay_ledger
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a trace that cannot be replayed to the same state hashes and the
+    same defect vectors
+  preserves_invariant: every event is the declared 13-tuple, and its projection to
+    the four-field kernel is a function of that tuple
+  protected_skeleton:
+  - thirteen_tuple
+  - four_field_kernel
+  erased_structure: []
+  non_claims:
+  - does not define the internal meaning of the thirteen components beyond the positions
+    given in the source
+  - does not treat a matching final hash as a substitute for step-by-step replay
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.3'
+  formal_statement: 'An event record is the 13-tuple (B, C-, x-, o, D, C+, x+, H(x-),
+    Omega-, Omega+, Delta C, I, p). The kernel projection is K = (B, C, x, Omega).
+    Replay of the tuple sequence reproduces the recorded state hashes and the recorded
+    defect vectors.
+
+    '
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_replay_not_a_relational_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: unreproducible traces, unverified side effects, and state labels
+      that drift from the ledger
+    lossless_join:
+      status: replay
+      statement: stepping the 13-tuple ledger reconstructs the recorded hashes and
+        defect vectors
+    dependency_preservation:
+      status: kernel_is_a_projection
+      statement: the four-field kernel is computed from the tuple and does not add
+        a component
+    syntactic_decision:
+      status: schema_decidable
+      statement: a record is checked by arity, component position, and replay against
+        the stored hashes
+declarations_required:
+- event_tuple_arity: 13
+- kernel_projection:
+  - B
+  - C
+  - x
+  - Omega
+evidence_required: []
+validation_criteria:
+- each event has the thirteen components in the declared order
+- the kernel equals the declared projection of that event
+- replay of the ledger reproduces the stored hashes and defect vectors
+terminal_routes:
+- Accept
+- RejectMalformedTuple
+- RejectReplayMismatch
+terminal_route_map:
+  Accept: Preserve
+  RejectMalformedTuple: Reject
+  RejectReplayMismatch: Reject
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: an event arrives with a component missing or reordered
+  diagnosis: the record is not the declared 13-tuple
+  terminal: RejectMalformedTuple
+- symptom: replay yields a different state hash
+  diagnosis: the ledger does not determine the recorded state
+  terminal: RejectReplayMismatch
+examples:
+- ref: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.3'
+references:
+- coda_all_universe/mssn_sn_tower/definitions.md

@@ -1,0 +1,100 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.ddc.context_boundary
+  name: Context Boundary Normal Form
+  short_name: CBNF
+  version: v0
+  theory_status: established
+  contract_status: active
+  status: active
+  verification_status: executable
+  family: topology
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+    - carrier_complex
+    - observation_window
+    - boundary_subcomplex
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: scope laundering and unmonitored carrier expansion where boundary dependencies are disguised as resolved defects
+  preserves_invariant: disjoint carrier edge partition E(K') = E_int ⊔ E_bnd with monotonic non-decreasing defect mass Φ₁ and Γ₂
+  protected_skeleton:
+    - subcomplex_carrier_K
+    - ambient_carrier_K_prime
+    - internal_edges
+    - boundary_edges
+    - defect_evaluations
+  erased_structure:
+    - external_complex_topology_beyond_boundary
+  non_claims:
+    - does not claim context exposure reduces residual defect; Law 8 mandates that declaring boundaries is not repair
+    - does not claim exposed boundary edges are gauge-repairable without further licensed carrier inclusion
+    - does not confer operational authority; authority_effect is unconditionally None
+definition:
+  source: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/normal_forms/README.md
+  section: '2.0'
+  formal_statement: >
+    On a discrete simplicial or cell complex carrier K exposed to an ambient window K',
+    Context Boundary Normal Form (CBNF) losslessly partitions edges into disjoint interior
+    and boundary sets E(K') = E_int ⊔ E_bnd. Context exposure rune C declares this partition
+    and verifies that residual mass Φ₁ and curvature defect Γ₂ are monotonic non-decreasing,
+    forbidding false defect relief through unmonitored carrier expansion.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: topological_sheaf_partition_not_relational_project_join
+    anomaly_exclusion: scope laundering (attempting to decrease Φ₁ or Γ₂ by expanding the carrier boundary)
+    lossless_join:
+      status: disjoint_sum_reconstruction
+      statement: E(K') is losslessly partitioned into E_int ⊔ E_bnd with explicit indicator functions
+    dependency_preservation:
+      status: subcomplex_embedding_preserved
+      statement: internal cochain relations are preserved identically on E_int
+    syntactic_decision:
+      status: combinatorial_subgraph_decidable
+      statement: membership is decidable by checking vertex incident inclusion and edge partition counts
+declarations_required:
+  - base_carrier
+  - extended_carrier
+  - internal_edge_count
+  - boundary_edge_count
+  - defect_monotonicity_witness
+evidence_required: []
+validation_criteria:
+  - interior and boundary edge sets are strictly disjoint
+  - all vertices incident to interior edges belong to base carrier K
+  - Φ₁ and Γ₂ on extended carrier K' are greater than or equal to their values on K
+terminal_routes:
+  - AdmitExposedContext
+  - RejectScopeLaundering
+  - RejectBoundaryNonDisjoint
+terminal_route_map:
+  AdmitExposedContext: Preserve
+  RejectScopeLaundering: Refuse
+  RejectBoundaryNonDisjoint: Reject
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+  - symptom: defect mass decreases across context exposure without explicit repair rune
+    diagnosis: scope laundering attempted; violates Law 8
+    terminal: RejectScopeLaundering
+  - symptom: intersection of interior and boundary edges is non-empty
+    diagnosis: carrier partition is not disjoint
+    terminal: RejectBoundaryNonDisjoint
+examples:
+  - ref: omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+    section: '2.1'
+references:
+  - omega_engine_education/documentation/14_discrete_deformation_calculus_ddc/00_discrete_deformation_calculus_foundations.md
+  - omega_engine_governance/contracts/contracts_omega_engine_crates/mathematics/discrete_deformation_algebra/context_embedding_operator.contract.yaml

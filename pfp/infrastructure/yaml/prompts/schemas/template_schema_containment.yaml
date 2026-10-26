@@ -1,0 +1,23 @@
+schema_id: omega.pfp.prompt-containment.v1
+title: PFP Prompt Containment Typed Contracts
+authority_effect: None
+source: README.md
+containment_law: 'cardinality(n) = 1 + sum(cardinality(c) for c in children(n))'
+leaf_invariant: 'cardinality is 1 when decomposition.subprompts is empty; a refusal is a valid single leaf'
+max_depth: 5
+mutation_kinds:
+  - root_seed
+  - decompose
+pipeline_order:
+  - prompts
+  - rewriting
+  - packetization
+executes_prompts: false
+example:
+  mutation_kind: root_seed
+  prompt_ref: p_star_root
+  cardinality: 3
+  children:
+    - {mutation_kind: decompose, prompt_ref: p_sub_0, cardinality: 1, children: [], authority_effect: None}
+    - {mutation_kind: decompose, prompt_ref: p_sub_1, cardinality: 1, children: [], authority_effect: None}
+  authority_effect: None

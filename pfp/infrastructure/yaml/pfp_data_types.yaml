@@ -1,0 +1,1948 @@
+# Proposal Fidelity Protocol (PFP) - Canonical Data Types Catalog
+# AuthorityEffect: None.
+# Schema: pfp.data-types.v1
+
+meta:
+  schema: pfp.data-types.v1
+  authority_effect: None
+  version: 1.1.0
+  governing_standard: Proposal Fidelity Protocol (PFP v0.2), Single Prompt Standard (SPK-001)
+  consumer_envelope_policy: rop_result_required_no_bare_dict_projection
+  yaml_parser_profile: yaml_1_2_strict_boolean_literals
+  description: >
+    Fully-typed schema catalog for PFP pilot specifications, landed responses,
+    prompt templates, lineage, guidance, cycle balance quartets, task fixtures,
+    twenty canonical modes, normal forms domain contracts, rewriting wire topologies,
+    schema envelopes, staged execution controllers, and type register census records.
+
+primitives:
+  AuthorityEffect:
+    kind: enum
+    doc: Constitutional ceiling; data validation grants no operational authority.
+    values:
+    - None
+
+  TaskFamily:
+    kind: enum
+    doc: The six canonical PFP benchmark task families.
+    values:
+    - linear_algebra
+    - graph_facts
+    - graph_repair
+    - refusal
+    - cochain_defect
+    - magma_associativity
+
+  ExecutionMode:
+    kind: enum
+    doc: Dispatch harness mode.
+    values:
+    - offline_fixture
+    - live_manual_dispatch
+    - live_gateway_dispatch
+
+  TrialStatus:
+    kind: enum
+    doc: Execution lifecycle status for a pilot request.
+    values:
+    - NOT_RUN
+    - RUNNING
+    - COMPLETED
+    - FAILED
+    - REFUSED
+
+  EvaluationStatus:
+    kind: enum
+    doc: Host checker outcome classification.
+    values:
+    - ACCEPTED
+    - WRONG_ANSWER
+    - FALSE_CERTAINTY
+    - MALFORMED
+    - NOT_RUN
+    - REFUSED
+
+  ConstraintType:
+    kind: enum
+    doc: Invariant enforcement classification.
+    values:
+    - ProjectOut
+    - Restrain
+    - Enforce
+    - RejectMalformedOrFakeRefusals
+
+  Operatorizability:
+    kind: enum
+    doc: Defect remediation capability.
+    values:
+    - repairable
+    - fatal
+
+  RuntimeAction:
+    kind: enum
+    doc: Execution response to defect detection.
+    values:
+    - repair
+    - abort
+    - refuse
+
+  Severity:
+    kind: enum
+    doc: Invariant defect urgency tier.
+    values:
+    - P0
+    - P1
+    - P2
+    - P3
+
+  TaskModeFidelity:
+    kind: enum
+    values:
+    - literal_extraction
+    - finite_deduction
+
+  VariableIdentifierPermutation:
+    kind: enum
+    values:
+    - canonical
+    - permuted
+
+  FloatingPointRisk:
+    kind: enum
+    values:
+    - exact_modular
+    - float_approximated
+
+  ArmTemplate:
+    kind: enum
+    values:
+    - A0
+    - A1
+    - A2
+    - A3
+
+  MissingPremise:
+    kind: enum
+    values:
+    - answerable
+    - unanswerable
+
+  CohomologyDefectClass:
+    kind: enum
+    values:
+    - none
+    - exact_boundary
+    - closed_non_exact
+    - curvature_defect
+
+  MagmaAssociativityType:
+    kind: enum
+    values:
+    - none
+    - associative_semigroup
+    - non_associative_magma
+
+  CheckerId:
+    kind: enum
+    values:
+    - PFP-01-EXACT-LINALG
+    - PFP-02-GRAPH-FACTS
+    - PFP-03-GRAPH-REPAIR
+    - PFP-14-TYPED-REFUSAL
+    - PFP-52-COCHAIN-DEFECT
+    - PFP-55-MAGMA-ASSOC
+
+  StructureDeltaMetric:
+    kind: enum
+    values:
+    - exact_rational_delta
+    - gate_boolean
+    - cochain_norm
+    - rank_change
+
+  RepresentationRewrite:
+    kind: enum
+    values:
+    - raw_prose
+    - structured_spans
+    - mss_boundary_v1
+    - sn_wire_v2
+    - ebnf_wire_v1
+    - hieroglyphic_glyphs
+
+  ModelClass:
+    kind: enum
+    values:
+    - 8B
+    - 70B
+    - 500B_plus
+
+types:
+  # ---------------------------------------------------------------------------
+  # 1. PILOT SPECIFICATION (spec.yaml)
+  # ---------------------------------------------------------------------------
+  PilotSpec:
+    kind: record
+    doc: Ingress matrix coordinates and host gate specification for a single pilot instance.
+    fields:
+      schema:
+        type: string
+        const: pfp.pilot-spec.v1
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      pilot_id:
+        type: string
+        doc: Unique pilot directory and instance identifier (e.g. pilot_00000).
+      prompt_id:
+        type: string
+        doc: Lineage root prompt identifier (e.g. prompt_00000).
+      parent_prompt_id:
+        type: string
+        optional: true
+        doc: Parent prompt identity for derived pilots; null for root seeds.
+      generation_id:
+        type: integer
+        doc: Generation ordinal; 0 for initial matrix pilots.
+      phase:
+        type: string
+        doc: Release campaign phase (e.g. phase_0_bedrock).
+      split:
+        type: string
+        doc: Dataset partition (development, validation, test).
+      coordinates:
+        type: PilotCoordinates
+      ingress:
+        type: PilotIngress
+      host_gate:
+        type: PilotHostGate
+
+  PilotCoordinates:
+    kind: record
+    doc: Coordinate vector for one explicitly selected PFP experiment.
+    fields:
+      task_family:
+        type: TaskFamily
+      difficulty_rung:
+        type: integer
+        doc: Discrete difficulty level from 1 to 5.
+      representation_rewrite:
+        type: RepresentationRewrite
+        doc: Rewriting transformation applied to prompt stimulus.
+      rewrite_count:
+        type: integer
+      legend_present:
+        type: boolean
+      mode:
+        type: string
+        doc: PFP mode identifier (e.g. none, M01..M20).
+      stage_count:
+        type: integer
+      pass_count:
+        type: integer
+      single_shot:
+        type: boolean
+      antibody_active:
+        type: boolean
+      antibody_ids:
+        type: list<string>
+      model_class:
+        type: ModelClass
+        doc: Parameter tier (e.g. 8B, 70B, 500B_plus).
+      model_id:
+        type: string
+        doc: Concrete model identifier.
+      temperature:
+        type: float
+      target_spend_usd:
+        type: float
+
+  PilotIngress:
+    kind: record
+    doc: Ingress mathematical configuration and boundary condition properties.
+    fields:
+      task_mode_fidelity:
+        type: TaskModeFidelity
+      variable_identifier_permutation:
+        type: VariableIdentifierPermutation
+      floating_point_approximation_risk:
+        type: FloatingPointRisk
+      arm_template:
+        type: ArmTemplate
+      missing_premise:
+        type: MissingPremise
+      cohomology_defect_class:
+        type: CohomologyDefectClass
+      magma_associativity_type:
+        type: MagmaAssociativityType
+
+  PilotHostGate:
+    kind: record
+    doc: Sovereign host checker binding and expected ground truth outcome.
+    fields:
+      checker_id:
+        type: CheckerId
+        doc: Sovereign checker identifier (e.g. PFP-01-EXACT-LINALG).
+      response_schema:
+        type: string
+        doc: Machine response schema identifier (e.g. PromptResponse.v1).
+      residual_logging:
+        type: boolean
+      structure_delta_metric:
+        type: StructureDeltaMetric
+      expected_outcome:
+        type: string
+
+  # ---------------------------------------------------------------------------
+  # 2. PILOT RESPONSE & EVALUATION (response.yaml)
+  # ---------------------------------------------------------------------------
+  PilotResponse:
+    kind: record
+    doc: Landed model execution response, extracted answer, sanitization report, and host evaluation receipt.
+    fields:
+      schema:
+        type: string
+        const: pfp.pilot-response.v1
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      pilot_id:
+        type: string
+      request_id:
+        type: string
+      execution_mode:
+        type: ExecutionMode
+      model_id:
+        type: string
+        optional: true
+      trial_status:
+        type: TrialStatus
+      raw_reply:
+        type: string
+        optional: true
+        doc: Verbatim reply string from the provider.
+      parsed_response:
+        type: PromptResponsePayload
+        optional: true
+        doc: Parsed structured JSON adhering to SPK-001 PromptResponse schema.
+      parsed_json:
+        type: dict
+        optional: true
+        doc: Raw parsed JSON object for ad-hoc or legacy responses.
+      extracted_answer:
+        type: any
+        optional: true
+        doc: Scalar answer extracted by the host sanitization pipeline.
+      sanitization:
+        type: SanitizationReport
+      evaluation:
+        type: EvaluationReport
+      receipt:
+        type: ExecutionReceipt
+
+  PromptResponsePayload:
+    kind: record
+    doc: Standard model response payload under the SPK-001 policy manifest.
+    fields:
+      derived_under_policy:
+        type: string
+        const: SPK-001
+      summary:
+        type: ResponseSummaryPayload
+      process_integrity:
+        type: ProcessIntegrityPayload
+      sections:
+        type: list<ResponseSectionPayload>
+        default: []
+
+  ResponseSectionPayload:
+    kind: record
+    doc: Structured response section with optional sub-rows, notes, or subsections.
+    fields:
+      name:
+        type: string
+        optional: true
+      title:
+        type: string
+        optional: true
+      rows:
+        type: list<any>
+        default: []
+      body:
+        type: string
+        optional: true
+      content:
+        type: string
+        optional: true
+      status:
+        type: string
+        optional: true
+      notes:
+        type: any
+        optional: true
+      subsections:
+        type: list<map<string, any>>
+        default: []
+
+  ResponseSummaryPayload:
+    kind: record
+    doc: Claim-disciplined response summary from the model.
+    fields:
+      narrowest_defensible_thesis:
+        type: string
+      evidence_scope:
+        type: string
+      next_concrete_test:
+        type: string
+
+  ProcessIntegrityPayload:
+    kind: record
+    doc: Model self-reported process integrity checks.
+    fields:
+      seed_allows_theory_refutation:
+        type: boolean
+      detected_prompt_biases:
+        type: list<string>
+      should_continue:
+        type: boolean
+
+  SanitizationReport:
+    kind: record
+    doc: Verification of code fence stripping and structure leakage debt tracking.
+    fields:
+      fence_stripped:
+        type: boolean
+      is_valid_json:
+        type: boolean
+      structure_leakage_debt_chars:
+        type: integer
+
+  EvaluationReport:
+    kind: record
+    doc: Sovereign host checker verdict comparing expected truth with received output.
+    fields:
+      checker_id:
+        type: string
+      expected:
+        type: any
+      received:
+        type: any
+      status:
+        type: EvaluationStatus
+
+  ExecutionReceipt:
+    kind: record
+    doc: Cryptographic and spend receipt for model invocation.
+    fields:
+      provider:
+        type: string
+        optional: true
+      dispatch_kind:
+        type: string
+        optional: true
+      cost_microusd:
+        type: integer
+      evidence:
+        type: string
+      timestamp_utc:
+        type: string
+        optional: true
+      provider_calls:
+        type: integer
+        optional: true
+
+  # ---------------------------------------------------------------------------
+  # 3. PROMPT TEMPLATE & P* TREE (prompt_template.yaml & p_star.yaml)
+  # ---------------------------------------------------------------------------
+  PromptTemplate:
+    kind: record
+    doc: Canonical prompt template carrying lineage, guidance defense slots, and system manifest.
+    fields:
+      lineage:
+        type: PromptLineageSlot
+      guidance:
+        type: GuidanceSlot
+      system_prompt:
+        type: string
+        doc: YAML string containing the policy manifest, grammar, typing rules, and claim hygiene.
+      user_prompt:
+        type: string
+        doc: Holds '[USER PROMPT]' placeholder in template, or concrete stimulus in P*.
+      response_schema:
+        type: string
+        doc: YAML/JSON Schema string specifying the required PromptResponse format.
+
+  PromptLineageSlot:
+    kind: record
+    doc: First-class provenance and mutation ancestry slots for prompt trees.
+    fields:
+      prompt_id:
+        type: string
+        doc: Holds '[PROMPT ID]' placeholder in template, or concrete prompt ID in P*.
+      generation_id:
+        type: any
+        doc: Holds '[PROMPT GENERATION ID]' string in template, or integer in P*.
+      family_id:
+        type: string
+        doc: Holds '[PROMPT FAMILY ID]' placeholder in template, or task family name in P*.
+      parent_id:
+        type: string
+        optional: true
+        doc: Holds '[PROMPT PARENT ID]' in template, or null/parent prompt ID in P*.
+      template_id:
+        type: string
+        optional: true
+        doc: Identifier of originating template.
+      template_version:
+        type: string
+        optional: true
+        doc: Version of originating template.
+      mutation_kind:
+        type: string
+        optional: true
+        doc: Mutation operator (e.g. root_seed, edit, antibody_injection, crossover).
+      mutation_notes:
+        type: string
+        optional: true
+        doc: Audit rationale for prompt transformation.
+      mutation_note:
+        type: string
+        optional: true
+        doc: Alias for mutation_notes.
+      status:
+        type: string
+        optional: true
+        doc: Assembly lifecycle status (e.g. assembled).
+      created_at_utc:
+        type: string
+        optional: true
+        doc: Timestamp in ISO 8601 UTC.
+      author:
+        type: string
+        optional: true
+        doc: Originating author or agent identity.
+      authority_effect:
+        type: AuthorityEffect
+        default: None
+
+  GuidanceSlot:
+    kind: record
+    doc: Active defense and behavioral guidance slots.
+    fields:
+      rules:
+        type: list<RuleSlot>
+        default: []
+      antibodies:
+        type: list<any>
+        default: []
+        doc: List of AntibodySlot objects matching .agents/antibodies or string IDs.
+      antipatterns:
+        type: list<AntipatternSlot>
+        default: []
+      helpful_patterns:
+        type: list<HelpfulPatternSlot>
+        default: []
+
+  RuleSlot:
+    kind: record
+    doc: Sovereign governance rule binding.
+    fields:
+      rule_id:
+        type: string
+      name:
+        type: string
+        optional: true
+      statement:
+        type: string
+      authority_effect:
+        type: AuthorityEffect
+        default: None
+
+  AntibodySlot:
+    kind: record
+    doc: Active immune antibody record adhering to .agents/antibodies schema.
+    fields:
+      antibody_id:
+        type: string
+      failure_class:
+        type: string
+        optional: true
+      target_pattern:
+        type: string
+        optional: true
+      constraint_type:
+        type: string
+        default: Restrain
+      operatorizability:
+        type: string
+        default: repairable
+      action:
+        type: string
+        default: repair
+      severity:
+        type: string
+        default: P2
+      description:
+        type: string
+        optional: true
+      negative_fixture:
+        type: string
+        optional: true
+      positive_fixture:
+        type: string
+        optional: true
+      times_seen:
+        type: integer
+        optional: true
+      evidence_sha256:
+        type: string
+        optional: true
+      pharmacy_status:
+        type: string
+        optional: true
+      case_id:
+        type: string
+        optional: true
+      failed_proof:
+        type: string
+        optional: true
+      diagnostic:
+        type: string
+        optional: true
+      timestamp:
+        type: string
+        optional: true
+      authority_effect:
+        type: AuthorityEffect
+        default: None
+
+  AntipatternSlot:
+    kind: record
+    doc: Known anti-pattern signature to be projected out.
+    fields:
+      antipattern_id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      target_pattern:
+        type: string
+        optional: true
+
+  HelpfulPatternSlot:
+    kind: record
+    doc: Positive behavioral pattern or recommended structural idiom.
+    fields:
+      pattern_id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      enforcement:
+        type: string
+        optional: true
+
+  # ---------------------------------------------------------------------------
+  # 4. SYSTEM PROMPT MANIFEST (Internal System Prompt Structure)
+  # ---------------------------------------------------------------------------
+  SystemPromptManifest:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Structured representation of the deserialized system_prompt block.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      semantic_policy_manifest:
+        type: PfpSemanticPolicyManifest
+      mss0_grammar_constraint:
+        type: PfpMss0GrammarConstraint
+      op_semantics:
+        type: PfpOpSemantics
+      import_boundary:
+        type: string
+      mss0_typing_rules:
+        type: PfpMss0TypingRules
+      evaluator_scope_rule:
+        type: PfpEvaluatorScopeRule
+      evidence_levels:
+        type: list<PfpEvidenceLevel>
+      claim_hygiene:
+        type: PfpClaimHygiene
+      role:
+        type: RoleManifest
+      antibody_injections:
+        type: list<any>
+        default: []
+
+  PfpSemanticPolicyManifest:
+    kind: record
+    fields:
+      policy_id:
+        type: string
+        const: SPK-001
+      required_stamp:
+        type: string
+        const: "derived_under_policy: SPK-001"
+
+  PfpMss0GrammarConstraint:
+    kind: record
+    fields:
+      system_name:
+        type: string
+        const: "SYM SYS"
+      atomic_glyph_count:
+        type: integer
+        const: 38
+      node_labels:
+        type: string
+        const: "a..z"
+      numeric_labels:
+        type: string
+        const: "0..9"
+      delimiters:
+        type: list<string>
+      pair_note:
+        type: string
+      numeric_license_rule:
+        type: string
+      derived_patterns_note:
+        type: string
+
+  PfpOpSemantics:
+    kind: record
+    fields:
+      default_layer:
+        type: integer
+        default: 1
+      default_meaning:
+        type: string
+        default: syntactic_binary_operator
+      forbidden_unlicensed_interpretations:
+        type: list<string>
+      license_required_for:
+        type: list<string>
+
+  PfpMss0TypingRules:
+    kind: record
+    fields:
+      preamble:
+        type: string
+      levels:
+        type: list<PfpMss0Level>
+
+  PfpMss0Level:
+    kind: record
+    fields:
+      level:
+        type: integer
+      code:
+        type: string
+      name:
+        type: string
+      meaning:
+        type: string
+
+  PfpEvaluatorScopeRule:
+    kind: record
+    fields:
+      principle:
+        type: string
+      bindings:
+        type: list<PfpEvaluatorBinding>
+
+  PfpEvaluatorBinding:
+    kind: record
+    fields:
+      evaluator:
+        type: string
+      promotes:
+        type: string
+      does_not_promote:
+        type: string
+        optional: true
+
+  PfpEvidenceLevel:
+    kind: record
+    fields:
+      code:
+        type: string
+      meaning:
+        type: string
+
+  PfpClaimHygiene:
+    kind: record
+    fields:
+      discipline:
+        type: string
+      forbidden_words:
+        type: list<string>
+      forbidden_word_exceptions:
+        type: string
+      replacement_defaults:
+        type: list<ReplacementDefault>
+      default_posture:
+        type: string
+
+  ReplacementDefault:
+    kind: record
+    fields:
+      from:
+        type: string
+      to:
+        type: string
+
+  RoleManifest:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Persona and role specification for prompt manifests.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      persona:
+        type: string
+      goal:
+        type: string
+        optional: true
+
+  # ---------------------------------------------------------------------------
+  # 5. SEED PROMPT (seed.yaml & rewrite_*.yaml)
+  # ---------------------------------------------------------------------------
+  SeedPrompt:
+    kind: record
+    doc: Pure external stimulus, AST rewrite metadata, and oracle ground truth expectation.
+    fields:
+      schema:
+        type: string
+        const: pfp.seed-prompt.v1
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      pilot_id:
+        type: string
+      task_family:
+        type: string
+      difficulty_rung:
+        type: integer
+      request_id:
+        type: string
+      rewrite_metadata:
+        type: RewriteMetadataModel
+        optional: true
+      input_typing:
+        type: InputTypingModel
+        optional: true
+      seed_prompt:
+        type: string
+      expected_outcome:
+        type: ExpectedOutcome
+
+  CodebookSlotModel:
+    kind: record
+    doc: Sidecar codebook slot for observational separation or parameter bindings.
+    fields:
+      role:
+        type: string
+      source_text_span:
+        type: string
+      binding_value:
+        type: any
+        optional: true
+      carrier_type:
+        type: string
+        optional: true
+
+  RewriteMetadataModel:
+    kind: record
+    doc: Metadata detailing the AST/wire rewrite applied to the seed stimulus.
+    fields:
+      rewrite_id:
+        type: string
+      name:
+        type: string
+      governing_specification:
+        type: string
+      governing_strategy:
+        type: string
+      target_stratum:
+        type: string
+      explanation:
+        type: string
+      codebook_slots:
+        type: map<string, CodebookSlotModel>
+        default: {}
+
+  InputTypingModel:
+    kind: record
+    doc: Formal syntax and carrier typing contract for prompt stimulus.
+    fields:
+      lexical_alphabet:
+        type: string
+      syntactic_category:
+        type: string
+      semantic_carrier:
+        type: string
+      dialect_tier:
+        type: string
+      boundary_format:
+        type: string
+
+  ExpectedOutcome:
+    kind: record
+    fields:
+      answer:
+        type: any
+      status:
+        type: string
+        default: ACCEPTED
+
+  # ---------------------------------------------------------------------------
+  # 6. CYCLE BALANCE QUARTET (cycle_balance/)
+  # ---------------------------------------------------------------------------
+  PfpArithmeticDomain:
+    kind: enum
+    doc: Arithmetic coefficient domain for cycle balance.
+    values:
+    - EXACT_INTEGER
+
+  PfpClaimedMove:
+    kind: enum
+    doc: Move type proposed to repair an active cycle defect.
+    values:
+    - ATTACH_2CELL
+
+  PfpVerificationRule:
+    kind: enum
+    doc: Sovereign verification rules applied by the cycle balance host verifier.
+    values:
+    - STATIC_CELL_BOUNDS_CHECK
+    - CHAIN_COMPLEX_NILPOTENCY_CHECK
+    - INTEGER_SMITH_NORMAL_FORM_CYCLE_BALANCE
+
+  PfpVerificationStatus:
+    kind: enum
+    doc: Verification outcome for cycle balance objects.
+    values:
+    - UNVERIFIED
+    - VERIFIED
+
+  PfpStaticCellBounds:
+    kind: record
+    doc: Upper bounds on vertex, edge, and face counts for carrier complexes.
+    fields:
+      max_vertices:
+        type: integer
+        schema: { minimum: 0 }
+      max_edges:
+        type: integer
+        schema: { minimum: 0 }
+      max_faces:
+        type: integer
+        schema: { minimum: 0 }
+
+  PfpEdge:
+    kind: record
+    doc: Directed 1-cell in carrier complex.
+    fields:
+      id:
+        type: string
+        schema: { minLength: 1 }
+      source:
+        type: integer
+      target:
+        type: integer
+
+  PfpFace:
+    kind: record
+    doc: Oriented 2-cell bounded by signed edge identifiers.
+    fields:
+      id:
+        type: string
+        schema: { minLength: 1 }
+      boundary_edges:
+        type: list<string>
+
+  PfpCarrier:
+    kind: record
+    doc: Carrier complex K0 = (V, E, B) with static cell bounds.
+    fields:
+      name:
+        type: string
+        schema: { minLength: 1 }
+      vertices:
+        type: list<integer>
+      edges:
+        type: list<PfpEdge>
+      faces:
+        type: list<PfpFace>
+      static_cell_bounds:
+        type: PfpStaticCellBounds
+
+  PfpBoundaryMatrices:
+    kind: record
+    doc: Boundary operator matrices d1 (|V| x |E|) and d2 (|E| x |faces|).
+    fields:
+      d1:
+        type: list<list<integer>>
+      d2:
+        type: list<list<integer>>
+
+  PfpActiveObstruction:
+    kind: record
+    doc: Homological defect cycle z in ker d1 not in im d2.
+    fields:
+      cycle_z:
+        type: list<integer>
+      cycle_edges:
+        type: list<string>
+      d1_z:
+        type: list<integer>
+      homology_status:
+        type: PfpVerificationStatus
+
+  PfpCycleBalanceProblem:
+    kind: record
+    doc: Object 1 of Cycle Balance Quartet - Problem contract.
+    fields:
+      schema_version:
+        type: string
+        const: omega.symbol_game.cycle_balance.problem.v1
+      problem_id:
+        type: string
+      case_id:
+        type: string
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      arithmetic_domain:
+        type: PfpArithmeticDomain
+      carrier:
+        type: PfpCarrier
+      boundary_matrices:
+        type: PfpBoundaryMatrices
+      active_obstruction:
+        type: PfpActiveObstruction
+
+  PfpCycleBalanceCandidate:
+    kind: record
+    doc: Object 2 of Cycle Balance Quartet - Untrusted model candidate proposal.
+    fields:
+      schema_version:
+        type: string
+        const: omega.symbol_game.cycle_balance.candidate.v1
+      candidate_id:
+        type: string
+      problem_digest:
+        type: string
+        doc: SHA-256 hex digest of Object 1 problem.
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      claimed_move:
+        type: PfpClaimedMove
+      repair_face_name:
+        type: string
+      constituent_edges:
+        type: list<string>
+      repair_boundary_column:
+        type: list<integer>
+      preserves_chain_law:
+        type: boolean
+      claimed_integer_preimage_c:
+        type: list<integer>
+      claimed_h1_status:
+        type: string
+
+  PfpCycleBalanceVerifier:
+    kind: record
+    doc: Object 3 of Cycle Balance Quartet - Deterministic host verifier contract.
+    fields:
+      schema_version:
+        type: string
+        const: omega.symbol_game.cycle_balance.verifier.v1
+      verifier_id:
+        type: string
+      arithmetic_domain:
+        type: PfpArithmeticDomain
+      problem_digest:
+        type: string
+      verification_rules:
+        type: list<PfpVerificationRule>
+      static_bounds:
+        type: PfpStaticCellBounds
+
+  PfpCycleBalanceReceipt:
+    kind: record
+    doc: Object 4 of Cycle Balance Quartet - Cryptographic receipt binding problem, candidate, verifier, and status.
+    fields:
+      schema_version:
+        type: string
+        const: omega.symbol_game.cycle_balance.receipt.v1
+      receipt_id:
+        type: string
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      problem_digest:
+        type: string
+      candidate_digest:
+        type: string
+      verifier_digest:
+        type: string
+      verification_status:
+        type: PfpVerificationStatus
+      terminal_status:
+        type: string
+        optional: true
+      residuals:
+        type: any
+        optional: true
+      exact_witness:
+        type: any
+        optional: true
+      claim_hygiene:
+        type: PfpClaimHygiene
+      receipt_digest:
+        type: string
+
+  PfpCycleBalanceQuartet:
+    kind: record
+    doc: Complete four-object cycle balance container with cross-object digest bindings.
+    fields:
+      problem:
+        type: PfpCycleBalanceProblem
+      candidate:
+        type: PfpCycleBalanceCandidate
+      verifier:
+        type: PfpCycleBalanceVerifier
+      receipt:
+        type: PfpCycleBalanceReceipt
+
+  # ---------------------------------------------------------------------------
+  # 7. FIXTURES & TASK PACKET ENVELOPES (fixtures/ & schemas/)
+  # ---------------------------------------------------------------------------
+  PfpAllowedTransform:
+    kind: enum
+    doc: Permitted transforms declared in long-horizon task packets.
+    values:
+    - edit_scoped_paths
+    - emit_content_addressed_artifact
+    - emit_dda_receipt
+    - render_prose_from_root
+    - test
+
+  PfpFramingMode:
+    kind: enum
+    doc: Task envelope framing mode.
+    values:
+    - strict
+    - permissive
+
+  PfpEvidenceCeiling:
+    kind: enum
+    doc: Maximum epistemological claim level permitted for task evidence.
+    values:
+    - ReplayableLabEvidence
+    - MachineCheckedProof
+    - TheoreticalConjecture
+
+  PfpOraclePolicy:
+    kind: enum
+    doc: Oracle verification requirement policy.
+    values:
+    - IndependentGateReceiptsRequired
+    - IndependentGateReceiptsAndExternalPromotionRequired
+
+  PfpPacketKind:
+    kind: enum
+    doc: High-level classification of the packet artifact.
+    values:
+    - problem
+    - candidate
+    - evaluation
+    - receipt
+
+  PfpNextWorkItem:
+    kind: record
+    doc: Sequenced work item declared in task packet next_work list.
+    fields:
+      order:
+        type: integer
+      target:
+        type: string
+      work_id:
+        type: string
+
+  PfpFableLongHorizonTaskPacket:
+    kind: record
+    doc: Long-horizon task packet envelope adhering to omega.symbol-game.packet-envelope.v2.
+    fields:
+      schema_version:
+        type: string
+        doc: omega.symbol-game.packet-envelope.v2 or v1
+      task_id:
+        type: string
+      packet_id:
+        type: string
+      packet_family:
+        type: string
+      packet_kind:
+        type: PfpPacketKind
+      parent_event_id:
+        type: string
+        optional: true
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      evidence_ceiling:
+        type: PfpEvidenceCeiling
+      oracle_policy:
+        type: PfpOraclePolicy
+      framing_mode:
+        type: PfpFramingMode
+      carrier_id:
+        type: string
+      initial_state_hash:
+        type: string
+      source_digest:
+        type: string
+      step_budget:
+        type: integer
+      terminal_target:
+        type: string
+      allowed_transforms:
+        type: list<string>
+      constraints:
+        type: list<string>
+      protected_boundaries:
+        type: list<string>
+      payload:
+        type: list<any>
+        doc: Triple [protocol_dialect, payload_type, serialized_content]
+
+  # ---------------------------------------------------------------------------
+  # 8. MODES CATALOG & SPECIFICATIONS (modes/)
+  # ---------------------------------------------------------------------------
+  PfpModeCluster:
+    kind: enum
+    doc: Five canonical clusters grouping the twenty PFP modes.
+    values:
+    - "Cluster I: Carrier & Representation"
+    - "Cluster II: Internal Steering"
+    - "Cluster III: Group & Cochain Structure"
+    - "Cluster IV: Dialectical & Adversarial"
+    - "Cluster V: Foundational Mechanization"
+
+  PfpModeCatalogEntry:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Row of the 20-mode catalog indexing contract path and cluster membership.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      mode_id:
+        type: integer
+        schema: { minimum: 1, maximum: 20 }
+      name:
+        type: string
+      cluster:
+        type: PfpModeCluster
+      contract_path:
+        type: string
+      extra_specs:
+        type: list<string>
+        default: []
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+
+  PfpModeCatalog:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Full twenty-mode catalog with complete partition over modes 1..20.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      entries:
+        type: list<PfpModeCatalogEntry>
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+
+  PfpVerifierContract:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Verifier requirements declared in a mode contract.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      verifier_type:
+        type: string
+      fail_closed:
+        type: boolean
+
+  PfpModeFile:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Complete canonical play mode definition (modes/mode_NN_*/contract.yaml).
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      mode_id:
+        type: integer
+        schema: { minimum: 1, maximum: 20 }
+      name:
+        type: string
+      cluster:
+        type: PfpModeCluster
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      core_mechanism:
+        type: string
+      substrate:
+        type: string
+      paper_reference:
+        type: string
+      rules:
+        type: list<string>
+      entry_preconditions:
+        type: list<string>
+      winning_condition:
+        type: string
+      failure_modes:
+        type: list<string>
+      verifier_contract:
+        type: PfpVerifierContract
+
+  PfpClusterEntry:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Cluster partition entry for the 20 canonical play modes.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      name:
+        type: string
+      modes:
+        type: list<integer>
+
+  PfpClusterIndex:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Five-cluster partition index over modes 1..20.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      cluster_1_carrier_representation:
+        type: PfpClusterEntry
+      cluster_2_internal_steering:
+        type: PfpClusterEntry
+      cluster_3_group_cochain_structure:
+        type: PfpClusterEntry
+      cluster_4_dialectical_adversarial:
+        type: PfpClusterEntry
+      cluster_5_foundational_mechanization:
+        type: PfpClusterEntry
+
+  PfpManifestMode:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Lightweight mode contract index reference in modes_manifest.yaml.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      id:
+        type: integer
+        schema: { minimum: 1, maximum: 20 }
+      file:
+        type: string
+
+  # ---------------------------------------------------------------------------
+  # 9. NORMAL FORMS DOMAIN INDEX & CONTRACTS (normal_forms/)
+  # ---------------------------------------------------------------------------
+  PfpNfFamily:
+    kind: enum
+    cross_language: INTENTIONALLY_ABSENT
+    doc: Domain families for the nine extended form contracts.
+    values:
+    - coda
+    - epistemic
+    - change
+    - compilation
+    - representation
+    - evidence
+    - experimental
+
+  PfpNfIndexEntry:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Row of the normal form domain index table.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      nf_id:
+        type: string
+        doc: Pattern ^nf\.[a-z]+\.[a-z_]+$
+      short_name:
+        type: string
+      name:
+        type: string
+      family:
+        type: PfpNfFamily
+      form_category:
+        type: string
+        const: "Extended Form Contract"
+      qualifies_as_true_normal_form:
+        type: boolean
+        const: false
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+
+  PfpNfDomainIndex:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Nine-contract domain index certifying no contract qualifies as a true normal form.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      contracts:
+        type: list<PfpNfIndexEntry>
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+
+  PfpNormalFormContractIdentity:
+    kind: record
+    cross_language: BOUND_TO_NATIVE
+    rust_binding: omega_contracts::normal_forms::NormalFormContractIdentity
+    python_binding: omega_engine_pfp.domain.types.normal_forms.PfpNormalFormContractIdentity
+    doc: Identity section of normal form contract. Bound to omega_contracts::normal_forms::NormalFormContractIdentity.
+    fields:
+      id:
+        type: string
+      name:
+        type: string
+      short_name:
+        type: string
+      version:
+        type: string
+      theory_status:
+        type: string
+      contract_status:
+        type: string
+      verification_status:
+        type: string
+      family:
+        type: string
+
+  PfpNormalFormClassification:
+    kind: record
+    cross_language: BOUND_TO_NATIVE
+    rust_binding: omega_contracts::normal_forms::NormalFormClassification
+    python_binding: omega_engine_pfp.domain.types.normal_forms.PfpNormalFormClassification
+    doc: Classification section of normal form contract. Bound to omega_contracts::normal_forms::NormalFormClassification.
+    fields:
+      hierarchy_level:
+        type: string
+      subject_kind:
+        type: list<string>
+      data_posture:
+        type: string
+      mathematical_posture:
+        type: string
+
+  PfpNormalFormContract:
+    kind: record
+    cross_language: BOUND_TO_NATIVE
+    rust_binding: omega_contracts::normal_forms::NormalFormContract
+    python_binding: omega_engine_pfp.domain.types.normal_forms.PfpNormalFormContract
+    doc: Simplex normal form contract adhering to normal_form_contract_schema.yaml. Bound to omega_contracts::normal_forms::NormalFormContract.
+    fields:
+      schema_version:
+        type: string
+        const: smplx.nf.contract_schema.v1
+      contract_kind:
+        type: string
+      identity:
+        type: PfpNormalFormContractIdentity
+      classification:
+        type: PfpNormalFormClassification
+      purpose:
+        type: string
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+
+  # ---------------------------------------------------------------------------
+  # 10. PROMPT REWRITING & WIRE TOPOLOGY (rewriting/rewriting_types.yaml)
+  # ---------------------------------------------------------------------------
+  PfpSpanRole:
+    kind: enum
+    doc: Semantic role of a byte span within a prompt.
+    values:
+    - task
+    - constraint
+    - context
+    - output
+    - unresolved
+
+  PfpByteSpan:
+    kind: record
+    doc: Half-open interval [start_byte, end_byte) over UTF-8 prompt with semantic role.
+    fields:
+      start_byte:
+        type: integer
+        schema: { minimum: 0 }
+      end_byte:
+        type: integer
+        schema: { minimum: 0 }
+      role:
+        type: PfpSpanRole
+
+  PfpSpanPartition:
+    kind: record
+    doc: Contiguous, disjoint, byte-exact partition covering the entire prompt byte length.
+    fields:
+      prompt_byte_length:
+        type: integer
+        schema: { minimum: 1 }
+      spans:
+        type: list<PfpByteSpan>
+
+  PfpBoundaryWire:
+    kind: record
+    doc: mss-boundary-v1 wire term topology representation.
+    fields:
+      profile:
+        type: string
+        const: mss-boundary-v1
+      term:
+        type: string
+
+  PfpSymbolMapping:
+    kind: record
+    doc: External symbol codebook entry resolving a symbol token (s0, s1, ...) to exact substring.
+    fields:
+      symbol_token:
+        type: string
+      start_byte:
+        type: integer
+      end_byte:
+        type: integer
+      text:
+        type: string
+
+  PfpRewritingContract:
+    kind: record
+    doc: PFP prompt rewriting contract binding prompt bytes, partition, wire, and symbol codebook.
+    fields:
+      schema_id:
+        type: string
+        const: omega.pfp.rewriting.types.v1
+      title:
+        type: string
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      source:
+        type: string
+      span_roles:
+        type: list<string>
+      partition_rules:
+        type: list<string>
+      wire_profile:
+        type: dict
+      receipt_guarantees_checked_by_model:
+        type: list<string>
+      example:
+        type: dict
+
+  # ---------------------------------------------------------------------------
+  # 11. SCHEMA REGISTER & ENVELOPES (schemas/)
+  # ---------------------------------------------------------------------------
+  PfpEnvelopeSchemaEntry:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Draft 2020-12 envelope schema index entry.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      file:
+        type: string
+      dialect:
+        type: string
+        const: "https://json-schema.org/draft/2020-12/schema"
+      schema_dollar_id:
+        type: string
+        optional: true
+      authority_effect:
+        type: AuthorityEffect
+        default: None
+
+  PfpGrammarSchemaEntry:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Grammar schema index entry identified by schema_id.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      file:
+        type: string
+      schema_id:
+        type: string
+      authority_effect:
+        type: AuthorityEffect
+        default: None
+
+  PfpSchemaRegister:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Typed index of 9 Draft 2020-12 envelopes and 4 grammar schemas.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      envelope_schemas:
+        type: list<PfpEnvelopeSchemaEntry>
+      grammar_schemas:
+        type: list<PfpGrammarSchemaEntry>
+
+  # ---------------------------------------------------------------------------
+  # 12. STAGES & EXECUTION CONTROLLER (stages/)
+  # ---------------------------------------------------------------------------
+  PfpStageName:
+    kind: enum
+    cross_language: INTENTIONALLY_ABSENT
+    doc: The eleven numbered PFP pipeline stage names.
+    values:
+    - admit
+    - ideation
+    - audit
+    - l2_extraction
+    - evaluation
+    - adversarial
+    - challenge_replay
+    - selection
+    - receipt
+    - hand_off
+    - evidence_plan
+
+  PfpStageExecutor:
+    kind: enum
+    cross_language: INTENTIONALLY_ABSENT
+    doc: Entity executing the stage turn.
+    values:
+    - model
+    - host
+
+  PfpStageInputContract:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Host-stage input requirements (Stage 5 evaluation).
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      preserve_original_seed:
+        type: boolean
+      retain_stage_2_candidates:
+        type: boolean
+      candidate_source_stage:
+        type: integer
+      independent_checker_required:
+        type: boolean
+
+  PfpStageFile:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Canonical stage specification (stages/stage_N_*.yaml).
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      stage:
+        type: integer
+        schema: { minimum: 1, maximum: 8 }
+      name:
+        type: PfpStageName
+      executor:
+        type: PfpStageExecutor
+      requires:
+        type: list<integer>
+      version:
+        type: string
+      derived_under_policy:
+        type: string
+        const: SPK-001
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      source_template:
+        type: string
+      system_prompt:
+        type: string
+      user_prompt:
+        type: string
+      response_schema:
+        type: dict
+        optional: true
+      input_contract:
+        type: PfpStageInputContract
+        optional: true
+
+  PfpStageReference:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Ordered stage execution reference in StageController.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      stage:
+        type: integer
+      name:
+        type: PfpStageName
+      executor:
+        type: PfpStageExecutor
+      requires:
+        type: list<integer>
+
+  PfpStageController:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Controller manifest (stages/controller.yaml) governing 8-stage execution.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      policy_id:
+        type: string
+        const: SPK-001
+      version:
+        type: string
+      public_stage_count:
+        type: integer
+        default: 8
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      system_prompt:
+        type: string
+      worked_example:
+        type: string
+      stages:
+        type: list<PfpStageReference>
+
+  # ---------------------------------------------------------------------------
+  # 12.5. PILOT ESTATE SCHEMAS & DIALECT SUBTYPES (pilots/)
+  # ---------------------------------------------------------------------------
+  PilotBenchmarkSpec:
+    kind: record
+    status: retired
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [RETIRED / INTENTIONALLY_ABSENT] Formal benchmark specification for a PFP pilot (pfp.pilot-spec.v1).
+      Retired per R2 orphan reconciliation; active pilots use PilotSpec aggregate.
+    fields:
+      schema:
+        type: string
+        const: pfp.pilot-spec.v1
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      pilot_id:
+        type: string
+      prompt_id:
+        type: string
+      phase:
+        type: string
+      task_family:
+        type: TaskFamily
+      target_system:
+        type: dict
+      ground_truth:
+        type: dict
+      host_gate:
+        type: dict
+      budget_bounds:
+        type: dict
+      output_expectations:
+        type: dict
+
+  PilotSeedDialect:
+    kind: enum
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] The 11 canonical presentation dialects for PFP seed prompts.
+      Pure data enumeration without sovereign Rust gate ownership.
+    values:
+    - plain_text
+    - math_formal
+    - word_problem
+    - codebook_cipher
+    - ascii_tableau
+    - matrix_form
+    - reverse_polish
+    - s_expression
+    - emoji_substitution
+    - interleaved_noise
+    - proof_style
+
+  PilotResponseCapture:
+    kind: record
+    status: retired
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [RETIRED / INTENTIONALLY_ABSENT] Verbatim model response payload with sanitization and checker receipts (pfp.pilot-response.v1).
+      Retired per R2 orphan reconciliation; active runtime uses PfpPipelineRun and StageFrame.
+    fields:
+      schema:
+        type: string
+        const: pfp.pilot-response.v1
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      test_id:
+        type: string
+      test_kind:
+        type: string
+      pilot_id:
+        type: string
+      case_id:
+        type: string
+      trial_status:
+        type: TrialStatus
+      sanitization:
+        type: dict
+      evaluation:
+        type: dict
+      receipt:
+        type: dict
+
+  # ---------------------------------------------------------------------------
+  # 13. TYPE REGISTER METRICS & INVARIANTS (type_register/)
+  # ---------------------------------------------------------------------------
+  PfpModuleWorld:
+    kind: enum
+    doc: Import world of a tracked PFP module.
+    values:
+    - colocated
+    - runtime
+    - generated
+
+  PfpModuleSource:
+    kind: enum
+    doc: Origin of truth for module type shapes.
+    values:
+    - pydantic
+    - yaml
+    - both_parity_tested
+    - both_unchecked
+
+  PfpYamlRole:
+    kind: enum
+    doc: Role of associated YAML schema or data file.
+    values:
+    - json_schema
+    - generated_json_schema
+    - custom_schema
+    - data
+
+  PfpModuleStatus:
+    kind: enum
+    doc: Census status of module.
+    values:
+    - canonical
+    - review
+
+  PfpYamlRef:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] YAML schema reference in type register census.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      path:
+        type: string
+      role:
+        type: PfpYamlRole
+
+  PfpModuleRow:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] One module row in type_register.yaml.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      path:
+        type: string
+      world:
+        type: PfpModuleWorld
+      source:
+        type: PfpModuleSource
+      yaml:
+        type: list<PfpYamlRef>
+        default: []
+      tests:
+        type: list<string>
+        default: []
+      status:
+        type: PfpModuleStatus
+      note:
+        type: string
+        optional: true
+
+  PfpTypeRegister:
+    kind: record
+    cross_language: INTENTIONALLY_ABSENT
+    doc: >
+      [INTENTIONALLY_ABSENT] Top-level PFP type register model.
+      Static configuration schema without sovereign Rust gate ownership.
+    fields:
+      schema:
+        type: string
+        const: pfp.type-register.v1
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      modules:
+        type: list<PfpModuleRow>
+      name_collisions:
+        type: list<dict>
+      overlaps:
+        type: list<dict>
+      derived:
+        type: list<dict>
+
+  RopConsumerEnvelope:
+    kind: record
+    cross_language: BOUND_TO_NATIVE
+    rust_binding: omega_symbol_game_runtime::canonical::CanonicalValue
+    python_binding: omega_engine_pfp.domain.kernel.result.Result
+    doc: >
+      [BOUND_TO_NATIVE] Railway-Oriented Programming Result<T, RefusalRecord> consumer envelope contract
+      enforcing refusal state preservation across all pfp_consumers and prohibiting
+      bare dictionary projection that erases refusal_code or stopping tokens.
+      Bound to Result[T, DomainError] in Python and CanonicalValue in Rust.
+    fields:
+      schema:
+        type: string
+        const: pfp.rop-consumer-envelope.v1
+      authority_effect:
+        type: AuthorityEffect
+        const: None
+      status:
+        type: TrialStatus
+      payload:
+        type: dict
+        optional: true
+      refusal_code:
+        type: string
+        optional: true
+      preserves_refusal_distinction:
+        type: boolean
+        const: true
+      allow_bare_dict_projection:
+        type: boolean
+        const: false

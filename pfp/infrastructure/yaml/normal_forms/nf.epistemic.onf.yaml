@@ -1,0 +1,101 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.epistemic.onf
+  name: Orchestration Normal Form
+  short_name: ONF
+  version: v0
+  status: draft
+  family: epistemic
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - distributed_claim
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: agent laundering
+  preserves_invariant: agent/tool action declares initiator, tool, input/output state,
+    delegated authority, rollback, and terminal route
+  protected_skeleton:
+  - initiator
+  - tool
+  - input_state
+  - output_state
+  - delegated_authority
+  erased_structure: []
+  non_claims:
+  - does not ensure agent actions are globally optimal or logically correct
+declarations_required:
+- initiator
+- tool
+- input_state
+- output_state
+- delegated_authority
+- rollback_path
+- terminal_route
+evidence_required:
+- cryptographic_delegation_seal
+- action_epoch
+- input_hash
+- output_hash
+validation_criteria:
+- action must have initiator and tool declared
+- delegated authority must be cryptographically sealed
+- rollback path must be declared
+- terminal route must resolve on failure
+proof_obligations: []
+terminal_routes:
+- ActionSuccess
+- RollbackExecuted
+- AgentLaunderingViolation
+- DelegationExpired
+- ActionRefused
+- Escalate
+certification:
+  certificate_required: true
+  certificate_kind: orchestration_certificate
+  obstruction_class_required: false
+  loss_ledger_required: true
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: agent action performed without reconstructible authorization or belief
+    state
+  diagnosis: agent laundering
+  terminal: AgentLaunderingViolation
+references:
+- ../1_normal_forms.md
+terminal_route_map:
+  ActionSuccess: Preserve
+  RollbackExecuted: Escalate
+  AgentLaunderingViolation: Refuse
+  DelegationExpired: Refuse
+  ActionRefused: Refuse
+  Escalate: Escalate
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: agent laundering. agent/tool action declares initiator, tool,
+    input/output state, delegated authority, rollback, and terminal route
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: agent laundering
+    lossless_join:
+      status: declared_reconstruction
+      statement: agent/tool action declares initiator, tool, input/output state, delegated
+        authority, rollback, and terminal route
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

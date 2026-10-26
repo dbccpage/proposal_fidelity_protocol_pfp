@@ -1,0 +1,96 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.evidence.certificate
+  name: Certificate Form
+  short_name: CertF
+  version: v0
+  status: draft
+  family: evidence
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - certificate_packet
+  data_posture: at_rest
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: uncertified representation transport
+  preserves_invariant: every transition carries a canonical certificate specifying
+    ID, regimes, morphism kind, preserved skeleton, and verifier outcome
+  protected_skeleton:
+  - certificate_id
+  - source_regime
+  - target_regime
+  - morphism_kind
+  - verifier_id
+  - verifier_outcome
+  erased_structure: []
+  non_claims:
+  - does not ensure that the target representation preserves all non-skeletal properties
+declarations_required:
+- certificate_id
+- source_regime
+- target_regime
+- morphism_kind
+evidence_required:
+- preserved_skeleton
+- erased_distinctions
+- verifier_id
+- verifier_outcome
+validation_criteria:
+- certificate ID must be globally unique
+- verifier outcome must be pending, accepted, or rejected
+- loss ledger reference is mandatory if erased distinctions are non-empty
+proof_obligations: []
+terminal_routes:
+- CertificateAccepted
+- CertificatePending
+- CertificateRejected
+- Refuse
+certification:
+  certificate_required: true
+  certificate_kind: meta_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: view compiled without a certificate or with missing preserved skeleton
+    fields
+  diagnosis: uncertified representation transport
+  terminal: CertificateRejected
+references:
+- ../1_normal_forms.md
+- ../1b_gtmur_representation_transport.md
+terminal_route_map:
+  CertificateAccepted: Escalate
+  CertificatePending: Escalate
+  CertificateRejected: Escalate
+  Refuse: Refuse
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: uncertified representation transport. every transition carries
+    a canonical certificate specifying ID, regimes, morphism kind, preserved skeleton,
+    and verifier outcome
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: uncertified representation transport
+    lossless_join:
+      status: declared_reconstruction
+      statement: every transition carries a canonical certificate specifying ID, regimes,
+        morphism kind, preserved skeleton, and verifier outcome
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+schema_ref: ./normal_form_contract_schema.yaml

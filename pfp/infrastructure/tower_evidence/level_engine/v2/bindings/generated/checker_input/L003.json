@@ -1,0 +1,518 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "cell_faces",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:65a58fb4615881d6ffdbf6a7cf7adbcc777310f06ceb0a1770522e4462ce7f6b",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:274ca2803a5c3f9f3b56103281936552ad9c86d39f8e7377734a620035e27d04",
+      "native_code": "NON_ADMISSIBLE",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_side_first",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:e6f290440782457385b6cf2843ecc7bc2091384606585885dd4bb074b11be275",
+      "native_code": "FAILS:side_first",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_side_last",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:c9eac87a64d474da8b6a8e4fafd469a4daaaf151b6935930b5d60402714d4603",
+      "native_code": "FAILS:side_last",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_side_outer",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:dbbd471a0b138e65e8f1aa618b57769fd166a4599a0fb386d7d7be2fad24600d",
+      "native_code": "FAILS:side_outer",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_ends",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              3
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            3
+          ],
+          [
+            "mark",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:fea4ec0b5635aedc783f4e65e6153615fdd3d01c58c52ac54320f5d06a3dc609",
+      "native_code": "FAILS:side_ends",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_repeat",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "side",
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "cell",
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            2
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:f52cff828c3d4976b768e01277af26d915b2f9363b3b42ab27e3029cdf7b8074",
+      "native_code": "FAILS:side_distinct",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-5"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "cell",
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            "side",
+            [
+              0,
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "pt",
+            3
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "side",
+            "sorts": [
+              "pt",
+              "pt"
+            ]
+          },
+          {
+            "name": "cell",
+            "sorts": [
+              "pt",
+              "pt",
+              "pt"
+            ]
+          }
+        ],
+        "values": []
+      },
+      "input_sha256": "sha256:d69a1bb7361616b6f0e8eabdf79b456c809db5921d9704249b8f468d09362c77",
+      "native_code": "FAILS:side_last",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 3,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_003"
+}

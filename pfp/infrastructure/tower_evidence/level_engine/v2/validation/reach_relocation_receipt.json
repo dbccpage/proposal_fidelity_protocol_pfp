@@ -1,0 +1,36 @@
+{
+  "authority_effect": "None",
+  "disposition_sha256": "3094fe8a67ce76159eabe836b45c01e7b79e3371fb6302d5d587d82c482ca9ba",
+  "junit_sha256": {
+    "reach_lean_compat_tests.xml": "98989a4d1ff5ef685677e939a7c829298b1f2fcd26f9fb5212cee59b3a5dc4ae",
+    "reach_target_tests.xml": "d2831d030f4c38fac5823c27c2dd64e188d41ea02517485b4aa0e6e7f354de0d"
+  },
+  "legacy_source_files_remaining": 0,
+  "runs": [
+    {
+      "command": "python -m pytest research/mssn_sn_tower/code/python/tests/test_reach_receipt.py research/mssn_sn_tower/code/python/tests/test_reach_transport.py research/mssn_sn_tower/code/python/tests/test_reach_ledger.py -q -o addopts= --basetemp=.tmp/level-engine-lean/reach-pytest",
+      "duration_seconds": "144.22",
+      "evidence": "Recorded directly from completed command output; no JUnit was requested for this run.",
+      "passed": 101,
+      "returncode": 0
+    },
+    {
+      "command": "python -m pytest research/mssn_sn_tower/code/python/tests/test_target_checkers.py research/mssn_sn_tower/code/python/tests/test_anti_evidence.py -q -o addopts= --basetemp=.tmp/level-engine-lean/targets-pytest --junitxml=.tmp/level-engine-lean/target-tests.xml",
+      "duration_seconds": "15.66",
+      "junit": "reach_target_tests.xml",
+      "passed": 1259,
+      "returncode": 0,
+      "skipped": 1
+    },
+    {
+      "command": "python -m pytest omega_engine_operations/tests/level_engine/test_reach_compat.py omega_engine_operations/tests/level_engine/test_lean.py -q -o addopts= --basetemp=.tmp/level-engine-lean/compat-pytest --junitxml=.tmp/level-engine-lean/compat-tests.xml",
+      "duration_seconds": "0.22",
+      "junit": "reach_lean_compat_tests.xml",
+      "passed": 11,
+      "returncode": 0
+    }
+  ],
+  "schema": "level-engine.reach-relocation-validation.v2",
+  "scope": "Receiving API import relocation, preserved history replay, target checker consumers, and read-only compatibility boundaries.",
+  "source_capture": "Destination hashes captured after execution and after the separately tested versioned-resolver integration in pins.py; individual JUnit records identify their execution times."
+}

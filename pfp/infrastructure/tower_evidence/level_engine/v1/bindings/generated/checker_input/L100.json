@@ -1,0 +1,818 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "scoped_release",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "frontier",
+            [
+              2
+            ]
+          ],
+          [
+            "held",
+            [
+              2,
+              5
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:2a63d1a7c49c1f2fd81d34f548ed78f7cab9f0920bbad8058e243add4f3b6f4c",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "frontier",
+            [
+              2
+            ]
+          ],
+          [
+            "held",
+            [
+              2,
+              5
+            ]
+          ],
+          [
+            "self_certified",
+            [
+              6
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:cf0650237731314500239d48107c6a3b428a5eb45f792d9f7052cdb75cf6ccb2",
+      "native_code": "FAILS:not_self_certified",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_authority",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "frontier",
+            [
+              2
+            ]
+          ],
+          [
+            "grants_authority",
+            [
+              6
+            ]
+          ],
+          [
+            "held",
+            [
+              2,
+              5
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:c57c29f812ffc3ae48839c97a028bcf21e474587684e0dbeec05323229888745",
+      "native_code": "FAILS:no_authority",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_uncovered",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "frontier",
+            [
+              2
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:b889db883bc61aa907d585c5c301cdc5935965ef2fb6f89f768fb9c194fa8af5",
+      "native_code": "FAILS:covered",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_untyped",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "frontier",
+            [
+              2
+            ]
+          ],
+          [
+            "held",
+            [
+              2,
+              5
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:9d105e9f4f17c9016429efb06797bf2f1510778d21b799d5b46b312001451084",
+      "native_code": "FAILS:types_closed",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_dangling",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              5
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "frontier",
+            [
+              2
+            ]
+          ],
+          [
+            "held",
+            [
+              2,
+              5
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:14dc7b36b86cded5281129069891c8fc0353d308f3a91fe60a2062f412fa4659",
+      "native_code": "FAILS:evidence_resolves",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_tested_front",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "frontier",
+            [
+              0
+            ]
+          ],
+          [
+            "frontier",
+            [
+              2
+            ]
+          ],
+          [
+            "held",
+            [
+              2,
+              5
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:17aba4c4882749021490d9754e4a7c676837a515fa68ccc58cbf4812900b4655",
+      "native_code": "FAILS:frontier_untested",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-5"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "evidence",
+            [
+              0,
+              3
+            ]
+          ],
+          [
+            "evidence",
+            [
+              1,
+              4
+            ]
+          ],
+          [
+            "held",
+            [
+              2,
+              5
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "claim",
+            3
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "kind",
+            1
+          ],
+          [
+            "release",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "evidence",
+            "sorts": [
+              "claim",
+              "test"
+            ]
+          },
+          {
+            "name": "held",
+            "sorts": [
+              "claim",
+              "kind"
+            ]
+          },
+          {
+            "name": "frontier",
+            "sorts": [
+              "claim"
+            ]
+          },
+          {
+            "name": "self_certified",
+            "sorts": [
+              "release"
+            ]
+          },
+          {
+            "name": "grants_authority",
+            "sorts": [
+              "release"
+            ]
+          }
+        ],
+        "values": [
+          [
+            5,
+            "0/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:e25c7f8d1106061fcd54b6e3c0cafd144721092e68210a63c5fb565ced1cfc66",
+      "native_code": "FAILS:frontier_complete",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 100,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_100"
+}

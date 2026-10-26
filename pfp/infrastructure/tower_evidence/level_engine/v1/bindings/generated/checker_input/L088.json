@@ -1,0 +1,1265 @@
+{
+  "authority_effect": "None",
+  "challenge_id": "limited_runs",
+  "fixtures": [
+    {
+      "expected_outcome": "PASS",
+      "id": "pos",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:8561573db38c8246490f08903a590fc019218568359c5daad76772eec4d90018",
+      "native_code": "ACCEPT",
+      "native_verdict": "ACCEPT",
+      "target_role": "pos"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "own_neg",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "final_of",
+            [
+              4,
+              1
+            ]
+          ],
+          [
+            "halted",
+            [
+              5
+            ]
+          ],
+          [
+            "inc",
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            1
+          ],
+          [
+            "register",
+            1
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            1
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            1,
+            "0/1"
+          ],
+          [
+            2,
+            "10/1"
+          ],
+          [
+            3,
+            "100/1"
+          ],
+          [
+            4,
+            "10/1"
+          ],
+          [
+            5,
+            "10/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:fbbff35ec60a16dbe680256ea09711158aae5d7bed5e51bced702b026c03a95d",
+      "native_code": "FAILS:exit_exact,no_false_completion",
+      "native_verdict": "REFUSE",
+      "target_role": "own-neg"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_timeout",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "3/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:b950b3befebd3341c887bb7041ae53c17df9c1691344a8b76f357b2919932f98",
+      "native_code": "FAILS:exit_exact,no_false_completion,state_exact,steps_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "extra-near_timeout"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_exit",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "at_limit",
+            [
+              9
+            ]
+          ],
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:9ed4a8c57e6fe8907e955e9463585e5e458cbde36c90ea5d16dd92cc56b97a31",
+      "native_code": "FAILS:exit_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-1"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_state",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "1/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:f12c835854b21d9caaa09211d24833db032b1f735f816b84d884d0219a725ce4",
+      "native_code": "FAILS:state_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-2"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_steps",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "4/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:a046647f7020ad708f2dfb4859444c2d0801c0bbb1f02c87f38fb7cd937f9251",
+      "native_code": "FAILS:steps_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-3"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "near_jump",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halt",
+            [
+              2
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              3
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:d81ba24c4d18c7d7a8a0b948f40a15c0cdcdec1a7d0e315f3505cfc5e479433d",
+      "native_code": "FAILS:inc_targets",
+      "native_verdict": "REFUSE",
+      "target_role": "near-miss-4"
+    },
+    {
+      "expected_outcome": "REFUSED",
+      "id": "mut",
+      "input": {
+        "protected": [],
+        "relations": [
+          [
+            "dec",
+            [
+              0,
+              3,
+              1,
+              2
+            ]
+          ],
+          [
+            "final_of",
+            [
+              7,
+              3
+            ]
+          ],
+          [
+            "final_of",
+            [
+              8,
+              4
+            ]
+          ],
+          [
+            "halted",
+            [
+              9
+            ]
+          ],
+          [
+            "inc",
+            [
+              1,
+              4,
+              0
+            ]
+          ],
+          [
+            "inc",
+            [
+              2,
+              4,
+              0
+            ]
+          ]
+        ],
+        "sorts": [
+          [
+            "instr",
+            3
+          ],
+          [
+            "register",
+            2
+          ],
+          [
+            "bound",
+            2
+          ],
+          [
+            "final",
+            2
+          ],
+          [
+            "capture",
+            1
+          ]
+        ],
+        "symbols": [
+          {
+            "name": "inc",
+            "sorts": [
+              "instr",
+              "register",
+              "instr"
+            ]
+          },
+          {
+            "name": "dec",
+            "sorts": [
+              "instr",
+              "register",
+              "instr",
+              "instr"
+            ]
+          },
+          {
+            "name": "halt",
+            "sorts": [
+              "instr"
+            ]
+          },
+          {
+            "name": "final_of",
+            "sorts": [
+              "final",
+              "register"
+            ]
+          },
+          {
+            "name": "halted",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "timed_out",
+            "sorts": [
+              "capture"
+            ]
+          },
+          {
+            "name": "at_limit",
+            "sorts": [
+              "capture"
+            ]
+          }
+        ],
+        "values": [
+          [
+            3,
+            "2/1"
+          ],
+          [
+            4,
+            "0/1"
+          ],
+          [
+            5,
+            "10/1"
+          ],
+          [
+            6,
+            "100/1"
+          ],
+          [
+            7,
+            "0/1"
+          ],
+          [
+            8,
+            "2/1"
+          ],
+          [
+            9,
+            "5/1"
+          ]
+        ]
+      },
+      "input_sha256": "sha256:276eb21f903766cb737afdb73c51108abd1015e3967fdedb2d6819805a530787",
+      "native_code": "FAILS:exit_exact,no_false_completion,state_exact,steps_exact",
+      "native_verdict": "REFUSE",
+      "target_role": "mut-1"
+    }
+  ],
+  "harness_intake": {
+    "data_plus_verdict": "FLAG_ONLY_FIXTURE",
+    "empty_list": "EMPTY_FIXTURE",
+    "empty_object": "EMPTY_FIXTURE",
+    "flags_for_data": "FLAG_ONLY_FIXTURE",
+    "lists_emptied": "EMPTY_FIXTURE",
+    "null": "EMPTY_FIXTURE",
+    "verdict_only": "FLAG_ONLY_FIXTURE"
+  },
+  "input_schema": "draft:harness.finite-structure.v1",
+  "level": 88,
+  "probe_battery_expected": {
+    "data_plus_verdict": "R_VERDICT_FIELD",
+    "empty_list": "R_EMPTY_INPUT",
+    "empty_object": "R_EMPTY_INPUT",
+    "flags_for_data": "R_VERDICT_FIELD",
+    "lists_emptied": "R_EMPTY_INPUT",
+    "null": "R_EMPTY_INPUT",
+    "verdict_only": "R_VERDICT_FIELD"
+  },
+  "probes_left_to_target_schema": {},
+  "schema": "level-engine.checker-input.v1",
+  "target": "CHECKER_OF_RECORD:stage_088"
+}

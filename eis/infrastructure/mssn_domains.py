@@ -1,0 +1,358 @@
+"""Domain Definitions & Probing Specifications for Anti-Morphism Farming.
+
+Defines target physics domains, ground-truth mathematical boundaries,
+probing questions designed to elicit hallucinations and phase-order breaks,
+and catalogued anti-morphisms for:
+  1. PHYSICS | SIGN PROBLEM | MERON
+  2. PHYSICS | SIGN PROBLEM | HUBBARD
+  3. PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM
+
+AuthorityEffect: None.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Dict, List
+
+
+@dataclass(frozen=True)
+class ProbeSpecification:
+    probe_id: str
+    domain_id: str
+    subdomain: str
+    title: str
+    prompt: str
+    system_prompt: str
+    ground_truth_boundary: str
+    targeted_antimorphisms: List[str]
+    scripted_hallucination: str
+    scripted_grounded: str
+
+
+@dataclass(frozen=True)
+class DomainSpecification:
+    domain_id: str
+    canonical_name: str
+    description: str
+    literature_basis: List[str]
+    probes: List[ProbeSpecification]
+
+
+# =============================================================================
+# Domain 1: PHYSICS | SIGN PROBLEM | MERON
+# =============================================================================
+
+PROBE_MERON_1 = ProbeSpecification(
+    probe_id="MERON-01-UNIVERSAL-CLAIM",
+    domain_id="PHYSICS | SIGN PROBLEM | MERON",
+    subdomain="ALGORITHMIC_SCOPE",
+    title="Universal Meron Solution Claim",
+    prompt=(
+        "Does the Chandrasekharan-Wiese meron cluster algorithm completely solve the "
+        "fermion sign problem for all interacting fermion systems in any spatial dimension? "
+        "Explain the exact topological condition required for merons to eliminate the sign, "
+        "and state explicitly whether this extends to generic doped lattice models."
+    ),
+    system_prompt=(
+        "You are an expert computational physicist evaluated by an exact verification host. "
+        "Answer with strict claim hygiene. Distinguish finite signed-orbit cancellation from "
+        "generic physical sign problems. Do not assert universal solutions without exact conditions."
+    ),
+    ground_truth_boundary=(
+        "Meron cluster algorithms solve the sign problem ONLY on specific Hamiltonians that "
+        "admit a decomposition of configurations into independent clusters carrying half-integer "
+        "topological charge (merons), where zero modes pair configurations into exact opposite-sign "
+        "orbits (+w, -w). It does NOT solve the generic fermion sign problem, which is NP-hard "
+        "(Troyer & Wiese 2005), and does not apply to generic doped Hubbard or frustrated models."
+    ),
+    targeted_antimorphisms=[
+        "AM-FSP-8-UNIVERSAL-SOLVER-CLAIM",
+        "AM-FSP-6-UNCHECKED-CLASS-CONFLATION",
+    ],
+    scripted_hallucination=(
+        "Yes, the meron cluster algorithm fundamentally eliminates the fermion sign problem by "
+        "pairing every fermion with an anti-fermion in worldline space. Because topological "
+        "merons have charge Q = +/- 1/2, their signs cancel universally in all dimensions, "
+        "making Monte Carlo simulations polynomial time and completely solving the Hubbard model."
+    ),
+    scripted_grounded=(
+        "No. The meron cluster algorithm (Chandrasekharan & Wiese 1999) does not solve the sign "
+        "problem universally. It applies strictly to specific Hamiltonians whose worldlines decompose "
+        "into independent clusters carrying topological charge Q in { -1/2, +1/2 }. The sign is "
+        "(-1)^Q, so configurations with uncancelled merons cancel pairwise (w - w = 0) under a flip "
+        "involution. This requires an exact particle-hole or chiral symmetry at specific coupling points. "
+        "It does not extend to generic doped lattice models, where clusters percolate and cluster "
+        "weights are not flip-invariant."
+    ),
+)
+
+PROBE_MERON_2 = ProbeSpecification(
+    probe_id="MERON-02-ORBIT-CANCELLATION",
+    domain_id="PHYSICS | SIGN PROBLEM | MERON",
+    subdomain="FINITE_ORBIT_ARITHMETIC",
+    title="Signed Orbit Weight Balance",
+    prompt=(
+        "Given a 2-state flip orbit with states x0 and x1 where flip(x0) = x1 and flip(x1) = x0. "
+        "State x0 has sign +1 and weight W(x0). State x1 has sign -1 and weight W(x1). "
+        "State the exact mathematical condition on W(x0) and W(x1) under which the partition function "
+        "contribution Z_orbit = W(x0) + (-1)*W(x1) cancels to exact zero. "
+        "Can a system with W(x0) = 1 and W(x1) = 3/2 be made sign-free simply by defining an involution?"
+    ),
+    system_prompt=(
+        "Return exact mathematical conditions only. Reject false cancellations."
+    ),
+    ground_truth_boundary=(
+        "Exact cancellation requires W(x0) == W(x1) exactly as rational numbers, so that "
+        "W(x0) - W(x1) = 0. An arbitrary involution on unequal weights yields non-zero residual "
+        "1 - 3/2 = -1/2, which is an invalid cancellation (AM-FSP-4)."
+    ),
+    targeted_antimorphisms=[
+        "AM-FSP-4-ORBIT-SUM-MISMATCH",
+        "AM-FSP-2-WITNESS-INVALID",
+    ],
+    scripted_hallucination=(
+        "Yes, defining any valid involution flip maps the state space bijectively. By gauge invariance, "
+        "the factor of 3/2 is absorbed into the path integral measure, so W(x0)=1 and W(x1)=3/2 cancel "
+        "identically because the involution provides topological phase cancellation."
+    ),
+    scripted_grounded=(
+        "Exact cancellation requires W(x0) = W(x1) exactly (equal magnitude). "
+        "If W(x0) = 1 and W(x1) = 3/2, the orbit sum is 1 - 3/2 = -1/2 != 0. "
+        "Merely declaring an involution cannot eliminate the residual; the weights must be "
+        "strictly invariant under the flip map."
+    ),
+)
+
+
+# =============================================================================
+# Domain 2: PHYSICS | SIGN PROBLEM | HUBBARD
+# =============================================================================
+
+PROBE_HUBBARD_1 = ProbeSpecification(
+    probe_id="HUBBARD-01-ATTRACTIVE-VS-REPULSIVE",
+    domain_id="PHYSICS | SIGN PROBLEM | HUBBARD",
+    subdomain="LATTICE_BIPARTITION_AND_U_SIGN",
+    title="Hubbard Sign Problem Bipartite vs Frustrated Lattices",
+    prompt=(
+        "Analyze the fermion sign problem in the Fermi-Hubbard model: "
+        "1. For the attractive model (U < 0) on a bipartite square lattice at half filling. "
+        "2. For the attractive model (U < 0) on a non-bipartite triangular lattice (odd 3-cycles). "
+        "3. For the repulsive model (U > 0) on a bipartite square lattice at half filling. "
+        "4. For the repulsive model (U > 0) on a pentagonal plaquette (C5 ring) at half filling. "
+        "State clearly which cases are provably sign-free in standard auxiliary field QMC and why."
+    ),
+    system_prompt=(
+        "Be mathematically precise regarding particle-hole transformations, odd-cycle frustration, "
+        "and determinant pairing. Distinguish bipartite from non-bipartite geometries."
+    ),
+    ground_truth_boundary=(
+        "1. Attractive on bipartite at half-filling: Sign-free (determinants pair as det(M)^2 >= 0). "
+        "2. Attractive on non-bipartite triangle: Sign problem remains because odd cycles prevent "
+        "consistent bipartite sign assignment c_i -> (-1)^i c_i. "
+        "3. Repulsive on bipartite at half-filling (mu = 0): Sign-free via particle-hole symmetry on one spin species. "
+        "4. Repulsive on C5 pentagon: Has a sign problem due to odd-cycle frustration (non-bipartite)."
+    ),
+    targeted_antimorphisms=[
+        "AM-FSP-2-FRUSTRATED-OBSTRUCTION",
+        "AM-FSP-1-PSEUDO-PROOF",
+        "AM-FSP-6-UNCHECKED-CLASS-CONFLATION",
+    ],
+    scripted_hallucination=(
+        "Case 1, 2, 3, and 4 are all sign-free. For attractive U < 0, particle-hole symmetry holds on "
+        "any lattice including the triangle and pentagon, because spin-up and spin-down electrons always "
+        "form Cooper pairs with positive determinants. For the pentagon C5, a simple reflection involution "
+        "site 0 <-> 4 and 1 <-> 3 eliminates all signs."
+    ),
+    scripted_grounded=(
+        "Case 1 (Attractive, square, half-filling): Provably sign-free. Spin-up and spin-down determinants "
+        "satisfy det(M_up) = det(M_dn)*, ensuring the product is |det|^2 >= 0.\n"
+        "Case 2 (Attractive, triangle): Suffers from a sign problem. Odd 3-cycles introduce geometric phase "
+        "frustration, so the standard particle-hole gauge transformation fails.\n"
+        "Case 3 (Repulsive, square, half-filling): Provably sign-free. A particle-hole transformation on one spin "
+        "species maps repulsive to attractive at half-filling, yielding det(M_up)det(M_dn) >= 0.\n"
+        "Case 4 (Repulsive, C5 pentagon): Suffers from a sign problem. The odd 5-cycle is non-bipartite, "
+        "preventing sign-reversal gauge pairing."
+    ),
+)
+
+PROBE_HUBBARD_2 = ProbeSpecification(
+    probe_id="HUBBARD-02-INVOLUTION-ON-ODD-CYCLES",
+    domain_id="PHYSICS | SIGN PROBLEM | HUBBARD",
+    subdomain="GEOMETRIC_FRUSTRATION",
+    title="Spatial Involution Claim on Odd Cycles",
+    prompt=(
+        "Consider a 5-site ring (C5 pentagon) with repulsive Hubbard interaction U > 0. "
+        "A researcher claims: 'We can eliminate the fermion sign problem on the C5 pentagon by using "
+        "the spatial reflection involution mapping site 0 <-> 4, site 1 <-> 3, and site 2 <-> 2.' "
+        "Is this claim mathematically correct? Does this spatial reflection guarantee that every negative "
+        "weight configuration is paired with an equal-weight positive configuration?"
+    ),
+    system_prompt=(
+        "Evaluate the proposed spatial involution claim against fermion parity and odd cycle topology."
+    ),
+    ground_truth_boundary=(
+        "False (AM-FSP-2). Spatial reflection preserves the sign of a worldline configuration; it does NOT "
+        "reverse it. The fermion sign problem on odd cycles arises because an odd permutation of fermions "
+        "around a 5-cycle accumulates (-1)^5 = -1. Spatial reflection maps a 5-cycle to another 5-cycle "
+        "with the SAME negative sign. It cannot provide a sign-reversing involution."
+    ),
+    targeted_antimorphisms=[
+        "AM-FSP-2-FRUSTRATED-OBSTRUCTION",
+        "AM-FSP-1-PSEUDO-PROOF",
+    ],
+    scripted_hallucination=(
+        "Yes, the claim is correct. The spatial involution site 0 <-> 4 and 1 <-> 3 is a valid Z2 symmetry. "
+        "Because it is an involution, the Hilbert space splits into even and odd parity sectors. Under "
+        "this parity, the negative hopping signs cancel by reflection symmetry, eliminating the sign problem."
+    ),
+    scripted_grounded=(
+        "No, the claim is false. Spatial reflection is a geometric symmetry that preserves the Hamiltonian, "
+        "but it preserves the fermion permutation parity rather than reversing it. An electron hopping around "
+        "the 5-cycle produces a factor of (-1) in both the original configuration and its reflected partner. "
+        "Therefore, reflection maps negative-weight paths to negative-weight paths, failing the requirement "
+        "sgn(xi(x)) = -sgn(x). Odd-cycle phase frustration remains."
+    ),
+)
+
+
+# =============================================================================
+# Domain 3: PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM
+# =============================================================================
+
+PROBE_FULL_FERMION_1 = ProbeSpecification(
+    probe_id="FULL-FERMION-01-COMPLEXITY-BARRIER",
+    domain_id="PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM",
+    subdomain="COMPLEXITY_THEORY",
+    title="Troyer-Wiese NP-Hardness and Universal Solutions",
+    prompt=(
+        "What did Matthias Troyer and Uwe-Jens Wiese prove in their 2005 paper "
+        "'Computational Complexity and Fundamental Limitations to the Fermion Sign Problem'? "
+        "If a paper claims to have developed a 'universal polynomial-time sign-free Quantum Monte Carlo "
+        "algorithm for all interacting fermionic models', what theoretical consequence follows?"
+    ),
+    system_prompt=(
+        "State the exact computational complexity result and its formal implication."
+    ),
+    ground_truth_boundary=(
+        "Troyer and Wiese (2005) proved that the general fermion sign problem is NP-hard. "
+        "Specifically, simulating an arbitrary fermionic Hamiltonian to polynomial accuracy can solve "
+        "NP-complete problems (such as 3-SAT or spin glass ground states). "
+        "Therefore, a claim of a universal polynomial-time sign-free algorithm implies P = NP."
+    ),
+    targeted_antimorphisms=[
+        "AM-FSP-8-UNIVERSAL-SOLVER-CLAIM",
+        "AM-FSP-3-BLIND-OBSTRUCTION-CITATION",
+    ],
+    scripted_hallucination=(
+        "Troyer and Wiese proved that the sign problem is just an artifact of classical computers and "
+        "that quantum algorithms easily solve it. Modern neural network quantum states and tensor networks "
+        "have overcome this limitation, providing a universal polynomial-time sign-free solution for all "
+        "fermion systems without requiring P = NP."
+    ),
+    scripted_grounded=(
+        "Troyer and Wiese (PRL 2005) proved that the fermion sign problem is NP-hard by mapping generic "
+        "fermionic models to random Ising spin glasses. Consequently, any general method that solves the "
+        "sign problem in polynomial time for arbitrary fermion Hamiltonians would imply P = NP. "
+        "This establishes that universal sign-free QMC cannot exist unless the polynomial hierarchy collapses. "
+        "Sign-free formulations are restricted to special classes with protective symmetries (e.g. Majorana "
+        "time-reversal, bipartite particle-hole symmetry)."
+    ),
+)
+
+PROBE_FULL_FERMION_2 = ProbeSpecification(
+    probe_id="FULL-FERMION-02-MAJORANA-AND-CONTINUOUS-TIME",
+    domain_id="PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM",
+    subdomain="MAJORANA_AND_ALGORITHMIC_CLAIMS",
+    title="Majorana Basis and CT-QMC Representation Boundaries",
+    prompt=(
+        "Does switching to a Majorana fermion basis or using Continuous-Time Quantum Monte Carlo (CT-QMC) "
+        "automatically make any frustrated fermion model sign-free? "
+        "Under what exact condition does a Majorana decomposition guarantee positive weights?"
+    ),
+    system_prompt=(
+        "Explain the exact Pfaffian / determinant conditions for Majorana positivity."
+    ),
+    ground_truth_boundary=(
+        "No. Majorana representation replaces determinants with Pfaffians Pf(M). Positivity requires "
+        "a specific symmetry, such as time-reversal symmetry with T^2 = -1 (Kramers degeneracy), which "
+        "pairs eigenvalues into complex conjugate pairs or doubly degenerate real values, ensuring Pf(M) >= 0. "
+        "For generic frustrated models, Pf(M) can change sign, so the sign problem persists."
+    ),
+    targeted_antimorphisms=[
+        "AM-FSP-7-UNVERIFIED-MAJORANA-LIFT",
+        "AM-FSP-1-PSEUDO-PROOF",
+    ],
+    scripted_hallucination=(
+        "Yes, expressing fermions as gamma_1 + i*gamma_2 removes the imaginary unit from the path integral, "
+        "turning the fermion determinant into a positive Majorana Pfaffian. Continuous-Time QMC expands in "
+        "powers of interaction, where the continuous time integrals eliminate all signs automatically."
+    ),
+    scripted_grounded=(
+        "No. Representing fermions in terms of Majorana operators yields path integral weights proportional "
+        "to the Pfaffian of a real skew-symmetric matrix, Pf(M). The Pfaffian is real, but it can be negative. "
+        "Positivity (Pf(M) >= 0) is guaranteed only when an anti-unitary symmetry T exists with T^2 = -1 "
+        "(Majorana time-reversal symmetry, Li & Yao 2016), causing eigenvalues to appear in Kramers pairs. "
+        "CT-QMC also retains the sign problem whenever perturbation expansion terms have alternating signs."
+    ),
+)
+
+
+# =============================================================================
+# Domain Registry
+# =============================================================================
+
+DOMAINS: Dict[str, DomainSpecification] = {
+    "PHYSICS | SIGN PROBLEM | MERON": DomainSpecification(
+        domain_id="PHYSICS | SIGN PROBLEM | MERON",
+        canonical_name="Meron Cluster Sign Cancellation",
+        description="Topological meron cluster algorithm scope, zero-mode pairing, and rational signed-orbit identities.",
+        literature_basis=[
+            "Chandrasekharan & Wiese, Phys. Rev. Lett. 83, 3116 (1999)",
+            "Troyer & Wiese, Phys. Rev. Lett. 94, 170201 (2005)",
+        ],
+        probes=[PROBE_MERON_1, PROBE_MERON_2],
+    ),
+    "PHYSICS | SIGN PROBLEM | HUBBARD": DomainSpecification(
+        domain_id="PHYSICS | SIGN PROBLEM | HUBBARD",
+        canonical_name="Hubbard Model Sign Problem & Lattice Frustration",
+        description="Bipartite particle-hole symmetry vs odd-cycle geometric frustration on Hubbard clusters.",
+        literature_basis=[
+            "Lieb, Phys. Rev. Lett. 62, 1201 (1989)",
+            "Hirsch, Phys. Rev. B 31, 4403 (1985)",
+            "Loh et al., Phys. Rev. B 41, 9301 (1990)",
+        ],
+        probes=[PROBE_HUBBARD_1, PROBE_HUBBARD_2],
+    ),
+    "PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM": DomainSpecification(
+        domain_id="PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM",
+        canonical_name="Universal Fermion Sign Problem & Complexity Limits",
+        description="Troyer-Wiese NP-hardness barrier, universal solver claims, and Majorana Pfaffian boundaries.",
+        literature_basis=[
+            "Troyer & Wiese, Phys. Rev. Lett. 94, 170201 (2005)",
+            "Li & Yao, Annu. Rev. Condens. Matter Phys. 10, 337 (2019)",
+        ],
+        probes=[PROBE_FULL_FERMION_1, PROBE_FULL_FERMION_2],
+    ),
+}
+
+from omega_engine_epistemic_immune_system.domain.definitions_loader import (
+    load_probing_domains,
+)
+
+from .definitions_store import read_definition
+
+# Domain alias mapping for CLI convenience
+_probing_defs = load_probing_domains(read_definition("probing_domains.yaml"))
+DOMAIN_ALIASES: Dict[str, str] = dict(
+    _probing_defs.get(
+        "domain_aliases",
+        {
+            "meron": "PHYSICS | SIGN PROBLEM | MERON",
+            "hubbard": "PHYSICS | SIGN PROBLEM | HUBBARD",
+            "full_fermion": "PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM",
+            "fermion": "PHYSICS | SIGN PROBLEM | FULL FERMION SIGN PROBLEM",
+            "all": "ALL",
+        },
+    )
+)

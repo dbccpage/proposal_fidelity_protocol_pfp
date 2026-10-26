@@ -1,0 +1,98 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.cohomology.acnf
+  name: Autopoietic Cohomology Normal Form
+  short_name: ACNF
+  version: v0
+  theory_status: proposed
+  contract_status: deprecated
+  verification_status: absent
+  family: experimental
+  status: deprecated
+  alias_of: nf.recursion.asrf
+  deprecation_note: >
+    Deprecated historical alias for Autopoietic Self-Reference Refusal Form (ASRF / nf.recursion.asrf).
+    Retained for contract inventory compatibility; enforces acyclic caller-target identity checks
+    and computes no cohomology groups.
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - caller_identity
+  - verification_target
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: a caller that certifies the state it just generated under identical identity
+  preserves_invariant: declared caller hash and target hash differ, and the declared call graph
+    contains no cycle through caller and target
+  protected_skeleton:
+  - caller_hash
+  - target_hash
+  erased_structure: []
+  non_claims:
+  - the check compares two declared hashes and graph paths; it is not an incompleteness theorem
+    and it computes no cohomology groups
+  - hash inequality H(actor) != H(artifact) does not prove causal independence or absence of
+    self-certification without authenticated producer/verifier bindings
+  - the source name for the refusal is a metaphor. The route in this contract is SelfReferenceRefusal
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.7'
+  formal_statement: >
+    A verification step records a declared caller hash and a target hash. The step is
+    admitted when the two hashes differ and no cycle exists through caller and target in
+    the declared call graph. When they are equal or cyclic, the step is refused with
+    SelfReferenceRefusal. The refusal record is kept apart from admitted evaluations.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: no_cohomology_or_join_theorem_is_stated
+    qualifies_as_extended_form: true
+    anomaly_exclusion: self-certification of a generated state under identical identity
+    lossless_join:
+      status: refusal_separated
+      statement: refused self-cycles are stored as refusals and are not folded into
+        admitted evaluations
+    dependency_preservation:
+      status: hash_inequality_retained
+      statement: an admitted step keeps caller hash different from target hash
+    syntactic_decision:
+      status: declaration_decidable
+      statement: the check compares the declared hashes and the declared call graph
+declarations_required:
+- caller_hash
+- target_hash
+- call_graph
+evidence_required: []
+validation_criteria:
+- an admitted step has caller hash different from target hash
+- a step with equal hashes is refused
+- a cycle through the caller and the target in the declared call graph is refused
+terminal_routes:
+- Accept
+- SelfReferenceRefusal
+terminal_route_map:
+  Accept: Preserve
+  SelfReferenceRefusal: Refuse
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: caller hash equals target hash
+  diagnosis: the caller is the verification target
+  terminal: SelfReferenceRefusal
+examples:
+- ref: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.7'
+references:
+- coda_all_universe/mssn_sn_tower/definitions.md
+- ./nf.recursion.asrf.yaml

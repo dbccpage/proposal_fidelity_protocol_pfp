@@ -1,0 +1,67 @@
+schema_version: "omega.immune.antibody-spec.v1"
+antibody_id: "ab_witness_certificate_desynchronization"
+canonical_name: "Anti-Witness-Certificate Desynchronization"
+failure_class: "witness_certificate_desynchronization"
+target_pattern: "(\\bunverified_prose_witness_literal\\b|\\bprose_certificate_witness_mismatch\\b|\\bmissing_inverse_tree_dressing\\b)"
+constraint_type: "Restrain"
+operatorizability: "repairable"
+action: "refuse"
+severity: "P0"
+pharmacy_status: "candidate"
+authority_effect: "None"
+description: >
+  Inert review candidate for multi-layer packages where the mathematical witness printed in the
+  prose manuscript (such as non-unit Bloch vectors with norm 25/9 != 1, a 4x4 matrix rho_1
+  violating Cabello context traces, or an uninverted tree gauge product g_x = prod U_e) differs
+  from the witness evaluated in the Lean 4, Rust, or Python certificate. Candidate remains inert
+  until admitted.
+
+governing_invariants:
+  - ".agents/rules/papers/rl_publication_review_remediation_and_recertification_discipline.md"
+  - ".agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md"
+  - ".agents/rules/architecture/rl_immune_antibody_and_verification_hygiene.md"
+
+adversarial_mutation_fixture: |
+  # Hostile specimen: prose prints non-unit vector (1, 4/3, 0) while code checks unit vector (3/5, 4/5, 0)
+  from fractions import Fraction
+
+  def check_desynchronized_witness() -> bool:
+      prose_certificate_witness_mismatch = (Fraction(1, 1), Fraction(4, 3), Fraction(0, 1))
+      code_witness = (Fraction(3, 5), Fraction(4, 5), Fraction(0, 1))
+      # Code checks only code_witness while prose_certificate_witness_mismatch has norm^2 = 25/9 != 1
+      return sum(x * x for x in code_witness) == Fraction(1, 1)
+
+repaired_invariant_fixture: |
+  # Repaired invariant: cross-layer witness equality verified before certifying receipt
+  from fractions import Fraction
+
+  def verify_synchronized_witness(
+      paper_witness: tuple[Fraction, ...],
+      code_witness: tuple[Fraction, ...],
+      proof_witness: tuple[Fraction, ...],
+  ) -> bool:
+      if not (paper_witness == code_witness == proof_witness):
+          raise ValueError("PROSE_CERTIFICATE_WITNESS_MISMATCH")
+      return sum(x * x for x in code_witness) == Fraction(1, 1)
+
+benign_control_fixture: |
+  # Benign control: paper, code, and proof witnesses share the identical unit Bloch triple
+  from fractions import Fraction
+
+  def evaluate_synchronized_bloch_triple() -> bool:
+      w = (Fraction(3, 5), Fraction(4, 5), Fraction(0, 1))
+      return sum(x * x for x in w) == Fraction(1, 1)
+
+implementation_binding: "omega_engine/crates_rs/omega_quantum_physics/src/quantum_import_finite_maps/ravera_dfm_finite_to_continuum.rs"
+native_test_binding: "omega_engine/crates_rs/omega_quantum_physics/src/quantum_import_finite_maps/ravera_dfm_finite_to_continuum.rs"
+harmful_control_tests:
+  - "test_su3_spanning_tree_vs_landau_gribov_control"
+benign_control_tests:
+  - "test_ckm_jarlskog_bipartite_dfm_control"
+qualification_limit: >
+  Candidate scope covers cross-layer witness tuple desynchronization between Paper, Code, and
+  Proof artifacts. Candidate remains inert until human admission.
+
+detection_mechanisms:
+  regex_triggers:
+    - "(\\bunverified_prose_witness_literal\\b|\\bprose_certificate_witness_mismatch\\b|\\bmissing_inverse_tree_dressing\\b)"

@@ -1,0 +1,23 @@
+mode_id: 6
+name: "Chain-of-Thought Scratchpad Boundary Probes"
+cluster: "Cluster I: Carrier & Representation"
+authority_effect: "None"
+core_mechanism: "Probing hidden reasoning traces for ungrounded leaps and hallucinated intermediate states"
+substrate: "Inter-turn scratchpads and intermediate thought traces"
+paper_reference: "007_the_symbol_game_executable_lessons_and_evidence_boundaries"
+rules:
+  - "Scratchpad steps must produce checkable intermediate certificates."
+  - "No claim may appear in the final proposal without an intermediate derivation trace."
+  - "Unverified heuristic jumps trigger instant scratchpad invalidation."
+entry_preconditions:
+  - "Scratchpad inspection channel configured."
+  - "Step-level validation rules declared."
+winning_condition: >
+  Complete trace where every single intermediate step is mechanically verified by host checkers.
+failure_modes:
+  - "Ghost step (conclusion without premise)"
+  - "Vibe-based heuristic jump"
+  - "Contradictory scratchpad state"
+verifier_contract:
+  verifier_type: "scratchpad_derivation_auditor"
+  fail_closed: true

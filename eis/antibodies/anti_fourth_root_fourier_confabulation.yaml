@@ -1,0 +1,23 @@
+schema_version: omega.immune.antibody-spec.v1
+antibody_id: anti-fourth-root-fourier-confabulation
+canonical_name: Anti-Fourth Root Fourier Confabulation
+failure_class: math:fourth_root_fourier_confabulation
+target_pattern: (all.*fourth.*roots.*implies.*Fourier|entries.*in.*\{\+-\s*1.*i\}.*proves.*Fourier|fourth.*roots.*alone.*sufficient)
+constraint_type: ProjectOut
+operatorizability: repairable
+action: refuse
+severity: P0
+pharmacy_status: admitted
+authority_effect: None
+description: Rejects asserting that having matrix entries in {+/-1, +/-i} proves membership
+  in the Fourier family.
+governing_invariants:
+- .agents/rules/math/rl_mathematical_solvers_and_exact_verification.md
+- .agents/rules/math/rl_exact_verification_and_witness_integrity_invariants.md
+adversarial_mutation_fixture: Every matrix whose entries are fourth roots of unity
+  is unitarily equivalent to the Fourier matrix F_6.
+repaired_invariant_fixture: Fourier membership requires evaluating the phase-independent
+  conjugate cross-ratio CR(a,b,c,d) = 1, which distinguishes F_6 from Butson Hadamard
+  matrices.
+source_pilot: pilot_048
+evidence_sha256: 792ab005c75ccda76c5cf7f9ae34ae9a5e9d0b7762f0d1a0940b3ced53806aa8

@@ -1,0 +1,57 @@
+{
+  "input": {
+    "case_id": "ex09_reduce_nested_multiplication",
+    "task": "REDUCE",
+    "rules": [
+      [
+        "mul(e, x)",
+        "x"
+      ],
+      [
+        "mul(inv(x), x)",
+        "e"
+      ],
+      [
+        "mul(mul(x, y), z)",
+        "mul(x, mul(y, z))"
+      ],
+      [
+        "mul(x, e)",
+        "x"
+      ]
+    ],
+    "term": "mul(mul(inv(x), x), mul(y, e))"
+  },
+  "expected_output": {
+    "case_id": "ex09_reduce_nested_multiplication",
+    "status": "SOLVED",
+    "task": "REDUCE",
+    "term": "mul(mul(inv(x), x), mul(y, e))",
+    "normal_form": "mul(inv(x), mul(x, y))",
+    "ddc_trace": {
+      "case_id": "ex09_reduce_nested_multiplication",
+      "trace_string": "ERT",
+      "step_count": 3,
+      "steps": [
+        {
+          "step_index": 0,
+          "op": "E",
+          "detail": "Received task REDUCE for case ex09_reduce_nested_multiplication",
+          "meta": {}
+        },
+        {
+          "step_index": 1,
+          "op": "R",
+          "detail": "Normalizing term mul(mul(inv(x), x), mul(y, e))",
+          "meta": {}
+        },
+        {
+          "step_index": 2,
+          "op": "T",
+          "detail": "Reached normal form: mul(inv(x), mul(x, y))",
+          "meta": {}
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,219 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "the-symbol-game"
+version = "0.1.0"
+description = "Three-layer sovereignty architecture, discrete L1 projection governor, and exact consistency gate for constraint-shaped LLM tasks"
+authors = [
+    { name = "The Symbol Game Contributors" }
+]
+readme = "README.md"
+license = { text = "PolyForm-Noncommercial-1.0.0" }
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "networkx>=3.0",
+    "pydantic>=2.13.5",
+    "pytest>=9.1.1",
+    "sympy>=1.14.0",
+    "pyyaml>=6.0.3",
+    "jsonschema>=4.26.0",
+    "blake3>=1.0,<2",
+]
+
+[project.optional-dependencies]
+coda-mcp = ["fastmcp==3.2.0"]
+empirical = ["egglog==14.0.0; python_version >= '3.12'"]
+dev = [
+    "cryptography>=43",
+    "hypothesis>=6.168.3",
+    "pytest>=9.1.1",
+    "pytest-cov>=4.1.0",
+    "pytest-xdist>=3.3.0",
+    "ruff>=0.1.0",
+]
+bench = [
+    "anthropic>=0.18.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "tabulate>=0.9.0",
+]
+notebooks = [
+    "jupyter>=1.0.0",
+    "ipywidgets>=8.0.0",
+    "matplotlib>=3.7.0",
+    "nbclient>=0.8.0",
+    "nbformat>=5.9.0",
+]
+web = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+]
+all = [
+    "the-symbol-game[dev,bench,notebooks,web]",
+]
+
+[project.scripts]
+oeop = "omega_engine_operads.frontend.cli.main:main"
+pfp = "omega_engine_pfp.entrypoints.cli.pfp:main"
+symbol-game = "omega_engine_pfp.entrypoints.cli.symbol_game:main"
+level-engine = "omega_engine_pfp.entrypoints.cli.level_engine_commands:main"
+
+[tool.setuptools]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "omega_engine_pfp*",
+    "omega_engine_pfp.tests.demo_004*",
+    "omega_engine",
+    "omega_engine.crates_rs.omega_wdp.src.ddc",
+    "omega_engine_operads*",
+    "omega_engine_prompt_civilization*",
+    "omega_engine_woland",
+    "omega_engine_woland.config*",
+    "omega_engine_woland.controllers*",
+    "omega_engine_woland.documentation*",
+    "omega_engine_woland.domain*",
+    "omega_engine_woland.entrypoints*",
+    "omega_engine_woland.evidence*",
+    "omega_engine_woland.infrastructure*",
+    "omega_engine_woland.profile*",
+    "omega_engine_woland.program_profiles*",
+    "omega_engine_woland.render*",
+    "omega_engine_woland.teamwork_preview*",
+    "omega_engine_woland.the_master_and_margarita*",
+    "omega_engine_woland.use_cases*",
+    "omega_engine_woland._fixtures*",
+    "omega_engine_woland.tests.pilots.matrix*",
+    "omega_engine_woland.tests.pilots.relational_spacetime*",
+    "omega_engine_woland.tests.pilots.challenge_suite*",
+    "omega_engine_woland.tests.pilots.c051_exact_lp_solver_with_duals*",
+    "omega_engine_woland.tests.pilots.c052_maxflow_mincut_certificates*",
+    "omega_engine_woland.tests.pilots.c053_bareiss_fraction_free_matrix_inversion*",
+    "omega_engine_woland.tests.pilots.c054_exact_linear_systems*",
+    "omega_engine_woland.tests.pilots.c055_assignment_with_potentials*",
+    "omega_engine_woland.tests.pilots.c059_sql_null_total_query_synthesis*",
+
+    "omega_engine_woland.tests.pilots.pilot_0000192",
+    "omega_engine_governance._law",
+    "omega_engine_governance.anomalon_councils*",
+    "omega_engine_governance.domain.actor_corpus*",
+    "omega_engine_governance.use_cases.actor_corpus*",
+    "omega_engine_governance.use_cases.council_deliberation*",
+    "omega_engine_governance.use_cases.stress_testing*",
+    "omega_engine_governance.infrastructure.actor_corpus*",
+    "omega_engine_governance.infrastructure",
+    "omega_engine_governance.infrastructure.storage*",
+    "omega_engine_operations.domain*",
+    "omega_engine_woland.stage*",
+    "omega_engine_atlas.coda_atlas.F004_papers.010_mub6.code.mub_verify*",
+    "omega_engine_atlas",
+    "omega_engine_product_planning_office.domain*",
+    "omega_engine_product_planning_office.use_cases*",
+    "omega_engine_governance.frontend",
+    "omega_engine_governance.frontend.cli*",
+    "omega_engine_epistemic_immune_system*",
+    "omega_engine_cognitive_operations*",
+    "omega_engine_governance", "omega_engine_governance.domain", "omega_engine_governance.domain.ingress*", "omega_engine_governance.domain.shared_kernel*",
+    "omega_engine_operating_system", "omega_engine_operating_system*",
+    "omega_engine_operations", "omega_engine_operations.use_cases", "omega_engine_operations.use_cases.level_engine*",
+    "omega_engine_operations.use_cases.verification",
+    "omega_engine_operations.use_cases.claim_hygiene",
+    "omega_engine_governance.contracts", "omega_engine_governance.contracts.level_engine*",
+    "omega_engine_applications*",
+    "omega_engine_education*",
+    "omega_engine_library*",
+    "omega_engine_research_papers*",
+    "omega_simplex_autop*",
+    "omega_simplex_cache*",
+]
+# fnmatch has no negation. These classes match "*.tests*" except
+# the declared tests.demo_004 and tests.pilots runtime subsets and descendants
+# that are not themselves test packages. Explicit includes above select their
+# canonical owners; the surrounding tests/evidence estate is not distributed.
+exclude = [
+    "scratch",
+    "scratch.*",
+    "*.tests",
+    "*.tests.[!dp]*",
+    "*.tests.d[!e]*",
+    "*.tests.de[!m]*",
+    "*.tests.dem[!o]*",
+    "*.tests.demo[!_]*",
+    "*.tests.demo_[!0]*",
+    "*.tests.demo_0[!0]*",
+    "*.tests.demo_00[!4]*",
+    "*.tests.demo_004[!.]*",
+    "*.tests.p[!i]*",
+    "*.tests.pi[!l]*",
+    "*.tests.pil[!o]*",
+    "*.tests.pilo[!t]*",
+    "*.tests.pilot[!s]*",
+    "*.tests.pilots[!.]*",
+    "*.test_*",
+    "*.__pycache__*",
+    "omega_engine_pfp.infrastructure.tower_evidence.level_engine.v1*",
+    "omega_engine_education.pilots*",
+    "omega_engine_education.pfp*",
+]
+namespaces = true
+
+[tool.setuptools.package-data]
+"omega_engine_applications.wdp_products" = ["kernel/frame.yaml", "p1_abstention_governor/frame.yaml", "p2_provenance_gate/frame.yaml", "p3_guard_transfer/frame.yaml", "p4_observation_budget/frame.yaml", "p5_claim_certification/frame.yaml"]
+"omega_engine_applications.anomalon_audit" = ["data/novella_v0.json", "entrypoints/web/index.html"]
+"omega_engine_library.coda_search" = ["database/schema.sql"]
+"omega_engine" = ["crates_rs/omega_prompt_civilization/src/forge.rs", "crates_rs/omega_wdp/src/application_kernel.rs"]
+"omega_engine.crates_rs.omega_wdp.src.ddc" = ["ddc_alphabet.rs"]
+"omega_engine_pfp" = [
+    "infrastructure/yaml/**/*.yaml", "infrastructure/yaml/**/*.sql", "infrastructure/yaml/**/*.json",
+    "infrastructure/yaml/prompts/README.md",
+    "domain/**/*.yaml", "domain/**/*.json", "type_register/*.yaml",
+    "fixtures/finite_qm_workflow/*.json",
+    # These public pilots retain their canonical namespace after relocation.
+    # Ship their runtime inputs and code, not the surrounding test/evidence estate.
+    "tests/__init__.py", "tests/pilots/__init__.py", "tests/pilots/c*/*.py",
+    "tests/pilots/c*/participant_packet/*.py", "tests/pilots/c*/participant_packet/TASK.md",
+    "tests/pilots/c*/participant_packet/examples/*.json",
+    "tests/pilots/c*/reference_solver/*.py", "tests/pilots/c*/judge_packet/*.py",
+    "tests/pilots/c*/judge_packet/checkers/*.py", "tests/pilots/c*/judge_packet/cases/**/*.json",
+    "tests/pilots/c*/judge_packet/hidden_cases/*.json",
+]
+"omega_engine_atlas" = [
+    "coda_atlas/F004_papers/002_projection_obstruction/035_zero_container_relational_spacetime_and_witness_holonomy/zero_container_relational_spacetime_and_witness_holonomy.md",
+    "coda_atlas/F004_papers/009_ms_majorana/code/majorana_braid_exact.py",
+    "coda_atlas/F004_papers/009_ms_majorana/code/majorana_multiqubit_noise.py",
+]
+"omega_engine_woland" = [
+    "tests/__init__.py", "tests/pilots/__init__.py", "the_master_and_margarita/wolands_retinue.yaml",
+    "tests/pilots/c*/participant_packet/TASK.md", "tests/pilots/c*/participant_packet/examples/*.json",
+    "tests/pilots/c*/judge_packet/cases/**/*.json", "tests/pilots/c*/judge_packet/hidden_cases/*.json",
+]
+"omega_engine_woland.tests.pilots.matrix" = ["seeds.yaml", "max_pilot_matrix.yaml"]
+"omega_engine_pfp.tests.demo_004" = ["**/*.yaml", "**/*.json", "**/*.txt", "**/TASK.md", "a_mechanism/c001_attention_distractor_mask_task_level.md"]
+"omega_engine_woland.tests.pilots.pilot_0000192" = ["cases/c005.json"]
+"omega_engine_pfp.entrypoints.web" = ["*.html", "*.css", "*.js"]
+"omega_engine_pfp.fixtures" = ["*.yaml"]
+"omega_engine_pfp.infrastructure.adapters.mssn_research" = ["*.json", "fixtures/*.json", "genesis_crosswalk.md"]
+
+"omega_engine_pfp.infrastructure.tower_research.level_engine" = ["**/*.json", "**/*.md", "**/*.txt"]
+"omega_engine_pfp.infrastructure.tower_research.reach" = ["data/**/*"]
+"omega_engine_pfp.infrastructure.tower_evidence.level_engine" = ["v1/**/*", "v1/.*", "v2/**/*"]
+"omega_engine_governance" = ["anomalon_councils/documentation/ic_casefold_v15_1.json", "anomalon_councils/documentation/intelligence_community.yaml", "contracts/level_engine/v2/**/*", "contracts/level_engine/v2/historical/.*"]
+"omega_engine_operations.use_cases.level_engine" = ["_docs/*.md"]
+"omega_engine_operations" = ["domain/**/*.yaml", "domain/**/*.json"]
+"omega_engine_operads.infrastructure.skill_garden" = ["cull_policy.json"]
+"omega_engine_operads.infrastructure.python_development_office" = ["python_quality_policy.v1.json"]
+"omega_engine_woland.infrastructure.providers" = ["model_registry_v1.json"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

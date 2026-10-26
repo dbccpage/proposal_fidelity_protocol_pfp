@@ -1,0 +1,107 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.dfnf
+  name: Dressing Field Normal Form
+  short_name: DFNF
+  version: v0
+  theory_status: experimental
+  contract_status: draft
+  verification_status: executable
+  family: physics
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - gauge_field_theory
+  - dressing_field_method
+  - relational_invariants
+  data_posture: in_motion
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: Gribov ambiguity anomalies from non-injective gauge-fixing slices,
+    spurious boundary edge-mode charges induced by cutting gauge orbits, Faddeev-Popov
+    ghost proliferation, and gauge-dependent state vector corruption
+  preserves_invariant: "gauge-basic physical degrees of freedom extracted via an equivariant dressing field u without gauge-fixing cuts, with idempotent retraction Pi^2 = Pi"
+  protected_skeleton:
+  - raw_field_carrier
+  - gauge_group_action
+  - dressing_field_operator
+  - basic_invariant_submanifold
+  - dressing_retraction_idempotence
+  erased_structure:
+  - longitudinal_gauge_redundancies
+  - faddeev_popov_ghost_fields
+  - artificial_boundary_edge_modes
+  non_claims:
+  - does not prove that an equivariant dressing field exists globally for all topology classes
+  - does not solve the non-abelian Gribov problem for full continuous QCD without chart covers
+  - does not replace BRST cohomology where boundary modes are physical observables
+  - does not guarantee unweighted convergence of discrete lattice dressing to continuum limits
+declarations_required:
+- field_configuration: phi in FieldSpace
+- gauge_group_action: "rho(g, phi) mapping G x FieldSpace to FieldSpace"
+- dressing_operator: "u mapping FieldSpace to G"
+- dressing_equivariance: "u(rho(g, phi)) = g^{-1} u(phi) for all g in G"
+validation_criteria:
+- dressing_equivariance_check: "verify u(rho(g, phi)) == g^{-1} * u(phi) across declared test instances"
+- retraction_idempotence_check: "verify Pi(Pi(phi)) == Pi(phi) where Pi(phi) = rho(u(phi), phi)"
+- gauge_invariance_check: "verify Pi(rho(g, phi)) == Pi(phi) for all test group elements g"
+- basic_presentation_check: "stored state vector satisfies phi_stored == Pi(phi) with zero ghost components"
+- zero_gauge_residual_check: "gauge coboundary defect delta_gauge(phi_stored) == 0"
+terminal_routes:
+- DressingFieldCertified
+- EquivarianceViolation
+- NonIdempotentRetraction
+- GaugeLeakageDetected
+- GlobalObstructionGribov
+- Unsupported
+terminal_route_map:
+  DressingFieldCertified: Preserve
+  EquivarianceViolation: Refuse
+  NonIdempotentRetraction: Repair
+  GaugeLeakageDetected: Repair
+  GlobalObstructionGribov: Escalate
+  Unsupported: Unsupported
+definition:
+  source: omega_engine_atlas/coda_atlas/F004_papers/004_general_relativity/003_relational_point_coincidence_and_witnessed_difference
+  formal_statement: "A field theory configuration is in Dressing Field Normal Form (DFNF) iff all local gauge degrees of freedom are factorized by an equivariant dressing field into basic gauge invariants phi_basic = rho(u(phi), phi), satisfying retraction idempotence Pi^2 = Pi and zero boundary edge-mode artifacts."
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: transformation_and_projection_rather_than_relational_project_join
+    anomaly_exclusion: Gribov ambiguities, spurious boundary charges, and ghost-field pollution
+    lossless_join:
+      status: declared_reconstruction
+      statement: Field decomposition into basic invariant degrees of freedom plus gauge group
+        element is invertible on each local bundle trivialization.
+    dependency_preservation:
+      status: gauge_orbit_preservation
+      statement: Preserves physical observable algebra invariant under gauge action.
+    syntactic_decision:
+      status: operator_decidable
+      statement: Verified by checking operator equivariance and idempotence on test inputs.
+canonical_terminal_map:
+  DressingFieldCertified: Preserve
+  EquivarianceViolation: Refuse
+  NonIdempotentRetraction: Repair
+  GaugeLeakageDetected: Repair
+  GlobalObstructionGribov: Escalate
+  Unsupported: Unsupported
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+certification:
+  certificate_required: true
+  certificate_kind: nf.physics.dfnf_certificate
+  obstruction_class_required: false
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+evidence_required:
+- field_state: string
+- dressing_operator_ref: string
+- equivariance_verified: boolean
+- idempotence_verified: boolean
+- gauge_invariance_verified: boolean
+- ghost_free_verified: boolean
+schema_ref: ./normal_form_contract_schema.yaml

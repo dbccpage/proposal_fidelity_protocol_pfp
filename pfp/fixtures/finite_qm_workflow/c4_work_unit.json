@@ -1,0 +1,202 @@
+{
+  "answer_schema": {
+    "$defs": {
+      "rational": {
+        "additionalProperties": false,
+        "properties": {
+          "den": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "num": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "num",
+          "den"
+        ],
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "dual_witness": {
+        "items": {
+          "$ref": "#/$defs/rational"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "gamma2": {
+        "$ref": "#/$defs/rational"
+      },
+      "phi1": {
+        "$ref": "#/$defs/rational"
+      },
+      "potential": {
+        "items": {
+          "$ref": "#/$defs/rational"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      }
+    },
+    "required": [
+      "potential",
+      "dual_witness",
+      "phi1",
+      "gamma2"
+    ],
+    "type": "object"
+  },
+  "checker_id": "finite-qm-native-cochain-v1",
+  "objective": "Certify the exact L1 quotient residual and face curvature of this supplied finite C4 cochain. This precursor task does not derive a quantum interface.",
+  "operad_slots": {
+    "slot_m1_layer0_ambient_carrier": {
+      "assumptions": [
+        "Supplied finite complex and L1 edge norm; rational primal and dual vectors."
+      ],
+      "carrier": "Oriented C4 with edges 01,12,23,03 and one face 01+12+23-03; potentials are considered modulo constant shifts.",
+      "coefficient_ring": "Q",
+      "mining_status": "FILLED",
+      "public_input": {
+        "cochain": [
+          "2",
+          "-3",
+          "5",
+          "7"
+        ],
+        "complex": {
+          "c0_dim": 4,
+          "c1_dim": 4,
+          "c2_dim": 1,
+          "d0": [
+            [
+              "-1",
+              "1",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "-1",
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "-1",
+              "1"
+            ],
+            [
+              "-1",
+              "0",
+              "0",
+              "1"
+            ]
+          ],
+          "d1": [
+            [
+              "1",
+              "1",
+              "1",
+              "-1"
+            ]
+          ]
+        }
+      },
+      "source_pins": [
+        {
+          "path": "omega_engine_pfp/fixtures/finite_qm_workflow/c4_public_input.json",
+          "sha256": "bacfa8ca0bcf63778acf28f60ecb84985b20b7332d38eebb7212d9008b08246c"
+        },
+        {
+          "path": "omega_engine/crates_rs/omega_symbol_game_runtime/src/cochain.rs",
+          "sha256": "298c3b6de889046e380055e8c57807c0a98027a3d5a38f526957f53113b9acc4"
+        }
+      ]
+    },
+    "slot_m2_layer1_forward_morphisms": {
+      "composition_plan": "One corolla: cochain_evaluate(complex,c,a,w). The model proposes a,w; the host evaluates the corolla.",
+      "mining_status": "FILLED",
+      "operations": [
+        {
+          "catalog_id": "runtime_operation:cochain_evaluate",
+          "inputs": [
+            "PromptCellComplex",
+            "EdgeCochain",
+            "PrimalPotential",
+            "DualWitness"
+          ],
+          "output": "CochainDisposition",
+          "semantic_predicate": "Candidate a,w satisfy primal/dual feasibility and matching exact objectives on the supplied complex."
+        }
+      ]
+    },
+    "slot_m3_layer2_ideals_and_annihilators": {
+      "algebraic_relations": [
+        "Potentials differing by a constant induce identical edge coboundaries on this graph."
+      ],
+      "mining_status": "FILLED",
+      "negative_control_plan": "After independent checking, mutate one dual coordinate; retain a valid control and test a changed problem binding.",
+      "rejection_predicates": [
+        "Reject a nonconserved dual even when its dot product happens to match a claimed objective.",
+        "Reject any general QM or continuum promotion from this cochain calculation."
+      ]
+    },
+    "slot_m4_tri_language_witness_anchors": {
+      "anchors": [
+        {
+          "execution_status": "NOT_RUN",
+          "language": "Rust",
+          "path": "omega_engine/crates_rs/omega_symbol_game_runtime/src/cochain.rs",
+          "symbol": "PromptCochainEvaluator::evaluate"
+        },
+        {
+          "execution_status": "NOT_RUN",
+          "language": "Python",
+          "path": "omega_engine_pfp/infrastructure/finite_qm_cochain_judge.py",
+          "symbol": "NativeCochainJudge"
+        },
+        {
+          "execution_status": "NOT_RUN",
+          "language": "Lean",
+          "path": "UNBOUND",
+          "symbol": "UNBOUND"
+        },
+        {
+          "execution_status": "NOT_RUN",
+          "language": "Paper",
+          "path": "UNBOUND",
+          "symbol": "UNBOUND"
+        }
+      ],
+      "certificate_predicates": [
+        "d1*d0=0",
+        "r=c-d0*a",
+        "d0^T*w=0",
+        "max(abs(w))<=1",
+        "phi1=norm1(r)=dot(w,c)",
+        "gamma2=norm1(d1*c)"
+      ],
+      "mining_status": "FILLED",
+      "unpaid_imports": [
+        "Scalar-field selection",
+        "Hilbert carrier",
+        "positive cone",
+        "Born pairing",
+        "tensor rule",
+        "unitary dynamics"
+      ]
+    }
+  },
+  "schema_id": "omega.pfp.finite-qm-work-unit.v1",
+  "selected_catalog_ids": [
+    "runtime_operation:cochain_evaluate"
+  ],
+  "task_id": "FQM-PRECURSOR-C4-CERTIFICATE-001"
+}

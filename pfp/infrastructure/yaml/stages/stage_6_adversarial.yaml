@@ -1,0 +1,69 @@
+stage: 6
+name: adversarial
+executor: model
+requires:
+- 2
+- 4
+- 5
+seat: seat_margarita
+version: pfp-staged.0.3
+derived_under_policy: SPK-001
+authority_effect: None
+source_template: yaml/mode_2_proofer/stage_6_adversarial.yaml
+system_prompt: Propose concrete adversarial checker inputs against the actual original candidate and Stage
+  5 receipt. Prefer the smallest witness that would falsify the claim; refining a witness belongs in this
+  turn, there is no later countermodel turn. expected_accept is your hypothesis, never a host verdict.
+  Respect protected source/profile boundaries; a changed-input control is a separate task.
+user_prompt: 'Supply typed challenge witnesses and a required independent check. Retain the Stage 2 candidate,
+  Stage 4 payload and Stage 5 receipt. A candidate for a counterexample is not yet a checked counterexample:
+  Stage 7 replays every witness on the host.'
+response_schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  type: object
+  additionalProperties: false
+  properties:
+    derived_under_policy:
+      const: SPK-001
+    demo_id:
+      const: DEMO_ID_BOUND_BY_HOST
+    stage:
+      const: 6
+    authority_effect:
+      const: None
+    challenges:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          candidate_id:
+            type: string
+          claim:
+            type: string
+          witness:
+            type: object
+            additionalProperties: false
+            properties:
+              proposal:
+                type: string
+            required:
+            - proposal
+          expected_accept:
+            type: boolean
+          required_check:
+            type: string
+        required:
+        - candidate_id
+        - claim
+        - witness
+        - expected_accept
+        - required_check
+    should_continue:
+      type: boolean
+  required:
+  - derived_under_policy
+  - demo_id
+  - stage
+  - authority_effect
+  - challenges
+  - should_continue

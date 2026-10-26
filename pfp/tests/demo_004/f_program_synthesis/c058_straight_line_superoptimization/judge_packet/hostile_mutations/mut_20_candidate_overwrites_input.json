@@ -1,0 +1,47 @@
+{
+  "mutation_id": "mut_20_candidate_overwrites_input",
+  "description": "Candidate overwrites input variable x violating SSA",
+  "case": {
+    "case_id": "c058_b01_xor_sub",
+    "width": 8,
+    "inputs": [
+      "x",
+      "y"
+    ],
+    "ops": [
+      [
+        "t1",
+        "or",
+        "x",
+        "y"
+      ],
+      [
+        "t2",
+        "and",
+        "x",
+        "y"
+      ],
+      [
+        "t3",
+        "sub",
+        "t1",
+        "t2"
+      ]
+    ],
+    "out": "t3",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b01_xor_sub",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "x",
+        "xor",
+        "x",
+        "y"
+      ]
+    ],
+    "out": "x"
+  }
+}

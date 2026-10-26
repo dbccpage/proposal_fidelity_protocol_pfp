@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "omega.symbol-game.packet-envelope.v2",
+  "title": "Symbol Game PacketEnvelopeV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "packet_id",
+    "packet_kind",
+    "framing_mode",
+    "task_id",
+    "packet_family",
+    "carrier_id",
+    "initial_state_hash",
+    "payload",
+    "constraints",
+    "protected_boundaries",
+    "terminal_target",
+    "evidence_ceiling",
+    "oracle_policy",
+    "allowed_transforms",
+    "step_budget",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omega.symbol-game.packet-envelope.v2"
+    },
+    "packet_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "packet_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "framing_mode": {
+      "enum": ["strict", "extraction"]
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packet_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "carrier_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "initial_state_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "payload": {
+      "$ref": "#/$defs/canonicalNode"
+    },
+    "constraints": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "protected_boundaries": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "terminal_target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_ceiling": {
+      "type": "string",
+      "minLength": 1
+    },
+    "oracle_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "allowed_transforms": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "step_budget": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "parent_event_id": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_digest": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "authority_effect": {
+      "const": "None"
+    }
+  },
+  "$defs": {
+    "canonicalStringNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "string"},
+        {"type": "string"}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalNonEmptyStringNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "string"},
+        {"type": "string", "minLength": 1}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalIntegerNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "int"},
+        {"type": "string", "pattern": "^(0|-?[1-9][0-9]*)$"}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalPositiveIntegerNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "int"},
+        {"type": "string", "pattern": "^[1-9][0-9]*$"}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalFloatHexNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "string"},
+        {
+          "type": "string",
+          "pattern": "^-?(0x0\\.0p\\+0|0x0\\.(?!0{13}p)[0-9a-f]{13}p-1022|0x1\\.[0-9a-f]{13}p(\\+(0|[1-9][0-9]{0,2}|10[01][0-9]|102[0-3])|-([1-9]|[1-9][0-9]{1,2}|10[01][0-9]|102[0-2])))$"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalBytesHexNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "string"},
+        {"type": "string", "pattern": "^([0-9a-f]{2})*$"}
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalFieldNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "field"},
+        {
+          "type": "array",
+          "prefixItems": [
+            {"$ref": "#/$defs/canonicalNonEmptyStringNode"},
+            {"$ref": "#/$defs/canonicalNode"}
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalEntryNode": {
+      "type": "array",
+      "prefixItems": [
+        {"const": "omega-canonical-v1"},
+        {"const": "entry"},
+        {
+          "type": "array",
+          "prefixItems": [
+            {"$ref": "#/$defs/canonicalStringNode"},
+            {"$ref": "#/$defs/canonicalNode"}
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "canonicalNode": {
+      "$comment": "Ordering, duplicate-key, and reduced-fraction checks are also enforced by canonical_unwire because JSON Schema cannot compare sibling values.",
+      "oneOf": [
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "null"},
+            {"type": "null"}
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "bool"},
+            {"type": "boolean"}
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {"$ref": "#/$defs/canonicalIntegerNode"},
+        {"$ref": "#/$defs/canonicalStringNode"},
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "float"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {"$ref": "#/$defs/canonicalFloatHexNode"}
+              ],
+              "items": false,
+              "minItems": 1,
+              "maxItems": 1
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "fraction"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {"$ref": "#/$defs/canonicalIntegerNode"},
+                {"$ref": "#/$defs/canonicalPositiveIntegerNode"}
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "bytes"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {"$ref": "#/$defs/canonicalBytesHexNode"}
+              ],
+              "items": false,
+              "minItems": 1,
+              "maxItems": 1
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "enum"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {"$ref": "#/$defs/canonicalNonEmptyStringNode"},
+                {"$ref": "#/$defs/canonicalNonEmptyStringNode"},
+                {"$ref": "#/$defs/canonicalNonEmptyStringNode"},
+                {"$ref": "#/$defs/canonicalNode"}
+              ],
+              "items": false,
+              "minItems": 4,
+              "maxItems": 4
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {"$ref": "#/$defs/canonicalFieldNode"},
+        {"$ref": "#/$defs/canonicalEntryNode"},
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "dataclass"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {"$ref": "#/$defs/canonicalNonEmptyStringNode"},
+                {"$ref": "#/$defs/canonicalNonEmptyStringNode"}
+              ],
+              "items": {"$ref": "#/$defs/canonicalFieldNode"},
+              "minItems": 2,
+              "uniqueItems": true
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"const": "mapping"},
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "array",
+                  "prefixItems": [
+                    {"const": "omega-canonical-v1"},
+                    {"const": "string"},
+                    {"const": "builtins"}
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                },
+                {
+                  "type": "array",
+                  "prefixItems": [
+                    {"const": "omega-canonical-v1"},
+                    {"const": "string"},
+                    {"const": "dict"}
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "items": {"$ref": "#/$defs/canonicalEntryNode"},
+              "minItems": 2,
+              "uniqueItems": true
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"enum": ["list", "tuple"]},
+            {
+              "type": "array",
+              "items": {"$ref": "#/$defs/canonicalNode"}
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {"const": "omega-canonical-v1"},
+            {"enum": ["set", "frozenset"]},
+            {
+              "type": "array",
+              "items": {"$ref": "#/$defs/canonicalNode"},
+              "uniqueItems": true
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        }
+      ]
+    }
+  }
+}

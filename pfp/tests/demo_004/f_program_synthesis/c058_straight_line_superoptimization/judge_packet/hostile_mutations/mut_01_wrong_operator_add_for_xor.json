@@ -1,0 +1,47 @@
+{
+  "mutation_id": "mut_01_wrong_operator_add_for_xor",
+  "description": "Returns x + y instead of x ^ y",
+  "case": {
+    "case_id": "c058_b01_xor_sub",
+    "width": 8,
+    "inputs": [
+      "x",
+      "y"
+    ],
+    "ops": [
+      [
+        "t1",
+        "or",
+        "x",
+        "y"
+      ],
+      [
+        "t2",
+        "and",
+        "x",
+        "y"
+      ],
+      [
+        "t3",
+        "sub",
+        "t1",
+        "t2"
+      ]
+    ],
+    "out": "t3",
+    "target_len": 1
+  },
+  "candidate": {
+    "case_id": "c058_b01_xor_sub",
+    "status": "SOLVED",
+    "ops": [
+      [
+        "res",
+        "add",
+        "x",
+        "y"
+      ]
+    ],
+    "out": "res"
+  }
+}

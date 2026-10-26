@@ -1,0 +1,23 @@
+mode_id: 5
+name: "Skill Injection & Operad Morphisms"
+cluster: "Cluster II: Internal Steering"
+authority_effect: "None"
+core_mechanism: "Composing one-morphism skill units into deterministic directed acyclic graphs"
+substrate: "Operad morphism signatures (Contract -> State -> Receipt)"
+paper_reference: "omega_engine_operads"
+rules:
+  - "Each skill execution is an operad morphism f: A -> B with strictly typed colours."
+  - "Skill composition must satisfy associativity: (h . g) . f = h . (g . f)."
+  - "Output colour must match input colour of downstream recipient."
+entry_preconditions:
+  - "Operad registry loaded and validated."
+  - "DAG topology contains zero cycles."
+winning_condition: >
+  Successful execution of all pipeline morphisms with verified receipt generation.
+failure_modes:
+  - "Operad arity violation"
+  - "Colour type mismatch"
+  - "Cyclic morphism composition"
+verifier_contract:
+  verifier_type: "operadic_morphism_typechecker"
+  fail_closed: true
