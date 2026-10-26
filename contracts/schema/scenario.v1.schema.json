@@ -1,0 +1,304 @@
+{
+  "$defs": {
+    "AssertIn": {
+      "additionalProperties": false,
+      "properties": {
+        "enforce_monotonicity": {
+          "default": false,
+          "title": "Enforce Monotonicity",
+          "type": "boolean"
+        },
+        "move": {
+          "const": "ASSERT",
+          "title": "Move",
+          "type": "string"
+        },
+        "provisional": {
+          "default": false,
+          "title": "Provisional",
+          "type": "boolean"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "step_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Id"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "move",
+        "source",
+        "target",
+        "value"
+      ],
+      "title": "AssertIn",
+      "type": "object"
+    },
+    "ClaimIn": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "value"
+      ],
+      "title": "ClaimIn",
+      "type": "object"
+    },
+    "CutIn": {
+      "additionalProperties": false,
+      "properties": {
+        "claims": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ClaimIn"
+              },
+              "maxItems": 16,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Claims"
+        },
+        "move": {
+          "const": "CUT",
+          "title": "Move",
+          "type": "string"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "maxProperties": 12,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "step_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Id"
+        }
+      },
+      "required": [
+        "move"
+      ],
+      "title": "CutIn",
+      "type": "object"
+    },
+    "EdgeIn": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "weight": {
+          "default": 1,
+          "title": "Weight",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source",
+        "target"
+      ],
+      "title": "EdgeIn",
+      "type": "object"
+    },
+    "RetractIn": {
+      "additionalProperties": false,
+      "properties": {
+        "move": {
+          "const": "RETRACT",
+          "title": "Move",
+          "type": "string"
+        },
+        "reason": {
+          "default": "",
+          "maxLength": 200,
+          "title": "Reason",
+          "type": "string"
+        },
+        "step_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Id"
+        },
+        "target_step_id": {
+          "title": "Target Step Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "move",
+        "target_step_id"
+      ],
+      "title": "RetractIn",
+      "type": "object"
+    },
+    "VerifyIn": {
+      "additionalProperties": false,
+      "properties": {
+        "move": {
+          "const": "VERIFY",
+          "title": "Move",
+          "type": "string"
+        },
+        "obligation": {
+          "maxLength": 200,
+          "title": "Obligation",
+          "type": "string"
+        },
+        "step_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Id"
+        }
+      },
+      "required": [
+        "move",
+        "obligation"
+      ],
+      "title": "VerifyIn",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A declared graph and the proposals to run against it, in order.",
+  "properties": {
+    "edges": {
+      "items": {
+        "$ref": "#/$defs/EdgeIn"
+      },
+      "maxItems": 16,
+      "title": "Edges",
+      "type": "array"
+    },
+    "moves": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "ASSERT": "#/$defs/AssertIn",
+            "CUT": "#/$defs/CutIn",
+            "RETRACT": "#/$defs/RetractIn",
+            "VERIFY": "#/$defs/VerifyIn"
+          },
+          "propertyName": "move"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/AssertIn"
+          },
+          {
+            "$ref": "#/$defs/CutIn"
+          },
+          {
+            "$ref": "#/$defs/VerifyIn"
+          },
+          {
+            "$ref": "#/$defs/RetractIn"
+          }
+        ]
+      },
+      "maxItems": 256,
+      "title": "Moves",
+      "type": "array"
+    },
+    "schema": {
+      "const": "pfp-lab.scenario.v1",
+      "title": "Schema",
+      "type": "string"
+    },
+    "title": {
+      "default": "",
+      "maxLength": 200,
+      "title": "Title",
+      "type": "string"
+    },
+    "vertices": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Vertices",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "vertices",
+    "edges",
+    "moves"
+  ],
+  "title": "ScenarioIn",
+  "type": "object"
+}

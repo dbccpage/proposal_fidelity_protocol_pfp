@@ -1,0 +1,86 @@
+{
+  "schema_version": "pfp.governance-policy.v1",
+  "AuthorityEffect": "None",
+  "description": "Single source of truth for the acceptance floor of SCORING.md section 1.5 in this repository. Read by governance/tools/checker.py.",
+  "rubric": "SCORING.md",
+  "level_order": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ],
+  "grade_order": [
+    "E",
+    "D",
+    "C",
+    "B",
+    "A",
+    "A+"
+  ],
+  "floor": {
+    "min_level": "L4",
+    "min_grade": "D",
+    "statement": "A governed source is accepted only with a completed score (every gate graded, composite = weakest gate, score_token = level + composite) at L4 or L5 and composite grade D or better, bound to the SHA-256 of its exact bytes. Sources in governance/baseline.json with unchanged bytes are grandfathered."
+  },
+  "companion_suffix": ".contract.score.json",
+  "companion_schema": "pfp.contract-score.v1",
+  "populations": [
+    {
+      "language": "Python",
+      "globs": [
+        "pfp_lab/**/*.py",
+        "governance/**/*.py"
+      ]
+    },
+    {
+      "language": "C#",
+      "globs": [
+        "csharp/**/*.cs"
+      ]
+    }
+  ],
+  "exclusions": {
+    "path_parts": [
+      "__pycache__",
+      "bin",
+      "obj",
+      ".venv",
+      "node_modules"
+    ]
+  },
+  "support_categories": [
+    {
+      "name": "test",
+      "globs": [
+        "pfp_lab/tests/**/*.py",
+        "governance/tools/tests/**/*.py",
+        "csharp/PfpLab.Tests/**/*.cs"
+      ],
+      "min_level": "L2",
+      "min_grade": "D",
+      "status": "proposed; awaiting maintainer approval",
+      "reason": "Test modules are verification harnesses, not production code. As in the sibling repository's regression_test exception, they keep a completed score, grade D or better and every integrity check, but are not held to capability level L4."
+    }
+  ],
+  "pinned_boilerplate": [
+    {
+      "glob": "**/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "Empty package markers (zero bytes). They hold no code, so there is nothing to score; only the exact empty file is admitted, as with the sibling repository's pinned build hook."
+    }
+  ],
+  "not_yet_governed": {
+    "paths": [
+      "pfp/",
+      "eis/",
+      "operads/",
+      "pciv/",
+      "ops/",
+      "papers/",
+      "education/",
+      "code/"
+    ],
+    "reason": "Imported trees. They join the population once their import names settle (a rename of ops/ is in progress) and a baseline of their exact bytes is recorded with the maintainer's agreement. PFP Lab does not import them."
+  }
+}

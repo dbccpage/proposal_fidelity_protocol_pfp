@@ -1,0 +1,98 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "csharp/PfpLab.Desktop/MainViewModel.cs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Desktop/MainViewModel.cs",
+      "language": "C#",
+      "sha256": "7db8bfebc21d2f2d886fbdebcf68f8c9e782824fcb075b05c4e552b27d54b926"
+    },
+    "contract_urn": "urn:pfp-lab:csharp:desktop:viewmodel:v1",
+    "symbols": [
+      "AsyncCommand",
+      "MainViewModel",
+      "ObservableObject"
+    ],
+    "owned_invariants": [
+      "The view never shows a number the core did not return."
+    ],
+    "boundaries": [
+      "Depends only on IPfpLabClient."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Desktop/MainViewModel.cs",
+      "language": "C#",
+      "sha256": "7db8bfebc21d2f2d886fbdebcf68f8c9e782824fcb075b05c4e552b27d54b926"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "View model with cancellable async commands and property-change plumbing: orchestrates loading, running, saving and verifying, turns expected failures into status, and lets unexpected ones reach the fail-closed handler.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
+      "G2": "Summary values are shown exactly as the core spelled them; file and core failures become status text.",
+      "G3": "Typed failures: every core failure becomes CoreException with a CoreErrorKind (RULE_CS_002 checks run after deserialisation; no null-forgiving operator in runtime code, enforced by a scan); async methods take and forward CancellationToken (CA2016 as error); disposables are disposed (CA2000/CA1816 as error). Not B: panic-freedom is tested, not proven.",
+      "G4": "Unit tests, view-model tests with a scripted client, and contract tests against the real Python core. Three mutants in the property-change plumbing survive. Mutation R = 4/5 (see mutation_accounting).",
+      "G5": "Cyclomatic complexity from lizard and CA1502 (threshold 10, error at build); nesting from the brace estimate. Cognitive complexity is not measured for C#, so A is not claimed. Metrics: worst function: cyclomatic 5, cognitive None, nesting 2; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/dotnet-build.run.json",
+        "sha256": "c1e96cfed01989efe39a640925fc139be65d4e0ef1b01fb8c68bef90df6644c2",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/csharp-tests.run.json",
+        "sha256": "697207bf8bd01d4a07c4ede2c406c360de471c2b375db7cba891865f7e785ab9",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pytest-all.run.json",
+        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.run.json",
+        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.json",
+        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 12,
+      "survived": 3,
+      "demonstrably_equivalent": 0,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.8,
+      "report": {
+        "path": "governance/evidence/m-csharp-app.mutation.json",
+        "sha256": "bc47635abd7037345647881c61a18dfd64c69afdc66fc10b2a25927370f272ad",
+        "note": "campaign m-csharp-app"
+      }
+    }
+  },
+  "history": []
+}

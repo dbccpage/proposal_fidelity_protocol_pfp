@@ -1,0 +1,122 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "pfp_lab/core/governor.py",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_lab/core/governor.py",
+      "language": "Python",
+      "sha256": "0c9c74a525c59299ca76978019e105aaae31cc56ea5f5132bad17c2ebf2ea53f"
+    },
+    "contract_urn": "urn:pfp-lab:core:governor:v1",
+    "symbols": [
+      "AssertMove",
+      "CutMove",
+      "Governor",
+      "Move",
+      "MoveKind",
+      "Record",
+      "RetractMove",
+      "Status",
+      "Verdict",
+      "VerifyMove"
+    ],
+    "owned_invariants": [
+      "A refused move changes no state.",
+      "An admitted CUT never raises D (section) or Phi_1 (claims).",
+      "RETRACT restores the exact recorded snapshot."
+    ],
+    "boundaries": [
+      "Moves arrive only through contracts.to_move with admitted values."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "pfp_lab/core/governor.py",
+      "language": "Python",
+      "sha256": "0c9c74a525c59299ca76978019e105aaae31cc56ea5f5132bad17c2ebf2ea53f"
+    },
+    "profile": "Exact",
+    "level": "L4",
+    "level_basis": "The protocol state machine: four moves, fourteen verdict statuses, refusal without state change, snapshot history and retraction, with one handler per move.",
+    "gates": {
+      "G1": "B",
+      "G2": "B",
+      "G3": "C",
+      "G4": "B",
+      "G5": "A"
+    },
+    "basis": {
+      "G1": "AuthorityEffect: None and a unique URN; complete provenance envelope for the ported logic (pfp_lab/core/PROVENANCE.md: source path, git blob, committed SHA-256, last commit, a table of every change); the differential test maps every verdict field back to the unmodified source. Not A: no signed receipt of the source.",
+      "G2": "Exact profile: every number in a verdict is recomputed from Fractions; refused moves leave section, claims and history unchanged (tested); behaviour agrees with the Paper 005 oracle verdict by verdict. Not A: no formal model of the state machine.",
+      "G3": "Every expected failure is a typed exception with a stable code (AdmissionError, BudgetExceededError, UnknownPackError) or a typed verdict; no assert in production code (Ruff S101, AST test) and the whole suite passes under python -O; no bare or broad except (Ruff BLE001/E722). Not B: panic-freedom is tested, not proven.",
+      "G4": "Unit and boundary tests for every branch, negative tests for each refusal, run under pytest and under python -O. Every status has a test; Hypothesis checks monotone descent for both CUT kinds; differential test. Mutation R = 1/1 (see mutation_accounting).",
+      "G5": "Functions are single-purpose; complexity measured per function. Metrics: worst function: cyclomatic 8, cognitive 9, nesting 2; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L4C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/pytest-all.run.json",
+        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pytest-optimized.run.json",
+        "sha256": "ac3d840c58451cd659fce505f20cf43460d3fd7c73f36b19c9a73d01257a23b5",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/mypy-strict.run.json",
+        "sha256": "c3e91ff7afd81aa52b729959ce7f4391c3ff4cae52f5aa352927b3959628cc80",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/ruff-check.run.json",
+        "sha256": "2ef6396146fac24df3de533e029117a816221211e77660704eca50b5cc6863af",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/ruff-format.run.json",
+        "sha256": "c8839377417062190ea553cc1ffd32ebad96f7c8b4ecfb7e9491f9ee03ed27a2",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.run.json",
+        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.json",
+        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/import-linter.run.json",
+        "sha256": "1db645be8b322223d516e7de3be0ed55d654d6cf6a37275240b7ff98f28646eb",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 106,
+      "survived": 0,
+      "demonstrably_equivalent": 6,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 1.0,
+      "report": {
+        "path": "governance/evidence/m-core-governor.mutation.json",
+        "sha256": "7917bb9188f12dd764c51cb18d3b022b233417bcc16f730a274c8b2ad252a729",
+        "note": "campaign m-core-governor"
+      }
+    }
+  },
+  "history": []
+}

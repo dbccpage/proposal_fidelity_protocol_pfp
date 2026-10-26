@@ -1,0 +1,120 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Every refusal the governor can give, each leaving the state unchanged",
+  "vertices": [
+    "a",
+    "b",
+    "c"
+  ],
+  "edges": [
+    {
+      "source": "a",
+      "target": "b",
+      "weight": 1
+    },
+    {
+      "source": "b",
+      "target": "c",
+      "weight": 2
+    },
+    {
+      "source": "c",
+      "target": "a",
+      "weight": 3
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "a",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "z",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "b",
+      "target": "a",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "b",
+      "value": "7"
+    },
+    {
+      "move": "ASSERT",
+      "source": "b",
+      "target": "c",
+      "value": "9",
+      "enforce_monotonicity": true
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "q": "1"
+      }
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "a": "0",
+        "b": "-5"
+      }
+    },
+    {
+      "move": "CUT",
+      "claims": [
+        {
+          "source": "a",
+          "target": "b",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "move": "CUT"
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "a": "0"
+      },
+      "claims": [
+        {
+          "source": "a",
+          "target": "b",
+          "value": "0"
+        },
+        {
+          "source": "b",
+          "target": "c",
+          "value": "0"
+        },
+        {
+          "source": "c",
+          "target": "a",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:a,c"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "NOT_AN_OBLIGATION"
+    },
+    {
+      "move": "RETRACT",
+      "target_step_id": "never_ran"
+    }
+  ]
+}

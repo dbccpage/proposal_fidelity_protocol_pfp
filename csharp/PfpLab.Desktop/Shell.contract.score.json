@@ -1,0 +1,97 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "csharp/PfpLab.Desktop/Shell.cs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Desktop/Shell.cs",
+      "language": "C#",
+      "sha256": "01e8a6a7003d2bcfc718c5177a21c16d6b2b7c347bc2ddc72e5be31e86e0ba8b"
+    },
+    "contract_urn": "urn:pfp-lab:csharp:desktop:shell:v1",
+    "symbols": [
+      "App",
+      "MainWindow"
+    ],
+    "owned_invariants": [
+      "The core process is disposed on exit."
+    ],
+    "boundaries": [
+      "No protocol logic."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Desktop/Shell.cs",
+      "language": "C#",
+      "sha256": "01e8a6a7003d2bcfc718c5177a21c16d6b2b7c347bc2ddc72e5be31e86e0ba8b"
+    },
+    "profile": "Non-Numeric",
+    "level": "L4",
+    "level_basis": "Application shell: owns the core process for the app's lifetime, fail-closed unhandled-exception handler, window wiring with cancellation on close.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "D",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
+      "G2": "Startup failure to find Python is reported and the app exits; closing cancels pending work.",
+      "G3": "Typed failures: every core failure becomes CoreException with a CoreErrorKind (RULE_CS_002 checks run after deserialisation; no null-forgiving operator in runtime code, enforced by a scan); async methods take and forward CancellationToken (CA2016 as error); disposables are disposed (CA2000/CA1816 as error). Not B: panic-freedom is tested, not proven.",
+      "G4": "Window wiring (dialogs, selection events, the unhandled-exception handler) has no automated UI test; the app was started and its window captured once by hand. Its mutants survive, so G4 is D. Mutation R = 0/1 (see mutation_accounting).",
+      "G5": "Cyclomatic complexity from lizard and CA1502 (threshold 10, error at build); nesting from the brace estimate. Cognitive complexity is not measured for C#, so A is not claimed. Metrics: worst function: cyclomatic 3, cognitive None, nesting 1; metrics ceiling A+."
+    },
+    "composite_grade": "D",
+    "score_token": "L4D",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/dotnet-build.run.json",
+        "sha256": "c1e96cfed01989efe39a640925fc139be65d4e0ef1b01fb8c68bef90df6644c2",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/csharp-tests.run.json",
+        "sha256": "697207bf8bd01d4a07c4ede2c406c360de471c2b375db7cba891865f7e785ab9",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/pytest-all.run.json",
+        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.run.json",
+        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.json",
+        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": {
+      "killed": 0,
+      "survived": 8,
+      "demonstrably_equivalent": 1,
+      "invalid": 0,
+      "inconclusive": 0,
+      "unrun": 0,
+      "conservative_ratio": 0.0,
+      "report": {
+        "path": "governance/evidence/m-csharp-app.mutation.json",
+        "sha256": "bc47635abd7037345647881c61a18dfd64c69afdc66fc10b2a25927370f272ad",
+        "note": "campaign m-csharp-app"
+      }
+    }
+  },
+  "history": []
+}

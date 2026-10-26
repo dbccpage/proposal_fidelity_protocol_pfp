@@ -1,0 +1,76 @@
+{
+  "schema_version": "pfp.contract-score.v1",
+  "AuthorityEffect": "None",
+  "artifact": "csharp/PfpLab.Tests/Harness.cs",
+  "contract": {
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Tests/Harness.cs",
+      "language": "C#",
+      "sha256": "abcf50c1aa32905f9367d39a682070a77ace3ed4536435c433a4f9dca226142a"
+    },
+    "contract_urn": "urn:pfp-lab:csharp:tests:harness:v1",
+    "symbols": [],
+    "owned_invariants": [
+      "The tests pass against the current sources."
+    ],
+    "boundaries": [
+      "Test code; support category 'test' (L2D floor, pending maintainer approval)."
+    ]
+  },
+  "score": {
+    "schema_version": "2.0.0",
+    "AuthorityEffect": "None",
+    "artifact": {
+      "path": "csharp/PfpLab.Tests/Harness.cs",
+      "language": "C#",
+      "sha256": "abcf50c1aa32905f9367d39a682070a77ace3ed4536435c433a4f9dca226142a"
+    },
+    "profile": "Non-Numeric",
+    "level": "L2",
+    "level_basis": "Minimal runner: named async tests, checks, exit code 0 or 3.",
+    "gates": {
+      "G1": "C",
+      "G2": "C",
+      "G3": "C",
+      "G4": "C",
+      "G5": "B"
+    },
+    "basis": {
+      "G1": "Header declares AuthorityEffect: None and a unique contract URN; the module docstring states what is tested.",
+      "G2": "Expected values have an independent basis (Paper 005 guide numbers, hand-worked defects, the unmodified oracle, the rubric's calibration example) rather than being recomputed by the code under test.",
+      "G3": "Tests clean up temporary files and processes; no test depends on network access.",
+      "G4": "The suite passes, and its sensitivity is measured by the mutation campaigns of the modules it covers.",
+      "G5": "Measured with lizard and the brace estimate; cognitive complexity not measured for C#, so A is not claimed. Metrics: worst function: cyclomatic 6, cognitive None, nesting 1; metrics ceiling A+."
+    },
+    "composite_grade": "C",
+    "score_token": "L2C",
+    "is_complete": true,
+    "grade_ceiling": "A",
+    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evidence": [
+      {
+        "path": "governance/evidence/dotnet-build.run.json",
+        "sha256": "c1e96cfed01989efe39a640925fc139be65d4e0ef1b01fb8c68bef90df6644c2",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/csharp-tests.run.json",
+        "sha256": "697207bf8bd01d4a07c4ede2c406c360de471c2b375db7cba891865f7e785ab9",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.run.json",
+        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "note": ""
+      },
+      {
+        "path": "governance/evidence/metrics.json",
+        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "note": ""
+      }
+    ],
+    "mutation_accounting": null
+  },
+  "history": []
+}

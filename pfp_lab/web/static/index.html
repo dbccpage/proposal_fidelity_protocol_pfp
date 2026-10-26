@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PFP Lab</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <h1>PFP Lab</h1>
+      <span id="version" class="muted"></span>
+    </div>
+    <div class="controls">
+      <label for="pack">Pack</label>
+      <select id="pack" aria-label="Built-in scenario pack"></select>
+      <button id="run" class="primary" type="button">Run</button>
+      <button id="download" type="button" disabled>Download receipt</button>
+      <label class="file">Verify a receipt<input id="upload" type="file" accept=".json,application/json"></label>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" role="status" hidden></div>
+
+  <main class="layout">
+    <section class="panel editor">
+      <div class="panel-head">
+        <h2>Scenario</h2>
+        <div class="templates" aria-label="Insert a move">
+          <button type="button" data-move="ASSERT">+ ASSERT</button>
+          <button type="button" data-move="CUT">+ CUT</button>
+          <button type="button" data-move="VERIFY">+ VERIFY</button>
+          <button type="button" data-move="RETRACT">+ RETRACT</button>
+        </div>
+      </div>
+      <textarea id="scenario" spellcheck="false" aria-label="Scenario JSON"></textarea>
+      <p class="hint">Rationals are strings: <code>"3"</code>, <code>"-2"</code>, <code>"3/2"</code>.
+        Every number in the results is recomputed by the core; nothing the proposer says is trusted.</p>
+    </section>
+
+    <section class="panel results">
+      <div class="cards">
+        <div class="card"><span class="label">Final defect D(s)</span><span id="defect" class="value">–</span></div>
+        <div class="card"><span class="label">Obstruction Φ₁</span><span id="obstruction" class="value">–</span></div>
+        <div class="card"><span class="label">Admitted</span><span id="admitted" class="value">–</span></div>
+      </div>
+      <div class="figures">
+        <figure>
+          <figcaption>Graph and final claims</figcaption>
+          <svg id="graph" viewBox="0 0 320 260" role="img" aria-label="Constraint graph"></svg>
+        </figure>
+        <figure>
+          <figcaption>Defect after each step</figcaption>
+          <svg id="chart" viewBox="0 0 320 260" role="img" aria-label="Defect by step"></svg>
+        </figure>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Step</th><th>Move</th><th>Status</th><th>Before</th><th>After</th><th>Details</th></tr></thead>
+          <tbody id="trace"></tbody>
+        </table>
+      </div>
+      <p id="digest" class="muted mono"></p>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

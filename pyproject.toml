@@ -1,0 +1,93 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pfp-lab"
+version = "0.1.0"
+description = "PFP Lab: run Proposal Fidelity Protocol scenarios and check their receipts."
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+dependencies = [
+    "pydantic==2.13.5",
+]
+
+[project.optional-dependencies]
+web = [
+    "fastapi==0.128.0",
+    "uvicorn==0.38.0",
+]
+dev = [
+    "complexipy==8.2.0",
+    "fastapi==0.128.0",
+    "httpx==0.28.1",
+    "hypothesis==6.170.12",
+    "import-linter==2.15",
+    "lizard==1.24.3",
+    "mypy==2.4.0",
+    "pytest==9.1.1",
+    "ruff==0.17.2",
+    "uvicorn==0.38.0",
+]
+
+[project.scripts]
+pfp-lab = "pfp_lab.cli.main:entry"
+pfp-lab-web = "pfp_lab.web.app:entry"
+
+[tool.setuptools.packages.find]
+include = ["pfp_lab*"]
+
+[tool.setuptools.package-data]
+"pfp_lab.web" = ["static/*"]
+"pfp_lab.core" = ["packs/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["pfp_lab/tests", "governance/tools/tests"]
+addopts = "-p no:cacheprovider"
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+files = ["pfp_lab", "governance/tools"]
+
+[[tool.mypy.overrides]]
+module = ["pfp_lab.tests.*", "governance.tools.tests.*"]
+# Tests compare Fraction results with int literals on purpose (Fraction(3) == 3).
+disable_error_code = ["comparison-overlap"]
+
+[[tool.mypy.overrides]]
+module = ["lizard"]
+ignore_missing_imports = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "S", "BLE", "UP", "SIM", "RET", "PL", "I", "N"]
+ignore = ["PLR2004", "PLR0913", "PLR0917"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101", "S603", "S607", "S104", "S105", "S106", "PLC0415", "PLR0402"]
+
+[tool.importlinter]
+root_packages = ["pfp_lab"]
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Core depends on nothing outside the standard library and Pydantic"
+type = "forbidden"
+source_modules = ["pfp_lab.core"]
+forbidden_modules = ["pfp_lab.cli", "pfp_lab.web", "pfp_lab.packs", "fastapi", "uvicorn"]
+allow_indirect_imports = false
+
+[[tool.importlinter.contracts]]
+name = "Front ends do not import each other"
+type = "independence"
+modules = ["pfp_lab.cli", "pfp_lab.web"]
