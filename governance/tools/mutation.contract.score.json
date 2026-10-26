@@ -69,41 +69,41 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-10-26T22:27:35Z",
+    "evaluation_timestamp": "2026-10-26T22:47:20Z",
     "evidence": [
       {
         "path": "governance/evidence/pytest-all.run.json",
-        "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+        "sha256": "3e1f44bdb70c51fbaed798740d4641b9478bcdc00c5f01cee31436c5e48e32f8",
         "note": ""
       },
       {
         "path": "governance/evidence/pytest-optimized.run.json",
-        "sha256": "ac3d840c58451cd659fce505f20cf43460d3fd7c73f36b19c9a73d01257a23b5",
+        "sha256": "fc692d45ba8d3c898638723113bcba20eda7cbf02aaee3ebc6c3d7809c2d304e",
         "note": ""
       },
       {
         "path": "governance/evidence/mypy-strict.run.json",
-        "sha256": "c3e91ff7afd81aa52b729959ce7f4391c3ff4cae52f5aa352927b3959628cc80",
+        "sha256": "76319884403a88bf08bb4541be9145d00a3e13d1164afb96c03686ae4ca9de69",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-check.run.json",
-        "sha256": "2ef6396146fac24df3de533e029117a816221211e77660704eca50b5cc6863af",
+        "sha256": "8431471010b65a2ab6063e66b031ce4dbfcac4218d1fbd2b644b129b422af629",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-format.run.json",
-        "sha256": "c8839377417062190ea553cc1ffd32ebad96f7c8b4ecfb7e9491f9ee03ed27a2",
+        "sha256": "7a94a9f92dbd0147adc07d0768e9eabe1887cf159f70bfa82ebc64ef10f21990",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.run.json",
-        "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+        "sha256": "27f9ba71f92251771816c868d43bdcc26964ef3cd1136486459bd30b67db303e",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.json",
-        "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+        "sha256": "f04129f0407bfbff610b3b910c41720ad9f949eed5db0b1c5540c06449f9e4d4",
         "note": ""
       }
     ],
@@ -122,5 +122,129 @@
       }
     }
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-10-26T22:47:25.260173Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/mutation.py",
+          "language": "Python",
+          "sha256": "a02df3eb74008674996623537f0975a973bf77c8336d851e96cc32d5a709a9bc"
+        },
+        "contract_urn": "urn:pfp-governance:mutation:v1",
+        "symbols": [
+          "Campaign",
+          "LexicalSite",
+          "Outcome",
+          "Result",
+          "Site",
+          "build_parser",
+          "build_report",
+          "classify",
+          "compiles",
+          "conservative_ratio",
+          "lexical_mutant",
+          "lexical_sites",
+          "load_equivalents",
+          "main",
+          "mask",
+          "mutant",
+          "recover",
+          "sites",
+          "split_command",
+          "summarize"
+        ],
+        "owned_invariants": [
+          "Original bytes are restored after every mutant and on any exit.",
+          "R = killed / (killed + survived + inconclusive + unrun)."
+        ],
+        "boundaries": [
+          "Mutates files in place in the directory it is given; run it in a copy to work in parallel."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/mutation.py",
+          "language": "Python",
+          "sha256": "a02df3eb74008674996623537f0975a973bf77c8336d851e96cc32d5a709a9bc"
+        },
+        "profile": "Non-Numeric",
+        "level": "L4",
+        "level_basis": "Mutation campaigns with honest six-outcome accounting for two languages (AST mutants for Python, lexical for C#), a recovery journal, a fresh bytecode cache per campaign, configurable exit-code semantics, and justified, hash-bound equivalents.",
+        "gates": {
+          "G1": "C",
+          "G2": "B",
+          "G3": "C",
+          "G4": "B",
+          "G5": "B"
+        },
+        "basis": {
+          "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
+          "G2": "Non-Numeric profile: inputs are admitted by strict Pydantic models before use (RULE_PY_001) and outputs are typed; behaviour matches the documented contract in the module docstring and README. R is computed exactly as SCORING.md 3.4 defines it; timeouts are never kills; an empty campaign reports null.",
+          "G3": "Every expected failure is a typed exception with a stable code (AdmissionError, BudgetExceededError, UnknownPackError) or a typed verdict; no assert in production code (Ruff S101, AST test) and the whole suite passes under python -O; no bare or broad except (Ruff BLE001/E722). Not B: panic-freedom is tested, not proven.",
+          "G4": "Unit and boundary tests for every branch, negative tests for each refusal, run under pytest and under python -O. Every operator, outcome, the journal recovery path, the budget and both runners are tested on a throwaway project. Mutation R = 154/157 (see mutation_accounting).",
+          "G5": "Functions are single-purpose; complexity measured per function. Metrics: worst function: cyclomatic 12, cognitive 13, nesting 3; metrics ceiling B."
+        },
+        "composite_grade": "C",
+        "score_token": "L4C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-10-26T22:27:35Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pytest-all.run.json",
+            "sha256": "00b1e1996811913d320840b9eaab996555d4f52dc3336a69998e485b7847f1fb",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/pytest-optimized.run.json",
+            "sha256": "ac3d840c58451cd659fce505f20cf43460d3fd7c73f36b19c9a73d01257a23b5",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/mypy-strict.run.json",
+            "sha256": "c3e91ff7afd81aa52b729959ce7f4391c3ff4cae52f5aa352927b3959628cc80",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-check.run.json",
+            "sha256": "2ef6396146fac24df3de533e029117a816221211e77660704eca50b5cc6863af",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-format.run.json",
+            "sha256": "c8839377417062190ea553cc1ffd32ebad96f7c8b4ecfb7e9491f9ee03ed27a2",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.run.json",
+            "sha256": "31daaef8bf4cb6d150cac3ced8f29cd2297d9a482988cfe7d87acf53bfdf0722",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.json",
+            "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
+            "note": ""
+          }
+        ],
+        "mutation_accounting": {
+          "killed": 154,
+          "survived": 3,
+          "demonstrably_equivalent": 4,
+          "invalid": 0,
+          "inconclusive": 0,
+          "unrun": 0,
+          "conservative_ratio": 0.9808917197452229,
+          "report": {
+            "path": "governance/evidence/m-gov-mutation.mutation.json",
+            "sha256": "8bb62d4c526927b5ede30eb9247e2c2210031a38f85efbd852de486a0dbc1ede",
+            "note": "campaign m-gov-mutation"
+          }
+        }
+      }
+    }
+  ]
 }

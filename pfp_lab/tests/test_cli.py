@@ -15,7 +15,7 @@ from pathlib import Path
 import pytest
 
 from pfp_lab.cli.main import Exit, main
-from pfp_lab.core.contracts import CORE_VERSION, MAX_JSON_BYTES
+from pfp_lab.core.contracts import CORE_VERSION, MAX_JSON_BYTES, PACK_IDS
 
 
 def call(*argv: str) -> tuple[int, str, str]:
@@ -66,7 +66,7 @@ def test_packs_listing() -> None:
     code, out, _ = call("packs")
     assert code == Exit.OK
     assert out.splitlines()[0].startswith("paper-005-worked-session       8 moves  Paper 005")
-    assert len(out.splitlines()) == 4
+    assert len(out.splitlines()) == len(PACK_IDS)
 
 
 def test_admission_failures(tmp_path: Path) -> None:
