@@ -1,0 +1,142 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.coda.gbqnf
+  name: Generalized Boundary-Quotient Normal Form
+  short_name: GBQNF
+  version: v0
+  status: draft
+  family: change
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - operad_morphism
+  - pipeline_state
+  - transformation_envelope
+  - boundary_relvar
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: unclassified state drift, silent non-commuting transformations, or uncertified
+    local patching without coboundary exactness
+  preserves_invariant: every state mutation or operad morphism T induces a computable defect
+    cochain omega in C^1; runtime incremental repair preserves declared semantics if and only
+    if omega is an exact coboundary (omega = d^0 alpha) relative to the declared repair model
+  protected_skeleton:
+  - c0_potential_space
+  - c1_defect_space
+  - c2_closure_space
+  - d0_coboundary_operator
+  - d1_closure_operator
+  - quotient_space_q1
+  - persistent_residual_register
+  erased_structure: []
+  non_claims:
+  - does not guarantee global multi-master replica convergence without explicit consensus
+  - does not claim that every defect is repairable; non-exact defects terminalize loudly
+  - exactness applies relative to the declared defect adapter and repair action; for non-invertible
+    reductions, sound incremental maintenance requires that declared retained state and update
+    witnesses suffice for the update
+  - 'does not imply authorization or authority minting (AuthorityEffect: None)'
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: >
+    On a declared cochain complex, every discrete state transition induces a defect
+    cochain omega in C^1. Incremental repair is mathematically eligible if and only if
+    omega is an exact coboundary (omega = d^0 alpha) for a certified potential alpha in C^0.
+    Closed non-exact defects are recorded as persistent residuals in H^1, while closure
+    failures (d^1 omega != 0) abort execution.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_state_agreement_not_a_relational_join
+    anomaly_exclusion: a state patch whose defect is not an exact coboundary
+    lossless_join:
+      status: exact_repair_agrees_with_recomputation
+      statement: an exact defect omega = d0 alpha repairs the declared state; a non-exact defect
+        does not
+    dependency_preservation:
+      status: nilpotence_retained
+      statement: d1 composed with d0 remains zero on the declared complex
+    syntactic_decision:
+      status: transition_certificate
+      statement: the route is computed from the declared operators and the before and after
+        images
+declarations_required:
+- source_state
+- target_state
+- transition_operator
+- cochain_complex
+- terminal_routes
+evidence_required:
+- mutation_event_kind
+- before_image
+- after_image
+- defect_cochain_omega
+- coboundary_image_membership
+validation_criteria:
+- transition boundary is declared before runtime execution
+- Stokes nilpotence d1 . d0 == 0 is verified on the underlying complex
+- defect omega is computed directly from before/after evidence
+- exact repair is mathematically eligible under the declared repair model if and only if
+  [omega] == [0] in Q1 = C1 / im(d0), equivalently omega = d0(alpha) for a certified potential
+  alpha in C0
+- closed non-exact defects (d1 omega == 0, [omega] != 0 in H1) are recorded as persistent
+  residuals in Cat_Res and escalated or recomputed
+- closure failure (d1 omega != 0) aborts and terminalizes loudly as Refuse or ClosureFailure
+proof_obligations:
+- id: gbqnf.stokes_nilpotence_identity
+  status: upstream_theorem
+  ref: 19L57G1
+  section: lean4/Derivation/BoundaryCancellation.lean
+- id: gbqnf.coboundary_repair_soundness
+  status: upstream_theorem
+  ref: coda_all_universe/mssn_sn_tower/lean/normal_forms_core.lean
+  statement: An exact defect (omega = d0 alpha) preserves target state invariants under incremental
+    repair
+terminal_routes:
+- Preserve
+- Repair
+- Invalidate
+- Recompute
+- Escalate
+- Refuse
+- ClosureFailure
+terminal_route_map:
+  Preserve: Preserve
+  Repair: Repair
+  Invalidate: Invalidate
+  Recompute: Recompute
+  Escalate: Escalate
+  Refuse: Refuse
+  ClosureFailure: ClosureFailure
+certification:
+  certificate_required: true
+  certificate_kind: coboundary_repair_certificate
+  obstruction_class_required: true
+  loss_ledger_required: false
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: defect cochain fails closure d1(omega) != 0
+  diagnosis: non-closed transformation defect, boundary inconsistency
+  terminal: ClosureFailure
+- symptom: defect cochain closed but non-exact [omega] != 0
+  diagnosis: topological obstruction, incremental repair sound only via recomputation
+  terminal: Recompute
+- symptom: state repair attempted without exact coboundary potential
+  diagnosis: uncertified patching attempt
+  terminal: Refuse
+examples:
+- ref: coda_all_universe/mssn_sn_tower/contracts/contract.change.bqnf.yaml
+  section: §3.2
+references:
+- coda_all_universe/mssn_sn_tower/contracts/contract.change.bqnf.yaml
+- ./nf.change.bqnf.yaml
+- 19L57G1

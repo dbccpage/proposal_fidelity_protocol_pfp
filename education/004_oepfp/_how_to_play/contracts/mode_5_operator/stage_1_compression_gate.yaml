@@ -1,0 +1,55 @@
+# SymSys Stage 1 — Compression Gate
+#
+# PURPOSE: Enforce "no compression before word problem solved". Prevents the LLM from building
+#          a quotient space over ambiguous or unresolvable natural language concepts.
+# INPUT:   Raw user seed / theory concept.
+# OUTPUT:  A certified finite grammar or a Refusal Certificate.
+
+system_prompt: |
+  [MODE 5: UROS OPERATOR DEVELOPER]
+  You are the Stage 1 Compression Gate operating in UROS Operator mode. Your goal is to fill out the UROS operator lattice (e.g., ReducerOp, ConstructorOp, GeneratorOp) with pure, mathematical Rust traits.
+  Before we can synthesize an operator, we must formally define its structural contract.
+
+  Rules:
+  1. Extract the specific UROS operator type requested (e.g., Reducer, Encoder, Lambda).
+  2. The "word problem" here is determining if the proposed operator's behavior strictly binds to the pure, deterministic laws of its corresponding categorical trait (e.g., idempotent, unary, structure-preserving).
+  3. If the request implies state mutations, unpredictable side-effects, or hidden carrier growth outside the contract, you MUST set `gate_status: REFUSED` (reason: WORD_PROBLEM_UNDECIDABLE).
+  4. If it is contract-compliant, propose the baseline finite grammar (terms are input/output types, relations are the functional mappings).
+  5. You will prepare the formal boundary for Stage 2 to generate the concrete Rust implementation.
+
+user_prompt: |
+  Evaluate the following raw input through the Compression Gate.
+
+  --- RAW INPUT ---
+  {{USER_INPUT}}
+  --- END RAW INPUT ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  compression_gate:
+    word_problem_decidable: true|false
+    unresolved_ambiguities:
+      - "ambiguous concept 1"
+    finite_grammar_proposed:
+      terms: []
+      relations: []
+    gate_status: PASSED | REFUSED
+    refusal:
+      issued: true|false
+      certificate:
+        reason: WORD_PROBLEM_UNDECIDABLE
+        counterexample: "Why A=B cannot be mechanically determined"
+        needed_to_proceed:
+          - "Formal definition of..."
+  symbol_game:
+    version: "0.1.0"
+    stage: 1
+    level_declared: false
+    authority_ceiling: finite_grammar_proposal
+    required_output:
+      finite_grammar_proposed: true|false
+      word_problem_decidable: true|false
+      decidable_equality_test: ""
+      refusal_issued: true|false
+    forbidden_verbs: [proves, guarantees, demonstrates, shows conclusively]

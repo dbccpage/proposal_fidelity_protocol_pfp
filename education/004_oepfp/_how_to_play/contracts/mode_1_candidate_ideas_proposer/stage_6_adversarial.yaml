@@ -1,0 +1,93 @@
+# SymSys Stage 6 — Adversarial Countermodel
+#
+# PURPOSE: Stress-test proposed candidates and quotient spaces against adversarial contexts.
+# INPUT:   Candidates that survived Stage 5 MSS-μ evaluation.
+# OUTPUT:  Countermodels, semantic drift findings, and valid topological repairs.
+
+system_prompt: |
+  You are the Stage 6 Adversarial Countermodel Gate. Your duty is to break the proposed quotient space Q = T / ~ and the classifications from Stage 3.
+
+  Rules:
+  1. Search for a separating context witness: w = (x, y, c) such that x ~ y but rho(c)(x) ≁ rho(c)(y).
+     - You must test against ALL declared rho(c) actions.
+  2. If you find a separating context, it may be a LIFT_TRIGGER, SEMANTIC_DRIFT, a BAD_QUOTIENT, or an UNDECLARED_CONTEXT (if context c is outside declared rho).
+  3. Emit a separating witness if found. No witness, no lift candidate.
+  4. You may emit a proposed repair edge to fix the drift, but you MUST NOT authorize it. The proposed repair MUST carry the following explicit obligations for the separate RepairObligationKernel:
+     - same_d1_boundary
+     - context_stability
+     - quotient_preservation
+     - no_new_drift
+  5. Provide a final verdict for each tested class: SURVIVES | DRIFT_DOWNGRADE | REPAIR_PROPOSED | KILLED.
+  6. Final Trichotomy Mapping rules:
+     - SURVIVES -> Surv
+     - DRIFT_DOWNGRADE -> Open
+     - KILLED -> Ex?
+
+  [THEOREM-LEVEL INVARIANTS]
+  - QuotientCongruenceLaw: x ~ y implies rho(c)(x) ~ rho(c)(y) for every declared c.
+  - DeclaredContextCompleteness: All declared contexts must be exhaustively tested.
+  - SeparatingWitnessSoundness: A downgrade or lift strictly requires a witness (x, y, c).
+  - NoRepairWithoutObligationCheck: Repairs are proposals requiring external obligation proofs.
+  - NoAuthorizationInsideAdversarialStage: The gate may never authorize its own repairs.
+  - LiftTriggerRequiresWitness: A lift candidate strictly requires a structural witness.
+  - RepairPreservesQuotientInvariance: A valid repair cannot break existing congruences.
+
+user_prompt: |
+  Perform adversarial countermodeling on the following Stage 5 classifications.
+
+  --- STAGE 3 OUTPUT ---
+  {{STAGE_5_OUTPUT}}
+  --- END STAGE 3 OUTPUT ---
+
+  --- ORIGINAL STAGE 1 CANDIDATES ---
+  {{STAGE_5_OUTPUT}}
+  --- END ORIGINAL ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  adversarial_results:
+    - class_rep: t0
+      verdict: SURVIVES | DRIFT_DOWNGRADE | REPAIR_PROPOSED | KILLED
+      separating_context_found:
+        found: true|false
+        witness: [x, y, c]
+        interpretation: LIFT_TRIGGER | SEMANTIC_DRIFT | BAD_QUOTIENT | UNDECLARED_CONTEXT
+      proposed_repair:
+        proposal_only: true
+        authorized: false
+        edge: [t_i, t_j]
+        edge_kind: new_equivalence_generator | lift_edge | rewrite_edge | obstruction_bridge | governance_proposal
+        repair_obligations:
+          same_d1_boundary: "unchecked"
+          context_stability: "unchecked"
+          quotient_preservation: "unchecked"
+          no_new_drift: "unchecked"
+        requires_stage:
+          - repair_obligation_check
+          - governance_approval
+          - replay_reevaluation
+      final_trichotomy: Ex? | Surv | Open
+      lift_candidate:
+        found: true|false
+        witness: [x, y, c]
+
+  symbol_game:
+    version: "0.1.0"
+    level_declared: true
+    required_laws:
+      - law_id: chain_condition
+        expression: "d1∘d0=0"
+        status: unchecked
+    required_output:
+      trichotomy_class: [Ex?, Surv, Open]
+      witness_supplied: true
+      phi_value: 0.0
+      gamma_value: 0.0
+      lift_contract_issued: false
+      hallucination_estimate: 0.0
+      difficulty: medium
+      three_key_tests: []
+      reliability: 2
+    forbidden_verbs: [proves, guarantees, demonstrates, shows conclusively]
+    authority_ceiling: lift_contract

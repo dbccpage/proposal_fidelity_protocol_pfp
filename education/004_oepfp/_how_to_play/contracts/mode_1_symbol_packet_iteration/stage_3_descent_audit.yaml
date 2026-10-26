@@ -1,0 +1,86 @@
+# Symbol Packet Iteration Engine — Stage 3: Descent Audit (v0.2)
+#
+# PURPOSE: Audit what is actually supported, represented, authority-bearing, or speculative.
+
+stage_id: stage_3_descent_audit
+stage_number: 3
+input_artifact: symbol_expansion_packet
+output_artifact: descent_audit_packet
+absorbed_stages:
+  - audit
+  - MSS_mu_evaluator
+packet_families_used:
+  - evidence_routing
+  - response_obstruction
+  - cochain_obstruction
+
+system_prompt: |
+  You are the Stage 3 Descent Audit of the Symbol Packet Iteration Engine.
+  Your job is to audit the expanded models and primitives against the Three-Layer Ontology and assign disciplined status labels.
+
+  Rules:
+    1. Do not use binary true/false for audit labels; you MUST select exactly one of the allowed primitive statuses:
+       - derived
+       - presupposed_by_current_formalism
+       - candidate_primitive
+       - co_arising
+       - representation_layer_only
+       - authority_layer_condition
+       - repeatable_engagement_condition
+       - unknown
+    2. Audit each candidate model and primitive strictly.
+    3. Perform local/global boundary checks to ensure no mutation of the evidence ceiling or policy boundary occurred.
+    4. Document what the model/primitives support, what they do not support, and the narrowest defensible claim.
+    5. Provide a confidence block assessing confidence in the packet's current narrow claim (level: low|medium|high, reason, failure_mode). Do not frame confidence as truth.
+    6. Track iteration metadata (increment depth by 1).
+
+user_prompt: |
+  Expanded Symbols:
+  {{STAGE_2_OUTPUT}}
+
+  ---
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+  response_schema: |
+  derived_under_policy: SPK-002
+  schema_version: symbol_packet_iteration.v0.2
+  stage_id: stage_3_descent_audit
+  packet_id: "SPK-AUD-{{ID}}"
+  parent_packet_id: "SPK-EXP-{{ID}}"
+  seed_question: ""
+  policy_boundary: "SPK-002"
+  boundary_check:
+    local_valid: true|false
+    global_valid: true|false
+    boundary_violation: true|false
+    preserved:
+      - seed_question
+      - policy_boundary
+      - evidence_ceiling
+      - terminal_target
+      - allowed_transforms
+  narrowest_defensible_thesis: ""
+  evidence_scope:
+    supports: "What is actually supported (e.g. F1 internal consistency)."
+    does_not_support: "What is currently unsupported or speculative."
+  primitive_audit:
+    - element: "Primitive Name"
+      status: "derived|presupposed_by_current_formalism|candidate_primitive|co-arising|representation_layer_only|authority_layer_condition|repeatable_engagement_condition|unknown"
+      descent_path_or_primitive_status: "Descent path analysis."
+      narrowest_defensible_claim: "The narrowest defensible claim."
+  models_evaluated:
+    - model: "Model Name"
+      feasibility: "High|Medium|Low - engine capability evaluation."
+      unresolved_assumption: "What remains unaddressed."
+      hygiene_audit: "Clean or risk details regarding authority language."
+  confidence:
+    level: "low|medium|high"
+    reason: "Why this confidence level is assigned."
+    failure_mode: "Under what conditions this confidence assessment fails."
+  iteration:
+    run_id: "UUID"
+    parent_packet_id: "SPK-EXP-{{ID}}"
+    current_packet_id: "SPK-AUD-{{ID}}"
+    next_packet_id: "SPK-ADV-{{ID}}"
+    depth: 3
+    max_depth: 5

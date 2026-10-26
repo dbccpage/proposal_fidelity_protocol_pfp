@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="100%" height="100%">
+  <defs>
+    <filter id="shadow-lp" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow-lp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="480" fill="#f8fafc" rx="12"/>
+  <rect x="20" y="20" width="920" height="440" fill="none" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+
+  <!-- Title -->
+  <text x="480" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">
+    Strict Lyapunov Descent: Defect Trajectory Across 7 Scenarios
+  </text>
+  <text x="480" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">
+    Discrete Host Governor Enforces Monotonic Non-Increase on Defect Φ₁ with Rollback Protection
+  </text>
+
+  <!-- Chart Area -->
+  <!-- Axes: X-axis at Y=380, Y-axis at X=120 -->
+  <g transform="translate(40, 20)">
+    <!-- Y-axis gridlines -->
+    <!-- Y = 10 (value 10): 380 - 10*26 = 120 -->
+    <line x1="120" y1="120" x2="840" y2="120" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="105" y="125" font-family="monospace" font-size="11" fill="#94a3b8" text-anchor="end">10</text>
+
+    <!-- Y = 6 (value 6): 380 - 6*26 = 224 -->
+    <line x1="120" y1="224" x2="840" y2="224" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="105" y="229" font-family="monospace" font-size="11" fill="#94a3b8" text-anchor="end">6</text>
+
+    <!-- Y = 2 (value 2): 380 - 2*26 = 328 -->
+    <line x1="120" y1="328" x2="840" y2="328" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="105" y="333" font-family="monospace" font-size="11" fill="#94a3b8" text-anchor="end">2</text>
+
+    <!-- Y = 0 (value 0): 380 -->
+    <line x1="120" y1="380" x2="840" y2="380" stroke="#64748b" stroke-width="2"/>
+    <text x="105" y="384" font-family="monospace" font-size="11" fill="#475569" text-anchor="end">0</text>
+
+    <!-- X Axis Line -->
+    <line x1="120" y1="380" x2="840" y2="380" stroke="#64748b" stroke-width="2"/>
+    <!-- Y Axis Line -->
+    <line x1="120" y1="90" x2="120" y2="380" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Axis Labels -->
+    <text x="120" y="80" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">
+      Defect Φ₁
+    </text>
+    <text x="840" y="415" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#334155" text-anchor="end">
+      Turn Sequence
+    </text>
+
+    <!-- Trajectory Points:
+         T0: Init (X=160, Y=224, val=6)
+         T1: ASSERT (X=280, Y=224, val=6)
+         T2_bad: Attempted CUT (X=400, Y=120, val=10) -> REJECTED & ROLLED BACK
+         T2_curr: (X=400, Y=224, val=6)
+         T3: Valid CUT (X=520, Y=328, val=2)
+         T4: Exact Chord CUT (X=640, Y=380, val=0)
+         T5: VERIFY (X=760, Y=380, val=0) -> CERTIFIED
+    -->
+
+    <!-- Trajectory Lines (Admitted) -->
+    <!-- T0 -> T1 -->
+    <line x1="160" y1="224" x2="280" y2="224" stroke="#2563eb" stroke-width="3"/>
+    <!-- T1 -> T2_curr -->
+    <line x1="280" y1="224" x2="400" y2="224" stroke="#2563eb" stroke-width="3"/>
+    <!-- T2_curr -> T3 -->
+    <line x1="400" y1="224" x2="520" y2="328" stroke="#16a34a" stroke-width="3"/>
+    <!-- T3 -> T4 -->
+    <line x1="520" y1="328" x2="640" y2="380" stroke="#16a34a" stroke-width="3"/>
+    <!-- T4 -> T5 -->
+    <line x1="640" y1="380" x2="760" y2="380" stroke="#16a34a" stroke-width="3"/>
+
+    <!-- Attempted Non-Monotonic Path (Red Dashed) -->
+    <line x1="280" y1="224" x2="400" y2="120" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/>
+    <line x1="400" y1="120" x2="400" y2="224" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>
+
+    <!-- Point T0: Initial State -->
+    <circle cx="160" cy="224" r="7" fill="#2563eb"/>
+    <text x="160" y="210" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">T0: Init</text>
+    <text x="160" y="400" font-family="system-ui, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Φ₁ = 6</text>
+
+    <!-- Point T1: ASSERT -->
+    <circle cx="280" cy="224" r="7" fill="#2563eb"/>
+    <text x="280" y="210" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">T1: ASSERT</text>
+    <text x="280" y="400" font-family="system-ui, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Invariants</text>
+
+    <!-- Point T2_bad: Attempted CUT -->
+    <circle cx="400" cy="120" r="7" fill="#dc2626"/>
+    <rect x="340" y="85" width="120" height="24" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+    <text x="400" y="101" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#991b1b" text-anchor="middle">
+      CUT (val=7) → Φ₁=10
+    </text>
+    <!-- Rollback annotation -->
+    <text x="450" y="170" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#dc2626">
+      ROLLBACK ↺
+    </text>
+
+    <!-- Point T2_curr: Restored -->
+    <circle cx="400" cy="224" r="6" fill="#64748b"/>
+    <text x="400" y="400" font-family="system-ui, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Restored (6)</text>
+
+    <!-- Point T3: Valid CUT -->
+    <circle cx="520" cy="328" r="7" fill="#16a34a"/>
+    <text x="520" y="315" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#15803d" text-anchor="middle">T3: CUT (-1)</text>
+    <text x="520" y="400" font-family="system-ui, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Φ₁ = 2</text>
+
+    <!-- Point T4: Exact Chord CUT -->
+    <circle cx="640" cy="380" r="7" fill="#16a34a"/>
+    <text x="640" y="365" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#15803d" text-anchor="middle">T4: CUT (-3)</text>
+    <text x="640" y="400" font-family="system-ui, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">Φ₁ = 0</text>
+
+    <!-- Point T5: VERIFY -->
+    <circle cx="760" cy="380" r="9" fill="#16a34a"/>
+    <circle cx="760" cy="380" r="14" fill="none" stroke="#16a34a" stroke-width="2"/>
+    <rect x="705" y="335" width="110" height="26" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="760" y="352" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#14532d" text-anchor="middle">
+      T5: CERTIFIED ✓
+    </text>
+    <text x="760" y="400" font-family="system-ui, sans-serif" font-size="10" fill="#15803d" text-anchor="middle">Terminal Seal</text>
+  </g>
+</svg>

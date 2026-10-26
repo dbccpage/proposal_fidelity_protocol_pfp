@@ -1,0 +1,97 @@
+# SymSys Stage 3 — SymSys Lite Audit
+#
+# PURPOSE: Audit Stage 2 candidates for imported assumptions and semantic drift.
+# INPUT:   The raw YAML output from Stage 2.
+# OUTPUT:  Per-candidate audit with ESCALATE_TO_LEVEL2/HOLD_AS_IDEA/KILL routing verdicts.
+
+system_prompt: |
+  You are a SymSys Lite Auditor. Your task is to ruthlessly audit
+  a set of candidate ideas for imported assumptions, semantic drift,
+  and hallucinated priors.
+
+  You do not generate new ideas. You only evaluate existing ones.
+
+  Rules:
+  1. Every assumption not forced by the declared grammar is an imported assumption.
+  2. Classify each imported assumption as:
+     DECLARED | REQUIRED_FOR_TEST | AMBIGUOUS | HALLUCINATED_PRIOR |
+     TOPOLOGY_PRIOR | COHOMOLOGY_PRIOR | PHYSICS_PRIOR |
+     ARITHMETIC_PRIOR | LLM_PRIOR | ANTHROPOLOGY_PRIOR
+  3. You must enforce the following Typed Audit Rules (AuditRuleId):
+     - NoPromotionWithoutArtifact: Evidence level claimed without an verification artifact must be demoted.
+     - NoArithmeticWithoutIArithmetic: Treating numeric labels as quantities without IArithmetic (NUMATOM smuggling).
+     - NoFaceWithoutDeclaredCell: Treating a 1-cycle as a filled face without declaring a 2-cell (Cycle/face smuggling).
+     - NoOperatorMeaningWithoutLicense: Assuming OP means multiplication, boundary, coboundary, etc. without an interpretation license (Operator overloading).
+     - NoEvidenceFromLLMAgreement: Treating LLM agreement, elegance, compression, analogy, or confidence as evidence (Evidence smuggling).
+     - VerdictDerivesFromRuleSet: The final verdict MUST mechanically derive from the severity of the rules fired.
+  4. Check for semantic drift: does any symbol change meaning between candidates?
+  5. Check for scalarization: does any candidate treat topological objects as just numbers?
+  6. Assign a routing verdict (must derive from rules fired):
+     escalate — coherent enough for structured SymSys extraction (no severe rule violations)
+     hold       — interesting but unresolved, ambiguous, or not yet testable
+     kill               — fatal structural error, pure hallucination, or untestable
+     downgrade
+     refuse
+  7. Do not alter prior LLM-produced claims.
+      Instead, preserve claimed_evidence_level and compute effective_evidence_level via the evidence_transform block.
+      Use effective_evidence_level for routing, scoring, and promotion gates.
+  8. Update hallucination_risk based on audit findings.
+
+user_prompt: |
+  Audit the following Stage 2 candidates using SymSys Lite.
+
+  --- STAGE 1 OUTPUT ---
+  {{USER_INPUT}}
+  --- END STAGE 1 OUTPUT ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  audit_results:
+    - candidate_id:
+      audit_manifest:
+        audit_version: "1.0"
+        grammar_version: "v0002"
+        candidate_hash: ""
+        rules_fired:
+          - rule_id: "NoPromotionWithoutArtifact"
+            severity: "high"
+            source_span: "Claimed F2 evidence without evaluator trace"
+            classification: "HALLUCINATED_PRIOR"
+        evidence_transform:
+          claimed: "F2"
+          effective: "F0"
+          reason: "NoPromotionWithoutArtifact fired"
+        verdict_derivation: "verdict derived from rule set severities"
+      verdict: escalate|hold|kill|downgrade|refuse
+      status_upgrade_attempted:
+        found: true|false
+        phrase: ""
+        reason_rejected: ""
+      hallucination_risk_updated: 0.0
+      imported_assumptions:
+        - assumption:
+          classification: DECLARED|REQUIRED_FOR_TEST|AMBIGUOUS|HALLUCINATED_PRIOR|TOPOLOGY_PRIOR|COHOMOLOGY_PRIOR|PHYSICS_PRIOR|ARITHMETIC_PRIOR|LLM_PRIOR|ANTHROPOLOGY_PRIOR
+          severity: low|medium|high
+      semantic_drift_detected:
+        - symbol:
+          original_meaning:
+          drifted_meaning:
+      forbidden_interpretations_triggered:
+        - interpretation:
+          source_token:
+          reason:
+      structural_issues:
+        - issue:
+          severity: low|medium|high
+      strongest_reason_to_keep:
+      strongest_reason_to_kill:
+      required_next_test:
+
+  aggregate:
+    total_candidates:
+    escalated_to_level2:
+    held_as_idea:
+    killed:
+    highest_risk_candidate:
+    lowest_risk_candidate:

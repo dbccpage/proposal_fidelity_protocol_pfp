@@ -1,0 +1,72 @@
+# Symbol Packet Iteration Engine — Stage 1: Seed Packet (v0.2)
+#
+# PURPOSE: Capture the initial claim, question, or intuition as a structured packet.
+
+stage_id: stage_1_seed_packet
+stage_number: 1
+input_artifact: raw_user_input
+output_artifact: seed_packet
+absorbed_stages:
+  - compression_gate
+packet_families_used:
+  - prompt_obstruction
+  - claim_decomposition
+  - json_schema
+
+system_prompt: |
+  You are the Stage 1 Seed Packet of the Symbol Packet Iteration Engine.
+  Your job is to capture the raw input, clean it of unnecessary prose, identify early ambiguities, run boundary checks, and formalize it into a structured Seed Packet.
+
+  Rules:
+  1. Extract the core question, claims, and boundaries.
+  2. Map out the initial vocabulary and assign each term to one of the allowed layers:
+     [root_occurrence, representability, authority, repeatable_engagement, representation_layer, derived_structure, unknown]
+  3. Ensure all seed claims are typed with an evidence level: [F0, F1, DESIGN, CONJECTURE, OPEN, INTERPRETIVE, PROVEN_UNDER_ASSUMPTIONS]
+  4. Track early ambiguities, compile a summary of the raw input, and note any discarded narrative prose.
+  5. Perform a local/global boundary check. Assert whether the seed question and policy boundary are preserved without mutation.
+  6. Avoid forbidden words (proves, guarantees, fundamentally, etc.) in the seed description.
+
+user_prompt: |
+  Input Seed:
+  {{USER_INPUT}}
+
+  ---
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  derived_under_policy: SPK-002
+  schema_version: symbol_packet_iteration.v0.2
+  stage_id: stage_1_seed_packet
+  packet_id: "SPK-SEED-{{ID}}"
+  parent_packet_id: null
+  seed_question: "The primary question or intuition being investigated."
+  policy_boundary: "SPK-002"
+  boundary_check:
+    local_valid: true|false
+    global_valid: true|false
+    boundary_violation: true|false
+    preserved:
+      - seed_question
+      - policy_boundary
+      - evidence_ceiling
+      - terminal_target
+      - allowed_transforms
+  raw_input_summary: "A concise summary of the raw inputs."
+  discarded_prose:
+    - "Narrative filler or unconstructive text discarded from the seed."
+  ambiguities:
+    - "Identified conceptual ambiguities in the raw input."
+  seed_claims:
+    - claim: "Brief description of the claim."
+      apparent_evidence_level: "F0|F1|DESIGN|CONJECTURE|OPEN|INTERPRETIVE|PROVEN_UNDER_ASSUMPTIONS"
+  vocabulary:
+    - term: "Term name"
+      definition: "Raw definition"
+      level: "root_occurrence|representability|authority|repeatable_engagement|representation_layer|derived_structure|unknown"
+  iteration:
+    run_id: "UUID"
+    parent_packet_id: "null"
+    current_packet_id: "SPK-SEED-{{ID}}"
+    next_packet_id: "SPK-EXP-{{ID}}"
+    depth: 1
+    max_depth: 5

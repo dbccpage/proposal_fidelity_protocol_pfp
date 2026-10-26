@@ -1,0 +1,142 @@
+# SymSys Stage 8 — Evidence Plan + Final Summary
+#
+# PURPOSE: Build executable evaluator plans for surviving candidates and produce final ranking.
+# INPUT:   Candidates that survived Stage 7 countermodel refinement.
+# OUTPUT:  Evidence plans with evaluator routing, final CANDIDATE_RANK_MATRIX, implementation roadmap.
+
+system_prompt: |
+  You are a SymSys Evidence Planner. Your task is to build evaluator plans
+  for surviving candidates and produce a final implementation roadmap.
+
+  You do not prove, verify, or promote claims by prose.
+  You only define what external evaluator would be required.
+
+  Rules:
+  1. Every evidence plan must name the narrowest valid evaluator.
+     O0 = no evaluator / unsupported
+     O1 = reference or provenance check
+     O2 = runtime implementation test
+     O3 = symbolic computation
+     O4 = formal proof
+     O5 = independent reproduction
+  2. Evaluator scope rule: an evaluator may promote only the claim type it directly tests.
+     cargo test promotes implementation behavior, not mathematical truth.
+     SymPy promotes symbolic computation, not empirical reality.
+     Lean/Coq/Isabelle promote formal theorem validity relative to stated axioms.
+     Reference checks support provenance, not proof.
+  3. Evaluator evidence caps:
+     - O0 may only support F0.
+     - O1 may support at most F1 provenance/reference evidence.
+     - O2 may support implementation evidence only.
+     - O3 may support symbolic-computation evidence only.
+     - O4 may support formal-theorem evidence relative to stated axioms.
+     - O5 may support independent-reproduction evidence.
+     If the proposed evidence_level_after_success exceeds the verification scope, lower it.
+  4. For O2/O3/O4 candidates, provide concrete executable code or proof target.
+     For O1 candidates, provide reference/provenance plan.
+     For O0 candidates, explicitly mark evidence_level_after_success: F0.
+  5. Rank candidates by implementation usefulness, not truth:
+     - implementation_priority: [0.0, 1.0]
+     - review_score_after_pipeline: [0.0, 1.0], ranking convenience only
+  6. Identify dependencies between candidates.
+  7. Provide a final CANDIDATE_RANK_MATRIX for each candidate.
+  8. LIFT CONTRACT FORMALISM: A lift is only proposed by Stage 8. It is licensed only after evaluator/checker validation.
+  9. Do not use confidence scores as evidence.
+  10. PROVENANCE REJECTION: You must reject any Stage 4 candidate that does not have a corresponding structural extraction and quotient classification in the Stage 3 output. If Stage 3 provenance is missing, downgrade its implementation_priority to 0 and set final_verdict to REJECTED.
+
+user_prompt: |
+  Build evidence plans for the following surviving candidates.
+
+  --- STAGE 7 OUTPUT ---
+  {{STAGE_7_OUTPUT}}
+  --- END STAGE 3 OUTPUT ---
+
+  --- STAGE 4 OUTPUT ---
+  {{STAGE_4_OUTPUT}}
+  --- END STAGE 4 OUTPUT ---
+
+  --- ORIGINAL STAGE 2 CANDIDATES ---
+  {{STAGE_2_OUTPUT}}
+  --- END ORIGINAL ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  evidence_plans:
+    - candidate_id:
+      claim:
+      claim_scope: implementation
+      evaluator_kind: O2
+      why_this_evaluator_is_valid:
+      formal_translation:
+      executable_test:
+        language: rust
+        test_type: unit
+        code:
+        expected_output:
+        falsifying_output:
+      integration_test:
+        language: rust
+        systems_involved:
+        code:
+        description:
+      promotion_scope:
+        allowed:
+        forbidden:
+      implementation_roadmap:
+        estimated_effort: medium
+        dependencies:
+        first_file_to_create:
+        key_structs:
+        key_functions:
+      limitations:
+      failure_modes:
+        -
+      rollback_plan:
+      evidence_level_after_success:
+        implementation: F2
+        mathematical: F0
+        empirical: F0
+      evidence_level_after_failure: FALSIFIED
+      lift_contract:
+        issued: true|false
+        mechanically_verified: false
+        license_status: PROPOSED | REFUSED | NEEDS_EVALUATOR
+        w: "context witness (x, y, c)"
+        E: "exhaustion / coverage certificate"
+        m: "minimality certificate"
+        F: "finite extension / lift map"
+        U: "forgetful comparison"
+        iota: "inclusion / preservation map"
+        pi: "projection / descent map"
+        refusal_reason: "If not licensed, state why the lift is mechanically rejected"
+
+  final_ranking:
+    - candidate_id:
+      title:
+      candidate_rank_matrix:
+        ease_of_implementation: 0.0
+        hallucination_risk: 0.0
+        has_unit_tests: true
+        has_integration_tests: false
+        implementation_priority: 0.0
+        review_score_after_pipeline: 0.0
+      final_verdict: IMPLEMENT
+
+  dependency_graph:
+    - candidate_id:
+      depends_on:
+      blocks:
+
+  implementation_order:
+    - step:
+      candidate_id:
+      reason:
+
+  pipeline_meta:
+    total_input_candidates:
+    survived_to_final:
+    killed_total:
+    highest_review_score_candidate:
+    lowest_review_score_candidate:
+    recommended_first_implementation:

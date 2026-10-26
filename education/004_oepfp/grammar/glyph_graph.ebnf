@@ -1,0 +1,13 @@
+(* glyph-graph-v1: Quiz 11/13 single-glyph graph surface.
+   AuthorityEffect: None. > and < are directions; <> is a separator,
+   NOT a ground packet here. No implied filling without a carrier policy.
+   The longer Quiz 14 notation is a different, unformalized dialect.
+   One vertex or edge per item; no empty items, spaces or implicit paths. *)
+glyph_graph = graph_item, { "<>", graph_item } ;
+graph_item = vertex | edge ;
+edge = vertex, direction, vertex, [ weight_suffix ] ;
+vertex = digit | lower_latin ;
+direction = ">" | "<" ;
+weight_suffix = lower_latin, digit ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+lower_latin = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;

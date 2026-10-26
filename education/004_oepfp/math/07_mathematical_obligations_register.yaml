@@ -1,0 +1,778 @@
+schema_version: omega.symbol-game.math-obligations.v1
+document: symbol_game_mathematical_spine.md
+authority_effect: None
+status_vocabulary:
+  - DEFINITION
+  - PROVED
+  - MECHANIZED
+  - TESTED-FINITE
+  - CONJECTURE
+  - OPEN
+  - IMPLEMENTED
+  - TESTED
+
+audit_2026_10_20:
+  source_pin: c419cc6beb19817065de08a33d3d81f999d6b0ba
+  authority_effect: None
+  summary: >-
+    Statuses were rechecked against the source pin by reading files and running git grep; no
+    cargo, lake or pytest run was made. The anchor document symbol_game_mathematical_spine.md, every
+    cited omega_engine/lean4/... path, omega_engine/crates/... and the omega_engine/research/ooutwire_docs
+    Python modules (mathematical_core.py, dda_core.py, packet_kernel.py, packet_composition.py,
+    interfaces.py, packet_regime.py and their tests) are not found at the pin, and no SG_L0..SG_L10
+    declaration exists in any .lean file. MECHANIZED entries are therefore re-statused. Where a
+    source-visible Rust test in omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs
+    names the obligation, the entry is TESTED-FINITE (source-visible, not run here); where the math
+    notes give a prose proof, PROVED; otherwise OPEN. The prior status is kept on each entry as
+    prior_status_2026_10_18.
+  evidence_path_base: >-
+    Paths under evidence are repository-relative, except the SG-EIS-001 entries, which are relative
+    to omega_engine_education/documentation/004_oepfp/ (lean4/, docs/) and to its math/ folder.
+
+audit_2026_10_22:
+  source_pin: 305b9690f97fc3f5c13e361cfe752a6d5dc7ad8d
+  authority_effect: None
+  summary: >-
+    No status was changed. The five Rust tests named by SG-PD-000, SG-R1-001, SG-EXH-001,
+    SG-EXT-001 and SG-EXT-002 were reopened in
+    omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs and are still
+    present. They were not executed. The status lines still count as 2 PROVED,
+    6 TESTED-FINITE and 30 OPEN.
+
+obligations:
+  - id: SG-PD-000
+    title: Bare Primitive Difference and graph non-determination
+    status: PROVED
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin; the prose proof of SG-L0 is in 01_primitive_difference_and_oesos_laws.md section 1.2; source-visible Rust test omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::primitive_difference_is_nullary (not run in this check)"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::primitive_difference_is_nullary
+      - omega_engine/crates_rs/omega_symbol_game/src/foundation.rs
+    layer: L0
+    obstruction: Existing doctrine often binds endpoints, a carrier, ZeroRel, or a witness to the primitive.
+    current_structure: A nullary marked occurrence serialized as <>.
+    required_result: Keep all endpoint, graph, equality, observer, and metric structure outside L0 and prove the two-graph-expansion countermodel.
+    counterexample: The same L0 reduct admits both an empty Bool graph and a Bool graph with one loop.
+    implementation: IMPLEMENTED - mathematical_core.py supplies a bare PrimitiveDifference without carrier or graph fields.
+    test: TESTED - test_symbol_game_mathematical_core.py covers unit-carrier construction and forbidden endpoint imports.
+    lean: MECHANIZED - SG-L0 binds the nullary witness to two unequal declared graph expansions; axiom receipt is propext only.
+    evidence:
+      - symbol_game_mathematical_spine.md#1-primitive-difference
+      - omega_engine/lean4/shared_kernel/primitive_difference.lean
+    structure_added: none
+    minimality_scope: Model-theoretic independence over the L0 reduct.
+    remaining_gap: The theorem shows graph non-determination, not a canonical arity; choosing a represented-difference model remains FRONTIER_OBSTRUCTION FO-01.
+
+  - id: SG-CTX-001
+    title: Generic executable context without cochain imports
+    status: OPEN
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin; omega_engine/crates_rs/omega_symbol_game/src/foundation.rs exists but its coverage of this obligation was not mapped"
+    layer: L1-L3
+    obstruction: Current contexts often assume a carrier, differential, norm, or cochain complex before an interface requires one.
+    current_structure: Finite state type, named obligations, three-way checks, and licensed partial repairs.
+    required_result: Implement the generic context and exact failed-obligation map with optional specialized mathematics.
+    counterexample: Two contexts share the same failed-obligation set while using incompatible numeric weights.
+    implementation: IMPLEMENTED - mathematical_core.py supplies exact frozen contexts, terms, detector values, repairs, and outcomes; contracts.py remains a specialized legacy path.
+    test: TESTED - test_symbol_game_mathematical_core.py checks declared signatures, exact fractions, immutability, and typed outcomes.
+    lean: TARGET - finite context and obligation-report definitions.
+    evidence:
+      - symbol_game_mathematical_spine.md#3-representationcontext-levels
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/contracts.py
+    structure_added: A declared executable context only.
+    minimality_scope: Smallest data supporting R1, exact obstruction, and refusal.
+    remaining_gap: The implementation landing is not yet wired through every legacy orchestrator caller or mechanized.
+
+  - id: SG-R1-001
+    title: Same-context repair has priority over extension
+    status: PROVED
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin; the prose proof of SG-L1 is in 01_primitive_difference_and_oesos_laws.md section 2.3; source-visible Rust test omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::r1_has_priority_and_r2_requires_positive_checked_exhaustion (not run)"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::r1_has_priority_and_r2_requires_positive_checked_exhaustion
+    layer: L2
+    obstruction: A pipeline may propose a lift while a resolving admitted repair remains reachable.
+    current_structure: OESOS decision rule over a declared reachable-state closure.
+    required_result: Enforce Repair rather than Extend whenever a resolving same-context path exists.
+    counterexample: A one-step exact repair exists while an extension proposer also returns a candidate.
+    implementation: IMPLEMENTED - mathematical_core.py carries exact R1 outcomes; a zero-obstruction repair refuses extension.
+    test: TESTED - test_symbol_game_mathematical_core.py covers zero-obstruction repair, positive exhaustion, unverifiable exhaustion, and forced-extension refusal.
+    lean: MECHANIZED - SG-L1 states R1 priority for the declared exact finite context and a coverage certificate.
+    evidence:
+      - symbol_game_mathematical_spine.md#2-the-two-rule-oesos-law
+      - omega_engine/lean4/ooutwire_ontology/oesos_math_spine.lean
+    structure_added: none
+    minimality_scope: Priority only; no claim of a unique repair selector.
+    remaining_gap: Repair tie policy remains interface-declared; the theorem shows priority, not a unique selector.
+
+  - id: SG-EXH-001
+    title: Structural exhaustion with coverage evidence
+    status: TESTED-FINITE
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin; source-visible Rust test omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::empty_observations_cannot_forge_nonempty_exhaustion (not run in this check)"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::empty_observations_cannot_forge_nonempty_exhaustion
+    layer: L4
+    obstruction: Empty output, one-step search, timeout, or a fixed budget is mistaken for structural exhaustion.
+    current_structure: Failure at every state of the complete reachable-state closure.
+    required_result: Carry a finite coverage certificate or a completeness theorem and retain Unknown for incomplete searches.
+    counterexample: The only resolving repair is omitted from an empty observed list; alternatively it requires two steps after every one-step repair fails.
+    implementation: IMPLEMENTED - mathematical_core.py supplies a typed ExhaustionCertificate binding source, context, order, exact values, and minimum.
+    test: TESTED - test_symbol_game_mathematical_core.py covers omitted candidates, reordered or invented values, declared empty repair spaces, and invalid certificates.
+    lean: MECHANIZED - SG-L2 defines finite coverage evidence and states that empty observation misses the sole resolving candidate.
+    evidence:
+      - symbol_game_mathematical_spine.md#5-exhaustion
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/_docs/_the_symbol_game_history/mss0_exhaustion_obstruction_packet.md
+    structure_added: A replayable coverage witness.
+    minimality_scope: Relative to the declared reachable repair universe.
+    remaining_gap: Infinite or externally searched repair families still require a separate completeness theorem; the older OoutwireOntology token remains non-evidence.
+
+  - id: SG-EXT-001
+    title: Conservative context extension and descent
+    status: TESTED-FINITE
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin; source-visible Rust test omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::conservative_extension_checks_roundtrip_and_detector_preservation (not run); SG-L4 and SG-L5 Lean statements not found"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::conservative_extension_checks_roundtrip_and_detector_preservation
+    layer: L5-L6
+    obstruction: Existing lift shapes do not establish old-language conservativity or a general forget-after-lift law.
+    current_structure: Candidate extension with embedding, partial forget map, explicit structure delta, and nine obligations.
+    required_result: Prove old typing/judgment preservation and reflection, forget-after-lift, obstruction refinement, and protected-invariant preservation.
+    counterexample: An extension resolves the target by proving a new theorem in the old vocabulary or invalidating an old judgment.
+    implementation: IMPLEMENTED - mathematical_core.py supplies explicit lift, forget, preservation, and conservative-extension validation.
+    test: TESTED - test_symbol_game_mathematical_core.py accepts a declared conservative extension and rejects a nonconservative lift.
+    lean: MECHANIZED - SG-L4 states old typing preservation under a declared typed injection; SG-L5 states forget-after-lift from the declared retraction.
+    evidence:
+      - symbol_game_mathematical_spine.md#6-context-extension
+      - symbol_game_mathematical_spine.md#7-descent--forgetting--invariants
+    structure_added: Embedding, forget comparison, structure delta, and preservation witnesses.
+    minimality_scope: Conservativity on the declared old vocabulary.
+    remaining_gap: General semantic judgment reflection and conservativity still require a restricted logic or external proof; the mechanized scope is syntax and retraction.
+
+  - id: SG-EXT-002
+    title: Relative minimality and incomparable extensions
+    status: TESTED-FINITE
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin; source-visible Rust test omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::extension_assessment_is_scoped_bound_and_tie_preserving (not run)"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::extension_assessment_is_scoped_bound_and_tie_preserving
+    layer: L5
+    obstruction: Single-generator deletion minimality does not produce a globally least extension.
+    current_structure: R2_EXTENSION_LICENSED separates positive exhaustion from extension; assess_r2_extensions binds a certificate to a declared finite family and returns every tied minimum.
+    required_result: Select or refuse among resolvers using an explicit preorder and equivalence; expose a unique candidate only when the complete tied-minimum set has size one.
+    counterexample: Two incomparable one-generator resolvers each fail when their sole generator is removed.
+    implementation: IMPLEMENTED - mathematical_core.py retains R2_EXTENSION_LICENSED as permission to assess, never an automatic lift, and retains all tied minima.
+    test: TESTED - test_symbol_game_mathematical_core.py covers declared-order tied minima, certificate binding, R1 refusal, and refusal of a global-least claim.
+    lean: OPEN - requires a chosen preorder before a leastness theorem can be stated.
+    evidence:
+      - symbol_game_mathematical_spine.md#64-relative-minimality
+      - symbol_game_mathematical_spine.md#fo-02--least-extension
+    structure_added: Only the declared comparison regime chosen by an interface.
+    minimality_scope: Relative to a finite admitted extension class and preorder.
+    remaining_gap: No canonical global order is justified; a formal finite-preorder assessment theorem remains open.
+
+  - id: SG-DDC-001
+    title: Exact generic DDC event and replay semantics
+    status: TESTED-FINITE
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin; source-visible Rust tests omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::dda_composition_has_identities_associativity_and_boundary_refusals and ::dda_refuses_protected_loss_and_replay_mismatch (not run); SG-L9 Lean statement not found"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::dda_composition_has_identities_associativity_and_boundary_refusals
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::dda_refuses_protected_loss_and_replay_mismatch
+      - omega_engine/crates_rs/omega_symbol_game/src/foundation/dda.rs
+    layer: L7
+    obstruction: Existing traces are either letter-shaped, cochain-specific, float-valued, or omit generic replay/invariant information.
+    current_structure: Bound before/operation/after event with obstruction endpoints, structure delta, invariants, exact operator/registry identity, host replay receipt, and optional parent.
+    required_result: Implement exact event formation, verification, parent-chain validation, and typed partial composition.
+    counterexample: A hidden carrier change with the same aggregate residual is relabeled as a repair.
+    implementation: IMPLEMENTED - dda_core.py supplies exact bound events, operator implementation/revision/registry digests, host/path-bound replay receipts, independent receipt re-verification, parent chains, and partial DDC path composition; raw callable maps fail closed and historical letters remain adapters.
+    test: TESTED - test_symbol_game_dda_core.py covers exact fraction replay, unbound and substituted operators, operator/registry revision drift, post-bind code mutation, forged receipts, path mutation, order, parent, float, obstruction-change, and replay mismatch attacks.
+    lean: MECHANIZED - SG-L9 states accepted deterministic replay reproduces the declared after-state; richer invariant/loss checks remain executable evidence.
+    evidence:
+      - symbol_game_mathematical_spine.md#8-dda
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/dda_core.py
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/_tests_unit/test_symbol_game_dda_core.py
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/obstruction.py
+    structure_added: Proof-relevant transition history only.
+    minimality_scope: Irreducible information, allowing content-addressed references instead of duplicate fields.
+    remaining_gap: Operator purity is not proved, arbitrary invariant projections are not re-executed, nondeterministic or external-world replay remains operation-specific, and legacy DDC callers still require migration.
+
+  - id: SG-PKT-001
+    title: Four-field packet kernel
+    status: TESTED-FINITE
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin; source-visible Rust tests omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::packet_identity_binds_all_four_fields_and_normalizes_object_order and ::packet_id_matches_python_canonical_golden_vector (not run); SG-L6 Lean statement not found"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::packet_identity_binds_all_four_fields_and_normalizes_object_order
+      - omega_engine/crates_rs/omega_symbol_game/src/foundation/packet.rs
+    layer: L8
+    obstruction: The current common envelope forces consequential fields into unrelated interfaces.
+    current_structure: contract_id, task_id, payload, and optional parent_id; packet ID is derived.
+    required_result: Land the minimal kernel and adapt existing heavy envelopes as interface fibers.
+    counterexample: Removing contract, task, payload, or descendant parent collapses a protected distinction.
+    implementation: IMPLEMENTED - packet_kernel.py supplies the four-field kernel, strict decoding, and domain-separated identity alongside the legacy envelope.
+    test: TESTED - test_symbol_game_packet_kernel.py binds contract, task, payload, and parent and attacks missing, duplicate, unknown, tampered, reordered, and sibling fields.
+    lean: MECHANIZED - SG-L6 states deterministic identity under explicit domain, canonical encoder, and hash inputs without injectivity.
+    evidence:
+      - symbol_game_mathematical_spine.md#9-packet-kernel
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/packets.py
+    structure_added: Finite transport binding, not Symbol Game ontology.
+    minimality_scope: Common information shared by every admitted packet fiber.
+    remaining_gap: Live PacketEnvelopeV2 remains a heavy consequential shape and callers need compatibility migration.
+
+  - id: SG-EQ-001
+    title: Separate packet equality relations and congruence gate
+    status: TESTED-FINITE
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin; source-visible Rust test omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::semantic_comparison_requires_an_explicit_projection (not run); SG-L8 Lean statement not found"
+    evidence_2026_10_20:
+      - omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs::semantic_comparison_requires_an_explicit_projection
+    layer: L8
+    obstruction: Byte, structural, semantic, result, replay, obstruction, and provenance equality are conflated.
+    current_structure: Contract-indexed relations with Unknown and Refused outcomes.
+    required_result: Implement distinct comparators and permit quotienting only after equivalence and congruence proofs.
+    counterexample: Parity identifies 0 and 2 while the context equals-zero separates them.
+    implementation: IMPLEMENTED - equivalence.py separates byte, structural, semantic, proposal, result, replay, obstruction, and provenance relations and finite congruence receipts.
+    test: TESTED - test_symbol_game_packet_kernel.py covers field order, declared projection, proposal/provenance separation, and a semantic non-congruence counterexample.
+    lean: MECHANIZED - SG-L8 states identity and declared semantic projection agree when both wire values decode to the same kernel.
+    evidence:
+      - symbol_game_mathematical_spine.md#10-packet-identity-and-equivalence
+    structure_added: Declared family semantics only.
+    minimality_scope: Each relation is no stronger than its declared projection or denotation.
+    remaining_gap: Semantic equivalence remains unavailable for generic prose and no general congruence proof exists.
+
+  - id: SG-COMP-001
+    title: Typed partial packet and DDC composition
+    status: OPEN
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin; no packet-composition test was found in omega_engine/crates_rs/tests/omega_symbol_game/foundation_contract.rs; SG-L7 Lean statement not found"
+    layer: L7-L8
+    obstruction: Untyped composition can splice tasks, sources, contexts, witnesses, or loss ledgers.
+    current_structure: Bound-state objects, matching typed transformations, virtual identities, and sequential replay.
+    required_result: Implement refusal conditions, canonical flat traces, loss transport, and identity/associativity tests.
+    counterexample: Two adjacent records have different intermediate source states but identical labels.
+    implementation: IMPLEMENTED - packet_composition.py returns a typed composition or specific refusal with flat traces and loss transport.
+    test: TESTED - test_symbol_game_packet_composition.py covers identity, associativity, endpoint/task/source mismatch, protected loss, parent replacement, witness conflict, replay, and parallel disagreement.
+    lean: MECHANIZED - SG-L7 states task/source/contract boundary preservation and conditional associativity for matching transitions.
+    evidence:
+      - symbol_game_mathematical_spine.md#11-packet-composition
+    structure_added: No higher cells; only typed 1-transition composition.
+    minimality_scope: Deterministic fibers with exact endpoint matching.
+    remaining_gap: Raw event-hash provenance and general lossy composition are not strictly associative without canonical flattening and explicit loss algebra.
+
+  - id: SG-FIB-001
+    title: Ephemeral, structured, and consequential interface fibers
+    status: OPEN
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin"
+    layer: L9-L10
+    obstruction: Ordinary conversation inherits sprint ceremony while consequential actions can be admitted by weak chat contracts.
+    current_structure: Three capability/effect-indexed refinements over the common kernel.
+    required_result: Implement strict required/optional/forbidden fields and descent for each fiber.
+    counterexample: The same text delete tmp is harmless in read-only chat and consequential in a tool-enabled session.
+    implementation: IMPLEMENTED - interfaces.py supplies strict chat, mathematical evidence, canonical math-subject digests, receiver-selected proof-verifier registries, fail-closed untrusted or subject-substituted PROVED downgrade, code proposal/result, capability, gate, and replay contracts over the kernel.
+    test: TESTED - test_symbol_game_interfaces_and_regime.py covers chat ceremony rejection, mathematical evidence scope, numeric-proof refusal, forged verifier/digest/artifact/revision/admission attacks, theorem/assumption/context substitution, rejecting verifier callbacks, and code mutation bindings.
+    lean: Not required for initial schema separation; later prove descent preserves the kernel.
+    evidence:
+      - symbol_game_mathematical_spine.md#12-interface-fibers--packet-families
+      - symbol_game_mathematical_spine.md#13-llm-chat-contract
+      - symbol_game_mathematical_spine.md#14-sprintcode-contract
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/interfaces.py
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/_tests_unit/test_symbol_game_interfaces_and_regime.py
+    structure_added: Interface policy only.
+    minimality_scope: Relative to declared capabilities and external effects.
+    remaining_gap: Proof status remains verifier-relative to a receiver-selected trusted registry, consequence classification still cannot be inferred from prose, and legacy packet families require adapters.
+
+  - id: SG-PIPE-001
+    title: Capability-indexed Pareto packet lifecycle
+    status: OPEN
+    prior_status_2026_10_18: TESTED-FINITE
+    status_basis_2026_10_20: "the cited Python module and test file are not found at the pin"
+    layer: L9-L10
+    obstruction: Historical five-, eight-, and twelve-stage pipelines are treated as general despite redundant or missing trust boundaries.
+    current_structure: Bind, optional untrusted propose, combined check/result, and optional atomic apply.
+    required_result: Compare pipelines over the interface matrix using invariant coverage, hostile-case coverage, and a componentwise cost vector.
+    counterexample: A one-transition chat and a source-mutating code sprint cannot share the same minimal lifecycle.
+    implementation: IMPLEMENTED - packet_regime.py supplies capability-indexed benchmarks, assessment, Pareto minima, matrix construction, and stage-deletion analysis.
+    test: TESTED - test_symbol_game_interfaces_and_regime.py covers interface-dependent minima, incomparable Pareto ties, and redundant legacy-stage deletion.
+    lean: Not required for empirical selection; a finite Pareto definition may be formalized later.
+    evidence:
+      - symbol_game_mathematical_spine.md#123-minimal-lifecycle
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/packet_regime.py
+      - symbol_game_source_of_truth_matrix.md#8-historical-archived-recovered-and-untracked-material
+    structure_added: No fixed stage count.
+    minimality_scope: Pareto minimality relative to one interface, invariant set, hostile corpus, and cost vector.
+    remaining_gap: Results remain relative to the declared benchmark corpus and cost vector; broader empirical matrices are still needed.
+
+  - id: SG-LEAN-000
+    title: Registered SG-L0 through SG-L10 formal target
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "symbol_game_foundation.lean and the cited omega_engine/lean4 paths are not found at the pin; no SG-L declaration exists in any .lean file"
+    layer: Formal
+    obstruction: Existing Lean is split between active specialized ontology targets and an unregistered broken ER007 aggregate.
+    current_structure: SymbolGameFoundation is registered, imports no broken ER007 aggregate, and its SG-L0 through SG-L10 source compiles through the repository Lake/Mathlib environment.
+    required_result: Register one standalone SymbolGameFoundation library, build it, scan for sorry/admit/axiom/unsafe, and record #print axioms for every SG-L theorem.
+    counterexample: A file containing theorem text but unreachable from Lake does not establish mechanization.
+    implementation: IMPLEMENTED - standalone symbol_game_foundation.lean and the SymbolGameFoundation lakefile entry are present without touching the broken ER007 aggregate.
+    test: MECHANIZED - direct Lake-environment compile passes; source scan has no sorry/admit/declared axiom/opaque/unsafe/noncomputable; every SG-L theorem emits a #print axioms receipt.
+    lean: MECHANIZED - SG-L6 and SG-L8 are axiom-free; the other named theorems use only propext, Quot.sound, and for SG-L2/SG-L3 Classical.choice; no sorryAx.
+    evidence:
+      - omega_engine/lean4/lakefile.lean
+      - omega_engine/lean4/ooutwire_ontology/oesos_math_spine.lean
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: A formal model only; no runtime authority.
+    minimality_scope: Small standalone target importing no broken ER007 aggregate.
+    remaining_gap: Future CI should run the registered target from a prepared cache; broader semantic claims remain outside the exact theorem scopes.
+
+  - id: SG-HIGH-001
+    title: Evidence gate for homology and higher coherence
+    status: OPEN
+    layer: L7+
+    obstruction: Advanced structures are named before a carrier, comparator, or real path disagreement exists.
+    current_structure: Generic typed 1-transitions and an admission rule for higher cells.
+    required_result: Supply one replayable parallel-path or local/global disagreement before adding a higher structure.
+    counterexample: Two paths share endpoints but have no declared comparator, so no defect is defined.
+    implementation: PENDING - no generic higher-coherence runtime should land first.
+    test: TARGET only after a concrete disagreement fixture exists.
+    lean: OPEN - formalize the concrete fixture, not a speculative hierarchy.
+    evidence:
+      - symbol_game_mathematical_spine.md#17-homologicalcategorical-interpretation
+      - symbol_game_mathematical_spine.md#18-higher-coherence
+    structure_added: none until the obstruction demands it
+    minimality_scope: One dimension is added only for genuinely parallel lower-dimensional data.
+    remaining_gap: No generic core fixture presently demands a 2-cell.
+
+  - id: SG-LEAN-L0
+    title: SG-L0 graph non-determination
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin (a prose proof exists in 01_primitive_difference_and_oesos_laws.md)"
+    layer: Formal/L0
+    obstruction: Current primitive structures already declare carrier and ZeroRel data.
+    current_structure: Bare Python representation plus a Lean theorem binding a nullary witness to two unequal declared orientations.
+    required_result: Mechanize two graph expansions with the same bare Primitive Difference reduct and different edge relations.
+    counterexample: Empty edge relation versus one Bool loop.
+    implementation: IMPLEMENTED - mathematical_core.py keeps PrimitiveDifference free of endpoint and graph fields.
+    test: TESTED-FINITE - test_symbol_game_mathematical_core.py constructs it on Unit without endpoint imports.
+    lean: MECHANIZED - SG_L0_graph_underdetermination_countermodel; #print axioms reports propext only.
+    evidence:
+      - symbol_game_mathematical_spine.md#12-non-entailments
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: Graph structure exists only inside the countermodel expansions.
+    minimality_scope: Non-determination; it does not show that no graph can be constructed.
+    remaining_gap: The theorem establishes non-determination, not a canonical arity; FO-01 remains open.
+
+  - id: SG-LEAN-L1
+    title: SG-L1 R1 priority
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin (a prose proof exists in 01_primitive_difference_and_oesos_laws.md)"
+    layer: Formal/L2
+    obstruction: Existing R2 licensing checks an Exhausted constructor but does not prove operational R1 priority.
+    current_structure: Exact finite repair context, complete coverage certificate, and R1/R2-license decision.
+    required_result: Prove that existence of an admitted resolving repair excludes an Extend decision.
+    counterexample: Resolver and lift candidate coexist.
+    implementation: IMPLEMENTED - mathematical_core.py gives R1 precedence and keeps R2 licensing separate from extension assessment.
+    test: TESTED-FINITE - zero-obstruction repair and forced-lift refusal in test_symbol_game_mathematical_core.py.
+    lean: MECHANIZED - SG_L1_R1_has_priority_over_R2; standard propext and Quot.sound only.
+    evidence:
+      - omega_engine/lean4/ooutwire_ontology/oesos_math_spine.lean
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: none
+    minimality_scope: Priority only.
+    remaining_gap: Repair tie policy and selector uniqueness remain interface-declared.
+
+  - id: SG-LEAN-L2
+    title: SG-L2 exhaustion is stronger than empty output
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L4
+    obstruction: Exhausted is currently a nullary outcome rather than a coverage witness.
+    current_structure: Exact Python coverage certificate plus Lean finite coverage data and singleton omission counterexample.
+    required_result: Define structural exhaustion and prove an empty observation list does not imply it.
+    counterexample: One allowed resolving repair and no observed attempts.
+    implementation: IMPLEMENTED - mathematical_core.py certificate binds the declared source, context, candidate order, evaluations, and minimum.
+    test: TESTED-FINITE - omission, reorder, invented-value, empty-space, and unverifiable-claim cases in test_symbol_game_mathematical_core.py.
+    lean: MECHANIZED - SG_L2_empty_observation_counterexample; standard propext, Classical.choice, and Quot.sound only.
+    evidence:
+      - symbol_game_mathematical_spine.md#53-empty-search-counterexample
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: Coverage witness.
+    minimality_scope: Declared finite repair universe.
+    remaining_gap: Infinite or external repair search still requires a completeness theorem.
+
+  - id: SG-LEAN-L3
+    title: SG-L3 fixed-signature generation is not extension
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L3
+    obstruction: Term growth is confused with signature/context growth.
+    current_structure: Active theorem in oesos_math_spine.lean and the standalone generic foundation target.
+    required_result: Preserve the theorem and connect its definitions to the generic foundation target.
+    counterexample: More nested terms with unchanged constructors.
+    implementation: Runtime must not increment context depth for term creation.
+    test: TESTED-FINITE - fixed-signature term generation leaves context identity unchanged in test_symbol_game_mathematical_core.py.
+    lean: MECHANIZED - SG_L3_fixed_signature_generation_is_not_extension plus the active OoutwireOntology specialization.
+    evidence:
+      - omega_engine/lean4/ooutwire_ontology/oesos_math_spine.lean
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: none
+    minimality_scope: The exact fixed-signature model in the active theorem.
+    remaining_gap: None at the exact fixed-signature theorem scope.
+
+  - id: SG-LEAN-L4
+    title: SG-L4 conservative extension preserves old judgments
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L5
+    obstruction: Existing lift structures do not carry a general old-language reflection law.
+    current_structure: Declared typed signature injection with a mechanized old-typing preservation theorem.
+    required_result: Prove old well-typed expressions remain well typed after the declared injection; keep general semantic reflection as a separate open obligation.
+    counterexample: Extension resolves by changing an old theorem.
+    implementation: IMPLEMENTED - mathematical_core.py binds explicit lift, forget, preservation, and admission witnesses.
+    test: TESTED-FINITE - conservative and nonconservative fixtures in test_symbol_game_mathematical_core.py.
+    lean: MECHANIZED - SG_L4_conservative_extension_preserves_old_typing; standard propext and Quot.sound only.
+    evidence:
+      - symbol_game_mathematical_spine.md#63-conservativity
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: Conservative embedding record.
+    minimality_scope: Declared old vocabulary.
+    remaining_gap: General semantic judgment reflection remains FRONTIER_OBSTRUCTION FO-11.
+
+  - id: SG-LEAN-L5
+    title: SG-L5 forget after lift
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L6
+    obstruction: Hard-coded example strings do not establish a general retraction.
+    current_structure: Declared partial forget map and retraction law with a recursive term theorem.
+    required_result: Prove U(iota(x)) = x for every old object.
+    counterexample: A lift renames an old object and forget returns the renamed value.
+    implementation: IMPLEMENTED - mathematical_core.py validates the lift/forget round trip on the declared old image.
+    test: TESTED-FINITE - conservative and nonconservative lift fixtures in test_symbol_game_mathematical_core.py.
+    lean: MECHANIZED - SG_L5_forget_after_lift_is_identity; standard propext and Quot.sound only.
+    evidence:
+      - symbol_game_mathematical_spine.md#71-forget-after-lift
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: Partial forget map defined on the old image.
+    minimality_scope: Old embedded subobject only.
+    remaining_gap: None on terms in the declared old image; no claim is made for genuinely new terms.
+
+  - id: SG-LEAN-L6
+    title: SG-L6 deterministic packet identity
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L8
+    obstruction: Runtime canonicalization tests do not constitute a Lean theorem about the generic kernel.
+    current_structure: Python/Rust golden parity plus an abstract Lean derivation with explicit domain tag, canonical encoder, and hash.
+    required_result: Prove abstract canonical-encoding determinism without claiming hash injectivity.
+    counterexample: A normalizer/version change without a changed contract domain.
+    implementation: IMPLEMENTED - packet_kernel.py uses a strict four-field kernel and domain-separated canonical identity.
+    test: TESTED-FINITE - field binding, field order, duplicate, unknown, missing, tampered, task, contract, and parent attacks in test_symbol_game_packet_kernel.py plus Rust host vectors.
+    lean: MECHANIZED - SG_L6_packet_id_is_deterministic; #print axioms is empty.
+    evidence:
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/canonical.py
+      - omega_engine/crates/omega_symbol_game/tests/host_contract.rs
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: none
+    minimality_scope: Determinism only; no collision-freedom theorem.
+    remaining_gap: No hash injectivity or collision-freedom is claimed.
+
+  - id: SG-LEAN-L7
+    title: SG-L7 composition preserves binding
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L7-L8
+    obstruction: No generic task/source-bound transition composition theorem exists.
+    current_structure: Exact partial Python/Rust implementation plus a Lean task/source/contract-bound transition composition.
+    required_result: Prove matching composition retains task/source and protected-invariant bindings.
+    counterexample: Mismatched intermediate source state.
+    implementation: IMPLEMENTED - packet_composition.py provides typed partial composition, refusals, flat traces, and loss transport.
+    test: TESTED-FINITE - identity, associativity, mismatch, witness, loss, parent, replay, and parallel-disagreement cases in test_symbol_game_packet_composition.py.
+    lean: MECHANIZED - SG_L7_matching_composition_preserves_task_source_binding and conditional associativity; standard axioms only.
+    evidence:
+      - symbol_game_mathematical_spine.md#11-packet-composition
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: Typed transition record.
+    minimality_scope: Matching deterministic fibers.
+    remaining_gap: General lossy provenance composition still requires an explicit loss algebra and canonical flattening.
+
+  - id: SG-LEAN-L8
+    title: SG-L8 equivalent serialization preserves identity
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L8
+    obstruction: Field-order invariance is runtime evidence, not yet tied to a formal decoder/kernel model.
+    current_structure: Strict four-field decoders, Python/Rust golden vector, and a Lean codec/kernel theorem.
+    required_result: Prove that two wire values decoding to the same kernel yield the same derived identity.
+    counterexample: Same map fields in a different wire order.
+    implementation: IMPLEMENTED - packet_kernel.py strict decoder rejects duplicates, unknowns, missing fields, and tampering and derives identity from the decoded kernel.
+    test: TESTED-FINITE - generic field-order/structural-identity and malformed transport vectors in test_symbol_game_packet_kernel.py.
+    lean: MECHANIZED - SG_L8_equivalent_serialization_preserves_semantic_identity; #print axioms is empty.
+    evidence:
+      - omega_engine/research/ooutwire_docs/universe_anomalonica/omega_engine/symbol_game/canonical.py
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: Decoder semantics.
+    minimality_scope: Wire forms accepted by one declared contract.
+    remaining_gap: Cross-language parity is a finite golden receipt; the theorem is abstract over one declared decoder and does not prove parser equivalence.
+
+  - id: SG-LEAN-L9
+    title: SG-L9 accepted DDC replay reproduces after-state
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/L7
+    obstruction: Narrow OESOS replay is tested, but no generic DDC verifier-soundness theorem exists.
+    current_structure: Exact registry-bound generic Python replay, specialized exact Rust replay, and a deterministic accepted-replay Lean theorem.
+    required_result: Generalize to verify(event) = true implies replay(event) = some(event.after).
+    counterexample: Claimed after-state differs from deterministic replay.
+    implementation: IMPLEMENTED - dda_core.py supplies registry-, implementation-, revision-, path-, and host-bound exact finite replay plus independent receipt verification; the narrow live Rust host supplies a separate specialized path.
+    test: TESTED-FINITE - test_symbol_game_dda_core.py covers replay, registry substitution, code/revision drift, path mutation, and forged-receipt attacks; omega_symbol_game host contract covers the narrow cross-language host.
+    lean: MECHANIZED - SG_L9_accepted_replay_reproduces_after; standard propext and Quot.sound only.
+    evidence:
+      - omega_engine/crates/omega_symbol_game/src/host.rs
+      - omega_engine/crates/omega_symbol_game/tests/host_contract.rs
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: No new ontology; replay evidence only.
+    minimality_scope: Current exact Python registry-bound path and Prime/OESOS Rust laboratory fixture.
+    remaining_gap: Operator purity and invariant-projection replay are not proved; nondeterministic and external-world replay remain operation-specific.
+
+  - id: SG-LEAN-L10
+    title: SG-L10 declared incidence gives boundary squared zero
+    status: OPEN
+    prior_status_2026_10_18: MECHANIZED
+    status_basis_2026_10_20: "the cited Lean file and the named SG-L theorem are not found in any .lean file at the pin"
+    layer: Formal/specialized
+    obstruction: A specialized cochain theorem can be misreported as generic Primitive Difference structure.
+    current_structure: Exact triangle incidence theorems in OoutwireOntology and SymbolGameFoundation plus a declared generic cochain law.
+    required_result: Reuse the theorem only inside a declared cochain fiber and record its axiom set.
+    counterexample: A generic packet with no carrier or incidence maps cannot state d-next composed with d equals zero.
+    implementation: Specialized exact family only.
+    test: Existing exact finite cochain fixtures; generic packetization does not inherit the result.
+    lean: MECHANIZED - SG_L10_triangle_incidence_nilpotency and the active OoutwireOntology triangle theorem.
+    evidence:
+      - omega_engine/lean4/ooutwire_ontology/oesos_math_spine.lean
+      - omega_engine/lean4/shared_kernel/finite_cochain_complex.lean
+      - omega_engine/lean4/research_programs/008_engine_runtime/000_symbol_game/symbol_game_foundation.lean
+    structure_added: Declared coefficient and incidence structure in the specialized fiber.
+    minimality_scope: Exact declared triangle/cochain realization.
+    remaining_gap: None at the specialized theorem scope; generic applicability is intentionally refused.
+
+  - id: SG-FO-01
+    title: Frontier - primitive arity
+    status: OPEN
+    layer: Frontier/L0-L1
+    obstruction: L0 does not select nullary, binary, or higher-arity representation.
+    current_structure: Bare marker plus optional interface representations.
+    required_result: Choose an explicit arity/representation axiom per interface.
+    counterexample: Nullary marker and binary NonSame models share the same reduct.
+    implementation: Keep representation outside the bare foundation type.
+    test: Cross-representation non-collapse fixtures.
+    lean: SG-L0 countermodel.
+    evidence: [symbol_game_mathematical_spine.md#fo-01--primitive-arity]
+    structure_added: Interface arity only.
+    minimality_scope: None is globally canonical.
+    remaining_gap: Human/interface choice.
+
+  - id: SG-FO-02
+    title: Frontier - least extension
+    status: OPEN
+    layer: Frontier/L5
+    obstruction: Incomparable minimal resolvers need not have a least member.
+    current_structure: Relative minimality definition.
+    required_result: Declare a preorder/equivalence or retain an ambiguity terminal.
+    counterexample: Two incomparable one-generator resolvers.
+    implementation: AmbiguousMinimalExtensions refusal/hold.
+    test: Incomparable-minima fixture.
+    lean: Formalize only after the preorder is selected.
+    evidence: [symbol_game_mathematical_spine.md#fo-02--least-extension]
+    structure_added: Declared comparison regime only.
+    minimality_scope: Relative.
+    remaining_gap: No canonical preorder.
+
+  - id: SG-FO-03
+    title: Frontier - infinite exhaustion
+    status: OPEN
+    layer: Frontier/L4
+    obstruction: A finite failed prefix does not establish an unbounded universally quantified negative.
+    current_structure: Finite coverage or imported completeness proof.
+    required_result: Provide a bound, decidability theorem, or oracle receipt.
+    counterexample: First successful natural-number-indexed repair follows the searched prefix.
+    implementation: Route incomplete searches to Unknown.
+    test: Prefix-extension attacks.
+    lean: Optional theorem for each bounded family.
+    evidence: [symbol_game_mathematical_spine.md#fo-03--infinite-exhaustion]
+    structure_added: None without proof.
+    minimality_scope: Finite or theorem-bounded search only.
+    remaining_gap: Infinite completeness.
+
+  - id: SG-FO-04
+    title: Frontier - semantic equivalence
+    status: OPEN
+    layer: Frontier/L8
+    obstruction: Bytes have no context-free denotation valid in every context.
+    current_structure: Contract-indexed partial denotation.
+    required_result: Declare semantics and equivalence per family.
+    counterexample: Value one under metre and currency contracts.
+    implementation: Return Unknown or Refused without a comparator.
+    test: Cross-contract alias attacks.
+    lean: Family-specific only.
+    evidence: [symbol_game_mathematical_spine.md#fo-04--semantic-equivalence]
+    structure_added: Declared semantics only.
+    minimality_scope: Contract-relative.
+    remaining_gap: Generic prose semantics.
+
+  - id: SG-FO-05
+    title: Frontier - congruence
+    status: OPEN
+    layer: Frontier/L8
+    obstruction: Equivalence may not survive admitted transformations.
+    current_structure: Explicit congruence gate before quotient composition.
+    required_result: Prove preservation for every allowed transformation.
+    counterexample: Parity versus the equals-zero context.
+    implementation: Do not quotient until the gate passes.
+    test: Context-separation attacks.
+    lean: Family-specific congruence theorem.
+    evidence: [symbol_game_mathematical_spine.md#fo-05--congruence]
+    structure_added: Congruence proof only.
+    minimality_scope: Declared operation family.
+    remaining_gap: No general congruence.
+
+  - id: SG-FO-06
+    title: Frontier - nondeterministic replay
+    status: OPEN
+    layer: Frontier/L7-L10
+    obstruction: Ambient entropy or external state breaks exact replay.
+    current_structure: Exact replay or explicitly weaker observational receipt.
+    required_result: Freeze environment/entropy or declare a non-exact semantics.
+    counterexample: One-bit random operation.
+    implementation: Refuse deterministic replay claims when inputs are incomplete.
+    test: Clock, RNG, environment, and network mutation attacks.
+    lean: Exact deterministic model only.
+    evidence: [symbol_game_mathematical_spine.md#fo-06--nondeterministic-replay]
+    structure_added: Frozen environment or approximation model.
+    minimality_scope: Operation-specific.
+    remaining_gap: External-world reproducibility.
+
+  - id: SG-FO-07
+    title: Frontier - loss composition
+    status: OPEN
+    layer: Frontier/L6-L8
+    obstruction: Composite loss needs a distinction carrier and transport.
+    current_structure: Refusal when loss cannot be pulled back or touches protection.
+    required_result: Define the loss universe and pullback law.
+    counterexample: Sequential projections forget the right bit and then the left bit.
+    implementation: Typed loss-composition refusal.
+    test: Independent-loss and protected-loss attacks.
+    lean: Optional family-specific law.
+    evidence: [symbol_game_mathematical_spine.md#fo-07--loss-composition]
+    structure_added: Loss carrier and pullback only.
+    minimality_scope: Declared lossy family.
+    remaining_gap: No generic loss algebra.
+
+  - id: SG-FO-08
+    title: Frontier - strict provenance associativity
+    status: OPEN
+    layer: Frontier/L7-L8
+    obstruction: Nested composite hashes depend on parenthesization.
+    current_structure: Semantic associativity plus proposed flat canonical trace.
+    required_result: Choose a flat normal form, Merkle associator, or replay quotient.
+    counterexample: ((f,g),h) and (f,(g,h)).
+    implementation: Canonical flattening before composite ID derivation.
+    test: Parenthesization golden vectors.
+    lean: Prove semantic law and normalizer correctness separately.
+    evidence: [symbol_game_mathematical_spine.md#fo-08--strict-provenance-associativity]
+    structure_added: Canonical trace representation only.
+    minimality_scope: Three or more composable events.
+    remaining_gap: Representation choice.
+
+  - id: SG-FO-09
+    title: Frontier - interface consequence
+    status: OPEN
+    layer: Frontier/L9-L10
+    obstruction: Request text does not determine external effect.
+    current_structure: Capability/effect-indexed fibers.
+    required_result: Bind an interface capability manifest.
+    counterexample: Delete tmp in read-only chat and in a tool-enabled agent.
+    implementation: Consequence selection occurs before packet-family admission.
+    test: Same-text/different-capability matrix.
+    lean: Not required for policy choice.
+    evidence: [symbol_game_mathematical_spine.md#fo-09--interface-consequence]
+    structure_added: Interface effect policy.
+    minimality_scope: Deployment-relative.
+    remaining_gap: External capability declaration.
+
+  - id: SG-FO-10
+    title: Frontier - numeric obstruction
+    status: OPEN
+    layer: Frontier/L3
+    obstruction: Primitive Difference supplies no scalar domain or norm.
+    current_structure: Exact finite failed-obligation map.
+    required_result: Declare coefficient, weights, norm, and tolerance only in specialized contexts.
+    counterexample: One failure set receives two incompatible weight functions.
+    implementation: Generic core remains non-numeric; exact rationals preferred when specialized.
+    test: Same-obligations/different-weights fixture.
+    lean: Specialized algebra only.
+    evidence: [symbol_game_mathematical_spine.md#fo-10--numeric-obstruction]
+    structure_added: Interface mathematical domain.
+    minimality_scope: Context-relative.
+    remaining_gap: No canonical norm.
+
+  - id: SG-FO-11
+    title: Frontier - conservativity decision
+    status: OPEN
+    layer: Frontier/L5-L6
+    obstruction: Arbitrary old-language conservativity may lack a finite local decider.
+    current_structure: Restricted finite proof or external theorem route.
+    required_result: Restrict the logic or attach an imported proof certificate.
+    counterexample: Old-language impact delegated to an unavailable proof theory.
+    implementation: Refuse admission when reflection is unproved.
+    test: Missing-oracle and false-preservation attacks.
+    lean: Prove for each restricted extension model.
+    evidence: [symbol_game_mathematical_spine.md#fo-11--conservativity-decision]
+    structure_added: Proof theory or oracle receipt.
+    minimality_scope: Declared old vocabulary and logic.
+    remaining_gap: General semantic conservativity.
+
+  - id: SG-FO-12
+    title: Frontier - higher coherence
+    status: OPEN
+    layer: Frontier/L7+
+    obstruction: No higher cell is justified without a concrete comparable path disagreement.
+    current_structure: Typed one-transitions and an admission rule.
+    required_result: Supply a replayable parallel-path or local/global defect and its comparator.
+    counterexample: Two paths share endpoints but have no comparator, so no defect exists.
+    implementation: Do not add a generic 2-category first.
+    test: PENDING until a concrete fixture exists.
+    lean: Formalize the fixture before the abstraction.
+    evidence: [symbol_game_mathematical_spine.md#fo-12--higher-coherence]
+    structure_added: None yet.
+    minimality_scope: Dimension follows observed coherence obstruction.
+    remaining_gap: No current generic fixture demands higher structure.
+
+  - id: SG-EIS-001
+    title: Thymus screening soundness (Lemma C and the OEEIS self-panel gate)
+    status: OPEN
+    layer: OEEIS/Thymus
+    obstruction: The self-panel zero-false-positive theorem and Lemma C (015_pfp/003 Appendix A.4, ledger P3-22) had prose proofs and a finite Python check only; no Lean statement existed.
+    current_structure: Bool-valued screened predicate P and executed predicate E over a universe U; panels as lists; admits, fires, soundFor, neverRejectsHarmless; thymusAdmit and falsePositives for E = P = d.
+    required_result: Soundness for every panel exactly when E implies P; no rejection of harmless rules for every panel exactly when P implies E; both exactly when E = P; an admitted detector has zero false positives on the sealed panel.
+    counterexample: Two-record universe, screened predicate constantly false, executed predicate true on the record without a witness field; the singleton panel admits the rule and the rule fires (control_not_sound).
+    implementation: Not applicable; the runtime thymus binds the executed matcher since commit fdc0035a8 (P3-25).
+    test: TESTED-FINITE - 015_pfp/003 test_two_signals_one_detector.py, 4,096 predicate pairs and 63 panels on a six-element universe (deposit, not rerun here).
+    lean: PROPOSED_LEAN - lean4/ThymusScreening.lean, Lean 4.34.0, exit 0, every cited theorem prints no axioms; status upgrade to MECHANIZED is the author's decision.
+    evidence:
+      - lean4/ThymusScreening.lean
+      - docs/thymus_screening_note.md
+      - math_epistemic_immune_system_and_negative_selection.md#22-autoimmune-zero-false-positive-theorem
+    structure_added: none beyond Bool predicates and List panels.
+    minimality_scope: Panel-relative; quantifies over members of finite panels only.
+    remaining_gap: Nothing about panel coverage, false suppression outside the panel, or the mean FPR as a rational; the count is zero, the mean follows for nonempty panels.

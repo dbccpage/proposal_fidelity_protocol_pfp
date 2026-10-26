@@ -1,0 +1,55 @@
+# Grammar inventory and conformance-case contracts
+# AuthorityEffect: None.
+
+schema_id: "omega.pfp.grammar_types.v1"
+authority_effect: None
+governing_standard: 'ISO/IEC 14977 EBNF, Fail-Closed Byte-Exact Parsing'
+
+alphabets:
+  sigma36: "abcdefghijklmnopqrstuvwxyz0123456789"
+  gamma38: "abcdefghijklmnopqrstuvwxyz0123456789<>"
+
+conformance_verdicts:
+  - accept
+  - reject
+
+profiles:
+  - grammar_file: "pfp.ebnf"
+    profile_id: "pfp-v0.2"
+    start_symbol: "pfp_packet"
+    scope: 'Proposal Fidelity Protocol wire envelope, 6 frozen slots, and 8 canonical PFP terminals.'
+    authority_effect: None
+  - grammar_file: "cycle_repair.ebnf"
+    profile_id: "pkt00-k0-v1"
+    start_symbol: "cycle_repair"
+    scope: 'K0 simplicial cycle repair candidate wire expressions with fixed incidence matrices.'
+    authority_effect: None
+  - grammar_file: "ddc_trace.ebnf"
+    profile_id: "ddc-tape-shape-v1"
+    start_symbol: "ddc_trace"
+    scope: 'Discrete Deformation Calculus 8-letter operational alphabet trace tapes.'
+    authority_effect: None
+  - grammar_file: "glyph_graph.ebnf"
+    profile_id: "glyph-graph-v1"
+    start_symbol: "glyph_graph"
+    scope: 'Single-glyph vertices, directed edges, and simplicial 1-complex graphs.'
+    authority_effect: None
+  - grammar_file: "historical_packet.ebnf"
+    profile_id: "historical-packet-v1"
+    start_symbol: "packet"
+    scope: 'Postnikov tower historical packets: ground, atom, or op application.'
+    authority_effect: None
+  - grammar_file: "quiz_packet.ebnf"
+    profile_id: "quiz-packet-v1"
+    start_symbol: "quiz_message"
+    scope: 'Educational ask, ans, and ref quiz packets.'
+    authority_effect: None
+
+conformance_case_files:
+  pfp_conformance_cases.json:
+    model: PfpConformanceCase
+    fields: [id, start, text, accept]
+  conformance_cases.json:
+    model: ProfileConformanceCase
+    fields: [id, profile, text, accept]
+    optional_fields: [note, runtime_accept]

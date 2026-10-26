@@ -1,0 +1,32 @@
+(* pkt00-k0-v1: serialized K0 cycle-repair candidates.
+   Start: cycle_repair. Layout is allowed only at the written ws sites.
+   Strip # line comments ONLY for declared .mssn source fixtures.
+   The runtime transcoder accepts additional source layout; this grammar
+   describes its rendered form, not every spelling its adapter accepts.
+   Fixed incidence, vector lengths, edge alphabet and field order belong
+   to this profile. Edge uniqueness, i64 range and diagnostic overflow
+   are runtime checks. Equations and qed are candidate claims.
+   AuthorityEffect: None. *)
+cycle_repair = ws, "cycle_repair<", ws,
+  "carrier<", identifier, ";", ws, "V<4>;", ws, "E<5>;", ws, "B<1>>;", ws,
+  "d1<[-1,0,0,1,-1],[1,-1,0,0,0],[0,1,-1,0,1],[0,0,1,-1,0]>;", ws,
+  "d2<[1],[1],[0],[0],[-1]>;", ws,
+  "obstruct<z<", vector_five, ">>;", ws,
+  "attach<", identifier, ";", ws,
+    "edges<", edge_list, ">;", ws, "boundary<", vector_five, ">>;", ws,
+  "nilpotent<d1*b=0>;", ws,
+  "preimage<c<", vector_two, ">;", ws, "d2_ext*c=z>;", ws,
+  "terminal<qed<", claimed_terminal, ">>", ws, ">", ws ;
+identifier = glyph, { glyph } ;
+glyph = lower_latin | upper_latin | digit | "_" ;
+edge_list = edge, { ",", edge } ;
+edge = "e0" | "e1" | "e2" | "e3" | "e4" ;
+vector_five = integer, ",", integer, ",", integer, ",", integer, ",", integer ;
+vector_two = integer, ",", integer ;
+integer = "0" | [ "-" ], nonzero_digit, { digit } ;
+claimed_terminal = "exact" | "refused" | "open" | "survivor" ;
+ws = { " " | "\t" | "\r" | "\n" } ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+nonzero_digit = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+lower_latin = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
+upper_latin = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ;

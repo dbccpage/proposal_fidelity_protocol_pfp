@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#180b29"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="resGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#be185d"/>
+    </linearGradient>
+    <linearGradient id="authGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="gateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="shadow3" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrow-pink" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ec4899"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="700" fill="url(#bgGrad3)" rx="16"/>
+
+  <text x="550" y="45" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle">
+    OEWAS V3: Residual Geometry, Verification Gate &amp; Authority
+  </text>
+  <text x="550" y="70" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13" text-anchor="middle">
+    Residual Package Spans (R_in ← E → R_out), Persistent Residual Decay, and Monotonic Authority Ceilings
+  </text>
+
+  <!-- Left: Residual Span Structure -->
+  <g transform="translate(50, 110)">
+    <rect width="480" height="240" fill="#0f172a" stroke="#334155" stroke-width="1.5" rx="12" filter="url(#shadow3)"/>
+    <rect x="15" y="15" width="450" height="35" fill="url(#resGrad)" rx="6"/>
+    <text x="240" y="38" fill="#ffffff" font-family="system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle">ResidualPackageSpan Geometry</text>
+
+    <rect x="25" y="70" width="120" height="70" fill="#1e293b" stroke="#ec4899" rx="6"/>
+    <text x="85" y="95" fill="#f472b6" font-family="system-ui, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Input Residual</text>
+    <text x="85" y="125" fill="#cbd5e1" font-family="monospace" font-size="14" text-anchor="middle">R_in (Hyp)</text>
+
+    <line x1="200" y1="105" x2="155" y2="105" stroke="#ec4899" stroke-width="2" marker-end="url(#arrow-pink)"/>
+    <text x="177" y="95" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">pre</text>
+
+    <rect x="200" y="70" width="100" height="70" fill="#1e293b" stroke="#38bdf8" rx="6"/>
+    <text x="250" y="95" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Evidence</text>
+    <text x="250" y="125" fill="#cbd5e1" font-family="monospace" font-size="14" text-anchor="middle">E (Receipt)</text>
+
+    <line x1="300" y1="105" x2="345" y2="105" stroke="#ec4899" stroke-width="2" marker-end="url(#arrow-pink)"/>
+    <text x="322" y="95" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">post</text>
+
+    <rect x="355" y="70" width="100" height="70" fill="#1e293b" stroke="#ec4899" rx="6"/>
+    <text x="405" y="95" fill="#f472b6" font-family="system-ui, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Output Residual</text>
+    <text x="405" y="125" fill="#cbd5e1" font-family="monospace" font-size="14" text-anchor="middle">R_out (Claim)</text>
+
+    <text x="30" y="175" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Residual Status: <tspan fill="#34d399">unresolved | verified | admitted</tspan></text>
+    <text x="30" y="195" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• PrimDiff Ceilings: Prevents unearned claim escalation</text>
+    <text x="30" y="215" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Verification Invariant: E must prove R_in → R_out</text>
+  </g>
+
+  <!-- Right: Authority Firewall -->
+  <g transform="translate(570, 110)">
+    <rect width="480" height="240" fill="#0f172a" stroke="#334155" stroke-width="1.5" rx="12" filter="url(#shadow3)"/>
+    <rect x="15" y="15" width="450" height="35" fill="url(#authGrad)" rx="6"/>
+    <text x="240" y="38" fill="#ffffff" font-family="system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Monotonic Authority Ceiling Hierarchy</text>
+
+    <rect x="25" y="65" width="430" height="32" fill="#1e293b" stroke="#475569" rx="4"/>
+    <text x="40" y="86" fill="#38bdf8" font-family="monospace" font-size="12">Rank 0: AuthorityEffect.NONE</text>
+    <text x="360" y="86" fill="#94a3b8" font-family="sans-serif" font-size="11">Default pure code</text>
+
+    <rect x="25" y="105" width="430" height="32" fill="#1e293b" stroke="#475569" rx="4"/>
+    <text x="40" y="126" fill="#fbbf24" font-family="monospace" font-size="12">Rank 1: SUBAGENT</text>
+    <text x="360" y="126" fill="#94a3b8" font-family="sans-serif" font-size="11">Local child workers</text>
+
+    <rect x="25" y="145" width="430" height="32" fill="#1e293b" stroke="#475569" rx="4"/>
+    <text x="40" y="166" fill="#f87171" font-family="monospace" font-size="12">Rank 2: COUNCIL_L3_LOGOS</text>
+    <text x="360" y="166" fill="#94a3b8" font-family="sans-serif" font-size="11">Governance &amp; Nomos</text>
+
+    <rect x="25" y="185" width="430" height="32" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" rx="4"/>
+    <text x="40" y="206" fill="#ef4444" font-family="monospace" font-size="12" font-weight="700">Rank 3: HUMAN_PROMOTION_FIREWALL</text>
+    <text x="360" y="206" fill="#ef4444" font-family="sans-serif" font-size="11" font-weight="700">Hard stop: Human only</text>
+  </g>
+
+  <!-- Bottom: Multi-Agent Presheaf Colimit & Verification Gate -->
+  <g transform="translate(50, 380)">
+    <rect width="1000" height="260" fill="#0f172a" stroke="#334155" stroke-width="1.5" rx="12" filter="url(#shadow3)"/>
+    <rect x="15" y="15" width="970" height="35" fill="url(#gateGrad)" rx="6"/>
+    <text x="500" y="38" fill="#ffffff" font-family="system-ui, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Verification Gate &amp; Residual Harmonic Optimization</text>
+
+    <rect x="30" y="65" width="280" height="170" fill="#1e293b" stroke="#10b981" rx="8"/>
+    <text x="170" y="90" fill="#34d399" font-family="system-ui, sans-serif" font-size="13" font-weight="600" text-anchor="middle">Presheaf Colimit (colim ω_i)</text>
+    <text x="45" y="120" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Merges parallel worker state</text>
+    <text x="45" y="145" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Univalent merge witness</text>
+    <text x="45" y="170" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Checks convex L1 norm</text>
+    <text x="45" y="205" fill="#38bdf8" font-family="monospace" font-size="11">Φ₁(colim ω_i) → Φ_min</text>
+
+    <line x1="320" y1="150" x2="370" y2="150" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+    <rect x="380" y="65" width="280" height="170" fill="#1e293b" stroke="#10b981" rx="8"/>
+    <text x="520" y="90" fill="#34d399" font-family="system-ui, sans-serif" font-size="13" font-weight="600" text-anchor="middle">Contract Boundary Check</text>
+    <text x="395" y="120" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Rejects uncontracted APIs</text>
+    <text x="395" y="145" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Blocks Placebo Residuals</text>
+    <text x="395" y="170" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Validates duality gaps</text>
+    <text x="395" y="205" fill="#34d399" font-family="monospace" font-size="11">Duality Gap &lt; ε_tol</text>
+
+    <line x1="670" y1="150" x2="720" y2="150" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+    <rect x="730" y="65" width="240" height="170" fill="#1e293b" stroke="#10b981" rx="8"/>
+    <text x="850" y="90" fill="#34d399" font-family="system-ui, sans-serif" font-size="13" font-weight="600" text-anchor="middle">EstateCatalogV3 Emission</text>
+    <text x="745" y="120" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Epoch incremented</text>
+    <text x="745" y="145" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• CatalogDigest locked</text>
+    <text x="745" y="170" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="11">• Outbox events appended</text>
+    <text x="745" y="205" fill="#38bdf8" font-family="monospace" font-size="11">CatalogCompiledV3</text>
+  </g>
+</svg>

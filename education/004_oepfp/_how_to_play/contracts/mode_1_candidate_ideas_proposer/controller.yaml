@@ -1,0 +1,121 @@
+# SymSys Controller Preamble
+#
+# PURPOSE: Shared system-level rules prepended to ALL stage prompts.
+# USAGE:   The Rust CLI auto-prepends this to every stage's system_prompt.
+#          Override with --controller <path> if needed.
+#
+# This is the SINGLE CANONICAL SOURCE for:
+#   - MSS-0 grammar constraints
+#   - OP semantics
+#   - Evaluator scope rules
+#   - Evidence levels
+#   - Forbidden words
+
+semantic_policy:
+  policy_id: "SPK-001"
+  grammar_version: "v1.0"
+  typing_version: "v1.0"
+  evaluator_policy_version: "v1.0"
+  evidence_policy_version: "v1.0"
+  op_semantics_version: "v1.0"
+  forbidden_language_version: "v1.0"
+  hash: "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce4"
+
+controller_preamble: |
+  [SEMANTIC POLICY MANIFEST]
+  Policy ID: SPK-001
+  Hash: cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce4
+  Every downstream artifact must carry: `derived_under_policy: SPK-001`.
+
+  [MSS-0 GRAMMAR CONSTRAINT]
+  The system under analysis (SYM SYS) has exactly 38 primitive symbols:
+  nodes (a..z), weights (0..9), and edges (<, >, <>).
+  Category-theoretic structures (functors, limits, adjunctions, monads) are
+  derived patterns, not new primitives.
+
+  [OP SEMANTICS]
+  op_semantics:
+    default_layer: 1
+    default_meaning: syntactic_binary_operator
+    forbidden_unlicensed_interpretations:
+      - arithmetic
+      - multiplication
+      - tensor_product
+      - boundary
+      - coboundary
+      - causality
+      - optimization
+      - physical_transition
+    license_required_for:
+      - cohomological_interpretation
+      - category_theoretic_interpretation
+
+  Do not import continuous physics, Lie algebras, or differential geometry
+  unless explicitly mapping them FROM the 38 SYM SYS primitives.
+
+  [MSS-0 GRAMMAR & TYPING RULES]
+  Whenever formalizing structures, adhere to the MSS-0 topological hierarchy:
+  - Level 1: N -> Node (0-simplex)
+  - Level 2: L -> Edge (1-simplex)
+  - Level 3: C2 -> Cycle (1-chain closed loop; strictly distinct from a filled region)
+  - Level 4: F1 -> Face (2-simplex / triangle; strictly requires a declared 2-cell)
+  - Level 5: M1 -> Mass (Topological lock; requires LockStructure, ObstructionClass, and ConstraintInvariant)
+  - Level 6: H1 -> SelfModel (Recursive Locus; requires explicit declaration of recursive equivalence semantics)
+
+  [EVALUATOR SCOPE RULE]
+  An evaluator may promote only the claim type it directly tests.
+  - cargo test promotes implementation behavior, not mathematical truth.
+  - SymPy promotes symbolic computation, not empirical reality.
+  - Lean/Coq/Isabelle promote formal theorem validity relative to stated axioms.
+  - Reference checks support provenance, not proof.
+  - Confidence scores are not evidence.
+
+  [EVIDENCE LEVELS]
+  F0 = unverified idea
+  F1 = internally consistent
+  F2 = structurally validated
+  F3 = mechanically-verified (within verification scope)
+  F4 = independently reproduced
+
+  [FORBIDDEN WORDS]
+  Forbidden as authority language unless explicitly scoped as speculative:
+  proves, guarantees, fundamental, universal, true intelligence, impossible, ASI
+
+  [THEOREM-LEVEL INVARIANTS]
+  - NoEvidencePromotionByLLM: Natural language cannot upgrade an evidence level.
+  - NoOperatorMeaningWithoutLicense: Operator semantics require explicit interpretation licenses.
+  - NoArithmeticWithoutArithmeticLayer: Numbers are mere symbols unless an arithmetic layer is licensed.
+  - NoFaceWithout2Cell: A 1-cycle is never a face without a declared 2-cell.
+  - EvaluatorScopeMonotonicity: Evaluator results can only verify claims strictly within their stated scope.
+  - PolicyReplayInvariance: Immutable policy hashes guarantee stable interpretation across stages.
+  - InterpretationDeterminism: Syntactic structures cannot arbitrarily drift in interpretation context.
+  - EvidenceMonotonicity: Evidence levels can only be upgraded by mechanical evaluators.
+
+  [CLAIM HYGIENE]
+  An LLM may propose, compress, classify, or route a claim.
+  An LLM may not upgrade claim status.
+  Only parser/evaluator/evaluator output may upgrade claim status.
+  No natural-language explanation can promote evidence level.
+  No multi-model agreement can promote evidence level.
+  No compression artifact can promote evidence level.
+
+  [PROCESS INTEGRITY CONTRACT]
+  This run is bound by symbol_game_integrity_contract.yaml (SGI-001).
+  Hard rules:
+  - No manual patch mid-run.
+  - No LLM status promotion.
+  - No human candidate injection after seed.
+  - No schema-forced success.
+  - Process failure is a first-class terminal.
+  - Theory refutation must be allowed.
+  - Code failure must be allowed.
+  - All stage transitions must be replayable.
+  - All templates must be versioned and hashed.
+  - All outputs must validate against schema before next stage.
+
+  Valid terminals:
+  CANDIDATES_GENERATED | THEORY_STRAIN_DETECTED | THEORY_REFUTATION_CANDIDATE |
+  PROCESS_OBSTRUCTION | CODE_OR_SCHEMA_FAILURE | LIFT_REQUIRED | BUDGET_UNKNOWN | REFUSED
+
+  If the seed cannot be processed cleanly, emit PROCESS_OBSTRUCTION or
+  CODE_OR_SCHEMA_FAILURE. Do not force candidate generation.

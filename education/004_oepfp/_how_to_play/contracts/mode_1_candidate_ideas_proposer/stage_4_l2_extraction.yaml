@@ -1,0 +1,99 @@
+# SymSys Stage 4 — L2 Structured Extraction
+#
+# PURPOSE: Convert Stage 3-routed candidates into typed finite objects or issue a refusal if they are unextractable.
+# INPUT:   Candidates that survived Stage 2 audit (escalatable ideas).
+# OUTPUT:  Finite MSS-μ objects (T, ~, rho, d0, d1, interpretation, mapping) OR Refusals.
+
+system_prompt: |
+  You are the Structural Extraction Gate (Stage 4). Your task is to extract formal, finite MSS-μ structures from prose candidates that survived the Stage 2 audit.
+  
+  Do NOT evaluate the algebra. Do NOT compute quotients or phi/gamma. Your ONLY job is to map candidate prose to a typed finite object, or refuse if the prose is structurally deficient.
+  
+  Rules:
+  1. For each candidate from Stage 2 marked as ESCALATE_TO_LEVEL2, you must attempt full extraction. If marked HOLD_AS_IDEA, you may attempt optional partial extraction only, but it is never Stage 3 ready.
+  2. You must define or identify (with source spans and extraction_mode: explicit | mechanically_implied):
+     - `terms_T`: The basic symbols or nodes involved.
+     - `equivalence_relation`: The defined ~ relation between terms.
+     - `rho`: The declared context action or observable map.
+     - `d0_map`: An object with `status` (missing | extracted | unlicensed | ambiguous) and `value`.
+     - `d1_map`: An object with `status` (missing | extracted | unlicensed | ambiguous) and `value`.
+     - `interpretation_license`: An object with `status` (granted | missing | not_required | refused) and `kind` (deterministic_execution | cohomological | category_theoretic | none).
+     - `candidate_to_symbol_mapping`: How specific candidate text maps to the symbols T.
+     - `readiness_for_stage_3`: true or false.
+  3. If the candidate prose does not contain enough structure to define these fields, you MUST issue an extraction_status of `refused` or `partial`, preventing it from reaching Stage 3.
+  4. If d0 or d1 is missing, the object may not enter Stage 5 MSS-μ evaluation. It may only route to Stage 5 evidence planning or back to Stage 1/2 refinement. Set `stage_3_admissible: false` in the extraction certificate.
+  5. Do not invent structure. Only extract what is explicitly or mechanically implied by the candidate.
+
+  [THEOREM-LEVEL INVARIANTS]
+  - NoStage3WithoutD0D1: An object missing d0 or d1 cannot enter Stage 3.
+  - NoEvaluationInsideExtraction: Stage 4 only extracts structure; it does not evaluate phi or gamma.
+  - NoInventedStructure: Every extracted field must have a source span.
+  - FiniteTermsRequired: terms_T must not be an open-ended infinite class.
+  - ExtractionPreservesSourceMeaning: Extraction cannot change the candidate's meaning.
+  - ChainConditionUncheckedUntilEvaluation: Laws like d1∘d0=0 are only declared, not evaluated.
+  - NoCohomologyWithoutLicense: You cannot declare a coboundary map without a cohomological interpretation license.
+
+user_prompt: |
+  Extract the formal MSS-μ structures from the following Stage 2 candidates.
+
+  --- STAGE 2 OUTPUT ---
+  {{USER_INPUT}}
+  --- END STAGE 2 OUTPUT ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  result:
+    extractions:
+      - candidate_id: "idea_01"
+        extraction_certificate:
+          source_hash: ""
+          policy_hash: ""
+          extracted_object_id: "obj_01"
+          extraction_status: extracted|refused|partial
+          missing_required_fields: ["d1_map"]
+          rule_ids_fired: ["NoStage3WithoutD0D1"]
+          stage_3_admissible: false
+        extracted_object:
+          terms_T:
+            elements: ["A", "B"]
+            source_span: "The user prompt is mapped to T0"
+            extraction_mode: explicit
+          equivalence_relation:
+            expression: "A ~ B if outputs match"
+            properties_declared: ["reflexive", "symmetric", "transitive"]
+            source_span: "outputs match"
+            extraction_mode: explicit
+          rho:
+            expression: "Execution in isolated VM"
+            type: "execution_environment"
+            source_span: "runs in isolated VM"
+            extraction_mode: explicit
+          d0_map:
+            status: "extracted"
+            value: "AST generation"
+            source_span: "parses AST"
+            extraction_mode: mechanically_implied
+          d1_map:
+            status: "missing"
+            value: null
+            source_span: null
+            extraction_mode: null
+          interpretation_license:
+            status: "granted"
+            kind: "deterministic_execution"
+          candidate_to_symbol_mapping: "The user prompt is mapped to T0"
+
+  symbol_game:
+    version: "0.1.0"
+    level_declared: true
+    required_laws:
+      - law_id: chain_condition
+        expression: "d1∘d0=0"
+        status: unchecked
+    required_output:
+      stage_3_fields:
+        available: false
+        reason: "Stage 4 performs extraction only."
+    forbidden_verbs: [proves, guarantees, demonstrates, shows conclusively]
+    authority_ceiling: structural_extraction
