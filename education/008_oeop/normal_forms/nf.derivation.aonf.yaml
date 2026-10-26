@@ -1,0 +1,153 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: form_contract
+identity:
+  id: nf.derivation.aonf
+  name: Active Obstruction Normal Form
+  short_name: AONF
+  version: v0
+  status: draft
+  family: derivation
+  theory_status: established
+  contract_status: draft
+  verification_status: executable
+classification:
+  hierarchy_level: form
+  subject_kind:
+  - obstruction_claim
+  - repair_family
+  - extension_family
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: acting at an obstruction that was never shown to be active, or selecting
+    one arm of a tie without declaring the selection
+  preserves_invariant: at an active obstruction the menu is exactly two arms, remove the obstruction
+    or construct structure, and a tie between them stays a tie
+  protected_skeleton:
+  - activity_predicate
+  - repair_family
+  - exhaustion_certificate
+  - extension_family
+  - selection_record
+  erased_structure: []
+  non_claims:
+  - does not treat a proposal as an execution; proposing an extension is gated separately
+    from performing one
+  - does not select between tied arms; a tie is recorded as a tie and the selection stays
+    absent
+  - does not treat a refusal as a terminal; a refusal is inert and a terminal absorbs
+  - does not act when any activity conjunct is unverified; the menu is then silent
+  - does not imply authorization
+quadrilateral:
+  qualifies_as_true_normal_form: false
+  qualification_gap: no_project_join_theorem
+  anomaly_exclusion: an arm taken before the obstruction is shown active, or a tie broken
+    with no recorded declaration
+  lossless_join:
+    status: not_a_relational_decomposition
+    statement: no project-join theorem is claimed
+  dependency_preservation:
+    status: menu_and_gate_preserved
+    statement: the two-arm menu and the separation of proposal from execution stay intact
+  syntactic_decision:
+    status: declaration_decidable
+    statement: the menu is read from the recorded conjuncts and the declared families
+activity_predicate:
+  conjuncts:
+  - retained
+  - observer_zero
+  - guarded
+  rule: all three conjuncts hold, and each is recorded separately
+  independence: no conjunct is implied by the other two
+declarations_required:
+- activity_predicate
+- repair_family
+- exhaustion_certificate
+- extension_family
+- selection_policy
+- cost_measure
+evidence_required:
+- activity_conjunct_status
+- repair_family_membership
+- exhaustion_status_at_the_same_level
+- extension_proposal_membership
+- selection_record
+validation_criteria:
+- the obstruction is shown active before any arm is read, and a missing conjunct makes the
+  menu silent
+- the same-level repair family is nonempty, or same-level exhaustion is certified and the
+  extension proposal family is nonempty
+- a proposal is recorded as a proposal and is not executed by the same act
+- when both arms are constructible and no declared invariant separates them, the selection
+  is recorded as absent
+- a selection, when made, names the further declaration that made it
+- a refusal is recorded as inert and does not absorb the run
+proof_obligations:
+- id: aonf.two_rule_at_an_active_obstruction
+  status: upstream_theorem
+  ref: 19L57G1
+  section: lean4/Derivation/PrimitivePassage.lean
+- id: aonf.proposal_is_not_execution
+  status: upstream_theorem
+  ref: 19L57G1
+  section: lean4/Derivation/PrimitivePassage.lean
+- id: aonf.extension_resolves
+  status: upstream_theorem
+  ref: 19L57G1
+  section: lean4/Derivation/PrimitivePassage.lean
+- id: aonf.refusal_inert_terminal_absorbing
+  status: upstream_theorem
+  ref: 19L57G1
+  section: lean4/Derivation/PrimitivePassage.lean
+- id: aonf.station_order_is_supplied_not_derived
+  status: declared_upstream
+  ref: 19L57G1
+  section: paper/primitive_difference_passage.md
+terminal_routes:
+- Repair
+- Extend
+- Tie
+- Silent
+- Refuse
+- Terminal
+- Escalate
+certification:
+  certificate_required: true
+  certificate_kind: passage_certificate
+  obstruction_class_required: true
+  loss_ledger_required: true
+  verifier_required: true
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: an arm is taken although one activity conjunct was never checked
+  diagnosis: the obstruction was not shown active, so the menu was silent
+  terminal: Silent
+- symptom: one of two equally admissible arms is taken with no reason recorded
+  diagnosis: a tie was broken by position rather than by a declaration
+  terminal: Tie
+- symptom: an extension is performed by the act that proposed it
+  diagnosis: proposal and execution were not separately gated
+  terminal: Refuse
+- symptom: a refusal ends the run
+  diagnosis: refusal treated as absorbing, which is the behaviour of a terminal
+  terminal: Terminal
+examples:
+- ref: 19L57G1
+  section: paper/primitive_difference_map.md
+  note: the two-rule stated at the first active obstruction, under declared hypotheses
+references:
+- 19L/PIN.md
+- ./nf.derivation.obnf.yaml
+- ./README.md
+schema_ref: ./normal_form_contract_schema.yaml
+terminal_route_map:
+  Repair: Preserve
+  Extend: Preserve
+  Tie: Preserve
+  Silent: Preserve
+  Refuse: Refuse
+  Terminal: Preserve
+  Escalate: Preserve

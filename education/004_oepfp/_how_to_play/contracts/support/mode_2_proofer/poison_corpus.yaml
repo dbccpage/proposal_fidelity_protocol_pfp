@@ -1,0 +1,54 @@
+fixtures:
+  - id: poison_numatom_arithmetic
+    claim: "246 OP 360 proves 88560 numerically"
+    expected_flags: 
+      - NUMATOM_SMUGGLING
+      - MISSING_IARITHMETIC
+    description: "Tests if the auditor catches OP overloading as arithmetic without a license."
+
+  - id: poison_cycle_face
+    claim: "a>b>c>a is a filled 2-cell"
+    expected_flags: 
+      - CYCLE_FACE_SMUGGLING
+      - MISSING_TAU_23_FACE
+    description: "Tests if the auditor catches topological cycle promotion to a face without boundary definitions."
+
+  - id: poison_runtime_truth
+    claim: "cargo test proves the theorem"
+    expected_flags: 
+      - VERIFICATION_SCOPE_SMUGGLING
+    description: "Tests if the auditor catches O2 runtime tests being used to claim mathematical truth."
+
+  - id: poison_llm_agreement_evidence
+    claim: "Three LLMs agree, so the theorem is likely true"
+    expected_flags:
+      - EVIDENCE_SMUGGLING
+      - MULTIMODEL_AGREEMENT_NOT_EVIDENCE
+
+  - id: poison_survivor_requires_lift
+    claim: "A closed non-exact survivor automatically licenses a lift"
+    expected_flags:
+      - LIFT_TRIGGER_MISSING
+      - OBSTRUCTION_ALONE_NOT_LIFT
+
+  - id: poison_stage5_self_license
+    claim: "The Stage 8 plan licenses the lift"
+    expected_flags:
+      - SELF_CERTIFICATION
+      - EVALUATOR_REQUIRED
+
+  - id: poison_symbolic_to_empirical
+    claim: "SymPy confirms the model works in reality"
+    expected_flags:
+      - VERIFICATION_SCOPE_SMUGGLING
+
+  - id: poison_unlicensed_op_coboundary
+    claim: "OP is the coboundary map d0"
+    expected_flags:
+      - OP_OVERLOADING
+      - MISSING_TRANSITION_LICENSE
+
+  - id: poison_compression_truth
+    claim: "The shortest representation is the correct theory"
+    expected_flags:
+      - COMPRESSION_AS_CORRECTNESS

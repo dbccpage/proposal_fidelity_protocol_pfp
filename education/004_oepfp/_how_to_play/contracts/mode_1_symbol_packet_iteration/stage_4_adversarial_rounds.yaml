@@ -1,0 +1,99 @@
+# Symbol Packet Iteration Engine — Stage 4: Adversarial Rounds (v0.2)
+#
+# PURPOSE: Stress-test descent audit results from 6 distinct perspectives.
+
+stage_id: stage_4_adversarial_rounds
+stage_number: 4
+input_artifact: descent_audit_packet
+output_artifact: adversarial_rounds_packet
+absorbed_stages:
+  - adversarial
+  - countermodel_refinement
+packet_families_used:
+  - claim_decomposition
+  - response_obstruction
+  - response_repair
+
+system_prompt: |
+  You are the Stage 4 Adversarial Rounds of the Symbol Packet Iteration Engine.
+  Your job is to ruthlessly attack the descent audit outputs from 6 mandatory perspectives.
+
+  Attack Roles & Criteria:
+    - Round A (Formalism attack): Identify smuggled-in structures (carrier, type, witness, codomain, equality, observer).
+    - Round B (Authority attack): Detect un-descent claims treated as terminal/proven without a formal descent path.
+    - Round C (Prompt-bias attack): Identify framing preferences, emotional bias, or over-description.
+    - Round D (Product attack): Check utility to an engineer trying to write Lean or Rust.
+    - Round E (Next-prompt attack): Formulate the strategic pivot for the next recursive iteration.
+    - Round F (Depth/Expressivity attack): Does this result add new structure, or merely add more symbolic wrapping at the same S(n)? If it needs new symbols, what lift is required?
+
+  Scoring & Severity rules:
+    - You MUST assign a severity to every attack: P0 (critical blocking defect), P1 (major issue), P2 (minor issue), P3 (nit/warning).
+    - You MUST declare whether the audited design survives the attack: true, false, or partial.
+    - Track iteration metadata (increment depth by 1).
+
+user_prompt: |
+  Descent Audit:
+  {{STAGE_3_OUTPUT}}
+
+  ---
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  derived_under_policy: SPK-002
+  schema_version: symbol_packet_iteration.v0.2
+  stage_id: stage_4_adversarial_rounds
+  packet_id: "SPK-ADV-{{ID}}"
+  parent_packet_id: "SPK-AUD-{{ID}}"
+  seed_question: ""
+  policy_boundary: "SPK-002"
+  boundary_check:
+    local_valid: true|false
+    global_valid: true|false
+    boundary_violation: true|false
+    preserved:
+      - seed_question
+      - policy_boundary
+      - evidence_ceiling
+      - terminal_target
+      - allowed_transforms
+  adversarial_rounds:
+    round_a_formalism:
+      attack: "Analysis of smuggled structures (carrier, type, witness, codomain, etc.)."
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      obligations: []
+    round_b_authority:
+      attack: "Analysis of terminal claims without descent."
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      unverified_claims: []
+    round_c_prompt_bias:
+      attack: "Analysis of prompt-level preferences or over-description."
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      detected_prompt_biases: []
+    round_d_product:
+      attack: "Utility analysis. How does this help a user solve real problems?"
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      user_value:
+        target_user: "The specific engineer or proof developer targeted."
+        use_case: "The precise problem being addressed."
+        failure_if_missing: "What fails if this packet is missing."
+    round_e_next_prompt:
+      attack: "Strategic pivot. What direction must the next prompt focus on to force a better answer?"
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      required_next_test: "The next concrete mechanization/verification test."
+    round_f_depth_expressivity:
+      attack: "Does this result add new structure, or merely add more symbolic wrapping at the same S(n)? If it needs new symbols, what lift is required?"
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      required_lift: "The lift required (e.g. S(n) to S(n+1)) if new symbols are needed."
+  iteration:
+    run_id: "UUID"
+    parent_packet_id: "SPK-AUD-{{ID}}"
+    current_packet_id: "SPK-ADV-{{ID}}"
+    next_packet_id: "SPK-{{ID}}"
+    depth: 4
+    max_depth: 5

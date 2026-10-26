@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "benchmark": "track_a_video_1_naked_prompt",
+  "authority_effect": "None",
+  "config": {
+    "provider": "openrouter",
+    "model": "openai/gpt-4o-mini",
+    "backend": "openrouter:openai/gpt-4o-mini:direct",
+    "style": "direct",
+    "n_items": 3,
+    "n_relations": 3,
+    "seed": 1
+  },
+  "instance": {
+    "items": [
+      "A",
+      "B",
+      "C"
+    ],
+    "edges": [
+      [
+        "A",
+        "B",
+        1
+      ],
+      [
+        "B",
+        "C",
+        2
+      ],
+      [
+        "A",
+        "C",
+        2
+      ]
+    ],
+    "claims": [
+      [
+        "A",
+        "B",
+        7
+      ],
+      [
+        "B",
+        "C",
+        3
+      ],
+      [
+        "A",
+        "C",
+        12
+      ]
+    ],
+    "poisoned": true,
+    "ground_truth": "CONTRADICTION"
+  },
+  "host_verdict": "CONTRADICTION",
+  "model_verdict": "CONTRADICTION",
+  "model_raw": "CONTRADICTION",
+  "prompt": "You are given integer ranks r(X) for the items: A, B, C.\nAll of the following constraints are claimed to hold simultaneously:\n  r(B) - r(A) = 7\n  r(C) - r(B) = 3\n  r(C) - r(A) = 12\n\nCan a single integer assignment of ranks satisfy ALL of these constraints at once? Answer with exactly one word: CONSISTENT or CONTRADICTION.",
+  "laundered": false,
+  "timestamp": "2026-09-18T22:20:07Z",
+  "self_digest": "1f93aba738eab7dfcf5eafa6007b792a7f17ab11d5f8bbce401189130fa34bc9"
+}

@@ -1,0 +1,59 @@
+# SymSys Stage 6 — Adversarial Countermodel
+#
+# PURPOSE: Stress-test proposed candidates and quotient spaces against adversarial contexts.
+# INPUT:   Candidates that survived Stage 5 MSS-μ evaluation.
+# OUTPUT:  Countermodels, semantic drift findings, and valid topological repairs.
+
+system_prompt: |
+  You are the Stage 6 Countermodel Finder. Your duty is to break the proposed quotient space Q = T / ~ and the classifications from Stage 3.
+
+  Rules:
+  1. Search for a separating context witness: w = (x, y, c) such that x ~ y but rho(c)(x) ≁ rho(c)(y).
+     - You must test against ALL declared rho(c) actions.
+  2. If you find a separating context, the topology is drifting. You must either:
+     - Downgrade the claim to Open (unresolved drift).
+     - Propose a dynamic repair edge (t_i, t_j) to fix the drift.
+  3. QUOTIENT SEPARABILITY GATE: If you propose a dynamic repair (t_i, t_j), you MUST mathematically justify that it satisfies Theorem 17.1a: d1(t_i) == d1(t_j). If you cannot justify this, you CANNOT propose the repair.
+  4. Provide a final verdict for each tested class: SURVIVES | DRIFT_DOWNGRADE | REPAIR_PROPOSED | KILLED.
+
+user_prompt: |
+  Perform adversarial countermodeling on the following Stage 5 classifications.
+
+  --- STAGE 3 OUTPUT ---
+  {{STAGE_5_OUTPUT}}
+  --- END STAGE 3 OUTPUT ---
+
+  --- ORIGINAL STAGE 1 CANDIDATES ---
+  {{STAGE_5_OUTPUT}}
+  --- END ORIGINAL ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  adversarial_results:
+    - class_rep: t0
+      verdict: SURVIVES | DRIFT_DOWNGRADE | REPAIR_PROPOSED | KILLED
+      separating_context_found:
+        found: true|false
+        witness: [x, y, c]
+      proposed_repair:
+        edge: [t_i, t_j]
+        quotient_separability_justification: "d1(t_i) = ... and d1(t_j) = ..., therefore d1 splits."
+      final_classification: Ex | Surv | Open
+
+  symbol_game:
+    version: "0.1.0"
+    level_declared: true
+    chain_condition: "d1∘d0=0"
+    required_output:
+      trichotomy_class: [Ex, Surv, Open]
+      witness_supplied: true
+      phi_value: 0.0
+      gamma_value: 0.0
+      lift_contract_issued: false
+      hallucination_estimate: 0.0
+      difficulty: medium
+      three_key_tests: []
+      reliability: 2
+    forbidden_verbs: [proves, guarantees, demonstrates, shows conclusively]
+    authority_ceiling: lift_contract

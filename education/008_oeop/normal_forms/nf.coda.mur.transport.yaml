@@ -1,0 +1,118 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.coda.mur.transport
+  name: CODA-MUR Representation Transport Contract
+  short_name: "coda_mur"
+  version: v1
+  status: draft
+  family: coda
+  theory_status: proposed
+  contract_status: draft
+  verification_status: absent
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - representation_transport
+  data_posture: in_motion
+  mathematical_posture: operational
+purpose:
+  excludes_anomaly: gauge drift across representations, unverified descent divergence,
+    bypassed target validation, unrecorded field erasure, and unauthorized semantic laundering
+  preserves_invariant: "descent compatibility witness chi_F: D_target F => bar F D_source
+    specifying exact equality, natural isomorphism, or controlled descent defect, with
+    target verifier attestation and conditional loss logging"
+  protected_skeleton:
+  - source_representation
+  - target_representation
+  - transport_functor_F
+  - finite_core_action_bar_F
+  - descent_compatibility_witness_chi_F
+  - compatibility_law_type
+  - loss_ledger_policy
+  erased_structure:
+  - raw_source_syntax_details
+  non_claims:
+  - does not authorize a target representation without active verifier acceptance
+  - does not treat declaring chi_F as verifying its components; the compatibility
+    law (equality, isomorphism, or bounded loss) must be explicitly witnessed and checked
+  - a loss ledger records erased distinctions; it does not turn a lossy projection
+    into an isomorphic preservation
+  - does not hide erased distinctions
+declarations_required:
+- source_representation: source schema and data domain
+- target_representation: target schema and encoded domain
+- transport_F: "functorial representation mapping F: Rep_source -> Rep_target"
+- finite_core_action_bar_F: descent action on core representations
+- descent_compatibility_witness_chi_F: "2-cell witness relating descent on target with transported descent on source"
+- compatibility_law_type: enum {strict_equality, natural_isomorphism, controlled_defect_bound}
+- loss_ledger_policy: rules for logging unmapped fields
+evidence_required:
+- transport_certificate: signature and attestation of transport mapping
+- chi_F_witness: formal verification of the commutation square under declared compatibility law
+- Loss_F_when_distinctions_are_erased: loss ledger entries whenever fields are dropped
+- target_verifier_record: active verification output from target environment verifier
+validation_criteria:
+- chi_F_law_verified: descent compatibility square commutes up to declared law (strict equality or isomorphism)
+- lossy_transport_requires_Loss_F: whenever distinctions are erased, an authorized loss ledger entry must be emitted with trigger coda_mur.unmapped_field_drop
+- target_verifier_must_not_be_bypassed: target representation must pass active verifier acceptance
+terminal_routes:
+- TransportOk
+- DegradedTransportWithLoss
+- AuthorityLaundering
+- LossLedgerMissing
+- TransportViolation
+- Unsupported
+terminal_route_map:
+  TransportOk: Preserve
+  DegradedTransportWithLoss: Quarantine
+  AuthorityLaundering: Refuse
+  LossLedgerMissing: Refuse
+  TransportViolation: Reject
+  Unsupported: Unsupported
+extensions:
+  condition_to_local_route_map:
+    verified_lossless_target_accepted: TransportOk
+    verified_lossy_with_ledger: DegradedTransportWithLoss
+    verifier_bypassed: AuthorityLaundering
+    loss_detected_without_ledger: LossLedgerMissing
+    commutation_square_violated: TransportViolation
+certification:
+  certificate_required: true
+  certificate_kind: transport_certificate
+  obstruction_class_required: true
+  loss_ledger_required: conditional
+  loss_ledger_trigger_id: coda_mur.unmapped_field_drop
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  formal_statement: "Representation transport contract asserting verified descent compatibility
+    chi_F: D_target F => bar F D_source, mandatory target verifier execution, and refusal
+    of un-ledgered loss or bypassed verification."
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_not_a_relational_project_join
+    anomaly_exclusion: gauge drift, unverified descent divergence, bypassed target
+      validation, and unrecorded loss
+    lossless_join:
+      status: declared_reconstruction
+      statement: representation transport with verified descent compatibility
+    dependency_preservation:
+      status: declared_with_the_invariant
+      statement: The preserved invariant stays on the declared schema. This form does
+        not state a functional-dependency projection of a flat relvar decomposition.
+    syntactic_decision:
+      status: declaration_decidable
+      statement: The check reads the declared constraints and validation criteria.
+        One unrecorded runtime image is not the decider.
+canonical_terminal_map:
+  TransportOk: Preserve
+  DegradedTransportWithLoss: Quarantine
+  AuthorityLaundering: Refuse
+  LossLedgerMissing: Refuse
+  TransportViolation: Reject
+  Unsupported: Unsupported
+schema_ref: ./normal_form_contract_schema.yaml

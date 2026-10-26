@@ -1,0 +1,218 @@
+schema_version: omega.contract.v1
+contract_id: urn:omega:products:llm_symbol_game_interface:v1.0.0
+title: LLMSymbolGameInterface
+kind: product_contract
+status: mathematical_wip
+layer: 07_products
+role: RepresentationBoundary
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - LLMAdapterContract
+    - SymbolGameContract
+    - PacketContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the interface boundary where LLM candidate output enters the Symbol
+    Game.
+
+
+    The LLMSymbolGameInterface receives parsed candidate output from the LLM Adapter and submits it to
+
+    the Symbol Game as untrusted candidate material. The interface strips any authority claims present
+
+    in LLM output, records LLM provenance for auditability, and checks intake preconditions for grammar
+
+    declaration, token budget, candidate envelope shape, and parseability before forwarding to the
+
+    Symbol Game.
+
+
+    These intake checks do not validate symbol correctness or grant grammar authority. Symbol Game owns
+
+    grammar parsing and local symbol-rule validation. This interface only ensures the candidate is fit
+
+    for Symbol Game intake.
+
+    '
+  non_role: &id002
+  - certification
+  - validation
+  - evaluation
+  - terminalization
+  - execution
+  - transition authorization
+  - action licensing
+  - authority upgrade
+  - operator classification
+  - evidence authority creation
+  - grammar authority creation
+  - symbol authority creation
+  - policy interpretation
+  - tool/oracle authority claim
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate, terminalize,
+
+      authorize transitions, execute transitions, classify operators, define grammar authority, define
+
+      symbol authority, claim tool/oracle authority, or upgrade evidence authority.
+
+
+      LLM output entering the Symbol Game must pass through the LLMAdapter and this interface as
+
+      untrusted candidate material.
+
+
+      No LLM output may bypass this interface to enter the Symbol Game as certified, validated, checked,
+
+      terminal, licensed, or authoritative material.
+
+      '
+  classification:
+    subsystem: Product Layer
+    role: Interface boundary between LLM Adapter output and Symbol Game input.
+    classification: 'Product layer -- LLMSymbolGameInterface is NOT an operator in the five-effect-class
+      algebra (E, I, C, R, M). It is an intake interface that bridges two product boundaries: LLM Adapter
+      output and Symbol Game input. It strips, tags, and forwards candidate material.'
+  structural_representation:
+    llm_symbol_game_intake:
+      struct_name: LlmSymbolGameIntake
+      fields:
+      - name: intake_id
+        type: IntakeId
+      - name: packet_id
+        type: PacketId
+      - name: candidate_id
+        type: CandidateId
+      - name: candidate_type
+        type: CandidateType
+      - name: grammar_ref
+        type: GrammarId
+      - name: alphabet_ref
+        type: AlphabetId
+      - name: request_hash
+        type: Hash256
+      - name: raw_response_hash
+        type: Hash256
+      - name: adapter_output_ref
+        type: LlmAdapterOutputRef
+      - name: provenance_ref
+        type: WitnessId
+      - name: intake_witness_ref
+        type: WitnessId
+      - name: token_count
+        type: usize
+      - name: token_budget
+        type: usize
+      - name: intake_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+  authority_bound: 'No authority is created at this interface. LLM output enters as untrusted candidate
+    material with
+
+    EvidenceOnly intake provenance.
+
+
+    Any downstream certificate, validation result, or Symbol Game fact derives authority exclusively
+
+    from the declared downstream boundary, not from the LLM source or this interface.
+
+    '
+  no_bypass_law: "LLM-originated material MUST NOT enter Symbol Game directly.\n\nIt must pass through:\n\
+    \  LLMAdapter -> LLMSymbolGameInterface -> Packet / SymbolGame intake\n\nAny direct LLM-to-SymbolGame\
+    \ submission is refused.\n"
+  admissibility_checklist:
+  - LLM output is parseable into a known candidate type
+  - Grammar is declared in the candidate envelope
+  - Symbols are drawn from the declared alphabet
+  - Token budget is not exceeded
+  - LLM provenance metadata is attached (model_id, request_hash, adapter_version)
+  - Authority claims are absent or have been stripped
+  - Candidate type matches a Symbol Game input kind
+  refusal_conditions:
+  - unparseable LLM output
+  - undeclared grammar
+  - undeclared symbols outside allowed alphabet
+  - token budget exceeded
+  - missing LLM provenance metadata
+  - authority claims present in LLM output after stripping
+  - unknown candidate type for Symbol Game
+  - prompt/response hash mismatch
+  - malformed candidate envelope
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - certify(
+    - validate_as_authority
+    - evaluate_admissibility
+    - terminalize(
+    - authority_upgrade
+    - sign_certificate
+    - create_certificate
+    - execute_transition
+    - authorize_transition
+    - license_transition
+    - classify_operator
+    - create_grammar_authority
+    - create_symbol_authority
+    - claim_oracle_authority
+    - self_certify
+  required_tests:
+  - interface_strips_authority_claims_from_llm_output
+  - interface_records_llm_provenance
+  - interface_rejects_unparseable_output
+  - interface_rejects_undeclared_grammar
+  - interface_rejects_undeclared_symbols
+  - interface_rejects_token_budget_exceeded
+  - interface_output_is_candidate_only
+  - interface_rejects_authority_claims_in_llm_output
+  - interface_output_defaults_to_evidence_only
+  - interface_requires_llm_adapter_output_ref
+  - interface_refuses_direct_llm_to_symbol_game_bypass
+  - interface_does_not_validate_symbol_correctness
+  - interface_does_not_create_grammar_authority
+  - interface_does_not_create_symbol_authority
+  - interface_does_not_authorize_transition
+  - interface_does_not_emit_action_license
+  - interface_intake_witness_is_complete
+  - interface_records_request_and_response_hashes
+  canonical_invariant: 'LLMSymbolGameInterface is an EvidenceOnly intake boundary. It receives LLMAdapter
+    candidate output,
+
+    strips authority claims, records provenance, checks Symbol Game intake preconditions, and forwards
+
+    only untrusted candidate material. It does not validate symbol correctness, define grammar authority,
+
+    create symbol authority, certify, evaluate, license, authorize, terminalize, mutate, or execute.
+
+    '
+  legacy_metadata:
+    name: LLMSymbolGameInterface
+    role: Interface boundary between LLM candidate output and Symbol Game intake
+    classification: product
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - StructureArtifact
+    - EvidenceEnvelope
+    - Record
+    referenced_domain_kinds:
+    - WitnessEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.

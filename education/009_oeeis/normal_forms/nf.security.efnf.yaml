@@ -1,0 +1,160 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+
+identity:
+  id: nf.security.efnf
+  name: Epistemic-Fibration Normal Form
+  short_name: EFNF
+  version: v0
+  status: draft
+  family: security
+  theory_status: proposed
+  contract_status: draft
+  verification_status: executable
+
+classification:
+  hierarchy_level: form
+  subject_kind:
+    - authorization_filter
+    - temporal_view_projection
+    - permission_adapter
+  data_posture: in_motion
+  mathematical_posture: operational
+
+purpose:
+  excludes_anomaly: untyped projection drift, unverified policy adapters, conflation
+    of data time with authorization time, or treating algebraic commutation as an autonomous
+    authorization oracle
+  preserves_invariant: projection to the user view plane is soundly bound to verified
+    principal permissions and satisfies the typed temporal commutation square
+    pi_{U, t+1} o Delta_t = Delta_{U, t} o pi_{U, t} across historical states
+  protected_skeleton:
+    - principal_id
+    - data_classification_schema
+    - permission_soundness_witness
+    - temporal_projection_adapters
+    - data_timestamp
+    - authorization_decision_timestamp
+  erased_structure:
+    - physical_storage_layout
+    - partition_offsets
+  non_claims:
+    - algebraic commutation of projection and update is not an authorization oracle;
+      a trivial identity projection commutes while exposing protected fields. Commutation
+      is valid only after independent verification of permission-model soundness
+    - commutation failure indicates a discrepancy (stale projection, invalid view-update
+      adapter, or policy mutation) and does not automatically prove an information leak
+    - does not protect against side-channel timing or statistical inference attacks
+    - "does not confer execution authority; an EligibleForExecution disposition remains
+      inert until an external host authorization decision is supplied (AuthorityEffect: None)"
+
+declarations_required:
+  - principal_context: {user_id: string, role: string, authorized_clearances: list}
+  - temporal_policy_binding:
+      data_timestamp_basis: string
+      authorization_decision_timestamp: string
+      policy_evaluation_rule: evaluated_at_decision_time
+  - source_transition: Delta_t
+  - projected_view_transition: Delta_{U, t}
+  - projection_adapter: pi_{U, t}
+  - permission_soundness_witness:
+      policy_rule_id: string
+      protected_fields_redacted: list
+      allowed_fields_retained: list
+
+evidence_required:
+  - independently_verified_permission_soundness: boolean
+  - source_state_hash_t: string
+  - source_state_hash_t_next: string
+  - projected_view_hash_t: string
+  - projected_view_hash_t_next: string
+  - commutation_discrepancy_norm: rational_or_int
+
+validation_criteria:
+  - permission soundness witness is independently checked against policy before evaluation
+  - projection pi_{U, t} strictly redacts all protected fields not authorized for principal U
+  - authorization time is distinguished from historical data transaction time
+  - typed temporal square pi_{U, t+1} o Delta_t == Delta_{U, t} o pi_{U, t} evaluates with zero discrepancy
+  - any commutation failure routes to a typed discrepancy terminal without granting execution eligibility
+  - execution remains an external host act; contract output only certifies view eligibility
+
+proof_obligations:
+  - id: efnf.permission_soundness_precondition
+    status: open_proof_obligation
+    note: Independent verification that pi_U correctly implements declared authorization policy
+  - id: efnf.typed_commutation_square
+    status: theorem_shaped
+    statement: pi_{U, t+1} o Delta_t = Delta_{U, t} o pi_{U, t} holds on all valid transitions under verified sound projections
+
+terminal_routes:
+  - EligibleForExecution
+  - RejectUnauthorizedAccess
+  - StaleProjectionDetected
+  - AdapterCommutationMismatch
+  - MissingPolicySoundnessWitness
+
+terminal_route_map:
+  EligibleForExecution: Preserve
+  RejectUnauthorizedAccess: Refuse
+  StaleProjectionDetected: Recompute
+  AdapterCommutationMismatch: Quarantine
+  MissingPolicySoundnessWitness: Refuse
+
+certification:
+  certificate_required: true
+  certificate_kind: verified_sound_projection_certificate
+  obstruction_class_required: true
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+
+failure_modes:
+  - symptom: permission soundness witness is absent or fails verification
+    diagnosis: unverified projection cannot act as an authorization gate; fails closed
+    terminal: MissingPolicySoundnessWitness
+  - symptom: user context lacks clearance for requested classified attributes
+    diagnosis: explicit permission refusal on protected attributes
+    terminal: RejectUnauthorizedAccess
+  - symptom: projection fails to commute across update due to outdated policy mapping
+    diagnosis: stale projection cache; requires recomputation of projection adapter
+    terminal: StaleProjectionDetected
+  - symptom: source update and projected update produce non-matching target views
+    diagnosis: view-update adapter discrepancy or unmodeled policy shift
+    terminal: AdapterCommutationMismatch
+
+examples:
+  - ref: coda_all_universe/mssn_sn_tower/definitions.md
+    section: "3.10"
+
+references:
+  - coda_all_universe/mssn_sn_tower/definitions.md
+
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: "3.10"
+  formal_statement: >
+    A temporal query projection conforms to Epistemic-Fibration Normal Form if and only if
+    the projection pi_{U, t} is independently certified sound against policy for principal U,
+    and satisfies the typed temporal commutation condition pi_{U, t+1} o Delta_t = Delta_{U, t} o pi_{U, t}
+    across successive state transitions. Commutation without certified policy soundness is
+    inert and rejected.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_sound_view_projection_not_relational_project_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: unauthorized temporal leakage, unverified projection policies, and false-authorization by commutation
+    lossless_join:
+      status: certified_sound_projection
+      statement: sound projection filters reconstruct authorized views preserving declared access constraints
+    dependency_preservation:
+      status: temporal_square_preserved
+      statement: access control policies remain evaluable across historical query transitions
+    syntactic_decision:
+      status: schema_decidable
+      statement: policy soundness and finite commutation checks are decidable on declared schemas and transition logs
+

@@ -1,0 +1,82 @@
+# Symbol Packet Iteration Engine — Stage 2: Symbol Expansion (v0.2)
+#
+# PURPOSE: Expand the seed packet into candidate models, primitives, and identify hidden assumptions.
+
+stage_id: stage_2_symbol_expansion
+stage_number: 2
+input_artifact: seed_packet
+output_artifact: symbol_expansion_packet
+absorbed_stages:
+  - ideation
+  - L2_extraction
+packet_families_used:
+  - typed_ast
+  - operator_classification
+  - cochain_obstruction
+  - json_schema
+
+system_prompt: |
+  You are the Stage 2 Symbol Expansion of the Symbol Packet Iteration Engine.
+  Your job is to expand the structured Seed Packet into candidate models and primitives, run boundary checks, and identify hidden background assumptions and biases.
+
+  Rules:
+  1. Expand the vocabulary into explicit candidate models.
+  2. For each model, identify the structural layout and mathematical/logical relationships.
+  3. Detail the candidate primitives and identify hidden background assumptions (e.g. presupposing target/source, codomain, etc.).
+  4. Perform local/global boundary checks to ensure no unauthorized transformations of seed parameters occur.
+  5. Explicitly assess:
+     - model_bias_risk: Risk of prompt or layout bias (e.g. over-describing one model).
+     - missing_models: Alternative models that should be considered to balance the framing.
+  6. Ensure claim hygiene: do not praise models or claim completeness. Use restrained, narrow claims.
+  7. Track iteration metadata (increment depth by 1).
+
+user_prompt: |
+  Seed Packet:
+  {{STAGE_1_OUTPUT}}
+
+  ---
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  derived_under_policy: SPK-002
+  schema_version: symbol_packet_iteration.v0.2
+  stage_id: stage_2_symbol_expansion
+  packet_id: "SPK-EXP-{{ID}}"
+  parent_packet_id: "SPK-SEED-{{ID}}"
+  seed_question: ""
+  policy_boundary: "SPK-002"
+  boundary_check:
+    local_valid: true|false
+    global_valid: true|false
+    boundary_violation: true|false
+    preserved:
+      - seed_question
+      - policy_boundary
+      - evidence_ceiling
+      - terminal_target
+      - allowed_transforms
+  model_bias_risk: "Analysis of whether certain options are privileged or over-described."
+  missing_models:
+    - "A model or perspective omitted from the seed but necessary for balance."
+  models:
+    - model: "Model Name"
+      description: "Structural layout and relationships."
+      feasibility: "High|Medium|Low"
+      unresolved_assumption: "What remains unaddressed."
+      hygiene_audit: "Evaluation of potential overclaims or forbidden language."
+      primitives_declared:
+        - name: "Primitive element"
+          role: "Role of the primitive"
+      hidden_assumptions:
+        - assumption: "Presupposition required for this model to be typed."
+  expanded_primitives:
+    - element: "Primitive Name"
+      presumed_layer: "root_occurrence|representability|authority|repeatable_engagement|representation_layer|derived_structure|unknown"
+      implication: "Impact of this primitive on the overall structure."
+  iteration:
+    run_id: "UUID"
+    parent_packet_id: "SPK-SEED-{{ID}}"
+    current_packet_id: "SPK-EXP-{{ID}}"
+    next_packet_id: "SPK-AUD-{{ID}}"
+    depth: 2
+    max_depth: 5

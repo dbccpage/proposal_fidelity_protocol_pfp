@@ -1,0 +1,45 @@
+(* Proposal Fidelity Protocol (PFP) & Packet Envelope Grammar, Version 1.
+   AuthorityEffect: None. GenesisEffect: None.
+   Conforms to check_grammars.py EBNF subset. All productions defined here.
+   Encodes raw recursive packets, typed constructor packets, 6-slot frozen
+   envelopes, stealth cochain receipts (Phi1, Gamma2, Xi), and typed refusals. *)
+
+(* Master start profile *)
+pfp_statement = packet | envelope | receipt | refusal ;
+
+(* 1. Raw Recursive Wire Grammar (PKT-00) *)
+packet = ground | atom | application ;
+ground = "<>" ;
+atom = "<", word, ">" ;
+application = "op<", { packet }, ">" ;
+
+(* 2. Typed Constructor Application (Constructor Tags) *)
+typed_packet = "op<<", constructor_tag, ">", { packet }, ">" ;
+constructor_tag = "0" | "1" | "10" | "11" | "100" | "101" | "110" | "111" | "1010" | "1100" ;
+
+(* 3. PFP 6-Slot Frozen Envelope (PFP Core Specification Section 2) *)
+envelope = "envelope<", schema_id, ";", task_data, ";", protected_boundary, ";", budget, ";", candidate_payload, ";", witness_data, ">" ;
+schema_id = "schema:", word ;
+task_data = "task:", packet ;
+protected_boundary = "boundary:", packet ;
+budget = "budget:", digits ;
+candidate_payload = "candidate:", packet ;
+witness_data = "witness:", packet ;
+
+(* 4. Stealth Cochain Defect Receipt (Phi1, Gamma2, Xi) *)
+receipt = "receipt<", "phi1:", digits, ",", "gamma2:", digits, ",", "xi:", digits, ",", verification_status, ">" ;
+verification_status = "ACCEPTED" | "REFUSED" ;
+
+(* 5. Typed Refusal Codes *)
+refusal = "refusal<", refusal_code, ">" ;
+refusal_code = "ERR_UNDECLARED_CARRIER" | "ERR_COCHAIN_DEFECT" | "ERR_BUDGET_EXHAUSTED" | "NON_DESCENT" ;
+
+(* 6. Terminals and Character Sets over Sigma36 *)
+word = glyph, { glyph } ;
+glyph = lower_latin | digit ;
+digits = digit, { digit } ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+
+lower_latin = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+            | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
+            | "u" | "v" | "w" | "x" | "y" | "z" ;

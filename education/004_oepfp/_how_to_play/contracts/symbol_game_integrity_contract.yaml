@@ -1,0 +1,177 @@
+# Symbol Game Process Integrity Contract
+#
+# PURPOSE: Hard rules that prevent the Symbol Game from becoming theatre.
+#          If any of these rules are violated during a run, the run is
+#          classified as PROCESS_OBSTRUCTION and its outputs carry no
+#          evidential weight about the theory.
+#
+# GOVERNANCE: This file is versioned and hashed. Any change to this file
+#             invalidates all runs that reference a prior hash.
+#
+# STANDARD: The software process must instantiate the theory closely enough
+#           that its outputs can surprise, refute, or break the theory
+#           without human or LLM steering the result.
+
+contract_version: "1.0"
+contract_id: "SGI-001"
+
+# ---------------------------------------------------------------------------
+# Hard rules (boolean invariants, no exceptions)
+# ---------------------------------------------------------------------------
+
+integrity_rules:
+  anti_rabbit_rule:
+    no_external_realization_targets_in_core_spec: true
+    examples_to_exclude:
+      - physics groups
+      - standard-model structures
+      - consciousness claims
+      - cosmology claims
+      - speculative bridge claims
+    allowed_location: "separate realization ledger only"
+
+  no_manual_patch_mid_run:
+    rule: "No template, schema, or prompt may be edited after the seed is submitted."
+    violation_terminal: PROCESS_OBSTRUCTION
+    enforcement: "All templates must be hashed before Stage 1. Any hash mismatch at any stage halts the run."
+
+  no_llm_status_promotion:
+    rule: "No LLM output may upgrade its own evidence level or terminal status."
+    violation_terminal: PROCESS_OBSTRUCTION
+    enforcement: "Evidence level transitions are gated by evaluator artifacts, not by prose."
+
+  no_human_candidate_injection_after_seed:
+    rule: "After the seed is submitted, no human may inject, edit, or steer candidate ideas."
+    violation_terminal: PROCESS_OBSTRUCTION
+    enforcement: "The seed is frozen at submission. All subsequent outputs are machine-generated."
+
+  no_schema_forced_success:
+    rule: "The response schema must permit failure, refusal, and process obstruction as first-class terminals."
+    violation_terminal: CODE_OR_SCHEMA_FAILURE
+    enforcement: "The terminal_status enum must include at least: CANDIDATES_GENERATED, THEORY_STRAIN_DETECTED, THEORY_REFUTATION_CANDIDATE, PROCESS_OBSTRUCTION, CODE_OR_SCHEMA_FAILURE, LIFT_REQUIRED, BUDGET_UNKNOWN, REFUSED."
+
+  process_failure_must_be_first_class_terminal:
+    rule: "If the pipeline cannot process the seed cleanly, the run must emit a typed failure, not force candidate generation."
+    violation_terminal: PROCESS_OBSTRUCTION
+    enforcement: "Stage 1 must include process_integrity_check. If should_continue is false, the run halts with the declared terminal reason."
+
+  theory_refutation_must_be_allowed:
+    rule: "The LLM must be permitted to output a theory refutation candidate."
+    violation_terminal: PROCESS_OBSTRUCTION
+    enforcement: "THEORY_REFUTATION_CANDIDATE is a valid terminal. The schema must not suppress it."
+
+  code_failure_must_be_allowed:
+    rule: "If the CLI, parser, or template engine fails, the run must emit CODE_OR_SCHEMA_FAILURE, not silently retry."
+    violation_terminal: CODE_OR_SCHEMA_FAILURE
+    enforcement: "All CLI errors are logged and the run halts with a typed error."
+
+  all_stage_transitions_must_be_replayable:
+    rule: "Every stage transition must be reproducible from the frozen inputs. No side-channel data."
+    violation_terminal: PROCESS_OBSTRUCTION
+    enforcement: "Stage N+1 input = Stage N output + frozen templates + frozen controller. Nothing else."
+
+  all_prompt_templates_must_be_versioned_and_hashed:
+    rule: "Every template file used in a run must have its SHA-256 hash recorded at run start."
+    violation_terminal: PROCESS_OBSTRUCTION
+    enforcement: "The run manifest records template hashes. Post-run audit compares hashes."
+
+  all_outputs_must_be_validated_against_schema_before_next_stage:
+    rule: "Stage N output must parse against the declared response schema before Stage N+1 begins."
+    violation_terminal: CODE_OR_SCHEMA_FAILURE
+    enforcement: "The Rust parser validates YAML structure. Malformed output halts the run."
+
+# ---------------------------------------------------------------------------
+# Terminal states (exhaustive enum)
+# ---------------------------------------------------------------------------
+
+terminal_status:
+  CANDIDATES_GENERATED:
+    meaning: "Mode 1 produced candidate ideas within the declared constraints."
+    evidence_value: "F0 candidates for downstream audit."
+
+  THEORY_STRAIN_DETECTED:
+    meaning: "The seed or process exposed tension in the theory that does not yet constitute refutation."
+    evidence_value: "Diagnostic signal. Requires follow-up investigation."
+
+  THEORY_REFUTATION_CANDIDATE:
+    meaning: "The process produced a specific, testable claim that the theory is wrong."
+    evidence_value: "High-priority falsification target."
+
+  PROCESS_OBSTRUCTION:
+    meaning: "The pipeline was contaminated by manual intervention, prompt bias, or schema bias."
+    evidence_value: "Debugging artifact only. No evidential weight."
+
+  CODE_OR_SCHEMA_FAILURE:
+    meaning: "The CLI, parser, template engine, or schema prevented clean execution."
+    evidence_value: "Engineering bug report. No evidential weight about the theory."
+
+  LIFT_REQUIRED:
+    meaning: "The current carrier lacks enough certified structure to close the task."
+    evidence_value: "Valid process output. Specifies what structure is missing."
+
+  BUDGET_UNKNOWN:
+    meaning: "Finite search ended before exhaustion. Answer may exist but is not certified."
+    evidence_value: "Valid process output. Specifies budget boundary."
+
+  REFUSED:
+    meaning: "The task, data, or operator family is invalid or contradictory."
+    evidence_value: "Valid process output. Specifies refusal reason."
+
+# ---------------------------------------------------------------------------
+# Run manifest (what must be recorded for every run)
+# ---------------------------------------------------------------------------
+
+run_manifest_requirements:
+  frozen_seed_hash: "SHA-256 of the theory seed file"
+  frozen_controller_hash: "SHA-256 of controller.yaml"
+  frozen_template_hashes:
+    - stage_id: "1"
+      template_file: "stage_1_compression_gate.yaml"
+      sha256: ""
+    - stage_id: "2"
+      template_file: "stage_2_ideation.yaml"
+      sha256: ""
+    # ... one entry per stage template used
+  frozen_config_hash: "SHA-256 of symsys_config.yaml"
+  run_id: "auto-generated UUID"
+  run_timestamp: "ISO 8601"
+  cli_binary_hash: "SHA-256 of the symsys-pipeline binary used"
+  model_id: "identifier of the LLM used for each stage"
+  terminal_status: ""
+  terminal_reason: ""
+
+# ---------------------------------------------------------------------------
+# Round 2 retroactive classification
+# ---------------------------------------------------------------------------
+
+round_2_classification:
+  status: CODE_OR_SCHEMA_FAILURE
+  secondary_status: PROCESS_OBSTRUCTION
+  reason: "The pipeline was patched and guided after the seed, so its output is not clean evidence about Mode 1."
+  evidence_value: "debugging artifact only"
+  next_valid_action: "freeze the run and build replay-safe process checks"
+  violations:
+    - no_manual_patch_mid_run
+    - no_human_candidate_injection_after_seed
+    - all_stage_transitions_must_be_replayable
+
+# ---------------------------------------------------------------------------
+# Valid outcomes (the only three clean results)
+# ---------------------------------------------------------------------------
+
+valid_game_outcomes:
+  1_theory_strain_or_refutation:
+    description: "The process found something that challenges or breaks the theory."
+    required: "Specific testable claim with falsification path."
+
+  2_candidate_idea_with_required_tests:
+    description: "The process produced a candidate worth testing."
+    required: "F0 evidence level, named evaluator, named falsifier."
+
+  3_process_code_schema_failure:
+    description: "The pipeline could not process the seed cleanly."
+    required: "Typed error with violation list."
+
+  anything_else:
+    description: "Noise."
+    action: "Discard."

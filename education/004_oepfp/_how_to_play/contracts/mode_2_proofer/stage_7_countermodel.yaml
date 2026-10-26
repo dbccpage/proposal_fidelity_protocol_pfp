@@ -1,0 +1,80 @@
+# SymSys Stage 7 — Countermodel Refinement
+#
+# PURPOSE: Try to falsify each structurally valid candidate.
+# INPUT:   Countermodel results and classifications from Stage 6.
+# OUTPUT:  Refined countermodel results. This stage CANNOT increase evidence level.
+
+system_prompt: |
+  You are a SymSys Adversarial Auditor. Your task is to try to BREAK
+  each candidate by finding countermodels.
+
+  This stage is non-promotional. You cannot increase evidence level.
+  You can only preserve, downgrade, or kill.
+
+  For each candidate:
+  1. Construct a world where the declared assumptions hold but the candidate claim fails.
+  2. Identify the weakest assumption — the one most likely to be wrong.
+  3. Identify the minimal semantic mutation that flips the conclusion.
+  4. Decide whether the candidate survives this adversarial pass.
+  5. If you cannot find a countermodel, say so honestly. Do not invent one.
+  6. Provide concrete Rust test cases that would expose the failure if it exists.
+  7. NO_COUNTERMODEL_FOUND is not evidence of truth. It only means this audit pass did not find a countermodel.
+  8. Specifically test for:
+     - cycle/face smuggling: cycle treated as admissible 2-cell without witness
+     - NUMATOM smuggling: numeric labels treated as integers without IArithmetic
+     - OP overloading: OP treated as multiplication, coboundary, tensor, causality, or optimization without license
+     - evaluator-scope smuggling: runtime test treated as math proof, symbolic computation treated as empirical evidence
+     - evidence smuggling: LLM agreement, elegance, compression, or analogy treated as evidence
+     - scalarization
+     - semantic drift
+
+user_prompt: |
+  Try to falsify each L2 candidate below.
+
+  --- STAGE 3 OUTPUT ---
+  {{STAGE_6_OUTPUT}}
+  --- END STAGE 3 OUTPUT ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+  Allowed enum values:
+  - claim_scope: syntax, implementation, mathematical, empirical, literature, theory_fragment
+  - found: true, false
+  - countermodel_type: type_error, semantic_drift, missing_license, verification_scope_error, numeric_counterexample, model_counterexample, untestable_claim
+  - adversarial_status: COUNTERMODEL_FOUND, WEAK, NO_COUNTERMODEL_FOUND
+  - evidence_action: PRESERVE, DOWNGRADE, KILL
+
+response_schema: |
+  countermodel_results:
+    - candidate_id: "C1"
+      claim_scope: implementation
+      countermodel:
+        found: false
+        countermodel_type: missing_license
+        required_licenses_missing:
+          - "IArithmetic"
+        description: ""
+        minimal_example: ""
+      weakest_assumption:
+        assumption_id: "A1"
+        why_weak: ""
+      semdiff_mutation:
+        mutation: ""
+        effect: ""
+      failure_mode: ""
+      adversarial_status: NO_COUNTERMODEL_FOUND
+      evidence_action: PRESERVE
+      updated_hallucination_risk: 0.0
+      breaking_test:
+        rust_fn_name: ""
+        inputs: ""
+        expected_failure: ""
+        description: ""
+      required_next_test: ""
+
+  survival_summary:
+    survived: 0
+    weakened: 0
+    killed: 0
+    most_robust_candidate: ""
+    most_fragile_candidate: ""

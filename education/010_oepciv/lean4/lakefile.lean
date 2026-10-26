@@ -1,0 +1,10 @@
+import Lake
+open Lake DSL
+
+package «prompt_civilization» where
+  version := v!"0.1.0"
+
+@[default_target]
+lean_lib «PromptCivilization» where
+  srcDir := "."
+  roots := #[`PromptCivilization]

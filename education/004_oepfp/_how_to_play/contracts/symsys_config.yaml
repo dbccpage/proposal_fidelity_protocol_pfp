@@ -1,0 +1,80 @@
+max_round_count: 5
+llm_name: "nvidia/llama-3.1-nemotron-70b-instruct"
+api_key_env_var: "NVIDIA_API_KEY"
+system_prompt_mode: "strict"
+mode: symbol_packet_iteration
+
+models:
+  OLLAMA_LOCAL_000: "qwen2.5:0.5b"
+  OLLAMA_LOCAL_001: "codegemma:2b"
+  OLLAMA_LOCAL_002: "gemma3:1b"
+  OLLAMA_LOCAL_003: "llama3.2:latest"
+  OLLAMA_LOCAL_004: "gemma3:4b"
+  NVIDIA_NEMOTRON_70B: "nvidia/llama-3.1-nemotron-70b-instruct"
+  NVIDIA_NEMOTRON_340B: "nvidia/nemotron-4-340b-instruct"
+  GROQ_LLAMA3_70B: "groq/llama3-70b-8192"
+  CEREBRAS_LLAMA3_1_70B: "cerebras/llama3.1-70b"
+  ANTHROPIC_MODEL_001: "claude-sonnet-4.6"
+  ANTHROPIC_MODEL_002: "claude-opus-4.6"
+  ANTHROPIC_MODEL_003: "claude-haiku-4.5"
+  GEMINI_MODEL_001: "gemini-3-pro"
+  GEMINI_MODEL_002: "gemini-3-flash"
+  GEMINI_MODEL_003: "gemini-2.5-flash"
+
+templates:
+  controller: "yaml/mode_1_symbol_packet_iteration/controller.yaml"
+  stage_1: "yaml/mode_1_symbol_packet_iteration/stage_1_seed_packet.yaml"
+  stage_2: "yaml/mode_1_symbol_packet_iteration/stage_2_symbol_expansion.yaml"
+  stage_3: "yaml/mode_1_symbol_packet_iteration/stage_3_descent_audit.yaml"
+  stage_4: "yaml/mode_1_symbol_packet_iteration/stage_4_adversarial_rounds.yaml"
+  stage_5: "yaml/mode_1_symbol_packet_iteration/stage_5_terminal_prompt_synthesis.yaml"
+
+
+proofer_templates:
+  controller: "yaml/mode_2_proofer/controller.yaml"
+  stage_1: "yaml/mode_2_proofer/stage_1_compression_gate.yaml"
+  stage_2: "yaml/mode_2_proofer/stage_2_ideation.yaml"
+  stage_3: "yaml/mode_2_proofer/stage_3_audit.yaml"
+  stage_4: "yaml/mode_2_proofer/stage_4_l2_extraction.yaml"
+  stage_5: "yaml/mode_2_proofer/stage_5_mss_mu_evaluator.yaml"
+  stage_6: "yaml/mode_2_proofer/stage_6_adversarial.yaml"
+  stage_7: "yaml/mode_2_proofer/stage_7_countermodel.yaml"
+  stage_8: "yaml/mode_2_proofer/stage_8_evidence_plan.yaml"
+
+nemotron_templates:
+  controller: "yaml/mode_3_nemotron/controller.yaml"
+  stage_1: "yaml/mode_3_nemotron/stage_1_compression_gate.yaml"
+  stage_2: "yaml/mode_3_nemotron/stage_2_ideation.yaml"
+  stage_3: "yaml/mode_3_nemotron/stage_3_audit.yaml"
+  stage_4: "yaml/mode_3_nemotron/stage_4_l2_extraction.yaml"
+  stage_5: "yaml/mode_3_nemotron/stage_5_mss_mu_evaluator.yaml"
+  stage_6: "yaml/mode_3_nemotron/stage_6_adversarial.yaml"
+  stage_7: "yaml/mode_3_nemotron/stage_7_countermodel.yaml"
+  stage_8: "yaml/mode_3_nemotron/stage_8_evidence_plan.yaml"
+
+operator_templates:
+  controller: "yaml/mode_5_operator/controller.yaml"
+  stage_1: "yaml/mode_5_operator/stage_1_compression_gate.yaml"
+  stage_2: "yaml/mode_5_operator/stage_2_ideation.yaml"
+  stage_3: "yaml/mode_5_operator/stage_3_audit.yaml"
+  stage_4: "yaml/mode_5_operator/stage_4_l2_extraction.yaml"
+  stage_5: "yaml/mode_5_operator/stage_5_mss_mu_evaluator.yaml"
+  stage_6: "yaml/mode_5_operator/stage_6_adversarial.yaml"
+  stage_7: "yaml/mode_5_operator/stage_7_countermodel.yaml"
+  stage_8: "yaml/mode_5_operator/stage_8_evidence_plan.yaml"
+
+symbol_packet_iteration_templates:
+  controller: "yaml/mode_1_symbol_packet_iteration/controller.yaml"
+  stage_1: "yaml/mode_1_symbol_packet_iteration/stage_1_seed_packet.yaml"
+  stage_2: "yaml/mode_1_symbol_packet_iteration/stage_2_symbol_expansion.yaml"
+  stage_3: "yaml/mode_1_symbol_packet_iteration/stage_3_descent_audit.yaml"
+  stage_4: "yaml/mode_1_symbol_packet_iteration/stage_4_adversarial_rounds.yaml"
+  stage_5: "yaml/mode_1_symbol_packet_iteration/stage_5_terminal_prompt_synthesis.yaml"
+
+validation:
+  reject_inline_api_keys: true
+  reject_unknown_fields: true
+  reject_multiple_yaml_blocks: true
+  require_canonical_hash: true
+  require_stage_order: true
+  forbid_status_upgrade_by_llm: true

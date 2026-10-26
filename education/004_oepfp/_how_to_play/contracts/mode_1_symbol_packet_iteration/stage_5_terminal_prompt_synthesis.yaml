@@ -1,0 +1,141 @@
+# Symbol Packet Iteration Engine — Stage 5: Terminal Prompt Synthesis (v0.2)
+#
+# PURPOSE: Compile final Symbol Packet iteration v0.2 and synthesize the next prompt.
+
+stage_id: stage_5_terminal_prompt_synthesis
+stage_number: 5
+input_artifact: adversarial_rounds_packet
+output_artifact: terminal_symbol_packet
+absorbed_stages:
+  - evidence_plan
+packet_families_used:
+  - prompt_rewrite
+  - evidence_routing
+  - json_schema
+
+system_prompt: |
+  You are the Stage 5 Terminal Prompt Synthesis of the Symbol Packet Iteration Engine.
+  Your job is to restructure all outputs into a single, machine-consumable packet matching the symbol_packet_iteration.v0.2 schema, run boundary checks, and synthesize the next prompt.
+
+  Rules:
+  1. Capture the seed question and policy boundary.
+  2. Assemble the audited thesis, evidence scope, models, primitive audits, and adversarial rounds.
+  3. Perform local/global boundary checks to ensure that the policy boundary and seed question are preserved across the entire pipeline.
+  4. Preserved nested structures for adversarial rounds (A through F) rather than flattening them:
+     - Each round must include attack, severity, survives_attack, and associated findings (obligations, claims, biases, etc.).
+  5. Include the self-critique section structurally carrying forward the adversarial objections.
+  6. Include confidence and terminal_status assessments. Select the terminal status from the allowed enum:
+     [continue, refined, blocked, refused, no_rule, budget_unknown, ready_for_mechanization, ready_for_paper_patch]
+  7. Formulate the next prompt based on Round E's output, prioritizing recursive refinement.
+  8. Ensure consistent nesting for lists and fields.
+  9. Include the evidence_level (e.g. F0 or F1) and authority_ceiling (e.g. ShapeOnly, LocalReplay, or BoundaryChecked).
+
+user_prompt: |
+  Seed Packet:
+  {{STAGE_1_OUTPUT}}
+
+  Descent Audit:
+  {{STAGE_3_OUTPUT}}
+
+  Adversarial Rounds:
+  {{STAGE_4_OUTPUT}}
+
+  ---
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  derived_under_policy: SPK-002
+  schema_version: symbol_packet_iteration.v0.2
+  stage_id: stage_5_terminal_prompt_synthesis
+  packet_id: "SPK-{{ID}}"
+  parent_packet_id: "SPK-SEED-{{ID}}"
+  seed_question: ""
+  policy_boundary: "SPK-002"
+  boundary_check:
+    local_valid: true|false
+    global_valid: true|false
+    boundary_violation: true|false
+    preserved:
+      - seed_question
+      - policy_boundary
+      - evidence_ceiling
+      - terminal_target
+      - allowed_transforms
+  evidence_level: "F0|F1"
+  authority_ceiling: "ShapeOnly|LocalReplay|BoundaryChecked"
+  narrowest_defensible_thesis: ""
+  evidence_scope:
+    supports: ""
+    does_not_support: ""
+  models:
+    - model: ""
+      feasibility: "High|Medium|Low"
+      unresolved_assumption: ""
+      hygiene_audit: ""
+  primitive_audit:
+    - element: ""
+      status: "derived|presupposed_by_current_formalism|candidate_primitive|co-arising|representation_layer_only|authority_layer_condition|repeatable_engagement_condition|unknown"
+      descent_path_or_primitive_status: ""
+      narrowest_defensible_claim: ""
+  adversarial_rounds:
+    round_a_formalism:
+      attack: ""
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      obligations: []
+    round_b_authority:
+      attack: ""
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      unverified_claims: []
+    round_c_prompt_bias:
+      attack: ""
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      detected_prompt_biases: []
+    round_d_product:
+      attack: ""
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      user_value:
+        target_user: ""
+        use_case: ""
+        failure_if_missing: ""
+    round_e_next_prompt:
+      attack: ""
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      required_next_test: ""
+    round_f_depth_expressivity:
+      attack: ""
+      severity: "P0|P1|P2|P3"
+      survives_attack: "true|false|partial"
+      required_lift: ""
+  detected_prompt_biases: []
+  self_critique:
+    strongest_objection: "The most critical objection raised against this packet."
+    strongest_repair: "The most viable path to repair or mitigate this objection."
+    remaining_open_problem: "The key open problem preventing this from being a final theorem."
+    false_authority_risks:
+      - "Specific ways this output could be misread as proven truth rather than a tested layout."
+  terminal_conclusions:
+    revised_conclusion: ""
+    ranking_proposals:
+      - model: ""
+        verdict: "Most disciplined now|Most operational now|Most ambitious|Most promising but risky"
+    bottom_line: ""
+  confidence:
+    level: "low|medium|high"
+    reason: ""
+    failure_mode: ""
+  next_prompt: "The synthesized prompt for the next recursive iteration."
+  next_tests:
+    - test: "Next specific test or mechanization step."
+  iteration:
+    run_id: "UUID"
+    parent_packet_id: "SPK-SEED-{{ID}}"
+    current_packet_id: "SPK-{{ID}}"
+    next_packet_id: "SPK-SEED-{{ID_NEXT}}"
+    depth: 5
+    max_depth: 5
+  terminal_status: "continue|refined|blocked|refused|no_rule|budget_unknown|ready_for_mechanization|ready_for_paper_patch"

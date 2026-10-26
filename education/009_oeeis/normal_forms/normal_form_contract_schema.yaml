@@ -1,0 +1,237 @@
+schema_version: smplx.nf.contract_schema.v1
+description: 'Meta-schema for Simplex normal form, genesis, bridge, and operational
+  contracts. Validates the nested contract layout, multi-axis status triad, local-to-canonical
+  terminal mappings, and finite obstruction substrate specifications.
+
+  '
+required_top_level_sections:
+- schema_version
+- contract_kind
+- identity
+- classification
+- purpose
+- declarations_required
+- validation_criteria
+- terminal_routes
+- terminal_route_map
+- certification
+- authorization
+contract_kinds:
+  enum:
+  - normal_form_contract
+  - genesis_contract
+  - bridge_contract
+  - form_contract
+  - transformation_contract
+  - authority_contract
+  - evidence_contract
+section_definitions:
+  identity:
+    required_fields:
+    - id
+    - name
+    - short_name
+    - version
+    - theory_status
+    - contract_status
+    - verification_status
+    - family
+    field_types:
+      id: string
+      name: string
+      short_name: string
+      version: string
+      theory_status:
+        enum:
+        - established
+        - proposed
+        - experimental
+      contract_status:
+        enum:
+        - draft
+        - active
+        - deprecated
+      verification_status:
+        enum:
+        - absent
+        - executable
+        - machine_checked
+      family:
+        enum:
+        - genesis
+        - bridge
+        - shape
+        - change
+        - evidence
+        - epistemic
+        - motion
+        - relativistic
+        - representation
+        - transport
+        - compilation
+        - authority
+        - experimental
+        - derivation
+        - topology
+        - physics
+        - recursion
+        - query
+        - runtime
+        - security
+  classification:
+    required_fields:
+    - hierarchy_level
+    - subject_kind
+    - data_posture
+    - mathematical_posture
+    field_types:
+      hierarchy_level:
+        enum:
+        - genesis_form
+        - bridge_form
+        - form
+        - normal_form
+        - certified_normal_form
+        - authorized_normal_form
+        - transformation_contract
+        - authority_contract
+      subject_kind: list
+      data_posture:
+        enum:
+        - at_rest
+        - in_motion
+        - in_transformation
+      mathematical_posture:
+        enum:
+        - operational
+        - formal_algebraic
+        - verified_mechanized
+  purpose:
+    required_fields:
+    - excludes_anomaly
+    - preserves_invariant
+    - protected_skeleton
+    - erased_structure
+    - non_claims
+    field_types:
+      excludes_anomaly: string
+      preserves_invariant: string
+      protected_skeleton: list
+      erased_structure: list
+      non_claims: list
+  obstruction_substrate:
+    optional: true
+    field_types:
+      policy_ref: string
+      finite_carrier: object
+      cochain_complex: object
+      obstruction_class: object
+      carrier_realization: object
+      geometry_module: string_or_null
+      gauge_metric_selector: string_or_null
+  declarations_required:
+    type: list
+  evidence_required:
+    type: list
+  validation_criteria:
+    type: list
+  proof_obligations:
+    type: list
+  terminal_routes:
+    type: list
+  terminal_route_map:
+    type: object
+    description: Mapping from declared local contract terminal routes to canonical system
+      terminals, where dom(m) = declared local routes and im(m) \subseteq canonical terminals.
+  certification:
+    required_fields:
+    - certificate_required
+    - certificate_kind
+    - obstruction_class_required
+    - loss_ledger_required
+    - loss_ledger_trigger_id
+    - verifier_required
+    field_types:
+      certificate_required: boolean
+      certificate_kind: string_or_null
+      obstruction_class_required: boolean
+      loss_ledger_required:
+        enum:
+        - true
+        - false
+        - conditional
+      loss_ledger_trigger_id:
+        enum:
+        - null
+        - cpnf.lossy_compilation_lowering
+        - gtmur.unmapped_field_drop
+        - coda_mur.unmapped_field_drop
+        - flow_control.buffer_drop
+        - gnf.hyperedge_projection_loss
+        - locality_lrb.tail_truncation
+        - epistemic_location.partition_divergence
+        - enf.lossy_epistemic_transition
+      verifier_required: boolean
+  authorization:
+    required_fields:
+    - authorized_by
+    - certified_implies_authorized
+    field_types:
+      authorized_by: string_or_null
+      certified_implies_authorized: boolean
+  failure_modes:
+    type: list
+  examples:
+    type: list
+  references:
+    type: list
+canonical_terminals:
+  enum:
+  - Preserve
+  - Repair
+  - Invalidate
+  - Recompute
+  - Serialize
+  - Lift
+  - Escalate
+  - Unsupported
+  - ClosureFailure
+  - BudgetUnknown
+  - ConservativeInvalidate
+  - Quarantine
+  - Decompose
+  - Refuse
+  - Reject
+  - Abstain
+loss_ledger_trigger_registry:
+  cpnf.lossy_compilation_lowering:
+    description: Triggered when lowering AST/IR erases non-reconstructible symbol/type
+      decorations or generates unmapped diagnostic residuals.
+  gtmur.unmapped_field_drop:
+    description: Triggered when cross-boundary serialization/deserialization drops
+      unmapped payload fields.
+  coda_mur.unmapped_field_drop:
+    description: Triggered when cross-boundary serialization/deserialization drops
+      unmapped payload fields (canonical CODA-MUR trigger).
+  flow_control.buffer_drop:
+    description: Triggered when backpressure queue saturation forces non-lossless
+      frame shedding.
+  gnf.hyperedge_projection_loss:
+    description: Triggered when high-arity hyperedges are projected onto simple binary
+      dyads without full rank preservation.
+  locality_lrb.tail_truncation:
+    description: Triggered when Lieb-Robinson exponential tail approximations are
+      truncated outside finite support.
+  epistemic_location.partition_divergence:
+    description: Triggered when replica consensus experiences asynchronous partition
+      divergence.
+  enf.lossy_epistemic_transition:
+    description: Triggered when belief update or contradictory observation revises
+      prior states with non-invertible entropy loss.
+protected_nf_checklist:
+  rule: >
+    A contract with hierarchy_level: normal_form, certified_normal_form, or authorized_normal_form
+    must exclude a non-trivial anomaly, declare a finite validation check or verifier,
+    map all local terminal routes to canonical terminals, and specify precise non_claims.
+    Raw carriers or genesis representations without anomaly exclusion must use
+    hierarchy_level: genesis_form or form.

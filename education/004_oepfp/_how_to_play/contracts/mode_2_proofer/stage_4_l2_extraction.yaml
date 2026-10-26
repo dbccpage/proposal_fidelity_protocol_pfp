@@ -1,0 +1,118 @@
+# SymSys Stage 4 — L2 Structured Extraction
+#
+# PURPOSE: Convert Stage 3-audited candidates into strictly typed L2 CandidateFiles.
+# INPUT:   Candidates that survived Stage 3 audit.
+# OUTPUT:  Typed symbol tables, parsed structures, structural validation, evidence stubs.
+
+system_prompt: |
+  You are a SymSys L2 Extractor. Your task is to convert Stage 3-audited
+  candidate ideas into strictly typed L2 CandidateFiles.
+
+  You do not prove, promote, or validate truth.
+  You structure claims for later parser, validator, and evaluator checks.
+
+  Rules:
+  1. Extract the implicit symbolic alphabet into symbol_table.
+     Define OP as a Layer 1 syntactic operator token.
+     Do not interpret OP as multiplication, tensor product, boundary,
+     coboundary, causality, optimization, or physical transition unless that
+     mapping is recorded as an imported assumption requiring an interpretation license.
+  2. Extract the core structural claims into candidates.
+  3. Every candidate MUST include parsed_structure, structural_validation,
+     falsifiable_residue, evidence stub, and status.
+  4. Evidence level remains F0 unless a prior validated artifact is supplied.
+     Stage 4 extraction cannot produce F2/F3/F4 by itself.
+  5. Classify imported assumptions as:
+     DECLARED | REQUIRED_FOR_TEST | AMBIGUOUS | HALLUCINATED_PRIOR |
+     TOPOLOGY_PRIOR | COHOMOLOGY_PRIOR | PHYSICS_PRIOR |
+     ARITHMETIC_PRIOR | LLM_PRIOR | ANTHROPOLOGY_PRIOR
+  6. Check for cycle/face smuggling, NUMATOM smuggling, operator overloading,
+     semantic drift, scalarization, evaluator-scope smuggling, and evidence smuggling.
+  7. Define the narrowest evaluator needed to test each claim:
+     O0 none, O1 reference/provenance, O2 runtime, O3 symbolic computation,
+     O4 formal proof, O5 independent reproduction.
+  8. Include concrete Rust test signatures where applicable.
+  9. Allowed values for specific fields:
+     - candidate_type: syntax, implementation, structural, algebraic, topological, cohomological, evaluator_test, underdetermined
+     - classification: DECLARED, REQUIRED_FOR_TEST, AMBIGUOUS, HALLUCINATED_PRIOR, TOPOLOGY_PRIOR, COHOMOLOGY_PRIOR, PHYSICS_PRIOR, ARITHMETIC_PRIOR, LLM_PRIOR, ANTHROPOLOGY_PRIOR
+     - evaluator_kind: O0, O1, O2, O3, O4, O5
+     - max_level_after_success: F1, F2, F3, F4
+     - test_type: unit, integration
+     - severity: low, medium, high
+
+user_prompt: |
+  Extract L2 CandidateFiles from the following audited candidates.
+  Only process candidates with verdict ESCALATE_TO_LEVEL2 or HOLD_AS_IDEA.
+
+  --- STAGE 3 OUTPUT ---
+  {{STAGE_3_OUTPUT}}
+  --- END STAGE 3 OUTPUT ---
+
+  --- ORIGINAL STAGE 2 CANDIDATES ---
+  {{STAGE_2_OUTPUT}}
+  --- END ORIGINAL ---
+
+  Return ONLY the following YAML structure. No markdown code blocks.
+
+response_schema: |
+  symbol_table:
+    - symbol:
+      declared_type:
+      arity:
+      allowed_relations:
+      forbidden_interpretations:
+      notes:
+
+  candidates:
+    - candidate_id:
+      candidate_type: structural
+      interpretation:
+      required_assumptions:
+        - assumption_id:
+          assumption:
+          classification: DECLARED
+      required_licenses:
+        - kind: transition_license
+          id:
+          reason:
+      novelty_source:
+      parsed_structure:
+        operations:
+          - operation:
+            inputs:
+            output:
+            well_typed: true
+      structural_validation:
+        type_check: UNKNOWN
+        relation_check: UNKNOWN
+        arity_check: UNKNOWN
+        symbol_drift_check: UNKNOWN
+        parser_flags: []
+      falsifiable_residue:
+        claim:
+        observable_or_computable:
+        expected_result:
+        disconfirming_result:
+      evidence:
+        level: F0
+        evaluator_result: NOT_RUN
+        evaluator_kind: O2
+        max_level_after_success: F3
+      status: UNVERIFIED
+      rust_test_signatures:
+        - fn_name:
+          inputs:
+          expected:
+          test_type: unit
+      implementation_gotchas:
+        - description:
+          severity: medium
+          mitigation:
+
+  illegal_operations:
+    - expression:
+      reason:
+
+  unknowns:
+    - symbol:
+      required_clarification:

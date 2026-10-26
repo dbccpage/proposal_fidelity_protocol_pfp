@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="100%" height="100%">
+  <defs>
+    <filter id="shadow-mv" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="480" fill="#f8fafc" rx="12"/>
+  <rect x="20" y="20" width="920" height="440" fill="none" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+
+  <!-- Title -->
+  <text x="480" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">
+    The Four Legal Moves of The Symbol Game
+  </text>
+  <text x="480" y="74" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">
+    Discrete Host Governor Invariant: No move may bypass the carrier firewall or violate strict Lyapunov descent
+  </text>
+
+  <!-- Move 1: ASSERT -->
+  <g transform="translate(45, 100)" filter="url(#shadow-mv)">
+    <rect width="195" height="330" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5"/>
+    <rect width="195" height="40" rx="10" fill="#3b82f6"/>
+    <rect y="30" width="195" height="10" fill="#3b82f6"/>
+    <text x="97" y="26" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1. ASSERT</text>
+
+    <text x="15" y="65" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1e40af">Purpose:</text>
+    <text x="15" y="82" font-family="system-ui, sans-serif" font-size="10.5" fill="#334155">Declare invariants &amp; spanning relations</text>
+
+    <text x="15" y="115" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1e40af">Preconditions:</text>
+    <text x="15" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Turn fuel &gt; 0</text>
+    <text x="15" y="148" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Valid string token</text>
+
+    <text x="15" y="180" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1e40af">Governor Check:</text>
+    <text x="15" y="197" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Syntax check</text>
+    <text x="15" y="213" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Defect unchanged</text>
+
+    <text x="15" y="245" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1e40af">State Effect:</text>
+    <text x="15" y="262" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Invariants += r</text>
+    <text x="15" y="278" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Fuel -= 1</text>
+
+    <rect x="12" y="295" width="171" height="22" rx="4" fill="#eff6ff"/>
+    <text x="97" y="310" font-family="monospace" font-size="9.5" font-weight="600" fill="#1d4ed8" text-anchor="middle">ADMITTED (Φ₁ const)</text>
+  </g>
+
+  <!-- Move 2: CUT -->
+  <g transform="translate(265, 100)" filter="url(#shadow-mv)">
+    <rect width="195" height="330" rx="10" fill="#ffffff" stroke="#fca5a5" stroke-width="1.5"/>
+    <rect width="195" height="40" rx="10" fill="#ef4444"/>
+    <rect y="30" width="195" height="10" fill="#ef4444"/>
+    <text x="97" y="26" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2. CUT</text>
+
+    <text x="15" y="65" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#991b1b">Purpose:</text>
+    <text x="15" y="82" font-family="system-ui, sans-serif" font-size="10.5" fill="#334155">Propose edge claim modifications</text>
+
+    <text x="15" y="115" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#991b1b">Preconditions:</text>
+    <text x="15" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Edge ∈ Pinned Carrier</text>
+    <text x="15" y="148" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Value ∈ Rational ℚ</text>
+
+    <text x="15" y="180" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#991b1b">Governor Check:</text>
+    <text x="15" y="197" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• FW-CARRIER check</text>
+    <text x="15" y="213" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#b91c1c">• Φ₁(S') &lt; Φ₁(S) (Lyapunov)</text>
+
+    <text x="15" y="245" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#991b1b">State Effect:</text>
+    <text x="15" y="262" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Claims updated</text>
+    <text x="15" y="278" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Rollback if non-descent</text>
+
+    <rect x="12" y="295" width="171" height="22" rx="4" fill="#fef2f2"/>
+    <text x="97" y="310" font-family="monospace" font-size="9.5" font-weight="600" fill="#b91c1c" text-anchor="middle">STRICT DESCENT GATE</text>
+  </g>
+
+  <!-- Move 3: VERIFY -->
+  <g transform="translate(485, 100)" filter="url(#shadow-mv)">
+    <rect width="195" height="330" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="1.5"/>
+    <rect width="195" height="40" rx="10" fill="#22c55e"/>
+    <rect y="30" width="195" height="10" fill="#22c55e"/>
+    <text x="97" y="26" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">3. VERIFY</text>
+
+    <text x="15" y="65" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#14532d">Purpose:</text>
+    <text x="15" y="82" font-family="system-ui, sans-serif" font-size="10.5" fill="#334155">Request terminal proof certification</text>
+
+    <text x="15" y="115" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#14532d">Preconditions:</text>
+    <text x="15" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Board not yet sealed</text>
+    <text x="15" y="148" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Fuel &gt; 0</text>
+
+    <text x="15" y="180" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#14532d">Governor Check:</text>
+    <text x="15" y="197" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#15803d">• Total defect Φ₁ == 0?</text>
+    <text x="15" y="213" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Refuse if Φ₁ &gt; 0</text>
+
+    <text x="15" y="245" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#14532d">State Effect:</text>
+    <text x="15" y="262" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Seal board state</text>
+    <text x="15" y="278" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Emit certified receipt</text>
+
+    <rect x="12" y="295" width="171" height="22" rx="4" fill="#f0fdf4"/>
+    <text x="97" y="310" font-family="monospace" font-size="9.5" font-weight="600" fill="#15803d" text-anchor="middle">CERTIFIED_RECEIPT</text>
+  </g>
+
+  <!-- Move 4: RETRACT -->
+  <g transform="translate(705, 100)" filter="url(#shadow-mv)">
+    <rect width="195" height="330" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect width="195" height="40" rx="10" fill="#64748b"/>
+    <rect y="30" width="195" height="10" fill="#64748b"/>
+    <text x="97" y="26" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">4. RETRACT</text>
+
+    <text x="15" y="65" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#334155">Purpose:</text>
+    <text x="15" y="82" font-family="system-ui, sans-serif" font-size="10.5" fill="#334155">Step back from an unpromising branch</text>
+
+    <text x="15" y="115" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#334155">Preconditions:</text>
+    <text x="15" y="132" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• History stack non-empty</text>
+    <text x="15" y="148" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Fuel &gt; 0</text>
+
+    <text x="15" y="180" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#334155">Governor Check:</text>
+    <text x="15" y="197" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Board unsealed</text>
+    <text x="15" y="213" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• History non-empty</text>
+
+    <text x="15" y="245" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#334155">State Effect:</text>
+    <text x="15" y="262" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Pop last history entry</text>
+    <text x="15" y="278" font-family="system-ui, sans-serif" font-size="10" fill="#475569">• Fuel -= 1</text>
+
+    <rect x="12" y="295" width="171" height="22" rx="4" fill="#f1f5f9"/>
+    <text x="97" y="310" font-family="monospace" font-size="9.5" font-weight="600" fill="#475569" text-anchor="middle">ATOMIC STEP BACK</text>
+  </g>
+</svg>

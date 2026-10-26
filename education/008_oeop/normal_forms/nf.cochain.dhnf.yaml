@@ -1,0 +1,121 @@
+schema_version: smplx.nf.contract.v0
+schema_ref: ./normal_form_contract_schema.yaml
+contract_kind: normal_form_contract
+identity:
+  id: nf.cochain.dhnf
+  name: Discrete Hodge Normal Form
+  short_name: DHNF
+  version: v0
+  theory_status: established
+  contract_status: draft
+  verification_status: absent
+  family: shape
+  status: draft
+classification:
+  hierarchy_level: normal_form
+  subject_kind:
+  - cochain
+  - finite_cell_complex
+  data_posture: at_rest
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: treating a gradient update, a harmonic cycle, and a coexact curl
+    as the same kind of cochain
+  preserves_invariant: a discrete 1-cochain splits uniquely into exact, harmonic,
+    and coexact summands for declared compatible rational inner products on C^0, C^1, C^2;
+    summands are unique, while potentials (p, q) are unique up to gauge choice
+  protected_skeleton:
+  - exact_part
+  - harmonic_part
+  - coexact_part
+  - inner_products
+  erased_structure: []
+  non_claims:
+  - a nonzero harmonic part is a component of a successful decomposition. It is not
+    a failure of the form
+  - a nonzero harmonic cochain is a residual_harmonic_class providing a canonical cohomology
+    representative; it is not an obstruction in isolation and promotes to an obstruction
+    only relative to a declared protected law via OBNF
+  - the orthogonal split is stated for a finite cell complex and declared positive
+    definite rational inner products on C^0, C^1, C^2
+  - unique decomposition applies to the orthogonal summands (d0 p, h, d1* q); potentials
+    p in C^0 and q in C^2 require a declared gauge selector for uniqueness
+  - this directory does not execute the decomposition
+  - does not imply authorization
+definition:
+  source: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.5'
+  formal_statement: >
+    On a finite cell complex with positive definite inner products on C^0, C^1, and C^2
+    taking rational values, every discrete 1-cochain c admits a unique orthogonal
+    decomposition c = d0 p + h + d1* q into exact, harmonic, and coexact summands, with
+    p a 0-cochain, h harmonic, and q a 2-cochain. The three summands are pairwise orthogonal
+    and uniquely determined. Canonical potentials p, q require a declared gauge selector.
+    The harmonic summand satisfies d1 h = 0 and d0* h = 0. Adding the three summands returns
+    c with no remainder in the declared rational arithmetic. Nilpotence d1 d0 = 0 is required
+    of the complex.
+  quadrilateral:
+    qualifies_as_true_normal_form: false
+    qualification_gap: reconstruction_is_the_hodge_sum_not_a_relational_join
+    qualifies_as_extended_form: true
+    anomaly_exclusion: conflating an exact gradient, a harmonic cycle, and a coexact
+      curl
+    lossless_join:
+      status: direct_sum
+      statement: the exact, harmonic, and coexact summands add back to c
+    dependency_preservation:
+      status: orthogonality_retained
+      statement: each pair of summands has inner product zero, and nilpotence of the
+        coboundary is retained
+    syntactic_decision:
+      status: decomposition_certificate
+      statement: >
+        The orthogonal split is computed from the declared complex, compatible inner products
+        on C^0, C^1, C^2, and the cochain instance. A nonzero harmonic component is recorded
+        and the decomposition remains valid.
+declarations_required:
+- cell_complex
+- coboundary_d0
+- coboundary_d1
+- inner_product_c0
+- inner_product_c1
+- inner_product_c2
+- cochain_c
+evidence_required: []
+validation_criteria:
+- d1 composed with d0 is zero
+- c equals d0 p + h + d1-star q in the declared rational arithmetic
+- the three summands are pairwise orthogonal
+- h is closed and coclosed
+terminal_routes:
+- Accept
+- RecordHarmonicComponent
+- RejectNilpotence
+- RejectReconstruction
+terminal_route_map:
+  Accept: Preserve
+  RecordHarmonicComponent: Preserve
+  RejectNilpotence: Refuse
+  RejectReconstruction: Reject
+certification:
+  certificate_required: false
+  certificate_kind: null
+  obstruction_class_required: false
+  loss_ledger_required: false
+  verifier_required: false
+  loss_ledger_trigger_id: null
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- symptom: d1 d0 != 0
+  diagnosis: cell complex coboundaries do not satisfy Stokes nilpotence
+  terminal: RejectNilpotence
+- symptom: d0 p + h + d1* q does not equal c
+  diagnosis: decomposition remainder non-zero in rational arithmetic
+  terminal: RejectReconstruction
+examples:
+- ref: coda_all_universe/mssn_sn_tower/definitions.md
+  section: '3.5'
+references:
+- coda_all_universe/mssn_sn_tower/definitions.md

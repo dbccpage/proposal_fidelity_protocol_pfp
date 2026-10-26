@@ -1,0 +1,151 @@
+# Symbol Packet Iteration Engine Controller
+#
+# MODE: symbol_packet_iteration
+# POLICY: SPK-002
+# PURPOSE: Shared rules, schema contracts, and enums for the Symbol Packet Iteration Engine.
+
+semantic_policy:
+  policy_id: "SPK-002"
+  grammar_version: "v2.0"
+  schema_version: "symbol_packet_iteration.v0.2"
+
+mode_id: symbol_packet_iteration
+authority_effect: none
+
+backend_runtime:
+  rust_crate: omega_symbol_game
+  public_stage_count: 5
+  internal_stage_count: 8
+
+pipeline:
+  - stage_1_seed_packet
+  - stage_2_symbol_expansion
+  - stage_3_descent_audit
+  - stage_4_adversarial_rounds
+  - stage_5_terminal_prompt_synthesis
+
+stop_conditions:
+  - malformed_yaml
+  - missing_required_field
+  - forbidden_language_unscoped
+  - terminal_prompt_missing
+  - no_adversarial_rounds
+
+artifact_contract:
+  all_outputs_must_be_valid_yaml: true
+  markdown_code_blocks_forbidden: true
+  required_policy_field: derived_under_policy
+  required_policy_value: SPK-002
+  next_prompt_required: true
+  adversarial_rounds_required: true
+
+evidence_levels:
+  - F0
+  - F1
+  - F2
+  - F3
+
+authority_ceiling:
+  - ShapeOnly
+  - LocalReplay
+  - BoundaryChecked
+  - ExternalOracleRequired
+  - EmpiricalOracleRequired
+
+terminal_statuses:
+  - Certificate
+  - Refusal
+  - Repair
+  - OracleNeeded
+  - Continue
+  - BudgetUnknown
+  - NoRule
+
+hard_laws:
+  packet_shape_forgets_semantic_truth: true
+  local_green_does_not_imply_global_green: true
+  model_may_propose_but_never_certifies: true
+  no_stage_self_promotes_evidence: true
+  depth_does_not_raise_expressive_ceiling: true
+
+allowed_evidence_levels:
+  - F0
+  - F1
+  - DESIGN
+  - CONJECTURE
+  - OPEN
+  - INTERPRETIVE
+  - PROVEN_UNDER_ASSUMPTIONS
+
+allowed_layers:
+  - root_occurrence
+  - representability
+  - authority
+  - repeatable_engagement
+  - representation_layer
+  - derived_structure
+  - unknown
+
+allowed_primitive_statuses:
+  - derived
+  - presupposed_by_current_formalism
+  - candidate_primitive
+  - co_arising
+  - representation_layer_only
+  - authority_layer_condition
+  - repeatable_engagement_condition
+  - unknown
+
+allowed_terminal_statuses:
+  - continue
+  - refined
+  - blocked
+  - refused
+  - no_rule
+  - budget_unknown
+  - ready_for_mechanization
+  - ready_for_paper_patch
+
+quality_gates:
+  - gate: schema_valid
+    failure: typed_refusal
+  - gate: adversarial_rounds_complete
+    failure: typed_refusal
+  - gate: next_prompt_present
+    failure: typed_refusal
+  - gate: forbidden_language_scoped
+    failure: repair_required
+
+controller_preamble: |
+  [SEMANTIC POLICY MANIFEST]
+  Policy ID: SPK-002
+  Every generated packet must specify: `derived_under_policy: SPK-002`.
+
+  [MSS-0 GRAMMAR CONSTRAINT]
+  The system under analysis (SYM SYS) has exactly 38 primitive symbols:
+  nodes (a..z), weights (0..9), and edges (<, >, <>).
+  Category-theoretic structures (functors, limits, adjunctions, monads) are
+  derived patterns, not new primitives.
+
+  [THREE-LAYER ONTOLOGY ARCHITECTURE]
+  - Layer 1: Root Occurrence (e.g. PrimitiveDifference₀ / obstruction itself, if admitted)
+  - Layer 2: Representability (e.g. carrier, support, addressability, markability sufficient to type a difference)
+  - Layer 3: Authority (e.g. witnessability, repeatability, terminal status, preservation laws)
+
+  [CLAIM HYGIENE & FORBIDDEN LANGUAGE]
+  You must write with strict claim discipline.
+  Forbidden words unless explicitly scoped as speculative:
+    proves, guarantees, mathematically verifies, fundamentally, true intelligence, impossible, universal, flawless, perfectly, clearly, obviously, simply, merely, weaponized
+  
+  Replacement defaults:
+    - "proves" -> "supports" or "shows in this model"
+    - "guarantees" -> "guarantees under the declared assumptions"
+    - "fundamental flaw" -> "failure mode"
+    - "mathematically verified" -> "checked by this oracle/test"
+
+  The default posture is to prefer narrow claims over broad claims. Do not promote speculative ideas into theorems. Do not describe toy tests as universal results.
+
+  [PROCESS INTEGRITY CONTRACT]
+  This iteration loop is self-correcting and recursive. Each run must produce the next prompt, not a final answer.
+  The packet shape does not preserve semantic truth. Packetization is a partial map that preserves declared fidelity and emits no authority.
+  The authority firewall guarantees that local success does not imply global authority.
