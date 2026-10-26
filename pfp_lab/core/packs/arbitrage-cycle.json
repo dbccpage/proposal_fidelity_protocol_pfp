@@ -1,0 +1,81 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Quoted price gaps around a loop that do not close are an arbitrage; fixing the stale quote removes it",
+  "vertices": [
+    "usd",
+    "eur",
+    "gbp"
+  ],
+  "edges": [
+    {
+      "source": "usd",
+      "target": "eur",
+      "weight": 1
+    },
+    {
+      "source": "eur",
+      "target": "gbp",
+      "weight": 1
+    },
+    {
+      "source": "gbp",
+      "target": "usd",
+      "weight": 1
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "usd",
+      "target": "eur",
+      "value": "3",
+      "step_id": "quote_usd_eur"
+    },
+    {
+      "move": "ASSERT",
+      "source": "eur",
+      "target": "gbp",
+      "value": "2",
+      "step_id": "quote_eur_gbp"
+    },
+    {
+      "move": "ASSERT",
+      "source": "gbp",
+      "target": "usd",
+      "value": "-4",
+      "step_id": "quote_gbp_usd"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "RETRACT",
+      "target_step_id": "quote_eur_gbp",
+      "reason": "the gbp to usd quote is stale"
+    },
+    {
+      "move": "ASSERT",
+      "source": "gbp",
+      "target": "usd",
+      "value": "-5",
+      "step_id": "fresh_gbp_usd"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "usd": "0",
+        "eur": "3",
+        "gbp": "5"
+      }
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    }
+  ]
+}

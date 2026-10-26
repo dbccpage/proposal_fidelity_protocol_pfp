@@ -1,0 +1,94 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "Every claim can be met on its own, but no single assignment meets them all",
+  "vertices": [
+    "p",
+    "q",
+    "r"
+  ],
+  "edges": [
+    {
+      "source": "p",
+      "target": "q",
+      "weight": 1
+    },
+    {
+      "source": "q",
+      "target": "r",
+      "weight": 1
+    },
+    {
+      "source": "r",
+      "target": "p",
+      "weight": 1
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "p",
+      "target": "q",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "q",
+      "target": "r",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "r",
+      "target": "p",
+      "value": "1"
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "p": "0",
+        "q": "1",
+        "r": "2"
+      }
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:p,q"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:q,r"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:r,p"
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "p": "0",
+        "q": "-2",
+        "r": "-1"
+      }
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:q,r"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:r,p"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "EDGE_MATCH:p,q"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    }
+  ]
+}

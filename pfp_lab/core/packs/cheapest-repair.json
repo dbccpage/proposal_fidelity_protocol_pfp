@@ -1,0 +1,113 @@
+{
+  "schema": "pfp-lab.scenario.v1",
+  "title": "An inconsistent loop is cheapest to fit on its lowest-weight edge; fitting it on a heavy edge is refused",
+  "vertices": [
+    "a",
+    "b",
+    "c",
+    "d"
+  ],
+  "edges": [
+    {
+      "source": "a",
+      "target": "b",
+      "weight": 4
+    },
+    {
+      "source": "b",
+      "target": "c",
+      "weight": 3
+    },
+    {
+      "source": "c",
+      "target": "d",
+      "weight": 2
+    },
+    {
+      "source": "d",
+      "target": "a",
+      "weight": 1
+    }
+  ],
+  "moves": [
+    {
+      "move": "ASSERT",
+      "source": "a",
+      "target": "b",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "b",
+      "target": "c",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "c",
+      "target": "d",
+      "value": "1"
+    },
+    {
+      "move": "ASSERT",
+      "source": "d",
+      "target": "a",
+      "value": "0"
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "a": "0",
+        "b": "-2",
+        "c": "-1",
+        "d": "0"
+      }
+    },
+    {
+      "move": "CUT",
+      "section": {
+        "a": "0",
+        "b": "1",
+        "c": "2",
+        "d": "3"
+      }
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_OBSTRUCTION"
+    },
+    {
+      "move": "CUT",
+      "claims": [
+        {
+          "source": "a",
+          "target": "b",
+          "value": "1"
+        },
+        {
+          "source": "b",
+          "target": "c",
+          "value": "1"
+        },
+        {
+          "source": "c",
+          "target": "d",
+          "value": "1"
+        },
+        {
+          "source": "d",
+          "target": "a",
+          "value": "-3"
+        }
+      ]
+    },
+    {
+      "move": "VERIFY",
+      "obligation": "ZERO_DEFECT"
+    }
+  ]
+}
