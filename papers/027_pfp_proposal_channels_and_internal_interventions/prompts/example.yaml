@@ -1,0 +1,47 @@
+{
+  "schema_id": "pfp-teaching-two-level/v1",
+  "system_prompt": "You propose candidates in a finite declared game. Preserve the original task, domain, assumptions, moves and budget. Return only the JSON object required by response_schema. Never supply a trusted host verdict. A host checks the submitted object independently; a correct local claim does not validate unrelated prose. Use worked_example to understand the format; it is a different instance.",
+  "user_prompt": {
+    "task": "binary-sum-one/v1",
+    "profile": "binary-angle-bracket-code",
+    "domains": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "encoding": "(x,y) maps to the four-character string <xy>",
+    "question": "Submit an encoded witness for x+y=1.",
+    "internal_activation_hooks": "not supplied",
+    "binding": "The schema binds the task; the fixed-task reference decodes the glyph and checks the original equation."
+  },
+  "worked_example": {
+    "task": "worked-code-zero",
+    "equation": "u+v=0",
+    "candidate": {
+      "task": "worked-code-zero",
+      "glyph": "<00>"
+    }
+  },
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "task": {
+        "const": "binary-sum-one/v1"
+      },
+      "glyph": {
+        "type": "string",
+        "pattern": "^<[01][01]>$"
+      }
+    },
+    "required": [
+      "task",
+      "glyph"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "symbol-game.preprint-local-validation.v1",
+  "date": "2026-10-01",
+  "release_version": "0.1.0",
+  "source_baseline": "3f3399766",
+  "scope": "Local finite checks, package isolation, and proof replay; no live provider experiments or publication authorization",
+  "python": "3.12.14",
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_007_pedagogical_transmission.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "3 passed in 0.01s",
+      "test_source_sha256": "f491f0fc20debe76d71c89edc3e19acffc126d7bfe2d16c45f99832a4cec876e",
+      "stdout": "...                                                                      [100%]\n3 passed in 0.01s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_007_worked_triangle.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "7 passed in 0.03s",
+      "test_source_sha256": "b57393267ebee247865b31302d60bbf5bec65dcc6c9c698eb2e032f2dfede8e6",
+      "stdout": ".......                                                                  [100%]\n7 passed in 0.03s\n"
+    }
+  ],
+  "lean": [
+    {
+      "command": [
+        "lake",
+        "build"
+      ],
+      "exit_code": 0,
+      "stdout": "info: downloading https://releases.lean-lang.org/lean4/v4.34.0/lean-4.34.0-linux.tar.zst\ninfo: installing /tmp/symbol-game-elan/toolchains/leanprover--lean4---v4.34.0\n\u2714 [2/5] Built Expressivity (216ms)\n\u2139 [3/5] Built GrammarDepthCeiling (247ms)\ninfo: GrammarDepthCeiling.lean:89:0: 'PaperER007.FixedAlphabetTerm.fixed_alphabet_nesting_introduces_no_undeclared_symbols' does not depend on any axioms\ninfo: GrammarDepthCeiling.lean:90:0: 'PaperER007.FixedAlphabetTerm.fixed_alphabet_nesting_introduces_no_undeclared_operators' does not depend on any axioms\ninfo: GrammarDepthCeiling.lean:91:0: 'PaperER007.FixedAlphabetTerm.fixed_alphabet_nesting_preserves_declarations' does not depend on any axioms\n\u2139 [4/5] Built GrammarCeiling (248ms)\ninfo: GrammarCeiling.lean:128:0: 'OmegaCosmology.SymbolGame.expressivity_norm_le_grammar_ceiling' depends on axioms: [propext, Quot.sound]\nBuild completed successfully (5 jobs).\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--write"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 007_the_symbol_game_executable_lessons_and_evidence_boundaries: generated Census.lean\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--replay"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 007_the_symbol_game_executable_lessons_and_evidence_boundaries: replayed census successfully\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_full_axiom_census.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 64 package-local declarations; 3 modules; approved axioms only\n"
+    }
+  ],
+  "notebooks": [
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/007_the_symbol_game_executable_lessons_and_evidence_boundaries/jupyter_notebooks/007_moving_a_discrepancy.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/007_the_symbol_game_executable_lessons_and_evidence_boundaries",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    },
+    {
+      "notebook": "omega_engine_atlas/coda_atlas/omega_engine_pfp/007_the_symbol_game_executable_lessons_and_evidence_boundaries/jupyter_notebooks/007_moving_a_discrepancy.ipynb",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/007_the_symbol_game_executable_lessons_and_evidence_boundaries/jupyter_notebooks",
+      "status": "PASS",
+      "detail": "Executed in isolated kernel; deposited notebook left unchanged"
+    }
+  ],
+  "external_deposit": false,
+  "rust": []
+}

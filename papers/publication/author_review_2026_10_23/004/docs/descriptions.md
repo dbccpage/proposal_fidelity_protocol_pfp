@@ -1,0 +1,9 @@
+# Description
+
+PFP IV: Native Verification and the Custody of Finite Evidence, version 0.1.0 (2026-10-02), is a systems methods paper by Jeremy H. Carroll. The deposit contains the manuscript, its claim ledger and change log, and companion files.
+
+The Proposal Fidelity Protocol (PFP), formerly the Symbol Game, separates untrusted proposal generation from checking a declared finite property. The paper describes the native verification architecture at one pinned source commit: a restricted Rust host that replays one exact solve on a declared finite carrier, a broader runtime dispatcher, an additive foundation library, and the Python seams and encodings around them. A worked four-vertex fixture with two triangular faces shows the whole path. The host recomputes packet and request identities, replays the exact solve, and requires the candidate to equal the replayed normal form. The intermediate values Φ₁ = 7 and Γ₂ = 12, which the paper derives by hand, fall to 0 and 0. The same outcome still refuses admission, because three conformance laws remain unchecked and the attestation is unsigned.
+
+The paper distinguishes the repository’s tagged and sorted JSON encodings from RFC 8785. It states what digests and unkeyed outcome roots cannot establish: producer authenticity, equivalence between Python and Rust code, a reproducible build, or authority to deploy a result. The worked fixture values are checked against pinned source. A separately dated historical author-run report records the September native tests; the October 2 package-local validation does not record a fresh native run. The deposit includes the audited source archive audited_source/pfp-iv-native-source-52cb5457.tar.gz from commit 52cb5457f6c485ba548cfd292f6012a941ed22cf.
+
+The package also holds legacy Python modules and six small Lean modules from an earlier manuscript, with tests and an axiom report. They do not formalize or execute the native host.

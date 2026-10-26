@@ -1,0 +1,72 @@
+{
+  "schema_id": "pfp-teaching-two-level/v1",
+  "system_prompt": "You propose candidates in a finite declared game. Preserve the original task, domain, assumptions, moves and budget. Return only the JSON object required by response_schema. Never supply a trusted host verdict. A host checks the submitted object independently; a correct local claim does not validate unrelated prose. Use worked_example to understand the format; it is a different instance.",
+  "user_prompt": {
+    "task": "p0",
+    "profile": "nonnegative-integer-shared-fuel",
+    "parent": {
+      "task": "p0",
+      "receipt": "r1",
+      "checker": "c0",
+      "used": 1,
+      "budget": 2
+    },
+    "next_operation_cost": 1,
+    "question": "Propose the next charged child record without resetting the original task or budget.",
+    "binding": "This example checks protocol continuity, not an unprovided mathematical witness."
+  },
+  "worked_example": {
+    "task": "worked-fuel",
+    "parent_used": 0,
+    "original_budget": 4,
+    "operation_cost": 1,
+    "candidate": {
+      "task": "worked-fuel",
+      "receipt": "e1",
+      "parent": "e0",
+      "checker": "example-check",
+      "used": 1,
+      "budget": 4,
+      "cost": 1
+    }
+  },
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "task": {
+        "const": "p0"
+      },
+      "receipt": {
+        "type": "string",
+        "minLength": 1
+      },
+      "parent": {
+        "const": "r1"
+      },
+      "checker": {
+        "const": "c0"
+      },
+      "used": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "budget": {
+        "const": 2
+      },
+      "cost": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "task",
+      "receipt",
+      "parent",
+      "checker",
+      "used",
+      "budget",
+      "cost"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "paper": "009",
+  "version": "0.1.0",
+  "review_date": "2026-10-02",
+  "retrieved_main_revision": "593230f7daba7aa04d7c41dd456dfbd00a39bcbd",
+  "conceptual_source_revision": "52cb5457f6c485ba548cfd292f6012a941ed22cf",
+  "checks": [
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "cwd": "package root",
+      "started_at_utc": "2026-10-02T19:16:34.973677+00:00",
+      "finished_at_utc": "2026-10-02T19:16:35.379023+00:00",
+      "exit_code": 0,
+      "stdout": ".................................                                        [100%]\n33 passed in 0.21s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "code",
+        "tools/review_capstone.py",
+        "tools/replay_notebook.py",
+        "tools/render_paper.py"
+      ],
+      "cwd": "package root",
+      "started_at_utc": "2026-10-02T19:16:35.379061+00:00",
+      "finished_at_utc": "2026-10-02T19:16:35.399640+00:00",
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "-m",
+        "mypy"
+      ],
+      "cwd": "package root",
+      "started_at_utc": "2026-10-02T19:16:35.399666+00:00",
+      "finished_at_utc": "2026-10-02T19:16:35.508211+00:00",
+      "exit_code": 0,
+      "stdout": "Success: no issues found in 2 source files\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/replay_notebook.py"
+      ],
+      "cwd": "package root",
+      "started_at_utc": "2026-10-02T19:16:35.508249+00:00",
+      "finished_at_utc": "2026-10-02T19:16:35.739054+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"notebook\": \"009_triangle_cycle_sum.ipynb\",\n  \"notebook_sha256\": \"5054cfa8ee4f70862b0b8fb2b6b7b0070336cb4367cd56574fcf0999054f6b7f\",\n  \"python_version\": \"3.12.14\",\n  \"interpreter\": \"/workspace/scratch/6f8cf591c58d/review-venv/bin/python\",\n  \"engine\": \"cpython\",\n  \"transport\": null,\n  \"versions\": {\n    \"nbclient\": \"0.10.2\",\n    \"nbformat\": \"5.10.4\",\n    \"ipykernel\": \"7.3.0\"\n  },\n  \"code_cells\": 5,\n  \"comparison\": \"all code-cell sources, positions, outputs, and execution counts\",\n  \"errors\": [],\n  \"scope\": \"fresh CPython process; ordinary Python cells only; no IPython rendering; stored-output comparison; no learner outcome\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/review_capstone.py"
+      ],
+      "cwd": "package root",
+      "started_at_utc": "2026-10-02T19:16:35.739164+00:00",
+      "finished_at_utc": "2026-10-02T19:16:35.779355+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"counts\": {\n    \"true_positive\": 6,\n    \"false_negative\": 0,\n    \"false_positive\": 2,\n    \"true_negative\": 2\n  },\n  \"exact_fractions\": {\n    \"challenge_among_refused\": \"1\",\n    \"challenge_among_not_refused\": \"1/2\",\n    \"refused_among_challenges\": \"3/4\",\n    \"agreement_with_historical_labels\": \"4/5\"\n  },\n  \"negative_controls\": [\n    \"one changed CHALLENGE becomes CONCUR\",\n    \"constant caught flag does not change cells\"\n  ],\n  \"gate_probe_records\": 5,\n  \"gate_defect_families\": 4,\n  \"scope\": \"Fresh recount and controls on retained records; no model, native checker, or gate replay\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/replay_lean_axiom_census.py",
+        "--check",
+        "."
+      ],
+      "cwd": "package root",
+      "started_at_utc": "2026-10-02T19:16:35.779405+00:00",
+      "finished_at_utc": "2026-10-02T19:16:35.817418+00:00",
+      "exit_code": 0,
+      "stdout": "OK 009_the_symbol_game_adversarial_dialectics_and_terminal_reality_gates: Census.lean is up to date\n",
+      "stderr": "",
+      "scope": "Static generated Census.lean comparison; not Lean execution"
+    }
+  ],
+  "notebook": {
+    "status": "PASS",
+    "notebook": "009_triangle_cycle_sum.ipynb",
+    "notebook_sha256": "5054cfa8ee4f70862b0b8fb2b6b7b0070336cb4367cd56574fcf0999054f6b7f",
+    "python_version": "3.12.14",
+    "interpreter": "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+    "engine": "cpython",
+    "transport": null,
+    "versions": {
+      "nbclient": "0.10.2",
+      "nbformat": "5.10.4",
+      "ipykernel": "7.3.0"
+    },
+    "code_cells": 5,
+    "comparison": "all code-cell sources, positions, outputs, and execution counts",
+    "errors": [],
+    "scope": "fresh CPython process; ordinary Python cells only; no IPython rendering; stored-output comparison; no learner outcome"
+  },
+  "capstone": {
+    "status": "PASS",
+    "counts": {
+      "true_positive": 6,
+      "false_negative": 0,
+      "false_positive": 2,
+      "true_negative": 2
+    },
+    "exact_fractions": {
+      "challenge_among_refused": "1",
+      "challenge_among_not_refused": "1/2",
+      "refused_among_challenges": "3/4",
+      "agreement_with_historical_labels": "4/5"
+    },
+    "negative_controls": [
+      "one changed CHALLENGE becomes CONCUR",
+      "constant caught flag does not change cells"
+    ],
+    "gate_probe_records": 5,
+    "gate_defect_families": 4,
+    "scope": "Fresh recount and controls on retained records; no model, native checker, or gate replay"
+  },
+  "actual_versions": {
+    "python": "3.12.14",
+    "pytest": "9.1.1",
+    "ruff": "0.14.13",
+    "mypy": "1.19.1",
+    "nbclient": "0.10.2",
+    "nbformat": "5.10.4",
+    "ipykernel": "7.3.0"
+  },
+  "source_identity_inspection": {
+    "lean4/Level15AuthorityCalculus.lean": "byte-identical body after two-line provenance comment",
+    "lean4/RuntimeLimits.lean": "byte-identical body after two-line provenance comment",
+    "lean4/SLevel.lean": "byte-identical body after two-line provenance comment",
+    "lean4/TriggerNotLicense.lean": "byte-identical body after two-line provenance comment"
+  },
+  "retained_census_inspection": {
+    "axiom_report.txt": {
+      "retained_declarations": 32,
+      "without_axioms": 28,
+      "inspection_only": true
+    },
+    "full_axiom_report.txt": {
+      "retained_declarations": 516,
+      "without_axioms": 491,
+      "inspection_only": true
+    }
+  },
+  "protected_artifacts_unchanged": {
+    "lean4/SLevel.lean": "6738934be7da6df75ea68253434bf03936d3520ce5fe91e4c4b03dee0e2a57fc",
+    "lean4/RuntimeLimits.lean": "4c20cb77ebde62d595b20b6e1a0314a70fa579111fa2de624d213aa3c1cfe833",
+    "lean4/Level15AuthorityCalculus.lean": "247bc714172a23cd2610812ebf547a0b5ee7bfee7e93cd1268ef08fde26a4da0",
+    "lean4/lake-manifest.json": "2a4dbc240f3048e58c7ba65497388c8a0ae237c67984d7c91fc7ae11cf9d4346",
+    "lean4/lakefile.lean": "fb1f377dd848bfd123d88d550fd254ac5047991779c343b19f2615c3f61729d2",
+    "lean4/FullCensus.lean": "7fb5bd239208e3496dd400d4affa5b0f1a81d48ba18db4faa89bfecbc8ffb69c",
+    "lean4/Census.lean": "bb3313c7a82b8f90a9b370da5b4d9799f847f9beabfbe1c9b9efdcd8eb897011",
+    "lean4/full_axiom_report.txt": "9e4c46652924784c452c25413b1332690395284ef0cd5618a0368c773283b85c",
+    "lean4/lean-toolchain": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632",
+    "lean4/axiom_report.txt": "7bb58a353088fbbeb79990d24ad0e43f8bb8296f9b0d0a56d761ba42b6bdf785",
+    "lean4/TriggerNotLicense.lean": "4c5048765d7325b912ce2a74711e31c02190006ef68387ae9972efbedada4b51",
+    "docs/release_validation_2026_10_02.json": "1da4fcba9b0f9c6a32803f9dc7690e65514c04d29c1bcce088b23ebd21ecbff2",
+    "docs/release_validation_2026_10_01.json": "e4ae506a99ae5703503a38a36dcbd9c969bdd1f2077ccdf7cde3beedf7750c1e"
+  },
+  "checked_artifact_sha256": {
+    "paper.md": "7f7c7850167cec2039d74be3eb7c97af68d8ef83b53c462f3a513e6ec3d459b8",
+    "paper.tex": "b05c0bfad1692e95650e03f4820d8815eae59d43167ce8915379603db9b0db2e",
+    "paper.pdf": "5e8cc4cccbe704c1ba08e5d3d9384a9391f7a51c0c9d4b559dcccb3340015fec",
+    "paper_claim_ledger.md": "ae3a941fd1f4ddfe23342e7963b05f59cdbbc4d29464b81aff6d955af5ad8783",
+    "README.md": "8d5a78a778e2df873ab6fa967e98647e1a51a339ee1fc9d5e6e0ea3630fd5614",
+    "zenodo_metadata.json": "028dfa16e18385952b09b0147fb12abe4aafcd4bb25c4f3f63d62db4272efd0b",
+    "pyproject.toml": "8f468dc87847446eafd783dc9bfeda01f6683991942f882eb6f7c4e3dbd4ae8f",
+    "_lev_landau_theoretical_minimum_quiz/quiz.md": "68f6118e96bdb3f741b6c7c165271bb1d54c3552f2954eaabc88506ff29aadf3",
+    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "08bf2d2d1fcd9fed65d04bd7cbdb196060d390fb6db2dd5ac5ac1e49cf058bbc",
+    "_lev_landau_theoretical_minimum_quiz/answer_key.md": "9645932af338dc813dfe6bfb4f3020f189d531a681d4500654781aaff22cf717",
+    "code/review_counts.py": "1998b5b4f78938f3a6a29a65a8eb441982ecc552829cde6826718d9d6e83ef62",
+    "tools/review_capstone.py": "2a7d434f20a75e1d9d96737245f426b410439c193089b59a0436d282d8f8261c",
+    "tools/replay_notebook.py": "e22f4cc634a28ae34ac2358c45b7a7e99333f9e50e2fd069ba32d2624d0a87b2",
+    "tools/render_paper.py": "91060b9d11dc7986175463d6631c15943f5c2dd425e0f3af78de8aa0384ccbc1",
+    "jupyter_notebooks/009_triangle_cycle_sum.ipynb": "5054cfa8ee4f70862b0b8fb2b6b7b0070336cb4367cd56574fcf0999054f6b7f"
+  },
+  "pdf": {
+    "command": [
+      "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+      "tools/render_paper.py"
+    ],
+    "outcome": "PASS",
+    "pandoc": "3.1.3",
+    "xelatex": "TeX Live 2023/Debian",
+    "pages": 10,
+    "diagnostics": "No overfull boxes or missing characters",
+    "visual_review": "All ten pages rendered and inspected; final Appendix A.5 text clarified and its page reinspected; appendix table widths improved."
+  },
+  "educational_companion": {
+    "levels": 8,
+    "questions": 24,
+    "question_points": 72,
+    "capstone_points": 8,
+    "total_practice_points": 80,
+    "grading": "Declared instructor practice rubric; command success does not grade explanations"
+  },
+  "not_run": [
+    {
+      "check": "fresh Lean 4.34.0 build and full axiom replay",
+      "reason": "Pinned toolchain unavailable in this environment; retained records unchanged"
+    },
+    {
+      "check": "fresh Jupyter kernel execution",
+      "reason": "CPython engine used; Jupyter rendering outside this execution scope"
+    },
+    {
+      "check": "model, native checker, and historical/corrected Woland gate runs",
+      "reason": "Retained data recounted and source inspected; not reexecuted"
+    }
+  ],
+  "scope_limits": [
+    "Counts describe ten retained trials under historical checker labels, not physical ground truth or general detection performance.",
+    "The later checker replay receipt does not identify its checker revision.",
+    "Historical passing counts and formal census reports are not fresh execution evidence.",
+    "Hashes bind bytes relative to declared digests; they do not authenticate a producer or establish content truth.",
+    "No Zenodo publication, DOI, merge, provider call, or learner-effectiveness study is performed."
+  ],
+  "standalone_archive_checks": [
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "cwd": "isolated extracted package",
+      "started_at_utc": "2026-10-02T19:17:01.328958+00:00",
+      "exit_code": 0,
+      "stdout": ".................................                                        [100%]\n33 passed in 0.27s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/review_capstone.py"
+      ],
+      "cwd": "isolated extracted package",
+      "started_at_utc": "2026-10-02T19:17:01.807792+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"counts\": {\n    \"true_positive\": 6,\n    \"false_negative\": 0,\n    \"false_positive\": 2,\n    \"true_negative\": 2\n  },\n  \"exact_fractions\": {\n    \"challenge_among_refused\": \"1\",\n    \"challenge_among_not_refused\": \"1/2\",\n    \"refused_among_challenges\": \"3/4\",\n    \"agreement_with_historical_labels\": \"4/5\"\n  },\n  \"negative_controls\": [\n    \"one changed CHALLENGE becomes CONCUR\",\n    \"constant caught flag does not change cells\"\n  ],\n  \"gate_probe_records\": 5,\n  \"gate_defect_families\": 4,\n  \"scope\": \"Fresh recount and controls on retained records; no model, native checker, or gate replay\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "tools/replay_notebook.py"
+      ],
+      "cwd": "isolated extracted package",
+      "started_at_utc": "2026-10-02T19:17:01.851696+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"notebook\": \"009_triangle_cycle_sum.ipynb\",\n  \"notebook_sha256\": \"5054cfa8ee4f70862b0b8fb2b6b7b0070336cb4367cd56574fcf0999054f6b7f\",\n  \"python_version\": \"3.12.14\",\n  \"interpreter\": \"/workspace/scratch/6f8cf591c58d/review-venv/bin/python\",\n  \"engine\": \"cpython\",\n  \"transport\": null,\n  \"versions\": {\n    \"nbclient\": \"0.10.2\",\n    \"nbformat\": \"5.10.4\",\n    \"ipykernel\": \"7.3.0\"\n  },\n  \"code_cells\": 5,\n  \"comparison\": \"all code-cell sources, positions, outputs, and execution counts\",\n  \"errors\": [],\n  \"scope\": \"fresh CPython process; ordinary Python cells only; no IPython rendering; stored-output comparison; no learner outcome\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/6f8cf591c58d/review-venv/bin/python",
+        "verify_deposit.py"
+      ],
+      "cwd": "isolated extracted package",
+      "started_at_utc": "2026-10-02T19:17:02.089844+00:00",
+      "exit_code": 0,
+      "stdout": "OK: Manifest and two-way sweep checks passed.\n\nVerification PASSED.\n",
+      "stderr": ""
+    }
+  ],
+  "release_checks": {
+    "manifest_and_two_way_census": "PASS",
+    "deterministic_zip": "PASS",
+    "isolated_archive_tests": "33 passed, zero skips",
+    "note": "Receipt updated after extracted-archive checks; manifests and ZIP refreshed and checked again for final delivery."
+  }
+}

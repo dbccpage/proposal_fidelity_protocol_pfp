@@ -1,0 +1,101 @@
+{
+  "schema": "symbol-game.local-candidate-validation.v2",
+  "date": "2026-10-02",
+  "release_version": "0.1.0",
+  "authority_effect": "None",
+  "external_deposit": false,
+  "zenodo_submission": false,
+  "scope": "selected offline teaching tests, quiz-control replay, local wheel import, and date-aligned PDF compilation after the 2026-10-02 review repairs; no full-suite, native-build, curriculum re-audit, publication, or DOI claim",
+  "conceptual_source_baseline": "3f3399766108adc4c4e7615dce2573a57be57dd6",
+  "conceptual_source_baseline_role": "commit that holds the cited S(n) core, MSS-N atlas, and 2026-10-01 Genesis audit correction; not a digest of this package",
+  "candidate_checkout": "399e6b146d15e9ebee00e02ade69174c448a07d3",
+  "checkout_scope": "branch tip feat/symbol-game-workstreams; the worktree also contains unrelated dirty files; the hashes below bind only the listed package files",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "tools": {
+    "ruff": "0.14.13",
+    "pytest": "8.3.5",
+    "pandoc": "pandoc.exe 3.7.0.2",
+    "xelatex": "MiKTeX-XeTeX 4.16 (MiKTeX 25.12)"
+  },
+  "checks": [
+    {
+      "id": "ruff_changed_python",
+      "command": "py -3.12 -m ruff check --select F401,F841,I code/lesson_packets.py code/tests/test_lesson_packets.py",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/000_the_symbol_game_introduction",
+      "tool_version": "ruff 0.14.13",
+      "exit_code": 0,
+      "scope": "F401, F841, and I on the two changed Python files"
+    },
+    {
+      "id": "teaching_pytest",
+      "command": "py -3.12 -m pytest code/tests/test_basic_packets.py code/tests/test_lesson_packets.py -o addopts= -q --tb=no -p no:cacheprovider",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/000_the_symbol_game_introduction",
+      "tool_version": "pytest 8.3.5",
+      "exit_code": 0,
+      "passed": 28,
+      "scope": "code/tests/test_basic_packets.py and code/tests/test_lesson_packets.py, including four malformed observation-index controls"
+    },
+    {
+      "id": "basic_packets_script",
+      "command": "py -3.12 code/basic_packets.py",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/000_the_symbol_game_introduction",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "scope": "supplied finite controls in code/basic_packets.py"
+    },
+    {
+      "id": "lesson_packets_script",
+      "command": "py -3.12 code/lesson_packets.py",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp/000_the_symbol_game_introduction",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "scope": "supplied finite controls in code/lesson_packets.py"
+    },
+    {
+      "id": "quiz_controls_patched",
+      "command": "py -3.12 repair_notes/verify_quiz_examples.py <package> --patched",
+      "cwd": "the proposed review bundle's repair_notes script, package argument this directory",
+      "tool_version": "Python 3.12.10",
+      "exit_code": 0,
+      "passed_controls": 28,
+      "index_type_precedence": {"status": "REFUSED", "reason": "ANSWER_TYPE"},
+      "scope": "selected finite quiz examples in the review script; not a native engine"
+    },
+    {
+      "id": "wheel_import",
+      "command": "py -3.12 -m pip wheel --no-deps -w <temp> .",
+      "tool_version": "pip 26.0.1, Python 3.12.10",
+      "exit_code": 0,
+      "scope": "wheel symbol_game_introduction-0.1.0 contains basic_packets.py and lesson_packets.py; both import from a temp target outside this source tree"
+    },
+    {
+      "id": "pdf_deposit",
+      "command": "py -3.12 -B tools/build_publications.py --pdf --deposit --only 000 --pandoc C:\\Users\\a343o\\AppData\\Local\\Pandoc\\pandoc.exe --latex C:\\Users\\a343o\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\xelatex.exe",
+      "cwd": "omega_engine_atlas/coda_atlas/omega_engine_pfp",
+      "tool_version": "pandoc.exe 3.7.0.2; MiKTeX-XeTeX 4.16 (MiKTeX 25.12)",
+      "exit_code": 0,
+      "scope": "Paper 000 deposit paper.tex and paper.pdf; the builder refuses Overfull \\hbox warnings; this record does not repeat a page-by-page visual inspection"
+    }
+  ],
+  "executed_file_sha256": {
+    "README.md": "b57a753327bc8ec89f2d9ed2d5aa572eed972d33a7124104331be51adca01c0b",
+    "pyproject.toml": "8ec42fc6123df456fd6a9d2eccf66dca75200f4929d08e5bb738dbabaa91da34",
+    "paper.md": "d8cfd2fb5e62b58a50f6bc54a1421e65f0bbe24df94c53752d4d4ccf5586b588",
+    "paper.tex": "d6015dd80e5a3c8a7102e206eeef0ac273add3a380e88fc49b1e24067dd0d0e8",
+    "paper.pdf": "3b84c3adffbb7c178d1207a6950460adf7105ac43af21a999577fcac451a56aa",
+    "paper_change_log.md": "2003833bf26d4d51b99295504fd787b81a5cbbdda8950ab84010c554bce5d42c",
+    "zenodo_metadata.json": "e4ed05b020916bacdcd02deff08a13cb09e2004bd64b0d5d3cb65118540bb659",
+    "docs/references.md": "a236d547e14e4b7476cc0bf44204e094511860a35c5785f24821c2794b5228d2",
+    "code/basic_packets.py": "1cd22ea291fa62d0855a1da5f9d8cffd19270d9fb461999ba06a6e4016daffcf",
+    "code/lesson_packets.py": "179f720ec062ce8e597c03708e23ec0819d488aa33e5f5ec6f7bb9bd03f39058",
+    "code/tests/test_lesson_packets.py": "ac7236fc70386fb20644ccfc98ba11a9ab418579e116099c71a21096d471198b",
+    "_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "187447ea1e14813cbccc839dd06213d7ae62208c62cc1283da95c7695b4d0cfc",
+    "_lev_landau_theoretical_minimum_quiz/quiz.md": "5b6811506c47931044c8292cbbe79bd55e56169060e036dfba54a689cb974e1d",
+    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "a59fe7bb5ef0225f28b1ca7dcfed1c7bf7574b7797232e2a50af42e3e26df202",
+    "_lev_landau_theoretical_minimum_quiz/instructor_key.md": "2b99928efb552ef8992752b457135c6bb32ec2cf1a40f73cd7862a0318f67c5f"
+  },
+  "historical_validation_retained": [
+    "release_validation_2026_10_01.json",
+    "release_validation_2026_10_02.json"
+  ]
+}

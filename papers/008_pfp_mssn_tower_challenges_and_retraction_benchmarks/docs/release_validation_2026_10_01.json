@@ -1,0 +1,64 @@
+{
+  "schema": "symbol-game.preprint-local-validation.v1",
+  "date": "2026-10-01",
+  "release_version": "0.1.0",
+  "source_baseline": "3f3399766",
+  "scope": "Local finite checks, package isolation, and proof replay; no live provider experiments or publication authorization",
+  "python": "3.12.14",
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_008_mssn_tower_retraction.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "24 passed in 0.05s",
+      "test_source_sha256": "e8352837116ea7ef0f8701c4bc13428a8f86e91fe03baf90799294c17a9db339",
+      "stdout": "........................                                                 [100%]\n24 passed in 0.05s\n"
+    }
+  ],
+  "lean": [
+    {
+      "command": [
+        "lake",
+        "build"
+      ],
+      "exit_code": 0,
+      "stdout": "\u2139 [2/12] Built Level21DiscreteRegge (339ms)\ninfo: Level21DiscreteRegge.lean:66:0: 'MSSN.Level21.rotYZ_orthogonal' depends on axioms: [propext]\ninfo: Level21DiscreteRegge.lean:67:0: 'MSSN.Level21.rotXZ_orthogonal' depends on axioms: [propext]\ninfo: Level21DiscreteRegge.lean:68:0: 'MSSN.Level21.scalar_sum_does_not_certify_closure' depends on axioms: [propext]\n\u2139 [3/12] Built Level22FibredDependentContexts (356ms)\ninfo: Level22FibredDependentContexts.lean:74:0: 'MSSN.Level22.reindex_id' does not depend on any axioms\ninfo: Level22FibredDependentContexts.lean:75:0: 'MSSN.Level22.reindex_comp' does not depend on any axioms\ninfo: Level22FibredDependentContexts.lean:76:0: 'MSSN.Level22.reindex_fiber_typing' does not depend on any axioms\ninfo: Level22FibredDependentContexts.lean:77:0: 'MSSN.Level22.fiber_mismatch_rejected' does not depend on any axioms\n\u2139 [4/12] Built Level23SheafDescent (362ms)\ninfo: Level23SheafDescent.lean:81:0: 'MSSN.Level23.restriction_is_compatible' does not depend on any axioms\ninfo: Level23SheafDescent.lean:82:0: 'MSSN.Level23.descent_refusal_on_overlap_conflict' does not depend on any axioms\n\u26a0 [5/12] Built ExactRat.Basic (510ms)\nwarning: ExactRat/Basic.lean:142:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nwarning: ExactRat/Basic.lean:142:20: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nwarning: ExactRat/Basic.lean:150:10: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nwarning: ExactRat/Basic.lean:150:22: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nwarning: ExactRat/Basic.lean:150:34: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nwarning: ExactRat/Basic.lean:150:47: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nwarning: ExactRat/Basic.lean:159:10: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nwarning: ExactRat/Basic.lean:159:22: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nwarning: ExactRat/Basic.lean:159:34: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nwarning: ExactRat/Basic.lean:159:47: `dif_neg` has been deprecated: Use `dite_eq_right` instead\n\u2139 [6/12] Built Level16IndObject (523ms)\ninfo: Level16IndObject.lean:79:0: 'MSSN.Level16.stage_capacity_monotonic' depends on axioms: [propext, Classical.choice, Quot.sound]\ninfo: Level16IndObject.lean:80:0: 'MSSN.Level16.colimit_quarantine_barrier' depends on axioms: [propext, Quot.sound]\ninfo: Level16IndObject.lean:81:0: 'MSSN.Level16.quarantine_halt_on_infinite_demand' depends on axioms: [propext, Quot.sound]\n\u26a0 [7/12] Built ExactRat.Laws (350ms)\nwarning: ExactRat/Laws.lean:63:43: This simp argument is unused:\n  Frac.zero\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.add, Frac.neg, Int.natCast_mul, Int.neg_mul, Int.natCast_zero, Int.natCast_one,\n    Int.mul_one, Int.zero_mul]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:104:33: This simp argument is unused:\n  Frac.one\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.mul, Int.natCast_mul, Int.natCast_zero, Int.natCast_one, Int.one_mul]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:104:60: This simp argument is unused:\n  Int.natCast_zero\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.mul, Frac.one, Int.natCast_mul, Int.natCast_one, Int.one_mul]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:133:23: This simp argument is unused:\n  Frac.zero\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.one] at this\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:133:34: This simp argument is unused:\n  Frac.one\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.zero] at this\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:150:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nwarning: ExactRat/Laws.lean:155:10: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nwarning: ExactRat/Laws.lean:155:22: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nwarning: ExactRat/Laws.lean:151:62: This simp argument is unused:\n  Int.natCast_zero\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.mul, Frac.one, Int.natCast_mul, Int.natCast_one, Int.mul_one, Int.one_mul,\n    Int.toNat_of_nonneg (Int.le_of_lt h1)]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:156:64: This simp argument is unused:\n  Int.natCast_zero\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.mul, Frac.one, Int.natCast_mul, Int.natCast_one, Int.mul_one, Int.one_mul,\n    Int.toNat_of_nonneg (show 0 \u2264 -n by omega), Int.mul_neg, Int.neg_mul, Int.neg_neg]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:157:78: This simp argument is unused:\n  Int.neg_mul\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.mul, Frac.one, Int.natCast_mul, Int.natCast_zero, Int.natCast_one, Int.mul_one,\n    Int.one_mul, Int.toNat_of_nonneg (show 0 \u2264 -n by omega), Int.mul_neg, Int.neg_neg]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:158:8: This simp argument is unused:\n  Int.neg_neg\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Frac.mul, Frac.one, Int.natCast_mul, Int.natCast_zero, Int.natCast_one, Int.mul_one,\n    Int.one_mul, Int.toNat_of_nonneg (show 0 \u2264 -n by omega), Int.mul_neg, Int.neg_mul]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:163:27: This simp argument is unused:\n  Frac.zero\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Int.zero_mul, Int.natCast_zero, Int.natCast_one, Int.mul_one]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nwarning: ExactRat/Laws.lean:212:25: This simp argument is unused:\n  Frac.zero\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [Frac.Eqv, Int.zero_mul, Int.natCast_zero, Int.natCast_one, Int.mul_one]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n\u2714 [8/12] Built ExactRat.Linear (264ms)\n\u2714 [9/12] Built ExactRat.Poly (464ms)\n\u2714 [10/12] Built ExactRat (169ms)\n\u2714 [11/12] Built FlowCertificate (356ms)\nBuild completed successfully (12 jobs).\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--write"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks: generated Census.lean\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_lean_axiom_census.py",
+        "--replay"
+      ],
+      "exit_code": 0,
+      "stdout": "OK 008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks: replayed census successfully\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/replay_full_axiom_census.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: 576 package-local declarations; 10 modules; approved axioms only\n"
+    }
+  ],
+  "notebooks": [],
+  "external_deposit": false,
+  "rust": []
+}

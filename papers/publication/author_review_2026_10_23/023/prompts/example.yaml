@@ -1,0 +1,70 @@
+{
+  "schema_id": "pfp-teaching-two-level/v1",
+  "system_prompt": "You propose candidates in a finite declared game. Preserve the original task, domain, assumptions, moves and budget. Return only the JSON object required by response_schema. Never supply a trusted host verdict. A host checks the submitted object independently; a correct local claim does not validate unrelated prose. Use worked_example to understand the format; it is a different instance.",
+  "user_prompt": {
+    "task": "binary-sum-one/v1",
+    "profile": "finite-integer-assignment",
+    "domains": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "question": "Supply a witness to x+y=1.",
+    "original_required_claims": [
+      "equation"
+    ],
+    "permitted_changes": [],
+    "binding": "The host retains its required claim set; optional claims need additional checks."
+  },
+  "worked_example": {
+    "task": "worked-sum-zero",
+    "domains": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "equation": "u+v=0",
+    "candidate": {
+      "task": "worked-sum-zero",
+      "witness": [
+        0,
+        0
+      ]
+    }
+  },
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "task": {
+        "const": "binary-sum-one/v1"
+      },
+      "witness": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      }
+    },
+    "required": [
+      "task",
+      "witness"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,350 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\emergencystretch=6em
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage{pdflscape}
+\newsavebox{\PfpMathBox}
+\newcommand{\PfpDisplayMath}[1]{%
+  \sbox{\PfpMathBox}{$\displaystyle #1$}%
+  \ifdim\wd\PfpMathBox>\linewidth
+    \resizebox{\linewidth}{!}{\usebox{\PfpMathBox}}%
+  \else\usebox{\PfpMathBox}\fi}
+\AtBeginDocument{\Urlmuskip=0mu plus 2mu}
+\lstset{breaklines=true,basicstyle=\small\ttfamily,columns=fullflexible,keepspaces=true}
+\setlength{\tabcolsep}{4pt}
+\usepackage{iftex}
+\ifXeTeX
+  \usepackage{newunicodechar}
+  \makeatletter
+  \newcommand{\DeclareUnicodeCharacter}[2]{%
+    \begingroup
+    \uccode`\~="#1\relax
+    \uppercase{\def\temp{~}}%
+    \expandafter\endgroup
+    \expandafter\newunicodechar\expandafter{\temp}{#2}%
+  }
+  \makeatother
+\fi
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2190}{\ensuremath{\leftarrow}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{21A6}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2113}{\ensuremath{\ell}}
+\DeclareUnicodeCharacter{03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{0393}{\ensuremath{\Gamma}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{211A}{\ensuremath{\mathbb{Q}}}
+\DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb{Z}}}
+\DeclareUnicodeCharacter{2115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{2202}{\ensuremath{\partial}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\phi}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{00B9}{\ensuremath{^1}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{2070}{\ensuremath{^0}}
+\DeclareUnicodeCharacter{2080}{\ensuremath{_0}}
+\DeclareUnicodeCharacter{2081}{\ensuremath{_1}}
+\DeclareUnicodeCharacter{2082}{\ensuremath{_2}}
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={PFP: Local witnesses and global compatibility in agent composition},
+  pdfauthor={Jeremy H. Carroll},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{PFP: Local witnesses and global compatibility in agent
+composition}
+\author{Jeremy H. Carroll}
+\date{2026-10-23}
+
+\begin{document}
+\makeatletter
+\begin{center}
+{\LARGE \@title\par}
+\vspace{0.8em}
+{\normalsize \@author\par}
+\vspace{0.5em}
+{\small \@date\par}
+\end{center}
+\makeatother
+
+\textbf{Code baseline:}
+\nolinkurl{59dde95a7860063c25d75db37f40af556e9f28ee}
+
+\subsection{Abstract}\label{abstract}
+
+Independently checked local answers can disagree on shared variables. We
+give a finite gluing theorem for explicit assignment tables, retain the
+overlap disagreements as obstruction evidence, and exhibit a three-agent
+cycle in which every local task is satisfiable but the joint task is
+not. The result explains a concrete role for LGGR in PFP agent
+composition without claiming a general sheaf theorem or automatic
+multi-agent reliability.
+
+\subsection{Mechanism inventory}\label{mechanism-inventory}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4999}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4999}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Mechanism
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Evidence
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Mathematical statement & Written proof under declared hypotheses \\
+Finite example & Standard-library replay of submitted inputs and
+rejection controls \\
+Model inference & Not executed \\
+Lean verification & No new formalization claimed \\
+Authorization & None supplied by this paper or its replay \\
+\end{longtable}
+
+\subsection{1. Local tasks and the global
+question}\label{local-tasks-and-the-global-question}
+
+Let \(V\) be a finite variable set with finite declared domains. Each
+agent's local task has a scope \(S_i\subseteq V\) and an explicitly
+supplied allowed relation \(R_i\subseteq\prod_{v\in S_i}D_v\). A
+candidate family selects \(a_i\in R_i\) for each scope. Local
+satisfaction and pairwise overlap compatibility are separate checks. Add
+full-domain unary relations for any uncovered variable when a
+global-assignment correspondence is required.
+
+\subsection{2. Finite compatibility
+theorem}\label{finite-compatibility-theorem}
+
+\textbf{Theorem.} A locally permitted family glues to a unique
+assignment on \(\bigcup_i S_i\) precisely when every pair agrees on its
+\nolinkurl{intersection.} If the scopes cover \(V\), compatible
+permitted families correspond bijectively to global solutions of all
+local constraints.
+
+\textbf{Proof.} If a global assignment exists, its restrictions agree.
+Conversely, for each covered variable choose its value from any
+containing scope. Pairwise agreement makes that choice independent of
+the scope. The resulting assignment restricts to each selected row, so
+it satisfies every relation. Every global assignment with those
+restrictions has those same values, proving uniqueness. Restriction and
+gluing are inverse maps when all variables are covered. An uncovered
+variable with multiple values defeats uniqueness unless its value is
+supplied separately; an empty uncovered domain makes global existence
+fail. The full-domain unary relations retain these cases.
+
+\subsection{3. Three local successes and one global
+obstruction}\label{three-local-successes-and-one-global-obstruction}
+
+Take Boolean variables \(x,\allowbreak y,\allowbreak z\). The first
+agent checks \(x=y\), the second \(y=z\), and the third \(z\ne x\).
+Every relation has two rows, so every local existence query succeeds. A
+global assignment would imply \(x=z\) and \(x\ne z\), a
+\nolinkurl{contradiction.} In the selected family
+\((x,\allowbreak y)=(0,\allowbreak 0)\),
+\((y,\allowbreak z)=(0,\allowbreak 0)\),
+\((z,\allowbreak x)=(0,\allowbreak 1)\), the overlap value of \(x\)
+disagrees. Replacing the final relation by equality gives the two global
+solutions \((0,\allowbreak 0,\allowbreak 0)\) and
+\((1,\allowbreak 1,\allowbreak 1)\) and compatible local restrictions
+for each.
+
+This is the finite LGGR distinction: local green results need not
+produce a global green result. A disagreement is an obstruction to the
+declared gluing requirement, not an assertion that all differences are
+inherently bad.
+
+\subsection{4. Agent packets and the integration
+check}\label{agent-packets-and-the-integration-check}
+
+The shared prompt explains row selection and the possibility of overlap
+failure. The typed instance supplies domains, scopes, tables, and the
+joint question. Each agent returns its actual row and local certificate.
+The integrator replays local membership and checks common-variable
+values before admitting a global witness. A loss ledger or a narrative
+agreement cannot replace these values. Renaming variables requires
+explicit bijections applied to the task and every witness; dropping an
+overlap changes the problem.
+
+\subsection{5. Executable falsifiers}\label{executable-falsifiers}
+
+The \href{code/replay.py}{reference replay} independently enumerates all
+eight original global assignments and checks submitted local rows. It
+verifies local nonemptiness of the incompatible cycle, refuses its
+disagreeing family, and accepts the compatible equality family. A global
+solution is decoded only from a family passing the overlap checks. There
+are no model calls, observed swarm improvements, or new claims about
+physical \nolinkurl{contextuality.}
+
+\subsection{6. Scope and relation to
+WDP}\label{scope-and-relation-to-wdp}
+
+The assignment gluing fact is standard. Its PFP use is a task-bound
+composition contract that preserves local evidence while exposing
+missing global \nolinkurl{compatibility.} WDP §20.7 supplies the broader
+finite constraint construction and zero-disagreement encoding. More
+general agent composition additionally requires contracts for effects,
+authority, timing, and representation change. Those cannot be
+established from this static Boolean example alone.
+
+The \href{prompts/example.yaml}{two-level teaching packet} includes
+shared system rules, this typed user instance, a different worked
+example and a required candidate response schema. It keeps provider
+system/user roles separate. It is a saved example, not a
+schema-admission or model-run receipt; the local replay checks the
+mathematical or protocol obligations stated above.
+
+\subsection{7. Typed operation composition is a different
+obligation}\label{typed-operation-composition-is-a-different-obligation}
+
+The current OEOP compiler checks ordered input and output slots,
+declared effects and source-bound operation identities. This is not the
+assignment gluing theorem: two callbacks with compatible types can still
+disagree on task identity, candidate bytes or shared state. The
+execution boundary must retain those bindings and observe the actual
+operations. The finite theorem cannot supply an unimplemented callback,
+undo a side effect or resolve a missing native host.
+
+In the \href{../028/paper.pdf}{bounded DDC repair study}, the operation
+order is C, R, E, I, M, T. Every stage carries the same run key, request
+digest and candidate identity. Compilation uses the existing typed
+workflow and operation-inventory boundaries; Woland owns the working
+copy and fixed checks. OEEIS screening and Prompt Civilization lineage
+are injected services, not responsibilities absorbed into the capability
+catalog.
+
+A complete six-step execution is a concrete integration observation, not
+a general gluing theorem for effectful agents. The example's original
+source is unchanged, activation remains on hold, and no mathematical
+residual is measured. The assignment proof and Boolean falsifiers above
+are unchanged; they remain independent from this implementation study.
+
+\subsection{Research extension: compatible evidence across a
+campaign}\label{research-extension-compatible-evidence-across-a-campaign}
+
+The harness campaign requires common experiment, source, checker,
+partition, model configuration and original budget identities before
+comparing evaluations. This is an evidence compatibility obligation. It
+is distinct from the finite assignment-gluing theorem above: task
+completion fractions are not assignments on a shared variable carrier,
+and agreement among several task scores is not a proof of global
+correctness.
+
+A candidate that improves one family while degrading another is retained
+as a rejected branch. Independent confirmation is still required when
+all family scores appear favorable. The existing typed workflow compiler
+checks declared connections; actual container execution and downstream
+checks provide separate \nolinkurl{observations.} A locally typed plan
+can still produce a wrong answer or fail to execute. The current
+author-review extension reports implementation, with the live campaign
+and its transfer comparisons unmeasured.
+
+The source and page references for this extension are collected in
+\href{../029/paper.pdf}{Paper 029} and its
+\href{../029/docs/source_to_claim_map.md}{source-to-claim map}. The
+author-review rendering does not replace a historical deposit or
+archive.
+
+\subsection{Sources and relation to the
+programme}\label{sources-and-relation-to-the-programme}
+
+This draft builds on the
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md}{WDP
+manuscript},
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/paper.md}{Paper
+021's source-and-execution distinctions}, and the
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/README.md}{corrected
+findings notices}.
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/022_pfp_frontier_research/paper.md}{Paper
+022} supplies a research design whose live-model and offline-strategy
+claims require their own source-bound scrutiny. These drafts do not
+adopt its empirical tables as new \nolinkurl{measurements.} The
+\href{https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/README.md}{PFP
+collection} provides the \nolinkurl{shared-system/typed-instance}
+protocol. Genesis and MSS-N presentation stages do not license a new
+mathematical or physical carrier.
+
+\end{document}

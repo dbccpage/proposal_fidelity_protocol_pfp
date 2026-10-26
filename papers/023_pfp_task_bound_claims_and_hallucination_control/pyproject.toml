@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "the-symbol-game-023"
+version = "0.1.0"
+description = "PFP: Task-bound claims and the scope of hallucination control"
+readme = "README.md"
+authors = [{ name = "Jeremy H. Carroll" }]
+license = { text = "PolyForm-Noncommercial-1.0.0" }
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.3",
+    "ruff>=0.14.13",
+]
+
+[tool.setuptools]
+package-dir = {"" = "code"}
+
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+pythonpath = ["code"]
+addopts = "-ra -q --import-mode=importlib -p no:cacheprovider"
+
+[tool.ruff]
+cache-dir = "~/.cache/ruff"
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

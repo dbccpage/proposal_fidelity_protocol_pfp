@@ -1,0 +1,73 @@
+{
+  "schema": "symbol-game.preprint-local-validation.v1",
+  "date": "2026-10-01",
+  "release_version": "0.1.0",
+  "source_baseline": "3f3399766",
+  "scope": "Local finite checks, package isolation, and proof replay; no live provider experiments or publication authorization",
+  "python": "3.12.14",
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_danger_gate.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "12 passed in 0.03s",
+      "test_source_sha256": "dcaccb11a8b48e43531fc660c5c50622c6269953e1a8f96fa6a103202d3496dd",
+      "stdout": "............                                                             [100%]\n12 passed in 0.03s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_demo_3_host.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "19 passed in 0.08s",
+      "test_source_sha256": "29a35f2ba916f3acfec7373bb4fd1e2ee15f9b19c9e3151e9f5e90e35e4d01a6",
+      "stdout": "...................                                                      [100%]\n19 passed in 0.08s\n"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_two_signals_one_detector.py",
+        "-q",
+        "--override-ini=addopts="
+      ],
+      "cwd": "package root",
+      "exit_code": 0,
+      "summary": "15 passed in 0.92s",
+      "test_source_sha256": "ac69549708de273970652cfe2f8bdba6f258dea54eefb79db0fd3b068bf207f0",
+      "stdout": "...............                                                          [100%]\n15 passed in 0.92s\n"
+    }
+  ],
+  "lean": [],
+  "notebooks": [],
+  "external_deposit": false,
+  "rust": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-j",
+        "1",
+        "--manifest-path",
+        "code/rust/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "stdout": "   Compiling pfp_host_detector v0.1.0 (/workspace/the_symbol_game/omega_engine_atlas/coda_atlas/omega_engine_pfp/003_the_symbol_game_host_admitted_failure_detectors/code/rust)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.82s\n     Running unittests src/lib.rs (code/rust/target/debug/deps/pfp_host_detector-ac18840ae637d360)\n\nrunning 13 tests\ntest canaries::tests::test_am_fsp_2_detection ... ok\ntest canaries::tests::test_am_fsp_4_detection ... ok\ntest canaries::tests::test_am_fsp_7_detection ... ok\ntest canaries::tests::test_am_fsp_8_detection ... ok\ntest canaries::tests::test_am_fsp_8_fixture_detection ... ok\ntest canaries::tests::test_clean_input_has_zero_findings ... ok\ntest canaries::tests::test_true_attractive_u_statement_is_not_flagged ... ok\ntest danger_gate::tests::test_gate_conjunction_refused ... ok\ntest danger_gate::tests::test_gate_signal1_alone ... ok\ntest danger_gate::tests::test_gate_tolerated ... ok\ntest host::tests::test_host_initialization ... ok\ntest host::tests::test_fuel_exhaustion ... ok\ntest host::tests::test_batch_rollback_on_unknown_move ... ok\n\ntest result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running unittests src/bin/solve_host_detector.rs (code/rust/target/debug/deps/solve_host_detector-5e06ce29617bdf04)\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n   Doc-tests pfp_host_detector\n\nrunning 0 tests\n\ntest result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n"
+    }
+  ]
+}

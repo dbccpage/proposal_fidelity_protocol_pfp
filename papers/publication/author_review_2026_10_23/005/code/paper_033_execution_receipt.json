@@ -1,0 +1,83 @@
+{
+  "receipt_schema": "omega.symbol_game.paper_033_execution_receipt.v1",
+  "benchmark_name": "Paper 033 Practitioner Field Manual Execution & Streaming Harness",
+  "paper_id": "PO-033",
+  "version": "1.1.0",
+  "timestamp_utc": "2026-09-19T06:41:46Z",
+  "scenarios": [
+    {
+      "name": "Canonical 3-Cycle Monotone Repair",
+      "carrier": [
+        "a",
+        "b",
+        "c"
+      ],
+      "initial_obstruction_phi1": "3",
+      "steps": [
+        {
+          "step": "ASSERT_initial",
+          "phi1": "3"
+        },
+        {
+          "step": "bad_cut_proposal",
+          "verdict_status": "DefectIncrease",
+          "admitted": false,
+          "defect_before": "3",
+          "defect_after": "5",
+          "refused_fail_closed": true
+        },
+        {
+          "step": "exact_repair_cut",
+          "verdict_status": "ExactRepair",
+          "admitted": true,
+          "defect_before": "3",
+          "defect_after": "0",
+          "monotonic_descent": true
+        },
+        {
+          "step": "verify_zero_obstruction",
+          "verdict_status": "Verified",
+          "admitted": true,
+          "defect_after": "0",
+          "terminal_reached": "ACCEPTED_ZERO_DEFECT"
+        }
+      ]
+    },
+    {
+      "name": "Authorization Dependency Graph 4-Cycle Repair",
+      "carrier": [
+        "u",
+        "r",
+        "p",
+        "a"
+      ],
+      "initial_obstruction_phi1": "6",
+      "steps": [
+        {
+          "step": "repair_cut",
+          "verdict_status": "ExactRepair",
+          "admitted": true,
+          "defect_before": "6",
+          "defect_after": "0",
+          "monotonic_descent": true
+        },
+        {
+          "step": "verify_zero_obstruction",
+          "verdict_status": "Verified",
+          "admitted": true,
+          "defect_after": "0",
+          "terminal_reached": "ACCEPTED_ZERO_DEFECT"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_scenarios": 2,
+    "total_turns": 5,
+    "refusals_caught_fail_closed": 1,
+    "monotone_descents_admitted": 2,
+    "zero_defect_terminals_verified": 2,
+    "status": "PASS_ALL_INVARIANTS"
+  },
+  "sha256_digest": "7f1f67d9d649f353af9d50329dc88e2f153d14002648f6b67bf14656a9c6a148"
+}

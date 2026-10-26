@@ -1,0 +1,307 @@
+{
+  "schema": "pfp008.publication-review-validation.v1",
+  "date": "2026-10-02",
+  "release_version": "0.1.0",
+  "review_base": "23893fc44162555fa12ceda3e1665982e3d7a14e",
+  "authority_effect": "None",
+  "external_deposit": false,
+  "live_provider_calls": 0,
+  "tools": {
+    "python": "3.12.14",
+    "pytest": "9.1.1",
+    "ruff": "0.14.13",
+    "mypy": "1.19.1",
+    "lean_pin": "4.34.0",
+    "pandoc": "3.1.3",
+    "xelatex": "XeTeX 3.141592653-2.6-0.999995 (TeX Live 2023/Debian)"
+  },
+  "checks": [
+    {
+      "id": "runner_tests",
+      "command": "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python -m pytest code/tests/test_008_mssn_tower_retraction.py -o addopts= -q -p no:cacheprovider --basetemp=/workspace/scratch/3615e1e25a6d/p008_validation/runner_tests",
+      "exit_code": 0,
+      "stdout": "..................................                                       [100%]\n34 passed in 0.04s\n",
+      "setup_retry": {
+        "exit_code": 1,
+        "reason": "scratch parent directory was absent; created before retry; no source change"
+      }
+    },
+    {
+      "id": "gate_tests",
+      "command": "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python -m pytest code/tests/test_008_deposit_gates.py -o addopts= -q -p no:cacheprovider --basetemp=/workspace/scratch/3615e1e25a6d/p008_validation/gate_tests",
+      "exit_code": 0,
+      "stdout": ".......                                                                  [100%]\n7 passed in 0.02s\n",
+      "setup_retry": {
+        "exit_code": 1,
+        "reason": "scratch parent directory was absent; created before retry; no source change"
+      }
+    },
+    {
+      "id": "source_tests",
+      "command": "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python -m pytest code/tests/test_008_source_bound_examples.py -o addopts= -q -p no:cacheprovider --basetemp=/workspace/scratch/3615e1e25a6d/p008_validation/source_tests",
+      "exit_code": 0,
+      "stdout": "...........                                                              [100%]\n11 passed in 0.03s\n"
+    },
+    {
+      "id": "ruff",
+      "command": "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python -m ruff check code",
+      "exit_code": 0,
+      "stdout": "All checks passed!\n"
+    },
+    {
+      "id": "mypy",
+      "command": "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python -m mypy",
+      "exit_code": 0,
+      "stdout": "Success: no issues found in 5 source files\n"
+    },
+    {
+      "id": "census_source_check",
+      "command": "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python tools/replay_lean_axiom_census.py --check .",
+      "exit_code": 0,
+      "stdout": "OK 008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks: Census.lean is up to date\n"
+    },
+    {
+      "id": "fresh_lean_replay",
+      "command": "PATH=/workspace/scratch/3615e1e25a6d/p008_toolchains/lean-4.34.0-linux/bin:$PATH /workspace/scratch/3615e1e25a6d/paper008_env/bin/python tools/replay_lean_axiom_census.py --replay .",
+      "exit_code": 1,
+      "stdout": "FAIL 008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks: Lake build failed with exit 1:\n\nerror: could not detect the configuration of the Lake installation\n\n"
+    },
+    {
+      "id": "series_custody_tests",
+      "command": "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python -m pytest ../tools/test_publication_checks.py -o addopts= -q -p no:cacheprovider --basetemp=/workspace/scratch/3615e1e25a6d/p008_validation/series_tests",
+      "exit_code": 0,
+      "stdout": "........                                                               [100%]\n8 passed, 2 subtests passed in 0.03s\n"
+    }
+  ],
+  "final_test_counts": {
+    "paper_passed": 52,
+    "series_passed": 8,
+    "series_subtests_passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "asset_sha256": {
+    "README.md": "8cd1301bcc7e1b5c858b414df3773ebddee6ab9e6baf3a16b32ce23723883326",
+    "_lev_landau_theoretical_minimum_quiz/quiz.md": "e7435ee2765198f28df5a216f25d0b05829f2f3cbdc665510d3491ed764ca6bc",
+    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "41c8a6bb090dfe1940c2ed824deee9d1c977e2041a25fa4e47dfe037c378884e",
+    "code/deposit_paths.py": "37c4f3b5da608d38bffd5315ef73a79e066d2fd96b219325e818941e1b3dac62",
+    "code/retraction_benchmark_runner.py": "b11a59a64f6d0bd3d8c80b6ea46cc6466ff5967cd31f851e4d77de17497103bb",
+    "code/tests/test_008_deposit_gates.py": "7d95b8a78a058c7839b64f69325906d5731a9567d2e1a2cd73d9a8c2f94c541b",
+    "code/tests/test_008_mssn_tower_retraction.py": "048c3b267685b8c32b0b58a212d9366df918c56c39237d1c3aa01149d4755747",
+    "code/tests/test_008_source_bound_examples.py": "3c813acfbe816e27019449cc69a9ea62b4a62550ced74aa78e79d9c72ab910e2",
+    "docs/challenge_census.md": "2b0952381283effc91b139c357fe74d3ebdadf4aee33da581ed68486c3acc897",
+    "docs/historical_census_inventory.json": "cb3ef5e89c1709d0ea358ac833abe68ed2d1d030ed9f2d88dfcd150dfa936cb3",
+    "docs/publication_review_2026_10_02.md": "79cb55af49d048b26127a1fb9744cec9c8799775a872dc8b0b930d6ddb2e99ce",
+    "docs/source_archive/README.md": "58acb497050247770d1c9172b02a2f465fcbad4b1a321993722ff81dd05c878c",
+    "docs/source_archive/source_index.json": "72b5a760e1f88b3395f307d420f20678b43b5b1428ace739fb5a2443c8ce03ee",
+    "lean4/Census.lean": "5ddc370a502268352cfa45d7acf65f05b49056b95cae833a42c2aeb0c146e0ff",
+    "lean4/ExactRat.lean": "e1926376d8687f4e2db17b77462944d3ad0cccf51d1d0837908ce2534ba9b191",
+    "lean4/ExactRat/Basic.lean": "bab46aa9bbab4d1bda07f4592af046cc6aa5b8acc04643592c32e7cc3cd156d4",
+    "lean4/ExactRat/Laws.lean": "71516f7b8eed7cefdb69070bfa4ca0eab7b066bf7f0a11946fdb7aef5daa637b",
+    "lean4/ExactRat/Linear.lean": "5860e4395fdf1fd6676ff1fdf095f70c46db9a44b0fe1484a890ad501d2ce3a8",
+    "lean4/ExactRat/Poly.lean": "4db439a70a40ba67ce6d001fe5f848361e4389be788e5990a2662eca09ce0485",
+    "lean4/FlowCertificate.lean": "3e8645f49d62d815a73f9c599d860ac2939fc999a214270aadb4d79e87a1cbb1",
+    "lean4/FullCensus.lean": "96a3283aaf561c704486f705551f1e51d1892af9ddf47377928b10160de92450",
+    "lean4/Level16IndObject.lean": "ecc118e8f72b1932b44aeca8858b35d0c87524e29507963db9c9b8b63ef712e2",
+    "lean4/Level21DiscreteRegge.lean": "e290bf8c3f41a6945386f506dc0fbf616d14251f4b920b416e05156a85f4d0ab",
+    "lean4/Level22FibredDependentContexts.lean": "f4e42d4c13e1bca2aad5f4ec9eb3bd25438a2e7bf5ed20606fb0d3e096eeeebe",
+    "lean4/Level23SheafDescent.lean": "0b10e724d6e4986e162901bc20a7f31a34ff74c39e6606ef07fff8c158312c55",
+    "lean4/axiom_report.txt": "58e8766ece6e414a7c0d4066879db7274db4c644b8642d1d8f286e9b811f401a",
+    "lean4/full_axiom_report.txt": "bcf4f1582eddfb750da55a6389866b99708cfb2af5b4e3a75b22ea288c243050",
+    "lean4/lake-manifest.json": "da71511375fef8b9f3bd8d59d37b58379bd110828d39c77362ed20e99c978cd9",
+    "lean4/lakefile.lean": "7b05da5ef6b28e203d36c562ed1c23c298e7616559fd87a926736dca9039141e",
+    "lean4/lean-toolchain": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632",
+    "paper.md": "ff7b3135f9102b1ef8a98ea5457d6f49e9e874bacb6bf88e300142fa72a7d8a6",
+    "paper.pdf": "fe50b0af3fd563cf4123d446e8d084dc35083917ec710e6ccbd27ddae7a42e31",
+    "paper.tex": "166ca8ba4c9af4e58fd6bb840d755270f674be93b51d135d192483f3d2523c41",
+    "paper_change_log.md": "24e5f1b3882afaabe5ef73a2f3a03f46f2e097fb2915bcebd6693bec5dcc42d2",
+    "paper_claim_ledger.md": "97cef07772f39fa84022d75496ae818cfb986ab7d5a4ec978d8aef92cc63a7ad",
+    "pyproject.toml": "e85d79f76318d4010af93428a818b7e5d0686a76b8585cbb3c94bbac8e2a77fc",
+    "tools/replay_full_axiom_census.py": "514b82e8776ae675389a58d5813c629f5f142ca35bb674c41f9161fb20765e09",
+    "tools/replay_lean_axiom_census.py": "c73bf94a0b15a3c7017578f4983a9044f3896609325bda2a7e7ddfba6c44f00d",
+    "verify_deposit.py": "7a8bfe2db08e87bee26c5a6f80fe7fd10e9e10da69af5ced3e66785d5f551b1e",
+    "zenodo_metadata.json": "9a3470e5737751a0f2fa90cae7043fd1fa0b9b00377a9621b2d082b1130644eb"
+  },
+  "collection_output_sha256": {
+    "README.md": "f0a33644f41645fb7eee5b36722f70d43cf29220fbfb2fdc893b1860cd52f8e2",
+    "build_receipt.json": "ae062af3ad9b11c823d5f608ffb770317c0a8dcf67e7a1d58207eb21441a6c19",
+    "claim_ledger.md": "02a6f9f34dcfb69c9bf453b188f7b480afd901322f19343c63a89cd14689f544",
+    "claim_ledger.source.md": "97cef07772f39fa84022d75496ae818cfb986ab7d5a4ec978d8aef92cc63a7ad",
+    "paper.md": "6a31fc5e073289dbe777acd4df353d4770ebc76728b308f60deb848503ecb7ac",
+    "paper.pdf": "96b0a94938b0893dffadaffd9db5a4e42e40cf63eb1eb170c1eb95d3312e1232",
+    "paper.tex": "4a3f18205ae0d190bc9d5755b744b4989a093dd4e14e3e73678caebf43bc8cb7",
+    "source.md": "ff7b3135f9102b1ef8a98ea5457d6f49e9e874bacb6bf88e300142fa72a7d8a6"
+  },
+  "offline_conditions": [
+    {
+      "cases": 6,
+      "command": [
+        "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python",
+        "/workspace/scratch/3615e1e25a6d/paper008_review/omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+        "--mock",
+        "--condition",
+        "baseline",
+        "--output-dir",
+        "/workspace/scratch/3615e1e25a6d/p008_validation/offline/baseline"
+      ],
+      "condition": "baseline",
+      "exact_prompts_valid": 6,
+      "exit_code": 1,
+      "host_certificates_valid": 6,
+      "matched": 3,
+      "receipt_digests_valid": 6,
+      "receipt_file_sha256": "d2a4ef8ef13d380ba4be4307a36516a35354d994e9a12ab2e5d9893c0fa4bbf1",
+      "stderr": "",
+      "stdout": "Paper 008 runner | mode=offline-stub | condition=baseline | model=meta-llama/llama-3.1-8b-instruct\n  [MATCH] retract_01_tree_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_02_triangle_clean: emitted=CONSISTENT host=CONSISTENT\n  [MISS] retract_03_triangle_poisoned: emitted=CONSISTENT host=CONTRADICTION\n  [MATCH] retract_04_diamond_clean: emitted=CONSISTENT host=CONSISTENT\n  [MISS] retract_05_diamond_entangled_poisoned: emitted=CONSISTENT host=CONTRADICTION\n  [MISS] retract_06_k4_rank3_poisoned: emitted=CONSISTENT host=CONTRADICTION\n3/6 verdicts match the host. Receipts: /workspace/scratch/3615e1e25a6d/p008_validation/offline/baseline\n"
+    },
+    {
+      "cases": 6,
+      "command": [
+        "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python",
+        "/workspace/scratch/3615e1e25a6d/paper008_review/omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+        "--mock",
+        "--condition",
+        "hinted",
+        "--output-dir",
+        "/workspace/scratch/3615e1e25a6d/p008_validation/offline/hinted"
+      ],
+      "condition": "hinted",
+      "exact_prompts_valid": 6,
+      "exit_code": 0,
+      "host_certificates_valid": 6,
+      "matched": 6,
+      "receipt_digests_valid": 6,
+      "receipt_file_sha256": "76e45c3a40fd38ff24beaa32de7e304dd342b467a910abb97387dea22ac13755",
+      "stderr": "",
+      "stdout": "Paper 008 runner | mode=offline-stub | condition=hinted | model=meta-llama/llama-3.1-8b-instruct\n  [MATCH] retract_01_tree_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_02_triangle_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_03_triangle_poisoned: emitted=CONTRADICTION host=CONTRADICTION\n  [MATCH] retract_04_diamond_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_05_diamond_entangled_poisoned: emitted=CONTRADICTION host=CONTRADICTION\n  [MATCH] retract_06_k4_rank3_poisoned: emitted=CONTRADICTION host=CONTRADICTION\n6/6 verdicts match the host. Receipts: /workspace/scratch/3615e1e25a6d/p008_validation/offline/hinted\n"
+    },
+    {
+      "cases": 6,
+      "command": [
+        "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python",
+        "/workspace/scratch/3615e1e25a6d/paper008_review/omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+        "--mock",
+        "--condition",
+        "scratchpad",
+        "--output-dir",
+        "/workspace/scratch/3615e1e25a6d/p008_validation/offline/scratchpad"
+      ],
+      "condition": "scratchpad",
+      "exact_prompts_valid": 6,
+      "exit_code": 1,
+      "host_certificates_valid": 6,
+      "matched": 3,
+      "receipt_digests_valid": 6,
+      "receipt_file_sha256": "f1eae78cd8499767a885adb40a1f8923a4ced131aa1707ae36a50d3d0d689e2b",
+      "stderr": "",
+      "stdout": "Paper 008 runner | mode=offline-stub | condition=scratchpad | model=meta-llama/llama-3.1-8b-instruct\n  [MATCH] retract_01_tree_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_02_triangle_clean: emitted=CONSISTENT host=CONSISTENT\n  [MISS] retract_03_triangle_poisoned: emitted=CONSISTENT host=CONTRADICTION\n  [MATCH] retract_04_diamond_clean: emitted=CONSISTENT host=CONSISTENT\n  [MISS] retract_05_diamond_entangled_poisoned: emitted=CONSISTENT host=CONTRADICTION\n  [MISS] retract_06_k4_rank3_poisoned: emitted=CONSISTENT host=CONTRADICTION\n3/6 verdicts match the host. Receipts: /workspace/scratch/3615e1e25a6d/p008_validation/offline/scratchpad\n"
+    },
+    {
+      "cases": 6,
+      "command": [
+        "/workspace/scratch/3615e1e25a6d/paper008_env/bin/python",
+        "/workspace/scratch/3615e1e25a6d/paper008_review/omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py",
+        "--mock",
+        "--condition",
+        "exact_oracle",
+        "--output-dir",
+        "/workspace/scratch/3615e1e25a6d/p008_validation/offline/exact_oracle"
+      ],
+      "condition": "exact_oracle",
+      "exact_prompts_valid": 6,
+      "exit_code": 0,
+      "host_certificates_valid": 6,
+      "matched": 6,
+      "receipt_digests_valid": 6,
+      "receipt_file_sha256": "5106f32e8d69b9458f50b454f201394f537861e2d845efb713a62702cc32e2de",
+      "stderr": "",
+      "stdout": "Paper 008 runner | mode=offline-stub | condition=exact_oracle | model=meta-llama/llama-3.1-8b-instruct\n  [MATCH] retract_01_tree_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_02_triangle_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_03_triangle_poisoned: emitted=CONTRADICTION host=CONTRADICTION\n  [MATCH] retract_04_diamond_clean: emitted=CONSISTENT host=CONSISTENT\n  [MATCH] retract_05_diamond_entangled_poisoned: emitted=CONTRADICTION host=CONTRADICTION\n  [MATCH] retract_06_k4_rank3_poisoned: emitted=CONTRADICTION host=CONTRADICTION\n6/6 verdicts match the host. Receipts: /workspace/scratch/3615e1e25a6d/p008_validation/offline/exact_oracle\n"
+    }
+  ],
+  "pdf_compilation": {
+    "collection": {
+      "compile_log_sha256": "5e41b6527327c61c02be462ad2197654097013083dd855a4ef0c10d645fe7672",
+      "exit_code": 0,
+      "missing_glyphs": 0,
+      "overfull_lines": 0,
+      "page_count": 15,
+      "passes": 3
+    },
+    "deposit": {
+      "compile_log_sha256": "56c132e5dad47078cad4f760ad0b61b7856ec4c54763dea892e47abb80d5175d",
+      "exit_code": 0,
+      "missing_glyphs": 0,
+      "overfull_lines": 0,
+      "page_count": 15,
+      "passes": 3
+    }
+  },
+  "retained_lean_bindings": {
+    "author_receipt": "docs/release_validation_2026_10_02.json",
+    "census_tool_sha256": "514b82e8776ae675389a58d5813c629f5f142ca35bb674c41f9161fb20765e09",
+    "full_axiom_report_sha256": "bcf4f1582eddfb750da55a6389866b99708cfb2af5b4e3a75b22ea288c243050",
+    "full_census_source_sha256": "96a3283aaf561c704486f705551f1e51d1892af9ddf47377928b10160de92450",
+    "full_environment_declarations": 576,
+    "local_modules": 10,
+    "named_theorems": 39,
+    "protected_source_changes": [],
+    "protected_source_count": 13,
+    "protected_source_sha256": {
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/Census.lean": "5ddc370a502268352cfa45d7acf65f05b49056b95cae833a42c2aeb0c146e0ff",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/ExactRat.lean": "e1926376d8687f4e2db17b77462944d3ad0cccf51d1d0837908ce2534ba9b191",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/ExactRat/Basic.lean": "bab46aa9bbab4d1bda07f4592af046cc6aa5b8acc04643592c32e7cc3cd156d4",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/ExactRat/Laws.lean": "71516f7b8eed7cefdb69070bfa4ca0eab7b066bf7f0a11946fdb7aef5daa637b",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/ExactRat/Linear.lean": "5860e4395fdf1fd6676ff1fdf095f70c46db9a44b0fe1484a890ad501d2ce3a8",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/ExactRat/Poly.lean": "4db439a70a40ba67ce6d001fe5f848361e4389be788e5990a2662eca09ce0485",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/FlowCertificate.lean": "3e8645f49d62d815a73f9c599d860ac2939fc999a214270aadb4d79e87a1cbb1",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/Level16IndObject.lean": "ecc118e8f72b1932b44aeca8858b35d0c87524e29507963db9c9b8b63ef712e2",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/Level21DiscreteRegge.lean": "e290bf8c3f41a6945386f506dc0fbf616d14251f4b920b416e05156a85f4d0ab",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/Level22FibredDependentContexts.lean": "f4e42d4c13e1bca2aad5f4ec9eb3bd25438a2e7bf5ed20606fb0d3e096eeeebe",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/Level23SheafDescent.lean": "0b10e724d6e4986e162901bc20a7f31a34ff74c39e6606ef07fff8c158312c55",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/lakefile.lean": "7b05da5ef6b28e203d36c562ed1c23c298e7616559fd87a926736dca9039141e",
+      "omega_engine_atlas/coda_atlas/omega_engine_pfp/008_the_symbol_game_mssn_tower_challenges_and_retraction_benchmarks/lean4/lean-toolchain": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632"
+    },
+    "status": "all compared identities match; retained author execution, not independent fresh kernel replay"
+  },
+  "series_builder_sha256": "ff758d8930e2902800f8d6a9e5a6d2c0f18f106957e8e6167eef70ce89ad5bf8",
+  "lean_fresh_replay": {
+    "status": "blocked",
+    "kernel_pass": false,
+    "archive_sha256": "caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b",
+    "official_release": "https://github.com/leanprover/lean4/releases/tag/v4.34.0",
+    "binary_startup": {
+      "exit_code": 1,
+      "stderr": "error: failed to locate application"
+    },
+    "reason": "Official Lean 4.34.0 binary fails before startup; Lake cannot detect installation configuration."
+  },
+  "archive_validation": {
+    "captured_files": 13,
+    "trace_hashes_matching_working_report": 8,
+    "provider_replay": false,
+    "historical_host_replay": false
+  },
+  "link_checks": {
+    "canonical_documentation_local_links": 66,
+    "linked_publication_local_links": 29,
+    "missing": 0
+  },
+  "pdf_visual_review": {
+    "latest_pages_per_pdf": 15,
+    "all_pages_rendered_and_inspected": true,
+    "identical_page_renders": 15,
+    "critical_math_tables_inspected": true
+  },
+  "scope_limits": [
+    "No fresh Lean kernel pass is established on this host.",
+    "Retained source-bound author Lean execution remains separate from fresh Python and PDF checks.",
+    "The 52 external Level Engine payloads and historical challenge test runs were not rebuilt or rerun.",
+    "Thirteen files retain exact historical bytes; working-report interpretations are not adopted wholesale.",
+    "McNemar arithmetic uses transcribed discordant counts; missing C005 per-case rows are not reconstructed.",
+    "No live model provider call, validated learner outcome or external Zenodo deposit occurred."
+  ],
+  "reproduction": {
+    "paper": "Three named test files and explicit replay commands are in README.md and manuscript Section 11.",
+    "publication": "Existing series renderer functions reused for a scoped 008 build; collection --only 008 keeps local evidence links beside current package files. Other collection entries were not rebuilt."
+  }
+}

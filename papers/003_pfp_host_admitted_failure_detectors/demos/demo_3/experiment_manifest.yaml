@@ -1,0 +1,364 @@
+# Proposed protocol data, not an executed result or an authority-bearing receipt.
+schema: symbol-game-demo3-experiment/proposal-v1
+status: proposed_not_executed
+authority_effect: None
+question: Can prompt treatments improve generation of independently checkable finite witnesses?
+
+sources:
+  genesis_sealed_audit:
+    repository: https://github.com/dbccpage/19L57G1
+    commit: d4a76a8c21ece0548a1d4a60caba0368a1571c13
+    sign_tower: research/sign_tower/FINDINGS.md
+    seventh_constructor: research/seventh_constructor/FINDINGS.md
+    exchange_coefficients: research/exchange_coefficients/README.md
+    native_machine_parity_status: SIGN_ABSENT_NEITHER
+    ordered_occupancy_sign_status: EXPLICIT_ADDITIONAL_INPUT
+  coda_fsp:
+    commit: 74d477b7af38b7d576796ae0f58fc6ee3bbb6bff
+    manuscript: coda_atlas/F004_papers/002_projection_obstruction/023_fermion_sign_and_computational_hardness/the_problem_of_the_fermion_sign.md
+    normal_form_audit: coda_atlas/F004_papers/002_projection_obstruction/023_fermion_sign_and_computational_hardness/docs/normal_form_audit.md
+    contract: coda_atlas/F004_papers/002_projection_obstruction/023_fermion_sign_and_computational_hardness/normal_forms/nf.change.bqnf.fermion_sign.yaml
+  symbol_game:
+    repository: https://github.com/dbccpage/the_symbol_game
+    commit: null
+    commit_required_before_live: true
+    historical_trace_audit: ../anti_morphism_observations.md
+    demo1_log: ../demo_1/1_demo.md
+    demo2_protocol: ../demo_2/2_demo.md
+
+architecture:
+  genesis_layer:
+    primitive_vocabulary: [difference, witness, reflexive_relation, obstruction, lift]
+    native_physics_claim: false
+    native_sign_character_on_certified_state: false
+    proposed_signed_rewrite_extension_requires: [typed_orientation_or_character_carrier, admission_rule, import_ledger]
+  physical_adapter_layer:
+    required_imports: [state_space, hamiltonian, ensemble, exchange_action, weights, observables]
+    exchange_readings_to_investigate: [trivial_permutation_action, parity_permutation_action]
+    boson_fermion_origin_status: research_question_not_derived
+    preservation_proof_required_for_physical_claim: true
+  presentation_layer:
+    key_fields: [hamiltonian_parameters, basis, ensemble, boundary, filling, representation, allowed_transformations]
+    cochain_fields_when_defined: [d0, d1, c1]
+  finite_oracle_layer:
+    certificate_scope: declared_presentation_and_adapter_only
+    exact_checker_required: true
+  search_index_layer:
+    type: gin_style_presentation_index_proposal
+    status: not_implemented
+    preserve_open_frontier: true
+
+execution:
+  live_enabled: false
+  reason: Freeze repository commit, prompt templates, provider route, model revision, and checker hashes first.
+  provider: null
+  model_id: null
+  model_revision: null
+  temperature: 0
+  seed: null
+  seed_support: unknown
+  pilot_repetitions_per_arm: 8
+  max_model_calls_per_run: 12
+  max_batch_items: 32
+  max_hint_requests_per_run: 2
+  randomize_arm_order: true
+  record_raw_prompt_and_reply: true
+  record_host_state_before_and_after: true
+  record_request_and_response_ids: true
+  record_token_counts_when_available: true
+  record_manifest_template_checker_and_fixture_sha256: true
+  missing_digest_disposition: refuse_live_run
+  immutable_checker_across_arms: true
+  exact_arithmetic_required: true
+  no_model_authored_terminal: true
+  no_external_authority_claim: true
+
+intake_contract:
+  model_output_format: strict_json_object_or_bounded_array
+  output_format_same_in_all_prompt_arms: true
+  reject_duplicate_json_keys: true
+  reject_unknown_move_types: true
+  reject_unknown_fixture_ids: true
+  reject_inexact_numeric_values: true
+  reject_model_supplied_receipt_or_verdict: true
+  arrays_are_atomic_transactions: true
+  verify_after_complete_coverage_only: true
+  host_only_fields_never_rendered_to_model: true
+  yaml_input_rules:
+    disallow_duplicate_keys: true
+    disallow_custom_tags: true
+    disallow_aliases_and_anchors: true
+    do_not_trust_verified_or_authority_fields: true
+
+host_state:
+  fields:
+    - fixture_digest
+    - checker_digest
+    - phase
+    - covered_manifest_ids
+    - witness_candidate
+    - exact_checker_result
+    - remaining_fuel
+    - prior_state_digest
+    - decision_digest
+  phases: [INTAKE, COVERAGE, WITNESS, VERIFY, TERMINAL]
+  exits: [SCOPED_CERTIFICATE, REJECT_LOCAL, NEEDS_EVIDENCE, UNKNOWN_NOT_CERTIFIED, FUEL_EXHAUSTED]
+  bqnf_phi1_when_adapter_missing: null
+  gamma2_without_declared_closure_checker: null
+
+search_frontier:
+  status: proposed_not_implemented
+  algorithms_to_compare: [complete_finite_enumeration, budgeted_mcts_like_scheduler]
+  heuristic_score_is_authority: false
+  candidate_node_fields:
+    - hamiltonian_specification_digest
+    - physical_adapter_digest
+    - presentation_digest
+    - carrier_or_cochain_digest
+    - allowed_move_family_digest
+    - pending_proof_obligations
+    - exact_host_receipt_digest
+  allowed_edge_types: [verified_gauge, verified_basis_change, preserving_regrouping, justified_projection, justified_retraction, justified_lift]
+  proposed_unproved_edge_disposition: speculative_no_inherited_physical_authority
+  deduplicate_only_on_checked_equivalence: true
+  text_hash_not_sufficient_for_equivalence: true
+  max_depth: 6
+  max_expansions_per_branch: 32
+  max_global_expansions: 256
+  max_parallel_proposers: 4
+  wall_clock_seconds: 300
+  exact_checker_work_budget: 100000
+  exhaustion_disposition: UNKNOWN_WITH_FRONTIER_SNAPSHOT
+  index_statuses: [CERTIFIED_IN_PRESENTATION, RESTRICTED_OBSTRUCTION, OPEN_FRONTIER, INVALID_REWRITE, UNKNOWN_ADAPTER]
+  global_no_go_from_partial_frontier: false
+  five_second_guarantee: false
+
+fixture_catalog:
+  - id: gauge_even_triangle
+    route: restricted_diagonal_sign_gauge
+    visibility: matrix_public_expected_witness_host_only
+    checker: ../demo_2/sign_switching.py::verify_gauge
+    basis: [v0, v1, v2]
+    matrix:
+      - ["0", "1", "-1"]
+      - ["1", "0", "1"]
+      - ["-1", "1", "0"]
+    host_only:
+      expected_witness_type: vertex_bits
+      one_valid_gauge: [0, 1, 0]
+      expected_terminal: RestrictedSignGaugeRepair
+      bqnf_phi1_zero: null
+
+  - id: gauge_odd_triangle
+    route: restricted_diagonal_sign_gauge
+    visibility: matrix_public_expected_witness_host_only
+    checker: ../demo_2/sign_switching.py::verify_cycle
+    basis: [v0, v1, v2]
+    matrix:
+      - ["0", "1", "1"]
+      - ["1", "0", "1"]
+      - ["1", "1", "0"]
+    host_only:
+      expected_witness_type: odd_parity_cycle
+      one_valid_cycle: [0, 1, 2, 0]
+      expected_terminal: RestrictedSignGaugeObstruction
+      forbidden_inference: universal_sign_obstruction
+
+  - id: cochain_exact_cycle
+    route: exact_rational_cochain_packet
+    visibility: packet_public_expected_witness_host_only
+    checker: null
+    checker_status: blocked_pending_omega_functional_adapter
+    structural_checker: ../demo_2/bqnf_zero.py::check_alpha_witness
+    packet:
+      d0:
+        - ["1", "0"]
+        - ["-1", "1"]
+        - ["0", "-1"]
+      d1:
+        - ["1", "1", "1"]
+      c1: ["1/2", "0", "-1/2"]
+    host_only:
+      expected_witness_type: gauge_potential
+      one_valid_alpha: ["1/2", "1/2"]
+      expected_phi1_zero: true
+      physical_adapter_supplied: false
+
+  - id: cochain_nonexact_cycle
+    route: exact_rational_cochain_packet
+    visibility: packet_public_expected_witness_host_only
+    checker: null
+    checker_status: blocked_pending_omega_functional_adapter
+    structural_checker: ../demo_2/bqnf_zero.py::check_left_null_witness
+    packet:
+      d0:
+        - ["1", "0"]
+        - ["-1", "1"]
+        - ["0", "-1"]
+      d1:
+        - ["1", "1", "1"]
+      c1: ["1", "0", "0"]
+    host_only:
+      expected_witness_type: separating_left_null_functional
+      one_valid_lambda: ["1", "1", "1"]
+      expected_phi1_zero: false
+      forbidden_inference: no_sign_free_representation_exists
+
+  - id: meron_two_pairs_survivor
+    route: finite_signed_path_pairing
+    visibility: sectors_public_expected_witness_host_only
+    checker: ../demo_2/meron_witness.py::verify_meron_witness
+    sectors:
+      - {path_id: p0, sign: -1, weight: "1/2"}
+      - {path_id: p1, sign: 1, weight: "2/3"}
+      - {path_id: p2, sign: -1, weight: "2/3"}
+      - {path_id: p3, sign: 1, weight: "1/2"}
+      - {path_id: p4, sign: 1, weight: "3/7"}
+    host_only:
+      expected_witness_type: partial_sign_reversing_path_involution
+      cancellation_ids: [p0, p1, p2, p3]
+      one_valid_xi: {p0: p3, p3: p0, p1: p2, p2: p1}
+      expected_survivors: [p4]
+      expected_signed_sum: "3/7"
+      physical_adapter_supplied: false
+
+  - id: historical_free_fermion_r2
+    route: observation_only_no_path_adapter
+    visibility: historical_raw_trace_only
+    source_trace: ../demo_2/traces/demo2_r2_freefermion_1790207175.jsonl
+    checker: ../demo_2/run_demo2.py::audit_response_r2
+    host_only:
+      expected_observation: BATCH_FORMAT_OBSERVED
+      witness_status: WITNESS_UNCHECKED
+      terminal: UNKNOWN_NOT_CERTIFIED
+      forbidden_inference: ExactCancellation
+
+negative_controls:
+  - id: identity_is_not_meron_xi
+    fixture: meron_two_pairs_survivor
+    mutation: map_each_cancelled_path_to_itself
+    expected: REJECT_LOCAL
+  - id: omitted_negative_survivor
+    fixture: meron_two_pairs_survivor
+    mutation: omit_p2_from_cancellation_subset
+    expected: REJECT_LOCAL
+  - id: mismatched_pair_weight
+    fixture: meron_two_pairs_survivor
+    mutation: pair_p0_with_p1
+    expected: REJECT_LOCAL
+  - id: incomplete_matrix_coverage
+    fixture: gauge_even_triangle
+    mutation: omit_one_matrix_entry_then_verify
+    expected: REJECT_LOCAL
+  - id: poisoned_batch_last_item
+    fixture: gauge_even_triangle
+    mutation: valid_assert_then_invalid_duplicate_as_final_item
+    expected: atomic_rollback_no_state_change
+  - id: wrong_route_witness
+    fixture: gauge_even_triangle
+    mutation: submit_site_swap_label_as_meron_xi
+    expected: REJECT_LOCAL
+  - id: solution_hint_falsehood
+    fixture: gauge_odd_triangle
+    mutation: hint_says_zero_gauge_exists
+    expected: checker_still_returns_restricted_obstruction
+
+experiments:
+  - id: SYMBOL_RELABEL
+    fixtures: [gauge_even_triangle, gauge_odd_triangle, cochain_exact_cycle, meron_two_pairs_survivor]
+    arms: [ascii_ids, blinded_bijective_greek_ids]
+    invariant: blind_map_to_identical_host_fixture_before_check
+    primary: host_verified_witness_rate
+  - id: YAML_WRAPPER
+    fixtures: [cochain_exact_cycle, meron_two_pairs_survivor]
+    arms: [plain_envelope, typed_yaml_envelope]
+    invariant: same_semantic_instructions_and_json_output_schema
+    primary: host_verified_witness_rate
+  - id: PHASE_CUE
+    fixtures: [gauge_even_triangle, meron_two_pairs_survivor]
+    arms: [no_cue, cue_after_host_confirmed_complete_coverage]
+    invariant: cue_never_issued_on_partial_coverage
+    primary: premature_verify_rate_and_host_verified_witness_rate
+  - id: EIS_HINT
+    fixtures: [gauge_even_triangle, cochain_exact_cycle, meron_two_pairs_survivor]
+    arms: [no_hint, diagnostic_without_solution, solution_bearing_hint]
+    checkpoint: same_host_confirmed_error_state
+    require_next_prompt_contains_exact_hint_bytes: true
+    solution_bearing_label: ASSISTED
+    primary: valid_repair_after_confirmed_delivery
+  - id: BATCH_ATOMICITY
+    fixtures: [gauge_even_triangle]
+    arms: [sequential, bounded_batch, bounded_batch_poisoned_last_item]
+    invariant: same_mathematical_disposition_for_same_proposals
+    primary: final_host_state_equivalence_and_rollback
+  - id: ROUTE_DISCRIMINATION
+    fixtures: [gauge_even_triangle, gauge_odd_triangle, cochain_exact_cycle, cochain_nonexact_cycle, meron_two_pairs_survivor]
+    arms: [unlabeled_route]
+    primary: correct_explicit_witness_type_and_checked_content
+  - id: FRONTIER_SEARCH
+    fixtures: [gauge_even_triangle, gauge_odd_triangle]
+    arms: [complete_eight_gauge_enumeration, budgeted_mcts_like_scheduler]
+    invariant: identical_fixed_basis_and_diagonal_sign_gauge_family
+    primary: verified_witness_recall_and_sound_unknown_at_equal_node_budget
+    experimental_status: proposed_no_runner
+
+detectors:
+  - {id: AM-1-CUT-RESTATE, requires: complete_state_and_flat_exact_defect}
+  - {id: AM-2-CUT-INCREASE, requires: complete_state_and_exact_defect_increase}
+  - {id: AM-3-PRECONDITION-INCOMPLETE, requires: cut_support_intersects_undeclared_ids}
+  - {id: AM-4-STATIONARY-REPEAT, requires: same_canonical_move_and_same_state_digest}
+  - {id: AM-FSP-2-WITNESS-INVALID, requires: explicit_route_specific_witness_check_fails}
+  - {id: AM-FSP-5-POST-COMPLETE-STALL, requires: full_coverage_and_repeated_nonprogress_assert}
+  - {id: AM-FSP-6-WRONG-ROUTE, requires: witness_type_mismatches_claimed_route}
+
+metrics:
+  primary:
+    name: host_verified_witness_within_fuel
+    denominator: all_eligible_attempted_runs_including_malformed_or_refused
+    assisted_and_unassisted_reported_separately: true
+  secondary:
+    - attempts_to_first_valid_witness
+    - manifest_coverage_fraction
+    - invalid_candidate_rate_by_detector
+    - premature_verify_rate
+    - delivered_hint_repair_rate
+    - batch_rollback_correctness
+    - calibrated_unknown_on_missing_adapter
+    - token_and_cost_use_when_available
+    - indexed_node_count_and_proved_duplicate_suppression
+    - frontier_recall_at_fixed_expansion_budget
+  never_score_as_certificate:
+    - model_reported_phi1
+    - model_reported_gamma2
+    - class_name_only
+    - json_or_yaml_shape_only
+    - old_runner_terminal_string
+
+stopping:
+  on_host_verified_scoped_terminal: stop
+  on_fuel_exhaustion: FUEL_EXHAUSTED
+  on_missing_adapter_or_checker: UNKNOWN_NOT_CERTIFIED
+  on_uncheckable_candidate: NEEDS_EVIDENCE
+  on_rejected_candidate: retain_receipt_and_continue_if_fuel_remains
+  on_any_failed_batch_item: rollback_entire_batch
+
+interpretation:
+  pilot_is_descriptive: true
+  old_traces_not_replicates: true
+  no_general_fsp_classification_from_these_fixtures: true
+  no_attention_head_intervention_from_prompt_or_hosted_logit_control: true
+  no_physical_sign_claim_without_preserving_adapter: true
+  no_boson_fermion_origin_claim_without_explicit_import_ledger_and_proof: true
+  no_global_no_go_from_partial_parallel_search: true
+  general_hardness_does_not_classify_named_fixture: true
+  note_threshold:
+    - frozen_manifest_and_source_digests
+    - raw_prompts_replies_and_independent_host_decisions
+    - positive_negative_and_near_miss_controls
+    - runnable_exact_checks_and_scoped_claim_ledger
+  physical_classification_paper_additional_threshold:
+    - justified_hamiltonian_to_representation_adapter
+    - preservation_proof_for_partition_function_and_observables
+    - explicit_completeness_domain
+    - independently_replayed_held_out_fixtures
+    - theorem_or_certificates_covering_declared_domain

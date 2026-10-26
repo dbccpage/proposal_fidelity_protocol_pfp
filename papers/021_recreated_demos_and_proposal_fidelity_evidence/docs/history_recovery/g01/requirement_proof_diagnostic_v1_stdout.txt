@@ -1,0 +1,1144 @@
+theorem ResearchG01.req_nonzero : ∀ (xs ys : List.{0} Nat)
+  (iso : Derivation.Iso (ResearchG01.state xs) (ResearchG01.state ys)),
+  And
+    (@Ne.{1} Nat
+      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+    (@Ne.{1} Nat
+      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) :=
+fun (xs ys : ⋯) (iso : ⋯) =>
+  have h : ⋯ :=
+    @Derivation.Iso.reqs_fwd (ResearchG01.state xs) (ResearchG01.state ys) iso
+      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (@of_eq_true
+        (@Membership.mem.{0, 0} (Prod.{0, 0} Nat Nat) (List.{0} (Prod.{0, 0} Nat Nat))
+          (@List.instMembership.{0} (Prod.{0, 0} Nat Nat))
+          (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@List.nil.{0} (Prod.{0, 0} Nat Nat)))
+          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+        (@Eq.trans.{1} Prop
+          (@Membership.mem.{0, 0} (Prod.{0, 0} Nat Nat) (List.{0} (Prod.{0, 0} Nat Nat))
+            (@List.instMembership.{0} (Prod.{0, 0} Nat Nat))
+            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@List.nil.{0} (Prod.{0, 0} Nat Nat)))
+            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+          (Or
+            (@Eq.{1} (Prod.{0, 0} Nat Nat)
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+            (@Membership.mem.{0, 0} (Prod.{0, 0} Nat Nat) (List.{0} (Prod.{0, 0} Nat Nat))
+              (@List.instMembership.{0} (Prod.{0, 0} Nat Nat)) (@List.nil.{0} (Prod.{0, 0} Nat Nat))
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+          True
+          (@List.mem_cons._simp_1.{0} (Prod.{0, 0} Nat Nat)
+            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@List.nil.{0} (Prod.{0, 0} Nat Nat))
+            (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+          (@Eq.trans.{1} Prop
+            (Or
+              (@Eq.{1} (Prod.{0, 0} Nat Nat)
+                (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@Membership.mem.{0, 0} (Prod.{0, 0} Nat Nat) (List.{0} (Prod.{0, 0} Nat Nat))
+                (@List.instMembership.{0} (Prod.{0, 0} Nat Nat)) (@List.nil.{0} (Prod.{0, 0} Nat Nat))
+                (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+            (Or True False) True
+            (@congr.{1, 1} Prop Prop
+              (Or
+                (@Eq.{1} (Prod.{0, 0} Nat Nat)
+                  (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+              (Or True)
+              (@Membership.mem.{0, 0} (Prod.{0, 0} Nat Nat) (List.{0} (Prod.{0, 0} Nat Nat))
+                (@List.instMembership.{0} (Prod.{0, 0} Nat Nat)) (@List.nil.{0} (Prod.{0, 0} Nat Nat))
+                (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              False
+              (@congrArg.{1, 1} Prop ((b : Prop) → Prop)
+                (@Eq.{1} (Prod.{0, 0} Nat Nat)
+                  (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                True Or
+                (@eq_self.{1} (Prod.{0, 0} Nat Nat)
+                  (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+              (@List.not_mem_nil._simp_1.{0} (Prod.{0, 0} Nat Nat)
+                (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+            (or_false True))));
+  have order : ⋯ :=
+    @Decidable.byContradiction
+      (Or
+        (@LE.le.{0} Nat instLENat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+        (@LT.lt.{0} Nat instLTNat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+      (@instDecidableOr
+        (@LE.le.{0} Nat instLENat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+        (@LT.lt.{0} Nat instLTNat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+        (Nat.decLe
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+        (Nat.decLt
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+      fun
+        (a :
+          Not
+            (Or
+              (@LE.le.{0} Nat instLENat
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@LT.lt.{0} Nat instLTNat
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))) =>
+      ResearchG01.req_nonzero._proof_1_3 xs ys iso a;
+  @Or.casesOn
+    (@LE.le.{0} Nat instLENat
+      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+    (@LT.lt.{0} Nat instLTNat
+      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+    (fun
+        (x :
+          Or
+            (@LE.le.{0} Nat instLENat
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+            (@LT.lt.{0} Nat instLTNat
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))) =>
+      And
+        (@Ne.{1} Nat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+        (@Ne.{1} Nat
+          (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+    order
+    (fun (hle : ⋯) =>
+      @Decidable.byContradiction
+        (And
+          (@Ne.{1} Nat
+            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+          (@Ne.{1} Nat
+            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+        (@instDecidableAnd
+          (@Ne.{1} Nat
+            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+          (@Ne.{1} Nat
+            (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+          (@instDecidableNot
+            (@Eq.{1} Nat
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+            (instDecidableEqNat
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+          (@instDecidableNot
+            (@Eq.{1} Nat
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+            (instDecidableEqNat
+              (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+        fun (a : ⋯) =>
+        ResearchG01.req_nonzero._proof_1_4 xs ys iso
+          (@Eq.mp.{0}
+            (@Eq.{1} (Prod.{0, 0} Nat Nat)
+              (@Prod.mk.{0, 0} Nat Nat
+                (@Derivation.Iso.dmap
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        xs)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        ys)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                (@Derivation.Iso.dmap
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        xs)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        ys)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+            (And
+              (@Eq.{1} Nat
+                (@Derivation.Iso.dmap
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        xs)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        ys)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+              (@Eq.{1} Nat
+                (@Derivation.Iso.dmap
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        xs)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                    (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                    (@List.cons.{0} Derivation.Inst
+                      (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                        ys)
+                      (@List.nil.{0} Derivation.Inst))
+                    (@List.nil.{0} Nat)
+                    (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                      (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                  iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+            (@Prod.mk.injEq.{0, 0} Nat Nat
+              (@Derivation.Iso.dmap
+                (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                  (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                  (@List.cons.{0} Derivation.Inst
+                    (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                      xs)
+                    (@List.nil.{0} Derivation.Inst))
+                  (@List.nil.{0} Nat)
+                  (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                    (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                  (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                  (@List.cons.{0} Derivation.Inst
+                    (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                      ys)
+                    (@List.nil.{0} Derivation.Inst))
+                  (@List.nil.{0} Nat)
+                  (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                    (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+              (@Derivation.Iso.dmap
+                (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                  (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                  (@List.cons.{0} Derivation.Inst
+                    (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                      xs)
+                    (@List.nil.{0} Derivation.Inst))
+                  (@List.nil.{0} Nat)
+                  (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                    (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                  (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                  (@List.cons.{0} Derivation.Inst
+                    (@Prod.mk.{0, 0} Nat (List.{0} Nat) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                      ys)
+                    (@List.nil.{0} Derivation.Inst))
+                  (@List.nil.{0} Nat)
+                  (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                    (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@Eq.mp.{0}
+              (@Eq.{1} (Prod.{0, 0} Nat Nat)
+                (@ite.{1} (Prod.{0, 0} Nat Nat)
+                  (@LE.le.{0} Nat instLENat
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (Nat.decLe
+                    (@Prod.fst.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+                    (@Prod.snd.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+                  (@Prod.mk.{0, 0} Nat Nat
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@Prod.mk.{0, 0} Nat Nat
+                    (@Prod.snd.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+                    (@Prod.fst.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))))
+                (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@Eq.{1} (Prod.{0, 0} Nat Nat)
+                (@Prod.mk.{0, 0} Nat Nat
+                  (@Derivation.Iso.dmap
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  (@Derivation.Iso.dmap
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@congrArg.{1, 1} (Prod.{0, 0} Nat Nat) Prop
+                (@ite.{1} (Prod.{0, 0} Nat Nat)
+                  (@LE.le.{0} Nat instLENat
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (Nat.decLe
+                    (@Prod.fst.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+                    (@Prod.snd.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+                  (@Prod.mk.{0, 0} Nat Nat
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@Prod.mk.{0, 0} Nat Nat
+                    (@Prod.snd.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+                    (@Prod.fst.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))))
+                (@Prod.mk.{0, 0} Nat Nat
+                  (@Derivation.Iso.dmap
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  (@Derivation.Iso.dmap
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                      (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                      (@List.cons.{0} Derivation.Inst
+                        (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                        (@List.nil.{0} Derivation.Inst))
+                      (@List.nil.{0} Nat)
+                      (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                        (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                    iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (fun (_a : Prod.{0, 0} Nat Nat) =>
+                  @Eq.{1} (Prod.{0, 0} Nat Nat) _a
+                    (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@if_pos.{1}
+                  (@LE.le.{0} Nat instLENat
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@Derivation.Iso.dmap (ResearchG01.state xs) (ResearchG01.state ys) iso
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (Nat.decLe
+                    (@Prod.fst.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+                    (@Prod.snd.{0, 0} Nat Nat
+                      (@Prod.mk.{0, 0} Nat Nat
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        (@Derivation.Iso.dmap
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                            (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                            (@List.cons.{0} Derivation.Inst
+                              (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                              (@List.nil.{0} Derivation.Inst))
+                            (@List.nil.{0} Nat)
+                            (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                              (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                          iso (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+                  hle (Prod.{0, 0} Nat Nat)
+                  (@Prod.mk.{0, 0} Nat Nat
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat ys) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ys)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      iso (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    (@Derivation.Iso.dmap
+                      (Derivation.Regime.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                        (@List.cons.{0} Nat (@List.length.{0} Nat xs) (@List.nil.{0} Nat))
+                        (@List.cons.{0} Derivation.Inst
+                          (@Prod.mk.{0, 0} Nat (List.{0} Nat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) xs)
+                          (@List.nil.{0} Derivation.Inst))
+                        (@List.nil.{0} Nat)
+                        (@List.cons.{0} (Prod.{0, 0} Nat Nat)
+                          (@Prod.mk.{0, 0} Nat Nat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@List.nil.{0} (Prod.{0, 0} Nat Nat))))
+                      (Derivation.Regime.mk ⋯ ⋯ ⋯ ⋯ ⋯) ⋯ ⋯))
+                  ⋯))
+              ⋯))
+          ⋯)
+    ⋯

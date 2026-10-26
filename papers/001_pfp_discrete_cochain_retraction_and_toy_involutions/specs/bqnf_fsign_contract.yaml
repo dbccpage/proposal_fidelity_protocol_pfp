@@ -1,0 +1,123 @@
+schema_version: smplx.nf.contract.v0
+contract_kind: normal_form_contract
+identity:
+  id: nf.physics.bqnf_fsign
+  name: Fermion Sign Problem Boundary-Quotient Normal Form
+  short_name: BQNF-FSIGN
+  version: v1.3
+  theory_status: experimental
+  contract_status: active
+  verification_status: executable
+  family: representation
+classification:
+  hierarchy_level: certified_normal_form
+  subject_kind:
+  - fock_carrier
+  - worldline_path_expansion
+  - involution_witness
+  data_posture: in_motion
+  mathematical_posture: formal_algebraic
+purpose:
+  excludes_anomaly: uncertified sign-free claims without explicit positive determinant
+    or sign-reversing involution witness (AM-FSP-2)
+  preserves_invariant: partition function evaluation preserves exact signs and weights;
+    sign cancellation requires verified 4-axiom involution on paired carrier subset
+  protected_skeleton:
+  - fock_states
+  - ordered_imaginary_time_hops
+  - sign_function
+  - weight_magnitude
+  - involution_map
+  erased_structure: []
+  non_claims:
+  - does not claim polynomial-time solution to generic macroscopic fermion sign problems
+    (Troyer-Wiese NP-hard barrier)
+  - does not claim odd cycles obstruct determinantal QMC representations
+  - does not grant live external execution authority (AuthorityEffect None)
+  - does not classify time-labelled path measures from integrated sequence weights
+  - does not treat historical verifier labels as independent ground truth
+obstruction_substrate:
+  finite_carrier:
+    description: Host-owned finite signed rational weight table for exact cancellation;
+      64 occupation states underlying a countable carrier of time-integrated C3 hopping
+      sequences
+    fock_states: 64
+  carrier_realization:
+    ref: fock.triangular_hubbard_c3.v1
+    path: code/fock_path_enumerator.py
+  geometry_module: null
+  gauge_metric_selector: null
+  obstruction_class:
+    alternating_site_gauge: odd cycle excludes flipping every edge; does not establish
+      a physical sign problem
+    integrated_sequence: C3 t=1 U=2 beta=1/4 mu=0 gap excludes equal-weight integrated
+      partners for one designated sequence
+declarations_required:
+- host_parameters:
+    hamiltonian_matrix: explicit real symmetric matrix for stoquastic positivity
+    configuration_weights: nonempty mapping of configuration IDs to signed rational
+      weights for finite_signed
+    determinant_hypotheses: explicit U, h_up, h_down; for U<0 also identical real
+      spin matrices and equal mu_up, mu_down
+    bonds: declared graph edges for alternating gauge witness
+    c3_parameters: t=1, U=2, beta=1/4, mu=0 for integrated-sequence gap
+- proposal:
+    representation: worldline_hopping | determinant | continuous_hs | determinantal_continuous_hs
+      | finite_signed
+    route: positivity | stoquastic | determinantal_positivity | determinant_squaring | exact_cancellation
+    xi_witness: pairs map on host IDs; free text is not evidence
+    obstruction_witness: alternating_site_gauge with explicit odd cycle, or c3_integrated_path_gap
+validation_criteria:
+- positivity: explicit matrix off-diagonal <= 0 or all declared finite weights >=
+    0
+- determinant: check supported Hamiltonian class, explicit interaction and required
+    matrix/chemical-potential hypotheses
+- involution_law: pairs[pairs[x]] == x on the paired subset
+- fixed_point_free: pairs[x] != x
+- sign_reversing: w[x] * w[pairs[x]] < 0
+- weight_preserving: abs(w[x]) == abs(w[pairs[x]])
+- negative_coverage: all negative host weights occur in the paired subset
+- gauge_obstruction: supplied odd cycle belongs to declared bonds
+- path_gap: validate fixed C3 model and bounds for 0, 1, 2, 3, and >=4 hops
+- route_alias: stoquastic names the same positivity check as the route positivity
+- refusal_family: a concrete gate status whose name begins with Refused_ is the abstract terminal Refused and uses the single map entry from Refused to Refuse
+terminal_routes:
+- Positivity
+- DeterminantalPositivity
+- ExactCancellation
+- OpenGaugeObstruction
+- OpenSignObstruction
+- Refused
+terminal_route_map:
+  Positivity: Preserve
+  DeterminantalPositivity: Preserve
+  ExactCancellation: Repair
+  OpenGaugeObstruction: Quarantine
+  OpenSignObstruction: Quarantine
+  Refused: Refuse
+certification:
+  certificate_required: true
+  certificate_kind: BqnfFsignCertificate
+  obstruction_class_required: true
+  loss_ledger_required: false
+  loss_ledger_trigger_id: null
+  verifier_required: true
+authorization:
+  authorized_by: null
+  certified_implies_authorized: false
+failure_modes:
+- Prose masquerading as executable evidence
+- Positivity route bypass
+- Involution law failure
+- Unpaired negative residue
+- Missing determinant hypotheses
+- Generic complexity claim masquerading as instance obstruction
+examples:
+- finite_checked_pairing: ExactCancellation
+- C3_odd_cycle_witness: OpenGaugeObstruction
+- C3_integrated_sequence_gap: OpenSignObstruction
+- explicit_stoquastic_matrix: Positivity
+- prose_only_particle_hole: Refused
+references:
+- Troyer, M., & Wiese, U. J. (2005). Physical Review Letters, 94(17), 170201. https://doi.org/10.1103/PhysRevLett.94.170201
+- Chandrasekharan, S. (2010). Physical Review D, 82(2), 025007. https://doi.org/10.1103/PhysRevD.82.025007

@@ -1,0 +1,13 @@
+name = "derivation"
+version = "0.1.0"
+defaultTargets = ["Derivation", "ParkedAudit"]
+
+[[lean_lib]]
+name = "Derivation"
+
+# The parked-module axiom census. A SECOND default target rather than an
+# import of `Derivation`, because five of the twelve modules it audits begin
+# with `import Derivation` and the root importing them is a genuine cycle.
+# See lean4/ParkedAudit.lean for the full statement of what it closes.
+[[lean_lib]]
+name = "ParkedAudit"

@@ -1,0 +1,84 @@
+{
+  "schema_id": "pfp-teaching-two-level/v1",
+  "system_prompt": "You propose candidates in a finite declared game. Preserve the original task, domain, assumptions, moves and budget. Return only the JSON object required by response_schema. Never supply a trusted host verdict. A host checks the submitted object independently; a correct local claim does not validate unrelated prose. Use worked_example to understand the format; it is a different instance.",
+  "user_prompt": {
+    "task": "two-routes/v1",
+    "profile": "finite-deterministic-positive-rational-cost",
+    "start": "r",
+    "terminals": [
+      "t"
+    ],
+    "transitions": {
+      "r": {
+        "direct": [
+          "5",
+          "t"
+        ],
+        "next": [
+          "1",
+          "s"
+        ],
+        "loop": [
+          "1",
+          "r"
+        ]
+      },
+      "s": {
+        "finish": [
+          "1",
+          "t"
+        ]
+      },
+      "t": {}
+    },
+    "question": "Submit a terminating route and its exact minimum operating cost.",
+    "binding": "Costs are decoded as exact Fractions. Replay the submitted route and compare its claimed price with independent simple-path enumeration."
+  },
+  "worked_example": {
+    "task": "worked-cost",
+    "start": "u",
+    "terminals": [
+      "v"
+    ],
+    "transitions": {
+      "u": {
+        "finish": [
+          "3/2",
+          "v"
+        ]
+      },
+      "v": {}
+    },
+    "candidate": {
+      "task": "worked-cost",
+      "moves": [
+        "finish"
+      ],
+      "claimed_cost": "3/2"
+    }
+  },
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "task": {
+        "const": "two-routes/v1"
+      },
+      "moves": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "claimed_cost": {
+        "type": "string",
+        "pattern": "^[0-9]+(/[1-9][0-9]*)?$"
+      }
+    },
+    "required": [
+      "task",
+      "moves",
+      "claimed_cost"
+    ],
+    "additionalProperties": false
+  }
+}

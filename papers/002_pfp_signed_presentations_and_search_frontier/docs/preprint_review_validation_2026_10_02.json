@@ -1,0 +1,295 @@
+{
+  "schema": "pfp.preprint-review-validation.v1",
+  "date": "2026-10-02",
+  "release_version": "0.1.0",
+  "authority_effect": "None",
+  "source_base": "e11c07ce90318309f058c8097ffd1c440a8ffb84",
+  "source_scope": "Revised Paper 002 package; exact input hashes below. The source_base identifies the inspected repository snapshot, not a hash of the revised working tree.",
+  "status": "scoped_checks_passed",
+  "external_deposit": false,
+  "tool_versions": {
+    "python": "3.12.14",
+    "pytest": "9.1.1",
+    "ruff": "0.14.13",
+    "nbformat": "5.11.1",
+    "nbclient": "0.11.0",
+    "ipykernel": "7.4.0",
+    "pandoc": "3.1.3",
+    "xelatex": "XeTeX 3.141592653-2.6-0.999995 (TeX Live 2023/Debian)"
+  },
+  "tests": [
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_sign_graph.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "passed": 3,
+      "skipped": 0,
+      "stdout": "...                                                                      [100%]\n"
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_frontier_search.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "passed": 16,
+      "skipped": 0,
+      "stdout": "................                                                         [100%]\n"
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_manuscript_examples.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "passed": 3,
+      "skipped": 0,
+      "stdout": "...                                                                      [100%]\n"
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_exact_fock_gap.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "passed": 9,
+      "skipped": 0,
+      "stdout": ".........                                                                [100%]\n"
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_native_sign_graph.py",
+        "-o",
+        "addopts=",
+        "-q"
+      ],
+      "exit_code": 0,
+      "passed": 3,
+      "skipped": 1,
+      "stdout": "...s                                                                     [100%]\n3 passed, 1 skipped in 0.02s\n"
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "code/tests/test_native_refusals.py",
+        "-o",
+        "addopts=",
+        "-q"
+      ],
+      "exit_code": 0,
+      "passed": 13,
+      "skipped": 0,
+      "stdout": ".............                                                            [100%]\n13 passed in 0.05s\n"
+    }
+  ],
+  "test_counts": {
+    "passed": 47,
+    "skipped": 1,
+    "failed": 0
+  },
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "-m",
+        "ruff",
+        "check",
+        "code"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n"
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "ruff",
+        "check",
+        "tools/replay_notebook_source.py"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n"
+    },
+    {
+      "argv": [
+        "python",
+        "code/exact_fock_gap.py"
+      ],
+      "exit_code": 0,
+      "scope": "Exact rational gap, 192 three-hop paths split 96/96; see combined demo output."
+    },
+    {
+      "argv": [
+        "python",
+        "code/run_demos.py",
+        "--all"
+      ],
+      "exit_code": 0,
+      "scope": "Three offline core demos; Python classifier route when optional binary is absent."
+    },
+    {
+      "argv": [
+        "python",
+        "-I",
+        "tools/replay_notebook_source.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Loaded finite checkers from: code/genesis_alpha\nFree swap: gauge bits {'left': 0, 'right': 1}\nAdded odd self-loop: verified odd closed walk ((1, 'left', 'left'),)\nPositive path: exact sign gauge (0, 1, 0)\nPositive triangle: verified odd cycle ((0, '1', '0'), (1, '0', '2'), (2, '2', '1'))\nFirst: UNKNOWN next untested index 3 receipt 7bd3521ede7c\nSecond: UNKNOWN next untested index 6 receipt 7d48a636cec5\nFinal: RESTRICTED_OBSTRUCTION covered 8 of 8 candidate gauges\nFinal odd cycle: ((0, '1', '0'), (1, '0', '2'), (2, '2', '1'))\nTampered resume refused: prior receipts do not form a verified UNKNOWN chain\nPASS: 5 notebook source cells; Python assertions active\nNo interactive Jupyter kernel or stored-output byte equality was checked.\nAll checks passed!\n"
+    }
+  ],
+  "notebook": {
+    "mode": "plain_Python_source_cells_in_fresh_isolated_process",
+    "code_cells_executed": 5,
+    "assertions_active": true,
+    "source_unchanged": true,
+    "interactive_kernel": {
+      "status": "BLOCKED",
+      "reason": "TCP and IPC kernel startup both failed because socket creation is not permitted in the execution environment."
+    },
+    "stored_output_byte_equality_checked": false,
+    "source_sha256": "20e82a7e0118b2dd4aa03e327e6808ff2a72f68bb0448191b26d92b5966b969a",
+    "optimized_python_refused": {
+      "exit_code": 1,
+      "expected_nonzero": true,
+      "reason": "Notebook replay requires Python assertions to be active"
+    }
+  },
+  "optional_native": {
+    "status": "NOT_BUILT",
+    "reason": "cargo and rustc unavailable; solve_sign_graph not installed; discovery skips; fixture executables test transport behavior."
+  },
+  "proofs_reviewed": [
+    "signed-graph balance, both directions",
+    "exact matrix sign adapter",
+    "stoquastic exponential norm convergence",
+    "integrated-path all-length gap",
+    "absolute path convergence bound 64*exp(4*beta)"
+  ],
+  "companion": {
+    "questions": 14,
+    "levels": "0-7",
+    "maximum_points": 100,
+    "instructor_answers": 14,
+    "package_relative_links_checked": 53,
+    "structure_exit_code": 0,
+    "worked_calculations": "Exact gauge count; indexed triangle/loop/parallel obstructions; uniform rational repair cost 2; DHD; 2-then-1 and full-batch traces; workers 1/4 equality; zero budget; rehashed false-verdict rejection.",
+    "score_is_instructional_convention": true
+  },
+  "extra_finite_check": {
+    "description": "Enumerated all 64 occupation states; maximum outgoing hopping degree is four.",
+    "exit_code": 0,
+    "stdout": "PASS: 64 occupation states; maximum outgoing hopping degree = 4\n"
+  },
+  "pdf": {
+    "status": "COMPILED_AND_VISUALLY_REVIEWED",
+    "pages": 8,
+    "passes": 3,
+    "renderer": "Functions from the repository's series tools/build_publications.py and publication_header.tex at the inspected baseline.",
+    "compile_exit_code": 0,
+    "overfull_hbox_warnings": 0,
+    "pages_visually_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "visual_findings": "No clipped text, overlapping content, malformed formulas, or broken tables found.",
+    "source_sha256": "bc0aff76fc645e2e908b835fead3b1fcb539a596f7dc4d5d59d7e3c1704ba014",
+    "tex_sha256": "fac94e9e31381e15d372af50dba3aad9649f2991acdaaac97acf8a18dbacd8ea",
+    "pdf_sha256": "ca55bd3bdef1e0336ce97da44053d0a34cecdbb122140d6db8e6929d4bd881ef"
+  },
+  "release_custody": {
+    "status": "PASS",
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "verify_deposit.py"
+        ],
+        "exit_code": 0,
+        "scope": "manifest hashes, required files, two-way census"
+      },
+      {
+        "argv": [
+          "python",
+          "tools/rebuild_release.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "scope": "ZIP membership, ordering, timestamps, member hashes, and canonical envelope"
+      }
+    ],
+    "identity_note": "The final manifests bind this receipt as a release member; no self-referential archive hash is embedded."
+  },
+  "historical_records_retained": [
+    "docs/release_validation_2026_10_01.json",
+    "docs/release_validation_2026_10_02.json"
+  ],
+  "scope_limits": [
+    "No new machine-checked proof.",
+    "No native Rust build or runtime verification.",
+    "No successful interactive Jupyter kernel transport replay in this environment.",
+    "No live provider calls, GPU benchmark, or model-benefit measurement.",
+    "No general physical adapter or sign-problem classification.",
+    "No Zenodo upload, API validation, publication, or DOI reservation."
+  ],
+  "input_sha256": {
+    "README.md": "29c6dde1aac42874a4fb6b7350bd233a1d733f00971caa1e3bf02d65860c4f04",
+    "_lev_landau_theoretical_minimum_quiz/00_preface_at_apartment_50.md": "98cc328105b95d24a807250889b1e2d9b5715a4e40909887c4c60b97bc0c5b62",
+    "_lev_landau_theoretical_minimum_quiz/instructor_key.md": "6517b46da3b7bc722a2be2a2c34061bd57747829f3786109c518bd3c48ed4a9b",
+    "_lev_landau_theoretical_minimum_quiz/quiz.md": "8934a3ef7843bb61d1d62cbd2611bcb91b2d3ac28175c2e0f76edb3666a95c6e",
+    "_lev_landau_theoretical_minimum_quiz/study_guide.md": "92339ed30854d64f882d47de018cb827f7c040caa2863a7f4c3e565a21151c2e",
+    "code/certificate_gate.py": "1c4c5e7a5b536da561681bbfcb12882995fe1b8d5f7e5c8d1a078a0cc133dbe9",
+    "code/demo1_signed_gauge.py": "33a59c9210dab85cca2564b508946d579c6bb90ff5d358b4e78d2fd2cc05933e",
+    "code/demo2_frontier_search.py": "ceca61a024c3c273d54bb4ec141c175b3f201a4176055da1e2d460565a66e826",
+    "code/demo3_fock_obstruction.py": "48e788c0690f17dc725a7e87531be3c5efd88372655404e951103800afbe30a2",
+    "code/deposit_paths.py": "37c4f3b5da608d38bffd5315ef73a79e066d2fd96b219325e818941e1b3dac62",
+    "code/exact_fock_gap.py": "8fc09a9ae7d74eadd890a7827f0f3c9b53cc77cab09c9c16c0efde31fe2c2d67",
+    "code/fock_path_enumerator.py": "3fa45c742589ec938067c372b35e3876adf0e3227eb898a91d5258aa4d6a4830",
+    "code/genesis_alpha/frontier_search.py": "d3529c2150f6b5d43be46a34c46bcde07ee2c082dc9f18ad522114977c417bc9",
+    "code/genesis_alpha/sign_graph.py": "9488ed63c65089af3086dafa3e01a9af948fb5d3c88505103e376f0590f0b3e1",
+    "code/live_proposer_demo.py": "7b7b738774eeb1c68c16162ccfdcab137b339faf1f328b40bc602ba0003d648e",
+    "code/native_sign_graph.py": "c7ccffafe95652dd486b87fb1b103232746bb8ef179836a867c190bdcf5e46fc",
+    "code/run_demos.py": "43c2a60a01037a692fa11408dc3700b806b4665ddc7f0260ba98a2e69c4755d7",
+    "code/tests/__init__.py": "ca7eba20c438740a1cc85b66505c1ecb0a7e6538f9399e0ebadaae151a3055f5",
+    "code/tests/test_exact_fock_gap.py": "51a495d617c1a78283eac93ae1b67300b97051f9c70bee698b27ab8781f130b8",
+    "code/tests/test_frontier_search.py": "c6d174036a0d531ee8d98c917637a84ac2674dfb7b11cd3d5a5e50356b6680f3",
+    "code/tests/test_manuscript_examples.py": "2eaad2a76d1369cd862807d31a6ea985be13a9d2caec94d4eeaec2459a0584a2",
+    "code/tests/test_native_refusals.py": "91f21a49b2692a0eb9c339fed9a565877a8a9bfa6f074f2182a564f5606832d3",
+    "code/tests/test_native_sign_graph.py": "7d06a4499b2e998c8670255f0da9769620bef641a4f1690f413fa32c2274d21f",
+    "code/tests/test_sign_graph.py": "cdfc820e4a5d4c86650873faefc81db6fbc49b119820b05c81e942a4d4007e1f",
+    "jupyter_notebooks/signed_exchange_and_frontier.ipynb": "20e82a7e0118b2dd4aa03e327e6808ff2a72f68bb0448191b26d92b5966b969a",
+    "paper.md": "bc0aff76fc645e2e908b835fead3b1fcb539a596f7dc4d5d59d7e3c1704ba014",
+    "paper_claim_ledger.md": "0096626bd257677257e6f2ae8fcb93c77e37b2154a7e692103bc4bf68967615b",
+    "pyproject.toml": "f3af0191edb80275bbb6086930d4757fd716b191c657beb0d4c61670e415d035",
+    "scripts/build_deposit_zip.py": "fc21f6119be966f4c3acfce58164e4d5b22360c0603081727cf5c6639a604675",
+    "scripts/regen_sha256sums.py": "2ec060492be0f7af01f4bf2b719da5076af7e3a0858182282c274fbaefb0731f",
+    "tools/rebuild_release.py": "e30952640a1dc507e1c8ebeebfd6cd3b003e99191903ace3856db7d484260df7",
+    "tools/replay_notebook_source.py": "1eebfef0f49e3f2e50fbbc5649e09fe5f5012415972a69d6a5df22bc1f3f5904",
+    "verify_deposit.py": "6c3c06beb6ca507875356fd141b2046d89a05146eb390ebab73c15062db5ded1"
+  },
+  "review_sha256": "31d50545b4f88839aef8da0e01c8cd78e9def81cdebe1a5e248402de6104fb5e"
+}

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "symbol-game-introduction"
+version = "0.1.0"
+description = "A first Symbol Game with S(n), MSS-N, and basic packets"
+authors = [{name = "Jeremy H. Carroll"}]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=9.0.3", "nbformat>=5.10", "nbclient>=0.10", "ipykernel>=6.29"]
+
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+addopts = "-q --import-mode=importlib"
+
+[tool.setuptools]
+py-modules = ["basic_packets", "lesson_packets"]
+package-dir = {"" = "code"}
