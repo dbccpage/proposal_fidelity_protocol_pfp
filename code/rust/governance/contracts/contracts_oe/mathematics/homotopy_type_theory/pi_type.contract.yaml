@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:pi_type:v0.1.0
+title: PiType Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: dependent-product-type
+  symbol: Pi(x:A). B(x)
+  ascii_symbol: pi_type
+  notation: Pi(x:A). B(x)
+  domain:
+  - 'base_type: A type A (the domain of quantification)'
+  - 'type_family: A type family B: A -> Type (the fiber over each a: A)'
+  codomain:
+    description: A pair (base_type, type_family) defining Pi(x:A). B(x)
+requirements:
+  required_structures:
+  - base_type_hash must resolve to a valid type A
+  - 'type_family_hash must resolve to a valid type family B: A -> Type'
+  - Pi(x:A). B(x) is a valid type
+  - Beta reduction and eta expansion are consistent
+laws:
+- 'If A: Type and B: A -> Type, then Pi(x:A). B(x): Type'
+- 'If t(x): B(x) for x: A, then lambda(x). t(x): Pi(x:A). B(x)'
+- 'If f: Pi(x:A). B(x) and a: A, then f(a): B(a)'
+- (lambda x. t)(a) = t[a/x] (definitional equality)
+- 'f = lambda x. f(x) for f: Pi(x:A). B(x) (definitional equality)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Data serialized in canonical order
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:SigmaType:v0.1.0 serves as Dual type former (dependent sum)
+- urn:math:contract:IdentityEliminator:v0.1.0 serves as Path induction interacts with Pi-types
+negative_tests:
+- base_type_hash does not resolve to a valid type
+- type_family_hash does not resolve to a valid family
+- Term body does not have the correct type B(x)
+- Beta reduction and eta expansion produce inconsistent results
+doctrine:
+  summary: 'A PiType Pi(x:A). B(x) is the dependent product type: the type of sections of the type family B: A -> Type. An element f: Pi(x:A). B(x) assigns to each a: A an element f(a): B(a). The Pi-type satisfies the introduction rule (lambda abstraction), elimination rule (application), computation rule (beta reduction), and uniqueness rule (eta expansion).'
+  non_role:
+  - Impredicative polymorphism (System F style)
+  - Universe polymorphism management
+  - Authority classification or policy decisions
+wip:
+- Universe level management for Pi-types
+- Interaction with univalence axiom
+- Impredicativity vs predicativity for Pi-type formation
+- FactEnvelope types for 'is non-dependent', 'is contractible'
+- Currently models predicative Pi-types in a fixed universe
+- Universe polymorphism not yet handled
+- Function extensionality as an axiom or derivable principle pending
+- Does not classify admissibility or emit authority decisions

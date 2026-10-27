@@ -1,0 +1,72 @@
+[package]
+autotests = false
+name = "core_functional"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+
+
+[dependencies]
+core_number_theory = { path = "../core_number_theory" }
+linear_algebra = { path = "../core_linear_algebra" }
+# Core mathematical structures
+nalgebra = { version = "0.33", features = ["serde-serialize"] }
+num-complex = "0.4"
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Hashing and cryptography
+blake3 = "1.5"
+sha2 = "0.10"
+
+# Error handling
+thiserror = "2.0"
+anyhow = "1.0"
+
+# Tier 0 substrate: validated observer identity
+core_kernel = { path = "../core_kernel" }
+
+[dev-dependencies]
+approx = "0.5"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+syn = { version = "2", features = ["full", "visit"] }
+quote = "1"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_functional`.
+
+[[test]]
+name = "circle_piecewise_linear"
+path = "../tests/core_functional/circle_piecewise_linear.rs"
+
+[[test]]
+name = "dependency_boundary"
+path = "../tests/core_functional/dependency_boundary.rs"
+
+[[test]]
+name = "loss_curvature"
+path = "../tests/core_functional/loss_curvature.rs"
+
+[[test]]
+name = "mub_feasibility_wall_evidence_api"
+path = "../tests/core_functional/mub_feasibility_wall_evidence_api.rs"
+
+[[test]]
+name = "observer_transport"
+path = "../tests/core_functional/observer_transport.rs"
+
+[[test]]
+name = "ownership_boundary"
+path = "../tests/core_functional/ownership_boundary.rs"
+
+[[test]]
+name = "projection_leakage"
+path = "../tests/core_functional/projection_leakage.rs"

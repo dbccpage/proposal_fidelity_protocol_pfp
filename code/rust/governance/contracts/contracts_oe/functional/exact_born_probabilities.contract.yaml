@@ -1,0 +1,52 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:exact_born_probabilities:file:v1.0.0
+title: Exact finite squared-modulus and nonnegative-weight normalization
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/born_probabilities.rs
+layer: functional
+role: exact_finite_probability_representation
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - nonempty_exact_nonnegative_normalized_probability_vectors
+  - declared_squared_modulus_rule_for_complex_rational_amplitudes
+  - zero_denominator_refusal_before_arithmetic
+  - canonicalization_of_signed_unreduced_rational_inputs
+  - immutable_normalized_output
+does_not_own:
+  - derivation_or_physical_justification_of_the_Born_rule
+  - authentication_of_state_or_request_identity
+  - floating_point_provider_or_display_conversion
+  - arbitrary_generated_code_or_quantum_hardware
+  - engine_or_actor_authority
+may_call: []
+must_not:
+  - normalize_an_empty_or_zero_total_vector
+  - accept_negative_weights
+  - drop_imaginary_amplitudes
+  - replace_tiny_nonzero_probabilities_with_zero
+exactness:
+  mode: exact_rational
+  exact_constructor_required: true
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "fn canonical_rational("
+  - "pub fn from_weights("
+  - "pub fn from_amplitudes("
+required_tests:
+  - "born_probabilities::tests::exact_nonnegative_weights_normalize_without_rounding"
+  - "born_probabilities::tests::complex_squared_modulus_uses_both_components"
+  - "born_probabilities::tests::common_nonzero_scale_and_phase_preserve_distribution"
+  - "born_probabilities::tests::empty_and_all_zero_inputs_have_distinct_refusals"
+  - "born_probabilities::tests::negative_weight_is_refused_after_sign_canonicalization"
+  - "born_probabilities::tests::invalid_rationals_are_refused_before_weight_or_amplitude_arithmetic"
+  - "born_probabilities::tests::extreme_exact_weights_neither_overflow_nor_disappear"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_majorana_fock_kitaev:v0.1.0
+title: Exact Majorana Fock and Kitaev Invariants
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_majorana_fock_kitaev
+  symbol: exact_majorana_fock_kitaev
+  ascii_symbol: exact_majorana_fock_kitaev
+  notation: Exact Majorana Fock and Kitaev Invariants
+  domain:
+  - Declared rational parameters on finite Fock carriers with 1..=5 modes
+  - Open chain or explicit periodic/antiperiodic boundary sign
+  codomain:
+    description: Declared finite results of core_quantum_physics::majorana_fock_algebra; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Jordan-Wigner Majoranas satisfy Clifford and CAR and anticommute with occupation parity
+- The real alternating BdG matrix reconstructs the Hermitian parity-conserving Fock Hamiltonian
+- Finite-chain Pfaffians square to exact determinants and periodic twists can change their signs
+- The translation-invariant bulk Z2 invariant uses the k=0/pi Pfaffian product and explicitly refuses gap-closing
+  cases
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_majorana
+  module: majorana_fock_algebra
+  symbols:
+  - FockCarrier
+  - MajoranaError
+  - FockCarrier::majoranas
+  - FockCarrier::parity
+  - FockCarrier::bdg_majorana_matrix
+  - FockCarrier::kitaev_chain_with_boundary
+  - FockCarrier::kitaev_pfaffian
+  - FockCarrier::bulk_kitaev_invariant
+  - FockCarrier::braid_unitary
+  required_tests:
+  - jordan_wigner_majoranas_satisfy_the_clifford_and_canonical_anticommutation_relations
+  - the_parity_is_minus_one_to_the_occupation_and_anticommutes_with_every_majorana
+  - majorana_braid_unitaries_satisfy_the_braid_relations_and_conserve_parity
+  - kitaev_pfaffians_replay_determinants_and_boundary_twists_change_the_finite_chain
+negative_tests:
+- Stringless Majoranas fail cross-mode anticommutation
+- Invalid mode/index/boundary data and gap-closing bulk parameters are refused or reported as None
+doctrine:
+  summary: Jordan-Wigner Majoranas satisfy Clifford and CAR and anticommute with occupation parity; The real
+    alternating BdG matrix reconstructs the Hermitian parity-conserving Fock Hamiltonian; Finite-chain Pfaffians
+    square to exact determinants and periodic twists can change their signs; The translation-invariant bulk
+    Z2 invariant uses the k=0/pi Pfaffian product and explicitly refuses gap-closing cases.
+  non_role:
+  - No hardware/tetron realization or arbitrary-L dense simulation
+  - Finite Pfaffian and bulk invariant remain separate quantities
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

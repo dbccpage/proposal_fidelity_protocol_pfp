@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_residue_exchange_roots:v0.1.0
+title: Exact Residue Roots of Unity and Two-Torsion
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_residue_exchange_roots
+  symbol: exact_residue_exchange_roots
+  ascii_symbol: exact_residue_exchange_roots
+  notation: Exact Residue Roots of Unity and Two-Torsion
+  domain:
+  - Moduli n>=2 in u64 and a declared canonical factorization budget
+  codomain:
+    description: Declared finite results of core_number_theory::residue; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Roots of x^2=1 are complete prime-power solutions combined by exact CRT
+- The 2-power factor uses its distinct roots rather than an odd-prime assumption
+- Two-torsion of Z/n is {0} for odd n and {0,n/2} for even n
+- No full residue scan or private factorization algorithm is used
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: residue
+  symbols:
+  - ResidueError
+  - square_roots_unity
+  - two_torsion
+  required_tests:
+  - residue_roots_agree_with_small_exhaustive_models_and_scale_to_u64_limits
+negative_tests:
+- Invalid moduli and factorization exhaustion are typed refusals; extreme u64 products are replayed exactly
+doctrine:
+  summary: Roots of x^2=1 are complete prime-power solutions combined by exact CRT; The 2-power factor uses
+    its distinct roots rather than an odd-prime assumption; Two-torsion of Z/n is {0} for odd n and {0,n/2}
+    for even n; No full residue scan or private factorization algorithm is used.
+  non_role:
+  - No field inference for a composite residue ring
+  - No assumption that a ring has only the two signs
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

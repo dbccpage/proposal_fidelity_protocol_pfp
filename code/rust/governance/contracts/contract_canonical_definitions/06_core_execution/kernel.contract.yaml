@@ -1,0 +1,110 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:kernel:v1.0.0
+title: Kernel
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Kernel
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - TypeContract
+    - BoundaryContract
+    - CertificateKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    required: []
+doctrine:
+  summary: 'Kernel is a bounded authority declaration for one semantic class. Kernels are not operators,
+
+    do not participate in E/I/C/R/M, and do not execute unless a separate Engine contract grants
+
+    StateTransition authority.
+
+    '
+  non_role: &id002
+  - god_object_behavior
+  - cross_kernel_orchestration
+  - hidden_state_mutation
+  - terminal_mapping
+  - policy_interpretation
+  - execution
+  structural_representation:
+    raw:
+      struct_name: KernelManifest
+      fields:
+      - name: kernel_id
+        type: KernelId
+      - name: semantic_class
+        type: SemanticClassId
+      - name: input_family_refs
+        type: Vec<ArtifactFamily>
+      - name: output_family_refs
+        type: Vec<ArtifactFamily>
+      - name: owned_authority_effect
+        type: AuthorityEffect
+        default: None
+      - name: manifest_hash
+        type: Hash256
+  flow: 'Contract declaration
+
+    -> KernelManifest
+
+    -> Validator
+
+    -> StructureArtifact / Record
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - kernel_manifest_declares_single_semantic_class
+  - kernel_manifest_authority_effect_defaults_to_none
+  - kernel_cannot_orchestrate_cross_kernel_flow
+  - kernel_cannot_execute
+  - kernel_cannot_hide_state_mutation
+  canonical_invariant: 'Kernel boundaries split authority. They do not create execution, policy, terminal,
+
+    certificate, or operator authority by themselves.
+
+    '
+  legacy_metadata:
+    name: Kernel
+    source_file: non-math/06_execution/kernel_contract.md
+    active: true
+    machine_authority: true
+    role: Bounded authority unit owning exactly one semantic class
+    version: '2.0'
+    classification: reference
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: StructureArtifact
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    - Record

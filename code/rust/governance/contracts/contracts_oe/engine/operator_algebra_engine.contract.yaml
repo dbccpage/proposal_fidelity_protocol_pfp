@@ -1,0 +1,38 @@
+schema_version: core.file_contract.v1
+contract_id: urn:core:engine:operator_algebra_engine:file:v1.0.0
+title: "Operator Algebra Engine"
+crate: engines
+file: engine/crates/engines/src/operator_algebra_engine.rs
+role: operator_algebra_computation_engine
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - operator_algebra_symbolic_computations
+  - lie_and_associative_algebra_evaluations
+does_not_own:
+  - infinite_dimensional_operator_oracle
+  - authority
+may_call:
+  - core_operator_algebra
+must_not:
+  - claim infinite-dimensional operator spectrum solver
+  - mint authority
+exactness:
+  numeric_mode: f64_operator_matrix_numeric
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect::None"
+required_tests:
+  - test_operator_algebra_engine_computations
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_file_contract:file:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:execution:engine:v1.0.0"

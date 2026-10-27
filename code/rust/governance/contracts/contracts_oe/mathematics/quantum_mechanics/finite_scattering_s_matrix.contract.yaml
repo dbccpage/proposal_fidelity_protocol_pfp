@@ -1,0 +1,66 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_scattering_s_matrix:v0.1.0
+title: Finite Scattering S Matrix
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_scattering_s_matrix
+  symbol: finite_scattering_s_matrix
+  ascii_symbol: finite_scattering_s_matrix
+  notation: Finite Scattering S Matrix
+  domain:
+  - A nonempty Hermitian reaction matrix K over Q(i), with at most MAX_SCATTERING_CHANNELS=128 channels
+  codomain:
+    description: Exact finite constructions implemented by core_quantum_physics::s_matrix; results remain
+      scoped to the declared carrier and budgets.
+requirements:
+  required_structures:
+  - Exact arithmetic and explicit finite carrier validation
+  - A typed refusal for unsupported or exhausted computations
+laws:
+- S=(I+iK)(I-iK)^-1 is independently verified unitary
+- With T=(S-I)/(2i), T-T dagger=2i T dagger T
+- K=1 fixes the outgoing-wave convention S=i
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact independent witness replay where a witness is returned
+relationships: []
+rust_binding:
+  crate: core_quantum_physics
+  module: s_matrix
+  symbols:
+  - SMatrix
+  - ScatteringError
+  required_tests:
+  - cayley_scalar_pins_the_scattering_sign_convention
+  - coupled_channels_are_unitary_and_obey_the_optical_theorem
+  - malformed_and_nonphysical_scattering_inputs_are_refused
+negative_tests:
+- Reject empty, rectangular, non-Hermitian reaction matrices and nonunitary candidates
+doctrine:
+  summary: Finite Scattering S Matrix on a declared finite carrier.
+  non_role:
+  - PROVED, GlobalGreen, or operational authority
+  - Continuum or infinite-carrier completion claims
+wip:
+- Executable finite checks are local evidence; no theorem-prover discharge is asserted.

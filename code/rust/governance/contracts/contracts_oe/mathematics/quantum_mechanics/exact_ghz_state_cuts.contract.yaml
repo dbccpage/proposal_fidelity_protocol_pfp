@@ -1,0 +1,66 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_ghz_state_cuts:v0.1.0
+title: Exact bounded GHZ state and coherent reductions
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_ghz_state_cuts
+  symbol: exact_ghz_state_cuts
+  ascii_symbol: exact_ghz_state_cuts
+  notation: Exact bounded GHZ state and coherent reductions
+  domain:
+  - Bounded finite rays over Q(i), rational mixing parameters and exact tensor index order
+  codomain:
+    description: Declared finite results of core_quantum_physics::ghz_state; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- GHZ has two exact nonzero coherent amplitudes
+- Every nontrivial one-qubit GHZ marginal is I/2
+- Invalid qubit counts and oversized dimensions refuse before allocation
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: ghz_state
+  symbols:
+  - GhzState::exact
+  required_tests:
+  - states_channels_exact_tests::ghz_w_dicke_cuts_retain_coherences_and_distinguish_three_tangle
+negative_tests:
+- states_channels_exact_tests::ghz_w_dicke_cuts_retain_coherences_and_distinguish_three_tangle
+doctrine:
+  summary: GHZ has two exact nonzero coherent amplitudes; Every nontrivial one-qubit GHZ marginal is I/2; Invalid
+    qubit counts and oversized dimensions refuse before allocation.
+  non_role:
+  - Does not assert a continuum state or a complete multipartite SLOCC classification
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

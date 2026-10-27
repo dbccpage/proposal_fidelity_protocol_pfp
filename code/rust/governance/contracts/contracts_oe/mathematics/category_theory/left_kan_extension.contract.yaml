@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:left_kan_extension:v0.1.0
+title: Left Kan Extension Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: universal_construction
+  symbol: 'Lan_K(F): C'' → D with η: F → Lan_K(F) ∘ K'
+  ascii_symbol: left_kan_extension
+  notation: 'Lan_K(F): C'' → D with η: F → Lan_K(F) ∘ K'
+  domain:
+  - 'functor_F: Functor F: C → D'
+  - 'functor_K: Functor K: C → C'''
+  - 'extension: Functor Lan_K(F): C'' → D'
+  - 'unit: Natural transformation η: F → Lan_K(F) ∘ K'
+  codomain:
+    description: "Given functors F: C → D and K: C → C', a left Kan extension consists of: - A functor Lan_K(F): C' → D - A natural transformation η: F → Lan_K(F) ∘ K (the unit) - Universal property: for any G: C' → D and α: F → G ∘ K, there exists\n  unique β: Lan_K(F) → G such that α = (β * K) · η\n"
+requirements:
+  required_structures:
+  - 'F: C → D, K: C → C'', and Lan_K(F): C'' → D are valid functors'
+  - 'η: F → Lan_K(F) ∘ K is a natural transformation'
+  - Universal property satisfied for all G and α
+  - Artifact hash is deterministic SHA-256
+laws:
+- F, K, and Lan_K(F) are functors
+- 'η: F → Lan_K(F) ∘ K is a natural transformation'
+- 'For any G: C'' → D and α: F → G ∘ K, there exists unique β: Lan_K(F) → G such that α = (β * K) · η
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+relationships:
+- urn:math:contract:Functor:v1.0.0 serves as Defines functors F, K, and Lan_K(F)
+- urn:math:contract:NaturalTransformation:v1.0.0 serves as Defines unit η and mediating transformations
+- urn:math:contract:Category:v1.0.0 serves as Defines source and target categories C, C', D
+negative_tests:
+- F is not a valid functor
+- K is not a valid functor
+- η is not a natural transformation
+- Universal property does not hold
+doctrine:
+  summary: 'A left Kan extension is a universal construction extending a functor F: C → D along K: C → C'' to a functor Lan_K(F): C'' → D. Left Kan extensions provide colimits, coends, and are fundamental to the calculus of profunctors. Given functors F: C → D and K: C → C'', the left Kan extension Lan_K(F): C'' → D is universal with respect to natural transformations η: F → Lan_K(F) ∘ K. When colimits exist, Lan_K(F)(c'') = colim_{(c, f: K(c)→c'')} F(c). The coend formula gives Lan_K(F)(c'') = ∫^{c∈C} C''(Kc, c'') ⊗ Fc.'
+  non_role:
+  - Right Kan extensions (use RightKanExtension contract)
+  - ∞-categorical Kan extensions (future work)
+  - Non-pointwise existence conditions beyond basic colimit requirements
+wip:
+- 'Pointwise Kan extensions: when do they exist and how to verify?'
+- Density and codensity monads from Kan extensions
+- ∞-categorical Kan extensions and their properties
+- Kan extensions along profunctors
+- Absolute Kan extensions and their characterization
+- Current implementation focuses on pointwise left Kan extensions with colimit formula
+- Coend formula requires tensor product structure in target category
+- Universal property verification needs efficient mediating morphism search
+- Consider caching colimit computations for performance
+- Adjunction Lan_K ⊣ (−) ∘ K should be verified systematically
+rust_binding:
+  crate: core_category_theory
+  module: limits_colimits
+  symbols:
+    - KanExtension
+  required_tests:
+    - lan_validate_ok
+    - kind_default_is_lan

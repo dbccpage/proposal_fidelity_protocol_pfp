@@ -1,0 +1,195 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:checked_packet:v1.0.0
+title: CheckedPacket
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: CheckedPacket
+descriptor:
+  authority_effect: fact_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - CertificateKernel
+    - ReplayKernel
+    - Validator
+    - Evaluator
+    - LicensingBoundary
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: FactEnvelope
+    authority_layer: Fact
+    replay_certificates:
+    - schema_hash
+  constraints:
+    checker_boundary_required: true
+    mutation_forbidden: true
+    typed_output_required: true
+doctrine:
+  summary: 'CheckedPacket is the universal boundary that admits generated, parsed, or solved material
+
+    into evaluator-facing factual form. Nothing is true because it was generated or solved.
+
+    A checked-packet certificate remains evidence-only after independent checking, tolerance or
+    exact arithmetic bounds, typed sealing, and replayable manifests/hashes. A scoped local result
+    can be authorized only by the separate authenticated host promotion contract after receipt-DAG,
+    authority-witness, and human-decision verification.
+
+    CheckedPacket may be FactOnly only for the specific checked claim under the declared checker, schema,
+    input hash, evidence refs, replay refs, and certificate refs. It does not upgrade unrelated payload
+    authority.
+
+    '
+  non_role: &id002
+  - self_certification
+  - unchecked_promotion
+  - transition_authorization
+  - engine_execution
+  - local_authority_effect_override
+  authority_ladder:
+    sequence:
+    - Generated
+    - Parsed
+    - Checked
+    - Evaluated
+    - DecisionEnvelope
+    - ActionLicense
+    - EngineAction
+    law: Only checked packets may enter Evaluator; LicensingBoundary must separate Evaluator from Engine.
+  structural_representation:
+    proposed:
+      struct_name: ProposedArtifact
+      authority_effect: EvidenceOnly
+    unchecked:
+      struct_name: UncheckedPacket
+      authority_effect: EvidenceOnly
+    checked:
+      struct_name: CheckedPacket
+      fields:
+      - name: packet_id
+        type: Hash
+      - name: carrier_hash
+        type: Hash
+      - name: tolerance_profile_hash
+        type: Hash
+      - name: certificate_status
+        type: CertificateVerdict
+      - name: replay_hash
+        type: Hash
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    primitive_decomposition_manifest:
+      struct_name: PrimitiveDecompositionManifest
+      fields:
+      - name: support_partition_policy
+        type: PartitionPolicy
+      - name: quotient_separability_checks
+        type: Vec<SeparabilityCheck>
+      - name: phi_additivity_certificate_refs
+        type: Vec<CertificateId>
+      - name: split_enumeration_budget
+        type: Budget
+      - name: uniqueness_status
+        type: UniquenessStatus
+      - name: replay_hash
+        type: Hash
+  flow: 'ProposedArtifact
+
+    -> UncheckedPacket
+
+    -> CertificateChecker / Validator / ReplayKernel
+
+    -> CheckedPacket
+
+    -> Evaluator emits DecisionEnvelope
+
+    -> LicensingBoundary emits ActionLicense
+
+    -> Engine executes only licensed transitions
+
+    -> Trace records
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - checked_packet_requires_independent_checker
+  - checked_packet_rejects_raw_solver_float_authority
+  - checked_packet_requires_replay_hash
+  - unchecked_packet_cannot_enter_evaluator
+  - checked_packet_does_not_emit_action_license
+  - licensing_boundary_required_before_engine
+  - phi_additivity_uses_certificate_refs_not_embedded_certificates
+  canonical_invariant: 'Generate freely, parse explicitly, check independently, seal immutably, evaluate
+    only sealed
+
+    packets, license separately, and execute only licensed transitions.
+
+    '
+  legacy_metadata:
+    name: CheckedPacket
+    source_file: non-math/02_evidence/checked_packet_contract.md
+    active: true
+    machine_authority: true
+    role: Universal evidence-promotion packet boundary
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: FactEnvelope
+    domain_output_kind: CheckedPacket
+    referenced_output_families:
+    - EvidenceEnvelope
+    - DecisionEnvelope
+    - ActionLicense
+    - Record
+
+rust_binding:
+  crate: core_certifiers
+  module: checked_packet
+  symbols:
+  - CheckedPacket
+  - CheckedPacketArgs
+  - CheckedClaimScope
+  - CheckedClaimKind
+  - CertificateRef
+  - CheckerRef
+  - CarrierManifestHash
+  - BoundaryMapsHash
+  - WeightsAndGaugesHash
+  - DefectFieldHash
+  - ObserverBoundaryHash
+  - ToleranceProfileHash
+  - ReplayHash
+  - EvidenceRef
+  - CertificateVerdict
+  - Hash256
+  - CheckedPacketCertificateError
+  - CheckedPacketCertificateV1
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

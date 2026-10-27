@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phase_quotient_descent_and_lifts:v0.1.0
+title: Exact phase-blind fibers, descent witnesses and constructive lifts
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: phase_quotient_descent_and_lifts
+  symbol: phase_quotient_descent_and_lifts
+  ascii_symbol: phase_quotient_descent_and_lifts
+  notation: Exact phase-blind fibers, descent witnesses and constructive lifts
+  domain:
+  - Finite Gaussian-rational amplitude vectors, finite Q(i) phase subgroup of order<=4, discrete fiber budget65536;
+    arbitrary-precision integer lift with explicit factorization and construction budgets
+  codomain:
+    description: Declared finite results of core_quantum_physics::phase_blind_quotient; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Projection is normalized squared modulus and is invariant across a declared phase orbit
+- Rows with at most one nonzero entry descend through the zero-extended quotient
+- A mixing row has a replayable phase-equivalent pair whose images separate
+- Gaussian lifts independently reproject; primes3mod4 of odd valuation obstruct a lift
+- Lift nonexistence is distinct from factorization or construction budget refusal
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: phase_blind_quotient
+  symbols:
+  - phase_blind_projection
+  - phase_equivalent
+  - UnitPhaseGroup::new
+  - discrete_fiber
+  - classify_descent
+  - separates
+  - gaussian_lift_with_budget
+  - rational_lift
+  required_tests:
+  - measurement_exact_laws::phase_quotient_lifts_replay_norms_and_distinguish_nonexistence_from_budgets
+  - superposition_as_the_quotient_fiber::mixing_maps_are_refused_with_a_separating_phase_equivalent_pair
+negative_tests:
+- measurement_exact_laws::phase_quotient_lifts_replay_norms_and_distinguish_nonexistence_from_budgets
+- superposition_as_the_quotient_fiber::phase_groups_must_be_finite_unit_subgroups
+doctrine:
+  summary: Projection is normalized squared modulus and is invariant across a declared phase orbit; Rows with
+    at most one nonzero entry descend through the zero-extended quotient; A mixing row has a replayable phase-equivalent
+    pair whose images separate; Gaussian lifts independently reproject; primes3mod4 of odd valuation obstruct
+    a lift; Lift nonexistence is distinct from factorization or construction budget refusal.
+  non_role:
+  - The quadratic readout and phase carrier are declared; this does not derive the Born rule
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

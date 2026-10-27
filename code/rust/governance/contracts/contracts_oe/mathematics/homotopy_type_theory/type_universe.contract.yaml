@@ -1,0 +1,65 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:type_universe:v0.1.0
+title: Type Universe Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: type_universe
+  symbol: U_i, where i ≥ 0 is the universe level
+  ascii_symbol: type_universe
+  notation: U_i, where i ≥ 0 is the universe level
+  domain:
+  - 'level: non-negative integer i'
+  - 'cumulative_inclusion: boolean flag for cumulative hierarchy'
+  - 'univalence: optional boolean for univalence axiom'
+  codomain:
+    description: A universe U_i is a type whose inhabitants are types
+requirements:
+  required_structures:
+  - Universe level must be non-negative (level ≥ 0)
+  - If cumulative=true, all types from lower levels are included
+  - Artifact hash is SHA-256 over contract_id, version, level, cumulative, univalent
+laws:
+- 'U_i : U_{i+1} for all i ≥ 0'
+- 'If A : U_i and cumulative=true, then A : U_{i+1}'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Type:v1.0.0 serves as Type artifacts reference a TypeUniverse
+negative_tests:
+- level = -1 must be rejected
+- Non-cumulative claim inconsistent with type references from lower level
+doctrine:
+  summary: 'A TypeUniverse is a type whose elements are themselves types. In HoTT, universes U_i form a hierarchy with U_i : U_{i+1}. The contract defines a universe level, validates cumulative inclusion, and supports type formation rules within the universe.'
+  non_role:
+  - Detailed universe management (polymorphism, constraints) - complex features deferred
+  - Resizing axioms (types shrinking to smaller universes) - handled via FactEnvelope
+  - Detailed integration with Type and Term contracts - WIP
+wip:
+- Detailed universe management (polymorphism, constraints) is complex and deferred
+- Resizing axioms (types can be shrunk to smaller universes) are FactEnvelope topics
+- 'The relationship with Type and Term contracts: Type artifacts reference a TypeUniverse'
+- Contract is minimal to establish basic universe hierarchy
+- Universe polymorphism and constraints require additional design
+- Integration with Type/Term contracts is work in progress

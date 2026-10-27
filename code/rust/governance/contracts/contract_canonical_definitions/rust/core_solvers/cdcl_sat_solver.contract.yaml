@@ -1,0 +1,40 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_solvers:cdcl_sat_solver:v1.0.0
+title: CDCL SAT and CaDiCaL UNSAT Core Solver Contract
+status: retired_source_archived
+crate: core_solvers
+file: crates_rs/core_solvers/src/solver_cdcl.rs
+retired_reason: |
+  Source archived 2026-08-25 with 69 other orphan solver modules: no Python
+  counterpart under engine/crates/solver, and nothing in the workspace
+  imported it. The contract is kept as the record of what the module
+  declared; recover the source with git show <sha>:<file> if it returns.
+role: cdcl_sat_and_unsat_core_solver
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - boolean_satisfiability_solving
+  - cdcl_conflict_driven_clause_learning
+  - unsat_core_extraction
+  - cadical_c_api_bridge
+does_not_own:
+  - semantic_sat_truth_grounding
+  - authority_promotion
+may_call:
+  - core_types
+must_not:
+  - return_sat_without_satisfying_assignment
+  - return_unsat_without_proof_core
+exactness:
+  numeric_mode: exact_boolean_logic
+  exact_certificate_allowed: true
+forbidden_substrings:
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "CDCL"
+required_tests:
+  - test_cdcl_sat_unsat_correctness
+lean_obligations: []

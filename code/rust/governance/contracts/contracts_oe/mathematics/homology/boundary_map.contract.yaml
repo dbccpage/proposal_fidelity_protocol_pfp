@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:boundary_map:v0.1.0
+title: BoundaryMap Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: linear_map
+  symbol: 'd_n: C_n → C_{n-1}'
+  ascii_symbol: boundary_map
+  notation: 'd_n: C_n → C_{n-1}'
+  domain:
+  - 'matrix: BasicMatrix<K>'
+  - 'source_dim: dimension of C_n'
+  - 'target_dim: dimension of C_{n-1}'
+  - 'shift: DegreeShift (BoundaryMinusOne or CoboundaryPlusOne)'
+  codomain:
+    description: Linear map between chain groups C_n and C_{n-1}
+requirements:
+  required_structures:
+  - Target degree must be source_degree - 1
+  - Matrix dimensions must match source and target chain group ranks
+  - Source and target chain groups must be compatible
+  - Coefficient domain must match chain complex coefficient ring
+  - Applying boundary to source chain must yield element in target group
+laws:
+- 'Boundary map lowers degree by 1: d_n: C_n → C_{n-1}'
+- 'd_n is a linear map: d_n(ax + by) = a·d_n(x) + b·d_n(y)'
+- 'Composition of consecutive boundaries is zero: d_n ∘ d_{n+1} = 0'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Matrix application must be deterministic
+  - Same chain input must produce same boundary output hash
+relationships:
+- urn:math:contract:LinearMap:v1.0.0 serves as Base linear map structure
+- urn:math:contract:BasicMatrix:v1.0.0 serves as Matrix representation of boundary operator
+- urn:math:contract:ChainGroup:v0.1.0 serves as Source and target chain groups
+negative_tests:
+- Target degree not n-1 must be rejected
+- Matrix with wrong dimensions must be rejected
+- Mismatched coefficient domains must be rejected
+- Boundary output outside target group must be rejected
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: 'Degree-lowering map d_n: C_n -> C_{n-1} in a chain complex. Boundary maps produce boundaries, define cycles by kernel, and support the chain-complex law d_n ∘ d_{n+1} = 0.'
+  non_role:
+  - Computing homology groups (separate HomologyGroup contract)
+  - Spectral sequences (separate SpectralSequence contract)
+  - Homotopy or derived functors (separate derived category contracts)
+wip:
+- Decide sign conventions for simplicial/cubical/singular boundaries
+- Validators referenced but not yet fully implemented
+- Sign conventions may vary by geometric context (simplicial vs cubical)
+- Future versions may support sparse matrix representations

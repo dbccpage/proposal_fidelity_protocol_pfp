@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:chsh_game_attainment:v0.1.0
+title: Exact CHSH game attainment and interval enclosure
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: chsh_game_attainment
+  symbol: chsh_game_attainment
+  ascii_symbol: chsh_game_attainment
+  notation: Exact CHSH game attainment and interval enclosure
+  domain:
+  - Canonical conductor8 two-qubit Phi+ strategy; arbitrary-precision rational endpoints
+  codomain:
+    description: Declared finite results of core_quantum_physics::tensor_commuting_correlation_frontier; exact
+      and diagnostic routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The Born expectation attains the independently replayed operator bound
+- Winning probability is1/2+sqrt2/4
+- Enclosure endpoints compare against the actual algebraic strategy
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: tensor_commuting_correlation_frontier
+  symbols:
+  - ChshGameCertificate
+  - chsh_game_certificate
+  - certify_chsh_interval
+  required_tests:
+  - measurement_exact_laws::chsh_square_sos_attainment_and_moment_replay_reject_corruption
+negative_tests:
+- measurement_exact_laws::chsh_square_sos_attainment_and_moment_replay_reject_corruption
+doctrine:
+  summary: The Born expectation attains the independently replayed operator bound; Winning probability is1/2+sqrt2/4;
+    Enclosure endpoints compare against the actual algebraic strategy.
+  non_role:
+  - Does not prove infinite correlation hierarchy equality or decidability
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

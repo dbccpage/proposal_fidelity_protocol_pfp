@@ -1,0 +1,95 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:homotopy_colimit:v0.1.0
+title: Homotopy Colimit Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: derived_functor
+  symbol: hocolim F
+  ascii_symbol: homotopy_colimit
+  notation: hocolim F
+  domain:
+  - 'index_category: small_category'
+  - 'target_category: model_category_or_infinity_category'
+  - 'diagram: functor_I_to_C'
+  codomain:
+    description: 'For a diagram F: I → C in a model category, the homotopy colimit
+      hocolim F is the colimit of a cofibrant replacement of F.
+
+      '
+requirements:
+  required_structures:
+  - 'The diagram F: I → C must be a valid functor'
+  - The cofibrant replacement QF must be computed correctly
+  - hocolim F must satisfy the universal property
+  - The artifact hash must be deterministic (SHA-256)
+laws:
+- 'If F and G are weakly equivalent diagrams, then hocolim F and hocolim G are weakly
+  equivalent.
+
+  '
+- 'hocolim F is computed as colim(QF) where QF is a cofibrant replacement of F.
+
+  '
+- 'hocolim F satisfies the universal property of colimits up to weak equivalence.
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cofibrant replacement must be deterministic
+  - Validators must be content-addressed
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Defines index category I and target
+  category C
+- 'urn:math:contract:Functor:v1.0.0 serves as Defines diagram F: I → C'
+- urn:math:contract:ModelCategory:v0.1.0 serves as Provides model category structure
+  and weak equivalences
+- urn:math:contract:Colimit:v1.0.0 serves as Defines ordinary colimits
+negative_tests:
+- Index category I is not a valid small category
+- Diagram F is not well-defined
+- Cofibrant replacement computation fails
+- Universal property is not satisfied
+doctrine:
+  summary: A homotopy colimit is the derived version of a categorical colimit, computed
+    in a model category or ∞-category. It captures the "homotopically correct" colimit
+    that respects weak equivalences.
+  non_role:
+  - Ordinary categorical colimits (use standard category theory)
+  - Homotopy limits (dual construction)
+  - Non-homotopy-invariant constructions
+wip:
+- Homotopy colimits in ∞-categories
+- 'Bousfield-Kan formula: hocolim via simplicial replacement'
+- Reedy model structures and latching objects
+- Contract defines basic structure and validation requirements
+- Implementation pending for ∞-category case
+- Simplicial replacement formulas need expansion
+rust_binding:
+  crate: core_higher_category_theory
+  module: model_category
+  symbols:
+  - ModelCategory
+  - MorphismFactorizations
+  required_tests:
+  - test_model_category_positive_verification

@@ -1,0 +1,58 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:finite_lp_diagnostics:file:v1.0.0
+title: Checked finite floating Lp and quasi-norm diagnostics
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/norms.rs
+layer: functional
+role: approximate_floating_magnitude_diagnostic
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - finite_coordinate_and_positive_order_admission
+  - positive_infinity_as_maximum_magnitude
+  - explicit_norm_versus_quasi_norm_classification
+  - scaled_or_log_domain_magnitude_evaluation
+  - typed_nonfinite_result_refusal
+  - private_finite_approximate_result_construction
+does_not_own:
+  - exact_mathematical_or_quotient_distance_certification
+  - uniform_rounding_error_bound_or_certified_interval
+  - triangle_inequality_status_for_orders_below_one
+  - quantum_state_normalization_or_authentication
+  - legacy_numpy_shape_or_complete_module_API_compatibility
+  - actor_licensing_or_task_completion
+may_call: []
+must_not:
+  - return_NaN_or_infinity_as_a_successful_magnitude
+  - accept_nonfinite_coordinates_at_infinity_order
+  - call_a_quasi_norm_a_norm
+  - overflow_an_unscaled_intermediate_when_the_scaled_result_is_finite
+  - promote_a_floating_diagnostic_to_exact_Phi1_evidence
+exactness:
+  mode: explicitly_approximate_finite_floating
+  exact_constructor_required: false
+  approximate_modes_allowed: true
+forbidden_substrings: []
+required_substrings:
+  - "pub fn lp_norm("
+  - "pub struct LpMagnitude"
+  - "LpKind::QuasiNorm"
+  - "LpNormError::UnrepresentableMagnitude"
+required_tests:
+  - "norms::tests::known_lp_values_preserve_sign_symmetry_order_and_empty_convention"
+  - "norms::tests::quasi_norms_do_not_acquire_triangle_inequality_status"
+  - "norms::tests::scaling_avoids_spurious_overflow_and_underflow_at_order_two"
+  - "norms::tests::log_domain_preserves_representable_roots_small_terms_and_scale_floor"
+  - "norms::tests::invalid_orders_are_refused_even_when_the_vector_is_empty"
+  - "norms::tests::nonfinite_coordinates_are_refused_including_the_infinity_order"
+  - "norms::tests::unrepresentable_results_are_refusals_not_infinities_or_zero"
+  - "norms::tests::single_nonzero_and_zero_vectors_do_not_roundtrip_through_logs"
+  - "norms::tests::positive_rescaling_and_coordinate_permutation_preserve_the_diagnostic"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

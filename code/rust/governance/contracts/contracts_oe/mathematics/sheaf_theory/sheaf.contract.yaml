@@ -1,0 +1,102 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:sheaf:v0.1.0
+title: Sheaf
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: presheaf_with_gluing_axiom
+  symbol: 'F: Open(X)^op → C'
+  ascii_symbol: sheaf
+  notation: 'F: Open(X)^op → C'
+  domain:
+  - 'space: TopologicalSpace X'
+  - 'value_category: Category C (target category)'
+  - 'sections: F(U) for each open set U'
+  - 'restrictions: ρ_{V,U}: F(U) → F(V) for each V ⊆ U'
+  codomain:
+    description: 'A contravariant functor F: Open(X)^op → C from the category of open sets of a topological space X to a value category C (e.g., Set, Ab, Ring, Mod_R), satisfying locality and gluing axioms.
+
+      '
+requirements:
+  required_structures:
+  - space_id must resolve to a valid TopologicalSpace artifact
+  - 'Sections assign an object to each open set, restrictions assign a morphism to each inclusion, and presheaf axioms hold
+
+    '
+  - Sections that agree locally on a cover are equal
+  - Compatible local sections glue to a unique global section
+  - Artifact hash is deterministic and reproducible
+laws:
+- ρ_{U,U} = id_{F(U)} for all open U
+- ρ_{W,U} = ρ_{W,V} ∘ ρ_{V,U} for all W ⊆ V ⊆ U
+- 'For each open U and cover {U_i} of U: if s, t ∈ F(U) satisfy ρ_{U_i,U}(s) = ρ_{U_i,U}(t) for all i, then s = t.
+
+  '
+- 'For each open U and cover {U_i} of U: if s_i ∈ F(U_i) satisfy ρ_{U_i ∩ U_j, U_i}(s_i) = ρ_{U_i ∩ U_j, U_j}(s_j) for all i, j, then there exists a unique s ∈ F(U) with ρ_{U_i,U}(s) = s_i.
+
+  '
+replay:
+  requirements:
+  - Open sets ordered canonically (as in TopologicalSpace)
+  - Restrictions enumerated in canonical order of (V, U) pairs
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:TopologicalSpace:v1.0.0 serves as Provides the underlying topological space and open sets
+- urn:math:contract:Category:v1.0.0 serves as Defines the value category for sections
+negative_tests:
+- space_id does not resolve to TopologicalSpace
+- An open set U has no F(U) assigned
+- Inclusion V ⊆ U has no restriction map ρ_{V,U}
+- Restriction ρ_{U,U} is not the identity
+- ρ_{W,U} ≠ ρ_{W,V} ∘ ρ_{V,U} for some chain W ⊆ V ⊆ U
+- Distinct sections s ≠ t agree on a cover
+- Compatible local sections don't glue to global section
+doctrine:
+  summary: 'A Sheaf is a presheaf that satisfies the gluing axiom: local sections that agree on overlaps can be uniquely glued to a global section. The contract defines a sheaf on a topological space (via its topology of open sets) with values in a category of algebraic objects. It validates the presheaf structure and the sheaf condition (locality and gluing).'
+  non_role:
+  - Sheaf cohomology (separate SheafCohomology contract)
+  - Morphisms of sheaves (natural transformations of functors)
+  - Infinite topological spaces without basis specification
+  - Category-specific morphism validation (e.g., module homomorphisms)
+wip:
+- 'The contract handles finite topological spaces where covers can be enumerated. Infinite spaces require a different approach (e.g., checking on a basis).
+
+  '
+- 'The value category is treated abstractly; category-specific validation (e.g., module homomorphisms) is deferred.
+
+  '
+- 'Sheaf cohomology is a separate contract (SheafCohomology).
+
+  '
+- 'Morphisms of sheaves (natural transformations of the functor) are not part of this contract.
+
+  '
+- 'The constant sheaf, skyscraper sheaf, and structure sheaf are special cases identified via FactEnvelopes.
+
+  '
+- 'Sheafification algorithm assumes finite covers and direct limit computation. Infinite case requires careful colimit construction.
+
+  '
+- 'Future work: sheaf morphisms, sheaf cohomology, derived functors, pushforward and pullback of sheaves.
+
+  '

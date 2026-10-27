@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:rational_circle_nearest_root:v0.1.0
+title: Exact nearest roots in the rational circle
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: rational_circle_nearest_root
+  symbol: rational_circle_nearest_root
+  ascii_symbol: rational_circle_nearest_root
+  notation: Exact nearest roots in the rational circle
+  domain:
+  - Arbitrary signed BigRational phase and positive usize root order
+  codomain:
+    description: Declared finite results of core_number_theory::rational_circle; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Two adjacent residues suffice for the exact geodesic nearest-root minimum
+- Ties choose the smallest residue
+- Distance never exceeds1/(2d)
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: rational_circle
+  symbols:
+  - fractional_part
+  - phase_distance_on_circle
+  - nearest_root_of_unity
+  required_tests:
+  - rational_circle::tests::adjacent_lattice_decision_matches_exhaustion_and_handles_large_orders
+negative_tests:
+- rational_circle::tests::adjacent_lattice_decision_matches_exhaustion_and_handles_large_orders
+doctrine:
+  summary: Two adjacent residues suffice for the exact geodesic nearest-root minimum; Ties choose the smallest
+    residue; Distance never exceeds1/(2d).
+  non_role:
+  - No floating point angle, trigonometric approximation or finite table is an unbounded convergence proof
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

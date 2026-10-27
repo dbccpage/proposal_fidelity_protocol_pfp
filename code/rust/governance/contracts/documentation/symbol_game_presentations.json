@@ -1,0 +1,106 @@
+{
+  "schema": "core.symbol_game.presentation_pins.v1",
+  "authority_effect": "None",
+  "doctrine": [
+    "These are the rewrite presentations this host recognises. A peak verdict",
+    "reached under one of them is reported with its own token (JOINED,",
+    "NOT_JOINABLE). A verdict reached under anything else is reported as",
+    "SELF_CONSISTENT_ONLY, because the rules arrived with the claim and the",
+    "host has never vetted them.",
+    "",
+    "This file is compiled into the host with include_str!. It is host-side by",
+    "construction: nothing in a request payload can reach it, and",
+    "PresentationPins derives no Deserialize, so a payload cannot be parsed",
+    "into a pin set either.",
+    "",
+    "A pin is not an endorsement of any claim made under the presentation. It",
+    "says the host recognises the rewriting SYSTEM, so that a verdict about it",
+    "is a verdict about something both parties named in advance.",
+    "",
+    "Adding a pin is a governance act. Pin only a system this estate actually",
+    "declares and can defend; an invented pin makes the HostPinned branch look",
+    "exercised while vouching for nothing."
+  ],
+  "pins": [
+    {
+      "name": "c5",
+      "note": "The period-5 successor cycle on the glyph-calculus carrier. Named `c5` because that is the name the corpus's own rows use -- `PROVE period(c5) = 5` -- and a registry whose keys do not match the names rows reference is a registry nothing can look anything up in. The name is the lookup key for `presentation_ref` and for the `period(NAME)` decider, so renaming it is a wire-visible change, not cosmetic. This is the system the Symbol Game corpus's own claims are about -- 'PROVE period(c5) = 5' and 'LAND successor^2(alpha) = gamma' are statements about exactly these five rules. Two properties worth stating because they are the reason it is a useful pin rather than a decorative one. It is NOT terminating: successor cycles forever, so no length argument applies and is_length_reducing is false. Its reachable set from any carrier symbol is nevertheless the whole carrier, which closes, so the host can decide joinability over it -- which is the closure-not-termination doctrine this module rests on, exercised on a real system. And every rule has a single-symbol left-hand side, so no two rules overlap and the presentation has no critical pairs at all; by the critical pair lemma it is therefore locally confluent, and NOT_JOINABLE can never be emitted under it.",
+      "presentation": {
+        "signature": [
+          "α",
+          "β",
+          "γ",
+          "δ",
+          "ε"
+        ],
+        "rules": [
+          {
+            "name": "succ_alpha",
+            "lhs": "α",
+            "rhs": "β"
+          },
+          {
+            "name": "succ_beta",
+            "lhs": "β",
+            "rhs": "γ"
+          },
+          {
+            "name": "succ_gamma",
+            "lhs": "γ",
+            "rhs": "δ"
+          },
+          {
+            "name": "succ_delta",
+            "lhs": "δ",
+            "rhs": "ε"
+          },
+          {
+            "name": "succ_epsilon",
+            "lhs": "ε",
+            "rhs": "α"
+          }
+        ]
+      }
+    },
+    {
+      "name": "c6",
+      "note": "A NEGATIVE CONTROL, and the only pin here that is not a system the corpus's own claims are about. It exists to falsify a specific wrong implementation, and that is stated rather than implied. Examiner's g(5) = 6: on five symbols the maximum order of a permutation is six, realised by a 2-cycle beside a 3-cycle. This is that permutation -- alpha <-> beta, and gamma -> delta -> epsilon -> gamma -- so its period is lcm(2, 3) = 6 while its signature has five members. Any checker that reports the SIZE of the signature returns 5 and is wrong, and c5 cannot detect that because for a single cycle the two numbers coincide. It is a real permutation system, so every verdict the host reaches about it is sound; pinning it vouches for nothing false. What it does NOT do is describe anything the Symbol Game corpus asserts, which is why the distinction from c5 is written here. A second pin also sharpens an existing fence: with two entries, the 'just use the only pinned presentation' shortcut for successor^k is no longer merely unsound in principle but ambiguous in fact.",
+      "presentation": {
+        "signature": [
+          "α",
+          "β",
+          "γ",
+          "δ",
+          "ε"
+        ],
+        "rules": [
+          {
+            "name": "swap_alpha",
+            "lhs": "α",
+            "rhs": "β"
+          },
+          {
+            "name": "swap_beta",
+            "lhs": "β",
+            "rhs": "α"
+          },
+          {
+            "name": "rot_gamma",
+            "lhs": "γ",
+            "rhs": "δ"
+          },
+          {
+            "name": "rot_delta",
+            "lhs": "δ",
+            "rhs": "ε"
+          },
+          {
+            "name": "rot_epsilon",
+            "lhs": "ε",
+            "rhs": "γ"
+          }
+        ]
+      }
+    }
+  ]
+}

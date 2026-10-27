@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bounded_matrix_braid_images:v0.1.0
+title: Exact Bounded Matrix Braid Images
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: bounded_matrix_braid_images
+  symbol: bounded_matrix_braid_images
+  ascii_symbol: bounded_matrix_braid_images
+  notation: Exact Bounded Matrix Braid Images
+  domain:
+  - Nonempty exact invertible square generators of one size; a caller group-order bound and explicit allocation/work
+    policy.
+  codomain:
+    description: Declared finite results of core_fusion_categories::braid_group; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- A finite breadth-first closure of admitted invertible generators is a group, with exact stored elements and
+  order.
+- Projective membership binds the square carrier dimension and canonicalizes only a nonzero matrix.
+- Storage and scalar-work are charged throughout enumeration; exhausting an order bound yields ExceedsBound.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_fusion_categories
+  module: braid_group
+  symbols:
+  - FiniteMatrixGroup
+  - ClosureOutcome
+  - group_closure
+  - group_closure_with_limits
+  - braid_relation_defects_with_limits
+  required_tests:
+  - closure_counts_the_klein_four_and_dihedral_groups_exactly
+  - closure_refuses_singular_and_empty_generators_and_binds_membership_shape
+  - closure_and_relation_replay_enforce_aggregate_resource_limits
+negative_tests:
+- Singular or empty generators cannot become a finite group; zero generators cannot become projective elements.
+- Wrong-shape matrices with the same flattened entries are absent.
+- A zero order bound and tight aggregate limits are honored; ExceedsBound does not prove infinity or density.
+doctrine:
+  summary: A finite breadth-first closure of admitted invertible generators is a group, with exact stored elements
+    and order.; Projective membership binds the square carrier dimension and canonicalizes only a nonzero matrix.;
+    Storage and scalar-work are charged throughout enumeration; exhausting an order bound yields ExceedsBound..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - Resource refusal does not assert failure of a mathematical law or infiniteness of a closure.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

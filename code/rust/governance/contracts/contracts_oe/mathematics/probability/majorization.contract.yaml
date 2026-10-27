@@ -1,0 +1,105 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:majorization:v0.1.0
+title: Majorization Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_preorder_on_probability_vectors
+  symbol: 'p ≻ q iff ∑_(i≤k) p↓_i ≥ ∑_(i≤k) q↓_i for every k (both of total 1)'
+  ascii_symbol: majorization
+  notation: 'p↓ is the non-increasing rearrangement; Equal, PMajorizesQ, QMajorizesP or Incomparable; T = l I + (1 - l) Q with Q a transposition and 0 ≤ l ≤ 1'
+  domain:
+  - 'vectors: nonempty lists of exact rationals, each ≥ 0, summing to exactly 1, stored sorted non-increasing'
+  - 'comparison of vectors of different lengths pads the shorter with zeros'
+  codomain:
+    description: 'The majorization preorder on probability vectors decided exactly by partial sums, with its four outcomes, the thermal ladder p_k proportional to r^k, Nielsen''s criterion as a pure statement on two vectors, and the constructive Hardy-Littlewood-Polya theorem: when p majorizes q there is a chain of at most n - 1 T-transforms carrying p↓ to q↓, whose product is a doubly stochastic map M with pM = q.
+
+      '
+requirements:
+  required_structures:
+  - 'Entries are nonnegative exact rationals summing to exactly one; the constructor sorts, so the order of the input does not matter'
+  - 'A thermal ladder needs a positive ratio, at least one level and at most a declared number of levels'
+  - 'A T-transform needs two distinct coordinates inside the vector and a weight in [0, 1]'
+  - 'A T-transform chain exists only when the first vector majorizes the second, and is refused otherwise'
+laws:
+- 'Majorization is a preorder: reflexive and transitive; p and q majorize each other exactly when they are permutations of one another'
+- 'The partial-sum test agrees with two independent definitions: every k-subset of q sums to at most the k largest entries of p, and ∑ (p_i - c)_+ ≥ ∑ (q_i - c)_+ at every breakpoint c'
+- 'A point mass majorizes every vector and the uniform vector is majorized by every vector'
+- 'The example (7/10, 3/20, 3/20) against (3/5, 7/20, 1/20) is incomparable: 7/10 > 3/5 but 17/20 < 19/20'
+- 'Thermal ladder: r = 1/2 with 4 levels is (8, 4, 2, 1)/15, ratio above one is the reversed ladder, and for r1 < r2 ≤ 1 the ladder of r1 strictly majorizes the ladder of r2'
+- 'Nielsen criterion as a pure statement: locc_convertible(source, target) holds exactly when target majorizes source, so conversion goes from less ordered to more ordered spectra only, and incomparable spectra convert in neither direction'
+- 'Hardy-Littlewood-Polya: for p ≻ q the chain has at most n - 1 transforms with 0 < l < 1, applying it to p↓ gives q↓ exactly, and its product is doubly stochastic'
+- 'Conversely every doubly stochastic map sends a vector to one it is majorized by, and a stochastic map that is not doubly stochastic can send the uniform vector to a vector that majorizes it'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All arithmetic is exact in BigRational
+  - The T-transform chain is built by the fixed rule of the largest index above and the smallest index below
+relationships:
+- urn:core:math:finite_probability_simplex:v0.1.0 serves as A simplex sorted is a probability vector
+- urn:core:math:stochastic_map:v0.1.0 serves as T-transform chains are doubly stochastic stochastic maps
+- urn:core:math:log_linear_entropy_form:v0.1.0 serves as Entropy is strictly Schur-concave for this order
+rust_binding:
+  crate: core_finite_probability
+  module: majorization
+  symbols:
+  - ProbabilityVector
+  - Majorization
+  - MajorizationError
+  - compare
+  - majorizes
+  - locc_convertible
+  - thermal_ladder
+  - TTransform
+  - t_transform_chain
+  - apply_chain
+  - doubly_stochastic_transform
+  - MAX_LADDER_LEVELS
+  required_tests:
+  - construction_sorts_and_refuses_empty_negative_and_unnormalised_input
+  - a_thermal_ladder_refuses_a_non_positive_ratio_no_levels_and_too_many_levels
+  - a_t_transform_moves_mass_between_two_coordinates_and_refuses_bad_arguments
+  - the_chain_carries_p_to_q_exactly_with_at_most_n_minus_one_strict_transforms
+  - majorization_is_a_preorder_antisymmetric_exactly_up_to_permutation
+  - the_partial_sum_test_agrees_with_the_subset_and_the_hinge_definitions
+  - a_point_mass_majorizes_everything_and_the_uniform_vector_is_majorized_by_everything
+  - the_four_outcomes_each_occur_and_the_documented_example_is_incomparable
+  - a_permutation_of_the_entries_does_not_change_the_vector_or_any_comparison
+  - vectors_of_different_lengths_compare_by_padding_with_zeros
+  - nielsen_conversion_goes_from_more_to_less_entangled_spectra_only
+  - the_thermal_ladder_has_the_documented_values_and_the_ratio_order_is_the_majorization_order
+  - a_doubly_stochastic_image_is_always_majorized_by_its_source_but_a_general_map_need_not_be
+  - entropy_is_strictly_schur_concave_on_every_grid_pair
+negative_tests:
+- An empty vector, a negative entry or a sum other than exactly one must be refused
+- A thermal ladder with a non-positive ratio, zero levels or more levels than the declared maximum must be refused
+- A T-transform with equal coordinates, a weight outside [0, 1] or a coordinate outside the vector must be refused
+- A T-transform chain between vectors where the first does not majorize the second must be refused
+doctrine:
+  summary: 'Majorization is decided exactly by partial sums, and the decision is cross-checked against the subset definition and the convex hinge-function definition. The Hardy-Littlewood-Polya direction is constructive and exact: the chain of T-transforms is built, applied to reproduce the target exactly, and multiplied into a doubly stochastic map, while the converse is checked on enumerated doubly stochastic maps with a negative control. Nielsen''s criterion is stated only as majorization of two probability vectors.'
+  non_role:
+  - Any claim about entanglement, LOCC protocols or thermodynamics
+  - Weak (sub)majorization of vectors that do not sum to one
+  - Infinite vectors or continuous majorization
+wip:
+- 'The real-valued Schur-concavity statement is certified for the Shannon entropy form on enumerated pairs, not proved for all Schur-concave functions'
+- 'Thermal ladders with ratio above one are the reversed ladder; no separate Hamiltonian level structure is represented'

@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:binary_spread_mub_construction:v0.1.0
+title: Characteristic-two spread MUB projectors
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: binary_spread_mub_construction
+  symbol: binary_spread_mub_construction
+  ascii_symbol: binary_spread_mub_construction
+  notation: Characteristic-two spread MUB projectors
+  domain:
+  - Declared GF(2^k) dimension, finite entry budget; exact Cyc24 projector representation
+  codomain:
+    description: Declared finite results of core_quantum_physics::mub::char_two; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Joint spectral projectors of each commuting Pauli spread resolve identity
+- The disjoint spread produces q+1 mutually unbiased bases
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: mub::char_two
+  symbols:
+  - build_char_two_mub
+  - build_char_two_mub_d2
+  - build_char_two_mub_d4
+  required_tests:
+  - measurement_exact_laws::prime_power_mubs_replay_projectors_two_design_and_inversion
+negative_tests:
+- measurement_exact_laws::prime_power_mubs_replay_projectors_two_design_and_inversion
+doctrine:
+  summary: Joint spectral projectors of each commuting Pauli spread resolve identity; The disjoint spread produces
+    q+1 mutually unbiased bases.
+  non_role:
+  - Does not extend a fixed finite field construction beyond its declared budget
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

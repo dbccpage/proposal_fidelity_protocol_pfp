@@ -1,0 +1,96 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:filesystem_adapter:v1.0.0
+title: Filesystem Host Adapter
+kind: host_contract
+status: proposed
+layer: 09_host
+role: FileSystemAdapter
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+    proof_obligations:
+      - id: FS-INV-001
+        statement: Every operation is scoped to an exact configured root and a matching host capability.
+        verification_status: open
+      - id: FS-INV-002
+        statement: Static symlink, junction, dangling redirect, and lexical path-escape checks fail closed.
+        verification_status: open
+      - id: FS-INV-003
+        statement: Atomic write claims are limited to the declared filesystem and platform profile.
+        verification_status: open
+      - id: FS-INV-004
+        statement: Short reads and writes are handled by checked bounded loops rather than one-call assumptions.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - FILESYSTEM_ATOMICITY_REFUSED
+      - FILESYSTEM_BOUNDS_REFUSED
+      - FILESYSTEM_REDIRECT_REFUSED
+      - FILESYSTEM_SHORT_IO_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: scoped_path_request
+      type: urn:core:oeos:type:scoped_path_request:v1.0.0
+      required: true
+  outputs:
+    - name: filesystem_operation_result
+      type: urn:core:oeos:type:filesystem_result:v1.0.0
+      required: true
+  typed_refusals:
+    - FILESYSTEM_ATOMICITY_REFUSED
+    - FILESYSTEM_BOUNDS_REFUSED
+    - FILESYSTEM_REDIRECT_REFUSED
+    - FILESYSTEM_SHORT_IO_REFUSED
+  platform_requirements:
+    - profile: windows_filesystem
+      requirements:
+        - junction_and_reparse_point_static_checks
+        - replace_semantics_declared
+        - windows_acl_profile_declared
+      verification_status: requirements_only
+    - profile: posix_filesystem
+      requirements:
+        - symlink_static_checks
+        - rename_and_fsync_semantics_declared
+        - posix_mode_profile_declared
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares bounded filesystem effects beneath inward-facing ports without claiming universal atomicity.
+  non_role:
+    - path_policy_authorship
+    - domain_file_interpretation
+    - trace_authority
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - static_redirect_checks_do_not_establish_general_toctou_safety
+    - atomicity_is_not_claimed_across_filesystems_or_platforms
+  invariants:
+    - path_scope_is_checked_before_each_operation
+    - partial_io_never_returns_as_complete
+  allowed_operations:
+    - read_bounded_bytes
+    - write_bytes_under_declared_atomic_profile
+    - create_scoped_directory
+  forbidden_operations:
+    - escape_configured_root
+    - follow_undeclared_redirect
+    - report_partial_write_as_complete

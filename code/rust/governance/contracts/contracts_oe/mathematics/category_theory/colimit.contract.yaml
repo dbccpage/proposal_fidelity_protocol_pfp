@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:colimit:v0.1.0
+title: Colimit Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: universal_cocone
+  symbol: colim D or lim→ D
+  ascii_symbol: colimit
+  notation: colim D or lim→ D
+  domain:
+  - 'diagram: Functor D: J → C'
+  - 'colimit_object: Object L in C'
+  - 'coprojections: Family {ι_j: D(j) → L | j ∈ Ob(J)}'
+  codomain:
+    description: 'A colimit consists of: - A diagram D: J → C (source functor) - An object L in C (the colimit object) - For each j ∈ Ob(J), a morphism ι_j: D(j) → L (coprojections)
+
+      '
+requirements:
+  required_structures:
+  - 'The diagram D: J → C must be a valid functor'
+  - L must be an object in category C
+  - Each ι_j must be a morphism D(j) → L in C
+  - 'For all morphisms f: j → k in J, ι_k ∘ D(f) = ι_j'
+  - Any cocone factors uniquely through L
+laws:
+- 'For every morphism f: j → k in J, ι_k ∘ D(f) = ι_j'
+- 'For any cocone (M, μ_j: D(j) → M), there exists a unique morphism u: L → M such that u ∘ ι_j = μ_j for all j ∈ Ob(J)
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Coprojections indexed by J's objects in canonical order
+  - Validators and computation functions are content-addressed
+relationships:
+- 'urn:math:contract:Functor:v1.0.0 serves as Defines the diagram D: J → C'
+- urn:math:contract:Category:v1.0.0 serves as Provides the categories J and C
+- urn:math:contract:Object:v1.0.0 serves as Defines the colimit object L
+- urn:math:contract:Morphism:v1.0.0 serves as Defines the coprojection morphisms ι_j
+negative_tests:
+- diagram_id does not resolve
+- colimit_object_id does not resolve
+- ι_j does not have codomain L
+- 'ι_k ∘ D(f) ≠ ι_j for some f: j → k'
+- Another cocone cannot factor through L uniquely
+doctrine:
+  summary: 'A Colimit of a diagram D: J → C is a universal cocone under D. It consists of an object L (the colimit) and morphisms ι_j: D(j) → L (the coprojections) such that any other cocone factors uniquely through L. The contract validates the cocone and universality.'
+  non_role:
+  - Does not provide specific colimit constructions (coproduct, pushout, etc.)
+  - Does not compute colimits automatically, only validates given cocones
+  - Does not handle large colimits (requires small diagrams)
+wip:
+- Dual to Limit; same verification issues apply
+- How to efficiently verify universal property for large cocones?
+- Should coproducts, initial objects, coequalizers, pushouts be separate contracts or special cases?
+- How to handle filtered colimits with special properties in specific categories?
+- Performance considerations for colimit computations in large diagrams
+- Coproducts, initial objects, coequalizers, pushouts are special cases of colimits
+- Filtered colimits have special properties in many categories (e.g., commute with finite limits in Set)
+- Universal property verification may require computational oracle for general categories
+- Consider caching factorization results for repeated cocone queries
+rust_binding:
+  crate: core_category_theory
+  module: limits_colimits
+  symbols:
+    - Colimit
+  required_tests:
+    - validate_ok
+    - validate_rejects_bad_cocone

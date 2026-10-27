@@ -1,0 +1,92 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:adjunction:v0.1.0
+title: Adjunction Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: adjunction
+  symbol: F ⊣ G
+  ascii_symbol: adjunction
+  notation: F ⊣ G
+  domain:
+  - 'left_functor: functor F: C → D'
+  - 'right_functor: functor G: D → C'
+  - 'unit: natural_transformation η: Id_C ⇒ GF'
+  - 'counit: natural_transformation ε: FG ⇒ Id_D'
+  codomain:
+    description: 'Two functors F: C → D and G: D → C with natural transformations η and ε'
+requirements:
+  required_structures:
+  - 'F: C → D and G: D → C must connect the same categories'
+  - η must be a natural transformation Id_C ⇒ GF
+  - ε must be a natural transformation FG ⇒ Id_D
+  - ε_{F(A)} ∘ F(η_A) = id_{F(A)} for all A in C
+  - G(ε_B) ∘ η_{G(B)} = id_{G(B)} for all B in D
+laws:
+- 'For each object A in C: ε_{F(A)} ∘ F(η_A) = id_{F(A)}'
+- 'For each object B in D: G(ε_B) ∘ η_{G(B)} = id_{G(B)}'
+- 'η is a natural transformation: Id_C ⇒ GF'
+- 'ε is a natural transformation: FG ⇒ Id_D'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Functors and natural transformations are content-addressed
+  - Composition order is fully determined
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Source and target categories C and D
+- urn:math:contract:Functor:v1.0.0 serves as Left adjoint F and right adjoint G
+- urn:math:contract:NaturalTransformation:v1.0.0 serves as Unit η and counit ε
+negative_tests:
+- left_functor_id does not resolve
+- F and G do not connect the same categories
+- η is not Id_C ⇒ GF
+- ε is not FG ⇒ Id_D
+- ε_{F(A)} ∘ F(η_A) ≠ id_{F(A)}
+- G(ε_B) ∘ η_{G(B)} ≠ id_{G(B)}
+doctrine:
+  binding_review_20261014: "The binding is the declared finite category/functor validator, not an unrestricted adjunction theorem. These symbols are source-checked; this review does not rerun the category behavior suite."
+  summary: 'An Adjunction between categories C and D consists of functors F: C → D (left adjoint) and G: D → C (right adjoint) with a natural bijection Hom_D(F(A), B) ≅ Hom_C(A, G(B)). The contract validates the adjunction via unit/counit or hom-set bijection.'
+  non_role:
+  - Multi-adjunctions (adjoint triples, quadruples)
+  - Enriched or bicategorical adjunctions
+  - Homotopy-coherent adjunctions (∞-categories)
+  - Proof of adjunction from initial/terminal objects
+wip:
+- How to support the hom-set bijection definition (equivalent to unit/counit)?
+- What FactEnvelope types should be standardized for adjoint equivalences?
+- How to encode monad algebras and Eilenberg-Moore categories?
+- Should we support adjoint functors between bicategories?
+- Currently targets ordinary adjunctions between 1-categories
+- Adjoint equivalences (both η and ε are isomorphisms) are important special case
+- Monads arise from adjunctions via T = GF - derive_monad method implemented
+- Comonads arise from adjunctions via D = FG - derive_comonad method implemented
+- Kleisli composition for derived monads is implemented
+- Validation includes triangle identities, functor existence, and naturality
+rust_binding:
+  crate: core_category_theory
+  module: legacy_adjunction
+  symbols:
+  - DeclaredFiniteAdjunction
+  - validate_declared_adjunction
+  required_tests:
+  - left_triangle_trivial
+  - missing_unit_is_violation

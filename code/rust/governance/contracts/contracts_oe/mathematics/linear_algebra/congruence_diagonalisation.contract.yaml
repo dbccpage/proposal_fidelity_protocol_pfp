@@ -1,0 +1,101 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:congruence_diagonalisation:v0.1.0
+title: Congruence Diagonalisation Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: matrix_factorisation_certificate
+  symbol: 'S* A S = D with S invertible, D diagonal, S* = Sᵀ (symmetric A) or S† (Hermitian A)'
+  ascii_symbol: congruence_diagonalisation
+  notation: 'A = Aᵀ or A = A† over a field F with 2 != 0'
+  domain:
+  - 'matrix: square symmetric BasicMatrix<F>, or Hermitian over an Involution field'
+  - 'field: F with one + one != 0 (characteristic not 2)'
+  - 'budgets: OperationLimits { max_elements, max_scalar_ops }'
+  codomain:
+    description: 'A CongruenceDiagonalisation: an invertible change of basis S of determinant ±1 and the diagonal D with S* A S = diag(D) exactly, together with verifiers that replay the certificate against the matrix without trusting the producer. The number of zero entries of D is n minus the rank of A.
+
+      '
+requirements:
+  required_structures:
+  - 'Input must be symmetric (Hermitian for the Hermitian form); the first offending position is reported as NotSymmetric or NotHermitian'
+  - 'Characteristic 2 is refused as CharacteristicTwo'
+  - 'Each step is a congruence M ← E* M E tracked as S ← S E: a symmetric permutation, the shear e_i ↦ e_i + c e_j with c = M[i][j]⁻¹ when every remaining diagonal entry is zero, or the elimination e_l ↦ e_l − μ_l e_k with μ_l = M[k][l] · M[k][k]⁻¹'
+  - 'The shear uses the inverse of the off-diagonal entry so that the new diagonal entry is 1 + conj 1 = 2 even when the entry is purely imaginary'
+  - 'If the trailing block is entirely zero the remaining diagonal entries are zero'
+  - 'verify_symmetric and verify_hermitian check that S is invertible, that S* A S equals diag(D) entry for entry, and the dimensions'
+  - 'The worst-case cost charged by the budget is 4n³ + 12n² scalar calls and n² elements'
+laws:
+- 'S* A S = D entry for entry, with D diagonal and S invertible (det S = ±1 for every certificate this module produces)'
+- 'the diagonal entries of a Hermitian form are fixed by the involution'
+- 'the number of zero diagonal entries equals n − rank A'
+- 'replaying the certificate against the original matrix succeeds; changing one diagonal entry, replacing S by a singular matrix, or using a wrong shape is rejected'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'The pivot is the first nonzero diagonal entry at or after the current index; otherwise the first nonzero off-diagonal entry of the trailing block in row-major order'
+  - 'The certificate replays as a product of three exact matrices with no reference to the algorithm'
+relationships:
+- urn:core:math:bilinear_form:v0.1.0 serves as the symmetric bilinear and Hermitian forms being diagonalised
+- urn:core:math:involution_adjoint:v0.1.0 serves as the adjoint used by the Hermitian form
+- urn:core:math:field_elimination:v0.1.0 serves as the determinant and invertibility checks of the transform
+- urn:core:math:ordered_field_ldlt:v0.1.0 is served by this contract (inertia reads the signs of D)
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::congruence
+  symbols:
+  - CongruenceDiagonalisation
+  - symmetric_congruence_diagonalisation
+  - hermitian_congruence_diagonalisation
+  # One test per mechanically checkable negative_test, in declaration order.
+  required_tests:
+  - non_symmetric_and_non_hermitian_inputs_are_refused_with_their_first_offending_entry
+  - characteristic_two_is_refused
+  - a_non_field_scalar_is_refused_by_the_diagonalisation
+  - tampered_certificates_are_rejected
+  - congruence_budget_boundary_is_inclusive
+  # Positive witnesses of the laws above.
+  # - symmetric_certificates_replay_and_the_transform_is_unimodular
+  # - hermitian_certificates_replay
+  # - a_zero_diagonal_is_handled_by_the_shear
+  # - the_hermitian_shear_works_for_imaginary_off_diagonal_entries
+  # - the_number_of_zero_diagonal_entries_is_the_corank
+  # - diagonalisation_needs_only_characteristic_not_two
+  # - hermitian_diagonal_entries_are_real
+negative_tests:
+- a matrix that is not symmetric must be refused as NotSymmetric naming the first offending position, and one that is not Hermitian as NotHermitian
+- a field of characteristic 2 must be refused as CharacteristicTwo
+- a scalar with a nonzero element that has no inverse must be refused as ScalarContract, not divided by
+- a certificate with a changed diagonal entry, a singular transform or a wrong shape must be rejected by the verifier
+- an operation whose documented worst-case bound exceeds the budget must be refused before any scalar work, and a bound equal to the limit must be accepted
+doctrine:
+  summary: 'Diagonalisation by congruence of a symmetric or Hermitian matrix over any field in which 2 is invertible, producing a replayable certificate S* A S = D. No ordering is used: over an ordered field the signs of D give the inertia (see ordered_field_ldlt), over a finite field of odd characteristic the certificate still decides the rank and the discriminant class. The certificate can be checked by anyone with three exact matrix products.'
+  non_role:
+  - Orthogonal or unitary diagonalisation (congruence changes the basis but does not preserve lengths)
+  - Eigenvalues (the diagonal of D is not the spectrum)
+  - Fields of characteristic 2, where symmetric forms may be alternating and have no diagonalisation
+  - Numerical stability (there is none to manage over an exact field)
+wip:
+- No Lean statement of Sylvester-type diagonalisation exists; the YAML to Lean to Rust chain for this contract is open
+- Pivoting chooses the first nonzero diagonal entry and does not minimise coefficient growth
+- The Hermitian form over a field of characteristic 2 (for example GF(4)) is refused although a different construction could handle it
+- Certificates for semi-definite forms over non-ordered fields carry no positivity claim; ordering is the job of ordered_field_ldlt

@@ -1,0 +1,187 @@
+[
+  {
+    "name": "unicode observation digest",
+    "request": {
+      "operation": "observation",
+      "observation": {
+        "schema": "core.provider.model-pricing-observation.v1",
+        "model_deployment_id": "deployment-λ",
+        "input_microusd_per_mtok": 1000001,
+        "output_microusd_per_mtok": 2000000,
+        "effective_from_utc": "2026-01-01T00:00:00.000000Z",
+        "observed_at_utc": "2026-01-02T00:00:00.000000Z",
+        "stale_after_utc": "2026-02-01T00:00:00.000000Z",
+        "evidence_digest": "sha256:7a55a248132096023b07269ad954c402877bce681efbf404c6141ab0cb06be43",
+        "authority_effect": "None"
+      }
+    },
+    "outcome": {
+      "observation": {
+        "schema": "core.provider.model-pricing-observation.v1",
+        "model_deployment_id": "deployment-λ",
+        "input_microusd_per_mtok": 1000001,
+        "output_microusd_per_mtok": 2000000,
+        "effective_from_utc": "2026-01-01T00:00:00.000000Z",
+        "observed_at_utc": "2026-01-02T00:00:00.000000Z",
+        "stale_after_utc": "2026-02-01T00:00:00.000000Z",
+        "evidence_digest": "sha256:7a55a248132096023b07269ad954c402877bce681efbf404c6141ab0cb06be43",
+        "authority_effect": "None"
+      },
+      "observation_digest": "sha256:1fbb3568fd32928234e2e8a29f16465e937781061bee588101cf1497cdffb74c"
+    }
+  },
+  {
+    "name": "exact leg cost 1",
+    "request": {
+      "operation": "leg_cost",
+      "tokens": 1,
+      "price": 1
+    },
+    "outcome": 1
+  },
+  {
+    "name": "exact leg cost 0",
+    "request": {
+      "operation": "leg_cost",
+      "tokens": 0,
+      "price": 9
+    },
+    "outcome": 0
+  },
+  {
+    "name": "exact leg cost 100000000000000000000000000000000000",
+    "request": {
+      "operation": "leg_cost",
+      "tokens": 100000000000000000000000000000000000,
+      "price": 1000000000000000000000000000
+    },
+    "outcome": 100000000000000000000000000000000000000000000000000000000
+  },
+  {
+    "name": "dated quote 1",
+    "request": {
+      "operation": "quote",
+      "observations": [
+        {
+          "schema": "core.provider.model-pricing-observation.v1",
+          "model_deployment_id": "deployment-λ",
+          "input_microusd_per_mtok": 1000001,
+          "output_microusd_per_mtok": 2000000,
+          "effective_from_utc": "2026-01-01T00:00:00.000000Z",
+          "observed_at_utc": "2026-01-02T00:00:00.000000Z",
+          "stale_after_utc": "2026-02-01T00:00:00.000000Z",
+          "evidence_digest": "sha256:7a55a248132096023b07269ad954c402877bce681efbf404c6141ab0cb06be43",
+          "authority_effect": "None"
+        }
+      ],
+      "model": "deployment-λ",
+      "input_tokens": 1,
+      "output_tokens": 3,
+      "at_utc": "2026-01-02T00:00:00.000000Z"
+    },
+    "outcome": {
+      "observation": {
+        "schema": "core.provider.model-pricing-observation.v1",
+        "model_deployment_id": "deployment-λ",
+        "input_microusd_per_mtok": 1000001,
+        "output_microusd_per_mtok": 2000000,
+        "effective_from_utc": "2026-01-01T00:00:00.000000Z",
+        "observed_at_utc": "2026-01-02T00:00:00.000000Z",
+        "stale_after_utc": "2026-02-01T00:00:00.000000Z",
+        "evidence_digest": "sha256:7a55a248132096023b07269ad954c402877bce681efbf404c6141ab0cb06be43",
+        "authority_effect": "None"
+      },
+      "cost_microusd": 8
+    }
+  },
+  {
+    "name": "dated quote 10000000000000000000000000000",
+    "request": {
+      "operation": "quote",
+      "observations": [
+        {
+          "schema": "core.provider.model-pricing-observation.v1",
+          "model_deployment_id": "deployment-λ",
+          "input_microusd_per_mtok": 1000001,
+          "output_microusd_per_mtok": 2000000,
+          "effective_from_utc": "2026-01-01T00:00:00.000000Z",
+          "observed_at_utc": "2026-01-02T00:00:00.000000Z",
+          "stale_after_utc": "2026-02-01T00:00:00.000000Z",
+          "evidence_digest": "sha256:7a55a248132096023b07269ad954c402877bce681efbf404c6141ab0cb06be43",
+          "authority_effect": "None"
+        }
+      ],
+      "model": "deployment-λ",
+      "input_tokens": 10000000000000000000000000000,
+      "output_tokens": 3,
+      "at_utc": "2026-01-02T00:00:00.000000Z"
+    },
+    "outcome": {
+      "observation": {
+        "schema": "core.provider.model-pricing-observation.v1",
+        "model_deployment_id": "deployment-λ",
+        "input_microusd_per_mtok": 1000001,
+        "output_microusd_per_mtok": 2000000,
+        "effective_from_utc": "2026-01-01T00:00:00.000000Z",
+        "observed_at_utc": "2026-01-02T00:00:00.000000Z",
+        "stale_after_utc": "2026-02-01T00:00:00.000000Z",
+        "evidence_digest": "sha256:7a55a248132096023b07269ad954c402877bce681efbf404c6141ab0cb06be43",
+        "authority_effect": "None"
+      },
+      "cost_microusd": 10000010000000000000000000006
+    }
+  },
+  {
+    "name": "debit cumulative",
+    "request": {
+      "operation": "debit",
+      "limit_microusd": 10000000000000000000000000000000000000000,
+      "spent_microusd": 5,
+      "cost_microusd": 7
+    },
+    "outcome": {
+      "spent_microusd": 12,
+      "remaining_microusd": 9999999999999999999999999999999999999988
+    }
+  },
+  {
+    "name": "receipt supplied quote",
+    "request": {
+      "operation": "receipt",
+      "observation": {
+        "schema": "core.provider.model-pricing-observation.v1",
+        "model_deployment_id": "deployment-λ",
+        "input_microusd_per_mtok": 1000001,
+        "output_microusd_per_mtok": 2000000,
+        "effective_from_utc": "2026-01-01T00:00:00.000000Z",
+        "observed_at_utc": "2026-01-02T00:00:00.000000Z",
+        "stale_after_utc": "2026-02-01T00:00:00.000000Z",
+        "evidence_digest": "sha256:7a55a248132096023b07269ad954c402877bce681efbf404c6141ab0cb06be43",
+        "authority_effect": "None"
+      },
+      "model": "deployment-λ",
+      "cost_microusd": 13,
+      "limit_microusd": 10000000000000000000000000000000000000000,
+      "spent_microusd": 12
+    },
+    "outcome": {
+      "model": "deployment-λ",
+      "cost_microusd": 13,
+      "spent_after_microusd": 25,
+      "limit_microusd": 10000000000000000000000000000000000000000,
+      "pricing_observation_digest": "sha256:1fbb3568fd32928234e2e8a29f16465e937781061bee588101cf1497cdffb74c",
+      "pricing_effective_from_utc": "2026-01-01T00:00:00.000000Z",
+      "pricing_observed_at_utc": "2026-01-02T00:00:00.000000Z",
+      "pricing_stale_after_utc": "2026-02-01T00:00:00.000000Z",
+      "authority_effect": "None"
+    }
+  },
+  {
+    "name": "payload estimate",
+    "request": {
+      "operation": "estimate",
+      "payload_bytes": 7
+    },
+    "outcome": 11
+  }
+]

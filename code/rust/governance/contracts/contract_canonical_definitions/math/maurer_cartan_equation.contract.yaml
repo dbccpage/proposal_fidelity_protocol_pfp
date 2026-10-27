@@ -1,0 +1,114 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:maurer_cartan_equation:v0.1.0
+title: Maurer–Cartan Residual Contract (finite cochain deformation check)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_maurer_cartan_residual
+  symbol: MC(a) = d₁(a) + ½[a,a]₂ ∈ C²
+  ascii_symbol: maurer_cartan_equation
+  notation: finite-degree cochain MC residual (diagnostic)
+  domain:
+  - connection-like 1-cochain a ∈ C¹ (finite)
+  - 'coboundary d₁ : C¹ → C²'
+  - 'bracket [ , ]₂ : C¹ × C¹ → C² (declared bilinear/graded-symmetric as implemented)'
+  codomain:
+    description: Residual 2-cochain measuring failure of the Maurer–Cartan equation on a finite cochain
+      complex. Full DGLA/L∞ deformation theory is out of scope for this contract instance.
+requirements:
+  required_structures:
+  - 'Degree discipline: a in degree 1, MC(a) in degree 2'
+  - Declared d and bracket with composable finite dimensions
+  - Deterministic residual evaluation
+  - Residual is diagnostic (Γ₂-channel), not Φ₁ acceptance authority
+laws:
+- 'Residual law: MC(a) := d(a) + ½[a,a] (coefficients per declared convention).'
+- 'Flatness witness: MC(a)=0 is the finite flatness check for this a — not a continuum theorem.'
+- 'Degree law: inputs/outputs live in declared cochain degrees only.'
+- 'Non-decision law: residual feeds deformation/consistency channels; does not mint authority.'
+- 'Authority law: no PROVED/GlobalGreen/HoTT from this contract alone.'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Deterministic residual
+relationships:
+- urn:core:math:exact_carrier:v0.1.0 — ambient cochain carrier
+- urn:core:math:cochain_complex:v0.1.0 — graded ambient
+- urn:core:math:l_infinity_algebra:v0.1.0 — broader L∞ / DGLA story (separate)
+rust_binding:
+  crate: core_homology
+  module: maurer_cartan
+  symbols:
+  - Cochain1
+  - Cochain2
+  # Runtime refusals: a vs d1 length, and d(a) vs [a,a] length. Degree mixing is
+  # a typed-wrapper compile-time fence, not a unit test. Authority-accept,
+  # L∞/DGLA package, and PROVED/GlobalGreen stay unnamed. The module is
+  # cfg(any()) so these tests are source-text only until un-gated.
+  required_tests:
+  - dimension_mismatch_error
+  - mc_rejects_da_bracket_dimension_mismatch
+negative_tests:
+- Degree-mixed a (not pure C¹) must be rejected when typed wrappers exist
+- Dimension mismatch between d(a) and [a,a] must be rejected
+- Treating nonzero residual as authority accept must be rejected
+- Claiming full L∞/DGLA theorem package from residual alone must be rejected
+- Artifact claiming PROVED/GlobalGreen/HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'Finite Maurer–Cartan residual on cochains: MC(a)=d(a)+½[a,a]. Diagnostic for deformation consistency
+    (Γ₂), not continuum DGLA completeness. Nonclaim: does not claim PROVED; does not claim GlobalGreen;
+    does not claim HoTT discharge.'
+  non_role:
+  - Full DGLA/L∞ deformation functor theorem package
+  - Continuum gauge theory flatness theorems
+  - Φ₁ acceptance authority
+  - PROVED / GlobalGreen / HoTT discharge
+  legacy_contract_id: urn:math:contract:MaurerCartanEquation:v1.0.0
+  migration_note: 'B3 meth: scoped to finite cochain MC residual matching maurer_cartan.rs.'
+wip:
+- Exact rational MC residual vs current f64 demo residual.
+- Bracket conventions (graded skew, factors of 1/2) must stay fixed per realization.
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B3_LEGACY_SHELL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'B3: replaced generic DGLA shell with finite MC residual laws; residual f64 vs exact arithmetic
+      noted as code-follows-YAML follow-up.'
+    recommendation: Object-specific math settled for this pass; align code under ADR-007a where YAML is
+      ahead or code still over-scopes. Not PROVED; not GlobalGreen; not LEAN4.
+    pass: b3_legacy_shells_meth
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: MATCH_WITH_NUMERIC_RESIDUAL
+    severity: medium
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates/core_homology/src/maurer_cartan.rs
+    detail: RS implements degree-disciplined MC residual with Cochain1/2. Uses f64 in places — exactness
+      residual OPEN. Not PROVED.
+    delta: CODE_NUMERIC_MORE_PERMISSIVE_THAN_EXACT_YAML

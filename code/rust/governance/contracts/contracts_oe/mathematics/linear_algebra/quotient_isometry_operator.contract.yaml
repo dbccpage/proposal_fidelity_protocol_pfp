@@ -1,0 +1,171 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quotient_isometry_operator:v1.0.0
+title: Quotient isometry operator class I
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:quotient_space:v1.0.0
+    - urn:core:math:phi1_obstruction_mass:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: A quotient automorphism or isometry preserving Φ₁, not necessarily fixing classes.
+  symbol: I
+  ascii_symbol: QuotientIsometry
+  formula: I:Q¹→Q¹ with Φ₁(I[x]) = Φ₁([x])
+  operator_class_symbol: I
+  1. Contract metadata:
+    title: Quotient isometry operator class I
+    version: 0.1.0
+    object_type: operator_class
+  2. Mathematical object / functional role:
+    role: A quotient automorphism or isometry preserving Φ₁, not necessarily fixing classes.
+    purpose: Represents symmetry on quotient obstruction classes, not repair.
+    non_role:
+    - Does not perform exact repair.
+    - Does not decrease Φ₁.
+    - Does not select a canonical representative.
+    - Does not mutate carrier.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: Q¹ or declared finite subset of Q¹
+    codomain: Q¹ or same declared finite subset of Q¹
+    domain_scope:
+      allowed:
+      - full_Q1
+      - finite_declared_subset
+  4. Required structures:
+    required:
+    - source Q¹
+    - map on Q¹
+    - Φ₁ preservation proof or witness
+    - well-definedness on quotient classes
+    - invertibility or declared finite bijection
+    - declared registry or finite budget if enumerated
+    optional:
+    - non-identity witness if classified as nontrivial I
+    - representative-level lift Ĩ:C¹→C¹
+  5. Definition:
+    preservation: Φ₁(I[x]) = Φ₁([x]) for all declared domain classes.
+    permutation: I may permute obstruction classes.
+    automorphism: I is bijective on Q¹ or on the declared finite domain subset.
+    quotient_well_definedness: If [x]=[y], then I[x]=I[y].
+    representative_lift_rule: Any representative-level lift Ĩ must satisfy π(Ĩx)=I(πx).
+  6. Laws and invariants:
+    isometry: Φ₁ preserved.
+    automorphism: I must be well-defined and invertible on declared quotient domain.
+    composition: I_a ∘ I_b = I_{a⋅b} where registry/group law is declared.
+    identity: The identity quotient map is the neutral isometry.
+    priority: E is classified before I.
+    no_repair: I preserves quotient mass and does not constitute repair progress.
+  7. Equality / equivalence rules:
+    operator_equality: Same action on Q¹ under fixed quotient basis, finite table, or declared group law.
+    nontrivial_I: A nontrivial I requires witness ∃[x] such that I([x]) ≠ [x].
+    identity_case: If I fixes all Q¹ classes, it is the identity quotient isometry.
+    not_E: E acts trivially on Q¹; an I classification concerns quotient-level symmetry, not representative-level
+      gauge movement.
+  8. Replay / determinism requirements:
+    requirements:
+    - Finite map or deterministic rule replay.
+    - Φ₁ preservation replay.
+    - Quotient well-definedness replay.
+    - Invertibility/bijection replay.
+    - Carrier hash unchanged.
+    - Q¹ hash unchanged.
+    - Registry entry if composed.
+    - Representative lift compatibility replay if lift is provided.
+  9. Relationship to other Core primitives:
+    relationships:
+      E: E is classified before I; E is representative gauge movement and identity on Q¹.
+      Q1: I acts on quotient classes.
+      Phi1: I preserves quotient mass.
+      R: R may choose canonical representatives after I, but I itself does not select representatives.
+      M: Carrier mutation or hidden basis change is M, not I.
+      EvaluationHierarchy: I does not improve Φ₁; it preserves the primary diagnostic.
+  10. Rust descriptor shape:
+    sketch: "pub struct QuotientIsometryOperatorDescriptor {\n    pub q1_hash: String,\n    pub action_hash:\
+      \ String,\n    pub domain_scope: IsometryDomainScope,\n    pub phi1_preservation_witness_hash: String,\n\
+      \    pub quotient_well_definedness_witness_hash: String,\n    pub invertibility_witness_hash: String,\n\
+      \    pub non_identity_witness_hash: Option<String>,\n    pub registry_hash: Option<String>,\n  \
+      \  pub representative_lift_hash: Option<String>,\n}\n\npub enum IsometryDomainScope {\n    FullQ1,\n\
+      \    FiniteDeclaredSubset,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - I changes Φ₁.
+    - I is not well-defined on quotient classes.
+    - I is not invertible on declared domain.
+    - I is actually representative-level E but classified as nontrivial quotient I.
+    - I uses undeclared carrier mutation.
+    - I changes basis silently.
+    - I composition claimed without registry/group law.
+    - Representative lift provided but π(Ĩx) ≠ I(πx).
+  12. Open questions / WIP status:
+    wip:
+    - Finite isometry registry format.
+    - Non-identity witness normalization.
+    - Group law / composition table format.
+    - Representative-level lift compatibility schema.
+  compact_yaml:
+    QUOTIENT_ISOMETRY_OPERATOR_CONTRACT:
+      symbol: I
+      ascii_symbol: QuotientIsometry
+      operator_class_symbol: I
+      formula: I:Q¹→Q¹, Φ₁ preserved
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: Q¹ or finite declared subset
+      codomain: Q¹ or same finite declared subset
+      required_structures:
+      - map on Q¹
+      - Φ₁ preservation
+      - quotient well-definedness
+      - invertibility/bijection
+      - registry optional
+      - non-identity witness if nontrivial
+      definition: quotient automorphism/isometry preserving Φ₁
+      laws:
+      - Φ₁ preserved
+      - may permute classes
+      - well-defined on Q¹
+      - invertible on declared domain
+      - E classified first
+      - I_a∘I_b=I_{a⋅b} if group law declared
+      forbidden_interpretations:
+      - repair
+      - carrier mutation
+      - E mislabeled as nontrivial I
+      - representative lift without compatibility
+      relationships:
+      - symmetry on Q¹
+      - not repair
+      - E is identity on Q¹
+      - M for hidden carrier/basis mutation
+      negative_tests:
+      - Φ₁ changed
+      - not well-defined
+      - not invertible
+      - actually E
+      - undeclared carrier mutation
+      - bad representative lift
+      open_questions:
+      - registry/group law
+      - non-identity witness
+      - representative lift schema

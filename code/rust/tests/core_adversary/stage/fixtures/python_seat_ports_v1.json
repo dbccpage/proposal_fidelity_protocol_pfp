@@ -1,0 +1,290 @@
+[
+  {
+    "op": "request_digest",
+    "request": {
+      "scene_id": "scene",
+      "seat_id": "seat",
+      "prompt_text": "prompt",
+      "cognitive_operator": "",
+      "role_kind": "prose",
+      "candidate_id": "",
+      "round_index": 0,
+      "context_bytes": []
+    },
+    "expected": "sha256:6b1cbd4fd9968ba2cf060fc1d61c849958714242a0b308c0522d88b22e1ba659"
+  },
+  {
+    "op": "request_digest",
+    "request": {
+      "scene_id": "λ\r\n",
+      "seat_id": "Manuscript Truth",
+      "prompt_text": "é é 😀 ",
+      "cognitive_operator": "",
+      "role_kind": "prose",
+      "candidate_id": "candidate",
+      "round_index": 3,
+      "context_bytes": [
+        0,
+        255,
+        239,
+        187,
+        191
+      ]
+    },
+    "expected": "sha256:da4b0b16036bcdd1da636f5696a783d07064fc560d1f346130feb67d5d6f3a65"
+  },
+  {
+    "op": "request_digest",
+    "request": {
+      "scene_id": "s",
+      "seat_id": "seat_gauge_breaker",
+      "prompt_text": "",
+      "cognitive_operator": "E",
+      "role_kind": "code",
+      "candidate_id": "",
+      "round_index": -1,
+      "context_bytes": []
+    },
+    "expected": "sha256:76c9a993006bbe37c66dc83aafbcbd18e475da04fe0930c998b938470b40149c"
+  },
+  {
+    "op": "reply_provenance",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": null,
+      "request_digest": null
+    },
+    "expected": {
+      "model": null,
+      "parameters": null,
+      "provider": null,
+      "request_digest": null,
+      "usage": null
+    }
+  },
+  {
+    "op": "reply_provenance",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {
+        "a": "b"
+      },
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": "a/x",
+      "provider": "openrouter",
+      "parameters": {
+        "cap": 65536,
+        "reported": null
+      },
+      "usage": {
+        "input_tokens": 2,
+        "output_tokens": 3
+      },
+      "request_digest": "sha256:public-fixture"
+    },
+    "expected": {
+      "model": "a/x",
+      "parameters": {
+        "cap": 65536,
+        "reported": null
+      },
+      "provider": "openrouter",
+      "request_digest": "sha256:public-fixture",
+      "usage": {
+        "input_tokens": 2,
+        "output_tokens": 3
+      }
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": "",
+      "provider": null,
+      "parameters": null,
+      "usage": null,
+      "request_digest": null
+    },
+    "expected": {
+      "error": "model must be None or a nonempty string"
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": " ",
+      "parameters": null,
+      "usage": null,
+      "request_digest": null
+    },
+    "expected": {
+      "error": "provider must be None or a nonempty string"
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": null,
+      "request_digest": " "
+    },
+    "expected": {
+      "error": "request_digest must be None or a nonempty string"
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": {
+        "input_tokens": -1
+      },
+      "request_digest": null
+    },
+    "expected": {
+      "error": "usage must map string keys to non-negative exact integers"
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": {
+        "input_tokens": true
+      },
+      "request_digest": null
+    },
+    "expected": {
+      "error": "usage must map string keys to non-negative exact integers"
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": {
+        "input_tokens": 1.5
+      },
+      "request_digest": null
+    },
+    "expected": {
+      "error": "usage must map string keys to non-negative exact integers"
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": {
+        "input_tokens": "7"
+      },
+      "request_digest": null
+    },
+    "expected": {
+      "error": "usage must map string keys to non-negative exact integers"
+    }
+  },
+  {
+    "op": "reply_validate",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": {
+        "input_tokens": 1000000000000000000000000000000000000000000000000000000000001
+      },
+      "request_digest": null
+    },
+    "expected": {
+      "ok": true
+    }
+  },
+  {
+    "op": "request_partial",
+    "request": {
+      "scene_id": "scene",
+      "seat_id": "seat",
+      "prompt_text": "prompt"
+    },
+    "expected": "sha256:6b1cbd4fd9968ba2cf060fc1d61c849958714242a0b308c0522d88b22e1ba659"
+  },
+  {
+    "op": "reply_partial",
+    "reply": {
+      "reply_text": "text",
+      "machine_fields": {}
+    },
+    "expected": {
+      "reply_text": "text",
+      "machine_fields": {},
+      "residual_colour": "Open",
+      "authority_effect": "None",
+      "raw_bytes": [],
+      "model": null,
+      "provider": null,
+      "parameters": null,
+      "usage": null,
+      "request_digest": null
+    }
+  }
+]

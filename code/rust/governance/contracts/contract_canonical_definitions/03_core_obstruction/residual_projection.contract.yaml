@@ -1,0 +1,271 @@
+schema_version: core.contract.v1
+contract_id: urn:core:obstruction:residual_projection:v1.0.0
+title: ResidualProjection
+kind: obstruction_contract
+status: mathematical_wip
+layer: 03_obstruction
+role: FixedLayerOperatorAlgebra
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - FixedLayerOperatorAlgebra
+    - CarrierContract
+    - ObstructionContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'A checked ResidualProjection may instantiate R = residual projection in the fixed-layer
+
+    operator algebra: a deterministic projection to a residual representative under declared
+
+    TiePolicy, preserving required invariants and recording discarded information.
+
+
+    Residual Projection is one of the five fixed-layer effect-classes in the obstruction algebra.
+
+
+    ResidualProjectionCandidate is EvidenceOnly.
+
+    CheckedResidualProjection may become FactOnly after surjectivity, TiePolicy, invariant
+
+    preservation, discarded-information evidence, and replay checks.
+
+    ResidualProjectionLicense, if emitted, is AuthorizesTransition.
+
+    Engine-executed projection is StateTransition.
+
+    '
+  non_role: &id002
+  - Reconstructing discarded information
+  - Certifying that discarded information was irrelevant without evidence
+  - Executing state transitions
+  - Evaluating admissibility
+  effect_class_designation:
+    effect_class: R
+    name: Residual Projection
+    composition_laws:
+    - R . R may normalize to R only when source/target compatibility, deterministic TiePolicy composition,
+      invariant preservation, replay support, and explicit RewriteLaw or certificate are present.
+    - R . M or M . R targets M only under checked composition; malformed refusal records are invalid evidence,
+      not automatically M.
+    - C . R != identity in general (information loss in R is irreversible)
+  structural_representation:
+    candidate:
+      struct_name: ResidualProjectionCandidate
+      fields:
+      - name: projection_id
+        type: ProjectionId
+      - name: source_carrier
+        type: CarrierRef
+      - name: target_carrier_schema
+        type: CarrierSchemaRef
+      - name: projection_map_ref
+        type: ProjectionWitnessId
+      - name: tie_policy
+        type: TiePolicyId
+      - name: discarded_dimensions
+        type: Vec<DimensionId>
+      - name: invariants_preserved
+        type: Vec<InvariantId>
+      - name: invariants_discarded
+        type: Vec<InvariantId>
+      - name: evidence_refs
+        type: Vec<EvidenceRef>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: projection_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedResidualProjection
+      fields:
+      - name: projection_id
+        type: ProjectionId
+      - name: candidate_ref
+        type: ProjectionId
+      - name: surjectivity_certificate
+        type: CertificateId
+      - name: tie_policy_certificate
+        type: CertificateId
+      - name: preservation_certificate
+        type: CertificateId
+      - name: discarded_information_certificate
+        type: CertificateId
+      - name: checked_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: ResidualProjectionRefusal
+      variants:
+      - SourceMalformed
+      - TargetNotSubspace
+      - ProjectionNotSurjective
+      - name: RequiredInvariantDiscarded
+        fields:
+          invariant: InvariantId
+      - name: NoEvidenceForIrrelevance
+        fields:
+          dimension: DimensionId
+      - AuthorityExceedsEvidence
+  authority_boundary:
+    may:
+    - Project a carrier to a lower-dimensional subspace
+    - Discard dimensions that are certified as irrelevant
+    - Produce a residual carrier with preserved invariants
+    must_not:
+    - Reconstruct discarded information
+    - Certify relevance/irrelevance without evidence
+    - Execute state transitions
+    - Evaluate admissibility (that is the Evaluator's role)
+    - Terminalize
+    - Create certificates
+  admissibility_checklist:
+  - Source carrier must be well-formed
+  - Target carrier must be a valid subspace of source
+  - Projection map must be surjective
+  - All invariants required by the target must be preserved
+  - Discarded dimensions must be certified as irrelevant by attached evidence
+  - Candidate authority effect is EvidenceOnly. Evaluation may be required before licensing or execution.
+    The checked projection fact may be FactOnly if all certificates verify.
+  tie_policy_law: 'Residual projection requires a deterministic TiePolicy.
+
+
+    If multiple residual representatives are possible, the projection is invalid unless the
+
+    TiePolicy selects one deterministically and replayably.
+
+
+    R without declared TiePolicy is refused.
+
+    '
+  refusal_conditions: 'If any refusal condition triggers, the candidate is refused. The attempted mutation
+    may be
+
+    classified as M = refused mutation only by the fixed-layer operator classifier/checker.
+
+    The ResidualProjection contract itself does not self-assign M.
+
+    '
+  replay_and_certificate_obligation: "- Every residual projection MUST be replayable from its ProjectionWitness\n\
+    - The projection map, discarded dimensions, TiePolicy, evidence refs, and certificate refs\n  must\
+    \ be replayable and recordable by Trace when execution occurs. Trace records execution;\n  it does\
+    \ not certify the projection.\n- A certificate wrapping a residual projection inherits the authority\
+    \ of the weakest evidence\n  it references (Doctrine 6)\n"
+  cross_subsystem_interfaces:
+  - subsystem: Carrier
+    interface: Source and target are Carrier instances
+  - subsystem: Obstruction
+    interface: R may be generated in response to an obstruction
+  - subsystem: Certificate
+    interface: R's evidence refs must reference valid certificates
+  - subsystem: Evaluator
+    interface: candidate authority is EvidenceOnly; evaluator judges admissibility
+  - subsystem: Engine
+    interface: Engine executes a residual projection only after a valid ActionLicense is present and required
+      evaluator/certificate/replay checks have passed.
+  - subsystem: Trace
+    interface: R is recorded in the execution trace
+  llm_exclusion:
+    doctrine: 5
+    text: 'The LLM is candidate generator only. An LLM may propose a residual projection as a
+
+      candidate, but the candidate carries no authority until certified by the obstruction
+
+      kernel and judged admissible by the Evaluator.
+
+      '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'Certificate authority wrapping a residual projection MUST NOT exceed the authority of
+
+      the evidence certifying that the discarded dimensions were irrelevant.
+
+      '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute_now(
+    - certify_now(
+    - evaluate_admissibility(
+    - terminalize(
+    - reconstruct_discarded(
+    - authority_upgrade(
+    - sign_certificate(
+    - apply_operator_now(
+    - self_declare_effect_class
+    - missing_tie_policy
+    - allow_nondeterministic_projection
+    - skip_tie_policy_check
+  required_tests:
+  - residual_projection_is_surjective
+  - residual_projection_preserves_required_invariants
+  - residual_projection_cannot_reconstruct_discarded
+  - residual_projection_candidate_defaults_to_evidence_only
+  - residual_projection_checked_fact_requires_certificates
+  - residual_projection_evidence_bound
+  - residual_projection_composes_to_residual
+  - residual_projection_absorbed_by_refusal
+  - residual_projection_replayable
+  - residual_projection_candidate_defaults_to_evidence_only
+  - checked_residual_projection_may_be_factonly_after_certificates
+  - residual_projection_requires_deterministic_tie_policy
+  - residual_projection_without_tie_policy_refused
+  - residual_projection_cannot_self_assign_m_refusal
+  - residual_projection_does_not_emit_action
+  - residual_projection_execution_requires_action_license
+  - residual_projection_records_discarded_information_certificate
+  canonical_invariant: 'ResidualProjection candidates are EvidenceOnly. A checked ResidualProjection may
+    instantiate
+
+    R = residual projection only with surjectivity evidence, deterministic TiePolicy,
+
+    invariant-preservation evidence, discarded-information evidence, and replay support.
+
+    R does not reconstruct discarded information, certify itself, evaluate admissibility,
+
+    terminalize, authorize, mutate, or execute. Engine execution requires a separate ActionLicense.
+
+    '
+  legacy_metadata:
+    name: ResidualProjection
+    role: 'Effect-class R candidate/check: deterministic residual projection with explicit discarded-information
+      evidence'
+    version: '2.0'
+    classification: operator
+    effect_class_target: R
+    effect_class_authority: checker_only
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+    referenced_domain_kinds:
+    - WitnessEnvelope
+    - CertificateEnvelope
+    supports_downstream:
+    - LicensingBoundary
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_obstruction_contract:v1.0.0"

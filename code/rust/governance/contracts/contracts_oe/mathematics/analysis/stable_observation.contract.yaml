@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:stable_observation:v0.1.0
+title: Least context-stable finite observation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: stable_observation
+  symbol: stable_observation
+  ascii_symbol: stable_observation
+  notation: Least context-stable finite observation
+  domain:
+  - Points1..4096, contexts<=256, refinement work<=2^24.
+  codomain:
+    description: Declared finite results of core_kernel::observation_partition; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The final partition refines the original labels.
+- Every declared context induces a well-defined quotient map.
+- Equivalent points have identical observations under every finite context word; refinement is least.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_kernel
+  module: observation_partition
+  symbols:
+  - stable_refinement
+  - StableObservation
+  required_tests:
+  - refinement_is_the_least_context_stable_observation
+  - malformed_contexts_are_refused_without_partial_refinement
+negative_tests:
+- malformed_contexts_are_refused_without_partial_refinement
+doctrine:
+  summary: The final partition refines the original labels.; Every declared context induces a well-defined
+    quotient map.; Equivalent points have identical observations under every finite context word; refinement
+    is least..
+  non_role:
+  - Stable partitions do not mint physics lift or protocol admission certificates.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

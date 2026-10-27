@@ -1,0 +1,401 @@
+[
+  {
+    "op": "parse_env",
+    "text": "# public fixture\nexport A=1\nB='two'\nC=\"three\"\nignore\n",
+    "expected": {
+      "A": "1",
+      "B": "two",
+      "C": "three"
+    }
+  },
+  {
+    "op": "parse_env",
+    "text": "A=first\r\nA=last\nEMPTY=\n",
+    "expected": {
+      "A": "last",
+      "EMPTY": ""
+    }
+  },
+  {
+    "op": "parse_env",
+    "text": "\u001cA=x\u001dB=y\u001eC=z D=d E=eF=f",
+    "expected": {
+      "A": "x",
+      "B": "y",
+      "C": "z",
+      "D": "d",
+      "E": "e",
+      "F": "f"
+    }
+  },
+  {
+    "op": "resolve_key",
+    "file": null,
+    "environ": {},
+    "expected": {
+      "code": "OPENROUTER_KEY_MISSING"
+    }
+  },
+  {
+    "op": "resolve_key",
+    "file": null,
+    "environ": {
+      "OPENROUTER_API_KEY": " fixture-env "
+    },
+    "expected": {
+      "key": "fixture-env"
+    }
+  },
+  {
+    "op": "resolve_key",
+    "file": [
+      239,
+      187,
+      191,
+      79,
+      80,
+      69,
+      78,
+      82,
+      79,
+      85,
+      84,
+      69,
+      82,
+      95,
+      65,
+      80,
+      73,
+      95,
+      75,
+      69,
+      89,
+      61,
+      39,
+      102,
+      105,
+      120,
+      116,
+      117,
+      114,
+      101,
+      45,
+      102,
+      105,
+      108,
+      101,
+      39,
+      10
+    ],
+    "environ": {
+      "OPENROUTER_API_KEY": "fixture-env"
+    },
+    "expected": {
+      "key": "fixture-file"
+    }
+  },
+  {
+    "op": "resolve_key",
+    "file": [
+      79,
+      84,
+      72,
+      69,
+      82,
+      61,
+      120,
+      10
+    ],
+    "environ": {
+      "OPENROUTER_API_KEY": "fixture-env"
+    },
+    "expected": {
+      "key": "fixture-env"
+    }
+  },
+  {
+    "op": "resolve_key",
+    "file": [
+      79,
+      80,
+      69,
+      78,
+      82,
+      79,
+      85,
+      84,
+      69,
+      82,
+      95,
+      65,
+      80,
+      73,
+      95,
+      75,
+      69,
+      89,
+      61,
+      39,
+      32,
+      39,
+      10
+    ],
+    "environ": {},
+    "expected": {
+      "code": "OPENROUTER_KEY_MISSING"
+    }
+  },
+  {
+    "op": "resolve_key",
+    "file": [
+      255
+    ],
+    "environ": {
+      "OPENROUTER_API_KEY": "fixture-env"
+    },
+    "expected": {
+      "code": "ENV_FILE_UNREADABLE"
+    }
+  },
+  {
+    "op": "body",
+    "request": {
+      "system": "system",
+      "user": "é\r\nλ",
+      "messages": [],
+      "decoding": null
+    },
+    "model": "a/x",
+    "max_tokens": 65536,
+    "expected": {
+      "model": "a/x",
+      "messages": [
+        {
+          "role": "system",
+          "content": "system"
+        },
+        {
+          "role": "user",
+          "content": "é\r\nλ"
+        }
+      ],
+      "max_tokens": 65536,
+      "usage": {
+        "include": true
+      }
+    }
+  },
+  {
+    "op": "body",
+    "request": {
+      "system": "",
+      "user": "",
+      "messages": [
+        {
+          "role": "user",
+          "content": "only"
+        }
+      ],
+      "decoding": null
+    },
+    "model": "a/x",
+    "max_tokens": 1,
+    "expected": {
+      "model": "a/x",
+      "messages": [
+        {
+          "role": "user",
+          "content": "only"
+        }
+      ],
+      "max_tokens": 1,
+      "usage": {
+        "include": true
+      }
+    }
+  },
+  {
+    "op": "body",
+    "request": {
+      "system": "",
+      "user": "",
+      "messages": [],
+      "decoding": {
+        "seed": 42,
+        "temperature": 0.25,
+        "top_p": 0.75,
+        "response_format": {
+          "type": "json_object"
+        },
+        "logit_bias": {
+          "3": -1
+        },
+        "grammar": "public",
+        "allow_fallbacks": true,
+        "require_parameters": true
+      }
+    },
+    "model": "a/x",
+    "max_tokens": 64,
+    "expected": {
+      "model": "a/x",
+      "messages": [
+        {
+          "role": "system",
+          "content": ""
+        },
+        {
+          "role": "user",
+          "content": ""
+        }
+      ],
+      "max_tokens": 64,
+      "seed": 42,
+      "temperature": 0.25,
+      "top_p": 0.75,
+      "response_format": {
+        "type": "json_object"
+      },
+      "logit_bias": {
+        "3": -1
+      },
+      "grammar": "public",
+      "provider": {
+        "allow_fallbacks": true,
+        "require_parameters": true
+      },
+      "usage": {
+        "include": true
+      }
+    }
+  },
+  {
+    "op": "body",
+    "request": {
+      "system": "",
+      "user": "",
+      "messages": [],
+      "decoding": {
+        "seed": null,
+        "temperature": null,
+        "top_p": null,
+        "response_format": null,
+        "logit_bias": null,
+        "grammar": null,
+        "allow_fallbacks": false,
+        "require_parameters": true
+      }
+    },
+    "model": "a/x",
+    "max_tokens": 7,
+    "expected": {
+      "model": "a/x",
+      "messages": [
+        {
+          "role": "system",
+          "content": ""
+        },
+        {
+          "role": "user",
+          "content": ""
+        }
+      ],
+      "max_tokens": 7,
+      "provider": {
+        "allow_fallbacks": false,
+        "require_parameters": true
+      },
+      "usage": {
+        "include": true
+      }
+    }
+  },
+  {
+    "op": "body",
+    "request": {
+      "system": "",
+      "user": "",
+      "messages": [],
+      "decoding": null
+    },
+    "model": " ",
+    "max_tokens": 1,
+    "expected": {
+      "error": "ProviderConfigError",
+      "message": "model required"
+    }
+  },
+  {
+    "op": "body",
+    "request": {
+      "system": "",
+      "user": "",
+      "messages": [],
+      "decoding": null
+    },
+    "model": "a/x",
+    "max_tokens": 0,
+    "expected": {
+      "error": "ProviderConfigError",
+      "message": "max_tokens must be >= 1"
+    }
+  },
+  {
+    "op": "reply_bound",
+    "raw": [
+      123,
+      125
+    ],
+    "limit": 2,
+    "expected": null
+  },
+  {
+    "op": "reply_bound",
+    "raw": [
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      45,
+      101,
+      120,
+      116,
+      114,
+      97,
+      45,
+      116,
+      97,
+      105,
+      108
+    ],
+    "limit": 8,
+    "expected": {
+      "refusal_code": "SWARM_PROVIDER_REPLY_TOO_LARGE",
+      "limit_bytes": 8,
+      "observed_bytes": 9,
+      "observed_truncated": true,
+      "observed_prefix_sha256": "15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225",
+      "authority_effect": "None"
+    }
+  },
+  {
+    "op": "reply_bound",
+    "raw": [
+      255
+    ],
+    "limit": 0,
+    "expected": {
+      "refusal_code": "SWARM_PROVIDER_REPLY_TOO_LARGE",
+      "limit_bytes": 0,
+      "observed_bytes": 1,
+      "observed_truncated": true,
+      "observed_prefix_sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+      "authority_effect": "None"
+    }
+  }
+]

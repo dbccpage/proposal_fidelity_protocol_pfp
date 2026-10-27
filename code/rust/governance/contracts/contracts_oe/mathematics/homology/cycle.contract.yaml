@@ -1,0 +1,91 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cycle:v0.1.0
+title: Cycle Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: kernel_element
+  symbol: z ∈ ker(d_n) ⊆ C_n
+  ascii_symbol: cycle
+  notation: z ∈ ker(d_n) ⊆ C_n
+  domain:
+  - 'representative: vector_in_chain_group'
+  - 'degree: non_negative_integer'
+  - 'witness: unforgeable_kernel_membership_token'
+  codomain:
+    description: 'Element z ∈ C_n where C_n is a chain group in a chain complex, together with certified proof that d_n(z) = 0.
+
+      '
+requirements:
+  required_structures:
+  - Application of boundary map d_n to cycle representative yields zero
+  - Cycle representative is valid element of chain group C_n
+  - Cycle degree matches chain group degree
+  - Referenced boundary map matches complex structure at given degree
+  - CycleWitness hash binds to specific complex, degree, and representative
+laws:
+- d_n(z) = 0 in C_{n-1}
+- z ∈ C_n where n = degree
+- CycleWitness binds z to specific complex and boundary map
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Boundary computation must be deterministic
+  - All hashes computed from canonical serialization
+relationships:
+- urn:math:contract:ChainComplex:v0.1.0 serves as Provides chain complex structure with graded chain groups and boundary maps
+- urn:math:contract:BoundaryMap:v0.1.0 serves as The boundary operator whose kernel defines cycles
+- urn:math:contract:ChainGroup:v0.1.0 serves as The chain group C_n containing the cycle representative
+rust_binding:
+  crate: core_homology
+  module: cycle
+  symbols:
+  - Cycle
+  # CycleWitness is defined in witness.rs, not this module.
+  # try_cycle refuses wrong length, non-zero boundary, and wrong degree.
+  # Complex/map hash mismatch, coefficient domain, homology-representative
+  # overclaim, and PROVED/GlobalGreen stay unnamed.
+  required_tests:
+  - try_cycle_rejects_coefficient_length_mismatch
+  - try_cycle_rejects_nonzero_boundary
+  - try_cycle_rejects_degree_mismatch
+negative_tests:
+- Reject chain representative with wrong dimension for degree
+- Reject boundary map that doesn't match claimed degree
+- Reject element where d_n(z) ≠ 0
+- Reject cycle when coefficient domain differs from complex
+- Reject cycle artifact claiming authority or admissibility
+doctrine:
+  summary: Chain z in C_n satisfying d_n z = 0. Cycles are kernel elements of boundary maps and representatives for homology classes.
+  non_role:
+  - Homology class equivalence (separate homology contract)
+  - Boundary elements (separate boundary contract)
+  - Normalized cycle representatives (deferred)
+  - Cohomology cycles (dual cochain complex)
+wip:
+- How to define normalized cycle representatives for canonical forms?
+- Should cycles in degree 0 have special handling beyond augmentation map?
+- How to represent relative cycles in chain pairs?
+- Currently targets finite chain complexes only
+- Normalized cycle representatives deferred to future version
+- Cohomology cycles (cocycles) handled by separate cochain complex contract
+- Relative homology and cycle pairs deferred

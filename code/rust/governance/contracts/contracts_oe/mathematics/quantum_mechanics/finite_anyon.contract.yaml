@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_anyon:v0.1.0
+title: Exact Simple Anyon Charges
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_anyon
+  symbol: finite_anyon
+  ascii_symbol: finite_anyon
+  notation: Exact Simple Anyon Charges
+  domain:
+  - A simple object of a checked finite ribbon fusion category over an exact field.
+  codomain:
+    description: Declared finite results of core_quantum_physics::anyon; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The dual, quantum dimension and twist are read from the same checked category.
+- An anyon is abelian exactly when its fusion product with its dual is the unit with multiplicity one and has
+  no other channels; signed spherical dimensions do not alter this test.
+- The Ising sigma object has dimension squared two and its exact ribbon twist.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: anyon
+  symbols:
+  - Anyon
+  required_tests:
+  - ising_charge_has_nonabelian_dimension_and_exact_twist
+  - signed_spherical_dimension_does_not_change_charge_invertibility
+negative_tests:
+- Out-of-range charges are refused.
+- Construction cannot confer operational authority.
+- An invertible Z2 charge with spherical dimension minus one remains abelian.
+doctrine:
+  summary: The dual, quantum dimension and twist are read from the same checked category.; An anyon is abelian
+    exactly when its fusion product with its dual is the unit with multiplicity one and has no other channels;
+    signed spherical dimensions do not alter this test.; The Ising sigma object has dimension squared two and
+    its exact ribbon twist..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

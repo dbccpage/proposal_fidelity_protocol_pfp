@@ -1,0 +1,1214 @@
+{
+  "vectors": [
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0x_0,0x1\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                0,
+                1
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0x__0,0x1\": 2}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key '0x__0,0x1' is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0x0_,0x1\": 2}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key '0x0_,0x1' is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0b0,0b1\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                0,
+                1
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0o0,0o1\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                0,
+                1
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0.0,1\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                0.0,
+                1
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0e+10,1\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                0.0,
+                1
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"1.0,0\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                0,
+                1.0
+              ],
+              "value": "-2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"-0.0,1\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                -0.0,
+                1
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"1e400,0\": 2}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key '1e400,0' is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0_0.0,1\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                0.0,
+                1
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0__0.0,1\": 2}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key '0__0.0,1' is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0x0,0x2\": 2}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key '0x0,0x2' is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"None,0\": 2}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key 'None,0' is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"False,True\": 2}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              0,
+              1
+            ],
+            "edges": [
+              [
+                0,
+                1
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                false,
+                true
+              ],
+              "value": "2"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\nb\", \"z\"], \"edges\": [[\"a\\nb\", \"z\"]], \"cochains\": {\"('a\\\\nb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\nb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\nb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\nb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\tb\", \"z\"], \"edges\": [[\"a\\tb\", \"z\"]], \"cochains\": {\"('a\\\\tb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\tb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\tb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\tb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a'b\", \"z\"], \"edges\": [[\"a'b\", \"z\"]], \"cochains\": {\"('a\\\\'b','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a'b",
+              "z"
+            ],
+            "edges": [
+              [
+                "a'b",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a'b",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\\"b\", \"z\"], \"edges\": [[\"a\\\"b\", \"z\"]], \"cochains\": {\"('a\\\\\\\"b','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\"b",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\"b",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\"b",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\\\b\", \"z\"], \"edges\": [[\"a\\\\b\", \"z\"]], \"cochains\": {\"('a\\\\\\\\b','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\\b",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\\b",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\\b",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"é\", \"z\"], \"edges\": [[\"é\", \"z\"]], \"cochains\": {\"('\\\\xe9','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "é",
+              "z"
+            ],
+            "edges": [
+              [
+                "é",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "é",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"é\", \"z\"], \"edges\": [[\"é\", \"z\"]], \"cochains\": {\"('\\\\u00e9','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "é",
+              "z"
+            ],
+            "edges": [
+              [
+                "é",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "é",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"🙂\", \"z\"], \"edges\": [[\"🙂\", \"z\"]], \"cochains\": {\"('\\\\U0001f642','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "🙂",
+              "z"
+            ],
+            "edges": [
+              [
+                "🙂",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "🙂",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"('\\\\141','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a",
+              "z"
+            ],
+            "edges": [
+              [
+                "a",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\\\nb\", \"z\"], \"edges\": [[\"a\\\\nb\", \"z\"]], \"cochains\": {\"(r'a\\\\nb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\\nb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\\nb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\\nb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"(u'a','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a",
+              "z"
+            ],
+            "edges": [
+              [
+                "a",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"(U'a','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a",
+              "z"
+            ],
+            "edges": [
+              [
+                "a",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"(R'a','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a",
+              "z"
+            ],
+            "edges": [
+              [
+                "a",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\\\qb\", \"z\"], \"edges\": [[\"a\\\\qb\", \"z\"]], \"cochains\": {\"('a\\\\qb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\\qb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\\qb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\\qb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\bb\", \"z\"], \"edges\": [[\"a\\bb\", \"z\"]], \"cochains\": {\"('a\\\\bb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\bb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\bb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\bb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\fb\", \"z\"], \"edges\": [[\"a\\fb\", \"z\"]], \"cochains\": {\"('a\\\\fb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\fb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\fb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\fb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\u0007b\", \"z\"], \"edges\": [[\"a\\u0007b\", \"z\"]], \"cochains\": {\"('a\\\\ab','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\u0007b",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\u0007b",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\u0007b",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\u000bb\", \"z\"], \"edges\": [[\"a\\u000bb\", \"z\"]], \"cochains\": {\"('a\\\\vb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\u000bb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\u000bb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\u000bb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\\rb\", \"z\"], \"edges\": [[\"a\\rb\", \"z\"]], \"cochains\": {\"('a\\\\rb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a\rb",
+              "z"
+            ],
+            "edges": [
+              [
+                "a\rb",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a\rb",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"ab\", \"z\"], \"edges\": [[\"ab\", \"z\"]], \"cochains\": {\"('a\\\\\\nb','z')\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "ab",
+              "z"
+            ],
+            "edges": [
+              [
+                "ab",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "ab",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"('a\\\\xzz','z')\": 3}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key \"('a\\\\xzz','z')\" is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"('a\\\\u000z','z')\": 3}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key \"('a\\\\u000z','z')\" is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"('a'broken','z')\": 3}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key \"('a'broken','z')\" is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"('a','z'\": 3}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a",
+              "z"
+            ],
+            "edges": [
+              [
+                "a",
+                "z"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a",
+                "z"
+              ],
+              "value": "3"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"('a',,'z')\": 3}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key \"('a',,'z')\" is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"(r'a\\\\', 'z')\": 3}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key \"(r'a\\\\', 'z')\" is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [\"a\", \"z\"], \"edges\": [[\"a\", \"z\"]], \"cochains\": {\"(0,1,)\": 3}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: cochain key '(0,1,)' is not an edge of the carrier",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [{\"$serde_json::private::Number\": \"0\"}, 1], \"edges\": [[0, 1]], \"cochains\": {}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: node labels must be ints or nonempty strings, got {'$serde_json::private::Number': '0'}",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"cochains\": {\"0,1\": {\"$serde_json::private::Number\": \"0\"}}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: exact rational required (int, Fraction or 'p/q' text), got dict",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": \"ab\", \"edges\": [\"ab\"], \"cochains\": {\"a,b\": 0}}",
+      "expected": {
+        "ok": {
+          "network": {
+            "nodes": [
+              "a",
+              "b"
+            ],
+            "edges": [
+              [
+                "a",
+                "b"
+              ]
+            ],
+            "faces": [],
+            "tetrahedra": [],
+            "four_simplices": []
+          },
+          "cochain": [
+            {
+              "edge": [
+                "a",
+                "b"
+              ],
+              "value": "0"
+            }
+          ],
+          "carrier_status": "DECLARED",
+          "implicit_zero_edges": 0
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"faces\": null, \"cochains\": {}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: 'NoneType' object is not iterable",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"tetrahedra\": null, \"cochains\": {}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: 'NoneType' object is not iterable",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    },
+    {
+      "carrier_json": "{\"nodes\": [0, 1], \"edges\": [[0, 1]], \"four_simplices\": null, \"cochains\": {}}",
+      "expected": {
+        "error": {
+          "code": "ADVERSARY_CARRIER_MALFORMED",
+          "message": "declared carrier is malformed: 'NoneType' object is not iterable",
+          "locus": "adversary.use_cases.act_helpers",
+          "details": {}
+        }
+      }
+    }
+  ]
+}

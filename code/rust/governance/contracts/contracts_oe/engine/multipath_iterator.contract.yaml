@@ -1,0 +1,154 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:multipath_iterator:v1.4.2
+title: Finite Multipath Projection Iterator
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Pipeline
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:rust:core_discrete_deformation_algebra:discrete_deformation_algebra:v1.13.0
+    proof_obligations:
+    - OB-PL070-1
+    - OB-PL070-2
+    - OB-PL070-3
+    - OB-PL070-4
+  terminals:
+    may_emit:
+    - ExactRepair
+    - StabilizedSurvivor
+    - OpenObstruction
+    may_support: []
+  refusals:
+    may_emit:
+    - Invalid
+    - DetectorInadequate
+    - NoRule
+    - RequiresLift
+    - Refused
+    - BudgetExhausted
+    - Cancelled
+  operator_classes:
+    may_support:
+    - R
+    - C
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - RuntimeMutation
+    required: []
+requirements:
+  receipt_schema: core.multipath.run_receipt.v3
+  packet_admission:
+    canonical_form: required
+    detector_requirement_identity: structured_claim_and_distinction_pair
+    packet_refs: nonempty_sorted_unique
+    packet_hash: canonical_sha256
+  operator_registry_admission:
+    canonical_form: required_before_hash_lookup_or_adapter_callback
+    operator_ids: nonempty_sorted_unique
+    descriptor_hashes: lowercase_sha256
+    set_fields: sorted_unique
+  adapter_callback_failures:
+    requested_classification: advisory
+    host_terminal: Refused
+    detail: nonempty_required
+    evidence_derived_terminals: host_observation_only
+  operator_candidate_compilation:
+    output: CompiledOperatorCandidate
+    proposal_validation: complete_candidate_receipt_fields_before_materialization
+    pattern_hash:
+      domain: core.paper070.operator_pattern.v3
+      required: true
+    run_evidence_hash:
+      domain: core.paper070.operator_evidence.v3
+      required: true
+    source_bindings:
+    - embedded_canonical_operator_registry_and_sha256
+    - complete_registered_operator_and_sha256
+    - complete_proposal_and_sha256
+    - complete_preservation_and_witness_assessment_and_sha256
+    - selected_candidate_receipt_and_sha256
+    - source_step_index
+    - source_carrier_sha256
+    - source_and_result_state_sha256
+    - observed_signature_kind_and_sha256
+    - before_and_post_inspection_measure
+    - post_inspection_sha256
+    proposal_ids: nonempty_unique_per_step
+    preservation_evidence: content_addressed
+    selected_transition: independently_strictly_descending
+    authority_effect: none
+    self_registration: forbidden
+    promotion: external_human_or_authorized_host
+  replay_verification:
+    require_receipt_schema: core.multipath.run_receipt.v3
+    require_run_authority_effect: none
+    receipt_encoding: canonical_compact_json
+    adapter_and_terminal_reason: nonempty
+    packet_and_carriers: canonical_and_budget_bounded
+    carrier_payload_hashes: lowercase_sha256
+    inspection_receipts: canonical_recomputed_from_packet_coverage_defects_and_signatures
+    inspection_summaries: independently_recomputed
+    run_budget: all_numeric_fields_positive
+    candidate_accounting: balanced_reconstructed_and_checked_for_overflow
+    terminal_envelope: inspection_consistent
+    transition_chain:
+      initial_state_anchor: required
+      final_state_anchor: required
+      initial_carrier_anchor: canonical_bytes
+      carrier_extensions: reconstruct_from_full_added_cells
+      final_carrier_anchor: canonical_bytes
+      strict_descent: independently_recomputed
+    internal_replay_scope: structural_self_consistency_only
+    runtime_return_invariant: every_ok_receipt_passes_public_replay_verification
+    external_receipt_anchor:
+      schema: core.multipath.run_receipt_anchor.v1
+      host_pin_before_untrusted_transport: required
+      canonical_receipt_sha256: required
+      inspection_trace_sha256: required
+      packet_registry_replay_bindings: required
+      verification_entrypoint: RunReceipt::verify_against_anchor
+      authority_effect: none
+      limitation: does_not_establish_adapter_semantics_detector_completeness_witness_truth_or_authority
+  runtime_budget_enforcement:
+    production_entrypoint: run_multipath
+    production_clock: system_monotonic
+    injected_clock_entrypoint: run_multipath_with_test_clock
+    injected_clock_feature: paper070-test-clock
+    production_build_exposes_injected_clock: false
+    callback_boundary_checks:
+    - inspect
+    - propose
+    - assess_candidate
+    - candidate_inspect
+    - extend_carrier
+    observed_expiration: BudgetExhausted_before_state_or_carrier_mutation
+    proposal_intake: reject_oversized_batch_before_validation_sort_or_receipt_materialization
+    limitation: synchronous_adapter_callbacks_are_checked_after_return_not_preempted
+
+rust_binding:
+  crate: engines
+  module: multipath_iterator
+  symbols:
+  - FiniteCarrier
+  - ProblemPacket
+  - MultipathAdapter
+  - OperatorRegistry
+  - RunBudget
+  - TerminalKind
+  - RunReceipt
+  - RunReceiptAnchor
+  - RunReceipt::verify_against_anchor
+  - CompiledOperatorCandidate
+  - run_multipath
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_execution_contract:v1.0.0"

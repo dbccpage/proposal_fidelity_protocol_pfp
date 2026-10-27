@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:spin_obstruction:v0.1.0
+title: Finite rational spin lifting and cohomological torsor
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: spin_obstruction
+  symbol: spin_obstruction
+  ascii_symbol: spin_obstruction
+  notation: Finite rational spin lifting and cohomological torsor
+  domain:
+  - Finite F2 cochain complex with admitted SO(3,Q) edge transport; bounded small-mask compatibility enumeration.
+  codomain:
+    description: Declared finite results of core_quantum_physics::spin_structure_obstruction; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The lifting defect is a degree2 cohomology class.
+- When it is exact, lift signs form a Z1 torsor; vertex-gauge classes form an H1 torsor.
+- Lift counts use arbitrary-precision powers of2 without enumerating all sign choices.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: spin_structure_obstruction
+  symbols:
+  - FlatRotationTransport
+  - SpinLiftClassification
+  required_tests:
+  - spin_lift_counts_use_cohomology_without_exponential_enumeration
+negative_tests:
+- spin_lift_counts_use_cohomology_without_exponential_enumeration
+doctrine:
+  summary: The lifting defect is a degree2 cohomology class.; When it is exact, lift signs form a Z1 torsor;
+    vertex-gauge classes form an H1 torsor.; Lift counts use arbitrary-precision powers of2 without enumerating
+    all sign choices..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

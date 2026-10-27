@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:signed_interval_reciprocal:v0.1.0
+title: Exact signed interval division
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: signed_interval_reciprocal
+  symbol: signed_interval_reciprocal
+  ascii_symbol: signed_interval_reciprocal
+  notation: Exact signed interval division
+  domain:
+  - Ordered exact rational endpoint intervals with denominator excluding zero
+  codomain:
+    description: Declared finite results of core_kernel::interval; exact and diagnostic routes retain their
+      stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Reciprocal endpoints reverse monotonically for either sign
+- Division encloses all endpoint products with exact rationals
+- Zero crossing and forged reversed endpoints refuse
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_kernel
+  module: interval
+  symbols:
+  - Interval::try_reciprocal
+  - Interval::try_divide
+  required_tests:
+  - interval::reciprocal_laws::signed_reciprocal_division_and_zero_crossing_refusals
+negative_tests:
+- interval::reciprocal_laws::signed_reciprocal_division_and_zero_crossing_refusals
+doctrine:
+  summary: Reciprocal endpoints reverse monotonically for either sign; Division encloses all endpoint products
+    with exact rationals; Zero crossing and forged reversed endpoints refuse.
+  non_role:
+  - No real division certificate for a denominator interval containing zero
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

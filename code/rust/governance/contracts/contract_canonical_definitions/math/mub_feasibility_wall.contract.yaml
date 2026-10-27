@@ -1,0 +1,131 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:mub_feasibility_wall:v1.0.0
+title: MubFeasibilityWall
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: mub_feasibility_wall
+  ascii_symbol: mub_feasibility_wall
+  symbol: mub_feasibility_wall
+  notation: mub_feasibility_wall
+  domain:
+  - 'carrier: instance of mub_feasibility_wall'
+  codomain:
+    description: Mathematical object declared by MubFeasibilityWall (structural shell).
+requirements:
+  required_structures:
+  - Carrier for mub_feasibility_wall must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- MubFeasibilityWall is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_functional
+  module: mub_feasibility_wall
+  symbols:
+  - MubFeasibilityWallValue
+  - MubFeasibilityWallEvidenceKind
+  - MubFeasibilityWallAuthorityKind
+  - MubFeasibilityWallTargetComparison
+  required_tests:
+  - rejects_empty_probabilities
+  - rejects_non_finite_probability
+  - rejects_non_finite_target_probability
+  - rejects_target_probability_outside_unit_interval
+  - rejects_invalid_comparison_tolerance
+negative_tests:
+- Artifact claiming MubFeasibilityWall without required structures must be rejected
+- Empty or ill-typed carrier for mub_feasibility_wall must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'MubFeasibilityWallEvidenceKind and evidence_kind are the canonical Rust API. The v1.0.0 serialized field
+    remains authority_kind. The deprecated MubFeasibilityWallAuthorityKind alias and authority_kind accessors remain
+    through core_functional 0.2.x and may be removed no earlier than 0.3.0 after a fresh consumer census. Every
+    form is evidence-only. Nonclaim: this contract does not claim HoTT/Univalence discharge, PROVED status, or GlobalGreen.'
+  non_role:
+  - Does not grant, certify, or expand authority
+  - Does not permit dual authority_kind and evidence_kind data fields
+  - Does not rename the serialized field within this v1.0.0 contract
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced as obligations; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_REQUIRED_STRUCTURES
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_NEGATIVE_TESTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; add overclaim nonclaim fence to doctrine.summary. Not PROVED; not GlobalGreen;
+      human re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STAGE2_BINDING_PRESENT
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: 'rust_binding → core_functional::mub_feasibility_wall. Symbols MubFeasibilityWallValue, EvidenceKind,
+      AuthorityKind (deprecated alias), TargetComparison present. Diagnostic f64 wall scalar + evidence classification;
+      evidence-only; serialized field remains authority_kind. Structural carrier MATCH to doctrine; not a theorem
+      discharge.
+
+      '
+    file: engine/crates_rs/core_functional/src/mub_feasibility_wall.rs
+    yaml_law: evidence-only MUB feasibility wall scalar and kind
+    code_behavior: f64 wall/obstruction values + evidence_kind with deprecated authority alias
+    delta: MATCH

@@ -1,0 +1,59 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# pfp/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_research_seed_packet:v1.0.0"
+title: "Research Seed Packet (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    ResearchSeedPacket carries frozen research inputs, objective, and budget without authority upgrade.
+  invariants:
+    - "Carries frozen corpus, objective, proposer, mode, budget, and evidence ceiling."
+    - "Authority effect is strictly None."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.entities.research_packets
+  python_type: "ResearchSeedPacket"
+  form: dataclass
+  fields:
+    - name: corpus
+    - name: objective
+    - name: proposer_id
+    - name: mode
+    - name: round_index
+    - name: proposal_budget
+    - name: protected_paths
+    - name: focus_codes
+    - name: parent_ledger_sha256
+    - name: evidence_ceiling
+    - name: authority_effect
+    - name: schema_version

@@ -1,0 +1,109 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:normal_form:v0.1.0
+title: Normal Form Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: canonical_representative
+  symbol: 'nf: S -> NF(S), nf(x) = y iff x ->* y and y is irreducible'
+  ascii_symbol: normal_form
+  notation: 'nf: S -> NF(S), nf(x) = y iff x ->* y and y is irreducible'
+  domain:
+  - 'expression_set: Set S of expressions in the algebraic structure'
+  - 'rewriting_relation: One-step reduction relation -> on S'
+  - 'normal_form_set: Subset NF(S) of irreducible elements'
+  - 'normal_form_function: Function nf: S -> NF(S) mapping each expression to its unique normal form'
+  - 'reduction_trace: Sequence of reduction steps from input to normal form'
+  codomain:
+    description: 'A normal form computation consists of: the expression set S, the rewriting relation ->, evidence of confluence and termination, and the normal form function nf: S -> NF(S) where NF(S) is the set of irreducible elements.
+
+      '
+requirements:
+  required_structures:
+  - nf(x) is irreducible -- no further reductions apply
+  - 'nf(x) is reachable from x via the reduction relation: x ->* nf(x)'
+  - nf(nf(x)) = nf(x)
+  - Artifact hash correctly computed from expression and normal form data
+laws:
+- 'The rewriting system is confluent: for all x, y, z in S, if x ->* y and x ->* z, then there exists w in S such that y ->* w and z ->* w.  This guarantees uniqueness of normal forms.
+
+  '
+- 'The rewriting system is terminating: there are no infinite reduction sequences x_0 -> x_1 -> x_2 -> ... in S.
+
+  '
+- 'An element y in S is in normal form (irreducible) if there is no z in S with y -> z.  The normal form function returns only irreducible elements.
+
+  '
+- 'For each x in S, nf(x) is unique.  This follows from confluence and termination but must be verified independently when the rewriting system is supplied.
+
+  '
+- 'nf(nf(x)) = nf(x) for all x in S.  Applying the normal form function to an already-normal element is the identity.
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Reduction strategy must be deterministic (e.g., leftmost-outermost)
+  - Expression encoding normalized to canonical bytes
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:EquivalenceRelation:v0.1.0 serves as Provides the equivalence relation induced by the rewriting system
+negative_tests:
+- Rewriting system is not confluent
+- Rewriting system has infinite reduction sequences
+- Expression hash does not resolve to valid artifact
+- Expression is not in the domain of the rewriting system
+doctrine:
+  summary: A Normal Form is a canonical representative of an equivalence class under a specified reduction or rewriting system.  Given a set S of expressions, an equivalence relation ~ on S, and a reduction relation ->* that is confluent and terminating, the normal form nf(x) of x in S is the unique element y such that x ->* y and y is irreducible (no further reductions apply).  Two elements x, y in S are equivalent (x ~ y) if and only if nf(x) = nf(y).  This contract defines the structure of normal form computations and the properties they must satisfy.
+  non_role:
+  - Does not define specific rewriting systems (lambda calculus, Groebner, etc.)
+  - Does not handle non-terminating or non-confluent systems
+  - Does not implement the reduction strategy (leftmost, rightmost, etc.)
+  - Does not classify admissibility of expressions
+  - Does not cover weak normal forms or head normal forms
+wip:
+- Should this contract support weak normal forms and head normal forms?
+- How to handle rewriting systems where termination is undecidable?
+- Integration with specific normal form contracts (Smith, Jordan, Groebner)
+- Whether reduction traces should be stored or only their hashes
+- Strategy selection (leftmost-outermost vs innermost) as contract parameter
+- This contract is generic over the rewriting system -- specific instances are separate contracts
+- Confluence and termination are assumed as preconditions, not proved by this contract
+- The reduction trace provides a constructive witness of reachability
+- Consider adding complexity bounds (max reduction steps) as a contract parameter
+
+rust_binding:
+  crate: core_pipelines
+  module: coda_gtlanf
+  symbols:
+  - Normalize
+  - FinClaim
+  - CodaGtlaNf
+  - normalize_l
+  - include_i
+  - t
+  - is_fixed
+  # GTLANF is a caller-supplied Normalize interface. It does not reject
+  # non-confluent systems, non-terminating systems, missing artifact hashes,
+  # or out-of-domain expressions. Those four negatives are named as
+  # OPEN_OBLIGATION under wip.
+

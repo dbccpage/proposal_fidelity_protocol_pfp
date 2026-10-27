@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:character_stack:v0.1.0
+title: Character Stack Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: derived_quotient_stack
+  symbol: Char(Γ, G) = [Hom(Γ, G)/G], RChar(Γ, G) for derived version
+  ascii_symbol: character_stack
+  notation: Char(Γ, G) = [Hom(Γ, G)/G], RChar(Γ, G) for derived version
+  domain:
+  - 'source_group: Group Γ (typically fundamental group π_1(X))'
+  - 'gauge_group: Target gauge group G'
+  - 'morphism_space: Space of group homomorphisms Hom(Γ, G)'
+  - 'quotient_action: Conjugation action of G on Hom(Γ, G)'
+  codomain:
+    description: 'The character stack is a quotient stack [Hom(Γ, G)/G] where Γ is the source group (fundamental group) and G is the gauge group. The derived version RChar(Γ, G) is the derived quotient stack.
+
+      '
+requirements:
+  required_structures:
+  - Both source group Γ and gauge group G must be valid groups
+  - Stack structure must be correct quotient [Hom(Γ, G)/G]
+  - Derived stack must carry valid shifted symplectic structure (if present)
+  - Artifact hash must be deterministic SHA-256 over all data
+laws:
+- The character stack is the quotient stack [Hom(Γ, G)/G] under conjugation
+- The derived character stack RChar(Γ, G) carries a shifted symplectic structure
+- For Γ = π_1(X), Char(Γ, G) parametrizes G-local systems on X
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+relationships:
+- urn:math:contract:Group:v1.0.0 serves as Provides source group Γ and gauge group G
+- urn:math:contract:DerivedStack:v0.1.0 serves as Provides derived stack structure
+- urn:math:contract:ShiftedSymplecticStructure:v0.1.0 serves as Provides shifted symplectic structure on derived stack
+negative_tests:
+- Invalid source or gauge group must be rejected
+- Incorrect quotient stack structure must be rejected
+- Invalid shifted symplectic structure must be rejected
+doctrine:
+  summary: A character stack (or character variety stack) parametrizes representations of a fundamental group up to conjugation. Character stacks are derived stacks with shifted symplectic structures central to geometric representation theory.
+  non_role:
+  - Does not handle non-derived moduli stacks
+  - Does not implement full geometric Langlands duality
+  - Does not provide skein algebra quantization
+wip:
+- Non-abelian Hodge correspondence
+- Derived character varieties
+- Factorization homology and character stacks
+- Contract captures core character stack structure
+- Shifted symplectic structure validation needs PTVV theory implementation
+- Geometric Langlands correspondence requires additional gauge theory contracts
+- Skein algebra quantization deferred to future version

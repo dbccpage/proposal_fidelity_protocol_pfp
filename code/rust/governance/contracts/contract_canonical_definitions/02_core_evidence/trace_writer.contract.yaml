@@ -1,0 +1,53 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:trace_writer:v1.0.0
+title: TraceWriter
+kind: evidence_contract
+status: active
+layer: 02_evidence
+role: Trace
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: []
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  constraints:
+    immutable_after_emit: true
+    mutation_forbidden: true
+doctrine:
+  summary: Append-only dual-trace artifact writer for the .intelligence/.traces
+    convention. The event chain is replay-verified before any filesystem effect;
+    a byte-identical re-emit is an idempotent no-op; a divergent re-emit is
+    refused with a typed append-only violation. Writing a trace is diagnostic
+    evidence only and mints no authority.
+  non_role: []
+rust_binding:
+  crate: core_replay
+  module: trace_writer
+  symbols:
+  - write_dual_trace_v1
+  - TraceWriteError
+  - WrittenTraceV1
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:evidence:trace_artifact:v1.0.0"

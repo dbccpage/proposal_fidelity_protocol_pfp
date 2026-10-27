@@ -1,0 +1,174 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:contract_property_witnesses:v1.0.0
+title: ContractPropertyWitnesses
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: contract_property_witnesses
+  ascii_symbol: contract_property_witnesses
+  symbol: contract_property_witnesses
+  notation: contract_property_witnesses
+  domain:
+  - 'carrier: instance of contract_property_witnesses'
+  codomain:
+    description: Mathematical object declared by ContractPropertyWitnesses (structural shell).
+requirements:
+  required_structures:
+  - Carrier for contract_property_witnesses must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- ContractPropertyWitnesses is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_contracts
+  module: functional_property_witnesses
+  symbols:
+  - ContractPropertyWitnesses
+negative_tests:
+- Artifact claiming ContractPropertyWitnesses without required structures must be rejected
+- Empty or ill-typed carrier for contract_property_witnesses must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'Verification witness structures for contract properties. Nonclaim fence: does not claim PROVED; does
+    not claim GlobalGreen; does not claim HoTT/Univalence discharge from this contract alone.'
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product assurances
+  - Full encyclopedia mechanization of contract_property_witnesses (deferred)
+  - HoTT/Univalence theorem discharge from this contract alone
+  - Runtime enforcement as proof of mathematical truth
+wip:
+- 'OPEN_OBLIGATION missing_required_structures: Artifact claiming ContractPropertyWitnesses without required structures
+  must be rejected; owner: Council Nomos; disposition: marker type has no admission API; AuthorityEffect: None.'
+- 'OPEN_OBLIGATION empty_or_ill_typed_carrier: Empty or ill-typed carrier for contract_property_witnesses must be
+  rejected; owner: Council Nomos; disposition: marker type has no carrier constructor; AuthorityEffect: None.'
+- 'OPEN_OBLIGATION authority_or_admissibility_claim: Artifact claiming authority or admissibility must be rejected;
+  owner: Council Nomos; disposition: no minting API exists to refuse; AuthorityEffect: None.'
+- 'OPEN_OBLIGATION proved_globalgreen_fence: Artifact claiming PROVED/GlobalGreen from this contract alone must
+  be rejected; owner: Council Nomos and human authority review; disposition: no mechanical unit-test discharge at
+  the ShapeOnly layer; AuthorityEffect: None.'
+- 'OPEN_OBLIGATION nondeterministic_construction: Non-deterministic or external-state-dependent construction must
+  be rejected; owner: Council Nomos; disposition: marker type has no construction path; AuthorityEffect: None.'
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced as obligations; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_REQUIRED_STRUCTURES
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_NEGATIVE_TESTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: DEV-THEATER
+    severity: high
+    claim_class: '[STANDARD]'
+    detail: non_role is empty list
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STATUS_VS_CONTENT
+    severity: low
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: status=''active'' while structural residuals remain'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; set doctrine.non_role (anti-theater); demote status active -> mathematical_wip
+      (structural repair); add overclaim nonclaim fence to doctrine.summary. Not PROVED; not GlobalGreen; human
+      re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: MATH-OVERCLAIM
+    severity: high
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: PROVED/GlobalGreen language without nearby nonclaim'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_OVERCLAIM_FENCE
+    severity: info
+    claim_class: '[SCOPE FENCE]'
+    detail: 'Explicit nonclaim fence: does not claim PROVED/GlobalGreen/HoTT discharge.'
+    recommendation: Vocabulary may remain; never mint proof status from YAML alone.
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: REALIZATION_PRESENT_STUB
+    severity: medium
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: 'rust_binding resolves to core_functional/src/contract_property_witnesses.rs. Symbol ContractPropertyWitnesses
+      exists as an empty marker; module tests exercise other functionals (trichotomy/phi1/gamma2) and YAML URN/deps
+      hygiene, not a property-witness algebra for this object. YAML has no laws/math block. Stage-2: YAML_AHEAD_OF_CODE
+      on substantive realization. Not PROVED / not GlobalGreen.
+
+      '
+    recommendation: 'Either flesh code under YAML when laws exist, or keep marker and document deliberate non-realization.
+
+      '
+    file: engine/crates_rs/core_contracts/src/functional_property_witnesses.rs
+    yaml_law: 'Thin doctrine only: verification witness structures for contract properties; no laws/math block.
+
+      '
+    code_behavior: 'pub struct ContractPropertyWitnesses is an empty marker to satisfy symbol binding; no structured
+      witness fields or law checks for this object.
+
+      '
+    delta: YAML_AHEAD_OF_CODE

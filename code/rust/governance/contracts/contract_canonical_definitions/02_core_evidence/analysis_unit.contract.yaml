@@ -1,0 +1,169 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:analysis_unit:v1.0.0
+title: AnalysisUnit
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: AnalysisUnit
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - MeasurementKernel
+    - CertificateKernel
+    - Witness
+    - ReplayKernel
+    - HealthModelKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'AnalysisUnit computes or checks factual evidence over declared artifacts.
+
+    It may produce analysis evidence and checked factual claims, but it does not
+
+    decide admissibility, rank candidates, terminalize, license, mutate, or execute.
+
+    '
+  non_role: &id002
+  - evaluator_judgment
+  - policy_interpretation
+  - terminal_mapping
+  - action_licensing
+  - transition_authorization
+  - state_transition
+  - state_mutation
+  - search_scheduling
+  - candidate_generation
+  - operator_execution
+  - certificate_sealing_without_certificate_kernel
+  - evidence_authority_upgrade
+  authority_defaults:
+    raw_analysis_output: EvidenceOnly
+    checked_analysis_output: FactOnly only after input type, hashes, tolerance semantics, and evidence
+      references are checked.
+    later_judgment: Consumers may route checked facts to Evaluator; AnalysisUnit itself does not request
+      decisions.
+  structural_representation:
+    raw:
+      struct_name: AnalysisOutput
+      fields:
+      - name: subject_ref
+        type: BoundaryRef
+      - name: input_refs
+        type: Vec<ArtifactRef>
+      - name: analysis_kind
+        type: AnalysisKind
+      - name: output_refs
+        type: Vec<EvidenceRef>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: output_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedAnalysisOutput
+      fields:
+      - name: analysis_ref
+        type: AnalysisOutputRef
+      - name: checker_ref
+        type: CheckerRef
+      - name: checked_input_hashes
+        type: Vec<Hash256>
+      - name: checked_output_hash
+        type: Hash256
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: AnalysisKind
+      variants:
+      - MeasurementCheck
+      - DecompositionCheck
+      - ValidationFactCheck
+      - CertificateCheck
+      - WitnessReferenceCheck
+  flow: 'ArtifactRef / EvidenceEnvelope / Record
+
+    -> AnalysisOutput
+
+    -> CheckedAnalysisOutput or EvidenceEnvelope
+
+    -> Evaluator / Policy
+
+    -> TerminalMapper
+
+    -> LicensingBoundary
+
+    -> Engine
+
+    -> Trace / Ledger
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - analysis_output_defaults_to_evidence_only
+  - analysis_output_requires_checking_for_factonly
+  - analysis_does_not_emit_action_license
+  - analysis_does_not_authorize_transition
+  - analysis_does_not_execute
+  - analysis_does_not_seal_certificate_without_certificate_kernel
+  - analysis_does_not_emit_canonical_cohomological_measurements
+  - analysis_records_input_and_output_hash
+  - same_input_same_analysis_output
+  canonical_invariant: 'Analysis computes or checks factual evidence over declared artifacts. Its outputs
+    are
+
+    EvidenceOnly until checked into FactOnly. It does not judge admissibility, rank candidates,
+
+    search, seal certificates without CertificateKernel authority, terminalize, license, mutate,
+
+    or execute.
+
+    '
+  legacy_metadata:
+    name: AnalysisUnit
+    source_file: non-math/02_evidence/analysis_unit_contract.md
+    active: true
+    machine_authority: true
+    role: Read-only factual analysis over declared artifacts
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: AnalysisOutput
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

@@ -1,0 +1,82 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_kernel:obligation:v1.0.0
+title: Obligation
+status: active
+crate: core_kernel
+file: crates_rs/core_kernel/src/obligation.rs
+role: substrate
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: false
+owns:
+- the free commutative monoid on obligation ids
+- the generated and discharged vectors of a transition, and the difference
+does_not_own:
+- what any particular obligation means
+- whether an obligation ought to have been generated
+- any authority; a settled ledger is not a certificate
+may_call: []
+must_not:
+- discharge an obligation that was never generated
+- discharge more instances than are outstanding
+- expose the generated or discharged vectors for direct assignment
+exactness:
+  mode: exact_only
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+laws:
+- 'Monoid law: combine is associative and commutative with empty as its unit, which
+  is what makes the obligation vector a free commutative monoid rather than a list.
+  Counts add; they do not replace.'
+- 'Whole-count law: an obligation is generated a whole number of times. Counts are
+  u64 and overflow is refused, never wrapped and never saturated. total() returns
+  None past the ceiling rather than u64::MAX, for the same reason approximate()
+  refuses NAN: a lost value that still looks like a value is worse than no value.'
+- 'Debt law: an obligation that was never generated cannot be discharged, and no
+  obligation can be discharged more times than it is outstanding. A transition
+  claiming otherwise claims to have settled a debt no one was owed.'
+- 'Difference law: outstanding is generated minus discharged, per id. A ledger is
+  settled exactly when nothing is outstanding.'
+- 'Canonical wire law: the multiset is unordered but its serialization is not. A
+  BTreeMap keyed by id means two equal vectors produce identical bytes, so a digest
+  over an obligation vector is stable.'
+- 'Construction law: the ledger''s fields are private and Deserialize re-checks the
+  debt law, so a forged pair discharging what was never generated cannot enter --
+  not from a caller and not from JSON.'
+- 'Narrow grammar law: an obligation id admits . _ - : and not the / and @ that
+  ObserverId allows. The two are deliberately not interchangeable -- an obligation
+  names a debt, not a scoped resource path.'
+- 'Authority law: settling every obligation confers nothing. It records that the
+  declared debts were paid, not that the result is true.'
+forbidden_substrings:
+- 'f64'
+- 'f32'
+- 'tolerance'
+- 'pub generated'
+- 'pub discharged'
+- 'HashMap'
+- 'saturating_add'
+required_substrings:
+- 'pub struct Obligations'
+- 'pub struct ObligationLedger'
+- 'pub fn combine'
+- 'pub fn discharge'
+- 'pub fn outstanding'
+- 'BTreeMap'
+required_tests:
+- an_obligation_id_must_be_canonical
+- combine_is_commutative
+- combine_is_associative
+- empty_is_the_identity
+- counts_add_rather_than_replace
+- an_obligation_never_generated_cannot_be_discharged
+- discharging_more_than_outstanding_is_refused
+- outstanding_is_generated_minus_discharged
+- a_ledger_is_settled_only_when_nothing_is_outstanding
+- a_forged_ledger_is_refused_on_deserialize
+- the_wire_form_is_ordered_so_equal_multisets_serialize_alike
+- combining_past_the_count_ceiling_is_refused_not_wrapped
+- a_total_that_would_overflow_is_none_rather_than_saturated
+lean_obligations: []

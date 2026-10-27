@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cohomology_admission:v0.1.0
+title: Exact Finite Cohomology Admission
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: cohomology_admission
+  symbol: cohomology_admission
+  ascii_symbol: cohomology_admission
+  notation: Exact Finite Cohomology Admission
+  domain:
+  - A sovereign validated rational cochain complex with bounded dimensions and matrix work, and a declared
+    residual adapter.
+  codomain:
+    description: Declared finite results of core_solvers::cohomology_admission; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Exact means a replayed preimage d0 a=s.
+- Closed nonexact means d1 s=0 and a separator annihilates d0 but not s.
+- Active closure failure carries the actual nonzero d1 s.
+- The three admitted classes are disjoint, and dim H1=dim C1-rank d1-rank d0.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_solvers
+  module: cert_cohomology_admission
+  symbols:
+  - Admission
+  - AdmissionRefusal
+  - CohomologyDimensions
+  - admit
+  - verify_admission
+  - cohomology_dimensions
+  - image_preimage
+  required_tests:
+  - exact_closed_and_active_classes_have_independent_certificates
+  - empty_axes_are_admitted_but_unbounded_preimages_are_refused
+negative_tests:
+- Missing adapters, bad cochain lengths, short or tampered separators, incorrect claimed defects and excessive
+  zero-axis dimensions are refused.
+doctrine:
+  summary: Exact means a replayed preimage d0 a=s.; Closed nonexact means d1 s=0 and a separator annihilates
+    d0 but not s.; Active closure failure carries the actual nonzero d1 s.; The three admitted classes are
+    disjoint, and dim H1=dim C1-rank d1-rank d0..
+  non_role:
+  - Admission is a diagnostic, not a terminal decision or realization attribution.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

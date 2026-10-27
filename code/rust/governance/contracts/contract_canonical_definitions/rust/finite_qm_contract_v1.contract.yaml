@@ -1,0 +1,70 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_q:finite_qm_types:v1.0.0
+title: FiniteQMContractV1Types
+status: active
+crate: core_wdp
+file: crates_rs/core_wdp/src/coda/q/finite_qm_types.rs
+role: finite_qm_schema_types
+authority_effect: none
+evidence_ceiling: ShapeOnly
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- FiniteCarrier
+- FiniteDimension
+- FiniteCertificate
+- FiniteDimContinuumScalars
+- ContinuumDebt
+- ImportSlotStatus
+- ImportSlot
+- ImportLedger
+- FiniteQmContractV1
+does_not_own:
+- full QM math (channels, path-sum, interference)
+- Q-admission continuum firewall (core_q::continuum::ContinuumDebt semantics)
+- authority minting
+- GlobalGreen discharge
+- spectral membrane convergence proofs
+may_call:
+- serde
+- serde_json
+- sha2
+must_not:
+- mint authority
+- claim GlobalGreen
+- collapse FiniteCarrier into FiniteDimension
+- collapse FiniteDimension into FiniteCertificate
+- collapse FiniteCertificate into ContinuumDebt
+- treat FiniteDimContinuumScalars as a finite certificate
+- derive quantum mechanics from the schema shell alone
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+forbidden_substrings:
+- CertifiedAuthority::certify
+- GlobalGreen
+- mint_authority(
+- unsafe
+required_substrings:
+- FiniteCarrier
+- FiniteDimension
+- FiniteCertificate
+- FiniteDimContinuumScalars
+- ContinuumDebt
+- ImportSlotStatus
+- ImportLedger
+- FiniteQmContractV1
+- SCHEMA_VERSION
+- FiniteQMContractV1
+- canonical_hash_sha256
+- fixture_canonical_hash_is_stable
+required_tests:
+- fence_types_are_distinct_newtypes
+- non_inference_fields_do_not_coerce
+- import_ledger_status_vocabulary
+- fixture_canonical_hash_is_stable
+- fixture_hash_is_deterministic
+- authority_effect_is_none
+lean_obligations: []

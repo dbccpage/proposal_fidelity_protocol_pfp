@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:presheaf:v0.1.0
+title: Presheaf Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: contravariant_functor
+  symbol: 'F: Open(X)^op → C'
+  ascii_symbol: presheaf
+  notation: 'F: Open(X)^op → C'
+  domain:
+  - 'source_category: Open(X)^op - opposite category of open sets of topological space X'
+  - 'target_category: C - arbitrary category (Set, Ab, Vect_k, etc.)'
+  - 'object_map: F(U) - object in C for each open set U'
+  - 'morphism_map: ρ_{V,U}: F(U) → F(V) - restriction map for each inclusion V ⊆ U'
+  codomain:
+    description: 'Contravariant functor F: Open(X)^op → C'
+requirements:
+  required_structures:
+  - The space_id must resolve to a valid TopologicalSpace artifact
+  - Every open set U must have a corresponding section F(U)
+  - Every inclusion V ⊆ U must have a corresponding restriction map ρ_{V,U}
+  - For each open set U, the restriction ρ_{U,U} must equal id_{F(U)}
+  - For each chain W ⊆ V ⊆ U, must have ρ_{W,U} = ρ_{W,V} ∘ ρ_{V,U}
+laws:
+- For each open set U, ρ_{U,U} = id_{F(U)}
+- For each chain W ⊆ V ⊆ U, ρ_{W,U} = ρ_{W,V} ∘ ρ_{V,U}
+replay:
+  requirements:
+  - Open sets and inclusions ordered canonically
+  - No external state dependencies
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:TopologicalSpace:v0.1.0 serves as Provides the underlying topological space and open set structure
+- urn:math:contract:Category:v0.1.0 serves as Provides the target category structure for F(U) objects and morphisms
+negative_tests:
+- space_id does not resolve to a valid TopologicalSpace
+- An open set U has no corresponding F(U)
+- An inclusion V ⊆ U has no corresponding ρ_{V,U}
+- ρ_{U,U} ≠ id_{F(U)} for some open set U
+- ρ_{W,U} ≠ ρ_{W,V} ∘ ρ_{V,U} for some chain W ⊆ V ⊆ U
+doctrine:
+  summary: 'A Presheaf is a contravariant functor from the category of open sets of a topological space to a target category.  It assigns to each open set U an object F(U) and to each inclusion V ⊆ U a restriction morphism ρ_{V,U}: F(U) → F(V).  The contract validates functoriality but does not require the sheaf axioms.'
+  non_role:
+  - Enforcing sheaf axioms (locality and gluing)
+  - Distinguishing separated presheaves from general presheaves
+  - Implementing sheafification algorithm
+  - Representing presheaf morphisms (natural transformations)
+wip:
+- The contract does not distinguish between presheaves and separated presheaves (those satisfying locality but not gluing)
+- Presheaf morphisms are natural transformations; these require a separate artifact type
+- 'The relationship with the Sheaf contract: a Presheaf becomes a Sheaf if it additionally passes locality and gluing validators'
+- Yoneda embedding and representable presheaves should be captured as FactEnvelope topics
+- Should we support presheaves on arbitrary sites (not just topological spaces)?
+- This contract focuses on the functor axioms only, not the sheaf axioms
+- Sheafification will be a separate operation in the Sheaf contract
+- Natural transformations between presheaves will need their own contract
+- Consider adding support for presheaves valued in monoidal categories

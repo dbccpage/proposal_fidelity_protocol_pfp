@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:grover_exact_iterate:v0.1.0
+title: Exact Grover reflection and Chebyshev Born law
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: grover_exact_iterate
+  symbol: grover_exact_iterate
+  ascii_symbol: grover_exact_iterate
+  notation: Exact Grover reflection and Chebyshev Born law
+  domain:
+  - Nonempty marked subset of 1..4096 labels; matrix iterate at most256 labels; iterations at most4096 and
+    n*k at most2^20.
+  codomain:
+    description: Declared finite results of core_quantum_physics::grover; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Oracle and diffusion reflections are unitary.
+- Marked Born probability equals (1-T_(2k+1)(1-2M/N))/2.
+- Rational unnormalized state has squared norm N; exact one-step success requires M=N or N=4M.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: grover
+  symbols:
+  - GroverInstance
+  - GroverIterate
+  required_tests:
+  - grover_chebyshev_probability_matches_every_evolved_marked_amplitude
+negative_tests:
+- grover_chebyshev_probability_matches_every_evolved_marked_amplitude
+doctrine:
+  summary: Oracle and diffusion reflections are unitary.; Marked Born probability equals (1-T_(2k+1)(1-2M/N))/2.;
+    Rational unnormalized state has squared norm N; exact one-step success requires M=N or N=4M..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,62 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:run_folder_v1:v1.0.0"
+title: "Run Folder v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit:
+      - "RUN_FOLDER_EXISTS"
+      - "MANIFEST_MISSING"
+      - "RECEIPT_MISSING"
+      - "DIGEST_MISMATCH"
+      - "UNBOUND_FILE"
+      - "CHAIN_TAMPERED"
+
+doctrine:
+  summary: >-
+    RunFolderV1 encapsulates an immutable, content-addressed execution directory
+    under _ic/darpa/symbol_game/runs/ sealed with a receipt binding all files
+    and stream heads.
+  invariants:
+    - "Every execution produces exactly one sealed folder whose receipt.json binds all SHA-256 digests."
+    - "No file within a sealed run folder is modified after atomic rename."
+    - "A crashed run is sealed as ABORTED and never deleted."
+    - "Scrubbed plaintext is kept for packets.jsonl while secrets are redacted."
+  non_roles:
+    - "authority_source"
+    - "truth_oracle"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: core_replay
+  rust_module: run_folder
+  rust_type: "RunReceiptV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: schema_version
+    - name: run_id
+    - name: status
+    - name: reason
+    - name: files
+    - name: chain_heads
+    - name: sealed_at_utc
+    - name: authority_effect

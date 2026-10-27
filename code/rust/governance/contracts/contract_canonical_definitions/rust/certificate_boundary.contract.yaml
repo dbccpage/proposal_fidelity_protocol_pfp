@@ -1,0 +1,47 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_certifiers:certificate_boundary:v1.0.0
+title: CertificateBoundary
+status: active
+crate: core_certifiers
+file: crates_rs/core_certifiers/src/certificate_boundary.rs
+layer: 02_evidence
+role: canonical_evidence_certifier
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- checked-packet evidence certificate entry point
+- none-effect authority verdict audit record
+does_not_own:
+- authority promotion
+- receipt DAG verification
+- authority-witness attestation
+- human promotion
+may_call:
+- core_certifiers::checked_packet::CheckedPacket::certify_evidence
+must_not:
+- call CertifiedAuthority::certify directly
+- call authority_from_outcome directly
+- call authority_from_outcome_f13 directly
+- call promote_authorized_local_result_v1
+- return CertifiedAuthority
+- construct AuthorizedLocalResultV1
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+forbidden_substrings:
+- CertifiedAuthority::certify
+- authority_from_outcome_f13
+- promote_authorized_local_result_v1
+- Result<CertifiedAuthority
+required_substrings:
+- CheckedPacketCertificateV1
+- certify_evidence
+- effect: '"None".to_owned()'
+required_tests:
+- certify_checked_packet_seals_none_effect_evidence
+- authority_verdict_transcribes_certificate_without_promoting
+lean_obligations: []

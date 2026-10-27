@@ -1,0 +1,41 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:mub_feasibility_wall:v1.0.0
+title: MubFeasibilityWall
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+rust_binding:
+  crate: core_functional
+  module: mub_feasibility_wall
+  symbols:
+  - MubFeasibilityWallValue
+  - MubFeasibilityWallEvidenceKind
+  - MubFeasibilityWallAuthorityKind
+  - MubFeasibilityWallTargetComparison
+doctrine:
+  summary: >-
+    MubFeasibilityWallEvidenceKind and evidence_kind are the canonical Rust API.
+    The v1.0.0 serialized field remains authority_kind. The deprecated
+    MubFeasibilityWallAuthorityKind alias and authority_kind accessors remain
+    through core_functional 0.2.x and may be removed no earlier than 0.3.0
+    after a fresh consumer census. Every form is evidence-only.
+  non_role:
+  - Does not grant, certify, or expand authority
+  - Does not permit dual authority_kind and evidence_kind data fields
+  - Does not rename the serialized field within this v1.0.0 contract

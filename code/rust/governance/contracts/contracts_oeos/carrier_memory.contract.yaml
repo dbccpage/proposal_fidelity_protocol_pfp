@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:carrier_memory:v1.0.0
+title: Host Buffer and Memory Boundary
+kind: host_contract
+status: proposed
+layer: 09_host
+role: CarrierMemory
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:resource_quota:v1.0.0
+    proof_obligations:
+      - id: MEM-INV-001
+        statement: Host buffers are bounded by the request quota and never define the mathematical carrier they encode.
+        verification_status: open
+      - id: MEM-INV-002
+        statement: Canonical input bytes are exposed read-only or copied before candidate mutation.
+        verification_status: open
+      - id: MEM-INV-003
+        statement: Buffer release and accounting are explicit and independently testable for the declared implementation profile.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - BUFFER_BOUNDS_REFUSED
+      - BUFFER_QUOTA_REFUSED
+      - READ_ONLY_BUFFER_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: exact_payload_bytes
+      type: urn:core:oeos:type:exact_bytes:v1.0.0
+      required: true
+  outputs:
+    - name: bounded_buffer_handle
+      type: urn:core:oeos:type:bounded_buffer_handle:v1.0.0
+      required: true
+  typed_refusals:
+    - BUFFER_BOUNDS_REFUSED
+    - BUFFER_QUOTA_REFUSED
+    - READ_ONLY_BUFFER_REFUSED
+  platform_requirements:
+    - profile: portable_process_memory
+      requirements:
+        - allocation_accounting
+        - explicit_buffer_lifetime
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares bounded host-memory handling for exact bytes while leaving all carrier semantics inward.
+  non_role:
+    - mathematical_carrier_definition
+    - schema_admission
+    - candidate_evaluation
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - process_memory_does_not_define_carrier_identity
+  invariants:
+    - canonical_input_buffers_are_not_mutated_in_place
+    - allocation_is_charged_to_one_declared_quota
+  allowed_operations:
+    - allocate_bounded_buffer
+    - expose_read_only_bytes
+    - copy_for_host_task
+  forbidden_operations:
+    - mutate_canonical_input_in_place
+    - infer_mathematical_type_from_memory_layout

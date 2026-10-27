@@ -1,0 +1,138 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:ordered_field_ldlt:v0.1.0
+title: Ordered-Field Inertia and LDLT Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quadratic_form_invariant
+  symbol: 'inertia(A) = (p, n, z) and A = L D L* (L* = Lᵀ or L†) over an ordered field'
+  ascii_symbol: ordered_field_ldlt
+  notation: 'A = Aᵀ over F : OrderedExactField, or A = A† over F : HermitianOrdered'
+  domain:
+  - 'field: F implementing OrderedExactField (a total order compatible with the field operations) or HermitianOrdered (an involution whose fixed field is ordered and whose norms are nonnegative)'
+  - 'matrix: square symmetric (Hermitian) BasicMatrix<F>'
+  - 'budgets: OperationLimits { max_elements, max_scalar_ops }'
+  codomain:
+    description: 'The inertia (positive, negative, zero diagonal counts of a congruence diagonalisation) with exact definiteness decisions, the quadratic and Hermitian forms, and the pivoting-free LDLᵀ factorisation (and, for Hermitian matrices, the L D L† factorisation) whose early stop carries a witness vector v with v* A v < 0.
+
+      '
+requirements:
+  required_structures:
+  - 'OrderedExactField::signum returns -1, 0 or 1, is 0 exactly for zero, satisfies signum(−x) = −signum(x), and the positive elements are closed under + and ·; an implementor must prove this and BigRational implements it'
+  - 'HermitianOrdered::fixed_field_sign is None exactly for elements not fixed by the involution, is an order sign on the fixed field, and every norm x · conj x has sign >= 0 and 0 only for x = 0'
+  - 'The algorithms refuse a signum or fixed_field_sign that returns a value outside {-1, 0, 1}, is zero for a nonzero element, or is None for a diagonal entry, as ScalarContract'
+  - 'Input must be symmetric (Hermitian for the Hermitian routines); the first offending position is reported'
+  - 'LDLᵀ accepts a zero pivot only when its whole Schur column is zero, stops at a negative pivot or at a zero pivot with a nonzero column, and leaves L with identity columns and D with zeros from the stopping step on'
+  - 'The witness of a NegativePivot at step j is (L*)⁻¹ e_j and has v* A v = pivot; the witness of ZeroPivotWithNonzeroColumn is (L*)⁻¹ (x e_j + e_i) with x = −(S_ii + 1)/(2 S_ij) and has v* A v = −1 (S is the Schur complement); here v* A v is vᵀ A v for ldlt and v† A v for hermitian_ldl'
+  - 'hermitian_ldl uses the recurrences D[j] = A[j][j] − Σ L[j][k] D[k] conj(L[j][k]) and L[i][j] = (A[i][j] − Σ L[i][k] D[k] conj(L[j][k])) / D[j]; its pivots are fixed by the involution and their signs are read with fixed_field_sign'
+  - 'The worst-case cost charged by ldlt is 2n³ + n² scalar calls'
+laws:
+- 'Sylvester: inertia(Sᵀ A S) = inertia(A) for every invertible S (valid over every ordered field, and for Hermitian forms under S† A S)'
+- 'p + n = rank A and p + n + z = dimension'
+- 'A is positive semidefinite iff n = 0, and positive definite iff n = 0 and z = 0'
+- 'for a completed LDLᵀ, A = L D Lᵀ with L unit lower triangular and every pivot >= 0; for a completed Hermitian factorisation A = L D L† with the same shape'
+- 'the pivoting-free LDLᵀ completes iff A is positive semidefinite (it agrees with the inertia decision)'
+- 'a stopped LDLᵀ carries a witness v with vᵀ A v < 0, replayable with quadratic_form; a stopped Hermitian factorisation carries v with v† A v of sign −1, replayable with hermitian_form'
+- 'A is positive definite iff all leading principal minors are positive, and positive semidefinite iff all principal minors are nonnegative'
+- 'over Q(i), the inertia of a Hermitian matrix is half the inertia of its real symmetric realification [[Re, −Im], [Im, Re]] (replayed by the tests over Q(i); not claimed for other fields)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'The order obligations replay on a finite sample through exact_field::laws::check_ordered_axioms and check_hermitian_ordered_axioms'
+  - 'The pivoting-free LDLᵀ reproduces the pre-existing exact_ldlt::ldlt_decomposition_rational triple (L, D, is_psd) entry for entry, including the partial fill after an early stop, and the congruence decisions agree with exact_ldlt::is_psd_rational'
+  - 'No tolerance: a perturbation of size 10⁻³⁰ is decided'
+relationships:
+- urn:core:math:congruence_diagonalisation:v0.1.0 serves as the diagonalisation whose signs give the inertia
+- urn:core:math:involution_adjoint:v0.1.0 serves as the involution and adjoint of the Hermitian routines
+- urn:core:math:bilinear_form:v0.1.0 serves as the form whose signature is computed
+- urn:core:math:povm:v0.1.0 is served by this contract (exact positive-semidefiniteness witnesses for rational and Gaussian-rational effects)
+- urn:core:math:density_matrix:v1.0.0 is served by this contract (an exact positive-semidefiniteness decision for the exact tier)
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::ordered
+  symbols:
+  - OrderedExactField
+  - HermitianOrdered
+  - Inertia
+  - Ldlt
+  - LdltOutcome
+  - inertia
+  - hermitian_inertia
+  - is_positive_semidefinite
+  - is_positive_definite
+  - hermitian_is_positive_semidefinite
+  - hermitian_is_positive_definite
+  - quadratic_form
+  - hermitian_form
+  - ldlt
+  - hermitian_ldl
+  # One test per mechanically checkable negative_test, in declaration order.
+  required_tests:
+  - asymmetric_non_square_and_non_hermitian_inputs_are_refused
+  - a_lying_signum_is_a_typed_error
+  - a_lying_fixed_field_sign_is_a_typed_error
+  - ldlt_reports_a_negative_pivot_with_a_witness
+  - ldlt_reports_a_zero_pivot_with_a_nonzero_column_and_a_lifted_witness
+  - hermitian_ldl_witness_for_an_imaginary_off_diagonal_entry
+  - hermitian_ldl_refuses_non_hermitian_input_and_respects_the_budget
+  - a_perturbation_far_below_any_tolerance_is_decided_exactly
+  - ldlt_budget_boundary_is_inclusive
+  # Positive witnesses of the laws above.
+  # - inertia_of_known_matrices
+  # - inertia_of_graph_adjacency_matrices
+  # - the_hilbert_matrix_is_positive_definite_exactly
+  # - inertia_is_invariant_under_congruence
+  # - inertia_is_consistent_with_rank_and_the_sign_of_the_determinant
+  # - definiteness_agrees_with_the_minor_criteria
+  # - definiteness_over_a_real_quadratic_field
+  # - hermitian_inertia_of_known_matrices
+  # - hermitian_gram_matrices_are_positive_and_inertia_is_congruence_invariant
+  # - hermitian_inertia_agrees_with_the_realification
+  # - ldlt_of_a_positive_definite_matrix_reproduces_it
+  # - ldlt_accepts_a_zero_pivot_with_a_zero_column
+  # - ldlt_and_congruence_inertia_agree_and_every_witness_replays
+  # - hermitian_ldl_of_a_positive_definite_matrix_reproduces_it
+  # - hermitian_ldl_and_hermitian_inertia_agree_and_every_witness_replays
+  # - hermitian_ldl_agrees_with_the_symmetric_ldlt_on_real_matrices
+  # - ldlt_reproduces_the_legacy_decomposition_exactly
+  # - definiteness_agrees_with_the_legacy_exact_ldlt_decisions
+negative_tests:
+- a matrix that is not symmetric must be refused as NotSymmetric, one that is not Hermitian as NotHermitian, and a non-square matrix as NotSquare
+- a scalar whose signum returns a value outside {-1, 0, 1} or zero for a nonzero element must be refused as ScalarContract
+- a scalar whose fixed_field_sign is None for a diagonal entry or outside {-1, 0, 1} must be refused as ScalarContract
+- a matrix that is not positive semidefinite must make ldlt (and hermitian_ldl) stop with a witness v whose form is negative, for a negative pivot and for a zero pivot with a nonzero Schur column, including a zero pivot whose Schur entry is purely imaginary
+- hermitian_ldl of a matrix that is not Hermitian must be refused as NotHermitian
+- a perturbation below any floating-point tolerance must still be decided exactly
+- an operation whose documented worst-case bound exceeds the budget must be refused before any scalar work, and a bound equal to the limit must be accepted
+doctrine:
+  summary: 'Exact inertia, definiteness and LDLᵀ over any ordered field, and Hermitian inertia over any field with an involution whose fixed field is ordered. The signature is read from a congruence diagonalisation, so it is complete (it handles zero diagonal entries) and valid over Q, real quadratic fields and real cyclotomic subfields, and over Q(i) and cyclotomic fields for Hermitian forms. The pivoting-free LDLᵀ and its Hermitian form L D L† (no realification, so the dimension is not doubled) are the certificate-bearing route: when they stop they return a vector that proves the matrix indefinite.'
+  non_role:
+  - Numerical definiteness with tolerances
+  - Eigenvalues, spectral decomposition or exact real-algebraic roots
+  - Cholesky of nearly singular floating-point matrices
+  - Fields whose involution can produce negative norms, where no signature exists
+wip:
+- No Lean statement of Sylvester's law exists; the YAML to Lean to Rust chain for this contract is open
+- The pre-existing exact_ldlt module (BigRational only, String errors, rejects the empty matrix) remains alongside this one; it is cross-validated but not yet rebuilt on top of it
+- OrderedExactField and HermitianOrdered are implemented in this crate for BigRational only; the real quadratic, Gaussian rational and cyclotomic implementations belong to the number-theory crate
+- The ldlt witness is exact but not minimal; no witness of minimal support is computed
+- Positive definiteness of a matrix over a field whose order is given only by an enclosure (interval) is not supported; a sign must be exact

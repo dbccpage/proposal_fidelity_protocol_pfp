@@ -1,0 +1,81 @@
+schema_version: "1.0.0"
+contract_id: "rust:core_functional:trichotomy"
+kind: "rust_file_contract"
+name: "Finite obstruction trichotomy — Phi1/Gamma2 classifier"
+version: "1.0.0"
+
+crate: core_policy
+file: "engine/crates_rs/core_policy/src/trichotomy.rs"
+module_path: "core_policy::trichotomy"
+
+role: "obstruction_trichotomy_classifier"
+status: "active"
+authority_effect: "EvidenceOnly"
+transition_authority: "none"
+
+description: >
+  classify_exact(Phi1, Gamma2) -> ObstructionStatus: ExactRepair (Phi1 = 0), StabilizedSurvivor
+  (Phi1 > 0 and Gamma2 = 0), OpenObstruction (Phi1 > 0 and Gamma2 > 0). Descriptive classifier of
+  the obstruction state of a degree-1 residual; mints no authority, issues no ActionLicense. The v1
+  math contract is urn:core:math:finite_obstruction_trichotomy:v0.2.0 (this os contract is the
+  Lean<->Rust binding / third leg, not a replacement).
+
+lean_anchor:
+  file: "atlas/coda_atlas/F004_papers/006_finite_qm/lean4/PointedObstructionClassifier.lean"
+  repointed_from: "engine/lean4/…/CoreCosmology/Primitives/PointedObstructionClassifier.lean (not present in this repository)"
+  in_tree_build: "Root `PointedObstructionClassifier` of atlas/coda_atlas/F004_papers/006_finite_qm/lean4/lakefile.lean (leanprover/lean4:v4.33.1); core Lean, imports PrimitiveDifference. A byte-identical copy sits at atlas/coda_atlas/finite_qm/lean4/."
+  replay: >
+    2026-09-29 standalone compile with Lean 4.34.0 (the package pins 4.33.1), exit 0:
+    classifier_total is axiom-free; terminalize_{exactRepair,stabilizedSurvivor,openObstruction}_iff
+    print axioms [propext].
+  modeled_definitions:
+    - "ObstructionClassifier (Phi, Gamma : Q -> Nat) + terminalize -> ObstructionStatus (the reusable trichotomy operad)"
+    - "classifier_total + classifier_exclusive_{exact_stabilized,exact_open,stabilized_open} (totality + mutual exclusivity)"
+    - "terminalize_{exactRepair,stabilizedSurvivor,openObstruction}_iff (terminalize matches the Phi=0 / Gamma=0 case split)"
+  cochain_instance_file: "lean4/original_lean_20260809/finite_cochain_complex.lean"
+  cochain_instance_repointed_from: "engine/lean4/…/CoreCosmology/Primitives/FiniteCochainComplex.lean (never present in this repository)"
+  cochain_instance_build: >
+    Not a root of any Lake package here; its imports primitive_difference,
+    «lg006_pointed_obstruction_classifier» and «lg006_primitive_obstruction_pipeline» do not
+    resolve. 2026-09-29 scratch replay (Lean 4.34.0 + Mathlib v4.34.0, those three imports
+    rewritten to the finite_qm modules, body unchanged): exit 0; every cochain_instance name
+    elaborates and the TRI-L2/TRI-L3 theorems print axioms [propext, Classical.choice, Quot.sound].
+  cochain_instance:
+    - "cochainClassifier (Phi = coboundary indicator, Gamma = gammaRaw) instantiates the operad"
+    - "cochainClassifier_phi_eq_zero_iff / cochainClassifier_gamma_eq_zero_iff"
+    - "gammaL1_eq_zero_iff_closed; gammaL1_eq_zero_of_mem_range (exact => closed via d1 d0 = 0)"
+  orientation: "ExactRepair iff Phi=0 (coboundary); StabilizedSurvivor iff Phi>0 and Gamma=0 (closed nonexact); OpenObstruction iff Phi>0 and Gamma>0"
+
+owns:
+  - "exact_finite_obstruction_classification"
+
+does_not_own:
+  - "phi1 (core_functional::phi1)"
+  - "gamma2 (core_functional::gamma2)"
+  - "obstruction_classifier_operad (owned by CoreCore.PointedObstructionClassifier)"
+  - "authority_minting"
+  - "terminalization / ActionLicense"
+  - "customer_facing_claim"
+
+lean_obligations:
+  - id: "TRI-L0"
+    theorem: "Totality + mutual exclusivity of the trichotomy on (Phi, Gamma): exactly one of exact/survivor/open holds."
+    lean_name: "CoreCore.ObstructionClassifier.classifier_total"
+    status: "proved_in_lean"
+  - id: "TRI-L1"
+    theorem: "terminalize realizes the (Phi=0 / Gamma=0) case split (exact/survivor/open iff lemmas)."
+    lean_name: "CoreCore.ObstructionClassifier.terminalize_exactRepair_iff (+ stabilizedSurvivor/openObstruction)"
+    status: "proved_in_lean"
+  - id: "TRI-L2"
+    theorem: "Cochain instance: Phi = 0 iff q is a coboundary (Phi1 = 0); Gamma = 0 iff q is closed (Gamma2 = 0)."
+    lean_name: "CoreCore.cochainClassifier_phi_eq_zero_iff (+ cochainClassifier_gamma_eq_zero_iff)"
+    status: "proved_in_lean"
+  - id: "TRI-L3"
+    theorem: "KEYSTONE exact => closed: an exactRepair cochain residual has Gamma = 0 (a coboundary has zero closure charge), via d1 d0 = 0. This is the well-foundedness of the trichotomy."
+    lean_name: "CoreCore.cochainClassifier_exact_imp_gamma_zero (via gammaL1_eq_zero_of_mem_range)"
+    status: "proved_in_lean"
+
+notes:
+  - "Reuses the abstract CoreCore.ObstructionClassifier operad; the cochain instance only contributes the d1 d0 = 0 keystone (exact => closed). This is the reusable-operad pattern: one trichotomy proved once on the operad, instantiated per carrier."
+  - "Descriptive only; the trichotomy describes obstruction state and does not mint authority, terminalize, or issue an ActionLicense (matches the v1 math contract doctrine)."
+  - "FSP framing: Meron (Paper 041) is the exactRepair corner (full cancellation, Phi1=0); the general fermion sign problem lands in stabilizedSurvivor (residual H^1) or openObstruction."

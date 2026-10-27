@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:representation_regime:v0.1.0
+title: Representation Regime Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: representation_regime
+  symbol: R = (G, k, C, Sigma)
+  ascii_symbol: representation_regime
+  notation: R = (G, k, C, Sigma)
+  domain:
+  - 'algebraic_object: G (group, algebra, or Lie algebra)'
+  - 'coefficient_field: k (field or ring of coefficients)'
+  - 'target_category: C (category of target modules)'
+  - 'structural_constraints: Sigma (set of required properties)'
+  codomain:
+    description: 'A tuple R = (G, k, C, Sigma) specifying the algebraic context for representations.
+
+      '
+requirements:
+  required_structures:
+  - Algebraic object G must have a content-addressed hash
+  - Coefficient field k must have a content-addressed hash
+  - Target category C must be explicitly specified
+  - All structural constraints in Sigma must be mutually consistent
+  - If Sigma requires char(k) not dividing |G|, this must be verifiable
+laws:
+- G is a well-defined algebraic object with specified structure
+- k is a valid field (or ring) with required properties
+- C is a valid abelian category with specified properties
+- Structural constraints Sigma are mutually consistent
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Regime specification is deterministic
+  - Constraint checking is deterministic
+  - All components use canonical serialization
+relationships:
+- urn:math:contract:Ring:v0.1.0 serves as defines_coefficient_ring_structure
+- urn:math:contract:Category:v0.1.0 serves as defines_target_category_structure
+negative_tests:
+- Algebraic object that is not a valid group/algebra must be rejected
+- Coefficient object that is not a valid field must be rejected
+- Contradictory structural constraints must be rejected
+- Regime where char(k) | |G| but semisimplicity is required must be rejected
+- Regime artifact claiming authority must be rejected
+- Regime artifact claiming admissibility must be rejected
+doctrine:
+  summary: 'A RepresentationRegime specifies the algebraic context for representations: the acting algebraic object (group G, algebra A, or Lie algebra g), the coefficient field k, the target category (finite-dimensional k-vector spaces, modules over a ring, etc.), and any structural constraints (semisimplicity, characteristic restrictions). The regime is a passive configuration that parameterizes representation operations but does not itself classify or decide anything.'
+  non_role:
+  - Deciding which regime is correct for a given problem
+  - Policy on which regimes are allowed
+  - Authority over regime selection
+  - Customer-facing claims about regime suitability
+wip:
+- Should regimes support derived categories as target categories?
+- How to handle modular representation theory regimes (char(k) | |G|)?
+- Should regimes track available decomposition algorithms?
+- Currently supports finite groups, associative algebras, and Lie algebras
+- Modular representation regimes need special handling for non-semisimple cases
+- Derived category targets deferred to future version

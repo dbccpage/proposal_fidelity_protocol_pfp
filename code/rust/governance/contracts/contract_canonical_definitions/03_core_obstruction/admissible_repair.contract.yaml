@@ -1,0 +1,273 @@
+schema_version: core.contract.v1
+contract_id: urn:core:obstruction:admissible_repair:v1.0.0
+title: AdmissibleRepair
+kind: obstruction_contract
+status: mathematical_wip
+layer: 03_obstruction
+role: AnalysisUnit
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Carrier
+    - Coboundary
+    - GaugeEquivalence
+    - Reducer
+    - Witness
+    - CertificateKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the AdmissibleRepair boundary.
+
+
+    AdmissibleRepair is a same-carrier local displacement candidate. A checked AdmissibleRepair
+
+    may support E = exact repair classification. A separate license is required before Engine execution.
+
+    AdmissibleRepair does not lift, adapt, reinterpret, terminalize, mutate runtime state, or execute.
+
+    '
+  non_role: &id002
+  - lift
+  - adapter_conversion
+  - reinterpretation
+  - semantic_repair
+  - terminalization
+  - execution
+  - transition_authorization
+  - action_licensing
+  - state_mutation
+  - candidate_ranking
+  - candidate_scoring
+  - effect_class_self_assignment
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+
+      terminalize, authorize transitions, execute transitions, assign effect classes,
+
+      or upgrade evidence authority.
+
+
+      LLM output may propose AdmissibleRepair candidates, but those proposals are
+
+      EvidenceOnly until checked by the declared repair, replay, certificate, and
+
+      fixed-layer operator classifier/checker boundaries.
+
+      '
+  effect_class_binding:
+    doctrine: 6
+    text: 'A checked AdmissibleRepair may instantiate the E = exact repair effect-class in the
+
+      fixed-layer operator algebra.
+
+
+      A candidate AdmissibleRepair does not self-declare E authority. E classification must be
+
+      evidence-based and produced by the fixed-layer operator classifier/checker.
+
+      '
+    connection_to_fixed_layer_operator_algebra: "- AdmissibleRepair implements the E effect-class: a same-carrier\
+      \ local displacement that\n  restores a broken invariant to its canonical form.\n- The repair is\
+      \ exact: the post-state satisfies the invariant that the pre-state violated.\n- Composition law:\
+      \ E . E may normalize to E only when the composition is same-carrier,\n  invariant-preserving, replayable,\
+      \ and justified by an explicit RewriteLaw or certificate.\n- Candidate authority: EvidenceOnly.\n\
+      - Checked classification authority: FactOnly for checked structural claims.\n- Licensing authority:\
+      \ AuthorizesTransition, emitted only by LicensingBoundary.\n- Execution authority: StateTransition,\
+      \ emitted only by Engine.\n"
+    authority_defaults: 'An AdmissibleRepair candidate is EvidenceOnly by default.
+
+
+      A checked exact-repair fact may become FactOnly only after same-carrier preservation,
+
+      invariant restoration, replayability, witness references, and certificate references are checked.
+
+
+      A repair license, if emitted by a later licensing boundary, uses AuthorizesTransition.
+
+
+      Engine execution of the licensed repair uses StateTransition.
+
+      '
+    operator_note: 'Only E, I, C, R, M are operators. A checked AdmissibleRepair may instantiate E after
+
+      evidence-based classification. A candidate AdmissibleRepair must not self-declare E.
+
+      All other entities (Lambda, Reducer, Adapter, etc.) are action candidates or boundaries,
+
+      never operators. See fixed_layer_operator_algebra_contract.md.
+
+      '
+  classification:
+    subsystem: Cohomological Semantics / Obstruction Algebra
+    role: 'Same-carrier local displacement candidate (effect-class E: Exact Repair after checking).'
+    classification: Obstruction layer -- same-carrier repair.
+  structural_representation:
+    candidate:
+      struct_name: AdmissibleRepairCandidate
+      fields:
+      - name: repair_id
+        type: RepairId
+      - name: carrier_ref
+        type: CarrierRef
+      - name: carrier_schema_hash
+        type: Hash256
+      - name: source_hash
+        type: Hash256
+      - name: target_hash
+        type: Hash256
+      - name: repair_kind
+        type: RepairKind
+      - name: generator_ref
+        type: Option<GeneratorId>
+      - name: component_ref
+        type: Option<ComponentId>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: repair_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedAdmissibleRepair
+      fields:
+      - name: repair_id
+        type: RepairId
+      - name: candidate_ref
+        type: RepairId
+      - name: same_carrier_certificate
+        type: CertificateId
+      - name: invariant_restoration_certificate
+        type: CertificateId
+      - name: replay_ref
+        type: ReplayRef
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: RepairKind
+      variants:
+      - D0Displacement
+      - GaugeEquivalenceWitnessed
+      - ReducerCandidate
+  core_definition: 'An AdmissibleRepair is a same-carrier local displacement candidate generated by d_0
+    or
+
+    declared gauge-equivalence/reducer action inside the current carrier. A separate license
+
+    is required before Engine execution.
+
+    '
+  same_carrier_law: "An AdmissibleRepair MUST preserve:\n  - carrier identity\n  - schema identity\n \
+    \ - universe identity\n  - coefficient semantics\n\nSame-carrier preservation must be checked against\
+    \ carrier identity, schema hash, universe\nidentity, coefficient semantics, and declared boundary\
+    \ references.\n\nAny carrier extension, schema expansion, added generator, added context, or layer\
+    \ transition\nis Lift, not AdmissibleRepair.\n"
+  must_be:
+  - Same-carrier
+  - Typed
+  - Finite
+  - Replayable
+  - Non-lifting
+  - Non-semantic
+  must_not_be:
+  - Optimization trick
+  - Solver improvement
+  - Explanation
+  - Reinterpretation
+  - Lift
+  - Adapter conversion
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - lift_carrier
+    - adapter_conversion
+    - reinterpret_semantics
+    - semantic_repair
+    - PolicyDecision
+    - EngineDecision
+    - TerminalEnvelope
+    - ALLOW_OUTPUT
+    - BLOCK_OUTPUT
+    - terminalize(
+    - execute_now(
+    - mutate_runtime
+    - rank_candidates
+    - score_candidate
+    - authorize_transition(
+    - license_transition(
+    - GaugeOp
+    - AdapterOp
+    - ForgetfulOp
+    - OperatorFactEnvelope
+    - OperatorId
+    - BasisOperator
+    - self_declare_effect_class
+    - apply_operator_now(
+  required_tests:
+  - admissible_repair_requires_carrier_ref
+  - admissible_repair_is_same_carrier
+  - admissible_repair_is_finite
+  - admissible_repair_is_replayable
+  - admissible_repair_is_not_lift
+  - admissible_repair_is_not_adapter
+  - admissible_repair_requires_witness_or_certificate
+  - admissible_repair_candidate_defaults_to_evidence_only
+  - checked_admissible_repair_may_be_factonly_after_certificates
+  - admissible_repair_cannot_self_declare_effect_class_e
+  - admissible_repair_requires_same_carrier_certificate
+  - admissible_repair_requires_invariant_restoration_certificate
+  - admissible_repair_composition_requires_rewrite_law_or_certificate
+  - admissible_repair_does_not_emit_action_license
+  - admissible_repair_does_not_authorize_transition
+  - admissible_repair_does_not_execute
+  canonical_invariant: 'AdmissibleRepair candidates are EvidenceOnly same-carrier repair proposals. A
+    checked
+
+    AdmissibleRepair may instantiate E = exact repair only through evidence-based classification,
+
+    same-carrier checking, invariant-restoration certificates, and replay evidence. It does not
+
+    lift, adapt, reinterpret, terminalize, license, authorize, mutate, or execute.
+
+    '
+  legacy_metadata:
+    name: AdmissibleRepair
+    role: Same-carrier local displacement candidate supporting effect-class E after checking
+    version: '2.0'
+    classification: obstruction
+    effect_class_target: E
+    effect_class_authority: checker_only
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+    - Record
+    referenced_domain_kinds:
+    - WitnessEnvelope
+    - CertificateEnvelope
+    - ReplayReport
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_obstruction_contract:v1.0.0"

@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_w_dicke_states:v0.1.0
+title: Exact W and Dicke state reductions
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_w_dicke_states
+  symbol: exact_w_dicke_states
+  ascii_symbol: exact_w_dicke_states
+  notation: Exact W and Dicke state reductions
+  domain:
+  - Bounded finite rays over Q(i), rational mixing parameters and exact tensor index order
+  codomain:
+    description: Declared finite results of core_quantum_physics::w_state; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- W has exactly n equal unnormalized amplitudes
+- Dicke squared norm is the exact binomial count
+- W two-qubit marginals retain off-diagonal coherence and concurrence2/n
+- Invalid excitation counts and oversized dimensions refuse
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: w_state
+  symbols:
+  - WState::exact
+  - WState::dicke
+  required_tests:
+  - states_channels_exact_tests::ghz_w_dicke_cuts_retain_coherences_and_distinguish_three_tangle
+negative_tests:
+- states_channels_exact_tests::ghz_w_dicke_cuts_retain_coherences_and_distinguish_three_tangle
+doctrine:
+  summary: W has exactly n equal unnormalized amplitudes; Dicke squared norm is the exact binomial count; W
+    two-qubit marginals retain off-diagonal coherence and concurrence2/n; Invalid excitation counts and oversized
+    dimensions refuse.
+  non_role:
+  - Does not assert a continuum state or a complete multipartite SLOCC classification
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

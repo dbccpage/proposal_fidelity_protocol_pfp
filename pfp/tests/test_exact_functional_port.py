@@ -28,7 +28,7 @@ from pfp.infrastructure.adapters.exact_rust_adapter import (
     RustExactEngineAdapter,
 )
 
-_DIGEST = "41e19d465ffca9dd0195682314ffba74f7abf11ad9c832c358fad96b8b4fa8b4"
+_DIGEST = "43c05d791424bdfd2f814db2791adca5c088b5c8d2d2d231ee9a62de9b5e432a"
 
 
 def _receipt(**changes: Any) -> FunctionalReceipt:

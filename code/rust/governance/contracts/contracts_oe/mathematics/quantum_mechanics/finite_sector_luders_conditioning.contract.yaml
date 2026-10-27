@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_sector_luders_conditioning:v0.1.0
+title: Finite conditioning and exact selective or unselective Luders updates
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_sector_luders_conditioning
+  symbol: finite_sector_luders_conditioning
+  ascii_symbol: finite_sector_luders_conditioning
+  notation: Finite conditioning and exact selective or unselective Luders updates
+  domain:
+  - Nonempty nonnegative rational finite outcome measures; Q(i) state/projector carriers1..64
+  codomain:
+    description: Declared finite results of core_quantum_physics::sector_conditioning; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Conditioned weights normalize exactly and keep only the sector
+- Luders compression P rho P divided by its exact trace agrees with diagonal conditioning
+- Projectors are checked Hermitian and idempotent; states are admitted positive trace-one
+- A complete projective resolution defines a checked unselective CPTP channel
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: sector_conditioning
+  symbols:
+  - condition_weights
+  - sector_weight_probability
+  - sector_projector
+  - luders_update
+  - luders_channel
+  required_tests:
+  - measurement_exact_laws::conditioning_and_luders_updates_replay_probabilities_and_refuse_null_sectors
+negative_tests:
+- measurement_exact_laws::conditioning_and_luders_updates_replay_probabilities_and_refuse_null_sectors
+doctrine:
+  summary: Conditioned weights normalize exactly and keep only the sector; Luders compression P rho P divided
+    by its exact trace agrees with diagonal conditioning; Projectors are checked Hermitian and idempotent;
+    states are admitted positive trace-one; A complete projective resolution defines a checked unselective
+    CPTP channel.
+  non_role:
+  - A null event has no conditional state; selective postselection is not the no-signalling unselective update
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

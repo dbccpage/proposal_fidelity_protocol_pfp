@@ -1,0 +1,97 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:cas_store:v1.0.0
+title: Immutable Content-Addressed Store
+kind: host_contract
+status: proposed
+layer: 09_host
+role: ContentAddressableStorage
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+      - urn:core:oeos:filesystem_adapter:v1.0.0
+    proof_obligations:
+      - id: CAS-INV-001
+        statement: Stored objects are addressed only by SHA-256 of their exact stored bytes within one declared CAS root.
+        verification_status: open
+      - id: CAS-INV-002
+        statement: The immutable CAS interface exposes put, get, has, and verify operations but no deletion operation.
+        verification_status: open
+      - id: CAS-INV-003
+        statement: Reads independently recompute byte length and raw digest before returning an object.
+        verification_status: open
+      - id: CAS-INV-004
+        statement: Refusal leaves the admitted CAS tree census byte-for-byte unchanged for the verified transaction profile.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - CAS_COLLISION_REFUSED
+      - CAS_CORRUPTION_REFUSED
+      - CAS_OBJECT_LIMIT_REFUSED
+      - CAS_REDIRECT_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: exact_object_bytes
+      type: urn:core:oeos:type:exact_bytes:v1.0.0
+      required: true
+  outputs:
+    - name: raw_sha256_artifact_ref
+      type: urn:core:oeos:type:artifact_ref:v1.0.0
+      required: true
+  typed_refusals:
+    - CAS_COLLISION_REFUSED
+    - CAS_CORRUPTION_REFUSED
+    - CAS_OBJECT_LIMIT_REFUSED
+    - CAS_REDIRECT_REFUSED
+  platform_requirements:
+    - profile: windows_filesystem_cas
+      requirements:
+        - exclusive_creation
+        - static_reparse_point_refusal
+        - verified_short_read_write_loops
+      verification_status: requirements_only
+    - profile: posix_filesystem_cas
+      requirements:
+        - exclusive_creation
+        - static_symlink_refusal
+        - verified_short_read_write_loops
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares a write-once exact-byte store scoped to one configured CAS root.
+  non_role:
+    - payload_execution
+    - artifact_semantic_interpretation
+    - evidence_promotion
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - deduplication_is_not_claimed_beyond_one_declared_cas_root
+    - static_redirect_checks_do_not_establish_general_toctou_safety
+  invariants:
+    - object_key_is_sha256_of_exact_stored_bytes
+    - immutable_interface_has_no_delete_operation
+  allowed_operations:
+    - put_exact_bytes_exclusively
+    - get_and_verify_exact_bytes
+    - test_object_presence
+  forbidden_operations:
+    - delete_object
+    - mutate_object_in_place
+    - execute_stored_payload

@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quantum_channel:v0.1.0
+title: QuantumChannel Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quantum_channel
+  symbol: quantum_channel
+  ascii_symbol: quantum_channel
+  notation: Exact Finite Quantum Channel
+  domain:
+  - Finite input/output operator spaces over Q(i), with weighted exact Kraus or Choi data
+  codomain:
+    description: Declared finite results of core_quantum_physics::exact_channel; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The full Choi operator is positive semidefinite and its output partial trace is input identity
+- The weighted Kraus completeness relation is sum w K dagger K=I
+- Application is linear, trace preserving and retains complex coherences
+- Rectangular Kraus, Choi and Stinespring routes replay the same channel
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+relationships:
+- urn:math:contract:HilbertSpace:v1.0.0 serves as Input and output spaces for the quantum channel
+- urn:math:contract:DensityMatrix:v1.0.0 serves as Domain and codomain objects
+- urn:math:contract:Field:v1.0.0 serves as Underlying field (typically C)
+negative_tests:
+- Reject wrong Choi dimension, nonpositive Choi data, non-Hermitian candidates and failed trace preservation
+doctrine:
+  summary: The full Choi operator is positive semidefinite and its output partial trace is input identity;
+    The weighted Kraus completeness relation is sum w K dagger K=I; Application is linear, trace preserving
+    and retains complex coherences; Rectangular Kraus, Choi and Stinespring routes replay the same channel.
+  non_role:
+  - Unrelated artifact-addressing protocols
+  - General continuum channels or customer-facing authority
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted
+- The former generic metadata scaffold remains outside this explicitly declared finite executable domain; its
+  unsupported hash obligations are not claimed discharged.
+rust_binding:
+  crate: core_quantum_physics
+  module: exact_channel
+  symbols:
+  - ExactKrausChannel
+  - ExactChoiMatrix
+  - ExactKrausChannel::try_weighted
+  - ExactChoiMatrix::try_new
+  required_tests:
+  - channels_have_choi_kraus_metric_stinespring_and_ordinary_routes
+  - rectangular_channel_factorization_and_malformed_choi_refusals
+  - generalized_amplitude_damping_has_the_exact_thermal_fixed_state

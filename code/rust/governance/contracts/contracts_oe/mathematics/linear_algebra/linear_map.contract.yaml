@@ -1,0 +1,93 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:linear_map:v0.1.0
+title: Linear Map Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: linear_map
+  symbol: 'f: V → W (as matrix with respect to bases)'
+  ascii_symbol: linear_map
+  notation: 'f: V → W (as matrix with respect to bases)'
+  domain:
+  - 'domain: vector_space_V'
+  - 'codomain: vector_space_W'
+  - 'matrix: coordinate_matrix'
+  codomain:
+    description: Linear transformation V → W between finite-dimensional vector spaces
+requirements:
+  required_structures:
+  - Domain, codomain, and matrix artifacts must exist
+  - All three artifacts must reference same field K
+  - Matrix dimensions must match space dimensions
+  - Matrix basis hashes must match space basis hashes
+laws:
+- Domain, codomain, and matrix all over same field K
+- Matrix dimensions match space dimensions
+- Matrix basis hashes match space basis hashes
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Artifact existence verified via content-addressing
+  - Validator and computation functions are content-addressed
+relationships:
+- urn:math:contract:VectorSpace:v0.1.0 serves as defines_domain_and_codomain_spaces
+- urn:math:contract:BasicMatrix:v1.0.0 serves as coordinate_matrix_representation
+- urn:math:contract:Field:v0.1.0 serves as common_base_field_K
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_map
+  symbols:
+  - LinearMap
+  # new_checked rejects matrix-vs-basis dimension mismatch. checked_compose
+  # rejects codomain(f) != domain(g) by basis id. Artifact-hash, field_id,
+  # identity-with-mismatched-basis, and replay-hash obligations have no
+  # constructor here and stay unnamed.
+  required_tests:
+  - new_checked_rejects_domain_dimension_mismatch
+  - new_checked_rejects_codomain_dimension_mismatch
+  - checked_compose_rejects_codomain_domain_basis_mismatch
+negative_tests:
+- One of three artifact hashes does not resolve must be rejected
+- Domain, codomain, or matrix using different fields must be rejected
+- Matrix dimensions not matching space dimensions must be rejected
+- Matrix basis hashes not matching space basis hashes must be rejected
+- Composing maps where codomain of f != domain of g must be rejected
+- Identity matrix with mismatched basis must be rejected
+- Same inputs producing different hashes must be rejected
+doctrine:
+  summary: A LinearMap is a linear transformation between two finite-dimensional vector spaces V (domain) and W (codomain) over a common field K, expressed with respect to chosen ordered bases of V and W. It is the pairing of a domain VectorSpace, a codomain VectorSpace, and a Matrix artifact that encodes the transformation in those bases. This contract guarantees compatibility of dimensions, bases, and field, but does not assert any additional algebraic properties (injectivity, surjectivity, kernel) — those are separate FactEnvelopes.
+  non_role:
+  - Algebraic properties (injectivity, surjectivity, kernel) are separate FactEnvelopes
+  - Abstract maps without chosen basis (deferred to AbstractLinearMap contract)
+  - Continuous or infinite-dimensional spaces (out of scope)
+  - Determinant computation (separate ComputationWitness)
+wip:
+- Should abstract maps without chosen basis have separate AbstractLinearMap contract?
+- How to handle composition when intermediate Matrix artifacts must be created?
+- How to define version-aware referencing when VectorSpace/Matrix contracts upgrade?
+- How to compute properties like 'is invertible' (requires determinant)?
+- Requires explicit Matrix artifact (no abstract basis-free maps)
+- Operations like composition generate new Matrix artifacts
+- Continuous or infinite-dimensional spaces not addressed
+- Properties like injectivity/surjectivity are separate FactEnvelopes
+- Dimension and field_id cached in descriptor (derivable from referenced artifacts)
+- Version changes to VectorSpace/Matrix contracts could invalidate existing LinearMaps

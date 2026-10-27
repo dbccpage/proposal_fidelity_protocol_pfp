@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:derived_scheme:v0.1.0
+title: Derived Scheme Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: derived_scheme
+  symbol: X = (X_space, O_X) with Spec(A) affine opens
+  ascii_symbol: derived_scheme
+  notation: X = (X_space, O_X) with Spec(A) affine opens
+  domain:
+  - 'underlying_space: topological_space_or_infinity_topos'
+  - 'structure_sheaf: sheaf_of_cdgas_or_simplicial_rings'
+  - 'affine_cover: atlas_of_derived_affine_opens'
+  codomain:
+    description: Derived stack with local affine structure
+requirements:
+  required_structures:
+  - Underlying space is well-defined topological space or ∞-topos
+  - Structure sheaf is a sheaf of cdga's or simplicial rings
+  - Each open in the cover is derived affine
+  - The cover glues correctly with compatible transition maps
+  - StructureArtifact hash is deterministic from inputs
+laws:
+- Each open in the cover is derived affine (Spec of cdga or simplicial ring)
+- O_X is a sheaf of cdga's or simplicial rings
+- The affine cover glues correctly with transition maps
+- L_X is a perfect complex (implied, not enforced structurally)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All structure sheaf and cover data are fixed byte arrays
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:DerivedStack:v0.1.0 serves as base_derived_stack_structure
+- urn:math:contract:Sheaf:v0.1.0 serves as structure_sheaf_as_sheaf_of_cdgas
+- urn:math:contract:CotangentComplex:v0.1.0 serves as cotangent_complex_structure
+- urn:math:contract:SimplicialjRing:v0.1.0 serves as simplicial_commutative_ring_structure
+negative_tests:
+- Invalid underlying space must be rejected
+- Structure sheaf not cdga/simplicial must be rejected
+- Cover with non-affine opens must be rejected
+- Incoherent gluing data must be rejected
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: A derived scheme is a derived stack that is "schematic" — locally equivalent to Spec of a cdga or simplicial ring. Derived schemes extend algebraic geometry to handle non-transverse intersections and deformation theory intrinsically. The truncation π_0(O_X) gives an ordinary scheme, while higher homotopy π_i(O_X) captures "derived" structure. The cotangent complex L_X is a perfect complex. Derived tensor products X ×^L_Z Y capture correct intersection even when not transverse. This contract is purely structural and does not confer authority.
+  non_role:
+  - Derived algebraic stacks as groupoid objects (separate contract)
+  - Virtual structure sheaves and Donaldson-Thomas invariants (future)
+  - Specific computations of cotangent complexes (separate operations)
+  - DAG vs SAG distinction (deferred to future versions)
+wip:
+- Relation between DAG (cdga's) and SAG (E_∞-rings)
+- Derived algebraic stacks as groupoid objects
+- Virtual structure sheaf and Donaldson-Thomas invariants
+- Currently targets derived schemes with cdga or simplicial ring structure sheaves
+- DAG vs SAG distinction deferred to future versions
+- Derived stacks as groupoid objects will be a separate contract
+- Virtual structure sheaves and DT invariants are future work

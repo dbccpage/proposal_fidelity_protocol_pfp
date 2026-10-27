@@ -1,0 +1,87 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:solver_arena_policy_bridge:v1.0.0
+title: Solver Arena Policy Bridge
+kind: host_contract
+status: proposed
+layer: 09_host
+role: SolverArenaPolicyBridge
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:experience_memory_bridge:v1.0.0
+      - urn:core:oeos:worker_host:v1.0.0
+    proof_obligations:
+      - id: SAP-INV-001
+        statement: Every competitor and corpus case binds exact implementation, lineage, route, budget, memory, and anti-skill digests.
+        verification_status: open
+      - id: SAP-INV-002
+        statement: Holdout scoring uses independent deterministic tests and mutation-sensitive gates rather than an LLM judge.
+        verification_status: open
+      - id: SAP-INV-003
+        statement: Arena output remains a proposal until a human admits one exact scoped and expiring policy digest.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - ARENA_CORPUS_REFUSED
+      - ARENA_EVIDENCE_REFUSED
+      - ARENA_POLICY_REFUSED
+      - ARENA_TRIAL_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: frozen_arena_trial
+      type: urn:core:oeos:type:frozen_arena_trial:v1.0.0
+      required: true
+  outputs:
+    - name: routing_policy_proposal
+      type: urn:core:oeos:type:routing_policy_proposal:v1.0.0
+      required: true
+  typed_refusals:
+    - ARENA_CORPUS_REFUSED
+    - ARENA_EVIDENCE_REFUSED
+    - ARENA_POLICY_REFUSED
+    - ARENA_TRIAL_REFUSED
+  platform_requirements:
+    - profile: local_frozen_solver_arena
+      requirements:
+        - lineage_disjoint_holdout_manifest
+        - independent_replayable_scorer
+        - exact_human_policy_admission
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares the OEOS host bridge into AG Arena trials and exact routing-policy proposals without owning evaluation or admission semantics.
+  non_role:
+    - arena_evaluation_authority
+    - autonomous_policy_promoter
+    - online_learning_controller
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - a_pareto_scorecard_does_not_admit_a_runtime_policy
+  invariants:
+    - holdout_cases_never_enter_memory_or_training_projection
+    - proposed_routes_cannot_widen_eligibility
+  allowed_operations:
+    - dispatch_isolated_arena_trial
+    - record_independent_trial_receipt
+    - emit_exact_policy_proposal
+  forbidden_operations:
+    - self_admit_policy_or_candidate
+    - use_llm_judgment_as_success_oracle
+    - update_runtime_policy_online

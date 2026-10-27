@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quadratic_algebraic_certificates:v0.1.0
+title: Exact Quadratic Minimal Polynomials and Enclosures
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: quadratic_algebraic_certificates
+  symbol: quadratic_algebraic_certificates
+  ascii_symbol: quadratic_algebraic_certificates
+  notation: Exact Quadratic Minimal Polynomials and Enclosures
+  domain:
+  - A canonical runtime quadratic field element; enclosures require a real radicand and positive rational width.
+  codomain:
+    description: Declared finite results of core_number_theory::quadratic; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The primitive minimal polynomial is degree one for rationals and degree two for genuine quadratic values.
+- The element annihilates its returned minimal polynomial.
+- Exact integer-square-root bounds produce an enclosure containing the real element with the requested maximum
+  width.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: quadratic
+  symbols:
+  - QuadraticNumber
+  - QuadraticNumber::minimal_polynomial
+  - QuadraticNumber::enclosure
+  required_tests:
+  - runtime_quadratics_have_minimal_polynomials_and_certified_bounded_enclosures
+
+negative_tests:
+- Imaginary fields, nonpositive widths and oversized refinement-bit requests are typed refusals.
+doctrine:
+  summary: The primitive minimal polynomial is degree one for rationals and degree two for genuine quadratic
+    values.; The element annihilates its returned minimal polynomial.; Exact integer-square-root bounds produce
+    an enclosure containing the real element with the requested maximum width..
+  non_role:
+  - Complex conjugation for a real field remains identity and is distinct from the Galois involution.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

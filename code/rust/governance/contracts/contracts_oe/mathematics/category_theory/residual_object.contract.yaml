@@ -1,0 +1,98 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:residual_object:v0.1.0
+title: Residual Object Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: residual_object
+  symbol: '[b] in Q = M / im(f), [b] != 0'
+  ascii_symbol: residual_object
+  notation: '[b] in Q = M / im(f), [b] != 0'
+  domain:
+  - 'representative: b (element of ambient module M)'
+  - 'ambient_module: M (module containing the representative)'
+  - 'quotient_module: Q = M / im(f) (cokernel or homology group)'
+  - 'projection: pi: M -> Q (canonical quotient projection)'
+  - 'nontriviality_witness: w: proof that [b] != 0 in Q'
+  codomain:
+    description: 'A tuple R = (b, M, Q, pi, w) where b is the representative element,
+      M is the ambient module, Q is the quotient module, pi: M -> Q is the projection,
+      and w is the non-triviality witness.
+
+      '
+requirements:
+  required_structures:
+  - Representative element b must be a valid member of ambient module M
+  - Ambient module M must be well-defined with content-addressed hash
+  - Quotient module Q must be well-defined
+  - Non-triviality witness must prove [b] != 0 in Q
+  - Provenance (which computation produced this residual) must be recorded
+laws:
+- Representative b is a valid element of ambient module M
+- Quotient Q = M / im(f) is well-defined
+- '[b] != 0 in Q (b is not in im(f))'
+- pi(b) = [b] in Q
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Nontriviality checking is deterministic
+  - Quotient projection is deterministic
+  - All modules use canonical serialization
+relationships:
+- urn:math:contract:Cokernel:v0.1.0 serves as defines_cokernel_quotient_structure
+- urn:math:contract:ResidualStatus:v0.1.0 serves as defines_residual_lifecycle_status
+negative_tests:
+- Representative not in ambient module M must be rejected
+- Residual where [b] = 0 in Q must be rejected
+- Quotient module that is not well-defined must be rejected
+- Residual with no provenance record must be rejected
+- Residual object artifact claiming authority must be rejected
+- Residual object artifact claiming admissibility must be rejected
+doctrine:
+  summary: A ResidualObject represents an algebraic element that remains after a computation
+    stage has processed what it can. In homological algebra, this corresponds to a
+    cokernel element in coker(d) = C_n / im(d_{n+1}), or more generally an element
+    of a quotient module that witnesses incomplete resolution. The residual object
+    carries its algebraic data (representative element, ambient module, quotient structure),
+    its provenance (which computation produced it), and its status (open, handed_off,
+    resolved).
+  non_role:
+  - Resolving residuals (separate resolution contract)
+  - Policy on residual handling
+  - Authority over residual significance
+  - Customer-facing claims about residual meaning
+wip:
+- Should residual objects track their 'resolution distance' estimate?
+- How to handle residual objects from spectral sequence computations?
+- Should residual objects support algebraic operations (addition, scalar multiplication)?
+- Currently assumes finitely generated modules
+- Spectral sequence residuals deferred to future version
+- Algebraic operations on residuals deferred
+- Status transitions are recorded but not enforced by this contract
+rust_binding:
+  crate: core_higher_category_theory
+  module: dg_category
+  symbols:
+  - CohomologyCategoryH0
+  - GradedHomComplex
+  required_tests:
+  - test_dg_category_basic_lifecycle

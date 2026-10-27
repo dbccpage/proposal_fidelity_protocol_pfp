@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:declared_finite_convex_hull:v0.1.0
+title: Independent exact convex decompositions, separating witnesses and transport
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: declared_finite_convex_hull
+  symbol: declared_finite_convex_hull
+  ascii_symbol: declared_finite_convex_hull
+  notation: Independent exact convex decompositions, separating witnesses and transport
+  domain:
+  - A nonempty declared rational family with at most256 members and256 coordinates; finite computed pivot budget;
+    canonical BasicMatrix<Q> linear maps
+  codomain:
+    description: Declared finite results of core_solvers::finite_convex_hull; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- A decomposition replays nonnegativity, normalization and reconstruction
+- A separating witness checks every declared member and a strict target gap
+- Exact weighted-L1 primal and dual equality prove the finite membership decision
+- Transport verifies every family image then replays the resulting decomposition
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_solvers
+  module: solver_convex_finite_hull
+  symbols:
+  - DeclaredFamily::new
+  - ConvexDecomposition::verify
+  - SeparatingWitness::verify
+  - decide_membership
+  - transport_decomposition
+  required_tests:
+  - solver_convex_finite_hull::tests::membership_separation_and_transport_replay_both_sides
+negative_tests:
+- solver_convex_finite_hull::tests::membership_separation_and_transport_replay_both_sides
+doctrine:
+  summary: A decomposition replays nonnegativity, normalization and reconstruction; A separating witness checks
+    every declared member and a strict target gap; Exact weighted-L1 primal and dual equality prove the finite
+    membership decision; Transport verifies every family image then replays the resulting decomposition.
+  non_role:
+  - Declared-family hull membership is not unrestricted quantum-state separability; malformed rationals and
+    exhausted pivots refuse
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

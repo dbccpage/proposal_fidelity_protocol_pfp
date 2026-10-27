@@ -1,0 +1,106 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phi3_quotient_obstruction:v1.0.0
+title: Φ₃ degree-3 quotient obstruction certificate replay and Γ₃ defect evaluation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: phi3_certificate_replay
+  symbol: Φ₃
+  ascii_symbol: Phi3
+  notation: "Φ₃([H]) = min_{B ∈ C²} ‖H − d₂B‖_{1,ν};  Γ₃(B) = ‖d₂B‖_{1,ν}"
+  domain:
+  - "caller-supplied rational matrix d₂ : C² → C³ (|C₃| rows, |C₂| columns)"
+  - "optional caller-supplied d₁ : C¹ → C² and d₀ : C⁰ → C¹"
+  - "flux H ∈ C³, 3-cell weights ν, potential B ∈ C², residual r, dual u, reported value"
+  codomain:
+    description: >-
+      verify_exact_certificate returns VerifiedExactPhi3, a sealed wrapper around the
+      replayed certificate, or a typed ExactPhi3CertificateError. evaluate_bianchi_defect
+      returns the exact rational ‖d₂B‖_{1,ν} or a typed error. Neither searches for a
+      minimizer.
+  definition:
+    formula: "Φ₃([H]) = min_B ‖H − d₂B‖_{1,ν}"
+    dual: "max ⟨H, u⟩ subject to d₂ᵀu = 0 and |u_c| ≤ ν_c"
+    acceptance: "r = H − d₂B, d₂ᵀu = 0, |u_c| ≤ ν_c, ν_c > 0, reported ≥ 0, Σ ν_c|r_c| = reported = ⟨H, u⟩"
+    closure_defect: "Γ₃(B) = Σ_c ν_c |(d₂B)_c| with ν_c > 0"
+requirements:
+  required_structures:
+  - Finite rational d₂ with one row per 3-cell and one column per 2-cell
+  - Strictly positive rational 3-cell weights ν
+  - Flux H, residual r and dual u of 3-cell length; potential B of 2-cell length
+  - Optional d₁, used to check d₂d₁ = 0; optional d₀, used with d₁ to check d₁d₀ = 0
+laws:
+- "Weak-duality law: for every B and every u with d₂ᵀu = 0 and |u_c| ≤ ν_c, ⟨H, u⟩ ≤ ‖H − d₂B‖_{1,ν}. A replayed certificate with equal primal and dual values reports the LP minimum for the supplied d₂, ν and H."
+- "Primal replay law: every residual entry must equal (H − d₂B)_c in exact rational arithmetic."
+- "Dual replay law: u must satisfy d₂ᵀu = 0 on every 2-cell and |u_c| ≤ ν_c on every 3-cell."
+- "Weight law: every 3-cell weight must be strictly positive, in the verifier and in evaluate_bianchi_defect."
+- "Chain-law scope: d₂d₁ = 0 is checked only when d₁ is supplied, and d₁d₀ = 0 only when both d₁ and d₀ are supplied. The code calls d₂d₁ = 0 the discrete Bianchi identity; it is the chain law d∘d = 0 on the supplied matrices, not a differential-geometric theorem."
+- "Defect law: if B = d₁A and d₂d₁ = 0 then Γ₃(B) = 0. evaluate_bianchi_defect computes Γ₃ for any supplied B; it does not check d₂d₁ = 0 itself."
+- "Carrier fence: the verifier checks the supplied matrices. It does not check that they are the coboundaries of a declared cell complex, and it computes no Betti number."
+- "Exactness law: all arithmetic is BigRational; there is no floating-point path."
+- "Separation fence: Φ₃ is a degree-3 quotient distance and Γ₃ a degree-3 closure mass. Neither is Φ₁, Γ₂ or Ξ."
+- "Authority law: a replayed certificate or evaluated defect mints no AuthorityEffect, PROVED, GlobalGreen or ActionLicense."
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Exact rational arithmetic only
+  - Deterministic replay of the submitted primal and dual witness
+relationships:
+- "urn:core:math:phi2_quotient_obstruction:v1.0.0 — degree-2 analogue"
+- "urn:core:math:phi4_quotient_obstruction:v1.0.0 — degree-4 analogue"
+- "urn:core:math:phi1:v1.0.0 — degree-1 quotient obstruction; distinct object"
+- "urn:core:math:gamma2_closure_defect:v1.0.0 — degree-2 closure defect; Γ₃ is the next degree, not the same functional"
+rust_binding:
+  crate: core_functional
+  module: phi3
+  symbols:
+  - ExactPhi3CertificateWire
+  - ExactPhi3Certificate
+  - VerifiedExactPhi3
+  - ExactPhi3CertificateError
+  - Phi3Functional
+  # The first two tests discharge the two negative_tests in order. The last two
+  # are the acceptance paths: a b₃ = 1 certificate on the hollow 4-simplex with
+  # both chain laws checked, and Γ₃ = 0 on an exact 2-flux.
+  required_tests:
+  - test_simplex4_rejects_non_closed_3_chain
+  - test_bianchi_defect_rejects_non_positive_weights
+  - test_simplex4_chain_laws_and_valid_b3_certificate
+  - test_bianchi_identity_exact_flux_has_zero_defect
+negative_tests:
+- A dual witness that is not a closed 3-cycle (d₂ᵀu ≠ 0) must be rejected
+- Γ₃ evaluation with a zero or negative 3-cell weight must be rejected
+doctrine:
+  summary: >-
+    Phi3Functional replays a submitted exact rational primal-dual witness for the degree-3
+    weighted ℓ¹ quotient distance min_B ‖H − d₂B‖_{1,ν}, and evaluates the degree-3 closure
+    mass ‖d₂B‖_{1,ν}. Acceptance means the reported value is the LP minimum for the supplied
+    matrices and weights, by weak duality. Nonclaim: no cell-complex, cohomology or
+    physical-field certification; no minimizer search; not authority; not PROVED; not
+    GlobalGreen.
+  non_role:
+  - Minimizer search or LP solving
+  - Cell-complex or Betti-number certification
+  - Differential-geometric Bianchi identity or physical field claims
+  - Φ₁, Γ₂ or Ξ
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- "OPEN_OBLIGATION untested_refusals: DualNormBoundViolation, DualValueMismatch, PrimalResidualMismatch, PrimalValueMismatch, NegativeReportedValue, BianchiNilpotenceViolation, CochainNilpotenceViolation, verifier NonPositiveWeight and the dimension refusals are implemented with no dedicated unit test; AuthorityEffect: None."
+- "OPEN_OBLIGATION d0_without_d1: a d₀ supplied without d₁ is ignored rather than refused, so no chain law is checked for it. Phi4Functional refuses the same shape with MissingD1ForD0; AuthorityEffect: None."

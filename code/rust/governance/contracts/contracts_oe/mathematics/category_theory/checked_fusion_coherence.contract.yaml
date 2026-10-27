@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:checked_fusion_coherence:v0.1.0
+title: Bounded Exact Fusion Coherence
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: checked_fusion_coherence
+  symbol: checked_fusion_coherence
+  ascii_symbol: checked_fusion_coherence
+  notation: Bounded Exact Fusion Coherence
+  domain:
+  - A checked multiplicity-free fusion ring and exact associator coefficients, within explicit aggregate storage
+    and replay limits.
+  codomain:
+    description: Declared finite results of core_fusion_categories::fusion_category; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every pentagon matrix element on admissible four-fold fusion paths is checked exactly; all other label tuples
+  have both sides zero.
+- Full label traversal, F/inverse storage, possible defect records, pentagon scalar calls and both hexagon
+  scalar-call bounds are admitted before coefficient generation.
+- Sparse traversal preserves lexicographic first-defect labels and agrees with the independently specified
+  nontrivial Z2 defect.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_fusion_categories
+  module: fusion_category
+  symbols:
+  - FSymbols
+  - FusionCategory
+  - DEFAULT_CATEGORY_LIMITS
+  required_tests:
+  - generic_category_admission_bounds_storage_and_law_work_before_coefficients
+  - pointed_rank32_replays_every_pentagon_without_dense_label_products
+  - the_pentagon_defect_reports_the_first_tuple_and_both_sides
+negative_tests:
+- Tight storage or law-work admission refuses before invoking a coefficient callback.
+- Unbounded ring rank is not substituted for an operation budget.
+doctrine:
+  summary: Every pentagon matrix element on admissible four-fold fusion paths is checked exactly; all other
+    label tuples have both sides zero.; Full label traversal, F/inverse storage, possible defect records, pentagon
+    scalar calls and both hexagon scalar-call bounds are admitted before coefficient generation.; Sparse traversal
+    preserves lexicographic first-defect labels and agrees with the independently specified nontrivial Z2 defect..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - Resource refusal does not assert failure of a mathematical law or infiniteness of a closure.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

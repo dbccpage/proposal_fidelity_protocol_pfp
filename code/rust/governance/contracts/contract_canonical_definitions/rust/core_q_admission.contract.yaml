@@ -1,0 +1,69 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_q:admission:v0.2.0
+title: QAdmissionFirewall
+status: active
+crate: core_wdp
+file: crates_rs/core_wdp/src/coda/q/admission.rs
+role: q_admission_firewall
+authority_effect: fact_only
+evidence_ceiling: ShapeOnly
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- CandidateKind
+- QAdmissionRequest
+- QAdmissionGate
+- AdmissionDecision
+does_not_own:
+- finite witness construction
+- continuum convergence proof
+- authority minting
+- terminal certification
+may_call:
+- core_q::continuum::ContinuumDebt
+- core_q::packet::QPacket
+- core_types::q_continuum::QContinuumLedger
+must_not:
+- admit QHeld with incomplete admission debt
+- treat a packet terminal request as witness support
+- certify continuum convergence
+- derive quantum mechanics
+- mint authority
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+forbidden_substrings:
+- CertifiedAuthority::certify
+- authority_from_outcome_f13
+- mint_authority(
+- unsafe
+required_substrings:
+- CandidateKind
+- QAdmissionRequest
+- QAdmissionGate
+- AdmissionDecision
+- classify_admission
+- admit_qheld
+- with_finite_shadow
+- with_refinement_relation
+- with_declared_topology
+- with_convergence_certificate_route
+- with_descent_trigger
+required_tests:
+- rejects_qheld_without_finite_shadow
+- rejects_qheld_without_refinement_route
+- rejects_qheld_without_declared_topology
+- rejects_qheld_without_convergence_certificate_route
+- rejects_qheld_without_descent_trigger
+- packet_cannot_self_declare_terminal_within_scope
+lean_obligations:
+- Paper_Q.qheld_admissible_iff_complete_admission_debt
+- Paper_Q.missing_finite_shadow_blocks_qheld
+- Paper_Q.missing_refinement_relation_blocks_qheld
+- Paper_Q.missing_declared_topology_blocks_qheld
+- Paper_Q.missing_convergence_certificate_route_blocks_qheld
+- Paper_Q.missing_descent_trigger_blocks_qheld
+- Paper_Q.admission_debt_gap_blocks_terminal_within_scope
+- Paper_Q.terminal_within_scope_requires_witness_support

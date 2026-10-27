@@ -1,0 +1,95 @@
+schema_version: core.contract.v1
+contract_id: urn:core:rust:core_quantum_physics:quantum_state:v0.1.0
+title: Quantum State (core_quantum_physics)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quantum_state
+  symbol: quantum_state
+  ascii_symbol: quantum_state
+  notation: Declared finite quantum state with executable operator laws
+  domain:
+  - Declared finite carrier and exact coefficient field for the exact face
+  - Checked shape and resource admission; any f64 face is diagnostic
+  codomain:
+    description: An exact pure state is a nonzero Q(i) ray with declared finite carrier bounds; Transition probabilities and projectors are invariant under nonzero ray scaling; The f64 amplitude tier is explicitly diagnostic
+requirements:
+  required_structures:
+  - Canonical scalar and matrix owners
+  - Declared finite physical inputs with independently replayed invariants
+  - AuthorityEffect none; no CertifiedAuthority construction
+laws:
+- An exact pure state is a nonzero Q(i) ray with declared finite carrier bounds
+- Transition probabilities and projectors are invariant under nonzero ray scaling
+- The f64 amplitude tier is explicitly diagnostic
+- Executable finite checks do not confer theorem, host or workload authority
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+relationships: []
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_state
+  symbols:
+  - QuantumState
+  required_tests:
+  - computational_basis_normalized
+  - rejects_wrong_dim
+  - rejects_zero_vector
+  - normalisation_reports_the_norm_it_divided_by_and_survives_extreme_scales
+  - try_unit_checks_the_norm_and_does_not_rescale
+  - inner_product_and_projector
+  - tensor_product_states_use_the_declared_index_order_and_label
+  - a_ray_is_nonzero_and_nonempty
+  - transition_probability_is_scale_and_phase_invariant_and_one_exactly_on_a_ray
+  - the_projector_is_a_hermitian_idempotent_of_trace_one
+  - the_bloch_vector_of_a_qubit_ray_is_rational_and_of_length_one_for_a_pure_state
+  - born_probabilities_go_through_the_functional_crate
+  - the_kronecker_product_orders_the_left_factor_first
+  - the_f64_face_is_a_diagnostic_of_the_exact_ray
+  - a_non_hermitian_operator_has_no_real_expectation
+  - no_carrier_in_this_crate_can_reach_certified_authority
+negative_tests:
+- Malformed carriers, unsupported fields or exhausted admitted operations must fail with their declared refusal
+- Changing an operator relation must leave a replayable nonzero residual
+- No result may self-assign CertifiedAuthority, PROVED or GlobalGreen
+doctrine:
+  summary: An exact pure state is a nonzero Q(i) ray with declared finite carrier bounds; Transition probabilities and projectors are invariant under nonzero ray scaling; The f64 amplitude tier is explicitly diagnostic. This declaration remains mathematical_wip pending mathematics review.
+  non_role:
+  - Human mathematics acceptance or mechanized proof
+  - Continuum limits, experimental realization or workload authority
+wip:
+- Human mathematics review remains required; executable law bindings are implementation evidence
+- No theorem or lifecycle acceptance is inferred from passing Rust checks
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: LLM_BEST_EFFORT_SLOP
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: 'AUTHORING_QUALITY: human_llm_best_effort_slop (best-effort dual-face scaffold; not human-canon math; not PROVED; not GlobalGreen). module core_quantum_physics::quantum_state'
+    recommendation: Keep AuthorityEffect None; deepen only with human review.
+    pass: finite_domain_face_deepen_qm_20260801

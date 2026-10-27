@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_modular_tensor_category:v0.1.0
+title: Verified Finite Modular Tensor Data
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_modular_tensor_category
+  symbol: finite_modular_tensor_category
+  ascii_symbol: finite_modular_tensor_category
+  notation: Verified Finite Modular Tensor Data
+  domain:
+  - A checked finite ribbon category whose sovereign ModularData verification succeeds.
+  - A genus within the exact power and construction bounds.
+  codomain:
+    description: Declared finite results of core_quantum_physics::modular_tensor_category; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Unnormalised S satisfies S squared = D squared times charge conjugation and S S dagger = D squared I.
+- The modular relation, Verlinde fusion coefficients and Gauss-Milgram phase are exact.
+- The toric genus-two degeneracy is sixteen and the Ising genus-two degeneracy is ten.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: modular_tensor_category
+  symbols:
+  - ModularTensorCategory
+  required_tests:
+  - modular_data_reproduce_toric_and_ising_ground_state_counts
+negative_tests:
+- Nonmodular ribbon data and exhausted exact work are refused.
+- Scattering S matrices are not used as modular data.
+doctrine:
+  summary: Unnormalised S satisfies S squared = D squared times charge conjugation and S S dagger = D squared
+    I.; The modular relation, Verlinde fusion coefficients and Gauss-Milgram phase are exact.; The toric genus-two
+    degeneracy is sixteen and the Ising genus-two degeneracy is ten..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

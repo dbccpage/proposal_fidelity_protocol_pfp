@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_function_orbits:v0.1.0
+title: Checked Finite Partial-Function Orbits
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_function_orbits
+  symbol: finite_function_orbits
+  ascii_symbol: finite_function_orbits
+  notation: Checked Finite Partial-Function Orbits
+  domain:
+  - A checked partial function on at most 2^20 indexed vertices and an admitted starting vertex.
+  codomain:
+    description: Declared finite results of core_holonomy::functional_graph; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every orbit either reaches its first refusal or enters a cycle with exact tail entry and positive period.
+- Periodic step indices reduce modulo the actual period before lookup.
+- An index of usize maximum is processed in work bounded by the carrier, without a caller-sized loop.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_holonomy
+  module: functional_graph
+  symbols:
+  - TransportOrbit
+  - transport_orbit
+  - orbit_value
+  required_tests:
+  - enormous_orbit_indices_are_reduced_to_the_cycle
+negative_tests:
+- Invalid starts, invalid targets and oversized carriers are typed refusals.
+doctrine:
+  summary: Every orbit either reaches its first refusal or enters a cycle with exact tail entry and positive
+    period.; Periodic step indices reduce modulo the actual period before lookup.; An index of usize maximum
+    is processed in work bounded by the carrier, without a caller-sized loop..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

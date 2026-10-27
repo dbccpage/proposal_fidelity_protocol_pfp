@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_compactified_circle:v0.1.0
+title: Exact Compactified Rational Circle
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_compactified_circle
+  symbol: exact_compactified_circle
+  ascii_symbol: exact_compactified_circle
+  notation: Exact Compactified Rational Circle
+  domain:
+  - Rational Cayley coordinates plus an explicit point at infinity representing -1
+  codomain:
+    description: Declared finite results of core_lie_theory::cayley; exact and diagnostic routes retain their
+      stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Finite coordinates compose by (s+t)/(1-st)
+- Infinity times infinity is coordinate zero
+- Infinity times nonzero t has coordinate -1/t; infinity times zero remains infinity
+- The chart result reproduces exact Gaussian unit multiplication
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: cayley
+  symbols:
+  - unit_from_parameter
+  - compose_circle_parameters
+  - compactified_circle_composition
+  required_tests:
+  - compactified_circle_composition_replays_infinity_and_finite_chart_products
+negative_tests:
+- A finite chart pole is returned as the declared infinity, never rounded to a nearby coordinate
+doctrine:
+  summary: Finite coordinates compose by (s+t)/(1-st); Infinity times infinity is coordinate zero; Infinity
+    times nonzero t has coordinate -1/t; infinity times zero remains infinity; The chart result reproduces
+    exact Gaussian unit multiplication.
+  non_role:
+  - No inference of a phase from undeclared masses or amplitudes
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,50 @@
+[package]
+autotests = false
+name = "core_replay"
+version.workspace = true
+edition = "2021"
+description = "Traces, witnesses, and replay ledger for the engine workspace"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[dependencies]
+core_functional = { path = "../core_functional" }
+linear_algebra = { path = "../core_linear_algebra" }
+core_types = { path = "../core_types" }
+blake3 = { version = "1.8", features = ["serde"] }
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+thiserror = "2"
+
+[dev-dependencies]
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+serde_json = "1.0"
+tempfile = "3"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_replay`.
+
+[[test]]
+name = "dual_trace_memory"
+path = "../tests/core_replay/dual_trace_memory.rs"
+
+[[test]]
+name = "retention_security_test"
+path = "../tests/core_replay/retention_security_test.rs"
+
+[[test]]
+name = "run_folder_v1"
+path = "../tests/core_replay/run_folder_v1.rs"
+
+[[test]]
+name = "trace_writer_roundtrip"
+path = "../tests/core_replay/trace_writer_roundtrip.rs"
+
+[[test]]
+name = "t3_exact_admission"
+path = "../tests/core_replay/t3_exact_admission.rs"

@@ -1,0 +1,93 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:residual_splitting:v1.0.0
+title: Rational splittings of a repair image and their weighted ℓ¹ distortion
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: residual_splitting
+  symbol: ‖L_H‖_{1,w}
+  ascii_symbol: SplitDistortion
+  notation: "Q^m = R ⊕ W_H, R = im d0, L_H = (N - B H) Q, Φ₁(x) ≤ ‖L_H x‖_{1,w} ≤ ‖L_H‖_{1,w} Φ₁(x)"
+  domain:
+  - "a repair map d0, an m x k rational matrix given row-wise, with declared column count k"
+  - "a basis B of R (m x r), a completion N (m x (m - r)) with S = [B N] invertible, and S^{-1} = [U; Q]"
+  - "a rational parameter H (r x (m - r)) selecting the complement W_H = im(N - B H)"
+  - "strictly positive rational weights w on Q^m"
+  codomain:
+    description: >-
+      The exact weighted operator norm ‖L_H‖_{1,w} of a replayed splitting, or a
+      typed ResidualSplittingError naming the failed shape or identity.
+  definition:
+    projections: "C_H = B (U + H Q) onto R; L_H = (N - B H) Q = I - C_H onto W_H along R"
+    operator_norm: "‖M‖_{1,w} = max_j Σ_i w_i |M_ij| / w_j; zero when m = 0"
+    distortion_bound: >-
+      L_H vanishes on R and x - L_H x = C_H x lies in R, so with
+      Φ₁(x) = min_a ‖x - d0 a‖_{1,w} one has Φ₁(x) ≤ ‖L_H x‖_{1,w} ≤ ‖L_H‖_{1,w} Φ₁(x).
+requirements:
+  required_structures:
+  - Rational matrices of the declared shapes with positive denominators
+  - Strictly positive rational weights
+laws:
+- "Replay law: ResidualSplittingCertificate::verify recomputes S S^{-1} = I, S^{-1} S = I, B = d0 F, d0 = B E, C = B (U + H Q), L = (N - B H) Q, C + L = I, C C = C and L d0 = 0 before returning a norm."
+- "Identity refusal law: a failed identity is IdentityFails naming the identity and the first failing entry; a wrong shape is Shape; a bad denominator is InvalidRational; a nonpositive weight is NonPositiveWeight."
+- "Transport law: verify_transport checks T C = C' T for square matrices and names the first failing entry."
+- "Scope law: this module checks one supplied splitting and returns its distortion; whether some H gives distortion at most one is decided elsewhere (core_solvers::contractive_complement), not here."
+- "Exactness law: all arithmetic is BigRational; there is no floating-point path and no tolerance."
+- "Authority law: a returned norm mints no AuthorityEffect, PROVED, GlobalGreen or ActionLicense."
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Exact rational arithmetic only
+relationships:
+- "urn:core:math:phi1:v1.0.0 — the weighted ℓ¹ quotient distance Φ₁ that the distortion bound brackets; no code is shared"
+rust_binding:
+  crate: core_functional
+  module: residual_splitting
+  symbols:
+  - ResidualSplittingError
+  - RowMatrix
+  - multiply
+  - weighted_l1_operator_norm
+  - splitting_from_parameter
+  - ResidualSplittingCertificate
+  - verify_transport
+  required_tests:
+  - two_dimensional_splittings_are_contractive
+  - tampered_certificates_name_the_failed_identity
+  - extreme_images
+  - weighted_norm_and_transport
+negative_tests:
+- A certificate with any tampered matrix must be refused with IdentityFails naming the failed identity
+doctrine:
+  summary: >-
+    residual_splitting replays a producer-supplied splitting Q^m = R ⊕ W_H of a
+    repair image R = im d0 and returns the exact weighted ℓ¹ operator norm of
+    its residual projection. The parametrisation of all complements by H and
+    the distortion bound are written proofs in the module documentation; the
+    code checks the identities of one supplied certificate. Nonclaim: not a
+    search for a contractive complement; not Φ₁ evaluation; not authority; not
+    PROVED; not GlobalGreen.
+  non_role:
+  - Search or feasibility decisions over H (see core_solvers::contractive_complement)
+  - Evaluation of Φ₁ itself (see urn:core:math:phi1:v1.0.0)
+  - Floating-point or tolerance-based linear algebra
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- "OPEN_OBLIGATION mechanisation: the complement parametrisation and the distortion bound are written proofs, not machine-checked; AuthorityEffect: None."

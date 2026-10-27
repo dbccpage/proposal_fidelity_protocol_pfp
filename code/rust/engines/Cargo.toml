@@ -1,0 +1,81 @@
+[package]
+autoexamples = false
+autotests = false
+name = "engines"
+version.workspace = true
+edition = "2021"
+description = "Computation engines for core_core: quantum systems, operator algebras, and prompt processing"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[features]
+default = []
+paper070-test-clock = []
+# Opt-in: compile engine_invariants checks into release builds (always on under debug_assertions).
+strict_invariants = []
+# NOTE: prompt_intake_engine was removed from this crate's dependency graph.
+# It pulled archive core_prompt_packets → pipelines → core_epk, which cycles
+# if core_epk depends on engines for epk_engine. Re-home prompt intake
+# under a host/application edge later — not under engines math.
+
+[dependencies]
+core_functional = { path = "../core_functional" }
+constants = { path = "../constants" }
+linear_algebra = { path = "../core_linear_algebra" }
+core_types = { path = "../core_types", features = ["linalg"] }
+core_homology = { path = "../core_homology" }
+core_wdp = { path = "../core_wdp" }
+core_policy = { path = "../core_policy" }
+sha2 = "0.10"
+
+
+nalgebra = { version = "0.33", features = ["serde-serialize"] }
+num-complex = { version = "0.4.6", features = ["serde"] }
+num-traits = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing = "0.1"
+thiserror = "2"
+rayon = "1.8"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/engines`.
+
+[[test]]
+name = "multipath_iterator"
+path = "../tests/engines/multipath_iterator.rs"
+
+[[test]]
+name = "semantic_geometry_1024_test"
+path = "../tests/engines/semantic_geometry_1024_test.rs"
+
+[[test]]
+name = "prompt_density"
+path = "../tests/engines/prompt_density.rs"
+
+[[test]]
+name = "su2_holonomy_multipath"
+path = "../tests/engines/su2_holonomy_multipath.rs"
+
+[[test]]
+name = "test_dda_orbit_state_solver"
+path = "../tests/engines/test_dda_orbit_state_solver.rs"
+
+[[test]]
+name = "test_eqcm_deliberation_engine"
+path = "../tests/engines/test_eqcm_deliberation_engine.rs"
+
+[[test]]
+name = "test_reasoning_density_full"
+path = "../tests/engines/test_reasoning_density_full.rs"
+
+[[test]]
+name = "test_uhlmann_fidelity_integration"
+path = "../tests/engines/test_uhlmann_fidelity_integration.rs"
+# Example programs remain package-owned source under `src/examples`.
+[[example]]
+name = "benchmarks"
+path = "src/examples/benchmarks.rs"
+
+[[example]]
+name = "replays"
+path = "src/examples/replays.rs"

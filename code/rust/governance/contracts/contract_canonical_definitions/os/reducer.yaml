@@ -1,0 +1,277 @@
+schema_version: "1.0.0"
+contract_id: "os:reducer"
+name: "Reducer Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "partially_enforced"
+
+description: >
+  A Reducer is a deterministic, stateless, unary, same-carrier structural
+  canonicalization operator over admitted Obstruction/BaseType state. It maps
+  S -> S, removes declared redundancy or normalizes representation, is
+  idempotent, and does not increase its declared reduction measure κ. A Reducer
+  does not compute canonical functionals, search, loop to convergence, enlarge
+  carrier, repair by hidden lift, terminalize, certify, authorize, or mutate
+  runtime state.
+
+layer: "OS"
+module_path: "operators::reducer"
+
+governs:
+  - "operators/reducers/**"
+  - "operators/reducer/**"
+  - "core_*/*reducer*.rs"
+
+does_not_govern:
+  - "constructors/**"
+  - "generators/**"
+  - "operators/lambdas/**"
+  - "operators/transforms/**"
+  - "core_functional/**"
+  - "core_homology/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipelines/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-L3"
+    description: "Reducer idempotence theorem: R(R(s)) = R(s) over the admitted domain."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L3"
+
+  - id: "OP-L4"
+    description: "Reducer non-expansion theorem: κ(R(s)) <= κ(s) for the declared reduction measure κ."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L4"
+
+  - id: "OP-L5"
+    description: "Reducer exhaustion theorem: if every admitted reducer is at fixed point and externally certified Φ₁ remains positive, the next legal outcome is typed refusal or explicit lift, never hidden reducer growth."
+    status: "doctrine_needed"
+    provenance: "Operator OS Doctrine OP-L5"
+
+  - id: "REDUCER-NO-HIDDEN-LIFT"
+    description: "Reducer cannot change carrier family, carrier rank, carrier universe, or admissible execution geometry."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "REDUCER-NO-AUTH"
+    description: "Reducer execution and reducer composition cannot mint authority."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  deterministic: true
+  stateless: true
+  unary: true
+  endomorphic: true
+  same_carrier_required: true
+  single_step: true
+  typed_failure_required: true
+  admitted_input_required: true
+  idempotence_required: true
+  kappa_non_expansion_required: true
+
+allowed:
+  - "read one admitted immutable input"
+  - "perform one deterministic same-carrier canonicalization"
+  - "remove declared redundancy"
+  - "project to declared normal form"
+  - "return typed output on the same carrier"
+  - "return typed ReducerFailure"
+  - "emit ReducerWitness for idempotence/non-expansion"
+  - "expose declared κ measure reference"
+  - "carry MeasurementRef values produced by canonical functional/replay layer"
+  - "expose local non-authoritative metadata"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "call Phi1Functional"
+  - "call Gamma2Functional"
+  - "call XiFunctional"
+  - "classify trichotomy"
+  - "mint CertifiedAuthority"
+  - "call CertifiedAuthority::certify"
+  - "call authority_from_outcome_f13"
+  - "call terminalize"
+  - "emit AuthorityEffect::Authorize"
+  - "generate lift candidates"
+  - "perform carrier growth"
+  - "change carrier rank"
+  - "change carrier universe"
+  - "reinterpret carrier to make reduction possible"
+  - "search candidate space"
+  - "rank alternatives"
+  - "iterate until fixed point"
+  - "iterate until convergence"
+  - "perform MCTS"
+  - "mutate global state"
+  - "perform IO"
+  - "return opaque string-only failure"
+  - "return None as failure"
+
+carrier_law:
+  input_output_shape: "S -> S"
+  same_carrier_family_required: true
+  carrier_rank_change: "forbidden"
+  carrier_universe_change: "forbidden"
+  admissible_geometry_change: "forbidden"
+  if_carrier_growth_required: "ExplicitLiftOrTypedRefusal"
+  notes:
+    - "A reducer may canonicalize representation inside S."
+    - "A reducer may not add basis elements, vertices, dimensions, generators, or carrier structure."
+
+reduction_law:
+  measure_name: "κ"
+  measure_owner: "declared_reducer_law"
+  kappa_non_expansion: "κ(R(s)) <= κ(s)"
+  strict_reduction_required: false
+  fixed_point_allowed: true
+  idempotence: "R(R(s)) = R(s)"
+  repeated_application_owner: "Engine"
+  notes:
+    - "A reducer is a single application."
+    - "Repeated application until stability is Engine orchestration."
+    - "κ is reducer-local unless explicitly linked to a canonical functional witness."
+    - "κ is not Φ₁ unless externally certified."
+
+phi_firewall:
+  reducer_may_compute_phi: false
+  reducer_may_reference_external_measurement: true
+  phi1_positive_for_exhaustion_must_come_from: "core_functional_or_replay"
+  exhaustion_owner: "Engine_or_replay"
+  notes:
+    - "Reducer fixed point does not by itself prove global exhaustion."
+    - "Reducer exhaustion requires all admitted reducers fixed-point plus externally certified Φ₁ > 0."
+    - "Reducer cannot decide lift license."
+
+witness_shape:
+  preferred: "ReducerWitness"
+  fields:
+    - "reducer_id"
+    - "input_ref"
+    - "output_ref"
+    - "kappa_before_ref"
+    - "kappa_after_ref"
+    - "idempotence_check_ref"
+    - "invariant_refs"
+    - "carrier_ref"
+  notes:
+    - "ReducerWitness is non-authoritative."
+    - "ReducerWitness may support replay, but cannot mint authority."
+
+failure_shape:
+  enum: "ReducerFailure"
+  required_variants:
+    - "OutsideAdmissibleDomain"
+    - "InvariantViolation"
+    - "ReductionUndefined"
+    - "CarrierMismatch"
+    - "CarrierGrowthRequired"
+    - "KappaMeasureMissing"
+    - "IdempotenceWitnessFailed"
+    - "NonFiniteInput"
+
+composition:
+  allowed_only_when:
+    - "same carrier S"
+    - "declared reducer laws are compatible"
+    - "composition remains same-carrier"
+  forbidden_when:
+    - "composition would enlarge carrier"
+    - "composition would require hidden lift"
+    - "composition would require runtime search"
+  authority_effect: "none"
+  notes:
+    - "Reducer composition is still non-authoritative."
+    - "A sequence of reducers is an Engine trace or pipeline stage, not a single Reducer unless separately proven idempotent."
+
+validator_requirements:
+  forbidden_substrings:
+    - "CertifiedAuthority"
+    - "authority_from_outcome_f13"
+    - "terminalize"
+    - "mint_authority"
+    - "Phi1Functional"
+    - "Gamma2Functional"
+    - "XiFunctional"
+    - "classify_exact"
+    - "ExactRepair"
+    - "AuthorityEffect::Authorize"
+    - "generate_lift"
+    - "LiftCandidate"
+    - "rank_candidates"
+    - "score_candidates"
+    - "while "
+    - "loop "
+    - "thread_rng"
+    - "rand::"
+    - "std::fs"
+    - "File::"
+    - "unwrap()"
+    - "expect("
+  required_patterns:
+    - "Result<"
+    - "ReducerFailure"
+  required_tests:
+    - "reducer_is_deterministic"
+    - "reducer_is_single_step"
+    - "reducer_is_same_carrier"
+    - "reducer_is_idempotent"
+    - "reducer_kappa_non_expanding"
+    - "reducer_preserves_declared_invariants"
+    - "reducer_rejects_carrier_growth"
+    - "reducer_does_not_compute_functionals"
+    - "reducer_does_not_mint_authority"
+    - "reducer_fixed_point_does_not_authorize"
+
+lean_obligations:
+  - id: "OP-L3"
+    theorem: "Reducer idempotence: R(R(s)) = R(s) over admitted domain."
+    status: "needed"
+
+  - id: "OP-L4"
+    theorem: "Reducer non-expansion: κ(R(s)) <= κ(s)."
+    status: "needed"
+
+  - id: "OP-L5"
+    theorem: "If all admitted reducers are fixed points and certified Φ₁ remains positive, next legal outcome is typed refusal or explicit lift, not hidden reducer."
+    status: "needed"
+
+  - id: "RED-L0"
+    theorem: "Reducer preserves same carrier family."
+    status: "needed"
+
+  - id: "RED-L1"
+    theorem: "Reducer execution cannot mint authority."
+    status: "needed"
+
+  - id: "RED-L2"
+    theorem: "Reducer composition preserves no-authority property."
+    status: "needed"
+
+notes:
+  - "Reducer is not a Lambda unless additionally declared as a Lambda with Φ non-increase witness."
+  - "Reducer is not a Transform because it carries idempotence and κ non-expansion obligations."
+  - "Reducer is not an Engine; it cannot run until stable."
+  - "Reducer is not a Lift; hidden carrier growth is a contract violation."
+  - "Reducer fixed point is local evidence, not authority."

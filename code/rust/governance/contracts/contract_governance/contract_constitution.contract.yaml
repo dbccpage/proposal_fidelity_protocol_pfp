@@ -1,0 +1,319 @@
+schema_version: core.contract.v1
+contract_id: urn:core:constitution:contract_constitution:v1.0.0
+title: ContractConstitution
+kind: constitution_contract
+status: mathematical_wip
+layer: 00_constitution
+role: Constitution
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'Root governance law for the engine contract system. Governs every contract
+
+    under the contract_canonical_definitions hierarchy.
+
+    '
+  non_role: &id001
+  - artifact-family collapse
+  - evidence emitting facts without checking
+  - facts emitting decisions
+  - decisions executing actions
+  - action licenses executing themselves
+  - records controlling execution
+  - unlicensed lifts
+  - implicit trace control
+  - certificate authority exceeding evidence authority
+  - llm self-certification
+  - search authority claims
+  - solver transition authorization
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MAY propose candidate text, packets,
+
+      structures, patches, or explanations.
+
+
+      The LLM MUST NOT certify, validate, evaluate, terminalize, authorize transitions,
+
+      execute transitions, or upgrade evidence authority.
+
+
+      LLM output enters the system as Generated evidence only. It must pass through
+
+      parsing, checking, evaluation, and licensing boundaries before it can support any
+
+      FactEnvelope, DecisionEnvelope, ActionLicense, Action, or Record.
+
+      '
+  role_boundary_law:
+    text: 'Search proposes candidates only.
+
+      Solvers compute results only.
+
+      Certifiers check evidence only.
+
+      Evaluators judge facts or candidate quality only within declared evaluator authority.
+
+      Terminalizers seal terminal outcomes or licenses only.
+
+      The Engine executes licensed transitions only.
+
+      None of these roles may silently assume the authority of another role.
+
+      '
+  health_model_law:
+    text: 'HealthModel reports invariant-relative health only.
+
+      HealthModel MUST NOT prescribe action, select policy, authorize repair, license a
+
+      lift, or execute transition.
+
+      HealthModel default AuthorityEffect is EvidenceOnly before invariant/source checking
+
+      and FactOnly after invariant/source checking.
+
+      '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'Certificate authority MUST NOT exceed attached evidence authority.
+
+      A certificate MAY bind, check, replay, summarize, or attest to attached evidence
+
+      within its declared certifier capability.
+
+      A certificate MUST NOT create authority absent from the attached evidence, declared
+
+      checker capability, replay boundary, or governing contract.
+
+      '
+  declarations_required:
+  - paper-level concept dependencies
+  - primary artifact family
+  - referenced artifact families (may not emit)
+  - output authority layer
+  - default AuthorityEffect
+  - forbidden later-layer concepts
+  - required certificates for replay/audit
+  - forbidden implementation tokens
+  - required negative-capability tests
+  - service vs reference consumption
+  - emitted artifact type
+  - implementation boundary crate/module
+  artifact_family_law:
+    text: 'A contract MUST emit exactly one primary artifact family.
+
+      Allowed families: StructureArtifact, EvidenceEnvelope, FactEnvelope,
+
+      DecisionEnvelope, ActionLicense, Action, Record.
+
+      '
+    invalid_combinations:
+    - EvidenceEnvelope + FactEnvelope from one unchecked interface
+    - FactEnvelope + DecisionEnvelope from one interface
+    - DecisionEnvelope + ActionLicense from one interface
+    - ActionLicense + Action from one interface
+    - Record + Action from one interface
+    - StructureArtifact + semantic DecisionEnvelope from one interface
+  checked_packet_boundary_law: 'CheckedPacket is the universal evidence-promotion boundary.
+
+    Generated output MUST NOT become FactEnvelope, DecisionEnvelope, ActionLicense,
+
+    Action, or Record without passing the required parsing and checking boundary.
+
+    Packetization proves grammar, carrier, schema, and representation integrity only.
+
+    It does not prove semantic truth.
+
+    '
+  authority_effect_law:
+    canonical_enum:
+    - None
+    - EvidenceOnly
+    - FactOnly
+    - RequiresEvaluator
+    - RequestsDecision
+    - AuthorizesTransition
+    - StateTransition
+    default_mapping:
+      StructureArtifact: None or EvidenceOnly
+      EvidenceEnvelope: EvidenceOnly
+      FactEnvelope: EvidenceOnly, FactOnly, or RequiresEvaluator
+      DecisionEnvelope: RequestsDecision
+      ActionLicense: AuthorizesTransition
+      Action: StateTransition
+      Record: EvidenceOnly or FactOnly
+    rule: No contract may invent a local AuthorityEffect enum.
+  family_flow_law:
+    valid_upward: StructureArtifact -> EvidenceEnvelope -> FactEnvelope -> DecisionEnvelope -> ActionLicense
+      -> Action
+    valid_recording: Record records StructureArtifact, EvidenceEnvelope, FactEnvelope, DecisionEnvelope,
+      ActionLicense, and Action.
+    invalid_downward:
+    - EvidenceEnvelope -> FactEnvelope without checking
+    - FactEnvelope -> EvidenceEnvelope by erasing judgment
+    - DecisionEnvelope -> FactEnvelope
+    - ActionLicense -> DecisionEnvelope
+    - Action -> ActionLicense
+    - Action -> DecisionEnvelope
+    - Record -> Action
+    - Record -> Policy
+    - Trace -> implicit execution
+    - Certificate -> authority above attached evidence
+  representation_meaning_split:
+    required_split:
+      representation_change: RepresentationBoundary / Projector / ForgetfulBoundary
+      shape_checking: Parser / PacketValidator / CheckedPacket boundary
+      meaning_judgment: Evaluator
+      policy_decision: Policy / MetaJudgment
+      transition_license: Terminalizer / Licensing boundary
+      state_transition: Engine
+  operator_authority_law:
+    effect_classes:
+      E: exact repair
+      I: quotient isometry
+      C: context embedding
+      R: residual projection
+      M: refused mutation
+    rules:
+    - No candidate may self-declare its operator class.
+    - Operator classification must be evidence-based.
+    - M is absorbing refusal and is never composable.
+    - No commutation, compression, or normalization without explicit RewriteLaw or certificate.
+    - R requires deterministic TiePolicy.
+    - C . C requires declared context composition.
+    - Normal form must emit rewrite trace and certificate references.
+  lift_law: 'A lift requires: obstruction reference, witness references, certificate references,
+
+    lift license, MetaJudgment approval when governance or layer authority changes,
+
+    Engine execution boundary.
+
+    A lift license authorizes a lift but does not execute it.
+
+    Any structural ascent, carrier/schema expansion, or layer transition without a
+
+    lift license is invalid.
+
+    '
+  trace_law:
+    allows:
+    - replay
+    - audit
+    - debugging
+    - provenance
+    must_not:
+    - trigger execution
+    - encode hidden policy
+    - mutate runtime state
+    - enrich records post-hoc
+    - act as cache
+    - control future behavior without a declared TraceConsumerContract
+  constitutional_laws:
+  - NoJudgmentInsideFacts
+  - NoDecisionInsideFacts
+  - NoActionInsideRecords
+  - NoExecutionInsideLicenses
+  - NoLiftWithoutWitness
+  - NoLiftWithoutLicense
+  - NoAuthorityAboveEvidence
+  - NoSemanticCreationInsideRepresentationBoundaries
+  - NoTruthClaimInsidePacketization
+  - NoLLMSelfCertification
+  - NoSearchAuthority
+  - NoSolverTransitionAuthorization
+  - NoEnginePolicyEvaluation
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - facts_and_decisions
+    - evidence_and_fact_without_checking
+    - decision_executes_action
+    - license_executes_action
+    - record_controls_execution
+    - unlicensed_lift
+    - implicit_trace_control
+    - local_authority_effect_enum
+    - local_artifact_family_enum
+    - semantic_creation_without_lift
+    - semantic_creation_inside_representation
+    - packetization_claims_truth
+    - certificate_creates_authority
+    - certificate_authority_exceeds_evidence
+    - llm_certifies_output
+    - search_selects_best
+    - search_certifies_candidate
+    - solver_authorizes_transition
+    - engine_evaluates_policy
+    - terminalizer_executes_action
+    - evaluator_mutates_state
+    - health_model_prescribes_action
+    - god_object
+  required_tests:
+  - contract_declares_primary_artifact_family
+  - contract_declares_referenced_artifact_families
+  - contract_declares_authority_effect
+  - contract_declares_implementation_boundary
+  - contract_does_not_emit_evidence_and_fact_from_unchecked_interface
+  - contract_does_not_emit_fact_and_decision_from_same_interface
+  - contract_does_not_emit_decision_and_action_license_from_same_interface
+  - contract_does_not_emit_action_license_and_action_from_same_interface
+  - contract_does_not_emit_record_and_action_from_same_interface
+  - contract_does_not_define_local_authority_enum
+  - contract_does_not_define_local_artifact_family_enum
+  - contract_declares_forbidden_authority
+  - contract_declares_required_tests
+  - contract_rejects_unlicensed_lift
+  - contract_rejects_trace_execution_control
+  - contract_rejects_certificate_authority_above_evidence
+  - contract_rejects_llm_self_certification
+  - contract_rejects_search_claiming_authority
+  - contract_rejects_solver_authorizing_transition
+  - contract_rejects_engine_internal_evaluation
+  - contract_rejects_packetization_semantic_truth_claim
+  - contract_rejects_health_model_action_prescription
+  - contract_distinguishes_action_license_from_action
+  - contract_distinguishes_evidence_from_fact
+  canonical_invariant: 'Structure, Evidence, Fact, Decision, ActionLicense, Action, and Record are separate
+
+    artifact families. Evidence may support facts only through checking. Facts may support
+
+    decisions only through evaluation or policy. Decisions may support action licenses only
+
+    through terminalization or licensing. Action licenses may authorize actions but may not
+
+    execute themselves. Records may record all and control none.
+
+    '
+  legacy_metadata:
+    name: ContractConstitution
+    role: Root governance law for all contracts
+    version: '2.0'
+    classification: constitution
+    doctrine_version: 2026-05
+    depends_on: []
+    forbidden_authority: *id001
+    primary_output_family: StructureArtifact
+    domain_output_kind: ConstitutionalLaw
+    referenced_output_families:
+    - StructureArtifact
+    referenced_domain_kinds:
+    - ContractRule
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_constitution_contract:v1.0.0"

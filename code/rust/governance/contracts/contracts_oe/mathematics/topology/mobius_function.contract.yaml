@@ -1,0 +1,105 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:mobius_function:v0.1.0
+title: Mobius Function of a Finite Poset Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: incidence_algebra_element
+  symbol: 'mu, the inverse of zeta (zeta(x, y) = 1 for x <= y) in the incidence algebra of a finite poset'
+  ascii_symbol: mobius_function
+  notation: 'mu(x, x) = 1; mu(x, y) = - sum_{x <= z < y} mu(x, z) for x < y; mu(x, y) = 0 unless x <= y'
+  domain:
+  - 'poset: a validated FinitePoset'
+  - 'x, y: elements of the poset'
+  codomain:
+    description: 'An exact integer mu(x, y) for each ordered pair of elements, held as a dense table, together with three independent ways to compute it: the defining recursion, exact inversion of the zeta matrix over Q, and the reduced Euler characteristic of the order complex of the open interval (Philip Hall).
+
+      '
+requirements:
+  required_structures:
+  - 'mu(x, x) = 1 for every x'
+  - 'mu(x, y) = 0 unless x <= y'
+  - 'The recursion, the zeta-matrix inversion and Hall''s theorem agree on every pair'
+  - 'Entries are exact integers (BigInt); the zeta-matrix inverse is checked to be integral'
+  - 'The zeta inversion is bounded at 64 elements and the order complex by a maximal-chain budget'
+laws:
+- 'mu(x, x) = 1 and mu(x, y) = 0 unless x <= y'
+- 'sum over x <= z <= y of mu(x, z) equals delta(x, y), and sum over x <= z <= y of mu(z, y) equals delta(x, y): mu is the two-sided inverse of zeta'
+- 'Philip Hall: for x < y, mu(x, y) = chi(Delta((x, y))) - 1, the reduced Euler characteristic of the order complex of the open interval; in particular mu(x, y) = -1 when y covers x'
+- 'Chain: mu(i, i+1) = -1 and mu(i, j) = 0 for j >= i + 2'
+- 'Boolean lattice: mu(A, B) = (-1)^|B minus A| for A contained in B'
+- 'Divisor lattice: mu(a, b) equals the number-theoretic Mobius function of b/a for a dividing b'
+- 'Partition lattice of an n-set: mu(0, 1) = (-1)^(n-1) (n-1)!; for partitions p refining s, mu(p, s) is the product over blocks B of s of (-1)^(m_B - 1) (m_B - 1)!, with m_B the number of blocks of p inside B'
+- 'Duality: the Mobius function of the dual poset at (y, x) equals mu(x, y)'
+- 'k pairwise incomparable points with a least and a greatest element adjoined have mu(0, 1) = k - 1, the reduced Euler characteristic of k points'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact integer and rational arithmetic only
+  - The zeta matrix is row-reduced over BigRational with the identity adjoined
+relationships:
+- urn:core:math:finite_poset:v0.1.0 serves as The carrier the function is computed on
+- urn:core:math:cell_complex:v0.1.0 serves as The order complex is a simplicial complex of the existing core_homology types
+rust_binding:
+  crate: core_homology
+  module: finite_poset
+  symbols:
+  - MobiusFunction
+  - FinitePoset::mobius
+  - FinitePoset::mobius_by_zeta_inversion
+  - FinitePoset::mobius_by_order_complex
+  - FinitePoset::zeta_matrix
+  - FinitePoset::order_complex
+  - FinitePoset::order_complex_of_open_interval
+  - MobiusFunction::is_inverse_of_zeta
+  - MAX_ZETA_INVERSION_ELEMENTS
+  required_tests:
+  - a_corrupted_mobius_table_is_not_the_zeta_inverse
+  - the_zeta_matrix_inversion_is_refused_above_its_size_bound
+  - queries_refuse_elements_outside_the_poset
+  - the_order_complex_is_bounded_by_the_maximal_chain_budget
+  - the_mobius_function_of_a_chain_is_one_minus_one_and_zero
+  - the_mobius_function_of_a_boolean_lattice_is_the_sign_of_the_difference
+  - the_mobius_function_of_the_divisor_lattice_is_the_number_theoretic_one
+  - the_partition_lattice_realises_the_classical_mobius_values
+  - the_mobius_function_of_the_dual_is_the_transpose
+  - the_adjoined_bounds_turn_the_reduced_euler_characteristic_into_mu
+  - recursion_zeta_inversion_and_order_complex_agree_on_every_poset_up_to_five_elements
+  - an_interval_that_is_a_single_cover_has_the_empty_order_complex_and_mu_minus_one
+  - the_proper_part_of_a_boolean_lattice_is_a_sphere
+  - the_zeta_matrix_records_less_or_equal
+
+negative_tests:
+- A table that is not the two-sided inverse of zeta on the poset (another poset, the dual poset, a wrong size) must fail is_inverse_of_zeta
+- Zeta-matrix inversion above 64 elements must be refused
+- A Mobius query naming an element outside the poset must be refused
+- An order complex with more maximal chains than the stated budget must be refused
+doctrine:
+  summary: 'The Mobius function is computed three ways that share no code: the recursion over the poset, exact inversion of the zeta matrix over Q, and the reduced Euler characteristic of the order complex of the open interval, built as a simplicial complex of the existing core_homology types. The three agree on every labelled poset with at most five elements, and the closed forms for chains, Boolean lattices, divisor lattices and partition lattices are checked pair by pair against independent formulas written in the tests.'
+  non_role:
+  - Mobius inversion of arbitrary functions on a poset
+  - Incidence algebras beyond zeta and mu
+  - Homology of the order complex with torsion coefficients
+  - Infinite posets
+wip:
+- 'The order complex is built from maximal chains and is bounded by a budget; large lattices such as partition lattices above 5 points are not exercised'
+- 'Hall''s theorem is used as a computed cross-check of mu; it is not proved in this repository'

@@ -1,0 +1,40 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_certifiers:checked_packet:v1.2.0
+title: CheckedPacket
+status: active
+crate: core_certifiers
+file: crates_rs/core_certifiers/src/checked_packet.rs
+role: canonical_evidence_certifier
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- CheckedPacket construction
+- packet-bound evidence certification
+does_not_own:
+- authority promotion
+- receipt DAG verification
+- human promotion
+may_call: []
+must_not:
+- compute Phi1
+- compute Gamma2
+- classify trichotomy
+- accept raw status strings
+- call CertifiedAuthority::certify directly
+- call authority_from_outcome_f13 directly
+- call promote_authorized_local_result_v1
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+- CheckedPacket
+- CheckedPacketCertificateV1
+- certify_evidence
+required_tests:
+- certify_evidence_seals_bound_exact_witness_without_authority
+lean_obligations: []

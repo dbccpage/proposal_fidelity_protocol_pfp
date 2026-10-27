@@ -1,0 +1,90 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:enriched_category:v0.1.0
+title: Enriched Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: enriched_category
+  symbol: C_V = (Ob, Hom_V, \circ, j)
+  ascii_symbol: enriched_category
+  notation: C enriched over (V, \otimes, I, \alpha, \lambda, \rho)
+  domain:
+  - 'monoidal_base: monoidal category (V, \otimes, I, \alpha, \lambda, \rho) providing hom-objects and tensor product'
+  - 'objects: (Obj : Type u) collection of object identifiers in C'
+  - 'hom_objects: (C(X, Y) \in Ob(V)) hom-object in V for each pair of objects'
+  - 'composition_morphism: (\circ_{X,Y,Z} : C(Y, Z) \otimes C(X, Y) -> C(X, Z)) morphism in V'
+  - 'unit_morphism: (j_X : I -> C(X, X)) morphism in V from monoidal unit I'
+  - 'associativity_diagram: commutativity of \circ \circ (id \otimes \circ) \circ \alpha = \circ \circ (\circ \otimes id)'
+  - 'unit_diagrams: commutativity of \circ \circ (id \otimes j) = \rho and \circ \circ (j \otimes id) = \lambda'
+  codomain:
+    description: 'A category C enriched over a monoidal category V is a collection of objects Ob(C) together with a hom-object C(X, Y) \in V for every pair of objects, composition morphisms \circ_{X,Y,Z}: C(Y, Z) \otimes C(X, Y) -> C(X, Z) in V, and unit morphisms j_X: I -> C(X, X) in V satisfying enriched associativity and unit diagrams.'
+requirements:
+  required_structures:
+  - Enriching category V is a valid monoidal category satisfying pentagon and triangle coherence.
+  - Every pair of objects X, Y has a valid hom-object C(X, Y) in Ob(V).
+  - Composition morphism \circ_{X,Y,Z} has domain C(Y, Z) \otimes C(X, Y) and codomain C(X, Z) in V.
+  - Unit morphism j_X has domain I and codomain C(X, X) in V.
+  - Enriched associativity diagram commutes strictly in V for all object quadruples.
+  - Enriched left and right unit diagrams commute strictly in V for all object pairs.
+  - Structure hash is deterministically content-addressed.
+laws:
+  - 'Enriched associativity: \circ_{X,Y,W} \circ (id \otimes \circ_{X,Y,Z}) \circ \alpha = \circ_{X,Z,W} \circ (\circ_{Z,Y,W} \otimes id)'
+  - 'Enriched left unit: \circ_{X,Y,Y} \circ (j_Y \otimes id) = \lambda_{C(X,Y)}'
+  - 'Enriched right unit: \circ_{X,X,Y} \circ (id \otimes j_X) = \rho_{C(X,Y)}'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Hom-objects, morphisms, and unit maps serialized in canonical order
+  - Content-addressed deterministic evaluation
+relationships:
+- urn:core:math:braided_monoidal_category:v0.1.0 serves as Monoidal base category V providing tensor product and unit object
+- urn:core:math:bicategory:v0.1.0 serves as A V-enriched category is a 1-object V-bicategory or monoidal action
+- urn:core:math:two_category:v0.1.0 serves as A strict 2-category is a category enriched over Cat
+- urn:core:math:dg_category:v0.1.0 serves as A DG category is a category enriched over chain complexes
+rust_binding:
+  crate: core_higher_category_theory
+  module: enriched
+  symbols:
+  - EnrichedCategory
+  - HomObject
+  - EnrichedComposition
+  - EnrichedUnit
+  required_tests:
+  - test_enriched_associativity_diagram
+  - test_enriched_category_lifecycle_and_unitality
+  - test_kill_mut_p2_06_enriched_unit_morphism_mismatch
+negative_tests:
+- Monoidal base category V does not resolve or lacks unit/associator
+- Composition morphism has invalid domain/codomain in V
+- Unit morphism j_X tampered or has invalid codomain (EnrichedUnitMorphismMismatch / MUT-P2-06)
+- Enriched associativity diagram fails to commute in V
+- Enriched unit diagrams fail to commute in V
+doctrine:
+  summary: An EnrichedCategory replaces set-theoretic hom-sets with objects of a monoidal category V. Composition is a morphism in V and units are morphisms from the monoidal unit I. When V = Set it yields ordinary categories; V = Cat yields 2-categories; V = Ch yields DG categories.
+  non_role:
+  - Enriched functors and enriched natural transformations (separate contracts)
+  - Enriched model categories
+  - Non-monoidal base categories
+wip:
+  - Enriched category formalization in Lean 4 (Enriched.lean)
+  - Rust discrete matrix/algebraic models of enriched categories
+  - Verification of unit morphism coherence under Adversary mutation MUT-P2-06

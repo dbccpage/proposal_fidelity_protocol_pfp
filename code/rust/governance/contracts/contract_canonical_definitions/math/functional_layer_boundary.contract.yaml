@@ -1,0 +1,223 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:functional_layer_boundary:v1.0.0
+title: FunctionalLayerBoundary
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  dependencies:
+    contracts:
+    - urn:core:math:cochain_layer:v1.0.0
+    - urn:core:math:exact_repair_space:v1.0.0
+    - urn:core:math:quotient_space:v1.0.0
+    - urn:core:math:validated_cochain_complex:v1.0.0
+    - urn:core:math:raw_closure_defect:v1.0.0
+    - urn:core:math:closed_sector:v1.0.0
+    - urn:core:math:cohomology:v1.0.0
+    - urn:core:math:residual_projection:v1.0.0
+    - urn:core:math:exact_repair_operator:v1.0.0
+    - urn:core:math:quotient_isometry_operator:v1.0.0
+    - urn:core:math:context_embedding_operator:v1.0.0
+    - urn:core:math:mutation_operator:v1.0.0
+    - urn:core:math:candidate_obstruction_window:v1.0.0
+    - urn:core:math:quotient_transport:v1.0.0
+    - urn:core:math:transport_loss_ledger:v1.0.0
+    - urn:core:math:tie_r:v1.0.0
+    - urn:core:math:born_probabilities:v1.0.0
+    - urn:core:math:dual_verification:v1.0.0
+    - urn:core:math:norms:v1.0.0
+    - urn:core:math:contract_descriptors:v1.0.0
+    - urn:core:math:contract_property_witnesses:v1.0.0
+    - urn:core:math:exact_repair:v1.0.0
+    - urn:core:math:hashes:v1.0.0
+    - urn:core:math:mub_feasibility_wall:v1.0.0
+    - urn:core:math:aggregation_functional:v1.0.0
+    - urn:core:math:quantum_gap_functional:v1.0.0
+    - urn:core:math:quantum_gaps:v1.0.0
+    - urn:core:math:transport_amplitude:v1.0.0
+    - urn:core:math:binary_degree_functional:v1.0.0
+    - urn:core:math:phi2_quotient_obstruction:v1.0.0
+    - urn:core:math:phi3_quotient_obstruction:v1.0.0
+    - urn:core:math:phi4_quotient_obstruction:v1.0.0
+    - urn:core:math:linear_observer_presentation:v1.0.0
+    - urn:core:math:gamma_reconciliation:v1.0.0
+    - urn:core:math:residual_splitting:v1.0.0
+    - urn:core:math:normal_projection:v1.0.0
+    - urn:core:math:circle_piecewise_linear:v1.0.0
+    - urn:core:math:weighted_l1_norm:v1.0.0
+    - urn:core:math:decoherence:v1.0.0
+    - urn:core:math:phi1:v1.0.0
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    - urn:core:math:observer:v1.0.0
+    - urn:core:math:distinguishability_functional:v1.0.0
+    - urn:core:math:trace_diagnostics:v1.0.0
+    - urn:core:math:l1_seminorm:v1.0.0
+    - urn:core:math:phi1_obstruction_mass:v1.0.0
+    - urn:core:math:closure_defect:v1.0.0
+    - urn:core:math:dual_witness:v0.1.0
+    - urn:core:math:observer_family:v1.0.0
+    - urn:core:math:observer_quotient:v1.0.0
+    - urn:core:math:quotient_mass:v1.0.0
+    - urn:core:math:graph_phi1_quotient_distance:v1.0.0
+    - urn:core:math:simplicial_defect:v1.0.0
+    - urn:core:math:observer_gauge:v1.0.0
+    - urn:core:math:residual:v1.0.0
+    - urn:core:math:functional_factory:v1.0.0
+    - urn:core:math:finite_obstruction_trichotomy:v0.2.0
+    - urn:core:math:observer_comparison:v1.0.0
+    - urn:core:math:xi_tie_breaker:v1.0.0
+    - urn:core:math:phi1_exact_certificate_solver:v1.0.0
+    - urn:core:math:closure_regime:v1.0.0
+    - urn:core:math:evaluation_hierarchy:v1.0.0
+    - urn:core:math:xi_diagnostic:v1.0.0
+    - urn:core:math:diagnostic_vector:v1.0.0
+    - urn:core:math:xi_comparison_policy:v1.0.0
+    - urn:core:math:product_distance:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+math:
+  object_kind: functional_layer_boundary
+  ascii_symbol: functional_layer_boundary
+  symbol: functional_layer_boundary
+  notation: functional_layer_boundary
+  domain:
+  - 'carrier: instance of functional_layer_boundary'
+  codomain:
+    description: Mathematical object declared by FunctionalLayerBoundary (structural shell).
+requirements:
+  required_structures:
+  - Carrier for functional_layer_boundary must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- FunctionalLayerBoundary is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_functional
+  module: lib
+  symbols:
+  - FunctionalLayerBoundary
+  required_tests:
+  - each_forbidden_package_is_rejected_even_through_an_inline_alias
+negative_tests:
+- Artifact claiming FunctionalLayerBoundary without required structures must be rejected
+- Empty or ill-typed carrier for functional_layer_boundary must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'Functional layer boundary Nonclaim: this contract does not claim HoTT/Univalence discharge, PROVED status,
+    or GlobalGreen.'
+  core_constraints: []
+  invariants: []
+  forbidden_dependencies:
+  - core_solvers
+  - core_policy
+  - core_types
+  - core_contracts
+  - pfp
+  - pfp_runtime
+  - core_homology
+  - core_quantum_physics
+  - engines
+  - core_pipelines
+  - core_id_run
+  - core_lifts
+  - core_certifiers
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product assurances
+  - Full encyclopedia mechanization of functional_layer_boundary (deferred)
+  - HoTT/Univalence theorem discharge from this contract alone
+  - Runtime enforcement as proof of mathematical truth
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NON_ROLE
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_NON_ROLE
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_REQUIRED_STRUCTURES
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_NEGATIVE_TESTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STATUS_VS_CONTENT
+    severity: low
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: status=''active'' while structural residuals remain'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; set doctrine.non_role (anti-theater); demote status active -> mathematical_wip
+      (structural repair); add overclaim nonclaim fence to doctrine.summary. Not PROVED; not GlobalGreen; human
+      re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STAGE2_BOUNDARY_MARKER
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates_rs/core_functional/src/lib.rs
+    yaml_law: Functional layer boundary forbidding solver/engine/pipeline authority deps
+    code_behavior: 'Zero-sized marker `FunctionalLayerBoundary` plus crate-level docs; no runtime enforcement of
+      forbidden_dependencies list.
+
+      '
+    detail: 'rust_binding resolves (module lib → lib.rs; symbol present). Realization is a structural fence marker,
+      not executable law checks. MATCH on existence; YAML dependency firewall is documentation-level only in code.
+
+      '
+    delta: MATCH_SHAPE_ONLY

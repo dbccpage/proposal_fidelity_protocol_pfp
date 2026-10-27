@@ -1,0 +1,81 @@
+schema_version: core.contract.v1
+contract_id: urn:core:rust:core_quantum_physics:local_operator_algebra:v0.1.0
+title: Local Operator Algebra (core_quantum_physics)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: local_operator_algebra
+  symbol: local_operator_algebra
+  ascii_symbol: local_operator_algebra
+  notation: Declared finite local operator algebra with executable operator laws
+  domain:
+  - Declared finite carrier and exact coefficient field for the exact face
+  - Checked shape and resource admission; any f64 face is diagnostic
+  codomain:
+    description: Generated finite algebras are closed under declared products and dagger; Centers and commutants are computed by exact linear algebra and local tensor complements
+requirements:
+  required_structures:
+  - Canonical scalar and matrix owners
+  - Declared finite physical inputs with independently replayed invariants
+  - AuthorityEffect none; no CertifiedAuthority construction
+laws:
+- Generated finite algebras are closed under declared products and dagger
+- Centers and commutants are computed by exact linear algebra and local tensor complements
+- Executable finite checks do not confer theorem, host or workload authority
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+relationships: []
+rust_binding:
+  crate: core_quantum_physics
+  module: local_operator_algebra
+  symbols:
+  - LocalOperatorAlgebra
+  required_tests:
+  - even_fermion_algebra_has_dimension_eight_and_two_dimensional_center
+  - pauli_local_algebra_commutant_is_the_complement_region
+  - no_carrier_in_this_crate_can_reach_certified_authority
+negative_tests:
+- Malformed carriers, unsupported fields or exhausted admitted operations must fail with their declared refusal
+- Changing an operator relation must leave a replayable nonzero residual
+- No result may self-assign CertifiedAuthority, PROVED or GlobalGreen
+doctrine:
+  summary: Generated finite algebras are closed under declared products and dagger; Centers and commutants are computed by exact linear algebra and local tensor complements. This declaration remains mathematical_wip pending mathematics review.
+  non_role:
+  - Human mathematics acceptance or mechanized proof
+  - Continuum limits, experimental realization or workload authority
+wip:
+- Human mathematics review remains required; executable law bindings are implementation evidence
+- No theorem or lifecycle acceptance is inferred from passing Rust checks
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: LLM_BEST_EFFORT_SLOP
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: 'AUTHORING_QUALITY: human_llm_best_effort_slop (best-effort dual-face scaffold; not human-canon math; not PROVED; not GlobalGreen). module core_quantum_physics::local_operator_algebra'
+    recommendation: Keep AuthorityEffect None; deepen only with human review.
+    pass: domain_face_batch_gr_qm_ml_20260801

@@ -1,0 +1,165 @@
+//! Arithmos category substrate.
+//!
+//! The finite/auditable layer is the canonical implementation target. The
+//! `core`, `functor`, and `braided_monoidal` modules below are compatibility
+//! contracts for older abstract arithmos files that still use the pre-migration
+//! trait names.
+
+pub mod core {
+    pub trait Category {
+        type Ob: Clone + PartialEq + Eq + std::fmt::Debug;
+        type Mor: Clone + PartialEq + Eq + std::fmt::Debug;
+
+        fn identity<A>(object: &A) -> Self::Mor;
+        fn compose<A, B, C>(first: &Self::Mor, second: &Self::Mor) -> Option<Self::Mor>;
+    }
+
+    pub trait MorphismEq: Category {
+        fn morphism_eq<A, B>(left: &Self::Mor, right: &Self::Mor) -> bool {
+            left == right
+        }
+    }
+}
+
+pub mod functor {
+    pub use super::cat_functor::DeclaredFiniteFunctor;
+
+    pub trait Functor<C, D>
+    where
+        C: super::core::Category,
+        D: super::core::Category,
+    {
+        type Obj<A>;
+
+        fn fmap<A, B>(f: impl Fn(A) -> B) -> impl Fn(Self::Obj<A>) -> Self::Obj<B>;
+    }
+}
+
+pub mod braided_monoidal {
+    pub trait BraidedMonoidalCategory: super::monoidal_category::MonoidalCategory {
+        fn braiding<A, B>() -> Self::Mor
+        where
+            Self: super::core::Category;
+    }
+}
+
+pub mod errors {
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub enum ArithmosError {
+        LawViolation(String),
+        PreconditionFailed(String),
+        InvalidShape(String),
+    }
+}
+
+pub mod witness {
+    #[derive(Debug, Clone, PartialEq, Eq)]
+    pub struct Witness {
+        pub name: String,
+    }
+
+    impl Witness {
+        pub fn new(name: impl Into<String>) -> Self {
+            Self { name: name.into() }
+        }
+    }
+}
+
+pub mod law {
+    use super::errors::ArithmosError;
+    use super::witness::Witness;
+
+    pub trait Law {
+        type Subject;
+
+        fn check(subject: &Self::Subject) -> Result<Witness, ArithmosError>;
+    }
+}
+
+pub mod functors {
+    pub use super::*;
+
+    pub mod functor {
+        pub use super::super::cat_functor::*;
+    }
+}
+
+pub mod category {
+    pub mod core {
+        pub use super::super::core::*;
+    }
+
+    pub mod functor {
+        pub use super::super::functor::*;
+    }
+
+    pub mod natural_trans {
+        pub use super::super::natural_trans::*;
+    }
+
+    pub mod profunctor {
+        // pub use super::super::profunctor::*;
+    }
+
+    pub mod monoidal_category {
+        // pub use super::super::monoidal_category::*;
+    }
+
+    pub mod braided_monoidal {
+        pub use super::super::braided_monoidal::*;
+    }
+}
+
+pub mod adjunction;
+pub mod bridges;
+pub mod cat_functor;
+pub mod cauchy;
+pub mod coend;
+pub mod condensation;
+pub mod eilenberg_moore;
+pub mod finite_category;
+pub mod finite_category_builder;
+pub mod finite_profunctor;
+pub mod functor_composition;
+pub mod higher;
+pub mod higher_functor;
+pub mod hom_adjunction;
+pub mod kleisli_category;
+pub mod lawvere;
+pub mod limits;
+pub mod monad;
+pub mod natural_trans;
+pub mod nerve;
+pub mod operad;
+pub mod rewriting;
+pub mod validation;
+
+// No `abstract_category` feature exists, and `braided_monoidal` above requires
+// this module unconditionally — the old cfg(not(feature)) gate was dead.
+pub mod monoidal_category {
+    use super::core::Category;
+
+    pub trait MonoidalCategory: Category {
+        type TensorProduct<A, B>: Clone;
+
+        fn unit() -> Self::Ob;
+    }
+}
+
+pub mod colimits;
+pub mod density_matrix_functor;
+pub mod family_category;
+pub mod hott_topos_bridge;
+pub mod mssn_functor_bridge;
+pub mod simplicial_hott_bridge;
+pub mod topos_hott_model;
+pub mod zeta_functor;
+// pub mod free_category_instance;
+// pub mod opposite_category;
+pub mod agent_functor;
+pub mod arrow;
+pub mod category_contract_alignment;
+pub mod finite_category_validation;
+pub mod grothendieck_construction;
+pub mod morphism;
+pub mod natural_trans_composition;

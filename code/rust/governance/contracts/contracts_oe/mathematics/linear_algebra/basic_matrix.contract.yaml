@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:basic_matrix:v1.0.0
+title: Basic Matrix Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_rectangular_matrix
+  symbol: A ∈ K^{m×n}
+  ascii_symbol: basic_matrix
+  notation: A ∈ K^{m×n}
+  domain:
+  - 'rows: finite_index_set'
+  - 'cols: finite_index_set'
+  - 'entries: scalar_domain'
+  codomain:
+    description: 'A finite rectangular array with fixed shape (rows, cols) and entries from a scalar domain (typically a field).
+
+      '
+requirements:
+  required_structures:
+  - rows and cols are finite natural numbers (rows, cols > 0)
+  - every access must satisfy 0 <= i < rows and 0 <= j < cols
+  - stored data length must equal rows * cols
+  - same matrix, row, and col always resolve to the same entry
+  - operations may not silently change shape
+laws:
+- rows and cols are finite natural numbers (rows, cols > 0)
+- every access must satisfy 0 <= i < rows and 0 <= j < cols
+- stored data length must equal rows * cols
+- same matrix, row, and col always resolve to the same entry
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All serializations are fixed byte arrays
+  - Operation functions are content-addressed
+relationships:
+- urn:math:contract:Scalar:v1.0.0 serves as entry_type
+- urn:math:contract:Field:v0.1.0 serves as scalar_domain
+rust_binding:
+  crate: core_linear_algebra
+  module: backend::basic_matrix
+  symbols:
+  - BasicMatrix
+  - MatrixError
+  # One test per mechanically-checkable negative_test, in declaration order.
+  # The last two negative_tests are doctrinal and are tracked as OPEN_OBLIGATION
+  # entries under wip. A named gap is honest; silence is invisible debt.
+  required_tests:
+  - test_from_row_major_mismatch
+  - test_out_of_bounds
+  - test_add_sub_mismatch
+  - test_mul_dimension_mismatch
+  - test_shape_preserved
+negative_tests:
+- Matrix with rows=0 must be rejected
+- Matrix with cols=0 must be rejected
+- Data length not equal to rows*cols must be rejected
+- Accessing index >= rows or >= cols must fail
+- Matmul with lhs_cols != rhs_rows must be rejected
+- Add with different shapes must be rejected
+- Operations on matrices from different fields must be rejected
+doctrine:
+  summary: Defines the canonical finite rectangular matrix representation used by linear algebra, cochain complexes, incidence maps, solvers, and validators. A BasicMatrix is a finite rectangular array of scalars over a declared field, with well-defined shape (rows × cols), deterministic indexing, and shape- preserving operations. This contract is purely structural and does not confer authority.
+  non_role:
+  - Symbolic tensor algebra (deferred to symbolic computation contract)
+  - Infinite-dimensional operators (out of scope)
+  - Implicit shape coercion (always rejected)
+  - Unchecked floating-point authority (requires explicit policy)
+  - Sparse matrix optimization (separate sparse_matrix contract)

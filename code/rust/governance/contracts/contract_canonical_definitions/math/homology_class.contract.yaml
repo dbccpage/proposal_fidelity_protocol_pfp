@@ -1,0 +1,128 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:homology_class:v0.1.0
+title: Homology class [z] ∈ H_n
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: homology_class
+  symbol: "[z] ∈ H_n(C)"
+  ascii_symbol: homology_class
+  notation: "[z] ∈ H_n = ker(d_n) / im(d_{n+1})"
+  domain:
+  - "ambient chain complex C_• over R with d² = 0"
+  - "degree n"
+  - "cycle representative z ∈ ker(d_n)"
+  - "boundary subspace B_n = im(d_{n+1})"
+  codomain:
+    description: >-
+      Equivalence class of a cycle modulo boundaries in the quotient module
+      H_n = Z_n / B_n.
+requirements:
+  required_structures:
+  - Ambient chain complex with d² = 0 so B_n ⊆ Z_n
+  - Representative z with d_n(z) = 0
+  - Boundary subspace B_n = im(d_{n+1}) at degree n
+  - Quotient equality relation on Z_n
+  - Deterministic class identity / normal form policy when materialized
+laws:
+- "Cycle law: representative z satisfies d_n(z) = 0."
+- "Equality law: [z] = [z′] iff z − z′ ∈ im(d_{n+1})."
+- "Addition law: [z] + [w] = [z + w] (when addition is defined in C_n)."
+- "Scalar law: λ[z] = [λz] for λ ∈ R."
+- "Zero class: [z] = 0 in H_n iff z ∈ B_n."
+- "Well-definedness: requires B_n ⊆ Z_n from d² = 0."
+- "Authority law: no PROVED / GlobalGreen / HoTT from this contract alone."
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Quotient / normal-form algorithms deterministic
+  - Class hashes reproducible from canonical serialization
+relationships:
+- "urn:core:math:chain_complex:v1.0.0 — ambient C_•"
+- "urn:core:math:cycle:v0.1.0 — representative lives in Z_n"
+- "urn:core:math:boundary:v0.1.0 — denominators of the quotient"
+- "urn:core:math:cohomology:v1.0.0 — dual cochain-side quotient language"
+rust_binding:
+  crate: core_homology
+  module: homology_class
+  symbols:
+  - HomologyClass
+  # Constructor refuses ComplexMismatch and DomainMismatch.
+  # Cycle d_n≠0, wrong-degree B_n, equality-without-B_n, class-hash,
+  # d²=0, and PROVED/GlobalGreen stay unnamed (no differential, hash
+  # policy, or authority seam on this type).
+  required_tests:
+  - test_homology_class_complex_mismatch_rejected
+  - test_homology_class_domain_mismatch_rejected
+negative_tests:
+- Representative with d_n(z) ≠ 0 must be rejected
+- Boundary subspace from wrong degree must be rejected
+- Equality claim without B_n difference must be rejected
+- Class hash mismatch under declared normal form must be rejected
+- Claiming H_n without d² = 0 must be rejected
+- Claiming PROVED / GlobalGreen / authority from this contract alone must be rejected
+doctrine:
+  summary: >-
+    Homology class [z] ∈ H_n = ker(d_n)/im(d_{n+1}). Finite obstruction/residual geometry
+    often consumes these classes. Nonclaim: not PROVED; not GlobalGreen; not HoTT discharge.
+  non_role:
+  - Computing entire homology groups/algorithms catalogs
+  - Persistent or relative homology variants (separate)
+  - Cohomology classes (cohomology contract)
+  - Authority / PROVED / GlobalGreen / HoTT
+wip:
+- Persistent / relative homology class variants
+- Infinite-dimensional H_n
+- Coefficient ring policy catalog (ℤ, ℚ, 𝔽_p, …)
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B2_HOMOLOGY
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Meth B2: quotient laws explicit; rust_binding.module homology_class."
+    recommendation: "Keep finite-complex fence; Stage-2 negative-test audit later."
+    pass: meth_b2_homology
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: BINDING_ALIGNED
+    severity: low
+    claim_class: "[CODE_DEMO_RUST]"
+    detail: >-
+      homology_class.rs exports HomologyClass with cycle/quotient pairing. Binding
+      module set to homology_class (was class — path drift residual cleared in YAML).
+      Full negative-test suite not audited here. Not PROVED.
+    file: engine/crates/core_homology/src/homology_class.rs
+    yaml_law: "[z] ∈ H_n = Z_n/B_n with cycle representative."
+    code_behavior: "HomologyClass pairs certified cycle with quotient class metadata."
+    delta: MATCH
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: "Quotient laws real; realization present. Not PROVED."

@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:pin_characteristic_obstructions:v0.1.0
+title: Finite Pin plus and minus obstructions
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: pin_characteristic_obstructions
+  symbol: pin_characteristic_obstructions
+  ascii_symbol: pin_characteristic_obstructions
+  notation: Finite Pin plus and minus obstructions
+  domain:
+  - Declared degree1 and degree2 characteristic cocycles on an ordered finite simplicial complex with at most4096
+    cells and bounded cohomology work.
+  codomain:
+    description: Declared finite results of core_quantum_physics::spin_structure_obstruction; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Pin+ obstruction is w2; Pin− obstruction is w2+w1 cup w1.
+- Exact obstructions admit a Z1 lift torsor and an H1 gauge-class torsor.
+- Changing a characteristic representative by a coboundary preserves class counts.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: spin_structure_obstruction
+  symbols:
+  - PinType
+  - PinLiftClassification
+  required_tests:
+  - pin_obstructions_use_the_actual_cup_square_on_projective_plane_and_klein_bottle
+negative_tests:
+- pin_obstructions_use_the_actual_cup_square_on_projective_plane_and_klein_bottle
+doctrine:
+  summary: Pin+ obstruction is w2; Pin− obstruction is w2+w1 cup w1.; Exact obstructions admit a Z1 lift torsor
+    and an H1 gauge-class torsor.; Changing a characteristic representative by a coboundary preserves class
+    counts..
+  non_role:
+  - Exact finite characteristic-class declarations do not infer tangent-bundle classes, continuum geometry,
+    or external program admission.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

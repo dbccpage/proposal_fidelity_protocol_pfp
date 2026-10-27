@@ -1,0 +1,15 @@
+{
+  "schema": "wdp-causal-problem-v1",
+  "initial": {"terms": ["t0"], "r": ["2"], "s": ["1"], "filled": []},
+  "initial_tokens": ["origin"],
+  "events": [
+    {"tag": "birth-b", "kind": "add_term", "birth": "b", "predecessors": []},
+    {"tag": "birth-c", "kind": "add_term", "birth": "c", "predecessors": []},
+    {"tag": "birth-d", "kind": "add_term", "birth": "d", "predecessors": []},
+    {"tag": "assert-bc", "kind": "add_assertion", "relation": "r", "tokens": ["b", "c"], "predecessors": ["birth-b", "birth-c"]},
+    {"tag": "fill-bcd", "kind": "fill", "tokens": ["b", "c", "d"], "predecessors": ["birth-b", "birth-c", "birth-d"]},
+    {"tag": "remove-bc", "kind": "remove", "relation": "r", "tokens": ["b", "c"], "predecessors": ["assert-bc"]},
+    {"tag": "identify-bc", "kind": "identify", "tokens": ["b", "c"], "predecessors": ["remove-bc", "fill-bcd"]}
+  ],
+  "protected_prices": ["term_additions", "assertion_additions", "source_size_delta", "plain_cost_delta"]
+}

@@ -1,0 +1,87 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_cochain_packet:v0.1.0
+title: Exact Weighted Finite Cochain Packets
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_cochain_packet
+  symbol: finite_cochain_packet
+  ascii_symbol: finite_cochain_packet
+  notation: Exact Weighted Finite Cochain Packets
+  domain:
+  - A checked finite oriented two-complex with strictly positive rational edge weights.
+  - Bounded canonical matrix ranks, actions and certified quotient proposals.
+  codomain:
+    description: Declared finite results of core_solvers::finite_cochain_packet; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Canonical matrix ranks give dim H1=dim C1-rank d1-rank d0.
+- The raw weighted edge mass is representative-dependent, while certified Phi1 is invariant under addition
+  of a primitive coboundary.
+- Gamma2 is the exact L1 closure defect and the trichotomy is independently replayed by the functional owner.
+- Empty and edge-free carriers preserve their mathematical dimensions and zero quotient mass.
+- Closure admission checks every axis, declared matrix shape, aggregate storage and replay work before cloning
+  its maps or residual.
+- A nonempty C2 coboundary is charged even when C1 is empty; an actual empty output is admitted under a zero
+  storage and work policy.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_solvers
+  module: data_cochain_packet
+  symbols:
+  - FiniteCochainPacket
+  - CochainDimensions
+  - CochainPacketError
+  - certified_closure_defect
+  - certified_closure_defect_with_limits
+  required_tests:
+  - empty_and_edge_free_complexes_keep_their_mathematical_shapes
+  - public_complex_tampering_is_a_typed_packet_refusal
+  - closure_admission_precedes_clones_and_preserves_empty_carriers
+  - edge_free_closure_outputs_obey_explicit_storage_and_work_budgets
+negative_tests:
+- Self loops, nonpositive or wrong-count weights, cochain size mismatch and public-complex tampering are refused.
+- An edge-free two-face carrier refuses zero storage and insufficient work before output construction, while
+  the fully empty and vertex-only carriers retain zero-policy admission.
+doctrine:
+  summary: Canonical matrix ranks give dim H1=dim C1-rank d1-rank d0.; The raw weighted edge mass is representative-dependent,
+    while certified Phi1 is invariant under addition of a primitive coboundary.; Gamma2 is the exact L1 closure
+    defect and the trichotomy is independently replayed by the functional owner.; Empty and edge-free carriers
+    preserve their mathematical dimensions and zero quotient mass.; Closure admission checks every axis, declared
+    matrix shape, aggregate storage and replay work before cloning its maps or residual.; A nonempty C2 coboundary
+    is charged even when C1 is empty; an actual empty output is admitted under a zero storage and work policy..
+  non_role:
+  - A packet does not grant diagnostic or terminal authority.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_superselection_sector:v0.1.0
+title: Exact Split Central Superselection Blocks
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_superselection_sector
+  symbol: finite_superselection_sector
+  ascii_symbol: finite_superselection_sector
+  notation: Exact Split Central Superselection Blocks
+  domain:
+  - A finite exact star algebra whose center splits over Gaussian rationals.
+  - A complete family of certified minimal central orthogonal projections.
+  codomain:
+    description: Declared finite results of core_quantum_physics::superselection_sector; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Central projections sum to identity, are pairwise orthogonal and idempotent, and their count equals the center
+  dimension.
+- Support, matrix block size and multiplicity are computed from actual algebra restrictions.
+- Central pinching is idempotent and preserves expectations of every algebra observable.
+- Parity pinching removes cross-sector phase coherence while retaining the sector populations.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: superselection_sector
+  symbols:
+  - SuperselectionSector
+  - pinching
+  - superselection_rule_holds
+  required_tests:
+  - parity_sectors_are_minimal_central_blocks_and_hide_cross_sector_phase
+negative_tests:
+- A center requiring unavailable algebraic spectral roots is a typed refusal.
+- Incomplete, noncentral or inconsistent sector projectors cannot certify a pinching rule.
+doctrine:
+  summary: Central projections sum to identity, are pairwise orthogonal and idempotent, and their count equals
+    the center dimension.; Support, matrix block size and multiplicity are computed from actual algebra restrictions.;
+    Central pinching is idempotent and preserves expectations of every algebra observable.; Parity pinching
+    removes cross-sector phase coherence while retaining the sector populations..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

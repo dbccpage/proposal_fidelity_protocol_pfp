@@ -1,0 +1,98 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:process_manager:v1.0.0
+title: Bounded Process Manager
+kind: host_contract
+status: proposed
+layer: 09_host
+role: ProcessManager
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+      - urn:core:oeos:resource_quota:v1.0.0
+      - urn:core:oeos:sandbox:v1.0.0
+    proof_obligations:
+      - id: PROC-INV-001
+        statement: Process launch binds an exact executable identity, argument vector, environment allowlist, workspace, quota, and sandbox profile.
+        verification_status: open
+      - id: PROC-INV-002
+        statement: Cancellation has a declared graceful deadline and a declared platform-specific hard-kill deadline.
+        verification_status: open
+      - id: PROC-INV-003
+        statement: Exit, stdout, stderr, timeout, and termination mode are captured without claiming deterministic process internals.
+        verification_status: open
+      - id: PROC-INV-004
+        statement: Cleanup failures and orphaned process handles produce typed refusals.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - PROCESS_CANCELLATION_REFUSED
+      - PROCESS_LAUNCH_REFUSED
+      - PROCESS_OUTPUT_LIMIT_REFUSED
+      - PROCESS_TIMEOUT_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: bounded_process_request
+      type: urn:core:oeos:type:bounded_process_request:v1.0.0
+      required: true
+  outputs:
+    - name: process_exit_record
+      type: urn:core:oeos:type:process_exit_record:v1.0.0
+      required: true
+  typed_refusals:
+    - PROCESS_CANCELLATION_REFUSED
+    - PROCESS_LAUNCH_REFUSED
+    - PROCESS_OUTPUT_LIMIT_REFUSED
+    - PROCESS_TIMEOUT_REFUSED
+  platform_requirements:
+    - profile: windows_process
+      requirements:
+        - job_object_tree_termination
+        - bounded_graceful_and_hard_kill_deadlines
+        - checked_pipe_io
+      verification_status: requirements_only
+    - profile: posix_process
+      requirements:
+        - signal_sequence_declared
+        - bounded_graceful_and_sigkill_deadlines
+        - checked_pipe_io
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares bounded subprocess supervision with platform-specific cancellation behavior.
+  non_role:
+    - task_semantics
+    - solver_evaluation
+    - policy_judgment
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - cancellation_is_bounded_not_instantaneous
+    - sigkill_is_not_a_cross_platform_operation
+  invariants:
+    - hard_kill_deadline_is_finite_and_declared
+    - output_capture_is_bounded
+  allowed_operations:
+    - spawn_declared_subprocess
+    - await_bounded_exit
+    - request_then_force_platform_termination
+  forbidden_operations:
+    - dynamic_executable_injection
+    - unbounded_output_capture
+    - report_timeout_as_success

@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_f2_cup_product:v0.1.0
+title: Exact ordered simplicial F2 cup product
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_f2_cup_product
+  symbol: exact_f2_cup_product
+  ascii_symbol: exact_f2_cup_product
+  notation: Exact ordered simplicial F2 cup product
+  domain:
+  - Canonical ordered simplicial bases; degrees at most64, at most65536 cells per participating basis and2^24
+    face work.
+  codomain:
+    description: Declared finite results of core_homology::cup_product; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The Alexander–Whitney product evaluates the front and back faces meeting at the declared split vertex.
+- The coboundary satisfies the cochain Leibniz rule over F2.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_homology
+  module: cup_product
+  symbols:
+  - cup_product_f2
+  - F2CupError
+  required_tests:
+  - alexander_whitney_product_obeys_the_cochain_leibniz_rule_over_f2
+negative_tests:
+- alexander_whitney_product_obeys_the_cochain_leibniz_rule_over_f2
+doctrine:
+  summary: The Alexander–Whitney product evaluates the front and back faces meeting at the declared split vertex.;
+    The coboundary satisfies the cochain Leibniz rule over F2..
+  non_role:
+  - This is cochain mathematics; bundle characteristic classes are supplied by physical consumers.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

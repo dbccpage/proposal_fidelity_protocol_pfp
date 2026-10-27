@@ -1,0 +1,91 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:double_category:v0.1.0
+title: Double Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: double_category
+  symbol: D = (Ob, Mor_h, Mor_v, Sq, \circ_h, \circ_v)
+  ascii_symbol: double_category
+  notation: D = (Obj, Horiz, Vert, Square, comp_h, comp_v, id_h, id_v)
+  domain:
+  - 'objects: (Obj : Type u) collection of 0-cells'
+  - 'horizontal_morphisms: (Horiz : Obj -> Obj -> Type v) horizontal 1-cells forming horizontal category D_h'
+  - 'vertical_morphisms: (Vert : Obj -> Obj -> Type w) vertical 1-cells forming vertical category D_v'
+  - 'squares: (Square : Horiz A B -> Horiz C D -> Vert A C -> Vert B D -> Type z) 2-cells with top/bottom horizontal and left/right vertical boundaries'
+  - 'horizontal_composition: (\circ_h : Square(\alpha) \times Square(\beta) -> Square(\alpha \circ_h \beta))'
+  - 'vertical_composition: (\circ_v : Square(\alpha) \times Square(\gamma) -> Square(\alpha \circ_v \gamma))'
+  - 'horizontal_identities: id_h(v) square with vertical morphism v on boundaries and horizontal identities'
+  - 'vertical_identities: id_v(f) square with horizontal morphism f on boundaries and vertical identities'
+  - 'square_interchange_law: (\alpha \circ_h \beta) \circ_v (\gamma \circ_h \delta) = (\alpha \circ_v \gamma) \circ_h (\beta \circ_v \delta)'
+  codomain:
+    description: A double category D is an internal category in Cat, consisting of objects (0-cells), horizontal 1-cells, vertical 1-cells, and 2-cells (squares) with horizontal and vertical composition operations sharing the same 0-cells and satisfying the square middle-four interchange law.
+requirements:
+  required_structures:
+  - Objects, horizontal morphisms, and vertical morphisms form two category structures sharing the same objects.
+  - Squares have four matching boundaries: top f, bottom g, left u, right v.
+  - Horizontal composition of squares is strictly associative and unital.
+  - Vertical composition of squares is strictly associative and unital.
+  - Square interchange law strictly relates horizontal and vertical composition: (\alpha \circ_h \beta) \circ_v (\gamma \circ_h \delta) = (\alpha \circ_v \gamma) \circ_h (\beta \circ_v \delta).
+  - Structure hash is deterministically content-addressed.
+laws:
+  - 'Horizontal square associativity: (\alpha \circ_h \beta) \circ_h \gamma = \alpha \circ_h (\beta \circ_h \gamma)'
+  - 'Vertical square associativity: (\alpha \circ_v \beta) \circ_v \gamma = \alpha \circ_v (\beta \circ_v \gamma)'
+  - 'Horizontal square units: \alpha \circ_h id_h(v_r) = \alpha = id_h(v_l) \circ_h \alpha'
+  - 'Vertical square units: \alpha \circ_v id_v(f_b) = \alpha = id_v(f_t) \circ_v \alpha'
+  - 'Middle-four square interchange law: (\alpha \circ_h \beta) \circ_v (\gamma \circ_h \delta) = (\alpha \circ_v \gamma) \circ_h (\beta \circ_v \delta)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Squares and cells serialized in canonical order
+  - Content-addressed deterministic evaluation
+relationships:
+- urn:core:math:two_category:v0.1.0 serves as A strict 2-category embeds into a double category where vertical morphisms are identities
+- urn:core:math:bicategory:v0.1.0 serves as Double categories provide a symmetric setting generalizing bicategories
+rust_binding:
+  crate: core_higher_category_theory
+  module: double_category
+  symbols:
+  - DoubleCategory
+  - HorizontalCell
+  - VerticalCell
+  - SquareCell
+  - SquareInterchange
+  required_tests:
+  - test_double_category_horizontal_and_vertical_composition
+  - test_double_category_interchange_verification
+  - test_kill_mut_p2_05_square_interchange_inversion
+negative_tests:
+- Square boundary mismatch (top/bottom/left/right 1-cells do not match 0-cell corners)
+- Horizontal square composition boundary mismatch
+- Vertical square composition boundary mismatch
+- Square interchange law violated (inversion of horizontal and vertical order) (SquareInterchangeInversion / MUT-P2-05)
+doctrine:
+  summary: A DoubleCategory contains objects, horizontal 1-morphisms, vertical 1-morphisms, and 2-cells (squares). Unlike 2-categories which treat 1-cells and 2-cells hierarchically, double categories treat horizontal and vertical morphisms on an equal footing, related by the 2-dimensional square interchange law.
+  non_role:
+  - Pseudo-double categories with weak horizontal composition
+  - Virtual double categories
+  - Triple categories / n-fold categories
+wip:
+  - Formalization of strict DoubleCategory in Lean 4 (DoubleCategory.lean)
+  - Zero-allocation square composition in Rust
+  - Property testing of square interchange law

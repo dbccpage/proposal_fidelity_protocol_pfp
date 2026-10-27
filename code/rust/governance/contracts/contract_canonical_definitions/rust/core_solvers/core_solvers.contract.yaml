@@ -1,0 +1,46 @@
+schema_version: core.file_contract.v1
+kind: rust_crate_contract
+contract_id: urn:core:rust:core_solvers:crate:v1.0.0
+title: Engine Solvers Crate Contract
+status: active
+crate: core_solvers
+file: crates_rs/core_solvers/src/lib.rs
+role: core_solvers_substrate
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - numerical_and_krylov_linear_solvers
+  - l1_norm_and_obstruction_solvers
+  - network_simplex_and_flow_solvers
+  - cdcl_and_sat_unsat_core_solvers
+  - groebner_and_hilbert_basis_solvers
+  - hodge_sheaf_and_cohomology_solvers
+  - quantum_gauge_and_yang_mills_solvers
+  - gnn_mcts_and_topological_autoencoders
+  - distributed_candidate_validation_backends
+does_not_own:
+  - global_authority_promotion
+  - unverified_quantum_feynman_amplitudes
+  - human_review_signoff
+may_call:
+  - core_types
+  - core_linear_algebra
+  - core_homology
+  - core_contracts
+must_not:
+  - mint_certified_authority_without_proof_witness
+  - return_uncertified_satisfiability_claims
+  - bypass_authority_ceiling_none
+exactness:
+  numeric_mode: float_and_exact_rational
+  exact_certificate_allowed: true
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect: None"
+required_tests:
+  - test_solvers_conformance
+lean_obligations: []

@@ -1,0 +1,54 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_kernel:observer:v1.0.0
+title: ObserverId
+status: active
+crate: core_kernel
+file: crates_rs/core_kernel/src/observer.rs
+role: substrate
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: false
+owns:
+- observer identity and its grammar
+- the binding of a value to the observer that produced it
+does_not_own:
+- the Observer structure O = (K, F, R, delta, d0, d1, J, M, tau)
+- what an observer is permitted to observe
+- any authority an observer may hold
+may_call: []
+must_not:
+- admit an unindexed claim
+- expose a value without its observer
+- treat one observer's report as another's
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+laws:
+- 'Zero View-from-Nowhere: every claim is indexed by a declared finite observer.
+  The law is enforced by construction, not by convention: T reaches a consumer only
+  inside Observed<T>, which cannot be built without an ObserverId.'
+- 'Grammar law: an observer id starts with an ascii alphanumeric and continues with
+  ascii alphanumerics and . _ - : / @ only, matching the digest envelope identifier.'
+- 'Distinguishability law: two observers reporting the same value remain distinct
+  observations.'
+- 'Authority law: identity is not authority. An ObserverId names who spoke, never
+  what their word is worth.'
+forbidden_substrings:
+- 'pub struct ObserverId(pub'
+- 'f64'
+- 'Default for ObserverId'
+required_substrings:
+- 'pub fn parse'
+- 'pub struct Observed'
+- 'serde(try_from = "String", into = "String")'
+required_tests:
+- the_grammar_matches_the_digest_envelopes_identifier
+- deserialize_refuses_what_parse_refuses
+- an_observed_value_carries_its_observer_through_a_round_trip
+- mapping_a_value_preserves_the_observer
+- an_observation_cannot_be_deserialized_without_an_observer
+- two_observers_reporting_the_same_value_remain_distinguishable
+lean_obligations: []

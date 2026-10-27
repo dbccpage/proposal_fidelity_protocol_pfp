@@ -1,0 +1,65 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:radical_sum:v0.1.0
+title: Canonical exact radical sums
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: radical_sum
+  symbol: radical_sum
+  ascii_symbol: radical_sum
+  notation: Canonical exact radical sums
+  domain:
+  - Finite sums of canonical Surd values admitted by the bounded quadratic normalizer.
+  codomain:
+    description: Declared finite results of core_number_theory::radical_sum; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Equal squarefree radicands coalesce.
+- Exact zero terms are removed.
+- Only an empty sum or surviving radicand1 is rational.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: radical_sum
+  symbols:
+  - SurdSum
+  required_tests:
+  - normalized_radicals_coalesce_and_exact_cancellation_is_rational
+negative_tests: []
+doctrine:
+  summary: Equal squarefree radicands coalesce.; Exact zero terms are removed.; Only an empty sum or surviving
+    radicand1 is rational..
+  non_role:
+  - Radical sums carry no contextual walk or physics admission logic.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

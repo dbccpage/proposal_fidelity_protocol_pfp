@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:chsh_square_sos_moment:v0.1.0
+title: Exact CHSH operator identity and Tsirelson SOS
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: chsh_square_sos_moment
+  symbol: chsh_square_sos_moment
+  ascii_symbol: chsh_square_sos_moment
+  notation: Exact CHSH operator identity and Tsirelson SOS
+  domain:
+  - Hermitian involutions on tensor factors dimension<=16 and joint dimension<=64 over HermitianOrdered
+  codomain:
+    description: Declared finite results of core_quantum_physics::finite_chsh_correlations; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- B²=4I-[A0,A1] tensor[B0,B1]
+- The two replayed sums of squares bound both signs by2sqrt2
+- State-derived Born boxes normalize and are nonnegative
+- The 1+AB moment matrix is an exact PSD Gram matrix
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: finite_chsh_correlations
+  symbols:
+  - chsh_operator
+  - verify_chsh_square_identity
+  - TsirelsonCertificate
+  - tsirelson_certificate
+  - verify_tsirelson_certificate
+  - algebraic_box_from_state
+  - npa_level_one_ab_moment
+  required_tests:
+  - measurement_exact_laws::chsh_square_sos_attainment_and_moment_replay_reject_corruption
+negative_tests:
+- measurement_exact_laws::chsh_square_sos_attainment_and_moment_replay_reject_corruption
+doctrine:
+  summary: B²=4I-[A0,A1] tensor[B0,B1]; The two replayed sums of squares bound both signs by2sqrt2; State-derived
+    Born boxes normalize and are nonnegative; The 1+AB moment matrix is an exact PSD Gram matrix.
+  non_role:
+  - A finite PSD NPA relaxation does not automatically construct a quantum model
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,297 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:validator:v1.0.0
+title: Validator
+kind: governance_contract
+status: mathematical_wip
+layer: 05_governance
+role: Validator
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - CertificateContract
+    - TraceContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constraints:
+    mutation_forbidden: true
+    read_only: true
+    typed_output_required: true
+  subject_type: ConstructedObject
+doctrine:
+  summary: 'This contract defines the Validator boundary.
+
+
+    Validators check well-formedness, invariants, and admissibility boundaries.
+
+    Validators check structure. Validators do not transform, normalize, repair, certify,
+
+    terminalize, execute, or mutate state.
+
+    '
+  non_role: &id002
+  - repair
+  - certification
+  - execution
+  - evaluation
+  - mutation
+  - normalization
+  - terminalization
+  - transition_authorization
+  - action_licensing
+  - invariant_definition_from_llm_output
+  - trace_writing
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+
+      terminalize, authorize transitions, execute transitions, define invariants, or upgrade
+
+      evidence authority.
+
+
+      LLM output may propose validator code, invariant candidates, countermodels, or test
+
+      cases, but those proposals are EvidenceOnly until checked by the declared Validator,
+
+      Schema, Replay, and Contract boundaries.
+
+      '
+  classification: 'Validator is NOT an operator in the five-effect-class algebra (E, I, C, R, M). It is
+    a
+
+    structural well-formedness checker that inspects objects against declared invariants and
+
+    reports validity.
+
+    '
+  core_definition: 'Validator checks structural well-formedness against declared invariants. It does not
+
+    repair, certify, evaluate admissibility, mutate, or execute.
+
+
+    A Validator is a deterministic, non-mutating component that inspects an already-constructed
+
+    object and emits a validation report.
+
+
+    Input object -> Validator -> ValidationReport
+
+
+    A Validator may reject malformed or inadmissible structure.
+
+    A Validator may not create a repaired replacement.
+
+    '
+  tower_placement: 'Validators sit at structural boundaries to protect the downstream engine and solvers
+    from
+
+    malformed syntax or out-of-bound representations.
+
+
+    Input T -> Validator -> [ValidationReport: Valid / Invalid / Indeterminate]
+
+
+    Unlike Constructors, which create objects, Validators act on already-instantiated objects T.
+
+    Unlike Evaluators, which judge operational admissibility based on computed diagnostics,
+
+    Validators judge strict structural conformance.
+
+    '
+  trait_shape:
+    rust: "pub trait Validator<T> {\n    type Report;\n\n    fn validate(&self, target: &T) -> Result<Self::Report,\
+      \ ValidationError>;\n\n    fn authority_effect(&self) -> AuthorityEffect {\n        AuthorityEffect::EvidenceOnly\n\
+      \    }\n}\n"
+  structural_representation:
+    validation_report:
+      struct_name: ValidationReport
+      fields:
+      - name: target_hash
+        type: Hash256
+      - name: validator_id
+        type: ValidatorId
+      - name: invariants_checked
+        type: Vec<InvariantId>
+      - name: status
+        type: ValidationStatus
+      - name: violations
+        type: Vec<ValidationViolation>
+      - name: report_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked_validation_report:
+      struct_name: CheckedValidationReport
+      fields:
+      - name: report_ref
+        type: ValidationReportRef
+      - name: schema_ref
+        type: SchemaRef
+      - name: validation_certificate_ref
+        type: Option<CertificateId>
+      - name: replay_ref
+        type: Option<ReplayRef>
+      - name: checked_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: ValidationStatus
+      variants:
+      - Valid
+      - Invalid
+      - Indeterminate
+    - name: ValidationError
+      variants:
+      - name: InvalidStructure
+        fields:
+          violation: ValidationViolation
+      - name: OutOfBoundsValue
+        fields:
+          invariant_id: InvariantId
+          detail: String
+      - name: InvariantViolated
+        fields:
+          invariant_id: InvariantId
+          detail: String
+      - name: SchemaMismatch
+        fields:
+          expected: SchemaRef
+          actual: SchemaRef
+      - name: HashMismatch
+        fields:
+          expected: Hash256
+          actual: Hash256
+      - name: UndeclaredInvariant
+        fields:
+          invariant_id: InvariantId
+      - name: ValidatorInternalError
+        fields:
+          detail: String
+  architectural_mandates:
+  - name: Non-Mutating Verification
+    text: A Validator MUST NOT mutate the target object, external state, or intermediate representations.
+      Its receiver is always immutable (&self, &T).
+  - name: Zero Repair or Correction
+    text: A Validator MUST NOT attempt to normalize, repair, or resolve an anomaly. It returns either
+      a successful validation report or an explicit validation error. Any repair behavior belongs to Normalizers
+      or Reducers under explicit Engine orchestration.
+  - name: Invariant Bound Checks
+    text: Every validation check must map directly to a declared invariant of the carrier or domain schema.
+  - name: No Certification Authority
+    text: A Validator reports structural well-formedness. It does not sign, create, or verify certificates.
+      If certification is required, CertificateKernel may seal a certificate over a ValidationReport.
+  - name: No Evaluation Authority
+    text: A Validator checks structure, not admissibility. Admissibility judgment belongs to the Evaluator.
+  authority_levels: 'A raw ValidationReport is EvidenceOnly.
+
+
+    A CheckedValidationReport may become FactOnly only for the claim that the target
+
+    satisfied or violated the declared structural invariants under the declared validator,
+
+    schema, input hash, and replay/checking boundary.
+
+    '
+  evidence_integration: 'When a ValidationReport is emitted within traced execution or audit flow, the
+    report
+
+    must record: target_hash, validator_id, schema_ref, invariants_checked, validation status,
+
+    violation refs or details, report_hash, replay refs when replayable, certificate refs
+
+    only if produced by CertificateKernel.
+
+    '
+  symsys_integration: "Validators are used to verify the outputs of all symbolic stages:\n  Stage 1 (Ideation):\
+    \ Emits structures that must immediately be validated.\n  Stage 2 (Audit): Audits the validator itself\
+    \ for potential bypasses.\n  Stage 3 (Extraction): Generates the invariant checking code.\n  Stage\
+    \ 4 (Countermodel): Attempts to generate models that bypass validator checks.\n  Stage 5 (Evidence\
+    \ Plan): Validates that all candidate models adhere to invariants.\n\nSymSys use of validators does\
+    \ not expand validator authority. Validator reports remain\nEvidenceOnly until checked or certified\
+    \ by the declared boundary.\n"
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - repair_target
+    - normalize_target
+    - fix_target
+    - EngineResult
+    - PolicyDecision
+    - TerminalEnvelope
+    - ActionLicense
+    - sign_certificate
+    - save_certificate
+    - create_certificate
+    - execute(
+    - mutate_state
+    - mutate_runtime
+    - certify(
+    - terminalize(
+    - compute_phi
+    - compute_gamma
+    - compute_xi
+    - evaluate_admissibility
+    - authorize_transition
+    - license_transition
+  required_tests:
+  - validator_report_defaults_to_evidence_only
+  - checked_validation_report_may_be_factonly_after_declared_checks
+  - validator_does_not_define_invariants_from_llm_output
+  - validator_does_not_emit_action_license
+  - validator_does_not_authorize_transition
+  - validator_does_not_terminalize
+  - validator_does_not_create_certificates
+  - validator_uses_valid_invalid_indeterminate_not_accept_reject
+  - validator_does_not_write_trace_directly
+  - validator_certificate_refs_are_external
+  - validator_errors_are_typed
+  python_poc_shape: "@dataclass(frozen=True)\nclass ValidationReport:\n    target_hash: str\n    validator_id:\
+    \ str\n    schema_ref: str\n    invariants_checked: List[str]\n    status: str  # \"Valid\", \"Invalid\"\
+    , or \"Indeterminate\"\n    violations: List[str]\n    authority_effect: str = \"EvidenceOnly\"\n"
+  canonical_invariant: 'Validator is an EvidenceOnly structural checking boundary. It checks already-constructed
+
+    objects against declared schemas and invariants, emits ValidationReport evidence, and does
+
+    not repair, normalize, certify, define invariants, evaluate admissibility, terminalize,
+
+    authorize, mutate, write Trace directly, or execute. Checked validation facts require a
+
+    declared checking, replay, or certificate boundary.
+
+    '
+  legacy_metadata:
+    name: Validator
+    role: Deterministic structural well-formedness checker against declared invariants
+    version: '1.0'
+    classification: governance
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: ValidationReport
+    checked_domain_output_kind: CheckedValidationReport
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+    - Record
+    referenced_domain_kinds:
+    - CertificateEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_governance_contract:v1.0.0"

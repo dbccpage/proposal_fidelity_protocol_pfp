@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phase_cancellation_replay:v0.1.0
+title: Cyclotomic phase sums and reflection matching certificates
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: phase_cancellation_replay
+  symbol: phase_cancellation_replay
+  ascii_symbol: phase_cancellation_replay
+  notation: Cyclotomic phase sums and reflection matching certificates
+  domain:
+  - 1..4096 declared exponents in a valid canonical cyclotomic field
+  codomain:
+    description: Declared finite results of core_quantum_physics::cancellation_certificates; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The declared equal-amplitude sum is computed exactly
+- A reflection matching replays opposite phases and uses each term once
+- Prime polygon cancellation can occur without reflection matching
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: cancellation_certificates
+  symbols:
+  - PhaseCancellationCertificate
+  - certify_phase_cancellation
+  - verify_phase_cancellation
+  required_tests:
+  - measurement_exact_laws::cyclic_cancellations_and_reflection_matchings_are_distinct_certificates
+negative_tests:
+- measurement_exact_laws::cyclic_cancellations_and_reflection_matchings_are_distinct_certificates
+doctrine:
+  summary: The declared equal-amplitude sum is computed exactly; A reflection matching replays opposite phases
+    and uses each term once; Prime polygon cancellation can occur without reflection matching.
+  non_role:
+  - An example polygon is not a classification of all irreducible composite-root sums
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

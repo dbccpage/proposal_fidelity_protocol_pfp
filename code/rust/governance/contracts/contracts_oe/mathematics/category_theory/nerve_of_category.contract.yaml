@@ -1,0 +1,81 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:nerve_of_category:v0.1.0
+title: Nerve of Category
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: simplicial_set
+  symbol: 'N(C) : Δ^op → Set'
+  ascii_symbol: nerve_of_category
+  notation: 'N(C) : Δ^op → Set'
+  domain:
+  - 'dimension_n: set of n-composable morphism chains'
+  - 'face_maps: composition or deletion operations'
+  - 'degeneracy_maps: identity insertion operations'
+  codomain:
+    description: 'A simplicial set N(C) where N(C)_n is the set of composable n-chains of morphisms in category C
+
+      '
+requirements:
+  required_structures:
+  - Source category C must be a valid category
+  - Face and degeneracy maps must satisfy simplicial identities
+  - Nerve must satisfy Segal condition (2-coskeletal with unique inner horn fillers)
+  - Artifact hash must be deterministically computable via SHA-256
+laws:
+- Face and degeneracy maps satisfy standard simplicial identities
+- N(C) is 2-coskeletal with unique inner horn fillers
+- 'The nerve functor N: Cat → sSet is fully faithful'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Source category C for nerve construction
+- urn:math:contract:SimplicialSet:v1.0.0 serves as Target simplicial set structure for N(C)
+negative_tests:
+- Invalid category must be rejected
+- Violation of simplicial identities must be rejected
+- Violation of Segal condition must be rejected
+doctrine:
+  summary: The nerve of a category C is a simplicial set N(C) encoding the compositional structure of C. The nerve construction embeds categories fully faithfully into simplicial sets and provides the bridge between category theory and homotopy theory.
+  non_role:
+  - Higher categorical nerves (bicategories, higher categories)
+  - Homotopy coherent nerve
+  - Nerve of operads or other algebraic structures
+wip:
+- Higher categorical nerves
+- Nerve of bicategories and higher categories
+- Homotopy coherent nerve
+- Current implementation handles ordinary categories only
+- Extension to higher categories planned for future versions
+- Homotopy coherent nerve requires additional structure
+rust_binding:
+  crate: core_category_theory
+  module: nerve
+  symbols:
+  - DeclaredNerve
+  - ValidatedFiniteNerve
+  required_tests:
+  - test_face_maps
+  - test_degeneracy_maps
+  - test_simplicial_identities

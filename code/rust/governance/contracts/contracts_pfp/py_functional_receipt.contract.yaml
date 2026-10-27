@@ -1,0 +1,60 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# symbol_game/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_functional_receipt:v1.0.0"
+title: "Functional Receipt (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    The domain's hold on a Rust-issued FunctionalReceiptV1: Phi1, Gamma2 and the
+    diagnostic class from core_functional, with the digest binding them to the
+    request that asked.
+  invariants:
+    - "The domain computes none of these values; the native adapter parses them from a receipt the OEOS seam already bound to its request."
+    - "Every value is an exact Fraction; a float is refused at construction."
+    - "second_stage_repairs is carried, not assumed: only receipts whose Gamma2 is the FOC quotient with a2 = 0 are admitted."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.value_objects.functional_receipt
+  python_type: "FunctionalReceipt"
+  form: dataclass
+  fields:
+    - name: input_digest
+    - name: phi1
+    - name: gamma2
+    - name: diagnostic_class
+    - name: dual_witness
+    - name: primal_residual
+    - name: second_stage_repairs
+    - name: authority_effect

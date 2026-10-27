@@ -1,0 +1,3151 @@
+{
+  "vectors": [
+    {
+      "record": "seat",
+      "input": {
+        "seat_id": "",
+        "trust_domain": "CRITIC",
+        "required_operations": [
+          "attack"
+        ],
+        "required_colours": [
+          "Code",
+          "Audit"
+        ],
+        "independent_from": [
+          "producer"
+        ]
+      },
+      "python_error": "seat_id must be normalized and nonempty"
+    },
+    {
+      "record": "seat",
+      "input": {
+        "seat_id": "critic",
+        "trust_domain": "INVALID",
+        "required_operations": [
+          "attack"
+        ],
+        "required_colours": [
+          "Code",
+          "Audit"
+        ],
+        "independent_from": [
+          "producer"
+        ]
+      },
+      "python_error": "seat trust_domain is not closed"
+    },
+    {
+      "record": "seat",
+      "input": {
+        "seat_id": "critic",
+        "trust_domain": "CRITIC",
+        "required_operations": [],
+        "required_colours": [
+          "Code",
+          "Audit"
+        ],
+        "independent_from": [
+          "producer"
+        ]
+      },
+      "python_error": "seat requires operations and colours"
+    },
+    {
+      "record": "seat",
+      "input": {
+        "seat_id": "critic",
+        "trust_domain": "CRITIC",
+        "required_operations": [
+          "attack",
+          "attack"
+        ],
+        "required_colours": [
+          "Code",
+          "Audit"
+        ],
+        "independent_from": [
+          "producer"
+        ]
+      },
+      "python_error": "required_operations must not contain duplicates"
+    },
+    {
+      "record": "seat",
+      "input": {
+        "seat_id": "critic",
+        "trust_domain": "CRITIC",
+        "required_operations": [
+          "attack"
+        ],
+        "required_colours": [],
+        "independent_from": [
+          "producer"
+        ]
+      },
+      "python_error": "seat requires operations and colours"
+    },
+    {
+      "record": "seat",
+      "input": {
+        "seat_id": "critic",
+        "trust_domain": "CRITIC",
+        "required_operations": [
+          "attack"
+        ],
+        "required_colours": [
+          "Code",
+          "Audit"
+        ],
+        "independent_from": [
+          "critic"
+        ]
+      },
+      "python_error": "seat cannot be independent from itself"
+    },
+    {
+      "record": "seat",
+      "input": {
+        "seat_id": "critic",
+        "trust_domain": "CRITIC",
+        "required_operations": [
+          "attack"
+        ],
+        "required_colours": [
+          "Code",
+          "Audit"
+        ],
+        "independent_from": [
+          "producer"
+        ],
+        "cognitive_operator": " trim "
+      },
+      "python_error": "cognitive_operator must be normalized and nonempty"
+    },
+    {
+      "record": "assignment",
+      "input": {
+        "scene_id": "bad space",
+        "seat_id": "producer",
+        "agent_id": "dev-agent",
+        "operation_ids": [
+          "propose"
+        ],
+        "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "python_error": "scene_id must be a canonical identifier"
+    },
+    {
+      "record": "assignment",
+      "input": {
+        "scene_id": "entry",
+        "seat_id": "producer",
+        "agent_id": "dev-agent",
+        "operation_ids": [],
+        "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "python_error": "node assignment requires operations"
+    },
+    {
+      "record": "assignment",
+      "input": {
+        "scene_id": "entry",
+        "seat_id": "producer",
+        "agent_id": "dev-agent",
+        "operation_ids": [
+          "propose"
+        ],
+        "agent_license_id": "sha256:BAD"
+      },
+      "python_error": "agent_license_id must be a lowercase sha256 digest"
+    },
+    {
+      "record": "scene",
+      "input": {
+        "scene_id": "entry",
+        "purpose": "",
+        "required_seat_ids": [
+          "producer"
+        ],
+        "allowed_result_statuses": [
+          "PROPOSED"
+        ],
+        "max_visits": 2,
+        "terminal": false
+      },
+      "python_error": "purpose must be normalized and nonempty"
+    },
+    {
+      "record": "scene",
+      "input": {
+        "scene_id": "entry",
+        "purpose": "Produce one candidate.",
+        "required_seat_ids": [],
+        "allowed_result_statuses": [
+          "PROPOSED"
+        ],
+        "max_visits": 2,
+        "terminal": false
+      },
+      "python_error": "scene requires at least one seat"
+    },
+    {
+      "record": "scene",
+      "input": {
+        "scene_id": "entry",
+        "purpose": "Produce one candidate.",
+        "required_seat_ids": [
+          "producer"
+        ],
+        "allowed_result_statuses": [],
+        "max_visits": 2,
+        "terminal": false
+      },
+      "python_error": "scene result status is not closed"
+    },
+    {
+      "record": "scene",
+      "input": {
+        "scene_id": "entry",
+        "purpose": "Produce one candidate.",
+        "required_seat_ids": [
+          "producer"
+        ],
+        "allowed_result_statuses": [
+          "UNKNOWN"
+        ],
+        "max_visits": 2,
+        "terminal": false
+      },
+      "python_error": "scene result status is not closed"
+    },
+    {
+      "record": "scene",
+      "input": {
+        "scene_id": "entry",
+        "purpose": "Produce one candidate.",
+        "required_seat_ids": [
+          "producer"
+        ],
+        "allowed_result_statuses": [
+          "PROPOSED"
+        ],
+        "max_visits": 0,
+        "terminal": false
+      },
+      "python_error": "max_visits must be an exact integer in [1, 64]"
+    },
+    {
+      "record": "scene",
+      "input": {
+        "scene_id": "entry",
+        "purpose": "Produce one candidate.",
+        "required_seat_ids": [
+          "producer"
+        ],
+        "allowed_result_statuses": [
+          "PROPOSED"
+        ],
+        "max_visits": 65,
+        "terminal": false
+      },
+      "python_error": "max_visits must be an exact integer in [1, 64]"
+    },
+    {
+      "record": "transition",
+      "input": {
+        "transition_id": "entry-review",
+        "source_scene_id": "entry",
+        "target_scene_id": "review",
+        "trigger_statuses": [],
+        "residual_codes": [],
+        "priority": 0
+      },
+      "python_error": "transition trigger status is not closed"
+    },
+    {
+      "record": "transition",
+      "input": {
+        "transition_id": "entry-review",
+        "source_scene_id": "entry",
+        "target_scene_id": "review",
+        "trigger_statuses": [
+          "UNKNOWN"
+        ],
+        "residual_codes": [],
+        "priority": 0
+      },
+      "python_error": "transition trigger status is not closed"
+    },
+    {
+      "record": "transition",
+      "input": {
+        "transition_id": "entry-review",
+        "source_scene_id": "entry",
+        "target_scene_id": "review",
+        "trigger_statuses": [
+          "PROPOSED"
+        ],
+        "residual_codes": [],
+        "priority": 10001
+      },
+      "python_error": "priority must be an exact integer in [0, 10000]"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "seat_requirements must be a nonempty exact tuple"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "seat requirements must be sorted"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "seat requirements must be unique"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "absent"
+            ]
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "seat independence references an unknown seat"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "bad",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "skill_catalog_id must be a lowercase sha256 digest"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "max_parallelism must be an exact integer in [1, 64]"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.swarm-definition.v1",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "swarm definition authority_effect must be None"
+    },
+    {
+      "record": "definition",
+      "input": {
+        "definition_name": "base-oeas-test",
+        "seat_requirements": [
+          {
+            "seat_id": "critic",
+            "trust_domain": "CRITIC",
+            "required_operations": [
+              "attack"
+            ],
+            "required_colours": [
+              "Code",
+              "Audit"
+            ],
+            "independent_from": [
+              "producer"
+            ]
+          },
+          {
+            "seat_id": "producer",
+            "trust_domain": "PRODUCER",
+            "required_operations": [
+              "propose"
+            ],
+            "required_colours": [
+              "State",
+              "Code"
+            ],
+            "independent_from": [
+              "critic"
+            ]
+          },
+          {
+            "seat_id": "selector",
+            "trust_domain": "SELECTOR",
+            "required_operations": [
+              "select"
+            ],
+            "required_colours": [
+              "Audit",
+              "Receipt"
+            ],
+            "independent_from": []
+          }
+        ],
+        "skill_catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "max_parallelism": 1,
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6"
+      },
+      "python_error": "unsupported swarm definition schema"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scenes must be a nonempty exact tuple"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scenes must be sorted by scene_id"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scene graph has duplicate scenes or missing entry"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "absent",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scene graph has duplicate scenes or missing entry"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": false
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scene graph requires a terminal scene"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "transitions must be sorted by priority and id"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scene transition ids must be unique"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "absent",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scene transition references an unknown scene"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.scene-graph.v1",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "scene graph authority_effect must be None"
+    },
+    {
+      "record": "graph",
+      "input": {
+        "entry_scene_id": "entry",
+        "scenes": [
+          {
+            "scene_id": "entry",
+            "purpose": "Produce one candidate.",
+            "required_seat_ids": [
+              "producer"
+            ],
+            "allowed_result_statuses": [
+              "PROPOSED"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "review",
+            "purpose": "Challenge the candidate.",
+            "required_seat_ids": [
+              "critic"
+            ],
+            "allowed_result_statuses": [
+              "FINDING",
+              "PASS"
+            ],
+            "max_visits": 2,
+            "terminal": false
+          },
+          {
+            "scene_id": "terminal",
+            "purpose": "Emit an inert selection proposal.",
+            "required_seat_ids": [
+              "selector"
+            ],
+            "allowed_result_statuses": [
+              "PASS",
+              "HOLD",
+              "REFUSE"
+            ],
+            "max_visits": 1,
+            "terminal": true
+          }
+        ],
+        "transitions": [
+          {
+            "transition_id": "entry-review",
+            "source_scene_id": "entry",
+            "target_scene_id": "review",
+            "trigger_statuses": [
+              "PROPOSED"
+            ],
+            "residual_codes": [],
+            "priority": 0
+          },
+          {
+            "transition_id": "review-entry-repair",
+            "source_scene_id": "review",
+            "target_scene_id": "entry",
+            "trigger_statuses": [
+              "FINDING"
+            ],
+            "residual_codes": [
+              "needs_repair"
+            ],
+            "priority": 1
+          },
+          {
+            "transition_id": "review-terminal",
+            "source_scene_id": "review",
+            "target_scene_id": "terminal",
+            "trigger_statuses": [
+              "PASS"
+            ],
+            "residual_codes": [],
+            "priority": 2
+          }
+        ],
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839"
+      },
+      "python_error": "unsupported scene graph schema"
+    },
+    {
+      "record": "profile",
+      "input": {
+        "profile_name": "bad space",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "python_error": "profile_name must be a canonical identifier"
+    },
+    {
+      "record": "profile",
+      "input": {
+        "profile_name": "test-profile",
+        "base_definition_id": "bad",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "python_error": "base_definition_id must be a lowercase sha256 digest"
+    },
+    {
+      "record": "profile",
+      "input": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "bad",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "python_error": "scene_graph_id must be a lowercase sha256 digest"
+    },
+    {
+      "record": "profile",
+      "input": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "python_error": "swarm profile requires skills"
+    },
+    {
+      "record": "profile",
+      "input": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "bad",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "python_error": "anti_skill_profile_digest must be a lowercase sha256 digest"
+    },
+    {
+      "record": "profile",
+      "input": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.swarm-profile.v1",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "python_error": "swarm profile authority_effect must be None"
+    },
+    {
+      "record": "profile",
+      "input": {
+        "profile_name": "test-profile",
+        "base_definition_id": "sha256:003bd0d91fd846593c8d9d21c7d29c8447d53c269a8f526d2cfa9de46b1e5ec6",
+        "scene_graph_id": "sha256:3be794a1bdd7722938a28a6f028f5a167e9ccc5c142c63754eee39762a268839",
+        "skill_ids": [
+          "attack",
+          "propose",
+          "select"
+        ],
+        "anti_skill_profile_digest": "",
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea"
+      },
+      "python_error": "unsupported swarm profile schema"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "bad space",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "plan_name must be a canonical identifier"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "bad",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "catalog_id must be a lowercase sha256 digest"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "assignments must be a nonempty exact tuple"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "workflow plan assignments must be unique per scene and seat"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "workflow plan requires normalized operations"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [
+          "bad"
+        ],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "path2_evidence_ids[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "ACCEPT",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "workflow plan status must remain PROPOSED"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.licensed-workflow-plan.v1",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "workflow plan authority_effect must be None"
+    },
+    {
+      "record": "plan",
+      "input": {
+        "plan_name": "test-plan",
+        "catalog_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "assignments": [
+          {
+            "scene_id": "entry",
+            "seat_id": "producer",
+            "agent_id": "dev-agent",
+            "operation_ids": [
+              "propose"
+            ],
+            "agent_license_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "scene_id": "review",
+            "seat_id": "critic",
+            "agent_id": "critic-agent",
+            "operation_ids": [
+              "attack"
+            ],
+            "agent_license_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "scene_id": "terminal",
+            "seat_id": "selector",
+            "agent_id": "adversary-agent",
+            "operation_ids": [
+              "select"
+            ],
+            "agent_license_id": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "normalized_operation_ids": [
+          "propose",
+          "attack",
+          "select"
+        ],
+        "path2_evidence_ids": [],
+        "status": "PROPOSED",
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "plan_id": "sha256:748976fb1ffee77c6fe080b3f636ad29c576daf0d3a8de2bf061c5c139d0b5d7"
+      },
+      "python_error": "unsupported workflow plan schema"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": " trim ",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "objective must be normalized and nonempty"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "λλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλ",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "objective exceeds the text limit"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "work packet requires acceptance criteria"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "bad"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "input_artifact_refs[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 0,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "budget_units must be an exact integer in [1, 1000000]"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 1000001,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "budget_units must be an exact integer in [1, 1000000]"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [
+          "bad"
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "causal_parent_ids[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "python_error": "packet_id does not match canonical content"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.work-packet.v1",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "work packet authority_effect must be None"
+    },
+    {
+      "record": "packet",
+      "input": {
+        "task_key": "test-task",
+        "scene_id": "entry",
+        "objective": "Produce and review a candidate.",
+        "input_artifact_refs": [
+          "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        "acceptance_criteria": [
+          "One candidate is reviewed."
+        ],
+        "budget_units": 6,
+        "evaluator_epoch_id": "sha256:66827a9eed15ff1a51df5f50b364a15fe192c169c54482fd7db68d9316af9531",
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+      },
+      "python_error": "unsupported work packet schema"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "ACCEPT",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "agent result status is not closed"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [
+          "bad"
+        ],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "candidate_ids[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [
+          "bad"
+        ],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "challenge_ids[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [
+          "bad"
+        ],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "artifact_refs[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [
+          "bad"
+        ],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "causal_parent_ids[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "bad code"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "residual_codes[0] must be a canonical identifier"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "a",
+          "a"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "residual_codes must not contain duplicates"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "python_error": "result_id does not match canonical content"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "agent result authority_effect must be None"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "unsupported agent result schema"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1000001,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "python_error": "changed_state must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1,
+        "stronger_certificate": 1000001,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "python_error": "stronger_certificate must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 1000001,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "python_error": "refined_residual must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 1000001,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "python_error": "expanded_cover must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 1000001,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "python_error": "proposed_lift must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "python_error": "measure_id does not match canonical content"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.progress-measure.v1",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "python_error": "progress measure authority_effect must be None"
+    },
+    {
+      "record": "progress",
+      "input": {
+        "changed_state": 1,
+        "stronger_certificate": 0,
+        "refined_residual": 0,
+        "expanded_cover": 0,
+        "proposed_lift": 0,
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "progressed": true,
+        "measure_id": "sha256:b3c8ab658f3e8ebb43b3a89cb5851d953513ac41e3d2ca9a05ea801db51abd07"
+      },
+      "python_error": "unsupported progress measure schema"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "visit_counts must be a nonempty exact tuple"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "z",
+            "count": 1
+          },
+          {
+            "scene_id": "a",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "visit counts must be sorted by scene_id"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "a",
+            "count": 1
+          },
+          {
+            "scene_id": "a",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "visit counts must be unique"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [
+          "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0"
+        ],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "run state result/progress arities differ"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [
+          "bad"
+        ],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "result_ids[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [
+          "bad"
+        ],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "progress_measure_ids[0] must be a lowercase sha256 digest"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 1000001,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "remaining_budget must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 1000001,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "scene_steps must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 1000001,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "dry_rounds must be an exact integer in [0, 1000000]"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "ACCEPT",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "run terminal status is not closed"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "python_error": "state_id does not match canonical content"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "Accept",
+        "schema_version": "core.oeas.swarm-run-state.v1",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "swarm run state authority_effect must be None"
+    },
+    {
+      "record": "state",
+      "input": {
+        "run_key": "run-one",
+        "profile_id": "sha256:8289dd37d6751d8713489de8e9bf997f44b2ed3bbc78fd21c8142733e7d842ea",
+        "current_scene_id": "entry",
+        "visit_counts": [
+          {
+            "scene_id": "entry",
+            "count": 1
+          }
+        ],
+        "result_ids": [],
+        "progress_measure_ids": [],
+        "remaining_budget": 6,
+        "scene_steps": 0,
+        "dry_rounds": 0,
+        "terminal_status": "RUNNING",
+        "authority_effect": "None",
+        "schema_version": "invalid",
+        "state_id": "sha256:0f8c1a70e042a06249832af98cb5d60078d87124a987715b94cb8995828ffb83"
+      },
+      "python_error": "unsupported swarm run state schema"
+    },
+    {
+      "record": "visit",
+      "input": {
+        "scene_id": "entry",
+        "count": 0
+      },
+      "python_error": "count must be an exact integer in [1, 64]"
+    },
+    {
+      "record": "visit",
+      "input": {
+        "scene_id": "entry",
+        "count": 65
+      },
+      "python_error": "count must be an exact integer in [1, 64]"
+    },
+    {
+      "record": "stop",
+      "input": {
+        "max_scene_steps": 0,
+        "max_dry_rounds": 2,
+        "max_total_budget": 6,
+        "stop_on_statuses": [
+          "REFUSE"
+        ]
+      },
+      "python_error": "max_scene_steps must be an exact integer in [1, 1000000]"
+    },
+    {
+      "record": "stop",
+      "input": {
+        "max_scene_steps": 6,
+        "max_dry_rounds": 0,
+        "max_total_budget": 6,
+        "stop_on_statuses": [
+          "REFUSE"
+        ]
+      },
+      "python_error": "max_dry_rounds must be an exact integer in [1, 1000000]"
+    },
+    {
+      "record": "stop",
+      "input": {
+        "max_scene_steps": 6,
+        "max_dry_rounds": 2,
+        "max_total_budget": 0,
+        "stop_on_statuses": [
+          "REFUSE"
+        ]
+      },
+      "python_error": "max_total_budget must be an exact integer in [1, 1000000]"
+    },
+    {
+      "record": "stop",
+      "input": {
+        "max_scene_steps": 6,
+        "max_dry_rounds": 2,
+        "max_total_budget": 6,
+        "stop_on_statuses": []
+      },
+      "python_error": "stop condition requires terminal statuses"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "residual_codes exceeds the item limit"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "\u001c"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "residual_codes[0] must be normalized and nonempty"
+    },
+    {
+      "record": "result",
+      "input": {
+        "agent_id": "fixture-agent",
+        "trust_domain": "PRODUCER",
+        "scene_id": "entry",
+        "work_packet_id": "sha256:5ff31e0b5eae62a930768881cb6ab6d1f7fbd818cf2344cefae5dc0ceab99ef0",
+        "status": "PROPOSED",
+        "candidate_ids": [],
+        "challenge_ids": [],
+        "artifact_refs": [],
+        "residual_codes": [
+          "bad!"
+        ],
+        "causal_parent_ids": [],
+        "authority_effect": "None",
+        "schema_version": "core.oeas.agent-result.v1",
+        "result_id": "sha256:b1398091c6b50344251dd56b95ca0e879fefa20574a2adf3e8a7072926b865ce"
+      },
+      "python_error": "residual_codes[0] must be a canonical identifier"
+    }
+  ]
+}

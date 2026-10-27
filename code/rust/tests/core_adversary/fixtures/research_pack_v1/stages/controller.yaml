@@ -1,0 +1,73 @@
+version: 0.2.0
+derived_under_policy: SPK-001
+authority_effect: None
+public_stage_count: 8
+stages:
+- stage: 1
+  name: compression_gate
+  file: stage_1_compression_gate.yaml
+  executor: model
+  requires: []
+- stage: 2
+  name: ideation
+  file: stage_2_ideation.yaml
+  executor: model
+  requires:
+  - 1
+- stage: 3
+  name: audit
+  file: stage_3_audit.yaml
+  executor: model
+  requires:
+  - 1
+  - 2
+- stage: 4
+  name: l2_extraction
+  file: stage_4_l2_extraction.yaml
+  executor: model
+  requires:
+  - 1
+  - 2
+  - 3
+- stage: 5
+  name: evaluation
+  file: stage_5_evaluation.yaml
+  executor: host
+  requires:
+  - 1
+  - 2
+  - 3
+  - 4
+- stage: 6
+  name: adversarial
+  file: stage_6_adversarial.yaml
+  executor: model
+  requires:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+- stage: 7
+  name: countermodel
+  file: stage_7_countermodel.yaml
+  executor: model
+  requires:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+- stage: 8
+  name: evidence_plan
+  file: stage_8_evidence_plan.yaml
+  executor: model
+  requires:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7

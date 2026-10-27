@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_boolean_constraints:v0.1.0
+title: Bounded Exact Boolean Constraints
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_boolean_constraints
+  symbol: exact_boolean_constraints
+  ascii_symbol: exact_boolean_constraints
+  notation: Bounded Exact Boolean Constraints
+  domain:
+  - Finite exactly-one contexts and at-most-one edges, with indexed Boolean variables
+  - Declared shared search-node budget
+  codomain:
+    description: Exact finite constructions implemented by core_solvers::boolean_constraints; results remain
+      scoped to the declared carrier and budgets.
+requirements:
+  required_structures:
+  - Exact arithmetic and explicit finite carrier validation
+  - A typed refusal for unsupported or exhausted computations
+laws:
+- Returned models satisfy every original constraint
+- UNSAT means exhaustive bounded search; node exhaustion is a typed refusal
+- A deletion-minimal core remains unsatisfiable and every retained source constraint is necessary
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact independent witness replay where a witness is returned
+relationships: []
+rust_binding:
+  crate: core_solvers
+  module: solver_sat_dpll
+  symbols:
+  - BooleanProblem
+  - BooleanOutcome
+  - ConstraintId
+  required_tests:
+  - exact_cover_model_satisfies_every_declared_constraint
+  - odd_exact_one_cycle_is_unsatisfiable_with_a_minimal_core
+  - bounded_dpll_agrees_with_exhaustive_small_carriers
+  - malformed_constraints_and_exhaustion_do_not_become_unsat
+  - unused_large_carrier_terminates_without_recursive_branching
+negative_tests:
+- Reject malformed indices, duplicate context variables and self-edges
+- Never convert budget exhaustion to UNSAT
+doctrine:
+  summary: Bounded Exact Boolean Constraints on a declared finite carrier.
+  non_role:
+  - PROVED, GlobalGreen, or operational authority
+  - Continuum or infinite-carrier completion claims
+wip:
+- Executable finite checks are local evidence; no theorem-prover discharge is asserted.

@@ -1,0 +1,53 @@
+# CODA-A Rules Specification
+# Typed Residual Closure
+paper_identity: CODA-A
+legacy_file_identity: 005_gtta.md
+canonical_version: v1.0
+authority_effect: None
+layer: Layer 6 (A — Sentinel Register)
+
+primitives:
+  ambient_category: "Category C with finite limits and pushouts"
+  closure_discipline: "Lambda = (Close_Lambda, c_Lambda, Cofib, tau_res, T_res)"
+  closure_unit: "c_{Lambda, X} : X -> Close_Lambda(X)"
+  residual_object: "R_Lambda(X) = Cofib(c_{Lambda, X}) ~= Close_Lambda(X) union_X *"
+  sentinel_terminal: "Core_{LambdaOmega}(X) = tau_res(R_Lambda(X))"
+  canonical_residual: "A-frak(X) = cofib(epsilon_X) via shadow reflection U_3"
+
+equations:
+  residual_handoff_pipeline:
+    latex: "X \\xrightarrow{c_\\Lambda} \\operatorname{Close}_\\Lambda(X) \\xrightarrow{\\operatorname{cofib}} R_\\Lambda(X) \\xrightarrow{\\tau_{\\mathrm{res}}} \\Omega_{\\Lambda\\Omega}(X)"
+    description: "Pipeline mapping failed closure attempt into typed residual cofiber terminal"
+  homological_classification:
+    resolved_exact: "[r] = 0 \\implies \\mathsf{ResolvedExact}"
+    closed_residual: "[r] \\neq 0 \\land \\bar{d}_1[r] = 0 \\implies \\mathsf{ClosedResidual} / \\mathsf{Sentinel}"
+    open_residual: "\\bar{d}_1[r] \\neq 0 \\implies \\mathsf{OpenResidual}"
+  first_unresolved_index:
+    latex: "n_0 := \\min \\{ n \\in \\mathbb{N} : R^{(n)}_\\Lambda \\not\\simeq 0 \\}"
+    description: "First unresolved coherence level acting as dependency cut for higher-dimensional checks"
+  lift_transition_ledger:
+    latex: "\\mathsf{Trans}_F(R) = \\mathsf{Split?} + \\bigoplus_i \\mathsf{AtomTrans}(R_i)"
+    description: "Transition outcomes under lift F: Kill, Close, Raise, PersistOpen, Refused, Split"
+  residual_non_creation_theorem:
+    latex: "\\operatorname{Nat}(\\Omega_{\\Lambda\\Omega}, \\mathsf{Auth}) = \\varnothing"
+    description: "Theorem proving no natural transformation exists from residual terminal to authority"
+
+enforcement_rules:
+  - id: CODA-A-RULE-001
+    name: "Doctrine of Residual Honesty"
+    statement: "Failed closure must be terminalized as typed residual (ClosureAbsorbed, ClosedResidual, OpenResidual, LiftRequired, RefusedClosure), never hidden or passed as authority."
+  - id: CODA-A-RULE-002
+    name: "Evidence Is Not Authority"
+    statement: "CertifiedResidual(r) does not equal Auth(claim). Exposing residue organizes boundaries but mints no authority."
+  - id: CODA-A-RULE-003
+    name: "No Silent Mutation on Lift"
+    statement: "If lift F mutates protected skeleton U F(q) != q, it must return a LossLedger. Silent mutation invalidates authority preservation."
+  - id: CODA-A-RULE-004
+    name: "n_0 Dependency Cut"
+    statement: "Higher-dimensional coherence checks (n > n_0) are conditional until the first unresolved residual n_0 is resolved or terminalized."
+
+claim_discipline:
+  supports: "Supports homological typing of unabsorbed residuals, cofiber formation, and lift transition ledgers."
+  does_not_support: "Does not support treating residuals as authority, origin of difference claims, or uncertified closure pass."
+  narrowest_defensible_claim: "Classifies residual cofiber outcomes into exact, closed, open, lift-required, or refused terminals."
+  next_test_needed: "Mechanized verification of atomic lift transition outcomes (Kill/Close/Raise/Split) on synthetic cofiber complexes."

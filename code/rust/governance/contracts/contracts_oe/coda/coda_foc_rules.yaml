@@ -1,0 +1,58 @@
+# CODA-FOC Rules Specification
+# General Theory of Finite Obstruction Calculus
+paper_identity: CODA-FOC
+legacy_file_identity: 000_coda_foc.md
+canonical_version: v1.0
+authority_effect: None
+layer: Layer 1 (FOC — Finite Obstruction Calculus)
+
+primitives:
+  difference: "Primitive cochain differences C_1"
+  complex: "C_0 -> d_0 -> C_1 -> d_1 -> C_2 with nilpotency d_1 o d_0 = 0"
+  repairs:
+    stage_1: "M_1 = im(d_0) subseteq C_1"
+    stage_2: "M_2 = im(a_2) subseteq C_2"
+  quotients:
+    Q_1: "C_1 / M_1"
+    Q_2: "C_2 / M_2"
+
+equations:
+  stage_1_quotient_norm:
+    latex: "\\Phi_1([x]) = \\min_f \\|x + d_0 f\\|_{(1, w_1)}"
+    description: "Stage-1 L1 quotient norm measuring unrepairable defect mass"
+  stage_2_quotient_norm:
+    latex: "\\Gamma_2([d_1 x]) = \\min_u \\|d_1 x + a_2 u\\|_{(1, w_2)}"
+    description: "Stage-2 L1 quotient norm measuring unrepairable boundary tear"
+  lp_dual_witness_theorem:
+    latex: "\\min_y \\|x + A y\\|_{(1,w)} = \\max_z \\{ z^T x : A^T z = 0, |z_i| \\le w_i \\}"
+    description: "L1 quotient norm equals LP dual witness certificate"
+  diagnostic_trichotomy:
+    exact_repair: "\\Phi_1([x]) = 0"
+    coherent_residual: "\\Phi_1([x]) > 0 \\land \\Gamma_2([d_1 x]) = 0"
+    nonclosed_defect: "\\Phi_1([x]) > 0 \\land \\Gamma_2([d_1 x]) > 0"
+  additive_composition:
+    latex: "\\Phi_1([x, x']) = \\Phi_1([x]) + \\Phi_1([x'])"
+    description: "Additive L1 composition under direct sum of cochain complexes"
+  transport_lipschitz_bound:
+    latex: "\\Phi_1'([T_1 x]) \\le L_1 \\Phi_1([x])"
+    description: "Transport morphism bound under chain map T_1"
+
+enforcement_rules:
+  - id: FOC-RULE-001
+    name: "No Anonymous Repair"
+    statement: "No defect x in C_1 may be claimed repaired without an explicit cochain primitive f in C_0 producing exact boundary d_0 f."
+  - id: FOC-RULE-002
+    name: "No Unrecomputed Binding"
+    statement: "Any modification to cochain values or weights requires complete re-computation of dual witnesses and quotient norms."
+  - id: FOC-RULE-003
+    name: "Trichotomy Categorization Discipline"
+    statement: "Every cochain defect must be classified into exactly one of ExactRepair, CoherentResidual, or NonclosedDefect."
+  - id: FOC-RULE-004
+    name: "Authority Fireward"
+    statement: "Zero residual norm (Phi_1 = 0) is a diagnostic pass only; it does not mint authority."
+
+claim_discipline:
+  supports: "Supports finite L1 quotient norm calculations and dual LP witness bounds in declared finite complexes."
+  does_not_support: "Does not support authority minting, continuum limit claims, or unpriced operator definitions."
+  narrowest_defensible_claim: "Calculates exact L1 defect norms and dual linear programming witness certificates over finite cochain complexes."
+  next_test_needed: "Automated verification of LP dual witness certificates against primal bounds across synthetic test complexes."

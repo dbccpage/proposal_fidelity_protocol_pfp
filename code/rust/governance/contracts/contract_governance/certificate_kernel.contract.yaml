@@ -1,0 +1,166 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:certificate_kernel:v1.0.0
+title: CertificateKernel
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: CertificateKernel
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    - GlobalContractTaxonomy
+    - Witness
+    - TraceArtifact
+    - MeasurementKernel
+    - ReplayKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'CertificateKernel binds typed claims to attached evidence under a declared verifier
+
+    capability. Unchecked certificates and proof witnesses are EvidenceOnly. Verified
+
+    certificates may support FactOnly claims only within the authority bound of attached
+
+    evidence, declared verifier capability, and governing contract.
+
+    '
+  non_role: &id002
+  - creating_authority_beyond_evidence
+  - self_certification
+  - authority_upgrade_without_check
+  - transition_authorization
+  - terminal_mapping
+  - execution
+  - policy_interpretation
+  - evidence_fabrication
+  - replay_replacement
+  - signing_unchecked_claims
+  authority_defaults:
+    proof_witness: EvidenceOnly
+    unchecked_certificate: EvidenceOnly
+    verified_certificate_claim: FactOnly only within evidence_authority_bound and verifier capability.
+    transition_authority: Never. LicensingBoundary emits ActionLicense separately.
+  structural_representation:
+    raw:
+      struct_name: CertificateEnvelope
+      fields:
+      - name: certificate_id
+        type: CertificateId
+      - name: claim
+        type: CertificateClaim
+      - name: evidence_refs
+        type: Vec<EvidenceRef>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: measurement_refs
+        type: Vec<MeasurementId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: certificate_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: VerifiedCertificateClaim
+      fields:
+      - name: certificate_ref
+        type: CertificateId
+      - name: verifier_ref
+        type: VerifierId
+      - name: evidence_authority_bound
+        type: AuthorityEffect
+      - name: verified_claim_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: CertificateKind
+      variants:
+      - AnalysisCertificate
+      - ReplayCertificate
+      - WitnessCertificate
+      - LiftLicenseEvidence
+      - TraceCertificate
+  flow: 'EvidenceEnvelope / WitnessId / MeasurementId / ReplayRef
+
+    -> CertificateEnvelope
+
+    -> CertificateVerifier
+
+    -> VerifiedCertificateClaim or refused evidence
+
+    -> Evaluator / Policy
+
+    -> TerminalMapper
+
+    -> LicensingBoundary
+
+    -> Engine
+
+    -> Trace / Ledger
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - certificate_defaults_to_evidence_only
+  - certificate_verification_may_support_factonly_only_with_bound
+  - certificate_authority_never_exceeds_attached_evidence
+  - certificate_does_not_emit_action_license
+  - certificate_does_not_authorize_transition
+  - certificate_does_not_execute
+  - certificate_does_not_replace_replay
+  - certificate_rejects_self_certification
+  canonical_invariant: 'Certificate binds claims to evidence. It does not create authority beyond evidence,
+
+    does not authorize transitions, and does not execute. Verification can support FactOnly
+
+    factual claims only inside the declared evidence bound.
+
+    '
+  legacy_metadata:
+    name: CertificateKernel
+    source_file: non-math/02_evidence/certificate_contract.md
+    active: true
+    machine_authority: true
+    role: Typed evidence-binding envelope with declared verifier capability
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: CertificateEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+    - Record
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

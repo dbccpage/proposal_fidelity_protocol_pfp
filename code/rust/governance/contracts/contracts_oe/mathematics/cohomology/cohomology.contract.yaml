@@ -1,0 +1,144 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cohomology:v1.0.0
+title: Degree-1 cohomology
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:closed_sector:v1.0.0
+    - urn:core:math:exact_repair_space:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: H¹ is the quotient of closed degree-1 cochains by exact repairs.
+  symbol: H¹
+  ascii_symbol: H1
+  formula: H¹ = Z¹ / B¹
+  1. Contract metadata:
+    title: Degree-1 cohomology
+    version: 0.1.0
+    object_type: cohomology_quotient
+  2. Mathematical object / functional role:
+    role: H¹ is the quotient of closed degree-1 cochains by exact repairs.
+    purpose: Represents closed survivors modulo exact repair.
+    non_role:
+    - Does not include nonclosed residuals.
+    - Does not equal all of Q¹.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: valid cochain layer with d₁d₀=0, Z¹=ker(d₁), B¹=im(d₀)
+    codomain: cohomology space H¹
+  4. Required structures:
+    required:
+    - valid cochain layer
+    - exactness d₁d₀=0
+    - Z¹ = ker(d₁)
+    - B¹ = im(d₀)
+    - quotient relation restricted to Z¹
+  5. Definition:
+    cohomology_class: '[h]_H = h + B¹ for h ∈ Z¹'
+    zero_class: '[h]_H = 0 iff h ∈ B¹'
+    survivor_class: a nonzero class in H¹
+    stabilized_residual: a residual h with h ∈ Z¹, h ∉ B¹; equivalently Φ₁ > 0 and Γ₂ = 0 under declared
+      comparison mode
+  6. Laws and invariants:
+    closed_only: Only h ∈ Z¹ may define H¹ classes.
+    exact_zero: h ∈ B¹ represents the zero class in H¹.
+    not_Q1: H¹ is a subquotient / closed-sector quotient, not all of Q¹.
+    quotient_equality: '[h]_H = [k]_H iff h-k ∈ B¹, with h,k ∈ Z¹.'
+    exactness_required: H¹ is well-defined only when B¹ ⊆ Z¹, i.e. d₁d₀ = 0.
+  7. Equality / equivalence rules:
+    equality: '[h]_H = [k]_H iff h-k ∈ B¹, with h,k ∈ Z¹.'
+    nonzero: '[h]_H is nonzero iff h ∉ B¹.'
+    representative_warning: Raw closed representatives may differ while defining the same H¹ class.
+  8. Replay / determinism requirements:
+    requirements:
+    - Verify d₁d₀=0 before constructing H¹.
+    - Verify d₁h=0 before admitting h as an H¹ representative.
+    - B¹ membership witnesses replay for equality or zero-class claims.
+    - Canonical H¹ basis policy must be deterministic if materialized.
+  9. Relationship to other Core primitives:
+    relationships:
+      CochainLayer: Requires valid cochain layer.
+      B1: B¹ is the zero relation denominator.
+      Z1: Z¹ supplies admissible closed representatives.
+      Q1: H¹ is not Q¹; nonclosed Q¹ elements are excluded.
+      Phi1: Φ₁ > 0 separates non-exact closed classes from exact repair.
+      Gamma2: Γ₂ = 0 separates closed from open obstruction.
+      StabilizedSurvivor: Φ₁ > 0 and Γ₂ = 0 corresponds to closed non-exact residual.
+      OpenObstruction: Γ₂ > 0 excludes the residual from H¹.
+  10. Rust descriptor shape:
+    sketch: "pub struct CohomologyDescriptor {\n    pub layer_hash: String,\n    pub z1_descriptor_hash:\
+      \ String,\n    pub b1_descriptor_hash: String,\n    pub exactness_artifact_hash: String,\n    pub\
+      \ quotient_policy_hash: Option<String>,\n    pub h1_basis_policy_hash: Option<String>,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - H¹ claimed without verifying d₁d₀=0.
+    - Open obstruction treated as H¹ class.
+    - Nonclosed residual admitted into H¹.
+    - Raw closed vector treated as H¹ class without quotienting by B¹.
+    - Zero class claim without B¹ membership witness.
+    - H¹ treated as all of Q¹.
+    - Canonical H¹ basis materialized without deterministic policy.
+  12. Open questions / WIP status:
+    wip:
+    - Canonical H¹ basis policy.
+    - Tolerance-mode closed-sector admission.
+    - Subquotient construction over non-field coefficient domains.
+  compact_yaml:
+    COHOMOLOGY_CONTRACT:
+      symbol: H¹
+      ascii_symbol: H1
+      formula: H¹=Z¹/B¹
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: Z¹,B¹ with valid d₁d₀=0
+      codomain: H¹
+      required_structures:
+      - valid layer
+      - Z¹
+      - B¹
+      - restricted quotient relation
+      - exactness d₁d₀=0
+      definition: closed classes modulo exact repair
+      laws:
+      - closed-only
+      - B¹ is zero class
+      - H¹ != Q¹
+      - '[h]=[k] iff h-k∈B¹'
+      forbidden_interpretations:
+      - open obstruction as H¹
+      - nonclosed survivor
+      - Q¹ collapsed to H¹
+      - raw closed vector as class without quotient
+      relationships:
+      - StabilizedSurvivor iff Φ₁>0 and Γ₂=0 under declared mode
+      - OpenObstruction excluded by Γ₂>0
+      - ExactRepair is zero class
+      negative_tests:
+      - missing exactness
+      - open as H¹
+      - nonclosed admitted
+      - zero class without B¹ witness
+      - H¹ treated as Q¹
+      open_questions:
+      - canonical H¹ basis policy
+      - tolerance closure admission
+      - non-field quotient construction

@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_algebraic_real:v0.1.0
+title: Certified Real Algebraic Roots
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_algebraic_real
+  symbol: exact_algebraic_real
+  ascii_symbol: exact_algebraic_real
+  notation: Certified Real Algebraic Roots
+  domain:
+  - Monic integer polynomials of degree at most sixty-four with coefficient bit size at most 4096.
+  - Strictly positive rational enclosure width under a bounded refinement budget.
+  codomain:
+    description: Declared finite results of core_number_theory::algebraic_real; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Largest real roots are certified as rational or canonical quadratic values when recognizable.
+- Higher-degree values retain a squarefree polynomial and a Sturm-certified single-root interval rather than
+  guessed surds.
+- Every returned enclosure contains the represented root and has width no greater than requested.
+- The empty characteristic matrix has determinant polynomial one through the canonical linear-algebra owner.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: algebraic_real
+  symbols:
+  - RealAlgebraic
+  - IsolatedRoot
+  - largest_real_root
+  - AlgebraicRealError
+  required_tests:
+  - characteristic_polynomial_matches_hand_computed_cases
+  - characteristic_polynomial_refuses_ragged_and_accepts_mathematical_empty_input
+  - integer_largest_roots_are_recognised
+  - quadratic_largest_roots_are_exact_surds
+  - higher_degree_roots_are_isolated_not_guessed
+  - enclosures_of_closed_forms_are_certified
+  - malformed_polynomials_are_refused
+  - oversized_root_and_enclosure_requests_refuse_before_refinement
+negative_tests:
+- Nonmonic, constant, root-free or oversized polynomials and invalid or excessively precise enclosure requests
+  are typed refusals.
+doctrine:
+  summary: Largest real roots are certified as rational or canonical quadratic values when recognizable.; Higher-degree
+    values retain a squarefree polynomial and a Sturm-certified single-root interval rather than guessed surds.;
+    Every returned enclosure contains the represented root and has width no greater than requested.; The empty
+    characteristic matrix has determinant polynomial one through the canonical linear-algebra owner..
+  non_role:
+  - No private polynomial, Sturm, quadratic-surd or characteristic-matrix arithmetic owner.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

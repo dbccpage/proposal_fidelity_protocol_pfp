@@ -1,0 +1,98 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:transport_pasting_law:v0.1.0
+title: TransportPastingLaw Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: coherence-condition
+  symbol: T_2 . T_1 = T_{1,3} and L(T_2 . T_1) = L(T_1) + L(T_2)
+  ascii_symbol: transport_pasting_law
+  notation: T_2 . T_1 = T_{1,3} and L(T_2 . T_1) = L(T_1) + L(T_2)
+  domain:
+  - 'transport_1: T_1 : R_1 -> R_2 (first transport)'
+  - 'transport_2: T_2 : R_2 -> R_3 (second transport)'
+  - 'composed_transport: T_2 . T_1 : R_1 -> R_3 (composition)'
+  - 'direct_transport: T_{1,3} : R_1 -> R_3 (direct, if exists)'
+  - 'loss_1: L(T_1) (loss of first transport)'
+  - 'loss_2: L(T_2) (loss of second transport)'
+  - 'composed_loss: L(T_2 . T_1) (loss of composition)'
+  codomain:
+    description: 'A verification record confirming that T_2 . T_1 = T_{1,3} and L(T_2
+      . T_1) = L(T_1) + L(T_2).
+
+      '
+requirements:
+  required_structures:
+  - Codomain of T_1 must equal domain of T_2
+  - Composed transport must agree with direct transport (if exists)
+  - Loss of composition must equal sum of individual losses
+  - Triple composition must be associative
+laws:
+- T_2 . T_1 agrees with T_{1,3} when T_{1,3} exists
+- L(T_2 . T_1) = L(T_1) + L(T_2)
+- Codomain of T_1 must equal domain of T_2
+- 'For T_3 : R_3 -> R_4, (T_3 . T_2) . T_1 = T_3 . (T_2 . T_1)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Composition computation is deterministic
+  - Loss addition is deterministic
+relationships:
+- urn:math:contract:TransportAuth:v0.1.0 serves as transport_auth_for_each_component_transport
+- urn:math:contract:TotalMap:v0.1.0 serves as transports_are_total_maps
+- urn:math:contract:CompositionLaw:v0.1.0 serves as composition_of_transport_maps
+negative_tests:
+- Transports with mismatched codomain/domain must be rejected
+- Composed transport disagreeing with direct must be rejected
+- Non-additive loss composition must be rejected
+- Non-associative triple composition must be rejected
+- Pasting law artifact claiming authority must be rejected
+doctrine:
+  summary: 'A TransportPastingLaw is a mathematical coherence condition for cross-representation
+    transports. It verifies that when two transports T_1 : R_1 -> R_2 and T_2 : R_2
+    -> R_3 are composed, the result agrees with any direct transport T_{1,3} : R_1
+    -> R_3. The law also requires that loss ledgers compose additively: L(T_2 . T_1)
+    = L(T_1) + L(T_2). This is the categorical coherence condition ensuring that representation
+    transport forms a well-defined category (or enriched category with loss).'
+  non_role:
+  - Does not construct transport maps (records coherence verification)
+  - Does not classify admissibility
+  - Does not emit policy decisions
+  - Does not emit certificates or trust markers
+  - Does not produce customer-facing claims
+  - Does not terminalize
+wip:
+- Should the pasting law handle approximate equality for lossy transports?
+- How to define loss addition for non-numeric loss measures?
+- Should we support higher coherence (pasting of pasting laws)?
+- Currently assumes strict equality for composition agreement
+- Loss additivity assumes numeric loss measures
+- Relationship to CODA-MUR transport layer and bicategorical coherence needs formalization
+rust_binding:
+  crate: core_higher_category_theory
+  module: two_category
+  symbols:
+  - Strict2Category
+  - OneMorphismData
+  required_tests:
+  - test_shape_4_triangle_1cells
+  - prop_middle_four_interchange_law

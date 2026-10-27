@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_fixed_weyl_operators:v0.1.0
+title: Exact Fixed-Dimension Weyl Operators
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_fixed_weyl_operators
+  symbol: exact_fixed_weyl_operators
+  ascii_symbol: exact_fixed_weyl_operators
+  notation: Exact Fixed-Dimension Weyl Operators
+  domain:
+  - Fixed dimensions three and five with canonical Cyc24/Cyc5 entries and arbitrary signed i64 displacement
+    labels
+  codomain:
+    description: Declared finite results of core_lie_theory::weyl_operators; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The conveniences delegate the validated sovereign Weyl-Heisenberg carrier
+- Extreme labels obey exact periodicity and dagger/product laws
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: weyl_operators
+  symbols:
+  - weyl_x_d3
+  - weyl_z_d3
+  - weyl_parity_d3
+  - weyl_displacement_d3
+  - weyl_x_d5
+  - weyl_z_d5
+  - weyl_parity_d5
+  - weyl_displacement_d5
+  required_tests:
+  - reduced_weyl_coordinates_keep_dagger_and_the_signed_product_law
+negative_tests:
+- Sign reversal of the half phase is excluded by the signed product and dagger fixtures
+doctrine:
+  summary: The conveniences delegate the validated sovereign Weyl-Heisenberg carrier; Extreme labels obey exact
+    periodicity and dagger/product laws.
+  non_role:
+  - No physics facade, separate matrix carrier, or alternate Weyl convention
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

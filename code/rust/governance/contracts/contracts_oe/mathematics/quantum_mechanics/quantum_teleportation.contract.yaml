@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quantum_teleportation:v0.1.0
+title: Quantum Teleportation of a Qubit Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: protocol
+  symbol: 'Teleportation of |psi> = alpha|0> + beta|1> through |Phi+>_BC with a Bell measurement on AB'
+  ascii_symbol: quantum_teleportation
+  notation: 'v_mu = (<mu|_AB (x) I_C)(|psi>_A (x) |Phi+>_BC); p_mu = |v_mu|^2; v_mu = sigma_mu |psi> / 2 with sigma_mu in {I, Z, X, XZ}'
+  domain:
+  - 'psi: a unit-norm one-qubit state (f64 amplitudes)'
+  - 'mu: one of the four Bell states on AB (Phi+, Phi-, Psi+, Psi-)'
+  codomain:
+    description: 'For each outcome mu, Bob conditional state v_mu and Born probability p_mu computed from the three-qubit amplitudes; after the Pauli correction named by mu Bob holds psi up to a global phase'
+requirements:
+  required_structures:
+  - 'The conditional states are computed from the amplitudes of |psi>_A (x) |Phi+>_BC and the Bell vectors, not written down from the textbook table'
+  - 'The four Born probabilities must sum to 1 within the stated tolerance, else the run is refused'
+  - 'Fidelity |<psi|recovered>|^2 must be 1 within the tolerance for every outcome'
+  - 'An input that is not a qubit is refused'
+laws:
+- 'Bob conditional state for outcome mu equals sigma_mu |psi> / 2, so every outcome has probability 1/4 for a unit-norm psi'
+- 'The Born probabilities of the four Bell outcomes sum to 1 for every input (completeness of the Bell basis)'
+- 'Applying sigma_mu to v_mu returns psi up to a global phase, because each Pauli squares to plus or minus the identity'
+- 'Without the correction Bob holds sigma_mu |psi>, which is orthogonal to |psi> for psi = |0> and mu = Psi+; the identity correction does not repair it'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - f64 amplitudes; results are diagnostics with an explicit tolerance and never certify
+relationships:
+- urn:core:math:ket:v0.1.0 serves as The input and Bob states are kets
+- urn:core:math:unitary:v0.1.0 serves as Bob correction is a Pauli unitary
+- urn:core:math:born_probabilities:v1.0.0 serves as The outcome probabilities are Born probabilities
+- urn:core:math:schmidt_decomposition:v0.1.0 serves as The pair |Phi+> is maximally entangled with Schmidt probabilities one half
+rust_binding:
+  crate: core_quantum_physics
+  module: teleportation
+  symbols:
+  - Teleportation
+  - AliceBellMeasurementOutcome
+  - TeleportationResult
+  - TeleportationError
+  required_tests:
+  - bobs_conditional_states_are_the_paulis_applied_to_psi_over_two
+  - the_four_born_probabilities_sum_to_one_for_every_input
+  - the_wrong_or_missing_correction_does_not_recover_the_input
+  - teleport_superposition_state
+  - teleport_computational_zero
+  - a_non_qubit_input_is_refused
+negative_tests:
+- A state that is not a qubit must be refused
+- Born probabilities that do not sum to 1 must be refused
+- A fidelity below 1 minus the tolerance must be refused
+doctrine:
+  summary: 'The protocol is computed from the three-qubit state: conditional states and probabilities come from the amplitudes, and the Pauli table is an independent expectation in the tests, not an input.'
+  non_role:
+  - Noisy channels or imperfect resource pairs
+  - Qudit or continuous-variable teleportation
+  - Classical communication cost or no-signalling arguments
+wip:
+- 'The arithmetic is f64; an exact version over Q(i) for rational inputs is not written'
+- 'Alice measurement is modelled by projecting onto a Bell vector, not by a full measurement update with state collapse on the three qubits'

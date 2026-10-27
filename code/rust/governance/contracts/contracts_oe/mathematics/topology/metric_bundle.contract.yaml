@@ -1,0 +1,91 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:metric_bundle:v0.1.0
+title: MetricBundle Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: fiber_bundle_with_metric
+  symbol: (E, π, B, {g_b}) where g_b is inner product on fiber π⁻¹(b)
+  ascii_symbol: metric_bundle
+  notation: (E, π, B, {g_b}) where g_b is inner product on fiber π⁻¹(b)
+  domain:
+  - 'fiber_bundle: FiberBundle artifact'
+  - 'inner_products: Ordered list of InnerProduct artifacts'
+  - 'field: Common field identifier'
+  codomain:
+    description: 'A FiberBundle artifact with an ordered list of InnerProduct artifacts, one for each fiber, in sorted order by base point.
+
+      '
+requirements:
+  required_structures:
+  - FiberBundle artifact and all InnerProduct artifacts must exist
+  - Number of inner products equals number of fibers
+  - Each InnerProduct's carrier matches the corresponding fiber
+  - All InnerProduct artifacts use the same field as the bundle
+  - StructureArtifact hash matches SHA-256 of canonical serialization
+laws:
+- Each fiber has exactly one inner product defined on it
+- Each InnerProduct's carrier space matches its fiber's vector space
+- All inner products use the same field as the bundle
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Ordering fixed by sorted base points
+  - Serialization is concatenation of 32-byte IDs
+  - All validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:FiberBundle:v0.1.0 serves as Provides the underlying bundle structure with base points and fibers
+- urn:math:contract:InnerProduct:v0.1.0 serves as Defines the inner product structure on each fiber
+- urn:math:contract:VectorSpace:v0.1.0 serves as Defines the vector space structure of each fiber
+negative_tests:
+- fiber_bundle_id does not resolve
+- Bundle has 5 base points, but inner_product_ids contains 4 entries
+- InnerProduct has basis_hash not matching fiber's codomain_basis_hash
+- InnerProduct is 3-dimensional, but fiber has dimension 2
+- InnerProduct uses field GF(2), while bundle is over GF(3)
+- One of the inner_product_ids is not a valid artifact hash
+- 'inner_product_ids are given in a different order (not sorted by base point). The hash computed will differ, or carrier_matching_validator will detect that the InnerProduct''s carrier hash doesn''t match the corresponding fiber at that index.
+
+  '
+doctrine:
+  summary: A MetricBundle is a vector bundle where each fiber is equipped with an inner product (a smoothly varying non-degenerate bilinear form on the fibers).  In this contract, a MetricBundle is represented by a FiberBundle together with a choice of an InnerProduct artifact for each fiber.  The contract verifies that each inner product is defined on exactly that fiber's vector space (i.e., it carries the same basis hash, dimension, and field).  No curvature, signature, or smoothness conditions are enforced; those belong to separate FactEnvelopes.
+  non_role:
+  - Smoothness or continuity conditions (belongs to SmoothMetricBundle)
+  - Signature verification (positive definiteness belongs in FactEnvelopes)
+  - Curvature computations (belongs to Connection contract)
+  - Metric compatibility with connections (separate structure)
+wip:
+- 'The contract treats each inner product independently; no smoothness or continuity condition is enforced.  A future SmoothMetricBundle contract could use a CoordinateExpression to enforce differentiability.
+
+  '
+- 'The inner products are assumed to be given as artifacts.  In practice, they might be generated from a metric tensor field expression; that generation is a ComputationWitness.
+
+  '
+- 'The signature and positive-definiteness are not part of the structure; they can be expressed as FactEnvelopes (e.g., "each inner product is positive definite") using the is_positive_definite property from the InnerProduct contract.
+
+  '
+- 'The relationship to the Connection contract: a MetricBundle with a compatible connection (metric compatibility) would be a separate structure combining both.
+
+  '
+- Status set to mathematical_wip due to unresolved design questions
+- authority_effect is 'none' - this is a pure mathematical contract
+- customer_claim_allowed is false

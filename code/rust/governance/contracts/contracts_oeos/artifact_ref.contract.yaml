@@ -1,0 +1,81 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:artifact_ref:v1.0.0
+title: Artifact Reference Handle
+kind: host_contract
+status: proposed
+layer: 09_host
+role: ArtifactReference
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:cas_store:v1.0.0
+    proof_obligations:
+      - id: ART-INV-001
+        statement: A reference binds the raw SHA-256 of exact bytes, byte length, media type, and optional schema URN.
+        verification_status: open
+      - id: ART-INV-002
+        statement: A reference carries no live payload and cannot override the digest of the referenced bytes.
+        verification_status: open
+      - id: ART-INV-003
+        statement: Dereferencing requires the declared CAS port and a separately valid host capability.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - ARTIFACT_DIGEST_MISMATCH
+      - ARTIFACT_REF_MALFORMED
+      - ARTIFACT_SIZE_MISMATCH
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: artifact_identity_fields
+      type: urn:core:oeos:type:artifact_identity_fields:v1.0.0
+      required: true
+  outputs:
+    - name: artifact_ref
+      type: urn:core:oeos:type:artifact_ref:v1.0.0
+      required: true
+  typed_refusals:
+    - ARTIFACT_DIGEST_MISMATCH
+    - ARTIFACT_REF_MALFORMED
+    - ARTIFACT_SIZE_MISMATCH
+  platform_requirements:
+    - profile: portable_reference
+      requirements:
+        - strict_utf8_metadata
+        - sha256_exact_byte_domain
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares the immutable host reference shape used to locate exact bytes in a declared CAS root.
+  non_role:
+    - payload_interpretation
+    - provenance_certification
+    - capability_minting
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - does_not_promote_referenced_bytes_to_evidence
+  invariants:
+    - raw_digest_and_semantic_identity_are_distinct_domains
+    - dereference_rechecks_length_and_raw_digest
+  allowed_operations:
+    - construct_validated_reference
+    - resolve_reference_through_cas_port
+  forbidden_operations:
+    - attach_mutable_payload
+    - reinterpret_digest_domain

@@ -1,0 +1,314 @@
+[
+  {
+    "name": "healthy_and_precedence",
+    "request": {
+      "operation": "nominate",
+      "policy": {
+        "window_days": 30,
+        "sensor_epoch": "2026-06-23",
+        "minimum_ledger_days": 30,
+        "new_skill_grace_days": 45,
+        "max_candidate_fraction": 0.25,
+        "exempt": {
+          "exempt": "kept"
+        },
+        "approved_by": "a-human",
+        "approved_at": "2026-09-01"
+      },
+      "now_us": 1790812800000000,
+      "first_us": 1783036800000000,
+      "last_us": 1790812800000000,
+      "roster": [
+        "recent",
+        "dead",
+        "exempt",
+        "brand-new",
+        "at-cutoff"
+      ],
+      "last_used": {
+        "recent": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "at-cutoff": {
+          "at_us": 1788220800000000,
+          "date": "2026-09-01"
+        },
+        "exempt": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        }
+      },
+      "births": {
+        "brand-new": {
+          "at_us": 1790553600000000,
+          "date": "2026-09-28"
+        }
+      },
+      "parity_green": true
+    },
+    "expected": {
+      "refusals": [],
+      "candidates": [
+        {
+          "skill_id": "dead",
+          "last_used": null,
+          "created": null
+        }
+      ],
+      "exempt": [
+        {
+          "skill_id": "exempt",
+          "reason": "kept"
+        }
+      ],
+      "in_grace": [
+        {
+          "skill_id": "brand-new",
+          "created": "2026-09-28",
+          "age_days": 3
+        }
+      ],
+      "used_recently": [
+        {
+          "skill_id": "at-cutoff",
+          "last_used": "2026-09-01"
+        },
+        {
+          "skill_id": "recent",
+          "last_used": "2026-10-01"
+        }
+      ],
+      "roster_size": 5,
+      "span_days": 90.0
+    }
+  },
+  {
+    "name": "all_refusals",
+    "request": {
+      "operation": "nominate",
+      "policy": {
+        "window_days": 30,
+        "sensor_epoch": "2026-06-23",
+        "minimum_ledger_days": 30,
+        "new_skill_grace_days": 45,
+        "max_candidate_fraction": 0.25,
+        "exempt": {
+          "exempt": "kept"
+        },
+        "approved_by": "",
+        "approved_at": "2026-09-01"
+      },
+      "now_us": 1790812800000000,
+      "first_us": null,
+      "last_us": null,
+      "roster": [
+        "a",
+        "b"
+      ],
+      "last_used": {},
+      "births": {},
+      "parity_green": false
+    },
+    "expected": {
+      "refusals": [
+        "the policy records no human approval. AuthorityEffect: None -- an archive decision needs a standing human policy, and until approved_by is filled in there is nothing to act under.",
+        "the ledger spans 0.0 days; a 30-day window over that measures the sensor, not the garden. Keep harvesting until it reaches 30 days.",
+        "zero invocations recorded across 2 packages. That is a sensor failure, not a garden of dead skills.",
+        "2 of 2 packages (100%) would be nominated, above the 25% ceiling. Archiving that share of the garden in one action is a decision for a human, not the output of a script.",
+        "four-host skill parity is not green. Nothing may be computed against a garden whose four copies already disagree."
+      ],
+      "candidates": [],
+      "exempt": [],
+      "in_grace": [],
+      "used_recently": [],
+      "roster_size": 2,
+      "span_days": 0.0
+    }
+  },
+  {
+    "name": "ceiling_equal",
+    "request": {
+      "operation": "nominate",
+      "policy": {
+        "window_days": 30,
+        "sensor_epoch": "2026-06-23",
+        "minimum_ledger_days": 30,
+        "new_skill_grace_days": 45,
+        "max_candidate_fraction": 0.25,
+        "exempt": {
+          "exempt": "kept"
+        },
+        "approved_by": "a-human",
+        "approved_at": "2026-09-01"
+      },
+      "now_us": 1790812800000000,
+      "first_us": 1783036800000000,
+      "last_us": 1790812800000000,
+      "roster": [
+        "a",
+        "b",
+        "c",
+        "dead"
+      ],
+      "last_used": {
+        "a": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "b": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "c": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        }
+      },
+      "births": {},
+      "parity_green": true
+    },
+    "expected": {
+      "refusals": [],
+      "candidates": [
+        {
+          "skill_id": "dead",
+          "last_used": null,
+          "created": null
+        }
+      ],
+      "exempt": [],
+      "in_grace": [],
+      "used_recently": [
+        {
+          "skill_id": "a",
+          "last_used": "2026-10-01"
+        },
+        {
+          "skill_id": "b",
+          "last_used": "2026-10-01"
+        },
+        {
+          "skill_id": "c",
+          "last_used": "2026-10-01"
+        }
+      ],
+      "roster_size": 4,
+      "span_days": 90.0
+    }
+  },
+  {
+    "name": "grace_boundary_and_future",
+    "request": {
+      "operation": "nominate",
+      "policy": {
+        "window_days": 30,
+        "sensor_epoch": "2026-06-23",
+        "minimum_ledger_days": 30,
+        "new_skill_grace_days": 45,
+        "max_candidate_fraction": 0.25,
+        "exempt": {
+          "exempt": "kept"
+        },
+        "approved_by": "a-human",
+        "approved_at": "2026-09-01"
+      },
+      "now_us": 1790812800000000,
+      "first_us": 1783036800000000,
+      "last_us": 1790812800000000,
+      "roster": [
+        "boundary",
+        "future",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+      ],
+      "last_used": {
+        "a": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "b": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "c": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "d": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "e": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        },
+        "f": {
+          "at_us": 1790812800000000,
+          "date": "2026-10-01"
+        }
+      },
+      "births": {
+        "boundary": {
+          "at_us": 1786924800000000,
+          "date": "2026-08-17"
+        },
+        "future": {
+          "at_us": 1790816400000000,
+          "date": "2026-10-01"
+        }
+      },
+      "parity_green": true
+    },
+    "expected": {
+      "refusals": [],
+      "candidates": [
+        {
+          "skill_id": "boundary",
+          "last_used": null,
+          "created": "2026-08-17"
+        }
+      ],
+      "exempt": [],
+      "in_grace": [
+        {
+          "skill_id": "future",
+          "created": "2026-10-01",
+          "age_days": -1
+        }
+      ],
+      "used_recently": [
+        {
+          "skill_id": "a",
+          "last_used": "2026-10-01"
+        },
+        {
+          "skill_id": "b",
+          "last_used": "2026-10-01"
+        },
+        {
+          "skill_id": "c",
+          "last_used": "2026-10-01"
+        },
+        {
+          "skill_id": "d",
+          "last_used": "2026-10-01"
+        },
+        {
+          "skill_id": "e",
+          "last_used": "2026-10-01"
+        },
+        {
+          "skill_id": "f",
+          "last_used": "2026-10-01"
+        }
+      ],
+      "roster_size": 8,
+      "span_days": 90.0
+    }
+  }
+]

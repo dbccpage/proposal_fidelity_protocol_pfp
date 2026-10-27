@@ -1,0 +1,153 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:observable:v1.0.0
+title: Observable
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Observable
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - MeasurementKernel
+    - FunctionalMeasurementAuthority
+    - GlobalContractTaxonomy
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  constraints:
+    mutation_forbidden: true
+    runtime_orchestration_forbidden: true
+    typed_output_required: true
+doctrine:
+  summary: 'Observable extracts primitive quantities from state through declared boundaries.
+
+    It does not perform governance judgment, policy interpretation, candidate ranking,
+
+    canonical cohomological measurement emission unless admitted by Functional authority,
+
+    licensing, mutation, or execution.
+
+    '
+  non_role: &id002
+  - evaluator_judgment
+  - policy_interpretation
+  - terminal_mapping
+  - transition_authorization
+  - action_licensing
+  - state_mutation
+  - execution
+  - search_scheduling
+  - candidate_ranking
+  - evidence_authority_upgrade
+  - canonical_cohomological_measurement_emission_without_functional_admission
+  authority_defaults:
+    observable_output: EvidenceOnly
+    checked_observable_fact: FactOnly only after extraction schema, source hash, output hash, and replayability
+      are checked.
+  structural_representation:
+    raw:
+      struct_name: ObservableOutput
+      fields:
+      - name: observable_id
+        type: ObservableId
+      - name: source_ref
+        type: ArtifactRef
+      - name: output_kind
+        type: ObservableKind
+      - name: output_ref
+        type: EvidenceRef
+      - name: output_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedObservableOutput
+      fields:
+      - name: observable_output_ref
+        type: ObservableOutputRef
+      - name: schema_ref
+        type: SchemaRef
+      - name: replay_ref
+        type: ReplayRef
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+  flow: 'State / ArtifactRef
+
+    -> ObservableOutput
+
+    -> MeasurementEnvelope / EvidenceEnvelope
+
+    -> MeasurementKernel / ReplayKernel
+
+    -> Evaluator
+
+    -> TerminalMapper
+
+    -> LicensingBoundary
+
+    -> Engine
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - observable_output_defaults_to_evidence_only
+  - observable_does_not_rank_candidates
+  - observable_does_not_schedule_search
+  - observable_does_not_emit_action_license
+  - observable_does_not_authorize_transition
+  - observable_does_not_execute
+  - observable_requires_declared_extraction_schema
+  canonical_invariant: 'Observable extracts evidence. It does not decide, rank, schedule, license, authorize,
+
+    mutate, execute, or upgrade evidence authority.
+
+    '
+  legacy_metadata:
+    name: Observable
+    source_file: non-math/02_evidence/observable_contract.md
+    active: true
+    machine_authority: true
+    role: State extraction and measurable quantity boundary
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: ObservableOutput
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

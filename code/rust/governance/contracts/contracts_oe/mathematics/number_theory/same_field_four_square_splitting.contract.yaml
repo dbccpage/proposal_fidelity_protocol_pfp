@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:same_field_four_square_splitting:v0.1.0
+title: Bounded same-field rational square splitting
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: same_field_four_square_splitting
+  symbol: same_field_four_square_splitting
+  ascii_symbol: same_field_four_square_splitting
+  notation: Bounded same-field rational square splitting
+  domain:
+  - Nonnegative BigInt integers and BigRational weights, explicit u64 search budget
+  codomain:
+    description: Declared finite results of core_number_theory::four_squares; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Returned squares replay sum s_i^2=n exactly
+- Rational split replays sum q_i^2=w without a square-root field
+- Negative inputs and exhausted budgets return typed errors
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: four_squares
+  symbols:
+  - four_squares
+  - rational_square_split
+  required_tests:
+  - four_squares::tests::all_small_integers_replay_the_four_square_identity
+  - four_squares::tests::rational_weights_split_without_an_extension_field
+negative_tests:
+- four_squares::tests::rational_weights_split_without_an_extension_field
+doctrine:
+  summary: Returned squares replay sum s_i^2=n exactly; Rational split replays sum q_i^2=w without a square-root
+    field; Negative inputs and exhausted budgets return typed errors.
+  non_role:
+  - No unbounded search or claim of a minimal number of nonzero squares
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

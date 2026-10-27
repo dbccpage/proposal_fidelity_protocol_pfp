@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bounded_derived_category:v0.1.0
+title: Bounded Derived Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: bounded_derived_category
+  symbol: D^b(A) \subset D(A)
+  ascii_symbol: bounded_derived_category
+  notation: D^b(A) = { X^\bullet \in Ch(A) | \exists N, \forall |n| > N, H^n(X^\bullet) = 0 }
+  domain:
+  - 'abelian_category: base abelian category A'
+  - 'bounded_complexes: subcategory of complexes X^\bullet with bounded cohomology: \exists a, b, \forall n < a \lor n > b, H^n(X) = 0'
+  - 'boundedness_variants: D^b (bounded), D^+ (bounded below), D^- (bounded above)'
+  - 'triangulated_structure: full triangulated subcategory structure inherited from D(A)'
+  - 'cohomology_bounds: exact integer bounds [lower_bound, upper_bound] for non-vanishing cohomology'
+  codomain:
+    description: The bounded derived category D^b(A) is the full triangulated subcategory of D(A) consisting of complexes whose cohomology vanishes in all but finitely many degrees. It is the primary setting for coherent sheaf theory and Serre duality.
+requirements:
+  required_structures:
+  - Base category A is abelian.
+  - All objects satisfy bounded cohomology: H^n(X) = 0 for |n| >> 0.
+  - Closed under translation [1] and [-1].
+  - Closed under mapping cones: if X, Y in D^b(A), then C(f) in D^b(A).
+  - Full embedding into D(A).
+  - Structure hash is deterministically content-addressed.
+laws:
+  - 'Vanishing cohomology: \exists a, b \in Z such that H^n(X) = 0 for all n < a and n > b'
+  - 'Triangulated subcategory closure: distinguished triangle on X, Y in D^b(A) implies cone object Z in D^b(A)'
+  - 'Shift stability: H^n(X[k]) = H^{n+k}(X), preserving finite cohomological support'
+  - 'Quasi-isomorphism preservation: every quasi-isomorphism between bounded complexes inverts within D^b(A)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cohomology bounds and complexes serialized in canonical order
+  - Exact integer degree bounds; deterministic hashing
+relationships:
+- urn:core:math:derived_category:v0.1.0 serves as Full triangulated subcategory of the derived category
+- urn:core:math:triangulated_category:v0.1.0 serves as Inherits triangulated category structure
+- urn:core:math:unbounded_derived_category:v0.1.0 serves as Bounded derived category embeds into the unbounded category
+rust_binding:
+  crate: core_higher_category_theory
+  module: bounded_derived
+  symbols:
+  - BoundedDerivedCategory
+  - BoundedComplex
+  - CohomologyBoundValidator
+  required_tests:
+  - test_bounded_derived_category_and_truncation
+negative_tests:
+- Complex with unbounded cohomology asserted as bounded
+- Mapping cone of bounded complexes escapes declared degree bounds
+- Non-abelian base category
+doctrine:
+  summary: The bounded derived category D^b(A) restricts the derived category to complexes with cohomology supported in finitely many degrees. It forms a full triangulated subcategory and is the foundational framework for coherent sheaves, Fourier-Mukai transforms, and Bridgeland stability conditions.
+  non_role:
+  - Unbounded derived categories D(A)
+  - Ind-coherent and pro-coherent extensions
+  - Infinite direct sums / Brown representability
+wip:
+  - Bound propagation algorithm across mapping cones in Rust
+  - Full subcategory verification in Lean 4
+  - Exact discrete cohomology vanishing checks

@@ -1,0 +1,128 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gram_schmidt:v0.1.0
+title: Gram-Schmidt Orthogonalization Contract (exact rational)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_gram_schmidt_orthogonalization
+  symbol: GS(v_1,…,v_n)=(u_1,…,u_n, certificate)
+  ascii_symbol: gram_schmidt
+  notation: classical Gram-Schmidt over Q with standard dot product
+  domain:
+  - 'field: rational field Q (exact Ratio arithmetic)'
+  - 'input family: linearly independent coordinate vectors in a common basis'
+  - 'inner product: standard coordinate dot product'
+  codomain:
+    description: Pairwise orthogonal family u_i of same length as input, with algebraic certificate of
+      orthogonality, nonzero outputs, and span preservation.
+requirements:
+  required_structures:
+  - Input family non-empty when n≥1; n=0 is empty GS (optional residual)
+  - All input vectors share the same ambient basis/space identity
+  - All input vectors have matching dimension
+  - Linear independence of inputs (no zero pivot) for full n-output success
+  - Exact arithmetic (no floating-point rounding)
+laws:
+- 'Orthogonality: ⟨u_i, u_j⟩ = 0 for i ≠ j (exact zero).'
+- 'Nonzero: u_i ≠ 0 for each produced i (dependence detected by zero pivot).'
+- 'Span: span{u_1,…,u_i} = span{v_1,…,v_i} for all i.'
+- 'Triangular reconstruction: u_i = v_i − Σ_{j<i} c_{ij} u_j with diagonal 1.'
+- 'Cardinality: successful full run yields |u|=|v|.'
+- 'Exactness: all coefficients in Q; no float.'
+- 'Authority law: no PROVED/GlobalGreen/HoTT from this contract alone.'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Deterministic input order
+  - Exact rational only
+relationships:
+- urn:core:math:vector:v0.1.0 — coordinate vectors
+- urn:core:math:vector_space:v0.1.0 — ambient space
+- urn:core:math:inner_product:v0.1.0 — standard dot product instance
+- urn:core:math:field:v0.1.0 — rational field story
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::gram_schmidt
+  symbols:
+  - gram_schmidt_exact_standard
+  - OrthogonalFamily
+  - GramSchmidtCertificate
+  - OrthogonalityWitness
+  - SpanPreservationWitness
+  - GramSchmidtError
+  # One test per mechanically-checkable negative_test, in declaration order.
+  # The last negative_test is doctrinal (PROVED/GlobalGreen/HoTT) and has no
+  # unit test.
+  required_tests:
+  - rejects_dependent_vectors
+  - rejects_empty_input
+  - rejects_dimension_mismatch
+  - rejects_basis_mismatch_specifically
+  - verify_output_family_fails_on_non_orthogonal
+  - verify_span_preservation_fails_on_corruption
+negative_tests:
+- Linearly dependent inputs must fail (zero pivot) rather than emit fake orthogonal family
+- Empty input family policy must be explicit (reject or empty certificate — no silent invent)
+- Mismatched dimensions among inputs must be rejected
+- Mismatched basis/space identity among inputs must be rejected
+- Corrupted non-orthogonal output must fail verification
+- Span-preservation failure must fail verification
+- Artifact claiming PROVED/GlobalGreen/HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'Exact rational classical Gram-Schmidt under the standard coordinate dot product, with algebraic
+    certificates. Orthogonal not orthonormal. Nonclaim: does not claim PROVED; does not claim GlobalGreen;
+    does not claim HoTT discharge.'
+  non_role:
+  - Orthonormalization (normalization separate)
+  - Floating-point numerical GS
+  - Arbitrary Gram-matrix inner products
+  - Complex/Hermitian GS
+  - QR factorization as product object
+  - Modified Gram-Schmidt algorithm
+  - Authority / PROVED / GlobalGreen / HoTT discharge
+wip:
+- 'Empty family policy: reject vs empty success certificate.'
+- Extension to arbitrary Gram matrices deferred.
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B1_LINEAR_ALGEBRA
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'B1 meth: restored domain/codomain/object_kind after shell damage; laws already largely correct
+      for exact classical GS; residual empty-family policy.'
+    recommendation: Continue object-specific meth; align code under ADR-007a after YAML settles. Not PROVED;
+      not GlobalGreen; not LEAN4.
+    pass: b1_linear_algebra_meth
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: STRUCTURAL_MATCH
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates/core_linear_algebra/src/gram_schmidt.rs
+    detail: Exact GS symbols bound; treat as CODE_DEMO_RUST certificate path. Not PROVED.
+    delta: MATCH

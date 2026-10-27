@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:resource_quota:v1.0.0
+title: Resource Quota and Bounding
+kind: host_contract
+status: proposed
+layer: 09_host
+role: ResourceQuota
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations:
+      - id: QTA-INV-001
+        statement: Every admitted host task binds positive ceilings for bytes, artifacts, steps, and wall-clock duration.
+        verification_status: open
+      - id: QTA-INV-002
+        statement: A quota breach yields a typed refusal and never a caller-authored success value.
+        verification_status: open
+      - id: QTA-INV-003
+        statement: Quota accounting is monotone during one run and cannot be replenished by task code.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - ARTIFACT_QUOTA_EXCEEDED
+      - BYTE_QUOTA_EXCEEDED
+      - STEP_QUOTA_EXCEEDED
+      - WALL_CLOCK_QUOTA_EXCEEDED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: quota_limits
+      type: urn:core:oeos:type:resource_quota:v1.0.0
+      required: true
+  outputs:
+    - name: quota_accounting_snapshot
+      type: urn:core:oeos:type:quota_accounting_snapshot:v1.0.0
+      required: true
+  typed_refusals:
+    - ARTIFACT_QUOTA_EXCEEDED
+    - BYTE_QUOTA_EXCEEDED
+    - STEP_QUOTA_EXCEEDED
+    - WALL_CLOCK_QUOTA_EXCEEDED
+  platform_requirements:
+    - profile: portable_accounting
+      requirements:
+        - monotonic_clock_source_declared
+        - safe_integer_counters
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares bounded resource accounting for host work without interpreting the work's mathematical meaning.
+  non_role:
+    - search_strategy
+    - solver_fuel_semantics
+    - license_granting
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - host_step_count_is_not_a_mathematical_complexity_proof
+  invariants:
+    - all_counters_are_bounded_safe_integers
+    - elapsed_time_is_not_part_of_semantic_identity
+  allowed_operations:
+    - bind_quota_to_host_request
+    - consume_declared_host_budget
+  forbidden_operations:
+    - replenish_quota_from_task_code
+    - convert_quota_to_authority

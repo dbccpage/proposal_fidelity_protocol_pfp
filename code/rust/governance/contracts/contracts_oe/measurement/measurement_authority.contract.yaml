@@ -1,0 +1,101 @@
+schema_version: core.contract.v1
+contract_id: urn:core:constitution:measurement_authority:v1.0.0
+title: FunctionalMeasurementAuthority
+kind: constitution_contract
+status: mathematical_wip
+layer: 00_constitution
+role: Constitution
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Functional
+    - Measurement
+    - MeasurementAccessControl
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'Only Functionals may emit canonical cohomological measurement values
+
+    (Phi1, Gamma2, Xi, quotient mass, closure defect, cohomological status).
+
+    Functional measurement authority is not execution authority.
+
+    '
+  non_role: &id002
+  - search access to cohomological values
+  - solver emission of canonical cohomological values
+  - evaluator recomputation
+  - engine recomputation
+  - terminalization
+  - execution
+  strict_access_law:
+    Search: Forbidden from importing PhiFunctional, GammaFunctional, XiFunctional. May consume only opaque
+      Evaluator priority hints.
+    Solver: Forbidden from emitting Phi, Gamma2, Xi as canonical values. May emit solver artifacts used
+      by Functionals.
+    Functional: Sole canonical source of truth for cohomological measurements.
+    Evaluator: Consumes Functional outputs and Policy. May judge but not recompute.
+    Engine: Routes on typed Evaluator verdicts. May not compute, recompute, reinterpret, or scalarize
+      cohomological values.
+    Terminalizer: Consumes verified decisions and replay/certificate evidence. MUST NOT compute Phi1,
+      Gamma2, Xi, quotient mass, closure defect, or cohomological status.
+  forbidden_implementation_tokens:
+    scope: outside Functional implementation files
+    tokens:
+    - PhiFunctional
+    - GammaFunctional
+    - XiFunctional
+    - compute_phi
+    - compute_gamma
+    - compute_xi
+    - canonical_phi
+    - canonical_gamma
+    - canonical_xi
+  required_tests:
+  - search_cannot_import_phi_functional
+  - search_cannot_import_gamma_functional
+  - search_cannot_import_xi_functional
+  - solver_cannot_emit_canonical_phi
+  - solver_cannot_emit_canonical_gamma
+  - evaluator_cannot_recompute_functional_values
+  - engine_cannot_compute_functional_values
+  - terminalizer_cannot_compute_functional_values
+  canonical_invariant: 'No canonical cohomological value exists without Functional emission.
+
+    No Search access to cohomological semantics.
+
+    '
+  legacy_metadata:
+    name: FunctionalMeasurementAuthority
+    role: Canonical source boundary for cohomological measurements
+    version: '2.0'
+    classification: constitution
+    split_from: authority_contract.md (lines 1-110)
+    doctrine_version: 2026-05
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: MeasurementAccessRule
+    referenced_output_families:
+    - EvidenceEnvelope
+    referenced_domain_kinds:
+    - FunctionalAuthorityRule
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_constitution_contract:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:evidence:measurement_kernel:v1.0.0"

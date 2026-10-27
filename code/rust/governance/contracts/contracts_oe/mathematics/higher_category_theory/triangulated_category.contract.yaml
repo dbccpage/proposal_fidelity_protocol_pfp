@@ -1,0 +1,92 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:triangulated_category:v0.1.0
+title: Triangulated Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: triangulated_category
+  symbol: (D, [1], Delta) with triangles X -> Y -> Z -> X[1]
+  ascii_symbol: triangulated_category
+  notation: "(D, [1], Delta) where [1]: D -> D is autoequivalence and Delta is class of distinguished triangles"
+  domain:
+  - 'additive_category: underlying additive category D with direct sums and zero object'
+  - 'translation_functor: additive autoequivalence T = [1]: D -> D'
+  - 'distinguished_triangles: sextuples (X, Y, Z, u, v, w) forming triangles X -u-> Y -v-> Z -w-> X[1]'
+  - 'verdier_axiom_tr1: identity triangles X -id-> X -> 0 -> X[1] distinguished; closure under isomorphism; cone completion exists'
+  - 'verdier_axiom_tr2: rotation axiom stating (X, Y, Z, u, v, w) distinguished iff (Y, Z, X[1], v, w, -u[1]) distinguished'
+  - 'verdier_axiom_tr3: morphism extension axiom between distinguished triangles'
+  - 'verdier_axiom_tr4: octahedral axiom encoding composition of distinguished triangles for v \circ u into a commuting braid'
+  codomain:
+    description: A triangulated category is an additive category equipped with an autoequivalence translation functor [1] and a distinguished class of triangles satisfying Verdier's four axioms TR1-TR4.
+requirements:
+  required_structures:
+  - Underlying category is additive with strict zero object and direct sums.
+  - Translation functor [1] is an exact additive autoequivalence.
+  - Every morphism u: X -> Y can be completed to a distinguished triangle X -> Y -> Z -> X[1] (TR1).
+  - Triangles are stable under rotation with exact anti-shift sign -u[1]: Y[1] -> X[2] (TR2).
+  - Any commuting square between base morphisms of distinguished triangles extends to a morphism of triangles (TR3).
+  - Octahedral axiom commutes strictly across all 8 faces and composite triangles (TR4).
+  - Structure hash is deterministically content-addressed.
+laws:
+  - 'TR1: Identity triangle X -id-> X -> 0 -> X[1] is distinguished, isomorphic triangles are distinguished, cone completions exist'
+  - 'TR2 Rotation: (X, Y, Z, u, v, w) distinguished <=> (Y, Z, X[1], v, w, -u[1]) distinguished'
+  - 'TR3 Extension: for distinguished triangles with b \circ u = u'' \circ a, there exists c: Z -> Z'' completing the triangle morphism'
+  - 'TR4 Octahedron: distinguished triangles on u: X -> Y, v: Y -> Z, and v \circ u: X -> Z form an octahedral braid with a triangle on cones C(u) -> C(v \circ u) -> C(v) -> C(u)[1]'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Triangle sextuples and diagrams serialized in canonical order
+  - Exact rational discrete arithmetic; signs verified algebraically
+relationships:
+- urn:core:math:derived_category:v0.1.0 serves as Derived category D(A) carries the canonical triangulated structure
+- urn:core:math:dg_category:v0.1.0 serves as Pretriangulated DG category generates a triangulated category under H^0
+- urn:core:math:bounded_derived_category:v0.1.0 serves as Bounded derived category is a full triangulated subcategory
+rust_binding:
+  crate: core_higher_category_theory
+  module: triangulated
+  symbols:
+  - TriangulatedCategory
+  - DistinguishedTriangle
+  - TranslationFunctor
+  - RotationValidator
+  - OctahedralBraidValidator
+  required_tests:
+  - test_rotation_validator_double_rotation
+  - test_octahedral_axiom_complete_braid
+  - test_kill_mut_p2_03_broken_rotation_axiom_tr2
+  - test_kill_mut_p2_04_non_commuting_octahedral_axiom_tr4
+negative_tests:
+- Category lacks additive structure or zero object
+- Translation functor [1] fails autoequivalence
+- Rotation TR2 violates sign change (-u[1] replaced with +u[1]) (BrokenRotationAxiom / MUT-P2-03)
+- Octahedral axiom TR4 braid fails commutativity (NonCommutingOctahedral / MUT-P2-04)
+- Cone completion fails to exist for a valid morphism
+doctrine:
+  summary: A triangulated category abstracts the homological structure of derived categories and stable homotopy categories. It replaces short exact sequences with distinguished triangles and kernels/cokernels with mapping cones. Verdier's axioms TR1-TR4 govern rotation, extension, and octahedral braiding.
+  non_role:
+  - Stable infinity-category enhancements
+  - Model category fibrant/cofibrant resolutions
+  - Non-additive triangulated structures
+wip:
+  - Formal proof of TR1-TR4 in Lean 4 (Triangulated.lean)
+  - Exact octahedral braid commutativity validator in Rust
+  - Discrete verification of negative translation sign -u[1]

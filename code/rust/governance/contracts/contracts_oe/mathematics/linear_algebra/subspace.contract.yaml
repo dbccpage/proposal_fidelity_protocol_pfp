@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:subspace:v0.1.0
+title: Subspace Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: vector_subspace
+  symbol: W ⊆ V, where dim(W) ≤ dim(V)
+  ascii_symbol: subspace
+  notation: W ⊆ V, where dim(W) ≤ dim(V)
+  domain:
+  - 'ambient_space: VectorSpace V over field K'
+  - 'subspace_basis: Finite list of vectors in V'
+  - 'field: Field K'
+  codomain:
+    description: 'A finite-dimensional linear subspace W ⊆ V over field K, where V is the ambient vector space. The carrier consists of a basis for W and the ambient space structure.
+
+      '
+requirements:
+  required_structures:
+  - All generator vectors must belong to the ambient vector space
+  - Subspace field must match ambient space field
+  - All generator vectors must be valid members of ambient space
+  - Computed subspace basis must be linearly independent
+  - All subspace basis vectors must lie in the span of generators
+  - Artifact hash must match content deterministically
+  - Subspace dimension must not exceed ambient dimension
+laws:
+- 'For all u, v ∈ W: u + v ∈ W'
+- 'For all v ∈ W and scalar α ∈ K: α·v ∈ W'
+- 0_V ∈ W
+- dim(W) is finite and dim(W) ≤ dim(V)
+- Subspace basis vectors are linearly independent
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Same ambient carrier, generator list, and basis-reduction policy must produce identical subspace basis hash
+  - Basis reduction algorithm must be deterministic
+relationships:
+- urn:math:contract:VectorSpace:v1.0.0 serves as Provides ambient vector space structure and operations
+- urn:math:contract:Field:v1.0.0 serves as Provides scalar field operations for vector space
+- urn:math:contract:Basis:v1.0.0 serves as Provides basis representation and validation
+negative_tests:
+- Reject generator vector not in ambient space
+- Reject generator over incompatible field
+- Reject linearly dependent basis vectors
+- Reject dimension greater than ambient dimension
+- Reject artifact attempting to claim authority
+doctrine:
+  summary: Subspace is a finite-dimensional linear subcarrier W contained in a declared ambient VectorSpace V over the same field. Subspaces are fundamental to linear algebra and serve as the foundation for kernels, images, spans, invariant subspaces, and linear constraints.
+  non_role:
+  - Infinite-dimensional subspaces or Banach spaces
+  - Topological vector spaces beyond finite dimensions
+  - Policy decisions or authority conferral
+  - Customer-facing claims or certificates
+wip:
+- Define canonical row-reduction policy for each exact field (Q, F_p, etc.)
+- Decide whether spans and subspaces are separate artifact kinds or unified
+- Determine if subspace intersection/sum operations belong in this contract
+- Clarify treatment of approximate subspaces over inexact fields (R, C)
+- Initial contract extracted from markdown specification
+- Validators defined but implementation pending in core-linear-algebra crate
+- Rust descriptor struct matches existing prototype
+- Replay requirements emphasize deterministic basis reduction
+- Contract enforces finite-dimensional restriction explicitly

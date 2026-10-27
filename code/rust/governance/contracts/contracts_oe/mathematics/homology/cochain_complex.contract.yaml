@@ -1,0 +1,116 @@
+schema_version: "core.contract.v1"
+contract_id: "urn:core:math:cochain_complex:v1.0.0"
+title: "Cochain Complex"
+kind: "math_contract"
+status: "mathematical_wip"
+layer: "math"
+
+descriptor:
+  authority_effect: "none"
+  evidence_ceiling: "ShapeOnly"
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+
+
+math:
+  object_kind: "cochain_complex"
+  symbol: "C^•"
+  ascii_symbol: "CochainComplex"
+  notation: "... → C^{n-1} → C^n → C^{n+1} → ..."
+  domain:
+    - "graded cochain groups C^n over a coefficient field or ring"
+    - "degree-raising coboundary maps delta_n : C^n → C^{n+1}"
+    - "a degree index set"
+  codomain:
+    description: "a well-formed graded complex artifact (purely structural; emits no class)"
+  definition:
+    degree_shift: "delta_n : C^n → C^{n+1} raises degree by exactly 1"
+    complex_law: "delta_{n+1} ∘ delta_n = 0 for all n"
+    graded_module_structure: "each C^n is a module over a fixed coefficient domain"
+
+requirements:
+  required_structures:
+    - "graded module with a degree-indexed family of cochain groups C^n"
+    - "a complete coboundary-map table delta_n for every adjacent degree pair"
+    - "a single fixed coefficient domain (field or ring) shared by all C^n"
+    - "a complex-law witness establishing delta_{n+1} ∘ delta_n = 0"
+    - "an explicit finite basis hash for each cochain group"
+  compatibility:
+    - "all cochain groups must share the same coefficient domain"
+    - "source/target degrees of every coboundary map must exist in the degree index set"
+
+laws:
+  degree_shift: "Every coboundary map raises degree by exactly one (C^n → C^{n+1})."
+  complex_law: "delta_{n+1} ∘ delta_n = 0 for all n — the defining cochain-complex identity."
+  graded_module_structure: "Each C^n is a module over the single shared coefficient domain."
+  coefficient_consistency: "A complex with mixed coefficient domains is not well-formed."
+  descriptive_only: "The complex is structural; it classifies nothing and confers no authority."
+
+equivalence:
+  artifact_equality: "Two complexes are equal iff their content-addressed StructureArtifact hashes agree under canonical serialization."
+  coefficient_mode: "Equality requires the same declared coefficient domain and degree index set."
+
+replay:
+  requirements:
+    - "no external state, randomness, or time-dependent data"
+    - "graded-module and coboundary-map data fixed as canonical byte arrays"
+    - "coboundary composition deterministic from canonical matrices"
+    - "deterministic SHA-256 artifact hash reproducible from the inputs"
+
+relationships:
+  CochainGroup: "Each degree component C^n of the complex is a [[cochain_group]]."
+  Cohomology: "Cohomology H^n is the homology of this complex (ker delta_n / im delta_{n-1})."
+  CechCochain: "Čech cochains assemble into a cochain complex of this shape over a nerve."
+  ObstructionClass: "Obstruction classes are cohomology classes of a cochain complex."
+  Phi1: "The degree-1 obstruction functional acts on residuals living in this complex's C^1."
+
+rust_binding:
+  crate: core_homology
+  module: cochain_complex
+  symbols:
+  - CochainComplex
+  # δ²=0, missing declared C^n (matrix dim), and finite degree support are
+  # constructor/query refusals. Degree-shift is hard-coded on construction
+  # (not an input). Coefficient domain is always Q. Cochain/chain dualization
+  # and H^n claims are not APIs here. PROVED/GlobalGreen/HoTT is doctrinal.
+  required_tests:
+  - test_coboundary_law_violation_rejected
+  - test_dimension_mismatch_d0
+  - dim_rejects_degree_outside_finite_support
+
+negative_tests:
+  - "Coboundary map with the wrong degree shift (delta : C^n → C^m, m ≠ n+1)"
+  - "Complex-law violation (delta_{n+1} ∘ delta_n ≠ 0)"
+  - "Missing cochain group for a coboundary map's source or target"
+  - "Coefficient-domain mismatch (different fields for different groups)"
+  - "Artifact claiming authority or admissibility"
+  - "Unbounded complex declared without an explicit specification"
+
+doctrine:
+  summary: >
+    Graded cochain groups C^n with degree-raising coboundary maps satisfying
+    delta ∘ delta = 0 — the base structure for cocycles, coboundaries, cohomology,
+    Čech complexes, and obstruction classes. Purely structural; confers no authority.
+  non_role:
+    - "Does not compute cohomology (see the cohomology contract)."
+    - "Does not specialize to Čech or de Rham complexes (separate contracts)."
+    - "Does not model double complexes or spectral sequences (separate contracts)."
+    - "Does not issue certificates, terminalize, or produce customer-facing claims."
+
+wip:
+  - "Currently targets bounded cochain complexes only; unbounded complexes deferred."
+  - "Čech and de Rham specializations will be separate contracts referencing this base."
+  - "Filtered complexes and bicomplexes are out of scope for v1."
+  - "Legacy owner block named promotion target core_homology::cochain_complex.rs."
+  - "Legacy owner note: Cohomological grading: d raises degree by +1. Construction or explicit validation must witness d^2=0. See MATHEMATICAL_CONVENTIONS.md."

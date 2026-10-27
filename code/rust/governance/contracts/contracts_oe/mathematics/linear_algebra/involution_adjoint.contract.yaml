@@ -1,0 +1,110 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:involution_adjoint:v0.1.0
+title: Field Involution and Adjoint Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: field_with_involution_and_adjoint
+  symbol: '(F, x ↦ x̄), A† = Āᵀ, ⟨A, B⟩ = tr(A† B)'
+  ascii_symbol: involution_adjoint
+  notation: 'F : Involution (a field with an involutive ring automorphism), A ∈ M_{m×n}(F)'
+  domain:
+  - 'field: F implementing Involution, a ring automorphism conjugate of order at most two'
+  - 'matrices: BasicMatrix<F>'
+  - 'vectors: slices of F'
+  codomain:
+    description: 'The adjoint A† (entry (i, j) is the conjugate of A[j][i]), the exact predicates Hermitian, skew-Hermitian, unitary and normal, the Hilbert–Schmidt inner product tr(A† B), the vector inner product and the outer product |u⟩⟨v|. With the identity involution A† is the transpose and the same functions decide symmetric, skew-symmetric and orthogonal matrices.
+
+      '
+requirements:
+  required_structures:
+  - 'An implementor of Involution must prove: conj(a+b) = conj a + conj b; conj(a·b) = conj a · conj b; conj 1 = 1; conj(conj a) = a'
+  - 'BigRational implements Involution as the identity'
+  - 'Operator predicates (is_hermitian, is_skew_hermitian, is_unitary, is_normal) return Result<bool, _> and refuse a non-square matrix as NotSquare instead of answering false'
+  - 'hs_inner refuses matrices of different shapes; inner_product refuses vectors of different length'
+  - 'outer_product has a _with_limits form charging len(u)·len(v) elements'
+laws:
+- '(A†)† = A, (A + B)† = A† + B†, (A B)† = B† A†, and (c A)† = c̄ A†'
+- 'A is Hermitian iff A = A†, skew-Hermitian iff A = −A†, unitary iff A† A = I (equivalently A A† = I), normal iff A A† = A† A'
+- 'Hermitian, skew-Hermitian and unitary matrices are normal'
+- '⟨A, B⟩ = Σ conj(A[i][j]) · B[i][j] = tr(A† B), conjugate-linear in A, linear in B, with ⟨B, A⟩ = conj ⟨A, B⟩'
+- 'tr(|u⟩⟨v|) = ⟨v, u⟩ and (|u⟩⟨v|) w = ⟨v, w⟩ u'
+- 'the Pauli matrices over Q(i) are Hermitian, unitary, square to I, and satisfy X Y = i Z, [X, Y] = 2 i Z and {X, Y} = 0'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'The involution obligations replay on a finite sample through exact_field::laws::check_involution_axioms'
+  - 'The hermitian violation reported by congruence diagonalisation is the first position (row, col), row <= col, in row-major order'
+relationships:
+- urn:core:math:complex_matrix:v1.0.0 serves as the floating-point twin; this contract is its exact counterpart
+- urn:core:math:inner_product:v0.1.0 serves as the Hilbert–Schmidt inner product here is an inner product when the fixed field is ordered with nonnegative norms
+- urn:core:math:unitary:v0.1.0 serves as the exact unitarity test for matrices over fields with an involution
+- urn:core:math:exact_field_matrix:v0.1.0 serves as the products and transposes the adjoint builds on
+- urn:core:math:ordered_field_ldlt:v0.1.0 is served by this contract (Hermitian definiteness needs the involution)
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::involution
+  symbols:
+  - Involution
+  - conjugate_entries
+  - adjoint
+  - is_hermitian
+  - is_skew_hermitian
+  - is_unitary
+  - is_normal
+  - hs_inner
+  - hs_norm_squared
+  - inner_product
+  - outer_product
+  # One test per mechanically checkable negative_test, in declaration order.
+  required_tests:
+  - predicates_refuse_non_square_input
+  - the_hilbert_schmidt_inner_product_is_sesquilinear_and_equals_tr_a_dagger_b
+  - inner_and_outer_products_place_the_conjugate_correctly
+  - a_defective_involution_is_caught_and_named
+  # Positive witnesses of the laws above.
+  # - the_adjoint_conjugates_and_transposes_over_q_i
+  # - adjoint_is_an_involutive_anti_automorphism_and_conjugate_linear
+  # - with_the_identity_involution_the_adjoint_is_the_transpose
+  # - the_pauli_matrices_satisfy_their_algebra_over_q_i
+  # - the_hadamard_matrix_is_orthogonal_over_q_sqrt2
+  # - hermitian_normal_unitary_are_three_different_properties
+  # - hermitian_and_skew_parts_of_a_random_matrix
+  # - orthogonality_over_a_finite_field
+  # - the_hermitian_violation_names_the_first_offending_entry
+negative_tests:
+- is_hermitian, is_skew_hermitian, is_unitary and is_normal of a non-square matrix must be refused rather than answer false
+- hs_inner of matrices with different shapes must be refused with both shapes
+- inner_product of vectors with different lengths must be refused with both lengths, and outer_product over its element budget must be refused
+- a conjugation that is not additive, not multiplicative, does not fix 1, or has order larger than two must be reported by check_involution_axioms with the name of the first violated law
+doctrine:
+  summary: 'An exact field with an involutive ring automorphism, and the adjoint, Hermitian, skew-Hermitian, unitary and normal matrices over it, plus the Hilbert–Schmidt and vector inner products and the outer product. The trait states what an implementor must prove; the predicates are exact equalities with no tolerance. It is the exact-arithmetic counterpart of complex_matrix and serves the quantum-mechanics crates, which previously kept private adjoint, Hermitian and unitary routines.'
+  non_role:
+  - Positive-definiteness or any ordering (see ordered_field_ldlt)
+  - Spectral decomposition and numerical eigenvalues
+  - Fields with a nontrivial involution that is not compatible with an order, where a Hermitian form has no signature
+  - Noncommutative scalars such as quaternions
+wip:
+- No Lean statement of the adjoint laws exists; the YAML to Lean to Rust chain for this contract is open
+- BigRational is the only Involution implemented in this crate; the Gaussian rational, cyclotomic and real quadratic fields implement it in the number-theory crate, outside this contract
+- The norm hs_norm_squared is returned as a field element; deciding its sign needs ordered_field_ldlt
+- partial traces and the partial transpose are not provided here (tensor::partial_trace_right is the existing Numeric-based route)

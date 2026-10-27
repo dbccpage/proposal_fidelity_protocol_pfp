@@ -1,0 +1,97 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quadratic_field:v0.1.0
+title: 'Quadratic Number Field Contract'
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_number_field
+  symbol: 'Q(sqrt d) = { a + b sqrt d : a, b in Q }, d squarefree'
+  ascii_symbol: quadratic_field
+  notation: 'Q(sqrt d) = { a + b sqrt d : a, b in Q }, d squarefree'
+  domain:
+  - 'radicand d: squarefree integer, not 0 or 1 (compile time for Quadratic<D>, run time for QuadraticNumber)'
+  - 'a, b: exact rationals'
+  codomain:
+    description: 'Elements a + b sqrt d with exact norm, trace, conjugate, inverse, exact square roots in the field, and for d > 0 an exact total order.'
+requirements:
+  required_structures:
+  - 'The radicand is squarefree; an invalid compile-time radicand does not compile, an invalid run-time radicand is refused'
+  - 'Two irrational elements of different fields are never combined; a rational lifts into any field'
+  - 'The order of a real field is decided by comparing a^2 with d b^2, never by approximating sqrt d'
+  - 'Elements of an imaginary field have no sign and are refused'
+  - 'No floating point appears in any operation'
+laws:
+- 'N(xy) = N(x) N(y) and conj is a ring automorphism; x conj(x) = N(x), x + conj(x) = Tr(x)'
+- 'phi^2 = phi + 1 and phi^n = F_n phi + F_{n-1} for the golden ratio (d = 5)'
+- 'The order is total, antisymmetric, translation invariant and compatible with scaling by positives (d > 0)'
+- 'An element is a square in Q(sqrt d) iff its norm is a rational square r^2 and one of (a +- r)/2 is a nonzero rational square'
+- 'Quadratic<-1> agrees with Q(i) and Quadratic<-3> with Q(zeta_3)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- 'exact_rational serves as the coefficient field and supplies squarefree_part and sqrt_exact'
+- 'exact_scalar_tower (linear_algebra) serves as the tower that Quadratic<D> implements'
+- 'gaussian_rational serves as the case d = -1'
+- 'cyclotomic_field serves as the ambient field when the conductor of Q(sqrt d) divides n'
+rust_binding:
+  crate: core_number_theory
+  module: quadratic
+  symbols:
+  - 'Quadratic'
+  - 'Surd'
+  - 'QuadraticNumber'
+  - 'QuadraticError'
+  - 'is_valid_radicand'
+  required_tests:
+  - 'the_radicand_predicate_accepts_exactly_the_squarefree_integers_other_than_0_and_1'
+  - 'every_quadratic_field_satisfies_the_field_axioms'
+  - 'the_norm_is_multiplicative_and_the_conjugate_is_a_ring_automorphism'
+  - 'the_golden_ratio_satisfies_its_defining_identities'
+  - 'exact_sign_agrees_with_an_independent_rational_enclosure_of_the_root'
+  - 'exact_sign_is_correct_where_floating_point_cannot_tell'
+  - 'the_order_is_total_translation_invariant_and_scale_compatible'
+  - 'quadratic_minus_one_agrees_with_the_gaussian_rationals'
+  - 'quadratic_minus_three_agrees_with_the_eisenstein_rationals'
+  - 'square_root_decisions_on_known_cases'
+  - 'a_negative_radicand_is_refused_whatever_the_coefficient'
+  - 'surd_sums_exist_only_for_equal_radicands_or_zero'
+  - 'a_non_squarefree_or_zero_radicand_is_refused'
+  - 'operations_lift_rationals_and_refuse_to_mix_irrational_fields'
+  - 'signs_of_quadratic_numbers_are_exact_and_imaginary_fields_refuse'
+  - 'sqrt_in_refuses_a_foreign_field_and_an_invalid_field'
+negative_tests:
+- 'A non-squarefree or zero radicand must be refused'
+- 'Combining irrational elements of different quadratic fields must be refused'
+- 'The sign of an irrational element of an imaginary field must be refused'
+- 'A negative radicand for a real surd must be refused'
+- 'The sum of surds with different radicands must be refused as not a single surd'
+- 'A square-root request in a field that is not the element''s own field must be refused'
+doctrine:
+  summary: 'Quadratic number fields in three forms: compile-time radicand with the scalar tower and exact order, one-term real surds, and run-time radicand numbers with exact square-root decisions.'
+  non_role:
+  - 'Rings of integers, ideals and class groups'
+  - 'Floating-point square roots'
+wip:
+- 'Squarefree radicands above the const-evaluation budget (about 10^11) are refused at compile time'
+- 'No Lean counterpart exists for the square-root decision procedure'

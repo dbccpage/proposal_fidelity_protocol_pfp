@@ -1,0 +1,59 @@
+[package]
+autotests = false
+name = "core_holonomy"
+version.workspace = true
+edition = "2021"
+description = "Exact discrete holonomy loops, connection Laplacians, and curvature commutators for the engine"
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+core_kernel = { path = "../core_kernel" }
+core_homology = { path = "../core_homology" }
+# Smith normal form of the face-boundary matrix, for the count of flat gauge classes.
+linear_algebra = { path = "../core_linear_algebra" }
+num-rational = { version = "0.4.2", features = ["serde"] }
+num-bigint = { version = "0.4.6", features = ["serde"] }
+num-traits = "0.2.19"
+serde = { version = "1.0", features = ["derive"] }
+sha2 = "0.10"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_holonomy`.
+
+[[test]]
+name = "adversarial_challenge_tests"
+path = "../tests/core_holonomy/adversarial_challenge_tests.rs"
+
+[[test]]
+name = "boundary_tests"
+path = "../tests/core_holonomy/boundary_tests.rs"
+
+[[test]]
+name = "gauge_fixing_tests"
+path = "../tests/core_holonomy/gauge_fixing_tests.rs"
+
+[[test]]
+name = "laplacian_tests"
+path = "../tests/core_holonomy/laplacian_tests.rs"
+
+[[test]]
+name = "mutation_kill_tests"
+path = "../tests/core_holonomy/mutation_kill_tests.rs"
+
+[[test]]
+name = "signed_transport_extension"
+path = "../tests/core_holonomy/signed_transport_extension.rs"
+
+[[test]]
+name = "soviet_allocation_tests"
+path = "../tests/core_holonomy/soviet_allocation_tests.rs"
+
+[[test]]
+name = "unit_tests"
+path = "../tests/core_holonomy/unit_tests.rs"

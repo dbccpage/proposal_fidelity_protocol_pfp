@@ -1,0 +1,59 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# symbol_game/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_receipt_row:v1.0.0"
+title: "Calculus Receipt Row (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    One ledger row, with the producer's claim and the host's finding kept apart.
+  invariants:
+    - "outcome is three-way plus REFUSED, never a boolean: host_rederived false conflates disagreed with could-not-check."
+    - "An UNCHECKABLE row names its missing fields; an unnamed blind spot is what this receipt exists to prevent."
+    - "A REFUSED row carries a refusal_code and records the op exactly as the producer wrote it."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.calculus_receipt
+  python_type: "ReceiptRow"
+  form: dataclass
+  fields:
+    - name: index
+    - name: op
+    - name: statement
+    - name: evidence_ref
+    - name: producer_claimed_valid
+    - name: outcome
+    - name: host_value
+    - name: missing_fields
+    - name: refusal_code

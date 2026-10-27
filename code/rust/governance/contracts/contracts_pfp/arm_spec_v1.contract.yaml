@@ -1,0 +1,57 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:arm_spec_v1:v1.0.0"
+title: "Arm Specification v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit:
+      - "ARM_MISMATCH"
+      - "INVALID_ARM_SPEC"
+      - "DECODING_DIVERGENCE"
+
+doctrine:
+  summary: >-
+    ArmSpecV1 defines the matched parameters across evaluation arms (A-F).
+    Comparisons are reported iff all arms share identical models, decoding
+    temperatures, token caps, and budget ceilings.
+  invariants:
+    - "Model identifier, token cap, and budget ceiling must be identical across matched arms."
+    - "Arms difference is strictly confined to the intervention under test."
+  non_roles:
+    - "authority_source"
+    - "truth_oracle"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp
+  rust_module: arms
+  rust_type: "ArmSpecV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: arm_id
+    - name: model_id
+    - name: temperature_str
+    - name: max_tokens
+    - name: budget_micro_usd
+    - name: specification_hash
+    - name: intervention_name
+    - name: authority_effect

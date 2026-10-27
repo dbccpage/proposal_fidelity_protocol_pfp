@@ -1,0 +1,122 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:tree_gauge_fixing:v0.1.0
+title: Tree Gauge Fixing and Holonomy Verdict Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: discrete_gauge_theory_decision
+  symbol: 'U_e in GL(d, F) for oriented edges e = (s, t); g: V -> GL(d, F); U_e -> g(t) U_e g(s)^(-1); R_e = T(t)^(-1) U_e T(s)'
+  ascii_symbol: tree_gauge_fixing
+  notation: 'T(v) = transport from the component root to v along a breadth-first spanning forest, g(v) = T(v)^(-1), residual R_e = g(t) U_e g(s)^(-1) on every edge'
+  domain:
+  - 'complex: a CellComplex of vertices, oriented edges and faces (closed boundary walks)'
+  - 'connection: one invertible d x d matrix per edge index over an exact field (BigRational, Q(i), any ExactScalar), or a string-keyed DiscreteConnection on a complex without antiparallel edges'
+  codomain:
+    description: 'The tree gauge g with its residual connection (the identity on every tree edge), the holonomies of the fundamental cycles, a pure-gauge verdict carrying the potentials or a replayable witness cycle, a gauge-equivalence verdict (Equivalent with a gauge, Inequivalent, or Undetermined), and a curvature verdict (Curved, FlatNontrivial, GaugeTrivial).
+
+      '
+requirements:
+  required_structures:
+  - 'Exact field arithmetic only: no floats, no tolerances'
+  - 'Transport along a walk is the path-ordered product M_k ... M_1, a backward step uses the inverse, as in core_holonomy::holonomy'
+  - 'The spanning forest depends only on the complex: roots in vertex order, vertices discovered along edges in increasing edge order'
+  - 'Edge-indexed connections carry independent values on antiparallel edges; string-keyed connections store one matrix per vertex pair and read the opposite pair as its inverse, so the adapters refuse complexes with antiparallel edges'
+  - 'Every index, walk, face boundary, gauge and value count is validated and a failure is a typed HolonomyError'
+laws:
+- 'The tree gauge g(v) = T(v)^(-1) makes U''_e = g(t) U_e g(s)^(-1) the identity on every tree edge'
+- 'For an edge e = (s, t) off the forest the residual is R_e = T(t)^(-1) U_e T(s): the edge value conjugated by the tree-path transports, equal to the holonomy of the fundamental cycle of e based at the component root; based at s the same loop has holonomy T(s) R_e T(s)^(-1)'
+- 'A connection is pure gauge exactly when every residual is the identity, and then h(v) = T(v) satisfies U_e = h(t) h(s)^(-1) with h(root) = 1'
+- 'Every connection on a forest is pure gauge; gauge triviality depends only on the holonomies of cycles, so changing the value of an edge on no cycle keeps a connection pure gauge'
+- 'Gauge covariance: the residual of the gauge transform g.A is g(root) R_A g(root)^(-1); the trace and determinant of every residual are gauge invariant'
+- 'Equal residuals certify gauge equivalence with the gauge T_b(v) g_a(v); a residual whose trace or determinant differs proves inequivalence; for a one-dimensional fibre every difference of residuals is decided; for a larger fibre the remaining cases are Undetermined, because a gauge constant on a component conjugates all residuals at once'
+- 'Face holonomy is gauge covariant, so flatness is gauge invariant; on a complex with no faces there is no curvature and the verdict is never Curved'
+- 'On a simply connected complex every flat connection is pure gauge, and on a cell complex with torsion in H_1 a flat connection can have holonomy other than the identity (u^2 = 1 on the projective plane cell)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Breadth-first discovery in vertex order and edge order, never hash order
+  - A witness cycle replays with EdgeConnection::loop_holonomy and, without antiparallel edges, with compute_loop_holonomy on its vertex list
+relationships:
+- urn:core:math:flat_cyclic_gauge_classes:v0.1.0 serves as Counts the gauge classes of flat connections with values in a cyclic group, computed on the same spanning forest
+- urn:core:math:cell_complex:v0.1.0 serves as The carrier of vertices, edges and faces
+rust_binding:
+  crate: core_holonomy
+  module: gauge_fixing
+  symbols:
+  - EdgeConnection
+  - TreeGauge
+  - FundamentalCycle
+  - HolonomyWitness
+  - PureGaugeVerdict
+  - GaugeEquivalence
+  - HolonomyVerdict
+  - tree_gauge
+  - tree_gauge_indexed
+  - gauge_equivalence
+  - face_holonomies
+  - holonomy_verdict
+  required_tests:
+  - edge_connection_construction_refuses_malformed_data
+  - antiparallel_edges_carry_independent_values_only_in_an_edge_indexed_connection
+  - walks_are_validated_step_by_step
+  - gauge_transforms_refuse_malformed_gauges
+  - faces_that_are_not_closed_walks_are_refused
+  - equivalence_needs_matching_dimensions
+  - indices_outside_the_complex_are_refused
+  - non_abelian_equivalence_is_not_overclaimed
+  - every_connection_on_a_tree_is_gauge_trivial
+  - the_tree_gauge_makes_every_tree_edge_the_identity_and_spans_each_component
+  - the_residual_on_a_cycle_edge_is_the_holonomy_of_its_fundamental_cycle
+  - the_residual_is_the_edge_value_conjugated_by_the_tree_path_transports
+  - the_tree_gauge_residual_equals_the_string_keyed_gauge_action
+  - a_gauge_transform_of_the_trivial_connection_is_pure_gauge_and_its_potentials_come_back
+  - the_trivial_connection_is_pure_gauge_with_identity_potentials
+  - a_perturbed_cycle_edge_is_not_pure_gauge_and_the_witness_replays
+  - gauge_triviality_depends_only_on_the_holonomies_of_cycles
+  - a_gauge_transformation_conjugates_the_tree_residuals_by_the_root_gauge
+  - an_abelian_residual_is_the_product_of_the_edge_values_around_the_cycle
+  - a_flat_connection_with_holonomy_minus_one_lives_on_the_two_by_two_torus
+  - abelian_gauge_equivalence_is_decided_by_the_residuals
+  - a_graph_has_no_curvature_and_a_cycle_can_carry_flat_nontrivial_holonomy
+  - filling_the_cycle_turns_the_same_flux_into_curvature
+  - on_a_simply_connected_complex_flat_means_gauge_trivial_and_a_perturbation_is_curved
+  - torsion_lets_a_flat_connection_carry_holonomy_on_the_projective_plane
+negative_tests:
+- A connection with the wrong number of edge values, a wrongly shaped value, a singular value or fibre dimension 0 must be refused
+- A string-keyed connection on a complex with antiparallel edges must be refused by the adapters, not guessed
+- A walk with a step that does not leave the vertex the previous step reached, a direction other than +1 or -1, an edge or vertex index out of range, or more steps than the path limit must be refused
+- A gauge with the wrong number of vertices, a wrongly shaped matrix or a singular matrix must be refused
+- A face whose boundary steps are not a closed walk must be refused
+- Comparing connections of different fibre dimension must be refused
+- An edge or vertex index outside the complex must be refused
+- Connections that differ by a constant conjugating gauge must not be reported as inequivalent
+doctrine:
+  summary: 'The pure gauge decision, gauge fixing and curvature verdict of discrete connection theory, stated once for any exact fibre. The tree gauge reduces a connection to its residuals on the edges off a spanning forest; the residuals are the holonomies of the fundamental cycles, conjugated by tree-path transports, so the same algorithm serves U(1), permutation and quaternion fibres. Tests replay every result against the string-keyed gauge action, loop holonomy and pure-gauge constructor already in core_holonomy, against explicit path products written from the definitions, and against brute-force enumeration of connections and gauge orbits.'
+  non_role:
+  - Continuous or infinite-dimensional gauge groups
+  - Decision of gauge equivalence of non-abelian connections beyond the stated invariants
+  - Physical interpretation of a connection, for example as an electromagnetic potential
+  - Laplacians, curvature commutators and Bianchi identities (separate core_holonomy modules)
+wip:
+- 'Gauge equivalence for a fibre of dimension above 1 reports Undetermined when the residuals differ by a possible simultaneous conjugation; deciding isomorphism of the two tuples of residuals is not attempted'
+- 'The spanning forest is breadth-first in vertex order; no minimal-height or other choice of tree is offered'
+- 'Callers with private connection and gauge code, for example core_quantum_physics::u1_graph_connection and holonomy_interference, have not yet been repointed to this module'

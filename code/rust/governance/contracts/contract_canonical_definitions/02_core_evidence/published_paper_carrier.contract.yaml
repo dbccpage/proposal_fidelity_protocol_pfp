@@ -1,0 +1,131 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:published_paper_carrier:v1.0.0
+title: PublishedPaperCarrier
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Carrier
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+definition:
+  # Canonical Title_Case marker this repository emits. Matching is
+  # case-INSENSITIVE on the marker so the lowercase `*_claim_ledger.md` form
+  # mandated by the file-naming rule is recognised too.
+  claim_ledger_marker: Claim_Ledger
+  claim_ledger_marker_lower: claim_ledger
+  # Files with this prefix at the corpus root are global proof ledgers, not papers.
+  proof_ledger_prefix: proof_ledger_
+  paper_id_grammar:
+    digits: 3
+    optional_lowercase_suffix: true
+    separators:
+    - _
+    - ' '
+    - '-'
+  # A ledger key names a paper by its ENCLOSING PROGRAMME plus its own leaf id,
+  # because a leaf id alone is ambiguous across programmes: `PL-012-1` already
+  # exists in the ledgers and denotes 002_finite_obstruction_calculus/
+  # 006_degree_wise_dsl, NOT the root folder 012_mutually_unbiased_bases.
+  #
+  # The separator is `.` and MUST NOT be a member of paper_id_grammar.separators
+  # above. Disjointness is what makes a scoped key refuse rather than truncate
+  # when it is fed back through the local grammar: paper_id_of("009.000") is
+  # None, while paper_id_of("009_000") and paper_id_of("009-000") would both
+  # answer Some("009") -- silently collapsing the key onto its scope. build.rs
+  # asserts the disjointness at build time.
+  #
+  # A paper with no enclosing programme (a corpus-root folder, or one whose
+  # parent is not itself paper-shaped) is SELF-SCOPED: 999_published_in_general_media
+  # keys as `999.999`.
+  scoped_paper_id:
+    separator: '.'
+    root_scope_is_self: true
+  # Folders prefixed 993-999 are GT-tower variants carrying a theorem ledger and
+  # math spine instead of a manuscript plus claim ledger.
+  gt_tower_prefix:
+    first: 993
+    last: 999
+  # Papers live one level below the corpus root, inside a programme folder.
+  # A programme folder itself matches the paper-id grammar. It is distinguished
+  # from a paper by CONTAINING paper folders -- NOT by lacking a manuscript:
+  # programmes routinely carry index and overview documents at their root
+  # (001_gtoc_gtla/gt_tower_master_design.md, 003_quantum_foundations/qm_atlas.md,
+  # 000_witnessed_difference/000_witnessed_difference.md), so "has no .md" would
+  # misclassify them as papers and reintroduce id collisions.
+  programme_nesting_depth: 1
+doctrine:
+  summary: 'Filename and folder grammar of the published paper carrier.
+
+    These were magic constants inside core_rip_papers::carrier, which is why the
+    PR #1191 programme
+
+    reorganization silently broke enumeration: the grammar had no way to express
+    that a folder may
+
+    group papers rather than be one.
+
+    '
+  authority_defaults:
+    grammar: EvidenceOnly. Parsing a folder name is a shape observation. Recognising
+      a paper id grants no authority over the paper and upgrades no claim.
+  consumers:
+  - crate: core_rip_papers
+    module: carrier
+    use: 'enumerate_papers, paper_id_of, is_claim_ledger_name, programme descent.
+
+      paper_id_of returns the LOCAL leaf key only. A ledger key for a paper is the
+      scoped
+
+      key, scope + scoped_paper_id.separator + leaf, composed from the enclosing
+      programme
+
+      folder; a paper with no paper-shaped parent is self-scoped.
+
+      '
+  required_tests:
+  - programme_folder_is_not_emitted_as_a_paper
+  - papers_inside_a_programme_are_enumerated
+  canonical_invariant: 'A folder matching the paper-id grammar is a programme if it
+    contains at least one child
+
+    folder that also matches the grammar; otherwise it is a paper. Enumeration descends
+    exactly one
+
+    level into a programme and never emits the programme itself as a paper. A GT-tower
+    folder is never
+
+    a programme.
+
+    A paper is named by its SCOPED key: the enclosing programme''s local id, then
+    scoped_paper_id.separator,
+
+    then the paper''s own local id. A paper with no paper-shaped enclosing folder
+    is self-scoped, so its
+
+    scope and leaf coincide. scoped_paper_id.separator is disjoint from paper_id_grammar.separators,
+    which is
+
+    what makes a scoped key REFUSE the local grammar instead of truncating to its
+    scope; GT-tower-ness is a
+
+    property of the LEAF id and is decided before scoping.
+
+    '
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

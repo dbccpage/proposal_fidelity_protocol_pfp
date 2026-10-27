@@ -1,0 +1,94 @@
+[package]
+autotests = false
+name = "core_homology"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+
+[dependencies]
+core_number_theory = { path = "../core_number_theory" }
+linear_algebra = { path = "../core_linear_algebra" }
+core_homotopy_type_theory = { path = "../core_homotopy_type_theory" }
+core_functional = { path = "../core_functional" }
+
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2"
+blake3 = "1.8"
+hex = "0.4"
+nalgebra = "0.33"
+sha2 = "0.10"
+
+[dev-dependencies]
+core_contracts = { path = "../core_contracts" }
+# Independent GF(2) lattice complexes (surface_grid) that the square lattices are compared with.
+core_majorana = { path = "../core_majorana" }
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_homology`.
+
+[[test]]
+name = "cell_grammar_tests"
+path = "../tests/core_homology/cell_grammar_tests.rs"
+
+[[test]]
+name = "cycle_basis"
+path = "../tests/core_homology/cycle_basis.rs"
+
+[[test]]
+name = "declared_incidence"
+path = "../tests/core_homology/declared_incidence.rs"
+
+[[test]]
+name = "f2_cohomology_tests"
+path = "../tests/core_homology/f2_cohomology_tests.rs"
+
+[[test]]
+name = "finite_poset_tests"
+path = "../tests/core_homology/finite_poset_tests.rs"
+
+[[test]]
+name = "finite_rational_homology"
+path = "../tests/core_homology/finite_rational_homology.rs"
+
+[[test]]
+name = "gf2_cross_crate_tests"
+path = "../tests/core_homology/gf2_cross_crate_tests.rs"
+
+[[test]]
+name = "golden_carrier_manifest_v2"
+path = "../tests/core_homology/golden_carrier_manifest_v2.rs"
+
+[[test]]
+name = "homology_grammar_unit"
+path = "../tests/core_homology/homology_grammar_unit.rs"
+
+[[test]]
+name = "homological_perturbation"
+path = "../tests/core_homology/homological_perturbation.rs"
+
+[[test]]
+name = "integral_chain_equivalence"
+path = "../tests/core_homology/integral_chain_equivalence.rs"
+
+[[test]]
+name = "minimum_sweep_contraction"
+path = "../tests/core_homology/minimum_sweep_contraction.rs"
+
+[[test]]
+name = "observed_incidence"
+path = "../tests/core_homology/observed_incidence.rs"
+
+[[test]]
+name = "permutohedral_contraction"
+path = "../tests/core_homology/permutohedral_contraction.rs"
+
+[[test]]
+name = "restriction_dga"
+path = "../tests/core_homology/restriction_dga.rs"
+
+[[test]]
+name = "square_lattice_tests"
+path = "../tests/core_homology/square_lattice_tests.rs"

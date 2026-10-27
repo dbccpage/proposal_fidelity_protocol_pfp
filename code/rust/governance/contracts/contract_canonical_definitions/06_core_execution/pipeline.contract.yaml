@@ -1,0 +1,144 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:pipeline:v1.0.0
+title: Pipeline
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Pipeline
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - TypeContract
+    - CertificateKernel
+    - Engine
+    - Trace
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - RuntimeMutation
+    required: []
+doctrine:
+  summary: 'Pipeline is a typed routing category over engines and declared boundaries. It records and
+
+    orders flow but does not invoke solvers, compute observables, certify, terminalize, license,
+
+    execute, or redefine engine state.
+
+    '
+  non_role: &id002
+  - operator_execution
+  - solver_invocation
+  - observable_calculation
+  - engine_state_redefinition
+  - state_transition
+  - terminal_mapping
+  - certification
+  - action_licensing
+  authority_defaults:
+    pipeline_manifest: None
+    pipeline_trace_step: Record
+    checked_pipeline_fact: FactOnly only for checked structural routing claims.
+  structural_representation:
+    raw:
+      struct_name: PipelineManifest
+      fields:
+      - name: pipeline_id
+        type: PipelineId
+      - name: stage_refs
+        type: Vec<BoundaryRef>
+      - name: edge_refs
+        type: Vec<PipelineEdgeRef>
+      - name: manifest_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: None
+    record:
+      struct_name: PipelineTraceStep
+      fields:
+      - name: pipeline_id
+        type: PipelineId
+      - name: stage_ref
+        type: BoundaryRef
+      - name: input_ref
+        type: ArtifactRef
+      - name: output_ref
+        type: ArtifactRef
+      - name: trace_ref
+        type: TraceId
+      - name: authority_effect
+        type: AuthorityEffect
+        default: None
+  flow: 'Declared stage refs
+
+    -> PipelineManifest
+
+    -> PipelineTraceStep records
+
+    -> declared boundary outputs
+
+    -> Engine only when an ActionLicense is already present
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - pipeline_authority_effect_is_none
+  - pipeline_does_not_invoke_solver
+  - pipeline_does_not_calculate_observables
+  - pipeline_does_not_certify
+  - pipeline_does_not_emit_action_license
+  - pipeline_does_not_execute
+  - pipeline_records_declared_flow_only
+  canonical_invariant: 'Pipeline routes and records declared flow only. It does not create authority,
+    execute,
+
+    certify, terminalize, license, or mutate state.
+
+    '
+  legacy_metadata:
+    name: Pipeline
+    source_file: non-math/06_execution/pipeline_contract.md
+    active: true
+    machine_authority: true
+    role: Typed routing category over declared boundaries
+    version: '2.0'
+    classification: orchestration
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: Record
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    - DecisionEnvelope
+    - ActionLicense
+    - Record
+  enforcement_scope: The finite report manifest validates exact intermediate identities and effects in
+    core_pipelines::report_route; other pipeline implementations require separate checks.
+relationships:
+  extends:
+  - urn:core:constitution:base_execution_contract:v1.0.0

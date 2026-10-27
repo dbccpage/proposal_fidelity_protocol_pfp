@@ -1,0 +1,85 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:end:v0.1.0
+title: End Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: universal_dinatural_transformation
+  symbol: ∫_c F(c,c)
+  ascii_symbol: end
+  notation: ∫_c F(c,c)
+  domain:
+  - 'bifunctor: F: C^op × C → D'
+  - 'end_object: e ∈ D'
+  - 'wedge: dinatural family ω_c: e → F(c,c)'
+  codomain:
+    description: 'An end consists of: 1. A bifunctor F: C^op × C → D 2. An end object e ∈ D 3. A wedge ω: (ω_c: e → F(c,c))_c that is dinatural
+
+      '
+requirements:
+  required_structures:
+  - F must be a valid bifunctor C^op × C → D
+  - Wedge ω must satisfy dinaturality condition for all morphisms
+  - End must satisfy universal property among all wedges
+  - All end artifacts must be content-addressed via SHA-256
+laws:
+- F must be a bifunctor from C^op × C to D
+- 'For each f: c → c'', the diagram F(c'',c) → F(c,c) → F(c,c'') commutes'
+- 'For any wedge (w, τ_c: w → F(c,c)), there exists unique h: w → e such that τ_c = ω_c ∘ h for all c
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Given same data, must produce identical artifact hash
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Provides source and target categories C and D
+- 'urn:math:contract:Functor:v1.0.0 serves as Defines bifunctor F: C^op × C → D'
+- urn:math:contract:NaturalTransformation:v1.0.0 serves as Dinatural transformations are related to natural transformations
+negative_tests:
+- Must reject when F is not a valid bifunctor
+- Must reject when wedge fails dinaturality
+- Must reject when universal property fails
+doctrine:
+  summary: 'An end is a universal dinatural transformation for a bifunctor F: C^op × C → D, written ∫_c F(c,c). Ends generalize limits and equalizers, and compute natural transformation objects and Hom spaces in functor categories.'
+  non_role:
+  - Coends (dual construction, separate contract)
+  - Weighted ends (future extension)
+  - Enriched ends (requires enriched category theory)
+  - ∞-categorical ends (higher category theory)
+wip:
+- Weighted ends
+- Enriched ends
+- ∞-categorical ends
+- Current implementation covers classical ends in ordinary categories
+- Equalizer formula provides computational foundation
+- Natural transformation space formula is primary use case
+- 'Future work: weighted and enriched variants'
+rust_binding:
+  crate: core_category_theory
+  module: limits_colimits
+  symbols:
+    - End
+  required_tests:
+    - validate_ok
+    - validate_rejects_missing_bifunctor

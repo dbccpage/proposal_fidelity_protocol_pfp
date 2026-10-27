@@ -1,0 +1,198 @@
+schema_version: core.contract.v1
+contract_id: urn:core:products:certificate_api_interface:v1.0.0
+title: CertificateAPIInterface
+kind: product_contract
+status: mathematical_wip
+layer: 07_products
+role: CertificateApiInterface
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - SentinelCertificateContract
+    - WebsiteAPIContract
+    - CertificateContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constraints:
+    mutation_forbidden: true
+    public_signing_forbidden: true
+    raw_payload_forbidden: true
+    read_only: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - EmitCertificate
+    - Evaluation
+    - Terminalization
+    - AuthorityPromotion
+    - RuntimeMutation
+    required: []
+doctrine:
+  summary: 'This contract defines the interface boundary where certificates are exposed through the Website
+    API.
+
+
+    The CertificateAPIInterface receives certificate queries from the Website API, delegates verification
+
+    to the CertificateVerifier, and returns structured certificate presentations. The API does NOT verify
+
+    certificates itself -- it requests verification and displays the result. Certificate authority is
+    read
+
+    and presented, never created or modified at this boundary.
+
+    '
+  non_role: &id002
+  - certificate verification
+  - certification
+  - evaluation
+  - terminalization
+  - authority upgrade
+  - certificate creation
+  - evidence authority creation
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, verify certificates,
+
+      evaluate, terminalize, authorize transitions, execute transitions, alter certificate displays,
+
+      or upgrade evidence authority.
+
+
+      LLM-generated content displayed through this interface retains its candidate status and MUST be
+
+      labeled accordingly.
+
+
+      No LLM output may influence certificate verification, authority level display, verification status
+
+      reporting, request authorization, or response shaping except as inert display content.
+
+      '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'Certificate authority MUST NOT be inflated, created, or modified at this interface. The API
+
+      presents exactly the authority level that the CertificateVerifier reports. A DiagnosticCertificate
+
+      must not be displayed as a ProofCertificate. The presented authority must never exceed the attached
+
+      evidence authority.
+
+      '
+  classification:
+    subsystem: Product Layer
+    role: Interface boundary between certificate subsystem and Website API.
+    classification: Product layer -- CertificateAPIInterface is NOT an operator in the five-effect-class
+      algebra (E, I, C, R, M). It is a presentation interface that bridges the certificate subsystem and
+      the Website API. It requests verification from CertificateVerifier and displays results. It does
+      not verify certificates itself.
+  presentation_non_authority_law: 'A CertificateAPIInterface response is a presentation structure.
+
+
+    It does not create certificate authority, verify a certificate, certify a claim, or promote evidence.
+
+
+    The response may include verifier-reported authority and verification status, but those fields are
+
+    read-only projections of CertificateVerifier output.
+
+
+    Certificate API responses carry AuthorityEffect::None unless wrapped by a separate audit/reporting
+
+    boundary. They are presentation structures, not evidence or facts by themselves.
+
+    '
+  required_response_fields:
+    required:
+    - certificate_id
+    - certificate_hash
+    - subject_hash
+    - terminal_status
+    - authority_level
+    - verification_status
+    - verifier_id
+    - verification_report_hash
+    optional:
+    - created_at
+    - issuer
+    - trace_bundle_refs
+    - obstruction_summary
+    - certificate_version
+  admissibility_checklist:
+  - Certificate exists in the certificate store
+  - Requester is authenticated and authorized for the query scope
+  - Query is bounded (specific certificate_id or bounded search parameters)
+  - Request schema validates
+  - Endpoint is declared
+  refusal_conditions:
+  - nonexistent certificate (certificate_id not found)
+  - unauthorized requester (identity not verified or insufficient permissions)
+  - unbounded query (no certificate_id, no search bounds)
+  - schema mismatch on request
+  - unknown endpoint
+  - certificate hash mismatch during verification
+  - attempted authority upgrade in response
+  - mutation request through read-only interface
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - verify_certificate
+    - certify(
+    - evaluate(
+    - terminalize(
+    - authority_upgrade
+    - sign_certificate
+    - create_certificate
+    - mutate_certificate_state
+    - execute_transition
+    - authorize_transition
+    - license_transition
+  required_tests:
+  - api_interface_delegates_verification_to_verifier
+  - api_interface_does_not_verify_certificates_itself
+  - api_interface_response_includes_required_fields
+  - api_interface_refuses_nonexistent_certificate
+  - api_interface_refuses_unauthorized_request
+  - api_interface_refuses_unbounded_query
+  - api_interface_does_not_inflate_authority_level
+  - api_interface_labels_llm_content_as_candidate
+  - api_interface_response_includes_verifier_id
+  - api_interface_response_includes_verification_report_hash
+  - api_interface_response_is_presentation_not_authority
+  - api_interface_does_not_authorize_request_from_llm_output
+  canonical_invariant: 'The Certificate API interface presents certificate data by delegating verification
+    to
+
+    CertificateVerifier. It does not verify, create, modify, or inflate certificate authority.
+
+    '
+  legacy_metadata:
+    name: CertificateAPIInterface
+    role: Interface boundary between certificate subsystem and Website API
+    classification: product
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: StructureArtifact
+    domain_output_kind: CertificatePresentation
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    - Record
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_product_contract:v1.0.0"

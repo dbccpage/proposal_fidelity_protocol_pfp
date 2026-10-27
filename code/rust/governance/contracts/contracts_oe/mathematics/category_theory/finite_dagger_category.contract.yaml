@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_dagger_category:v0.1.0
+title: Checked Finite Dagger Categories
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_dagger_category
+  symbol: finite_dagger_category
+  ascii_symbol: finite_dagger_category
+  notation: Checked Finite Dagger Categories
+  domain:
+  - A sovereign validated finite category with at most sixty-four arrows and a total declared dagger table.
+  codomain:
+    description: Declared finite results of core_category_theory::dagger; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Dagger reverses source and target, fixes identities and is involutive.
+- For every composite, dagger reverses its factors exactly.
+- An arrow is unitary exactly when its dagger is a two-sided inverse.
+- Groups, pair groupoids and finite binary relations supply actual admitted examples.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_category_theory
+  module: dagger
+  symbols:
+  - DaggerStructure
+  - DaggerValidationError
+  required_tests:
+  - group_groupoid_and_relations_are_dagger_categories
+  - the_walking_arrow_with_identity_dagger_is_refused
+negative_tests:
+- The walking arrow with identity dagger is refused because sources and targets fail reversal.
+- Incomplete tables, invalid arrows and carrier budget excess are refused.
+doctrine:
+  summary: Dagger reverses source and target, fixes identities and is involutive.; For every composite, dagger
+    reverses its factors exactly.; An arrow is unitary exactly when its dagger is a two-sided inverse.; Groups,
+    pair groupoids and finite binary relations supply actual admitted examples..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

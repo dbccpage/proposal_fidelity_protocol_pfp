@@ -1,0 +1,50 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:run_folder:v1.0.0
+title: Run folder manifests and byte verification
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Replay
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: []
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  capabilities:
+    forbidden:
+    - RuntimeMutation
+    - Terminalization
+    - CertificateSigning
+    required: []
+rust_binding:
+  crate: core_replay
+  module: run_folder
+  symbols:
+  - RunTrigger
+  - RunMode
+  - RunManifestV1
+  - RunReceiptV1
+  - RunFolderError
+  - RunFolder
+  - sanitize_task_slug
+  - generate_run_folder_name
+  - compute_file_sha256
+  - seal_run_folder
+  - verify_run_folder

@@ -1,0 +1,65 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:principal_minors:v0.1.0
+title: Canonical principal-minor enumeration
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: principal_minors
+  symbol: principal_minors
+  ascii_symbol: principal_minors
+  notation: Canonical principal-minor enumeration
+  domain:
+  - Square exact-field matrix of dimension<=12; at most4095 nonempty principal submatrices.
+  codomain:
+    description: Declared finite results of linear_algebra::exact_field::elimination; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Each output determinant corresponds to its indexed principal subset.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::elimination
+  symbols:
+  - principal_minors
+  required_tests:
+  - principal_minors_replay_subsets_and_permutations_over_exact_fields
+  - principal_minors_admit_empty_carriers_and_refuse_rectangles_or_size_exhaustion
+  - principal_minors_preserve_complex_off_diagonal_products_exactly
+negative_tests:
+- principal_minors_admit_empty_carriers_and_refuse_rectangles_or_size_exhaustion
+doctrine:
+  summary: Each output determinant corresponds to its indexed principal subset..
+  non_role:
+  - Principal minors are pure algebra; physical positivity premises belong to the caller.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bounded_power_frame_readouts:v0.1.0
+title: Bounded exact power readouts on finite frames
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: bounded_power_frame_readouts
+  symbol: bounded_power_frame_readouts
+  ascii_symbol: bounded_power_frame_readouts
+  notation: Bounded exact power readouts on finite frames
+  domain:
+  - Gaussian-integer plane, scales1..16, search boxes<=4, exponents1..1024
+  codomain:
+    description: Declared finite results of core_quantum_physics::gaussian_frame_readout; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Frame operators decide quadratic frame additivity on all states
+- Readouts are exact positive powers without signed exponent wrapping
+- Caller exponents above the declared arithmetic budget refuse
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: gaussian_frame_readout
+  symbols:
+  - readout
+  - frame_operator
+  - square_is_frame_additive
+  - frame_additivity_violation
+  required_tests:
+  - measurement_exact_laws::exact_power_readouts_refuse_wrapped_exponents_before_arithmetic
+negative_tests:
+- measurement_exact_laws::exact_power_readouts_refuse_wrapped_exponents_before_arithmetic
+doctrine:
+  summary: Frame operators decide quadratic frame additivity on all states; Readouts are exact positive powers
+    without signed exponent wrapping; Caller exponents above the declared arithmetic budget refuse.
+  non_role:
+  - A bounded search witness does not derive the quadratic rule
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

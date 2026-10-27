@@ -1,0 +1,97 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quillen_adjunction:v0.1.0
+title: Quillen Adjunction Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quillen_adjunction
+  symbol: 'F: M ⇆ N :G'
+  ascii_symbol: quillen_adjunction
+  notation: 'F: M ⇆ N :G'
+  domain:
+  - 'source_model: model category M'
+  - 'target_model: model category N'
+  - 'left_functor: F: M → N (left adjoint)'
+  - 'right_functor: G: N → M (right adjoint)'
+  - 'adjunction: adjunction data for F ⊣ G'
+  codomain:
+    description: 'Pair of model categories (M, N) with functors F: M → N, G: N → M
+      forming an adjunction F ⊣ G satisfying the Quillen condition.
+
+      '
+requirements:
+  required_structures:
+  - Source and target are valid model categories
+  - 'F: M → N and G: N → M are functors between the model categories'
+  - F and G form a categorical adjunction F ⊣ G
+  - 'Either (F preserves cofibrations and acyclic cofibrations) OR (G preserves fibrations
+    and acyclic fibrations)
+
+    '
+laws:
+- F ⊣ G forms a categorical adjunction
+- 'F preserves cofibrations and acyclic cofibrations (equivalently: F is left Quillen)
+
+  '
+- 'G preserves fibrations and acyclic fibrations (equivalently: G is right Quillen)
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Computation functions are content-addressed
+relationships:
+- urn:math:contract:ModelCategory:v0.1.0 serves as Defines the model categories M
+  and N
+- urn:math:contract:Functor:v0.1.0 serves as Defines functors F and G
+- urn:math:contract:Adjunction:v0.1.0 serves as Defines the adjunction F ⊣ G
+negative_tests:
+- Source or target lacks model structure
+- F ⊣ G fails adjunction verification
+- F doesn't preserve cofibrations
+- G doesn't preserve fibrations
+doctrine:
+  summary: A Quillen adjunction between model categories M and N is an adjunction
+    F ⊣ G where F preserves cofibrations and G preserves fibrations (equivalently,
+    F preserves acyclic cofibrations or G preserves acyclic fibrations). It induces
+    an adjunction on homotopy categories.
+  non_role:
+  - Does not implement general adjunctions between arbitrary categories
+  - Does not verify Quillen equivalences (only adjunctions)
+  - Does not compute total derived functors or higher homotopy categories
+wip:
+- Quillen adjunctions induce ∞-categorical adjunctions
+- A Quillen adjunction is a Quillen equivalence if LF ⊣ RG is an equivalence
+- 'Ken Brown''s lemma: F preserves weak equivalences between cofibrant objects'
+- Current implementation validates basic Quillen conditions
+- Derived functor computation assumes cofibrant/fibrant replacement exists
+- Quillen equivalence detection not yet implemented
+rust_binding:
+  crate: core_higher_category_theory
+  module: model_category
+  symbols:
+  - ModelCategory
+  - CommutativeSquare
+  required_tests:
+  - test_model_category_positive_verification
+  - test_kill_mut_p3_02_lifting_property_violation

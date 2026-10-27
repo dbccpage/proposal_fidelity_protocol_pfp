@@ -1,0 +1,124 @@
+schema_version: "1.0.0"
+contract_id: "os:operator"
+name: "Root Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "partial"
+enforcement_scope: >-
+  General operator doctrine. The finite Genesis report profile checks a detached
+  partition-copy operation and its external rank witness; no claim is made that
+  every legacy Operator obeys these rules.
+
+description: >
+  An Operator is a deterministic, stateless, single-step typed transformation
+  over admitted BaseTypes. Every admitted Operator is Phi-nonincreasing over its
+  admitted domain (Phi(output) <= Phi(input)), established externally by a witness
+  or declared theorem. An Operator maps input to output through one structural
+  transformation without search, iteration over alternatives, runtime orchestration,
+  hidden carrier lift, authority minting, or canonical functional computation.
+
+layer: "OS"
+module_path: "operators::operator_identity"
+
+governs:
+  - "operators/**"
+  - "operators/lambdas/**"
+  - "operators/reducers/**"
+  - "operators/transforms/**"
+
+does_not_govern:
+  - "core_functional/**"
+  - "core_homological/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipeline/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-L0"
+    description: "Operator purity model: deterministic stateless map with typed failure."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L0"
+
+  - id: "OP-L2"
+    description: >
+      Every admitted Operator is Phi-nonincreasing over its admitted domain:
+      externally established Phi(output) <= Phi(input).
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L2"
+
+  - id: "OP-L6"
+    description: "Typed operator composition requires exact domain/codomain match or an explicit Adapter/MetaLift."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L6"
+
+  - id: "OP-L7"
+    description: "Operators are single-step; repetition and sequencing belong to Pipeline/Runner orchestration. Each durable step is committed through Engine."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L7"
+
+  - id: "OP-L8"
+    description: "Authority firewall: operator composition cannot mint authority."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L8"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  operator_calls_operator: "forbidden"
+  phi_nonincrease_required: true
+  typed_failure_required: true
+  deterministic: true
+  stateless: true
+  single_step: true
+
+phi_law:
+  operator_may_compute_phi: false
+  phi_nonincrease_required: true
+  relation: "Phi(output) <= Phi(input)"
+  witness_source: "canonical_functional_or_replay_layer"
+  admission_requires:
+    - "declared theorem/certificate covering admitted domain"
+    - "or external application witness"
+
+allowed:
+  - "read immutable input"
+  - "perform one deterministic structural transformation"
+  - "return typed output"
+  - "return typed failure"
+  - "expose declared metadata"
+  - "declare local non-authoritative estimates"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "mint CertifiedAuthority"
+  - "call terminalize"
+  - "call authority_from_outcome_f13"
+  - "call CertifiedAuthority::certify"
+  - "perform search over candidates"
+  - "rank alternatives"
+  - "iterate until convergence"
+  - "orchestrate multiple operators"
+  - "mutate global state"
+  - "perform IO"
+  - "silently enlarge carrier"
+  - "reinterpret carrier to make an operation executable"
+  - "return opaque string-only failure"
+  - "return None as failure"
+
+relationships:
+  extends: []

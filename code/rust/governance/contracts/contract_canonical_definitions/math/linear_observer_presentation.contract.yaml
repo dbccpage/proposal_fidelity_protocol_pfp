@@ -1,0 +1,46 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:linear_observer_presentation:v1.0.0
+title: Exact linear sensing and checked repair quotients
+kind: math_contract
+status: mathematical_wip
+layer: math
+role: MathObject
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: []
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  capabilities:
+    forbidden:
+    - RuntimeMutation
+    - Terminalization
+    - CertificateSigning
+    - EmitDecision
+    - EmitCertificate
+    - EmitAction
+    required: []
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_observer_presentation
+  symbols:
+  - LinearObserverError
+  - LinearObserverPresentation
+  - LinearSensingPresentation
+  - RepairBlindspotWitness

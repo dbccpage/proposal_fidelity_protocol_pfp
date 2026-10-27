@@ -1,0 +1,66 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:heisenberg_exact_taylor:v0.1.0
+title: Finite Heisenberg and Ehrenfest calculus
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: heisenberg_exact_taylor
+  symbol: heisenberg_exact_taylor
+  ascii_symbol: heisenberg_exact_taylor
+  notation: Finite Heisenberg and Ehrenfest calculus
+  domain:
+  - Equal finite Hermitian Gaussian-rational dimensions; Taylor degree<=32.
+  codomain:
+    description: Declared finite results of core_quantum_physics::heisenberg_picture; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Taylor coefficients satisfy A_k=(i/k)[H,A_(k-1)].
+- The Ehrenfest derivative equals i Tr(rho[H,A]).
+- Exact Cayley jets and conjugations use canonical BasicMatrix arithmetic.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: heisenberg_picture
+  symbols:
+  - heisenberg_taylor
+  - ehrenfest_derivative
+  required_tests:
+  - heisenberg_taylor_coefficients_replay_the_nested_commutators
+negative_tests: []
+doctrine:
+  summary: Taylor coefficients satisfy A_k=(i/k)[H,A_(k-1)].; The Ehrenfest derivative equals i Tr(rho[H,A]).;
+    Exact Cayley jets and conjugations use canonical BasicMatrix arithmetic..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

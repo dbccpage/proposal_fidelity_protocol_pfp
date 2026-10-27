@@ -1,0 +1,146 @@
+[
+  {
+    "input": {
+      "role": "system",
+      "content": "system prompt"
+    },
+    "expected": {
+      "ok": {
+        "role": "system",
+        "content": "system prompt"
+      }
+    }
+  },
+  {
+    "input": {
+      "role": "user",
+      "content": ""
+    },
+    "expected": {
+      "ok": {
+        "role": "user",
+        "content": ""
+      }
+    }
+  },
+  {
+    "input": {
+      "role": "assistant",
+      "content": "é é\r\nλ"
+    },
+    "expected": {
+      "ok": {
+        "role": "assistant",
+        "content": "é é\r\nλ"
+      }
+    }
+  },
+  {
+    "input": {
+      "role": " ",
+      "content": "whitespace role is nonempty"
+    },
+    "expected": {
+      "ok": {
+        "role": " ",
+        "content": "whitespace role is nonempty"
+      }
+    }
+  },
+  {
+    "input": {
+      "role": "custom-role",
+      "content": "source allows arbitrary role strings"
+    },
+    "expected": {
+      "ok": {
+        "role": "custom-role",
+        "content": "source allows arbitrary role strings"
+      }
+    }
+  },
+  {
+    "input": {
+      "role": "λ",
+      "content": "unicode role"
+    },
+    "expected": {
+      "ok": {
+        "role": "λ",
+        "content": "unicode role"
+      }
+    }
+  },
+  {
+    "input": {
+      "role": "",
+      "content": "empty role must refuse"
+    },
+    "expected": {
+      "error": "role must be non-empty str"
+    }
+  },
+  {
+    "input": {
+      "role": null,
+      "content": "no role"
+    },
+    "expected": {
+      "error": "role must be non-empty str"
+    }
+  },
+  {
+    "input": {
+      "role": true,
+      "content": "boolean role"
+    },
+    "expected": {
+      "error": "role must be non-empty str"
+    }
+  },
+  {
+    "input": {
+      "role": 7,
+      "content": "integer role"
+    },
+    "expected": {
+      "error": "role must be non-empty str"
+    }
+  },
+  {
+    "input": {
+      "role": "user",
+      "content": null
+    },
+    "expected": {
+      "error": "content must be str"
+    }
+  },
+  {
+    "input": {
+      "role": "user",
+      "content": true
+    },
+    "expected": {
+      "error": "content must be str"
+    }
+  },
+  {
+    "input": {
+      "role": "user",
+      "content": 7
+    },
+    "expected": {
+      "error": "content must be str"
+    }
+  },
+  {
+    "input": {
+      "role": true,
+      "content": 7
+    },
+    "expected": {
+      "error": "role must be non-empty str"
+    }
+  }
+]

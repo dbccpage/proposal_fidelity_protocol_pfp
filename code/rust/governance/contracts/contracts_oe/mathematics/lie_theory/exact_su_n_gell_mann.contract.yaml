@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_su_n_gell_mann:v0.1.0
+title: Exact Generalized Gell-Mann Lie Basis
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_su_n_gell_mann
+  symbol: exact_su_n_gell_mann
+  ascii_symbol: exact_su_n_gell_mann
+  notation: Exact Generalized Gell-Mann Lie Basis
+  domain:
+  - Exact Hermitian traceless matrices of dimension 2..=8 over Q(i)
+  - Normalized square-root factors use canonical NT Surd
+  codomain:
+    description: Declared finite results of core_lie_theory::su_n; exact and diagnostic routes retain their
+      stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The family has N^2-1 independent generators with Gram matrix 2I
+- Coordinate reconstruction returns the declared traceless Hermitian matrix exactly
+- Structure constants are antisymmetric, close the bracket and satisfy Jacobi
+- With T_a=lambda_a/2, the fundamental Casimir is (N^2-1)/(2N) times identity; Fierz and Killing identities
+  hold with that declared normalization
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: su_n
+  symbols:
+  - GellMannBasis
+  - GeneratorKind
+  - GellMannBasis::coordinates
+  - GellMannBasis::reconstruct
+  - GellMannBasis::verify_jacobi
+  - GellMannBasis::fundamental_casimir
+  - GellMannBasis::fierz_entry
+  - GellMannBasis::killing_entry
+  required_tests:
+  - gell_mann_gram_independence_and_sparse_structure_constants_are_exact
+  - fundamental_casimir_killing_form_and_fierz_completeness_hold_through_su_six
+  - basis_coordinates_refuse_nontraceless_nonhermitian_and_wrong_shape_inputs
+negative_tests:
+- Wrong shapes, nontraceless or non-Hermitian inputs and indices outside the declared basis are refused
+doctrine:
+  summary: The family has N^2-1 independent generators with Gram matrix 2I; Coordinate reconstruction returns
+    the declared traceless Hermitian matrix exactly; Structure constants are antisymmetric, close the bracket
+    and satisfy Jacobi; With T_a=lambda_a/2, the fundamental Casimir is (N^2-1)/(2N) times identity; Fierz
+    and Killing identities hold with that declared normalization.
+  non_role:
+  - No unbounded-N solver, approximate basis, or claim that arbitrary real coefficients live in Q(i)
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

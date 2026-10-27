@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_gaussian_regular:v0.1.0
+title: Exact Gaussian Regular Representation
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_gaussian_regular
+  symbol: exact_gaussian_regular
+  ascii_symbol: exact_gaussian_regular
+  notation: Exact Gaussian Regular Representation
+  domain:
+  - Gaussian rationals and checked rational 2x2 matrices
+  codomain:
+    description: Declared finite results of core_number_theory::gaussian_regular; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- a+bi maps to [[a,-b],[b,a]] injectively
+- The map preserves one, addition and multiplication exactly
+- The image of i squares to -I, while the real sign matrix squares to I
+- The inverse image test recognizes exactly the regular-representation shape
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: gaussian_regular
+  symbols:
+  - regular_representation
+  - regular_coordinates
+  required_tests:
+  - the_complex_structure_squares_to_minus_one_and_the_sign_to_plus_one
+  - the_regular_representation_is_an_injective_unital_ring_homomorphism
+negative_tests:
+- Wrong dimensions and 2x2 matrices outside the regular image return no coordinates
+doctrine:
+  summary: a+bi maps to [[a,-b],[b,a]] injectively; The map preserves one, addition and multiplication exactly;
+    The image of i squares to -I, while the real sign matrix squares to I; The inverse image test recognizes
+    exactly the regular-representation shape.
+  non_role:
+  - No preferred physical complex structure is inferred from an arbitrary real sign carrier
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

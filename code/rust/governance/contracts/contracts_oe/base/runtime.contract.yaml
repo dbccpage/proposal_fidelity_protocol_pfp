@@ -1,0 +1,59 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:core-runtime:v1.0.0
+title: Core Pure Runtime
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Pipeline
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - RuntimeMutation
+    required: []
+doctrine:
+  summary: >-
+    Pure bounded prompt metabolism: admission, proposal, independent evaluation,
+    finite repair, typed upper-role routing, and total CoreResult construction.
+    This mapping grants no authority and performs no host effect.
+  nonclaims:
+  - authority_minting
+  - effect_execution
+  - universal_problem_solving
+  terminal_vocabulary_residual: >-
+    CoreTerminal remains a separate runtime dialect until the seeded v1
+    contract terminal vocabulary is explicitly reconciled.
+rust_binding:
+  crate: core_pipelines
+  module: runtime
+  symbols:
+  - ProblemPacket
+  - SeparationClaim
+  - IndependenceReceipt
+  - Proposal
+  - Evaluation
+  - CoreResult
+  - run_omega
+negative_tests:
+- core_result_wire_refuses_completion_evidence_and_independence_forgery
+- bounded_repair_exhaustion_preserves_complete_residual_history
+- plain_evaluator_acceptance_stays_open_without_descent_replay_or_host_independence
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_execution_contract:v1.0.0"

@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_parity_cech_complex:v0.1.0
+title: Finite parity Cech complexes on canonical GF2 matrices
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_parity_cech_complex
+  symbol: finite_parity_cech_complex
+  ascii_symbol: finite_parity_cech_complex
+  notation: Finite parity Cech complexes on canonical GF2 matrices
+  domain:
+  - Declared Z2 parity targets,<=512 rays,<=64 contexts,<=1024 incidences,<=2^24 dense matrix entries
+  codomain:
+    description: Declared finite results of core_quantum_physics::contextuality_obstruction; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Both differentials and d1*d0=0 replay from canonical bit matrices
+- The discrepancy is checked closed before its H1 class is decided
+- A vanishing class produces a independently checked global parity section
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: contextuality_obstruction
+  symbols:
+  - MeasurementScenario
+  - CochainComplex
+  - CochainComplex::checked_complex
+  - build_cochain_complex
+  - compute_obstruction_class
+  - verify_global_section
+  required_tests:
+  - measurement_exact_laws::parity_cochains_and_pauli_signs_replay_actual_differentials
+negative_tests:
+- measurement_exact_laws::parity_cochains_and_pauli_signs_replay_actual_differentials
+doctrine:
+  summary: Both differentials and d1*d0=0 replay from canonical bit matrices; The discrepancy is checked closed
+    before its H1 class is decided; A vanishing class produces a independently checked global parity section.
+  non_role:
+  - H1 refers to this specified parity sheaf and differential, not every contextuality notion
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

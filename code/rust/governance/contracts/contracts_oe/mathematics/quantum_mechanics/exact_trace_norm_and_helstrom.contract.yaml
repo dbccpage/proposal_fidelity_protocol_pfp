@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_trace_norm_and_helstrom:v0.1.0
+title: Exact trace-norm primal dual certificates
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_trace_norm_and_helstrom
+  symbol: exact_trace_norm_and_helstrom
+  ascii_symbol: exact_trace_norm_and_helstrom
+  notation: Exact trace-norm primal dual certificates
+  domain:
+  - Bounded Hermitian exact operators, declared primal PSD parts and dual feasible sign, or isolated algebraic
+    spectrum
+  codomain:
+    description: Declared finite results of core_quantum_physics::trace_norm_certificate; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- PSD primal decomposition and dual operator ball give zero duality gap
+- Trace distance is half the trace norm of the full density difference
+- Helstrom effect realizes optimal discrimination for a checked sign
+- Algebraic intervals retain exact eigenvalue multiplicities
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: trace_norm_certificate
+  symbols:
+  - TraceNormCertificate::try_new
+  - SignCertificate::new
+  - SignCertificate::helstrom_effect
+  - trace_norm_enclosure
+  - trace_distance_enclosure
+  required_tests:
+  - states_channels_exact_tests::uhlmann_fidelity_and_trace_norm_intervals_agree_on_pure_and_mixed_routes
+  - trace_norm_certificate::tests::pauli_y_trace_norm_and_sign
+negative_tests:
+- trace_norm_certificate::tests::tampered_certificates_are_refused
+doctrine:
+  summary: PSD primal decomposition and dual operator ball give zero duality gap; Trace distance is half the
+    trace norm of the full density difference; Helstrom effect realizes optimal discrimination for a checked
+    sign; Algebraic intervals retain exact eigenvalue multiplicities.
+  non_role:
+  - No f64 singular-value output constitutes an exact sign certificate
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

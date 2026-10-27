@@ -1,0 +1,80 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# pfp/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_derivation:v1.0.0"
+title: "Row Derivation (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-STATEMENT-ILL-FORMED"]
+
+doctrine:
+  summary: >-
+    What the host established about one ledger row's statement, on its own and
+    exactly. The type that makes the receipt's terminal ladder reachable: with
+    no decider every admitted row was UNCHECKABLE, so PASS,
+    SELF_CONSISTENT_ONLY and any non-zero hallucination count were structurally
+    unreachable outcomes.
+  invariants:
+    - "A decider is a claim that the host KNOWS the answer, so it must be
+       exactly decidable from the row alone -- no model, no network, no
+       heuristic. A wrong REDERIVED is far worse than an honest blind spot."
+    - "REDERIVED and CONTRADICTED both carry host_value. A reader must be able
+       to see what the host held, not merely that it disagreed."
+    - "UNCHECKABLE always names its blind spot in missing_fields. 'We did not
+       check that' and 'we cannot know what we did not check' are different
+       admissions, and only the first is auditable."
+    - "A statement with no truth value is REFUSED, not CONTRADICTED. `17 mod 0`
+       names no value, so the host holds no contrary answer; charging the
+       producer for it would inflate the hallucination count with the host's
+       own admission policy."
+    - "mod is the LEAST NON-NEGATIVE RESIDUE, so -17 mod 5 = 3. Rust, C, C++,
+       Java and Go truncate toward zero and give -2. A Rust re-derivation of
+       the same row would disagree, and would surface as a CONTRADICTED row --
+       the producer blamed for a difference between two hosts. Pinned by test."
+    - "The operator word is matched case-insensitively, which is the OPPOSITE
+       polarity from the op linter and deliberately so. Loosening a closed op
+       set silently enlarges it; loosening a form marker only admits more
+       statements to be checked. Refusing `17 MOD 5 = 99` would file a false
+       claim as UNCHECKABLE and let it escape the hallucination count on a
+       capitalisation."
+    - "Deciding is keyed on the statement's FORM, never on the row's op. What
+       the host can compute does not depend on what the producer called it."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.row_rederivation
+  python_type: "Derivation"
+  form: dataclass
+  fields:
+    - name: outcome
+    - name: host_value
+    - name: missing_fields
+    - name: refusal_code
+    - name: detail

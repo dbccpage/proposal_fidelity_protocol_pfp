@@ -1,0 +1,114 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gf2_linear_algebra:v0.1.0
+title: GF(2) Linear Algebra Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_field_linear_algebra
+  symbol: 'vectors in F_2^n and matrices M in F_2^(m x n): rank, reduced row echelon form, ker M, im M, solutions
+    of M x = b'
+  ascii_symbol: gf2_linear_algebra
+  notation: F_2 = {0, 1} with x + y = x XOR y and x y = x AND y; F2Vector, F2Matrix, F2Rref, F2AffineSpace,
+    F2Span
+  domain:
+  - vectors and matrices with entries 0 or 1, at most 2^28 entries (MAX_F2_ENTRIES)
+  - right-hand sides b of length equal to the number of rows
+  codomain:
+    description: 'Exact bit-packed results: rank, the reduced row echelon form with its pivot columns, bases
+      of the kernel, column space and row space, the solution set of a linear system as an affine space (a
+      particular solution plus a kernel basis, or none), and an incrementally built span that reduces vectors
+      canonically.
+
+      '
+requirements:
+  required_structures:
+  - 'Exact arithmetic mod 2: no floats, no randomness'
+  - Bits of a vector past its length are always zero, so equality of vectors is equality of entries
+  - Every shape, index, entry and length is validated and a failure is a typed F2Error, never a panic
+laws:
+- Addition is bitwise XOR, so x + x = 0; the dot product is the parity of the common support
+- 'Rank-nullity: rank M + dim ker M = n, and rank M = rank M^T'
+- The reduced row echelon form has a leading one in every pivot column with zeros elsewhere in that column,
+  strictly increasing pivots, zero rows below the rank, and the row space of M
+- ker M has 2^(n - rank M) elements and a basis of n - rank M vectors; im M has 2^(rank M) elements and the
+  pivot columns of M are a basis
+- 'M x = b is solvable exactly when b lies in the column space; the solution set is then a coset of ker M:
+  2^(n - rank M) solutions, any two differing by a kernel vector, each kernel vector carrying a solution to
+  a solution (a torsor over ker M)'
+- (A B)^T = B^T A^T and the identity is neutral for the product
+- Reduction modulo a span is zero exactly on members of the span and constant on each coset
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Elimination pivots on the lowest available row, so results are deterministic
+relationships:
+- urn:core:math:f2_cohomology:v0.1.0 serves as GF(2) cohomology of chain complexes is built on this elimination
+- urn:core:math:smith_normal_form:v0.1.0 serves as An independent route to ranks and torsion over Z, used
+  in cross-checks
+rust_binding:
+  crate: core_number_theory
+  module: gf2
+  symbols:
+  - F2Vector
+  - F2Matrix
+  - F2Rref
+  - F2AffineSpace
+  - F2Span
+  - F2Error
+  - MAX_F2_ENTRIES
+  required_tests:
+  - vectors_refuse_bad_indices_lengths_and_entries
+  - matrix_construction_refuses_ragged_non_binary_and_oversized_input
+  - solving_refuses_a_right_hand_side_of_the_wrong_length
+  - listing_solutions_is_bounded_with_a_typed_refusal
+  - vector_addition_dot_weight_and_support_follow_gf2
+  - vectors_cross_word_boundaries_exactly
+  - integer_rows_are_reduced_mod_two
+  - rows_columns_and_transpose_are_consistent
+  - products_and_transposes_obey_the_matrix_laws_on_every_small_pair
+  - matrix_vector_products_agree_with_the_definition
+  - rank_agrees_with_elimination_and_row_span_enumeration_on_every_matrix_up_to_four_by_four
+  - the_reduced_row_echelon_form_is_reduced_and_keeps_the_row_space
+  - the_nullspace_is_exactly_the_kernel_counted_by_enumeration
+  - column_and_row_space_bases_span_the_image_counted_by_enumeration
+  - the_solution_set_of_every_three_by_three_system_matches_brute_force
+  - solutions_form_a_torsor_over_the_kernel
+  - a_span_reduces_canonically_and_detects_dependence
+  - elimination_is_correct_across_word_boundaries
+negative_tests:
+- An index, row or column outside a vector or matrix must be refused
+- A ragged row list, or an entry that is not 0 or 1, must be refused
+- A matrix or vector with more than 2^28 entries must be refused
+- A right-hand side whose length is not the number of rows must be refused
+- Listing the solutions of a system beyond the stated limit must be refused with a typed error
+doctrine:
+  summary: Exact GF(2) linear algebra on bit-packed words. Rank is independently checked against naive elimination
+    and exhaustive row-span counting on every matrix up to4 x4; kernel, image and solution sets are checked
+    by vector enumeration; a separate homology integration regression preserves the legacy rank_z2 comparison.
+  non_role:
+  - Fields other than GF(2) (see the generic exact-field elimination in core_linear_algebra)
+  - Sparse or blocked elimination for very large matrices
+  - Coding theory beyond kernels and images (minimum distance, decoding)
+wip:
+- Elimination is dense and cubic in the number of columns; there is no blocked or sparse variant
+- Legacy homology rank_z2 remains a separate cross-check; the canonical bit-packed arithmetic and its pure
+  laws are owned by core_number_theory.

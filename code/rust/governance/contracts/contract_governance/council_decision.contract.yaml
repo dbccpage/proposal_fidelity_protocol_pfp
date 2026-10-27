@@ -1,0 +1,108 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:council_decision:v1.0.0
+title: CouncilDecision
+kind: governance_contract
+status: mathematical_wip
+layer: 05_governance
+role: Policy
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - AuthInterface
+    - PolicyContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - Terminalization
+    required: []
+doctrine:
+  binding_review_20261014: "The declared Rust crate/module is absent from the active Cargo workspace. Withdraw this realization binding; the retained specification has no executable implementation credit from it."
+  summary: >
+    A CouncilDecision is the unit of deliberative governance: a council, meeting on
+    its declared cadence, accepts evidence and resolves a motion into a decision. A
+    decision is credit-bearing ONLY when it carries (1) a QuorumWitness with quorum
+    met, (2) an EvidenceBundle (no evidence ⇒ no credit), and (3) a citation of the
+    core_contract it is taken under (C8 — a decision with no governing contract is
+    unrouted authority and is refused). Blackrod witnesses a meeting but never votes
+    and never counts toward quorum; enforcement is Blackrod's, deliberation the
+    council's. A council decision confers NO math-layer terminal authority
+    (authority_effect: none); terminal authority arrives only via Pi-sharp + IsAuth,
+    Sentinel-rooted. The decision is governance, not computation.
+  mathematical_role: >
+    The MeetingCat morphism `deliberate : Motion(seconded, evidenced) → Decision`
+    is defined only when the quorum witness is present and quorum_met holds; a
+    credit-bearing (Approved) decision in its image must factor through both an
+    EvidenceBundle reference and a contract citation, else it is rejected by
+    validate_decision. Acceptance of a guardian's report (e.g. Integrity Auditor's
+    contract↔code verdict) is such a decision: the verdict is the evidence; the
+    council's act is to accept and route it, never to certify integrity that the
+    verdict did not establish.
+  non_role:
+  - Minting or upgrading math-layer authority (arrives only via Pi-sharp + IsAuth)
+  - Signing or wrapping certificates
+  - Terminalizing or executing an operator
+  - Enforcing its own decisions (that is Blackrod's role)
+  - Granting credit without an evidence path
+  - Approving a decision with no cited governing contract
+  llm_boundary_law:
+    doctrine: 5
+    text: >
+      LLM-generated content carries zero authority in a council decision. LLM output
+      (e.g. a Panel performance, an advisory draft) is candidate/diagnostic material
+      only; it may inform deliberation but never constitutes evidence authority, quorum,
+      or the decision itself. Decisions are functions of present members, witnessed
+      quorum, and cited evidence + contract.
+  authority_boundary:
+    may:
+    - Resolve a seconded, evidenced motion into a decision under a cited contract
+    - Record dissent, minutes, and action items
+    - Route action items to Blackrod (enforcement) without voting power transfer
+    must_not:
+    - Mint, upgrade, or launder math-layer authority
+    - Grant credit without an evidence bundle
+    - Approve without a QuorumWitness (quorum_met)
+    - Approve without citing the governing core_contract (C8)
+    - Certify a property the submitted evidence did not establish
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - mint_authority
+    - terminalize(
+    - sign_certificate
+    - certify_now(
+    - waive_evidence
+    - waive_quorum
+    - blackrod_votes
+  required_tests:
+  - council_decision_requires_quorum_witness
+  - council_decision_requires_evidence_bundle
+  - council_decision_requires_cited_contract
+  - council_decision_confers_no_math_authority
+  - blackrod_witnesses_but_never_votes_or_counts_to_quorum
+  canonical_invariant: >
+    A CouncilDecision is credit-bearing only with quorum + evidence + a cited
+    governing contract; it confers no math-layer authority, is witnessed (not voted)
+    by Blackrod, and never certifies a property its evidence did not establish.
+  references:
+  - engine/crates/sentinel_councils/councils/council_governance.md
+  - engine/crates/sentinel_councils/src/governance/meeting.rs (validate_decision, C8)
+  - engine/crates/sentinel_councils/councils/councils.yaml (Rule Prime 0-0)
+# Contract↔code binding — the symbols that realize a council decision. Pontius
+# Integrity Auditor's standing audit (the governance daemon) verifies each exists in code.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_governance_contract:v1.0.0"

@@ -1,0 +1,48 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED. The `structure:` block below is read by
+# pfp/build.rs, which generates an exhaustive destructure
+# of the named Rust type plus a serde conformance test.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:lggr_soundness_request_v1:v1.0.0"
+title: "LGGR Soundness Request v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    LggrSoundnessRequestV1, request payload for the lggr_soundness runtime action.
+  invariants:
+    - "The shape declared here is the shape in lggr.rs, enforced at compile time by an exhaustive destructure."
+    - "Denies unknown fields."
+  non_roles:
+    - "authority_source"
+  required_negative_capabilities:
+    - no_self_certification
+
+structure:
+  rust_crate: pfp
+  rust_module: lggr
+  rust_type: "LggrSoundnessRequestV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: d
+    - name: q

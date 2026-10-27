@@ -1,0 +1,194 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:invariant_defect_profile:v1.0.0
+title: InvariantDefectProfile
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - FixedLayerOperatorAlgebra
+    - ObstructionContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: invariant_defect_profile
+  ascii_symbol: invariant_defect_profile
+  symbol: invariant_defect_profile
+  notation: invariant_defect_profile
+  domain:
+  - 'carrier: instance of invariant_defect_profile'
+  codomain:
+    description: Mathematical object declared by InvariantDefectProfile (structural shell).
+requirements:
+  required_structures:
+  - Carrier for invariant_defect_profile must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- InvariantDefectProfile is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+
+negative_tests:
+- reject_self_assigned_effect_class
+- reject_authority_effect_not_none
+- reject_commutative_collapse
+doctrine:
+  binding_review_20261014: "The declared Rust crate/module is absent from the active Cargo workspace. Withdraw this realization binding; the retained specification has no executable implementation credit from it."
+  summary: "An InvariantDefectProfile is the ORDER-SENSITIVE per-invariant effect word recorded along\
+    \ an operator's normal form: for each declared invariant (e.g. Phi_1, Q^1, Gamma_2) it states whether\
+    \ the operator preserves, mutates, exposes, or destroys that invariant, in composition order. It is\
+    \ the realized \"Operator-Shadow\" classifier of the Invariant-Defect Discovery spine (invariant_discovery_theory.md\
+    \ Theorem 7.1): operators are classified by their invariant-defect signature under composition, NOT\
+    \ by their formula. The profile is a pure mathematical/diagnostic structure. It confers NO authority\
+    \ (authority_effect: none) and is NOT itself an operator.\n Nonclaim: this contract does not claim\
+    \ HoTT/Univalence discharge, PROVED status, or GlobalGreen."
+  mathematical_role: 'For an operator word w = o_1 . o_2 . ... . o_k normalized under the fixed-layer
+    operator algebra (E < I < C < R; M non-composable), the profile is the sequence of per-invariant effect
+    classes induced by each step, read in composition order. Two operators are profile-equivalent iff
+    they induce the same effect word on the declared invariant family under the same authority packet.
+    Order is significant: operator composition is non-commutative (IX-rewrite reorder rules; W2'' is counterexampled),
+    so the profile is a word, never a commutative aggregate.
+
+    '
+  non_role:
+  - Minting or upgrading authority (authority arrives only via Pi-sharp + IsAuth)
+  - Classifying admissibility (that is the Evaluator's role)
+  - Executing or applying an operator
+  - Creating, signing, or wrapping certificates
+  - Claiming operator status for itself (it is the SIGNATURE of an operator, not one)
+  distinct_from:
+    obstruction_signature: 'DIFFERENT object. ObstructionSignature (urn:math:contract:ObstructionSignature)
+      is a SHA-256 content-address fingerprint of an obstruction CLASS (carrier group, degree, vanishing
+      status). InvariantDefectProfile is the per-operator, order-sensitive effect word. They must not
+      be conflated or merged.
+
+      '
+    invariant_defect_severity_aggregate: 'DIFFERENT object. The severity aggregate is documented by the
+      archived snapshot research/archive/lean4_orphans/2026-07-22/CoreCore/InvariantDefectMonoid.lean.txt.
+      It is an ORDER-FREE commutative join ("worst-case damage to an invariant") used as a safety/damage
+      bound in the feedback layer. The snapshot has no live Lean owner and is not proof evidence. The
+      profile is the ORDER-SENSITIVE classifier; a commutative aggregate cannot classify non-commutative
+      operators.
+
+      '
+  authority_boundary:
+    may:
+    - Record the per-invariant effect word induced by an operator's normal form
+    - Compare two operators by profile equivalence
+    - Serve as a diagnostic lookup key (AuthorityEffect::None)
+    must_not:
+    - Mint, upgrade, or launder authority
+    - Self-assign a fixed-layer effect class (E/I/C/R/M)
+    - Terminalize, certify, evaluate admissibility, or execute
+  effect_classes_observed:
+    note: 'The profile OBSERVES which fixed-layer effect class (E/I/C/R/M) each step is and what it does
+      to each invariant; it does not ASSIGN the class (the fixed-layer operator classifier does). must_not_self_assign
+      is true.
+
+      '
+    per_invariant_effect:
+    - preserve
+    - mutate
+    - expose
+    - destroy
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - mint_authority
+    - terminalize(
+    - certify_now(
+    - evaluate_admissibility(
+    - apply_operator_now(
+    - self_declare_effect_class
+    - commutative_signature
+    - order_free_classifier
+  required_tests:
+  - invariant_defect_profile_is_order_sensitive
+  - invariant_defect_profile_distinguishes_noncommuting_operators
+  - invariant_defect_profile_confers_no_authority
+  - invariant_defect_profile_records_per_invariant_effect_word
+  - invariant_defect_profile_equivalence_is_reflexive_symmetric_transitive
+  canonical_invariant: 'An InvariantDefectProfile is the order-sensitive per-invariant effect word of
+    an operator''s normal form. It classifies operators (Operator-Shadow, Theorem 7.1), confers no authority,
+    is not an operator, and is distinct from both the obstruction-class SHA fingerprint and the order-free
+    severity aggregate.
+
+    '
+  references:
+  - research/theory/math_spines_v002/invariant_discovery_theory.md (Sec 4.2, Theorem 7.1)
+  - research/theory/math_spines_v002/operad_signature_review.md
+  - core_operator_algebra fixed-layer normal form (E < I < C < R)
+  negative_test_intent:
+    reject_self_assigned_effect_class: A profile that self-assigns a fixed-layer effect class E/I/C/R/M
+      must be refused (must_not_self_assign).
+    reject_authority_effect_not_none: A profile declaring any authority_effect other than none must be
+      refused (math contract firewall).
+    reject_commutative_collapse: A profile that identifies two non-commuting operators (order-free collapse)
+      must be refused.
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none; never promote from this block alone"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "Missing or not detected field gate G_MATH_BLOCK"
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "Missing or not detected field gate G_REQUIRED_STRUCTURES"
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: "[STANDARD]"
+    detail: "Missing or not detected field gate G_LAWS_OR_REQUIREMENTS"
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false; create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures; set laws; add overclaim nonclaim fence to doctrine.summary. Not PROVED; not GlobalGreen; human re-review still required for math depth."
+    recommendation: "Continue meth re-review for object-specific laws; code follows YAML (ADR-007a)."
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: OPERATOR_SHADOW_MATCH
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    file: core_operator_algebra/src/invariant_defect_profile.rs
+    yaml_law: >
+      Order-sensitive per-invariant effect word; symbols InvariantDefectProfile,
+      StepEffect, InvariantEffect, TrackedInvariant; authority_effect none
+    code_behavior: >
+      All four symbols present. Profile is Vec<StepEffect> word; of(OperatorClass)
+      observes E/I/C/R/M effects; no authority field. OBF-1 incompleteness documented.
+    detail: >
+      Binding path resolves. Order-sensitivity and no-authority fence align with YAML.
+      Not theorem discharge of Operator-Shadow completeness.
+    delta: MATCH

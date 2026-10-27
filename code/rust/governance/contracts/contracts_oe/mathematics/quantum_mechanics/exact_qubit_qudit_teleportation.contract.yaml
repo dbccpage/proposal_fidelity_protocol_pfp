@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_qubit_qudit_teleportation:v0.1.0
+title: Exact computed Bell-measurement teleportation branches
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_qubit_qudit_teleportation
+  symbol: exact_qubit_qudit_teleportation
+  ascii_symbol: exact_qubit_qudit_teleportation
+  notation: Exact computed Bell-measurement teleportation branches
+  domain:
+  - Nonzero finite qubit rays over Q(i), or qudit rays d=2..32 in an exact field with a supplied primitive
+    unit root
+  codomain:
+    description: Declared finite results of core_quantum_physics::teleportation; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every Bell branch probability is computed from projection
+- Every corrected branch has the input ray projector
+- All qubit probabilities are 1/4; qudit probabilities are 1/d^2
+- Wrong root order and invalid dimensions are refused
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: teleportation
+  symbols:
+  - Teleportation::exact
+  - teleport_qudit
+  required_tests:
+  - states_channels_exact_tests::exact_teleportation_computes_all_complex_qubit_and_qudit_branches
+negative_tests:
+- states_channels_exact_tests::exact_teleportation_computes_all_complex_qubit_and_qudit_branches
+doctrine:
+  summary: Every Bell branch probability is computed from projection; Every corrected branch has the input
+    ray projector; All qubit probabilities are 1/4; qudit probabilities are 1/d^2; Wrong root order and invalid
+    dimensions are refused.
+  non_role:
+  - No classical outcome flag or fidelity constant substitutes for the branch computation
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

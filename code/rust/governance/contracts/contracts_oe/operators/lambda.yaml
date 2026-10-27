@@ -1,0 +1,91 @@
+schema_version: "1.0.0"
+contract_id: "os:lambda"
+name: "Lambda Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  A LambdaOp is a deterministic, stateless, unary internal-descent morphism over
+  admitted BaseType states. It maps S -> T without carrier enlargement, preserves
+  declared invariants, and requires an external Phi-witness establishing Phi_after <= Phi_before
+  for admission. A Lambda does not compute canonical functionals, search, rank, repair,
+  lift, terminalize, authorize, orchestrate, or mutate state.
+
+layer: "OS"
+module_path: "operators::lambda"
+
+governs:
+  - "operators/lambdas/**"
+  - "operators/lambda/**"
+
+does_not_govern:
+  - "constructors/**"
+  - "generators/**"
+  - "operators/reducers/**"
+  - "operators/transforms/**"
+  - "core_functional/**"
+  - "core_homological/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipeline/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-L1"
+    description: "Lambda no-hidden-lift theorem: same carrier family; carrier growth implies MetaLift or explicit Lift, not Lambda."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L1"
+
+  - id: "OP-L2"
+    description: "Lambda Phi non-increase theorem: every admitted Lambda requires a valid LambdaWitness establishing externally measured Phi_after <= Phi_before."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L2"
+
+  - id: "OP-L7"
+    description: "Engine-only loop theorem: operators are single-step; repeated execution belongs to Pipeline/Runner trace."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L7"
+
+  - id: "OP-LAMBDA-NO-AUTH"
+    description: "Lambda execution and Lambda composition cannot mint authority."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  phi_nonincrease_required: true
+  witness_required_for_admission: true
+  deterministic: true
+  stateless: true
+  unary: true
+  single_step: true
+  typed_failure_required: true
+  admitted_input_required: true
+
+phi_law:
+  operator_may_compute_phi: false
+  phi_nonincrease_required: true
+  relation: "Phi(output) <= Phi(input)"
+  witness_source: "LambdaWitness"
+  admission_requires:
+    - "valid LambdaWitness establishing Phi(output) <= Phi(input)"
+
+relationships:
+  extends:
+    - "os:operator"

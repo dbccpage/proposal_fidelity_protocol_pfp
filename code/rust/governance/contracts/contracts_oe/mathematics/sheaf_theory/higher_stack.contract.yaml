@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:higher_stack:v0.1.0
+title: Higher Stack Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: higher_categorical_sheaf
+  symbol: 'F: C^op → n-Grpd, satisfying higher descent'
+  ascii_symbol: higher_stack
+  notation: 'F: C^op → n-Grpd, satisfying higher descent'
+  domain:
+  - 'site: A Grothendieck site or ∞-site'
+  - 'functor: Functor to n-Grpd or ∞-Grpd'
+  - 'truncation_level: Integer n indicating n-stack, or ∞ for ∞-stack'
+  codomain:
+    description: 'A functor from a site C to the (∞,n)-category of n-groupoids (or ∞-groupoids for ∞-stacks), satisfying the higher descent condition for covering families.
+
+      '
+requirements:
+  required_structures:
+  - The underlying site structure is valid
+  - The functor satisfies the higher descent condition
+  - Truncation level n is correctly enforced
+  - All data is content-addressed via SHA-256
+laws:
+- For every covering {U_i → U}, the canonical map F(U) → holim F(U_i) is an equivalence in n-Grpd
+- Values are n-truncated (π_k = 0 for k > n)
+- F preserves composition and identities
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All validators are content-addressed
+  - Given identical inputs, must produce identical artifact hash
+relationships:
+- urn:math:contract:Site:v1.0.0 serves as Provides the site structure for sheaf definition
+- urn:math:contract:Functor:v1.0.0 serves as Models the functor to n-groupoids
+- urn:math:contract:Groupoid:v1.0.0 serves as Target category for sheaf values
+- urn:math:contract:Descent:v1.0.0 serves as Encodes higher Čech descent condition
+negative_tests:
+- Site structure fails validation
+- Functor does not satisfy descent condition
+- Truncation level is inconsistent with functor values
+doctrine:
+  summary: A higher stack (or n-stack) is a higher categorical sheaf valued in n-groupoids or (∞,n)-categories. Higher stacks generalize stacks to encode higher symmetries and higher gauge structures.
+  non_role:
+  - Classical (1-truncated) stacks are handled by the Stack contract
+  - Concrete sheaf implementations for specific sites
+  - Computational algorithms for higher cohomology
+wip:
+- 'Geometric n-stacks: What additional structure defines geometric higher stacks?'
+- 'Derived higher stacks: Integration with derived category framework'
+- 'Higher Deligne-Mumford stacks: Representability and smoothness conditions'
+- Current implementation focuses on abstract higher stacks
+- Geometric and derived variants require additional contract extensions
+- Cohomology computations need integration with homological algebra contracts

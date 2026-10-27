@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:telemetry_sink:v1.0.0
+title: Non-Authoritative Telemetry Sink
+kind: host_contract
+status: proposed
+layer: 09_host
+role: TelemetrySink
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations:
+      - id: TLM-INV-001
+        statement: Telemetry buffers, field sizes, and export work are bounded by a declared profile.
+        verification_status: open
+      - id: TLM-INV-002
+        statement: Telemetry failure is non-authoritative and does not change mathematical, evaluator, licensing, or Engine outcomes.
+        verification_status: open
+      - id: TLM-INV-003
+        statement: Redaction and payload-exclusion policies are explicit and independently tested.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - TELEMETRY_BOUNDS_REFUSED
+      - TELEMETRY_EXPORT_REFUSED
+      - TELEMETRY_REDACTION_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: bounded_telemetry_event
+      type: urn:core:oeos:type:bounded_telemetry_event:v1.0.0
+      required: true
+  outputs:
+    - name: telemetry_delivery_status
+      type: urn:core:oeos:type:telemetry_delivery_status:v1.0.0
+      required: true
+  typed_refusals:
+    - TELEMETRY_BOUNDS_REFUSED
+    - TELEMETRY_EXPORT_REFUSED
+    - TELEMETRY_REDACTION_REFUSED
+  platform_requirements:
+    - profile: bounded_non_blocking_buffer
+      requirements:
+        - finite_ring_buffer
+        - bounded_export_deadline
+        - drop_policy_declared
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares bounded operational observability separate from authoritative trace artifacts.
+  non_role:
+    - authoritative_trace
+    - decision_input
+    - control_flow_policy
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - telemetry_is_not_claimed_zero_cost
+    - telemetry_delivery_is_not_authoritative_evidence
+  invariants:
+    - emission_work_is_bounded_by_profile
+    - dropped_telemetry_never_changes_run_semantics
+  allowed_operations:
+    - enqueue_bounded_telemetry
+    - export_bounded_telemetry_batch
+  forbidden_operations:
+    - drive_control_flow_from_telemetry
+    - store_unredacted_credentials
+    - claim_telemetry_as_trace_receipt

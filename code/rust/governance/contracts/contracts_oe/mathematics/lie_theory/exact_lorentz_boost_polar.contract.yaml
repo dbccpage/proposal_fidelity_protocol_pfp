@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_lorentz_boost_polar:v0.1.0
+title: Exact Rational Lorentz Boosts and Polar Decomposition
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_lorentz_boost_polar
+  symbol: exact_lorentz_boost_polar
+  ascii_symbol: exact_lorentz_boost_polar
+  notation: Exact Rational Lorentz Boosts and Polar Decomposition
+  domain:
+  - Declared rational points on the future hyperboloid and Lorentz matrices within MAX_SPACE_DIM/MAX_POWER
+  - Exact BigInt heights and reduced rational entries
+  codomain:
+    description: Declared finite results of core_lie_theory::lorentz; exact and diagnostic routes retain their
+      stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Boosts preserve the Minkowski form and have determinant one
+- Closed-form collinear powers agree with checked exact matrix powers beyond i128
+- For the frozen orthogonal pair the polar rotation has cosine 40/41 and sine -9/41, with infinite exact order
+- Polar factors multiply to the original matrix and the boost factor is symmetric
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: lorentz
+  symbols:
+  - boost
+  - preserves_form
+  - lorentz_power
+  - collinear_power_entries
+  - polar_decompose
+  - thomas_wigner_census
+  - height
+  required_tests:
+  - test_t890_b1_properties_and_power_sequence
+  - powers_remain_exact_beyond_the_machine_integer_carrier
+  - test_t915_boost_composition_and_decomposition
+  - test_t916_cross_language_parity
+  - test_t917_mutation_3_cosine_rounded_to_exceptional_set
+  - test_t917_mutation_4_collinear_pairs_excluded_from_census
+  - operational_limits_are_refused_before_work
+negative_tests:
+- Off-hyperboloid data and exact perturbations are refused
+- Numeric rational order is used in the orthochronous test
+- Nonpositive rapidity ratios and oversized powers are typed refusals
+doctrine:
+  summary: Boosts preserve the Minkowski form and have determinant one; Closed-form collinear powers agree
+    with checked exact matrix powers beyond i128; For the frozen orthogonal pair the polar rotation has cosine
+    40/41 and sine -9/41, with infinite exact order; Polar factors multiply to the original matrix and the
+    boost factor is symmetric.
+  non_role:
+  - A bounded pair census is not a proof about all boosts
+  - Rotation order is not the order of the full boost product
+  - No floating rapidity or spacetime dynamics inference
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

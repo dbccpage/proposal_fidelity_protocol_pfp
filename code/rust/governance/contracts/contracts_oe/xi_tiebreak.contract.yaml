@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:obstruction:xi_tiebreak:v1.0.0
+title: XiTieBreak
+kind: obstruction_contract
+status: mathematical_wip
+layer: 03_obstruction
+role: Diagnostic
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Obstruction
+    - Witness
+    - CertificateKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+doctrine:
+  summary: 'This contract defines the Xi tertiary tie-break boundary.
+
+
+    Xi = ||rho(h1*) - rho(phi*)||_tr is the scale-invariant density-lift trace distance
+    (papers 009/013). It is the THIRD tier of the guarded descent law Phi_1 > Gamma_2 > Xi.
+
+    Xi does not repair, lift, terminalize, or authorize. It may break a tie ONLY when
+    Phi_1 AND Gamma_2 are already tied.
+
+    '
+  non_role: &id002
+  - repair
+  - lift
+  - terminalize
+  - authorize
+  - primary ranking
+  classification:
+    subsystem: Obstruction Resolution
+    role: Tertiary diagnostic tie-break (density-lift trace distance).
+    classification: Obstruction layer -- diagnostic only.
+  core_definition: 'Xi lifts the minimal residual h1* and the dual witness phi* to rank-one
+    densities and reports their trace distance. It is scale-invariant, so it cannot stand in
+    for the Phi_1 magnitude; it is admissible only as a deterministic tertiary tie-break.
+
+    '
+  what_xi_is_not:
+  - a primary or secondary ranking key
+  - an authority terminal
+  - a repair or a lift
+  what_xi_is: 'A scale-invariant tertiary diagnostic that may break a guarded-law tie only
+    after Phi_1 and Gamma_2 are both non-worsening and tied.
+
+    '
+  core_invariant: No Xi decision unless Phi_1 and Gamma_2 are tied.
+  firewall: 'Xi carries authority_effect = evidence_only. It is consumed under the no-authority
+    guard like every diagnostic; it never mints authority and never overrides Phi_1 or Gamma_2.
+
+    '
+  required_tests:
+  - xi_decides_only_when_phi1_and_gamma2_tied
+  - xi_is_scale_invariant
+  - xi_carries_no_authority
+  legacy_metadata:
+    name: XiTieBreak
+    role: Tertiary diagnostic tie-break
+    version: '1.0'
+    classification: obstruction
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_obstruction_contract:v1.0.0"

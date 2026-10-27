@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:character_sum:v0.1.0
+title: 'Additive Character and Gauss Sum Contract'
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: character_sum
+  symbol: 'psi(x) = zeta_p^Tr(x), sum_x psi(a x^2 + b x) over GF(q)'
+  ascii_symbol: character_sum
+  notation: 'psi(x) = zeta_p^Tr(x), sum_x psi(a x^2 + b x) over GF(q)'
+  domain:
+  - 'finite field GF(q), q = p^k'
+  - 'target field: an exact cyclotomic field Q(zeta_N) with p dividing N'
+  - 'a, b: elements of GF(q)'
+  codomain:
+    description: 'Exact cyclotomic-field values of the additive character, the linear character sum and the quadratic Gauss sum, and the certificate that the two MUB identities hold.'
+requirements:
+  required_structures:
+  - 'The target field must contain the p-th roots of unity; otherwise the request is refused'
+  - 'The trace must land in F_p; otherwise the modulus is reported as not a field'
+  - 'All sums are computed exactly in the cyclotomic field'
+laws:
+- 'The sum over x of psi(c x) vanishes for every c != 0'
+- '|sum_x psi(a x^2 + b x)|^2 = q for every a != 0 and every b'
+- 'The identities are independent of the representation of GF(q), since the absolute trace is'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- 'finite_field serves as the field and the trace'
+- 'cyclotomic_field serves as the generic field in which the same sums can be evaluated'
+rust_binding:
+  crate: core_number_theory
+  module: character_sums
+  symbols:
+  - 'CyclotomicField'
+  - 'additive_character'
+  - 'linear_character_sum'
+  - 'quadratic_gauss_sum'
+  - 'CharacterSumCertificate'
+  - 'verify_character_sum_identities'
+  required_tests:
+  - 'prime_fields_satisfy_the_identities_used_by_prime_controls'
+  - 'prime_power_fields_satisfy_the_identities_used_by_odd_prime_power_controls'
+  - 'a_field_without_the_p_th_roots_is_refused'
+  - 'a_reducible_modulus_is_not_a_field_and_fails_the_identities'
+negative_tests:
+- 'A target field without the p-th roots of unity must be refused'
+- 'A reducible modulus must be reported, not certified'
+doctrine:
+  summary: 'Additive characters and quadratic Gauss sums over GF(q) valued in an exact cyclotomic field, with the exact check of the two identities the Weyl MUB proof reduces to.'
+  non_role:
+  - 'Multiplicative characters and L-functions'
+  - 'Numerical Gauss-sum evaluation'
+wip:
+- 'The errors are Strings rather than a typed enum'

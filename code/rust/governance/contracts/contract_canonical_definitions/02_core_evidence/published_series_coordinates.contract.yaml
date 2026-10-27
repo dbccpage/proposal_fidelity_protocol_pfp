@@ -1,0 +1,132 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:published_series_coordinates:v1.0.0
+title: PublishedSeriesCoordinates
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Carrier
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+definition:
+  published_root: core_research/programs
+  # Verbatim action string every agreement row must carry. Previously a bare
+  # literal inside validate_published_series_matrix_v1.
+  required_row_action: none; declared conditional, open, and VERIFY fences preserved
+  # Row order is load-bearing: validate_published_series_matrix_v1 zips packet
+  # rows against this list positionally, so it must stay ascending by paper_id.
+  # `programme` and `directory` stay separate so the programme partition is
+  # queryable data rather than a slash inside an opaque string.
+  papers:
+  - paper_id: paper000
+    programme: 002_finite_obstruction_calculus
+    directory: 000_primitive_axiomatics
+    main: 000_primitive_axiomatics.md
+    claim_ledger: 000_primitive_axiomatics_claim_ledger.md
+    claim_row_count: 71
+  - paper_id: paper001
+    programme: 004_projection_obstruction
+    directory: 000_projection_obstruction
+    main: 000_projection_obstruction.md
+    claim_ledger: 000_projection_obstruction_claim_ledger.md
+    claim_row_count: 42
+  - paper_id: paper002
+    programme: 004_projection_obstruction
+    directory: 007_m_compatible_gauge_classification
+    main: 007_m_compatible_gauge_classification.md
+    claim_ledger: 007_m_compatible_gauge_classification_claim_ledger.md
+    claim_row_count: 25
+  - paper_id: paper003
+    programme: 004_projection_obstruction
+    directory: 008_so_k_invariant_gauge_classification
+    main: 008_so_k_invariant_gauge_classification.md
+    claim_ledger: 008_so_k_invariant_gauge_classification_claim_ledger.md
+    claim_row_count: 48
+  - paper_id: paper004
+    programme: 004_projection_obstruction
+    directory: 009_coordinate_wise_additivity
+    main: 009_coordinate_wise_additivity.md
+    claim_ledger: 009_coordinate_wise_additivity_claim_ledger.md
+    claim_row_count: 21
+  - paper_id: paper005
+    programme: 003_quantum_foundations
+    directory: qm_080_cptp_trace_norm_geometry_and_quantum_dual_witnesses
+    main: qm_080_cptp_trace_norm_geometry_and_quantum_dual_witnesses.md
+    claim_ledger: qm_080_cptp_trace_norm_geometry_and_quantum_dual_witnesses_claim_ledger.md
+    claim_row_count: 24
+  - paper_id: paper006
+    programme: 002_finite_obstruction_calculus
+    directory: 003_l1_native_cohomology
+    main: 003_l1_native_cohomology.md
+    claim_ledger: 003_l1_native_cohomology_claim_ledger.md
+    claim_row_count: 19
+  - paper_id: paper007
+    programme: 002_finite_obstruction_calculus
+    directory: 004_l1_obstruction_framework
+    main: 004_l1_obstruction_framework.md
+    claim_ledger: 004_l1_obstruction_framework_claim_ledger.md
+    claim_row_count: 18
+  - paper_id: paper008
+    programme: 002_finite_obstruction_calculus
+    directory: 005_conditional_lift_descent
+    main: 005_conditional_lift_descent.md
+    claim_ledger: 005_conditional_lift_descent_claim_ledger.md
+    claim_row_count: 17
+  - paper_id: paper009
+    programme: 002_finite_obstruction_calculus
+    directory: 007_conditional_density_lift_and_dual_witness_xi_functional
+    main: 007_conditional_density_lift_and_dual_witness_xi_functional.md
+    claim_ledger: 007_conditional_density_lift_and_dual_witness_xi_functional_claim_ledger.md
+    claim_row_count: 12
+  - paper_id: paper010
+    programme: 003_quantum_foundations
+    directory: qm_020_born_normalization_and_conditional_hilbert_lift
+    main: qm_020_born_normalization_and_conditional_hilbert_lift.md
+    claim_ledger: qm_020_born_normalization_and_conditional_hilbert_lift_claim_ledger.md
+    claim_row_count: 16
+doctrine:
+  summary: 'Canonical on-disk coordinates for the S07-005 published-series agreement
+    matrix (papers 000-010).
+
+    Repository paths are data, not Rust literals: a path buried in a const drifts
+    silently because the
+
+    agreement matrix is compared field-wise and never resolved against the filesystem.
+    That is how the
+
+    PR #1191 programme reorganization left every coordinate stale while the crate
+    still compiled and
+
+    every test still passed.
+
+    '
+  authority_defaults:
+    coordinates: EvidenceOnly. Locating a paper is not a claim about it. This contract
+      pins where a manuscript and its claim ledger live and how many claim rows the
+      ledger declares; it grants no authority over their content and upgrades no status.
+  consumers:
+  - crate: core_state
+    module: published_series_agreement
+    use: validate_published_series_matrix_v1 compares packet rows against these coordinates
+  required_tests:
+  - manifest_parses_and_is_ordered
+  - every_coordinate_resolves_on_disk
+  canonical_invariant: 'Every coordinate resolves to a file that exists in the published
+    tree, rows are ascending by
+
+    paper_id, and no row points its manuscript and its claim ledger at the same file.
+
+    '

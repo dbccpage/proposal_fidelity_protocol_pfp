@@ -1,0 +1,92 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_field_law_checks:v0.1.0
+title: Exact Field Law Checks Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_sample_law_replay
+  symbol: 'check(laws, S) for a finite sample S ⊂ F of the field, involution and order obligations'
+  ascii_symbol: exact_field_law_checks
+  notation: 'S : &[F], F : Field + ExactRing (+ Involution, OrderedExactField, HermitianOrdered)'
+  domain:
+  - 'sample: a finite slice of scalar values'
+  - 'trait obligations: the field axioms, the four involution axioms, the order axioms, the Hermitian-order axioms'
+  codomain:
+    description: 'Ok when every law holds on the sample, otherwise LawViolated naming the first violated law in a documented check order. A failing check proves the implementation breaks that law; a passing check is evidence on the sample only.
+
+      '
+requirements:
+  required_structures:
+  - 'check_field_axioms runs three passes (single elements, pairs, triples) so a missing inverse is reported before a derived division failure'
+  - 'check_involution_axioms checks in this order: additive, multiplicative, fixes 1, order at most two'
+  - 'check_ordered_axioms checks in this order: sign in {-1, 0, 1}, zero exactly for zero, negation, positive sums, positive products'
+  - 'check_hermitian_ordered_axioms checks that fixed_field_sign is None exactly for non-fixed elements, that signs are valid, the negation and closure laws on the fixed elements, and that every norm x · conj x has sign >= 0 and 0 only for zero'
+  - 'Cost is cubic in the sample size; samples are expected to have a few dozen elements'
+laws:
+- 'a failing check names a law that the implementation provably violates on the sample'
+- 'BigRational, GF(p), a Gaussian rational field and a real quadratic field satisfy the obligations they claim on the shipped test samples'
+- 'a ring with zero divisors claiming to be a field, a conjugation that is not a ring homomorphism, a signum that is out of range or inconsistent with is_zero, and a fixed-field sign that is None for a fixed element are each detected'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'The check order is fixed, so the reported law is deterministic'
+relationships:
+- urn:core:math:exact_scalar_tower:v0.1.0 serves as the obligations being replayed
+- urn:core:math:involution_adjoint:v0.1.0 serves as the involution obligations
+- urn:core:math:ordered_field_ldlt:v0.1.0 serves as the order and Hermitian-order obligations
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::laws
+  symbols:
+  - check_field_axioms
+  - check_involution_axioms
+  - check_ordered_axioms
+  - check_hermitian_ordered_axioms
+  # One test per mechanically checkable negative_test, in declaration order.
+  required_tests:
+  - a_ring_with_zero_divisors_fails_the_field_axioms
+  - a_wrong_inverse_is_caught_and_named
+  - a_defective_involution_is_caught_and_named
+  - a_defective_order_is_caught_and_named
+  - a_defective_hermitian_sign_is_caught_and_named
+  - a_negative_norm_violates_the_hermitian_order_obligations
+  # Positive witnesses of the laws above.
+  # - bigrational_satisfies_the_field_involution_and_order_obligations
+  # - finite_fields_satisfy_the_field_axioms_and_the_identity_is_an_involution
+  # - the_gaussian_rationals_and_q_sqrt2_satisfy_their_obligations
+negative_tests:
+- a sample containing a ring with zero divisors used as a field must be reported as violating the inverse law
+- a try_inv that answers Some(x) with x · x != 1 must be reported as violating the inverse law
+- a conjugation that is not additive, not multiplicative or does not fix 1 must be reported with that law
+- a signum out of range, inconsistent with is_zero, or violating the negation law must be reported with that law
+- a fixed-field sign that is None for a fixed element or out of range must be reported with that law
+- a field with a Galois involution whose norm is negative must be reported as violating the norm law
+doctrine:
+  summary: 'The scalar traits state obligations the compiler cannot check. These functions replay them on a finite sample and name the first law that fails, so a crate that implements Field, Involution, OrderedExactField or HermitianOrdered for a new exact type can put one line in its tests. They are evidence, not proof.'
+  non_role:
+  - A proof that an implementation satisfies the axioms
+  - Exhaustive checking of an infinite field
+  - Checks of the analytic (floating-point) tier
+wip:
+- No Lean statement of the field, involution or order axioms exists; the YAML to Lean to Rust chain for this contract is open
+- The samples used by the shipped tests are hand-chosen; there is no generator that draws from every component of a cyclotomic field
+- Associativity and distributivity are checked on triples only, so a sample of size N costs O(N³) scalar operations

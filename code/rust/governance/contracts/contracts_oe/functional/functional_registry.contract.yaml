@@ -1,0 +1,47 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:functional_registry:file:v1.0.0
+title: Inert functional descriptor registry and dependency identities
+status: active_provisional
+crate: core_contracts
+file: crates_rs/core_contracts/src/contract_descriptors.rs
+layer: functional
+role: inert_contract_identity_registry
+authority_effect: none
+evidence_ceiling: ShapeOnly
+customer_claim_allowed: false
+runtime_enforcement: false
+owns:
+  - primitive_and_functional_identity_lookups
+  - unique_named_module_symbol_bindings
+  - declared_dependency_order_and_reference_resolution
+  - explicit_inert_WIP_descriptor_nonclaims
+does_not_own:
+  - operational_or_mathematical_contract_enforcement
+  - source_or_request_authentication
+  - runtime_actor_licensing
+  - acceptance_by_marker_struct
+may_call: []
+must_not:
+  - register_duplicate_or_empty_identities
+  - self_assign_mathematical_or_terminal_authority
+exactness:
+  mode: inert_identity_and_composition
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "pub const FUNCTIONAL_CONTRACT_BINDINGS:"
+  - "pub fn functional_binding_by_rust_surface("
+  - "urn:core:math:transport_amplitude:v1.0.0"
+required_tests:
+  - "contract_descriptors::tests::functional_contract_bindings_are_unique"
+  - "contract_descriptors::tests::functional_contract_binding_lookups_round_trip_registry"
+  - "contract_descriptors::tests::functional_contract_binding_surface_lookup_rejects_unknown_pairs"
+  - "contract_descriptors::tests::functional_contract_binding_dependencies_are_valid_and_ordered"
+  - "contract_descriptors::tests::functional_contract_bindings_name_existing_module_files"
+  - "contract_descriptors::tests::functional_boundary_dependency_contract_urns_cover_expected_registry_closure"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

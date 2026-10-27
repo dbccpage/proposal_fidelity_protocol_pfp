@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_anyon_model:v0.1.0
+title: Exact Anyon Models and Fusion Spaces
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_anyon_model
+  symbol: finite_anyon_model
+  ascii_symbol: finite_anyon_model
+  notation: Exact Anyon Models and Fusion Spaces
+  domain:
+  - Checked Ising, Fibonacci, semion, toric-code and three-fermion categories, or an admitted SU(2)_k carrier.
+  - Finite charge words and admitted fusion totals.
+  codomain:
+    description: Declared finite results of core_quantum_physics::anyon_model; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every admitted model replays pentagon, both hexagons and ribbon balance.
+- Fusion-space dimensions count actual admissible fusion paths with arbitrary-precision integers.
+- Exchange matrices use the checked F and R symbols, and monodromy equals theta_c/(theta_a theta_b).
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: anyon_model
+  symbols:
+  - AnyonModel
+  required_tests:
+  - declared_models_satisfy_pentagon_and_both_hexagons
+  - ising_fusion_spaces_and_monodromy_are_computed
+negative_tests:
+- Invalid charges, totals, word sizes and unavailable field roots are typed refusals.
+- A fusion-space label alone never supplies an associator or braiding.
+doctrine:
+  summary: Every admitted model replays pentagon, both hexagons and ribbon balance.; Fusion-space dimensions
+    count actual admissible fusion paths with arbitrary-precision integers.; Exchange matrices use the checked
+    F and R symbols, and monodromy equals theta_c/(theta_a theta_b)..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

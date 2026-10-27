@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quotient_mass:v1.0.0
+title: Quotient Mass Phi1 Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:cochain_layer:v1.0.0
+    - urn:core:math:exact_repair_space:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support:
+    - R
+    - E
+    must_not_self_assign: true
+math:
+  object_kind: quotient_norm_functional
+  symbol: 'Phi_1: C^1 -> Q_{>=0}'
+  ascii_symbol: Phi1
+  formula: Phi_1(x) = min_phi sum_e w_e |x_e - (d_0 phi)_e|
+  dual_formula: 'Phi_1(x) = max_{y: d_0^T y = 0, |y_e| <= w_e} <y, x>'
+  domain:
+  - 'x: 1-cochain over finite 2-complex with positive rational weights w_e > 0'
+  codomain:
+    description: Exact rational quotient distance Phi_1(x) >= 0 from x to im(d_0).
+requirements:
+  required_structures:
+  - Cochain complex C^0 -> C^1 -> C^2 with d_1 d_0 = 0
+  - All edge weights w_e must be strictly positive rationals (w_e in Q_{>0})
+  - Exact arithmetic over Q; floats and bare booleans strictly forbidden
+  - Spanning forest enumeration budget must be bounded
+laws:
+- 'Definition 3.1 (Quotient Mass): Phi_1(x) is the weighted l1 distance of x to im(d_0).'
+- 'DDC-TAPE-11 (Spanning Forest Minimality): On a finite graph, Phi_1 is attained at a potential determined
+  by a spanning forest whose edges are all tight (Prop 3.2).'
+- 'Exact Dual Certification: Every Phi_1 measurement must return a primal potential phi and a dual circulation
+  flow y (d_0^T y = 0, |y_e| <= w_e) whose inner product <y, x> equals the primal objective, closing the duality
+  gap exactly with zero tolerance.'
+- 'Gauge Invariance: Phi_1(x + d_0 alpha) = Phi_1(x) for all alpha in C^0.'
+- 'Hodge Exactness Characterization: Over Q, Phi_1(x) = 0 iff x_C = 0 and x_H = 0 in the orthogonal Hodge decomposition
+  C^1 = im(d_0) + im(d_1^T) + H^1 (Theorem 3.3, OE010-01).'
+- 'Guard g_3 (Zero Residual Mass): Zero residual mass requires exact rational vanishing (Phi_1 == 0). Positive
+  policy tolerances are forbidden in exact algebraic theory.'
+negative_tests:
+- Floats or non-exact scalars passed to Phi_1 must be rejected with FLOAT_FORBIDDEN.
+- Dual flow violating d_0^T y = 0 or |y_e| <= w_e must be rejected.
+- Non-zero duality gap between primal and dual objective must be rejected.
+- Gauge shift altering Phi_1 must be rejected.
+- Non-zero residual mass accepted under positive tolerance must be rejected.
+doctrine:
+  summary: Phi_1 measures the exact irreducible quotient obstruction of a 1-cochain modulo coboundaries im(d_0).
+    It represents unresolved boundary tension that cannot be discharged by gauge repair.
+  symbol: Phi_1
+  ascii_symbol: Phi1
+  operator_class_symbol: R
+  non_role:
+  - authority_minting
+  - policy_decision
+  - self_certification
+  canonical_invariant: Phi_1 is a non-authoritative diagnostic functional. Phi_1 = 0 certifies that a defect
+    is exact within declared scope; it confers zero authority beyond scope.
+wip:
+- Runtime enforcement and exact verification authority were unsupported scaffold claims; mathematical declarations
+  supply local replay obligations without operational authority.
+- The symbolic BUDGET_UNKNOWN/FLOAT_FORBIDDEN/BOOL_FORBIDDEN phrases are explanatory input guards, not registered
+  refusal emissions.

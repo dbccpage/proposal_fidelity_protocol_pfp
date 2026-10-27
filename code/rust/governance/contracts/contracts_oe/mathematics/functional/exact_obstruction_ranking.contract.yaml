@@ -1,0 +1,63 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_obstruction_ranking:v0.1.0
+title: Exact Deterministic Obstruction Ranking
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_obstruction_ranking
+  symbol: exact_obstruction_ranking
+  ascii_symbol: exact_obstruction_ranking
+  notation: Exact Deterministic Obstruction Ranking
+  domain:
+  - Rational Phi1 and Gamma2, optional rational Xi, labels and input positions
+  codomain:
+    description: Exact finite constructions implemented by core_policy::evaluation_hierarchy; results
+      remain scoped to the declared carrier and budgets.
+requirements:
+  required_structures:
+  - Exact arithmetic and explicit finite carrier validation
+  - A typed refusal for unsupported or exhausted computations
+laws:
+- Ranking is a transitive total order by Phi1, Gamma2, declared Xi before absent Xi, label and position
+- Ranking does not certify strict improvement or feasibility
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact independent witness replay where a witness is returned
+relationships: []
+rust_binding:
+  crate: core_policy
+  module: evaluation_hierarchy
+  symbols:
+  - ExactRankingKey
+  - compare_exact_ranking
+  required_tests:
+  - exact_ranking_is_transitive_with_missing_tertiary_values
+negative_tests:
+- A missing tertiary value cannot introduce a comparison cycle
+doctrine:
+  summary: Exact Deterministic Obstruction Ranking on a declared finite carrier.
+  non_role:
+  - PROVED, GlobalGreen, or operational authority
+  - Continuum or infinite-carrier completion claims
+wip:
+- Executable finite checks are local evidence; no theorem-prover discharge is asserted.

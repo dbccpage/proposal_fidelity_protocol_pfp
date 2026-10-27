@@ -1,0 +1,42 @@
+schema_version: "1.0.0"
+contract_id: "os:retractor"
+name: "Retractor Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  A Retractor is a deterministic, stateless, single-step typed Operator that
+  safely reverses or unwinds a previous proposal or transformation within the
+  same carrier space. It restores the prior structure state without destructive
+  mutation, enforcing identical endpoints (before/after matching).
+
+layer: "OS"
+module_path: "operators::retractor"
+
+governs:
+  - "operators/retractors/**"
+
+does_not_govern:
+  - "core_functional/**"
+  - "core_certifiers/**"
+
+claims:
+  - id: "RET-L1"
+    description: "Retractors safely reverse proposals within the same carrier without escalating authority."
+    status: "active"
+    provenance: "Retractor OS Doctrine RET-L1"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  phi_nonincrease_required: true
+  deterministic: true
+  stateless: true
+  same_carrier_required: true
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_file_contract:file:v1.0.0"

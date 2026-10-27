@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_spin_network_area:v0.1.0
+title: Exact Spin-Network Area and Intertwiners
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_spin_network_area
+  symbol: exact_spin_network_area
+  ascii_symbol: exact_spin_network_area
+  notation: Exact Spin-Network Area and Intertwiners
+  domain:
+  - Declared twice-spins with total<=4096 and at most 4096 legs
+  - Normalized exact Surd labels; physical scale is declared separately
+  codomain:
+    description: Declared finite results of core_quantum_physics::spin_area_spectrum; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Area label is sqrt(j(j+1)), with first nonzero value sqrt(3)/2
+- Magnetic degeneracy is 2j+1
+- SU(2) fusion multiplicities preserve total tensor-product dimension
+- The invariant dimension is the multiplicity of spin zero; four spin-half legs have two intertwiners and three
+  have none
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: spin_area_spectrum
+  symbols:
+  - area_label_squared
+  - area_label
+  - magnetic_degeneracy
+  - tensor_spin_multiplicities
+  - invariant_subspace_dimension
+  - SpinNetworkError
+  required_tests:
+  - area_labels_increase_strictly_from_a_gap_of_root_three_over_two
+  - spin_intertwiners_and_exchange_projectors_preserve_exact_sector_dimensions
+negative_tests:
+- Arithmetic/normalization exhaustion and oversized spin-network declarations are typed refusals
+doctrine:
+  summary: Area label is sqrt(j(j+1)), with first nonzero value sqrt(3)/2; Magnetic degeneracy is 2j+1; SU(2)
+    fusion multiplicities preserve total tensor-product dimension; The invariant dimension is the multiplicity
+    of spin zero; four spin-half legs have two intertwiners and three have none.
+  non_role:
+  - No Hamiltonian constraint, area-scale choice or full quantum-gravity state space
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

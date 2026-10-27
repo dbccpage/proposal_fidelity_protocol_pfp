@@ -1,0 +1,193 @@
+{
+  "broken_hash_chain_run": {
+    "is_ok": false,
+    "records": [
+      {
+        "parent_sha256": null,
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "C"
+        },
+        "record_sha256": "4dde90a73ddd8e73503e59498e5c5bb08cb4a8e8ec68b67ac3175cd389bf0074",
+        "sequence": 0
+      },
+      {
+        "parent_sha256": "badbadbadbadbadbadbadbadbadbadbadbadbadbadbadbad",
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "R"
+        },
+        "record_sha256": "79098f2896802c67a3681a384a56a30f373563c69f2e00f3980966341247a792",
+        "sequence": 1
+      }
+    ],
+    "refusal_code": "HASH_CHAIN_BROKEN"
+  },
+  "exact_contraction_run": {
+    "expected_receipt": {
+      "authority_effect": "None",
+      "ddc_laws_valid": true,
+      "hash_chain_valid": true,
+      "initial_residual": "1/2",
+      "law_violations": [],
+      "residual_delta": "-1/2",
+      "residual_effect": "exact",
+      "step_count": 5,
+      "tape_str": "C.R.E.I.T",
+      "terminal_residual": "0"
+    },
+    "is_ok": true,
+    "records": [
+      {
+        "parent_sha256": null,
+        "payload": {
+          "after_class": "CarrierExposed",
+          "before_class": "Uninitialized",
+          "carrier_hash": "carrier_1",
+          "gamma_2": "0",
+          "letter": "C",
+          "phi_1": "1/2"
+        },
+        "record_sha256": "022208af68d4eee0336304bf2e1408a553e2bb94cba1e37accdac20cd4246afd",
+        "sequence": 0
+      },
+      {
+        "parent_sha256": "022208af68d4eee0336304bf2e1408a553e2bb94cba1e37accdac20cd4246afd",
+        "payload": {
+          "after_class": "ResidualProjected",
+          "before_class": "CarrierExposed",
+          "carrier_hash": "carrier_1",
+          "gamma_2": "0",
+          "letter": "R",
+          "phi_1": "1/2"
+        },
+        "record_sha256": "b8681f1db9c759862efadb0ef32b8cd658aae305187cbc5325c57a00d0f57f38",
+        "sequence": 1
+      },
+      {
+        "parent_sha256": "b8681f1db9c759862efadb0ef32b8cd658aae305187cbc5325c57a00d0f57f38",
+        "payload": {
+          "after_class": "ExactRepaired",
+          "before_class": "ResidualProjected",
+          "carrier_hash": "carrier_1",
+          "gamma_2": "0",
+          "letter": "E",
+          "phi_1": "0"
+        },
+        "record_sha256": "9b603a48a73e6f55f995ce77aca9aebd80fccc5f81b5c974eb94b9b6d54e6ed2",
+        "sequence": 2
+      },
+      {
+        "parent_sha256": "9b603a48a73e6f55f995ce77aca9aebd80fccc5f81b5c974eb94b9b6d54e6ed2",
+        "payload": {
+          "after_class": "Integrated",
+          "before_class": "ExactRepaired",
+          "carrier_hash": "carrier_1",
+          "gamma_2": "0",
+          "letter": "I",
+          "phi_1": "0"
+        },
+        "record_sha256": "8f6f4b4f8bc5756e36243ad77e8638e8482ed277a80760bff42114fda4bc9f0b",
+        "sequence": 3
+      },
+      {
+        "parent_sha256": "8f6f4b4f8bc5756e36243ad77e8638e8482ed277a80760bff42114fda4bc9f0b",
+        "payload": {
+          "after_class": "Terminalized",
+          "before_class": "Integrated",
+          "carrier_hash": "carrier_1",
+          "gamma_2": "0",
+          "letter": "T",
+          "phi_1": "0"
+        },
+        "record_sha256": "3d1bd00cb45f9b5c13f535484fcb25c64944b523d188cb58ed87095c2e332f05",
+        "sequence": 4
+      }
+    ]
+  },
+  "non_monotonic_repair_run": {
+    "expected_receipt": {
+      "ddc_laws_valid": false,
+      "hash_chain_valid": true,
+      "law_violations": [
+        "Step 1: ExactRepairIncreasedPhi1 (1/4 -> 3/4)"
+      ],
+      "step_count": 3,
+      "tape_str": "C.E.T"
+    },
+    "is_ok": true,
+    "records": [
+      {
+        "parent_sha256": null,
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "C",
+          "phi_1": "1/4"
+        },
+        "record_sha256": "6760db820a12425f3b69c46251e58ed52cd2118799b559fed91b2eafd3d61ae7",
+        "sequence": 0
+      },
+      {
+        "parent_sha256": "6760db820a12425f3b69c46251e58ed52cd2118799b559fed91b2eafd3d61ae7",
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "E",
+          "phi_1": "3/4"
+        },
+        "record_sha256": "11b0b3d418b36e367691c381ebcc0049a26bcb85e9f48a9673b5ea21e8102853",
+        "sequence": 1
+      },
+      {
+        "parent_sha256": "11b0b3d418b36e367691c381ebcc0049a26bcb85e9f48a9673b5ea21e8102853",
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "T",
+          "phi_1": "3/4"
+        },
+        "record_sha256": "09d478c4b6b7155d2d406d751d472cb3b001454427e7eb76507f6d2111a8a2e3",
+        "sequence": 2
+      }
+    ]
+  },
+  "terminal_absorbing_violation_run": {
+    "expected_receipt": {
+      "ddc_laws_valid": false,
+      "hash_chain_valid": true,
+      "law_violations": [
+        "Step 2: TerminalAbsorbing violation \u2014 step executed after T"
+      ],
+      "step_count": 3,
+      "tape_str": "C.T.R"
+    },
+    "is_ok": true,
+    "records": [
+      {
+        "parent_sha256": null,
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "C"
+        },
+        "record_sha256": "4dde90a73ddd8e73503e59498e5c5bb08cb4a8e8ec68b67ac3175cd389bf0074",
+        "sequence": 0
+      },
+      {
+        "parent_sha256": "4dde90a73ddd8e73503e59498e5c5bb08cb4a8e8ec68b67ac3175cd389bf0074",
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "T"
+        },
+        "record_sha256": "6cc231159603dbcd051b248b26f5b303b221712afa2d21e8ce99cfe5b36c44f5",
+        "sequence": 1
+      },
+      {
+        "parent_sha256": "6cc231159603dbcd051b248b26f5b303b221712afa2d21e8ce99cfe5b36c44f5",
+        "payload": {
+          "carrier_hash": "c1",
+          "letter": "R"
+        },
+        "record_sha256": "a9c50dfefae4233832aeed699a44f68520606a83deb26684bd5f988697a9acb3",
+        "sequence": 2
+      }
+    ]
+  }
+}

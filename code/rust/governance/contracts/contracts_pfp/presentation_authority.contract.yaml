@@ -1,0 +1,56 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED. The `structure:` block below is read by
+# pfp_runtime/build.rs, which generates an exhaustive destructure
+# of the named Rust type plus a serde conformance test. Adding, removing or
+# renaming a field without amending this contract is a COMPILE ERROR, not a
+# review finding.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:presentation_authority:v1.0.0"
+title: "Presentation Authority"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-PRESENTATION-UNKNOWN"]
+
+doctrine:
+  summary: >-
+    Who authored the rewrite presentation a peak verdict was reached under.
+  invariants:
+    - "HostPinned is emitted only when the presentation digest matches an entry
+       in a pin set the host constructed; the pin set is never parsed from a
+       request payload, which PresentationPins enforces by deriving no
+       Deserialize."
+    - "ProducerDeclared is the default, not a failure: a host that pins nothing
+       says so rather than implying an endorsement it cannot give."
+    - "The digest names the rewriting SYSTEM. Rules and signature are sorted
+       before digesting, so reordering a payload does not defeat a pin."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp_runtime
+  rust_module: rewriting
+  rust_type: "PresentationAuthority"
+  form: enum
+  variants:
+    - HostPinned
+    - ProducerDeclared

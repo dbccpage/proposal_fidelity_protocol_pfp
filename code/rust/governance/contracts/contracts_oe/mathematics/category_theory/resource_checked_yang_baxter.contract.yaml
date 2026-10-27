@@ -1,0 +1,81 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:resource_checked_yang_baxter:v0.1.0
+title: Bounded Exact Yang Baxter Replay
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: resource_checked_yang_baxter
+  symbol: resource_checked_yang_baxter
+  ascii_symbol: resource_checked_yang_baxter
+  notation: Bounded Exact Yang Baxter Replay
+  domain:
+  - An exact R matrix on a nonempty tensor-square carrier, or three exactly evaluated family values on the
+    same carrier, within explicit aggregate limits.
+  codomain:
+    description: Declared finite results of core_fusion_categories::yang_baxter; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Residuals retain both sides of the constant, additive spectral and multiplicative spectral braid equations
+  as exact matrix differences.
+- Tensor-cube storage and every dense product are admitted before embeddings are allocated.
+- Each spectral argument is evaluated once and all values have one checked tensor carrier.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_fusion_categories
+  module: yang_baxter
+  symbols:
+  - base_dimension
+  - braid_form_defect_with_limits
+  - spectral_form_defect_with_limits
+  - spectral_braid_form_defect_with_limits
+  - swap_matrix_with_limits
+  required_tests:
+  - oversized_yang_baxter_embeddings_refuse_before_dense_products
+  - spectral_families_use_one_checked_carrier_and_one_value_per_argument
+  - yang_rational_satisfies_the_spectral_and_braid_forms
+  - the_six_vertex_matrix_satisfies_the_multiplicative_yang_baxter_equation
+negative_tests:
+- Identity R on a dimension-16 base carrier refuses before 4096-square embeddings and their billion-operation
+  products.
+- Inconsistent spectral family shapes and overflowed flip dimensions are typed refusals.
+- A tight scalar-work policy does not claim a zero defect.
+doctrine:
+  summary: Residuals retain both sides of the constant, additive spectral and multiplicative spectral braid
+    equations as exact matrix differences.; Tensor-cube storage and every dense product are admitted before
+    embeddings are allocated.; Each spectral argument is evaluated once and all values have one checked tensor
+    carrier..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - Resource refusal does not assert failure of a mathematical law or infiniteness of a closure.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

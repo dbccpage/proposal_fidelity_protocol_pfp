@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:busch_effects_ordered_inertia:v0.1.0
+title: Busch effects on canonical matrices and real places
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: busch_effects_ordered_inertia
+  symbol: busch_effects_ordered_inertia
+  ascii_symbol: busch_effects_ordered_inertia
+  notation: Busch effects on canonical matrices and real places
+  domain:
+  - Canonical BasicMatrix CM-coordinate declarations; conductors4,5,8,12,24, dimensions1..64; basis-entry and
+    finite-effect budgets
+  codomain:
+    description: Declared finite results of core_quantum_physics::busch_effects; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- PSD uses shared full Hermitian inertia in every admitted dimension
+- Declared real-place polynomial and isolating interval are replayed
+- Effects satisfy0<=E<=I
+- Finite effect-additivity hypotheses and trace-state recovery remain explicitly scoped
+- The declared real root selects a cyclotomic Galois embedding before inertia
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: busch_effects
+  symbols:
+  - HermitianMatrix
+  - HermitianMatrix::try_inertia
+  - HermitianMatrix::principal_minors_with_budget
+  - EffectAlgebra
+  - check_finite_effect_additivity
+  - recover_density_matrix
+  - cubic_qubit_projector_value
+  required_tests:
+  - measurement_exact_laws::busch_inertia_checks_dimension_four_and_mutated_places
+negative_tests:
+- measurement_exact_laws::busch_inertia_checks_dimension_four_and_mutated_places
+doctrine:
+  summary: PSD uses shared full Hermitian inertia in every admitted dimension; Declared real-place polynomial
+    and isolating interval are replayed; Effects satisfy0<=E<=I; Finite effect-additivity hypotheses and trace-state
+    recovery remain explicitly scoped; The declared real root selects a cyclotomic Galois embedding before
+    inertia.
+  non_role:
+  - Finite checks on a declared valuation do not prove the unbounded Busch or Gleason theorem
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

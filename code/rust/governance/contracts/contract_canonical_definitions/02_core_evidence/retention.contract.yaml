@@ -1,0 +1,61 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:retention:v1.0.0
+title: RetentionPolicy
+kind: evidence_contract
+status: active
+layer: 02_evidence
+role: Trace
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: []
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  constraints:
+    immutable_after_emit: true
+    mutation_forbidden: true
+doctrine:
+  summary: Age-based retention that destroys trace CONTENT while preserving the
+    hash ledger. Redaction is never an in-place edit - replay recomputes
+    event_sha256 per event, so no edit removes the text and still satisfies
+    verify(). Retention therefore emits a distinct RedactedTraceV1 and leaves
+    the source trace unmutated. Preserved across redaction - every recorded
+    event_sha256 and parent_sha256, the run replay_sha256, and therefore the
+    linkage invariant, which stays checkable with no content present. Not
+    preserved - the ability to re-derive those digests. A redacted artifact is
+    NOT replay-verified and must not be described as such. LegalHold outranks
+    any window and the redactor refuses outright on a held record.
+  non_role:
+  - Replay verification of a redacted artifact.
+  - Automated release of a LegalHold.
+  - Deletion of hash journals or breaking of parent-hash linkage.
+rust_binding:
+  crate: core_replay
+  module: retention
+  symbols:
+  - RetentionPolicy
+  - RetentionClass
+  - RedactedTraceV1
+  - RedactedEventV1
+  - LegalHold
+  - RetentionError
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

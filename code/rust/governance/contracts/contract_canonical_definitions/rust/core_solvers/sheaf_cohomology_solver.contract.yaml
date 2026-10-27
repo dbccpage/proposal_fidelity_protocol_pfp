@@ -1,0 +1,36 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_solvers:sheaf_cohomology_solver:v1.0.0
+title: Sheaf Cohomology and Mayer-Vietoris Gluing Solver Contract
+status: active
+crate: core_solvers
+file: crates_rs/core_solvers/src/solver_resolution_free_sheaf_cohomology.rs
+role: sheaf_cohomology_and_topological_gluing_solver
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - resolution_free_sheaf_cohomology
+  - mayer_vietoris_gluing
+  - hodge_primal_dual_decomposition
+  - sheaf_contextuality_detection
+does_not_own:
+  - global_topos_axiomatization
+  - authority_promotion
+may_call:
+  - core_homology
+  - core_linear_algebra
+must_not:
+  - report_trivial_cohomology_on_obstructed_sheaf
+  - bypass_mayer_vietoris_coboundary_check
+exactness:
+  numeric_mode: exact_integer_and_f64_cochain
+  exact_certificate_allowed: true
+forbidden_substrings:
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "Sheaf"
+required_tests:
+  - test_sheaf_cohomology_gluing
+lean_obligations: []

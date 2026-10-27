@@ -1,0 +1,41 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_step_realization:v1.0.0"
+title: "Step Realization (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+
+doctrine:
+  summary: >-
+    StepRealization enum differentiating structural and mechanical realizations.
+  invariants:
+    - "Variants are strictly STRUCTURAL and MECHANICAL."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.entities.research_packets
+  python_type: "StepRealization"
+  form: enum
+  variants:
+    - STRUCTURAL
+    - MECHANICAL

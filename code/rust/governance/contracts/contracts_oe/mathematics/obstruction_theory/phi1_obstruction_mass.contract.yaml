@@ -1,0 +1,193 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phi1_obstruction_mass:v1.0.0
+title: Φ₁ obstruction mass
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:cochain_layer:v1.0.0
+    - urn:core:math:exact_repair_space:v1.0.0
+    - urn:core:math:quotient_space:v1.0.0
+    - urn:core:math:hashes:v1.0.0
+    - urn:core:math:phi1:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'Primary obstruction mass: the weighted ℓ¹ quotient norm on Q¹.'
+  symbol: Φ₁
+  ascii_symbol: Phi1
+  formula: Φ₁([ω]) = inf_α ||ω - d₀α||_{1,w}
+  1. Contract metadata:
+    title: Φ₁ obstruction mass
+    version: 0.2.0
+    object_type: quotient_norm_functional
+  2. Mathematical object / functional role:
+    role: 'Primary obstruction mass: the weighted ℓ¹ quotient norm on Q¹.'
+    purpose: Measures residual mass after all exact repairs in B¹ have been minimized out.
+    non_role:
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: '[ω] ∈ Q¹ represented by ω ∈ C¹'
+    codomain: exact nonnegative rational with replayed primal-dual evidence, or an explicitly non-authority
+      display diagnostic
+  4. Required structures:
+    required:
+    - valid cochain layer (C⁰, C¹, C², d₀, d₁)
+    - B¹ = im(d₀)
+    - Q¹ = C¹ / B¹
+    - weight profile w
+    - ω ∈ C¹
+    - weighted ℓ¹ norm ||·||_{1,w}
+    witness_modes:
+      primal_witness:
+        optional: false
+        required_for: every certified Phi1 claim
+        fields:
+        - α* ∈ C⁰
+        - h₁* = ω - d₀α*
+        - '||h₁*||_{1,w}'
+      dual_witness:
+        optional: false
+        required_for: every certified Phi1 claim
+        fields:
+        - φ* ∈ C¹*
+        - d₀ᵀφ* = 0
+        - '||φ*||_{∞,w*} <= 1'
+        - <φ*, h₁*> = Φ₁
+      exact_solver_transcript:
+        optional: true
+        note: May supplement replay, but never replaces the mandatory primal and dual witnesses.
+  5. Definition:
+    primal: Φ₁([ω]) = inf_α ||ω - d₀α||_{1,w}
+    dual: 'when applicable, Φ₁([ω]) = max_φ <φ,ω> subject to d₀ᵀφ = 0 and ||φ||_{∞,w*} <= 1, where w*
+      is the dual norm convention induced by the weighted ℓ¹ norm.
+
+      '
+    exact_zero_mode: ExactRepair iff Φ₁ = 0 in exact arithmetic.
+    tolerance_mode: Tolerance values are display diagnostics only and cannot emit exact Φ₁ claims.
+    certified_scalar_mode: A scalar is certified only with replayable exact primal and dual evidence whose
+      objective values match.
+  6. Laws and invariants:
+    quotient_invariance: Φ₁([ω + d₀β]) = Φ₁([ω])
+    nonnegativity: Φ₁ >= 0
+    exact_repair: Φ₁ = 0 iff ω ∈ B¹
+    quotient_norm: Φ₁ is a norm/seminorm on Q¹ depending on the declared layer assumptions; WIP must state
+      exact assumptions.
+    hierarchy: Φ₁ dominates Γ₂ and Ξ; neither may override worse Φ₁.
+    saturation: Every certified claim satisfies <φ*, ω> = <φ*, h₁*> = Φ₁ = ||h₁*||_{1,w}.
+  7. Equality / equivalence rules:
+    scalar_equality: Exact scalar equality in exact mode; tolerance comparison only with declared tolerance
+      profile.
+    quotient_equality: If ω₁ - ω₂ ∈ B¹, then Φ₁([ω₁]) = Φ₁([ω₂]).
+    representative_warning: Different representatives of the same Q¹ class may have different raw ℓ¹ norms
+      but must have the same Φ₁.
+  8. Replay / determinism requirements:
+    requirements:
+    - Optimization problem statement is frozen.
+    - Layer, basis, d₀, weights, and ω are hash-bound in any replay artifact.
+    - Tie policies are declared if h₁* is exported as a canonical residual.
+    - Dual feasibility is replayable when dual witness is claimed.
+    - Raw floats are approximate display values, not exact certificates.
+    - A cochain obstruction packet refuses any Φ₁ claim without both witnesses.
+  9. Relationship to other Core primitives:
+    relationships:
+      B1: Φ₁ = 0 iff the class is exact.
+      Q1: Φ₁ is defined on Q¹.
+      Gamma2: Γ₂ is checked after Φ₁ on a selected residual h₁*.
+      Xi: Ξ is tertiary only after Φ₁/Γ₂ tie.
+      R: Residual projection R selects a deterministic Φ₁-minimizing representative when TieR is declared.
+      EvaluationHierarchy: Φ₁ is the first lexicographic key.
+  10. Rust descriptor shape:
+    sketch: "pub struct ExactPhi1Certificate {\n    pub omega: Vec<BigRational>,\n    pub d0: Vec<Vec<BigRational>>,\n\
+      \    pub weights: Vec<BigRational>,\n    pub alpha: Vec<BigRational>,\n    pub primal_residual:\
+      \ Vec<BigRational>,\n    pub dual_witness: Vec<BigRational>,\n    pub reported_value: BigRational,\n\
+      }\n\npub fn verify_exact_certificate(\n    certificate: ExactPhi1Certificate,\n) -> Result<VerifiedExactPhi1,\
+      \ ExactPhi1CertificateError>;\n"
+  11. Negative definition tests:
+    tests:
+    - Φ₁ computed as ||ω||₁ without minimizing over B¹.
+    - Φ₁ depends on representative choice inside the same Q¹ class.
+    - Dual witness violates d₀ᵀφ = 0.
+    - Dual witness violates ||φ||_{∞,w*} <= 1.
+    - Primal and dual values disagree.
+    - Saturation identity fails.
+    - Raw float treated as exact certificate.
+    - Γ₂ or Ξ used to override worse Φ₁.
+    - Canonical h₁* exported without TieR when multiple minimizers exist.
+    - Φ₁ is not the raw representative norm ||ω||₁ unless d₀α=0 is optimal.
+  12. Open questions / WIP status:
+    wip:
+    - General certificate-producing LP witness generation beyond specialized solvers.
+    - Canonical residual export policy when minimizer is nonunique.
+  compact_yaml:
+    PHI1_OBSTRUCTION_MASS_CONTRACT:
+      symbol: Φ₁
+      ascii_symbol: Phi1
+      formula: Φ₁([ω])=inf_α ||ω-d₀α||_{1,w}
+      status: exact_rational_certificate_gate_implemented
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: Q¹ represented by ω in C¹
+      codomain: nonnegative scalar
+      required_structures:
+      - valid layer
+      - weights
+      - ω
+      - B¹
+      - Q¹
+      - weighted ℓ¹ norm
+      - mandatory α* for certified claims
+      - mandatory h₁* for certified claims
+      - mandatory φ* for certified claims
+      definition: weighted ℓ¹ quotient norm; dual max when applicable
+      laws:
+      - quotient invariant
+      - nonnegative
+      - Φ₁=0 iff ExactRepair
+      - Φ₁ dominates Γ₂ and Ξ
+      forbidden_interpretations:
+      - raw norm ||ω||₁
+      - raw float exact certificate
+      - Γ₂/Ξ override
+      - canonical residual without TieR
+      relationships:
+      - primary evaluation key
+      - defined on Q¹
+      - feeds Γ₂ through selected residual h₁*
+      - R selects a minimizing representative
+      negative_tests:
+      - no minimization
+      - representative-dependent value
+      - dual infeasible
+      - dual norm violation
+      - primal/dual mismatch
+      - saturation failure
+      - raw float exact
+      - Γ₂/Ξ override
+      open_questions:
+      - general certificate-producing solver generation
+      - canonical residual export policy
+
+rust_binding:
+  crate: core_types
+  module: obstruction_mass
+  symbols:
+  - ObstructionMass
+  - ObstructionMassError
+  - EvidenceBindings

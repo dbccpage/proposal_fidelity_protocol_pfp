@@ -1,0 +1,70 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:observer:v1.1.0
+title: Observer
+status: active
+crate: core_types
+file: crates_rs/core_types/src/observer.rs
+role: state
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: false
+owns:
+- the declared observer descriptor and its kind
+- the three-law replay witness and the attestation that seals it
+does_not_own:
+- the observer map itself, which the solver or evaluator applies
+- proof that the three laws hold
+- observer identity grammar, which is core_kernel::ObserverId
+may_call: []
+must_not:
+- accept an unvalidated observer identity
+- expose the fields of VerifiedObserver
+- claim the three laws hold from an attestation alone
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+laws:
+- 'Indexed identity law: an observer id is an core_kernel::ObserverId, parsed and
+  canonical. A bare String field accepted every spelling including the empty one.'
+- 'Sealed attestation law: VerifiedObserver holds private fields and attest is its
+  only constructor, so a consumer that demands the type -- observer_quotient does --
+  cannot be handed a bare Observer wearing the name.'
+- 'Wire seal law: deserialization routes through UntrustedVerifiedObserverWire and
+  attest, so an untrusted payload cannot bypass the private fields with unset or
+  reused replay hashes.'
+- 'Independent witness law: the three observer laws are independent, so attest
+  requires three set, pairwise-distinct replay hashes. One replay cannot witness
+  idempotence, repair-compatibility and lossiness at once.'
+- 'Honest scope law: attest establishes that three distinct replays were recorded.
+  It does NOT re-run the observer map, which is not stored here, so it does not
+  establish that the laws hold. Whoever produced the replays vouches for that, and
+  the type must not be read as more than that.'
+- 'Erasure law: observers erase distinctions and never create them. Nothing in this
+  file may add structure to a quotient.'
+- 'Authority law: an attested observer carries no authority.'
+forbidden_substrings:
+- 'pub observer:'
+- 'pub witness:'
+- 'id: String'
+- 'f64'
+- 'unwrap_or_default'
+required_substrings:
+- 'pub struct VerifiedObserver'
+- 'pub fn attest'
+- '#[serde(try_from = "UntrustedVerifiedObserverWire")]'
+- 'core_kernel::ObserverId'
+required_tests:
+- an_observer_id_must_be_canonical
+- three_distinct_replays_attest
+- an_unset_replay_is_refused_for_each_law
+- one_replay_cannot_witness_two_laws
+- all_three_laws_sharing_one_replay_is_refused
+- a_malformed_observer_id_is_refused_on_the_wire
+- an_observer_survives_a_serde_round_trip
+- an_unset_replay_cannot_deserialize_as_verified
+- a_reused_replay_cannot_deserialize_as_verified
+- a_verified_observer_survives_a_serde_round_trip
+lean_obligations: []

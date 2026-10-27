@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:weighted_choi_kraus_channels:v0.1.0
+title: Constructive exact Choi and weighted Kraus channels
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: weighted_choi_kraus_channels
+  symbol: weighted_choi_kraus_channels
+  ascii_symbol: weighted_choi_kraus_channels
+  notation: Constructive exact Choi and weighted Kraus channels
+  domain:
+  - Bounded finite rectangular CPTP maps over Q(i), nonnegative rational weights, explicit four-square search
+    budget
+  codomain:
+    description: Declared finite results of core_quantum_physics::exact_channel; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Exact LDL* produces a Kraus family of size rank(J)
+- Kraus and Choi agree on every matrix unit
+- Bounded four-square splitting yields an ordinary isometry in the original field
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: exact_channel
+  symbols:
+  - ExactChoiMatrix::weighted_kraus
+  - ExactKrausChannel::to_unit_weight
+  - ExactKrausChannel::kraus_rank
+  required_tests:
+  - states_channels_exact_tests::channels_have_choi_kraus_metric_stinespring_and_ordinary_routes
+  - states_channels_exact_tests::rectangular_channel_factorization_and_malformed_choi_refusals
+negative_tests:
+- states_channels_exact_tests::rectangular_channel_factorization_and_malformed_choi_refusals
+doctrine:
+  summary: Exact LDL* produces a Kraus family of size rank(J); Kraus and Choi agree on every matrix unit; Bounded
+    four-square splitting yields an ordinary isometry in the original field.
+  non_role:
+  - Does not derive CPTP dynamics or claim minimal ordinary environment dimension after four-square splitting
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

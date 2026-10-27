@@ -1,0 +1,94 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:incidence_matrix:v1.0.0
+title: Incidence Matrix Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: oriented_incidence_matrix
+  symbol: B ∈ {-1,0,+1}^{m×n}
+  ascii_symbol: incidence_matrix
+  notation: B ∈ {-1,0,+1}^{m×n}
+  domain:
+  - 'rows: edges or k-cells'
+  - 'cols: vertices or (k-1)-cells'
+  - 'entries: integers from {-1, 0, +1}'
+  codomain:
+    description: 'A finite rectangular matrix with integer entries from {-1, 0, +1}. Rows index edges/k-cells, columns index vertices/(k-1)-cells.
+
+      '
+requirements:
+  required_structures:
+  - 'For each edge (source, target), matrix entry (edge_index, source) = -1 and entry (edge_index, target) = +1
+
+    '
+  - All vertex indices must be in range [0, num_nodes)
+  - No edge may have source == target
+  - All matrix entries must be in {-1, 0, +1}
+  - Number of matrix rows equals number of edges
+  - Number of matrix columns equals number of vertices
+  - Edge list order determines row order (no implicit reordering)
+laws:
+- 'For edge e = (source, target), entry (e, source) = -1 and entry (e, target) = +1, all other entries in row e are 0.
+
+  '
+- No edge may connect a vertex to itself (source ≠ target)
+- Number of edges/cells and vertices/cells are finite
+- For chain complexes, B_{n-1} · B_n = 0 (d² = 0)
+- Same graph/complex yields same matrix (deterministic edge ordering)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Edge ordering must be deterministic
+  - Same graph yields same matrix hash
+relationships:
+- urn:math:contract:BasicMatrix:v1.0.0 serves as underlying_matrix_structure
+- urn:math:contract:BoundaryMap:v0.1.0 serves as boundary_operator_connection
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::incidence_matrix
+  symbols:
+  - incidence_matrix
+  - incidence_matrix_dmatrix
+  - IncidenceMatrixError
+  # One test per mechanically-checkable negative_test that the source actually
+  # rejects. num_nodes==0 is accepted as a 0-row matrix; entry-set and
+  # ordering obligations have no constructor check. The last two negatives
+  # stay unnamed rather than faked.
+  required_tests:
+  - invalid_source_rejected
+  - invalid_target_rejected
+  - self_loop_rejected_if_forbidden
+negative_tests:
+- Edge with source >= num_nodes must be rejected
+- Edge with target >= num_nodes must be rejected
+- Edge with source == target must be rejected
+- Graph with num_nodes == 0 must be rejected
+- Entries outside {-1, 0, +1} must be rejected
+- Same graph with different ordering must be rejected
+doctrine:
+  summary: Oriented incidence matrix for graphs and simplicial complexes. Rows represent edges/higher cells, columns represent vertices/lower cells. Entries are ±1 or 0 indicating incidence relations. The incidence matrix encodes the boundary operator and supports the boundary law d² = 0 for chain complexes.
+  non_role:
+  - Computing homology groups (separate HomologyGroup contract)
+  - Graph algorithms (shortest path, connectivity, etc.)
+  - Sparse matrix optimization (separate sparse_matrix contract)
+  - Weighted or multi-edge graphs (only simple oriented edges)
+  - Higher-dimensional incidence beyond simplicial/cubical complexes

@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_field:v0.1.0
+title: 'Finite Field GF(p^k) Contract'
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_field
+  symbol: 'GF(p^k) = F_p[x] / (f), f monic irreducible of degree k'
+  ascii_symbol: finite_field
+  notation: 'GF(p^k) = F_p[x] / (f), f monic irreducible of degree k'
+  domain:
+  - 'prime p'
+  - 'degree k >= 1'
+  - 'monic modulus of degree k over F_p'
+  codomain:
+    description: 'The field GF(p^k) with every element enumerated, addition, multiplication, powers and the absolute trace to F_p.'
+requirements:
+  required_structures:
+  - 'p must be prime; a degree of zero or an overflowing order p^k is refused'
+  - 'The absolute trace lands in F_p; a reducible modulus is detected by the trace leaving F_p'
+  - 'Irreducibility is decided by trial division by monic divisors up to half the degree'
+laws:
+- 'a^(q-1) = 1 for every nonzero a in GF(q) (Fermat)'
+- 'The trace has uniform fibres: every value of F_p is taken q/p times'
+- 'Every nonzero element has a multiplicative inverse'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- 'binary_field serves as the packed form of GF(2^k)'
+- 'character_sum serves as the consumer that builds additive characters from the trace'
+rust_binding:
+  crate: core_number_theory
+  module: finite_field
+  symbols:
+  - 'FiniteField'
+  - 'FieldElement'
+  - 'find_irreducible_monic'
+  - 'is_irreducible_monic'
+  - 'is_prime'
+  - 'checked_pow'
+  required_tests:
+  - 'the_trace_lands_in_f_p_with_uniform_fibres'
+  - 'the_field_axioms_hold_on_gf27'
+  - 'constructors_refuse_non_primes'
+  - 'irreducibility_helpers_refuse_invalid_or_reducible_inputs'
+  - 'a_reducible_modulus_is_not_a_field_and_fails_the_identities'
+negative_tests:
+- 'A composite characteristic must be refused by the checked constructors'
+- 'A reducible modulus must not be accepted as irreducible'
+- 'A field whose order overflows usize must be refused'
+doctrine:
+  summary: 'Enumerated finite fields GF(p^k) as polynomials over F_p modulo a monic irreducible, with the absolute trace used to build additive characters.'
+  non_role:
+  - 'Large finite fields that cannot be enumerated'
+  - 'Elliptic curves over finite fields'
+wip:
+- 'FiniteField::new does not check irreducibility of a supplied modulus (use with_first_irreducible)'
+- 'arithmetic uses usize coefficients and is not hardened against a mismatched element degree'

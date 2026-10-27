@@ -1,0 +1,231 @@
+schema_version: core.contract.v1
+contract_id: urn:core:state:carrier:v1.0.0
+title: Carrier
+kind: state_contract
+status: mathematical_wip
+layer: 01_state
+role: Carrier
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - TypeAndKindContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the Carrier boundary.
+
+
+    Carrier is declared structure, not a live mutable object. Carrier changes require a licensed
+
+    transition executed by Engine and recorded by Trace.
+
+
+    Carrier is finite declared structure.
+
+    Carrier does not act as world, model, ontology, semantic domain, embedding space, terminalizer,
+
+    or executor.
+
+    '
+  non_role: &id002
+  - mutation without certified transition
+  - self-modification
+  - implicit carrier change
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate, terminalize,
+
+      authorize transitions, execute transitions, or upgrade evidence authority.
+
+
+      LLM output may propose carrier schemas or carrier declarations, but those proposals are
+
+      EvidenceOnly until checked against this contract.
+
+      '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'Certificate authority MUST NOT exceed attached evidence authority. No carrier certificate may
+
+      claim authority beyond the evidence it binds.
+
+      '
+  classification:
+    subsystem: Cohomological Semantics
+    role: Finite declared structure.
+    classification: 'State layer -- carrier is NOT an operator. It is the state space that operators act
+      upon. Carrier has no effect-class assignment (effect_class: none). Only the five canonical effect-classes
+      (E, I, C, R, M) are operators.'
+  structural_representation:
+    carrier_artifact:
+      struct_name: CarrierArtifact
+      fields:
+      - name: carrier_id
+        type: CarrierId
+      - name: carrier_kind
+        type: CarrierKind
+      - name: c0_ref
+        type: SpaceRef
+      - name: c1_ref
+        type: SpaceRef
+      - name: c2_ref
+        type: SpaceRef
+      - name: d0_ref
+        type: CoboundaryMapRef
+      - name: d1_ref
+        type: CoboundaryMapRef
+      - name: admissible_repair_set
+        type: RepairSetRef
+      - name: context_family
+        type: ContextFamilyRef
+      - name: coefficient_semantics
+        type: CoefficientDomainId
+      - name: schema_hash
+        type: Hash256
+      - name: carrier_hash
+        type: Hash256
+      - name: chain_law_witness
+        type: Option<WitnessId>
+      - name: chain_law_certificate
+        type: Option<CertificateId>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    layer_split_note: "Computational carrier implementations are not authority-bearing by themselves.\
+      \ The intended\nlayer split is:\n\nCarrier\n  exact in-memory computational cochain complex\n  no\
+      \ authority effect\n  no contract promotion\n\nCarrierManifest\n  serializable identity/evidence\
+      \ for exact Carrier\n\nCarrierArtifact\n  contract-level declared carrier record\n  EvidenceOnly\
+      \ by default\n\nCheckedCarrierArtifact\n  checked contract wrapper\n  FactOnly only after validation/certificate\
+      \ refs\n"
+  chain_cochain_law: 'A Carrier MUST declare:
+
+
+    d1 ∘ d0 = 0
+
+
+    The law must be witnessed or certified.
+
+
+    A structure without a declared and checked `d1 ∘ d0 = 0` witness or certificate is not a valid
+
+    checked cohomological carrier. It may exist only as an unchecked carrier proposal.
+
+    '
+  requires:
+  - $C^0$, $C^1$, $C^2$
+  - '$d_0: C^0 \to C^1$'
+  - '$d_1: C^1 \to C^2$'
+  - $d_1 \circ d_0 = 0$
+  - admissible_repair_set
+  - context_family
+  - coefficient_semantics
+  - carrier hash
+  - declared schema
+  - declared repair image
+  - declared context family
+  - chain/cochain law witness or certificate
+  must_not:
+  - Be defined as "world", "model", "ontology", "semantic domain", or "embedding space".
+  - Hide topology in labels.
+  - Infer faces from cycles without declared 2-cells.
+  - Treat embeddings as carrier structure.
+  - Treat LLM latent space as carrier structure.
+  admissibility_checklist:
+  - Carrier type is declared
+  - Carrier algebra is well-formed (d1 compose d0 = 0)
+  - Dimension/rank is bounded and explicit
+  - Base field is specified
+  - Carrier transitions require a licensed transition executed by Engine. The transition may be supported
+    by a certified fixed-layer effect-class application, but the operator certificate is not itself the
+    state transition.
+  - Admissible repair set is declared
+  - Context family is declared
+  - Coefficient semantics are declared
+  - Carrier hash is deterministic and stable
+  - Chain/cochain law is witnessed or certified
+  refusal_conditions:
+  - Untyped carrier (carrier without declared type)
+  - Undeclared carrier transition (state change without certified path)
+  - Carrier mutation without licensed Engine transition
+  - Implicit expressivity change (carrier dimension or rank change without declaration)
+  - Dimension mismatch (declared dimension does not match structure)
+  - Carrier without chain/cochain law witness
+  - Carrier self-modification (carrier acting on itself)
+  - note: Checked E/I/C/R/M evidence may support a transition license, but cannot mutate carrier state
+      by itself.
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - world_model
+    - ontology
+    - semantic_domain
+    - embedding_space
+    - latent_space
+    - infer_faces_from_cycles
+    - PolicyDecision
+    - EngineDecision
+    - TerminalEnvelope
+    - ALLOW_OUTPUT
+    - BLOCK_OUTPUT
+    - terminalize(
+    - execute(
+    - mutate_runtime
+    - authorize_transition
+    - score_candidate
+    - quality_score
+  required_tests:
+  - carrier_authority_effect_defaults_to_evidence_only
+  - checked_carrier_may_promote_to_factonly
+  - carrier_requires_c0_c1_c2
+  - carrier_requires_d0_d1
+  - carrier_verifies_d1_d0_zero
+  - carrier_requires_admissible_repair_set
+  - carrier_requires_context_family
+  - carrier_rejects_world_model_label
+  - carrier_rejects_embedding_space_claim
+  - carrier_rejects_cycles_as_faces_without_declared_2cells
+  - same_carrier_same_hash
+  - carrier_transition_requires_engine_license
+  - carrier_certificate_does_not_execute_transition
+  - carrier_requires_schema_hash
+  - carrier_requires_chain_law_witness_or_certificate
+  - carrier_does_not_treat_operator_certificate_as_mutation
+  canonical_invariant: 'Carrier is finite declared cohomological structure. It is not world, ontology,
+    semantic domain,
+
+    embedding space, terminalizer, or executor. Carrier artifacts are EvidenceOnly until checked.
+
+    Carrier mutation requires a licensed Engine transition; certificates and operators do not mutate
+
+    carrier state by themselves.
+
+    '
+  legacy_metadata:
+    name: Carrier
+    role: Typed algebraic state space over which all computations, measurements, and transformations operate
+    classification: state
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: StructureArtifact
+    domain_output_kind: CarrierArtifact
+    checked_domain_output_kind: CheckedCarrierArtifact
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.

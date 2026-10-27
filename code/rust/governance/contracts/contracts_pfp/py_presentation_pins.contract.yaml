@@ -1,0 +1,62 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# pfp/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_presentation_pins:v1.0.0"
+title: "Presentation Pin Registry (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    Every rewrite presentation this host recognises, by name. The
+    registry a packet's presentation_ref is resolved against, and the
+    only place a decider may obtain rules.
+  invariants:
+    - "Built in the entrypoint layer from the governance pin file. This
+       type reads no file and accepts no presentation from a packet: a
+       pin set the producer can extend is not a pin set. The Rust side
+       gets the same guarantee from PresentationPins deriving no
+       Deserialize."
+    - "resolve() returning None is a statement about THIS HOST, not about
+       the name. A decider must then report UNCHECKABLE with the blind
+       spot named, never a refusal -- the row may be about something
+       legitimate this estate does not pin."
+    - "from_wire refuses undeclared fields and duplicate names. Two
+       presentations under one key make every lookup ambiguous, and
+       the key is what presentation_ref resolves against."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.presentation_pins
+  python_type: "PresentationPins"
+  form: dataclass
+  fields:
+    - name: by_name

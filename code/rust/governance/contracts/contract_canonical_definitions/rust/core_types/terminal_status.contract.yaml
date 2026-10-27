@@ -1,0 +1,63 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_types:terminal_status:v1.0.0
+title: TerminalStatus
+status: active
+crate: core_types
+file: crates_rs/core_types/src/terminal_status.rs
+role: state
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: false
+owns:
+- the general derivation and search terminal taxonomy
+- the total mapping from a terminal to its authority level and residual class
+- the T_auth projection, which is the only terminal-to-AuthorityTerminal path
+does_not_own:
+- the Q-continuum terminal vocabulary, which its own doc scopes to that layer
+- the obstruction trichotomy, which is core_policy::trichotomy
+- authority itself; a tag reaches Certifiable and stops there
+may_call: []
+must_not:
+- return Certified from a terminal tag alone
+- decide a terminal by a floating-point tolerance
+- leave a variant out of the enumerated taxonomy
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+laws:
+- 'Exhaustive taxonomy law: ALL_TERMINAL_STATUSES lists every variant exactly once.
+  A gate that iterates the list would otherwise skip a terminal in silence, which is
+  the ambiguous terminal state rubric section 6 prohibits.'
+- 'No-authority-from-a-tag law: authority_level reaches Certifiable and no further.
+  Promotion needs a CertifiedAuthority, and this file cannot mint one.'
+- 'Projection law: authority_terminal is the sole mapping into AuthorityTerminal, and
+  only ExactRuleDerived and UniqueOutputDerived project at all.'
+- 'Totality law: authority_level and residual_class are defined for every variant.'
+- 'Budget honesty law: BudgetUnknown is a resource debt record. It classifies Open,
+  projects to no authority terminal, and cannot teach -- it is never an obstruction
+  class and never a pass.'
+- 'Exactness law: no terminal here is decided by a float. The two boundary-closure
+  gates that decided is_terminal by `residual < tolerance` were deleted, not moved.'
+forbidden_substrings:
+- 'f64'
+- 'f32'
+- 'EPSILON'
+- 'tolerance'
+- 'AuthorityLevel::Certified'
+required_substrings:
+- 'pub enum TerminalStatus'
+- 'pub const ALL_TERMINAL_STATUSES'
+- 'pub fn authority_terminal'
+- 'pub fn residual_class'
+required_tests:
+- all_terminal_statuses_is_exhaustive_and_duplicate_free
+- every_terminal_has_authority_and_residual_mapping
+- certified_terminals_are_the_only_teaching_terminals
+- refused_and_parse_refused_are_not_certified
+- authority_level_never_returns_certified_from_tag_alone
+- budget_unknown_is_a_resource_record_not_an_obstruction_class
+- terminal_from_fiber_enforces_count_invariants
+lean_obligations: []

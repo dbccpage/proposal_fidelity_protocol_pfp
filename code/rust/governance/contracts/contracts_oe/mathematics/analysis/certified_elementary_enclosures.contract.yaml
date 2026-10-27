@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:certified_elementary_enclosures:v0.1.0
+title: Certified Rational Elementary Enclosures
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: certified_elementary_enclosures
+  symbol: certified_elementary_enclosures
+  ascii_symbol: certified_elementary_enclosures
+  notation: Certified Rational Elementary Enclosures
+  domain:
+  - Exact rational points or intervals in the declared domains
+  - Supported precision and argument bounds
+  codomain:
+    description: Exact finite constructions implemented by core_kernel::elementary; results remain scoped
+      to the declared carrier and budgets.
+requirements:
+  required_structures:
+  - Exact arithmetic and explicit finite carrier validation
+  - A typed refusal for unsupported or exhausted computations
+laws:
+- Every returned interval contains the mathematical image
+- Point-function enclosures satisfy their declared absolute width
+- Series truncation uses a derived tail bound, never a floating approximation
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact independent witness replay where a witness is returned
+relationships: []
+rust_binding:
+  crate: core_kernel
+  module: elementary
+  symbols:
+  - ElementaryError
+  - pi_enclosure
+  - ln_enclosure
+  - exp_enclosure
+  - sqrt_enclosure
+  - sin_enclosure
+  - cos_enclosure
+  required_tests:
+  - enclosures_obey_rational_bounds_and_inverse_relations
+  - elementary_domains_and_interval_widths_are_checked
+negative_tests:
+- Refuse invalid domains, unsupported precision and oversized arguments
+doctrine:
+  summary: Certified Rational Elementary Enclosures on a declared finite carrier.
+  non_role:
+  - PROVED, GlobalGreen, or operational authority
+  - Continuum or infinite-carrier completion claims
+wip:
+- Executable finite checks are local evidence; no theorem-prover discharge is asserted.

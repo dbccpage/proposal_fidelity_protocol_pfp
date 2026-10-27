@@ -1,0 +1,44 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:oesos_cascade:v0.1.0
+title: OESOS Cascade Object Set
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+owner:
+  playpen_package: engine.crates.solver.solv_solver_of_solvers
+paper_claims:
+  - OE-000 triad composition
+  - OE-010 DDA letter emission after admission only
+doctrine:
+  summary: >
+    OESOS is a set of objects (problem, registry, stage, queue, receipt, cascade)
+    composing SolverKernel EvidenceOnly work under Prime 000 admission and Prime 002
+    continuation. It is not the Engine contract (no StateTransition) and not Pipeline
+    (it may sequence solver stages; Pipeline only records declared flow).
+  objects:
+    - ObstructionProblem
+    - SolverRegistry
+    - CascadeStage
+    - ResidualQueue
+    - CascadeReceipt
+    - OesosCascade
+  non_role:
+    - state_transition
+    - action_license_mint
+    - residual_geometry_reimplementation
+    - phi_gamma_computation_in_cascade_body
+  must_delegate_math_to:
+    - homology
+    - functional
+    - linear_algebra
+    - residuals
+  relation_to_engine_contract: not_engine
+  relation_to_pipeline_contract: not_pipeline_may_use_pipeline_for_recording
+  relation_to_solver_kernel: stages_invoke_solver_kernel_evidence_only
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_execution_contract:v1.0.0"

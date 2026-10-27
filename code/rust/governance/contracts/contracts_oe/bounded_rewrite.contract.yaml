@@ -1,0 +1,40 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:bounded_rewrite:v1.0.0
+title: Bounded Rewrite Convergence Controls
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: Pipeline
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - RuntimeMutation
+    required: []
+rust_binding:
+  crate: core_pipelines
+  module: bounded_rewrite
+  symbols:
+  - BoundedRewritePolicy
+  - BoundedRewriteTerminal
+  - BoundedRewriteResult
+  - run_bounded_rewrites
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_execution_contract:v1.0.0"

@@ -1,0 +1,30 @@
+# Math contracts that do not yet bind cleanly to their Rust.
+#
+# Each line is one finding, verbatim, as math_contract_gate.rs emits it. This is
+# the worklist for perfecting the corpus. Findings may shrink when obligations
+# are discharged or be replaced one-for-one when a stale path is reclassified
+# more precisely as a partial realization. New findings still fail the gate.
+#
+# Four kinds appear:
+#   - "resolves to no file"        the module path is stale or the source is gone
+#   - "declares symbol X"          the contract names something the source lacks
+#   - "names no required_tests"    the negative_tests are prose nothing exercises
+#   - "partial_carrier"            the source covers only a declared sub-carrier
+#
+# math/basic_matrix and math/density_matrix are the worked exemplars and are
+# deliberately absent: they pair every mechanically-checkable obligation with a
+# named test. Copy their shape.
+#
+# AuthorityEffect: None.
+
+urn:core:math:combinatorial_chain_functor:v0.1.0: rust_binding core_homology::finite_directed_graph is explicitly partial_carrier, not a complete realization
+urn:core:math:contract_property_witnesses:v1.0.0: declares 5 negative_tests and names no required_tests, so nothing checks that any of them is exercised
+urn:core:math:decoherence:v1.0.0: declares 1 negative_tests and names no required_tests, so nothing checks that any of them is exercised
+urn:core:math:normal_form:v0.1.0: declares 4 negative_tests and names no required_tests, so nothing checks that any of them is exercised
+urn:core:math:observer_gauge:v1.0.0: declares 1 negative_tests and names no required_tests, so nothing checks that any of them is exercised
+urn:core:math:residual:v1.0.0: declares 1 negative_tests and names no required_tests, so nothing checks that any of them is exercised
+urn:core:math:transport_amplitude:v1.0.0: rust_binding core_functional::transport_amplitude is explicitly partial_carrier, not a complete realization
+urn:core:math:weighted_l1_norm:v1.0.0: declares 1 negative_tests and names no required_tests, so nothing checks that any of them is exercised
+urn:core:math:xi_tie_breaker:v1.0.0: required test "test_xi_cannot_decide_when_gamma_worsens" is not a #[test] anywhere in core_functional
+urn:core:math:xi_tie_breaker:v1.0.0: required test "test_xi_cannot_decide_when_phi_worsens" is not a #[test] anywhere in core_functional
+

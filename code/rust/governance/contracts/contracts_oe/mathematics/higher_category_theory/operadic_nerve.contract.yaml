@@ -1,0 +1,99 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:operadic_nerve:v0.1.0
+title: Higher-Dimensional Operadic Nerve Functor Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: operadic_nerve
+  symbol: 'N : ColouredOperad -> (∞, 1)-Cat'
+  ascii_symbol: operadic_nerve
+  notation: N(O) mapping coloured operads to Joyal quasi-categories via simplicial spine nerve
+  domain:
+  - 'coloured_operad: multicategory with colours, multi-ary operations, identities, and unary spine composition'
+  - 'inner_horns: simplicial inner horns Lambda^k_n for 0 < k < n'
+  codomain:
+    description: An operadic nerve functor maps each coloured operad O to a simplicial set N(O) such that the underlying unary spine forms a Joyal quasi-category. Every inner horn Lambda^1_2 composed of compatible operations f01 and f12 admits a constructive filler whose missing face d1 is the operadic composite f12 o_1 f01.
+requirements:
+  required_structures:
+  - Coloured operad with strict unary associativity and unitality.
+  - Functorial realization of underlying 1-category ColouredOperad.toCategory.
+  - Constructive inner horn filler fillInnerHorn2_1 matching outer faces d0 and d2.
+  - Quasi-category satisfaction theorem operadic_nerve_is_quasi_category in Lean 4.
+  - Strictly zero floating-point arithmetic (0 f32/f64) in Rust implementation.
+  - Soviet memory allocation bounds enforced via reserve_exact and OperationLimits.
+  - Deterministic content-addressed artifact hash.
+laws:
+- 'Inner horn filling: every inner horn Lambda^1_2 admits a constructive filler matching d0 and d2'
+- 'Composite realization: the missing face d1 produced by horn filling equals operadic composition'
+- 'Identity preservation: degenerate 1-simplices correspond to operadic identity operations'
+- 'Associativity of composition: nerve 2-simplex compositions associate strictly'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Operations serialized in canonical discrete order
+  - Given identical input operad, produces identical artifact hash
+relationships:
+- urn:core:math:quasi_category:v0.1.0 serves as Target quasicategory structure
+- urn:core:math:simplicial_set:v0.1.0 serves as Simplicial set foundation
+rust_binding:
+  crate: core_higher_category_theory
+  module: operadic_nerve
+  symbols:
+  - ColouredOperad
+  - OperadicNerve
+  - InnerHorn2_1
+  - fill_inner_horn_2_1
+  - OperadicNerve::verify_quasi_category_property
+  required_tests:
+  - test_operadic_nerve_positive_verification
+  - test_kill_mut_on_01_missing_face_d1_mismatch
+  - test_kill_mut_on_02_face_d0_mismatch
+  - test_kill_mut_on_03_face_d2_mismatch
+  - test_kill_mut_on_04_non_associative_composition
+  - test_kill_mut_on_05_non_unital_identity
+  - test_kill_mut_on_06_allocation_cap_exceeded
+
+lean4_binding:
+  module: HigherCategoryTheory.OperadicNerve
+  symbols:
+  - ColouredOperad
+  - OperadicNerve
+  - fillInnerHorn2_1
+  - fillInnerHorn2_1_matches_d0
+  - fillInnerHorn2_1_matches_d2
+  - missingFace_d1_source_target
+  - operadic_nerve_is_quasi_category
+negative_tests:
+- Missing face d1 calculation mismatch (MUT-ON-01)
+- Face d0 boundary mismatch on horn filler (MUT-ON-02)
+- Face d2 boundary mismatch on horn filler (MUT-ON-03)
+- Non-associative operation composition in spine (MUT-ON-04)
+- Non-unital identity operation composition (MUT-ON-05)
+- Allocation limit exceeded in operadic nerve solver (MUT-ON-06)
+doctrine:
+  summary: An operadic nerve functor maps coloured operads to quasi-categories. This provides a bridge between multicategories/coloured operads and Joyal (infinity, 1)-categories, establishing that operadic composition fills inner simplicial horns.
+  non_role:
+  - Continuous topology or smooth operads
+  - Unbounded infinity-operads with non-discrete higher cells
+wip:
+  - Dendroidal nerve of coloured operads to dendroidal infinity-operads
+  - Boardman-Vogt tensor product of operadic nerves

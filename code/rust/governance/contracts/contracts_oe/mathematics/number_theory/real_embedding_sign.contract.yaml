@@ -1,0 +1,87 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:real_embedding_sign:v0.1.0
+title: 'Real Embedding Sign Contract'
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: exact_order_oracle
+  symbol: 'sign( iota_k(x) ), x in Q(zeta_n)^+, iota_k(zeta) = exp(2 pi i k / n)'
+  ascii_symbol: real_embedding_sign
+  notation: 'sign( iota_k(x) ), x in Q(zeta_n)^+, iota_k(zeta) = exp(2 pi i k / n)'
+  domain:
+  - 'x: real element of Q(zeta_n) (fixed by complex conjugation)'
+  - 'class k: integer coprime to n, taken modulo n and up to sign'
+  codomain:
+    description: 'The exact sign (less, equal, greater) of the image of x under the real embedding of class k, and rational enclosures of that image.'
+requirements:
+  required_structures:
+  - 'The embedding of class 1 sends t = zeta + zeta^-1 to the largest root of its minimal polynomial; classes in increasing k take the roots in decreasing order'
+  - 'The sign is decided by rational interval arithmetic on Sturm-isolated intervals, refined until the enclosure excludes zero; zero is decided first, exactly, as the reduced polynomial being zero'
+  - 'A non-real element, a class not coprime to n, and an element of a different conductor are refused'
+  - 'No floating point and no transcendental enclosure appears in any decision'
+laws:
+- 'There are phi(n)/2 real embeddings for n >= 3, one for n <= 2'
+- 'sign_k(x) = sign_1(sigma_k(x)) (Galois covariance)'
+- 'sign_k(sqrt d) is positive exactly when sigma_k fixes sqrt d'
+- 'The number of embeddings with positive x equals the number of positive roots of the characteristic polynomial of x (Sturm)'
+- '2 - t and 2 + t are totally positive for n >= 3'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- 'cyclotomic_field serves as the field whose real subfield is ordered'
+- 'polynomial_ring serves as the Sturm isolation and refinement machinery'
+- 'quadratic_field serves as a source of comparison elements'
+rust_binding:
+  crate: core_number_theory
+  module: real_embedding
+  symbols:
+  - 'RealEmbeddings'
+  - 'real_embeddings'
+  - 'EmbeddingError'
+  required_tests:
+  - 'there_are_phi_over_two_embeddings_indexed_by_classes_coprime_to_the_conductor'
+  - 'a_class_that_shares_a_factor_with_the_conductor_is_refused'
+  - 'the_golden_witness_differs_between_the_two_embeddings_of_q_zeta_5'
+  - 'the_conductor_8_witness_differs_between_the_two_embeddings'
+  - 'the_sign_under_embedding_k_equals_the_canonical_sign_of_the_galois_conjugate'
+  - 'the_sign_of_a_constructed_square_root_follows_its_galois_action'
+  - 'counts_of_positive_and_negative_embeddings_match_sturm_counts_of_the_characteristic_polynomial'
+  - 'a_non_real_element_is_refused_not_given_a_sign'
+  - 'an_element_of_another_field_is_refused'
+  - 'the_zero_element_is_decided_exactly_and_nonzero_elements_never_are_zero'
+  - 'enclosures_contain_the_exact_value_and_respect_the_tolerance'
+negative_tests:
+- 'The sign of a non-real element must be refused'
+- 'A class sharing a factor with the conductor must be refused'
+- 'An element of a different conductor than the embeddings must be refused'
+- 'An enclosure with a non-positive tolerance must be refused'
+doctrine:
+  summary: 'An exact, float-free oracle for the sign and order of real elements of a cyclotomic field under each of its real embeddings, by Sturm-isolated intervals and rational interval arithmetic.'
+  non_role:
+  - 'Floating-point evaluation'
+  - 'Embeddings of non-real elements into C'
+  - 'Positivity of matrices (a consumer concern)'
+wip:
+- 'Isolation of the roots of Psi_n costs a Sturm chain of degree phi(n)/2; very large conductors are slow'
+- 'No Lean counterpart exists for the interval-refinement termination argument'

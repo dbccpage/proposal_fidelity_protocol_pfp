@@ -1,0 +1,110 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:characteristic_polynomial:v0.1.0
+title: Characteristic and Minimal Polynomial Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: matrix_invariant
+  symbol: 'p_A(x) = det(x I − A) ∈ F[x] and the minimal polynomial m_A | p_A'
+  ascii_symbol: characteristic_polynomial
+  notation: 'A ∈ M_n(F), F : Field + ExactRing'
+  domain:
+  - 'matrix: square BasicMatrix<F> of size n'
+  - 'polynomial: coefficients in ascending powers, entry i is the coefficient of xⁱ'
+  - 'budgets: OperationLimits { max_elements, max_scalar_ops }'
+  codomain:
+    description: 'Monic polynomials as vectors of ascending coefficients: the characteristic polynomial (degree n, computed without any division by the Berkowitz algorithm and therefore valid in every characteristic) and the minimal polynomial (least degree d <= n with m_A(A) = 0, found by the first dependence among vec(I), vec(A), vec(A²), …). Also Horner evaluation of a polynomial at a matrix and the nilpotent, idempotent and involution tests.
+
+      '
+requirements:
+  required_structures:
+  - 'The characteristic polynomial has exactly n + 1 entries and the last entry is 1'
+  - 'Only add, mul and neg of the scalar are used by the characteristic polynomial: no division, so characteristic 2 and 3 fields are valid'
+  - 'The Toeplitz column of each trailing block (a, R, C, M) is (1, −a, −R·C, −R·M·C, …, −R·M^(s−2)·C)'
+  - 'The minimal polynomial is monic of degree at most n; the zero matrix gives x, the scalar matrix c·I gives x − c, and the empty matrix gives the constant 1'
+  - 'is_nilpotent tests Aⁿ = 0; is_idempotent tests A² = A; is_involution tests A² = I (a matrix involution, not the field involution); all three refuse a non-square matrix'
+  - 'The worst-case cost charged by the budget is 2n⁴ + 4n³ scalar calls for the characteristic polynomial and n² elements; for the minimal polynomial 2n⁴ plus the reductions of the n²×(k+1) grids, k = 1..n, on at most n²·(n+1) elements'
+laws:
+- 'Cayley–Hamilton: p_A(A) = 0'
+- 'the coefficient of x^(n−1) is −tr A, and the constant term is (−1)ⁿ det A'
+- 'p_(S A S⁻¹) = p_A and p_(Aᵀ) = p_A'
+- 'p_(c A)(x) has coefficient c^(n−i) · (coefficient of xⁱ in p_A)'
+- 'A is nilpotent iff p_A = xⁿ iff Aⁿ = 0'
+- 'the companion matrix of a monic polynomial has that polynomial as characteristic and as minimal polynomial'
+- 'm_A(A) = 0, m_A divides p_A, and deg m_A equals the rank of {vec(I), vec(A), …, vec(Aⁿ)}'
+- 'the minimal polynomial of the multiplication matrix of a field element is the minimal polynomial of that element'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'Cayley–Hamilton is replayed with evaluate_polynomial_at_matrix, which uses matrix products only'
+  - 'Berkowitz agrees with an independent Faddeev–LeVerrier implementation over BigRational (which divides by k and is valid only in characteristic 0)'
+  - 'Divisibility m_A | p_A is replayed by long division with zero remainder'
+relationships:
+- urn:core:math:determinant:v0.1.0 serves as the constant term up to sign
+- urn:core:math:eigenvalue:v0.1.0 serves as the roots of these polynomials are the eigenvalues, which this contract does not compute
+- urn:core:math:exact_field_matrix:v0.1.0 serves as the products used by Horner evaluation, the power test and the Krylov powers
+- urn:core:math:field_elimination:v0.1.0 serves as the reduction used for the minimal polynomial and the independent determinant route used in tests
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::characteristic_polynomial
+  symbols:
+  - characteristic_polynomial
+  - minimal_polynomial
+  - evaluate_polynomial_at_matrix
+  - is_nilpotent
+  - is_idempotent
+  - is_involution
+  # One test per mechanically checkable negative_test, in declaration order.
+  required_tests:
+  - predicates_and_polynomial_refuse_non_square_input
+  - charpoly_budget_boundary_is_inclusive
+  - minimal_polynomial_refuses_non_square_input_and_respects_its_budget
+  # Positive witnesses of the laws above.
+  # - known_characteristic_polynomials
+  # - companion_matrix_reproduces_its_polynomial
+  # - cayley_hamilton_holds_for_random_matrices_of_size_one_to_six
+  # - the_extreme_coefficients_are_the_trace_and_the_determinant
+  # - the_polynomial_is_a_similarity_invariant
+  # - transpose_and_scaling_behave
+  # - the_algorithm_is_valid_in_small_characteristic
+  # - the_characteristic_polynomial_needs_no_division_even_over_a_ring_with_zero_divisors
+  # - nilpotency_agrees_with_the_characteristic_polynomial_criterion
+  # - berkowitz_agrees_with_faddeev_leverrier_and_satisfies_cayley_hamilton
+  # - known_minimal_polynomials
+  # - the_minimal_polynomial_annihilates_divides_the_characteristic_polynomial_and_is_minimal
+  # - the_minimal_polynomial_of_a_field_element_is_that_of_its_multiplication_matrix
+  # - minimal_polynomials_over_gf2
+negative_tests:
+- the characteristic polynomial, the minimal polynomial, the nilpotent, idempotent and involution tests, and polynomial evaluation at a matrix must refuse a non-square matrix
+- an operation whose documented worst-case bound exceeds the budget must be refused before any scalar work, and a bound equal to the limit must be accepted
+doctrine:
+  summary: 'The characteristic polynomial of a square matrix over any exact field, by the division-free Berkowitz algorithm, and its minimal polynomial, with Horner evaluation at a matrix for the Cayley–Hamilton replay and the three exact tests A^n = 0, A² = A and A² = I. Because no division occurs in the characteristic polynomial, the result is valid over GF(2) and GF(3) at dimensions where the Faddeev–LeVerrier recurrence would divide by zero. The minimal polynomial of a multiplication matrix is the minimal polynomial of the field element it represents.'
+  non_role:
+  - Root finding, factorisation or isolation of the roots (polynomial arithmetic over F belongs to the number-theory crate)
+  - Jordan or rational canonical forms
+  - Eigenvectors and spectral decomposition
+  - Numerical eigenvalue algorithms
+wip:
+- No Lean statement of Cayley–Hamilton or the Berkowitz identity exists; the YAML to Lean to Rust chain for this contract is open
+- The polynomials are returned as raw coefficient vectors; a polynomial type with arithmetic belongs to core_number_theory, which depends on this crate and therefore cannot be imported here
+- The minimal polynomial costs O(n⁵) scalar calls (n reductions of n²-row grids); a Krylov route on single vectors would be cheaper for multiplication matrices of field elements but needs polynomial gcd over F
+- The O(n⁴) characteristic polynomial is conservative for large n; a fraction-free Bareiss route would be cheaper over integer-like fields

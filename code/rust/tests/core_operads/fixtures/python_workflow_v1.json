@@ -1,0 +1,1399 @@
+{
+  "garden": {
+    "identity": {
+      "name": "identity",
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "State"
+    },
+    "grow": {
+      "name": "grow",
+      "source_colours": [
+        "State",
+        "Audit"
+      ],
+      "target_colour": "State"
+    },
+    "wrong": {
+      "name": "wrong",
+      "source_colours": [
+        "State"
+      ],
+      "target_colour": "Proof"
+    }
+  },
+  "vectors": [
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(wf o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [],
+          "is_valid": true,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "none"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(wf o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "AUTHORITY",
+              "detail": "authority_effect is 'none', not None",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "StateTransition"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(wf o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "AUTHORITY",
+              "detail": "authority_effect is 'StateTransition', not None",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": true
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(wf o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "AUTHORITY",
+              "detail": "authority_effect is True, not None",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "EMPTY_PIPELINE",
+              "detail": "a workflow with no steps composes nothing",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": null,
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "EMPTY_PIPELINE",
+              "detail": "a workflow with no steps composes nothing",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": "steps",
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "EMPTY_PIPELINE",
+              "detail": "a workflow with no steps composes nothing",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "missing"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "UNKNOWN_OPERATION",
+              "detail": "'missing' is not a skill in the garden",
+              "step_index": 0,
+              "operation": "missing"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": [
+        "missing"
+      ]
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "UNKNOWN_OPERATION",
+              "detail": "None is not a skill in the garden",
+              "step_index": 0,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "z"
+          },
+          {
+            "slot": 0,
+            "operation": "a"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "UNKNOWN_OPERATION",
+              "detail": "'z' is not a skill in the garden",
+              "step_index": 0,
+              "operation": "z"
+            },
+            {
+              "workflow_id": "wf",
+              "code": "UNKNOWN_OPERATION",
+              "detail": "'a' is not a skill in the garden",
+              "step_index": 1,
+              "operation": "a"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": [
+        "a",
+        "z"
+      ]
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": -1,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "INDEX_OUT_OF_RANGE",
+              "detail": "INDEX_OUT_OF_RANGE: wf has arity 1; slot -1 does not exist",
+              "step_index": 0,
+              "operation": "identity"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": true,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "BAD_INDEX",
+              "detail": "BAD_INDEX: index must be an exact integer",
+              "step_index": 0,
+              "operation": "identity"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 1,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "INDEX_OUT_OF_RANGE",
+              "detail": "INDEX_OUT_OF_RANGE: wf has arity 1; slot 1 does not exist",
+              "step_index": 0,
+              "operation": "identity"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "wrong"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "COLOUR_MISMATCH",
+              "detail": "COLOUR_MISMATCH: wf expects 'State' at slot 0, but wrong produces 'Proof'",
+              "step_index": 0,
+              "operation": "wrong"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "grow"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(wf o_0 grow)",
+            "source_colours": [
+              "State",
+              "Audit"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "INPUT_SIGNATURE_DRIFT",
+              "detail": "the pipeline requires ('State', 'Audit') but the workflow declares ('State',)",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          },
+          {
+            "slot": 0,
+            "operation": "identity"
+          },
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(((wf o_0 identity) o_0 identity) o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [],
+          "is_valid": true,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State",
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          },
+          {
+            "slot": 1,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State",
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "((wf o_0 identity) o_1 identity)",
+            "source_colours": [
+              "State",
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [],
+          "is_valid": true,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "Unknown"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "BAD_SIGNATURE",
+          "message": "BAD_SIGNATURE: wf declares an invalid signature: UNKNOWN_COLOUR: wf declares source colours outside the closed vocabulary: ['Unknown']"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "Unknown",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "BAD_SIGNATURE",
+          "message": "BAD_SIGNATURE: wf declares an invalid signature: UNKNOWN_COLOUR: wf declares target colour 'Unknown', which is outside the closed vocabulary"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "BAD_SIGNATURE",
+          "message": "BAD_SIGNATURE:  declares an invalid signature: BAD_NAME: name must be a nonempty string"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": null,
+      "expected": {
+        "error": {
+          "code": "BAD_INPUT",
+          "message": "BAD_INPUT: workflow must be a parsed object"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": [],
+      "expected": {
+        "error": {
+          "code": "BAD_INPUT",
+          "message": "BAD_INPUT: workflow must be a parsed object"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: Fixture workflow is missing: workflow_id"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: wf is missing: name"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: Fixture workflow is missing: source_colours"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: Fixture workflow is missing: target_colour"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: Fixture workflow is missing: pipeline"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ]
+      },
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: Fixture workflow is missing: authority_effect"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": false
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(wf o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "AUTHORITY",
+              "detail": "authority_effect is False, not None",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": null
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(wf o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "AUTHORITY",
+              "detail": "authority_effect is None, not None",
+              "step_index": null,
+              "operation": null
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": "State",
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "error": {
+          "code": "BAD_SIGNATURE",
+          "message": "BAD_SIGNATURE: wf declares an invalid signature: UNKNOWN_COLOUR: wf declares source colours outside the closed vocabulary: ['S', 'a', 'e', 't']"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": "",
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "INDEX_OUT_OF_RANGE",
+              "detail": "INDEX_OUT_OF_RANGE: wf has arity 0; slot 0 does not exist",
+              "step_index": 0,
+              "operation": "identity"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": 7,
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "7",
+          "declared": {
+            "name": "7",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(7 o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [],
+          "is_valid": true,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": false,
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "False",
+          "declared": {
+            "name": "False",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": {
+            "name": "(False o_0 identity)",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "findings": [],
+          "is_valid": true,
+          "signature_matches": true
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "operation": "identity"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "BAD_INDEX",
+              "detail": "BAD_INDEX: index must be an exact integer",
+              "step_index": 0,
+              "operation": "identity"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": ""
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "UNKNOWN_OPERATION",
+              "detail": "'' is not a skill in the garden",
+              "step_index": 0,
+              "operation": ""
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "wf",
+        "name": "Fixture workflow",
+        "source_colours": [
+          "State"
+        ],
+        "target_colour": "State",
+        "pipeline": [
+          {
+            "slot": 0,
+            "operation": "missing"
+          },
+          {
+            "slot": 0,
+            "operation": "identity"
+          },
+          {
+            "slot": 0,
+            "operation": "missing"
+          }
+        ],
+        "authority_effect": "None"
+      },
+      "expected": {
+        "ok": {
+          "workflow_id": "wf",
+          "declared": {
+            "name": "wf",
+            "source_colours": [
+              "State"
+            ],
+            "target_colour": "State"
+          },
+          "composed": null,
+          "findings": [
+            {
+              "workflow_id": "wf",
+              "code": "UNKNOWN_OPERATION",
+              "detail": "'missing' is not a skill in the garden",
+              "step_index": 0,
+              "operation": "missing"
+            },
+            {
+              "workflow_id": "wf",
+              "code": "UNKNOWN_OPERATION",
+              "detail": "'missing' is not a skill in the garden",
+              "step_index": 2,
+              "operation": "missing"
+            }
+          ],
+          "is_valid": false,
+          "signature_matches": false
+        }
+      },
+      "unknown_operations": [
+        "missing"
+      ]
+    },
+    {
+      "input": {},
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: workflow is missing: workflow_id, name, source_colours, target_colour, pipeline, authority_effect"
+        }
+      },
+      "unknown_operations": []
+    },
+    {
+      "input": {
+        "workflow_id": "fallback-name"
+      },
+      "expected": {
+        "error": {
+          "code": "MISSING_KEYS",
+          "message": "MISSING_KEYS: fallback-name is missing: name, source_colours, target_colour, pipeline, authority_effect"
+        }
+      },
+      "unknown_operations": []
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:observer_comparison_runtime:file:v1.0.0
+title: Scoped observer comparison constructors and diagnostic refusals
+status: active_provisional
+crate: core_types
+file: crates_rs/core_types/src/observer_comparison.rs
+layer: functional
+role: diagnostic_constructor_and_refusal
+authority_effect: none
+evidence_ceiling: ShapeOnly
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - checked_constructor_identity_refusals
+  - shared_source_and_carrier_checks
+  - conservative_hash_derived_status
+  - local_authority_promotion_refusals
+does_not_own:
+  - authentication_of_hash_labels
+  - validation_of_direct_public_struct_or_derived_deserialization
+  - independent_observer_truth
+  - actor_licensing_or_workload_completion
+may_call: []
+must_not:
+  - mint_authority_from_agreement
+  - derive_agreement_from_different_equivalence_hashes
+exactness:
+  mode: scoped_native_and_declaration_witnesses
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "pub fn try_derive_from_equivalence_hashes("
+  - "pub fn refuse_authority_request("
+required_tests:
+  - "observer_comparison::tests::comparison_packet_from_same_source_is_diagnostic_only"
+  - "observer_comparison::tests::conservative_hash_derivation_treats_different_hashes_as_incomparable"
+  - "observer_comparison::tests::comparison_packet_rejects_cross_source_without_transport"
+  - "observer_comparison::tests::comparison_packet_rejects_cross_carrier_without_transport"
+  - "observer_comparison::tests::comparison_packet_refuses_laundering_attempts"
+  - "observer_comparison::tests::comparison_packet_rejects_empty_packet_id"
+  - "observer_comparison::tests::comparison_packet_rejects_zero_carrier_hash"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

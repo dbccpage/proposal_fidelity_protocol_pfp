@@ -1,0 +1,134 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:field_elimination:v0.1.0
+title: Exact Field Elimination Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: linear_algebra_algorithm
+  symbol: 'RREF(A), rank A, ker A, ker Aᵀ, im A, A x = b, A⁻¹, det A over an exact field F'
+  ascii_symbol: field_elimination
+  notation: 'A ∈ M_{m×n}(F), b ∈ Fᵐ, F : Field + ExactRing'
+  domain:
+  - 'matrix: BasicMatrix<F> of shape m×n'
+  - 'right-hand side: slice of F of length m'
+  - 'budgets: OperationLimits { max_elements, max_scalar_ops }'
+  codomain:
+    description: 'The unique reduced row echelon form with its pivot columns, the rank, bases of the right kernel, left kernel and column space, the solution set of A x = b as a particular solution plus a kernel basis or an inconsistency certificate, the inverse of a square matrix or a Singular refusal carrying its rank, and the determinant. Every answer is exact; a scalar that is not a field is refused.
+
+      '
+requirements:
+  required_structures:
+  - 'Gauss–Jordan elimination takes the first nonzero entry of the column as pivot and multiplies by try_inv of the pivot; a nonzero pivot with no inverse is refused as ScalarContract'
+  - 'The pivot columns are strictly increasing, each pivot column of the reduced form is a standard unit vector, and the zero rows come last'
+  - 'kernel_basis returns one vector per free column, in column order, with 1 at its own free column, 0 at the other free columns and minus the reduced-form entries at the pivot columns'
+  - 'image_basis returns the columns of the ORIGINAL matrix at the pivot columns'
+  - 'solve returns Consistent { particular, kernel_basis } with every free variable of the particular solution equal to 0, or Inconsistent with a certificate y satisfying yᵀA = 0 and yᵀb = 1, obtained as a solution of the dual system [Aᵀ; bᵀ] y = e; a consistent answer is replayed as A x = b and a certificate is replayed before it is returned'
+  - 'inverse of a singular matrix is refused as Singular { rank, size } with the true rank; determinant of the empty matrix is 1'
+  - 'Every function has a _with_limits form whose preflight charges the worse of the paths it may take: solve charges the consistent path (replay and kernel basis) or the refusal path (reduction of the dual system [Aᵀ; bᵀ] y = e and the certificate replay), whichever is larger'
+laws:
+- 'The reduced row echelon form of a matrix is unique; rref(rref(A)) = rref(A)'
+- 'rank(A) = |pivot columns| = rank(Aᵀ)'
+- 'rank(A) + dim ker(A) = n (rank–nullity) and rank(A) + dim ker(Aᵀ) = m'
+- 'A v = 0 for every kernel vector v, the kernel vectors are linearly independent, and yᵀ A = 0 for every left-kernel vector y'
+- 'b ∈ im(A) iff yᵀ b = 0 for every y in the left kernel (Fredholm alternative); otherwise a replayable y with yᵀA = 0 and yᵀb != 0 exists'
+- 'the solutions of A x = b are exactly particular + span(kernel_basis)'
+- 'A A⁻¹ = I = A⁻¹ A, and A is invertible iff rank A = n iff det A != 0'
+- 'det(A B) = det A · det B, det Aᵀ = det A, det(c A) = cⁿ det A, and exchanging two rows negates the determinant'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - 'The reduced row echelon form, pivot columns, kernel basis and image basis agree entry for entry with the BigRational instance of ExactRowReduction (uniqueness of the reduced form makes this a differential test)'
+  - 'solve agrees with solve_in_image on verdict and particular solution; determinant agrees with bareiss_determinant on integer matrices'
+  - 'An InconsistencyCertificate replays through verify without trusting the solver'
+relationships:
+- urn:core:math:rank:v0.1.0 serves as the rank realised exactly over any tower field
+- urn:core:math:determinant:v0.1.0 serves as the determinant realised by elimination with sign tracking
+- urn:core:math:subspace:v0.1.0 serves as the kernel, left kernel and column-space bases
+- urn:core:math:exact_field_matrix:v0.1.0 serves as the matrix arithmetic the elimination is built on
+- urn:core:math:exact_scalar_tower:v0.1.0 serves as the scalar protocol
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::elimination
+  symbols:
+  - RowReduced
+  - InconsistencyCertificate
+  - LinearSolution
+  - rref
+  - rank
+  - kernel_basis
+  - left_kernel_basis
+  - image_basis
+  - solve
+  - inverse
+  - determinant
+  - is_invertible
+  # One test per mechanically checkable negative_test, in declaration order.
+  required_tests:
+  - a_non_field_scalar_is_refused_not_miscomputed
+  - inverse_refuses_singular_matrices_with_their_rank_and_non_square_input
+  - a_singular_refusal_is_certified_by_a_kernel_vector_and_a_zero_determinant
+  - solve_inconsistent_yields_a_replayable_certificate
+  - a_certificate_failing_in_a_single_column_is_rejected
+  - solve_handles_empty_shapes_and_refuses_wrong_length
+  - reduction_budget_boundaries_are_inclusive
+  - solve_budget_covers_the_certificate_path
+  - the_kernel_budget_charges_the_output_not_just_the_input
+  - left_kernel_budget_charges_the_output_size
+  - is_invertible_agrees_with_a_nonzero_determinant
+  # Positive witnesses of the laws above.
+  # - rref_matches_hand_computed_reduced_forms
+  # - rref_is_idempotent_with_unit_pivot_columns_and_trailing_zero_rows
+  # - kernel_basis_satisfies_rank_nullity_replay_and_the_free_column_pattern
+  # - image_basis_is_the_pivot_columns_of_the_original_matrix
+  # - solve_returns_a_particular_solution_and_the_whole_kernel
+  # - determinant_tracks_the_sign_of_row_swaps
+  # - determinant_is_multiplicative_transpose_invariant_and_homogeneous
+  # - inverse_round_trips_on_random_invertible_matrices
+  # - a_tall_system_is_charged_linear_not_quadratic_elements
+  # - elimination_over_gf5
+  # - elimination_over_gf2_and_gf3_kernel_signs
+  # - rref_rank_kernel_and_image_agree_entry_for_entry_with_exact_row_reduction
+  # - solve_agrees_with_solve_in_image
+  # - determinant_agrees_with_bareiss_on_integer_matrices
+  # - coefficients_beyond_i64_are_computed_exactly
+negative_tests:
+- a scalar with a nonzero element that has no inverse must be refused as ScalarContract, never produce a rank, kernel or determinant
+- inverse of a singular matrix must be refused as Singular carrying the true rank, the refusal must be certified by a nonzero kernel vector with A x = 0 and a zero determinant, and inverse or determinant of a non-square matrix must be refused as NotSquare
+- an inconsistent system must yield a certificate that verify accepts, and a tampered or unrelated certificate must be rejected, including one that fails in a single column only
+- a right-hand side whose length is not the row count must be refused with both lengths
+- an operation whose documented worst-case bound exceeds the budget must be refused before any scalar work, and a bound equal to the limit must be accepted
+- a budget that covers only the success path of solve but not its certificate path must be refused
+- the kernel and left-kernel budgets must charge the output size, not only the input size
+- is_invertible of a non-square matrix must be refused rather than answer false
+doctrine:
+  summary: 'Exact elimination over any field of the scalar tower: reduced row echelon form, rank, right kernel, left kernel, column-space basis, the linear system A x = b with a replayable refusal certificate, the inverse and the determinant. It removes the restriction of the pre-existing elimination to Rational64 and BigRational, so the same algorithms serve Q(i), cyclotomic fields, finite fields and real quadratic fields, and it cross-validates against the pre-existing elimination on BigRational.'
+  non_role:
+  - Numerical linear algebra and conditioning (see eigen and gram_schmidt for the float tier)
+  - Fraction-free integer elimination (determinant::bareiss_determinant is the integer route)
+  - Smith normal form and module structure over rings
+  - Iterative or sparse solvers (solvers belong to core_solvers)
+wip:
+- No Lean statement of the elimination laws exists; the YAML to Lean to Rust chain for this contract is open
+- Pivots are the first nonzero entry, which is exact but can grow coefficient size over fields with large representations; no pivoting strategy for size is implemented
+- The certificate path of solve runs a second elimination (of the dual system [Aᵀ; bᵀ] y = e) instead of tracking row operations in the first
+- Kernel and image bases are returned as Vec<Vec<F>> rather than the sealed RawSubspaceBasis of the Rational64/BigRational route
+- The existing ExactRowReduction trait remains sealed to Rational64 and BigRational; it is not generalised here

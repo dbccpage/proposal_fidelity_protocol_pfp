@@ -1,0 +1,50 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED by pfp/build.rs via the shared engine at
+# engine/crates_rs/contract_shapes_build.rs. Adding, removing or renaming
+# a field without amending this contract is a COMPILE ERROR.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:prime_replay_step_wire:v1.0.0"
+title: "Prime Replay Step Wire"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    PrimeReplayStepWire, operational step record evaluated in prime replay.
+  invariants:
+    - "AuthorityEffect is strictly None."
+  non_roles:
+    - "authority_source"
+  required_negative_capabilities:
+    - no_self_certification
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: prime
+  rust_type: "PrimeReplayStepWire"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: prime_step
+    - name: op
+    - name: executed
+    - name: message

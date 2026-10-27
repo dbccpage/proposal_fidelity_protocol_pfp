@@ -1,0 +1,55 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED by pfp/build.rs via the shared engine at
+# engine/crates_rs/contract_shapes_build.rs. Adding, removing or renaming
+# a field without amending this contract is a COMPILE ERROR.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:host_carrier_edge_wire:v1.0.0"
+title: "Carrier Edge (Host Wire)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    One directed edge of the carrier graph.
+  invariants:
+    - "The carrier is a directed graph on the wire, so a declared cycle is a closed walk and its modulus is its length."
+    - "The edge carries an integer weight, so the carrier is a weighted digraph on the wire and a declared cycle is a closed walk whose modulus is its length."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: protocol
+  rust_type: "CarrierEdgeWireV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: tail
+      rust_type: "usize"
+    - name: head
+      rust_type: "usize"
+    - name: weight_i128
+      rust_type: "i128"

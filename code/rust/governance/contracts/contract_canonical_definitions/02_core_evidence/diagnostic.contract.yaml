@@ -1,0 +1,156 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:diagnostic:v1.0.0
+title: Diagnostic
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Diagnostic
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - HealthModelKernel
+    - AnalysisUnit
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+doctrine:
+  summary: 'Diagnostic is a read-only health reporting component. It emits factual findings and
+
+    measurement references, but it does not prescribe treatment, schedule control flow,
+
+    classify admissibility, terminalize, mutate, authorize, or execute.
+
+    '
+  non_role: &id002
+  - action_prescription
+  - escalation
+  - policy_interpretation
+  - terminal_mapping
+  - transition_authorization
+  - execution
+  authority_defaults:
+    diagnostic_report: EvidenceOnly
+    checked_diagnostic_report: FactOnly only for checked structural and factual health claims.
+  structural_representation:
+    raw:
+      struct_name: DiagnosticReport
+      fields:
+      - name: subject
+        type: BoundaryRef
+      - name: findings
+        type: Vec<DiagnosticFinding>
+      - name: measurements
+        type: Vec<MeasurementRef>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: diagnostic_id
+        type: DiagnosticId
+      - name: report_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedDiagnosticReport
+      fields:
+      - name: report_ref
+        type: DiagnosticReportRef
+      - name: checked_subject_hash
+        type: Hash256
+      - name: checked_finding_hashes
+        type: Vec<Hash256>
+      - name: checker_ref
+        type: CheckerRef
+      - name: replay_ref
+        type: Option<ReplayRef>
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+  flow: 'Declared subject / checked measurement refs
+
+    -> DiagnosticReport
+
+    -> CheckedDiagnosticReport when checked
+
+    -> Evaluator / Policy if decision is needed
+
+    -> TerminalMapper
+
+    -> LicensingBoundary
+
+    -> Engine
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - diagnostic_does_not_mutate_input
+  - diagnostic_does_not_prescribe_action
+  - diagnostic_report_defaults_to_evidence_only
+  - checked_diagnostic_report_may_be_factonly_after_checks
+  - diagnostic_does_not_emit_policy_decision
+  - diagnostic_does_not_authorize_transition
+  - diagnostic_does_not_execute
+  - diagnostic_report_is_evidence_addressable
+  canonical_invariant: 'Diagnostics report health evidence. Checked diagnostics can support factual health
+    claims,
+
+    but never action prescriptions, licenses, or transitions.
+
+    '
+  legacy_metadata:
+    name: Diagnostic
+    source_file: non-math/02_evidence/diagnostic_contract.md
+    active: true
+    machine_authority: true
+    role: Health reporting over declared subjects
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: DiagnosticReport
+    referenced_output_families:
+    - FactEnvelope
+    - Record
+
+rust_binding:
+  crate: core_id_run
+  module: run
+  symbols:
+  - GeneratorEntry
+  - GeneratorTape
+  - RunResult
+  - ExactSignature
+  - InvariantDefectSignature
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

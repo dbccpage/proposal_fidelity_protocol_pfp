@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_exchange_statistics:v0.1.0
+title: Exact Finite Exchange Statistics
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_exchange_statistics
+  symbol: exact_exchange_statistics
+  ascii_symbol: exact_exchange_statistics
+  notation: Exact Finite Exchange Statistics
+  domain:
+  - Declared permutations of at most 4096 entries
+  - Symmetric/alternating projectors with 1<=n<=6 and d^n<=128
+  - Canonical budgeted residue-root helpers for u64 moduli
+  codomain:
+    description: Declared finite results of core_quantum_physics::pair_exchange_characters; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Permutation characters are trivial or the exact cycle-parity sign
+- The averaged symmetric/alternating tensor actions are self-adjoint idempotents
+- Their ranks agree with binomial(d+n-1,n) and binomial(d,n)
+- The zero-fold tensor carrier has dimension one, including d=0
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: pair_exchange_characters
+  symbols:
+  - ExchangeError
+  - permutation_character
+  - exchange_projector
+  - exchange_sector_dimension
+  - exchange_characters_mod
+  - alternating_fixed_values_mod
+  required_tests:
+  - spin_intertwiners_and_exchange_projectors_preserve_exact_sector_dimensions
+negative_tests:
+- Duplicate/out-of-range permutation entries and oversized tensor carriers are refused
+- Alternating sectors vanish when n>d; residue zero-divisor exceptions remain explicit
+doctrine:
+  summary: Permutation characters are trivial or the exact cycle-parity sign; The averaged symmetric/alternating
+    tensor actions are self-adjoint idempotents; Their ranks agree with binomial(d+n-1,n) and binomial(d,n);
+    The zero-fold tensor carrier has dimension one, including d=0.
+  non_role:
+  - No braid-group statistics or general Young-symmetrizer decomposition
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

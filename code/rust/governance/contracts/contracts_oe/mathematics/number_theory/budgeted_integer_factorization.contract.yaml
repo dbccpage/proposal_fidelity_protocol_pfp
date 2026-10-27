@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:budgeted_integer_factorization:v0.1.0
+title: Certified Budgeted Integer and Rational Factorization
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: budgeted_integer_factorization
+  symbol: budgeted_integer_factorization
+  ascii_symbol: budgeted_integer_factorization
+  notation: Certified Budgeted Integer and Rational Factorization
+  domain:
+  - Positive BigUint/BigInt integers and positive BigRational inputs
+  - Declared shared operation budget, including numerator and denominator work
+  codomain:
+    description: Declared finite results of core_number_theory::integer_factorization; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Successful factors are proved prime and their product reconstructs the original input exactly
+- Rational prime exponents are signed and canceled zero exponents are removed
+- Proven deterministic u64 primality and bounded exact larger-integer trial certification are distinguished
+  from an unfinished search
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: integer_factorization
+  symbols:
+  - FactorizationBudget
+  - FactorizationError
+  - factor_natural
+  - factor_integer
+  - factor_positive_rational
+  - is_prime_u64
+  required_tests:
+  - certified_factorization_reconstructs_large_integers_and_refuses_exhaustion
+  - rational_factorization_replays_signed_exponents_and_shares_one_budget
+negative_tests:
+- Zero/nonpositive inputs are refused
+- Operation exhaustion cannot be reported as primality or a complete factorization
+doctrine:
+  summary: Successful factors are proved prime and their product reconstructs the original input exactly; Rational
+    prime exponents are signed and canceled zero exponents are removed; Proven deterministic u64 primality
+    and bounded exact larger-integer trial certification are distinguished from an unfinished search.
+  non_role:
+  - No probabilistic prime claim
+  - No promise to complete arbitrarily large factorization within a finite budget
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

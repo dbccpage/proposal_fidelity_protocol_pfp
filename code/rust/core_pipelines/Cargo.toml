@@ -1,0 +1,50 @@
+[package]
+autotests = false
+name = "core_pipelines"
+version.workspace = true
+edition = "2021"
+description = "Composer for the Pi_S^# authority pipeline: o_K Kleisli composition over the refusal monad, the five-stage terminalizer, the GTLANF idempotent normalizer (ADR-107-001), and the core_certifier_loop diagnostic improver (Sprint core_certifier_loop, 2026-06-21)"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[dependencies]
+core_policy = { path = "../core_policy" }
+core_types = { path = "../core_types" }
+core_homotopy_type_theory = { path = "../core_homotopy_type_theory" }
+core_functional = { path = "../core_functional" }
+core_wdp = { path = "../core_wdp" }
+core_certifiers = { path = "../core_certifiers" }
+core_epk = { path = "../core_local_green_global_red_lggr" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+num-rational = "0.4"
+num-bigint = "0.4"
+num-traits = "0.2"
+blake3 = "1.5"
+thiserror = "2"
+
+[dev-dependencies]
+serde_yaml = "0.9"
+proptest = "1.5"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_pipelines`.
+
+[[test]]
+name = "coda_gtlanf_parity"
+path = "../tests/core_pipelines/coda_gtlanf_parity.rs"
+
+[[test]]
+name = "exact_rewrite_scheduler"
+path = "../tests/core_pipelines/exact_rewrite_scheduler.rs"
+
+[[test]]
+name = "finite_lambda_adapter"
+path = "../tests/core_pipelines/finite_lambda_adapter.rs"
+
+[[test]]
+name = "loop_step_terminalize"
+path = "../tests/core_pipelines/loop_step_terminalize.rs"
+
+[[test]]
+name = "core_runtime"
+path = "../tests/core_pipelines/core_runtime.rs"

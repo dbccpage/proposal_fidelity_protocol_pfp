@@ -1,0 +1,215 @@
+schema_version: core.contract.v1
+contract_id: urn:core:constitution:meta_judgment:v1.0.0
+title: MetaJudgmentAndMetaLift
+kind: constitution_contract
+status: mathematical_wip
+layer: 00_constitution
+role: Constitution
+descriptor:
+  authority_effect: requests_decision
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'MetaJudgment = read-only governance judgment over lift admissibility and authority
+
+    conditions. MetaLiftContract = lift-license artifact or proposed lift contract.
+
+    Engine = only executor of licensed lift transitions.
+
+    '
+  non_role: &id002
+  - lift application
+  - carrier mutation
+  - search execution
+  - candidate scheduling
+  - operator computation
+  - solver computation
+  - measurement computation
+  - evaluator recomputation
+  - terminalization
+  - certificate creation for unverified evidence
+  - certificate authority above attached evidence
+  - engine action execution
+  - trace mutation
+  - storage mutation
+  - unlicensed carrier extension
+  - self-certification of minimality
+  two_forms:
+    MetaJudgment: Read-only 2-morphism-like governance over contracts, operators, and traces. Validates
+      admissibility and composability.
+    MetaLiftContract: 'Licensed boundary artifact describing an admissible carrier-extension transition
+      L_h : C_N -> C_{N+1}. Does not execute.'
+  minimality_enforcement:
+    conditions:
+    - sim_{N+1} is a congruence
+    - For all L' subset L_h, sim_{N+1}^{L'} is not a congruence
+    mechanisms:
+      repair_enabling: A lift is invalid unless obstruction equivalence becomes a congruence after the
+        lift.
+      delta_law: Unary lift (Delta=1) iff already a congruence but names lacking. Binary lift (Delta=2)
+        iff not a congruence. Higher-arity lifts presently unlicensed.
+      context_witnessed: Binary lift admissible only when an admissible context C[_] distinguishes the
+        irreducible failure.
+  area_lock_phase_gate: 'If m_G(gamma) > 0, the evidence may support irreducibility under the declared
+    gauge
+
+    model. A lift still requires persistence, context witness, license, minimality evidence,
+
+    and Engine execution boundary. MetaJudgment may consume checked MeasurementId references
+
+    but MUST NOT compute or recompute measurements.
+
+    '
+  failure_classes:
+  - name: Authority failure
+    description: Licensed lift claimed but no governance license permits it.
+  - name: Representation failure
+    description: No admissible representation expansion reduces the obstruction.
+  - name: Evidence failure
+    description: Claim cannot survive forgetful descent due to missing/revoked evidence.
+  structural_representation:
+    meta_decision:
+      variants:
+      - name: NoLift
+        fields:
+        - reason
+        - evidence_refs
+      - name: LiftAdmissible
+        fields:
+        - license
+        - contract_ref
+        - evidence_refs
+      - name: Refuse
+        fields:
+        - failure
+        - certificate_ref
+    meta_no_lift_reason:
+      variants:
+      - GaugeRemovable
+      - NoContextWitness
+      - NotPersistent
+      - NotIrreducible
+      - LicenseMissing
+      - DeltaNotAdmissible
+    meta_lift_contract:
+      fields:
+      - source_carrier
+      - target_carrier_schema
+      - obstruction_ref
+      - context_witness
+      - persistence_certificate
+      - irreducibility_certificate
+      - minimality_certificate
+      - delta
+      - contract_hash
+    lift_license:
+      fields:
+      - license_id
+      - contract_ref
+      - authority_refs
+      - evidence_refs
+      - authority_effect
+    lift_delta:
+      variants:
+      - UnaryName
+      - BinaryConjugatePair
+  authority_effect_mapping:
+    MetaJudgment: RequestsDecision
+    unchecked_MetaLiftRequest: EvidenceOnly
+    checked_MetaLiftContract_LiftLicense: AuthorizesTransition
+    Engine: StateTransition
+    Pipeline: None or EvidenceOnly
+  anti_god_object_law: producer != judge != executor
+  negative_capabilities:
+  - apply a lift
+  - mutate a carrier
+  - run search
+  - schedule candidates
+  - compute operator outputs
+  - terminalize final state
+  - create certificates for unverified evidence
+  - execute Engine actions
+  - compute measurements
+  - recompute Functional outputs
+  - invoke solvers
+  - inspect mutable Engine internals
+  - emit Action directly
+  - emit StateTransition directly
+  - store or mutate Trace
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - apply_lift
+    - execute_lift
+    - mutate_carrier
+    - EngineResult
+    - StateTransition
+    - TerminalEnvelope
+    - execute(
+    - schedule_search
+    - run_search
+    - compute_operator
+    - compute_phi
+    - compute_gamma
+    - compute_xi
+    - invoke_solver
+    - terminalize(
+    - write_trace
+    - store_state
+  required_tests:
+  - meta_judgment_does_not_apply_lift
+  - meta_judgment_does_not_mutate_carrier
+  - meta_judgment_does_not_run_search
+  - meta_judgment_does_not_schedule_candidates
+  - meta_judgment_does_not_compute_operator_outputs
+  - meta_judgment_does_not_compute_measurements
+  - meta_judgment_consumes_measurement_refs_only
+  - meta_judgment_does_not_invoke_solvers
+  - meta_judgment_does_not_terminalize
+  - meta_judgment_does_not_execute_engine_actions
+  - meta_lift_request_is_evidence_only
+  - lift_license_authorizes_but_does_not_execute
+  - engine_requires_lift_license_for_lift_execution
+  - binary_lift_requires_context_witness
+  - lift_without_license_rejected
+  - lift_without_persistence_certificate_rejected
+  - lift_without_irreducibility_certificate_rejected
+  - lift_without_minimality_certificate_rejected
+  - metalift_contract_does_not_self_certify_minimality
+  canonical_invariant: 'MetaJudgment judges lift admissibility from submitted evidence. MetaLiftContract
+
+    describes a carrier-extension transition. LiftLicense authorizes the Engine to attempt
+
+    that transition. Engine alone executes licensed lift transitions. No Meta artifact
+
+    executes, mutates, terminalizes, searches, solves, measures, or self-certifies.
+
+    '
+  legacy_metadata:
+    name: MetaJudgmentAndMetaLift
+    role: Meta layer governance boundary - judgment and lift licensing
+    version: '2.0'
+    classification: constitution
+    split_from: contract_constitution.md (lines 247-757)
+    doctrine_version: 2026-05
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: DecisionEnvelope
+    referenced_output_families:
+    - ActionLicense
+    - EvidenceEnvelope
+    - FactEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.

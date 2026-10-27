@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:povm:v0.1.0
+title: POVM Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: povm
+  symbol: povm
+  ascii_symbol: povm
+  notation: Exact Finite POVM
+  domain:
+  - A nonempty finite family of equal-size positive Hermitian Q(i) effects resolving identity
+  codomain:
+    description: Declared finite results of core_quantum_physics::instruments; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Each effect is Hermitian positive semidefinite and their exact sum is identity
+- For an admitted density operator probabilities are Tr(E_i rho), nonnegative, and sum to one
+- Outcome indices are precisely the checked effect-family positions
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+relationships:
+- urn:math:contract:HilbertSpace:v1.0.0 serves as Provides underlying Hilbert space structure
+- urn:math:contract:Operator:v1.0.0 serves as Effects are operators on Hilbert space
+- urn:math:contract:Field:v1.0.0 serves as Complex field for operator entries
+negative_tests:
+- Reject malformed dimensions, non-Hermitian effects, nonpositive effects and failed completeness
+doctrine:
+  summary: Each effect is Hermitian positive semidefinite and their exact sum is identity; For an admitted
+    density operator probabilities are Tr(E_i rho), nonnegative, and sum to one; Outcome indices are precisely
+    the checked effect-family positions.
+  non_role:
+  - A POVM does not determine its instrument or physical implementation
+  - Continuous outcome carriers
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted
+- The former generic metadata scaffold remains outside this explicitly declared finite executable domain; its
+  unsupported hash obligations are not claimed discharged.
+rust_binding:
+  crate: core_quantum_physics
+  module: instruments
+  symbols:
+  - ExactPovm
+  - ExactPovm::try_new
+  - ExactPovm::probabilities
+  required_tests:
+  - spectral_projective_measurements_are_repeatable_and_refuse_noncommuting_joint
+  - measurement_exact_laws::naimark_compression_replays_a_nonprojective_povm_without_rational_square_roots

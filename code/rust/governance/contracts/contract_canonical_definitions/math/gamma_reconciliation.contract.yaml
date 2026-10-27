@@ -1,0 +1,107 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gamma_reconciliation:v1.0.0
+title: Raw versus second-repair quotient Γ, certificate checkers
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: gamma_reconciliation
+  symbol: Γ_raw, Γ_quot
+  ascii_symbol: GammaRawQuot
+  notation: "Γ_raw(x) = ‖D x‖_{1,w}; Γ_quot(x) = min_u ‖D x + A u‖_{1,w}"
+  domain:
+  - "a defect map D, an m x n rational matrix given row-wise"
+  - "a second-repair map A, an m x k rational matrix given row-wise"
+  - "strictly positive rational weights w on Q^m, admitted by RepairQuotientProblem::try_new"
+  - "a defect argument x in Q^n, and producer-supplied certificates over these data"
+  codomain:
+    description: >-
+      Exact rational values (a certified Γ_quot value, a raw value and an upper
+      bound for a value gap, a zero-test gap value) or a typed
+      GammaReconciliationError naming the failed check.
+  definition:
+    raw: "Γ_raw(x) = Σ_i w_i |(D x)_i|"
+    quotient: "Γ_quot(x) = min over u in Q^k of ‖D x + A u‖_{1,w}; taking u = 0 gives Γ_quot ≤ Γ_raw"
+    agreement_condition: >-
+      Γ_quot(x) = Γ_raw(x) for every x exactly when D^T K_w = D^T B_w, where
+      B_w is the weight box and K_w is B_w intersected with ker A^T. Since
+      D^T B_w is the convex hull of the 2^m points D^T (w ⊙ σ), σ in {-1, 1}^m,
+      this is the finite vertex condition, one extension z_σ per sign vector.
+    zero_test_condition: >-
+      The zero tests Γ_raw(x) = 0 and Γ_quot(x) = 0 agree for every x exactly
+      when im D ∩ im A = {0}; this is weaker than value agreement.
+requirements:
+  required_structures:
+  - A problem admitted by RepairQuotientProblem::try_new (matching shapes, positive denominators, strictly positive weights)
+  - Exact rational certificate entries with positive denominators
+laws:
+- "Dual certificate law: verify_quotient_certificate accepts a value only when the residual equals D x + A u, the value equals the weighted norm of the residual, the dual lies in the weight box, annihilates every column of A, and pairs with D x to the value."
+- "Vertex table law: verify_vertex_table accepts only a table with exactly the 2^m sign vectors, each entry in the weight box, annihilating A and restricting to D^T (w ⊙ σ); acceptance is the finite vertex condition for agreement at every x."
+- "Farkas law: verify_vertex_farkas checks nonnegative box multipliers, a zero combination and a negative bound, builds x = -restriction and u = -annihilator, and replays the value gap before returning it."
+- "Gap law: verify_value_gap and verify_zero_test_gap accept only a strict gap that they recompute from the problem data."
+- "Descent law: verify_raw_descent checks D d0 = 0 and verify_quotient_descent checks D d0 = A G for a declared first repair d0."
+- "Size refusal: all_sign_vectors, and with it verify_vertex_table, refuses m > MAX_VERTEX_ROWS (16) with CarrierTooLarge; no partial table is checked."
+- "Exactness law: all arithmetic is BigRational; there is no floating-point path and no tolerance."
+- "Authority law: a checked certificate mints no AuthorityEffect, PROVED, GlobalGreen or ActionLicense."
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Exact rational arithmetic only
+  - Deterministic sign-vector order
+relationships:
+- "urn:core:math:gamma2_closure_defect:v1.0.0 — the closure-defect functional whose raw and quotient readings this module compares on finite rational data; no code is shared"
+rust_binding:
+  crate: core_functional
+  module: gamma_reconciliation
+  symbols:
+  - MAX_VERTEX_ROWS
+  - GammaReconciliationError
+  - QuotientGammaCertificate
+  - VertexFarkasCertificate
+  - ValueGapWitness
+  - VertexExtensionTable
+  - all_sign_vectors
+  - RepairQuotientProblem
+  required_tests:
+  - raw_two_quotient_one_with_dual_certificate
+  - weighted_variant_raw_five_quotient_three
+  - farkas_certificate_for_failed_vertex_builds_the_gap
+  - opposite_repair_has_complete_vertex_table
+  - zero_test_gap_and_descent_conditions
+  - refusals_are_typed
+negative_tests:
+- A malformed or tampered certificate, a missing or repeated sign vector, and a carrier with more than MAX_VERTEX_ROWS rows must each be refused with a typed error
+doctrine:
+  summary: >-
+    gamma_reconciliation checks producer-supplied certificates that compare the
+    raw closure-defect value Γ_raw with the quotient value Γ_quot after a second
+    repair map A. It does not search for certificates. The equivalences between
+    the vertex condition and agreement at every x, and between im D ∩ im A = {0}
+    and zero-test agreement, are written proofs in the module documentation; the
+    code checks the finite certificates those proofs use. Nonclaim: not a solver;
+    not a binary or Hamming-weight carrier; not authority; not PROVED; not
+    GlobalGreen.
+  non_role:
+  - Certificate construction or optimisation (no search is performed)
+  - Binary carriers with Hamming weight
+  - Vertex tables for more than MAX_VERTEX_ROWS rows
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- "OPEN_OBLIGATION vertex_cap: the full vertex table is exponential in m and is refused above MAX_VERTEX_ROWS = 16; larger carriers have no agreement check here; AuthorityEffect: None."
+- "OPEN_OBLIGATION mechanisation: the agreement and zero-test equivalences are written proofs, not machine-checked; AuthorityEffect: None."

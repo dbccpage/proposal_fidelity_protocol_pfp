@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cell_complex:v0.1.0
+title: CellComplex Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cell_complex
+  symbol: 'X = X^0 ∪ X^1 ∪ ... ∪ X^n with φ_α: S^{k-1} → X^{k-1}'
+  ascii_symbol: cell_complex
+  notation: 'X = X^0 ∪ X^1 ∪ ... ∪ X^n with φ_α: S^{k-1} → X^{k-1}'
+  domain:
+  - 'max_dimension: non-negative integer N'
+  - 'cells: list of N+1 lists of cell identifiers'
+  - 'attaching_maps: list of AttachingMapDescriptor for each cell with dimension ≥ 1'
+  codomain:
+    description: 'A finite CW complex with cells organized by dimension, where each n-cell (n ≥ 1) has an attaching map from S^{n-1} to the (n-1)-skeleton X^{n-1}.
+
+      '
+requirements:
+  required_structures:
+  - cells list has exactly max_dimension + 1 entries
+  - No cell identifier appears more than once
+  - Cell identifiers within each dimension are sorted lexicographically
+  - At least one 0-cell is required
+  - Each k-cell (k ≥ 1) has an attaching map with correct dimension and valid boundary references
+  - ∂∂ = 0 for all cells
+  - StructureArtifact hash matches canonical serialization
+laws:
+- max_dimension ≥ 0
+- cells[0] is non-empty
+- Each cell identifier is unique across all dimensions
+- For all k-cells c with k ≥ 2, ∂(∂c) = 0
+- Each n-cell (n ≥ 1) has exactly one attaching map referencing only (n-1)-cells
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cell identifiers serialized in sorted order within each dimension
+  - Dimensions serialized in ascending order
+  - Attaching maps serialized by dimension ascending, then cell_id lexicographic
+  - 'AttachingMapDescriptor fields serialized as: cell_id (length-prefixed), dimension (4-byte LE), boundary_cells count (4-byte LE), pairs of (cell_id length-prefixed, coefficient signed 4-byte LE)'
+negative_tests:
+- max_dimension = -1 must be rejected
+- max_dimension = 2 but cells has 4 lists
+- cell_a appears in both cells[0] and cells[1]
+- cells[0] = [] must be rejected
+- 1-cell has no AttachingMapDescriptor
+- 2-cell attaching map references 0-cell instead of 1-cell
+- Attaching map references cell not in skeleton
+- For 2-cell c, ∂(∂c) ≠ 0
+- cells[1] = ['b', 'a'] not lexicographically ordered
+- Non-canonical attaching map serialization order
+doctrine:
+  summary: 'A CellComplex (CW complex) is a topological space constructed by iteratively attaching cells of increasing dimension. The contract defines a finite CW complex with an explicit cell structure: a finite set of cells indexed by dimension, together with attaching maps for each cell. Each n-cell has an attaching map from the (n-1)-sphere to the (n-1)-skeleton. The contract validates the inductive structure, cell counts, and attaching map consistency, but does not compute homology or homotopy groups (those are ComputationWitness outputs).'
+  non_role:
+  - Geometric embeddings or coordinate representations
+  - Infinite CW complexes
+  - Homotopy group computation (provided as ComputationWitness)
+  - Homology group computation (provided as ComputationWitness)
+  - Relative CW complexes (X, A)
+wip:
+- Geometric embeddings or characteristic maps beyond combinatorial boundary data - separate GeometricCellComplex contract?
+- Support for infinite CW complexes?
+- Relationship with SimplicialComplex - conversion via simplicial_to_cellular ComputationWitness?
+- Orientation consistency enforcement across the complex (currently not enforced, but can be verified via FactEnvelope 'is orientable')
+- Relative CW complexes (X, A) - add as RelativeCellComplex contract with subspace reference?
+- Performance optimization for ∂∂ = 0 check on large complexes (O(cells * boundary_size))
+- Contract uses signed coefficients in attaching maps to encode orientation
+- Simplicial complexes can be viewed as special case of regular CW complexes
+- Homology and homotopy groups are ComputationWitness outputs, not part of contract validation
+- 'All serialization must follow canonical order: dimensions ascending, then cell_id lexicographic within dimension'
