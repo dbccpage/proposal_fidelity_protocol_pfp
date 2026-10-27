@@ -20,6 +20,7 @@ from typing import Any, NoReturn
 
 import yaml
 
+from operads.canon import COLOUR_MEANINGS
 from operads.domain.capability_catalog_v1 import (
     OPERAD_COLOURS_V1,
     AgentCapabilityV1,
@@ -39,18 +40,7 @@ CATALOG_FILENAME = "capability_catalog.v1.json"
 SIGNATURE_FILENAME = "operad_signature.json"
 SLICES_FILENAME = "agent_capability_slices.json"
 
-COLOUR_DESCRIPTIONS = {
-    "Audit": "Symmetry audit, red-team diagnostic, compliance report, or defect escalation",
-    "Code": "Rust/Python implementation, AST, solver module, or Pydantic schema",
-    "Contract": "Nomos governance contract, prime rule YAML, or API boundary specification",
-    "Diagram": "DIME figure, quick-start card, AST graph, or visualization artifact",
-    "Ledger": "Claim queue row, refusal store, hypothesis tree, or issue register entry",
-    "Paper": "OEARS paper package, LaTeX source, Pandoc AST, or claim ledger",
-    "Post": "Public math post, Glossa dialect draft, or forum cadence item",
-    "Proof": "Lean 4 formal proof term, math derivation, or step-truth assertion",
-    "Receipt": "Evidence receipt, CI report, GTLA swarm review, or SHA256 manifest",
-    "State": "Repository, session worktree, git ref, or execution environment state",
-}
+COLOUR_DESCRIPTIONS = COLOUR_MEANINGS
 
 if frozenset(COLOUR_DESCRIPTIONS) != OPERAD_COLOURS_V1:
     raise RuntimeError("colour descriptions do not cover the admitted vocabulary exactly")

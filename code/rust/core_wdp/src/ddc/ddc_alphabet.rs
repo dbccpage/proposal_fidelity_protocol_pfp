@@ -30,79 +30,12 @@
 use core_types::authority::AuthorityEffect;
 use serde::{Deserialize, Serialize};
 
-/// The eight lawful transitions of Discrete Deformation Calculus (`discrete_deformation_calculus.md` §1).
-///
-/// The letters are the canonical DDC operational alphabet \(\mathcal{A}_{\mathrm{DDC}} = \{E, R, C, I, \Lambda, D, M, T\}\).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub enum DdcOp {
-    /// `E` — exact repair: discharge the defect outright (residual → 0).
-    ExactRepair,
-    /// `R` — residual projection: carry forward what repair could not remove.
-    ResidualProjection,
-    /// `C` — context exposure: declare/split the carrier and its 2-window.
-    ContextExposure,
-    /// `I` — integration: append to the local ledger.
-    Integration,
-    /// `Λ`/`Meta` — structural lift or extension. Lift *trigger* is not lift
-    /// *license*: a lift needs obstruction, preservation, and
-    /// non-destruction witnesses plus a terminalizer route.
-    Lift,
-    /// `D` — descent / re-index (e.g. refine the window).
-    Descent,
-    /// `M` — mutation / typed refusal.
-    Refusal,
-    /// `T` — terminalization. Emitting `T` records a terminal status; it does
-    /// **not** mint authority (`AuthorityEffect::None`).
-    Terminalize,
-}
+/// The eight lawful transitions of Discrete Deformation Calculus, defined once in the operad
+/// canon (`core_operad_canon`) and re-exported here.
+pub use core_operad_canon::DdcOp;
 
 /// Backward compatibility alias for [`DdcOp`].
 pub type DdaOp = DdcOp;
-
-impl DdcOp {
-    /// The spine letter.
-    pub fn letter(self) -> &'static str {
-        match self {
-            DdcOp::ExactRepair => "E",
-            DdcOp::ResidualProjection => "R",
-            DdcOp::ContextExposure => "C",
-            DdcOp::Integration => "I",
-            DdcOp::Lift => "Λ",
-            DdcOp::Descent => "D",
-            DdcOp::Refusal => "M",
-            DdcOp::Terminalize => "T",
-        }
-    }
-
-    /// Parse a spine letter into a DDC operation.
-    pub fn from_letter(s: &str) -> Option<DdcOp> {
-        match s {
-            "E" => Some(DdcOp::ExactRepair),
-            "R" => Some(DdcOp::ResidualProjection),
-            "C" => Some(DdcOp::ContextExposure),
-            "I" => Some(DdcOp::Integration),
-            "Λ" | "\\Lambda" | "Lambda" | "Meta" => Some(DdcOp::Lift),
-            "D" => Some(DdcOp::Descent),
-            "M" => Some(DdcOp::Refusal),
-            "T" => Some(DdcOp::Terminalize),
-            _ => None,
-        }
-    }
-
-    /// The full declared alphabet, in spine order.
-    pub fn alphabet() -> [DdcOp; 8] {
-        [
-            DdcOp::ExactRepair,
-            DdcOp::ResidualProjection,
-            DdcOp::ContextExposure,
-            DdcOp::Integration,
-            DdcOp::Lift,
-            DdcOp::Descent,
-            DdcOp::Refusal,
-            DdcOp::Terminalize,
-        ]
-    }
-}
 
 /// DDC invariant: every emitted op carries **either** its local execution log
 /// Canonical closed refusal vocabulary (matching DDC paper M_REASONS).

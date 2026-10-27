@@ -93,11 +93,8 @@ impl Port {
             && self.validator_digest[7..] != "0".repeat(64)
     }
     fn valid(&self) -> bool {
-        [
-            "Audit", "Code", "Contract", "Diagram", "Ledger", "Paper", "Post", "Proof", "Receipt",
-            "State",
-        ]
-        .contains(&self.colour_id.as_str())
+        core_operad_canon::OPERAD_COLOURS
+            .contains(&self.colour_id.as_str())
             && !self.name.is_empty()
             && !self.schema_ref.is_empty()
             && self.schema_ref != "schema:any:v1"

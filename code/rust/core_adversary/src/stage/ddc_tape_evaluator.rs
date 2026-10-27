@@ -171,8 +171,9 @@ impl DDCTapeDFA {
         dialect: DdcDialect,
         require_complete: bool,
     ) -> Result<BTreeSet<&'static str>, Refusal> {
-        let mut alphabet: BTreeSet<&'static str> = ["E", "R", "C", "I", "Λ", "D", "M", "T"]
-            .into_iter()
+        let mut alphabet: BTreeSet<&'static str> = core_operad_canon::DdcOp::LETTERS
+            .iter()
+            .copied()
             .collect();
         if dialect == DdcDialect::ExperimentalZV1 {
             alphabet.remove("M");

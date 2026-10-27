@@ -8,18 +8,11 @@ from __future__ import annotations
 
 from enum import Enum
 
+from operads.canon import DDC_LETTER
 
-class DDCRune(str, Enum):
-    """The 8 operational runes of the DDC alphabet A_DDC."""
 
-    C = "C"  # Context Exposure: Declares or splits carrier, window, and boundary complex
-    R = "R"  # Residual Projection: Projects unresolved boundary tension into quotient tracking (Phi_1 > 0)
-    E = "E"  # Exact Repair: Eliminates local boundary tension under declared rules
-    I = "I"  # noqa: E741  # Integration: Appends verified transition to Merkle tape with deterministic step receipt
-    LIFT = "Λ"  # Structural Lift: Extends carrier capacity under Licensed Context Extension (LCE)
-    D = "D"  # Descent: Scale descent lowering from rich to coarse carriers with loss ledger
-    M = "M"  # Typed Refusal: Mutation block halting untyped, unwitnessed, or out-of-budget moves
-    T = "T"  # Terminalization: Closes execution trace under a routing terminal
+class _DDCRuneMethods(str):
+    """Behaviour of a DDC rune; the runes themselves come from the operad canon."""
 
     @classmethod
     def from_str(cls, val: str) -> DDCRune:
@@ -37,3 +30,7 @@ class DDCRune(str, Enum):
 
     def is_refusal(self) -> bool:
         return self == DDCRune.M
+
+
+# The eight runes of A_DDC, from code/rust/core_operad_canon; the lift rune is named LIFT here.
+DDCRune = Enum("DDCRune", [("LIFT" if letter == "Λ" else letter, letter) for letter in DDC_LETTER], type=_DDCRuneMethods)
