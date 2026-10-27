@@ -2,7 +2,7 @@
 //!
 //! Both renderings are deterministic, so `check` can compare the committed files byte for byte.
 
-use crate::{Family, OperadColour, OperadType, OPERAD_TYPES, PYTHON_ENUMS};
+use crate::{Family, OperadColour, OperadType, OPERAD_TYPES, PYTHON_ENUMS, SUBCOLOUR_SCHEMAS};
 
 /// Where each generated file lives, relative to the repository root.
 pub const JSON_PATH: &str = "operads/canon/operad_canon.json";
@@ -55,6 +55,13 @@ pub fn to_json() -> String {
         .map(|c| format!("    {}: {}", quote(c.as_str()), quote(c.meaning())))
         .collect();
     out.push_str(&meanings.join(",\n"));
+    out.push_str("\n  },\n");
+    out.push_str("  \"subcolour_schemas\": {\n");
+    let schemas: Vec<String> = SUBCOLOUR_SCHEMAS
+        .iter()
+        .map(|(name, schema)| format!("    {}: {}", quote(name), schema))
+        .collect();
+    out.push_str(&schemas.join(",\n"));
     out.push_str("\n  },\n");
     out.push_str("  \"types\": [\n");
     let entries: Vec<String> = OPERAD_TYPES.iter().map(json_entry).collect();
@@ -149,6 +156,11 @@ pub fn to_python() -> String {
             quote(colour.as_str()),
             quote(colour.meaning())
         ));
+    }
+    out.push_str("}\n\n# JSON Schema text for each sub-colour's payload; json.loads before use.\n");
+    out.push_str("SUBCOLOUR_SCHEMAS: dict[str, str] = {\n");
+    for (name, schema) in SUBCOLOUR_SCHEMAS {
+        out.push_str(&format!("    {}: {},\n", quote(name), quote(schema)));
     }
     out.push_str("}\n\nTYPES: dict[str, dict[str, object]] = {\n");
     for entry in OPERAD_TYPES {

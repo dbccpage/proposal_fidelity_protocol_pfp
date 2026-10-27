@@ -39,6 +39,7 @@ from operads.skill_operad.domain.planar import (
     ArityMismatch,
     ColorMismatch,
 )
+from operads.skill_operad.resolver import subcolour_schema
 from operads.skill_operad.skill_compiler.op_inventory import (
     INVENTORY_PATH,
     AntiOpSpec,
@@ -568,6 +569,8 @@ def execute_step(op_id, op, args, guards, executors, detectors, steps, cleared, 
         output_digest = digest(output)
     except (TypeError, ValueError) as exc:
         raise _Stop(Refusal("OUTPUT_NOT_JSON", f"{op_id} returned {exc}")) from exc
+    if (shape := subcolour_schema.output_problem(op.output, output)) is not None:
+        raise _Stop(Refusal("OUTPUT_SCHEMA_REFUSED", f"{op_id} -> {op.output}: {shape}"))
     steps.append(Step(op_id, op.output, output_digest,
         hashlib.sha256(invocation_args_json.encode("utf-8")).hexdigest() if occurrence_checker is not None else digest(args),
         hashlib.sha256(invocation_operation_json.encode("utf-8")).hexdigest() if occurrence_checker is not None else digest(op.model_dump(mode="json")), execution))
