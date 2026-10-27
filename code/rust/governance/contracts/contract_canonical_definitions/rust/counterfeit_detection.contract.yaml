@@ -1,0 +1,62 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_certifiers:counterfeit_detection:v1.1.0
+title: CounterfeitDetection
+status: active
+crate: core_certifiers
+file: crates_rs/core_certifiers/src/counterfeit_detection.rs
+layer: 02_evidence
+role: canonical_counterfeit_detector
+authority_effect: fact_only
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- exact_counterfeit_detection
+- approximate_counterfeit_diagnostics
+- certificate_consistency_checks
+does_not_own:
+- Phi1 computation
+- Gamma2 computation
+- trichotomy classification
+- authority minting
+- packet terminalization
+may_call:
+- core_certifiers::checked_packet::CheckedPacket
+- core_certifiers::closure_certificate::ClosureCertificate
+- core_functional::phi1::VerifiedExactPhi1
+- core_functional::gamma2::VerifiedExactGamma2
+must_not:
+- treat approximate fraud check as authority
+- use f64 tolerance for exact fraud criterion
+- modify packet state
+- repair counterfeit packets
+- terminalize
+- mint authority
+exactness:
+  mode: split_exact_and_approximate
+  exact_detector_required: true
+  exact_rule: ExactRepair claim implies Phi1 == 0 and Gamma2 == 0
+  approximate_detector_allowed: true
+  approximate_detector_authority_effect: none
+forbidden_substrings:
+- CertifiedAuthority::certify
+- authority_from_outcome_f13
+- mint_authority(
+- AuthorityCeiling::FullCertifier
+required_substrings:
+- detect_exact
+- detect_approx
+- ExactRepair
+- Phi1
+- Gamma2
+required_tests:
+- exact_counterfeit_rejects_exact_repair_with_positive_phi1
+- exact_counterfeit_rejects_exact_repair_with_positive_gamma2
+- exact_counterfeit_rejects_closure_status_mismatch
+- approx_counterfeit_cannot_authorize
+- carrier_hash_mismatch_detected
+- replay_hash_mismatch_detected
+lean_obligations:
+- 'L-CERT-5: counterfeit theorem'
+- 'L-CERT-6: tolerance quarantine theorem'

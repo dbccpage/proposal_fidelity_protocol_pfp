@@ -12,8 +12,8 @@ from uuid import uuid4
 from pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gateway
 from pfp.infrastructure.pilot_matrix import complete_pilot_turn, validate_pilot_gateways
 from pfp.infrastructure.synthesis_matrix import prepare_output_dir
-from pfp.tests.demo_004.a_mechanism.consistency_teaching import conditions, tasks
-from pfp.tests.demo_004.a_mechanism.consistency_teaching.host import host_verdict
+from pilots.llm_mechanism.consistency_teaching import conditions, tasks
+from pilots.llm_mechanism.consistency_teaching.host import host_verdict
 from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
 
 DEFAULT_MODEL = "openai/gpt-4o-mini"

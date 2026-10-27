@@ -1,0 +1,89 @@
+schema_version: "1.0.0"
+contract_id: "os:reducer"
+name: "Reducer Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  A Reducer is a deterministic, stateless, unary, same-carrier structural
+  canonicalization operator over admitted Obstruction/BaseType state. It maps
+  S -> S, removes declared redundancy or normalizes representation, is
+  idempotent, does not increase its declared reduction measure κ (κ(R(s)) <= κ(s)),
+  and satisfies the inherited root Operator law Phi(R(s)) <= Phi(s). A Reducer
+  does not compute canonical functionals, search, loop to convergence, enlarge
+  carrier, repair by hidden lift, terminalize, certify, authorize, or mutate
+  runtime state.
+
+layer: "OS"
+module_path: "operators::reducer"
+
+governs:
+  - "operators/reducers/**"
+  - "operators/reducer/**"
+
+does_not_govern:
+  - "constructors/**"
+  - "generators/**"
+  - "operators/lambdas/**"
+  - "operators/transforms/**"
+  - "core_functional/**"
+  - "core_homological/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipeline/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-L3"
+    description: "Reducer idempotence theorem: R(R(s)) = R(s) over the admitted domain."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L3"
+
+  - id: "OP-L4"
+    description: "Reducer non-expansion theorem: κ(R(s)) <= κ(s) for the declared reduction measure κ."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L4"
+
+  - id: "OP-L2-REDUCER"
+    description: "Reducer inherited Phi non-increase theorem: Phi(R(s)) <= Phi(s) over the admitted domain."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L2"
+
+  - id: "OP-L7"
+    description: "Operators are single-step; repeated execution belongs to Pipeline/Runner trace."
+    status: "active"
+    provenance: "Operator OS Doctrine OP-L7"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  phi_nonincrease_required: true
+  kappa_nonincrease_required: true
+  idempotent: true
+  deterministic: true
+  stateless: true
+
+phi_law:
+  operator_may_compute_phi: false
+  phi_nonincrease_required: true
+  relation: "Phi(R(s)) <= Phi(s)"
+  kappa_relation: "kappa(R(s)) <= kappa(s)"
+
+relationships:
+  extends:
+    - "os:operator"

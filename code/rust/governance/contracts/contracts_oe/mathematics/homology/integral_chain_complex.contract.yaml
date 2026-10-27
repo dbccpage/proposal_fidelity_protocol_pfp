@@ -1,0 +1,85 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:integral_chain_complex:v0.1.0
+title: Integral Chain Complex with Torsion Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: chain_complex_over_the_integers
+  symbol: 'C_top -> ... -> C_1 -> C_0 free abelian groups with integer boundary matrices d_k, d_{k-1} d_k = 0; H_k(X; Z) = Z^r + sum Z/d'
+  ascii_symbol: integral_chain_complex
+  notation: 'sparse integer boundary columns of (row, coefficient) pairs; free rank r_k = n_k - rank d_k - rank d_(k+1); torsion = invariant factors d > 1 of d_(k+1)'
+  domain:
+  - 'cell counts n_0, ..., n_top and sparse integer boundary matrices d_k of shape n_{k-1} x n_k'
+  - 'or a SimplicialComplex with its signed boundary matrices'
+  codomain:
+    description: 'The complex with d_{k-1} d_k = 0 checked exactly; its reduction mod 2 as an F2 chain complex; the integral homology of each degree (free rank and torsion invariant factors, by Smith normal form); and the Euler characteristic.
+
+      '
+requirements:
+  required_structures:
+  - 'd_{k-1} d_k = 0 over Z, checked in i128 with a typed overflow refusal'
+  - 'Columns are normalised: rows sorted, repeated rows summed with checked arithmetic, zeros dropped, row indices below the row count'
+  - 'Shapes must match the cell counts, and the number of boundary maps must be one fewer than the number of degrees'
+laws:
+- 'd_{k-1} d_k = 0 exactly over Z'
+- 'H_k(X; Z) = Z^(n_k - rank d_k - rank d_(k+1)) plus the sum of Z/d over the invariant factors d > 1 of d_(k+1)'
+- 'The free ranks are the rational Betti numbers'
+- 'Reduction mod 2 of a Z-complex is an F_2 complex, and dim H^k(X; F_2) = rank H_k + t_k + t_(k-1) with t_j the number of even torsion summands of H_j(X; Z)'
+- 'The 6-vertex projective plane has H_1 = Z/2; the one-face cell complex with boundary 2e has H_1 = Z/2, with boundary 3e it has H_1 = Z/3 (invisible to F_2); the Klein bottle cell complex has H_1 = Z + Z/2; tori have no torsion'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact BigInt Smith normal form from core_linear_algebra
+relationships:
+- urn:core:math:f2_cohomology:v0.1.0 serves as The mod-2 reduction and the cross-check by universal coefficients
+- urn:core:math:smith_normal_form:v0.1.0 serves as The invariant factors come from core_linear_algebra
+- urn:core:math:bockstein_homomorphism:v0.1.0 serves as The integral lift needed for the Bockstein map
+rust_binding:
+  crate: core_homology
+  module: integral_chain_complex
+  symbols:
+  - IntegralChainComplex
+  - SparseIntegerMatrix
+  - IntegralHomology
+  required_tests:
+  - a_chain_complex_refuses_malformed_boundary_data
+  - sparse_integer_products_refuse_overflow
+  - degrees_outside_the_complex_are_refused
+  - integral_homology_with_torsion_of_known_surfaces
+  - f2_cohomology_follows_from_integral_homology_by_universal_coefficients
+  - torsion_is_seen_by_f2_but_not_by_q
+  - integral_homology_of_the_torus_is_z_z_squared_z_with_no_torsion
+  - the_existing_exact_betti_code_agrees_on_the_lattice_carrier
+negative_tests:
+- A complex with no degrees, a wrong number of boundary maps, a wrongly shaped boundary, or boundaries that do not compose to zero must be refused
+- A boundary entry whose row index is outside the matrix must be refused
+- A product of boundary coefficients that overflows must be refused, not wrapped
+- A degree above the top degree must be refused
+doctrine:
+  summary: 'The integral counterpart of the F_2 chain complex: sparse integer boundaries, exact d d = 0, and homology with torsion by Smith normal form. Its purpose here is to be an independent route to the F_2 dimensions (universal coefficients) and to supply the integral lift the Bockstein map needs; free ranks are checked against the rational Betti numbers of the simplicial code and the lattice carrier against the existing exact_betti.'
+  non_role:
+  - Cohomology with integer coefficients as a separate object (only homology and the Bockstein lift are provided)
+  - Homology of complexes too large for dense Smith normal form
+  - Coefficient groups other than Z and F_2
+wip:
+- 'Smith normal form is dense; very large complexes would need a sparse reduction'
+- 'The existing core_homology::exact_betti works on 2-truncated carriers only; this module handles any top degree'

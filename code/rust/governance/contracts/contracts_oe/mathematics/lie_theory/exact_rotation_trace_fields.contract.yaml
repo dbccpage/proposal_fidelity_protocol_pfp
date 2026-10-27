@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_rotation_trace_fields:v0.1.0
+title: Exact Finite Rotation Groups and Trace Fields
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_rotation_trace_fields
+  symbol: exact_rotation_trace_fields
+  ascii_symbol: exact_rotation_trace_fields
+  notation: Exact Finite Rotation Groups and Trace Fields
+  domain:
+  - Finite exact 3-dimensional rotation matrices over Q or Q(sqrt(5))
+  - Canonical tetrahedral, octahedral and icosahedral carriers
+  codomain:
+    description: Declared finite results of core_lie_theory::rotation; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every admitted group element satisfies R^T R=I and det R=1 exactly
+- Computed canonical group orders are 12,24,60
+- The icosahedral order census is (1:1,2:15,3:20,5:24); its 24 nonrational traces satisfy x^2-x-1=0
+- Trace-field conductor is distinct from the coefficients needed by a chosen axis realization
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: rotation
+  symbols:
+  - rotation_group
+  - tetrahedral_group
+  - octahedral_group
+  - icosahedral_group
+  - icosahedral_trace_field
+  - trace_field_conductor
+  required_tests:
+  - test_t865_octahedral_closure_and_price_1
+  - test_t865_tetrahedral_closure_and_price_1
+  - test_t865_icosahedral_closure_and_price_5
+  - trace_field_price_is_independent_of_the_chosen_axis
+  - test_t867_mutation_1_closure_checked_by_tolerance
+  - test_t867_mutation_5_planted_rational_icosahedral_realisation
+negative_tests:
+- Small exact perturbations fail rotation admission
+- An order-five rational axis-angle approximation has infinite exact order
+- A trivial nonfaithful image does not certify a group of order 24
+doctrine:
+  summary: Every admitted group element satisfies R^T R=I and det R=1 exactly; Computed canonical group orders
+    are 12,24,60; The icosahedral order census is (1:1,2:15,3:20,5:24); its 24 nonrational traces satisfy x^2-x-1=0;
+    Trace-field conductor is distinct from the coefficients needed by a chosen axis realization.
+  non_role:
+  - No cost/price optimality for all axis choices
+  - No exhaustive classification of every matrix group or continuum representation
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

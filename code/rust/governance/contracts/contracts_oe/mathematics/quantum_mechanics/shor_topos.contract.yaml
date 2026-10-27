@@ -1,0 +1,63 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:shor_topos:v1.0.0
+title: Shor Topos Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: topos
+  symbol: '\mathcal{E}_{Shor}'
+  ascii_symbol: shor_topos
+  notation: '\mathcal{E}_{Shor}'
+  domain:
+  - 'category: a category with finite limits'
+  - 'exponentials: exponential objects'
+  - 'subobject_classifier: a subobject classifier'
+  codomain:
+    description: 'A topos in which the logic of Shor-style quantum algorithms can be stated constructively.'
+requirements:
+  required_structures:
+  - The category has finite limits
+  - The category has exponentials
+  - The category has a subobject classifier
+laws:
+- 'Topos axioms: finite limits, exponentials and a subobject classifier'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Deterministic digest (SHA-256) over the canonical serialization
+relationships:
+- urn:math:contract:InfinityTopos:v1.0.0 serves as the base categorical semantics
+negative_tests:
+- A category missing a subobject classifier is refused
+- A category missing finite limits or exponentials is refused
+- An artifact claiming authority or admissibility is refused
+doctrine:
+  summary: 'A specialized topos model intended to encapsulate Shor-algorithm logic and quantum circuit topologies in a categorical setting. It is the logical universe in which quantum algorithms could be reasoned about constructively: a category with finite limits, power objects and a quantum-specific subobject classifier.'
+  non_role:
+  - Shor's factoring algorithm itself; core_quantum_physics::shor is the [[9,1,3]] error-correcting code, a different object
+  - Authority of any kind; the contract is purely mathematical
+  - Customer-facing claims
+wip:
+- 'Legacy id urn:math:contract:ShorTopos:v1.0.0 with status `staged`, mapped to `mathematical_wip`.'
+- 'Legacy owner named crate core_topos, module shor_topos.rs, symbols ShorTopos and ShorToposLogic. No such crate exists under engine/crates_rs, so no rust_binding is declared.'
+- 'The legacy contract declared no validators and no tests; this is a statement of intent only. No module of the estate implements Shor factoring: core_quantum_physics::shor is the [[9,1,3]] error-correcting code.'
+- 'Last audited (legacy record): 2026-06-15.'

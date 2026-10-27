@@ -1,0 +1,42 @@
+schema_version: core.contract.v1
+contract_id: urn:core:constitution:authority_redirect:v1.0.0
+title: AuthorityContract
+kind: constitution_contract
+status: mathematical_wip
+layer: 00_constitution
+role: Constitution
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: "This contract is not active and MUST NOT be imported as doctrine by contract validators,\n\
+    code generators, or implementation crates.\n\nSplit into:\n  - measurement_authority (FunctionalMeasurementAuthority)\n\
+    \  - functional_kernel (FunctionalKernel)\n\nThe current doctrine is defined only by those replacement\
+    \ contracts.\n"
+  legacy_metadata:
+    name: AuthorityContract
+    role: Redirect to measurement_authority and functional contracts
+    version: '2.0'
+    classification: constitution
+    status: redirect
+    redirect_notice: true
+    machine_authority: false
+    primary_output_family: None
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_constitution_contract:v1.0.0"

@@ -1,0 +1,45 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:fiber_bundle:v0.1.0
+title: FiberBundle
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'A FiberBundle is a collection of finite-dimensional vector spaces (fibers) over a common field K, each attached to a distinct base point.  It is the discrete analogue of a vector bundle: the total space is the disjoint union of the fibers, the base space is a set of abstract points, and the projection maps each fiber to its base point.  The contract ensures that all fibers share the same field and dimension, that base points are unique, and that each fiber is a valid Fiber artifact.  No topological, smooth, or continuity conditions are imposed; those belong to separate contracts.'
+wip:
+- wip_status: true
+  questions:
+  - question: 'The contract assumes a discrete base set; for continuous base spaces (manifolds) a separate `TopologicalFiberBundle` contract would be needed, incorporating atlas and transition functions.
+
+      '
+  - question: 'Global frames (choices of basis for every fiber that vary smoothly) are not covered; a `FrameField` contract may be added later.
+
+      '
+  - question: 'The bundle currently requires explicit Fiber artifacts for every base point, which is impractical for infinite bases.  A future version might allow a generator function (content-addressed) that produces Fibers on demand.
+
+      '
+  - question: 'The concept of a "typical fiber" (a Fiber without a base point) is not yet standardised; the `typical_fiber_basis_hash` field is optional and informative.
+
+      '
+  - question: 'Sub-bundle and quotient bundle constructions are deferred to ComputationWitness specifications.
+
+      '
+  - question: 'The exact sorting rule for base point IDs with mixed encodings (text vs. binary) needs a precise canonicalisation; currently it is bytewise comparison of the raw UTF-8/byte strings.
+
+      '

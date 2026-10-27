@@ -35,6 +35,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Optional
 
+from operads.canon import HIT_DISPOSITION
+
 from eis.domain.host_checks import (
     persona_authority_leak_loci,
 )
@@ -75,20 +77,16 @@ class FailureClass(Enum):
             return Disposition.FINDING
 
 
-class Disposition(Enum):
-    """Scheduler routing dispositions ordered strictly by severity."""
-    FINDING = "FINDING"
-    HOLD = "HOLD"
-    REFUSE = "REFUSE"
+class _DispositionRank:
+    """Severity order of a disposition: its position in the canon's HIT_DISPOSITION."""
 
     def severity_rank(self) -> int:
-        if self == Disposition.FINDING:
-            return 0
-        elif self == Disposition.HOLD:
-            return 1
-        elif self == Disposition.REFUSE:
-            return 2
-        raise ValueError(f"Unknown disposition {self}")
+        return HIT_DISPOSITION.index(self.value)  # type: ignore[attr-defined]
+
+
+# Scheduler routing dispositions ordered strictly by severity; the values are the
+# canon's (code/rust/core_operad_canon), listed from least to most severe.
+Disposition = Enum("Disposition", [(value, value) for value in HIT_DISPOSITION], type=_DispositionRank)
 
 
 @dataclass(frozen=True)

@@ -1,0 +1,313 @@
+schema_version: core.contract.v1
+contract_id: urn:core:obstruction:obstruction:v1.0.0
+title: Obstruction
+kind: obstruction_contract
+status: mathematical_wip
+layer: 03_obstruction
+role: AnalysisUnit
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Carrier
+    - MeasurementKernel
+    - Witness
+    - CertificateKernel
+    - Replay
+    - Evaluator
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the Obstruction boundary.
+
+
+    Obstruction records typed persistent structural incompatibility.
+
+    Obstruction does not represent ordinary runtime failure, solver failure, low confidence,
+
+    policy violation, terminal mapping, mutation, or execution.
+
+
+    An ObstructionCandidate is EvidenceOnly. A checked ObstructionArtifact may become FactOnly
+
+    only after declared carrier, equivalence, context family, measurement references, witness
+
+    references, persistence evidence, reducibility evidence, and certificate/replay references
+
+    are checked.
+
+    '
+  non_role: &id002
+  - runtime error handling
+  - policy interpretation
+  - terminalization
+  - state mutation
+  - execution
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is candidate generator only. It MUST NOT certify, validate, terminalize, or
+
+      upgrade evidence authority. An LLM may report candidate obstructions, but those reports
+
+      are EvidenceOnly proposals until checked against declared carrier, equivalence, context,
+
+      measurement, witness, certificate, and replay boundaries.
+
+      '
+  effect_class_binding:
+    doctrine: 6
+    text: 'A checked ObstructionArtifact may be a structural fact. An obstruction report or candidate
+
+      is evidence only.
+
+      '
+    operator_note: 'Only E (exact repair), I (quotient isometry), C (context embedding), R (residual projection),
+
+      and M (refused mutation) are operators. Obstruction is not an operator.
+
+      See fixed_layer_operator_algebra_contract.md.
+
+      '
+  classification:
+    subsystem: Cohomological Semantics / Obstruction Detection
+    role: Typed persistent structural incompatibility record.
+    classification: Obstruction layer -- evidence emission; checked artifacts may support facts.
+  core_definition: 'An ObstructionArtifact records checked evidence of a persistent structural incompatibility
+
+    relative to a declared carrier, equivalence, context family, and measurement regime.
+
+    '
+  what_obstruction_is_not:
+  - an error
+  - an exception
+  - a bad score
+  - low confidence
+  - solver failure
+  - LLM uncertainty
+  what_obstruction_is: 'A typed, persistent structural incompatibility relative to a declared carrier,
+    equivalence,
+
+    context family, and measurement regime.
+
+    '
+  core_invariant: Operational failure is not mathematical obstruction.
+  typed_obstruction_artifact:
+    example:
+      id: obs_uuid
+      carrier_ref: carrier_n
+      equivalence_ref: equiv_class_id
+      support: topological_boundary
+      obstruction_kind: BoundaryFailure
+      measurement_refs:
+      - phi_1
+      - gamma_2
+      witness_refs:
+      - context_witness_id
+      persistence_status: Persistent
+      reducibility_status: Irreducible
+  structural_representation:
+    candidate:
+      struct_name: ObstructionCandidate
+      fields:
+      - name: obstruction_id
+        type: ObstructionId
+      - name: carrier_ref
+        type: CarrierRef
+      - name: equivalence_ref
+        type: EquivalenceRef
+      - name: context_family_ref
+        type: ContextFamilyRef
+      - name: obstruction_kind
+        type: ObstructionKind
+      - name: measurement_refs
+        type: Vec<MeasurementId>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: obstruction_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedObstructionArtifact
+      fields:
+      - name: obstruction_id
+        type: ObstructionId
+      - name: candidate_ref
+        type: ObstructionId
+      - name: persistence_status
+        type: PersistenceStatus
+      - name: reducibility_status
+        type: ReducibilityStatus
+      - name: evidence_refs
+        type: Vec<EvidenceRef>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: terminal_status_ref
+        type: Option<TerminalStatusRef>
+      - name: checked_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+        promotion_condition: checked_evidence_boundary_passed
+    enums:
+    - name: ObstructionKind
+      variants:
+      - BoundaryFailure
+      - ClosureDefect
+      - NonCongruentQuotient
+      - DescentBlocked
+      - GovernanceAuthorityConflict
+      - EvidencePersistenceFailure
+      - RepresentationFailure
+    - name: PersistenceStatus
+      variants:
+      - NotTested
+      - Transient
+      - Persistent
+    - name: ReducibilityStatus
+      variants:
+      - NotTested
+      - Reducible
+      - Irreducible
+    terminal_status_ref:
+      type: Option<TerminalStatusRef>
+      owner: TerminalMapper
+      note: TerminalStatus enum is owned by TerminalMapper, not by Obstruction.
+  obstruction_emission_rule: "An ObstructionArtifact may be emitted only when all are present:\n  - declared\
+    \ carrier\n  - declared equivalence\n  - declared context family\n  - measurement references\n  -\
+    \ witness references\n  - persistence evidence\n  - reducibility evidence\n  - terminal-mapped evaluation\
+    \ reference (if applicable)\n\nOperational failure alone MUST NOT emit an ObstructionArtifact.\n"
+  obstruction_proof_threshold: 'A checked ObstructionArtifact may be emitted only after declared evidence
+    supports
+
+    persistence or irreducibility relative to the carrier and context family.
+
+
+    Terminal outcomes may be referenced as evidence when applicable, but terminal mapping
+
+    is not the universal source of obstruction truth.
+
+    '
+  terminal_mapper_note: '"Terminalizer" has been renamed to "TerminalMapper" across the system. The dependency
+
+    listed in metadata uses the new name. The filename terminalizer_contract.md is retained
+
+    for backward compatibility, but all code and contract references should use TerminalMapper.
+
+    '
+  shared_kernel_envelope_pattern: 'All kernel outputs should follow the shared envelope interface. Outputs
+    are EvidenceOnly
+
+    by default and may become FactOnly only through the declared checking or certificate boundary.
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - solver_failed_is_obstruction
+    - timeout_is_obstruction
+    - low_confidence_is_obstruction
+    - bad_score_is_obstruction
+    - PolicyDecision
+    - EngineDecision
+    - TerminalEnvelope
+    - ActionLicense
+    - ALLOW_OUTPUT
+    - BLOCK_OUTPUT
+    - terminalize(
+    - execute_now(
+    - mutate_state(
+    - rank_candidates(
+    - score_candidate(
+    - authorize_transition(
+    - GaugeOp
+    - AdapterOp
+    - ForgetfulOp
+    - OperatorFactEnvelope
+    - OperatorId
+    - BasisOperator
+    - runtime_error_is_obstruction
+  required_tests:
+  - solver_failure_is_not_obstruction
+  - timeout_is_not_obstruction
+  - low_confidence_is_not_obstruction
+  - obstruction_requires_declared_carrier
+  - obstruction_requires_context_family
+  - obstruction_requires_measurement_refs
+  - obstruction_requires_witness_refs
+  - obstruction_requires_persistence_status
+  - obstruction_requires_reducibility_status
+  - obstruction_candidate_defaults_to_evidence_only
+  - checked_obstruction_may_be_factonly_after_evidence_checks
+  - obstruction_does_not_require_terminal_mapping_universally
+  - obstruction_report_from_llm_is_evidence_only
+  - obstruction_requires_declared_equivalence
+  - obstruction_requires_replay_or_certificate_refs_when_checked
+  - runtime_error_is_not_obstruction
+  - policy_violation_is_not_obstruction_without_governance_obstruction_evidence
+  - checked_obstruction_does_not_emit_action_license
+  - checked_obstruction_does_not_authorize_transition
+  - no_forbidden_op_suffix_tokens
+  negative_capability_tests:
+  - name: test_solver_failure_is_not_obstruction
+    language: python
+    code: "def test_solver_failure_is_not_obstruction():\n  # solver failed during analysis; should not\
+      \ produce obstruction artifact\n  obs = maybe_emit_obstruction_from_solver_failure(solver_result)\n\
+      \  assert obs is None\n"
+  - name: test_obstruction_requires_persistence
+    language: python
+    code: "def test_obstruction_requires_persistence():\n  # Obstruction must include persistence proof\n\
+      \  with pytest.raises(ValueError):\n    create_obstruction(ObstructionArtifact { persistence_status:\
+      \ PersistenceStatus::NotTested, .. })\n"
+  canonical_invariant: 'Obstruction records checked evidence of persistent structural incompatibility
+    relative to a
+
+    declared carrier, equivalence, context family, and measurement regime. Obstruction candidates
+
+    are EvidenceOnly; checked obstruction artifacts may become FactOnly after evidence checks.
+
+    Obstruction does not handle runtime errors, decide policy, terminalize, license, mutate,
+
+    authorize, or execute.
+
+    '
+  legacy_metadata:
+    name: Obstruction
+    role: Typed persistent structural incompatibility
+    version: '2.0'
+    classification: obstruction
+    effect_class: none
+    depends_on: *id001
+    optional_depends_on:
+    - TerminalMapper
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - EvidenceEnvelope
+    - DecisionEnvelope
+    referenced_domain_kinds:
+    - MeasurementEnvelope
+    - WitnessEnvelope
+    - CertificateEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_obstruction_contract:v1.0.0"

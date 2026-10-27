@@ -1,0 +1,145 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:kleisli_refusal_pipeline:v0.1.0
+title: Kleisli Refusal Pipeline Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: kleisli_refusal_pipeline
+  symbol: 'f_n >=> f_{n-1} >=> ... >=> f_1 : A_0 -> T(A_n)'
+  ascii_symbol: kleisli_refusal_pipeline
+  notation: 'f_n >=> f_{n-1} >=> ... >=> f_1 : A_0 -> T(A_n)'
+  domain:
+  - 'monad_id: Identifier of the refusal monad T'
+  - 'stages: Ordered sequence of Kleisli arrows f_1, ..., f_n'
+  - 'stage_count: Number of stages n'
+  - 'input_type: Type A_0 (domain of the pipeline)'
+  - 'output_type: Type A_n (codomain of the pipeline, wrapped in T)'
+  - 'composed_hash: Content-addressed hash of the full composed pipeline'
+  codomain:
+    description: 'A Kleisli refusal pipeline consists of: (1) a refusal monad T (typically Result<_, RefusalReason>), (2) a sequence of stages (Kleisli arrows) f_1, ..., f_n with compatible domain/codomain types, (3) the composed pipeline f_n >=> ... >=> f_1, and (4) content-addressed hashes for each stage and the pipeline.
+
+      '
+requirements:
+  required_structures:
+  - Adjacent stages must have compatible domain/codomain types
+  - Pipeline must produce deterministic output for the same input
+  - Refusals must include stage index, validator name, and reason
+  - Artifact hash must be correctly computed
+laws:
+- 'Adjacent stages must have compatible types: the codomain (unwrapped from T) of stage f_i must equal the domain of stage f_{i+1}.  That is, if f_i: A_{i-1} -> T(A_i), then f_{i+1}: A_i -> T(A_{i+1}).
+
+  '
+- 'Kleisli composition is associative: (h >=> g) >=> f = h >=> (g >=> f). Regrouping stages does not change the pipeline''s input-output behavior.
+
+  '
+- 'If stage f_i produces a refusal T_fail(reason), stages f_{i+1} through f_n are not executed, and the pipeline returns T_fail(reason) with provenance information.
+
+  '
+- 'Given the same input, the pipeline must produce the same output (same success value or same refusal reason at the same stage).
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Stages ordered by pipeline index
+  - Stage functions content-addressed by their algorithm hash
+relationships:
+- urn:math:contract:Category:v0.1.0 serves as Provides the Kleisli category structure
+- urn:math:contract:Functor:v0.1.0 serves as Provides the monad's underlying endofunctor
+negative_tests:
+- Pipeline with no stages
+- Adjacent stages have incompatible domain/codomain types
+- Input to execute has wrong type
+- A stage produces different outputs for the same input
+- Refusal lacks stage index or validator name
+doctrine:
+  summary: 'A Kleisli refusal pipeline is a sequence of validation stages composed using Kleisli composition for a refusal monad T.  Each stage is a Kleisli arrow f_i: A_i -> T(A_{i+1}) that either produces a valid output wrapped in T (success) or short-circuits with a refusal reason (failure).  The full pipeline f_n >=> ... >=> f_1: A_0 -> T(A_n) runs each stage in sequence; if stage i refuses, stages i+1 through n are not executed, and the refusal propagates.  The refusal monad T carries structured refusal reasons, enabling precise diagnosis of which stage refused and why.  This models the contract validation pipeline where inputs pass through dimension checks, type checks, axiom verification, and hash validation, any of which may refuse.  The pipeline is associative (by the monad laws) and deterministic.'
+  non_role:
+  - Does not implement specific validation logic (that is per-contract)
+  - Does not handle parallel validation (stages are strictly sequential)
+  - Does not implement the refusal monad itself (that is a separate type)
+  - General Kleisli categories are handled by a separate contract
+  - Does not make policy decisions about what constitutes a valid refusal
+rust_binding:
+  crate: core_pipelines
+  module: kleisli
+  symbols:
+  - id_k
+  - compose_k
+  - then
+  # Combinator layer short-circuits on refusal. Empty-pipeline, runtime
+  # type mismatch, provenance fields, and non-determinism have no
+  # pipeline carrier here and stay unnamed.
+  required_tests:
+  - refusal_short_circuits_downstream_arrow
+wip:
+- Should the pipeline support conditional branching (monadic choice) or stay strictly linear?
+- Whether to support pipeline inspection (extracting individual stage behavior)
+- How to handle stages that produce warnings alongside success
+- Whether to formalize the connection to the Kleisli category explicitly
+- Error accumulation mode (collecting all refusals vs short-circuit) as a pipeline parameter
+- The refusal monad is typically Result<T, RefusalReason> in Rust
+- Short-circuit semantics match Rust's ? operator and monadic bind
+- Pipeline composition is associative by the monad laws, verified structurally
+- Each stage corresponds to a validator in the contract validation framework
+- Provenance data enables precise debugging of which stage refused and why
+
+# === CANONICAL CONTRACT ABOVE ===
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none; never promote from this block alone"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STAGE1_MECHANICAL_PASS
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Mechanical GTLA field gates passed (authority/math/non_role/structures/laws-or-requirements/negative_tests). Not PROVED."
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: KLEISLI_PRIMITIVES_MATCH
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    file: core_pipelines/src/kleisli.rs
+    yaml_law: "id_k, compose_k, then; associative short-circuit refusal monad"
+    code_behavior: >
+      id_k / compose_k / then over Refusable bind; tests for left/right identity,
+      associativity, short-circuit.
+    detail: >
+      Primitives match binding. YAML pipeline artifact (stage hashes, provenance fields)
+      is richer than this module — composition kernel only. Shape-level MATCH on monadic laws.
+    delta: MATCH
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: PIPELINE_CARRIER_ABSENT
+    severity: low
+    claim_class: "[SCOPE FENCE]"
+    file: core_pipelines/src/kleisli.rs
+    yaml_law: "stages, composed_hash, stage index in refusal provenance"
+    code_behavior: "No named pipeline carrier type; only free functions on Refusable arrows."
+    detail: >
+      Contract describes a full staged pipeline object; code is Kleisli combinator layer only.
+    delta: YAML_AHEAD_OF_CODE

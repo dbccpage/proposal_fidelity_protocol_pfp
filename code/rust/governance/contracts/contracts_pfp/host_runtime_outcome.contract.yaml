@@ -1,0 +1,61 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED by pfp/build.rs via the shared engine at
+# engine/crates_rs/contract_shapes_build.rs. Adding, removing or renaming
+# a field without amending this contract is a COMPILE ERROR.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:host_runtime_outcome:v1.0.0"
+title: "Runtime Outcome (Host Wire)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    The response half of the FFI seam.
+  invariants:
+    - "authority_effect is always None; the seam vouches for bytes, never for a verdict."
+    - "success reports whether the action ran, never whether the host accepted anything."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: invoke
+  rust_type: "RuntimeOutcomeV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: schema_version
+      rust_type: "String"
+    - name: action
+      rust_type: "String"
+    - name: success
+      rust_type: "bool"
+    - name: result
+      rust_type: "Option<Value>"
+    - name: error
+      rust_type: "Option<String>"
+    - name: authority_effect
+      rust_type: "String"

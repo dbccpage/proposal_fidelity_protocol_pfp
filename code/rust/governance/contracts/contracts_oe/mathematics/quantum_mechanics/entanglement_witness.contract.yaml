@@ -1,0 +1,80 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:entanglement_witness:v0.1.0
+title: Entanglement Witness Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: entanglement_witness
+  symbol: entanglement_witness
+  ascii_symbol: entanglement_witness
+  notation: Exact Decomposable Entanglement Witness
+  domain:
+  - A declared finite bipartite Q(i) carrier and positive Hermitian Q defining W=partial_transpose_B(Q)
+  - Validated density operators for entanglement classification
+  codomain:
+    description: Declared finite results of core_quantum_physics::bipartite_operator; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- W is Hermitian and its expectation on every product state is nonnegative
+- A negative Tr(W rho) on an admitted density operator certifies entanglement within the declared bipartition
+- Bell coherence is detected while a same-population separable mixture is not
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+relationships:
+- urn:math:contract:HermitianOperator:v1.0.0 serves as Observable must be Hermitian
+- urn:math:contract:DensityMatrix:v1.0.0 serves as State for expectation computation
+- urn:math:contract:TensorFactorization:v1.0.0 serves as Declared composite Hilbert space factorization
+negative_tests:
+- Reject wrong bipartitions, nonpositive defining operators and non-density classification candidates
+- Equal population shadows cannot replace full operator evaluation
+doctrine:
+  summary: W is Hermitian and its expectation on every product state is nonnegative; A negative Tr(W rho) on
+    an admitted density operator certifies entanglement within the declared bipartition; Bell coherence is
+    detected while a same-population separable mixture is not.
+  non_role:
+  - A complete witness classification or arbitrary separability decision
+  - Abstract witness hash protocols
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted
+- The former generic metadata scaffold remains outside this explicitly declared finite executable domain; its
+  unsupported hash obligations are not claimed discharged.
+rust_binding:
+  crate: core_quantum_physics
+  module: bipartite_operator
+  symbols:
+  - DecomposableWitness
+  - DecomposableWitness::new
+  - DecomposableWitness::value
+  - DecomposableWitness::certifies_entanglement
+  required_tests:
+  - the_decomposable_witness_is_nonnegative_on_declared_product_states
+  - bell_state_and_classical_mixture_share_a_table_but_not_entanglement
+  - the_descent_and_the_witness_refuse_malformed_inputs

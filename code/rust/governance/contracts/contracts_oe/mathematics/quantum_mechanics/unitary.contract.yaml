@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:unitary:v0.1.0
+title: Unitary Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: unitary
+  symbol: unitary
+  ascii_symbol: unitary
+  notation: Exact Finite Unitary
+  domain:
+  - A finite square operator over Q(zeta_8), with the shared exact carrier limits
+  codomain:
+    description: Declared finite results of core_quantum_physics::unitary_operator; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Admission verifies U dagger U=I exactly; square finite invertibility also gives U U dagger=I
+- The inverse is dagger and composition/tensor retain exact unitarity
+- Clifford+T gate words retain their full complex phases
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+relationships:
+- urn:math:contract:HilbertSpace:v1.0.0 serves as Defines the underlying Hilbert space structure
+- 'urn:math:contract:Endomorphism:v1.0.0 serves as Defines the endomorphism structure U: H → H'
+- urn:math:contract:Adjoint:v1.0.0 serves as Provides the adjoint operator U*
+- urn:math:contract:InnerProduct:v1.0.0 serves as Defines inner product for norm preservation
+negative_tests:
+- Reject nonsquare and nonunitary candidates, including an exact nonzero perturbation
+- Refuse dimensions and products exceeding declared limits
+doctrine:
+  summary: Admission verifies U dagger U=I exactly; square finite invertibility also gives U U dagger=I; The
+    inverse is dagger and composition/tensor retain exact unitarity; Clifford+T gate words retain their full
+    complex phases.
+  non_role:
+  - Unrelated basis-artifact hash protocols
+  - Arbitrary coefficient fields or approximate unitarity
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted
+- The former generic metadata scaffold remains outside this explicitly declared finite executable domain; its
+  unsupported hash obligations are not claimed discharged.
+rust_binding:
+  crate: core_quantum_physics
+  module: unitary_operator
+  symbols:
+  - ExactUnitary
+  - ExactUnitary::try_new
+  - ExactUnitary::inverse
+  - ExactUnitary::compose
+  required_tests:
+  - exact_clifford_t_gate_words_and_packed_operators_keep_complex_phases

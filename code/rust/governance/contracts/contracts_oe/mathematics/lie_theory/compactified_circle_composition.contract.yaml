@@ -1,0 +1,64 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:compactified_circle_composition:v0.1.0
+title: Exact compactified rational circle composition
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: compactified_circle_composition
+  symbol: compactified_circle_composition
+  ascii_symbol: compactified_circle_composition
+  notation: Exact compactified rational circle composition
+  domain:
+  - Rational finite Cayley chart plus its infinity point.
+  codomain:
+    description: Declared finite results of core_lie_theory::cayley; exact and diagnostic routes retain their
+      stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Products at a*b=1 return the infinity point.
+- Infinity cases and the tangent addition law compose exact rational unit phases.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: cayley
+  symbols:
+  - compactified_circle_composition
+  required_tests:
+  - compactified_circle_composition_replays_infinity_and_finite_chart_products
+negative_tests: []
+doctrine:
+  summary: Products at a*b=1 return the infinity point.; Infinity cases and the tangent addition law compose
+    exact rational unit phases..
+  non_role:
+  - This chart law carries no physical generator or domain certificate.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

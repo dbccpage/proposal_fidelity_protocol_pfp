@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:checked_odd_cycle_witness:v0.1.0
+title: Exact finite graph two-colouring and valid odd cycles
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: checked_odd_cycle_witness
+  symbol: checked_odd_cycle_witness
+  ascii_symbol: checked_odd_cycle_witness
+  notation: Exact finite graph two-colouring and valid odd cycles
+  domain:
+  - Declared finite undirected graph with 0..=4096 vertices, at most 2^20 edges and valid endpoints; self-loops
+    and parallel edges admitted; allocation and size refusals are typed
+  codomain:
+    description: Declared finite results of core_homology::graph_coloring; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Bipartition checks every edge
+- An odd-cycle witness has odd length, distinct vertices and every cyclic adjacency
+- All small exhaustive colourings agree independently
+- Vertex/edge admission and endpoint validation precede graph storage allocation; empty carriers retain their
+  exact zero-component result
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_homology
+  module: graph_coloring
+  symbols:
+  - two_coloring
+  - verify_odd_cycle
+  - verify_bipartition
+  required_tests:
+  - graph_coloring::transferred_regressions::detection_agrees_with_exhaustive_two_colouring_and_every_witness_is_valid
+  - graph_coloring::tests::colouring_admission_precedes_allocation_and_preserves_empty_graphs
+negative_tests:
+- graph_coloring::transferred_regressions::detection_agrees_with_exhaustive_two_colouring_and_every_witness_is_valid
+- graph_coloring::tests::colouring_admission_precedes_allocation_and_preserves_empty_graphs
+doctrine:
+  summary: Bipartition checks every edge; An odd-cycle witness has odd length, distinct vertices and every
+    cyclic adjacency; All small exhaustive colourings agree independently; Vertex/edge admission and endpoint
+    validation precede graph storage allocation; empty carriers retain their exact zero-component result.
+  non_role:
+  - An odd cycle only obstructs two-colouring and does not obstruct arbitrary commuting operators
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

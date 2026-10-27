@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_path_integral:v0.1.0
+title: Exact Finite Path Sums and Gaussian Integrals
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_path_integral
+  symbol: finite_path_integral
+  ascii_symbol: finite_path_integral
+  notation: Exact Finite Path Sums and Gaussian Integrals
+  domain:
+  - Declared finite time-sliced semiring kernels.
+  - A positive-definite rational Gaussian precision matrix on at most eight coordinates, with bounded moment
+    and perturbation order.
+  codomain:
+    description: Declared finite results of core_quantum_physics::path_integral; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The finite partition value is the trace of the actual transfer product.
+- Positive definiteness is certified by exact LDL and covariance is the canonical exact inverse.
+- Moments satisfy Isserlis recurrence over actual covariance entries.
+- Zero-dimensional phi4 partition, log-partition and two-point formal series reproduce the exact Wick and connected
+  coefficients.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: path_integral
+  symbols:
+  - PathIntegral
+  - GaussianMeasure
+  required_tests:
+  - gaussian_moments_and_phi4_integrals_match_exact_wick_coefficients
+  - finite_chain_partition_is_the_trace_of_the_transfer_product
+negative_tests:
+- Indefinite or singular precision, carrier mismatch and moment/series resource excess are refused.
+doctrine:
+  summary: The finite partition value is the trace of the actual transfer product.; Positive definiteness is
+    certified by exact LDL and covariance is the canonical exact inverse.; Moments satisfy Isserlis recurrence
+    over actual covariance entries.; Zero-dimensional phi4 partition, log-partition and two-point formal series
+    reproduce the exact Wick and connected coefficients..
+  non_role:
+  - No continuum path measure or measure-convergence assertion.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,102 @@
+schema_version: "core.contract.v1"
+contract_id: "urn:core:math:cech_cochain:v1.0.0"
+title: "Čech Cochain"
+kind: "math_contract"
+status: "mathematical_wip"
+layer: "math"
+
+descriptor:
+  authority_effect: "none"
+  evidence_ceiling: "ShapeOnly"
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+
+math:
+  object_kind: "cochain"
+  symbol: "c : N(U)_k → G"
+  ascii_symbol: "CechCochain"
+  notation: "c : N(U)_k → G"
+  domain:
+    - "the nerve N(U) of a cover U = {U_i} of a space X"
+    - "a non-negative degree k"
+    - "an abelian coefficient group G"
+    - "a map from k-simplex identifiers to elements of G"
+  codomain:
+    description: "a single validated Čech k-cochain (purely structural; emits no class)"
+  definition:
+    cochain: "a function c assigning to each k-simplex of N(U) an element of G"
+    coboundary: "delta : C^k → C^{k+1} via the alternating-sum formula"
+    scope: "this contract is a single k-cochain; the full complex lives in Čech cohomology"
+
+requirements:
+  required_structures:
+    - "a nerve_id resolving to a valid Nerve artifact"
+    - "a degree k with 0 ≤ k ≤ max dimension of the nerve"
+    - "all simplex ids being valid, sorted k-simplices of the nerve"
+    - "each value being a valid element of the coefficient group"
+    - "values sorted lexicographically by simplex id, each simplex at most once"
+    - "a content-addressed SHA-256 hash over the canonical serialization"
+  compatibility:
+    - "the degree must not exceed the nerve's maximum dimension"
+    - "coefficient values must belong to the declared coefficient group"
+
+laws:
+  simplex_membership: "Every simplex id must be a valid, canonically-sorted k-simplex of the nerve."
+  coefficient_validity: "Every value is a valid element of the declared abelian coefficient group."
+  uniqueness: "Each simplex appears at most once in the value map."
+  canonical_order: "Values are sorted lexicographically by simplex id; sorted ids imply alternating signs."
+  descriptive_only: "A cochain is structural; it classifies nothing and confers no authority."
+
+equivalence:
+  artifact_equality: "Two cochains are equal iff nerve, degree, coefficient group, and canonical values hash agree."
+  zero_cochain: "An empty value list and an all-identity assignment are equivalent via the group identity."
+
+replay:
+  requirements:
+    - "no external state, randomness, or time-dependent data"
+    - "simplex ids serialized as sorted tuples of 4-byte unsigned LE integers"
+    - "values serialized in the coefficient group's canonical form, sorted by simplex id"
+    - "deterministic SHA-256 hash over the canonical serialization"
+
+relationships:
+  Nerve: "Cochains are defined on the simplices of the nerve N(U) of a cover."
+  CochainComplex: "Čech cochains assemble into a [[cochain_complex]] under the Čech coboundary."
+  CechCohomology: "Čech cohomology is the cohomology of the complex of these cochains."
+  Cover: "The cover U of the space X induces the nerve on which cochains live."
+
+negative_tests:
+  - "nerve_id does not resolve to a Nerve artifact"
+  - "degree exceeds the nerve's maximum dimension"
+  - "simplex id references vertices not in the nerve, or has the wrong cardinality"
+  - "simplex id is unsorted (e.g. (2,0,1) instead of (0,1,2))"
+  - "duplicate simplex id in the value list"
+  - "value not in the coefficient group (e.g. 0.5 for coefficients in Z)"
+  - "value list not sorted lexicographically by simplex id"
+  - "artifact hash does not match the recomputed hash"
+
+doctrine:
+  summary: >
+    A single Čech k-cochain: an assignment of coefficient-group elements to the
+    k-simplices of the nerve of a cover. Purely structural; confers no authority.
+  non_role:
+    - "Does not represent the full Čech cohomology complex (see the Čech cohomology contract)."
+    - "Does not compute cohomology groups directly."
+    - "Does not handle cup products (a separate computation)."
+    - "Does not issue certificates, terminalize, or produce customer-facing claims."
+
+wip:
+  - "Sheaf coefficients are planned via a Sheaf artifact hash in the coefficient group id."
+  - "Zero cochain may be an empty list; the group identity handles equivalence."
+  - "Cup product will be a separate operation with a dedicated computation witness."
+  - "Alternating-sign convention is implicit in the sorted-simplex representation."

@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_empirical_support_fractions:v0.1.0
+title: Finite empirical support and contextual fractions
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_empirical_support_fractions
+  symbol: finite_empirical_support_fractions
+  ascii_symbol: finite_empirical_support_fractions
+  notation: Finite empirical support and contextual fractions
+  domain:
+  - Declared binary variables1..20 with explicit local vertex assignment/coordinate/entry limits; packing dimensions<=64
+    and explicit candidate budget
+  codomain:
+    description: Declared finite results of core_quantum_physics::contextuality_obstruction; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Distributions normalize and all overlap marginals agree
+- Strong contextuality is empty supported global assignment set
+- Logical contextuality tests extension of every supported local outcome
+- Packing primal and dual replay maximal noncontextual mass and contextual fraction=1-mass
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: contextuality_obstruction
+  symbols:
+  - BinaryEmpiricalModel
+  - BinaryEmpiricalModel::supported_global_assignments
+  - BinaryEmpiricalModel::is_logically_contextual
+  - BinaryEmpiricalModel::contextual_fraction
+  - BinaryEmpiricalModel::verify_contextual_fraction
+  - ContextualFractionCertificate
+  required_tests:
+  - measurement_exact_laws::contextual_fraction_support_and_ks_are_independent_finite_decisions
+negative_tests:
+- measurement_exact_laws::contextual_fraction_support_and_ks_are_independent_finite_decisions
+doctrine:
+  summary: Distributions normalize and all overlap marginals agree; Strong contextuality is empty supported
+    global assignment set; Logical contextuality tests extension of every supported local outcome; Packing
+    primal and dual replay maximal noncontextual mass and contextual fraction=1-mass.
+  non_role:
+  - Finite empirical, Bell-local and KS-ray decisions remain distinct; no quantum realization follows from
+    nondisturbance
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

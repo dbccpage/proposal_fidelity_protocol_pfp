@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:derived_category:v0.1.0
+title: Derived Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: derived_category
+  symbol: D(A) = Ch(A)[Qis^-1]
+  ascii_symbol: derived_category
+  notation: D(A) = (Ch(A), Qis^-1, [1], C(f))
+  domain:
+  - 'abelian_category: base abelian category A with exact sequences and homology functors'
+  - 'chain_complexes: category Ch(A) of unbounded cochain complexes (X^\bullet, d_X)'
+  - 'quasi_isomorphisms: class Qis of chain maps inducing cohomology isomorphisms H^n(f): H^n(X) \cong H^n(Y)'
+  - 'mapping_cone: functorial mapping cone object C(f) = Y \oplus X[1] with cone differential matrix [[d_Y, f], [0, -d_X]]'
+  - 'localization_calculus: calculus of left and right fractions for formally inverting Qis'
+  - 'shift_functor: translation functor [1] shifting degrees by (X[1])^n = X^{n+1} with d_{X[1]} = -d_X'
+  codomain:
+    description: The derived category D(A) of an abelian category A is obtained by localizing the category of chain complexes Ch(A) at the multiplicative system of quasi-isomorphisms. D(A) is canonically equipped with a triangulated structure where distinguished triangles arise from mapping cones C(f).
+requirements:
+  required_structures:
+  - Base category A is abelian.
+  - Quasi-isomorphisms form a localizing class admitting a calculus of fractions.
+  - Mapping cone differential matrix satisfies d_{C(f)}^2 = 0.
+  - Canonical mapping cone triangle X -f-> Y -i-> C(f) -p-> X[1] is distinguished.
+  - Every quasi-isomorphism becomes an isomorphism in D(A).
+  - Structure hash is deterministically content-addressed.
+laws:
+  - 'Cone differential nilpotence: [[d_Y, f], [0, -d_X]]^2 = [[d_Y^2, d_Y f - f d_X], [0, d_X^2]] = 0 since d^2=0 and d_Y f = f d_X'
+  - 'Inversion law: for every s in Qis, Q(s) has a two-sided inverse in D(A)'
+  - 'Shift functor: (X[1])^n = X^{n+1} and d_{X[1]}^n = -d_X^{n+1}'
+  - 'Long exact cohomology sequence: distinguished cone triangle induces ... -> H^n(X) -> H^n(Y) -> H^n(C(f)) -> H^{n+1}(X) -> ...'
+  - 'Roof composition: composition of fractions is associative via the Ore condition'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Complex differentials and mapping cones serialized in canonical order
+  - Exact rational discrete arithmetic; signs verified algebraically
+relationships:
+- urn:core:math:triangulated_category:v0.1.0 serves as Derived category satisfies all Verdier triangulated category axioms
+- urn:core:math:bounded_derived_category:v0.1.0 serves as Bounded derived category D^b(A) is a full triangulated subcategory
+- urn:core:math:unbounded_derived_category:v0.1.0 serves as Unbounded derived category contains all complexes without cohomological bounds
+- urn:core:math:dg_category:v0.1.0 serves as Category of chain complexes is a DG-category providing the enhancement of D(A)
+rust_binding:
+  crate: core_higher_category_theory
+  module: derived
+  symbols:
+  - DerivedCategory
+  - MappingCone
+  - ConeDifferentialMatrix
+  - QuasiIsomorphism
+  required_tests:
+  - test_derived_category_manager
+  - test_chain_complex_and_mapping_cone_construction
+  - test_kill_mut_p2_01_broken_differential
+negative_tests:
+- Cone differential matrix fails d^2 = 0 due to sign error in -d_X or broken chain map (BrokenDifferential / MUT-P2-01)
+- Non-quasi-isomorphism asserted as invertible fraction
+- Base category is not abelian
+- Calculus of fractions fails Ore condition
+doctrine:
+  summary: The derived category D(A) localizes chain complexes at quasi-isomorphisms, making chain maps that induce cohomology isomorphisms strictly invertible. Mapping cones C(f) = Y \oplus X[1] furnish canonical distinguished triangles, making D(A) the archetype of triangulated categories.
+  non_role:
+  - Derived algebraic geometry / derived stacks
+  - Non-abelian derived categories
+  - Specific t-structures and hearts
+wip:
+  - Formal verification of cone differential nilpotence in Lean 4 (DerivedCategory.lean)
+  - Exact rational mapping cone differential matrix constructor in Rust
+  - Ore condition verification for roof composition

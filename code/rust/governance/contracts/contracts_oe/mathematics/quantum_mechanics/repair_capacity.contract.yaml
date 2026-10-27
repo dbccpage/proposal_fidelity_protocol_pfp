@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:repair_capacity:v0.1.0
+title: Conditional Repair Capacity and Concatenation Bounds
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: repair_capacity
+  symbol: repair_capacity
+  ascii_symbol: repair_capacity
+  notation: Conditional Repair Capacity and Concatenation Bounds
+  domain:
+  - Nonnegative rational production, repair and mixing rates.
+  - A declared positive malignant-pair count C, initial probability at most 1/C and bounded concatenation levels.
+  codomain:
+    description: Declared finite results of core_quantum_physics::repair_capacity; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The recurrence gives rho_k >= max(0,rho_0+k(lambda-mu-epsilon)).
+- A positive persistent gap forces strict threshold crossing at the exact integer floor formula; a nonpositive
+  gap does not yield that conclusion.
+- The concatenation threshold is 1/C and exact upper iterates obey p_l=(C p_0)^(2^l)/C.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: repair_capacity
+  symbols:
+  - RepairBudget
+  - residual_lower_bounds
+  - windows_to_exceed
+  - concatenated_threshold
+  - concatenated_repair_scaling
+  required_tests:
+  - conditional_concatenation_has_a_fixed_threshold_and_double_exponential_decay
+negative_tests:
+- Negative rates, nonpositive C, rates above the admitted threshold, level excess and rational bit growth are
+  refused.
+doctrine:
+  summary: The recurrence gives rho_k >= max(0,rho_0+k(lambda-mu-epsilon)).; A positive persistent gap forces
+    strict threshold crossing at the exact integer floor formula; a nonpositive gap does not yield that conclusion.;
+    The concatenation threshold is 1/C and exact upper iterates obey p_l=(C p_0)^(2^l)/C..
+  non_role:
+  - Declared rate and malignant-pair hypotheses are not inferred device properties.
+  - No refutation of fault-tolerance threshold theorems.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

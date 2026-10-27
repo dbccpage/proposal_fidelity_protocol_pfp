@@ -1,0 +1,72 @@
+# Builds pfp binaries when a maintainer pushes a tag like pfp-cli-v0.1.0,
+# and attaches them, with SHA-256 sums, to a draft GitHub release.
+name: pfp-cli-release
+
+on:
+  push:
+    tags: ["pfp-cli-v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-musl, exe: pfp }
+          - { os: macos-latest, target: aarch64-apple-darwin, exe: pfp }
+          - { os: macos-latest, target: x86_64-apple-darwin, exe: pfp }
+          - { os: windows-latest, target: x86_64-pc-windows-msvc, exe: pfp.exe }
+    defaults:
+      run:
+        shell: bash
+        working-directory: code/rust/pfp_cli
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Only the two crates: the full tree has paths past Windows' 260-character limit.
+          sparse-checkout: |
+            code/rust/pfp_cli
+            code/rust/core_prompt_civilization
+      - name: Tag matches the crate version
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
+          test "$GITHUB_REF_NAME" = "pfp-cli-v$version" || { echo "tag $GITHUB_REF_NAME does not match version $version"; exit 1; }
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+      - run: cargo build --locked --release --target ${{ matrix.target }}
+      - name: Package
+        run: |
+          name="pfp-${GITHUB_REF_NAME#pfp-cli-}-${{ matrix.target }}"
+          mkdir "$name"
+          cp "target/${{ matrix.target }}/release/${{ matrix.exe }}" README.md ../../../LICENSE "$name/"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            7z a "$name.zip" "$name" >/dev/null && echo "ASSET=$name.zip" >> "$GITHUB_ENV"
+          else
+            tar czf "$name.tar.gz" "$name" && echo "ASSET=$name.tar.gz" >> "$GITHUB_ENV"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: code/rust/pfp_cli/${{ env.ASSET }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - run: cd dist && sha256sum * > SHA256SUMS
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --draft --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --notes "pfp command line. Verify downloads against SHA256SUMS."

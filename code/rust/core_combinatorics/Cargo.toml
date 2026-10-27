@@ -1,0 +1,31 @@
+[package]
+autotests = false
+name = "core_combinatorics"
+version.workspace = true
+edition = "2021"
+description = "Budgeted exact finite combinatorics: permutations, combinations, weak compositions, Cartesian words, factorials and binomials"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[dependencies]
+num-bigint = "0.4"
+num-traits = "0.2"
+thiserror = "2"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_combinatorics`.
+
+[[test]]
+name = "cartesian_words"
+path = "../tests/core_combinatorics/cartesian_words.rs"
+
+[[test]]
+name = "color_constraints"
+path = "../tests/core_combinatorics/color_constraints.rs"
+
+[[test]]
+name = "enumeration"
+path = "../tests/core_combinatorics/enumeration.rs"
+
+[[test]]
+name = "partitions"
+path = "../tests/core_combinatorics/partitions.rs"

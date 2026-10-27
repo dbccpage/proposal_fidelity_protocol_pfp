@@ -1,0 +1,29 @@
+[package]
+autotests = false
+name = "core_sandbox"
+version.workspace = true
+edition = "2021"
+description = "Process isolation and sandboxed execution seam for the Symbol Game"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[[bin]]
+name = "core-sandbox-run"
+path = "src/main.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+tempfile = "3"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_sandbox`.
+
+[[test]]
+name = "hostile_scripts"
+path = "../tests/core_sandbox/hostile_scripts.rs"
+
+[[test]]
+name = "windows_capture"
+path = "../tests/core_sandbox/windows_capture.rs"

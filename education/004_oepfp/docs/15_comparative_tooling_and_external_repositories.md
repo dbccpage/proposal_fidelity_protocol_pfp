@@ -41,7 +41,7 @@ Below is an evaluation of external GitHub repositories identified as potentially
 
 > **Inventory correction (2026-10-20).** Earlier text said 13 repositories. The tables below name 18 projects: Mathlib4, LeanDojo-v2, LeanCopilot (section 2); CivAgent, CatDock, CEO, AgentCiv (section 3); sharpen, AutoPrompt, gpt-prompt-engineer, TheBigPromptLibrary, DAIR Prompt-Engineering-Guide (section 4); vLLM, SGLang, LLMLingua, Representation Engineering, llm-attacks, Prompt Guard via llama-cookbook (section 5). Counts per section: 3 + 4 + 5 + 6 = 18. None is pinned to a commit, and this page records reading of public descriptions, not inspected behavior; the [deep research prompt review](pfp_pciv_eis_llms_deep_research_prompt.md#pass-one-review-and-second-pass-research-prompt) asks for pinned versions before any integration.
 >
-> **Local paths (2026-10-20, pin `c419cc6beb`).** The `pilots/` tree named below has moved. `c041_lean4_finite_lemma_proofs` is now under [`pfp/tests/demo_004/e_formal_math/`](../../../../pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs.md). Directories `pilot_0000045` and `pilot_0000046` exist under `adversary/tests/pilots/`, but their current READMEs describe other experiments (intrinsic triangle fans and an offline Hodge slice), not "unknown filtration inputs" or "prompt compression information loss"; the pilot bindings below are historical proposals. `_intelligence/` is not present; intelligence records now live under `_ic/` (for example `_ic/antibodies/antibodies_log.md`). `operations/use_cases/adversary_bout/` is not present.
+> **Local paths (2026-10-20, pin `c419cc6beb`).** The `pilots/` tree named below has moved. `c041_lean4_finite_lemma_proofs` is now under [`pfp/tests/demo_004/e_formal_math/`](../../../../demos/certified_challenges/c041_lean4_finite_lemma_proofs.md). Directories `pilot_0000045` and `pilot_0000046` exist under `adversary/tests/pilots/`, but their current READMEs describe other experiments (intrinsic triangle fans and an offline Hodge slice), not "unknown filtration inputs" or "prompt compression information loss"; the pilot bindings below are historical proposals. `_intelligence/` is not present; intelligence records now live under `_ic/` (for example `_ic/antibodies/antibodies_log.md`). `operations/use_cases/adversary_bout/` is not present.
 
 ---
 
@@ -56,7 +56,7 @@ Formal theorem proving provides the mathematical backbone for PFP's obstruction 
 | **[LeanCopilot](https://github.com/lean-dojo/LeanCopilot)** | **Proposer Only** | LLM-assisted tactic suggestion and premise retrieval. | Acts strictly as an automated **Proposer**. It suggests candidate proof tactics; the sovereign Lean 4 kernel evaluates them. | Must carry zero authority. A proposed tactic is an untrusted string until accepted by the proof kernel. |
 
 ### Concrete Pilot Binding
-In `pilots/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs/` (now [`pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs/`](../../../../pfp/tests/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs.md)), connect a minimal obstruction lemma (discrete boundary vanishing on a toy 3-simplex) to Mathlib's chain complex typeclass.
+In `pilots/demo_004/e_formal_math/c041_lean4_finite_lemma_proofs/` (now [`demos/certified_challenges/c041_lean4_finite_lemma_proofs/`](../../../../demos/certified_challenges/c041_lean4_finite_lemma_proofs.md)), connect a minimal obstruction lemma (discrete boundary vanishing on a toy 3-simplex) to Mathlib's chain complex typeclass.
 
 ---
 

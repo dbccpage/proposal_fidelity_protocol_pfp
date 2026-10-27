@@ -1,0 +1,64 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:xi_tiebreak:v1.1.0
+title: XiTieBreak
+status: active
+crate: core_functional
+file: crates_rs/core_functional/src/xi.rs
+layer: 03_obstruction
+role: tertiary_diagnostic_tiebreak
+authority_effect: none
+evidence_ceiling: DiagnosticOnly
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- xi_trace_distance
+- xi_scale_invariance_check
+- xi_tie_break_only
+does_not_own:
+- Phi1 magnitude
+- Gamma2 closure defect
+- primary ranking
+- secondary ranking
+- authority minting
+- lift acceptance
+- terminalization
+may_call:
+- density lift helpers
+- trace distance helpers
+must_not:
+- override Phi1
+- override Gamma2
+- decide when Phi1 is not tied
+- decide when Gamma2 is not tied
+- mint authority
+- terminalize
+- repair
+- lift
+- claim FullCertifier ceiling
+exactness:
+  mode: diagnostic_exact_or_bounded_numeric
+  exact_constructor_required: false
+  scale_invariance_required: true
+  tie_precondition_required: true
+forbidden_substrings:
+- CertifiedAuthority::certify
+- authority_from_outcome_f13
+- mint_authority(
+- AuthorityCeiling::FullCertifier
+- AuthorityEffect::Authorize
+- AuthorityEffect::Full
+required_substrings:
+- Xi
+- tie
+- scale
+required_tests:
+- xi_decides_only_when_phi1_and_gamma2_tied
+- xi_is_scale_invariant
+- xi_carries_no_authority
+- xi_never_overrides_phi1
+- xi_never_overrides_gamma2
+lean_obligations:
+- 'L4: guarded evaluator law: Phi1 ≻ Gamma2 ≻ Xi'
+- 'L-XI-1: Xi scale invariance'
+- 'L-XI-2: Xi no-authority theorem'

@@ -1,0 +1,116 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:polynomial_ring:v0.1.0
+title: 'Polynomial Ring over an Exact Field Contract'
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: polynomial_ring
+  symbol: 'F[x], and over Q: content, Sturm counts and real-root isolation'
+  ascii_symbol: polynomial_ring
+  notation: 'F[x], and over Q: content, Sturm counts and real-root isolation'
+  domain:
+  - 'coefficients: ascending list over an exact field F of the linear_algebra scalar tower'
+  - 'interval endpoints: exact rationals, for the real-root routines'
+  codomain:
+    description: 'Normalised polynomials (no trailing zero coefficient); quotients, remainders, gcds, resultants, discriminants; exact counts of real roots in (a, b]; rational isolating intervals.'
+requirements:
+  required_structures:
+  - 'Every polynomial is normalised: the leading stored coefficient is nonzero and the zero polynomial is empty'
+  - 'Division by the zero polynomial is refused with a typed error'
+  - 'The squarefree operations are valid in characteristic zero'
+  - 'Real-root counts are of distinct roots, in a half-open interval (a, b]'
+  - 'A rational root is reported exactly; an irrational root is reported by an interval whose endpoints are not roots'
+  - 'No floating point appears in any operation'
+laws:
+- 'f = q g + r with deg r < deg g (Euclidean division)'
+- 's a + t b = gcd(a, b), gcd monic (Bezout)'
+- 'Res(f, g) equals the Sylvester determinant, and Res(prod(x - a_i), prod(x - b_j)) = prod(a_i - b_j)'
+- 'disc(f) = 0 exactly when f has a repeated root'
+- 'f = lc(f) prod q_i^i for the squarefree decomposition q_i'
+- 'content(f g) = content(f) content(g) (Gauss)'
+- 'prod over d | n of Phi_d = x^n - 1, deg Phi_n = phi(n), Phi_n(1) = p for a prime power p^k'
+- 'Sturm: the number of distinct real roots in (a, b] is V(a) - V(b)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- 'exact_rational serves as the field Q of the coefficients'
+- 'exact_scalar_tower (linear_algebra) serves as the trait tower the generic polynomial is written over'
+- 'cyclotomic_field serves as the quotient ring Q[x] / (Phi_n)'
+- 'real_embedding_sign serves as the consumer of the real-root isolation'
+rust_binding:
+  crate: core_number_theory
+  module: polynomial
+  symbols:
+  - 'Polynomial'
+  - 'PolynomialError'
+  - 'ExactField'
+  - 'cyclotomic_polynomial'
+  - 'euler_phi'
+  - 'mobius'
+  - 'SturmSequence'
+  - 'sturm_sequence'
+  - 'count_real_roots'
+  - 'count_all_real_roots'
+  - 'real_root_bound'
+  - 'isolate_real_roots'
+  - 'rational_roots'
+  - 'refine_root'
+  - 'refine_simple_root'
+  - 'RealRoot'
+  - 'RootLocation'
+  required_tests:
+  - 'ring_laws_and_degree_additivity_hold_on_a_grid'
+  - 'euclidean_division_reconstructs_the_dividend_with_a_smaller_remainder'
+  - 'division_by_the_zero_polynomial_is_refused_not_panicked'
+  - 'extended_gcd_satisfies_the_bezout_identity'
+  - 'resultant_matches_the_sylvester_determinant_and_the_product_over_roots'
+  - 'discriminant_vanishes_exactly_for_repeated_roots_and_equals_the_root_product'
+  - 'discriminant_refuses_the_zero_polynomial_and_constants'
+  - 'squarefree_part_drops_multiplicities_and_yun_reassembles_the_polynomial'
+  - 'gauss_lemma_content_is_multiplicative'
+  - 'cyclotomic_polynomials_satisfy_the_defining_relations_for_every_n_up_to_40'
+  - 'cyclotomic_polynomial_refuses_zero_and_oversized_conductors'
+  - 'sturm_counts_distinct_real_roots_in_half_open_intervals'
+  - 'sturm_counts_agree_with_direct_counting_of_known_rational_roots'
+  - 'sturm_refuses_the_zero_polynomial_and_reversed_intervals'
+  - 'isolation_reports_every_rational_root_exactly_with_its_multiplicity'
+  - 'isolation_separates_close_irrational_roots'
+  - 'refinement_refuses_a_non_positive_tolerance_and_a_non_isolating_interval'
+  - 'cauchy_bound_strictly_contains_every_real_root'
+negative_tests:
+- 'Division by the zero polynomial must be refused'
+- 'The discriminant of the zero polynomial or of a constant must be refused'
+- 'Sturm counting for the zero polynomial or over a reversed interval must be refused'
+- 'Root refinement with a non-positive tolerance or a non-isolating interval must be refused'
+- 'A cyclotomic polynomial for conductor 0 or above the declared maximum must be refused'
+doctrine:
+  summary: 'Dense univariate polynomials over any exact field of the scalar tower, with the exact real-root machinery over Q: Gauss content, cyclotomic polynomials, Sturm sequences, isolation and refinement of real roots.'
+  non_role:
+  - 'Floating-point root finding'
+  - 'Factorisation over Q into irreducibles (not built)'
+  - 'Multivariate polynomials'
+wip:
+- 'Factorisation over Q (Kronecker or Zassenhaus) is not built'
+- 'The squarefree routines assume characteristic zero; there is no GF(p) polynomial type yet'
+- 'No Lean counterpart exists for Sturm''s theorem or the resultant'

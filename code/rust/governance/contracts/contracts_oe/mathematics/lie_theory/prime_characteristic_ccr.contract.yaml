@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:prime_characteristic_ccr:v0.1.0
+title: Prime-Characteristic Truncated Polynomial CCR
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: prime_characteristic_ccr
+  symbol: prime_characteristic_ccr
+  ascii_symbol: prime_characteristic_ccr
+  notation: Prime-Characteristic Truncated Polynomial CCR
+  domain:
+  - Prime characteristic p in 2..=31 on the truncated polynomial basis 1,x,...,x^(p-1)
+  codomain:
+    description: Declared finite results of core_lie_theory::heisenberg; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Differentiation D and multiplication X satisfy [D,X]=I by independent field contractions including the final
+  basis vector
+- Trace(I)=p=0 in the declared prime field
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: heisenberg
+  symbols:
+  - PrimeCharacteristicCcr
+  - prime_characteristic_ccr
+  required_tests:
+  - prime_characteristic_ccr_replays_the_boundary_and_requires_a_proven_prime
+negative_tests:
+- Composite/zero/one characteristics and dimensions above the declared bound are refused
+doctrine:
+  summary: Differentiation D and multiplication X satisfy [D,X]=I by independent field contractions including
+    the final basis vector; Trace(I)=p=0 in the declared prime field.
+  non_role:
+  - No characteristic-zero CCR realization or continuum limit
+  - Characteristic p is explicitly part of the carrier
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

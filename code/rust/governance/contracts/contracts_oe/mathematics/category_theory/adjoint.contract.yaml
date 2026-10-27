@@ -1,0 +1,102 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:adjoint:v0.1.0
+title: Adjoint Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: adjoint_operator
+  symbol: 'T*: W -> V where <Tv,w>_W = <v,T*w>_V'
+  ascii_symbol: adjoint
+  notation: 'T*: W -> V where <Tv,w>_W = <v,T*w>_V'
+  domain:
+  - 'original_map: linear_map_T'
+  - 'adjoint_map: adjoint_map_T_star'
+  - 'domain_inner_product: inner_product_V'
+  - 'codomain_inner_product: inner_product_W'
+  codomain:
+    description: 'Adjoint linear operator T*: W -> V for linear map T: V -> W'
+requirements:
+  required_structures:
+  - Linear maps and inner product artifacts must exist
+  - Domain of T* must equal codomain of T, and vice versa
+  - Both domain and codomain must have declared inner products
+  - All artifacts must reference same field K
+  - Adjoint identity <Tv,w>_W = <v,T*w>_V must hold
+  - Complex inner products require declared conjugation convention
+  - Content-addressed artifact hash must be valid
+laws:
+- <Tv,w>_W = <v,T*w>_V for all v in V, w in W
+- Domain of T* is codomain of T, codomain of T* is domain of T
+- T, T*, and both inner products are over the same field K
+- Both domain and codomain must have declared inner products
+- For complex fields, conjugation convention must be declared (linear_in_first or
+  linear_in_second)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Artifact existence verified via content-addressing
+  - Validator and computation functions are content-addressed
+  - Reconstructing T* from T and same inner-product Gram matrices must reproduce same
+    adjoint_map_hash
+relationships:
+- urn:math:contract:LinearMap:v0.1.0 serves as defines_original_and_adjoint_maps
+- urn:math:contract:VectorSpace:v0.1.0 serves as defines_domain_and_codomain_spaces
+- urn:math:contract:InnerProduct:v0.1.0 serves as defines_inner_product_structures
+- urn:math:contract:Field:v0.1.0 serves as common_base_field_K
+negative_tests:
+- Missing inner product artifacts must be rejected
+- T* domain != T codomain must be rejected
+- Complex field without conjugation convention must be rejected
+- Matrix that fails adjoint identity must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- T, T*, or inner products using different fields must be rejected
+- Same inputs producing different hashes must be rejected
+doctrine:
+  summary: 'Adjoint records a linear operator T*: W -> V associated to a linear map
+    T: V -> W under declared inner-product structures. The adjoint is defined by the
+    identity <Tv,w>_W = <v,T*w>_V.'
+  non_role:
+  - Admissibility classification (not an authority contract)
+  - Policy decisions (purely mathematical)
+  - Certificate emission (no customer-facing claims)
+  - Terminalization (no authority effects)
+  - Unbounded operator adjoints (deferred until infinite-dimensional contracts exist)
+wip:
+- Should we define exact tolerance discipline for floating approximations?
+- How to handle unbounded operator adjoints if infinite-dimensional contracts are
+  added?
+- Should self-adjoint and unitary properties be separate FactEnvelope contracts?
+- Requires explicit inner-product structures for both domain and codomain
+- Conjugation convention required for complex inner products
+- Adjoint identity verified on sampled or exact basis pairs
+- Unbounded operator adjoints deferred until infinite-dimensional contracts exist
+- Self-adjoint, normal, unitary properties are separate FactEnvelopes
+- Tolerance discipline for floating-point approximations not yet specified
+rust_binding:
+  crate: core_category_theory
+  module: dagger
+  symbols:
+  - DaggerStructure
+  required_tests:
+  - test_dagger_involution
+  - test_dagger_composition
+  - test_dagger_identity

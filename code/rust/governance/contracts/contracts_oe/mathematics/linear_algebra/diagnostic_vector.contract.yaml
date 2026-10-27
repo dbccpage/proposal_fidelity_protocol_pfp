@@ -1,0 +1,34 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:diagnostic_vector:v1.0.0
+title: DiagnosticVector
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:xi_tie_breaker:v1.0.0
+    - urn:core:math:phi1_obstruction_mass:v1.0.0
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    - urn:core:math:closure_defect:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Multidimensional diagnostic vector math definition.
+  non_role: []
+rust_binding:
+  crate: core_types
+  module: diagnostic_vector
+  symbols:
+  - DiagnosticSnapshot

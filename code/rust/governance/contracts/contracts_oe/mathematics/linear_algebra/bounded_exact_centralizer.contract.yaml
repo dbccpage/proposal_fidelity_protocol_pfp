@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bounded_exact_centralizer:v0.1.0
+title: Bounded exact commutant basis
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: bounded_exact_centralizer
+  symbol: bounded_exact_centralizer
+  ascii_symbol: bounded_exact_centralizer
+  notation: Bounded exact commutant basis
+  domain:
+  - Finite same-size square exact-field generators with explicit n^4 storage and elimination work bounds
+  codomain:
+    description: Declared finite results of core_linear_algebra::exact_field::commutant; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Kernel of the stacked commutator map is the full centralizer
+- Every returned basis matrix independently commutes with every generator
+- Repeated eigenvalues enlarge the exact dimension
+- All construction and elimination allocations are preflighted
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_field::commutant
+  symbols:
+  - commutant_dimension_with_limits
+  - commutant_basis_with_limits
+  required_tests:
+  - commutant::tests::centralizer_detects_multiplicity_and_replays_a_complete_basis
+negative_tests:
+- commutant::tests::centralizer_detects_multiplicity_and_replays_a_complete_basis
+doctrine:
+  summary: Kernel of the stacked commutator map is the full centralizer; Every returned basis matrix independently
+    commutes with every generator; Repeated eigenvalues enlarge the exact dimension; All construction and elimination
+    allocations are preflighted.
+  non_role:
+  - No field-independent absolute irreducibility or unbounded enumeration claim
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

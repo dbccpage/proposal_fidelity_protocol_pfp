@@ -1,0 +1,154 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:complex_matrix:v1.0.0
+title: Complex Matrix Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_rectangular_complex_matrix
+  symbol: A ∈ C^{m×n}
+  ascii_symbol: complex_matrix
+  notation: A ∈ C^{m×n}
+  domain:
+  - 'rows: finite_index_set'
+  - 'cols: finite_index_set'
+  - 'entries: complex_field_C'
+  codomain:
+    description: 'A finite rectangular array with fixed shape (rows, cols) and entries from the complex field C. Each entry z = a + bi where a, b are finite real numbers.
+
+      '
+requirements:
+  required_structures:
+  - rows and cols are finite natural numbers (rows, cols > 0)
+  - all entries z = a + bi have finite a and b (no NaN, no Inf)
+  - every access must satisfy 0 <= i < rows and 0 <= j < cols
+  - stored data length must equal rows * cols
+  - same matrix, row, and col always resolve to the same entry
+  - A** = A (adjoint applied twice returns original matrix)
+  - operations may not silently change shape
+laws:
+- rows and cols are finite natural numbers (rows, cols > 0)
+- all entries z = a + bi have finite a and b (no NaN, no Inf)
+- every access must satisfy 0 <= i < rows and 0 <= j < cols
+- stored data length must equal rows * cols
+- same matrix, row, and col always resolve to the same entry
+- A** = A (adjoint applied twice returns original matrix)
+- (αA + βB)* = ᾱA* + β̄B* (adjoint is conjugate-linear)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All serializations are fixed byte arrays
+  - Operation functions are content-addressed
+  - Complex number operations are IEEE 754 deterministic
+relationships:
+- urn:math:contract:BasicMatrix:v1.0.0 serves as backend_storage
+- urn:math:contract:Field:v0.1.0 serves as complex_field_C
+- urn:math:contract:Scalar:v1.0.0 serves as complex_scalar_type
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::complex_matrix
+  symbols:
+  - ComplexMatrix
+  - ComplexMatrixError
+  - C64
+  - CMatrix
+  - CVector
+  # Zero rows/cols are accepted by the source (same as BasicMatrix). Those two
+  # negatives stay unnamed rather than faked. Remaining mechanical negatives
+  # are named in declaration order.
+  required_tests:
+  - from_row_major_rejects_length_mismatch
+  - from_row_major_rejects_nan_real_part
+  - from_row_major_rejects_nan_imag_part
+  - from_row_major_rejects_infinite_entry
+  - from_row_major_rejects_infinite_imag_part
+  - scale_real_rejects_nan_scalar
+  - get_rejects_out_of_bounds
+  - set_rejects_out_of_bounds
+  - set_rejects_non_finite_value
+  - mul_rejects_dimension_mismatch
+  - add_rejects_shape_mismatch
+  - sub_rejects_shape_mismatch
+negative_tests:
+- Matrix with rows=0 must be rejected
+- Matrix with cols=0 must be rejected
+- Data length not equal to rows*cols must be rejected
+- Entry with NaN real part must be rejected
+- Entry with NaN imaginary part must be rejected
+- Entry with Inf real part must be rejected
+- Entry with Inf imaginary part must be rejected
+- scale_real with NaN or Inf scalar must be rejected
+- Accessing index >= rows or >= cols must fail
+- Setting index >= rows or >= cols must fail
+- Setting nonfinite value must be rejected
+- Matmul with lhs_cols != rhs_rows must be rejected
+- Add with different shapes must be rejected
+- Sub with different shapes must be rejected
+doctrine:
+  summary: Defines rectangular matrices over the complex field C with complex number operations, Hermitian adjoints (conjugate transpose), and complex-specific matrix operations. ComplexMatrix extends BasicMatrix semantics to the complex domain, adding conjugation, adjoint operations, and Hermitian properties. All entries are validated for finiteness (no NaN or Inf in real or imaginary parts). This contract is purely structural and does not confer authority.
+  non_role:
+  - Infinite-dimensional operators (out of scope)
+  - Sparse matrix optimization (separate sparse_complex_matrix contract)
+  - Symbolic complex algebra (deferred to symbolic computation contract)
+  - Implicit shape coercion (always rejected)
+  - Unchecked complex infinity (NaN, Inf always rejected)
+
+# === CANONICAL CONTRACT ABOVE ===
+# Debate below is NON-CANONICAL. AuthorityEffect: none. Not contract law.
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none; do not read as certification."
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STAGE1_MECHANICAL_PASS
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Mechanical GTLA field gates passed (authority/math/non_role/structures/laws-or-requirements/negative_tests). Not PROVED."
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: SHAPE_FINITE_ADJOINT_MATCH
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    detail: >
+      rust_binding module complex_matrix resolves under linear_algebra::complex_matrix.
+      Structural core MATCH. Not theorem proof of conjugate-linearity law suite.
+    file: engine/crates/core_linear_algebra/src/linear_algebra/complex_matrix.rs
+    yaml_law: "rows/cols via BasicMatrix; finite a+bi; OOB fail; shape-preserving ops; adjoint."
+    code_behavior: "ComplexMatrix wraps BasicMatrix<C64>; rejects nonfinite on construct/set; adjoint/conjugate/add/sub/mul/scale_real present."
+    delta: MATCH
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: ZERO_DIM_INHERITS_BACKEND
+    severity: low
+    claim_class: "[CODE_DEMO_RUST]"
+    detail: >
+      If backend admits 0-dim, complex_matrix inherits that permissiveness.
+    recommendation: >
+      Track with basic_matrix zero-dim math repair; do not silent-weaken YAML.
+    file: engine/crates/core_linear_algebra/src/linear_algebra/complex_matrix.rs
+    yaml_law: "rows and cols are finite natural numbers (rows, cols > 0)"
+    code_behavior: "Delegates shape policy to BasicMatrix (see basic_matrix residual on 0-dim)."
+    delta: CODE_MORE_PERMISSIVE_THAN_YAML

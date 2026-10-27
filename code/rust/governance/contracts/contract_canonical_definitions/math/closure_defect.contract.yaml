@@ -1,0 +1,108 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:closure_defect:v1.0.0
+title: Closure defect (general)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: closure_defect
+  symbol: δ_cl
+  ascii_symbol: ClosureDefect
+  notation: measure of failure of d h = 0 for a residual h (degree-declared)
+  domain:
+  - residual h in a declared cochain degree
+  - boundary/coboundary operator of the next degree
+  - norm profile on the codomain of that operator
+  codomain:
+    description: Nonnegative scalar quantifying open-ness of a residual. In FOC degree-1 estate usage, the primary
+      realization is Γ₂ = ‖d₁h‖₁.
+requirements:
+  required_structures:
+  - Declared residual degree and operator
+  - Residual carrier h
+  - Norm on operator codomain
+  - Exact vs tolerance comparison mode
+laws:
+- 'Defect law: closure defect is a nonnegative function of ‖D h‖ under declared operator D and norm.'
+- 'Closed law: exact-mode defect 0 iff D h = 0.'
+- 'Specialization law: FOC degree-1 specialization is Γ₂ (gamma2_closure_defect).'
+- 'Hierarchy law: when paired with Φ₁, closure defect is secondary.'
+- 'Separation fence: closure defect is not obstruction mass Φ₁.'
+- 'Authority law: no PROVED / GlobalGreen / ActionLicense from defect alone.'
+replay:
+  requirements:
+  - Deterministic operator application and norm
+  - Comparison mode declared for zero tests
+relationships:
+- urn:core:math:gamma2_closure_defect:v1.0.0 — FOC degree-1 specialization
+- urn:core:math:phi1:v1.0.0 — primary residual mass
+- urn:core:math:closure_regime:v1.0.0 — evaluation regime boundaries
+rust_binding:
+  crate: core_types
+  module: closure_defect
+  symbols:
+  - ClosureDefectDisplay
+  - UntrustedClosureDefectDto
+  required_tests:
+  - untrusted_dto_rejects_missing_operator_norm
+  - untrusted_dto_rejects_negative_defect
+negative_tests:
+- Defect without operator/norm must be rejected
+- Negative defect must be rejected
+- Defect identified with Φ₁ must be rejected
+- Authority / GlobalGreen from defect alone must be rejected
+- Claiming PROVED / HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'General closure-defect language; FOC degree-1 instance is Γ₂. Nonclaim: not Φ₁; not authority; not PROVED;
+    not GlobalGreen.'
+  non_role:
+  - Φ₁ obstruction mass
+  - Full trichotomy classification
+  - Authority / PROVED / GlobalGreen / HoTT
+wip:
+- Higher-degree closure defects beyond d₁
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B4_FOC_RESIDUAL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth B4: general vs Γ₂ specialization clarified.'
+    recommendation: Prefer gamma2 contract for FOC d₁ claims.
+    pass: meth_b4_foc_residual
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: DISPLAY_SURFACE
+    severity: medium
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: Binding exposes display/DTO symbols; may be thinner than full functional. Residual honest.
+    file: engine/crates_rs/core_types/src/closure_defect.rs
+    delta: YAML_AHEAD_OF_CODE
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: '[SCOPE FENCE]'
+    detail: Display-only residual noted. Not PROVED.

@@ -5,7 +5,7 @@ description: "Review Python diffs against contracts, callers, types, refusals an
 operad_source_colours: ["Code"]
 operad_target_colour: "Audit"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 ---
 
 # Python code reviewer

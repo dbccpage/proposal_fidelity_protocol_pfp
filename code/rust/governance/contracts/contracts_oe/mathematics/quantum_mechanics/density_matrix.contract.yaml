@@ -1,0 +1,121 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:density_matrix:v1.0.0
+title: Density Matrix Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: operator
+  symbol: ρ ∈ D(ℋ), where D(ℋ) is the space of density operators on ℋ ≅ ℂ^n
+  ascii_symbol: density_matrix
+  notation: ρ ∈ D(ℋ), where D(ℋ) is the space of density operators on ℋ ≅ ℂ^n
+  domain:
+  - 'dimension: positive integer n ≥ 1'
+  - 'matrix: complex n×n matrix (nalgebra::DMatrix<Complex<f64>>)'
+  - 'validation_report: trace, Hermitian defect, minimum eigenvalue, config'
+  codomain:
+    description: 'A complex square matrix ρ ∈ ℂ^(n×n) satisfying: (1) trace(ρ) = 1 (2) ρ† = ρ (Hermitian) (3) ρ ≥ 0 (positive semidefinite: all eigenvalues ≥ 0)
+
+      '
+requirements:
+  required_structures:
+  - The trace of the density matrix equals 1 within trace_tol
+  - Matrix equals its conjugate transpose within hermitian_tol
+  - All eigenvalues are non-negative (≥ -psd_tol)
+  - All matrix entries are finite (no NaN, no infinity)
+  - Matrix dimension n ≥ 1
+  - All tolerance values are positive and finite
+  - psd_tol ≥ hermitian_tol (positive semidefinite check must be at least as loose as Hermitian check)
+  - Purity Tr(ρ²) satisfies 1/n ≤ purity ≤ 1
+  - Kraus operators satisfy ∑ᵢ Kᵢ† Kᵢ = I (trace preservation)
+  - Bloch vector satisfies |r| ≤ 1 for qubit states
+laws:
+- trace(ρ) = 1
+- ρ† = ρ (conjugate transpose equals self)
+- '⟨ψ|ρ|ψ⟩ ≥ 0 for all |ψ⟩ ∈ ℋ (equivalently: all eigenvalues ≥ 0)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Eigenvalue computation uses deterministic nalgebra symmetric_eigen
+  - Floating-point operations follow IEEE 754 determinism
+relationships:
+- urn:math:contract:ComplexMatrix:v1.0.0 serves as Underlying complex matrix representation and operations
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::density
+  symbols:
+  - DensityMatrixCandidate
+  - NumericalDensityMatrix
+  - DensityMatrixConfig
+  - DensityMatrixValidationReport
+  - DensityMatrixError
+  # One test per negative_test, in declaration order. All 17 map one-to-one:
+  # this contract states no obligation that nothing exercises.
+  required_tests:
+  - rejects_zero_dimension
+  - rejects_trace_not_one
+  - rejects_non_hermitian_matrix
+  - rejects_non_psd_matrix
+  - rejects_nan_in_raw_data
+  - rejects_shape_mismatch_in_raw
+  - rejects_negative_probability_in_diagonal
+  - rejects_bloch_vector_outside_sphere
+  - rejects_bloch_with_nan
+  - get_rejects_out_of_bounds
+  - partial_trace_rejects_dimension_mismatch
+  - mixture_rejects_negative_weight
+  - mixture_rejects_weight_sum_not_one
+  - config_try_new_rejects_negative_tolerance
+  - config_try_new_rejects_nan_tolerance
+  - config_try_new_rejects_psd_smaller_than_hermitian
+  - amplitudes_rejects_unnormalized_state
+negative_tests:
+- Construction with dimension=0 must fail
+- Matrix with trace != 1 must fail validation
+- Matrix with ρ != ρ† must fail validation
+- Matrix with negative eigenvalues must fail validation
+- NaN entries must be rejected immediately
+- Data length != dimension² must fail
+- Negative diagonal probabilities must fail
+- Bloch vector with |r| > 1 must fail
+- NaN in Bloch vector must fail
+- Access beyond dimension must fail
+- Incorrect subsystem dimensions must fail
+- Negative mixture weights must fail
+- Mixture weights not summing to 1 must fail
+- Negative tolerance values must fail
+- NaN tolerance values must fail
+- psd_tol < hermitian_tol must fail consistency check
+- State vector with ||ψ|| != 1 must fail
+doctrine:
+  summary: 'This contract specifies the mathematical structure and validation requirements for quantum density matrices. A density matrix is a positive semidefinite, Hermitian operator with trace one that represents the quantum state of a system. This contract covers both pure states (rank-1 projectors) and mixed states (convex combinations of pure states).
+
+    The contract enforces physical consistency through configurable numerical tolerances for trace, Hermiticity, and positive semidefiniteness checks. All operations are deterministic and replay-compatible.
+
+    Density matrices are fundamental to quantum information theory, quantum computing, and statistical quantum mechanics. They enable representation of both pure and mixed states, partial trace operations for subsystems, quantum channels via Kraus operators, and entropy calculations.'
+  non_role:
+  - Symbolic manipulation of density matrices
+  - Exact rational or algebraic number representation
+  - Infinite-dimensional Hilbert spaces
+  - Real-time quantum dynamics simulation
+  - Quantum circuit compilation or optimization
+  - Automatic differentiation or gradient computation
+  - GPU or distributed computation backends

@@ -1,0 +1,129 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:dual_witness:v0.1.0
+title: DualWitness Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: dual-certificate
+  symbol: '||x|| >= |y(x)| when ||y||* <= 1'
+  ascii_symbol: dual_witness
+  notation: '||x|| >= |y(x)| when ||y||* <= 1'
+  domain:
+  - 'dual_element: Covector y in V*'
+  - 'primal_element: Element x in V (the element being witnessed)'
+  - 'dual_norm_value: ||y||* (must be <= 1 for valid witness)'
+  - 'evaluation_value: |y(x)| (the certified lower bound)'
+  - 'primal_space: Normed vector space V'
+  - 'dual_space: Dual space V*'
+  codomain:
+    description: A covector y in V* witnessing a lower bound on a primal element
+requirements:
+  required_structures:
+  - dual_element_hash must resolve to a valid covector in V*
+  - primal_element_hash must resolve to a valid element of V
+  - '||y||* <= 1'
+  - The evaluation y(x) must be correctly computed
+  - Witness hash must be deterministic from all components
+laws:
+- '||y||* <= 1 (the witness has unit dual norm or less)'
+- '||x|| >= |y(x)| follows from ||y||* <= 1'
+- y(x) is correctly computed from the evaluation pairing
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Evaluation pairing is deterministic from covector and vector data
+  - Dual norm computation is deterministic
+relationships:
+- urn:math:contract:DualSpace:v0.1.0 serves as The dual space V* containing the witness
+- urn:math:contract:DualNorm:v0.1.0 serves as The dual norm used to validate ||y||* <= 1
+- urn:math:contract:Covector:v0.1.0 serves as The covector element y
+negative_tests:
+- dual_element_hash does not resolve to valid covector
+- primal_element_hash does not resolve to valid vector
+- '||y||* > 1 (dual norm exceeds unit bound)'
+- Evaluation y(x) is incorrectly computed
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: DualWitness is a covector y in the dual space V* that certifies properties of primal elements via the
+    evaluation pairing. Given a primal element x and a dual witness y with ||y||* <= 1, the value |y(x)| provides
+    a certified lower bound on ||x||. When ||y||* = 1 and y(x) = ||x||, the witness is optimal (Hahn-Banach witness).
+    The contract validates the dual norm bound, the evaluation computation, and the resulting lower bound certificate.
+  non_role:
+  - Does not classify admissibility
+  - Does not emit policy decisions
+  - Does not emit certificates
+  - Does not terminalize
+  - Does not produce customer-facing claims
+  - Does not solve optimization problems
+  - Does not construct Hahn-Banach extensions
+wip:
+- Should dual witnesses support approximate optimality (|y(x)| >= (1-epsilon)||x||)?
+- Relationship to primal-dual certificates for LP/SDP feasibility
+- How to construct optimal witnesses algorithmically in finite dimensions
+- Connection to annihilator constraints and complementary slackness
+- Currently targets finite-dimensional normed vector spaces
+- Hahn-Banach extension for infinite dimensions is deferred
+- Primal-dual pairing with PrimalResidual for complete certificates
+- May need approximate witness for numerical computation
+rust_binding:
+  crate: core_types
+  module: dual_witness
+  symbols:
+  - DualWitness
+  required_tests:
+  - dual_norm_exceeds_unit_bound
+  - evaluation_pairing_mismatch_must_be_rejected
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STAGE1_MECHANICAL_PASS
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: Mechanical GTLA field gates passed (authority/math/non_role/structures/laws-or-requirements/negative_tests).
+      Not PROVED.
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: REALIZATION_PRESENT_SCOPE_NARROWER
+    severity: high
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates_rs/core_types/src/dual_witness.rs
+    yaml_law: Hahn-Banach-style dual certificate ||x|| >= |y(x)| when ||y||* <= 1 over general normed V
+    code_behavior: 'DualWitness is a display-only f64 view of VerifiedExactPhi1 (phi vector, dual_value, is_circulation/is_bounded
+      inherited, not recomputed). No general dual-norm certificate construction or evaluation pairing API.
+
+      '
+    delta: YAML_OVERCLAIMS
+    detail: 'rust_binding resolves; symbols exist. Code is a diagnostic projection of Phi1 dual evidence, not a
+      general dual-witness object matching the YAML math object.
+
+      '
+    recommendation: 'Either narrow YAML to Phi1 display dual-witness scope, or split a second contract for general
+      dual certificates. Code must not mint authority. No PROVED/GlobalGreen.
+
+      '

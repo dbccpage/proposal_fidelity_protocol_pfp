@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_mub_projector_algebra:v0.1.0
+title: Checked finite exact MUB projector algebra
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_mub_projector_algebra
+  symbol: finite_mub_projector_algebra
+  ascii_symbol: finite_mub_projector_algebra
+  notation: Checked finite exact MUB projector algebra
+  domain:
+  - Nonempty finite carriers dimension1..64 over RationalEmbedding+Involution; at most d+1 bases
+  codomain:
+    description: Declared finite results of core_quantum_physics::mub::algebra; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Projectors are Hermitian idempotents of trace one
+- Each basis is orthogonal and resolves identity
+- Cross-basis overlaps have exact trace1/d
+- Malformed declarations refuse, checked identity counts count actual replays
+- Standalone rank-one checks replay exact matrix rank, not trace alone
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: mub::algebra
+  symbols:
+  - verify_mub_projector_algebra
+  - ProjectorAlgebraReport
+  - ProjectorAlgebraStatus
+  required_tests:
+  - measurement_exact_laws::tomography_normalization_and_algebra_are_separate_from_state_admission
+negative_tests:
+- measurement_exact_laws::tomography_normalization_and_algebra_are_separate_from_state_admission
+doctrine:
+  summary: Projectors are Hermitian idempotents of trace one; Each basis is orthogonal and resolves identity;
+    Cross-basis overlaps have exact trace1/d; Malformed declarations refuse, checked identity counts count
+    actual replays; Standalone rank-one checks replay exact matrix rank, not trace alone.
+  non_role:
+  - Does not certify state positivity or complete MUB existence at arbitrary composite dimension
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

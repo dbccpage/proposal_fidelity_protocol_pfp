@@ -1,9 +1,9 @@
 ---
 paths:
   - "**/*prime*/**"
-  - "engine/crates_rs/core_wdp/**"
-  - "engine/crates_rs/core_types/**"
-  - "adversary/**"
+  - "code/rust/core_wdp/**"
+  - "code/rust/core_types/**"
+  - "ops/adversary/**"
   - "pfp/**"
 ---
 

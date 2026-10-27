@@ -1,0 +1,93 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cover:v0.1.0
+title: Cover Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: indexed_family
+  symbol: 𝒰 = {U_i}_{i∈I} covering X where ⋃_{i∈I} U_i = X
+  ascii_symbol: cover
+  notation: 𝒰 = {U_i}_{i∈I} covering X where ⋃_{i∈I} U_i = X
+  domain:
+  - 'base_space: finite_set'
+  - 'index_set: finite_ordered_set'
+  - 'subsets: list_of_nonempty_subsets'
+  codomain:
+    description: 'A Cover consists of: - Base space X: a finite set of points - Index set I: a finite set of cover indices - Assignment function: I → P(X) where P(X) is the power set of X Each index i ∈ I maps to a non-empty subset U_i ⊆ X, and ⋃_{i∈I} U_i = X
+
+      '
+requirements:
+  required_structures:
+  - base_space_id must resolve to a valid BaseSpace artifact
+  - cover_indices must be non-empty, distinct, and lexicographically sorted
+  - Number of subsets equals number of cover indices
+  - Each subset is non-empty, contains only points from X, and is sorted
+  - Union of all subsets equals exactly the set X
+  - StructureArtifact hash matches canonical serialization
+laws:
+- Index set I is non-empty
+- Each U_i is non-empty
+- For all i ∈ I, U_i ⊆ X
+- ⋃_{i∈I} U_i = X (every point in X is covered)
+- Index set I is totally ordered (lexicographic on byte strings)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cover index identifiers serialized as sorted UTF-8 strings separated by U+001E
+  - Each subset serialized as sorted list of point IDs, each with 2-byte little-endian length prefix
+  - Subsets separated by U+001F
+  - All validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:BaseSpace:v0.1.0 serves as Provides the underlying finite set X that is being covered
+- urn:math:contract:Nerve:v0.1.0 serves as Target for nerve construction from cover intersections
+negative_tests:
+- base_space_id does not resolve
+- cover_indices is empty list []
+- cover_indices contains duplicates ['U1', 'U1']
+- cover_indices not sorted ['U2', 'U1']
+- 3 indices but only 2 subsets
+- A subset is [] (empty)
+- Subset contains 'p99' which is not in X
+- Subset is ['b', 'a'] (not sorted)
+- X has points {1,2,3} but subsets cover only {1,2}
+- Different serialization conventions produce different hashes
+doctrine:
+  summary: A Cover is a finite indexed family of subsets of a finite set X (the base space) whose union is X. Each member of the cover is a non-empty subset of X. The contract records the base space, the index set, and the assignment of subsets to indices. It is used to build the nerve for Čech cohomology and for defining locally trivial structures. No topological properties (openness, contractibility) are asserted.
+  non_role:
+  - Topological properties (openness, contractibility) are not encoded
+  - Infinite covers are not supported (only finite sets and finite index sets)
+  - Measure-theoretic properties are not included
+  - Cover does not automatically generate its nerve (requires separate operation)
+wip:
+- Should the Cover contract generate the Nerve as an optional output, or always require a separate ComputationWitness operation?
+- How should infinite covers (e.g., open covers of manifolds) be handled? Generator function approach?
+- Should cover properties (open, closed, locally finite) be included as FactEnvelope claims referencing external topological space contracts?
+- 'What is the best approach for encoding refinement relationships: as FactEnvelope predicate or as a separate RefinementArtifact?'
+- Should Lebesgue number property be supported for metric space covers, or is that out of scope?
+- Contract treats subsets as plain sets with no topological or measure-theoretic properties
+- Only finite covers supported; infinite covers would require generator function and lazy evaluation
+- Nerve computation is a separate operation producing ComputationWitness, not automatic
+- Refinement checking is a FactEnvelope predicate referencing both Cover artifacts
+- Common refinement computation creates new Cover artifact with intersections
+- Cover properties (partition, open, closed) are FactEnvelope claims, not part of core contract
+- Serialization uses U+001E for index separator and U+001F for subset separator with 2-byte length prefixes
+- All operations are deterministic and content-addressed for replay

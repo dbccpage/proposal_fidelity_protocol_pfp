@@ -1,0 +1,115 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:vector_space:v0.1.0
+title: VectorSpace Contract (finite-dimensional, ordered basis)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_dimensional_vector_space
+  symbol: V ∈ Vect_K^{fin}
+  ascii_symbol: vector_space
+  notation: V ≅ K^n with ordered basis (n ≥ 0)
+  domain:
+  - field K
+  - dimension n ∈ ℕ₀
+  - ordered basis B = (b_1,…,b_n) with |B|=n (empty when n=0)
+  codomain:
+    description: Finite-dimensional vector space over K equipped with an ordered basis. n=0 is the zero
+      space with empty basis.
+requirements:
+  required_structures:
+  - n ∈ ℕ₀ (zero space allowed)
+  - len(ordered_basis) = n
+  - field K is declared and shared by all vectors in V
+  - basis identity is content-addressable when hashed
+  - linear independence of B is required when a verifier is attached; hash-only admission is wip residual
+laws:
+- 'Dimension law: dim(V)=n with n ≥ 0.'
+- 'Basis length law: ordered basis has exactly n elements.'
+- 'Zero-space law: n=0 ⇒ unique zero vector and empty basis.'
+- 'Field law: V is a vector space over a single field K.'
+- 'Span law: declared basis is intended as a basis (span + independence) when verified.'
+- 'Authority law: no PROVED/GlobalGreen/HoTT from this contract alone.'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Deterministic basis serialization when hashes are used
+relationships:
+- urn:core:math:field:v0.1.0 — scalar field K
+- urn:core:math:vector:v0.1.0 — elements of V
+- urn:core:math:matrix:v0.1.0 — linear maps between spaces
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::vector_space
+  symbols:
+  - FiniteVectorSpace
+  # len(ordered_basis) vs n and wrong-space membership are constructor-checked.
+  # Basis-hash, field-declaration, and independence-verifier obligations have
+  # no constructor here and stay unnamed. The last negative_test is doctrinal
+  # (PROVED/GlobalGreen/HoTT) and has no unit test.
+  required_tests:
+  - geometric_vector_rejects_coordinate_basis_dimension_mismatch
+  - space_rejects_basis_dimension_mismatch
+  - geometric_vector_rejects_basis_mismatch
+  - space_rejects_coordinate_dimension_mismatch
+negative_tests:
+- len(ordered_basis) ≠ n must be rejected
+- Mismatched basis hash vs basis list must be rejected
+- Invalid or missing field declaration must be rejected
+- Dependent basis must be rejected when independence verifier is engaged
+- Vectors claiming membership with wrong space identity must be rejected
+- Artifact claiming PROVED/GlobalGreen/HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'VectorSpace is a finite-dimensional K-vector space with an ordered basis, including the zero
+    space n=0. Carrier for vectors and domain/codomain of linear maps. Nonclaim: does not claim PROVED;
+    does not claim GlobalGreen; does not claim HoTT discharge.'
+  non_role:
+  - Normed/inner-product/topological structure
+  - Infinite-dimensional spaces
+  - Abstract spaces without any declared basis presentation
+  - Authority / PROVED / GlobalGreen / HoTT discharge
+wip:
+- Independence verification may be deferred; hash-only admission is residual.
+- Isomorphism classes vs concrete basis presentations are intentionally distinct.
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B1_LINEAR_ALGEBRA
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'B1 meth: allowed dim n=0 zero space; removed hard reject of dimension=0; kept independence
+      verification as conditional/wip.'
+    recommendation: Continue object-specific meth; align code under ADR-007a after YAML settles. Not PROVED;
+      not GlobalGreen; not LEAN4.
+    pass: b1_linear_algebra_meth
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: PARTIAL_REALIZATION
+    severity: medium
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates/core_linear_algebra/src/linear_algebra/vector_space.rs
+    detail: FiniteVectorSpace metadata present; ordered-basis hash verifier residual. Not PROVED.
+    delta: YAML_AHEAD_OF_CODE

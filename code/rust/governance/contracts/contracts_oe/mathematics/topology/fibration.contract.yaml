@@ -1,0 +1,31 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:fibration:v0.1.0
+title: Fibration
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'A Fibration is a map p: E → B satisfying the homotopy lifting property (HLP): any homotopy in B can be lifted to E.  Fibrations generalize fiber bundles and are central to homotopy theory. The contract validates the map, base, total space, and optionally verifies the HLP or provides fiber data.'
+wip:
+- status: WIP
+  issues:
+  - The contract does not verify the full HLP (undecidable in general); it may sample specific lifts.
+  - Serre fibrations (HLP for CW pairs) vs Hurewicz fibrations (HLP for all spaces) are not distinguished structurally.
+  - Fiber bundles are fibrations with additional local triviality; see FiberBundle contract.
+  - Path space fibrations and loop space fibrations are important special cases.

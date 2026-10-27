@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:identity_type:v0.1.0
+title: IdentityType
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: type_former
+  symbol: a =_A b or Id_A(a, b)
+  ascii_symbol: identity_type
+  notation: a =_A b or Id_A(a, b)
+  domain:
+  - 'ambient_type: Type A in which a and b live'
+  - 'left_endpoint: Term a : A'
+  - 'right_endpoint: Term b : A'
+  codomain:
+    description: 'For a type A and terms a, b : A, the identity type Id_A(a, b) or (a =_A b) is the type of equality proofs/paths from a to b.
+
+      '
+requirements:
+  required_structures:
+  - The ambient type A must resolve to a valid type artifact
+  - The left endpoint a must be a valid term of type A
+  - The right endpoint b must be a valid term of type A
+  - 'The artifact hash must be deterministically computed from contract_id, version, ambient_type_id, left_term_id, and right_term_id
+
+    '
+laws:
+- 'For all a : A, there exists refl_a : a =_A a'
+- 'J-eliminator: Given a motive C : (x : A) → (y : A) → (p : x = y) → Type and a base case d : C(a, a, refl_a), we can eliminate any p : a = b to produce C(a, b, p)
+
+  '
+- Both a and b must have type A
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Identical inputs must produce identical artifact hash
+relationships:
+- urn:math:contract:Type:v1.0.0 serves as Ambient type A must be a valid type
+- urn:math:contract:Term:v1.0.0 serves as Endpoints a and b must be valid terms of type A
+negative_tests:
+- ambient_type_id does not resolve to valid type
+- left_term_id does not have type A
+- right_term_id does not have type A
+- contract_version is not '0.1.0'
+doctrine:
+  summary: An IdentityType (a =_A b) is the type of paths (proofs of equality) between two terms a and b of type A. In Homotopy Type Theory (HoTT), identity types are the foundation of equality and homotopy. The contract validates the ambient type and the two endpoints. Identity types support reflexivity, path induction (J-eliminator), and transport operations.
+  non_role:
+  - This contract defines identity types, not paths themselves (paths are Term artifacts)
+  - Does not implement path composition or higher groupoid structure
+  - Does not provide definitional equality checking
+  - Does not handle univalence axiom enforcement
+wip:
+- How are paths (inhabitants of identity types) represented as Term artifacts?
+- What is the contract relationship between Path and IdentityType?
+- How are higher identity types (paths between paths) constructed?
+- Should higher dimensional paths have separate contracts or be iterated identity types?
+- Identity type defines the type structure; paths are terms of this type
+- Higher identity types are iterated applications of identity type constructor
+- Path composition, inverse, and higher groupoid structure likely need separate operations
+- Univalence axiom integration deferred to future version

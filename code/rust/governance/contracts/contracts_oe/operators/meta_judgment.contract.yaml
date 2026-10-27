@@ -1,0 +1,235 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:meta_lift_judgment:v1.0.0
+title: MetaLiftJudgment
+kind: constitution_contract
+status: active_doctrine
+layer: 00_constitution
+role: MetaLiftJudgment
+descriptor:
+  authority_effect: requests_decision
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: true
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: >
+    MetaLiftJudgment is the specialized, read-only governance judgment contract that determines
+    whether a proposed carrier-extension lift plan (MetaLiftPlan / ProposedCarrier) and its attached
+    evidence certificates satisfy the declared lift doctrine.
+    MetaLiftJudgment emits RequestsDecision (never LiftLicense or StateTransition).
+    LicensingBoundary alone consumes MetaLiftJudgment to issue LiftLicense (AuthorizesTransition).
+    Engine alone commits already-computed licensed lift results to runtime state.
+
+  anti_god_object_law: "producer != judge != executor"
+
+  canonical_flow: >
+    MetaPlanner (emits MetaLiftRequest) ->
+    Lift subsystem (computes detached proposed carrier extension) ->
+    Functional / Certifier (generates evidence certificates) ->
+    MetaLiftJudgment (judges admissibility; emits RequestsDecision) ->
+    LicensingBoundary (evaluates judgment; issues LiftLicense) ->
+    Engine (durable commit of EXACT licensed lifted carrier to runtime state)
+
+  non_role: &id002
+    - lift application
+    - carrier mutation
+    - search execution
+    - candidate scheduling
+    - operator computation
+    - solver computation
+    - measurement computation
+    - evaluator recomputation
+    - terminalization
+    - license minting
+    - certificate creation for unverified evidence
+    - engine action execution
+    - trace mutation
+    - storage mutation
+    - unlicensed carrier extension
+    - self-certification of minimality
+
+  subsystem_firewalls:
+    planner_boundary: "MetaPlanner selects same-regime operators or emits MetaLiftRequest; it does not judge lift admissibility."
+    lift_subsystem_boundary: "Lift subsystem constructs proposed carrier extension; it does not commit to runtime state."
+    certifier_boundary: "MinimalityCertifier, PersistenceCertifier, and AreaLockCertifier check mathematical properties; MetaLiftJudgment only verifies their existence and scope alignment."
+    judge_boundary: "MetaLiftJudgment judges admissibility; it cannot mint LiftLicense or execute transitions."
+    licensing_boundary: "LicensingBoundary alone evaluates MetaLiftJudgment to issue LiftLicense."
+    engine_boundary: "Engine alone commits an already-computed, licensed lift result to runtime state."
+
+  minimality_enforcement:
+    consumed_certificate: "MinimalityCertificate (emitted by external MinimalityCertifier)"
+    declared_universe:
+      lift_component_type: "LiftComponent"
+      lift_component_set: "LiftComponentSet"
+      sub_lift_relation: "SubLiftRelation(L', L) [L' ≺ L]"
+      candidate_space_property: "finite_and_decidable"
+    theorem_obligation: >
+      Minimal(L) <=> Repairs(L) AND forall L' ≺ L, NOT Repairs(L')
+    judgment_rule: >
+      MetaLiftJudgment verifies that a valid MinimalityCertificateRef exists, binds the target plan,
+      and carries sufficient evidence authority. MetaLiftJudgment NEVER reruns search or proof over sublifts.
+
+  externalized_lift_math:
+    lift_theory_contract_ref: "urn:core:governance:lift_theory:v1.0.0"
+    area_lock_irreducibility_certificate_ref: "urn:core:governance:area_lock_irreducibility_certificate:v1.0.0"
+    notes: >
+      Delta-laws (unary vs binary) and gauge area-lock calculations (m_G(gamma) > 0) are externalized into
+      consumed LiftTheory and Certificate contracts. MetaLiftJudgment mechanism checks presence and validity
+      of certificates without embedding specific regime-dependent mathematical constants.
+
+  structural_representation:
+    meta_decision:
+      variants:
+      - name: NoLift
+        fields:
+        - reason
+        - evidence_refs
+      - name: LiftAdmissible
+        fields:
+        - judgment_id
+        - lift_plan_ref
+        - evidence_refs
+        - satisfied_condition_refs
+        - judgment_hash
+        - authority_effect # RequestsDecision (NO license field!)
+      - name: Refuse
+        fields:
+        - failure
+        - evidence_refs
+        - missing_requirement_refs
+        - optional_certificate_refs
+
+    meta_no_lift_reason:
+      variants:
+      - GaugeRemovable
+      - NoContextWitness
+      - NotPersistent
+      - NotIrreducible
+      - DeltaNotAdmissible
+      - MinimalityUnproven
+
+    meta_lift_plan:
+      fields:
+      - plan_id
+      - source_carrier_ref
+      - target_carrier_schema_ref
+      - obstruction_ref
+      - context_witness_ref
+      - persistence_certificate_ref
+      - irreducibility_certificate_ref
+      - minimality_certificate_ref
+      - plan_hash
+
+    lift_license_ref:
+      contract_ref: "urn:core:governance:lift_license:v1.0.0"
+      notes: "LiftLicense structure is canonically defined in lift_license.contract.yaml."
+
+  artifact_algebra:
+    MetaLiftRequest:
+      authority_effect: AuthorityEffect::EvidenceOnly
+      owner: MetaPlanner
+      intent: "we appear to need a higher regime"
+    MetaLiftPlan:
+      authority_effect: AuthorityEffect::EvidenceOnly
+      owner: LiftSubsystem
+      intent: "exact proposed structural extension"
+    ProposedCarrier:
+      authority_effect: AuthorityEffect::None
+      owner: LiftSubsystem
+      intent: "detached result of applying lift mathematics"
+    MetaLiftJudgment:
+      authority_effect: AuthorityEffect::RequestsDecision
+      owner: MetaLiftJudgment
+      intent: "evidence shows proposed lift is/isn't admissible"
+    LiftLicense:
+      authority_effect: AuthorityEffect::AuthorizesTransition
+      owner: LicensingBoundary
+      intent: "authorizes Engine to commit proposed transition"
+    EngineAction:
+      authority_effect: AuthorityEffect::StateTransition
+      owner: Engine
+      intent: "durable commit of exact licensed carrier state"
+
+  negative_capabilities:
+  - apply a lift
+  - mutate a carrier
+  - run search over sublifts
+  - schedule candidates
+  - compute operator outputs
+  - terminalize final state
+  - mint LiftLicense
+  - create certificates for unverified evidence
+  - execute Engine actions
+  - compute measurements
+  - recompute Functional outputs
+  - invoke solvers
+  - inspect mutable Engine internals
+  - emit Action directly
+  - emit StateTransition directly
+  - store or mutate Trace
+
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - apply_lift
+    - execute_lift
+    - mutate_carrier
+    - mint_license
+    - EngineResult
+    - StateTransition
+    - TerminalEnvelope
+    - execute(
+    - schedule_search
+    - run_search
+    - compute_operator
+    - compute_phi
+    - compute_gamma
+    - compute_xi
+    - invoke_solver
+    - terminalize(
+    - write_trace
+    - store_state
+
+  required_tests:
+  - meta_judgment_does_not_apply_lift
+  - meta_judgment_does_not_mutate_carrier
+  - meta_judgment_does_not_run_search
+  - meta_judgment_does_not_schedule_candidates
+  - meta_judgment_does_not_compute_operator_outputs
+  - meta_judgment_does_not_compute_measurements
+  - meta_judgment_consumes_measurement_refs_only
+  - meta_judgment_does_not_invoke_solvers
+  - meta_judgment_does_not_terminalize
+  - meta_judgment_does_not_execute_engine_actions
+  - meta_judgment_does_not_mint_license
+  - meta_lift_request_is_evidence_only
+  - lift_license_authorizes_but_does_not_execute
+  - engine_requires_lift_license_for_lift_execution
+  - binary_lift_requires_context_witness
+  - lift_without_license_rejected
+  - lift_without_persistence_certificate_rejected
+  - lift_without_irreducibility_certificate_rejected
+  - lift_without_minimality_certificate_rejected
+  - metalift_contract_does_not_self_certify_minimality
+
+  canonical_invariant: >
+    MetaLiftJudgment judges lift admissibility from submitted evidence. LiftSubsystem constructs
+    detached proposed carrier extensions. LicensingBoundary alone issues LiftLicense. Engine alone
+    commits licensed lift transitions to runtime state. No Meta artifact executes, mutates, terminalizes,
+    searches, solves, measures, licenses, or self-certifies.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_constitution_contract:v1.0.0"
+

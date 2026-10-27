@@ -4,7 +4,7 @@ description: "Gate lesson folders (prose, notebook, videos) and learning checks;
 operad_source_colours: ["Code", "Paper"]
 operad_target_colour: "Receipt"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 families: [governance, pedagogy, education]
 ---
 

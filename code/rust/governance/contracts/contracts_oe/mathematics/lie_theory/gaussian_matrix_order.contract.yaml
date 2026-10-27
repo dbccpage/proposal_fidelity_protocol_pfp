@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gaussian_matrix_order:v0.1.0
+title: Algebraic Gaussian finite-order decision
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: gaussian_matrix_order
+  symbol: gaussian_matrix_order
+  ascii_symbol: gaussian_matrix_order
+  notation: Algebraic Gaussian finite-order decision
+  domain:
+  - Square Gaussian-rational matrix dimension1..8, rational realification dimension<=16.
+  codomain:
+    description: Declared finite results of core_lie_theory::finite_order; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Faithful realification preserves exact multiplication and order.
+- Cyclotomic minimal-polynomial decision distinguishes torsion from infinite order without a sampled orbit
+  cutoff.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: finite_order
+  symbols:
+  - gaussian_finite_order
+  - cyclotomic_factorisation
+  - FiniteOrderError
+  required_tests:
+  - gaussian_order_decision_preserves_the_faithful_realification
+  - direct_polynomial_entry_refuses_overflowing_and_false_degree_bounds
+negative_tests:
+- gaussian_order_decision_preserves_the_faithful_realification
+- direct_polynomial_entry_refuses_overflowing_and_false_degree_bounds
+doctrine:
+  summary: Faithful realification preserves exact multiplication and order.; Cyclotomic minimal-polynomial
+    decision distinguishes torsion from infinite order without a sampled orbit cutoff..
+  non_role:
+  - Unitary admission belongs to physical callers; this pure algebra API can also decide nonunitary torsion.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

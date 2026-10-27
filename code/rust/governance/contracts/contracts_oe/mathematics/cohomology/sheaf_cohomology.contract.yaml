@@ -1,0 +1,101 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:sheaf_cohomology:v0.1.0
+title: Sheaf Cohomology Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: derived_functor_cohomology
+  symbol: H^k(X; F) or H^•(X; F) for the graded group
+  ascii_symbol: sheaf_cohomology
+  notation: H^k(X; F) or H^•(X; F) for the graded group
+  domain:
+  - 'sheaf: Sheaf F on topological space X'
+  - 'space: Underlying topological space X'
+  - 'degree_sequence: Cohomology groups indexed by k ∈ ℕ'
+  codomain:
+    description: 'Sequence of cohomology groups {H^k(X; F) | k ≥ 0} where each H^k is an abelian group (or module over the sheaf''s ring).
+
+      '
+requirements:
+  required_structures:
+  - The sheaf_id must resolve to a valid Sheaf artifact
+  - 'Method must be one of: cech, injective, flabby'
+  - If method is cech, cover_id must be provided and valid
+  - Cover must be a cover of the sheaf's underlying space
+  - 'Given identical inputs (sheaf, method, cover), the artifact hash must be identical across all implementations
+
+    '
+laws:
+- H^0(X; F) = Γ(X, F) (global sections functor)
+- 'For 0 → F'' → F → F'''' → 0 exact, there exists a long exact sequence ... → H^k(X; F'') → H^k(X; F) → H^k(X; F'''') → H^{k+1}(X; F'') → ...
+
+  '
+- Sheaf morphisms induce morphisms on cohomology
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cohomology groups serialized by degree in canonical order
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Sheaf:v1.0.0 serves as Provides the sheaf F whose cohomology is computed
+- urn:math:contract:Cover:v1.0.0 serves as Provides covers for Cech cohomology computation
+- urn:math:contract:CechCohomology:v1.0.0 serves as Cech cohomology used for computation when cover is good
+negative_tests:
+- sheaf_id does not resolve to a Sheaf artifact
+- method is 'singular' (invalid)
+- method is cech but cover_id is not provided
+- Cover is for a different space than the sheaf
+- 'method is cech but cover is not good (not acyclic); in strict mode this should be rejected or issue warning
+
+  '
+doctrine:
+  summary: SheafCohomology is the derived functor cohomology of a sheaf. H^k(X; F) measures the obstruction to extending local sections globally. The contract computes sheaf cohomology via Cech cohomology (for suitable covers) or injective resolutions, producing cohomology group descriptors for each degree.
+  non_role:
+  - Hypercohomology (cohomology of complexes of sheaves)
+  - Infinite-dimensional cohomology without explicit truncation
+  - Automatic selection of optimal computation method
+  - Cohomological duality theorems (these are FactEnvelopes)
+wip:
+- 'The contract supports finite computations; infinite-dimensional cohomology requires different handling (truncation or completion).
+
+  '
+- 'The Cech-to-derived comparison (Leray''s theorem) is a FactEnvelope claim when the cover is Leray - should this be formalized?
+
+  '
+- 'Hypercohomology (cohomology of complexes of sheaves) is not part of this contract - should it be a separate contract or extension?
+
+  '
+- 'Serre duality and other cohomological dualities are FactEnvelopes - should we provide a standard schema for duality claims?
+
+  '
+- 'The relationship with CechCohomology contract: SheafCohomology generalizes CechCohomology with sheaf coefficients.
+
+  '
+- 'For good (acyclic) covers, the Cech cohomology Ȟ^k(U; F) is isomorphic to sheaf cohomology H^k(X; F). The contract emits a ComputationWitness with the isomorphism witness.
+
+  '
+- 'Spectral sequences (e.g., Leray spectral sequence) are supported via ComputationWitness but not yet fully formalized in contract.
+
+  '
+- 'The snake lemma algorithm for connecting homomorphisms in long exact sequences is content-addressed via algorithm_hash.
+
+  '

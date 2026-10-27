@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:chain_group:v0.1.0
+title: ChainGroup
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: graded_module_component
+  symbol: C_n
+  ascii_symbol: chain_group
+  notation: C_n
+  domain:
+  - 'degree: integer (i64)'
+  - 'group_or_module: hash reference to algebraic structure'
+  - 'coefficient_domain: hash reference to coefficient ring/field'
+  - 'basis: optional hash reference when finite/free'
+  codomain:
+    description: 'The underlying group or module C_n at degree n, with elements represented as linear combinations of basis elements over a coefficient domain.
+
+      '
+requirements:
+  required_structures:
+  - Degree must exist in parent graded module or chain complex
+  - Component hash must match parent structure's component at this degree
+  - Coefficient domain hash must match parent structure's coefficient domain
+  - When finite/free, basis hash must be provided and match parent
+  - Artifact hash must be deterministic and reproducible
+laws:
+- All elements belong to a fixed degree n
+- Elements form a group or module over coefficient domain
+- When basis provided, all chains expressible as linear combinations
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Looking up the same degree in the same graded module must reproduce the same ChainGroup artifact hash
+relationships:
+- urn:math:contract:GradedModule:v0.1.0 serves as Parent structure providing grading and degree indexing
+- urn:math:contract:CoefficientDomain:v0.1.0 serves as Coefficient ring or field for linear combinations
+negative_tests:
+- Reject degree absent from parent structure
+- Reject component hash mismatch with parent
+- Reject coefficient domain hash mismatch
+- Reject chain coordinates outside basis length
+- Reject artifact claiming authority or admissibility
+doctrine:
+  summary: Homological degree component C_n of a graded module or chain complex. ChainGroup is the carrier for n-chains, boundaries from degree n+1, cycles in degree n, and homology classes H_n.
+  non_role:
+  - Does not classify admissibility or emit policy decisions
+  - Does not produce customer-facing claims or certificates
+  - Does not terminalize or confer authority
+  - Does not perform homology computation (delegated to higher-level contracts)
+wip:
+- Decide naming split for ChainGroup versus ChainModule
+- Clarify relationship with graded module components
+- Determine if separate ChainModule contract needed
+- Current implementation focuses on chain complex context
+- May need generalization for arbitrary graded modules
+- Basis representation and storage strategy under review

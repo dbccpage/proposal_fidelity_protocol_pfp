@@ -1,0 +1,116 @@
+# 2x2 Matrix Example
+#
+# This example demonstrates basic 2x2 matrix operations using the BasicMatrix contract.
+
+example_id: "basic_matrix_2x2_identity_multiplication"
+description: "2×2 identity matrix multiplication preserves input matrix"
+
+# Input matrix A
+matrix_a:
+  rows: 2
+  cols: 2
+  data: [1, 2, 3, 4]
+  scalar_domain: "urn:math:contract:Field:v0.1.0#GF(5)"
+  layout: "row_major"
+  # Visual representation:
+  # [ 1  2 ]
+  # [ 3  4 ]
+
+# Identity matrix I
+identity_matrix:
+  rows: 2
+  cols: 2
+  data: [1, 0, 0, 1]
+  scalar_domain: "urn:math:contract:Field:v0.1.0#GF(5)"
+  layout: "row_major"
+  # Visual representation:
+  # [ 1  0 ]
+  # [ 0  1 ]
+
+# Operation: A * I
+operation:
+  name: "matmul"
+  left_operand: "matrix_a"
+  right_operand: "identity_matrix"
+  preconditions:
+    - "lhs_cols (2) == rhs_rows (2)"
+  expected_result:
+    rows: 2
+    cols: 2
+    data: [1, 2, 3, 4]
+    # A * I == A (identity law)
+
+# Operation: I * A
+operation_commuted:
+  name: "matmul"
+  left_operand: "identity_matrix"
+  right_operand: "matrix_a"
+  preconditions:
+    - "lhs_cols (2) == rhs_rows (2)"
+  expected_result:
+    rows: 2
+    cols: 2
+    data: [1, 2, 3, 4]
+    # I * A == A (identity law)
+
+# Transpose operation
+transpose_example:
+  input: "matrix_a"
+  operation: "transpose"
+  expected_result:
+    rows: 2
+    cols: 2
+    data: [1, 3, 2, 4]
+    # Visual representation:
+    # [ 1  3 ]
+    # [ 2  4 ]
+
+# Transpose involution: (Aᵀ)ᵀ == A
+transpose_involution:
+  input: "matrix_a"
+  operation: "transpose"
+  then_operation: "transpose"
+  expected_result:
+    rows: 2
+    cols: 2
+    data: [1, 2, 3, 4]
+    # Should equal original matrix_a
+
+# Scalar multiplication
+scalar_multiplication:
+  input: "matrix_a"
+  operation: "scale"
+  scalar: 2
+  expected_result:
+    rows: 2
+    cols: 2
+    data: [2, 4, 6, 8]
+    # Every entry multiplied by 2 (mod 5 for GF(5))
+    # Visual representation:
+    # [ 2  4 ]
+    # [ 6  8 ] which is [ 2  4 ] in GF(5)
+    #                    [ 1  3 ]
+
+# Matrix addition (same shape)
+addition_example:
+  left_operand: "matrix_a"
+  right_operand:
+    rows: 2
+    cols: 2
+    data: [4, 3, 2, 1]
+    scalar_domain: "urn:math:contract:Field:v0.1.0#GF(5)"
+  operation: "add"
+  expected_result:
+    rows: 2
+    cols: 2
+    data: [5, 5, 5, 5]
+    # Which is [0, 0, 0, 0] in GF(5)
+
+validation:
+  contract: "urn:math:contract:BasicMatrix:v1.0.0"
+  validators_applied:
+    - "shape_validator"
+    - "storage_validator"
+    - "scalar_domain_validator"
+  deterministic: true
+  replay_algorithm: "SHA-256"

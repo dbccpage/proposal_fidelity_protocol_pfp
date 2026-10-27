@@ -1,0 +1,104 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:health_reporting_interface:v1.0.0
+title: HealthReportingInterface
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: RepresentationBoundary
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - HealthModelKernel
+    - Engine
+    - Pipeline
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'HealthReportingInterface exposes health report references to consumers without creating
+
+    new authority. It does not prescribe action, evaluate, certify, license, execute, or mutate.
+
+    '
+  non_role: &id002
+  - prescription
+  - repair
+  - evaluation
+  - certification
+  - terminal_mapping
+  - action_licensing
+  - execution
+  - mutation
+  - policy_decision
+  structural_representation:
+    raw:
+      struct_name: HealthReportView
+      fields:
+      - name: report_ref
+        type: HealthReportRef
+      - name: consumer_ref
+        type: ConsumerRef
+      - name: projection_schema_ref
+        type: SchemaRef
+      - name: view_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+  flow: 'HealthReport / CheckedHealthReport
+
+    -> HealthReportView
+
+    -> consumer boundary
+
+    -> Evaluator / Policy only if separately admitted
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - health_reporting_view_defaults_to_evidence_only
+  - health_reporting_interface_does_not_prescribe_action
+  - health_reporting_interface_does_not_emit_decision
+  - health_reporting_interface_does_not_execute
+  - health_reporting_interface_preserves_report_refs
+  canonical_invariant: 'HealthReportingInterface exposes report references only. It cannot upgrade, decide,
+
+    prescribe, license, mutate, or execute.
+
+    '
+  legacy_metadata:
+    name: HealthReportingInterface
+    source_file: non-math/06_execution/health_reporting_interface_contract.md
+    active: true
+    machine_authority: true
+    role: Reference-only consumption boundary for health reports
+    version: '2.0'
+    classification: presentation_interface
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - Record

@@ -1,0 +1,83 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cohomology_class:v0.1.0
+title: CohomologyClass Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quotient_group_element
+  symbol: '[α] ∈ H^n(C•)'
+  ascii_symbol: cohomology_class
+  notation: '[α] ∈ H^n(C•)'
+  domain:
+  - 'representative: cocycle in ker(delta_n)'
+  - 'coboundary_subspace: im(delta_{n-1})'
+  - 'quotient_space: H^n = ker(delta_n) / im(delta_{n-1})'
+  codomain:
+    description: 'Equivalence class [alpha] where alpha is a cocycle in ker(delta_n), with equivalence relation: alpha ~ beta if alpha - beta ∈ im(delta_{n-1})
+
+      '
+requirements:
+  required_structures:
+  - Representative must be a cocycle (delta_n(representative) = 0)
+  - Coboundary subspace must be im(delta_{n-1}) for correct degree
+  - Quotient space must match ker(delta_n) / im(delta_{n-1})
+  - Representative must be in canonical normal form for the quotient
+  - class_hash must match deterministic hash of normal form representative
+laws:
+- delta_n(alpha) = 0
+- '[alpha] = [beta] iff alpha - beta ∈ im(delta_{n-1})'
+- '[alpha] + [beta] = [alpha + beta]'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Reducing the same cocycle modulo the same coboundary subspace with the same quotient algorithm must reproduce class_hash
+relationships:
+- urn:math:contract:CochainComplex:v0.1.0 serves as Provides the underlying cochain complex structure
+- urn:math:contract:Cocycle:v0.1.0 serves as Defines valid representatives for cohomology classes
+- urn:math:contract:Coboundary:v0.1.0 serves as Defines the equivalence relation via coboundary subspace
+rust_binding:
+  crate: core_homology
+  module: homology_class
+  symbols:
+  - CohomologyClass
+  required_tests:
+  - test_cohomology_class_complex_mismatch_rejected
+negative_tests:
+- Representative that is not a cocycle (delta_n ≠ 0)
+- Coboundary subspace from incorrect degree
+- Quotient basis inconsistent with quotient space
+- class_hash does not match normal form computation
+- Artifact attempting to claim authority or admissibility
+doctrine:
+  summary: 'Equivalence class [alpha] in H^n = ker(delta_n) / im(delta_{n-1}) represented by a cocycle modulo coboundaries.
+
+    Cohomology classes represent closed cochains up to coboundary equivalence and are core obstruction and characteristic-class carriers.'
+  non_role:
+  - Does not classify admissibility or emit policy decisions
+  - Does not emit certificates or produce customer-facing claims
+  - Does not terminalize or make authority decisions
+  - Does not compute cup products (handled by dependent contract)
+wip:
+- Define cup-product compatibility in a dependent contract
+- Core structure complete, awaiting cup-product extension
+- Validation infrastructure matches template requirements
+- Replay requirements explicitly defined for class_hash

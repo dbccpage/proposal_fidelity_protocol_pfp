@@ -24,9 +24,10 @@ import hashlib
 import json
 import warnings
 from dataclasses import dataclass
-from enum import Enum
 from fractions import Fraction
 from typing import Any, Sequence
+
+from operads.canon import DDC_LETTER
 
 from .errors import Refusal
 
@@ -49,21 +50,7 @@ def emit_ddc_shim_deprecation_warning(subject: str) -> None:
     )
 
 
-class DdcRune(str, Enum):
-    """The 8 canonical runes of the Discrete Deformation Calculus operational alphabet."""
-
-    C = "C"  # Context Exposure
-    R = "R"  # Residual Projection
-    E = "E"  # Exact Repair
-    I = "I"  # noqa: E741 — canonical rune name
-
-    LAMBDA = "Λ"  # Structural Lift
-    D = "D"  # Scale Descent
-    M = "M"  # Typed Refusal
-    T = "T"  # Terminalization
-
-
-CANONICAL_RUNES: tuple[str, ...] = ("C", "R", "E", "I", "Λ", "D", "M", "T")
+CANONICAL_RUNES: tuple[str, ...] = DDC_LETTER
 
 RUNE_SYNONYMS: dict[str, str] = {
     "L": "Λ",

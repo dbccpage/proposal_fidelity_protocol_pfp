@@ -1,0 +1,128 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cycle:v0.1.0
+title: Cycle (kernel element of d_n)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cycle
+  symbol: "z ∈ ker(d_n) ⊆ C_n"
+  ascii_symbol: cycle
+  notation: "z ∈ Z_n = ker(d_n) ⊆ C_n"
+  domain:
+  - "ambient chain complex C_• over R"
+  - "degree n"
+  - "representative chain z ∈ C_n"
+  - "boundary map d_n : C_n → C_{n−1} (or none at bottom degree if declared)"
+  codomain:
+    description: >-
+      A chain z ∈ C_n together with a kernel-membership witness that d_n(z) = 0
+      (or a declared bottom-degree convention with no outgoing boundary).
+requirements:
+  required_structures:
+  - Valid ambient chain complex
+  - Degree n matching C_n
+  - Representative z ∈ C_n
+  - Kernel check d_n(z) = 0 when d_n exists
+  - Deterministic CycleWitness binding complex, degree, and representative
+laws:
+- "Kernel law: d_n(z) = 0 in C_{n−1} when d_n is present."
+- "Membership law: z ∈ C_n with n = degree."
+- "Witness law: CycleWitness binds z to a specific complex and boundary at n."
+- "Boundary inclusion: every boundary is a cycle (B_n ⊆ Z_n) when d² = 0."
+- "Authority law: no PROVED / GlobalGreen / HoTT from this contract alone."
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Boundary evaluation deterministic
+  - Witness hashes from canonical serialization
+relationships:
+- "urn:core:math:chain_complex:v1.0.0 — ambient C_•"
+- "urn:core:math:boundary_map:v0.1.0 — operator whose kernel defines cycles"
+- "urn:core:math:boundary:v0.1.0 — exact cycles (images)"
+- "urn:core:math:homology_class:v0.1.0 — class of a cycle modulo boundaries"
+rust_binding:
+  crate: core_homology
+  module: cycle
+  symbols:
+  - Cycle
+  # CycleWitness is defined in witness.rs, not this module.
+  # try_cycle refuses wrong length, non-zero boundary, and wrong degree.
+  # Complex/map hash mismatch, coefficient domain, homology-representative
+  # overclaim, and PROVED/GlobalGreen stay unnamed.
+  required_tests:
+  - try_cycle_rejects_coefficient_length_mismatch
+  - try_cycle_rejects_nonzero_boundary
+  - try_cycle_rejects_degree_mismatch
+negative_tests:
+- Representative with wrong dimension for degree must be rejected
+- Element with d_n(z) ≠ 0 must be rejected
+- Boundary map / complex mismatch must be rejected
+- Coefficient domain mismatch must be rejected
+- Claiming a non-cycle as a homology representative must be rejected
+- Claiming PROVED / GlobalGreen / authority from this contract alone must be rejected
+doctrine:
+  summary: >-
+    A cycle is z ∈ ker(d_n). Cycles represent homology classes modulo boundaries.
+    Nonclaim: not PROVED; not GlobalGreen; not HoTT discharge.
+  non_role:
+  - Homology class equivalence relation (homology_class)
+  - Boundary elements specifically (boundary)
+  - Normalized cycle representatives (deferred)
+  - Cocycles in cochain complexes (separate dual objects)
+  - Authority / PROVED / GlobalGreen / HoTT
+wip:
+- Normalized cycle representatives
+- Relative cycles
+- Degree-0 augmentation special cases
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B2_HOMOLOGY
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Meth B2: object_kind cycle; real kernel laws; urn:omega relationships."
+    recommendation: "Clarify CycleWitness module path vs cycle module if needed."
+    pass: meth_b2_homology
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: REALIZATION_CORE_MATCH
+    severity: low
+    claim_class: "[CODE_DEMO_RUST]"
+    detail: >-
+      cycle.rs try_cycle verifies boundary apply is zero (None boundary => degree-0
+      chains admitted as cycles) and builds Cycle with CycleWitness. Structural MATCH
+      at ShapeOnly. CycleWitness may live in witness.rs while rust_binding.module is cycle.
+    file: engine/crates/core_homology/src/cycle.rs
+    yaml_law: "d_n(z)=0; witness binds complex/degree/representative."
+    code_behavior: "try_cycle + Cycle/CycleWitness construction."
+    delta: MATCH
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: "Kernel law matched at demo level; not PROVED."

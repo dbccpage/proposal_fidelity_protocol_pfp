@@ -1,0 +1,50 @@
+[package]
+autotests = false
+name = "core_operad_theory"
+version.workspace = true
+edition = "2021"
+description = "Colored operads, planar tree composition, algebraic realizations, deformation theory, and PyO3 bridge for the engine"
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+core_operad_canon = { path = "../core_operad_canon" }
+anyhow = "1.0"
+thiserror = "2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["raw_value"] }
+sha2 = "0.10"
+hex = "0.4"
+num-rational = "0.4"
+num-traits = "0.2"
+
+# PyO3 extension module support for Python / Jupyter notebook integration
+pyo3 = { version = "0.29", optional = true }
+
+[dev-dependencies]
+tempfile = "3"
+
+[features]
+default = []
+python = ["dep:pyo3"]
+extension-module = ["pyo3/extension-module"]
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_operad_theory`.
+
+[[test]]
+name = "canonical_parity"
+path = "../tests/core_operad_theory/canonical_parity.rs"
+
+[[test]]
+name = "kernel_tests"
+path = "../tests/core_operad_theory/kernel_tests.rs"
+
+[[test]]
+name = "operad_term_unit"
+path = "../tests/core_operad_theory/operad_term_unit.rs"
+
+[[test]]
+name = "operad_theory_tests"
+path = "../tests/core_operad_theory/operad_theory_tests.rs"

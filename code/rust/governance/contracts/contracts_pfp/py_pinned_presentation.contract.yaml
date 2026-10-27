@@ -1,0 +1,66 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# pfp/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_pinned_presentation:v1.0.0"
+title: "Pinned Presentation (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    A finite rewrite presentation this host recognises, under a name.
+    The name is the lookup key a row's presentation_ref and the
+    period(NAME) decider resolve against, so it is part of the wire
+    contract and renaming one is not cosmetic.
+  invariants:
+    - "successor_map returns None unless the rules form a TOTAL
+       PERMUTATION of the signature. Four failures are checked rather
+       than assumed: a rule whose sides are not single symbols, two
+       rules sharing a left-hand side, a signature symbol with no
+       rule, and right-hand sides that are not onto."
+    - "period is the ORDER of the permutation -- the lowest common
+       multiple of the cycle lengths -- not the size of the signature.
+       Those coincide for c5 and diverge the moment a presentation has
+       two orbits, so returning len(signature) would be right for the
+       one pin this estate has and wrong in general."
+    - "apply_successor indexes into the orbit rather than iterating. The
+       PRODUCER chooses the exponent, so iterating would hand it a
+       lever on the host's running time."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.presentation_pins
+  python_type: "PinnedPresentation"
+  form: dataclass
+  fields:
+    - name: name
+    - name: signature
+    - name: rules

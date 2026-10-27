@@ -1,0 +1,64 @@
+{
+  "fixture_id": "pos_finite_shadow_replay",
+  "kind": "positive",
+  "authority_effect": "None",
+  "global_green": false,
+  "finite_qm_contract_field_refs": {
+    "schema_version": "FiniteQMContractV1",
+    "contract_urn": "urn:core:math:finite_qm:v1.0.0",
+    "field_names": [
+      "schema_version",
+      "contract_urn",
+      "authority_effect",
+      "carrier",
+      "dimension",
+      "certificate",
+      "continuum_debt",
+      "import_ledger"
+    ]
+  },
+  "system": {
+    "shadows": ["declared_M1_projection", "declared_M2_packet"],
+    "refinements": [["declared_M1_projection", "declared_M2_packet"]],
+    "topology": "finite_matrix_norm_topology",
+    "cofinal_for_query": true,
+    "error_budget": { "numer": 0, "denom": 1 },
+    "convergence_witness": null
+  },
+  "cases": [
+    {
+      "case_id": "finite_query",
+      "require_continuum": false,
+      "expected_status": "pass",
+      "expected_terminal": "FiniteShadowReplay"
+    },
+    {
+      "case_id": "continuum_without_witness",
+      "require_continuum": true,
+      "expected_status": "conditional",
+      "expected_terminal": "OracleNeeded(Convergence)"
+    }
+  ],
+  "distributions": [
+    {
+      "case_id": "bit_product_pure_b",
+      "a": { "n": 2, "masses": [2, 3] },
+      "b": { "n": 2, "masses": [1, 0] },
+      "expected_product_masses": [2, 0, 3, 0],
+      "expected_marg_a": [2, 3],
+      "expected_marg_b": [5, 0],
+      "expected_a_pure": false,
+      "expected_a_mixed": true
+    },
+    {
+      "case_id": "fair_bits_product",
+      "a": { "n": 2, "masses": [1, 1] },
+      "b": { "n": 2, "masses": [1, 1] },
+      "expected_product_masses": [1, 1, 1, 1],
+      "expected_marg_a": [2, 2],
+      "expected_marg_b": [2, 2],
+      "expected_a_pure": false,
+      "expected_a_mixed": true
+    }
+  ]
+}

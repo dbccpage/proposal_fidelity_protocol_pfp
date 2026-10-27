@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:site:v0.1.0
+title: Site Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: site
+  symbol: (C, J)
+  ascii_symbol: site
+  notation: (C, J)
+  domain:
+  - 'category: underlying category C'
+  - 'topology: Grothendieck topology J on C'
+  codomain:
+    description: 'A pair (C, J) where C is a category and J is a Grothendieck topology on C.
+
+      '
+requirements:
+  required_structures:
+  - The category_id must resolve to a valid Category artifact
+  - The topology_id must resolve to a valid GrothendieckTopology artifact
+  - The topology must be defined on the given category
+  - Site artifact hash must be deterministic
+laws:
+- C must be a valid category
+- J must be a valid Grothendieck topology
+- J must be defined on category C
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+relationships:
+- urn:math:contract:Category:v* serves as Provides the underlying category structure
+- urn:math:contract:GrothendieckTopology:v* serves as Provides the topology structure on the category
+negative_tests:
+- category_id does not resolve to a valid Category
+- topology_id does not resolve to a valid GrothendieckTopology
+- topology is not defined on the given category
+doctrine:
+  summary: A Site is a category C equipped with a Grothendieck topology J. It provides the categorical foundation for sheaf theory, generalizing open covers in topological spaces. The contract validates the underlying category and the coverage structure.
+  non_role:
+  - Does not define sheaves themselves (see sheaf_on_site contract)
+  - Does not provide computational topology tools
+  - Does not handle concrete topological space constructions
+wip:
+- Subcanonical sites (representables are sheaves) are important
+- Sites with enough points allow stalks at all points
+- Comparison with locale theory and pointless topology
+- Contract is in WIP status awaiting implementation of validators
+- Covering family computation algorithms need optimization
+- Integration with sheaf_on_site contract pending

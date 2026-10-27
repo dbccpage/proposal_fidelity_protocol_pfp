@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:sigma_type:v0.1.0
+title: Sigma Type Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: type_former
+  symbol: 'Sigma(x: A). B(x) or Sum_{x: A} B(x)'
+  ascii_symbol: sigma_type
+  notation: 'Sigma(x: A). B(x) or Sum_{x: A} B(x)'
+  domain:
+  - 'base_type: finite_type'
+  - 'type_family: indexed_family_of_types'
+  - 'total_space: dependent_pair_set'
+  codomain:
+    description: 'A Sigma Type consists of: - Base type A: a finite type with enumerable elements - Type family B: A -> Type, assigning to each a: A a type B(a) - Total space: the set of all pairs (a, b) with a: A and b: B(a)
+
+      '
+requirements:
+  required_structures:
+  - Base type A must be a valid finite type with enumerable elements
+  - 'Type family B must assign a valid type B(a) to each element a: A'
+  - 'Total space must equal the disjoint union of fibers {B(a)}_{a: A}'
+  - First and second projections must satisfy computation rules
+  - StructureArtifact hash matches canonical serialization
+laws:
+- 'Given a: A and b: B(a), the pair (a, b) is an element of Sigma(x: A). B(x)'
+- pi_1(a, b) = a for all (a, b) in the sigma type
+- 'pi_2(a, b) = b: B(a) for all (a, b) in the sigma type'
+- pi_1(a, b) = a and pi_2(a, b) = b (computation rules)
+- 'For all p: Sigma(x: A). B(x), p = (pi_1(p), pi_2(p))'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Base type elements serialized in canonical sorted order
+  - Type family serialized as sorted (element, fiber_type_id) pairs with U+001E separators
+  - Dependent pairs serialized as (first, second) with 2-byte length prefixes
+  - All validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v0.1.0 serves as Sigma types are objects in the category of types
+- urn:math:contract:SumType:v0.1.0 serves as Non-dependent specialization when B is constant over disjoint tags
+negative_tests:
+- Base type artifact does not resolve
+- Type family missing fiber for some element of A
+- Fiber type artifact does not resolve
+- First component of pair is not in A
+- Second component is not in B(first)
+- Projection does not satisfy beta rule
+- Different serialization conventions produce different hashes
+doctrine:
+  summary: 'A Sigma Type (dependent pair type, dependent sum) is a fundamental type-theoretic construction. Given a base type A and a type family B: A -> Type, the sigma type Sigma(x: A). B(x) consists of dependent pairs (a, b) where a: A and b: B(a). The type of the second component depends on the value of the first component. When B is constant (B(x) = C for all x), the sigma type reduces to the ordinary Cartesian product A x C. The contract encodes the base type, the type family, and validates dependent pair construction and elimination (projections).'
+  non_role:
+  - Does not encode higher inductive types
+  - Does not handle universe polymorphism (universe levels are external)
+  - Does not verify decidability of type equality
+  - Does not encode path types or identity types
+  - Does not implement proof-irrelevant sigma types
+wip:
+- Should the sigma type support dependent elimination (induction principle) as an operation?
+- How should universe levels for A and B be tracked?
+- Should truncated sigma types (e.g., mere existence / propositional truncation) be a variant?
+- How should sigma types interact with the path type contract for transport?
+- Should record types be encoded as iterated sigma types?
+- Only finite base types and finite fiber types are directly encodable
+- Constant families reduce to ordinary Cartesian products
+- Eta expansion is validated exhaustively over the total space
+- Type family is stored as an explicit map from base elements to fiber type artifact IDs
+- 'Total space size is the sum of fiber sizes: Sum_{a: A} |B(a)|'
+- All operations are deterministic and content-addressed for replay

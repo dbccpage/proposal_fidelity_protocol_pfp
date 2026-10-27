@@ -1,0 +1,84 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_lattice_dirac_species:v0.1.0
+title: Exact Lattice Dirac Doubling and Wilson Species
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_lattice_dirac_species
+  symbol: exact_lattice_dirac_species
+  ascii_symbol: exact_lattice_dirac_species
+  notation: Exact Lattice Dirac Doubling and Wilson Species
+  domain:
+  - Dense periodic lattice operators with declared Clifford family and dimension<=128
+  - Exact momentum corner carriers with 1..=64 spatial dimensions, period>=3 and explicit periodic/antiperiodic
+    twists
+  - Exact cyclotomic symbols require the declared conductor 2*period<=1024
+  codomain:
+    description: Declared finite results of core_quantum_physics::lattice_dirac_doubling; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Naive zero species are exactly the available sine-zero corners, including boundary parity
+- Wilson zeros additionally satisfy mass+2r(number of pi components)=0
+- Exact momentum kernel counts match independent dense elimination for small carriers
+- Corner chirality is (-1) to the number of pi components and the even-period full corner sum is zero
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: lattice_dirac_doubling
+  symbols:
+  - LatticeDirac
+  - LatticeMomentumSpectrum
+  - LatticeError
+  - LatticeDirac::naive_operator
+  - LatticeDirac::wilson_operator
+  - LatticeMomentumSpectrum::naive_species_count
+  - LatticeMomentumSpectrum::wilson_species_count
+  - LatticeMomentumSpectrum::symbol_data
+  required_tests:
+  - the_naive_lattice_operator_doubles_and_a_wilson_term_removes_the_doublers
+  - exact_lattice_momentum_corners_match_dense_kernels_and_wilson_species
+  - malformed_lattice_declarations_are_refused
+negative_tests:
+- Wrong momentum/conductor shape and oversized dense carriers are refused
+- A Wilson term removes massless periodic doublers while breaking chirality; even-period antiperiodic axes
+  have no sine-zero corner
+doctrine:
+  summary: Naive zero species are exactly the available sine-zero corners, including boundary parity; Wilson
+    zeros additionally satisfy mass+2r(number of pi components)=0; Exact momentum kernel counts match independent
+    dense elimination for small carriers; Corner chirality is (-1) to the number of pi components and the even-period
+    full corner sum is zero.
+  non_role:
+  - No continuum-limit proof or Nielsen-Ninomiya theorem discharge
+  - BigUint species counts do not imply a feasible dense operator
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

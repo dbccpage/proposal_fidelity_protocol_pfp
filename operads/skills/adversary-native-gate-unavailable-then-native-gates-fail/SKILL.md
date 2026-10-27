@@ -4,7 +4,7 @@ description: "Native gate unavailable (blocked) predicts native gates still not 
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-native-gate-unavailable-then-native-gates-fail.json"
-  core-contracts-digest: "sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f"
+  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "anti_pattern"
   core-residual: "unknown"
@@ -24,7 +24,7 @@ Seats: adversary, syntax_prefilter, scar_chronicler. Admitted by host replay of 
 
 ## Digested lesson
 
-Source: `_ic/darpa/adversary/self_digestion/witnesses/adversary-native-gate-unavailable-then-native-gates-fail.json` @ `corpus-sha256:76258a14132224dfe2e1b3d5bf0f641dc333def62f75d93bb4dc792f98467c89` (sha256:4ffedb17253c3e029f231e3e81cd10e8d69bd7410e40b8fbf3c991efc87444af).
+Source: `_ic/darpa/adversary/self_digestion/witnesses/adversary-native-gate-unavailable-then-native-gates-fail.json` @ `corpus-sha256:76258a14132224dfe2e1b3d5bf0f641dc333def62f75d93bb4dc792f98467c89` (sha256:0eeef99ccaa8719283197bd7d6ab6d4c4d3acf2d0b840eb6f3db7db43141863c).
 
 Source excerpt (evidence to inspect):
 
@@ -56,7 +56,7 @@ detector {'blocked': true, 'failure_code': 'NATIVE_GATE_UNAVAILABLE', 'role': 'h
 
 Ordered signature: `(candidate: Code) -> result: Audit`.
 
-Contracts: `sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f`.
+Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

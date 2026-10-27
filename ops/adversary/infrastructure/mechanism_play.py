@@ -23,7 +23,7 @@ from pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gat
 from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
 from adversary.use_cases.teamwork import POST_RUN_LEARNING_INSTRUCTIONS
 
-PROTOCOL = "pfp/tests/demo_004/a_mechanism/c006_host_scratch_space_vs_cot.md"
+PROTOCOL = "pilots/llm_mechanism/c006_host_scratch_space_vs_cot.md"
 PROTOCOL_SHA256 = "e1cf2e0fd816ad060c534f3aad8facc16e7c6d5d8cf5c7bd9bffa2ffd33635fb"
 SOURCES = (PROTOCOL, "pfp/infrastructure/mechanism_sessions.py",
     "pfp/infrastructure/mechanism_scratch_space.py",

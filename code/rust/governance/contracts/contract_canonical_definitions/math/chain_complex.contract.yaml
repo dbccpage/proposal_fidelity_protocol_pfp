@@ -1,0 +1,154 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:chain_complex:v1.0.0
+title: Chain complex (finite graded)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: chain_complex
+  symbol: C_•
+  ascii_symbol: ChainComplex
+  notation: "… → C_n --d_n→ C_{n-1} --d_{n-1}→ C_{n-2} → …"
+  domain:
+  - "coefficient domain R (ring or field)"
+  - "finite degree index set I ⊂ ℤ (or ℕ)"
+  - "for each n ∈ I: finite R-module C_n with finite presentation/basis"
+  - "for each adjacent pair: boundary map d_n : C_n → C_{n-1}"
+  codomain:
+    description: >-
+      A finite graded chain complex over R with degree-lowering boundaries
+      satisfying d² = 0. Structural only; does not mint homology classes or FOC Φ/Γ.
+  definition:
+    chain_complex: "Graded object C_• with maps d_n of degree −1 and d_{n−1} ∘ d_n = 0."
+    cycles: "Z_n = ker(d_n)"
+    boundaries: "B_n = im(d_{n+1})"
+    homology: "H_n = Z_n / B_n when B_n ⊆ Z_n (follows from d² = 0)"
+    finite_scope: "This contract version covers finite declared degree sets only."
+requirements:
+  required_structures:
+  - Coefficient domain R declared and shared by all C_n
+  - Finite degree index set I
+  - Finite C_n for each n ∈ I (presentation or ordered basis)
+  - Boundary map d_n for each adjacent degree pair present in I
+  - Boundary law witness / check that d_{n−1} ∘ d_n = 0 on all adjacent pairs
+  - Degree shift −1 (source degree n, target degree n−1)
+laws:
+- "Boundary-squared law: d_{n−1} ∘ d_n = 0 for every adjacent declared pair."
+- "Degree-shift law: each d_n lowers degree by exactly one."
+- "Coefficient uniformity: every C_n is an R-module for the same declared R."
+- "Presentation compatibility: each d_n has source/target matching declared C_n presentations."
+- "Homology well-definedness: B_n ⊆ Z_n follows from the boundary-squared law."
+- "Finite-scope law: only finitely many degrees and finite C_n ranks are in-scope for this version."
+- "Authority law: no PROVED / GlobalGreen / HoTT discharge from this contract alone."
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Boundary application and d∘d checks are deterministic
+  - Basis/presentation serialization is canonical when hashed
+relationships:
+- "urn:core:math:boundary:v0.1.0 — element of B_n = im(d_{n+1})"
+- "urn:core:math:cycle:v0.1.0 — element of Z_n = ker(d_n)"
+- "urn:core:math:homology_class:v0.1.0 — class in H_n = Z_n/B_n"
+- "urn:core:math:boundary_map:v0.1.0 — single d_n morphism object"
+- "urn:core:math:cochain_complex:v1.0.0 — dual degree-raising complex (distinct object)"
+- "urn:core:math:basic_matrix:v1.0.0 — optional storage for matrix of d_n (not identity of objects)"
+rust_binding:
+  crate: core_homology
+  module: chain_complex
+  symbols:
+  - ChainComplex
+  # d²=0, missing declared C_n (matrix dim), and finite degree support are
+  # constructor/query refusals. Degree-shift is hard-coded on construction
+  # (not an input). Coefficient domain is always Q. Chain/cochain dualization
+  # and H_n claims are not APIs here. PROVED/GlobalGreen/HoTT is doctrinal.
+  required_tests:
+  - test_boundary_law_violation_rejected
+  - test_dimension_mismatch_d1
+  - dim_rejects_degree_outside_finite_support
+negative_tests:
+- Boundary map with wrong degree shift (not n → n−1) must be rejected
+- d_{n−1} ∘ d_n ≠ 0 must be rejected
+- Missing C_n for a declared boundary source or target must be rejected
+- Coefficient domain mismatch across degrees must be rejected
+- Infinite/unbounded degree family without explicit finite I must be rejected under this version
+- Confusing this object with Core cochain layer (degree-raising) without dualization must be rejected
+- Claiming H_n without d² = 0 must be rejected
+- Claiming PROVED / GlobalGreen / HoTT / Φ₁/Γ₂ identity from this contract alone must be rejected
+doctrine:
+  summary: >-
+    Finite graded chain complex C_• over R with d² = 0. Base structure for cycles,
+    boundaries, and homology. Nonclaim: does not claim PROVED; does not claim GlobalGreen;
+    does not claim HoTT discharge; does not define FOC Φ₁/Γ₂ (cochain residual layer).
+  non_role:
+  - Computing FOC Φ₁ / Γ₂ / Ξ functionals
+  - Core cochain layer specialization (degree-raising d₀,d₁)
+  - Chain homotopy equivalence as a full object (separate contract)
+  - Infinite-dimensional chain groups
+  - Spectral sequences / double complexes
+  - Authority minting, customer claims, PROVED/GlobalGreen/HoTT discharge
+wip:
+- Bounded/filtered/augmented specializations
+- Double complexes and spectral sequence interfaces
+- Chain homotopy equivalence contract
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B2_HOMOLOGY
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: >-
+      Meth B2 pass: lifted d²=0, degree shift, finite scope, and dual-fence into canonical
+      laws/structures/negative_tests; removed theater shells. Not PROVED; human re-review welcome.
+    recommendation: "Stage-2 realization align under ADR-007a; LEAN4 only if paper demands."
+    pass: meth_b2_homology
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: FINITE_ONLY_FENCE
+    severity: low
+    claim_class: "[SCOPE FENCE]"
+    detail: "Contract is finite-degree / finite-rank only; unbounded complexes remain residual."
+    recommendation: "Keep fence until a separate unbounded object is introduced."
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: BOUNDED_THREE_TERM_ONLY
+    severity: medium
+    claim_class: "[CODE_DEMO_RUST]"
+    detail: >-
+      core_homology::chain_complex is finite C2→C1→C0 with d1∘d2=0 checks (MATCH core law)
+      but not a general graded family over arbitrary I. YAML finite-scope is honest; general
+      multi-degree API is YAML_AHEAD_OF_CODE relative to full graded I.
+    file: engine/crates/core_homology/src/chain_complex.rs
+    yaml_law: "Finite graded C_• with d²=0 on all adjacent pairs in I."
+    code_behavior: "Degree-bounded 0..2 chain complex with verified composition zero."
+    delta: YAML_AHEAD_OF_CODE
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: >-
+      Stages 1–2 consistent: math laws real; realization is demo-bounded. Not PROVED;
+      not GlobalGreen; LEAN4 not claimed.

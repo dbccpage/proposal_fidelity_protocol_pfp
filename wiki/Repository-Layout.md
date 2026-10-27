@@ -10,6 +10,8 @@
 | [`operads/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/operads) ([page](Operads.md)) | Typed composition of capabilities, workflows and skills |
 | [`pfp_lab/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pfp_lab) | [PFP Lab](PFP-Lab.md) and its scenario packs |
 | [`ops/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/ops) | Operations, governance and supporting infrastructure |
+| [`demos/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/demos) ([page](Demos-Pilots-And-Tests.md)) | Offline demos and the fifty certified challenges; no model calls |
+| [`pilots/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/pilots) ([page](Demos-Pilots-And-Tests.md)) | Experiments that ran language models; they need the private runtime |
 | `wiki/` | The source for this wiki |
 
 ## Code layout

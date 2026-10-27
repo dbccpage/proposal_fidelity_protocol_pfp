@@ -7,7 +7,7 @@ invocation: discipline
 operad_source_colours: ["State", "Contract"]
 operad_target_colour: "Audit"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 families: [meta]
 ---
 

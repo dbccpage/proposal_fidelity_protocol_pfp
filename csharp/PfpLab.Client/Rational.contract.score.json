@@ -50,26 +50,26 @@
     "score_token": "L4C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-10-27T00:34:42Z",
+    "evaluation_timestamp": "2026-10-27T00:21:44Z",
     "evidence": [
       {
         "path": "governance/evidence/dotnet-build.run.json",
-        "sha256": "871130fd852afaa0686b2e04102b64c6aecf5d82a3e8f4a66b4d6d9e43c8eac5",
+        "sha256": "34ac1022264a0a45f40a95b30ef07f7c07404270a6232354970381fd51e5c4c1",
         "note": ""
       },
       {
         "path": "governance/evidence/csharp-tests.run.json",
-        "sha256": "2681e1a74feabe15696b4c8a2449536d875d3d180c6c436311ede674fa947c8c",
+        "sha256": "d95682c5fc1a1920f97bac1803d3ea9be4c52a52b877add69cb5af644e5dbf97",
         "note": ""
       },
       {
         "path": "governance/evidence/pytest-all.run.json",
-        "sha256": "71f528bbea7e9aae4f2283bd24a861d91b7ce5459d413e395f10ff31107bf0f6",
+        "sha256": "649f083f26e55fd3dbb817e3f6a742a30ffbaf4ef9513fd142511d7be0c2a1fc",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.run.json",
-        "sha256": "0ac4beb70c2bd9d4507329170b8cd9cd20a7675c66439873ba72da2174605cb8",
+        "sha256": "35ab6edefe2f35348c79c3d3a20310d4c33029ae2ba5697ca3812d4faf150a70",
         "note": ""
       },
       {
@@ -95,7 +95,7 @@
   },
   "history": [
     {
-      "recorded_at": "2026-10-26T22:47:22.306648Z",
+      "recorded_at": "2026-10-27T00:21:47.083896Z",
       "contract": {
         "AuthorityEffect": "None",
         "artifact": {
@@ -169,100 +169,6 @@
           {
             "path": "governance/evidence/metrics.json",
             "sha256": "9908aaffd755a936ee2252d240dc582f61718b9a6fc83adcc18ef8ed4169ef14",
-            "note": ""
-          }
-        ],
-        "mutation_accounting": {
-          "killed": 15,
-          "survived": 0,
-          "demonstrably_equivalent": 0,
-          "invalid": 6,
-          "inconclusive": 0,
-          "unrun": 0,
-          "conservative_ratio": 1.0,
-          "report": {
-            "path": "governance/evidence/m-csharp-app.mutation.json",
-            "sha256": "bc47635abd7037345647881c61a18dfd64c69afdc66fc10b2a25927370f272ad",
-            "note": "campaign m-csharp-app"
-          }
-        }
-      }
-    },
-    {
-      "recorded_at": "2026-10-27T00:34:44.117775Z",
-      "contract": {
-        "AuthorityEffect": "None",
-        "artifact": {
-          "path": "csharp/PfpLab.Client/Rational.cs",
-          "language": "C#",
-          "sha256": "e5f923deaf6573f27faf79e5bd8ba7636a26477fdc92f9beaa03303ef860cf1e"
-        },
-        "contract_urn": "urn:pfp-lab:csharp:rational:v1",
-        "symbols": [
-          "Rational"
-        ],
-        "owned_invariants": [
-          "Only canonical spellings parse.",
-          "default(Rational) is zero, never 0/0."
-        ],
-        "boundaries": [
-          "The client never computes protocol values."
-        ]
-      },
-      "score": {
-        "schema_version": "2.0.0",
-        "AuthorityEffect": "None",
-        "artifact": {
-          "path": "csharp/PfpLab.Client/Rational.cs",
-          "language": "C#",
-          "sha256": "e5f923deaf6573f27faf79e5bd8ba7636a26477fdc92f9beaa03303ef860cf1e"
-        },
-        "profile": "Exact",
-        "level": "L4",
-        "level_basis": "Exact rational value type across the language boundary: canonical parsing identical to the Python core, lowest-terms check, overflow-free comparison on BigInteger, and a safe default value.",
-        "gates": {
-          "G1": "C",
-          "G2": "B",
-          "G3": "C",
-          "G4": "B",
-          "G5": "B"
-        },
-        "basis": {
-          "G1": "Header declares AuthorityEffect: None and a unique contract URN; the exported names (__all__ or public types) are the ones the docstring describes and the contract lists. Not B: no requirement-to-symbol trace beyond this contract.",
-          "G2": "Exact profile: parse, compare and print only, no arithmetic; the same refusal list as the Python admission tests is refused here (SCORING.md 5.1 interface type conservation).",
-          "G3": "Typed failures: every core failure becomes CoreException with a CoreErrorKind (RULE_CS_002 checks run after deserialisation; no null-forgiving operator in runtime code, enforced by a scan); async methods take and forward CancellationToken (CA2016 as error); disposables are disposed (CA2000/CA1816 as error). Not B: panic-freedom is tested, not proven.",
-          "G4": "Unit tests, view-model tests with a scripted client, and contract tests against the real Python core. Mutation R = 1/1 (see mutation_accounting).",
-          "G5": "Cyclomatic complexity from lizard and CA1502 (threshold 10, error at build); nesting from the brace estimate. Cognitive complexity is not measured for C#, so A is not claimed. Metrics: worst function: cyclomatic 8, cognitive None, nesting 1; metrics ceiling A+."
-        },
-        "composite_grade": "C",
-        "score_token": "L4C",
-        "is_complete": true,
-        "grade_ceiling": "A",
-        "evaluation_timestamp": "2026-10-26T22:47:20Z",
-        "evidence": [
-          {
-            "path": "governance/evidence/dotnet-build.run.json",
-            "sha256": "c5d42855fecc1d7206b50799e76485fa20b915ac400c2cd3e324fe691176151c",
-            "note": ""
-          },
-          {
-            "path": "governance/evidence/csharp-tests.run.json",
-            "sha256": "729252dc0ce8e7ce8fb96106b44df6e1b5164f47726a0c63108993e57269c6fa",
-            "note": ""
-          },
-          {
-            "path": "governance/evidence/pytest-all.run.json",
-            "sha256": "3e1f44bdb70c51fbaed798740d4641b9478bcdc00c5f01cee31436c5e48e32f8",
-            "note": ""
-          },
-          {
-            "path": "governance/evidence/metrics.run.json",
-            "sha256": "27f9ba71f92251771816c868d43bdcc26964ef3cd1136486459bd30b67db303e",
-            "note": ""
-          },
-          {
-            "path": "governance/evidence/metrics.json",
-            "sha256": "f04129f0407bfbff610b3b910c41720ad9f949eed5db0b1c5540c06449f9e4d4",
             "note": ""
           }
         ],

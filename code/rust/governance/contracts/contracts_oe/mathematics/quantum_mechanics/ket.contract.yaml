@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:ket:v0.1.0
+title: Ket Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: ket
+  symbol: ket
+  ascii_symbol: ket
+  notation: Exact Finite Ket
+  domain:
+  - A nonempty, nonzero finite vector over Q(i) in declared coordinate order
+  - The shared finite dimension and allocation ceilings
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_state; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The admitted vector has exactly its declared finite coordinate dimension and positive exact norm squared
+- Ray probabilities and projectors are invariant under nonzero exact rescaling
+- Tensor coordinates use the left-factor-first lexicographic index order
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+relationships:
+- urn:math:contract:HilbertSpace:v0.1.0 serves as Defines the Hilbert space H, inner product structure, field,
+  and ordered basis
+- urn:math:contract:VectorSpace:v0.1.0 serves as Provides underlying vector space structure for H
+- urn:math:contract:Field:v1.0.0 serves as Defines the field K and field element validation
+- urn:math:contract:Scalar:v1.0.0 serves as Represents individual field elements (components)
+negative_tests:
+- Reject empty vectors, zero vectors, unequal comparison dimensions and exhausted carrier limits
+doctrine:
+  summary: The admitted vector has exactly its declared finite coordinate dimension and positive exact norm
+    squared; Ray probabilities and projectors are invariant under nonzero exact rescaling; Tensor coordinates
+    use the left-factor-first lexicographic index order.
+  non_role:
+  - Zero vectors and general artifact-addressed vector metadata are outside this nonzero quantum-state face
+  - No abstract Hilbert-space registry, basis hash, arbitrary coefficient field or continuum completion is
+    claimed
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted
+- The former generic metadata scaffold remains outside this explicitly declared finite executable domain; its
+  unsupported hash obligations are not claimed discharged.
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_state
+  symbols:
+  - RayVector
+  - RayVector::try_new
+  - RayVector::entries
+  - RayVector::norm_sq
+  required_tests:
+  - exact_ket_bra_sesquilinear_positive_norm_and_typed_refusals
+  - transition_probability_is_scale_and_phase_invariant_and_one_exactly_on_a_ray
+  - the_kronecker_product_orders_the_left_factor_first

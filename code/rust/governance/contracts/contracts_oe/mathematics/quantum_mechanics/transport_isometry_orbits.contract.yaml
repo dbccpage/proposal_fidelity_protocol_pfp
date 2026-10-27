@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:transport_isometry_orbits:v0.1.0
+title: Exact Metric Isometry Replay
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: transport_isometry_orbits
+  symbol: transport_isometry_orbits
+  ascii_symbol: transport_isometry_orbits
+  notation: Exact Metric Isometry Replay
+  domain:
+  - A finite square exact-field transport and a conformable Hermitian Gram matrix, with dimension at most 128.
+  codomain:
+    description: Declared finite results of core_quantum_physics::transport_isometry_orbits; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Isometry means exactly T dagger G T = G.
+- Complex Hermitian and real indefinite metrics use the same involution-aware replay.
+- A perturbed transport returns false rather than being accepted by an approximate tolerance.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: transport_isometry_orbits
+  symbols:
+  - is_isometry
+  - IsometryError
+  required_tests:
+  - complex_and_real_transports_preserve_exactly_the_declared_pairing
+negative_tests:
+- Non-Hermitian Gram data, shape mismatch and storage/operation budget excess are typed refusals.
+doctrine:
+  summary: Isometry means exactly T dagger G T = G.; Complex Hermitian and real indefinite metrics use the
+    same involution-aware replay.; A perturbed transport returns false rather than being accepted by an approximate
+    tolerance..
+  non_role:
+  - No spacetime dynamics or general-relativistic field equation.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

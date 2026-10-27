@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_topological_quantum_computing:v0.1.0
+title: Exact Braids and Bounded Projective Gate Images
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_topological_quantum_computing
+  symbol: finite_topological_quantum_computing
+  ascii_symbol: finite_topological_quantum_computing
+  notation: Exact Braids and Bounded Projective Gate Images
+  domain:
+  - An actual fusion space and its exact braid generators.
+  - Signed braid words and an explicit finite image-enumeration budget.
+  codomain:
+    description: Declared finite results of core_quantum_physics::topological_quantum_computing; exact and
+      diagnostic routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Adjacent generators obey the braid relation and distant generators commute.
+- Negative word letters use the inverse braid matrix.
+- The four-sigma Ising qubit has projective image size twenty-four, excluding the T gate after complete closure.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: topological_quantum_computing
+  symbols:
+  - TopologicalQuantumComputing
+  required_tests:
+  - ising_braid_image_is_projectively_clifford_and_excludes_t
+  - gate_words_refuse_aggregate_dense_work_before_products
+negative_tests:
+- A search budget exhaustion yields undecided membership.
+- Invalid braid letters and oversized words are refused.
+- Excessive aggregate dense-word work and oversized path or generator materialization are typed budget refusals
+  before allocation or products.
+doctrine:
+  summary: Adjacent generators obey the braid relation and distant generators commute.; Negative word letters
+    use the inverse braid matrix.; The four-sigma Ising qubit has projective image size twenty-four, excluding
+    the T gate after complete closure..
+  non_role:
+  - No universality claim follows from a model name or a partial image search.
+  - No operational authority or device-performance claim.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

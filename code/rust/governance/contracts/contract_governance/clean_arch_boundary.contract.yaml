@@ -1,0 +1,55 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+schema_version: core.contract.v2
+contract_id: "urn:core:governance:clean_arch_boundary:v2.0.0"
+title: "Clean Architecture Inward Dependency Boundary Policy"
+kind: "policy_contract"
+layer: "00_constitution"
+role: "Policy"
+status: active
+council_owner: "L3_logos_nomos"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  clean_architecture_layer: domain
+  dependencies:
+    contracts: []
+    lean4_theorems: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: ["REFUSAL_INVALID_ARGUMENTS", "REFUSAL_GATE_FAILED", "REFUSAL_INVARIANT_BREACH"]
+
+doctrine:
+  summary: >-
+    Mandates strict inward dependencies: domain has zero outer imports; use cases depend only on domain.
+  invariants:
+    - "Domain packages must never import from use_cases, infrastructure, controllers, or entrypoints."
+    - "Use case handlers depend strictly on domain entities and inward port protocols."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+    - "implicit_coercion"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+    - no_undeclared_state_transition
+
+specification:
+  algebraic_structure:
+    carrier_type: "PolicyCarrier"
+    operations:
+      []
+  ports:
+    input_packet: "urn:core:packet:work_packet:v1.0.0"
+    output_packet: "urn:core:packet:swarm_run_receipt:v1.0.0"
+    error_type: "Refusal"
+  verification:
+    fitness_test: null
+    lean4_file: null

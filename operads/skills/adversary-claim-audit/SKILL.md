@@ -4,7 +4,7 @@ description: "Audit a typed claim against declared evidence scope with a replaye
 metadata:
   core-arity: "2"
   core-contract: "operads/catalog/contracts/v1/adversary_claim_audit.json"
-  core-contracts-digest: "sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f"
+  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "skill"
   core-residual: "unknown"
@@ -29,15 +29,15 @@ Ordered signature: `(findings: Audit, subject: Contract) -> receipt: Receipt`.
 
 ## Evidence and execution boundary
 
-Contracts: `sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f`
+Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`
 
-Spec: `sha256:d1ae2b5b9554ebf2661e07a48fc2c5b336c899252afa5e1b6c21b581d4c67d96`
+Spec: `sha256:ba117ed5180c684520793d18bdc614b102fc6eda2eb8e90d9e6e951ce0f94912`
 
-Fixtures: `sha256:e8e0394005f3ba7f15adacd0e7c5722c54d0a5e45f052d92cb390bb9a526b938`
+Fixtures: `sha256:ebdb995f74c857976e38a4b2875c6d5eab2275fe5f6cf9edd4ec9d23e00ffcd7`
 
-Evaluation: `sha256:6198500cc6cf81335db9b7b323f9cb9ebd1c53a23076467846598397dd2cf3c7`
+Evaluation: `sha256:0443eeb19eaf5a86bb7a408faeba45f2f259762a1de538a42d992d794680313f`
 
-Implementation: `sha256:8704bc0c8682ca3873930ca807de8f0c4dcb352c0b0f98d450bd3caee615ac88`
+Implementation: `sha256:7f2c2d4117a895d97e54151782589e94a73b1748f5fdca2e2ed29bb2be8cdfcc`
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 The finite detector reports findings. It does not activate a production guard.

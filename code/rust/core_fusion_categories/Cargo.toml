@@ -1,0 +1,33 @@
+[package]
+autotests = false
+name = "core_fusion_categories"
+version.workspace = true
+edition = "2021"
+description = "Exact fusion rings, multiplicity-free fusion, braided and modular data (F- and R-symbols, pentagon, hexagon, Verlinde) over exact number fields (AuthorityEffect None)"
+license.workspace = true
+
+[dependencies]
+# The exact scalar tower (`Field`, `ExactRing`) and the dense matrix storage.
+linear_algebra = { path = "../core_linear_algebra" }
+# Exact number fields (`Q`, `Q(i)`, `Q(zeta_n)`, ...) the symbols take values in.
+core_number_theory = { path = "../core_number_theory" }
+# Tier 0: the exact rational `Interval` used for Frobenius-Perron enclosures.
+num-bigint = "0.4"
+num-integer = "0.1"
+num-rational = "0.4"
+num-traits = "0.2"
+thiserror = "2"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_fusion_categories`.
+
+[[test]]
+name = "anyon_models"
+path = "../tests/core_fusion_categories/anyon_models.rs"
+
+[[test]]
+name = "canonical_matrix_regressions"
+path = "../tests/core_fusion_categories/canonical_matrix_regressions.rs"
+
+[[test]]
+name = "ising"
+path = "../tests/core_fusion_categories/ising.rs"

@@ -1,0 +1,48 @@
+# CODA-FDA Rules Specification
+# Finite Descent Standing Authorization Gate
+paper_identity: CODA-FDA
+legacy_file_identity: 001_coda_fda.md
+canonical_version: v1.0
+authority_effect: None
+layer: Layer 8 (FDA — Finite Descent Authority)
+
+primitives:
+  descent_packet: "P_s = (K_s, E_s, V_s, tau_s, Lambda_s)"
+  pipeline: "P -> rho -> G -> eta -> R -> D -> C_fin -> V -> Fib -> tau -> Term"
+  authority_type: "AuthStanding_S(p) := Sigma(t:T_S) (Pi_S#(p) = inl(t) and IsAuth_S(t))"
+  verifier_fiber: "R_p = { r in E_s : V_s(r, z_p) = 1 }"
+  output_fiber: "O_p = { o(r, z_p) : r in R_p }"
+
+equations:
+  authority_standing_dependent_pair:
+    latex: "\\mathsf{AuthStanding}_S(p) := \\Sigma(t:\\mathbb{T}_S) \\left( \\Pi_S^\\sharp(p) = \\mathsf{inl}(t) \\wedge \\mathsf{IsAuth}_S(t) \\right)"
+    description: "Dependent pair type for finite standing authority under system S"
+  refusal_law:
+    latex: "\\neg D(p) \\implies \\neg \\mathsf{Auth}(p)"
+    description: "Absence of accepted finite descent forces refusal of authority"
+  terminal_taxonomy:
+    no_rule: "R_p = \\varnothing (exhaustive search)"
+    budget_unknown: "R_p = \\varnothing (non-exhaustive / budget limit)"
+    unique_rule: "|R_p| = 1"
+    unique_output: "|R_p| > 1, |O_p| = 1"
+    non_unique: "|R_p| > 1, |O_p| > 1"
+
+enforcement_rules:
+  - id: FDA-RULE-001
+    name: "Refusal Law Enforcement"
+    statement: "Any claim lacking an accepted finite descent packet D(p) = inl(c) must be refused authority."
+  - id: FDA-RULE-002
+    name: "Seven-Guard Verification"
+    statement: "IsAuth_S(t) requires verifying all 7 guards (packet completeness, verifier replay, terminal alignment, budget, lift, scope, trust root)."
+  - id: FDA-RULE-003
+    name: "Exhaustive Search Classification"
+    statement: "Empty candidate fiber R_p must be classified as NoRule if search was exhaustive, or BudgetUnknown if search was truncated."
+  - id: FDA-RULE-004
+    name: "Terminal Non-Bypass"
+    statement: "Observation-side evidence or transport certificates alone cannot bypass explicit terminalization tau_s."
+
+claim_discipline:
+  supports: "Supports 5-field packet verification, candidate fiber classification, and authority refusal for unverified proposals."
+  does_not_support: "Does not support uncertified authority creation, global green claims, or infinite-horizon authorization without finite shadows."
+  narrowest_defensible_claim: "Calculates candidate fiber cardinality and enforces 7-guard validation over finite descent packets."
+  next_test_needed: "Automated replay test of 7-guard validation suite against synthetic non-unique and budget-exhausted descent packets."

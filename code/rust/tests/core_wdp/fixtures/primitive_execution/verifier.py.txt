@@ -1,0 +1,376 @@
+"""Original Genesis raw regime, context and full candidate execution oracle.
+
+Exhausts the declared small regime corpus, not arbitrary histories. The raw
+source operations and unpruned candidate space remain distinct from the
+fast minimum entrypoint, whose rule-free/fresh-token assumptions are tested.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib
+import itertools
+import json
+import stat
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+INPUTS = ROOT / "manifests" / "primitive_execution_inputs.json"
+
+
+def regular(path: Path) -> bytes:
+    info = path.lstat()
+    if not stat.S_ISREG(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+        raise ValueError(f"not a regular source/control file: {path}")
+    for parent in path.parents:
+        info = parent.lstat()
+        if not stat.S_ISDIR(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            raise ValueError(f"source/control parent is not a regular directory: {parent}")
+    return path.read_bytes()
+
+
+def require(condition: bool, detail: str) -> None:
+    if not condition:
+        raise ValueError(detail)
+
+
+def verify_unchanged(snapshot: dict[Path, str]) -> None:
+    for path, digest in snapshot.items():
+        require(
+            hashlib.sha256(regular(path)).hexdigest() == digest, f"replay input changed: {path}"
+        )
+
+
+def stream(digest, data) -> None:
+    digest.update(json.dumps(data, ensure_ascii=False, separators=(",", ":")).encode() + b"\n")
+
+
+def wire(regime) -> list:
+    return [
+        list(regime.data),
+        list(regime.forms),
+        [[f, list(args)] for f, args in sorted(regime.insts)],
+        sorted(regime.rules),
+        list(map(list, sorted(regime.reqs))),
+    ]
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-root", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    require(not args.output.exists() and not args.output.is_symlink(), "refusing existing output")
+    verifier_path = Path(__file__).absolute()
+    verifier, control = regular(verifier_path), regular(INPUTS)
+    manifest = json.loads(control)
+    require(manifest["schema"] == "wdp-primitive-execution-inputs-v1", "unknown input schema")
+    snapshot = {
+        verifier_path: hashlib.sha256(verifier).hexdigest(),
+        INPUTS: hashlib.sha256(control).hexdigest(),
+    }
+    source_paths = set()
+    for row in manifest["files"]:
+        path = args.source_root / row["repository"] / row["path"]
+        body = regular(path)
+        require(len(body) == row["bytes"], f"source size drift: {path}")
+        require(hashlib.sha256(body).hexdigest() == row["sha256"], f"source hash drift: {path}")
+        require(
+            hashlib.sha1(f"blob {len(body)}\0".encode() + body).hexdigest() == row["git_blob"],
+            f"source blob drift: {path}",
+        )
+        snapshot[path] = row["sha256"]
+        source_paths.add(path.resolve())
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, str(args.source_root / "19L57G1" / "code"))
+    modules_before = set(sys.modules)
+    model, observe, candidates, bridge = (
+        importlib.import_module(f"derivation.{name}")
+        for name in ("model", "observe", "candidates", "bridge")
+    )
+
+    def module_closure():
+        for name, module in list(sys.modules.items()):
+            if name in modules_before and not name.startswith("derivation"):
+                continue
+            path = getattr(module, "__file__", None)
+            if path and name.split(".")[0] not in sys.stdlib_module_names:
+                require(Path(path).resolve() in source_paths, f"unbound imported source: {name}")
+
+    module_closure()
+
+    def state(data=(), forms=(), insts=(), rules=(), reqs=()):
+        return model.Regime(
+            tuple(data), tuple(forms), frozenset(insts), frozenset(rules), frozenset(reqs)
+        )
+
+    def context(c):
+        return None if c is None else [c[0], list(c[1])]
+
+    def observations(r):
+        ctxs, profs = observe.contexts(r), observe.profiles(r)
+        pairs = list(itertools.combinations(range(len(r.data)), 2))
+        return [
+            list(map(context, ctxs)),
+            [[context(c) for c in ctxs if c in p] for p in profs],
+            list(map(list, observe.collapsed_pairs(r))),
+            observe.satisfies(r),
+            [[list(pair), context(observe.witness(r, *pair))] for pair in pairs],
+        ]
+
+    def event(e):
+        if isinstance(e, model.Supply):
+            return ["supply", e.token]
+        if isinstance(e, model.AdmitDatum):
+            return ["admit_datum", e.token]
+        if isinstance(e, model.AdmitForm):
+            return ["admit_form", e.arity]
+        if isinstance(e, model.AdmitInst):
+            return ["admit_inst", e.form, list(e.args)]
+        if isinstance(e, model.AdmitRuleAll):
+            return ["admit_rule_all", e.form]
+        return ["impose", e.i, e.j]
+
+    def alphabet(r):
+        out = [model.Supply("<ab>"), model.AdmitDatum("fresh")]
+        if r.data:
+            out.append(model.AdmitDatum(r.data[0]))
+        out += [model.AdmitForm(a) for a in (0, 1, 2)]
+        for f, arity in enumerate(r.forms):
+            out += [
+                model.AdmitInst(f, args)
+                for args in itertools.product(range(len(r.data)), repeat=arity)
+            ]
+            out += [model.AdmitInst(f, ()), model.AdmitInst(f, (len(r.data),) * arity)]
+        out += [model.AdmitInst(len(r.forms), ())]
+        out += [model.AdmitRuleAll(f) for f in range(len(r.forms) + 1)]
+        out += [model.Impose(*pair) for pair in itertools.combinations(range(len(r.data)), 2)]
+        out += [model.Impose(0, 0), model.Impose(0, len(r.data))]
+        return out
+
+    shapes = [[], [1], [2], [1, 2], [3]]
+    extras = [
+        state(["<>"]),
+        state(["<>", "<>"], [1]),
+        state(["", "\u03bc"], [2], [(0, (0, 1))], reqs=[(0, 1)]),
+        state(["w2", "x"], [2]),
+        state(["a", "b", "c"], [3], [(0, (0, 1, 0)), (0, (2, 1, 2))], reqs=[(0, 2)]),
+        state(["a", "b", "c"], [1, 2], [(0, (0,)), (1, (2, 0))], [1], [(0, 1), (1, 2)]),
+    ]
+    digest = hashlib.sha256()
+    states = steps = refused = 0
+
+    def record(r):
+        nonlocal states, steps, refused
+        outcomes = []
+        for reading, stepper in (("dedup", model.step), ("occurrence", bridge.occurrence_step)):
+            rows = []
+            for e in alphabet(r):
+                try:
+                    after = wire(stepper(r, e))
+                except model.AdmissionError:
+                    after = None
+                    refused += 1
+                rows.append([event(e), after])
+            outcomes.append([reading, rows])
+            steps += len(rows)
+        stream(digest, [wire(r), observations(r), outcomes])
+        states += 1
+
+    for n in range(3):
+        data = [f"d{i}" for i in range(n)]
+        pairs = list(itertools.combinations(range(n), 2))
+        for forms in shapes:
+            instances = [
+                (f, args)
+                for f, arity in enumerate(forms)
+                for args in itertools.product(range(n), repeat=arity)
+            ]
+            for mask in range(1 << (len(instances) + len(forms) + len(pairs))):
+                insts = [inst for i, inst in enumerate(instances) if mask >> i & 1]
+                rules = [f for f in range(len(forms)) if mask >> (len(instances) + f) & 1]
+                reqs = [
+                    pair
+                    for i, pair in enumerate(pairs)
+                    if mask >> (len(instances) + len(forms) + i) & 1
+                ]
+                record(state(data, forms, insts, rules, reqs))
+    for r in extras:
+        record(r)
+
+    def item(it):
+        if isinstance(it, candidates.NewDatum):
+            return ["new_datum"]
+        if isinstance(it, candidates.NewForm):
+            return ["new_form", it.arity]
+        if isinstance(it, candidates.NewRuleAll):
+            return ["new_rule_all", it.form]
+        return ["new_inst", it.form, list(it.args)]
+
+    candidate_bases = [
+        state(["d0", "d1"]),
+        state(["d0", "d1"], [1]),
+        state(["d0", "d1"], [2]),
+        state(["d0", "d1"], [1, 2], [(0, (0,))]),
+        state(["d0", "d1"], [2], [(0, (0, 0)), (0, (1, 1))]),
+        state(["d0", "d1"], [2], rules=[0]),
+        state(["d0", "d1", "d2"], [1], [(0, (0,))], reqs=[(0, 2)]),
+        state(["w2", "x"], [2]),
+    ]
+
+    def complete_requirements(n):
+        return list(itertools.combinations(range(n), 2))
+
+    candidate_bases += [
+        state([f"d{i}" for i in range(n)], reqs=complete_requirements(n)) for n in (3, 4, 4)
+    ]
+    candidate_arities = [2] * (len(candidate_bases) - 1) + [3]
+    candidate_rows = []
+    total_deltas = 0
+    for base, max_arity in zip(candidate_bases, candidate_arities):
+        bounds = candidates.Bounds(2, max_arity)
+        target = (0, 1)
+        complete = [list(candidates.iter_full_deltas(base, cost, bounds)) for cost in range(3)]
+        candidate_digest = hashlib.sha256()
+        valid_costs = []
+        for cost, deltas in enumerate(complete):
+            rows, valid = [], []
+            for delta in deltas:
+                after = candidates.apply_delta(base, delta)
+                okay = candidates.response_valid_naive(base, target, delta)
+                rows.append(
+                    [
+                        list(map(item, delta)),
+                        list(map(event, candidates.delta_events(base, delta))),
+                        wire(after),
+                        [str(v) for v in candidates.mu2(delta)],
+                        okay,
+                    ]
+                )
+                if okay:
+                    valid.append(delta)
+            stream(candidate_digest, [cost, rows])
+            valid_costs.append(valid)
+            total_deltas += len(rows)
+        minima = {}
+        for measure in ("mu1", "mu2"):
+            minima[measure] = None
+            for cost, valid in enumerate(valid_costs):
+                if not valid:
+                    continue
+                arity = min(candidates.mu2(d)[1] for d in valid) if measure == "mu2" else -1
+                chosen = [d for d in valid if measure == "mu1" or candidates.mu2(d)[1] == arity]
+                chosen.sort(key=candidates._delta_key)
+                minima[measure] = {
+                    "price": [str(cost), str(arity)],
+                    "deltas": [list(map(item, d)) for d in chosen],
+                }
+                break
+        try:
+            fast = candidates.min_responses(base, target, "mu1", bounds)
+            fast_result = (
+                None
+                if fast is None
+                else {
+                    "price": [str(v) for v in fast.cost],
+                    "deltas": [list(map(item, d)) for d in fast.deltas],
+                }
+            )
+        except ValueError:
+            fast_result = "rule_free_base_required"
+        candidate_rows.append(
+            {
+                "base": wire(base),
+                "target": list(target),
+                "max_arity": max_arity,
+                "counts": list(map(len, complete)),
+                "stream_sha256": candidate_digest.hexdigest(),
+                "checked_minima": minima,
+                "source_fast_mu1": fast_result,
+            }
+        )
+
+    collision_base = candidate_bases[7]
+    collision_delta = candidates.canonical_delta(
+        (candidates.NewDatum(), candidates.NewInst(0, (0, 2)))
+    )
+    fast_accepts = candidates.response_valid_fast(
+        candidates.NodeView.of(collision_base), (0, 1), collision_delta
+    )
+    try:
+        candidates.response_valid_naive(collision_base, (0, 1), collision_delta)
+        naive = "accepted"
+    except model.AdmissionError:
+        naive = "ill_formed"
+    require(
+        fast_accepts and naive == "ill_formed", "expected generated-name collision not reproduced"
+    )
+    histories = []
+    events = [
+        model.Supply("<>"),
+        model.AdmitDatum("<>"),
+        model.AdmitDatum("<>"),
+        model.AdmitForm(1),
+        model.AdmitInst(0, (0,)),
+        model.AdmitRuleAll(0),
+    ]
+    for reading, stepper in (("dedup", model.step), ("occurrence", bridge.occurrence_step)):
+        current = model.EMPTY
+        intermediates = [wire(current)]
+        for e in events:
+            current = stepper(current, e)
+            intermediates.append(wire(current))
+        histories.append(
+            {"reading": reading, "events": list(map(event, events)), "states": intermediates}
+        )
+    module_closure()
+    verify_unchanged(snapshot)
+    result = {
+        "schema": "wdp-primitive-execution-receipt-v1",
+        "authority_effect": "None",
+        "inputs_sha256": hashlib.sha256(control).hexdigest(),
+        "verifier_sha256": hashlib.sha256(verifier).hexdigest(),
+        "bound_inputs": len(manifest["files"]),
+        "post_execution_rehash": "unchanged",
+        "scope": "finite original-function oracle; full-replay minimum within declared <=2 item space; no primitive law selection",
+        "corpus": {
+            "max_data": 2,
+            "form_shapes": shapes,
+            "extra_inputs": list(map(wire, extras)),
+            "regimes": states,
+            "event_attempts": steps,
+            "refused_events": refused,
+            "stream_sha256": digest.hexdigest(),
+        },
+        "candidate_cases": candidate_rows,
+        "complete_candidate_deltas": total_deltas,
+        "histories": histories,
+        "generated_name_countermodel": {
+            "base": wire(collision_base),
+            "delta": list(map(item, collision_delta)),
+            "source_fast_valid": fast_accepts,
+            "source_naive": naive,
+        },
+    }
+    args.output.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(
+        json.dumps(
+            {
+                "regimes": states,
+                "event_attempts": steps,
+                "refused": refused,
+                "candidate_deltas": total_deltas,
+                "source_name_collision": "reproduced",
+            }
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()

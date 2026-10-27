@@ -1,0 +1,114 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:closure_ratio_invariant:v1.0.0
+title: Closure ratio invariant
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Dimensionless scalar ratio comparing declared obstruction norm to declared total reference
+    norm.
+  symbol: γ
+  ascii_symbol: gamma_ratio
+  formula: γ = ||obs|| / ||total||
+  1. Contract metadata:
+    title: Closure ratio invariant
+    version: 0.1.0
+    object_type: scalar_ratio_invariant
+  2. Mathematical object / functional role:
+    role: Dimensionless scalar ratio comparing declared obstruction norm to declared total reference norm.
+    purpose: Tracks relative obstruction magnitude under a declared quotient norm and denominator.
+    non_role:
+    - Does not define Γ₂.
+    - Does not define Γ².
+    - Does not replace Φ₁.
+    - Does not classify the finite obstruction trichotomy.
+    - Does not decide admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: obstruction norm and positive total reference norm over compatible quotient/carrier data
+    codomain: scalar γ ∈ [0,1] when denominator bounds numerator; otherwise Invalid or out-of-contract
+  4. Required structures:
+    required:
+    - obstruction_norm
+    - total_reference_norm
+    - quotient or cohomology class reference
+    - norm definition
+    - carrier/layer hash
+    - comparison mode
+    required_conditions:
+    - total_reference_norm > 0
+    - 0 <= obstruction_norm <= total_reference_norm
+    - numerator and denominator are compatible under same carrier/norm semantics
+  5. Definition:
+    ratio: γ = obstruction_norm / total_reference_norm
+    zero_case: γ = 0 iff obstruction_norm = 0; exactness follows only if obstruction_norm is Φ₁ or a faithful
+      quotient norm.
+    unit_case: γ = 1 iff obstruction_norm = total_reference_norm under declared denominator.
+    partial_case: 0 < γ < 1 iff obstruction norm is nonzero but below declared total reference norm.
+  6. Laws and invariants:
+    unit_interval: γ ∈ [0,1] under declared bounded-denominator assumptions.
+    denominator_positive: total_reference_norm > 0.
+    ratio_consistency: γ equals numerator divided by denominator under declared arithmetic mode.
+    conditional_coboundary_invariance: γ is invariant under coboundary shifts only when numerator and
+      denominator are quotient-invariant.
+    no_trichotomy_authority: γ does not define ExactRepair/StabilizedSurvivor/OpenObstruction.
+  7. Equality / equivalence rules:
+    scalar_equality: Exact rational equality in exact mode; tolerance equality only with tolerance profile.
+    ratio_equivalence: Ratios are comparable only under same numerator definition, denominator definition,
+      carrier, norm, and comparison mode.
+  8. Replay / determinism requirements:
+    requirements:
+    - Numerator norm replay.
+    - Denominator norm replay.
+    - Division arithmetic mode replay.
+    - Carrier/norm compatibility replay.
+    - No division by zero.
+    - No NaN or infinite values.
+    - No implicit rounding.
+  9. Relationship to other Core primitives:
+    relationships:
+      Phi1: May use Φ₁ as obstruction_norm if declared.
+      Gamma2: Not Γ₂ and does not measure closure defect unless explicitly used as numerator.
+      Trichotomy: Does not replace finite obstruction trichotomy.
+      EvaluationHierarchy: Not a lexicographic key unless separately declared.
+      Q1: Often defined on quotient-class norms, but only if numerator/denominator are quotient-compatible.
+  10. Rust descriptor shape:
+    sketch: "pub struct ClosureRatioInvariantDescriptor {\n    pub carrier_hash: String,\n    pub numerator_norm_hash:\
+      \ String,\n    pub denominator_norm_hash: String,\n    pub norm_definition_hash: String,\n    pub\
+      \ arithmetic_mode_hash: String,\n    pub tolerance_profile_hash: Option<String>,\n}\n\npub enum\
+      \ ClosureRatioState {\n    Zero,\n    Partial,\n    Unit,\n    Invalid,\n    Incomparable,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - total_reference_norm = 0.
+    - obstruction_norm < 0.
+    - obstruction_norm > total_reference_norm.
+    - γ outside [0,1].
+    - γ used as finite obstruction trichotomy.
+    - γ = 1 called OpenObstruction without Γ₂.
+    - γ = 0 called ExactRepair when numerator is not Φ₁ or faithful quotient norm.
+    - ratio compared across different denominator definitions.
+    - raw float division treated as exact.
+  12. Open questions / WIP status:
+    wip:
+    - Canonical denominator semantics.
+    - Whether this invariant belongs in the core Core primitive layer or derived diagnostics.
+    - Relationship to Φ₁ when Φ₁ is used as numerator.
+    - Whether ratio bands should be named without conflicting with trichotomy.

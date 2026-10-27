@@ -1,0 +1,98 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:inner_product:v0.1.0
+title: InnerProduct Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: bilinear_form
+  symbol: ⟨x, y⟩ = x^T G y (real) or x† G y (complex)
+  ascii_symbol: inner_product
+  notation: ⟨x, y⟩ = x^T G y (real) or x† G y (complex)
+  domain:
+  - 'gram_matrix: n × n array of field elements in row-major order'
+  - 'carrier_space: finite-dimensional vector space V with dimension n'
+  - 'field_spec: field K with element serialization rules'
+  - 'ordered_basis: ordered list of n basis vectors with basis_hash'
+  codomain:
+    description: 'Gram matrix G: n × n array over field K, representing inner product on V'
+requirements:
+  required_structures:
+  - Gram matrix dimensions must equal carrier space dimension
+  - All matrix entries must be valid field elements
+  - Supplied basis_hash must match SHA-256 of ordered basis
+  - Carrier space field must match field_spec
+  - StructureArtifact hash must match SHA-256 of canonical serialization
+laws:
+- Gram matrix G must be n × n where n = dim(V)
+- Every entry of G must be a valid element of field K
+- Ordered basis must be linearly independent and span V
+- Carrier space V must be declared over field K
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Gram matrix entries serialized in row-major order
+  - Field elements encoded according to field_spec
+  - Validator and computation functions are content-addressed
+relationships:
+- urn:math:contract:VectorSpace:v1.0.0 serves as Provides carrier space V with ordered basis and dimension
+- urn:math:contract:Field:v1.0.0 serves as Defines field K with element validation and serialization
+- urn:math:contract:Vector:v1.0.0 serves as Provides vector types for inner product evaluation
+- urn:math:contract:Scalar:v1.0.0 serves as Provides scalar result type for inner product computation
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::vector_space
+  symbols:
+  - InnerProduct
+  # Dedicated inner_product.rs was absorbed. The trait lives on vector_space.
+  # Gram-matrix / field_spec / basis_hash / FactEnvelope obligations have no
+  # constructor here and stay unnamed.
+  required_tests:
+  - inner_product_rejects_dimension_mismatch
+negative_tests:
+- carrier dimension n=3, gram_matrix is 3×4
+- field_spec = 'GF(2)', gram_matrix contains entry '2'
+- supplied basis_hash does not match SHA-256 of ordered basis
+- carrier_space over ℝ, but field_spec = 'GF(5)'
+- InnerProduct on V, Vector from different space (different basis_hash)
+- V has dimension 3, supplied vector has 4 components
+- FactEnvelope claiming 'is_symmetric' for non-symmetric matrix (G != G^T)
+doctrine:
+  summary: An InnerProduct represents a bilinear (or sesquilinear) form on a finite-dimensional vector space V over a field K, expressed in a chosen ordered basis of V. The form is given by a square matrix G (the Gram matrix) such that the pairing of vectors x and y (written as column vectors) is x^T G y for real bilinear forms, and x† G y for complex sesquilinear forms. This contract defines the structure of the Gram matrix and its relationship to V, together with deterministic computations (evaluation of the pairing) and decidable facts (e.g. symmetry, positive-definiteness). It does not confer authority or decide admissibility.
+  non_role:
+  - Does not determine whether form is bilinear or sesquilinear (captured by field K)
+  - Does not assert symmetry, Hermitian, or positive-definite properties (use FactEnvelopes)
+  - Does not confer authority or decide admissibility
+  - Does not extend to infinite-dimensional or continuous basis spaces
+  - Does not provide sparse matrix representations
+wip:
+- Contract does not distinguish between bilinear and sesquilinear forms in structure; evaluation function in ComputationWitness must be chosen according to field's conjugation rules. Precise handling of complex conjugation will be part of field_spec contract.
+- Facts like 'positive definite' require ordering on field K; currently only sub-fields of ℝ supported for such properties. Separate 'OrderedField' contract anticipated.
+- Contract limited to finite-dimensional spaces. Extension to continuous bases or reproducing kernel Hilbert spaces is deferred.
+- No sparse representation of Gram matrix defined; only dense row-major serialization used.
+- List of allowed FactEnvelope types and their validators will be specified in future 'InnerProductProperties' sub-contract.
+- Canonical scalar artifact for inner product result not defined here; assumes separate 'Scalar' contract exists and is referenced.
+- Status set to mathematical_wip until OrderedField and InnerProductProperties contracts are completed
+- 'Validator execution order is critical: dimension → field elements → basis → carrier/field consistency → artifact hash'
+- ComputationWitness for evaluation must include content-addressed evaluation function hash to ensure deterministic replay
+- FactEnvelopes for properties (symmetry, Hermitian, positive-definite) are separate artifacts that reference the InnerProduct StructureArtifact hash
+- Sparse matrix support deferred to v0.2.0
+- Infinite-dimensional extension (RKHS) deferred to v1.0.0 or separate contract

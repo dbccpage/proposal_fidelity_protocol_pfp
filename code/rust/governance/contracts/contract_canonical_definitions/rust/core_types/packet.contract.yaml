@@ -1,0 +1,87 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_types:packet:v1.0.0
+title: Packet
+status: active
+crate: core_types
+file: crates_rs/core_types/src/packet.rs
+role: state
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: false
+implements: urn:core:state:packet:v1.0.0
+owns:
+- the typed transport wrapper and its two hashes
+- the packet refusal taxonomy
+- the parsed and checked evidence boundaries
+does_not_own:
+- execution, evaluation, certification, or terminalization
+- the canonical measurement, which is the Functional / Measurement boundary
+- any authority; Certified requires a CertifiedAuthority this file cannot mint
+may_call: []
+must_not:
+- execute, evaluate, certify, or terminalize
+- propagate itself
+- mint or upgrade authority
+- claim semantic truth
+exactness:
+  mode: not_applicable
+  exact_constructor_required: false
+  approximate_modes_allowed: false
+laws:
+- 'Passive cargo law: a packet is data. It does not execute, evaluate, certify,
+  terminalize, or propagate itself; the pipeline propagates packets.'
+- 'Hash integrity law: seal recomputes both hashes and Packet''s fields are private,
+  so a packet whose hashes disagree with its bytes cannot be constructed. PacketDraft
+  carries public fields deliberately -- it is the unsealed input, and seal derives
+  every hash from it, so nothing a caller writes there can survive unchecked.'
+- 'Boundary law: identity bytes are length-delimited, so no field boundary can shift
+  into its neighbour -- grammar_id "ab" with schema_ref "c" must not hash as
+  "a" with "bc".'
+- 'No-upgrade law: sealing, parsing and checking all leave the authority effect at
+  Uncertified. Certified requires a CertifiedAuthority, whose sole constructor
+  demands a DescentWitness and an IsAuth token, so wrapping LLM output in a packet
+  cannot raise it.'
+- 'Declaration law: grammar_id, schema_ref and schema_version are required, and the
+  signature requirement is a property of the packet kind rather than of the caller.'
+- 'Observer law: an ObserverDiagnostic packet without a trace reference is refused.'
+forbidden_substrings:
+- 'fn execute'
+- 'fn evaluate'
+- 'fn certify'
+- 'fn terminalize'
+- 'fn propagate'
+- 'mutate_carrier'
+- 'authority_upgrade'
+- 'promote_authority'
+- 'AuthorityEffect::Certified'
+- 'pub payload_hash'
+- 'pub packet_hash'
+- 'pub authority_effect'
+- 'f64'
+required_substrings:
+- 'pub struct Packet'
+- 'pub fn seal'
+- 'pub fn verify_hashes'
+- 'AuthorityEffect::Uncertified'
+required_tests:
+- packet_carries_no_execution_authority
+- packet_payload_hash_matches
+- packet_malformed_refused_as_packet_refusal_not_operator_m
+- packet_replay_produces_identical_ast
+- observer_packet_requires_trace_ref
+- observer_packet_state_hash_matches
+- packet_does_not_self_propagate
+- packet_default_authority_is_uncertified
+- packet_wrapping_does_not_upgrade_llm_output
+- packet_does_not_claim_semantic_truth
+- packet_signature_requirement_is_declared
+- unsigned_packet_refused_when_signature_required
+- packet_schema_ref_is_declared
+- packet_hash_matches_canonical_packet_bytes
+- checked_packet_is_not_certified
+- observer_packet_does_not_emit_canonical_measurements
+- a_field_boundary_cannot_shift_between_neighbours
+- a_check_with_no_refs_is_refused_rather_than_vacuously_passing
+lean_obligations: []

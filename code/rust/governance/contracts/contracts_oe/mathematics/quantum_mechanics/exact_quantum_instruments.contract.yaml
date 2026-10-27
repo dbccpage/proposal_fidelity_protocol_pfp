@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_quantum_instruments:v0.1.0
+title: Exact full-operator POVMs and measurement updates
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_quantum_instruments
+  symbol: exact_quantum_instruments
+  ascii_symbol: exact_quantum_instruments
+  notation: Exact full-operator POVMs and measurement updates
+  domain:
+  - Bounded finite PSD effects, exact completeness, checked rational spectral declarations or supplied PSD
+    square roots
+  codomain:
+    description: Declared finite results of core_quantum_physics::instruments; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Outcome probabilities are exact traces of effects against states
+- Zero probability has no normalized conditional state
+- Nonselective sum and classical-register channel are CPTP
+- Projective outcomes are repeatable; joint projectors require commuting effects
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: instruments
+  symbols:
+  - ExactPovm::try_new
+  - ExactPovm::luders
+  - ExactInstrument::try_new
+  - ExactInstrument::outcome
+  - ExactInstrument::classical_register_channel
+  - ExactProjectiveMeasurement::from_observable
+  - ExactProjectiveMeasurement::joint
+  required_tests:
+  - states_channels_exact_tests::spectral_projective_measurements_are_repeatable_and_refuse_noncommuting_joint
+negative_tests:
+- states_channels_exact_tests::spectral_projective_measurements_are_repeatable_and_refuse_noncommuting_joint
+doctrine:
+  summary: Outcome probabilities are exact traces of effects against states; Zero probability has no normalized
+    conditional state; Nonselective sum and classical-register channel are CPTP; Projective outcomes are repeatable;
+    joint projectors require commuting effects.
+  non_role:
+  - No Lüders root is fabricated when absent from the coefficient field
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

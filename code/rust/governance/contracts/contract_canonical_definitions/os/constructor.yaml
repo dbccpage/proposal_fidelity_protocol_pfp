@@ -1,0 +1,170 @@
+schema_version: "1.0.0"
+contract_id: "os:constructor"
+name: "Constructor Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "partially_enforced"
+
+description: >
+  Constructors are deterministic admission-boundary builders. They ingest raw,
+  unstructured, heterogeneous, or external material and either reject it with a
+  typed construction failure or produce an immutable admitted Carrier,
+  Obstruction, Packet, or other declared Engine structure. Constructors
+  do not evaluate, certify, authorize, terminalize, repair, search, rank, lift,
+  or compute canonical functionals.
+
+layer: "OS"
+module_path: "constructors"
+
+governs:
+  - "constructors/**"
+  - "adapters/constructors/**"
+  - "core_*/*constructor*.rs"
+
+does_not_govern:
+  - "operators/lambdas/**"
+  - "operators/reducers/**"
+  - "operators/transforms/**"
+  - "core_functional/**"
+  - "core_homology/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipelines/**"
+  - "engines/**"
+
+claims:
+  - id: "OP-CONSTRUCTOR"
+    description: "Constructor output must be an admitted typed structure or a typed failure."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "OP-CONSTRUCTOR-RAW-QUARANTINE"
+    description: "Raw input remains untrusted until constructor admission succeeds."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "OP-CONSTRUCTOR-NO-AUTH"
+    description: "Construction/admission does not mint authority."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  repair: "forbidden"
+  lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden_except_declared_hashing_or_parsing"
+  deterministic: true
+  typed_failure_required: true
+  admitted_output_required: true
+  raw_input_quarantine_required: true
+
+allowed:
+  - "parse raw input"
+  - "normalize representation into a declared canonical form"
+  - "validate schema and dimensions"
+  - "validate finite carrier membership"
+  - "validate decidable typing/admission predicates"
+  - "attach source provenance"
+  - "attach content hashes"
+  - "return admitted immutable structure"
+  - "return typed construction failure"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "classify trichotomy"
+  - "mint CertifiedAuthority"
+  - "call CertifiedAuthority::certify"
+  - "call authority_from_outcome_f13"
+  - "call terminalize"
+  - "emit AuthorityEffect::Authorize"
+  - "perform repair"
+  - "generate lift candidates"
+  - "rank candidate states"
+  - "execute operators"
+  - "orchestrate engines"
+  - "hide lossy coercion"
+  - "silently enlarge carrier"
+  - "accept malformed finite complexes"
+  - "accept non-finite numeric values"
+  - "return opaque string-only failure"
+  - "return None as failure"
+
+output_shape:
+  preferred: "Result<Admitted<T>, ConstructionFailure>"
+  admitted_wrapper_required: true
+  raw_output_forbidden: true
+
+failure_shape:
+  enum: "ConstructionFailure"
+  required_variants:
+    - "MalformedInput"
+    - "SchemaViolation"
+    - "CarrierAdmissionFailure"
+    - "DimensionMismatch"
+    - "NonFiniteInput"
+    - "UndeclaredCoercion"
+    - "UnsupportedRepresentation"
+    - "HashMismatch"
+    - "ProvenanceMissing"
+
+validator_requirements:
+  forbidden_substrings:
+    - "CertifiedAuthority"
+    - "authority_from_outcome_f13"
+    - "terminalize"
+    - "mint_authority"
+    - "Phi1Functional"
+    - "Gamma2Functional"
+    - "XiFunctional"
+    - "classify_exact"
+    - "ExactRepair"
+    - "AuthorityEffect::Authorize"
+    - "unwrap()"
+    - "expect("
+  required_patterns:
+    - "Result<"
+    - "ConstructionFailure"
+  required_tests:
+    - "constructor_rejects_malformed_input"
+    - "constructor_rejects_non_finite_input"
+    - "constructor_rejects_dimension_mismatch"
+    - "constructor_outputs_admitted_structure"
+    - "constructor_does_not_mint_authority"
+    - "constructor_does_not_compute_functionals"
+
+lean_obligations:
+  - id: "CON-L0"
+    theorem: "Constructor admission produces an object satisfying declared carrier predicates."
+    status: "needed"
+
+  - id: "CON-L1"
+    theorem: "Rejected raw input cannot enter admitted operator execution."
+    status: "needed"
+
+  - id: "CON-L2"
+    theorem: "Construction/admission does not imply authority."
+    status: "needed"
+
+  - id: "CON-L3"
+    theorem: "Constructor normalization preserves declared structural invariants."
+    status: "needed"
+
+notes:
+  - "Constructors are admission-boundary builders, not Operators in the strict admitted-input sense."
+  - "A constructor may create an admitted object, but it may not certify that the object is true, repaired, authoritative, or optimal."
+  - "Lossy coercions must be explicit and reflected in typed output or typed failure."
+  - "If construction requires carrier enlargement from an already-admitted object, that is a MetaLift or lift operation, not a constructor."

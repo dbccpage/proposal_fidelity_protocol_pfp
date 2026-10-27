@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bounded_product_formulas:v0.1.0
+title: Computed product-formula bounds
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: bounded_product_formulas
+  symbol: bounded_product_formulas
+  ascii_symbol: bounded_product_formulas
+  notation: Computed product-formula bounds
+  domain:
+  - Equal Hermitian matrices of dimension<=64, exact rational time and positive step count; separate conditional
+    norm-input functions require positive BigInt steps and nonnegative BigRational norm hypotheses. Interaction
+    cones use an admitted directed graph with<=4096 vertices and<=8192 undirected bonds plus caller-declared
+    nonnegative velocity.
+  codomain:
+    description: Declared finite results of core_quantum_physics::continuous_time_locality_limit; exact and
+      diagnostic routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Commutator and double commutators are computed on supplied operators.
+- The entrywise absolute-value bound dominates operator norm.
+- First-order error scales as t^2/(2n); Strang error as |t|^3/n^2 with weights1/24 and1/12.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: continuous_time_locality_limit
+  symbols:
+  - product_formula_bounds
+  - ProductFormulaCertificate
+  - DeclaredInteractionGraph
+  - trotter_first_order_error_bound
+  - trotter_second_order_error_bound
+  required_tests:
+  - product_formula_bounds_use_actual_noncommutation_and_step_count
+  - interaction_cones_use_actual_graph_distance_and_typed_bounds
+negative_tests:
+- product_formula_bounds_use_actual_noncommutation_and_step_count
+- interaction_cones_use_actual_graph_distance_and_typed_bounds
+doctrine:
+  summary: Commutator and double commutators are computed on supplied operators.; The entrywise absolute-value
+    bound dominates operator norm.; First-order error scales as t^2/(2n); Strang error as |t|^3/n^2 with weights1/24
+    and1/12..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

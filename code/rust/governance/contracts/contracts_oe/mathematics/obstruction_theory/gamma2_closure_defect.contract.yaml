@@ -1,0 +1,178 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:gamma2_closure_defect:v1.0.0
+title: Γ₂ closure defect
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:validated_cochain_complex:v1.0.0
+    - urn:core:math:raw_closure_defect:v1.0.0
+    - urn:core:math:hashes:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Secondary closure defect functional.
+  symbol: Γ₂
+  ascii_symbol: Gamma2
+  formula: Γ₂([h]) = ||d₁h||₁
+  1. Contract metadata:
+    title: Γ₂ closure defect
+    version: 1.0.0
+    object_type: closure_defect_functional
+  2. Mathematical object / functional role:
+    role: Secondary closure defect functional.
+    purpose: Measures whether a degree-1 residual is closed after Φ₁ selection.
+    non_role:
+    - Does not compute obstruction mass.
+    - Does not replace Φ₁.
+    - Does not define cohomology gamma-square Γ².
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    representative_domain: h ∈ C¹, usually h₁* selected by Φ₁/TieR
+    quotient_domain: '[h] ∈ Q¹ only when d₁d₀=0 makes Γ₂ quotient-well-defined'
+    codomain: nonnegative scalar ||d₁h||₁ on C² under declared norm profile
+  4. Required structures:
+    required:
+    - valid cochain layer
+    - h ∈ C¹
+    - d₁:C¹→C²
+    - exactness check d₁d₀=0 for quotient-level interpretation
+    - C² basis
+    - norm on C²
+    norm_profile:
+      default: unweighted ℓ¹ on C²
+      optional:
+      - weighted ℓ¹ on C²
+      - declared C² norm profile
+  5. Definition:
+    formula: Γ₂([h]) = ||d₁h||₁ when quotient-well-defined; otherwise Γ₂(h)=||d₁h||₁ as representative-level
+      closure defect.
+    closed: Closed iff Γ₂ = 0 in exact mode.
+    open: Open iff Γ₂ > 0 in exact mode.
+    degree_separation: Γ₂ is impossible without C² and d₁ data.
+    descends_to_Q1: Γ₂ descends to Q¹ only when d₁d₀ = 0.
+    tolerance_mode: Γ₂ <= ε may be treated as zero only under declared tolerance profile.
+  6. Laws and invariants:
+    nonnegativity: Γ₂ >= 0.
+    exact_repair_invariance: If d₁d₀=0, then Γ₂(h+d₀α)=Γ₂(h).
+    quotient_well_definedness: Γ₂ is independent of representative exactly when d₁d₀=0.
+    hierarchy: Γ₂ is checked after Φ₁ and cannot accept Φ₁-worsening proposals.
+    strict_improvement_rule: Γ₂ may decide strict improvement only when Φ₁ is tied.
+    non_worse_rule: Γ₂ may be checked for non-worsening only after Φ₁ is non-worsening.
+    classifications:
+    - StabilizedSurvivor iff Φ₁>0 and Γ₂=0.
+    - OpenObstruction iff Φ₁>0 and Γ₂>0.
+  7. Equality / equivalence rules:
+    scalar_equality: Exact equality in exact mode; tolerance comparison only with declared tolerance profile.
+    quotient_well_definedness: Requires d₁d₀=0.
+    representative_equivalence: If h' = h + d₀α and d₁d₀=0, then Γ₂(h') = Γ₂(h).
+    tolerance_equivalence: Tolerance-zero does not equal exact zero unless declared by comparison mode.
+  8. Replay / determinism requirements:
+    requirements:
+    - d₁h replay.
+    - C² norm replay.
+    - Exactness witness/artifact for d₁d₀=0 if quotient interpretation is claimed.
+    - Tolerance profile if approximate.
+    - Basis/order/carrier hashes match layer.
+    - Norm profile hash is fixed.
+    - No NaN or infinite scalar values.
+  9. Relationship to other Core primitives:
+    relationships:
+      Phi1: Secondary after Φ₁.
+      Z1: Γ₂=0 iff selected residual lies in Z¹ under exact mode.
+      H1: Γ₂=0 is required before a residual can represent H¹.
+      Q1: Γ₂ descends to Q¹ only when d₁d₀=0.
+      Trichotomy: Separates StabilizedSurvivor from OpenObstruction when Φ₁>0.
+      EvaluationHierarchy: Γ₂ may decide only after Φ₁ tie for strict improvement.
+  10. Rust descriptor shape:
+    sketch: "pub struct Gamma2Descriptor {\n    pub layer_hash: String,\n    pub d1_hash: String,\n  \
+      \  pub residual_hash: String,\n    pub c2_basis_hash: String,\n    pub c2_norm_profile_hash: String,\n\
+      \    pub exactness_artifact_hash: Option<String>,\n    pub tolerance_profile_hash: Option<String>,\n\
+      \    pub quotient_interpretation: bool,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - Γ₂ computed without d₁.
+    - Γ₂ computed without C² structure.
+    - Γ₂ claimed as quotient-well-defined when d₁d₀ != 0.
+    - Γ₂ used to accept Φ₁-worsening proposal.
+    - Closure claimed with d₁h != 0 in exact mode.
+    - Closure claimed with ||d₁h|| > ε in tolerance mode.
+    - Γ₂ confused with cohomology gamma-square Γ².
+    - Weighted C² norm used without norm profile.
+    - Representative-level Γ₂ treated as quotient-level Γ₂ without exactness.
+  12. Open questions / WIP status:
+    wip:
+    - Weighted C² norm variants.
+    - Exactness witness/artifact canonical format.
+    - Tolerance-zero predicate for closure.
+    - Whether representative-level Γ₂ should be separately named when d₁d₀ is not verified.
+  compact_yaml:
+    QUOTIENT_GAMMA2_CONTRACT:
+      symbol: Γ₂
+      ascii_symbol: Gamma2
+      formula: Γ₂([h])=||d₁h||₁
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: h∈C¹ with d₁:C¹→C²; quotient-level only if d₁d₀=0
+      codomain: nonnegative scalar
+      required_structures:
+      - valid layer
+      - h
+      - d₁
+      - C² basis
+      - C² norm
+      - d₁d₀=0 for quotient interpretation
+      definition: closure defect; closed iff zero
+      laws:
+      - nonnegative
+      - descends to Q¹ only if d₁d₀=0
+      - invariant under B¹ shifts when d₁d₀=0
+      - cannot override worse Φ₁
+      - strict Γ₂ improvement only after Φ₁ tie
+      forbidden_interpretations:
+      - GammaSquare/Γ² operation
+      - Γ₂ without C²/d₁
+      - policy classifier
+      - quotient-level Γ₂ without exactness
+      relationships:
+      - secondary after Φ₁
+      - detects membership in Z¹
+      - separates StabilizedSurvivor/OpenObstruction
+      - required before H¹ interpretation
+      negative_tests:
+      - missing d₁
+      - missing C²
+      - nonexact layer
+      - overrides Φ₁
+      - d₁h nonzero but closed
+      - confused with Γ²
+      open_questions:
+      - C² norm profile
+      - exactness artifact format
+      - tolerance-zero predicate
+rust_binding:
+  crate: core_functional
+  module: gamma2
+  symbols:
+  - ExactCochainComplexQ
+  - DegreeOneResidualQ
+  - ExactGamma2Result
+  - ClosureStatus
+

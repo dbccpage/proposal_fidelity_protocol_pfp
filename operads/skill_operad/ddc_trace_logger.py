@@ -25,6 +25,8 @@ from typing import Any
 
 from typing_extensions import Self
 
+from operads.canon import DdcLetter
+
 __all__ = [
     "DDCTapeDFA",
     "DDCTapeValidationError",
@@ -41,18 +43,7 @@ __all__ = [
 
 # --- alphabet and dialects ---------------------------------------------------
 
-
-class DdcLetter(str, enum.Enum):
-    """OE-010 operational alphabet A_DDC = {E, R, C, I, Λ, D, M, T}."""
-
-    E = "E"  # Exact Repair
-    R = "R"  # Residual Projection
-    C = "C"  # Context Exposure
-    I = "I"  # Integration
-    LAMBDA = "Λ"  # Structural Lift
-    D = "D"  # Descent
-    M = "M"  # Typed Refusal
-    T = "T"  # Terminalization
+# The alphabet itself is the canon's DdcLetter (code/rust/core_operad_canon).
 
 
 class DdcDialect(str, enum.Enum):

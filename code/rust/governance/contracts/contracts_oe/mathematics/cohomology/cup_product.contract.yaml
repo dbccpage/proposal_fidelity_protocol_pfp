@@ -1,0 +1,109 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cup_product:v0.1.0
+title: Cup Product Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cup_product
+  symbol: alpha U beta, [alpha] U [beta] in H^{p+q}(X;R)
+  ascii_symbol: cup_product
+  notation: alpha U beta, [alpha] U [beta] in H^{p+q}(X;R)
+  domain:
+  - 'cochain_complex: C^*(X;R)'
+  - 'coefficient_ring: R (commutative ring with unit)'
+  - 'left_cochain_group: C^p(X;R)'
+  - 'right_cochain_group: C^q(X;R)'
+  - 'target_cochain_group: C^{p+q}(X;R)'
+  - 'left_degree: p (non-negative integer)'
+  - 'right_degree: q (non-negative integer)'
+  - 'target_degree: p+q'
+  - 'diagonal_approximation: Alexander-Whitney diagonal Delta: C_n -> direct_sum_{p+q=n} C_p tensor C_q'
+  codomain:
+    description: 'Bilinear operation on cochain groups C^p(X;R) x C^q(X;R) -> C^{p+q}(X;R) that descends to cohomology H^p(X;R) x H^q(X;R) -> H^{p+q}(X;R)
+
+      '
+requirements:
+  required_structures:
+  - Cup product of a p-cochain and q-cochain must produce a (p+q)-cochain
+  - Cup product must be R-bilinear in both arguments
+  - (alpha U beta) U gamma must equal alpha U (beta U gamma)
+  - Augmentation cocycle epsilon must act as two-sided identity
+  - '[alpha] U [beta] = (-1)^{pq} [beta] U [alpha] at the cohomology level'
+  - delta(alpha U beta) = delta(alpha) U beta + (-1)^p alpha U delta(beta)
+  - Input cochains must be valid members of their respective cochain groups
+  - All component hashes must be valid and content-addressed
+laws:
+- (a*alpha_1 + b*alpha_2) U beta = a*(alpha_1 U beta) + b*(alpha_2 U beta) for all a,b in R
+- alpha U (a*beta_1 + b*beta_2) = a*(alpha U beta_1) + b*(alpha U beta_2) for all a,b in R
+- (alpha U beta) U gamma = alpha U (beta U gamma) for all cochains alpha, beta, gamma
+- epsilon U alpha = alpha = alpha U epsilon, where epsilon is the augmentation cocycle in C^0
+- '[alpha] U [beta] = (-1)^{pq} [beta] U [alpha] in H^{p+q} for [alpha] in H^p, [beta] in H^q'
+- delta(alpha U beta) = delta(alpha) U beta + (-1)^p alpha U delta(beta)
+- If alpha in C^p and beta in C^q, then alpha U beta in C^{p+q}
+- If delta(alpha) = 0 and delta(beta) = 0, then delta(alpha U beta) = 0 (cocycles map to cocycles)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Cup product computation is deterministic given canonical cochain representations
+  - Simplex face operations (front p-face, back q-face) are deterministic
+  - Coefficient ring multiplication is deterministic
+  - Alexander-Whitney diagonal is content-addressed
+relationships:
+- urn:math:contract:CochainComplex:v0.1.0 serves as defines_underlying_cochain_complex_structure
+- urn:math:contract:CochainGroup:v0.1.0 serves as defines_source_and_target_cochain_groups
+- urn:math:contract:CoboundaryMap:v0.1.0 serves as defines_coboundary_operator_delta_for_leibniz_rule
+- urn:math:contract:Cocycle:v0.1.0 serves as defines_cocycle_inputs_for_cohomology_level_product
+- urn:math:contract:CohomologyClass:v0.1.0 serves as defines_cohomology_classes_for_graded_commutativity
+- urn:math:contract:Coboundary:v0.1.0 serves as defines_coboundary_equivalence_for_well_definedness
+negative_tests:
+- Left cochain alpha not in C^p must be rejected
+- Right cochain beta not in C^q must be rejected
+- Result cochain with degree != p+q must be rejected
+- Cochains over different coefficient rings must be rejected
+- Cup product violating Leibniz rule must be rejected
+- Attempting to descend non-cocycles to cohomology must be rejected
+- CupProduct artifact claiming authority must be rejected
+- CupProduct artifact claiming admissibility must be rejected
+- Same inputs producing different hashes must be rejected
+doctrine:
+  summary: 'The Cup Product is a bilinear operation on cohomology classes U: H^p(X;R) x H^q(X;R) -> H^{p+q}(X;R) that gives the cohomology ring its multiplicative structure. At the cochain level, the cup product of cochains alpha in C^p and beta in C^q is defined on a (p+q)-simplex sigma by (alpha U beta)(sigma) = alpha(front p-face of sigma) * beta(back q-face of sigma). The cup product is associative, unital, satisfies graded commutativity (alpha U beta = (-1)^{pq} beta U alpha at the cohomology level), and obeys the Leibniz rule delta(alpha U beta) = delta(alpha) U beta + (-1)^p alpha U delta(beta). This contract defines the structure, validation, and deterministic operations for cup products, ensuring correct bilinearity, associativity, graded commutativity, and compatibility with the coboundary operator.'
+  non_role:
+  - Cochain complex construction (separate CochainComplex contract)
+  - Cohomology class quotient computation (separate CohomologyClass contract)
+  - Steenrod operations (deferred to separate contract)
+  - Massey products and higher-order operations (deferred)
+  - Cross product and Kunneth formula (separate contracts)
+  - Classification of admissibility or policy decisions
+  - Certificate generation or authority claims
+wip:
+- Should relative cup products H^p(X,A) x H^q(X,B) -> H^{p+q}(X, A U B) be a separate contract?
+- Define cap product as a dependent contract or extend this one?
+- How to handle cup-i products and Steenrod's higher diagonal approximations?
+- Should the Alexander-Whitney diagonal be a separate contract or embedded here?
+- 'Cross product and Kunneth compatibility: separate contract or extension?'
+- Currently assumes simplicial cochain complexes with Alexander-Whitney diagonal
+- Graded commutativity holds at the cohomology level; at cochain level only up to homotopy
+- Associativity at cochain level follows from Alexander-Whitney conventions
+- 'Unit element is the augmentation cocycle epsilon: C_0 -> R sending every 0-simplex to 1'
+- 'Relationship to CohomologyClass contract: cup product is the dependent operation referenced there'
+- Cap product, slant product, and Steenrod operations are deferred to separate contracts
+- Poincare duality formulation depends on this cup product plus a fundamental class

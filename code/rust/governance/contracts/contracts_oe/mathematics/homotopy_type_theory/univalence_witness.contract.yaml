@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:univalence_witness:v0.1.0
+title: Univalence Witness Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: axiom_witness
+  symbol: 'UA(U) : Π(A B : U). isEquiv(idtoeqv_{A,B})'
+  ascii_symbol: univalence_witness
+  notation: 'UA(U) : Π(A B : U). isEquiv(idtoeqv_{A,B})'
+  domain:
+  - 'universe_id: Reference to TypeUniverse artifact'
+  - 'proof_id: Reference to univalence proof artifact'
+  codomain:
+    description: 'A UnivalenceWitness consists of a reference to a TypeUniverse U and a proof that for all types A, B : U, the canonical map idtoeqv : (A = B) → (A ≃ B) is an equivalence.
+
+      '
+requirements:
+  required_structures:
+  - The universe_id must resolve to a valid TypeUniverse artifact
+  - The proof_id must resolve to a valid univalence proof
+  - The proof term must be well-typed with correct univalence statement type
+  - The artifact hash is deterministic SHA-256 over contract components
+laws:
+- 'For all A, B : U, the map (A = B) → (A ≃ B) is an equivalence'
+- The witness applies to a valid TypeUniverse
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Same inputs must produce identical artifact hash
+relationships:
+- urn:math:contract:TypeUniverse:v0.1.0 serves as Provides the universe of types for which univalence holds
+- urn:math:contract:Equivalence:v0.1.0 serves as Defines type equivalence (A ≃ B)
+- urn:math:contract:Path:v0.1.0 serves as Defines path types (identity types A = B)
+negative_tests:
+- universe_id does not resolve to TypeUniverse
+- proof_id does not resolve to proof artifact
+- proof does not have univalence statement type
+- proof term is not valid univalence witness
+doctrine:
+  summary: 'A UnivalenceWitness demonstrates that the univalence axiom holds for a given universe: the canonical map from type identity to type equivalence is itself an equivalence. The contract validates the universe and the univalence proof.'
+  non_role:
+  - Does not construct the univalence axiom (takes proof as input)
+  - Does not implement cubical type theory proofs
+  - Does not provide computational transport algorithms
+wip:
+- Univalence is an axiom in standard HoTT; in cubical type theory, it is provable. How should we support both axiomatic and cubical approaches?
+- The computational content of univalence (transport) is complex. What level of computational detail should be tracked?
+- Univalence implies function extensionality. Should we validate this implication?
+- Different model constructions (simplicial sets, cubical sets) validate univalence. Should we track which model is used?
+- This contract accepts univalence proofs as inputs rather than constructing them
+- Transport along ua(e) requires careful algorithmic specification
+- The ua operation converts equivalences to paths, enabling powerful reasoning
+- Future versions may include cubical type theory proof construction

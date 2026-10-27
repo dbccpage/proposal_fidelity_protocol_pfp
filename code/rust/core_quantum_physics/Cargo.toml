@@ -1,0 +1,273 @@
+[package]
+autotests = false
+name = "core_quantum_physics"
+version.workspace = true
+edition = "2021"
+description = "Exact finite quantum physics: states, operators, channels, measurements, correlations and dynamics (AuthorityEffect None)"
+license.workspace = true
+
+[dependencies]
+core_policy = { path = "../core_policy" }
+core_certifiers = { path = "../core_certifiers" }
+core_holonomy = { path = "../core_holonomy" }
+linear_algebra = { path = "../core_linear_algebra" }
+core_homology = { path = "../core_homology" }
+core_functional = { path = "../core_functional" }
+core_solvers = { path = "../core_solvers" }
+core_number_theory = { path = "../core_number_theory" }
+core_finite_probability = { path = "../core_finite_probability" }
+core_fusion_categories = { path = "../core_fusion_categories" }
+core_kernel = { path = "../core_kernel" }
+core_combinatorics = { path = "../core_combinatorics" }
+core_category_theory = { path = "../core_category_theory" }
+core_lie_theory = { path = "../core_lie_theory" }
+core_majorana = { path = "../core_majorana" }
+core_general_relativity = { path = "../core_general_relativity" }
+constants = { path = "../constants" }
+num-rational = { version = "0.4", features = ["serde"] }
+num-bigint = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+num-integer = "0.1"
+serde = { version = "1.0", features = ["derive"] }
+num-complex = { version = "0.4.6", features = ["serde"] }
+nalgebra = { version = "0.33", features = ["serde-serialize"] }
+thiserror = "2"
+serde_json = { version = "1.0", features = ["arbitrary_precision", "raw_value"] }
+
+[dev-dependencies]
+serde_json = { version = "1.0", features = ["arbitrary_precision", "raw_value"] }
+proptest = "1.5"
+
+[[bin]]
+name = "emit_pfp_workpads"
+path = "src/bin/emit_pfp_workpads.rs"
+
+[[test]]
+name = "qddc"
+path = "../tests/core_quantum_physics/qddc.rs"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_quantum_physics`.
+
+[[test]]
+name = "adversarial_challenge_m4"
+path = "../tests/core_quantum_physics/adversarial_challenge_m4.rs"
+
+[[test]]
+name = "adversarial_challenge_tests"
+path = "../tests/core_quantum_physics/adversarial_challenge_tests.rs"
+
+[[test]]
+name = "ancilla_capacity"
+path = "../tests/core_quantum_physics/ancilla_capacity.rs"
+
+[[test]]
+name = "authority_boundary"
+path = "../tests/core_quantum_physics/authority_boundary.rs"
+
+[[test]]
+name = "bench_packed_vs_cmatrix"
+path = "../tests/core_quantum_physics/bench_packed_vs_cmatrix.rs"
+
+[[test]]
+name = "carrier_tests"
+path = "../tests/core_quantum_physics/carrier_tests.rs"
+
+[[test]]
+name = "challenger_2_adversarial_suite"
+path = "../tests/core_quantum_physics/challenger_2_adversarial_suite.rs"
+
+[[test]]
+name = "classical_storage"
+path = "../tests/core_quantum_physics/classical_storage.rs"
+
+[[test]]
+name = "complex_tensor_realification"
+path = "../tests/core_quantum_physics/complex_tensor_realification.rs"
+
+[[test]]
+name = "composition_quantum_bound"
+path = "../tests/core_quantum_physics/composition_quantum_bound.rs"
+
+[[test]]
+name = "dynamics_completion"
+path = "../tests/core_quantum_physics/dynamics_completion.rs"
+
+[[test]]
+name = "exact_channel_admission"
+path = "../tests/core_quantum_physics/exact_channel_admission.rs"
+
+[[test]]
+name = "exact_instrument_finite"
+path = "../tests/core_quantum_physics/exact_instrument_finite.rs"
+
+[[test]]
+name = "fidelity_diagonal_agreement"
+path = "../tests/core_quantum_physics/fidelity_diagonal_agreement.rs"
+
+[[test]]
+name = "finite_bell_extension"
+path = "../tests/core_quantum_physics/finite_bell_extension.rs"
+
+[[test]]
+name = "finite_bell_preparation"
+path = "../tests/core_quantum_physics/finite_bell_preparation.rs"
+
+[[test]]
+name = "genesis_realification_bridge"
+path = "../tests/core_quantum_physics/genesis_realification_bridge.rs"
+
+[[test]]
+name = "gleason_finite_context"
+path = "../tests/core_quantum_physics/gleason_finite_context.rs"
+
+[[test]]
+name = "groups_completion"
+path = "../tests/core_quantum_physics/groups_completion.rs"
+
+[[test]]
+name = "instrument_repeatability"
+path = "../tests/core_quantum_physics/instrument_repeatability.rs"
+
+[[test]]
+name = "measurement_exact_laws"
+path = "../tests/core_quantum_physics/measurement_exact_laws.rs"
+
+[[test]]
+name = "meron_analytic_response"
+path = "../tests/core_quantum_physics/meron_analytic_response.rs"
+
+[[test]]
+name = "meron_source_field"
+path = "../tests/core_quantum_physics/meron_source_field.rs"
+
+[[test]]
+name = "meron_spatial_source"
+path = "../tests/core_quantum_physics/meron_spatial_source.rs"
+
+[[test]]
+name = "meron_spin_and_observable"
+path = "../tests/core_quantum_physics/meron_spin_and_observable.rs"
+
+[[test]]
+name = "meron_time_refinement"
+path = "../tests/core_quantum_physics/meron_time_refinement.rs"
+
+[[test]]
+name = "mub6_non_cyclic_falser"
+path = "../tests/core_quantum_physics/mub6_non_cyclic_falser.rs"
+
+[[test]]
+name = "mub_certificate_boundaries"
+path = "../tests/core_quantum_physics/mub_certificate_boundaries.rs"
+
+[[test]]
+name = "mutation_kill_tests"
+path = "../tests/core_quantum_physics/mutation_kill_tests.rs"
+
+[[test]]
+name = "no_signalling_tests"
+path = "../tests/core_quantum_physics/no_signalling_tests.rs"
+
+[[test]]
+name = "packed_hermitian_contract_and_blas_suite"
+path = "../tests/core_quantum_physics/packed_hermitian_contract_and_blas_suite.rs"
+
+[[test]]
+name = "pauli_phase"
+path = "../tests/core_quantum_physics/pauli_phase.rs"
+
+[[test]]
+name = "phase_readout_nonselection"
+path = "../tests/core_quantum_physics/phase_readout_nonselection.rs"
+
+[[test]]
+name = "po000_projection_retraction_born_conformance"
+path = "../tests/core_quantum_physics/po000_projection_retraction_born_conformance.rs"
+
+[[test]]
+name = "projective_history_mub6"
+path = "../tests/core_quantum_physics/projective_history_mub6.rs"
+
+[[test]]
+name = "projective_preservers"
+path = "../tests/core_quantum_physics/projective_preservers.rs"
+
+[[test]]
+name = "qm_020_hilbert_lift_derivation_conformance"
+path = "../tests/core_quantum_physics/qm_020_hilbert_lift_derivation_conformance.rs"
+
+[[test]]
+name = "qm_certification_regressions"
+path = "../tests/core_quantum_physics/qm_certification_regressions.rs"
+
+[[test]]
+name = "review_numeric_boundaries"
+path = "../tests/core_quantum_physics/review_numeric_boundaries.rs"
+
+[[test]]
+name = "signed_sampling_extension"
+path = "../tests/core_quantum_physics/signed_sampling_extension.rs"
+
+[[test]]
+name = "states_channels_exact_tests"
+path = "../tests/core_quantum_physics/states_channels_exact_tests.rs"
+
+[[test]]
+name = "test_adaptive_cluster_fusion"
+path = "../tests/core_quantum_physics/test_adaptive_cluster_fusion.rs"
+
+[[test]]
+name = "test_general_order_bound"
+path = "../tests/core_quantum_physics/test_general_order_bound.rs"
+
+[[test]]
+name = "test_jordan_lie"
+path = "../tests/core_quantum_physics/test_jordan_lie.rs"
+
+[[test]]
+name = "test_operator_2cell_closure"
+path = "../tests/core_quantum_physics/test_operator_2cell_closure.rs"
+
+[[test]]
+name = "trace_observer_source"
+path = "../tests/core_quantum_physics/trace_observer_source.rs"
+
+[[test]]
+name = "boundary"
+path = "../tests/core_quantum_physics/boundary/main.rs"
+
+[[test]]
+name = "channels"
+path = "../tests/core_quantum_physics/channels/main.rs"
+
+[[test]]
+name = "dynamics"
+path = "../tests/core_quantum_physics/dynamics/main.rs"
+
+[[test]]
+name = "entanglement"
+path = "../tests/core_quantum_physics/entanglement/main.rs"
+
+[[test]]
+name = "foundations"
+path = "../tests/core_quantum_physics/foundations/main.rs"
+
+[[test]]
+name = "interpretations"
+path = "../tests/core_quantum_physics/interpretations/main.rs"
+
+[[test]]
+name = "repair_and_gravity"
+path = "../tests/core_quantum_physics/repair_and_gravity/main.rs"
+
+[[test]]
+name = "representation"
+path = "../tests/core_quantum_physics/representation/main.rs"
+
+[[test]]
+name = "superposition"
+path = "../tests/core_quantum_physics/superposition/main.rs"
+
+[[test]]
+name = "synthesis"
+path = "../tests/core_quantum_physics/synthesis/main.rs"

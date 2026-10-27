@@ -1,0 +1,81 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_conditional_quantum_information:v0.1.0
+title: Exact mutual and conditional quantum information
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_conditional_quantum_information
+  symbol: exact_conditional_quantum_information
+  ascii_symbol: exact_conditional_quantum_information
+  notation: Exact and diagnostic mutual and conditional quantum information
+  domain:
+  - Finite exact density operators, rational spectral LogForms or isolated algebraic intervals; bounded precision;
+    the general complex matrix route is f64 diagnostic and requires a finite strictly positive caller tolerance
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_mutual_information; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Bell conditional entropy is negative and mutual information is twice marginal entropy
+- Conditional mutual information uses actual three-party reductions
+- Araki-Lieb gaps use actual full density reductions
+- Diagnostic mutual and conditional entropy reject nonfinite and nonpositive tolerances through canonical checked
+  density configuration
+- The diagnostic caller trace tolerance controls admission without renormalization; strict rejection and loose
+  acceptance retain Bell entropy controls
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_mutual_information
+  symbols:
+  - QuantumMutualInformation::conditional_mutual_exact
+  - QuantumMutualInformation::araki_lieb_gaps
+  - QuantumMutualInformation::mutual_information_matrix
+  - QuantumMutualInformation::conditional_entropy_matrix
+  required_tests:
+  - states_channels_exact_tests::coherent_information_and_relative_entropy_use_full_operators
+  - states_channels_exact_tests::diagnostic_matrix_information_rejects_invalid_tolerances_and_retains_bell_values
+  - states_channels_exact_tests::diagnostic_matrix_information_uses_the_supplied_trace_tolerance
+negative_tests:
+- states_channels_exact_tests::diagnostic_faces_refuse_nan_tolerances_and_invalid_public_storage
+- states_channels_exact_tests::diagnostic_matrix_information_rejects_invalid_tolerances_and_retains_bell_values
+- states_channels_exact_tests::diagnostic_matrix_information_uses_the_supplied_trace_tolerance
+doctrine:
+  summary: Bell conditional entropy is negative and mutual information is twice marginal entropy; Conditional
+    mutual information uses actual three-party reductions; Araki-Lieb gaps use actual full density reductions;
+    Diagnostic mutual and conditional entropy reject nonfinite and nonpositive tolerances through canonical
+    checked density configuration; The diagnostic caller trace tolerance controls admission without renormalization;
+    strict rejection and loose acceptance retain Bell entropy controls.
+  non_role:
+  - No diagonal population entropy is presented as full-operator entanglement entropy
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

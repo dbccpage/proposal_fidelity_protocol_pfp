@@ -1,0 +1,98 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:stable_homotopy_category:v0.1.0
+title: Stable Homotopy Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: triangulated_category
+  symbol: SH, Σ, [E, F], π_n^s(X)
+  ascii_symbol: stable_homotopy_category
+  notation: SH, Σ, [E, F], π_n^s(X)
+  domain:
+  - 'objects: spectra modulo stable equivalence'
+  - 'morphisms: homotopy classes [E, F]'
+  - 'suspension: shift functor Σ: SH → SH (equivalence)'
+  - 'smash_product: symmetric monoidal structure ∧'
+  - 'sphere_spectrum: unit object S'
+  codomain:
+    description: 'The stable homotopy category SH with: - Objects: spectra (sequences
+      of pointed spaces with structure maps) - Morphisms: homotopy classes of spectrum
+      maps - Triangulated structure: cofiber sequences as distinguished triangles
+      - Suspension: shift functor Σ that is an equivalence
+
+      '
+requirements:
+  required_structures:
+  - Spectrum model must be mathematically well-defined
+  - Must satisfy triangulated category axioms (TR1-TR4)
+  - Suspension functor Σ must be an equivalence
+  - Smash product must satisfy symmetric monoidal axioms
+  - All operations must be deterministic and replay-compatible
+laws:
+- Satisfies TR1-TR4 triangulated category axioms
+- 'Suspension functor Σ: SH → SH is an equivalence'
+- Smash product ∧ defines symmetric monoidal structure
+- Sphere spectrum S is the unit for smash product
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Given same data, must produce identical artifact hash
+relationships:
+- urn:math:contract:TriangulatedCategory:v1.0.0 serves as Provides triangulated category
+  structure and axioms
+- urn:math:contract:Spectrum:v0.1.0 serves as Defines spectrum objects and stable
+  equivalence
+- urn:math:contract:CofiberSequence:v1.0.0 serves as Source of distinguished triangles
+negative_tests:
+- Invalid spectrum model must be rejected
+- Models not satisfying triangulated axioms must be rejected
+- Categories where suspension is not an equivalence must be rejected
+doctrine:
+  summary: The stable homotopy category SH is the homotopy category of spectra. It
+    is a triangulated category where suspension is invertible, and serves as the universal
+    setting for stable phenomena in topology. Objects are spectra (up to stable equivalence),
+    morphisms are homotopy classes of maps, and it is equipped with a symmetric monoidal
+    structure under smash product.
+  non_role:
+  - Unstable homotopy theory (requires separate contract)
+  - Specific spectrum models (S-modules, symmetric spectra)
+  - Equivariant stable homotopy theory
+  - Motivic stable homotopy category
+  - Chromatic filtration implementation
+wip:
+- Motivic stable homotopy category
+- Chromatic filtration and nilpotence
+- Equivariant stable homotopy theory
+- Currently focused on classical stable homotopy category
+- Spectrum model choice affects computational efficiency
+- Future work will include equivariant and motivic variants
+rust_binding:
+  crate: core_higher_category_theory
+  module: stable_infinity
+  symbols:
+  - StableInfinityCategory
+  - PointedObject
+  - SpectrumLevel
+  required_tests:
+  - test_stable_infinity_category_positive_verification
+  - test_kill_mut_p3_05_stable_infinity_loop_suspension_violation

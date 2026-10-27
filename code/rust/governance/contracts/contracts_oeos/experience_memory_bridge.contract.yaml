@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:experience_memory_bridge:v1.0.0
+title: Redacted Experience Memory Bridge
+kind: host_contract
+status: proposed
+layer: 09_host
+role: ExperienceMemoryBridge
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:artifact_ref:v1.0.0
+      - urn:core:oeos:database_adapter:v1.0.0
+      - urn:core:oeos:telemetry_sink:v1.0.0
+    proof_obligations:
+      - id: EMB-INV-001
+        statement: Only verified sealed governed receipts may produce redacted typed experience projections.
+        verification_status: open
+      - id: EMB-INV-002
+        statement: Disposable indexes are deterministically reproducible from canonical receipts and never become evidence authorities.
+        verification_status: open
+      - id: EMB-INV-003
+        statement: Retrieved material remains untrusted context and grants no tool, policy, license, or execution authority.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - MEMORY_INDEX_REFUSED
+      - MEMORY_RECEIPT_REFUSED
+      - MEMORY_REDACTION_REFUSED
+      - MEMORY_RETRIEVAL_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: sealed_governed_receipt
+      type: urn:core:oeos:type:harness_run_receipt:v1.0.0
+      required: true
+  outputs:
+    - name: memory_index_receipt
+      type: urn:core:oeos:type:memory_index_receipt:v1.0.0
+      required: true
+  typed_refusals:
+    - MEMORY_INDEX_REFUSED
+    - MEMORY_RECEIPT_REFUSED
+    - MEMORY_REDACTION_REFUSED
+    - MEMORY_RETRIEVAL_REFUSED
+  platform_requirements:
+    - profile: local_redacted_disposable_index
+      requirements:
+        - canonical_receipt_replay
+        - deterministic_lexical_and_graph_retrieval
+        - raw_artifact_exclusion
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares an OEOS adapter from canonical DAG receipts to a disposable redacted retrieval index.
+  non_role:
+    - canonical_execution_evidence
+    - insight_or_skill_admission
+    - vector_memory_authority
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - retrieval_rank_does_not_establish_truth_or_authority
+  invariants:
+    - raw_prompts_responses_credentials_and_file_contents_are_excluded
+    - source_and_redaction_profile_digests_bind_every_hit
+  allowed_operations:
+    - ingest_verified_redacted_projection
+    - rebuild_disposable_index
+    - retrieve_bounded_untrusted_context
+  forbidden_operations:
+    - ingest_unsealed_or_corrupt_receipt
+    - store_raw_worker_artifacts_in_index
+    - self_admit_model_distillation

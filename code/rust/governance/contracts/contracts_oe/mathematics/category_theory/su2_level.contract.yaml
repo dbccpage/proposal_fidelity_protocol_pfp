@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:su2_level:v0.1.0
+title: Bounded Exact SU(2) Level Fusion Categories
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: su2_level
+  symbol: su2_level
+  ascii_symbol: su2_level
+  notation: Bounded Exact SU(2) Level Fusion Categories
+  domain:
+  - Positive levels one through six, doubled-spin simple labels, and an exact field containing zeta_(8(k+2)).
+  codomain:
+    description: Declared finite results of core_fusion_categories::su2_level; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The q-Racah formula constructs actual F and R data for every declared level.
+- Every returned level replays pentagon, both hexagons, quantum dimensions and ribbon balance.
+- The unnormalised modular data satisfy Verlinde and Gauss-Milgram with central charge 3k/(k+2) modulo four.
+- The admitted nonorthonormal field gauge has exact positive metrics obeying F dagger G_left F = G_right.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_fusion_categories
+  module: su2_level
+  symbols:
+  - su2_level
+  - associator_metrics
+  - MAX_LEVEL
+  required_tests:
+  - racah_formula_replays_pentagon_hexagons_and_verlinde_through_maximum_level
+  - level_three_has_actual_fibonacci_subcategory_and_nonorthonormal_gauge
+  - unsupported_field_and_unbounded_level_are_typed_refusals
+negative_tests:
+- Level zero, level seven and a field lacking the required roots are typed refusals.
+- Tampering with an associator causes exact law replay to fail.
+doctrine:
+  summary: The q-Racah formula constructs actual F and R data for every declared level.; Every returned level
+    replays pentagon, both hexagons, quantum dimensions and ribbon balance.; The unnormalised modular data
+    satisfy Verlinde and Gauss-Milgram with central charge 3k/(k+2) modulo four.; The admitted nonorthonormal
+    field gauge has exact positive metrics obeying F dagger G_left F = G_right..
+  non_role:
+  - The gauge is not claimed orthonormal in its ordinary coordinates.
+  - No unsupported square-root extension or generic level beyond the declared exact work bounds.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

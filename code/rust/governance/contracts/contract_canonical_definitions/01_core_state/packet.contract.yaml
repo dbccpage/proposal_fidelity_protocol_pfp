@@ -1,0 +1,320 @@
+schema_version: core.contract.v1
+contract_id: urn:core:state:packet:v1.0.0
+title: Packet
+kind: state_contract
+status: mathematical_wip
+layer: 01_state
+role: Packet
+rust_binding:
+  crate: core_types
+  module: packet
+  symbols:
+  - Packet
+  - PacketKind
+  - PacketRefusal
+  - PacketProvenance
+  - SignatureRequirement
+  - ParsedPacket
+  - CheckedPacket
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Carrier
+    - Boundary
+    - TypeAndKind
+    - GlobalContractTaxonomy
+    - SymbolGame
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the Packet boundary.
+
+
+    A Packet is a typed, hashed transport payload wrapper for Symbol Game payloads, observer
+
+    diagnostics, and candidate responses. It may contain structured mathematical intent, diagnostic
+
+    evidence, or proposed actions, but it does not itself execute or authorize any action.
+
+
+    A packet proves at most transport integrity, grammar/schema identity, and provenance linkage after
+
+    checking. It does not prove semantic truth.
+
+
+    Packets do not have agency. They do not propagate themselves, certify, evaluate, or execute. The
+
+    pipeline propagates packets; the packet is passive cargo.
+
+    '
+  non_role: &id002
+  - execution
+  - evaluation
+  - certification
+  - mutation
+  - authority upgrade
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate, terminalize,
+
+      authorize transitions, execute transitions, or upgrade evidence authority.
+
+
+      LLM output may be wrapped in a Packet, but Packet wrapping does not upgrade the authority of
+
+      LLM output.
+
+      '
+  classification:
+    subsystem: Symbol Game / Observer Diagnostics
+    role: Typed transport payload wrapper.
+    classification: State layer -- passive cargo.
+  authority_vocabulary:
+    canonical_type: core_types::authority::AuthorityEffect
+    variants:
+    - None
+    - Certified(CertifiedAuthority)
+    - Refused
+    - Uncertified
+    note: 'Amended 2026-08-25. This contract previously declared default EvidenceOnly,
+      a variant the canonical AuthorityEffect does not have -- it belongs to the
+      ContractEffect vocabulary (None/EvidenceOnly/FactOnly/RequiresEvaluator/RequestsDecision)
+      in core_contract_core. That mismatch is why the first partial implementation
+      reached for ContractEffect and set CheckedPacket to FactOnly, contradicting this
+      contract''s own canonical_invariant.
+
+      The firewall type is canonical for packets: Certified carries an unforgeable
+      CertifiedAuthority whose sole constructor demands a matching DescentWitness and
+      IsAuth token, so "not a fact" is expressible as "not Certified" and is enforced
+      by construction rather than by convention.
+
+      Two required_tests were renamed to follow: packet_default_authority_is_evidence_only
+      became packet_default_authority_is_uncertified, and
+      checked_packet_is_evidence_boundary_not_fact_boundary became
+      checked_packet_is_not_certified. The claims they make are unchanged.'
+  structural_representation:
+    packet:
+      struct_name: Packet
+      fields:
+      - name: packet_id
+        type: PacketId
+      - name: packet_kind
+        type: PacketKind
+      - name: payload
+        type: PacketPayload
+      - name: payload_hash
+        type: Hash256
+      - name: packet_hash
+        type: Hash256
+      - name: grammar_id
+        type: GrammarId
+      - name: schema_ref
+        type: SchemaRef
+      - name: schema_version
+        type: SchemaVersion
+      - name: signature
+        type: Option<PacketSignature>
+      - name: provenance
+        type: PacketProvenance
+      - name: authority_effect
+        type: AuthorityEffect
+        default: Uncertified
+    packet_kind:
+      enum_name: PacketKind
+      variants:
+      - SymbolGameMove
+      - MathIntent
+      - GameAction
+      - ObserverDiagnostic
+      - CandidateResponse
+    packet_provenance:
+      struct_name: PacketProvenance
+      fields:
+      - name: source
+        type: ProvenanceSource
+      - name: created_at
+        type: Timestamp
+      - name: trace_ref
+        type: Option<TraceRef>
+    signature_requirement:
+      enum_name: SignatureRequirement
+      variants:
+      - Required
+      - Optional
+      - Forbidden
+    parsed_packet:
+      struct_name: ParsedPacket
+      fields:
+      - name: packet
+        type: Packet
+      - name: parsed_ast_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: Uncertified
+    checked_packet:
+      struct_name: CheckedPacket
+      fields:
+      - name: parsed_packet_ref
+        type: ParsedPacketRef
+      - name: check_refs
+        type: Vec<CheckRef>
+      - name: authority_effect
+        type: AuthorityEffect
+        default: Uncertified
+  authority_boundary:
+    may:
+    - Wrap a typed payload for transport
+    - Carry a payload hash and signature for integrity verification
+    - Reference a trace for provenance
+    must_not:
+    - Execute any computation
+    - Evaluate admissibility
+    - Certify anything
+    - Mutate carrier state
+    - Upgrade evidence authority
+    - Self-propagate (the pipeline propagates packets)
+  admissibility_condition:
+  - It parses correctly according to the symbolic grammar of the target S(n) context level
+  - If a signature is required by packet kind, source, or policy, it must verify. Unsigned packet kinds
+    must explicitly declare that signature is not required.
+  - Grammar ID and schema version are declared
+  - Payload uses allowed alphabet
+  - Payload hash matches actual payload content
+  refusal_condition:
+    enum_name: PacketRefusal
+    note: 'Any malformed, out-of-order, unauthorized, or schema-invalid packet payload is refused as
+
+      PacketRefusal.
+
+
+      If the packet attempted to request an unlicensed mutation, a later operator or transition
+
+      classifier may classify the attempted mutation as M = refused mutation. The packet refusal
+
+      itself is not an operator effect-class assignment.
+
+      '
+    variants:
+    - Malformed
+    - OutOfOrder
+    - UnauthorizedPayload
+    - UnlicensedTransitionRequest
+    - PayloadHashMismatch
+    - PacketHashMismatch
+    - GrammarViolation
+    - SchemaUnknown
+    - SchemaVersionMismatch
+    - SchemaHashMismatch
+    - UnknownPacketKind
+    - PayloadKindMismatch
+    - SignatureRequiredMissing
+    - SignatureInvalid
+    - SemanticClaimNotChecked
+  observer_packet_specialization:
+    description: 'An Observer Packet is a Packet with `packet_kind: ObserverDiagnostic`. It references
+      coordinate
+
+      measurements and diagnostics observed at a specific state transition. It may carry diagnostic
+
+      payloads, but canonical measurements must come from the Functional / Measurement boundary.
+
+      '
+    admissibility:
+    - It contains a valid trace reference
+    - Its carrier state hash matches the state at the referenced transition
+    - Measurement references are checked or explicitly marked as uncertified diagnostics.
+    refusal: Refuse any Observer Packet with mismatched state hashes or uncertified measurement values
+      presented as certified.
+    certificate_obligation: 'The pipeline may route measurement and certificate references from Observer
+      Packets to the
+
+      evaluator. The packet itself does not propagate or certify them.
+
+      '
+  packet_witness_and_replay_obligation:
+    description: 'Every Packet must be signed and hashed. Replay verification must reproduce identical
+      parsed
+
+      AST state.
+
+      '
+    required_replay_witness:
+    - packet_id
+    - packet_kind
+    - payload_hash
+    - packet_hash
+    - grammar_id
+    - schema_ref
+    - schema_version
+    - signature_status
+    - parsed_ast_hash
+    - provenance
+    - source_trace_ref
+  certificate_note: CertificateKernel may seal certificates over checked evidence; this contract does
+    not create certificates.
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - evaluate(
+    - certify(
+    - terminalize(
+    - mutate_carrier
+    - sign_certificate
+    - authority_upgrade
+    - self_propagate
+    - promote_authority
+    - semantic_truth_verified_by_packet
+  required_tests:
+  - packet_carries_no_execution_authority
+  - packet_payload_hash_matches
+  - packet_malformed_refused_as_packet_refusal_not_operator_m
+  - packet_replay_produces_identical_ast
+  - observer_packet_requires_trace_ref
+  - observer_packet_state_hash_matches
+  - packet_does_not_self_propagate
+  - packet_default_authority_is_uncertified
+  - packet_wrapping_does_not_upgrade_llm_output
+  - packet_does_not_claim_semantic_truth
+  - packet_signature_requirement_is_declared
+  - unsigned_packet_refused_when_signature_required
+  - packet_schema_ref_is_declared
+  - packet_hash_matches_canonical_packet_bytes
+  - checked_packet_is_not_certified
+  - observer_packet_does_not_emit_canonical_measurements
+  canonical_invariant: 'A Packet is passive typed transport evidence. It may carry or reference structured
+    payloads,
+
+    hashes, signatures, grammar IDs, schema IDs, and provenance, but it does not execute, evaluate,
+
+    certify, terminalize, propagate itself, authorize transitions, or prove semantic truth. Packet
+
+    wrapping never upgrades LLM output. CheckedPacket is an evidence boundary, not a fact, decision,
+
+    license, or action.
+
+    '
+  legacy_metadata:
+    name: Packet
+    role: Compressed transport payload wrapper for the Symbol Game and observer diagnostics
+    classification: state
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: PacketEnvelope
+    referenced_output_families:
+    - StructureArtifact
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.

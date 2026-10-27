@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quadratic_conductor_prime_obstruction:v0.1.0
+title: Bounded least absent quadratic subfield prime
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: quadratic_conductor_prime_obstruction
+  symbol: quadratic_conductor_prime_obstruction
+  ascii_symbol: quadratic_conductor_prime_obstruction
+  notation: Bounded least absent quadratic subfield prime
+  domain:
+  - Positive usize nominal conductor; declared candidate budget and canonical deterministic primality
+  codomain:
+    description: Declared finite results of core_number_theory::cyclotomic_field; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Q(sqrt p) embeds exactly when its quadratic conductor divides n
+- Every predecessor candidate is checked, so the returned prime is the least absent one
+- Search beyond the former fixed prime list is supported with typed budget refusal
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: cyclotomic_field
+  symbols:
+  - quadratic_field_conductor
+  - first_missing_quadratic_prime
+  - QuadraticPrimeSearchError
+  required_tests:
+  - cyclotomic_field::quadratic_prime_search_laws::least_missing_prime_uses_complete_predecessors_and_typed_bounds
+negative_tests:
+- cyclotomic_field::quadratic_prime_search_laws::least_missing_prime_uses_complete_predecessors_and_typed_bounds
+doctrine:
+  summary: Q(sqrt p) embeds exactly when its quadratic conductor divides n; Every predecessor candidate is
+    checked, so the returned prime is the least absent one; Search beyond the former fixed prime list is supported
+    with typed budget refusal.
+  non_role:
+  - No topology, Gleason continuity or ambient field construction is inferred
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

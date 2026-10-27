@@ -1,0 +1,43 @@
+# Native packet shape; semantic laws require the named finite tests.
+# AuthorityEffect: None. New URN; existing frozen contracts are unchanged.
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:host_pinned_permutation_order_request:v1.0.0"
+title: "Pinned permutation order request (native runtime payload)"
+kind: packet_contract
+layer: 40_packets
+role: PacketSpecification
+status: active
+council_owner: L3_logos_techne
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit: [FW-UNKNOWN-FIELD]
+
+doctrine:
+  summary: "Names a compiled host presentation and submits an unsigned-decimal order claim. The request carries no presentation, pin catalogue, license or authority."
+  invariants:
+    - "This struct's JSON representation must be an object; positional arrays, undeclared fields and wrongly typed fields are refused by typed deserialization."
+    - "presentation_ref is an exact name, without trimming or fallback to another pin; unknown names remain OPEN_RESIDUAL after valid dispatch."
+    - "claimed_order is nonempty ASCII decimal text. Leading zeroes are preserved as submitted spelling while comparison uses their integer value. Zero is a valid claim and is contradicted by a nonempty permutation."
+    - "Additional or wrongly typed payload fields are refused before mathematical evaluation. Invalid decimal strings are native dispatch failures, not mathematical counterexamples."
+    - "The generic runtime decoder first constructs serde_json::Value. This typed payload alone does not detect raw duplicate keys that decoder has already collapsed."
+  non_roles: [authority_source, promotion_granter]
+  required_negative_capabilities: [no_self_certification, no_implicit_authority_upgrade]
+
+structure:
+  language: rust
+  rust_crate: pfp
+  rust_module: pinned_permutation
+  rust_type: PinnedPermutationOrderRequestV1
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: presentation_ref
+      rust_type: "String"
+    - name: claimed_order
+      rust_type: "String"

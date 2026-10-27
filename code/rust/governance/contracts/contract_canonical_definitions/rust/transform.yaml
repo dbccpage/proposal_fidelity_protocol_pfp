@@ -1,0 +1,273 @@
+schema_version: "1.0.0"
+contract_id: "os:transform"
+name: "Transform Operator Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "partially_enforced"
+
+description: >
+  A TransformOp is a deterministic, stateless, unary, same-carrier structural
+  mapping over admitted BaseType/Obstruction state. It maps S -> S by
+  rearranging, relabeling, transporting, reindexing, or representation-shifting
+  structure while preserving declared invariants. Unlike Lambda, it carries no
+  Φ non-increase obligation. Unlike Reducer, it carries no idempotence or κ
+  non-expansion obligation by default. A Transform does not compute canonical
+  functionals, search, rank, lift, repair, terminalize, certify, authorize,
+  orchestrate, or mutate runtime state.
+
+layer: "OS"
+module_path: "operators::transform"
+
+governs:
+  - "operators/transforms/**"
+  - "operators/transform/**"
+  - "core_*/*transform*.rs"
+
+does_not_govern:
+  - "constructors/**"
+  - "generators/**"
+  - "operators/lambdas/**"
+  - "operators/reducers/**"
+  - "core_functional/**"
+  - "core_homology/**"
+  - "core_lifts/**"
+  - "core_certifiers/**"
+  - "core_replay/**"
+  - "core_id_run/**"
+  - "core_pipelines/**"
+  - "engines/**"
+  - "meta/**"
+
+claims:
+  - id: "OP-L0-TRANSFORM"
+    description: "Transform is structure-preserving but not Φ-constrained."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "TRANSFORM-SAME-CARRIER"
+    description: "Transform preserves carrier family, carrier rank, carrier universe, and admissible execution geometry."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "TRANSFORM-NO-HIDDEN-LIFT"
+    description: "If carrier growth or carrier-family change is required, the lawful unit is Adapter, MetaLift, or explicit Lift, not Transform."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "TRANSFORM-NO-AUTH"
+    description: "Transform execution and Transform composition cannot mint authority."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  carrier_enlargement: "forbidden"
+  hidden_lift: "forbidden"
+  search: "forbidden"
+  rank: "forbidden"
+  runtime_orchestration: "forbidden"
+  side_effects: "forbidden"
+  deterministic: true
+  stateless: true
+  unary: true
+  endomorphic: true
+  same_carrier_required: true
+  single_step: true
+  typed_failure_required: true
+  admitted_input_required: true
+  phi_monotonicity_required: false
+  idempotence_required: false
+  kappa_non_expansion_required: false
+
+allowed:
+  - "read one admitted immutable input"
+  - "perform one deterministic same-carrier structural transformation"
+  - "reindex structure"
+  - "rename/relabel declared symbols"
+  - "transport representation across a declared same-carrier bridge"
+  - "normalize presentation only when not claiming Reducer status"
+  - "return typed output on the same carrier"
+  - "return typed TransformFailure"
+  - "preserve declared invariants"
+  - "emit non-authoritative TransformWitness"
+  - "expose local non-authoritative metadata"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "call Phi1Functional"
+  - "call Gamma2Functional"
+  - "call XiFunctional"
+  - "classify trichotomy"
+  - "mint CertifiedAuthority"
+  - "call CertifiedAuthority::certify"
+  - "call authority_from_outcome_f13"
+  - "call terminalize"
+  - "emit AuthorityEffect::Authorize"
+  - "generate lift candidates"
+  - "perform carrier growth"
+  - "change carrier rank"
+  - "change carrier universe"
+  - "reinterpret carrier to make transformation possible"
+  - "repair obstruction"
+  - "claim ExactRepair"
+  - "search candidate space"
+  - "rank alternatives"
+  - "iterate until convergence"
+  - "perform MCTS"
+  - "mutate global state"
+  - "perform IO"
+  - "return opaque string-only failure"
+  - "return None as failure"
+
+carrier_law:
+  input_output_shape: "S -> S"
+  same_carrier_family_required: true
+  carrier_rank_change: "forbidden"
+  carrier_universe_change: "forbidden"
+  admissible_geometry_change: "forbidden"
+  representation_bridge_allowed_only_if_declared: true
+  if_carrier_growth_required: "AdapterOrMetaLiftOrExplicitLift"
+  notes:
+    - "A Transform may alter representation inside the same carrier."
+    - "A Transform may not add basis elements, vertices, dimensions, generators, or carrier structure."
+    - "A Transform may not silently coerce one carrier family into another."
+
+invariant_law:
+  declared_invariants_required: true
+  transform_must_preserve_declared_invariants: true
+  invariant_witness_required: true
+  notes:
+    - "Transform does not preserve every possible invariant."
+    - "Transform preserves only the invariants declared in its TransformLaw."
+    - "If an invariant is not declared, no preservation claim is made."
+
+phi_firewall:
+  transform_may_compute_phi: false
+  transform_may_claim_phi_non_increase: false
+  transform_may_reference_external_measurement: true
+  if_phi_non_increase_claimed: "ReclassifyAsLambdaOrAttachExternalLambdaWitness"
+  notes:
+    - "Transform is not Φ-constrained."
+    - "A Transform that claims Φ non-increase belongs under Lambda discipline."
+    - "A Transform that claims κ non-expansion/idempotence belongs under Reducer discipline."
+
+witness_shape:
+  preferred: "TransformWitness"
+  fields:
+    - "transform_id"
+    - "input_ref"
+    - "output_ref"
+    - "carrier_ref"
+    - "preserved_invariant_refs"
+    - "representation_bridge_ref"
+    - "authority_effect_none"
+  notes:
+    - "TransformWitness is non-authoritative."
+    - "TransformWitness may support replay, but cannot mint authority."
+
+failure_shape:
+  enum: "TransformFailure"
+  required_variants:
+    - "OutsideAdmissibleDomain"
+    - "InvariantViolation"
+    - "TransformUndefined"
+    - "CarrierMismatch"
+    - "CarrierGrowthRequired"
+    - "UndeclaredRepresentationBridge"
+    - "NonFiniteInput"
+
+composition:
+  allowed_only_when:
+    - "same carrier S"
+    - "declared invariant laws are compatible"
+    - "composition remains same-carrier"
+    - "codomain/domain representation bridge is explicit if representation changes"
+  forbidden_when:
+    - "composition would enlarge carrier"
+    - "composition would require hidden lift"
+    - "composition would require runtime search"
+    - "composition would smuggle Φ policy"
+  authority_effect: "none"
+  notes:
+    - "Transform composition is still non-authoritative."
+    - "Transform composition does not imply operad closure unless executable apply and composition laws are separately proven."
+    - "A chain of Transforms may be run by an Engine or Pipeline, but the chain is not a single Transform unless separately declared and validated."
+
+validator_requirements:
+  forbidden_substrings:
+    - "CertifiedAuthority"
+    - "authority_from_outcome_f13"
+    - "terminalize"
+    - "mint_authority"
+    - "Phi1Functional"
+    - "Gamma2Functional"
+    - "XiFunctional"
+    - "classify_exact"
+    - "ExactRepair"
+    - "AuthorityEffect::Authorize"
+    - "generate_lift"
+    - "LiftCandidate"
+    - "rank_candidates"
+    - "score_candidates"
+    - "while "
+    - "loop "
+    - "thread_rng"
+    - "rand::"
+    - "std::fs"
+    - "File::"
+    - "unwrap()"
+    - "expect("
+  required_patterns:
+    - "Result<"
+    - "TransformFailure"
+  required_tests:
+    - "transform_is_deterministic"
+    - "transform_is_single_step"
+    - "transform_is_same_carrier"
+    - "transform_preserves_declared_invariants"
+    - "transform_rejects_carrier_growth"
+    - "transform_does_not_compute_functionals"
+    - "transform_does_not_mint_authority"
+    - "transform_does_not_claim_phi_non_increase"
+    - "transform_does_not_claim_reducer_idempotence"
+
+lean_obligations:
+  - id: "TRANS-L0"
+    theorem: "Transform preserves same carrier family."
+    status: "needed"
+
+  - id: "TRANS-L1"
+    theorem: "Transform preserves declared invariants over admitted domain."
+    status: "needed"
+
+  - id: "TRANS-L2"
+    theorem: "Transform execution cannot mint authority."
+    status: "needed"
+
+  - id: "TRANS-L3"
+    theorem: "Transform composition preserves no-authority property."
+    status: "needed"
+
+  - id: "TRANS-L4"
+    theorem: "Transform is not Φ-constrained unless reclassified as Lambda with valid external witness."
+    status: "needed"
+
+  - id: "TRANS-L5"
+    theorem: "Transform is not a hidden lift; carrier growth requires Adapter, MetaLift, or explicit Lift."
+    status: "needed"
+
+notes:
+  - "Transform is not a Lambda unless it carries a valid external Φ non-increase witness."
+  - "Transform is not a Reducer unless it is endomorphic, idempotent, and κ non-expanding under a declared reducer law."
+  - "Transform is not an Engine; it cannot loop, search, or orchestrate."
+  - "Transform is not a Lift; hidden carrier growth is a contract violation."
+  - "Transform is not a Certifier; structure preservation is not authority."

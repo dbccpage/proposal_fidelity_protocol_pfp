@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:constructive_same_field_hermitian_eigenspaces:v0.1.0
+title: Constructive same-field Hermitian eigenspaces
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: constructive_same_field_hermitian_eigenspaces
+  symbol: constructive_same_field_hermitian_eigenspaces
+  ascii_symbol: constructive_same_field_hermitian_eigenspaces
+  notation: Constructive same-field Hermitian eigenspaces
+  domain:
+  - Bounded Hermitian operators over Q(i); shared exact characteristic polynomials and real-root isolation
+  codomain:
+    description: Declared finite results of core_quantum_physics::hermitian_spectral; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Same-field eigenvectors use exact kernels and Gram orthogonalization
+- Irrational same-field eigenspaces are explicitly refused
+- Full-degree real algebraic roots retain exact multiplicity
+- Public dimension and scalar-carrier metadata must agree with the intact coefficient matrix and private Hermitian
+  witness before decomposition
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: hermitian_spectral
+  symbols:
+  - spectral_decompose
+  - algebraic_spectrum
+  required_tests:
+  - hermitian_spectral::tests::general_n_nondiagonal_open_residual
+  - states_channels_exact_tests::spectral_decomposition_revalidates_public_dimension_and_carrier_metadata
+negative_tests:
+- hermitian_spectral::tests::general_n_nondiagonal_open_residual
+- states_channels_exact_tests::spectral_decomposition_revalidates_public_dimension_and_carrier_metadata
+doctrine:
+  summary: Same-field eigenvectors use exact kernels and Gram orthogonalization; Irrational same-field eigenspaces
+    are explicitly refused; Full-degree real algebraic roots retain exact multiplicity; Public dimension and
+    scalar-carrier metadata must agree with the intact coefficient matrix and private Hermitian witness before
+    decomposition.
+  non_role:
+  - Isolation evidence is not a claim that all algebraic eigenvectors belong to Q(i)
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

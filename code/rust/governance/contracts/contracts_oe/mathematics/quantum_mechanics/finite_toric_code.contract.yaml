@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_toric_code:v0.1.0
+title: Cellular Toric Codes and Topological Entropy
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_toric_code
+  symbol: finite_toric_code
+  ascii_symbol: finite_toric_code
+  notation: Cellular Toric Codes and Topological Entropy
+  domain:
+  - A periodic rectangular square lattice with both axes at least two and area at most 256.
+  - Its exact F2 chain/cochain complex and pure ground-state stabilizers.
+  codomain:
+    description: Declared finite results of core_quantum_physics::toric_code; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Homology and cohomology supply dual logical bases with identity intersection pairing.
+- The CSS code has k=2, ground-state degeneracy four and distance min(rows,cols).
+- An electric loop enclosing one magnetic defect has phase minus one, and a loop enclosing none has phase plus
+  one.
+- The declared contractible Kitaev-Preskill wedges of a pure toric ground state give topological entropy one
+  bit.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: toric_code
+  symbols:
+  - ToricCode
+  required_tests:
+  - toric_code_parameters_and_intersection_form_are_derived_from_homology
+  - moving_e_around_an_m_and_away_from_it_have_opposite_phases
+  - toric_code_kitaev_preskill_entropy_is_one_bit
+negative_tests:
+- Malformed defect chains, invalid loops and lattice budget excess are refused.
+- Distance certification uses winding bounds with small exhaustive cross-checks.
+doctrine:
+  summary: Homology and cohomology supply dual logical bases with identity intersection pairing.; The CSS code
+    has k=2, ground-state degeneracy four and distance min(rows,cols).; An electric loop enclosing one magnetic
+    defect has phase minus one, and a loop enclosing none has phase plus one.; The declared contractible Kitaev-Preskill
+    wedges of a pure toric ground state give topological entropy one bit..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

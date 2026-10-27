@@ -1,0 +1,96 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cocycle:v0.1.0
+title: Cocycle Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cochain_with_property
+  symbol: 'α ∈ Z^n(C^•) where Z^n = ker(δ_n : C^n → C^{n+1})'
+  ascii_symbol: cocycle
+  notation: 'α ∈ Z^n(C^•) where Z^n = ker(δ_n : C^n → C^{n+1})'
+  domain:
+  - 'cochain_element: α ∈ C^n'
+  - 'cochain_complex: C^• with coboundary maps δ^•'
+  - 'degree: n ∈ ℤ'
+  - 'coefficient_domain: R (ring or field)'
+  - 'zero_element: 0 ∈ C^{n+1}'
+  codomain:
+    description: 'The carrier is a cochain α ∈ C^n where C^n is the n-th cochain group of a cochain complex (C^•, δ^•), and α satisfies the cocycle condition δ_n(α) = 0.
+
+      '
+requirements:
+  required_structures:
+  - δ_n(α) = 0
+  - α ∈ C^n
+  - δ_n maps C^n to C^{n+1}
+  - degree(α) = n where α ∈ C^n
+  - All input hashes are valid and match expected structure
+laws:
+- δ_n(α) = 0
+- α ∈ C^n
+- degree(α) = n
+- 'δ_n : C^n → C^{n+1} is the correct coboundary map for degree n'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Coboundary computation must be deterministic and reproducible
+  - Same inputs must produce same zero-witness hash
+relationships:
+- urn:math:contract:CochainComplex:v0.1.0 serves as Provides the cochain complex structure C^• with coboundary maps
+- urn:math:contract:Cochain:v0.1.0 serves as Defines cochain elements α ∈ C^n
+- urn:math:contract:CoboundaryMap:v0.1.0 serves as Provides the coboundary map δ_n used to verify closure
+- urn:math:contract:CoefficientDomain:v0.1.0 serves as Defines the ring/field R for cochain coefficients
+rust_binding:
+  crate: core_homology
+  module: cocycle
+  symbols:
+  - Cocycle
+  # try_cocycle refuses non-closed cochains, wrong degree, and length mismatch.
+  # Coefficient-domain, authority, and certificate negatives stay unnamed.
+  required_tests:
+  - try_cocycle_rejects_nonzero_coboundary
+  - try_cocycle_rejects_degree_mismatch
+  - try_cocycle_rejects_coefficient_length_mismatch
+negative_tests:
+- Reject cochain α where δ_n(α) ≠ 0
+- Reject cochain not in C^n
+- Reject coboundary map with incorrect source or target degree
+- Reject cochain with mismatched coefficient domain
+- Reject artifact attempting to claim authority or admissibility
+- Reject artifact attempting to emit certificates
+doctrine:
+  summary: 'A cocycle is a cochain α in a cochain complex C^n such that the coboundary map δ_n applied to α yields zero: δ_n(α) = 0. Cocycles are closed cochains and serve as representatives for cohomology classes and obstruction classes in homological algebra and obstruction theory.'
+  non_role:
+  - This contract does not define cohomology classes themselves
+  - Coboundary elements (non-closed cochains) are excluded
+  - This contract does not handle Cech cocycle specializations yet
+  - Group cohomology and Lie algebra cohomology require separate contracts
+  - This contract does not compute cohomology group structure
+wip:
+- Define Cech cocycle specializations separately
+- Should group cohomology cocycles have a separate contract?
+- How should cocycle representatives be tracked across cohomology classes?
+- Should we enforce compatibility with de Rham or singular cocycles?
+- Initial version covers general cocycles in abstract cochain complexes
+- Cech cocycles will require additional geometric data
+- May need separate contracts for group cohomology, Lie algebra cohomology
+- Cohomology class representatives are not yet tracked

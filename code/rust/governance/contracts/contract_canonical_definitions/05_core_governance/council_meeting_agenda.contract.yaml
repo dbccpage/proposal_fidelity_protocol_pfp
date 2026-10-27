@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:council_meeting_agenda:v1.0.0
+title: CouncilMeetingAgenda
+kind: governance_contract
+status: mathematical_wip
+layer: 05_governance
+role: Policy
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - AuthInterface
+    - PolicyContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - Terminalization
+    required: []
+doctrine:
+  binding_review_20261014: "The declared Rust crate/module is absent from the active Cargo workspace. Withdraw this realization binding; the retained specification has no executable implementation credit from it."
+  summary: >
+    A CouncilMeetingAgenda specifies the structure, counterargument topics, and
+    deliberative focus for a scheduled council meeting (daily during bring-up, weekly
+    in standard operation). Agendas provide the human embodiment and oppositional
+    processing framework for the system. An agenda confers NO math-layer terminal
+    authority; it guides LLM-generated deliberative theater and counterargument.
+  mathematical_role: >
+    The AgendaCat mapping `prepare_agenda : Cadence × CouncilID → Agenda` formats
+    the oppositional debate topics before a meeting convenes.
+  non_role:
+  - Minting or upgrading math-layer authority
+  - Signing or wrapping certificates
+  - Terminalizing or executing an operator
+  llm_boundary_law:
+    doctrine: 5
+    text: >
+      LLM-generated agenda items and counterargument prompts serve as deliberative,
+      dialectic, and oppositional theater. They guide human/agent debate but never
+      authorize state mutations or mathematical terminals.
+  authority_boundary:
+    may:
+    - Formulate debate topics, counterargument prompts, and deliberative agendas
+    - Schedule daily bring-up or weekly standing meetings
+    must_not:
+    - Mint or upgrade math-layer authority
+    - Override math-layer proof obligations or certificate gates
+  required_tests:
+  - agenda_requires_council_id_and_cadence
+  - agenda_confers_no_math_authority
+  canonical_invariant: >
+    A CouncilMeetingAgenda structures deliberative debate and oppositional processing;
+    it confers zero math-layer authority and is bound to a declared council cadence.
+  references:
+  - engine/crates/sentinel_councils/councils/council_governance.md
+  - engine/crates/sentinel_councils/src/cadence.rs
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_governance_contract:v1.0.0"

@@ -1,0 +1,33 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:equivalence_relation:v0.1.0
+title: EquivalenceRelation
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Equivalence relation on a finite set, satisfying reflexivity, symmetry,
+    and transitivity.
+rust_binding:
+  crate: core_higher_category_theory
+  module: dg_category
+  symbols:
+  - DgCategory
+  - GradedMorphism
+  required_tests:
+  - test_dg_category_basic_lifecycle

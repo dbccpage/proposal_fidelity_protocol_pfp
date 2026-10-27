@@ -1,0 +1,156 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:fsr_retrieval:v1.0.0
+title: FsrRetrieval
+kind: execution_contract
+status: active
+layer: 06_execution
+role: Search
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - SearchKernel
+    - Trace
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - Terminalization
+    - CertificateSigning
+    - Evaluation
+    required: []
+doctrine:
+  summary: 'FsrRetrieval traverses a shard index over a declared estate by opaque membership and
+    returns the reached frontier as evidence. It does not rank or score candidates, evaluate
+    admissibility, certify, terminalize, authorize, license, execute, or mutate. Relevance is decided
+    by the caller, never by this contract''s implementation.
+
+    '
+  non_role: &id002
+  - candidate_scoring
+  - candidate_ranking
+  - evaluation
+  - certification
+  - terminal_mapping
+  - execution
+  - mutation
+  - policy_interpretation
+  - transition_authorization
+  - action_licensing
+  structural_representation:
+    raw:
+      struct_name: FsrFrontierStep
+      fields:
+      - name: estate_root
+        type: EstateRootRef
+      - name: index_snapshot
+        type: Hash256
+      - name: descent_path
+        type: Vec<NodeRef>
+      - name: page_costs
+        type: Vec<u64>
+      - name: reached_leaves
+        type: Vec<LeafRef>
+      - name: frontier_loci
+        type: u64
+      - name: delivered_loci
+        type: u64
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+  flow: 'EstateSnapshot
+
+    -> shard index (bounded pages, opaque membership filter)
+
+    -> FsrFrontierStep
+
+    -> caller-side relevance decision outside this contract
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - fsr_does_not_rank_candidates
+  - fsr_does_not_score_candidate
+  - fsr_locus_outside_declared_estate_root_is_refused
+  - fsr_absent_content_digest_is_refused_not_bypassed
+  - fsr_descent_budget_is_global_not_per_node
+  - fsr_read_budget_is_a_hard_bound
+  - fsr_emits_only_licensed_stop_codes
+  canonical_invariant: 'Frontier evidence only. The implementation selects which index pages to open by
+    opaque membership and reports what it reached; it never orders loci by relevance and never claims
+    to have identified an answer.
+
+    '
+  non_claims:
+  - Discovery cost is NOT claimed to be logarithmic in estate size; the persisted index is parsed per
+    query and the receipt reports MEASURED pages opened, never a derived bound.
+  - Def 007C.1 is NOT evaluated; that requires J = (P_index, c, m) and a two-sided page-cost bound the
+    implementation does not carry. Only structural invariants are reported.
+  - The full 18-code stop alphabet is NOT implemented; a named subset is emitted and no code outside
+    the licensed union is ever produced.
+  - No RouteReceipt and no evidence-indexed OutputStatus are emitted.
+  - No cross-language parity is claimed; there is no Rust implementation of this contract.
+definition:
+  emitted_stop_codes:
+    note: 'Product alphabet, held here rather than in descriptor.terminals/refusals because the v1
+      terminal and refusal vocabularies are closed. These are a SUBSET of the licensed union
+      (OE-005 section 13 plus OE-006 Def 007C.10); the implementation asserts membership before
+      returning.
+
+      '
+    codes:
+    - DISCOVERY_OK
+    - UNREACHABLE_LOCUS
+    - CONTEXT_BUDGET_EXCEEDED
+    - STALE_INDEX
+    - ROUTE_INVALID
+    - RECEIPT_INVALID
+    - MANIFEST_PARSE_ERROR
+    - SCHEMA_INVALID
+    - INDEX_MISSING
+  implementation:
+    language: python
+    package: engine_py/core_retrieval
+    entry_point: python -m core_retrieval
+    tests: engine_py/core_retrieval/tests/test_retrieval.py
+    rust_twin: none
+  estate_binding:
+    rule: 'Every locus is resolved against the DECLARED ESTATE ROOT recorded in the index, not merely
+      against the repository root. A locus resolving outside that root is refused. An absent or empty
+      content digest is refused, never treated as fresh.
+
+      '
+  legacy_metadata:
+    name: FsrRetrieval
+    active: true
+    machine_authority: false
+    role: Opaque estate frontier traversal
+    version: '1.0'
+    classification: proposal_traversal
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - Record

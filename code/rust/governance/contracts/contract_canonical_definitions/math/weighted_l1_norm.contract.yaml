@@ -1,0 +1,51 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:weighted_l1_norm:v1.0.0
+title: weighted_l1_norm
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: weighted_l1_norm
+  symbol: weighted_l1_norm
+  ascii_symbol: weighted_l1_norm
+  notation: weighted_l1_norm
+  domain:
+  - Declared finite input carrier
+  codomain:
+    description: Finite weighted L1 representative mass, not a quotient minimum.
+  definition:
+    evaluation: Finite weighted L1 representative mass, not a quotient minimum.
+laws:
+- Finite weighted L1 representative mass, not a quotient minimum.
+- Evaluation evidence does not authorize a state transition.
+rust_binding:
+  crate: core_functional
+  module: weighted_l1_norm
+  symbols:
+  - L1Weight
+  - HilbertLift
+  - WeightedL1Norm
+  - WeightedL1NormError
+  required_tests: []
+negative_tests:
+- Malformed input or an impermissible comparison is refused.
+doctrine:
+  summary: Finite weighted L1 representative mass, not a quotient minimum.
+  non_role:
+  - Authorization

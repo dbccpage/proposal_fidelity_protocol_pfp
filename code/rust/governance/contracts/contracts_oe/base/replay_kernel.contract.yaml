@@ -1,0 +1,180 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:replay_kernel:v1.0.0
+title: ReplayKernel
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Replay
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - TraceArtifact
+    - CertificateKernel
+    - Witness
+    - MeasurementKernel
+    - GlobalContractTaxonomy
+    - ContractConstitution
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  capabilities:
+    forbidden:
+    - RuntimeMutation
+    - Terminalization
+    required: []
+doctrine:
+  summary: 'Replay reconstructs declared historical execution from trace, manifest, schema, seed,
+
+    witness, measurement, and certificate references. Replay artifacts are EvidenceOnly
+
+    until verified. Verified replay may support FactOnly history claims but does not repair,
+
+    authorize, terminalize, license, mutate, or execute live control flow.
+
+    '
+  non_role: &id002
+  - live_execution_control
+  - speculative_execution
+  - active_search
+  - state_mutation
+  - terminal_mapping
+  - policy_interpretation
+  - authority_promotion_without_check
+  - trace_repair
+  - certificate_creation
+  - certificate_authority_upgrade
+  - action_licensing
+  - transition_authorization
+  authority_defaults:
+    replay_bundle: EvidenceOnly
+    replay_report: EvidenceOnly
+    verified_replay_fact: FactOnly only after manifest integrity, trace availability, certificate validity,
+      seed, schema, environment, and output hash checks succeed.
+  structural_representation:
+    raw:
+      struct_name: ReplayReport
+      fields:
+      - name: replay_id
+        type: ReplayId
+      - name: trace_refs
+        type: Vec<TraceId>
+      - name: manifest_ref
+        type: ReplayManifestRef
+      - name: status
+        type: ReplayStatus
+      - name: output_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: VerifiedReplayReport
+      fields:
+      - name: replay_ref
+        type: ReplayId
+      - name: verifier_ref
+        type: VerifierId
+      - name: checked_trace_hashes
+        type: Vec<Hash256>
+      - name: checked_output_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+    enums:
+    - name: ReplayStatus
+      variants:
+      - Verified
+      - Diverged
+      - Impossible
+      - Indeterminate
+  flow: 'TraceArtifact / Manifest / Seed / Schema / Environment
+
+    -> ReplayReport
+
+    -> VerifiedReplayReport when checks pass
+
+    -> FactEnvelope or EvidenceEnvelope
+
+    -> Evaluator / Policy
+
+    -> TerminalMapper
+
+    -> LicensingBoundary
+
+    -> Engine
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - replay_report_defaults_to_evidence_only
+  - verified_replay_may_support_factonly_history_claim
+  - replay_does_not_mutate_trace_bundle
+  - replay_does_not_repair_missing_trace
+  - replay_does_not_create_certificate
+  - replay_does_not_emit_action_license
+  - replay_does_not_authorize_transition
+  - replay_does_not_execute_live_control_flow
+  canonical_invariant: 'Replay verifies reconstruction only. It records divergence or verified reconstruction,
+
+    but does not repair, authorize, license, terminalize, mutate, or execute.
+
+    '
+  legacy_metadata:
+    name: ReplayKernel
+    source_file: non-math/02_evidence/replay_contract.md
+    active: true
+    machine_authority: true
+    role: Deterministic reconstruction and replay verification
+    version: '2.0'
+    classification: evidence
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    domain_output_kind: ReplayReport
+    referenced_output_families:
+    - FactEnvelope
+    - Record
+    - EvidenceEnvelope
+
+rust_binding:
+  crate: core_replay
+  module: replay_harness
+  symbols:
+  - ReplayPacket
+  - VerificationAudit
+  - VerificationStatus
+  - ReplayPacketValidationError
+  - T3Verifier
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

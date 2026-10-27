@@ -1,0 +1,92 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:simplicial_set:v0.1.0
+title: Simplicial Set Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: simplicial_set
+  symbol: 'X_• : Δ^op → Set'
+  ascii_symbol: simplicial_set
+  notation: X_• with face maps d_i and degeneracy maps s_j satisfying simplicial identities
+  domain:
+  - 'simplices: (X_n : Type u) graded sets of n-simplices for n >= 0'
+  - 'face_maps: (d_i : X_n -> X_{n-1}) for 0 <= i <= n'
+  - 'degeneracy_maps: (s_j : X_n -> X_{n+1}) for 0 <= j <= n'
+  codomain:
+    description: A simplicial set is a contravariant functor from the simplex category Δ to Set. It consists of collections of n-simplices with boundary/face maps d_i and degeneracy maps s_j satisfying the standard five simplicial identities.
+requirements:
+  required_structures:
+  - Face maps d_i and degeneracy maps s_j satisfy all 5 simplicial identities.
+  - Horn structures Λ^k_n are well-defined with matching boundary faces.
+  - Inner horns (0 < k < n) and outer horns (k = 0, n) are classified.
+  - All indices and dimensions use exact discrete integer arithmetic.
+  - Deterministic content-addressed artifact hash.
+laws:
+- 'Face-face identity: d_i ∘ d_j = d_{j-1} ∘ d_i for i < j'
+- 'Face-degeneracy identity 1: d_i ∘ s_j = s_{j-1} ∘ d_i for i < j'
+- 'Face-degeneracy identity 2: d_j ∘ s_j = id = d_{j+1} ∘ s_j'
+- 'Face-degeneracy identity 3: d_i ∘ s_j = s_j ∘ d_{i-1} for i > j + 1'
+- 'Degeneracy-degeneracy identity: s_i ∘ s_j = s_{j+1} ∘ s_i for i <= j'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Simplices and faces serialized in canonical discrete order
+  - Given same data, produces identical artifact hash
+relationships:
+- urn:core:math:infinity_category:v0.1.0 serves as Simplicial sets provide the foundational model for quasi-categories
+- urn:core:math:model_category:v0.1.0 serves as Simplicial sets admit the standard Quillen model structure
+rust_binding:
+  crate: core_higher_category_theory
+  module: simplicial_set
+  symbols:
+  - SimplicialSet
+  - Simplex
+  - Horn
+  - KanComplexValidator
+  - QuasiCategoryValidator
+  required_tests:
+  - test_simplicial_set_and_quasi_category_positive_verification
+  - test_kill_mut_p3_03_simplicial_identity_violation
+  - test_kill_mut_p3_04_quasi_category_inner_horn_filling_violation
+lean4_binding:
+  module: HigherCategoryTheory.SimplicialSet
+  symbols:
+  - SimplicialSet
+  - HornData
+  - IsKanComplex
+  - IsQuasiCategory
+  - kan_complex_is_quasi_category
+  - source_identity
+  - target_identity
+negative_tests:
+- Simplicial identity d_i ∘ d_j != d_{j-1} ∘ d_i violated (MUT-P3-03)
+- Horn boundary mismatch on shared faces (MUT-P3-04)
+- Missing required horn face
+- Simplex index out of bounds
+doctrine:
+  summary: Simplicial sets are combinatorial models for topological spaces and higher categories. Graded by dimension, simplices are acted upon by face and degeneracy operators satisfying the five simplicial identities. Quasi-categories and Kan complexes are simplicial sets satisfying horn-filling conditions.
+  non_role:
+  - Continuous topological spaces
+  - Cubical sets
+wip:
+  - Complete Segal space conversion
+  - Simplicial enrichment functors

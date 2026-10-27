@@ -1,0 +1,87 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:direct_sum:v0.1.0
+title: DirectSum Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: vector_space
+  symbol: V₁ ⊕ V₂ ⊕ ... ⊕ Vₙ
+  ascii_symbol: direct_sum
+  notation: V₁ ⊕ V₂ ⊕ ... ⊕ Vₙ
+  domain:
+  - 'component_spaces: finite list of vector spaces over same field K'
+  - 'elements: tuples (v₁, v₂, ..., vₙ)'
+  codomain:
+    description: 'The carrier is the Cartesian product V₁ × V₂ × ... × Vₙ of the component vector spaces. Elements are tuples (v₁, v₂, ..., vₙ) where vᵢ ∈ Vᵢ.
+
+      '
+requirements:
+  required_structures:
+  - Component list must be non-empty unless zero-object policy declared
+  - All component vector spaces must be over the same field
+  - Output dimension must equal sum of component dimensions
+  - Output basis must match declared concatenation policy
+  - All component and output hashes must be consistent
+laws:
+- All component vector spaces must be over the same field K
+- dim(V₁ ⊕ V₂ ⊕ ... ⊕ Vₙ) = dim(V₁) + dim(V₂) + ... + dim(Vₙ)
+- 'If Bᵢ is a basis for Vᵢ, then B₁ ∪ B₂ ∪ ... ∪ Bₙ (concatenated) forms a basis for the direct sum
+
+  '
+- 'For each i, there exists a canonical injection ιᵢ: Vᵢ → V₁ ⊕ ... ⊕ Vₙ given by ιᵢ(vᵢ) = (0, ..., 0, vᵢ, 0, ..., 0)
+
+  '
+- 'For each i, there exists a canonical projection πᵢ: V₁ ⊕ ... ⊕ Vₙ → Vᵢ given by πᵢ((v₁, ..., vₙ)) = vᵢ
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Same ordered component list produces identical output
+  - Same concatenation policy produces identical basis hash
+  - Component order matters for determinism
+relationships:
+- urn:math:contract:VectorSpace:v1.0.0 serves as Each component must satisfy the VectorSpace contract
+- urn:math:contract:Field:v1.0.0 serves as All components must be over the same field
+- urn:math:contract:Basis:v1.0.0 serves as Basis concatenation for direct sum basis construction
+negative_tests:
+- Reject empty component list unless zero object policy declared
+- Reject components over different fields
+- Reject output dimension not equal to sum of components
+- Reject output basis not matching concatenation policy
+- Reject artifact claiming authority or admissibility
+doctrine:
+  summary: DirectSum is the finite-dimensional vector space formed by the external direct sum of a finite list of vector spaces over the same field. It combines independent carriers and provides canonical injections and projections for use in block matrices, chain groups, decompositions, biproduct examples, and separability operations.
+  non_role:
+  - Internal direct sums (these may be a separate contract)
+  - Infinite direct sums or infinite-dimensional spaces
+  - Direct sums of modules over rings (only vector spaces over fields)
+  - Policy decisions or authority conferral
+wip:
+- Decide whether internal direct sums are a separate contract
+- Define zero-dimensional direct-sum behavior
+- Should we support infinite direct sums in a future version?
+- Policy for component reordering and its effect on basis ordering
+- Contract migrated from markdown to YAML format 2026-05-25
+- Component ordering matters for basis concatenation and determinism
+- Canonical injections and projections are structurally enforced
+- Zero object behavior needs explicit policy declaration

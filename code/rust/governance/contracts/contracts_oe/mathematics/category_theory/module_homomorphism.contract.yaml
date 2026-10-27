@@ -1,0 +1,110 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:module_homomorphism:v0.1.0
+title: ModuleHomomorphism Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: morphism
+  symbol: 'f: M -> N (R-linear)'
+  ascii_symbol: module_homomorphism
+  notation: 'f: M -> N (R-linear)'
+  domain:
+  - 'domain_module_hash: SHA-256 hash of the domain module M'
+  - 'codomain_module_hash: SHA-256 hash of the codomain module N'
+  - 'ring_hash: SHA-256 hash of the scalar ring R'
+  - 'map_hash: SHA-256 hash of the map specification'
+  - 'morphism_hash: SHA-256 hash of the entire morphism record'
+  codomain:
+    description: 'An R-linear map f: M -> N between left R-modules. The carrier consists
+      of the domain module M, the codomain module N, the scalar ring R (shared by
+      both modules), and the map f itself.
+
+      '
+requirements:
+  required_structures:
+  - Domain module M must satisfy the Module contract
+  - Codomain module N must satisfy the Module contract
+  - Domain and codomain must be modules over the same ring R
+  - f(m + n) = f(m) + f(n) for all m, n in M
+  - f(r . m) = r . f(m) for all r in R and m in M
+  - morphism_hash must match canonical hash of the homomorphism record
+laws:
+- f(m + n) = f(m) + f(n) for all m, n in M
+- f(r . m) = r . f(m) for all r in R and m in M
+- f(0_M) = 0_N (derived from additivity)
+- Domain M and codomain N must be modules over the same ring R
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - No random numbers
+  - No wall-clock data
+  - No network calls
+  - No thread scheduling dependencies
+relationships:
+- urn:math:contract:Module:v0.1.0 serves as Defines the domain module M and codomain
+  module N
+- urn:math:contract:Ring:v0.1.0 serves as Defines the shared scalar ring R
+- urn:math:contract:GroupHomomorphism:v0.1.0 serves as Underlying additive map must
+  be a group homomorphism
+negative_tests:
+- Reject map where f(m + n) != f(m) + f(n)
+- Reject map where f(r . m) != r . f(m)
+- Reject homomorphism between modules over different rings
+- Reject homomorphism with invalid domain module
+- Reject composition where codomain of first != domain of second
+- Reject homomorphism that attempts to claim authority
+doctrine:
+  summary: 'A ModuleHomomorphism is an R-linear map f: M -> N between left R-modules.
+    It is a group homomorphism (f(m + n) = f(m) + f(n)) that additionally commutes
+    with scalar multiplication (f(r . m) = r . f(m) for all r in R and m in M). Module
+    homomorphisms are the morphisms in the category R-Mod of left R-modules. They
+    generalize linear transformations from vector spaces to modules over arbitrary
+    rings. Kernels and cokernels of module homomorphisms give rise to exact sequences,
+    the foundation of homological algebra.'
+  non_role:
+  - Does not classify admissibility
+  - Does not emit policy decisions
+  - Does not emit certificates
+  - Does not terminalize operations
+  - Does not produce customer-facing claims
+  - Does not define the modules themselves (see Module contract)
+  - Does not compute kernels or cokernels (separate contracts)
+  - Does not handle bimodule maps or graded module maps
+wip:
+- Should injective/surjective/bijective classification be separate contracts or flags?
+- How to handle infinite modules where exhaustive verification is impossible?
+- Integration with exact sequence and chain complex contracts
+- Module homomorphisms are the morphisms of R-Mod
+- Kernel and image are submodules; their quotient structure is handled separately
+- Chain complexes are sequences of module homomorphisms with boundary^2 = 0
+- When R is a field, this specializes to linear transformation
+- The Module contract explicitly notes that module homomorphisms would be a separate
+  contract
+rust_binding:
+  crate: core_higher_category_theory
+  module: dg_category
+  symbols:
+  - DifferentialMap
+  - GradedMorphism
+  required_tests:
+  - test_dg_category_basic_lifecycle
+  - test_dg_graded_leibniz_even_and_odd

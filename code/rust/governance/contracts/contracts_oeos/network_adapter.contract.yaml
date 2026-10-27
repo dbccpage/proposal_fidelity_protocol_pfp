@@ -1,0 +1,85 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:network_adapter:v1.0.0
+title: Network Host Adapter
+kind: host_contract
+status: proposed
+layer: 09_host
+role: NetworkAdapter
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+    proof_obligations:
+      - id: NET-INV-001
+        statement: Network egress requires an exact host capability naming the destination and operation.
+        verification_status: open
+      - id: NET-INV-002
+        statement: Connect, read, write, response-size, retry, and total wall-clock ceilings are explicit.
+        verification_status: open
+      - id: NET-INV-003
+        statement: TLS verification and credential-redaction requirements are bound to the declared transport profile.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - NETWORK_DESTINATION_REFUSED
+      - NETWORK_RESPONSE_LIMIT_REFUSED
+      - NETWORK_TIMEOUT_REFUSED
+      - NETWORK_TLS_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: bounded_network_request
+      type: urn:core:oeos:type:bounded_network_request:v1.0.0
+      required: true
+  outputs:
+    - name: bounded_network_response
+      type: urn:core:oeos:type:bounded_network_response:v1.0.0
+      required: true
+  typed_refusals:
+    - NETWORK_DESTINATION_REFUSED
+    - NETWORK_RESPONSE_LIMIT_REFUSED
+    - NETWORK_TIMEOUT_REFUSED
+    - NETWORK_TLS_REFUSED
+  platform_requirements:
+    - profile: tls_client
+      requirements:
+        - destination_allowlist
+        - strict_certificate_validation
+        - bounded_response_body
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares bounded network effects below a destination-scoped host port.
+  non_role:
+    - remote_content_trust
+    - provider_semantics
+    - research_admission
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - successful_transport_does_not_certify_remote_content
+  invariants:
+    - retries_remain_inside_total_request_budget
+    - response_bytes_are_bounded_before_materialization
+  allowed_operations:
+    - execute_allowlisted_http_request
+    - execute_allowlisted_rpc_request
+  forbidden_operations:
+    - unrestricted_network_probe
+    - disable_tls_verification_silently
+    - expose_unredacted_credentials

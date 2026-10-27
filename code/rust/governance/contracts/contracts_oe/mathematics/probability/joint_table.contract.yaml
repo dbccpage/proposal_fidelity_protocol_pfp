@@ -1,0 +1,118 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:joint_table:v0.1.0
+title: Joint Table Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_bipartite_weight_table
+  symbol: 'w : A × B → ℚ_≥0 with W = ∑ w(a, b) > 0'
+  ascii_symbol: joint_table
+  notation: 'w_A(a) = ∑_b w(a, b), w_B(b) = ∑_a w(a, b), δ(a, b) = w(a, b) - w_A(a) w_B(b) / W, P = w / W'
+  domain:
+  - 'shape: |A| ≥ 1 rows and |B| ≥ 1 columns, every row of one length'
+  - 'weights: nonnegative exact rationals with positive total'
+  codomain:
+    description: 'A nonnegative rational table on a finite product, read as an unnormalised joint distribution: marginals, conditional kernels P(B|A) and P(A|B), the product defect and its l1 mass, independence decided several independent ways, the Pearson statistic, covariances, couplings of two marginals (independent and north-west-corner) with the Frechet bounds, the action of two local stochastic maps, point-product decomposition and convex mixtures.
+
+      '
+requirements:
+  required_structures:
+  - 'Nonnegative weights, rectangular shape and a positive total; the fields are private'
+  - 'A conditional is defined only where the marginal mass is positive; a zero-mass state is refused'
+  - 'Local maps must have source size equal to the side of the table they act on'
+  - 'The product-defect mass depends on the product basis in which the table is read and is not a distance to the set of product tables'
+laws:
+- 'Independence, decided by the vanishing of the product-defect mass, of every 2x2 minor, of a row-proportionality scan, of the dense rank being one, of the Pearson statistic, of every indicator covariance, and by the existence of factor marginals, gives one answer on every small table'
+- 'The defect has zero row and column sums, and Cov(1_a, 1_b) = δ(a, b) / W'
+- 'The Pearson statistic of a 2x2 table with positive marginals is W (ad - bc)^2 / (r1 r2 c1 c2)'
+- 'The total variation between P and the product of its marginals is the defect mass over 2W; it lies in [0, 1), is zero exactly for products, and no local stochastic map increases it'
+- 'The table of a prior p and a kernel M has conditional P(B|A) = M and posterior P(A|B) equal to the Bayesian inverse of M against p'
+- 'Every joint table with marginals p and q respects the Frechet bounds max(0, p_a + q_b - 1) ≤ P(a, b) ≤ min(p_a, q_b), and each bound is attained'
+- 'The north-west-corner coupling of two marginals has exactly those marginals and at most |A| + |B| - 1 positive cells'
+- 'Every normalised table is the convex mixture of its point tables weighted by its cells'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All arithmetic is exact in BigRational
+  - Cells are visited in row-major order
+relationships:
+- urn:core:math:finite_probability_simplex:v0.1.0 serves as Marginals and factor marginals are simplices
+- urn:core:math:stochastic_map:v0.1.0 serves as Conditionals and local maps are stochastic maps
+- urn:core:math:log_linear_entropy_form:v0.1.0 serves as Joint, conditional and mutual entropies of a table are log forms
+- urn:core:math:basic_matrix:v1.0.0 serves as The rank of the dense weight matrix decides independence
+rust_binding:
+  crate: core_finite_probability
+  module: joint_table
+  symbols:
+  - JointTable
+  - WeightTableError
+  - FrechetBounds
+  - frechet_bounds
+  - JointTable::product_defect
+  - JointTable::product_defect_mass
+  - JointTable::dependence_total_variation
+  - JointTable::is_independent
+  - JointTable::has_vanishing_minors
+  - JointTable::chi_square_statistic
+  - JointTable::conditional_b_given_a
+  - JointTable::from_prior_and_kernel
+  - JointTable::northwest_corner_coupling
+  - JointTable::apply_local_maps
+  - JointTable::convex_mixture
+  required_tests:
+  - a_table_is_refused_when_empty_ragged_negative_or_zero
+  - a_point_table_is_refused_outside_its_shape
+  - a_conditional_of_a_zero_mass_state_is_refused_and_a_prior_kernel_mismatch_too
+  - mixtures_are_refused_when_empty_misweighted_or_misshaped
+  - maps_of_the_wrong_source_size_are_refused_on_either_side
+  - covariance_vanishes_on_products_for_every_pair_of_functions_but_not_conversely_for_one_pair
+  - the_l1_distance_is_a_metric_on_small_tables
+  - seven_independent_decisions_of_independence_agree_on_every_small_table
+  - the_defect_has_zero_row_and_column_sums
+  - the_covariance_of_indicators_is_the_normalised_product_defect
+  - the_pearson_statistic_of_a_two_by_two_table_is_its_closed_form
+  - dependence_total_variation_is_a_fraction_of_one_and_zero_only_for_products
+  - no_local_stochastic_map_can_increase_the_dependence_total_variation
+  - conditionals_of_a_joint_built_from_a_prior_and_a_kernel_return_that_kernel
+  - every_joint_table_respects_the_frechet_bounds_and_each_bound_is_attained
+  - the_northwest_corner_coupling_has_the_marginals_and_a_small_support
+  - the_point_product_decomposition_reassembles_the_normalised_table
+
+negative_tests:
+- An empty, ragged, negative-weight or zero-total table must be refused
+- A point table whose cell lies outside the shape must be refused
+- A conditional of a state with zero marginal mass, or a prior and kernel of different sizes, must be refused
+- A mixture that is empty, has a negative or unnormalised weight, or has parts of different shapes must be refused
+- A local map whose source size differs from the side it acts on must be refused
+- A covariance with a function of the wrong length on either side must be refused
+- An l1 distance between tables of different shapes must be refused
+doctrine:
+  summary: 'A joint table is a nonnegative rational weight table with positive total, whose independence is decided seven independent ways that must agree, so no single routine is the authority. The dependence measure that is basis-free (total variation from the product of the marginals) cannot be increased by local stochastic maps, and every coupling respects the Frechet bounds, which are tight. The table has no quantum content; quantum descents to a table are computed elsewhere.'
+  non_role:
+  - Entanglement or separability of quantum states
+  - Continuous joint distributions
+  - Floating-point weights
+  - Statistical inference or significance testing from the Pearson statistic
+wip:
+- 'No Bell-scenario module: families of tables p(a, b | x, y), the no-signalling condition and the local polytope of deterministic strategies are not implemented here; core_quantum_physics::finite_chsh_correlations carries its own 16-coordinate box'
+- 'Multi-way tables (more than two sides) are not represented'
+- 'Optimal transport between marginals is not implemented; only the independent and north-west-corner couplings are'

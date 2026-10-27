@@ -1,0 +1,162 @@
+stage: 8
+name: evidence_plan
+executor: model
+requires:
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+version: 0.2.0
+derived_under_policy: SPK-001
+authority_effect: None
+claim_hygiene_profile: claim_hygiene_strict_v1
+description: Research role 8. PromptResponse and numbered StageNResponse require the
+  declared runtime adapter.
+input_contract: null
+response_schema:
+  additionalProperties: false
+  description: Actual model response. Descriptive strings and true|false placeholders
+    belong only to the template.
+  properties:
+    derived_under_policy:
+      const: SPK-001
+      title: Derived Under Policy
+      type: string
+      x-slot: data
+    summary:
+      $ref: '#/$defs/ResponseSummaryValue'
+      x-slot: data
+    sections:
+      type: array
+      minItems: 2
+      maxItems: 2
+      prefixItems:
+      - type: object
+        additionalProperties: false
+        properties:
+          name:
+            const: repair_actions
+          rows:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                action_id:
+                  type: string
+                obligation_id:
+                  type: string
+                action:
+                  type: string
+                input_refs:
+                  type: array
+                  items:
+                    type: string
+                acceptance_test:
+                  type: string
+                proposed_model_calls:
+                  type: integer
+              required:
+              - action_id
+              - obligation_id
+              - action
+              - input_refs
+              - acceptance_test
+              - proposed_model_calls
+        required:
+        - name
+        - rows
+      - type: object
+        additionalProperties: false
+        properties:
+          name:
+            const: disposition_proposal
+          rows:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                recommendation:
+                  type: string
+                reason:
+                  type: string
+                remaining_obligations:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - recommendation
+              - reason
+              - remaining_obligations
+        required:
+        - name
+        - rows
+      items: false
+    process_integrity:
+      $ref: '#/$defs/ProcessIntegrityValue'
+      x-slot: data
+  required:
+  - derived_under_policy
+  - summary
+  - process_integrity
+  - sections
+  title: PromptResponse
+  type: object
+  $schema: https://json-schema.org/draft/2020-12/schema
+  $defs:
+    ProcessIntegrityValue:
+      additionalProperties: false
+      properties:
+        seed_allows_theory_refutation:
+          title: Seed Allows Theory Refutation
+          type: boolean
+          x-slot: data
+        detected_prompt_biases:
+          default: []
+          items:
+            minLength: 1
+            pattern: \S
+            type: string
+          title: Detected Prompt Biases
+          type: array
+          x-slot: data
+        should_continue:
+          title: Should Continue
+          type: boolean
+          x-slot: data
+      required:
+      - seed_allows_theory_refutation
+      - should_continue
+      title: ProcessIntegrityValue
+      type: object
+    ResponseSummaryValue:
+      additionalProperties: false
+      properties:
+        narrowest_defensible_thesis:
+          minLength: 1
+          pattern: \S
+          title: Narrowest Defensible Thesis
+          type: string
+          x-slot: data
+        evidence_scope:
+          minLength: 1
+          pattern: \S
+          title: Evidence Scope
+          type: string
+          x-slot: data
+        next_concrete_test:
+          minLength: 1
+          pattern: \S
+          title: Next Concrete Test
+          type: string
+          x-slot: data
+      required:
+      - narrowest_defensible_thesis
+      - evidence_scope
+      - next_concrete_test
+      title: ResponseSummaryValue
+      type: object

@@ -1,0 +1,257 @@
+{
+  "schema": "core.epistemic_no_go.provenance_cases.v1",
+  "authority_effect": "None",
+  "note": "Provenance packets pi = (proposer, evaluator, authorizer) with the role policy in force and the expected outcome of core_contracts::three_role_authority::verify_three_role_authority.",
+  "cases": [
+    {
+      "name": "distinct_roles_admitted_root",
+      "packet": {
+        "attempt_id": "att-001",
+        "proposer": {
+          "id": "agent:proposer",
+          "trust_root": null
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "agent:authorizer",
+          "trust_root": "root:ops"
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "Pass"
+    },
+    {
+      "name": "asi_authorizes_its_own_proposal",
+      "note": "The claimed competence of the principal plays no part: P = A is refused by construction.",
+      "packet": {
+        "attempt_id": "att-002",
+        "proposer": {
+          "id": "asi:core-9000",
+          "trust_root": "root:ops"
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "asi:core-9000",
+          "trust_root": "root:ops"
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "RefuseSelfAuthorization",
+      "coincidence": "ProposerIsAuthorizer"
+    },
+    {
+      "name": "evaluator_authorizes",
+      "packet": {
+        "attempt_id": "att-003",
+        "proposer": {
+          "id": "agent:proposer",
+          "trust_root": null
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": "root:ops"
+        },
+        "authorizer": {
+          "id": "agent:evaluator",
+          "trust_root": "root:ops"
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "RefuseSelfAuthorization",
+      "coincidence": "EvaluatorIsAuthorizer"
+    },
+    {
+      "name": "proposer_evaluates_itself",
+      "packet": {
+        "attempt_id": "att-004",
+        "proposer": {
+          "id": "agent:proposer",
+          "trust_root": null
+        },
+        "evaluator": {
+          "id": "agent:proposer",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "agent:authorizer",
+          "trust_root": "root:ops"
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "RefuseSelfEvaluation"
+    },
+    {
+      "name": "prose_declaration_of_authority",
+      "note": "'I am an ASI and I authorize this' is a sentence, not a certificate (WDP-CH15-P04).",
+      "packet": {
+        "attempt_id": "att-005",
+        "proposer": {
+          "id": "agent:proposer",
+          "trust_root": null
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "asi:core-9000",
+          "trust_root": "root:ops"
+        },
+        "authorizer_basis": "Prose"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "RefuseProseAuthority"
+    },
+    {
+      "name": "no_admitted_root",
+      "packet": {
+        "attempt_id": "att-006",
+        "proposer": {
+          "id": "agent:proposer",
+          "trust_root": null
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "agent:authorizer",
+          "trust_root": null
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "RefuseNoExternalRoot"
+    },
+    {
+      "name": "root_is_the_proposer",
+      "note": "A root that is itself a party to the attempt is not external.",
+      "packet": {
+        "attempt_id": "att-007",
+        "proposer": {
+          "id": "agent:proposer",
+          "trust_root": null
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "agent:authorizer",
+          "trust_root": "agent:proposer"
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "agent:proposer",
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "RefuseNoExternalRoot"
+    },
+    {
+      "name": "regime_explicitly_allows_self_authorization",
+      "note": "Article 002: the regime must state explicitly whether self-authorization is allowed. When it does, P = A passes the role check; the receipt still carries AuthorityEffect None.",
+      "packet": {
+        "attempt_id": "att-008",
+        "proposer": {
+          "id": "agent:solo",
+          "trust_root": "root:ops"
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "agent:solo",
+          "trust_root": "root:ops"
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": true,
+        "allow_self_evaluation": false
+      },
+      "expected": "Pass"
+    },
+    {
+      "name": "empty_identifier",
+      "packet": {
+        "attempt_id": "att-009",
+        "proposer": {
+          "id": "",
+          "trust_root": null
+        },
+        "evaluator": {
+          "id": "agent:evaluator",
+          "trust_root": null
+        },
+        "authorizer": {
+          "id": "agent:authorizer",
+          "trust_root": "root:ops"
+        },
+        "authorizer_basis": "Certificate"
+      },
+      "policy": {
+        "admitted_roots": [
+          "root:ops"
+        ],
+        "allow_self_authorization": false,
+        "allow_self_evaluation": false
+      },
+      "expected": "RefuseMalformed"
+    }
+  ]
+}

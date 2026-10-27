@@ -1,0 +1,92 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:monoidal_category:v0.1.0
+title: Monoidal Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: monoidal_category
+  symbol: (C, ⊗, I, α, λ, ρ)
+  ascii_symbol: monoidal_category
+  notation: (C, ⊗, I, α, λ, ρ)
+  domain:
+  - 'underlying_category: Category C'
+  - 'tensor_bifunctor: ⊗: C × C → C'
+  - 'unit_object: I ∈ Ob(C)'
+  - 'associator: α: (- ⊗ -) ⊗ - ⇒ - ⊗ (- ⊗ -)'
+  - 'left_unitor: λ: I ⊗ - ⇒ Id_C'
+  - 'right_unitor: ρ: - ⊗ I ⇒ Id_C'
+  codomain:
+    description: 'A category C with additional structure: tensor bifunctor, unit object, and natural isomorphisms for associativity and unit laws.
+
+      '
+requirements:
+  required_structures:
+  - Underlying category C must exist and be valid
+  - Tensor functor must be a valid bifunctor C × C → C
+  - Unit object I must be an object in category C
+  - Associator must be a natural isomorphism
+  - Left and right unitors must be natural isomorphisms
+  - Pentagon diagram must commute for all objects
+  - Triangle diagram must commute for all objects
+laws:
+- '⊗: C × C → C is a bifunctor'
+- 'α: (- ⊗ -) ⊗ - ⇒ - ⊗ (- ⊗ -) is a natural isomorphism'
+- 'λ: I ⊗ - ⇒ Id_C is a natural isomorphism'
+- 'ρ: - ⊗ I ⇒ Id_C is a natural isomorphism'
+- Pentagon diagram commutes for all A, B, C, D
+- Triangle diagram commutes for all A, B
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Underlying category structure
+- urn:math:contract:Functor:v1.0.0 serves as Tensor product is a bifunctor C × C → C
+- urn:math:contract:NaturalTransformation:v1.0.0 serves as Associator and unitors are natural isomorphisms
+negative_tests:
+- category_id does not resolve
+- tensor_functor_id is not a bifunctor C × C → C
+- Some α_{A,B,C} is not invertible
+- Pentagon diagram doesn't commute
+- Triangle diagram doesn't commute
+doctrine:
+  summary: 'A MonoidalCategory is a category C equipped with a tensor product bifunctor ⊗: C × C → C, a unit object I, and natural isomorphisms (associator, left unitor, right unitor) satisfying coherence conditions. The contract validates the monoidal structure.'
+  non_role:
+  - Braided or symmetric monoidal categories (separate contracts)
+  - Closed monoidal categories with internal hom (separate contract)
+  - Strict monoidal categories where constraints are identities
+wip:
+- Strict monoidal categories (associator and unitors are identities) are a special case - should we add a flag or separate contract?
+- Braided and symmetric monoidal categories add braiding - should these be separate contracts or FactEnvelopes?
+- Closed monoidal categories have internal hom - should this be a separate contract or extension?
+- Current implementation covers basic monoidal structure validation
+- Pentagon and triangle coherence checks are the most computationally intensive validators
+- May need optimization for large categories with many objects
+- Consider caching tensor products for performance
+rust_binding:
+  crate: core_category_theory
+  module: monoidal
+  symbols:
+    - MonoidalCategory
+  required_tests:
+    - validate_ok
+    - validate_rejects_empty

@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:validated_cellular_coboundaries:v0.1.0
+title: Checked Exact Cellular Coboundaries
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: validated_cellular_coboundaries
+  symbol: validated_cellular_coboundaries
+  ascii_symbol: validated_cellular_coboundaries
+  notation: Checked Exact Cellular Coboundaries
+  domain:
+  - A declared finite oriented two-complex, including its public vertex/edge/face maps and indices.
+  - Explicit dense-storage and nilpotency-replay operation budgets.
+  codomain:
+    description: Declared finite results of core_holonomy::graph; exact and diagnostic routes retain their
+      stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Construction replays declared indices, endpoints, maps and closed oriented face boundaries before indexing.
+- The primitive coboundary is f(v)-f(u) and the face coboundary sums its signed boundary edges.
+- The returned exact rational maps obey d1 d0=0.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_holonomy
+  module: graph
+  symbols:
+  - CellComplex
+  - CellComplex::cochain_matrices
+  required_tests:
+  - malformed_public_cell_complex_fields_are_refused_before_indexing
+
+negative_tests:
+- Tampered public maps, edge indices, unknown boundary data and oversized matrix/replay work are refused.
+doctrine:
+  summary: Construction replays declared indices, endpoints, maps and closed oriented face boundaries before
+    indexing.; The primitive coboundary is f(v)-f(u) and the face coboundary sums its signed boundary edges.;
+    The returned exact rational maps obey d1 d0=0..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,99 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:coboundary_map:v0.1.0
+title: CoboundaryMap Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: linear_map
+  symbol: 'delta_n: C^n -> C^{n+1}'
+  ascii_symbol: coboundary_map
+  notation: 'delta_n: C^n -> C^{n+1}'
+  domain:
+  - 'source: C^n (cochain group at degree n)'
+  - 'target: C^{n+1} (cochain group at degree n+1)'
+  - 'matrix: Linear transformation matrix'
+  - 'coefficient_domain: Ring or field for coefficients'
+  codomain:
+    description: 'Linear map delta_n: C^n -> C^{n+1} between cochain groups. Represented by matrix relative to source and target bases.
+
+      '
+requirements:
+  required_structures:
+  - Target degree equals source degree plus 1
+  - Source and target are valid cochain groups from same complex
+  - Matrix dimensions match source/target basis dimensions
+  - Source, target, and matrix use compatible coefficient domains
+  - Artifact hash correctly identifies coboundary map structure
+  - Composition delta_{n+1} ∘ delta_n = 0 (zero map)
+laws:
+- 'delta_n raises degree by exactly 1: deg(delta_n(c)) = deg(c) + 1'
+- delta_n(a*c1 + b*c2) = a*delta_n(c1) + b*delta_n(c2) for scalars a,b
+- delta_{n+1} ∘ delta_n = 0 (composition is zero map)
+- Domain is C^n, codomain is C^{n+1} from same cochain complex
+replay:
+  requirements:
+  - No external state or global variables
+  - No randomness or probabilistic operations
+  - No time-dependent data
+  - Matrix operations must be numerically stable and deterministic
+  - Same cochain input must produce same coboundary output hash
+relationships:
+- urn:math:contract:CochainGroup:v0.1.0 serves as Defines source C^n and target C^{n+1} cochain groups
+- urn:math:contract:LinearMap:v0.1.0 serves as Provides linear map structure and matrix representation
+- urn:math:contract:CoefficientDomain:v0.1.0 serves as Defines coefficient ring/field for linear operations
+- urn:math:contract:Basis:v0.1.0 serves as Provides basis for matrix representation
+rust_binding:
+  crate: core_homology
+  module: coboundary
+  symbols:
+  - CoboundaryMap
+  # Constructor does not reject degree shift, coefficient domain, or d^2 != 0.
+  # Those negatives stay unnamed. apply() does reject a length mismatch.
+  required_tests:
+  - apply_rejects_coefficient_length_mismatch
+negative_tests:
+- Reject if target degree ≠ source degree + 1
+- Reject if matrix dimensions don't match basis dimensions
+- Reject if coefficient domains incompatible
+- Reject if coboundary output lies outside target cochain group
+- Reject artifact attempting to claim authority or admissibility
+- Reject operations with randomness or external state
+- Reject if delta_{n+1} ∘ delta_n ≠ 0
+doctrine:
+  summary: 'Degree-raising map delta_n: C^n -> C^{n+1} in a cochain complex. Coboundary maps are linear transformations that increase degree by 1, produce coboundaries (image of delta_n), define cocycles (kernel of delta_n), and satisfy the fundamental cochain complex law: delta_{n+1} ∘ delta_n = 0.
+
+    This contract ensures that coboundary maps are properly constructed with validated source/target cochain groups, correct degree shift, compatible coefficient domains, and appropriate matrix representations.'
+  non_role:
+  - Computing cohomology groups (H^n computed separately)
+  - Chain complexes (use BoundaryMap for homological version)
+  - Implementing cup products or cohomological operations
+  - Computing spectral sequences
+  - Providing geometric or topological interpretations
+  - Authority or certification of mathematical results
+wip:
+- Decide sign conventions relative to dual boundary maps (orientation compatibility)
+- Determine strategy for numerical stability in matrix operations (floating point vs exact arithmetic)
+- Define relationship to spectral sequences and filtrations
+- Clarify how cup products and cohomological ring structure interact with coboundary maps
+- Initial version focuses on basic cochain complex structure
+- Cochain law validation requires access to adjacent coboundary maps
+- Kernel/image computation may need specialized algorithms for large matrices
+- Consider caching kernel/image generators for performance
+- Sign conventions must align with boundary map contract for duality

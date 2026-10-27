@@ -1,0 +1,40 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_solvers:mcts_obstruction_solver:v1.0.0
+title: MCTS, GNN, and Neural-Symbolic Obstruction Solver Contract
+status: retired_source_archived
+crate: core_solvers
+file: crates_rs/core_solvers/src/solver_obstruction_mcts.rs
+retired_reason: |
+  Source archived 2026-08-25 with 69 other orphan solver modules: no Python
+  counterpart under engine/crates/solver, and nothing in the workspace
+  imported it. The contract is kept as the record of what the module
+  declared; recover the source with git show <sha>:<file> if it returns.
+role: monte_carlo_tree_search_and_neural_ranker_solver
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - monte_carlo_tree_search_for_obstructions
+  - neural_symbolic_candidate_ranking
+  - gnn_thimble_prediction
+  - topological_autoencoder_reconstruction
+does_not_own:
+  - exact_mathematical_proof
+  - authority_promotion
+may_call:
+  - core_types
+must_not:
+  - treat_heuristic_mcts_search_as_formal_proof
+  - mint_certified_authority
+exactness:
+  numeric_mode: heuristic_search_and_neural_scoring
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "MCTS"
+required_tests:
+  - test_mcts_obstruction_search
+lean_obligations: []

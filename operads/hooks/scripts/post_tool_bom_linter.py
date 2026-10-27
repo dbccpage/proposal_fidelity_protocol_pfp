@@ -90,7 +90,7 @@ def main() -> int:
         try:
             check_and_clean_bom(target)
         except ValueError as exc:
-            sys.stderr.write(f"[POST_TOOL_INPUT_REFUSED] {exc}\n")
+            sys.stderr.write(f"[POST_TOOL_INPUT_REFUSED] [RULE_FILE_STRICT_UTF8_001] {exc}\n")
             return 2
 
         exit_code = max(exit_code, run_ruff_lint(target))

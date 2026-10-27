@@ -1,0 +1,57 @@
+[package]
+autotests = false
+name = "core_operads"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+description = "Validated workflow and skill domain slices over sovereign operad kernels"
+
+[dependencies]
+core_operad_canon = { path = "../core_operad_canon" }
+core_types = { path = "../core_types" }
+core_operad_theory = { path = "../core_operad_theory" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["arbitrary_precision", "raw_value"] }
+num-bigint = "0.4"
+num-rational = "0.4"
+num-traits = "0.2"
+sha2 = "0.10"
+hex = "0.4"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_operads`.
+
+[[test]]
+name = "estate_composition_contract"
+path = "../tests/core_operads/estate_composition_contract.rs"
+
+[[test]]
+name = "estate_lifecycle_contract"
+path = "../tests/core_operads/estate_lifecycle_contract.rs"
+
+[[test]]
+name = "immune_guards_parity"
+path = "../tests/core_operads/immune_guards_parity.rs"
+
+[[test]]
+name = "planar_parity"
+path = "../tests/core_operads/planar_parity.rs"
+
+[[test]]
+name = "policy_parity"
+path = "../tests/core_operads/policy_parity.rs"
+
+[[test]]
+name = "skill_garden_cull"
+path = "../tests/core_operads/skill_garden_cull.rs"
+
+[[test]]
+name = "workflow_graph"
+path = "../tests/core_operads/workflow_graph.rs"
+
+[[test]]
+name = "workflow_parity"
+path = "../tests/core_operads/workflow_parity.rs"
+
+[[test]]
+name = "workflow_step_contract"
+path = "../tests/core_operads/workflow_step_contract.rs"

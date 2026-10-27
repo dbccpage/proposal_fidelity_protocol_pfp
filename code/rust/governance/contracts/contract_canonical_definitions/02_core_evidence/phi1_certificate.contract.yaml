@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:phi1_certificate:v1.0.0
+title: Phi1Certificate
+kind: evidence_contract
+status: active
+layer: 02_evidence
+role: CertificateKernel
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations:
+    - PO-PHI1-PRIMAL-FEASIBILITY
+    - PO-PHI1-DUAL-FEASIBILITY
+    - PO-PHI1-WEAK-DUALITY-EQUALITY
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: []
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+    - exact_rational_inputs
+    - lean_theorem_reference
+  constraints:
+    checker_boundary_required: true
+    mutation_forbidden: true
+    typed_output_required: true
+    authority_does_not_exceed_evidence: true
+doctrine:
+  summary: >-
+    Phi1Certificate is an exact BigRational primal-dual equality witness. It
+    checks A x <= b, x >= 0, A^T y >= c, y >= 0, and c^T x = b^T y. The
+    certificate is algebraic evidence only and cannot authorize a contract
+    transition, mint CertifiedAuthority, or grant release authority.
+  non_role:
+  - authority_promotion
+  - transition_authorization
+  - release_authorization
+  - approximate_optimization
+  authority_ladder:
+    sequence:
+    - Generated
+    - Checked
+    - Verified
+    law: >-
+      Exact verification raises evidence status only; normative, operational,
+      and release dimensions remain independently non-authorizing.
+  required_tests:
+  - test_valid_phi1_certificate_passes
+  - test_duality_gap_refused
+  - test_infeasible_pair_refused
+  - test_authority_effect_no_implicit_promotion
+rust_binding:
+  crate: core_certifiers
+  module: phi1_certifier
+  symbols:
+  - Phi1Certificate
+  - Phi1CertificateMetadata
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

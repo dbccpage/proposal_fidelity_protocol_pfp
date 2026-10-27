@@ -10,7 +10,7 @@ from pfp.domain.shared_kernel.canonical import (
 
 # Same vector as host_contract::packet_id_matches_python_for_line_and_paragraph_separators.
 # serde_json leaves U+2028 and U+2029 raw. The framed digest is of that text.
-_SEPARATOR_PACKET_ID = "11aa1b89aa513177c1aaa81cca3aedeb5e4ae9dcfdbf4c043e7e58b68cd43dc6"
+_SEPARATOR_PACKET_ID = "870efca3bded9c0fbb3f1fafa90fa11a212984f3e97b0a6f3204b1d01d7b0aa9"
 
 
 def test_packet_id_uses_raw_line_and_paragraph_separators() -> None:

@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_clifford_t_physical_gates:v0.1.0
+title: Bounded exact Clifford T physical unitary circuits
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_clifford_t_physical_gates
+  symbol: exact_clifford_t_physical_gates
+  ascii_symbol: exact_clifford_t_physical_gates
+  notation: Bounded exact Clifford T physical unitary circuits
+  domain:
+  - Finite matrices over Cyc8 with checked budgets
+  codomain:
+    description: Declared finite results of core_quantum_physics::unitary_operator; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Unitary admission replays U*U=I
+- H^2=I and T^8=I exactly
+- H on the control followed by CNOT produces a Bell ray with exact phases
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: unitary_operator
+  symbols:
+  - ExactUnitary::try_new
+  - ExactUnitary::hadamard
+  - ExactUnitary::t_gate
+  - ExactUnitary::cnot
+  - ExactUnitary::compose
+  - ExactUnitary::tensor
+  required_tests:
+  - states_channels_exact_tests::exact_clifford_t_gate_words_and_packed_operators_keep_complex_phases
+negative_tests:
+- states_channels_exact_tests::diagnostic_faces_refuse_nan_tolerances_and_invalid_public_storage
+doctrine:
+  summary: Unitary admission replays U*U=I; H^2=I and T^8=I exactly; H on the control followed by CNOT produces
+    a Bell ray with exact phases.
+  non_role:
+  - No generic continuous-time irrational rotation is approximated as an exact gate
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

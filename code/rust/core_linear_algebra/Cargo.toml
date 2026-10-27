@@ -1,0 +1,94 @@
+[package]
+autotests = false
+name = "linear_algebra"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+
+[dependencies]
+
+core_category_theory = { path = "../core_category_theory" }
+core_combinatorics = { path = "../core_combinatorics" }
+
+nalgebra = { version = "0.33", features = ["serde-serialize"] }
+num-rational = { version = "0.4.2", features = ["serde"] }
+num-bigint = { version = "0.4.6", features = ["serde"] }
+num-traits = "0.2.19"
+num-complex = "0.4.6"
+thiserror = "2"
+
+
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_linear_algebra`.
+
+[[test]]
+name = "adr001_exact_row_reduction_generic"
+path = "../tests/core_linear_algebra/adr001_exact_row_reduction_generic.rs"
+
+[[test]]
+name = "basic_matrix_serialization"
+path = "../tests/core_linear_algebra/basic_matrix_serialization.rs"
+
+[[test]]
+name = "contract_cases_basic_matrix"
+path = "../tests/core_linear_algebra/contract_cases_basic_matrix.rs"
+
+[[test]]
+name = "decorated_pair_orbits"
+path = "../tests/core_linear_algebra/decorated_pair_orbits.rs"
+
+[[test]]
+name = "exact_field_cross_validation"
+path = "../tests/core_linear_algebra/exact_field_cross_validation.rs"
+
+[[test]]
+name = "exact_ldlt"
+path = "../tests/core_linear_algebra/exact_ldlt.rs"
+
+[[test]]
+name = "exact_pfaffian"
+path = "../tests/core_linear_algebra/exact_pfaffian.rs"
+
+[[test]]
+name = "finite_cochain_map"
+path = "../tests/core_linear_algebra/finite_cochain_map.rs"
+
+[[test]]
+name = "gauge_pair_table"
+path = "../tests/core_linear_algebra/gauge_pair_table.rs"
+
+[[test]]
+name = "gauge_pair_transport"
+path = "../tests/core_linear_algebra/gauge_pair_transport.rs"
+
+[[test]]
+name = "linear_observer_presentation"
+path = "../tests/core_linear_algebra/linear_observer_presentation.rs"
+
+[[test]]
+name = "pair_table_canonical"
+path = "../tests/core_linear_algebra/pair_table_canonical.rs"
+
+[[test]]
+name = "pair_table_transport"
+path = "../tests/core_linear_algebra/pair_table_transport.rs"
+
+[[test]]
+name = "principal_minors_boundary"
+path = "../tests/core_linear_algebra/principal_minors_boundary.rs"
+
+[[test]]
+name = "qm_complex_regression"
+path = "../tests/core_linear_algebra/qm_complex_regression.rs"
+
+[[test]]
+name = "row_constraint_implication"
+path = "../tests/core_linear_algebra/row_constraint_implication.rs"
+
+[[test]]
+name = "second_order_jet"
+path = "../tests/core_linear_algebra/second_order_jet.rs"

@@ -1,0 +1,113 @@
+schema_version: "1.0.0"
+contract_id: "rust:core_homology:cochain_primitive_difference"
+kind: "rust_file_contract"
+name: "Cochain -> PrimitiveDifference Adapter"
+version: "1.0.0"
+
+crate: "core_homology"
+file: "crates_rs/core_homology/src/cochain_primitive_difference.rs"
+module_path: "core_homology::cochain_primitive_difference"
+
+role: "cochain_primitive_difference_adapter"
+status: "active"
+authority_effect: "EvidenceOnly"
+transition_authority: "none"
+
+description: >
+  Realizes a finite cochain complex as a PrimitiveDifference on its C^1 cochains, mirroring the
+  Lean CoreCore.cochainDifference: delta(x,y) = x - y and Zero(d) := d in im(d0) (d is a
+  coboundary), membership decided exactly over Q by
+  linear_algebra::linear_algebra::image_kernel::solve_in_image. It implements the HoTT primitive
+  trait for cochain complexes; it computes no Phi1/Gamma2, runs no evaluator, mints no authority.
+
+exactness:
+  level: "bigrational_exact"
+  f64_allowed: false
+  bigrational_followup: "EXACT-LA-001 completed by ADR-001 (BigRational canonical Q)"
+
+lean_anchor:
+  file: "lean4/original_lean_20260809/finite_cochain_complex.lean"
+  repointed_from: "engine/lean4/…/CoreCosmology/Primitives/FiniteCochainComplex.lean (never present in this repository)"
+  in_tree_build: >
+    None. The file is not a root of any Lake package in this repository, and its imports
+    primitive_difference, «lg006_pointed_obstruction_classifier» and
+    «lg006_primitive_obstruction_pipeline» do not resolve here.
+  replay: >
+    2026-09-29 scratch replay, not committed: Lean 4.34.0 + Mathlib v4.34.0, the three imports
+    rewritten to PrimitiveDifference / PointedObstructionClassifier / PrimitiveObstructionPipeline
+    from atlas/coda_atlas/F004_papers/006_finite_qm/lean4/, body unchanged; exit 0. cochainDifference,
+    gammaL1_congruent_of_cochain, cochainDifference_zero_iff_mem_range, d0LinearMap and
+    range_d0_finiteDimensional elaborate; the theorems print axioms
+    [propext, Classical.choice, Quot.sound].
+  modeled_definitions:
+    - "cochainDifference"        # delta = x - y, Zero = is-coboundary
+  related:
+    - "gammaL1 / gammaL1_congruent_of_cochain (Gamma2 magnitude descent)"
+  orientation: "delta(x,y) = x - y (matches Lean cochainDifference)"
+
+owns:
+  - "cochain_as_primitive_difference"
+  - "coboundary_zero_predicate (Zero(d) := d in im(d0))"
+
+does_not_own:
+  - "phi1"
+  - "gamma2"
+  - "trichotomy"
+  - "cochain_complex (owned by cochain_complex.rs)"
+  - "exact_image_membership (owned by core_linear_algebra::image_kernel)"
+  - "primitive_difference_trait (defined in core_homotopy_type_theory)"
+  - "authority_minting"
+  - "evaluator_policy"
+  - "lift_policy"
+  - "operad_generation"
+
+may_call:
+  - "std"
+  - "core_homotopy_type_theory::primitive_difference (the trait)"
+  - "core_homology::cochain_complex (the carrier)"
+  - "linear_algebra::linear_algebra::image_kernel::solve_in_image (exact membership)"
+
+must_not_call:
+  - "core_functional"
+  - "core_certifiers"
+  - "core_id_run"
+  - "core_pipelines"
+  - "engines"
+
+rules:
+  authority_minting: "forbidden"
+  canonical_functional_computation: "forbidden"
+  f64: "forbidden"
+  delta_orientation: "x_minus_y_matches_lean"
+  zero_predicate: "d_in_image_d0_exact"
+
+required_types:
+  - "CochainPrimitiveDifference"
+
+required_tests:
+  - "cochain_zero_accepts_exact_boundary"
+  - "cochain_zero_rejects_non_boundary"
+  - "cochain_primitive_difference_matches_lean_orientation"
+  - "cochain_zero_rel_equivalence_on_validated_domain"
+
+lean_obligations:
+  - id: "CPD-L0"
+    theorem: "delta = x - y, Zero = is-coboundary realizes a PrimitiveDifference (zero laws hold)."
+    lean_name: "CoreCore.cochainDifference (zero_refl/zero_symm/zero_trans)"
+    status: "proved_in_lean"
+  - id: "CPD-L1"
+    theorem: "The cochain Zero predicate (Zero d := exists pot, d0 pot = d) is exactly membership in the Q-linear range of d0 (a genuine Mathlib LinearMap), and im(d0) is a finite-dimensional Q-subspace of C^1 -- the image-membership predicate solve_in_image decides. Soundness (Rust InImage => Lean Zero) is definitional: the replay-verified pot witness IS the existential."
+    lean_name: "CoreCore.cochainDifference_zero_iff_mem_range (+ d0LinearMap / range_d0_finiteDimensional)"
+    status: "proved_in_lean"
+    axioms: "[propext, Classical.choice, Quot.sound]"
+    scope: "bounded anchor: spec correspondence + finite-dimensionality. Completeness split out as CPD-L1b."
+  - id: "CPD-L1b"
+    theorem: "Completeness of the Rust rank decision: solve_in_image returns NotInImage (rank([d0|v]) > rank d0) only when v is genuinely NOT a coboundary (Rouche-Capelli over finite-dim Q)."
+    lean_name: "rust_verified_not_yet_in_lean"
+    status: "rust_verified"
+    note: "Verified Rust-side by exact rank-augmentation + matvec replay; a false InImage witness is impossible. A full Lean derivation would require porting rank/RREF consistency (Rouche-Capelli) into Mathlib -- deferred."
+
+notes:
+  - "This adapter is BELOW the functional layer; it produces the residual quotient C^1/im(d0), not Phi1 or Gamma2."
+  - "ADR-001 widened Q to BigRational. Consumers recording evidence must retain the solve_in_image Result; PrimitiveDifference::zero maps solver errors to false."
+  - "Do not claim operads, physics, or global generativity from this -- it is the delta->cochain realization only."

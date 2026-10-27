@@ -1,0 +1,823 @@
+[
+  {
+    "op": "ledger",
+    "records": [],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "",
+      "spent": 0
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 5,
+        "seat": "é λ"
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a352c22646179223a22323032362d31302d3034222c2273656174223a22c3a920cebb227d0a",
+      "spent": 5
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 1000000000000000000000000000000000000000000000000000000000001
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a313030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030312c22646179223a22323032362d31302d3034227d0a",
+      "spent": 1000000000000000000000000000000000000000000000000000000000001
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 5
+      },
+      {
+        "day": "2026-10-04",
+        "cost_microusd": true
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a352c22646179223a22323032362d31302d3034227d0a7b22636f73745f6d6963726f757364223a747275652c22646179223a22323032362d31302d3034227d0a",
+      "spent": 5
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 5
+      },
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 1.5
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a352c22646179223a22323032362d31302d3034227d0a7b22636f73745f6d6963726f757364223a312e352c22646179223a22323032362d31302d3034227d0a",
+      "spent": 5
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 5
+      },
+      {
+        "day": "2026-10-04",
+        "cost_microusd": "7"
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a352c22646179223a22323032362d31302d3034227d0a7b22636f73745f6d6963726f757364223a2237222c22646179223a22323032362d31302d3034227d0a",
+      "spent": 5
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 5
+      },
+      {
+        "day": "2026-10-04",
+        "cost_microusd": null
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a352c22646179223a22323032362d31302d3034227d0a7b22636f73745f6d6963726f757364223a6e756c6c2c22646179223a22323032362d31302d3034227d0a",
+      "spent": 5
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-04",
+        "cost_microusd": 5
+      },
+      {
+        "day": "2026-10-04",
+        "cost_microusd": -2
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a352c22646179223a22323032362d31302d3034227d0a7b22636f73745f6d6963726f757364223a2d322c22646179223a22323032362d31302d3034227d0a",
+      "spent": 3
+    }
+  },
+  {
+    "op": "ledger",
+    "records": [
+      {
+        "day": "2026-10-05",
+        "cost_microusd": 99
+      },
+      {
+        "cost_microusd": 99
+      }
+    ],
+    "day": "2026-10-04",
+    "expected": {
+      "raw_hex": "7b22636f73745f6d6963726f757364223a39392c22646179223a22323032362d31302d3035227d0a7b22636f73745f6d6963726f757364223a39397d0a",
+      "spent": 0
+    }
+  },
+  {
+    "op": "load_routing",
+    "raw_hex": "2320576f6c616e64207365617420726f7574696e672076312e20417574686f726974794566666563743a204e6f6e652e0a230a23205072696365733a205553442070657220314d20746f6b656e732c20776869636820657175616c73206d6963726f2d5553442070657220746f6b656e2e204f70656e526f75746572207072696365730a2320636f6d652066726f6d204745542068747470733a2f2f6f70656e726f757465722e61692f6170692f76312f6d6f64656c73206f6e20323032362d31302d30342c20726f756e64656420746f0a23203320646563696d616c20706c616365732e20416674657220656163682063616c6c20746865204f70656e526f75746572207265636569707420636f7374202875736167652e636f7374292069730a232077686174206765747320646562697465643b20746865736520707269636573206172652075736564206f6e6c7920666f722074686520776f7273742d636173652061646d697373696f6e0a2320636865636b206265666f726520612063616c6c2069732073656e742e0a230a23204f70656e526f7574657220697320746865206f6e6c7920726f757465722e204576657279206c6567206f66206576657279207365617420676f6573207468726f7567682069743b20610a23207472616e73706f7274206661696c7572652066616c6c7320746f20746865206e657874204f70656e526f75746572206d6f64656c20616e64206973207265636f7264656420696e207468650a232063616c6c206c65646765722c206e657665722068696464656e2e0a230a23204d6f64656c207069636b732061726520612070726963652f76656e646f722d646976657273697479207374617274696e6720706f696e742c206e6f742061207175616c6974790a2320636c61696d2e2054686520636865636b65722d6772616465642070696c6f742064656369646573207468656d2e0a0a76657273696f6e3a20736561745f726f7574696e675f76310a7072696d6172795f726f757465723a206f70656e726f757465720a63686561705f73686172655f6d696e3a2022312f32220a6275646765743a0a20207065725f626f75745f6d6963726f7573643a203230303030303020202020232024322e30302070657220626f757420696e20746f74616c202870696c6f74290a20207065725f6461795f6d6963726f7573643a20353030303030302020202020232024352e30302070657220646179202870696c6f74290a2020232041646d697373696f6e20617373756d65732074686973206d616e79206f757470757420746f6b656e733b207265717565737473206d617920616c6c6f7720757020746f207468650a2020232067617465776179206d617820283635353336292e205265636569707420636f73742069732064656269746564206166746572207468652063616c6c2c20736f2061206361702063616e2062650a20202320706173736564206279206f6e652063616c6c2773206f76657273686f6f743b20746865206c6564676572207265636f7264732069742e0a202061646d697373696f6e5f726573657276655f6f75747075745f746f6b656e733a20383139320a2020232057697468696e206120626f75743a207374726f6e672d74696572207365617473206d6179207370656e6420757020746f2024322e30302c2063686561702d7469657220757020746f2024302e35302e0a2020746965725f7065725f626f75745f6d6963726f7573643a207b7374726f6e673a20323030303030302c2063686561703a203530303030307d0a20202320412073696e676c652070726f6d70742061626f76652074686973206d616e792062797465732069732072656675736564206265666f72652073656e64696e672c20736f206120687567650a2020232064756d702063616e6e6f742062652062696c6c6564206279206163636964656e742e2041626f75742035306b20746f6b656e732e0a20206d61785f696e7075745f62797465735f7065725f63616c6c3a203230303030300a0a6d6f64656c733a0a20206f70656e726f757465723a0a20202020616e7468726f7069632f636c617564652d736f6e6e65742d352e353a20202020207b696e3a202232222c206f75743a20223130227d0a202020206f70656e61692f6770742d362e312d736f6c3a20202020202020202020202020207b696e3a202232222c206f75743a20223130227d0a20202020676f6f676c652f67656d696e692d332e312d70726f2d707265766965773a2020207b696e3a202232222c206f75743a20223132227d0a202020206f70656e61692f6770742d352e312d636f6465783a2020202020202020202020207b696e3a2022312e3235222c206f75743a20223130227d0a202020207177656e2f7177656e332e372d6d61783a202020202020202020202020202020207b696e3a2022312e3438222c206f75743a2022342e3433227d0a202020207a2d61692f676c6d2d352e333a20202020202020202020202020202020202020207b696e3a2022312e34222c206f75743a2022342e34227d0a20202020646565707365656b2f646565707365656b2d76342d70726f2d303831333a2020207b696e3a2022302e3535222c206f75743a2022342e32227d0a202020206d6f6f6e73686f7461692f6b696d692d6b333a20202020202020202020202020207b696e3a2022302e3732222c206f75743a20223133227d0a20202020646565707365656b2f646565707365656b2d76342d666c6173683a2020202020207b696e3a2022302e3032222c206f75743a2022312e3238227d0a202020207177656e2f7177656e332e382d666c6173683a20202020202020202020202020207b696e3a2022302e3135222c206f75743a2022302e3437227d0a202020207a2d61692f676c6d2d352e332d666c6173683a20202020202020202020202020207b696e3a2022302e3135222c206f75743a2022302e35227d0a202020206f70656e61692f6770742d362d6c756e613a2020202020202020202020202020207b696e3a2022302e31222c206f75743a2022302e35227d0a202020206d69737472616c61692f6d69737472616c2d736d616c6c2d323630333a202020207b696e3a2022302e3135222c206f75743a2022302e36227d0a202020206d6574612d6c6c616d612f6c6c616d612d342d6d6176657269636b3a20202020207b696e3a2022302e3139222c206f75743a2022302e3635227d0a20202020646565707365656b2f646565707365656b2d76342d70726f3a20202020202020207b696e3a2022302e3231222c206f75743a2022302e3432227d0a20202020676f6f676c652f67656d696e692d332e312d666c6173682d6c6974653a202020207b696e3a2022302e3235222c206f75743a2022312e35227d0a202020206d696e696d61782f6d696e696d61782d6d333a20202020202020202020202020207b696e3a2022302e33222c206f75743a2022312e32227d0a73656174733a0a202023207374726f6e672074696572202839290a2020576f6c616e643a2020202020202020202020207b746965723a207374726f6e672c206d6f64656c733a205b616e7468726f7069632f636c617564652d736f6e6e65742d352e352c206f70656e61692f6770742d362e312d736f6c2c20676f6f676c652f67656d696e692d332e312d70726f2d707265766965775d7d0a2020546865204d61737465723a20202020202020207b746965723a207374726f6e672c206d6f64656c733a205b616e7468726f7069632f636c617564652d736f6e6e65742d352e352c206f70656e61692f6770742d352e312d636f6465782c207177656e2f7177656e332e372d6d61785d7d0a20204b6f726f766965763a202020202020202020207b746965723a207374726f6e672c206d6f64656c733a205b6f70656e61692f6770742d362e312d736f6c2c20616e7468726f7069632f636c617564652d736f6e6e65742d352e352c207a2d61692f676c6d2d352e335d7d0a20204a6572656d793a2020202020202020202020207b746965723a207374726f6e672c206d6f64656c733a205b616e7468726f7069632f636c617564652d736f6e6e65742d352e352c20646565707365656b2f646565707365656b2d76342d70726f2d303831332c206f70656e61692f6770742d362e312d736f6c5d7d0a20205965736875612048612d4e6f7a72693a2020207b746965723a207374726f6e672c206d6f64656c733a205b676f6f676c652f67656d696e692d332e312d70726f2d707265766965772c20616e7468726f7069632f636c617564652d736f6e6e65742d352e352c207177656e2f7177656e332e372d6d61785d7d0a2020506f6e746975732050696c6174653a202020207b746965723a207374726f6e672c206d6f64656c733a205b6f70656e61692f6770742d362e312d736f6c2c20676f6f676c652f67656d696e692d332e312d70726f2d707265766965772c206d6f6f6e73686f7461692f6b696d692d6b335d7d0a2020417a617a656c6c6f3a202020202020202020207b746965723a207374726f6e672c206d6f64656c733a205b7177656e2f7177656e332e372d6d61782c20616e7468726f7069632f636c617564652d736f6e6e65742d352e352c206f70656e61692f6770742d362e312d736f6c5d7d0a20204d61726761726974613a2020202020202020207b746965723a207374726f6e672c206d6f64656c733a205b676f6f676c652f67656d696e692d332e312d70726f2d707265766965772c207a2d61692f676c6d2d352e332c20616e7468726f7069632f636c617564652d736f6e6e65742d352e355d7d0a20205961726f736c6176613a2020202020202020207b746965723a207374726f6e672c206d6f64656c733a205b646565707365656b2f646565707365656b2d76342d70726f2d303831332c207177656e2f7177656e332e372d6d61782c206f70656e61692f6770742d362e312d736f6c5d7d0a2020232063686561702074696572202839290a2020426567656d6f743a20202020202020202020207b746965723a2063686561702c206d6f64656c733a205b646565707365656b2f646565707365656b2d76342d666c6173682c207177656e2f7177656e332e382d666c6173682c207a2d61692f676c6d2d352e332d666c6173685d7d0a2020416e6e7573686b613a202020202020202020207b746965723a2063686561702c206d6f64656c733a205b6f70656e61692f6770742d362d6c756e612c206d69737472616c61692f6d69737472616c2d736d616c6c2d323630332c206d6574612d6c6c616d612f6c6c616d612d342d6d6176657269636b5d7d0a20204976616e2042657a646f6d6e793a20202020207b746965723a2063686561702c206d6f64656c733a205b7177656e2f7177656e332e382d666c6173682c20646565707365656b2f646565707365656b2d76342d70726f2c20676f6f676c652f67656d696e692d332e312d666c6173682d6c6974655d7d0a202047656f726765732042656e67616c736b793a207b746965723a2063686561702c206d6f64656c733a205b7a2d61692f676c6d2d352e332d666c6173682c206f70656e61692f6770742d362d6c756e612c20646565707365656b2f646565707365656b2d76342d666c6173685d7d0a20204c6975646d696c613a202020202020202020207b746965723a2063686561702c206d6f64656c733a205b646565707365656b2f646565707365656b2d76342d70726f2c206d696e696d61782f6d696e696d61782d6d332c207177656e2f7177656e332e382d666c6173685d7d0a2020506f6c696e613a2020202020202020202020207b746965723a2063686561702c206d6f64656c733a205b676f6f676c652f67656d696e692d332e312d666c6173682d6c6974652c207a2d61692f676c6d2d352e332d666c6173682c206d69737472616c61692f6d69737472616c2d736d616c6c2d323630335d7d0a20204a6572656d7920616e6420506f6c696e613a207b746965723a2063686561702c206d6f64656c733a205b6d696e696d61782f6d696e696d61782d6d332c20646565707365656b2f646565707365656b2d76342d666c6173682c206f70656e61692f6770742d362d6c756e615d7d0a202044722e205374726176696e736b793a202020207b746965723a2063686561702c206d6f64656c733a205b6d69737472616c61692f6d69737472616c2d736d616c6c2d323630332c207177656e2f7177656e332e382d666c6173682c20676f6f676c652f67656d696e692d332e312d666c6173682d6c6974655d7d0a202043656e747572696f6e204d61726b20526174736c617965723a207b746965723a2063686561702c206d6f64656c733a205b646565707365656b2f646565707365656b2d76342d70726f2c206f70656e61692f6770742d362d6c756e612c207a2d61692f676c6d2d352e332d666c6173685d7d0a202023206c6f63616c20636f64652c206e6f206d6f64656c2063616c6c0a202048656c6c613a202020202020202020202020207b746965723a2064657465726d696e69737469637d0a2020416261646f6e6e613a202020202020202020207b746965723a2064657465726d696e69737469637d0a20204e6174617368613a20202020202020202020207b746965723a2064657465726d696e69737469637d0a20204c657679204d61747665693a202020202020207b746965723a2064657465726d696e69737469637d0a202041706872616e6975733a2020202020202020207b746965723a2064657465726d696e69737469637d0a202023206e6f20636f676e6974697665206f70657261746f72206465636c6172656420696e20776f6c616e64735f726574696e75652e79616d6c0a20204265726c696f7a3a20202020202020202020207b746965723a20696e6163746976657d0a20204e696b616e6f7220426f736f793a20202020207b746965723a20696e6163746976657d0a2020416c6f697379204d6f6761727963683a2020207b746965723a20696e6163746976657d0a",
+    "expected": {
+      "ok": [
+        {
+          "version": "seat_routing_v1",
+          "primary_router": "openrouter",
+          "cheap_share_min": "1/2",
+          "budget": {
+            "per_bout_microusd": 2000000,
+            "per_day_microusd": 5000000,
+            "admission_reserve_output_tokens": 8192,
+            "tier_per_bout_microusd": [
+              [
+                "cheap",
+                500000
+              ],
+              [
+                "strong",
+                2000000
+              ]
+            ],
+            "max_input_bytes_per_call": 200000
+          },
+          "seats": [
+            {
+              "seat_id": "Adversary",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "anthropic/claude-sonnet-5.5",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6.1-sol",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "google/gemini-3.1-pro-preview",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "12",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Manuscript Truth",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "anthropic/claude-sonnet-5.5",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-5.1-codex",
+                  "input_microusd_per_token": "5/4",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.7-max",
+                  "input_microusd_per_token": "37/25",
+                  "output_microusd_per_token": "443/100",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Defect Hunter",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6.1-sol",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "anthropic/claude-sonnet-5.5",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "z-ai/glm-5.3",
+                  "input_microusd_per_token": "7/5",
+                  "output_microusd_per_token": "22/5",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Bare Metal Anchor",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "anthropic/claude-sonnet-5.5",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-pro-0813",
+                  "input_microusd_per_token": "11/20",
+                  "output_microusd_per_token": "21/5",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6.1-sol",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Truth Repair",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "google/gemini-3.1-pro-preview",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "12",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "anthropic/claude-sonnet-5.5",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.7-max",
+                  "input_microusd_per_token": "37/25",
+                  "output_microusd_per_token": "443/100",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Integrity Auditor",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6.1-sol",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "google/gemini-3.1-pro-preview",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "12",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "moonshotai/kimi-k3",
+                  "input_microusd_per_token": "18/25",
+                  "output_microusd_per_token": "13",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Scope Guard",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.7-max",
+                  "input_microusd_per_token": "37/25",
+                  "output_microusd_per_token": "443/100",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "anthropic/claude-sonnet-5.5",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6.1-sol",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Primal Dual",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "google/gemini-3.1-pro-preview",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "12",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "z-ai/glm-5.3",
+                  "input_microusd_per_token": "7/5",
+                  "output_microusd_per_token": "22/5",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "anthropic/claude-sonnet-5.5",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Punchlist",
+              "tier": "strong",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-pro-0813",
+                  "input_microusd_per_token": "11/20",
+                  "output_microusd_per_token": "21/5",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.7-max",
+                  "input_microusd_per_token": "37/25",
+                  "output_microusd_per_token": "443/100",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6.1-sol",
+                  "input_microusd_per_token": "2",
+                  "output_microusd_per_token": "10",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Gauge Breaker",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-flash",
+                  "input_microusd_per_token": "1/50",
+                  "output_microusd_per_token": "32/25",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.8-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "47/100",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "z-ai/glm-5.3-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Boundary Fuzzer",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6-luna",
+                  "input_microusd_per_token": "1/10",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "mistralai/mistral-small-2603",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "3/5",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "meta-llama/llama-4-maverick",
+                  "input_microusd_per_token": "19/100",
+                  "output_microusd_per_token": "13/20",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Scar Chronicler",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.8-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "47/100",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-pro",
+                  "input_microusd_per_token": "21/100",
+                  "output_microusd_per_token": "21/50",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "google/gemini-3.1-flash-lite",
+                  "input_microusd_per_token": "1/4",
+                  "output_microusd_per_token": "3/2",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Anti-Hype",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "z-ai/glm-5.3-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6-luna",
+                  "input_microusd_per_token": "1/10",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-flash",
+                  "input_microusd_per_token": "1/50",
+                  "output_microusd_per_token": "32/25",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Resilience",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-pro",
+                  "input_microusd_per_token": "21/100",
+                  "output_microusd_per_token": "21/50",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "minimax/minimax-m3",
+                  "input_microusd_per_token": "3/10",
+                  "output_microusd_per_token": "6/5",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.8-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "47/100",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Overconfidence Probe",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "google/gemini-3.1-flash-lite",
+                  "input_microusd_per_token": "1/4",
+                  "output_microusd_per_token": "3/2",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "z-ai/glm-5.3-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "mistralai/mistral-small-2603",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "3/5",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Bare Metal Anchor and Overconfidence Probe",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "minimax/minimax-m3",
+                  "input_microusd_per_token": "3/10",
+                  "output_microusd_per_token": "6/5",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-flash",
+                  "input_microusd_per_token": "1/50",
+                  "output_microusd_per_token": "32/25",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6-luna",
+                  "input_microusd_per_token": "1/10",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Quarantine",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "mistralai/mistral-small-2603",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "3/5",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "qwen/qwen3.8-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "47/100",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "google/gemini-3.1-flash-lite",
+                  "input_microusd_per_token": "1/4",
+                  "output_microusd_per_token": "3/2",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Hardware Constraint",
+              "tier": "cheap",
+              "legs": [
+                {
+                  "router": "openrouter",
+                  "model": "deepseek/deepseek-v4-pro",
+                  "input_microusd_per_token": "21/100",
+                  "output_microusd_per_token": "21/50",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "openai/gpt-6-luna",
+                  "input_microusd_per_token": "1/10",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                },
+                {
+                  "router": "openrouter",
+                  "model": "z-ai/glm-5.3-flash",
+                  "input_microusd_per_token": "3/20",
+                  "output_microusd_per_token": "1/2",
+                  "id_verified": true
+                }
+              ]
+            },
+            {
+              "seat_id": "Syntax Prefilter",
+              "tier": "deterministic",
+              "legs": []
+            },
+            {
+              "seat_id": "Backdoor Auditor",
+              "tier": "deterministic",
+              "legs": []
+            },
+            {
+              "seat_id": "Context Transport",
+              "tier": "deterministic",
+              "legs": []
+            },
+            {
+              "seat_id": "Custody",
+              "tier": "deterministic",
+              "legs": []
+            },
+            {
+              "seat_id": "Covert Verifier",
+              "tier": "deterministic",
+              "legs": []
+            },
+            {
+              "seat_id": "the overconfident editor",
+              "tier": "inactive",
+              "legs": []
+            },
+            {
+              "seat_id": "Nikanor Bosoy",
+              "tier": "inactive",
+              "legs": []
+            },
+            {
+              "seat_id": "Aloisy Mogarych",
+              "tier": "inactive",
+              "legs": []
+            }
+          ]
+        },
+        "sha256:b82ee5a7e09745b21b5adb2df96ace483b98f412f7b2ac5c920d9e74414dac92"
+      ]
+    }
+  },
+  {
+    "op": "load_routing",
+    "raw_hex": "73656174733a205b0a",
+    "expected": {
+      "code": "ROUTING_CONFIG_INVALID"
+    }
+  },
+  {
+    "op": "load_routing",
+    "raw_hex": "ff",
+    "expected": {
+      "code": "ROUTING_CONFIG_INVALID"
+    }
+  },
+  {
+    "op": "load_routing",
+    "raw_hex": "5b5d0a",
+    "expected": {
+      "code": "ROUTING_CONFIG_INVALID"
+    }
+  },
+  {
+    "op": "load_routing",
+    "raw_hex": null,
+    "expected": {
+      "code": "ROUTING_CONFIG_UNREADABLE"
+    }
+  },
+  {
+    "op": "rational",
+    "raw": "0",
+    "expected": "0"
+  },
+  {
+    "op": "rational",
+    "raw": "-1/2",
+    "expected": "-1/2"
+  },
+  {
+    "op": "rational",
+    "raw": "1/3",
+    "expected": "1/3"
+  },
+  {
+    "op": "rational",
+    "raw": "1.25",
+    "expected": "5/4"
+  },
+  {
+    "op": "rational",
+    "raw": "1e3",
+    "expected": "1000"
+  },
+  {
+    "op": "rational",
+    "raw": "-1.25e-3",
+    "expected": "-1/800"
+  },
+  {
+    "op": "rational",
+    "raw": ".5",
+    "expected": "1/2"
+  },
+  {
+    "op": "rational",
+    "raw": "-0.5",
+    "expected": "-1/2"
+  },
+  {
+    "op": "rational",
+    "raw": " 2 / 3 ",
+    "expected": "2/3"
+  },
+  {
+    "op": "rational",
+    "raw": "1/0",
+    "expected": null
+  },
+  {
+    "op": "rational",
+    "raw": "bogus",
+    "expected": null
+  },
+  {
+    "op": "rational",
+    "raw": "1.2.3",
+    "expected": null
+  },
+  {
+    "op": "repr",
+    "text": "",
+    "expected": "''"
+  },
+  {
+    "op": "repr",
+    "text": "quote'",
+    "expected": "\"quote'\""
+  },
+  {
+    "op": "repr",
+    "text": "both'\"",
+    "expected": "'both\\'\"'"
+  },
+  {
+    "op": "repr",
+    "text": "back\\slash",
+    "expected": "'back\\\\slash'"
+  },
+  {
+    "op": "repr",
+    "text": "\n\r\t\u0001",
+    "expected": "'\\n\\r\\t\\x01\\x7f\\x85'"
+  },
+  {
+    "op": "repr",
+    "text": "é λ",
+    "expected": "'é λ'"
+  }
+]

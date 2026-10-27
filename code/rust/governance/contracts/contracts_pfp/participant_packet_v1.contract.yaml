@@ -1,0 +1,57 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:participant_packet_v1:v1.0.0"
+title: "Participant Packet v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: infrastructure
+  refusals:
+    may_emit:
+      - "INVALID_PARTICIPANT_PACKET"
+      - "SPECIFICATION_MISMATCH"
+      - "COMMITMENT_NOT_FOUND"
+
+doctrine:
+  summary: >-
+    ParticipantPacketV1 contains the public challenge specification, public examples,
+    and operational boundaries provided to a solver before commitment freeze.
+  invariants:
+    - "Contains only public examples; hidden test cases are strictly excluded."
+    - "Specifies deterministic token and time limits."
+    - "Binds the judge commitment SHA-256."
+  non_roles:
+    - "authority_source"
+    - "truth_oracle"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp
+  rust_module: challenge
+  rust_type: "ParticipantPacketV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: challenge_id
+    - name: specification_hash
+    - name: prompt_template
+    - name: public_cases
+    - name: timeout_ms
+    - name: max_tokens
+    - name: judge_commitment_hash
+    - name: authority_effect

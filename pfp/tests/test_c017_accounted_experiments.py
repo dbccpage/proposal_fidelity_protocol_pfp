@@ -14,7 +14,7 @@ import pytest
 from pfp.infrastructure.synthesis_matrix import RunnerRefusal
 from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
-PREFIX = "pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy"
+PREFIX = "c017_nonabelian_lattice_holonomy"
 ARM5 = importlib.import_module(PREFIX + ".eval_arm5_hybrid")
 ARM6 = importlib.import_module(PREFIX + ".eval_arm6_hierarchical_decimation")
 IMMUNE = importlib.import_module(PREFIX + ".eval_epistemic_immune_transfer")

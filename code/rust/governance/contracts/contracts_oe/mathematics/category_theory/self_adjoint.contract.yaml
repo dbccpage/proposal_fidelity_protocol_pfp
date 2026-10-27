@@ -1,0 +1,110 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:self_adjoint:v0.1.0
+title: Self-Adjoint Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: self_adjoint_matrix
+  symbol: A = A^*, A ∈ M_{n×n}(F)
+  ascii_symbol: self_adjoint
+  notation: A = A^*, A ∈ M_{n×n}(F)
+  domain:
+  - 'matrix_A: M_{n×n}(F), n≥1, exact complex or real entries'
+  - 'field: F = C (complex) or R (real, trivial conjugation)'
+  - 'inner_product: standard Hermitian: ⟨x,y⟩ = Σ x̄_i y_i'
+  - 'basis: standard basis {e₁, …, e_n}'
+  - 'conjugate_transpose: A^* = (Ā)^T'
+  codomain:
+    description: 'A square matrix A ∈ M_{n×n}(F), n ≥ 1, with entries from F (exact
+      complex or real numbers). Standard basis of F^n assumed. Standard Hermitian
+      inner product ⟨x,y⟩ = Σ x̄_i y_i.
+
+      '
+requirements:
+  required_structures:
+  - A has dimensions n×n with n ≥ 1
+  - 'B = A^* (transpose and conjugate each entry); A = B entrywise. For complex entries:
+    real parts equal and imaginary parts equal.
+
+    '
+  - 'Re-running validators on the canonical serialization of A produces a byte-identical
+    ValidationWitness.
+
+    '
+laws:
+- A is n×n with n ≥ 1
+- A_{i,j} = conj(A_{j,i}) for all i, j (A = A^* entrywise)
+- 'All entries are exact; floating-point representation is disallowed. Complex entries
+  are pairs of exact rationals or integers.
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Canonical serialization for complex entries must be fixed and unambiguous
+  - 'Recommended format for complex entry a+bi: two decimal strings ''(a,b)'''
+relationships:
+- urn:math:contract:ComplexMatrix:v0.1.0 serves as Defines complex matrix structure
+  and conjugate transpose operation
+- urn:math:contract:InnerProduct:v0.1.0 serves as Defines the standard Hermitian inner
+  product on F^n
+negative_tests:
+- A=[[1,2],[3,4],[5,6]] (3×2); must fail sa_check_square
+- A=[[1, 2+i],[3-i, 4]]; A^* ≠ A; must fail sa_check_self_adjoint
+- A=[[1,2],[3,4]]; 2 ≠ 3; must fail sa_check_self_adjoint
+- Entry 0.1 (floating-point); rejected by schema before math checks
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: 'Verification of the self-adjoint property for a square matrix A with respect
+    to the standard Hermitian inner product. For A ∈ M_{n×n}(F) where F is C or R,
+    the contract checks A = A^* (conjugate transpose). Validity is determined solely
+    by the mathematical checks: square shape and exact elementwise equality A = A^*.
+    This contract is a pure structural check; it does not assert any spectral properties,
+    positivity, or definiteness.'
+  non_role:
+  - Does not assert spectral properties, eigenvalues, or definiteness
+  - Does not extend to general metrics or non-orthonormal bases
+  - Does not address infinite-dimensional operators or boundedness
+  - No policy decisions or authority claims
+  - No customer-facing claims
+wip:
+- 'Canonical string format for complex entries must be finalized: ''(a,b)'' decimal
+  pairs vs ''a+bi'' string'
+- 'Extension to general metric or non-orthonormal bases requires additional input
+  (metric tensor): out of scope for this version'
+- 'Large matrices: elementwise comparison may be costly; a compact proof structure
+  (e.g., zero-knowledge A - A^* = 0 check) is deferred to future versions'
+- The contract does not address infinite-dimensional operators or boundedness
+- Restricted to standard inner product and standard basis; no change of basis allowed
+- Exact arithmetic is mandatory; floating-point entries are rejected by schema
+- For real matrices, conjugation is trivial; 'R' field_spec signals no imaginary parts
+- The contract verifies A = A^* as a pure structural check; no spectral consequences
+  are asserted
+- authority_effect is fixed to 'none'; no policy or admissibility claims
+rust_binding:
+  crate: core_category_theory
+  module: dagger
+  symbols:
+  - DaggerStructure
+  required_tests:
+  - test_dagger_involution
+  - test_dagger_identity

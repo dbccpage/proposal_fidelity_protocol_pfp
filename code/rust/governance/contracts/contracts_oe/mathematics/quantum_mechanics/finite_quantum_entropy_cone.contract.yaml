@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_quantum_entropy_cone:v0.1.0
+title: Exact Finite Quantum Entropy Inequalities
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_quantum_entropy_cone
+  symbol: finite_quantum_entropy_cone
+  ascii_symbol: finite_quantum_entropy_cone
+  notation: Exact Finite Quantum Entropy Inequalities
+  domain:
+  - Full subset entropy vectors on at most eight parties, with universal inequality replay limited to the declared
+    party bound.
+  - Exact stabilizer-state entropy vectors, including GHZ, Bell, product and six-qubit perfect tensors.
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_entropy_cone; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Nonnegativity, subadditivity, Araki-Lieb, strong subadditivity and weak monotonicity are replayed exactly.
+- A pure state has complementary-subset entropy equality.
+- The six-qubit perfect tensor has entropy min(|A|,6-|A|) for every one of its sixty-four subsets.
+- 'Monogamy of mutual information is optional: GHZ on four parties has I3=+1 and violates it.'
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_entropy_cone
+  symbols:
+  - EntropyVector
+  - QuantumEntropyCone
+  required_tests:
+  - ghz_four_obeys_quantum_inequalities_but_violates_monogamy
+  - six_qubit_perfect_tensor_has_maximal_entropy_through_three_parties
+  - bell_and_product_entropy_vectors_are_exact
+negative_tests:
+- Wrong subset-vector size, invalid party masks and unsupported inequality carriers are refused.
+- Necessary inequalities do not certify a complete quantum entropy cone.
+doctrine:
+  summary: 'Nonnegativity, subadditivity, Araki-Lieb, strong subadditivity and weak monotonicity are replayed
+    exactly.; A pure state has complementary-subset entropy equality.; The six-qubit perfect tensor has entropy
+    min(|A|,6-|A|) for every one of its sixty-four subsets.; Monogamy of mutual information is optional: GHZ
+    on four parties has I3=+1 and violates it..'
+  non_role:
+  - No complete characterization of arbitrary multipartite quantum entropy.
+  - No assertion that optional monogamy is a universal quantum law.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

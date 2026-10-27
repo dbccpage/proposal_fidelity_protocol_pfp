@@ -1,0 +1,107 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:closure_regime:v1.0.0
+title: Closure regime (evaluation boundaries)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:finite_obstruction_trichotomy:v0.2.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: closure_regime
+  symbol: Regime
+  ascii_symbol: ClosureRegime
+  notation: declared evaluation regime for closure/Φ₁/Γ₂ comparisons
+  domain:
+  - comparison mode (exact rational vs tolerance/diagnostic)
+  - norm and weight profiles
+  - carrier/layer identity for residual evaluation
+  codomain:
+    description: A finite declared regime that fixes how closure and residual scalars are interpreted (exact vs
+      diagnostic). Does not itself compute Φ₁ or Γ₂.
+requirements:
+  required_structures:
+  - Explicit comparison mode
+  - Norm/weight profile identities
+  - Carrier/layer binding for evaluations
+  - Compatibility rules with trichotomy exact classifier
+laws:
+- 'Declaration law: a regime must name comparison mode and profiles.'
+- 'Exact firewall: tolerance/diagnostic modes must not emit exact trichotomy constructors.'
+- 'Stability law: regime identity is part of replay; silent profile swap is refuse.'
+- 'Non-authority law: regime choice is not ActionLicense or GlobalGreen.'
+- 'Compatibility law: exact trichotomy requires exact regime evidence.'
+replay:
+  requirements:
+  - Regime fields content-addressed when hashed
+  - Deterministic mode selection
+relationships:
+- urn:core:math:finite_obstruction_trichotomy:v0.2.0 — exact classifier consumes regime
+- urn:core:math:phi1:v1.0.0 — primary scalar under regime
+- urn:core:math:gamma2_closure_defect:v1.0.0 — secondary scalar under regime
+rust_binding:
+  crate: core_policy
+  module: closure_regime
+  symbols:
+  - ClosureRegime
+  required_tests:
+  - unnamed_comparison_mode_rejected
+  - tolerance_mode_emitting_exact_trichotomy_rejected
+  - silent_profile_swap_across_replay_rejected
+negative_tests:
+- Unnamed comparison mode must be rejected
+- Tolerance mode emitting exact trichotomy must be rejected
+- Silent profile swap across replay must be rejected
+- Regime used as authority mint must be rejected
+- Claiming PROVED / GlobalGreen from this contract alone must be rejected
+doctrine:
+  summary: 'Closure regime fixes evaluation boundaries for residual/closure comparisons. Nonclaim: not Φ₁/Γ₂ computation;
+    not authority; not PROVED; not GlobalGreen.'
+  non_role:
+  - Computing Φ₁ or Γ₂
+  - Policy admissibility
+  - Authority / PROVED / GlobalGreen / HoTT
+wip:
+- Catalog of named estate regimes
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B4_FOC_RESIDUAL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth B4: regime as declaration object, not classifier.'
+    recommendation: Keep exact firewall aligned with trichotomy.
+    pass: meth_b4_foc_residual
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: HAS_RS_BINDING
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: closure_regime module present.
+    file: engine/crates_rs/core_policy/src/closure_regime.rs
+    delta: MATCH
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: '[SCOPE FENCE]'
+    detail: Not PROVED.

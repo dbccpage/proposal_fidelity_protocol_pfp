@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cyclotomic_inclusion:v0.1.0
+title: Canonical cyclotomic field arithmetic
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: cyclotomic_inclusion
+  symbol: cyclotomic_inclusion
+  ascii_symbol: cyclotomic_inclusion
+  notation: Canonical cyclotomic field arithmetic
+  domain:
+  - Conductors1..1024 with canonical polynomial basis.
+  codomain:
+    description: Declared finite results of core_number_theory::cyclotomic_field; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Q(zeta_n)=Q(zeta_(n/2)) when n=2 mod4.
+- Containment, intersection and compositum use normalized conductors.
+- Embedding substitutes the appropriate target root and preserves arithmetic.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: cyclotomic_field
+  symbols:
+  - normalized_conductor
+  - contains_cyclotomic_field
+  - compositum_conductor
+  - intersection_conductor
+  - embed_cyclotomic
+  required_tests:
+  - normalized_conductor_inclusion_agrees_with_compositum_degree_and_embeddings
+negative_tests:
+- normalized_conductor_inclusion_agrees_with_compositum_degree_and_embeddings
+doctrine:
+  summary: Q(zeta_n)=Q(zeta_(n/2)) when n=2 mod4.; Containment, intersection and compositum use normalized
+    conductors.; Embedding substitutes the appropriate target root and preserves arithmetic..
+  non_role:
+  - Field membership is not physical minimality of a campaign carrier.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

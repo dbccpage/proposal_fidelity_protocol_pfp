@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_weyl_heisenberg:v0.1.0
+title: Exact Finite Weyl-Heisenberg Carrier
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_weyl_heisenberg
+  symbol: exact_weyl_heisenberg
+  ascii_symbol: exact_weyl_heisenberg
+  notation: Exact Finite Weyl-Heisenberg Carrier
+  domain:
+  - Finite dimension 2..=128 with a validated primitive central phase
+  - Odd dimensions use tau=omega^((d+1)/2); even dimensions declare a primitive 2d-th tau
+  codomain:
+    description: Declared finite results of core_lie_theory::heisenberg; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- For ZX=omega XZ the symmetric displacement is tau^(ab) X^a Z^b
+- D(a,b)D(c,e)=tau^(bc-ae)D(a+c,b+e) and D(a,b)^*=D(-a,-b)
+- Signed coordinates including i64 MIN/MAX are reduced before multiplication
+- Displacements are a complete orthogonal operator basis; monomial parity pairing equals the dense exact trace
+- The characteristic-zero CCR trace obstruction distinguishes nonzero central scalar from zero
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: heisenberg
+  symbols:
+  - WeylHeisenberg
+  - WeylHeisenberg::with_phase_root
+  - WeylHeisenberg::displacement
+  - WeylHeisenberg::product_phase
+  - WeylHeisenberg::displaced_parity
+  - WeylHeisenberg::parity_pairing
+  - WeylHeisenberg::reconstruct_operator
+  - trace_obstruction
+  - stone_von_neumann_census
+  required_tests:
+  - odd_displacements_have_the_correct_dagger_product_and_orthogonality_laws
+  - extreme_coordinates_reduce_before_multiplication
+  - even_dimension_keeps_the_winding_sign_and_dagger_law
+  - weyl_displacements_span_the_full_matrix_algebra
+  - the_displaced_parity_contraction_matches_dense_conjugation_and_trace
+  - ccr_trace_refusal_and_finite_stone_von_neumann_census_are_distinct
+negative_tests:
+- The former negative-half convention fails the tested dagger law
+- Invalid dimension, nonprimitive roots and missing even-dimensional phase roots are refused
+doctrine:
+  summary: For ZX=omega XZ the symmetric displacement is tau^(ab) X^a Z^b; D(a,b)D(c,e)=tau^(bc-ae)D(a+c,b+e)
+    and D(a,b)^*=D(-a,-b); Signed coordinates including i64 MIN/MAX are reduced before multiplication; Displacements
+    are a complete orthogonal operator basis; monomial parity pairing equals the dense exact trace; The characteristic-zero
+    CCR trace obstruction distinguishes nonzero central scalar from zero.
+  non_role:
+  - Finite Weyl relations are not finite-dimensional characteristic-zero CCR
+  - No continuum Stone-von Neumann theorem or limit is claimed
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

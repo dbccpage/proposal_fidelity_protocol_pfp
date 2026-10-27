@@ -1,0 +1,93 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:model_category:v0.1.0
+title: Model Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: model_category
+  symbol: M with classes (W, F, C)
+  ascii_symbol: model_category
+  notation: M with classes (W, F, C) satisfying Quillen axioms MC1-MC5
+  domain:
+  - 'category: underlying_category'
+  - 'weak_equivalences: class_W'
+  - 'fibrations: class_F'
+  - 'cofibrations: class_C'
+  codomain:
+    description: A Quillen model category is a complete and cocomplete category M equipped with three distinguished subcategories of morphisms (Weak Equivalences W, Fibrations F, Cofibrations C) satisfying the two-out-of-three property, retract stability, lifting properties ((W ∩ C) ⋔ F and C ⋔ (W ∩ F)), and functorial factorizations.
+requirements:
+  required_structures:
+  - Category M has finite limits and colimits.
+  - Weak equivalences satisfy two-out-of-three property.
+  - Acyclic cofibrations (W ∩ C) have left lifting property with respect to fibrations F.
+  - Cofibrations C have left lifting property with respect to acyclic fibrations (W ∩ F).
+  - Any morphism has both required functorial factorizations.
+  - All operations respect OperationLimits and Builder allocation caps.
+  - Deterministic content-addressed artifact hash.
+laws:
+- 'Two-out-of-three property for weak equivalences: if f ∘ g is defined and two of {f, g, f ∘ g} are in W, then so is the third'
+- 'Lifting axioms: (W ∩ C) ⋔ F and C ⋔ (W ∩ F)'
+- 'Factorization axioms: any morphism f factors as f = p ∘ i with i ∈ W ∩ C, p ∈ F and as f = q ∘ j with j ∈ C, q ∈ W ∩ F'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+  - Given same data, produces identical artifact hash
+relationships:
+- urn:core:math:simplicial_set:v0.1.0 serves as Simplicial sets admit the Kan-Quillen model structure
+- urn:core:math:infinity_category:v0.1.0 serves as The ∞-category is obtained by localization at weak equivalences W
+rust_binding:
+  crate: core_higher_category_theory
+  module: model_category
+  symbols:
+  - ModelCategory
+  - ModelMorphism
+  - CommutativeSquare
+  - MorphismFactorizations
+  required_tests:
+  - test_model_category_positive_verification
+  - test_kill_mut_p3_01_two_out_of_three_violation
+  - test_kill_mut_p3_02_lifting_property_violation
+lean4_binding:
+  module: HigherCategoryTheory.ModelCategory
+  symbols:
+  - ModelStructure
+  - HasLiftingProperty
+  - IsAcyclicCofibration
+  - IsAcyclicFibration
+  - identity_factorization
+  - comp_weak_equiv
+  - left_cancel_weak_equiv
+  - right_cancel_weak_equiv
+negative_tests:
+- Weak equivalences fail two-of-three property (MUT-P3-01)
+- Lifting property fails for acyclic cofibration vs fibration (MUT-P3-02)
+- Missing morphism in factorization
+- Factorization intermediate maps not in required classes
+doctrine:
+  summary: A model category is a category M with three distinguished classes of morphisms (weak equivalences, fibrations, cofibrations) satisfying Quillen's axioms MC1-MC5. Model categories provide an axiomatic framework for abstract homotopy theory.
+  non_role:
+  - Automatic construction of the homotopy category Ho(M)
+  - Non-functorial factorizations
+wip:
+  - Combinatorial and cofibrantly generated model category structures
+  - Quillen adjunctions and Quillen equivalences

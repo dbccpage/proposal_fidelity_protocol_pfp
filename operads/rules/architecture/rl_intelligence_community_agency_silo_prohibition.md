@@ -5,7 +5,7 @@ category: architecture
 subsystem: governance
 authority_effect: None
 paths:
-  - "_ic/**"
+  - "ops/_ic/**"
 ---
 
 # Rule: Intelligence Community Agency Boundaries

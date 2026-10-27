@@ -1,0 +1,90 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:dependent_pair:v0.1.0
+title: DependentPair Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: sigma-type
+  symbol: Sigma(a:A). B(a)
+  ascii_symbol: dependent_pair
+  notation: Sigma(a:A). B(a)
+  domain:
+  - 'base_type: Type A'
+  - 'fiber_family: Type family B : A -> Type'
+  - 'first_component: Element a : A (the base/witness)'
+  - 'second_component: Element b : B(a) (the fiber element)'
+  codomain:
+    description: 'A pair (a, b) where a : A and b : B(a), with B a type family over
+      A'
+requirements:
+  required_structures:
+  - first_component_hash must resolve to a valid element of base type A
+  - fiber_family_hash must resolve to a valid type family B over A
+  - 'second_component_hash must resolve to an element b : B(a)'
+  - Artifact hash must be deterministic from base, family, and fiber element
+laws:
+- The second component b must inhabit B(a) for the declared first component a
+- The first component a must be a valid element of A
+- The type family B must be well-formed over A
+- pi1(a,b) = a and pi2(a,b) = b, with pi2 typed in B(pi1(a,b))
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Fiber membership check is deterministic from base and fiber element
+  - Same inputs must produce identical artifact hash
+negative_tests:
+- first_component_hash does not resolve to valid element of A
+- fiber_family_hash does not resolve to valid type family
+- Second component does not inhabit fiber B(a)
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: DependentPair represents the sigma type Sigma(a:A). B(a) from dependent
+    type theory. It consists of a pair (a, b) where a is an element of base type A
+    and b is an element of the fiber B(a). The first projection extracts a, and the
+    second projection extracts b. The contract validates that the second component
+    genuinely inhabits the type determined by the first component.
+  non_role:
+  - Does not classify admissibility
+  - Does not emit policy decisions
+  - Does not emit certificates
+  - Does not terminalize
+  - Does not produce customer-facing claims
+  - Does not handle dependent function types (Pi types)
+  - Does not handle identity types or path types
+wip:
+- How to encode the type family B concretely for content-addressing
+- 'Relationship between DependentPair and DependentPacket: is packet just a transport
+  wrapper?'
+- Should we support eta-expansion (a, b) = pair for DependentPair?
+- Connection to existential types and proof-relevant witnesses
+- Currently targets finite, concrete type families
+- Pi types (dependent function types) are separate contracts
+- Identity/path types not yet in scope
+- 'May need extensionality principle: pairs equal iff both projections equal'
+rust_binding:
+  crate: core_category_theory
+  module: category::fibered_category
+  symbols:
+  - FiberedCategoryShell
+  required_tests:
+  - test_fibered_category_projection
+  - test_fibered_category_cleavage

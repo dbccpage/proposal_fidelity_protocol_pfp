@@ -1,0 +1,3752 @@
+# =============================================================================
+# 04_actions_contracts.yaml
+# Unified contract definitions for all action boundaries and candidates
+# Source: engine/crates/core_contracts/src/contract_canonical_definitions/non-math/04_actions/
+# =============================================================================
+
+collection_metadata:
+  source_directory: "non-math/04_actions"
+  doctrine_version: "2026-05"
+  total_contracts: 15
+  active_contracts: 13
+  superseded_contracts: 2
+  categories:
+    boundaries:
+      - adapter_boundary
+      - component_shared_boundary
+      - encoder_boundary
+      - intake_constructor
+    candidates:
+      - forgetful_action
+      - lambda_action_candidate
+      - normalizer_action_candidate
+      - projector_candidate
+      - proposal_generator
+      - reducer_action_candidate
+      - reflector_candidate
+      - transform_action_candidate
+    taxonomy:
+      - fixed_layer_operator_algebra
+    superseded:
+      - declared_action_candidate_redirect
+      - representation_boundary_redirect
+  validation_rules:
+    yaml_must_parse: true
+    no_action_fact_envelope: true
+    no_operator_fact_envelope: true
+    non_certifier_contracts_emit_evidence_not_certificates: true
+    candidates_default_to_evidence_only: true
+    checked_outputs_require_boundary_for_factonly: true
+    action_license_only_from_licensing_boundary: true
+    state_transition_only_from_engine: true
+    engine_executes_only_licensed_transitions: true
+    primary_output_family_must_be_canonical: true
+    referenced_output_families_must_be_canonical: true
+    domain_specific_output_kinds_must_use_domain_output_kind: true
+    non_certifier_contracts_must_not_emit_certificate_named_structs: true
+    candidates_must_not_emit_requires_evaluator_by_default: true
+    composition_laws_must_be_conditional_unless_explicit_rewrite_law: true
+    constructor_must_not_emit_validation_certificate_directly: true
+    encoding_evidence_is_allowed_encoding_certificate_is_forbidden: true
+
+# =============================================================================
+# SUPERSEDED CONTRACTS (redirects only)
+# =============================================================================
+
+contracts:
+
+  # ---------------------------------------------------------------------------
+  declared_action_candidate_redirect:
+  # ---------------------------------------------------------------------------
+    source_file: declared_action_candidate_contract.md
+    frontmatter:
+      name: DeclaredActionCandidateRedirect
+      status: superseded
+      active: false
+      machine_authority: false
+      role: "redirect to split action-candidate contracts"
+      superseded_by:
+        - lambda_action_candidate_contract.md
+        - reducer_action_candidate_contract.md
+        - normalizer_action_candidate_contract.md
+        - transform_action_candidate_contract.md
+      doctrine_version: "2026-05"
+    title: "Declared Action Candidate Contract (SUPERSEDED)"
+    notice: >
+      This file is not an active contract and MUST NOT be imported by validators,
+      build scripts, contract generators, or implementation crates as doctrine.
+      If this redirect conflicts with any split action-candidate contract, the split contract controls.
+    decomposition_table:
+      - original_section: Lambda
+        new_contract_file: lambda_action_candidate_contract.md
+        classification: Action Candidate
+      - original_section: Reducer
+        new_contract_file: reducer_action_candidate_contract.md
+        classification: Action Candidate
+      - original_section: Normalizer
+        new_contract_file: normalizer_action_candidate_contract.md
+        classification: Action Candidate
+      - original_section: Transform
+        new_contract_file: transform_action_candidate_contract.md
+        classification: Action Candidate
+    migration_notes:
+      - "All LambdaOp references renamed to LambdaAction"
+      - "All ReducerOp references renamed to ReducerAction"
+      - "All TransformOp references renamed to TransformAction"
+      - "All OperatorIdentity references renamed to ComponentIdentity"
+      - "All OperatorFactEnvelope references must migrate to ComponentEvidenceEnvelope or role-specific envelope"
+      - "All OperatorKernel references must migrate to specific component boundary"
+      - "Inheritance from operator_family_shared_law.md replaced with component_shared_boundary_contract.md"
+      - "Boxed canonical invariants calling non-operators 'operators' have been removed"
+      - "Each contract now includes explicit classification as ACTION CANDIDATE"
+    clarification: >
+      Action candidates are proposals or checked facts about possible transformations.
+      They are not Actions. Engine execution of a licensed transformation is the Action.
+
+  # ---------------------------------------------------------------------------
+  representation_boundary_redirect:
+  # ---------------------------------------------------------------------------
+    source_file: representation_boundary_contract.md
+    frontmatter:
+      name: RepresentationBoundaryRedirect
+      status: superseded
+      active: false
+      machine_authority: false
+      role: "redirect to split representation boundary and candidate contracts"
+      superseded_by:
+        - adapter_boundary_contract.md
+        - encoder_boundary_contract.md
+        - decoder_boundary_contract.md
+        - projector_candidate_contract.md
+        - reflector_candidate_contract.md
+        - forgetful_action_contract.md
+      doctrine_version: "2026-05"
+    title: "Representation Boundary Contract (SUPERSEDED)"
+    notice: >
+      This file is not an active contract and MUST NOT be imported by validators,
+      build scripts, contract generators, or implementation crates as doctrine.
+      If this redirect conflicts with any split representation boundary or candidate contract,
+      the split contract controls.
+    decomposition_table:
+      - original_section: Adapter
+        new_contract_file: adapter_boundary_contract.md
+        classification: Boundary
+      - original_section: Decoder
+        new_contract_file: decoder_boundary_contract.md
+        classification: "Boundary - pending split"
+      - original_section: Encoder
+        new_contract_file: encoder_boundary_contract.md
+        classification: Boundary
+      - original_section: Projector
+        new_contract_file: projector_candidate_contract.md
+        classification: Candidate
+      - original_section: Reflector
+        new_contract_file: reflector_candidate_contract.md
+        classification: Candidate
+      - original_section: Forgetful
+        new_contract_file: forgetful_action_contract.md
+        classification: Candidate
+    migration_notes:
+      - "All ForgetfulOp references renamed to ForgetfulAction"
+      - "All ForgetfulOperator references renamed to ForgetfulAction"
+      - "All OperatorFactEnvelope references must migrate to ComponentEvidenceEnvelope or role-specific envelope"
+      - "ActionFactEnvelope is forbidden because it collapses action and fact authority"
+      - "All OperatorVersion references renamed to ComponentVersion"
+      - "'representation-boundary operators' replaced with 'representation boundaries'"
+      - "'Projector Operator Contract' replaced with 'Projector Candidate Contract'"
+      - "'Reflector Operator Contract' replaced with 'Reflector Candidate Contract'"
+      - "Inheritance from operator_family_shared_law.md replaced with component_shared_boundary_contract.md"
+      - "Each contract now includes explicit classification as BOUNDARY or CANDIDATE"
+      - "Decoder content should be split into decoder_boundary_contract.md; until then, any Decoder section inside adapter_boundary_contract.md is transitional and non-canonical"
+    clarification: >
+      Representation boundaries and representation candidates do not authorize or execute transitions.
+      They emit EvidenceOnly artifacts unless checked by their declared boundary.
+      Engine execution requires a separate ActionLicense.
+
+  # ---------------------------------------------------------------------------
+  component_shared_boundary:
+  # ---------------------------------------------------------------------------
+    source_file: component_shared_boundary_contract.md
+    frontmatter:
+      name: ComponentSharedBoundary
+      role: "Defines shared boundary law for all non-operator component families"
+      classification: boundary
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ContractConstitution
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - "claiming operator status for non-E/I/C/R/M entities"
+        - "using Op suffix or Operator name for non-effect-class components"
+        - "authorizing transitions without ActionLicense authority"
+        - "executing without Engine boundary"
+        - "mutating global state without licensed Engine transition"
+        - "ranking candidates outside Evaluator/Search policy boundary"
+        - "searching outside SearchGenerator boundary"
+        - "scheduling execution outside declared orchestration boundary"
+        - "collapsing evidence, fact, decision, license, action, and record"
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - DecisionEnvelope
+        - ActionLicense
+        - Action
+        - Record
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, or upgrade evidence authority.
+      LLM output may propose component definitions, mappings, or patches, but those proposals
+      are EvidenceOnly until checked by the relevant component boundary.
+
+    shared_component_law: >
+      Component-family members emit artifacts under their declared artifact family.
+      Most component outputs are EvidenceOnly by default. They may become FactOnly,
+      DecisionEnvelope, ActionLicense, Action, or Record only through the declared
+      boundary that owns that authority. A component-family member may not authorize,
+      execute, certify, terminalize, search, rank, mutate global state, or change
+      carrier expressivity unless its specific contract declares that role and authority.
+
+    canonical_separation:
+      Constructor: "declares or builds structured intake artifacts; Validator checks them"
+      Adapter: "changes representation without changing meaning"
+      Encoder: "embeds into constrained representation"
+      Decoder: "reconstructs only what the encoding evidence permits"
+      Generator_Search: "proposes detached candidates"
+      Lambda: "proposes local transformation"
+      Reducer: "proposes same-carrier deflation"
+      Transform: "proposes same-carrier rearrangement"
+      Projector: "proposes explicit-loss projection"
+      Reflector: "quotes or reflects; it does not execute"
+      Normalizer: "proposes canonical form"
+      Solver: "computes"
+      Functional: "composes measurements"
+      Observable: "extracts primitive quantities"
+      Analysis: "checks factual evidence"
+      Certifier: "binds claims to evidence"
+      Evaluator: "judges"
+      Policy: "decides policy"
+      Terminalizer: "seals terminal outcomes or licenses"
+      LicensingBoundary: "emits ActionLicense"
+      Engine: "executes licensed transitions"
+      Trace: "records"
+      Replay: "verifies reconstruction"
+      MetaJudgment: "judges lift admissibility"
+      LiftLicense: "authorizes carrier/schema extension"
+
+    reclassification_table:
+      - entity: Lambda
+        classification: Action candidate
+        role: "proposes pure local endomorphism"
+        default_family: EvidenceEnvelope
+      - entity: Reducer
+        classification: Action candidate
+        role: "proposes same-carrier deflation"
+        default_family: EvidenceEnvelope
+      - entity: Normalizer
+        classification: Action candidate
+        role: "proposes canonical-form mapping"
+        default_family: EvidenceEnvelope
+      - entity: Transform
+        classification: Action candidate
+        role: "proposes same-carrier rearrangement"
+        default_family: EvidenceEnvelope
+      - entity: Constructor
+        classification: "Boundary / intake"
+        role: "builds or declares structured intake"
+        default_family: "StructureArtifact / EvidenceEnvelope"
+      - entity: Adapter
+        classification: "Boundary / representation"
+        role: "changes representation without changing meaning"
+        default_family: EvidenceEnvelope
+      - entity: Encoder
+        classification: "Boundary / representation"
+        role: "maps to compressed/canonical representation"
+        default_family: EvidenceEnvelope
+      - entity: Decoder
+        classification: "Boundary / representation"
+        role: "reconstructs only what encoding evidence permits"
+        default_family: EvidenceEnvelope
+      - entity: Projector
+        classification: Action candidate
+        role: "proposes explicit-loss projection"
+        default_family: EvidenceEnvelope
+      - entity: Reflector
+        classification: "Boundary / quotation"
+        role: "quotes or reflects without execution"
+        default_family: EvidenceEnvelope
+      - entity: Forgetful
+        classification: "Boundary / projection"
+        role: "discards structure with explicit loss"
+        default_family: EvidenceEnvelope
+      - entity: Generator
+        classification: Proposal system
+        role: "produces candidates"
+        default_family: EvidenceEnvelope
+      - entity: SearchGenerator
+        classification: Proposal system
+        role: "traverses/generates candidate frontier"
+        default_family: EvidenceEnvelope
+      - entity: Solver
+        classification: Computation
+        role: "computes declared results"
+        default_family: "EvidenceEnvelope; FactEnvelope after checking"
+      - entity: Functional
+        classification: Measurement composition
+        role: "composes canonical measurements"
+        default_family: "EvidenceEnvelope; FactEnvelope after checking"
+      - entity: Observable
+        classification: Measurement extraction
+        role: "extracts primitive quantities"
+        default_family: EvidenceEnvelope
+      - entity: Analysis
+        classification: Fact checking
+        role: "checks declared artifact evidence"
+        default_family: "EvidenceEnvelope; FactEnvelope after checking"
+      - entity: Certifier
+        classification: Certification
+        role: "binds claim to evidence"
+        default_family: "EvidenceEnvelope; FactEnvelope after verification"
+      - entity: Validator
+        classification: Checking
+        role: "checks well-formedness/domain"
+        default_family: "EvidenceEnvelope; FactOnly only if declared"
+      - entity: Evaluator
+        classification: "Governance / judgment"
+        role: "judges evidence within contract"
+        default_family: "DecisionEnvelope or FactEnvelope depending contract"
+      - entity: Policy
+        classification: "Governance / policy"
+        role: "classifies or decides policy"
+        default_family: DecisionEnvelope
+      - entity: Terminalizer
+        classification: "Governance / terminal mapping"
+        role: "seals terminal outcomes or licenses"
+        default_family: "DecisionEnvelope / ActionLicense"
+      - entity: LicensingBoundary
+        classification: Authorization
+        role: "emits scoped transition license"
+        default_family: ActionLicense
+      - entity: MetaJudgment
+        classification: "Governance / lift admissibility"
+        role: "judges lift admissibility"
+        default_family: DecisionEnvelope
+      - entity: LiftLicense
+        classification: Lift authorization
+        role: "authorizes carrier/schema extension"
+        default_family: ActionLicense
+      - entity: Engine
+        classification: Execution
+        role: "executes licensed transitions"
+        default_family: Action
+      - entity: Pipeline
+        classification: Orchestration
+        role: "routes declared stages"
+        default_family: "None / Record / EvidenceEnvelope"
+      - entity: Trace
+        classification: Record
+        role: "records immutable event evidence"
+        default_family: Record
+      - entity: Replay
+        classification: Replay checking
+        role: "reconstructs declared history"
+        default_family: "EvidenceEnvelope; FactEnvelope after verified replay"
+
+    operator_exclusion_note: >
+      None of these entities are operators. Only E (exact repair), I (quotient isometry),
+      C (context embedding), R (residual projection), and M (refused mutation) are operators.
+      See fixed_layer_operator_algebra_contract.md.
+
+    role_separation_matrix_note: >
+      This contract does not duplicate the full matrix.
+      Use kernel_authority_matrix_contract.md as the canonical shared reference.
+      Component-specific contracts MAY narrow authority further, but MUST NOT exceed the shared matrix.
+
+    shared_envelope_pattern:
+      authority_effect_enum:
+        source: "GlobalContractTaxonomy / core-contracts"
+        note: "Component contracts MUST NOT define local authority-effect enums"
+        values:
+          - None
+          - EvidenceOnly
+          - FactOnly
+          - RequiresEvaluator
+          - RequestsDecision
+          - AuthorizesTransition
+          - StateTransition
+      component_evidence_envelope:
+        rust_code: |
+          pub struct ComponentEvidenceEnvelope<R> {
+              pub component_id: ComponentId,
+              pub component_version: ComponentVersion,
+              pub input_hash: Hash256,
+              pub output_hash: Hash256,
+              pub result: R,
+              pub law_refs: Vec<LawId>,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        note: >
+          ComponentEvidenceEnvelope is not a fact by name. Fact, decision, license, action,
+          and record envelopes must use their own canonical artifact families and owning boundaries.
+
+    default_authority_effect: "AuthorityEffect::EvidenceOnly"
+    default_authority_note: >
+      Only components whose contracts explicitly own judgment or decision boundaries may emit
+      RequiresEvaluator or RequestsDecision. Only licensing boundaries emit AuthorizesTransition.
+      Only Engine emits StateTransition.
+
+    negative_capability_tests:
+      forbidden_component_tokens:
+        - EngineDecision
+        - PipelineEvent
+        - PolicyDecision
+        - TerminalEnvelope
+        - ActionLicense
+        - "accepted = true"
+        - "rejected = true"
+        - "verdict: Accept"
+        - "verdict: Reject"
+        - quality_score
+        - reward_score
+        - should_apply
+        - authorize_transition
+        - license_transition
+        - execute_transition
+        - mutate_global_state
+        - solve_cnf
+        - solve_l1_hodge
+        - "phi1("
+        - "gamma2("
+      forbidden_naming_tokens:
+        - LambdaOp
+        - ReducerOp
+        - TransformOp
+        - ForgetfulOp
+        - AdapterOp
+        - GaugeOp
+        - ReflectorOp
+        - OperatorFactEnvelope
+        - BasisOperator
+        - ActionFactEnvelope
+      python_guard: |
+        from pathlib import Path
+
+        FORBIDDEN_COMPONENT_TOKENS = [
+            "EngineDecision", "PipelineEvent", "PolicyDecision", "TerminalEnvelope",
+            "ActionLicense", "accepted = true", "rejected = true", "verdict: Accept",
+            "verdict: Reject", "quality_score", "reward_score", "should_apply",
+            "authorize_transition", "license_transition", "execute_transition",
+            "mutate_global_state", "solve_cnf", "solve_l1_hodge", "phi1(", "gamma2(",
+        ]
+
+        FORBIDDEN_NAMING_TOKENS = [
+            "LambdaOp", "ReducerOp", "TransformOp", "ForgetfulOp",
+            "AdapterOp", "GaugeOp", "ReflectorOp",
+            "OperatorFactEnvelope", "BasisOperator", "ActionFactEnvelope",
+        ]
+
+        def assert_no_forbidden_tokens(root: str):
+            violations = []
+            for path in Path(root).rglob("*.rs"):
+                text = path.read_text(encoding="utf-8")
+                for token in FORBIDDEN_COMPONENT_TOKENS + FORBIDDEN_NAMING_TOKENS:
+                    if token in text:
+                        violations.append((str(path), token))
+            assert not violations, violations
+
+    required_tests:
+      - shared_boundary_uses_canonical_authority_effect_enum
+      - shared_boundary_removes_action_fact_envelope
+      - component_outputs_default_to_evidence_only
+      - search_and_solver_are_not_execution
+      - pipeline_is_orchestration_not_execution
+      - only_engine_emits_action
+      - only_licensing_boundary_emits_action_license
+      - component_evidence_envelope_is_not_fact_by_name
+      - adapter_outputs_evidence_not_fact
+      - no_component_self_declares_operator_status
+      - no_legacy_op_suffix_tokens
+      - component_specific_contract_cannot_exceed_kernel_authority_matrix
+
+    canonical_invariant: >
+      ComponentSharedBoundary defines evidence-first boundaries for non-operator components.
+      Only E/I/C/R/M are fixed-layer operator classes. Components emit artifacts under declared
+      families; most outputs are EvidenceOnly until checked. Components do not gain authority from
+      names, envelopes, or placement. Only licensing boundaries authorize transitions, only Engine
+      executes, Trace records, and no shared component envelope is a fact by default.
+
+    file_naming_law: "All component-family implementation files MUST obey operator_file_naming_contract.md"
+
+  # ---------------------------------------------------------------------------
+  fixed_layer_operator_algebra:
+  # ---------------------------------------------------------------------------
+    source_file: fixed_layer_operator_algebra_contract.md
+    frontmatter:
+      name: FixedLayerOperatorAlgebra
+      role: "defines the five and only five fixed-layer effect classes in the obstruction algebra"
+      version: "2.0"
+      classification: operator-taxonomy
+      effect_class: all
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ContractConstitution
+        - GlobalContractTaxonomy
+        - KernelAuthorityMatrix
+      forbidden_authority:
+        - "creating new effect-classes beyond E/I/C/R/M"
+        - "calling non-operator entities operators"
+        - "candidate self-declaring effect class"
+        - "operator artifact emitting Action directly"
+        - "operator artifact emitting ActionLicense directly"
+        - "composition without RewriteLaw or certificate"
+        - "authority upgrade without checker boundary"
+      primary_output_family: StructureArtifact
+      domain_output_kind: TaxonomyRule
+      referenced_output_families:
+        - EvidenceEnvelope
+        - FactEnvelope
+        - ActionLicense
+        - Action
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, assign effect classes,
+      prove operator composition, or upgrade evidence authority. LLM output may propose
+      operator candidates or algebra patches, but those proposals are EvidenceOnly until
+      checked by the fixed-layer operator classifier/checker.
+
+    core_doctrine: >
+      The strict fixed-layer obstruction algebra has exactly five effect-classes.
+      No more may be added without constitutional amendment.
+
+    operator_authority_boundary:
+      candidate_authority: EvidenceOnly
+      checked_classification_authority: "FactOnly if checker/certifier verifies"
+      licensing_authority: "AuthorizesTransition, emitted only by LicensingBoundary"
+      execution_authority: "StateTransition, emitted only by Engine"
+      notes:
+        - "E/I/C/R/M are effect classes, not execution authority"
+        - "An operator candidate is EvidenceOnly"
+        - "An operator artifact does not emit ActionLicense, Action, StateTransition, or EngineResult"
+        - "A licensed operator application requires a separate ActionLicense"
+        - "Engine execution of a licensed operator application is the Action"
+
+    effect_classes:
+      E_exact_repair:
+        definition: >
+          A same-carrier local displacement that restores a broken invariant to its canonical form.
+          The repair is exact: the post-state satisfies the invariant that the pre-state violated.
+        rust_candidate: |
+          pub struct ExactRepairCandidate {
+              pub candidate_id: OperatorCandidateId,
+              pub obstruction_ref: ObstructionId,
+              pub carrier_ref: CarrierRef,
+              pub pre_state_hash: Hash256,
+              pub post_state_hash: Hash256,
+              pub invariant_restored: InvariantId,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub candidate_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        rust_checked: |
+          pub struct CheckedExactRepair {
+              pub checked_id: CheckedOperatorId,
+              pub candidate_ref: OperatorCandidateId,
+              pub same_carrier_certificate: CertificateId,
+              pub invariant_restoration_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+        composition_law: "E . E may normalize to E only when same-carrier preservation, invariant restoration, replayability, and an explicit RewriteLaw or certificate justify compression"
+        admissibility: "Pre-state must violate the declared invariant; post-state must satisfy it"
+        refusal: "If no invariant is violated, E is inadmissible (repair without breakage is identity, not E)"
+
+      I_quotient_isometry:
+        definition: >
+          A representation-preserving equivalence map that identifies states differing only by gauge freedom.
+          The quotient isometry collapses a gauge orbit to its canonical representative without information
+          loss relevant to the declared invariants.
+        rust_candidate: |
+          pub struct QuotientIsometryCandidate {
+              pub candidate_id: OperatorCandidateId,
+              pub source_carrier: CarrierRef,
+              pub target_carrier: CarrierRef,
+              pub source_hash: Hash256,
+              pub target_hash: Hash256,
+              pub equivalence_class: GaugeOrbitId,
+              pub isometry_witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub candidate_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        rust_checked: |
+          pub struct CheckedQuotientIsometry {
+              pub checked_id: CheckedOperatorId,
+              pub candidate_ref: OperatorCandidateId,
+              pub quotient_preservation_certificate: CertificateId,
+              pub invariant_preservation_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+        identity_note: "Identity may be classified as I only when a declared identity or quotient-equivalence law applies. Identity by naming alone is not an operator fact."
+        composition_law: "I . I = I (quotient isometries compose)"
+        admissibility: "Source and target must be in the same gauge orbit"
+        refusal: "If source and target differ in invariant-relevant structure, I is inadmissible"
+
+      C_context_embedding:
+        definition: >
+          A context embedding maps a local structure into a declared admissible context within
+          the current fixed layer, preserving declared local invariants and recording the context
+          relation. It does not perform carrier/schema expansion unless a separate LiftLicense exists.
+        rust_candidate: |
+          pub struct ContextEmbeddingCandidate {
+              pub candidate_id: OperatorCandidateId,
+              pub source_carrier: CarrierRef,
+              pub context_family_ref: ContextFamilyRef,
+              pub target_context_ref: ContextRef,
+              pub embedding_witness_refs: Vec<WitnessId>,
+              pub preservation_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub candidate_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        rust_checked: |
+          pub struct CheckedContextEmbedding {
+              pub checked_id: CheckedOperatorId,
+              pub candidate_ref: OperatorCandidateId,
+              pub injectivity_certificate: CertificateId,
+              pub invariant_preservation_certificate: CertificateId,
+              pub context_admissibility_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+        carrier_note: "C does not create new carrier expressivity by itself. If carrier/schema expressivity changes, the operation requires Lift machinery and a LiftLicense."
+        composition_law: "C . C may normalize to C only when declared context composition exists and the composed embedding has replay/certificate support"
+        admissibility: "Embedding must be injective; source invariants must be preserved in target"
+        refusal: "If embedding is not injective or destroys source invariants"
+
+      R_residual_projection:
+        definition: >
+          A residual projection maps a structure to a deterministic residual representative
+          under a declared TiePolicy, preserving required invariants and recording discarded
+          information. R is irreversible unless a separate checked witness proves otherwise.
+        rust_candidate: |
+          pub struct ResidualProjectionCandidate {
+              pub candidate_id: OperatorCandidateId,
+              pub source_carrier: CarrierRef,
+              pub target_carrier_schema: CarrierSchemaRef,
+              pub projection_map_ref: ProjectionWitnessId,
+              pub tie_policy: TiePolicyId,
+              pub discarded_dimensions: Vec<DimensionId>,
+              pub invariants_preserved: Vec<InvariantId>,
+              pub invariants_discarded: Vec<InvariantId>,
+              pub evidence_refs: Vec<EvidenceRef>,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub candidate_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        rust_checked: |
+          pub struct CheckedResidualProjection {
+              pub checked_id: CheckedOperatorId,
+              pub candidate_ref: OperatorCandidateId,
+              pub surjectivity_certificate: CertificateId,
+              pub tie_policy_certificate: CertificateId,
+              pub preservation_certificate: CertificateId,
+              pub discarded_information_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+        tie_policy_note: "R requires deterministic TiePolicy. Without TiePolicy, R is invalid."
+        composition_law: "R . R may normalize to R only when source/target compatibility, deterministic TiePolicy composition, invariant preservation, discarded-information evidence, replay support, and explicit RewriteLaw or certificate are present."
+        admissibility: "Projection must be surjective; target invariants must hold"
+        refusal: "If projection destroys required invariants in the target"
+
+      M_refused_mutation:
+        definition: >
+          M is an absorbing refusal class for invalid, unlicensed, authority-insufficient,
+          or inadmissible attempted mutations. M is valid only when it records the proposed
+          mutation, refusal reason, refusing boundary, and evidence.
+        rust_candidate: |
+          pub struct RefusedMutationCandidate {
+              pub refusal_id: RefusalId,
+              pub attempted_mutation_ref: EvidenceRef,
+              pub current_state_hash: Hash256,
+              pub proposed_state_hash: Hash256,
+              pub refusal_reason: RefusalReason,
+              pub refusing_boundary: BoundaryId,
+              pub evidence_refs: Vec<EvidenceRef>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub refusal_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        rust_checked: |
+          pub struct CheckedRefusedMutation {
+              pub checked_id: CheckedOperatorId,
+              pub refusal_ref: RefusalId,
+              pub refusal_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+        composition_law: "M . X = M for any X (refusal absorbs subsequent operations)"
+        admissibility: "Always admissible (any proposed mutation may be refused)"
+        refusal: "A checked M is absorbing under declared composition. A malformed or unsupported refusal record is rejected as invalid evidence, not classified as another M."
+
+    conditional_composition_table:
+      description: >
+        Type-level target for checked composition. Not automatic rewrite authority.
+        A composition result is valid only when: (1) both operands are checked;
+        (2) source/target boundaries match; (3) required carrier/context compatibility holds;
+        (4) no authority is upgraded; (5) required RewriteLaw or certificate exists;
+        (6) replay trace can be emitted.
+      matrix:
+        #     E  I  C  R  M
+        E:  [ E, E, C, R, M ]
+        I:  [ E, I, C, R, M ]
+        C:  [ C, C, C, R, M ]
+        R:  [ R, R, R, R, M ]
+        M:  [ M, M, M, M, M ]
+      notes:
+        - "M is absorbing: any composition with M yields M"
+        - "E and I are 'light' effects that preserve carrier structure"
+        - "C and R change context or residual representation within the declared fixed layer. Carrier/schema expressivity changes require Lift machinery and a valid LiftLicense."
+        - "C . R != identity in general (information loss in R is irreversible)"
+
+    algebraic_closure_properties:
+      closure: "The set {E, I, C, R, M} is closed under composition"
+      associativity: "Associativity is a law obligation for checked composition, not an assumed implementation property. Any implementation that relies on associativity must provide a RewriteLaw, finite checker, or certificate."
+      identity: "Identity may be represented as a quotient isometry only when a declared identity/equivalence witness exists. Otherwise it is an inert no-change relation, not an operator fact."
+      absorption: "M is the zero element: M . X = X . M = M"
+      no_inverse_for_R: "Residual projection is not invertible. Lost information cannot be recovered."
+
+    non_operator_entities:
+      - entity: Lambda
+        correct_classification: Action candidate
+        role: "Pure local endomorphism proposing transformation"
+      - entity: Reducer
+        correct_classification: Action candidate
+        role: "Same-carrier deflation proposing reduction"
+      - entity: Normalizer
+        correct_classification: Action candidate
+        role: "Canonical-form mapping proposing normalization"
+      - entity: Transform
+        correct_classification: Action candidate
+        role: "Same-carrier rearrangement proposing transformation"
+      - entity: Constructor
+        correct_classification: "Boundary (intake)"
+        role: "Converts raw input to validated BaseType"
+      - entity: Adapter
+        correct_classification: "Boundary (representation)"
+        role: "Changes representation without changing meaning"
+      - entity: Encoder
+        correct_classification: "Boundary (representation)"
+        role: "Maps to compressed/canonical representation"
+      - entity: Decoder
+        correct_classification: "Boundary (representation)"
+        role: "Inverse of encoder"
+      - entity: Projector
+        correct_classification: Action candidate
+        role: "Projects carrier to lower-dimensional subspace"
+      - entity: Reflector
+        correct_classification: Action candidate
+        role: "Quotation/reflection boundary"
+      - entity: Forgetful
+        correct_classification: Action candidate
+        role: "Discards structure while preserving invariants"
+      - entity: Generator
+        correct_classification: "Candidate (proposal)"
+        role: "Pure proposal morphism"
+      - entity: Evaluator
+        correct_classification: "Governance (judgment)"
+        role: "Admissibility judgment gate"
+      - entity: Validator
+        correct_classification: "Governance (well-formedness)"
+        role: "Structural conformance checker"
+      - entity: Terminalizer
+        correct_classification: "Governance / terminal mapping"
+        role: "Seals terminal outcomes or licenses; does not execute"
+      - entity: MetaLift
+        correct_classification: Lift machinery
+        role: "Licensed carrier extension"
+      - entity: Engine
+        correct_classification: Execution
+        role: "Executes licensed transitions only"
+      - entity: Pipeline
+        correct_classification: Orchestration
+        role: "Routes declared stages; does not execute"
+      - entity: Search
+        correct_classification: Proposal system
+        role: "Generates/traverses candidate frontier only"
+      - entity: Solver
+        correct_classification: Computation
+        role: "Computes declared mathematical results; does not authorize transitions"
+    candidate_note: >
+        Action candidates may GENERATE proposals for E, I, C, R, or M effects.
+        The Evaluator judges admissibility. A LicensingBoundary may authorize execution when required. Engine executes only licensed transitions.
+        The candidate itself is never an operator.
+
+    forbidden_tokens:
+      naming:
+        - LambdaOp
+        - ReducerOp
+        - TransformOp
+        - ForgetfulOp
+        - AdapterOp
+        - GaugeOp
+        - ReflectorOp
+        - OperatorFactEnvelope
+        - ActionFactEnvelope
+        - BasisOperator
+      behavior:
+        - self_declare_effect_class
+        - emit_action
+        - emit_action_license
+        - execute_transition
+        - authorize_transition
+        - license_transition
+        - compose_without_rewrite_law
+        - normalize_without_certificate
+        - commute_without_certificate
+      notes:
+        - "Any *Op suffix or *Operator name on non-E/I/C/R/M entities is forbidden"
+        - "OperatorFactEnvelope is forbidden. Use ComponentEvidenceEnvelope or the role-specific canonical envelope"
+        - "ActionFactEnvelope is forbidden because it collapses action and fact authority"
+
+    required_tests:
+      - only_five_effect_classes_exist
+      - effect_class_composition_is_closed
+      - effect_class_composition_is_associative
+      - refused_mutation_is_absorbing
+      - exact_repair_requires_broken_invariant
+      - quotient_isometry_preserves_invariants
+      - context_embedding_is_injective
+      - residual_projection_is_surjective
+      - no_op_suffix_on_non_effect_class
+      - no_operator_name_on_non_effect_class
+      - operator_candidates_default_to_evidence_only
+      - checked_operator_classification_may_be_factonly
+      - operator_candidate_cannot_self_declare_effect_class
+      - operator_artifact_does_not_emit_action
+      - operator_artifact_does_not_emit_action_license
+      - operator_execution_requires_action_license
+      - composition_requires_rewrite_law_or_certificate
+      - context_embedding_does_not_extend_carrier_without_lift_license
+      - residual_projection_requires_tie_policy
+      - malformed_refusal_record_is_not_checked_m
+      - action_fact_envelope_forbidden
+      - search_and_solver_not_classified_as_execution
+
+    canonical_invariant: >
+      The fixed-layer obstruction algebra has exactly five effect classes:
+      E = exact repair, I = quotient isometry, C = context embedding,
+      R = residual projection, and M = refused mutation. Operator candidates are EvidenceOnly.
+      Checked operator classifications may become FactOnly only through classifier/checker evidence.
+      Operator artifacts do not authorize or execute transitions. LicensingBoundary authorizes;
+      Engine executes. Everything else is a candidate, boundary, computation, governance gate,
+      orchestration layer, record, replay, or lift machinery -- never an operator.
+
+  # ---------------------------------------------------------------------------
+  adapter_boundary:
+  # ---------------------------------------------------------------------------
+    source_file: adapter_boundary_contract.md
+    frontmatter:
+      name: AdapterBoundary
+      role: "Pure representation morphism crossing schema boundaries"
+      classification: boundary
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+        - semantic creation
+        - hidden inference
+        - policy interpretation
+        - search
+        - solver invocation
+        - state mutation
+        - lift licensing
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - Record
+      referenced_domain_kinds:
+        - WitnessEnvelope
+        - CertificateEnvelope
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, adapt schemas, or upgrade
+      evidence authority. LLM output may propose adapter definitions or migration mappings,
+      but those proposals are EvidenceOnly until checked by the Adapter / Schema / InvariantTransport boundary.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is a BOUNDARY, not a fixed-layer operator. An Adapter is a pure representation
+      morphism. It crosses schema boundaries without semantic computation, solver invocation,
+      evaluation, or authority promotion. Adapters change representation, not meaning.
+      Adapter artifacts are EvidenceOnly by default. A checked adaptation result may become
+      FactOnly only after schema-bound totality, deterministic hashing, invariant transport,
+      loss declaration, and replay checks pass. Adapter never emits ActionLicense, Action,
+      DecisionEnvelope, or StateTransition.
+
+    core_definition: >
+      An Adapter is a pure, total, non-executive transformation that maps one BaseType to
+      another BaseType with a different SchemaRef, preserving declared invariants up to an
+      explicitly stated correspondence, and performing no orchestration, search, policy, or
+      side-effectful computation. An Adapter is the lawful representation-boundary mechanism
+      for schema-changing representation conversion. Carrier/schema expressivity changes are
+      lifts, not adaptations.
+
+    architectural_role:
+      description: "Adapters exist to cross representation boundaries safely and explicitly."
+      is: "representation boundaries"
+      is_not:
+        - computational components
+        - evaluators
+        - engines
+        - pipelines
+        - policies
+        - solvers
+        - search components
+      summary: "They are representation morphisms, nothing more."
+
+    rules:
+      explicit_schema_boundary:
+        section_number: 1
+        requirements:
+          - "Every Adapter MUST declare a source schema SchemaRef_src"
+          - "Every Adapter MUST declare a target schema SchemaRef_dst"
+          - "If SchemaRef_src == SchemaRef_dst, an Adapter is forbidden. Identity is handled by the BaseType itself."
+
+      totality_and_determinism:
+        section_number: 2
+        must_be:
+          - "Total over admissible source domain -- defined for all valid instances of the source BaseType that meet the explicitly declared admissibility conditions"
+          - "Deterministic -- identical inputs produce identical outputs"
+          - "Pure -- no side effects, no IO, no external state"
+        must_not:
+          - "branch on runtime policy"
+          - "consult external registries"
+          - "depend on time, randomness, or environment"
+        allowed: "Bounded structural field mapping, renaming, canonical serialization, and declared loss accounting"
+        forbidden: "Search, optimization, inference, solver calls, policy branching, and semantic repair"
+
+      invariant_transport_law:
+        section_number: 3
+        description: "Adapters must explicitly declare how invariants are transported via a dedicated InvariantTransportKernel"
+        rust_code: |
+          struct InvariantTransport {
+              source: InvariantId,
+              target: Vec<InvariantId>,
+              mode: TransportMode,
+          }
+
+          enum TransportMode {
+              Preserved,
+              Refined,
+              Weakened,
+              ForgottenExplicitly,
+          }
+        invariant_correspondence: "For each invariant I_src of the source schema, the Adapter MUST specify the TransportMode. Dropping an invariant without explicit declaration is forbidden."
+        no_invariant_repair:
+          - "An Adapter MUST NOT silently repair invariant violations"
+          - "An Adapter MUST NOT coerce invalid source data into valid target data"
+          - "If an invariant cannot be transported, the Adapter MUST fail explicitly"
+
+      no_new_information_law:
+        section_number: 4
+        formal: "Info(Dst) <= Closure(Info(Src)) under declared transport semantics"
+        allowed:
+          - "renaming fields"
+          - "regrouping structure"
+          - "changing coordinate systems (ONLY IF invertibility, invariant transport, and quotient preservation are explicitly declared)"
+          - "forgetting fields (with explicit loss declaration)"
+        forbidden:
+          - inference
+          - estimation
+          - optimization
+          - "default filling of missing data"
+
+      loss_declaration:
+        section_number: 5
+        rust_code: |
+          pub enum LossClass {
+              Structural,
+              Semantic,
+              QuotientRelevant,
+          }
+
+          pub enum LossMode {
+              None,
+              Explicit {
+                  lost_fields: &'static [&'static str],
+                  loss_class: LossClass,
+              },
+          }
+        requirements:
+          - "Loss MUST be explicit"
+          - "Loss MUST be auditable"
+          - "Loss MUST be invariant-compatible"
+          - "Silent loss is forbidden"
+          - "Every adaptation must produce AdaptationEvidence detailing transported invariants, lost invariants, quotient impact, and support mapping"
+
+      phi_and_quotient_geometry:
+        section_number: 6
+        requirements:
+          - "Adapter may change representation-level quotient references only through declared invariant transport and explicit loss"
+          - "MUST NOT compute or recompute canonical Phi1, Gamma2, Xi, quotient mass, closure defect, or cohomological status"
+          - "MUST NOT mix supports or introduce Phi-coupling between previously independent components"
+        formal: "If [a] perp [b] in source, then Adapter(a) perp Adapter(b) in target, unless loss is explicitly declared"
+        note: "Strictly distinguish between representation-preserving adapters and quotient-altering projection adapters. They are different categories."
+
+    rust_types:
+      adaptation_output:
+        code: |
+          pub struct AdaptationOutput<Dst> {
+              pub adapter_id: AdapterId,
+              pub source_schema: SchemaRef,
+              pub target_schema: SchemaRef,
+              pub source_hash: Hash256,
+              pub target_hash: Hash256,
+              pub output: Dst,
+              pub evidence: AdaptationEvidence,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      adapter_trait:
+        code: |
+          pub trait Adapter<Src: BaseType, Dst: BaseType> {
+              fn source_schema(&self) -> SchemaRef;
+              fn target_schema(&self) -> SchemaRef;
+              fn adapt(&self, src: &Src) -> Result<AdaptationOutput<Dst>, AdaptationError>;
+          }
+        note: "AdaptationError MUST be structural (never policy- or execution-based). Adapter output is evidence, not an action fact."
+      checked_adaptation_output:
+        code: |
+          pub struct CheckedAdaptationOutput<Dst> {
+              pub output_ref: AdaptationOutputRef,
+              pub checked_target_hash: Hash256,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+        note: "Only a checking boundary may produce CheckedAdaptationOutput. Adapter itself emits AdaptationOutput."
+
+    forbidden_behaviors_hard_errors:
+      - "call computational components, engines, evaluators, policies, searches, or solvers"
+      - "perform search or branching over alternatives"
+      - "mutate global or external state"
+      - "depend on policy, budgets, or runtime context"
+      - "cache results that affect observable behavior"
+    forbidden_behaviors_note: "If any of these occur, the component is not an Adapter."
+
+    pipeline_engine_relationship:
+      - "Pipeline or declared orchestration selects when an adapter boundary is invoked"
+      - "Adapter defines how representation fields map"
+      - "Engine does not adapt implicitly and does not execute adapters as state transitions unless a separate licensed transition applies"
+
+    admissibility_checklist:
+      - "Source and target schemas differ"
+      - "Transformation is total over the admissible domain and deterministic"
+      - "No new information is introduced"
+      - "All invariant transport is explicit"
+      - "Any information loss is declared"
+      - "Phi-separability is preserved"
+      - "No execution, search, or policy logic exists"
+      - "No external dependencies or side effects"
+    admissibility_note: "If any condition fails, the Adapter is invalid."
+
+    required_tests:
+      purity:
+        - adapter_has_no_io
+        - adapter_has_no_external_dependencies
+        - adapter_has_no_policy_branching
+        - adapter_has_no_runtime_context
+      transport:
+        - all_source_invariants_accounted_for
+        - undeclared_invariant_drop_rejected
+        - loss_mode_required_for_forgetting
+      quotient:
+        - adapter_preserves_support_separability
+        - adapter_does_not_merge_independent_components
+        - quotient_collapse_requires_explicit_loss
+      replay:
+        - same_input_same_output
+        - same_input_same_loss_certificate
+        - canonical_serialization_stable_under_adaptation
+      composition:
+        - adapter_chain_preserves_transport_laws
+        - loss_accumulates_explicitly
+      authority:
+        - adapter_output_defaults_to_evidence_only
+        - checked_adaptation_output_may_be_factonly_after_checks
+        - adapter_does_not_emit_action_fact_envelope
+        - adapter_does_not_create_adaptation_certificate
+        - adapter_evidence_is_not_certificate
+        - adapter_does_not_compute_canonical_cohomological_values
+        - adapter_does_not_infer_missing_fields
+        - adapter_does_not_default_fill_missing_data
+        - adapter_does_not_call_solver_or_search
+        - adapter_does_not_authorize_transition
+        - adapter_same_schema_forbidden
+        - adapter_schema_change_requires_explicit_invariant_transport
+
+    target_architecture:
+      kernels:
+        - SchemaKernel
+        - BaseTypeKernel
+        - InvariantTransportKernel
+        - AdapterKernel
+        - SerializationKernel
+        - ReplayKernel
+      note: "Adapters should remain tiny: map representation, transport invariants, declare loss, and stop."
+
+    theorem_level_infrastructure:
+      - NoSemanticCreationInsideAdapter
+      - InvariantTransportCompleteness
+      - ExplicitLossLaw
+      - QuotientSeparabilityPreservation
+      - AdapterDeterminism
+      - NoImplicitAdaptationInsideEngine
+      - SchemaBoundaryIntegrity
+      - ReplayStableAdaptation
+
+    canonical_invariant: >
+      Adapter is an EvidenceOnly representation boundary. It maps between different schema-bound
+      BaseTypes through total, deterministic, pure structural transformation with explicit invariant
+      transport and explicit loss. It changes representation, not meaning. It does not certify,
+      validate, infer, repair, compute canonical measurements, terminalize, authorize, mutate,
+      execute, or emit action facts. If meaning or carrier expressivity changes, the boundary is
+      not Adapter; it is lift or another declared authority boundary.
+
+    upgrade_v02:
+      adaptation_evidence:
+        description: "Adapters need an explicit loss and invariant transport evidence record"
+        rust_code: |
+          pub struct AdaptationEvidence {
+              pub adapter_id: AdapterId,
+              pub source_schema: SchemaRef,
+              pub target_schema: SchemaRef,
+              pub source_hash: Hash256,
+              pub target_hash: Hash256,
+              pub invariant_transport: Vec<InvariantTransport>,
+              pub loss_ledger: LossLedger,
+              pub quotient_impact: QuotientImpact,
+              pub evidence_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+
+          pub enum QuotientImpact {
+              Preserved,
+              Weakened { reason: &'static str },
+              Collapsed { loss_certificate: CertificateId },
+          }
+
+          pub struct LossLedger {
+              pub lost_fields: Vec<FieldId>,
+              pub loss_class: LossClass,
+              pub semantic_loss_declared: bool,
+          }
+        note: "If certification is required, CertificateKernel may seal a certificate over AdaptationEvidence. Adapter itself does not create certificates."
+      python_poc: |
+        from dataclasses import dataclass
+
+        @dataclass(frozen=True)
+        class Handoff:
+            source_schema: str
+            target_schema: str
+            adapter_id: str | None
+
+        def validate_adapter_boundary(h: Handoff) -> None:
+            if h.source_schema == h.target_schema and h.adapter_id is not None:
+                raise ValueError("Adapter forbidden when schemas are identical.")
+            if h.source_schema != h.target_schema and h.adapter_id is None:
+                raise ValueError("Adapter required for schema-changing handoff.")
+
+    paired_boundary:
+      decoder: >
+        Decoder is the inverse or partial-inverse representation boundary paired with Encoder.
+        Its governing contract is decoder_boundary_contract.md. Adapter does not define Decoder authority.
+
+  # ---------------------------------------------------------------------------
+  encoder_boundary:
+  # ---------------------------------------------------------------------------
+    source_file: encoder_boundary_contract.md
+    frontmatter:
+      name: EncoderBoundary
+      role: "Typed representation functor mapping structured domain to admissible density representation"
+      classification: boundary
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+        - evaluation
+        - ranking
+        - policy interpretation
+        - search
+        - solver invocation unless declared
+        - physical interpretation without license
+        - semantic creation
+        - state mutation
+        - action licensing
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - Record
+      referenced_domain_kinds:
+        - WitnessEnvelope
+        - CertificateEnvelope
+        - MeasurementEnvelope
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, encode authoritative
+      representations, or upgrade evidence authority. LLM output may propose Encoder
+      definitions or tests, but those proposals are EvidenceOnly until checked by the
+      Encoder / Representation / Certificate boundary.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is a BOUNDARY, not a fixed-layer operator. An Encoder is a typed representation
+      functor at the representation boundary. It shapes the representation space but does not
+      decide candidate acceptance, evaluate, or execute. Encoder output is EvidenceOnly by
+      default. A checked encoded representation may become FactOnly only after codomain
+      invariants, deterministic hashing, schema identity, replayability, and required
+      certificate references are checked. Encoder does not emit DecisionEnvelope,
+      ActionLicense, Action, or StateTransition.
+
+    core_definition: >
+      An Encoder is a typed representation functor mapping a structured domain to an
+      admissible density representation under strict codomain invariants. Encoders shape
+      the representation space but do not decide candidate acceptance.
+
+    subsystem_classification:
+      subsystem: "representation boundary / admissible embedding morphism"
+      not:
+        - adapter
+        - decoder
+        - evaluator
+        - physics engine
+        - solver
+        - policy
+        - terminalizer
+        - engine
+
+    encoding_domain: >
+      Encoders map structured domain to admissible density representation under strict
+      codomain invariants: PSD, trace-one, Hermitian, and finite.
+
+    tower_placement: >
+      Encoders sit at the representation boundary between the structural domain (graphs,
+      text, embeddings) and the density-representation layer. They are closely related to
+      Adapters but distinguished by their postcondition: every encoder output MUST be a
+      valid density matrix. An Encoder is distinct from an Adapter. An Adapter converts
+      between already-declared representations. An Encoder crosses the representation
+      boundary from an unstructured/heterogeneous domain into a strictly constrained
+      physical representation.
+
+    actual_implementation_note: >
+      The TextDensityEncoder is the canonical example of an encoder that maps raw text ->
+      Bigram Gram matrix -> PSD trace-one density matrix. It was deliberately named
+      "encoder" rather than "quantum" to enforce the epistemic firewall: text does not
+      become quantum by being encoded as a density matrix. The density matrix is a
+      diagnostic formalism, not a physical ontology.
+
+    rust_types:
+      encoding_evidence:
+        code: |
+          pub struct EncodingEvidence {
+              pub encoder_id: EncoderId,
+              pub source_schema: SchemaRef,
+              pub target_schema: SchemaRef,
+              pub source_hash: Hash256,
+              pub encoded_hash: Hash256,
+              pub basis_construction: BasisId,
+              pub normalization_rule: RuleId,
+              pub psd_witness_ref: Option<WitnessId>,
+              pub trace_one_witness_ref: Option<WitnessId>,
+              pub hermitian_witness_ref: Option<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub semantics: RepresentationSemantics,
+              pub physical_interpretation_license: PhysicalInterpretationLicense,
+              pub evidence_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      encoding_output:
+        code: |
+          pub struct EncodingOutput<Encoded> {
+              pub encoded: Encoded,
+              pub evidence: EncodingEvidence,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      encoder_trait:
+        code: |
+          pub trait Encoder<S, Encoded> {
+              fn source_schema(&self) -> SchemaRef;
+              fn target_schema(&self) -> SchemaRef;
+
+              fn encode(&self, input: &S) -> Result<EncodingOutput<Encoded>, EncoderError>;
+          }
+        note: "Encoder produces EncodingEvidence. CertificateKernel may seal a certificate over that evidence. Encoder itself does not create certificates."
+      checked_encoding_output:
+        code: |
+          pub struct CheckedEncodingOutput<Encoded> {
+              pub output_ref: EncodingOutputRef,
+              pub checked_encoded_hash: Hash256,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+        note: "Only a RepresentationLawKernel, CertificateKernel, or declared checking boundary may produce CheckedEncodingOutput."
+      encoder_error:
+        code: |
+          pub enum EncoderError {
+              EmptyInput,
+              NonFiniteInput { index: usize },
+              DegenerateInput { reason: &'static str },
+              DimensionMismatch { expected: usize, actual: usize },
+              EncodingFailed { reason: String },
+              PsdViolation,
+              MissingPsdEvidence,
+              MissingTraceOneEvidence,
+              MissingHermitianEvidence,
+              PhysicalInterpretationUnlicensed,
+              ForbiddenEvaluationLogic,
+              ForbiddenRankingLogic,
+          }
+      representation_semantics:
+        code: |
+          pub struct RepresentationSemantics {
+              pub basis_meaning: BasisMeaning,
+              pub admissible_metrics: Vec<MetricId>,
+          }
+
+    postconditions:
+      description: "Every Ok output from an encoder MUST provide evidence references for codomain validity"
+      requirements:
+        - "PSD: witness or certificate reference"
+        - "Trace-one: witness or certificate reference"
+        - "Hermitian: witness or certificate reference"
+        - "Finite: checked by representation boundary"
+      note: "If certificates are absent, the output remains EvidenceOnly and must not be treated as a checked density representation."
+
+    preconditions:
+      description: "An encoder MUST reject inputs that cannot be mapped to a valid density matrix"
+      rejections:
+        - "Empty inputs (zero-length text, empty graph)"
+        - "Non-finite inputs (NaN embeddings)"
+        - "Degenerate inputs (all-zero vectors that would produce a zero matrix)"
+
+    constraints_and_exclusions:
+      - "Deterministic -- same input always produces identical output"
+      - "Stateless -- no mutable state, no caches, no external bindings"
+      - "No evaluation -- encoders do not score, rank, or accept/reject"
+      - "Epistemic Firewall -- encoding data as a density matrix does not make it quantum"
+      - "No repair -- if the input cannot be encoded, return EncoderError, do not fix the input"
+      - "No Hidden Weights -- Encoders must not smuggle ranking or feature selection via EncodingEvidence"
+
+    evaluation_integration:
+      description: >
+        Encoders produce encoded representation evidence. Diagnostics such as entropy,
+        purity, coherence, or SBE telemetry are produced by declared Measurement /
+        Observable / Functional / Analysis boundaries over the encoded representation.
+      flow: |
+        Raw domain state
+        -> Encoder
+        -> EncodingOutput / EncodingEvidence
+        -> RepresentationLawKernel / CertificateKernel
+        -> Measurement or Analysis boundary
+        -> telemetry or evaluator input
+      note: "The encoder itself is not evaluated by the evaluation layer. Its output (the density matrix) is what the evaluator measures."
+
+    epistemic_firewall: >
+      Encoding a representation as a density matrix does not promote the representation to
+      physical quantum mechanics. The density matrix formalism provides useful mathematical
+      properties (PSD, trace-one, eigendecomposition, entropy) that serve as diagnostic
+      tools. The encoder contract does not license claims about quantum entanglement,
+      quantum coherence, or quantum computation over the encoded data.
+
+    forbidden_tokens:
+      - ActionFactEnvelope
+      - EncodingCertificate
+      - "certify("
+      - "validate("
+      - "terminalize("
+      - "execute("
+      - "accepted = true"
+      - "rejected = true"
+      - rank_candidates
+      - score_candidate
+      - PolicyDecision
+      - EngineDecision
+      - TerminalEnvelope
+      - ActionLicense
+      - quantum_claim
+      - physical_quantum
+      - entanglement_claim
+      - authority_upgrade
+
+    required_tests:
+      - encoder_psd_verified
+      - encoder_trace_one_verified
+      - encoder_hermitian_verified
+      - encoder_deterministic_replay
+      - encoder_rejects_empty_input
+      - encoder_has_no_evaluation_logic
+      - encoder_cannot_rank_candidates
+      - representation_semantics_declared
+      - encoder_output_defaults_to_evidence_only
+      - checked_encoding_output_may_be_factonly_after_checks
+      - encoder_does_not_emit_action_fact_envelope
+      - encoder_produces_encoding_evidence_not_certificate
+      - encoder_does_not_create_certificates
+      - encoder_does_not_emit_measurements_or_diagnostics
+      - encoder_does_not_rank_or_score_candidates
+      - physical_interpretation_license_is_not_action_license
+      - density_encoding_does_not_create_quantum_physical_claim
+      - missing_psd_evidence_keeps_output_evidence_only
+
+    target_architecture:
+      kernels:
+        - EncoderKernel
+        - RepresentationKernel
+        - RepresentationLawKernel
+        - MetricExtractionKernel
+
+    theorem_level_infrastructure:
+      - EncoderCodomainValidity
+      - RepresentationBoundaryIntegrity
+      - NoPhysicsFromEncoding
+
+    canonical_invariant: >
+      Encoder is an EvidenceOnly representation boundary. It maps structured input into a
+      constrained encoded representation and emits EncodingEvidence. It does not certify,
+      validate, measure, evaluate, rank, terminalize, authorize, mutate, execute, or create
+      physical ontology. Checked encoded representations require a declared checking or
+      Certificate boundary.
+
+    upgrade_v02:
+      basis_meaning:
+        description: "Encoding into density form must produce codomain validity evidence, not physical claims"
+        rust_code: |
+          pub enum BasisMeaning {
+              TokenBigram,
+              GraphAdjacency,
+              EmbeddingGram,
+              DeclaredDomain(BasisId),
+          }
+      no_physics_field:
+        description: "Add an explicit field to prevent ontology laundering"
+        rust_code: |
+          pub enum PhysicalInterpretationLicense {
+              None,
+              Licensed { license_id: LicenseId },
+          }
+        note: >
+          A PhysicalInterpretationLicense permits interpretation claims only. It does not
+          authorize Engine transitions and is not an ActionLicense. Default value:
+          PhysicalInterpretationLicense::None
+      python_poc: |
+        import numpy as np
+
+
+        def validate_density_matrix(rho: np.ndarray, tol: float = 1e-9) -> None:
+            if rho.shape[0] != rho.shape[1]:
+                raise ValueError("Density matrix must be square.")
+            if not np.allclose(rho, rho.conj().T, atol=tol):
+                raise ValueError("Hermitian violation.")
+            if not np.isclose(np.trace(rho).real, 1.0, atol=tol):
+                raise ValueError("Trace-one violation.")
+            eigvals = np.linalg.eigvalsh(rho)
+            if np.min(eigvals) < -tol:
+                raise ValueError("PSD violation.")
+
+  # ---------------------------------------------------------------------------
+  intake_constructor:
+  # ---------------------------------------------------------------------------
+    source_file: intake_constructor_contract.md
+    frontmatter:
+      name: IntakeConstructor
+      role: "Deterministic intake boundary converting raw input to typed construction evidence"
+      version: "2.0"
+      classification: boundary
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation_override
+        - terminalization
+        - execution
+        - authority_upgrade
+        - repair
+        - solving
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - Record
+      referenced_domain_kinds:
+        - WitnessEnvelope
+        - CertificateEnvelope
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      This contract is a governance artifact. LLM-generated content carries no authority
+      within this contract. LLM output may propose candidates, contract edits, or tests, but those proposals are EvidenceOnly until checked by the declared boundary.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      Constructor is a BOUNDARY (intake boundary), not a fixed-layer operator. A Constructor
+      sits at the intake boundary of the engine. It validates and converts raw input
+      into typed internal structures. It does not compute, evaluate, repair, or execute.
+
+    core_definition: >
+      A Constructor is a deterministic boundary unit that converts raw or heterogeneous
+      input into a validated internal BaseType. It may parse, decode, type-check, and
+      validate. It may not repair, solve, optimize, search, register with the engine, or
+      mutate runtime state. Constructor outputs are EvidenceOnly by default. A checked
+      construction result may become FactOnly only after validation certificate
+      verification, schema conformance checking, and replay verification.
+
+    tower_placement:
+      description: >
+        Constructors are the intake boundary of the engine. They sit at the outermost
+        edge, accepting untrusted data and producing validated mathematical objects.
+      flow: "Untrusted external data -> Constructor -> validated BaseType -> Engine pipeline"
+      critical_note: >
+        Constructors are NOT Adapters. Constructors ingest untrusted/raw data and create
+        lawful internal objects. Adapters convert between already-declared,
+        already-validated representations.
+
+    known_implementation_locations:
+      - location: "engines/quantum/core/density_matrix.rs"
+        constructs: "DensityMatrix::new(), DensityMatrix::pure()"
+      - location: "engines/quantum/adapters/quantum_density_engine.rs"
+        constructs: "from_prompt_embedding_checked(), from_states_checked()"
+      - location: "engines/quantum/adapters/text_density_encoder.rs"
+        constructs: "TextDensityEncoder::encode()"
+      - location: "engines/quantum/adapters/graph_density.rs"
+        constructs: "GraphDensityMatrix construction"
+      - location: "engines/quantum/channels/quantum_channel.rs"
+        constructs: "QuantumChannel::try_new()"
+      - location: "engines/prompt_intake_engine.rs"
+        constructs: "PromptIntakeEngine::parse_cot_record(), parse_jsonl_record()"
+      - location: "types/trace_step.rs"
+        constructs: "TraceStep::new_validated()"
+      - location: "types/trace_dependency.rs"
+        constructs: "TraceDependency::new_validated()"
+      - location: "types/section.rs"
+        constructs: "Section::new_validated()"
+      - location: "trace/replay_ledger.rs"
+        constructs: "ReplayLedger::from_payloads()"
+      - location: "trace/witness.rs"
+        constructs: "ExecutionWitness::from_execution()"
+
+    architectural_mandate:
+      mandatory_validation:
+        section_number: 1
+        description: "Constructor output MUST be impossible without validation"
+        invariant: "Ok(T) => T.validate().is_ok()"
+        example_rust_code: |
+          pub fn new(dim: usize, data: Vec<C64>) -> Result<Self, DensityMatrixError> {
+              if dim == 0 { return Err(DensityMatrixError::ZeroDimension); }
+              if data.len() != dim * dim {
+                  return Err(DensityMatrixError::ShapeMismatch { ... });
+              }
+              // ... additional validation
+              Ok(Self { dim, data })
+          }
+      separate_parsing_from_construction:
+        section_number: 2
+        description: >
+          Parser: bytes/text -> intermediate syntax. Constructor: intermediate/raw structure
+          -> validated BaseType. Parsing errors and invariant violations MUST remain distinct
+          error types.
+      zero_mathematical_solving_or_repair:
+        section_number: 3
+        forbidden:
+          - no filling missing fields
+          - no guessing defaults
+          - no normalizing invalid topology
+          - no deleting bad nodes/edges
+          - no solving constraints to make input valid
+        allowed:
+          - canonical decoding
+          - type conversion
+          - invariant checking
+          - explicit default only if schema declares it
+      pure_owned_instantiation:
+        section_number: 4
+        must_not:
+          - "take &mut Engine"
+          - "maintain own state"
+          - "register, schedule, attach, or mutate global state"
+
+    evidence_integration:
+      description: "When a constructor creates an object within a traced execution"
+      steps:
+        - "The constructed object's state hash is recorded in the ReplayLedger"
+        - "If the constructor is the first step, its output hash becomes the genesis_hash"
+        - "The EvidencePacket records initial_state, constructor_morphism, hypothesis_invariant"
+      rust_code: |
+        // trace/evidence.rs
+        pub struct EvidencePacket {
+            pub claim_id: Uuid,
+            pub initial_state: String,
+            pub constructor_morphism: String,
+            pub hypothesis_invariant: String,
+            pub formal_translation: String,
+            pub oracle_execution_trace: Option<String>,
+            pub proof: Option<OracleProof>,
+        }
+
+    symsys_integration:
+      description: "Constructors can be proposed by the SymSys pipeline"
+      stages:
+        - "Stage 1 (Ideation): Propose a new constructor for a raw data format"
+        - "Stage 2 (Audit): Red-team the constructor for repair smuggling"
+        - "Stage 3 (L2 Extraction): Generate the Rust skeleton with validation checks"
+        - "Stage 4 (Countermodel): Find inputs that bypass validation"
+        - "Stage 5 (Evidence Plan): Write #[test] functions verifying all rejection paths"
+
+    required_boundary_flow:
+      lawful: "Raw input -> Constructor -> validated BaseType"
+      forbidden: "Raw input -> Constructor -> repaired candidate"
+
+    rust_types:
+      constructor_output:
+        code: |
+          pub struct ConstructorOutput<T> {
+              pub value: T,
+              pub constructor_id: ConstructorId,
+              pub input_hash: Hash256,
+              pub value_hash: Hash256,
+              pub validation_report_ref: Option<ValidationReportRef>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      constructor_trait:
+        code: |
+          pub trait Constructor<Raw, T> {
+              fn constructor_id(&self) -> ConstructorId;
+              fn parse(&self, raw: &Raw) -> Result<IntermediateSyntax, ParseError>;
+              fn construct(&self, syntax: IntermediateSyntax) -> Result<ConstructorOutput<T>, ConstructorError>;
+          }
+      constructor_error:
+        code: |
+          pub enum ConstructorError {
+              Parse(ParseError),
+              MissingRequiredField { field: &'static str },
+              InvariantViolation { invariant: InvariantId },
+              RepairRequiredButForbidden,
+          }
+        note: "Constructors must reject incomplete input rather than fill it. A constructor MUST fail closed when required input is absent, ambiguous, or structurally incomplete."
+
+    canonical_invariant: >
+      Constructor may perform intake precondition checks and schema-directed parsing. Validator owns validation. CertificateKernel owns certificates. Encoder encodes. LambdaAction bridges. ReducerAction deflates.
+      TransformAction rearranges. Generator proposes. Engine executes licensed transitions. Boundaries shape
+      and validate; only Evaluators accept; only Engines execute; only MetaLift changes
+      carrier expressivity. No boundary is allowed to become an Engine in disguise.
+
+    upgrade_v02:
+      constructor_output_contract:
+        description: "A constructor MUST emit a validated object plus a validation certificate, not just T"
+      repair_smuggling_guard:
+        description: "Constructors must reject incomplete input rather than fill it"
+      python_poc: |
+        from dataclasses import dataclass
+        from typing import Any
+        import hashlib, json
+
+        @dataclass(frozen=True)
+        class ConstructorOutput:
+            value: Any
+            constructor_id: str
+            input_hash: str
+            value_hash: str
+            validation_certificate_ref: str
+
+
+        def stable_hash(obj: Any) -> str:
+            raw = json.dumps(obj, sort_keys=True, default=str).encode()
+            return hashlib.sha256(raw).hexdigest()
+
+
+        def construct_required_record(raw: dict) -> ConstructorOutput:
+            required = ["id", "prompt"]
+            for field in required:
+                if field not in raw:
+                    raise ValueError(f"MissingRequiredField:{field}")
+
+            # No default filling. No repair.
+            value = {"id": raw["id"], "prompt": raw["prompt"]}
+            return ConstructorOutput(
+                value=value,
+                constructor_id="prompt_record_constructor_v1",
+                input_hash=stable_hash(raw),
+                value_hash=stable_hash(value),
+                validation_certificate_ref="cert_prompt_record_schema_v1",
+            )
+
+  # ---------------------------------------------------------------------------
+  forgetful_action:
+  # ---------------------------------------------------------------------------
+    source_file: forgetful_action_contract.md
+    frontmatter:
+      name: ForgetfulAction
+      role: "Lawful information forgetting with explicit loss ledger"
+      classification: candidate
+      effect_class: "none; may support R classification after fixed-layer checker"
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+        - Type
+        - Witness
+        - CertificateKernel
+      forbidden_authority:
+        - silent compression
+        - hidden equivalence claim
+        - undeclared information loss
+        - terminalization
+        - runtime mutation
+        - engine execution
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - CertificateEnvelope
+        - WitnessEnvelope
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, or upgrade evidence authority.
+      LLM output may propose ForgetfulAction candidates, loss ledgers, or contract edits,
+      but those proposals are EvidenceOnly until checked by the declared ForgetfulAction,
+      Witness, Certificate, Replay, and Evaluator boundaries.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is a CANDIDATE, not a fixed-layer operator. A ForgetfulAction lawfully forgets
+      declared structure and emits explicit loss evidence. A checked forgetful result may
+      support FactOnly loss claims only after loss verification, certificate binding, and
+      replay checking. It may support later classification as R = residual projection only
+      if the fixed-layer operator classifier/checker verifies deterministic TiePolicy,
+      residual target, invariant preservation, discarded-information evidence, and replay
+      support. The Evaluator judges admissibility. A LicensingBoundary may authorize execution when required. Engine executes only licensed transitions.
+      ForgetfulAction lawfully forgets declared structure. ForgetfulAction emits explicit
+      loss evidence. ForgetfulAction does not compress silently, claim equivalence,
+      terminalize, mutate runtime state, or execute engine actions.
+
+    subsystem_classification:
+      subsystem: "representation / projection / forgetting candidate"
+      signature: "RichStructure -> PoorerStructure"
+      role: "lawfully forgets declared structure with explicit loss ledger"
+
+    core_definition: >
+      A ForgetfulAction maps a richer declared structure to a poorer declared structure by
+      forgetting explicitly named fields, invariants, or structure.
+
+    obligations:
+      must:
+        - "Forget structure lawfully"
+        - "Issue a loss ledger and evidence sufficient for later certificate binding"
+        - "Declare source and target schemas"
+        - "Emit a loss ledger"
+        - "Preserve declared surviving invariants"
+        - "Record source and target hashes"
+        - "Validate that target is a subset of source projection"
+      must_not:
+        - "Destroy structure without producing a cryptographic/traceable certificate of what was forgotten"
+        - "Claim the source and target are equivalent"
+        - "Hide non-recoverable loss"
+        - "Act as a Projector unless registered under projector law"
+        - "Act as a ReducerAction unless reduction law is separately declared"
+        - "Act as an Adapter unless representation conversion is separately declared"
+
+    kernel_authority_matrix_note: >
+      This contract does not duplicate the shared authority matrix. ForgetfulAction follows
+      kernel_authority_matrix_contract.md and component_shared_boundary_contract.md.
+      Component-specific authority here may narrow the shared matrix but MUST NOT exceed it.
+
+    rust_types:
+      forgetful_request:
+        code: |
+          pub struct ForgetfulRequest {
+              pub request_id: ForgetfulRequestId,
+              pub source_structure: StructureRef,
+              pub target_structure: StructureRef,
+              pub source_schema: SchemaRef,
+              pub target_schema: SchemaRef,
+              pub forgotten_fields: Vec<StructureField>,
+              pub preserved_invariants: Vec<InvariantId>,
+              pub source_replay_ref: Option<ReplayRef>,
+              pub request_hash: Hash256,
+          }
+      forgetful_result:
+        code: |
+          pub struct ForgetfulResult {
+              pub forgetful_action_id: ForgetfulActionId,
+              pub forgetful_action_version: ComponentVersion,
+              pub source_hash: Hash256,
+              pub target_hash: Hash256,
+              pub loss_ledger: LossLedger,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub result_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      checked_forgetful_result:
+        code: |
+          pub struct CheckedForgetfulResult {
+              pub result_ref: ForgetfulResultRef,
+              pub loss_verification_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly
+          }
+      loss_ledger:
+        code: |
+          pub struct LossLedger {
+              pub source_hash: Hash256,
+              pub target_hash: Hash256,
+              pub forgotten: Vec<LostStructure>,
+              pub preserved: Vec<InvariantId>,
+              pub non_recoverable: bool,
+              pub ledger_hash: Hash256,
+          }
+        note: "A checked forgetful result may become FactOnly only after loss verification, certificate binding, and replay checking."
+      forgetful_action_trait:
+        code: |
+          pub trait ForgetfulAction {
+              fn forgetful_action_id(&self) -> ForgetfulActionId;
+              fn forgetful_action_version(&self) -> ComponentVersion;
+
+              fn forget(
+                  &self,
+                  request: ForgetfulRequest,
+              ) -> Result<EvidenceEnvelope<ForgetfulResult>, ForgetfulError>;
+          }
+        note: "EvidenceEnvelope MUST be imported from the canonical artifact taxonomy. This contract MUST NOT define a local EvidenceEnvelope type."
+
+    default_authority_effect: "AuthorityEffect::EvidenceOnly"
+    compression_rule: "ForgetfulAction must never be used as compression unless the loss_certificate proves which invariants survived."
+
+    forgetful_vs_projector:
+      description: >
+        ForgetfulAction is not automatically Projector. ForgetfulAction forgets declared
+        structure. Projector projects to a declared quotient, subspace, support, or
+        coordinate subset. If a ForgetfulAction induces a quotient, it MUST also satisfy
+        projector_candidate_contract.md. If a ForgetfulAction induces a residual projection,
+        it MUST declare a deterministic TiePolicy and satisfy the ResidualProjection
+        contract. Without TiePolicy, it cannot support R classification.
+
+    forbidden_tokens:
+      - silent_compress
+      - equivalent_after_forget
+      - lossless
+      - PolicyDecision
+      - EngineDecision
+      - TerminalEnvelope
+      - ActionLicense
+      - ALLOW_OUTPUT
+      - BLOCK_OUTPUT
+      - "terminalize("
+      - "execute("
+      - mutate_runtime
+      - rank_candidates
+      - score_candidate
+      - authorize_transition
+      - license_transition
+      - self_declare_effect_class
+      - EncodingEvidence
+
+    required_tests:
+      - checked_forgetful_requires_loss_verification_certificate
+      - forgetful_requires_loss_ledger
+      - forgetful_requires_loss_evidence
+      - forgetful_records_source_and_target_hash
+      - forgetful_declares_preserved_invariants
+      - forgetful_rejects_hidden_loss
+      - forgetful_does_not_claim_equivalence
+      - forgetful_output_defaults_to_evidence_only
+      - checked_forgetful_may_be_factonly_after_verification
+      - forgetful_does_not_emit_action_fact_envelope
+      - same_forgetful_input_same_result_hash
+      - forgetful_result_does_not_create_certificate
+      - forgetful_checked_result_uses_certificate_boundary
+      - forgetful_does_not_self_declare_effect_class_r
+      - forgetful_induced_residual_requires_tie_policy
+      - forgetful_does_not_emit_action_license
+      - forgetful_does_not_authorize_transition
+      - forgetful_does_not_execute
+      - forgetful_evidence_envelope_is_canonical_import
+
+    negative_capability_test_example:
+      python_code: |
+        def test_forgetful_requires_loss_ledger():
+            op = {"source": "metric_space", "target": "topological_space", "loss_ledger": None}
+            with pytest.raises(ValueError):
+                validate_forgetful_action(op)
+
+    canonical_invariant: >
+      ForgetfulAction is an EvidenceOnly action candidate that lawfully forgets declared
+      structure with explicit loss ledger, preserved-invariant declarations, source/target
+      hashes, and replayable evidence. It emits loss evidence, not equivalence, authority,
+      license, action, or execution. Checked loss facts require a declared checking or
+      certificate boundary. If it induces residual projection, R classification requires
+      the fixed-layer checker and deterministic TiePolicy. Candidates propose
+      transformations; Evaluators judge; LicensingBoundary authorizes; Engine executes;
+      Trace records; MetaLift changes carrier/schema expressivity only through license.
+
+  # ---------------------------------------------------------------------------
+  lambda_action_candidate:
+  # ---------------------------------------------------------------------------
+    source_file: lambda_action_candidate_contract.md
+    frontmatter:
+      name: LambdaActionCandidate
+      role: "Pure local endomorphism proposing same-carrier transformation"
+      version: "2.0"
+      classification: candidate
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - DecisionEnvelope
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      This contract is a governance artifact. LLM-generated content carries no authority
+      within this contract. LLM output may propose candidates, contract edits, or tests, but those proposals are EvidenceOnly until checked by the declared boundary.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is an ACTION CANDIDATE, not a fixed-layer operator. A LambdaAction may generate
+      proposals for E (exact repair) or I (quotient isometry) effects. The Evaluator judges
+      admissibility. A LicensingBoundary may authorize execution when required. Engine executes only licensed transitions. LambdaAction outputs are
+      EvidenceOnly by default. A raw LambdaOutput is EvidenceOnly.
+
+      A checked LambdaOutput may become FactOnly only for checked structural claims.
+
+      If admissibility judgment is needed, consumers may route the checked output to Evaluator. LambdaAction itself does not emit RequiresEvaluator.
+
+    core_definition: >
+      A LambdaAction is a pure local endomorphism over an admitted carrier. It is a
+      deterministic, stateless, unary morphism that preserves declared structure and
+      may declare claims about diagnostic constraints over its admitted domain, subject to
+      evaluator verification. It performs no search, candidate exploration, ranking,
+      orchestration, hidden lift, or repair.
+
+    subsystem_classification:
+      subsystem: "action candidate / deterministic transformation layer"
+      not:
+        - generator
+        - search
+        - evaluator
+        - solver
+        - policy
+        - terminalizer
+        - engine
+        - pipeline
+        - MetaLift
+
+    internal_descent_requirements:
+      - "Must not enlarge the carrier"
+      - "Must not silently reinterpret the carrier"
+      - "Must return typed failure rather than hide a lift"
+      - "Must not change carrier rank, universe, or admissible execution geometry"
+
+    rust_types:
+      lambda_action_trait_current:
+        description: "Current working implementation (operators/lambdas/mod.rs)"
+        code: |
+          pub trait LambdaAction<S: BaseType, T: BaseType>: Send + Sync {
+              fn name(&self) -> &'static str;
+              fn apply(&self, input: &S) -> Result<T, LambdaFailure>;
+              fn preserved_structure(&self) -> Vec<PreservedStructure>;
+              fn law_declaration(&self) -> LawDeclarationId;
+          }
+
+          pub enum PreservedStructure {
+              Topology,
+              Cohomology,
+              Typing,
+              QuotientClass,
+              GaugeClass,
+          }
+
+          pub struct DeclaredLaw {
+              pub law_id: LawId,
+              pub expected_behavior: ExpectedBehavior,
+          }
+        note: >
+          This is the active definition. All 53 lambda implementations use NemotronValue as
+          both input and output (endomorphic). Law witnesses are self-reported booleans.
+          These booleans are declarations only; the Evaluator must verify the actual
+          before/after diagnostics. The runtime law is: declared law != accepted law.
+      lambda_action_trait_deprecated:
+        description: "Deprecated contract-layer definition"
+        code: |
+          pub trait LambdaAction<S: BaseType, T: BaseType>: ComponentIdentity {
+              fn apply(&self, input: &S) -> Result<T, LambdaFailure>;
+              fn law(&self) -> &'static LambdaLaw;
+          }
+        note: "This generic S -> T shape with ComponentIdentity and LambdaLaw is the design target but is not used by any implementation."
+      lambda_action_trait_migration_target:
+        description: "Migration target (base_contracts)"
+        code: |
+          pub trait LambdaAction<S: BaseType, T: BaseType>: BoundContract {
+              fn apply(&self, input: &S) -> Result<T, LambdaFailure>;
+              fn law(&self) -> &'static LambdaLaw;
+          }
+      lambda_failure:
+        code: |
+          pub enum LambdaFailure {
+              OutsideAdmissibleDomain(AdmissibleDomainCertificate),
+              InvariantViolation { invariant: InvariantId },
+              UndefinedTransformation { reason: &'static str },
+              NonFiniteInput,
+          }
+
+    algebraic_contract:
+      declared_law: "Phi(apply(s)) <= Phi(s)"
+      note: "This is a declaration by the LambdaAction. It is not accepted until verified by the Evaluator layer."
+      admissible_noise_gating: >
+        Where numerical precision is an issue, action candidates must provide a Typed
+        Admissible Numerical Tolerance Certificate rather than using naked floating-point
+        epsilon. Replay equivalence must be hardware-independent via exact symbolic regime
+        comparison.
+      composability: >
+        LambdaActions compose when the codomain of one matches the admitted domain of the
+        next. Since the current implementation is endomorphic (NemotronValue -> NemotronValue),
+        all lambdas are naively composable. The codensity.rs and transport.rs modules in
+        operators/ provide the algebraic infrastructure for lawful composition.
+      composition_example: |
+        f: NemotronValue -> NemotronValue
+        g: NemotronValue -> NemotronValue
+        g . f: NemotronValue -> NemotronValue (lawful if both are structure-preserving)
+      forbidden: "candidate-space search, adaptive traversal, convergence-driven exploration, ranking, runtime orchestration, hidden normalization, hidden carrier extension, policy branching, terminal action"
+      allowed: "finite deterministic traversal over input structure, fixed-iteration algebraic computation"
+      static_bound_rule: "Action candidate branching factor must be statically bounded, and the execution path must be independent of evaluation outcomes."
+
+    evaluation_integration:
+      description: "Lambda steps produce EvaluationDiagnostics snapshots that the evaluator bridge checks"
+      check: "evaluator_accepts(before, after, r_cl_max)"
+      note: "The Phi non-increase claim is enforced structurally: the evaluator rejects any step where after.phi > before.phi."
+
+    witness_integration:
+      description: "When a LambdaAction is applied within a traced execution"
+      records:
+        - "Exactly one attempt per step"
+        - "State hash before and after application"
+        - "The LambdaAction's component identity in the ReplayLedger payload"
+      note: "If a LambdaAction internally retries or branches, the witness will fail with NonDeterministicReplay."
+
+    required_tests:
+      action_purity:
+        - lambda_has_single_execution_path
+        - lambda_has_no_retry_logic
+        - lambda_has_no_hidden_cache
+        - lambda_has_no_candidate_generation
+      replay:
+        - same_input_same_output_hash
+        - same_input_same_trace
+        - no_branching_under_replay
+      structural_preservation:
+        - preserved_structure_declared
+        - preserved_structure_verified_by_evaluator
+      admissibility:
+        - outside_domain_returns_typed_failure
+        - invalid_carrier_rejected
+      composition:
+        - typed_composition_required
+        - illegal_codomain_composition_rejected
+
+    target_architecture:
+      kernels:
+        - ActionKernel
+        - ActionLawKernel
+        - CompositionKernel
+        - ReplayKernel
+      note: "The action candidate itself remains a tiny deterministic bridge between states."
+
+    theorem_level_infrastructure:
+      - ActionDeterminism
+      - NoHiddenSearchInsideAction
+      - ReplayDeterminism
+      - TypedCompositionLaw
+      - NoImplicitCarrierExtension
+      - EvaluatorSeparatesDeclaredFromAcceptedLaw
+      - AdmissibilityPreservation
+
+    canonical_invariant: >
+      LambdaAction bridges. ReducerAction deflates. TransformAction rearranges. Encoder
+      encodes. Generator proposes. Constructor builds/intakes; Validator validates. Engine executes licensed transitions. Action
+      candidates propose transformations; only Evaluators accept; only Engines execute;
+      only MetaLift changes carrier expressivity. No action candidate is allowed to become
+      an Engine in disguise.
+
+    upgrade_v02:
+      declared_law_not_accepted_law:
+        description: >
+          The current document correctly notes that law witnesses may be self-reported
+          booleans and must be verified by the Evaluator. Make this mechanical.
+        rust_code: |
+          pub struct LambdaLawDeclaration {
+              pub law_id: LawId,
+              pub preserves: Vec<PreservedStructure>,
+              pub phi_claim: PhiClaim,
+              pub carrier_change: CarrierChange,
+          }
+
+          pub enum CarrierChange {
+              SameCarrier,
+              DeclaredHomomorphism { source: SchemaRef, target: SchemaRef },
+              HiddenLiftDetected,
+          }
+
+          pub enum PhiClaim {
+              NonIncreasing,
+              Preserved,
+              Unclaimed,
+          }
+      lambda_output:
+        rust_code: |
+          pub struct LambdaResult<T> {
+              pub output: T,
+              pub law_declaration: LambdaLawDeclaration,
+              pub replay_witness: WitnessId,
+              pub authority_effect: AuthorityEffect,
+          }
+        note: "Default: authority_effect: AuthorityEffect::EvidenceOnly. A checked lambda result may escalate to RequiresEvaluator or FactOnly depending on verification completeness."
+      python_poc: |
+        def validate_lambda_no_hidden_lift(before_schema: str, after_schema: str, declared_target: str) -> None:
+            if after_schema != declared_target:
+                raise ValueError("HiddenLiftDetected: undeclared target schema.")
+            if before_schema != after_schema and declared_target == before_schema:
+                raise ValueError("HiddenLiftDetected: carrier changed without declared target.")
+
+  # ---------------------------------------------------------------------------
+  normalizer_action_candidate:
+  # ---------------------------------------------------------------------------
+    source_file: normalizer_action_candidate_contract.md
+    frontmatter:
+      name: NormalizerActionCandidate
+      role: "Canonical-form action mapping admitted state to declared normal form"
+      version: "2.0"
+      classification: candidate
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+        - effect_class_self_assignment
+        - action_licensing
+        - evaluator_acceptance
+        - hidden_projection
+        - hidden_carrier_change
+        - hidden_semantic_loss
+        - search
+        - ranking
+        - measurement_computation
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - CertificateEnvelope
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, assign effect classes, or
+      upgrade evidence authority. LLM output may propose NormalizerAction candidates,
+      NormalizerLaw descriptors, normal-form predicates, migration patches, or tests, but
+      those proposals are EvidenceOnly until checked by the declared NormalizerAction,
+      Replay, Certificate, Evaluator, and component-boundary checks.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is an ACTION CANDIDATE, not a fixed-layer operator. A NormalizerAction maps
+      admitted state to its declared unique normal form. It may be treated as a strict
+      subtype of ReducerAction only when uniqueness, idempotence, and termination are
+      certified. The Evaluator judges admissibility. A LicensingBoundary may authorize
+      execution when required. The Engine executes only licensed transitions.
+
+    subsystem_classification:
+      subsystem: "canonical-form action candidate"
+      signature: "S -> Canonical(S)"
+      role: "maps admitted state to declared normal form"
+
+    core_definition: >
+      A NormalizerAction transforms an admitted state into its declared unique normal form.
+      A NormalizerAction may be treated as a strict subtype of ReducerAction only when
+      uniqueness, idempotence, termination, same-carrier preservation, and replay evidence
+      are checked by the declared boundary. This subtype relation is a checked structural
+      claim, not execution authority.
+
+    obligations:
+      must:
+        - "Be strongly normalizing (always terminates at a unique normal form)"
+        - "Be idempotent"
+        - "Declare the normal-form predicate"
+        - "Emit normal-form evidence"
+        - "Preserve source semantics unless explicit projection loss is declared"
+      must_not:
+        - "Hallucinate normal forms that lose semantic meaning unless governed by a projection license"
+        - "Hide projection or quotient loss"
+        - "Repair malformed input"
+        - "Act as an evaluator"
+        - "Claim semantic equivalence without verification support"
+
+    same_carrier_law:
+      description: "NormalizerAction MUST preserve"
+      preserves:
+        - carrier identity
+        - carrier type
+        - carrier rank
+        - schema reference
+        - universe reference
+        - coefficient semantics
+        - carrier schema hash
+        - admissible domain
+      note: >
+        Any schema change, carrier identity change, universe change, coefficient-domain
+        change, projection loss, or expressivity expansion is not NormalizerAction unless
+        separately governed by Adapter, Projector, ResidualProjection, or Lift.
+
+    rust_types:
+      normal_form_evidence:
+        code: |
+          pub struct NormalFormEvidence {
+              pub normalizer_id: NormalizerId,
+              pub source_schema: SchemaRef,
+              pub normal_form_schema: SchemaRef,
+              pub uniqueness_witness_ref: WitnessId,
+              pub idempotence_witness_ref: WitnessId,
+              pub termination_argument_ref: TerminationArgumentId,
+              pub source_hash: Hash256,
+              pub normal_form_hash: Hash256,
+              pub normal_form_predicate: PredicateId,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub evidence_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        note: "If certification is required, CertificateKernel may seal a certificate over NormalFormEvidence. NormalizerAction itself does not create certificates."
+      normalizer_output:
+        code: |
+          pub struct NormalizerOutput<S> {
+              pub normalizer_id: NormalizerId,
+              pub normalizer_version: ComponentVersion,
+              pub input_hash: Hash256,
+              pub output_hash: Hash256,
+              pub carrier_ref: CarrierRef,
+              pub normal_form_evidence: NormalFormEvidence,
+              pub output: S,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      normalizer_action_trait:
+        code: |
+          pub trait NormalizerAction<S: BaseType>: BoundContract {
+              fn propose_normal_form(
+                  &self,
+                  input: &S,
+              ) -> Result<EvidenceEnvelope<NormalizerOutput<S>>, NormalizerError>;
+
+              fn normalizer_law(&self) -> &'static NormalizerLaw;
+          }
+        note: "Avoid is_normal_form(&self, input) -> bool as a contract method. That is a local validator/evaluator-style claim. Use a declared predicate reference instead."
+      checked_normalizer_output:
+        code: |
+          pub struct CheckedNormalizerOutput {
+              pub output_ref: NormalizerOutputRef,
+              pub uniqueness_certificate: CertificateId,
+              pub idempotence_certificate: CertificateId,
+              pub termination_certificate: CertificateId,
+              pub normal_form_predicate_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly for checked structural claims
+          }
+        note: >
+          A raw NormalizerOutput is EvidenceOnly. A checked NormalizerOutput may become
+          FactOnly only for the claim that the output satisfies declared normal-form,
+          uniqueness, idempotence, termination, and replay requirements. NormalizerAction
+          itself does not emit RequiresEvaluator. If later admissibility judgment is
+          required, consumers may route the checked output to an Evaluator.
+
+    default_authority_effect: "AuthorityEffect::EvidenceOnly"
+    checked_authority_note: >
+      A checked normalizer result may become FactOnly for checked structural claims. It
+      does not become RequiresEvaluator merely by being checked.
+
+    forbidden_tokens:
+      - NormalFormEvidence
+      - ActionFactEnvelope
+      - OperatorFactEnvelope
+      - NormalizerOp
+      - self_declare_effect_class
+      - emit_action
+      - emit_action_license
+      - execute_transition
+      - authorize_transition
+      - license_transition
+      - compute_phi
+      - compute_gamma
+      - compute_xi
+      - rank_candidates
+      - score_candidate
+      - PolicyDecision
+      - EngineDecision
+      - TerminalEnvelope
+      - ActionLicense
+      - "execute("
+      - "terminalize("
+      - mutate_runtime
+      - hidden_projection
+      - hidden_lift
+
+    required_tests:
+      - normalizer_output_defaults_to_evidence_only
+      - normalizer_produces_normal_form_evidence_not_certificate
+      - checked_normalizer_output_may_be_factonly_after_uniqueness_idempotence_termination_and_replay_checks
+      - normalizer_does_not_emit_requires_evaluator_by_default
+      - normalizer_does_not_create_certificates
+      - normalizer_does_not_emit_action_license
+      - normalizer_does_not_authorize_transition
+      - normalizer_does_not_execute
+      - normalizer_does_not_self_declare_effect_class
+      - normalizer_preserves_schema_ref
+      - normalizer_preserves_universe_ref
+      - normalizer_preserves_coefficient_semantics
+      - normalizer_rejects_hidden_projection_loss
+      - normalizer_rejects_hidden_carrier_change
+      - normalizer_is_reducer_subtype_only_after_checked_laws
+
+    canonical_invariant: >
+      NormalizerAction is an EvidenceOnly same-carrier action candidate. It proposes a
+      deterministic mapping to a declared normal form under explicit normal-form predicate,
+      uniqueness, idempotence, termination, and replay evidence. It does not certify,
+      validate, evaluate, license, authorize, mutate, execute, hide projection loss, or
+      change carrier/schema expressivity. Checked normalizer facts require a declared
+      checking or certificate boundary. Candidates propose transformations; Evaluators
+      judge; LicensingBoundary authorizes; Engine executes licensed transitions only;
+      MetaLift changes carrier/schema expressivity only through license.
+
+    upgrade_v02:
+      normal_form_evidence:
+        description: "A NormalizerAction is a strict subtype of ReducerAction only when it proves unique normal form and idempotence"
+      normalizer_action_trait:
+        description: "NormalizerAction trait with explicit EvidenceEnvelope wrapping"
+      checked_wrapper:
+        description: "CheckedNormalizerOutput with full certificate suite for uniqueness, idempotence, termination, and normal-form predicate"
+      python_poc: |
+        def assert_normalizer_laws(normalizer, value):
+            n1 = normalizer.propose_normal_form(value)
+            assert getattr(n1, "authority_effect", "EvidenceOnly") == "EvidenceOnly"
+            n2 = normalizer.propose_normal_form(n1.output if hasattr(n1, "output") else n1)
+            assert n1.output == n2.output, "Normalizer must be idempotent."
+
+        def assert_checked_normalizer_result(checked):
+            assert checked.authority_effect == "FactOnly"
+            assert checked.uniqueness_certificate is not None
+            assert checked.idempotence_certificate is not None
+            assert checked.termination_certificate is not None
+
+  # ---------------------------------------------------------------------------
+  projector_candidate:
+  # ---------------------------------------------------------------------------
+    source_file: projector_candidate_contract.md
+    frontmatter:
+      name: ProjectorCandidate
+      role: "Lawful forgetting via projection onto declared subspace or quotient"
+      version: "2.0"
+      classification: candidate
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+        - equivalence_claim
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - CertificateEnvelope
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      This contract is a governance artifact. LLM-generated content carries no authority
+      within this contract. LLM output may propose candidates, contract edits, or tests, but those proposals are EvidenceOnly until checked by the declared boundary.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is a CANDIDATE, not a fixed-layer operator. A Projector explicitly maps a rich
+      structure into a declared quotient, subspace, support, or substructure. It is a
+      candidate for lawful forgetting, not a certified authority. The Evaluator judges
+      admissibility.
+
+    core_definition: >
+      A Projector explicitly maps a rich structure into a declared quotient, subspace,
+      support, or substructure.
+
+    subsystem_classification:
+      subsystem: "projection / lawful forgetting candidate"
+      signature: "S -> Substructure(S) | Quotient(S)"
+      role: "projects onto declared subspace, quotient, basis, support, or coordinate subset with explicit loss"
+
+    obligations:
+      must:
+        - "Declare projection target"
+        - "Declare kernel declaration"
+        - "Emit loss ledger"
+        - "Declare quotient impact"
+        - "Reference source and target schemas"
+      must_not:
+        - "Hide information loss"
+        - "Pretend projection is equivalence"
+        - "Use projection as acceptance"
+        - "Act as an evaluator"
+        - "Treat quotient equality as source equality"
+        - "Erase quotient-relevant information without explicit loss"
+
+    rust_types:
+      projection_certificate:
+        code: |
+          pub struct ProjectionCertificate {
+              pub projector_id: ProjectorId,
+              pub source_schema: SchemaRef,
+              pub target_schema: SchemaRef,
+              pub projection_target: ProjectionTarget,
+              pub kernel_declaration: KernelDeclaration,
+              pub loss_ledger: LossLedger,
+              pub quotient_impact: QuotientImpact,
+              pub source_hash: Hash256,
+              pub projected_hash: Hash256,
+              pub authority_effect: AuthorityEffect,
+          }
+
+          pub enum ProjectionTarget {
+              Subspace(BasisId),
+              Quotient(EquivalenceRef),
+              Support(SupportRef),
+              CoordinateSubset(Vec<CoordinateId>),
+              NormalForm(NormalFormId),
+          }
+        note: "Default: authority_effect: AuthorityEffect::EvidenceOnly. A checked projector result may become RequiresEvaluator or FactOnly after projection target verification, kernel checking, loss ledger validation, and quotient impact assessment."
+      projector_trait:
+        code: |
+          pub trait Projector<S, P> {
+              fn project(
+                  &self,
+                  input: &S,
+              ) -> Result<EvidenceEnvelope<(P, ProjectionCertificate)>, ProjectorError>;
+          }
+
+    forbidden_tokens: []
+
+    required_tests: []
+
+    canonical_invariant: >
+      Projector projects with explicit loss. It never pretends projection is equivalence.
+      Candidates propose transformations; only Evaluators accept; only Engines execute;
+      only MetaLift changes carrier expressivity.
+
+    upgrade_v02:
+      projection_certificate:
+        description: "Projection is lawful forgetting. It must never pretend lossless equivalence."
+      python_poc: |
+        def validate_projection_certificate(cert: dict) -> None:
+            for required in [
+                "projection_target",
+                "kernel_declaration",
+                "loss_ledger",
+                "quotient_impact",
+                "source_schema",
+                "target_schema",
+                "source_hash",
+                "projected_hash",
+            ]:
+                if required not in cert:
+                    raise ValueError(f"Projection missing {required}")
+            if cert["quotient_impact"] == "Collapsed" and not cert.get("loss_ledger"):
+                raise ValueError("Quotient collapse requires explicit loss ledger.")
+
+  # ---------------------------------------------------------------------------
+  proposal_generator:
+  # ---------------------------------------------------------------------------
+    source_file: proposal_generator_contract.md
+    frontmatter:
+      name: ProposalGenerator
+      role: "Pure proposal morphism producing detached candidate states with transition metadata"
+      version: "2.0"
+      classification: candidate
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+        - evaluation
+        - ranking
+        - scoring
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+      doctrine_5_reference: "Doctrine 5 (Action/Candidate/Boundary Classification) governs this contract. Generators are candidates that produce sub-candidates."
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, rank candidates, schedule
+      search, or upgrade evidence authority. LLM output may propose Generator implementations,
+      candidate schemas, generation rules, or tests, but those proposals are EvidenceOnly
+      until checked by the declared Generator, Search, Replay, and component-boundary checks.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      Generator is a CANDIDATE, not a fixed-layer operator. A Generator applies
+      domain-specific transformation schemas to produce detached candidate states. It does
+      not evaluate, schedule, or execute. The Evaluator may judge candidate admissibility.
+      A LicensingBoundary may authorize execution when required. The Engine executes only
+      licensed transitions.
+
+    core_definition: >
+      A Generator is a pure proposal morphism. It is a mechanism that applies domain-specific
+      transformation schemas to an immutable input state and returns detached candidate states
+      with transition metadata. Generators propose transitions. They do not evaluate, schedule,
+      or execute them.
+
+    subsystem_classification:
+      subsystem: "proposal kernel / candidate synthesis layer"
+      not:
+        - evaluator
+        - search kernel
+        - solver
+        - policy
+        - terminalizer
+        - engine
+        - pipeline
+
+    architectural_distinction:
+      Generator: "proposes transitions"
+      Evaluator: "accepts/rejects transitions"
+      SearchKernel: "orders, bounds, or explores candidate proposals under declared search policy"
+      Engine: "executes transitions"
+
+    tower_placement:
+      description: >
+        Generators sit at the proposal layer, below Engines (which orchestrate) and the
+        Evaluator (which accepts/rejects). They produce raw material for the search pipeline.
+      flow: |
+        Generator
+        -> detached Candidate artifacts
+        -> SearchKernel / Search policy
+        -> Evaluator
+        -> Terminalizer / LicensingBoundary
+        -> Engine
+        -> Trace
+
+    actual_trait_shape:
+      note: >
+        There is no unified Generator trait in the working codebase. Generators are
+        implemented as standalone functions or structs with ad-hoc generate() methods.
+        The contract-layer definition exists only in this document.
+
+    rust_types:
+      proposal_generator_trait:
+        description: "Historical design target"
+        code: |
+          pub trait ProposalGenerator<State, Metadata> {
+              fn propose(
+                  &self,
+                  state: &State,
+                  ctx: &GeneratorContext,
+              ) -> Result<Vec<Candidate<State, Metadata>>, GeneratorError>;
+          }
+
+          pub struct GeneratorContext {
+              pub grammar_ref: GrammarId,
+              pub admissible_components: Vec<ComponentId>,
+              pub deterministic_seed: Option<u64>,
+              pub branch_limit: Option<usize>,
+              pub proposal_depth_bound: Option<usize>,
+              pub context_hash: Hash256,
+          }
+        note: >
+          generate is accepted as a legacy implementation name. Contract-canonical APIs should
+          use propose to emphasize detached candidate creation rather than search or execution.
+          GeneratorContext is configuration evidence only. It MUST NOT contain evaluator metrics,
+          policy verdicts, live Engine handles, terminal outcomes, or raw cohomological measurements.
+      candidate:
+        code: |
+          pub struct Candidate<State, Metadata> {
+              pub candidate_id: CandidateId,
+              pub source_state_hash: Hash256,
+              pub proposed_state: State,
+              pub component_id: ComponentId,
+              pub metadata: Metadata,
+              pub proposal_evidence: ProposalEvidence,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      actual_patterns:
+        pattern_a: |
+          pub fn generate(input: &NemotronValue) -> Vec<NemotronValue> { ... }
+        pattern_b: |
+          pub struct GraphTopologyGenerator;
+          impl GraphTopologyGenerator {
+              pub fn generate(&self, graph: &FiniteDirectedGraph) -> Vec<FiniteDirectedGraph> { ... }
+          }
+      proposal_evidence:
+        code: |
+          pub struct ProposalEvidence {
+              pub generator_id: GeneratorId,
+              pub generation_rule: RuleId,
+              pub deterministic_seed: Option<u64>,
+              pub enumeration_policy: EnumerationPolicy,
+              pub branch_index: usize,
+              pub evidence_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        note: "If certification is required, CertificateKernel may seal a certificate over ProposalEvidence. Generator itself does not create certificates."
+      generator_error:
+        code: |
+          pub enum GeneratorError {
+              InvalidDomain(String),
+              DimensionMismatch { expected: usize, got: usize },
+              UndefinedOperation(String),
+              NonFiniteInput,
+              InternalInvariantViolation(String),
+              GenerationLimitExceeded,
+          }
+
+    rules:
+      blind_proposal_generation:
+        section_number: 1
+        description: "A Generator MUST apply a specific transformation rule to an immutable input state."
+        may_return:
+          - "zero candidates (defined but no applicable transitions)"
+          - "one or more candidates"
+          - "a typed error (input violated generator's domain)"
+
+      zero_evaluation:
+        section_number: 2
+        description: "Generators MUST NOT: score, rank, accept, reject, prune for quality, compare by expected usefulness, inspect evaluator metrics, or call functionals/observables for decision-making."
+        forbidden_fields: "score, fitness, quality, rank, accepted, rejected, should_keep, confidence, priority"
+        allowed_fields: "component_id, source_state_id, parameters, preconditions, postconditions, semantic_tags"
+        strict_metadata_rule: "semantic_tags must be descriptive only. They must not encode ranking hints or hidden evaluation metrics."
+
+      pure_state_immutability:
+        section_number: 3
+        description: "Generators MUST receive state by immutable reference and return new owned candidates."
+
+      mandatory_transition_metadata:
+        section_number: 4
+        description: "Every candidate MUST contain TransitionMetadata identifying the component, source, parameters, and pre/postconditions."
+
+      no_measurement_access:
+        section_number: 5
+        description: >
+          Generator MUST NOT compute, read, or reconstruct canonical Phi1, Gamma2, Xi,
+          quotient mass, closure defect, closure regime, cohomological status, evaluator
+          scores, policy scores, or terminal outcomes. If generation needs bounded structural
+          context, it may consume opaque non-semantic configuration or grammar refs only.
+
+    search_coupling:
+      description: >
+        The SearchCatalog aggregates multiple generators. However, the catalog's implementation
+        is currently underdefined and risks hiding search policy.
+      missing_subsystem: >
+        The Generator subsystem must delegate all scheduling, breadth control, and exploration
+        bias to a formal SearchKernel. Current Search logic leaks across Generator (proposing
+        too many/few candidates), Engine (deciding which path to take), and SearchCatalog
+        (ordering generators). Without a dedicated SearchKernel contract, search remains
+        ambient behavior rather than a governed subsystem.
+
+    trace_integration:
+      description: "When generators produce candidates within a traced execution"
+      rules:
+        - "Only candidates selected by SearchKernel and accepted by Evaluator may become TraceGraph edges"
+        - "Each accepted transition is recorded in the ReplayLedger with a payload hash"
+        - "The generator's component identity is preserved for auditability"
+        - "Non-selected or refused candidates do not become state-transition edges. They may be recorded as proposal/evaluation evidence when required by audit policy."
+      flow: |
+        Generator.propose(state) -> Candidate artifacts
+          -> SearchKernel orders/bounds proposals
+          -> Evaluator judges candidate evidence
+          -> LicensingBoundary emits ActionLicense when permitted
+          -> Engine executes licensed transition
+          -> Trace records executed action and relevant proposal/evaluation/license refs
+
+    evaluation_integration: >
+      Generators do not directly interact with the evaluation layer. Evaluator may consume
+      detached Candidate artifacts and checked proposal evidence through declared interfaces.
+      Generator MUST NOT call evaluator functions, inspect evaluator metrics, encode
+      acceptance hints, or emit accepted/rejected fields.
+
+    bounded_description_complexity:
+      description: >
+        Generators are bounded transformation systems acting over an existing grammar and carrier.
+      synthesis_modes:
+        - "LLM-mediated synthesis: Proposes new generator implementations (external to Generator semantics)"
+        - "Solver-mediated synthesis: Evolves generator parameters"
+        - "Complexity Reduction: A generator that produces candidates with lower description complexity under a declared encoding contributes to the system's compression objective"
+      warning: >
+        Kolmogorov complexity is not computable. Self-compression must be operationalized as
+        bounded description complexity or compression heuristics, and must never reintroduce
+        hidden evaluation inside the generator. Generators remain epistemically blind to the
+        productivity of their output. Bounded description complexity may be recorded as
+        descriptive proposal metadata only if computed by a declared non-governance encoding
+        rule and not used by Generator to rank, prune, accept, or reject candidates. Any
+        compression objective used for selection belongs to Search/Evaluator/Policy, not Generator.
+
+    generator_governance:
+      description: "To prevent search explosion, Generators must receive externally declared bounds"
+      bounds:
+        - "GeneratorBudget: CPU/Memory limits"
+        - "GeneratorBranchLimit: Max candidates per state"
+        - "ProposalDepthBound: Max recursive generation depth"
+      note: "SearchKernel owns scheduling, exploration bias, and global budget policy."
+
+    reclassification_warning:
+      description: "Several listed files may not be valid ProposalGenerator implementations under this contract"
+      files:
+        - file: "operator_evolution_generator.rs"
+          concern: "must not evolve operator authority or self-classify effect classes"
+        - file: "immune_projector.rs"
+          concern: "likely Projector / ResidualProjection candidate if it performs projection"
+        - file: "semantic_dag_planner.rs"
+          concern: "likely SearchKernel / Planner, not blind Generator, if it orders or plans by goal"
+        - file: "critical_graph_lift_generator.rs"
+          concern: "LiftRequest generator only; must not license or justify lift"
+        - file: "vertex_flip_history.rs"
+          concern: "Trace/History evidence or generator depending behavior"
+        - file: "dirichlet_arm_proposal.rs"
+          concern: "may be Search policy / stochastic proposal; requires deterministic seed and no reward/priority semantics"
+      note: "Before registry admission, every generator file must be classified as ProposalGenerator, SearchKernel, Solver, Projector, LiftRequestGenerator, Trace/History evidence, or forbidden."
+
+    forbidden_tokens:
+      - ProposalEvidence
+      - score
+      - fitness
+      - quality
+      - rank
+      - accepted
+      - rejected
+      - should_keep
+      - confidence
+      - priority
+      - reward
+      - PolicyDecision
+      - EngineDecision
+      - TerminalEnvelope
+      - ActionLicense
+      - ALLOW_OUTPUT
+      - BLOCK_OUTPUT
+      - evaluate_candidate
+      - evaluator_step
+      - eeda_accepts
+      - compute_phi
+      - compute_gamma
+      - compute_xi
+      - read_measurement
+      - rank_candidates
+      - score_candidate
+      - authorize_transition
+      - license_transition
+      - execute_transition
+      - "terminalize("
+      - "execute("
+      - mutate_runtime
+      - self_certify
+      - self_declare_effect_class
+
+    required_tests:
+      purity:
+        - generator_does_not_mutate_input
+        - generator_has_no_runtime_state
+        - generator_has_no_hidden_cache
+      evaluation_isolation:
+        - generator_cannot_access_phi
+        - generator_cannot_rank_candidates
+        - generator_cannot_emit_confidence
+      search_separation:
+        - search_orders_candidates_not_generator
+        - catalog_contains_no_evaluation_logic
+      metadata_integrity:
+        - candidate_contains_transition_metadata
+        - candidate_preserves_component_identity
+      determinism:
+        - deterministic_sampling_replayable
+        - same_seed_same_candidates
+      governance_and_boundary:
+        - generator_candidates_default_to_evidence_only
+        - generator_produces_proposal_evidence_not_certificate
+        - generator_does_not_create_certificates
+        - generator_context_contains_no_evaluator_metrics
+        - generator_context_contains_no_engine_handles
+        - generator_context_contains_no_terminal_outcomes
+        - generator_does_not_read_canonical_measurements
+        - generator_does_not_call_evaluator_step
+        - generator_does_not_emit_action_license
+        - generator_does_not_authorize_transition
+        - generator_does_not_execute
+        - generator_does_not_self_declare_effect_class
+        - legacy_generate_name_is_not_execution_or_search
+        - searchkernel_orders_candidates_not_generator
+        - proposal_certificate_name_forbidden
+        - suspicious_generator_files_require_reclassification_before_admission
+
+    best_future_architecture:
+      - "ProposalKernel (The Generator): transformation application"
+      - "SearchKernel: Exploration scheduling and bias"
+      - "EvaluationKernel: Acceptance judgment"
+      - "ExecutionKernel: State updates and trace emission"
+      - "MetaKernel: Congruence restoration and lift authority"
+
+    theorem_level_infrastructure:
+      - NoEvaluationInsideGenerator
+      - GeneratorPurity
+      - ProposalReplayInvariant
+      - ImmutableInputLaw
+      - NoHiddenSchedulingInsideGenerator
+      - ProposalMetadataCompleteness
+      - SearchGeneratorSeparation
+
+    canonical_invariant: >
+      ProposalGenerator emits detached EvidenceOnly Candidate artifacts and ProposalEvidence
+      under declared grammar, bounds, and deterministic replay context. It does not evaluate,
+      score, rank, prune for quality, schedule execution, certify, validate, terminalize,
+      license, authorize, mutate, read canonical measurements, or execute. SearchKernel orders
+      or explores proposals; Evaluator judges; LicensingBoundary authorizes; Engine executes
+      licensed transitions; Trace records.
+
+    upgrade_v02:
+      candidate_shape:
+        description: "Candidates must be detached proposal objects with no score, verdict, or priority."
+        rust_code: |
+          pub struct Candidate<State, Metadata> {
+              pub candidate_id: CandidateId,
+              pub source_state_hash: Hash256,
+              pub proposed_state: State,
+              pub component_id: ComponentId,
+              pub metadata: Metadata,
+              pub proposal_evidence: ProposalEvidence,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+
+          pub struct ProposalEvidence {
+              pub generator_id: GeneratorId,
+              pub generation_rule: RuleId,
+              pub deterministic_seed: Option<u64>,
+              pub enumeration_policy: EnumerationPolicy,
+              pub branch_index: usize,
+              pub evidence_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        note: "If certification is required, CertificateKernel may seal a certificate over ProposalEvidence. Generator itself does not create certificates. Default: authority_effect: AuthorityEffect::EvidenceOnly"
+      forbidden_candidate_fields:
+        description: "Add a schema test forbidding these fields"
+        fields: "score, fitness, quality, rank, accepted, rejected, should_keep, confidence, priority, reward"
+      python_poc: |
+        FORBIDDEN_CANDIDATE_KEYS = {
+            "score", "fitness", "quality", "rank", "accepted", "rejected",
+            "should_keep", "confidence", "priority", "reward",
+        }
+
+
+        def validate_candidate_payload(candidate: dict) -> None:
+            leaked = FORBIDDEN_CANDIDATE_KEYS.intersection(candidate.keys())
+            if leaked:
+                raise ValueError(f"Generator leaked evaluation fields: {sorted(leaked)}")
+            for required in ["candidate_id", "source_state_hash", "proposed_state", "component_id", "proposal_evidence"]:
+                if required not in candidate:
+                    raise ValueError(f"Missing candidate field: {required}")
+
+  # ---------------------------------------------------------------------------
+  reducer_action_candidate:
+  # ---------------------------------------------------------------------------
+    source_file: reducer_action_candidate_contract.md
+    frontmatter:
+      name: ReducerActionCandidate
+      role: "Pure idempotent same-carrier deflation proposing structural reduction"
+      version: "2.0"
+      classification: candidate
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+        - effect_class_self_assignment
+        - measurement_computation
+        - evaluator_acceptance
+        - action_licensing
+        - hidden_carrier_change
+        - search
+        - ranking
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - FactEnvelope
+        - DecisionEnvelope
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, assign effect classes, or
+      upgrade evidence authority. LLM output may propose ReducerAction candidates,
+      ReducerLaw descriptors, migration patches, or tests, but those proposals are
+      EvidenceOnly until checked by the declared ReducerAction, Measurement, Replay,
+      Evaluator, and component-boundary checks.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is an ACTION CANDIDATE, not a fixed-layer operator. A ReducerAction may produce
+      evidence that later supports E = exact repair or R = residual projection classification.
+      It MUST NOT self-declare E or R. Only the fixed-layer operator classifier/checker may
+      classify an effect. The Evaluator judges admissibility. A LicensingBoundary may
+      authorize execution when required. The Engine executes only licensed transitions.
+
+    core_definition: >
+      A ReducerAction is a pure, deterministic, unary, idempotent same-carrier action
+      candidate S -> S that removes declared structural redundancy or normalizes admitted
+      state without increasing the declared reduction measure.
+
+    tower_placement: >
+      A ReducerAction is same-carrier canonicalization inside internal repair. It may remove
+      redundancy, project to canonical form, or collapse noise, but it may not add basis
+      elements, vertices, dimensions, or carrier structure. If obstruction survives every
+      admissible reducer, exhaustion has been reached on the current carrier. The next lawful
+      move is explicit Meta lift, not a stronger reducer with hidden carrier growth.
+
+    rust_types:
+      reducer_action_trait:
+        description: "Canonical contract shape"
+        code: |
+          pub trait ReducerAction<S: BaseType>: BoundContract {
+              fn propose_reduction(
+                  &self,
+                  input: &S,
+              ) -> Result<ReducerOutput<S>, ReducerFailure>;
+
+              fn law(&self) -> &'static ReducerLaw;
+          }
+        note: "apply is a legacy implementation name. Contract-canonical APIs should use propose_reduction to avoid implying execution authority."
+      reducer_output:
+        code: |
+          pub struct ReducerOutput<S> {
+              pub reducer_id: ComponentId,
+              pub reducer_version: ComponentVersion,
+              pub input_hash: Hash256,
+              pub output_hash: Hash256,
+              pub carrier_ref: CarrierRef,
+              pub law_ref: LawId,
+              pub kappa_measure_ref: MeasurementId,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+              pub output: S,
+          }
+
+          pub struct CheckedReducerOutput {
+              pub output_ref: ReducerOutputRef,
+              pub same_carrier_certificate: CertificateId,
+              pub kappa_monotonicity_certificate: CertificateId,
+              pub idempotence_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly for checked structural claims
+          }
+        note: >
+          A raw ReducerOutput is EvidenceOnly. A checked ReducerOutput may become FactOnly
+          only for the claim that the reducer satisfied same-carrier, kappa-monotonicity,
+          idempotence, and replay requirements. If later admissibility judgment is needed,
+          consumers may route the checked output to an Evaluator. ReducerAction itself does
+          not emit RequiresEvaluator unless a specific reducer contract explicitly owns that boundary.
+      reducer_failure:
+        code: |
+          pub enum ReducerFailure {
+              OutsideAdmissibleDomain,
+              InvariantViolation { invariant: InvariantId },
+              ReductionUndefined { reason: &'static str },
+              NonFiniteInput,
+              InternalLoopForbidden,
+              HiddenCarrierChange,
+          }
+
+    existing_implementations:
+      - file: "reducer.rs"
+        status: Active
+        kappa_measure: "--"
+        description: "Base reducer infrastructure"
+      - file: "reducer_clip_dual.rs"
+        status: Active
+        kappa_measure: "Magnitude exceeding bounds"
+        description: "Clips edge weights to declared bounds"
+      - file: "reducer_h1.rs"
+        status: Active
+        kappa_measure: "H1 cohomology rank"
+        description: "Projects to H1-reduced representative"
+      - file: "reducer_partial_trace.rs"
+        status: Active
+        kappa_measure: "Subsystem dimension"
+        description: "Traces out declared subsystem"
+      - file: "reducer_support_predicates.rs"
+        status: Active
+        kappa_measure: "Support cardinality"
+        description: "Removes edges failing declared predicates"
+      - file: "reducer_l1_projector.rs"
+        status: Disabled
+        kappa_measure: "L1 norm"
+        description: "Projects to L1-minimal representative"
+      - file: "reducer_observables.rs"
+        status: Disabled
+        kappa_measure: "Observable count"
+        description: "Reduces to essential observable set"
+      - file: "reducer_series_truncate.rs"
+        status: Disabled
+        kappa_measure: "Series length"
+        description: "Truncates power series to finite order"
+      - file: "reducer_synthesis_generate.rs"
+        status: Disabled
+        kappa_measure: "Synthesis complexity"
+        description: "Generates reduced synthesis candidates"
+      - file: "reducer_threshold.rs"
+        status: Disabled
+        kappa_measure: "Values below threshold"
+        description: "Zero-out small values"
+      - file: "reducer_tqc_optimization.rs"
+        status: Disabled
+        kappa_measure: "TQC circuit depth"
+        description: "Optimizes topological quantum circuits"
+
+    reclassification_warning:
+      description: "Some reducer files may require reclassification before admission"
+      files:
+        - file: "reducer_partial_trace.rs"
+          concern: "likely ResidualProjection / explicit-loss projection, not ordinary same-carrier reducer unless the carrier identity and schema remain unchanged"
+        - file: "reducer_synthesis_generate.rs"
+          concern: "Generator/Search, not ReducerAction"
+        - file: "reducer_tqc_optimization.rs"
+          concern: "Solver/Optimizer or domain-specific computation, not ReducerAction unless bounded, deterministic, same-carrier, and non-search"
+        - file: "reducer_observables.rs"
+          concern: "Measurement/Observable selection boundary, not ReducerAction unless it only reduces an already-declared same-carrier structure"
+        - file: "reducer_threshold.rs"
+          concern: "may be ReducerAction only with declared kappa, deterministic threshold, invariant preservation, and replay evidence"
+      note: "Before registry admission, every reducer file must be classified as ReducerAction, ResidualProjection, Generator, Solver, Functional, Observable, or forbidden."
+
+    registry_admission_warning: >
+      Implemented reducer does not equal admitted reducer. Only reducers explicitly admitted
+      by the reducer registry count toward exhaustion, area-lock claims, or current-carrier closure.
+
+    algebraic_contract:
+      declared_law: "kappa(R(s)) <= kappa(s)"
+      note: "This declaration is not accepted until verified by the Evaluator layer. If R(s) = s, then s is reduced with respect to this ReducerAction's declared kappa."
+      constraints:
+        - "Unary & Endomorphic -- S -> S only"
+        - "Pure & Deterministic -- no random side-effects"
+        - "Idempotent -- propose_reduction(propose_reduction(x)) == Ok(propose_reduction(x))"
+        - "Structure-Reducing -- kappa-monotone"
+        - "Single Application -- repeated application until stability is Engine orchestration, not reducer semantics"
+        - "No Hidden Normalization -- normalization belongs to NormalizerAction unless explicitly declared as part of the reducer law"
+        - "No Hidden Carrier Change -- carrier type, rank, schema, and universe must remain unchanged"
+      preserves:
+        - carrier identity
+        - carrier type
+        - carrier rank
+        - schema reference
+        - universe reference
+        - coefficient semantics
+        - carrier schema hash
+        - admissible domain
+      note_schema: >
+        Any schema change, carrier identity change, universe change, coefficient-domain
+        change, or expressivity expansion is not ReducerAction.
+      engine_isolation_limit: >
+        If a ReducerAction performs search, iterative convergence, ranking, or external IO,
+        it is an Engine, not a reducer.
+
+    measurement_evaluation_integration: >
+      ReducerAction does not compute Phi1, Gamma2, Xi, quotient mass, closure defect,
+      closure regime, cohomological status, or evaluation diagnostics. ReducerAction may
+      reference a declared kappa_measure_ref produced by the Functional / Measurement boundary.
+      Any monotonicity, non-increase, budget, acceptance, or admissibility claim is outside
+      ReducerAction and must be verified by the declared Measurement, Replay, Evaluator, or
+      Certificate boundary.
+
+    witness_integration:
+      description: "When a ReducerAction proposal is executed by Engine through a licensed transition"
+      records:
+        - "reducer output reference"
+        - "state hash before and after"
+        - "license reference, if execution occurred"
+        - "replay binding"
+        - "exactly one declared reduction proposal for the candidate step"
+      note: "If a reducer introduces hidden branching (attempting multiple reduction strategies internally), the witness will fail at NonDeterministicReplay."
+
+    forbidden_tokens:
+      - ActionFactEnvelope
+      - OperatorFactEnvelope
+      - ReducerOp
+      - self_declare_effect_class
+      - emit_action
+      - emit_action_license
+      - execute_transition
+      - authorize_transition
+      - license_transition
+      - compute_phi
+      - compute_gamma
+      - compute_xi
+      - evaluator_accepts
+      - rank_candidates
+      - score_candidate
+      - PolicyDecision
+      - EngineDecision
+      - TerminalEnvelope
+      - ActionLicense
+      - "execute("
+      - "terminalize("
+      - mutate_runtime
+
+    required_tests:
+      - reducer_output_defaults_to_evidence_only
+      - checked_reducer_output_may_be_factonly_after_same_carrier_kappa_idempotence_and_replay_checks
+      - reducer_does_not_emit_action_license
+      - reducer_does_not_authorize_transition
+      - reducer_does_not_execute
+      - reducer_does_not_compute_measurements
+      - reducer_does_not_call_evaluator_accepts
+      - reducer_does_not_self_declare_effect_class_e_or_r
+      - reducer_preserves_schema_ref
+      - reducer_preserves_universe_ref
+      - reducer_preserves_coefficient_semantics
+      - legacy_apply_name_is_not_execution
+      - disabled_or_legacy_reducer_files_require_reclassification_before_admission
+      - synthesis_generate_reducer_reclassified_as_generator_or_forbidden
+      - partial_trace_reducer_requires_residual_projection_contract_if_lossy
+
+    canonical_invariant: >
+      ReducerAction is an EvidenceOnly same-carrier action candidate. It proposes one
+      deterministic, idempotent reduction step under a declared ReducerLaw and kappa
+      measurement reference. It does not compute measurements, evaluate acceptance, search,
+      rank, certify, license, authorize, mutate, or execute. Checked reducer facts require
+      same-carrier, kappa-monotonicity, idempotence, law, and replay verification.
+      LicensingBoundary authorizes execution when required; Engine executes licensed
+      transitions only. Candidates propose transformations; Evaluators judge;
+      LicensingBoundary authorizes; Engine executes licensed transitions only; MetaLift
+      changes carrier/schema expressivity only through license.
+
+    upgrade_v02:
+      registry_admission_warning:
+        description: "The current registry returns an empty reducer set. Any theorem using reducers must be conditional on registry admission."
+        text: |
+          Implemented reducer does not equal admitted reducer.
+          Only admitted reducers count toward exhaustion or area-lock claims.
+      reducer_law:
+        rust_code: |
+          pub struct ReducerLaw {
+              pub law_id: LawId,
+              pub kappa_measure_ref: MeasurementId,
+              pub same_carrier_required: bool,
+              pub idempotence_required: bool,
+              pub support_reduction_claim: SupportReductionClaim,
+              pub invariant_refs: Vec<InvariantId>,
+              pub replay_required: bool,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+
+          pub enum SupportReductionClaim {
+              StrictlyReduces,
+              NonIncreasing,
+              CanonicalizesOnly,
+          }
+        note: "Default: authority_effect: AuthorityEffect::EvidenceOnly. A checked reducer result may become RequiresEvaluator or FactOnly after kappa-measure verification, idempotence checking, and replay verification."
+      no_internal_loop_rule: >
+        ReducerAction applies once. Repeated application until stable belongs to Engine
+        orchestration. A ReducerAction MUST perform one declared reduction step. Fixed-point
+        iteration is Engine orchestration.
+      python_poc: |
+        def assert_reducer_idempotent(reducer, value):
+            once = reducer.propose_reduction(value)
+            twice = reducer.propose_reduction(once)
+            assert once == twice, "Reducer must be idempotent: R(R(x)) == R(x)"
+
+  # ---------------------------------------------------------------------------
+  reflector_candidate:
+  # ---------------------------------------------------------------------------
+    source_file: reflector_candidate_contract.md
+    frontmatter:
+      name: ReflectorCandidate
+      role: "Quotation and reflection creating quote-level structure without execution"
+      version: "2.0"
+      classification: candidate
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+        - quote_execution
+        - authority_inheritance_from_quoted_object
+        - hidden_recursion
+        - runtime_mutation
+        - scheduling_quoted_content
+        - decoding_without_declared_boundary
+        - decoding_without_required_license
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - EvidenceEnvelope
+        - FactEnvelope
+        - WitnessEnvelope
+        - CertificateEnvelope
+        - ReplayReport
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, execute quoted objects, or
+      upgrade evidence authority. LLM output may propose Reflector candidates, quote schemas,
+      recursion guards, or tests, but those proposals are EvidenceOnly until checked by the
+      declared Reflector, Schema, Replay, and Evaluator boundaries.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is a CANDIDATE, not a fixed-layer operator. A Reflector reifies the structure
+      of a state into quote-level structure that can be inspected or reasoned about by later
+      layers. It does not execute quoted objects. The Evaluator judges admissibility.
+
+    core_definition: >
+      A Reflector reifies the structure of a state into quote-level structure that can be
+      inspected or reasoned about by later layers.
+
+    subsystem_classification:
+      subsystem: "quotation / reflection candidate"
+      signature: "S -> Quote(S) | Reflection(S)"
+      role: "creates quote-level structure or internal representation without execution"
+
+    obligations:
+      must:
+        - "Declare reflection scope"
+        - "Declare quote schema"
+        - "Declare source schema"
+        - "Provide recursion guard"
+        - "Provide execution-forbidden declaration"
+        - "Provide decode boundary reference, if decoding is supported"
+        - "Provide decode license reference, only if decode is attempted"
+      must_not:
+        - "Execute quoted objects"
+        - "Grant authority"
+        - "Create hidden recursion"
+        - "Evaluate quoted content"
+        - "Schedule quoted content"
+        - "Mutate runtime state through reflection"
+        - "Exceed declared quote depth"
+
+    quote_non_execution_law: >
+      Quoted structure is inert. A quote may be inspected, hashed, replayed, decoded through
+      a declared decode boundary, or evaluated by a later layer. A quote MUST NOT execute,
+      schedule itself, authorize execution, mutate runtime state, or inherit the authority of
+      the quoted object.
+
+    no_authority_inheritance_law: >
+      Reflecting an object does not copy that object's authority. A quoted ActionLicense is
+      not an ActionLicense. A quoted Action is not an Action. A quoted DecisionEnvelope is
+      not a live decision. A quoted certificate is quote evidence unless dereferenced and
+      verified through the declared certificate boundary.
+
+    rust_types:
+      reflection_evidence:
+        code: |
+          pub struct ReflectionEvidence {
+              pub reflector_id: ReflectorId,
+              pub source_schema: SchemaRef,
+              pub quote_schema: SchemaRef,
+              pub reflection_scope: ReflectionScope,
+              pub decode_boundary_ref: Option<DecodeBoundaryId>,
+              pub decode_license_ref: Option<LicenseId>,
+              pub recursion_guard: RecursionGuard,
+              pub source_hash: Hash256,
+              pub quote_hash: Hash256,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub evidence_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+        note: "If certification is required, CertificateKernel may seal a certificate over ReflectionEvidence. Reflector itself does not create certificates."
+      recursion_guard:
+        code: |
+          pub struct RecursionGuard {
+              pub max_quote_depth: usize,
+              pub execution_forbidden: bool,
+              pub decode_forbidden_without_license: bool,
+          }
+        note: >
+          Default: authority_effect: AuthorityEffect::EvidenceOnly. A raw ReflectionOutput
+          is EvidenceOnly. A checked reflection result may become FactOnly only for the claim
+          that quote construction satisfied the declared quote schema, recursion guard, and
+          replay requirements. If later interpretation or admissibility judgment is needed,
+          consumers may route the checked result to an Evaluator. Reflector itself does not
+          emit RequiresEvaluator unless a specific reflector contract explicitly owns that boundary.
+      reflection_output:
+        code: |
+          pub struct ReflectionOutput<Q> {
+              pub quote: Q,
+              pub evidence: ReflectionEvidence,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+          }
+      reflector_trait:
+        code: |
+          pub trait Reflector<S, Q> {
+              fn reflect(
+                  &self,
+                  input: &S,
+              ) -> Result<EvidenceEnvelope<ReflectionOutput<Q>>, ReflectorError>;
+          }
+        note: "EvidenceEnvelope MUST be imported from the canonical artifact taxonomy. This contract MUST NOT define a local EvidenceEnvelope type."
+
+    forbidden_tokens:
+      - ReflectionEvidence
+      - execute_quote
+      - run_quote
+      - eval_quote
+      - schedule_quote
+      - quote_authority
+      - inherit_authority
+      - copy_authority
+      - ActionLicense
+      - StateTransition
+      - EngineDecision
+      - PolicyDecision
+      - TerminalEnvelope
+      - authorize_transition
+      - license_transition
+      - "execute("
+      - "terminalize("
+      - mutate_runtime
+      - self_certify
+
+    required_tests:
+      - reflector_output_defaults_to_evidence_only
+      - checked_reflection_may_be_factonly_after_quote_schema_recursion_and_replay_checks
+      - reflector_produces_reflection_evidence_not_certificate
+      - reflector_does_not_execute_quote
+      - reflector_does_not_schedule_quote
+      - reflector_does_not_inherit_authority_from_quoted_object
+      - quoted_action_license_is_not_live_action_license
+      - quoted_action_is_not_live_action
+      - quoted_decision_is_not_live_decision
+      - reflector_requires_recursion_guard
+      - reflector_rejects_quote_depth_overflow
+      - reflector_decode_requires_declared_decode_boundary
+      - reflector_decode_requires_license_when_required
+      - reflector_does_not_emit_action_license
+      - reflector_does_not_authorize_transition
+
+    canonical_invariant: >
+      Reflector is an EvidenceOnly quotation candidate. It creates inert quote-level structure
+      under declared source schema, quote schema, recursion guard, and replay evidence. It
+      does not certify, validate, decode without boundary, inherit authority from quoted
+      objects, schedule quoted content, terminalize, authorize, mutate, or execute. Checked
+      reflection facts require a declared checking or certificate boundary. Candidates propose
+      transformations; Evaluators judge; LicensingBoundary authorizes; Engine executes
+      licensed transitions only; MetaLift changes carrier/schema expressivity only through license.
+
+    upgrade_v02:
+      reflection_evidence:
+        description: "Reflection creates quote-level structure. It must not execute the quote."
+      reflector_trait:
+        description: "Reflector trait with explicit EvidenceEnvelope wrapping"
+      recursion_guard:
+        description: "RecursionGuard struct with max_quote_depth, execution_forbidden, and decode_forbidden_without_license"
+      python_poc: |
+        def validate_reflection_output(reflection: dict) -> None:
+            if reflection.get("executed") is True:
+                raise ValueError("Reflector may quote but must not execute quoted objects.")
+            if reflection.get("quote_depth", 0) > reflection.get("max_quote_depth", 1):
+                raise ValueError("Reflection recursion guard violated.")
+            if reflection.get("authority_effect") != "EvidenceOnly":
+                raise ValueError("Reflector output must be EvidenceOnly before checking.")
+            if reflection.get("decode_attempted") is True and not reflection.get("decode_license"):
+                raise ValueError("Reflector decode attempted without license.")
+
+  # ---------------------------------------------------------------------------
+  transform_action_candidate:
+  # ---------------------------------------------------------------------------
+    source_file: transform_action_candidate_contract.md
+    frontmatter:
+      name: TransformActionCandidate
+      role: "Deterministic same-carrier rearrangement proposing structural permutation"
+      version: "2.0"
+      classification: candidate
+      effect_class: none
+      authority_effect: EvidenceOnly
+      depends_on:
+        - ComponentSharedBoundary
+        - FixedLayerOperatorAlgebra
+      forbidden_authority:
+        - certification
+        - validation
+        - terminalization
+        - execution
+        - authority_upgrade
+      primary_output_family: EvidenceEnvelope
+      referenced_output_families:
+        - StructureArtifact
+        - EvidenceEnvelope
+        - FactEnvelope
+        - WitnessEnvelope
+        - CertificateEnvelope
+        - ReplayReport
+      llm_boundary: "LLM is candidate generator only. LLM output carries no authority."
+      doctrine_version: "2026-05"
+
+    llm_boundary_law: >
+      The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+      terminalize, authorize transitions, execute transitions, assign effect classes, or
+      upgrade evidence authority. LLM output may propose TransformAction candidates,
+      TransformLaw descriptors, migration patches, or tests, but those proposals are
+      EvidenceOnly until checked by the declared TransformAction, Replay, Evaluator, and
+      component-boundary checks.
+    inherits: component_shared_boundary_contract.md
+
+    classification_statement: >
+      This is an ACTION CANDIDATE, not a fixed-layer operator. A TransformAction rearranges
+      structure within the same carrier. It makes no default Phi monotonicity claim. The
+      Evaluator judges admissibility. A LicensingBoundary may authorize execution when
+      required. The Engine executes only licensed transitions.
+
+    status_warning: >
+      STATUS: DISABLED. The operators/transforms/ module is currently commented out in
+      operators/mod.rs (line 15: // pub mod transforms;). The 19 transform implementations
+      exist on disk but do not compile into the binary. This document describes the
+      architectural intent for when the module is resurrected or its contents are migrated.
+
+    core_definition: >
+      A TransformAction is a deterministic, stateless, unary same-carrier action candidate
+      S -> S that rearranges or modifies admitted state within the same carrier, without Phi
+      guarantees, search, ranking, orchestration, repair, representation conversion, or
+      hidden lift.
+
+    tower_placement: >
+      A TransformAction is the tower kind for same-carrier rearrangement. It may change
+      arrangement, parameterization, or internal structure, but it stays inside the declared
+      carrier. A TransformAction may not resolve an inadmissible request by reinterpreting
+      the carrier. Converting a discrete support into a continuous interval, or otherwise
+      switching geometry so the operation type-checks, is hidden lift/coercion and is
+      forbidden. That boundary belongs to explicit Meta lift.
+
+    rust_types:
+      transform_action_trait_current:
+        description: "Current working implementation (operators/transforms/mod.rs)"
+        code: |
+          pub trait TransformAction: Send + Sync {
+              fn name(&self) -> &'static str;
+              fn apply(&self, input: &NemotronValue) -> Result<NemotronValue, TransformFailure>;
+              fn is_invertible(&self) -> bool { true }
+              fn preserves_dimension(&self) -> bool { true }
+          }
+        note: "This is the active definition (when the module is enabled). It operates on NemotronValue and has no generic type parameters. Law witnesses are self-reported booleans."
+      transform_action_trait_deprecated:
+        description: "Deprecated contract-layer definition"
+        code: |
+          pub trait TransformAction<S: BaseType>: ComponentIdentity {
+              fn propose_transform(&self, input: &S) -> Result<TransformOutput<S>, TransformFailure>;
+              fn law(&self) -> &'static TransformLaw;
+          }
+        note: "This is the design target. It is generic over BaseType, requires ComponentIdentity, and demands a TransformLaw descriptor. Neither ComponentIdentity nor TransformLaw are used by any transform implementation."
+      transform_action_trait_migration_target:
+        description: "Migration target"
+        code: |
+          pub trait TransformAction<S: BaseType>: BoundContract {
+              fn propose_transform(&self, input: &S) -> Result<TransformOutput<S>, TransformFailure>;
+              fn law(&self) -> &'static TransformLaw;
+          }
+        note: "apply is a legacy implementation name. Contract-canonical APIs should use propose_transform or transform_candidate to avoid implying execution authority. Uses BoundContract from contracts::base_contracts::binding."
+      transform_output:
+        code: |
+          pub struct TransformOutput<S> {
+              pub transform_id: ComponentId,
+              pub transform_version: ComponentVersion,
+              pub input_hash: Hash256,
+              pub output_hash: Hash256,
+              pub carrier_ref: CarrierRef,
+              pub law_ref: LawId,
+              pub witness_refs: Vec<WitnessId>,
+              pub certificate_refs: Vec<CertificateId>,
+              pub replay_refs: Vec<ReplayRef>,
+              pub authority_effect: AuthorityEffect, // EvidenceOnly
+              pub output: S,
+          }
+
+          pub struct CheckedTransformOutput {
+              pub output_ref: TransformOutputRef,
+              pub same_carrier_certificate: CertificateId,
+              pub law_check_certificate: CertificateId,
+              pub replay_ref: ReplayRef,
+              pub checked_hash: Hash256,
+              pub authority_effect: AuthorityEffect, // FactOnly or RequiresEvaluator depending contract
+          }
+      phi_claim:
+        code: |
+          pub enum PhiClaim {
+              Unrestricted,         // default
+              Preserved,            // Phi(T(s)) = Phi(s)
+              NonIncreasing,        // Phi(T(s)) <= Phi(s)
+              Bounded { factor: f64 }, // Phi(T(s)) <= factor * Phi(s)
+          }
+
+    existing_implementations:
+      description: "19 files, all disabled"
+      reclassification_candidates:
+        - file: "transform_base2_to10.rs"
+          concern: "Decoder / representation conversion"
+        - file: "transform_roman_to_int.rs"
+          concern: "Decoder / parser boundary"
+        - file: "transform_complex_numbers.rs"
+          concern: "domain-specific computation or representation boundary"
+        - file: "transform_op_remap_plus_is_mult.rs"
+          concern: "semantic reinterpretation; likely forbidden or lift/evaluator-governed"
+        - file: "transform_op_remap_mult_is_pow.rs"
+          concern: "semantic reinterpretation; likely forbidden or lift/evaluator-governed"
+      note: "Before re-enabling operators/transforms, each file must be classified as TransformAction, Adapter, Decoder, Functional, Solver, or forbidden."
+
+    same_carrier_law:
+      preserves:
+        - carrier identity
+        - carrier type
+        - carrier rank
+        - schema reference
+        - universe reference
+        - coefficient semantics
+        - carrier schema hash
+        - admissible domain
+      note: >
+        Any schema change, carrier identity change, universe change, coefficient-domain
+        change, or expressivity expansion is not TransformAction. Transformations must declare
+        a TransformLaw preventing hidden adapters/lifts (e.g., kappa-preserving, kappa-bounded,
+        or same-carrier).
+      may_change:
+        - "arrangement, labels, parameters"
+        - "internal edge/weight/data layout"
+      must_not_change: "cardinality or introduce/remove structure unless explicitly declared in its TransformLaw"
+      failure_rule: "A TransformAction MUST fail if the operation requires a representation change, carrier lift, schema change, or policy-dependent reinterpretation."
+
+    phi_behavior: >
+      TransformAction makes no default Phi monotonicity claim. Any Phi claim is a declaration
+      only and must be verified by the Evaluator layer.
+
+    measurement_evaluation_integration: >
+      TransformAction does not compute Phi1, Gamma2, Xi, closure defect, quotient mass, or
+      cohomological status. If a transform result is later evaluated, the Evaluator may
+      consume checked MeasurementEnvelope references produced by the Functional / Measurement
+      boundary. Any monotonicity, non-increase, or admissibility claim is outside
+      TransformAction and must be verified by the declared Evaluator or Measurement boundary.
+
+    forbidden_tokens:
+      - ActionFactEnvelope
+      - OperatorFactEnvelope
+      - TransformOp
+      - apply_lift
+      - hidden_lift
+      - reinterpret_carrier
+      - change_schema
+      - change_universe
+      - compute_phi
+      - compute_gamma
+      - compute_xi
+      - rank_candidates
+      - score_candidate
+      - PolicyDecision
+      - EngineDecision
+      - TerminalEnvelope
+      - ActionLicense
+      - authorize_transition
+      - license_transition
+      - "execute("
+      - "terminalize("
+      - mutate_runtime
+      - self_declare_effect_class
+
+    required_tests:
+      - transform_output_defaults_to_evidence_only
+      - checked_transform_output_may_be_factonly_after_same_carrier_law_and_replay_checks
+      - transform_does_not_emit_action_license
+      - transform_does_not_authorize_transition
+      - transform_does_not_execute
+      - transform_does_not_compute_measurements
+      - transform_does_not_self_declare_effect_class
+      - transform_preserves_schema_ref
+      - transform_preserves_universe_ref
+      - transform_preserves_coefficient_semantics
+      - legacy_apply_name_is_not_execution
+      - disabled_transform_files_require_reclassification_before_enablement
+      - semantic_reinterpretation_transform_is_forbidden_or_reclassified
+
+    differentiators_table:
+      - kind: TransformAction
+        domain: "S -> S"
+        guarantee: "Prevents hidden lifts (declared TransformLaw)"
+        phi: "Unrestricted (unless declared)"
+      - kind: ReducerAction
+        domain: "S -> S"
+        guarantee: "Idempotent + kappa-monotone: kappa(R(s)) <= kappa(s)"
+        phi: Reducing
+      - kind: LambdaAction
+        domain: "admitted carrier morphism"
+        guarantee: "local declared law, no hidden lift"
+        phi: "declared Phi behavior"
+      - kind: Encoder
+        domain: "S -> DensityMatrix"
+        guarantee: "PSD, trace-one postcondition"
+        phi: "Representation boundary"
+      - kind: Generator
+        domain: "S -> Vec<Candidate<S>>"
+        guarantee: "Blind proposal, zero evaluation"
+        phi: "N/A"
+      - kind: Constructor
+        domain: "Raw -> BaseType"
+        guarantee: "Validation-gated instantiation"
+        phi: "N/A"
+
+    canonical_invariant: >
+      TransformAction is an EvidenceOnly same-carrier action candidate. It proposes
+      deterministic structural rearrangement under a declared TransformLaw. It does not
+      repair, reduce, encode, adapt, search, rank, measure, evaluate, license, mutate,
+      authorize, or execute. Checked transform facts require same-carrier, law, and replay
+      verification. LicensingBoundary authorizes execution when required; Engine executes
+      licensed transitions only.
+
+    upgrade_v02:
+      transform_law:
+        description: "TransformActions are same-carrier rearrangements. They make no default Phi claim."
+        rust_code: |
+          pub struct TransformLaw {
+              pub law_id: LawId,
+              pub same_carrier_required: bool,
+              pub invertibility: InvertibilityClaim,
+              pub phi_claim: PhiClaim,
+              pub carrier_invariants: Vec<InvariantId>,
+              pub authority_effect: AuthorityEffect,
+          }
+
+          pub enum InvertibilityClaim {
+              Invertible { inverse: ComponentId },
+              NotInvertibleDeclared,
+              Unknown,
+          }
+        note: >
+          Default: authority_effect: AuthorityEffect::EvidenceOnly. A raw TransformOutput is
+          EvidenceOnly. A checked same-carrier TransformOutput may become FactOnly only for
+          the claim that the transform satisfied its declared structural law. If later
+          admissibility judgment is needed, consumers may route the checked output to an
+          Evaluator. The TransformAction itself does not emit RequiresEvaluator unless its
+          specific contract declares that boundary. If invertibility is Unknown, no theorem
+          may depend on invertibility for that TransformAction.
+      disabled_module_rule: >
+        Since transforms are disabled in the binary, mark every theorem depending on them as
+        conditional: Transform theorem applies only when operators/transforms is compiled,
+        registered, and admitted by the component registry.
+      python_poc: |
+        def validate_transform_same_carrier(before: dict, after: dict) -> None:
+            if before.get("carrier_id") != after.get("carrier_id"):
+                raise ValueError("Transform changed carrier identity.")
+            keys = ["carrier_type", "carrier_rank", "schema_ref", "universe_ref"]
+            for key in keys:
+                if before.get(key) != after.get(key):
+                    raise ValueError(f"Transform changed carrier field: {key}")
+
+# --- END OF CONTRACTS ---

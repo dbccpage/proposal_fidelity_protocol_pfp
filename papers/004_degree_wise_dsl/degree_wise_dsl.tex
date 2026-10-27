@@ -1,0 +1,1351 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{255,255,255}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{\textbf{\colorbox[rgb]{0.97,0.90,0.90}{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.79,0.38,0.79}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.39,0.29,0.61}{\textbf{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.57,0.30,0.62}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.54,0.53,0.53}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.00,0.58,1.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.67,0.33,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.38,0.47,0.50}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{\underline{#1}}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.58,1.00}{\textbf{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.39,0.29,0.61}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{1.00,0.33,0.00}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.69,0.50,0.00}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.12,0.11,0.11}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.43,0.16}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.00,0.43,0.16}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{\colorbox[rgb]{0.88,0.91,0.97}{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.24,0.68,0.91}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{1.00,0.33,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.34,0.68}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.75,0.01,0.01}{#1}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+% House preamble for the l1-obstruction-framework paper.
+%
+% Typesetting is not evidence for any claim.
+%
+% Built 2026-09-30.
+%
+% xelatex, not pdflatex: the manuscript uses unicode characters that pdflatex
+% cannot set without per-character declarations.
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Latin Modern Roman}
+\setmonofont{Latin Modern Mono}[Scale=0.85]
+\setmathfont{Latin Modern Math}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{microtype}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.4em}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=RoyalBlue,urlcolor=RoyalBlue,
+            citecolor=RoyalBlue,breaklinks=true]{hyperref}
+\usepackage{fvextra}
+\usepackage{framed}
+\fvset{breaklines=true,breakanywhere=true,fontsize=\small}
+
+\AtBeginEnvironment{longtable}{\small}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\definecolor{quoterule}{gray}{0.75}
+\renewenvironment{quote}
+  {\begin{leftbar}\small}
+  {\end{leftbar}}
+
+\usepackage[htt]{hyphenat}
+\usepackage{xurl}
+\emergencystretch=3em
+\sloppy
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  colorlinks=true,
+  linkcolor={RoyalBlue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Degree-Wise Obstruction Calculus and Symbolic DSL: Graded Cochain Complexes, Degree Separation, and Local-Global Gate Non-Factorization}\label{degree-wise-obstruction-calculus-and-symbolic-dsl-graded-cochain-complexes-degree-separation-and-local-global-gate-non-factorization}
+
+\textbf{Author:} Jeremy H. Carroll\\
+\textbf{Date:} 2026-09-30\\
+\textbf{Version:} 2.1.0\\
+\textbf{Canonical Identity:} \texttt{EA:F004.001.009} (\texttt{FOC-006})\\
+\textbf{License:} Creative Commons Attribution 4.0 International (CC-BY-4.0)
+
+\noindent\textbf{Nonclaims:} This monograph assigns no authorization and changes no jurisdiction. It carries no operational authority or institutional standing.\textbackslash{[}0.4em{]}
+
+\subsection{Mechanism inventory}\label{mechanism-inventory}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Slot
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Value / Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Primitive Differences} & \(\delta c = \text{{defect mass}}\) \\
+\textbf{Carriers / Structure} & Finite Graph 0-Cochain / Hilbert Space \\
+\textbf{Cochain complex} & \(C^0 \to C^1 \to C^2\) \\
+\textbf{Coboundary maps} & \(\delta^0, \delta^1\) \\
+\textbf{ZeroRel} & Preserved under \(L_1\) quotient \\
+\textbf{Licensed repairs} & None \\
+\textbf{Quotient / Q1} & Banach Quotient \\
+\textbf{Residuals} & \(\delta c \neq 0\) boundary defect \\
+\textbf{Witnesses} & Replayable Python / Rust Certifiers \\
+\textbf{Observers / profiles} & Operational Observer \\
+\textbf{Anomalons} & None \\
+\textbf{CompletionLaw} & Finite Cochain Completion \\
+\textbf{Terminal / route} & Route to Anomalon Estate \\
+\textbf{Authority status} & None; this monograph assigns no authorization and changes no jurisdiction. It carries no operational authority or institutional standing. \\
+\end{longtable}
+
+\subsection{Scope}\label{scope}
+
+\begin{quote}
+\textbf{Specification Identity:} This paper is the finite obstruction DSL specification. Its theorem content is the (\(k=1\)) degree-separation witness and the local/global gate non-factorization result.
+\end{quote}
+
+\textbf{Main result (informal).} The obstruction DSL is a typed graded symbolic system: \(d_0:C^0\to C^1\) and \(d_1:C^1\to C^2\) act on distinct cochain degrees, and the diagnostic carried by \(d_1\) (the closure defect \(\Gamma_2\)) is provably invisible to any model that supplies only \(C^1\) data with no explicit 2-cell structure. Valid expressions must respect degree typing and \(\ell^1(E;g)\) aggregation; collapsing degrees or relaxing the norm destroys recoverable obstruction information.
+
+The same finite replay now also has a composite LGGR form: even a local fingerprint that remembers both \(C^1\) edge data and whether the DSL diagnostic is constructible does not determine the global gated pair consisting of \(\Gamma_2\) and acceptance authorization.
+
+This boundary is stable under context extension: adding arbitrary external metadata, including QM-facing operator/density payloads, does not repair the PrimitiveDifference non-factorization unless the missing global gate itself is supplied. This is factored through a reusable PrimitiveDifference theorem: any local fingerprint/global readout pair with a zero-related witness remains LGGR after arbitrary context is added around the core state.
+
+This paper formalizes the graded algebraic structure underlying the obstruction engine. It defines:
+
+\begin{itemize}
+\tightlist
+\item
+  The cochain complex and its boundary operators as programmable primitives.
+\item
+  Degree separation: why operations on \(C^k\) cannot be faithfully reduced to \(C^{k-1}\).
+\item
+  The compositional grammar for expressing transformations over obstruction fields.
+\end{itemize}
+
+\subsubsection{Explicit exclusions}\label{explicit-exclusions}
+
+This paper does NOT contain:
+
+\begin{itemize}
+\tightlist
+\item
+  Operator dynamics or transport proposals (\to Paper 011).
+\item
+  Trace metrics, density lifts, or Hilbert structures (\to Paper 013). The DSL \emph{declares} \texttt{Density} and \texttt{trace\_norm} slots but constructs neither --- see the §8.1 import fence.
+\item
+  Any physical interpretation or analogy.
+\item
+  Any authority, acceptance, correctness, or semantic-truth claim. \textbf{Authority: none} --- see the GTOC / GTLA Compliance Note.
+\item
+  Probability semantics. The \(\ell^1(E;g)\) aggregation here is a finite weighted tally, and no probabilistic adapter is supplied.
+\item
+  A quantum-cohomology \textbf{admission classifier} or classical/quantum \textbf{non-selection} theorem (\to **QM\_032\textbf{ \texttt{CODAQMBridge} / \texttt{QM-032-C3}--\texttt{C5}). This paper remains the degree-wise complex }DSL declaration surface**; QM\_032 consumes graded complex shape without duplicating the DSL.
+\end{itemize}
+
+(The \emph{Explicit exclusions} list above is this paper's ``what this does not claim'' box.)
+
+\textbf{Why a researcher should care.} Systems that flatten a graded diagnostic into a single scalar ``score'' silently discard exactly the information that distinguishes a first-order obstruction (\(\Phi_1\)) from a closure failure (\(\Gamma_2\)). This paper makes the degree structure a \emph{typed} invariant: a statically-checked DSL rejects degree-confused expressions before execution, and the degree-separation theorem demonstrates why a \(C^1\)-only model cannot fake a \(\Gamma_2\) computation. The payoff is an auditable boundary between what a diagnostic actually measured and what it asserted without construction.
+
+\subsection{1. Graded Cochain Complex}\label{graded-cochain-complex}
+
+Let \(P = (V, E)\) be a finite connected directed graph. This graph is a \emph{declared} starting
+structure: it is admitted, not derived, and nothing in this paper narrates a domain prior to it.
+
+Construct the graded objects first. From \(P\) alone:
+
+\begin{itemize}
+\tightlist
+\item
+  \(C^0(P) = \mathbb{R}^{|V|}\) --- scalar node assignments.
+\item
+  \(C^1(P) = \mathbb{R}^{|E|}\) --- edge-level obstruction fields (\(\omega\)).
+\end{itemize}
+
+A third object exists only once an explicit finite set of 2-cells \(\sigma_2\) is \emph{attached} to \(P\).
+It is not induced by \((V,E)\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(C^2(P,\sigma_2) = \mathbb{R}^{|\sigma_2|}\) --- 2-cell closure defects.
+\end{itemize}
+
+Only now that the objects exist may the operators between them be named. If \((P, \sigma_2)\) is
+specified, the graded chain is
+\[
+C^0 \xrightarrow{\;d_0\;} C^1 \xrightarrow{\;d_1\;} C^2 .
+\]
+Otherwise: no \(\sigma_2\), hence no \(C^2\), hence no \(d_1\) --- and the calculus terminates at \(C^1\).
+
+\textbf{Definition (coboundary operators).}
+\[
+(d_0 f)(e_{ij}) = f(j) - f(i)
+\]
+\[
+(d_1 \omega)(\sigma) = \sum_{e \in \partial\sigma} \mathrm{sign}(e, \sigma) \cdot \omega(e)
+\]
+
+\textbf{Fundamental property.}
+\[
+d_1 \circ d_0 = 0
+\]
+
+This identity assumes the \(d_0\) and \(d_1\) incidence conventions are compatible: every oriented boundary appears with canceling signs. A DSL implementation must test this invariant for each supplied \texttt{Complex2}.
+
+This ensures that any exact form (\(\omega = d_0 f\)) is automatically closed under \(d_1\).
+
+\textbf{Implementation Registry.} Transient crate function names and module paths are decoupled from this paper specification and maintained in the companion claim ledger.
+
+\subsection{2. Degree Separation Theorem}\label{degree-separation-theorem}
+
+\textbf{Theorem --- Degree Separation for \(\Gamma_2\)}
+
+The general \(d_k:C^k\to C^{k+1}\) statement is schematic: it follows the same typing logic, but this paper establishes and replays only the \(d_1:C^1\to C^2\) / \(\Gamma_2\) instance.
+
+In the presence of nontrivial higher-degree structure, the diagnostic information carried by \(d_k:C^k\to C^{k+1}\) is not recoverable from \(C^{k-1}\)-data alone without additional structure.
+
+\textbf{Proof sketch.}
+
+\begin{itemize}
+\tightlist
+\item
+  \(d_0\) maps \(C^0 \to C^1\). Its image \(\mathrm{im}(d_0)\) is the space of exact 1-cochains. When a 2-complex is specified, \(H^1\) is defined as \(\ker(d_1)/\mathrm{im}(d_0)\). Otherwise, obstruction is measured operationally via \(\Phi_1\).
+\item
+  \(d_1\) maps \(C^1 \to C^2\). The closure defect \(\Gamma_2=\|d_1h_1\|_1\) depends on the 2-cell incidence operator \(d_1\). It is therefore invisible to a graph-only model that supplies \(C^1\) but no explicit 2-cell structure.
+\end{itemize}
+
+\textbf{Consequence.} The diagnostic hierarchy \(\Phi_1, \Gamma_2\) requires operating at multiple cochain degrees simultaneously. A system restricted to \(C^0\) cannot represent arbitrary cycle obstruction. A system restricted to \(C^1\) cannot evaluate closure failure unless an explicit 2-cell complex and \(d_1\) are supplied.
+
+\subsubsection{\texorpdfstring{Worked Replay --- \(\Gamma_2\) Is Invisible Without a 2-Cell}{Worked Replay --- \textbackslash Gamma\_2 Is Invisible Without a 2-Cell}}\label{worked-replay-gamma_2-is-invisible-without-a-2-cell}
+
+Take \(C_3\) (triangle) with \(\omega=(1,0,0)\). A graph-only model (no 2-cell) computes the primary obstruction
+
+\[
+\Phi_1=\min_f\|\omega-d_0 f\|_1=1,
+\]
+
+but \(\Gamma_2\) is \emph{undefined} --- there is no \(d_1\) to apply. Now attach the single 2-cell \(\sigma=(e_1,e_2,e_3)\) with incidence \(d_1=[\,1\;\;1\;\;1\,]\). Adding a 2-cell does not change \(\operatorname{im}(d_0)\), so \(\Phi_1=1\) still, while the closure defect becomes visible on the residual \(h_1=(1,0,0)\):
+
+\[
+\Gamma_2=\|d_1 h_1\|_1=|1+0+0|=1,\qquad R_{cl}=\Gamma_2/\Phi_1=1.
+\]
+
+The same edge data yields \emph{no} \(\Gamma_2\) in the graph-only model and \(\Gamma_2=1\) once the 2-cell is supplied --- a concrete instance of the degree-separation theorem, and the reason the DSL makes \texttt{gamma2} ill-typed without a \texttt{Complex2}.
+
+\textbf{Lean support note (v2.0.7).} \textbf{{[}MECHANIZED-PARTIAL{]}} The integer \(C_3\) instance is \texttt{PaperFOC006.c3\_degree\_separation\_instance}: the \(\ell^1\) distance from \((1,0,0)\) to the image of \(d_0\) is \(1\), that distance ignores the 2-cell flag, a missing 2-cell has no \(\Gamma_2\) readout, and the attached 2-cell has \(\Gamma_2=1\). \texttt{PaperFOC006.c3\_d1\_d0\_zero} establishes the compatible \(C_3\) coboundary identity, \texttt{PaperFOC006.gamma2\_graphOnly\_undefined} and \texttt{PaperFOC006.gamma2\_withTwoCell\_one} prove the graph-only/2-cell contrast, and \texttt{PaperFOC006.c1\_local\_green\_not\_gamma2\_global} establishes the LGGR form: the \(C^1\)-only local quotient preserves the edge data, but it cannot also carry the global \(\Gamma_2\) readout. The same file names the readout gate explicitly: \texttt{PaperFOC006.gamma2\_readout\_requires\_twoCell}, \texttt{PaperFOC006.no\_twoCell\_blocks\_gamma2\_readout}, and \texttt{PaperFOC006.graphOnly\_gamma2\_not\_zero\_readout} state that a missing 2-cell does not provide a zero-valued \(\Gamma_2\); it provides no \(\Gamma_2\) readout. The composite theorem \texttt{PaperFOC006.degreeDsl\_local\_green\_not\_global\_gate} strengthens the finite replay without widening the general-\(k\) claim: preserving the local pair \texttt{(C1,\ diagnosticConstructible)} still does not factor the global pair \texttt{(Gamma2,\ acceptanceAuthorized)}. The context-extension theorem \texttt{PaperFOC006.contextual\_local\_green\_not\_global\_gate} is an instance of \texttt{PaperFOC006.PrimitiveDifference.localGreenGlobalRed\_context\_obstruction\_of\_witness} in this package. The name \texttt{OmegaCore.PrimitiveDifference} is not a module here.
+
+\begin{quote}
+\textbf{Mechanization scope (do not read past it).} \texttt{PaperFOC006.c3\_degree\_separation\_instance} is an integer-valued shadow. Cochains in that file are \texttt{Int}. A minimization over real potentials, a real quotient \(R_{cl}\), and the general-\(k\) statement are outside this deposit. Within the integer shadow, \texttt{gamma2?} is a declared gate (\texttt{if\ hasTwoCell\ then\ some\ …\ else\ none}), so the readout theorems mechanize this paper's stipulation that a missing 2-cell yields no \(\Gamma_2\). The non-factorization theorem \texttt{PaperFOC006.c1\_local\_green\_not\_gamma2\_global} and its composites remain separate.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{h1 }\OperatorTok{=}\NormalTok{ np.array([}\FloatTok{1.}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{])}\OperatorTok{;}\NormalTok{ d1 }\OperatorTok{=}\NormalTok{ np.array([[}\FloatTok{1.}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{]])   }\CommentTok{\# one 2{-}cell over e1,e2,e3}
+\BuiltInTok{print}\NormalTok{(np.}\BuiltInTok{abs}\NormalTok{(d1 }\OperatorTok{@}\NormalTok{ h1).}\BuiltInTok{sum}\NormalTok{())                             }\CommentTok{\# Gamma\_2 = 1.0}
+\end{Highlighting}
+\end{Shaded}
+
+Expected output: \texttt{1.0}.
+
+\subsection{3. Symbolic Primitives}\label{symbolic-primitives}
+
+The obstruction calculus admits a minimal set of programmable primitives:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Symbol
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meaning
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(\omega\) & \(C^1(P)\) & Raw obstruction field \\
+\(d_0\) & \(C^0 \to C^1\) & Coboundary (node \to edge) \\
+\(d_1\) & \(C^1 \to C^2\) & Coboundary (edge \to face) \\
+\(\pi_Z\) & \(C^1 \to C^1\) & solver-declared cycle-space/residual projection \\
+\(f^*\) & \(C^1 \to C^0\) & Optimal scalar section (solver output) \\
+\(h_1\) & \(C^1\) & Irreducible residual: \(\omega - d_0 f^*\) \\
+\(|\cdot|_{1;g}\) & \(C^k \to \mathbb{R}\) & \(\ell^1(E; g)\) norm \\
+\end{longtable}
+
+The \(\ell^1\) norm is generalized to an edge-sum over a local gauge \(g\) on channel space.
+
+\begin{quote}
+\textbf{Note on \(\pi_Z\):} This projection is not assumed to be the \(\ell^2\) harmonic projection. It is a declared projection operator satisfying tested invariants such as \(\pi_Z^2=\pi_Z\) and \(\pi_Z(d_0f)=0\). It is a solver-declared residual/cycle-space projection induced by the chosen solver. It is not unique and depends on the chosen gauge and optimization procedure.
+\end{quote}
+
+\begin{quote}
+\textbf{Note on \(f^*\):} \(f^*\) is an \(\ell^1\)-minimizing solution and may not be unique. Any minimizer defines a valid residual \(h_1\).
+\end{quote}
+
+\textbf{Code:} \(\pi_Z\) is implemented in \texttt{cycle\_space\_projector.rs}.
+
+\subsection{4. Compositional Expressions}\label{compositional-expressions}
+
+If no \texttt{Complex2} is supplied, \(\Gamma_2\) is undefined. It is not zero, not accepted, and not eligible for \(R_{\mathrm{cl}}\) computation.
+
+\textbf{Typed Readout Semantics:}
+To prevent silent degree confusion or treating missing 2-cell complexes as zero closure defects, \(\Gamma_2\) readouts are explicitly typed:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Gamma2Readout :=}
+\NormalTok{  | NoComplex2}
+\NormalTok{  | MalformedComplex2}
+\NormalTok{  | Gamma2(value)}
+\end{Highlighting}
+\end{Shaded}
+
+The closure ratio \(R_{\mathrm{cl}} = \Gamma_2 / \Phi_1\) is defined and well-typed only when \texttt{Gamma2Readout} is \texttt{Gamma2(value)} and \(\Phi_1 > \varepsilon\).
+
+\begin{quote}
+\textbf{Architecture Split:} Rewrite rules (Section 5) belong to the symbolic layer. The solvers calculating \(\pi_Z\) and \(f^*\) belong to the numeric layer.
+\end{quote}
+
+\begin{quote}
+\textbf{Evaluation Boundary:} This calculus defines expressions only. It does not define acceptance or correctness. Evaluation is handled externally (Paper 011).
+\end{quote}
+
+Using the primitives above, the engine's diagnostic chain can be expressed as a composition.
+
+\textbf{Compositional Typing:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ω \textbackslash{}in C¹}
+\NormalTok{f* \textbackslash{}in C⁰}
+\NormalTok{d\_0f* \textbackslash{}in C¹}
+\NormalTok{h\_1 \textbackslash{}in C¹}
+\NormalTok{d\_1h\_1 \textbackslash{}in C\^{}2}
+\NormalTok{Φ\_1 \textbackslash{}in ℝ}
+\NormalTok{Gamma2Readout}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Primary obstruction:}
+\[
+\Phi_1 = |h_1|_{1;g} = |\omega - d_0 f^*(\omega)|_{1;g}
+\]
+
+\textbf{Closure defect:}
+\[
+\Gamma_2 = |d_1 h_1|_{1;g} = |d_1(\omega - d_0 f^*(\omega))|_{1;g}
+\]
+
+\textbf{Closure ratio:}
+\[
+R_{cl} = \Gamma_2 / \Phi_1 \quad (\text{when } \Phi_1 > \varepsilon)
+\]
+If \(\Phi_1 \le \varepsilon\) and \(\Gamma_2 > \varepsilon\), the reading is \emph{flagged} as inconsistent with the assumed cochain model. \textbf{{[}POLICY RULE{]}} The flag is a diagnostic trigger, not a proof of inconsistency. In exact arithmetic the implication is sound (\(\Phi_1=0\Rightarrow h_1=0\Rightarrow\Gamma_2=0\)); under \(\varepsilon\)-tolerances only \(\Gamma_2\le\|d_1\|\,\Phi_1\) is available, so a \(d_1\) of large operator norm can produce this pattern on well-formed data. The flag routes the packet for inspection. It does not authorize a verdict about the system.
+
+\textbf{Canonical projection:}
+\[
+h_Z = \pi_Z(\omega)
+\]
+
+\textbf{Representative distortion (\to Paper 009; elaborated in Paper 013):}
+\[
+\Xi = \|\rho(h_1^*)-\rho(\phi^*)\|_1
+\]
+where \(h_1^*\) is the tie-broken primal residual and \(\phi^*\) is the tie-broken optimal dual witness. This paper treats \(\rho\), \(\phi^*\), and \(\Xi\) as opaque external primitives.
+
+\begin{quote}
+\textbf{Note.} The definition and justification of \(\Xi\) belongs in Paper 009 (the Dual-Witness \(\Xi\) construction), elaborated in Paper 013. It appears here only to show how it fits the compositional chain.
+\end{quote}
+
+\subsection{5. Rewrite Rules}\label{rewrite-rules}
+
+The following algebraic identities hold in the obstruction calculus and may be used for symbolic simplification:
+
+\textbf{Rule 1 (exactness kills closure).}
+\[
+d_1 \circ d_0 = 0
+\]
+
+Rules involving \(\pi_Z\) are enabled only after the projection implementation has passed its invariants:
+\[
+\pi_Z^2=\pi_Z,\qquad \pi_Z(d_0f)=0.
+\]
+Without that certification, these are not sound rewrite rules.
+
+\textbf{Lean support note (v2.0.3).} The certified-projection condition is captured by \texttt{PaperFOC006.DeclaredProjection}: \texttt{PaperFOC006.declaredProjection\_idempotent} and \texttt{PaperFOC006.declaredProjection\_kills\_exact} expose exactly the two rewrite permissions above. These theorems are contract lemmas: they apply only to a projection whose idempotence and exact-killing fields have been supplied.
+
+\textbf{Rule 2 (projection idempotence).}
+\[
+\pi_Z \circ \pi_Z = \pi_Z
+\]
+
+\textbf{Rule 3 (exact component vanishes under projection).}
+\[
+\pi_Z(d_0 f) = 0 \quad \forall f \in C^0
+\]
+
+\textbf{Rule 4 (closure deviation).}
+
+\(\Gamma_2\) measures failure of \(h_1\) to lie in \(\ker(d_1)\).
+
+\subsection{6. Coarse-Graining Asymmetry}\label{coarse-graining-asymmetry}
+
+\textbf{Core fact.} \textbf{{[}STANDARD --- triangle inequality with equality case{]}} The \(\ell^1\) norm forbids sign cancellation:
+\[
+\left|\sum_i x_i\right| \le \sum_i |x_i|
+\]
+with equality iff all \(x_i\) share the same sign.
+
+\textbf{Consequence.} Aggregation that retains only squared-norm or magnitude data generally loses sign, orientation, and edge-local decomposition information unless those data are carried separately. Fine combinatorial information (edge orientations, defect signs) is irreversibly destroyed.
+
+\textbf{Corollary (reconstruction obstruction).} Recovery of the discrete representation from squared aggregate data generally requires additional combinatorial topology and orientation data. No canonical inverse exists from squared aggregate magnitudes alone.
+
+\subsection{7. Final Statement}\label{final-statement}
+
+\[
+\fbox{\parbox{0.95\textwidth}{\centering The obstruction calculus is a graded symbolic system in which $d_0, d_1, \pi_Z$ operate on distinct cochain degrees, and valid expressions must respect degree typing and $\ell^1(E; g)$ aggregation. Collapsing degrees or relaxing the norm destroys recoverable obstruction information.}}
+\]
+
+Formal Grammar and Evaluation Semantics
+
+\subsubsection{8. DSL Grammar}\label{dsl-grammar}
+
+The obstruction DSL is a typed expression language over graded cochains.
+
+\paragraph{8.1 Types}\label{types}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Type\textgreater{} ::=}
+\NormalTok{    Real}
+\NormalTok{  | Bool}
+\NormalTok{  | Graph}
+\NormalTok{  | Complex2}
+\NormalTok{  | C0}
+\NormalTok{  | C1}
+\NormalTok{  | C2}
+\NormalTok{  | Gauge}
+\NormalTok{  | Projection}
+\NormalTok{  | Density}
+\NormalTok{  | Decision}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+\textbf{Import fence --- \texttt{Density}, \texttt{trace\_norm}, \texttt{rho}, \texttt{xi}.} These are \textbf{declared slots, not constructed objects}. This paper builds no density operator, trace norm, or Hilbert structure at its declared degree; the \emph{Explicit exclusions} box routes all of them to Paper 013 (and \texttt{xi} to Paper 009). They are therefore \textbf{{[}IMPORTED / Q-gated placeholders{]}}: a well-typed program may \emph{mention} them, but nothing here licenses reading \texttt{Density} as a quantum-mechanical density state, \texttt{trace\_norm} as a trace-class norm on an operator algebra, or \texttt{rho} as a density lift. No result in this paper depends on their internal structure, and the degree-separation and typing results below are stated and proved without them. Instantiating any of these slots is an import, and it must be priced where it is constructed --- not here.
+\end{quote}
+
+Multi-channel types are written:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}CType\textgreater{} ::=}
+\NormalTok{    C0[g]}
+\NormalTok{  | C1[g]}
+\NormalTok{  | C2[g]}
+\end{Highlighting}
+\end{Shaded}
+
+where \texttt{g} is the local observer gauge.
+
+\paragraph{8.2 Terms}\label{terms}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Expr\textgreater{} ::=}
+\NormalTok{    \textless{}Var\textgreater{}}
+\NormalTok{  | \textless{}RealLiteral\textgreater{}}
+\NormalTok{  | \textless{}Apply\textgreater{}}
+\NormalTok{  | \textless{}Let\textgreater{}}
+\NormalTok{  | \textless{}If\textgreater{}}
+\NormalTok{  | \textless{}Norm\textgreater{}}
+\NormalTok{  | \textless{}Subtract\textgreater{}}
+\NormalTok{  | \textless{}Project\textgreater{}}
+\NormalTok{  | \textless{}Solve\textgreater{}}
+\NormalTok{  | \textless{}Ratio\textgreater{}}
+\NormalTok{  | \textless{}DecisionExpr\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.3 Variables}\label{variables}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Var\textgreater{} ::= identifier}
+\end{Highlighting}
+\end{Shaded}
+
+Examples:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{omega}
+\NormalTok{f}
+\NormalTok{h1}
+\NormalTok{phi1}
+\NormalTok{gamma2}
+\NormalTok{xi}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.4 Function application}\label{function-application}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Apply\textgreater{} ::= \textless{}Op\textgreater{} "(" \textless{}ExprList\textgreater{} ")"}
+
+\NormalTok{\textless{}ExprList\textgreater{} ::= \textless{}Expr\textgreater{} | \textless{}Expr\textgreater{} "," \textless{}ExprList\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.5 Core operators}\label{core-operators}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Op\textgreater{} ::=}
+\NormalTok{    d0}
+\NormalTok{  | d1}
+\NormalTok{  | solve\_l1}
+\NormalTok{  | residual}
+\NormalTok{  | phi1}
+\NormalTok{  | gamma2}
+\NormalTok{  | r\_cl}
+\NormalTok{  | pi\_Z}
+\NormalTok{  | rho}
+\NormalTok{  | xi}
+\NormalTok{  | eval}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.6 Let binding}\label{let-binding}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Let\textgreater{} ::= "let" \textless{}Var\textgreater{} ":" \textless{}Type\textgreater{} "=" \textless{}Expr\textgreater{} "in" \textless{}Expr\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+Example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{let h1:C1 = residual(omega) in norm1(h1)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.7 Norms}\label{norms}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Norm\textgreater{} ::=}
+\NormalTok{    "norm1" "(" \textless{}Expr\textgreater{} ")"}
+\NormalTok{  | "norm\_g" "[" \textless{}Gauge\textgreater{} "]" "(" \textless{}Expr\textgreater{} ")"}
+\NormalTok{  | "trace\_norm" "(" \textless{}Expr\textgreater{} ")"}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.8 Arithmetic}\label{arithmetic}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Subtract\textgreater{} ::= \textless{}Expr\textgreater{} "{-}" \textless{}Expr\textgreater{}}
+
+\NormalTok{\textless{}Ratio\textgreater{} ::= "ratio" "(" \textless{}Expr\textgreater{} "," \textless{}Expr\textgreater{} "," \textless{}Expr\textgreater{} ")"}
+\end{Highlighting}
+\end{Shaded}
+
+The ratio form is used for safe closure ratios:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ratio(gamma2, phi1, eps)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.9 Projection}\label{projection}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Project\textgreater{} ::= "project" "[" \textless{}Projection\textgreater{} "]" "(" \textless{}Expr\textgreater{} ")"}
+\end{Highlighting}
+\end{Shaded}
+
+Example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{project[pi\_Z](omega)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.10 Solver expression}\label{solver-expression}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}Solve\textgreater{} ::= "solve\_l1" "(" \textless{}GraphExpr\textgreater{} "," \textless{}C1Expr\textgreater{} ")"}
+\end{Highlighting}
+\end{Shaded}
+
+The solver returns a structured value:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SolveResult \{}
+\NormalTok{    f\_star : C0,}
+\NormalTok{    h1     : C1,}
+\NormalTok{    phi1   : Real}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{8.11 Evaluation expression}\label{evaluation-expression}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\textless{}DecisionExpr\textgreater{} ::=}
+\NormalTok{    "eval" "(" \textless{}Coordinates\textgreater{} "," \textless{}Coordinates\textgreater{} "," \textless{}Config\textgreater{} ")"}
+
+\NormalTok{\textless{}Coordinates\textgreater{} ::=}
+\NormalTok{    "coords" "("}
+\NormalTok{        "phi1" "=" \textless{}Expr\textgreater{} ","}
+\NormalTok{        "gamma2" "=" \textless{}Expr\textgreater{} ","}
+\NormalTok{        "rcl" "=" \textless{}Expr\textgreater{} ","}
+\NormalTok{        "xi" "=" \textless{}Expr\textgreater{}}
+\NormalTok{    ")"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{9. Static Typing Rules}\label{static-typing-rules}
+
+The DSL is statically typed. Invalid degree composition is rejected before execution.
+
+\paragraph{9.1 Coboundary typing}\label{coboundary-typing}
+
+\[
+d_0 : C^0 \to C^1
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ f : C0}
+\NormalTok{────────────}
+\NormalTok{Γ ⊢ d0(f) : C1}
+\end{Highlighting}
+\end{Shaded}
+
+\[
+d_1 : C^1 \to C^2
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ omega : C1}
+\NormalTok{──────────────}
+\NormalTok{Γ ⊢ d1(omega) : C2}
+\end{Highlighting}
+\end{Shaded}
+
+Invalid:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d0(omega:C1)}
+\NormalTok{d1(f:C0)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{9.2 Residual typing}\label{residual-typing}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ omega : C1}
+\NormalTok{Γ ⊢ f     : C0}
+\NormalTok{──────────────}
+\NormalTok{Γ ⊢ omega {-} d0(f) : C1}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{9.3 Solver typing}\label{solver-typing}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ P     : Graph}
+\NormalTok{Γ ⊢ omega : C1}
+\NormalTok{────────────────────}
+\NormalTok{Γ ⊢ solve\_l1(P, omega) : SolveResult}
+\end{Highlighting}
+\end{Shaded}
+
+With projections:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{solve\_l1(P, omega).f\_star : C0}
+\NormalTok{solve\_l1(P, omega).h1     : C1}
+\NormalTok{solve\_l1(P, omega).phi1   : Real}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{9.4 Norm typing}\label{norm-typing}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ x : Ck}
+\NormalTok{────────────}
+\NormalTok{Γ ⊢ norm1(x) : Real}
+\end{Highlighting}
+\end{Shaded}
+
+For multi-channel:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ x : Ck[g]}
+\NormalTok{──────────────}
+\NormalTok{Γ ⊢ norm\_g[g](x) : Real}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{9.5 Gamma typing}\label{gamma-typing}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ K  : Complex2}
+\NormalTok{Γ ⊢ h1 : C1}
+\NormalTok{──────────────}
+\NormalTok{Γ ⊢ gamma2(K, h1) : Real}
+\end{Highlighting}
+\end{Shaded}
+
+If no 2-complex is supplied, \texttt{gamma2} is ill-typed.
+
+\paragraph{9.6 Projection typing}\label{projection-typing}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ omega : C1}
+\NormalTok{Γ ⊢ pi\_Z  : Projection(C1 \textbackslash{}to C1)}
+\NormalTok{──────────────────────────────}
+\NormalTok{Γ ⊢ project[pi\_Z](omega) : C1}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{9.7 Xi typing}\label{xi-typing}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Γ ⊢ h1\_star : C1}
+\NormalTok{Γ ⊢ phi\_star : C1}
+\NormalTok{────────────────────────}
+\NormalTok{Γ ⊢ xi(rho(h1\_star), rho(phi\_star)) : Real}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{rho} and \texttt{xi} are opaque in this paper. The internal definition of \texttt{rho} belongs to Paper 013, and the internal definition of \texttt{xi} belongs to Paper 009 (the Dual-Witness \(\Xi\) construction), elaborated in Paper 013.
+
+\subsubsection{10. Operational Semantics}\label{operational-semantics}
+
+Evaluation is deterministic except where a solver has multiple minimizers. In that case the interpreter must either:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  return a canonical minimizer, or
+\item
+  return a nondeterminism error, or
+\item
+  accept an explicit tie-breaking policy.
+\end{enumerate}
+
+Silent arbitrary minimizer selection is forbidden.
+
+\paragraph{10.1 Environment}\label{environment}
+
+An evaluation environment contains:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Env = \{}
+\NormalTok{    graph        : Graph,}
+\NormalTok{    complex2?    : Complex2,}
+\NormalTok{    gauge        : Gauge,}
+\NormalTok{    projections  : ProjectionSet,}
+\NormalTok{    config       : DescentConfig}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{10.2 Values}\label{values}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Value ::=}
+\NormalTok{    Real(f64)}
+\NormalTok{  | Bool(bool)}
+\NormalTok{  | Cochain0(Vec\textless{}f64\textgreater{})}
+\NormalTok{  | Cochain1(Vec\textless{}f64\textgreater{})}
+\NormalTok{  | Cochain2(Vec\textless{}f64\textgreater{})}
+\NormalTok{  | SolveResult \{ f\_star, h1, phi1 \}}
+\NormalTok{  | Coordinates \{ phi1, gamma2, rcl, xi \}}
+\NormalTok{  | Decision \{ Accept | Reject, reason \}}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{10.3 Evaluation relation}\label{evaluation-relation}
+
+Write:
+
+\[
+\langle E, \rho \rangle \Downarrow v
+\]
+
+meaning expression \(E\) evaluates under runtime environment \(\rho\) to value \(v\).
+
+\begin{quote}
+\textbf{Notation warning.} This \(\rho\) is the \emph{runtime environment}, and is unrelated to the opaque density map \(\rho\) of §4 and §9.7 (and the \texttt{rho} operator of §8.5). The collision is inherited from two source conventions; the two never occur in the same expression. A paper about typed degree discipline should not overload a symbol, and this one does --- flagged rather than silently renamed, since the names are load-bearing in the cited code and Lean.
+\end{quote}
+
+\paragraph{10.4 Core evaluations}\label{core-evaluations}
+
+\subparagraph{Coboundary}\label{coboundary}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{⟨d0(f), ρ⟩ ⇓ apply\_d0(ρ.graph, f)}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Closure}\label{closure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{⟨d1(omega), ρ⟩ ⇓ apply\_d1(ρ.complex2, omega)}
+\end{Highlighting}
+\end{Shaded}
+
+If \texttt{complex2} is absent:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{error: d1 requires explicit 2{-}cell complex}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Solver}\label{solver}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{⟨solve\_l1(P, omega), ρ⟩ ⇓ solve\_l1\_hodge(P, omega)}
+\end{Highlighting}
+\end{Shaded}
+
+The implementation name \texttt{solve\_l1\_hodge} is historical. In this DSL it denotes an \(\ell^1\) quotient solver returning a primal residual, not an \(\ell^2\) Hodge projection.
+
+Returns:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+\NormalTok{  f\_star,}
+\NormalTok{  h1,}
+\NormalTok{  phi1 = norm1(h1)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Primary obstruction}\label{primary-obstruction}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{⟨phi1(P, omega), ρ⟩ ⇓ solve\_l1(P, omega).phi1}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Closure defect}\label{closure-defect}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{⟨gamma2(K, h1), ρ⟩ ⇓ norm1(apply\_d1(K, h1))}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Closure ratio}\label{closure-ratio}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ratio(gamma, phi, eps):}
+\NormalTok{    if phi \textgreater{} eps:}
+\NormalTok{        return gamma / phi}
+\NormalTok{    if gamma \textless{}= eps:}
+\NormalTok{        return 0}
+\NormalTok{    else:}
+\NormalTok{        return +\textbackslash{}infty}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Projection}\label{projection-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{project[pi\_Z](omega):}
+\NormalTok{    return pi\_Z(omega)}
+\end{Highlighting}
+\end{Shaded}
+
+Projection must satisfy:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pi\_Z(pi\_Z(x)) = pi\_Z(x)}
+\NormalTok{pi\_Z(d0(f)) = 0}
+\end{Highlighting}
+\end{Shaded}
+
+If these invariants fail during tests, the projection implementation is invalid.
+
+\subsubsection{11. Evaluator Semantics}\label{evaluator-semantics}
+
+The DSL may construct coordinates but may not override evaluator law.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coords\_before = coords(phi1=..., gamma2=..., rcl=..., xi=...)}
+\NormalTok{coords\_after  = coords(phi1=..., gamma2=..., rcl=..., xi=...)}
+\NormalTok{eval(coords\_before, coords\_after, config)}
+\end{Highlighting}
+\end{Shaded}
+
+Evaluation delegates to the external evaluator.
+
+\paragraph{11.1 Guarded descent law}\label{guarded-descent-law}
+
+The \(\varepsilon\)-form is an implementation policy for numerical evaluation. In exact mathematics, the guarded order is strict lexicographic descent with \(R_{cl}\) defined only when \(\Phi_1>0\).
+
+Let:
+
+\[
+old=(\Phi,\Gamma,R,\Xi),\quad new=(\Phi',\Gamma',R',\Xi')
+\]
+
+Accept iff:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+\[
+\Phi' < \Phi - \varepsilon
+\quad\text{and}\quad
+R' \le R_{\max}+\varepsilon
+\]
+
+or 2.
+
+\[
+|\Phi'-\Phi|\le \varepsilon
+\quad\text{and}\quad
+\Gamma' < \Gamma-\varepsilon
+\quad\text{and}\quad
+R' \le R_{\max}+\varepsilon
+\]
+
+or 3.
+
+\[
+|\Phi'-\Phi|\le \varepsilon
+\quad\text{and}\quad
+|\Gamma'-\Gamma|\le \varepsilon
+\quad\text{and}\quad
+\Xi' < \Xi-\varepsilon
+\quad\text{and}\quad
+R' \le R_{\max}+\varepsilon
+\]
+
+Reject otherwise.
+
+\subsubsection{12. Example Programs}\label{example-programs}
+
+\paragraph{12.1 Compute primary obstruction}\label{compute-primary-obstruction}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{let s:SolveResult = solve\_l1(P, omega) in}
+\NormalTok{s.phi1}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{12.2 Compute closure defect}\label{compute-closure-defect}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{let s:SolveResult = solve\_l1(P, omega) in}
+\NormalTok{gamma2(K, s.h1)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{12.3 Full coordinate construction}\label{full-coordinate-construction}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{let s:SolveResult = solve\_l1(P, omega) in}
+\NormalTok{let hZ:C1 = project[pi\_Z](omega) in}
+\NormalTok{let gamma:Real = gamma2(K, s.h1) in}
+\NormalTok{let r:Real = ratio(gamma, s.phi1, eps) in}
+\NormalTok{let x:Real = xi(rho(h1\_star), rho(phi\_star)) in}
+\NormalTok{coords(phi1=s.phi1, gamma2=gamma, rcl=r, xi=x)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{12.4 Candidate evaluation}\label{candidate-evaluation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{let before:Coordinates = compute\_coords(P, K, omega\_before) in}
+\NormalTok{let after:Coordinates  = compute\_coords(P, K, omega\_after) in}
+\NormalTok{eval(before, after, config)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{13. Rewrite Rules}\label{rewrite-rules-1}
+
+The interpreter may simplify expressions using sound rewrite rules.
+
+\paragraph{Exactness}\label{exactness}
+
+\[
+d_1(d_0(f)) \to 0
+\]
+
+\paragraph{Projection idempotence}\label{projection-idempotence}
+
+\[
+\pi_Z(\pi_Z(x)) \to \pi_Z(x)
+\]
+
+\paragraph{Projection kills exact components}\label{projection-kills-exact-components}
+
+\[
+\pi_Z(d_0(f)) \to 0
+\]
+
+\paragraph{Gamma simplification}\label{gamma-simplification}
+
+\[
+d_1(h_1)=0 \Rightarrow \gamma2(h_1)=0
+\]
+
+\subsubsection{14. Rejected Programs}\label{rejected-programs}
+
+These must fail type checking.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d0(omega)}
+\end{Highlighting}
+\end{Shaded}
+
+Reason:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d0 expects C0, got C1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d1(f)}
+\end{Highlighting}
+\end{Shaded}
+
+Reason:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d1 expects C1, got C0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gamma2(P, h1)}
+\end{Highlighting}
+\end{Shaded}
+
+Reason:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gamma2 requires Complex2, got Graph}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eval(phi1\_before, phi1\_after)}
+\end{Highlighting}
+\end{Shaded}
+
+Reason:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eval requires full Coordinates}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{15. Interpreter Safety Rules}\label{interpreter-safety-rules}
+
+The DSL interpreter must enforce:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  No solver mutates the graph.
+\item
+  No expression computes acceptance except \texttt{eval}.
+\item
+  No transport operator may call \texttt{eval}.
+\item
+  No weighted scalar score may replace the evaluator.
+\item
+  No missing \texttt{Complex2} may be silently treated as \(\Gamma_2=0\).
+\item
+  No nondeterministic solver minimizer may be silently accepted.
+\item
+  No projection may be called canonical unless its invariants are tested.
+\end{enumerate}
+
+\subsubsection{16. Final DSL Statement}\label{final-dsl-statement}
+
+\[
+\fbox{\parbox{0.95\textwidth}{\centering $d_0$ and $d_1$ operate between distinct cochain degrees; $\pi_Z : C^1 \to C^1$ is a declared degree-preserving $C^1$ projection whose rewrite use requires certified idempotence and exact-killing invariants.}}
+\]
+
+\textbf{Lean support note (v2.0.7).} The diagnostic/acceptance boundary is mechanized as \texttt{PaperFOC006.diagnostic\_local\_green\_not\_acceptance\_authority}: a local quotient that preserves diagnostic constructibility does not also determine acceptance authority. \texttt{PaperFOC006.no\_eval\_no\_acceptance} records the finite fail-closed gate: without \texttt{eval}, no acceptance is authorized. The composite theorem \texttt{PaperFOC006.degreeDsl\_local\_green\_not\_global\_gate} packages the degree and DSL gates together: a local quotient preserving \texttt{(C1,\ diagnosticConstructible)} still cannot carry \texttt{(Gamma2,\ acceptanceAuthorized)}. The reusable primitive theorem elaborated in this package is \texttt{PaperFOC006.PrimitiveDifference.localGreenGlobalRed\_context\_obstruction\_of\_witness}: an arbitrary context coordinate does not create a quotient factor when the underlying local relation holds and the global readout differs. \texttt{PaperFOC006.contextual\_local\_green\_not\_global\_gate} specializes that pattern to the PaperFOC006 local fingerprint and global gate. \texttt{PaperFOC006.contextual\_local\_fingerprint\_ignores\_context\_replacement} and \texttt{PaperFOC006.contextual\_global\_gate\_ignores\_context\_replacement} show that replacing the context does not change either reading. \texttt{QM.PaperFOC006DegreeBridge} is not a source in this package. Q admission, \texttt{QHeld}, and \texttt{TerminalWithinScope} are not theorems of this package. The package constructs no quantum mechanics, selects no Born rule, and mints no authority.
+
+\begin{quote}
+\textbf{Scope of the word ``QM'' here.} This package does not contain \texttt{QM.PaperFOC006DegreeBridge}. Context metadata in the finite Python check is an opaque dictionary. Replacing it leaves the local fingerprint and the gated readout unchanged, and a complex with no 2-cell still has no \(\Gamma_2\) readout. No Hilbert space, density operator, CPTP map, trace, or Born structure is constructed. Q admission is outside the proved statement.
+\end{quote}
+
+\subsection{Implementation Note}\label{implementation-note}
+
+Implementation names are registry pointers as of the v2.0.7 snapshot, and they are \textbf{unverified unless stated otherwise below}. Build status, conformance tests, and current API names must be checked separately. Known-stale at this snapshot: \texttt{apply\_d1} (§1) and \texttt{apply\_d0} (§10.4) do not exist in the active crates under those names; \texttt{solve\_l1\_hodge} (§10.4) exists only as \texttt{solve\_l1\_hodge\_primal\_dual}; and \texttt{cycle\_space\_projector.rs} (§3) is ambiguous between two crates. A stale pointer weakens the implementation claim it supports; it does not affect any mathematical statement in this paper, none of which depends on a code path.
+
+\textbf{Mechanical conformance note (v2.0.4).} PL-012-1 is discharged by the companion conformance test suite (see claim ledger). The suite now pins the §14 rejected-program and §15 safety boundaries as executable checks: degree-confused \texttt{d0} rows/columns are rejected; missing \texttt{Complex2} is rejected by an explicit \texttt{Complex2InputQ::Missing} gate; a declared empty \texttt{C2} is distinguished from absence; malformed declared \texttt{d1} rows/columns are rejected; residuals at the wrong degree are rejected; the cochain invariant \texttt{d1\ ∘\ d0\ =\ 0} is enforced; \texttt{Gamma2} is produced only through \texttt{Gamma2Functional::try\_compute\_exact\_quotient} after validated complex/residual construction; and the guarded evaluator order refuses \texttt{Gamma2} or \texttt{Xi} improvements that worsen earlier coordinates. This is Rust conformance evidence only. It does not promote the DSL into an authority layer.
+
+\subsection{GTOC / GTLA Compliance Note}\label{gtoc-gtla-compliance-note}
+
+\textbf{Role:} GTOC construction/specification paper. It builds a degree-wise obstruction calculus over a declared finite graph and a typed symbolic DSL over that calculus. It is not a foundations paper, not a physics paper, and not an authority/governance paper.
+
+\textbf{Degree:} cochain degrees \(k=0,1,2\) over a declared finite connected directed graph \(P=(V,E)\), plus an \emph{optionally} declared finite 2-cell set \(\sigma_2\). The degree-separation result is proved and replayed \textbf{only} for the \(d_1:C^1\to C^2\) / \(\Gamma_2\) instance; the general \(d_k\) statement is schematic (§2).
+
+\textbf{Consumes:} a declared \(P=(V,E)\); an optional declared \(\sigma_2\) with incidence \(d_1\); a declared gauge \(g\); a solver-declared projection \(\pi_Z\) with \emph{tested} invariants; the \(\ell^1(E;g)\) norm; \(\varepsilon\) tolerances as numeric policy; the external evaluator of Paper 011.
+
+\textbf{Produces:} the graded objects \(C^0,C^1,C^2\) and operators \(d_0,d_1\) in construction order; the \(\Gamma_2\)/\(k{=}1\) degree-separation result; a typed grammar and static typing rules that make degree confusion ill-typed; operational semantics; the diagnostic coordinates \((\Phi_1,\Gamma_2,R_{cl},\Xi)\) \textbf{as constructed expressions}; rewrite rules conditional on tested \(\pi_Z\) invariants.
+
+\textbf{Does not produce:} acceptance, correctness, semantic truth, or authority; a general-\(k\) theorem; a mechanization of \(\Phi_1\) or \(R_{cl}\); a density operator, trace norm, or Hilbert structure; probability semantics; any physical interpretation; a canonical \(\pi_Z\); a canonical minimizer \(f^*\); a \texttt{DetectorAdequacy} certificate; a lift.
+
+\textbf{Authority status:} \textbf{none.}
+
+\textbf{Declared imports:} \(\mathbb{R}\)-valued cochains (the calculus is stated over \(\mathbb{R}\); every mechanization is \texttt{Int}- or \texttt{BigRational}-valued, never real); \texttt{Density}, \texttt{trace\_norm}, \texttt{rho}, \texttt{xi} as opaque declared slots (→ Papers 009 / 013); \(\rho\), \(\phi^*\), \(\Xi\) as opaque external primitives; Paper 011's evaluator law.
+
+\textbf{OracleNeeded / Q-gated items:} instantiation of \texttt{Density} / \texttt{trace\_norm} / \texttt{rho} / \texttt{xi}; any density lift or Hilbert/trace reading; the internal definitions of \(\rho\), \(\phi^*\), \(\Xi\); the \texttt{Operator} / \texttt{DensityState} slots of \texttt{QM.PaperFOC006DegreeBridge} (opaque type variables --- nothing quantum is constructed \emph{or} imported there).
+
+\textbf{GTLA boundary:} this paper diagnoses, types, and routes inside a declared obstruction regime. It mints no authority. \texttt{eval} (§11) \emph{authorizes acceptance within the evaluator's own declared scope only} --- that is a \texttt{ContractAuthority}-shaped, verifier-scoped gate owned by Paper 011, not a \texttt{SemanticAuthority} and not a claim about the world. Authority typing and \texttt{IsAuth} are owned by CODA-FDA; terminalization discipline by GTLA; this paper owns neither.
+
+\textbf{Mechanization status:} \textbf{{[}MECHANIZED-PARTIAL{]}} --- see the mechanization-scope note in §2 and the firewall below.
+
+\textbf{Remaining open obligations:} general-\(k\) degree separation (schematic, unproved); \(\Phi_1\)/\(R_{cl}\) mechanization (absent); an \(\mathbb{R}\)-valued mechanization (all current artifacts are \texttt{Int}/\(\mathbb{Q}\)); a \texttt{DetectorAdequacy} certificate for the \((\Phi_1,\Gamma_2,R_{cl},\Xi)\) profile; re-verification of the stale code pointers listed in the Implementation Note.
+
+\subsubsection{GTOC obstruction packet}\label{gtoc-obstruction-packet}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Field
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Declaration
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{ObstructionRegime(k)} & \(k=1\): closure failure of \(h_1\in C^1\) against a declared \(\sigma_2\) (with \(k=0\) available for \(\Phi_1\)). \\
+\(C^k, C^{k+1}, C^{k+2}\) & \(C^0=\mathbb{R}^{\lvert V\rvert}\), \(C^1=\mathbb{R}^{\lvert E\rvert}\), \(C^2=\mathbb{R}^{\lvert\sigma_2\rvert}\) --- the last existing \textbf{only} if \(\sigma_2\) is declared. \\
+\(d_k, d_{k+1}\) & \(d_0:C^0\to C^1\), \(d_1:C^1\to C^2\) (§1). \(d_1\) exists only with \(\sigma_2\). \\
+\(d_1\circ d_0=0\) & \textbf{Assumption, tested per instance} --- not a globally unconditioned theorem. It holds iff the supplied incidence conventions are compatible; a DSL implementation must test it for each \texttt{Complex2} (§1), and the Rust gate enforces it (\texttt{CochainIdentityViolation}). Mechanized for the compatible \(C_3\) instance only (\texttt{PaperFOC006.c3\_d1\_d0\_zero}). \\
+ZeroRel / local sameness & The \(C^1\)-only local sameness relation \(\delta(x,y) \equiv (x.c1 = y.c1)\) of \texttt{PaperFOC006.c1LocalPD}, and its composite/contextual refinements. These are the declared local fingerprints under which the LGGR non-factorization results are stated. \\
+Observer / gauge / norm & Gauge \(g\) declared on channel space; norm \(\ell^1(E;g)\) declared and \textbf{load-bearing} (§6: relaxing it destroys sign/orientation data); \(\pi_Z\) solver-declared, non-canonical, non-unique. \\
+Lift policy & \textbf{Refused.} This paper considers no lift. A nonzero \(\Gamma_2\) (active closure failure) or a \(\Gamma_2=0\) closed survivor may \emph{trigger} lift consideration elsewhere; neither licenses one. A lift additionally requires an obstruction witness, a preservation witness, a non-destruction check, a budget/authority boundary, and a terminalizer route --- none supplied here. \\
+Terminal policy & \textbf{Refused.} ``This calculus defines expressions only. It does not define acceptance or correctness'' (§4). Terminalization is external (Paper 011). \\
+\end{longtable}
+
+\textbf{Classification mapping.} In GTOC vocabulary the coordinates route as: \(\Phi_1=0\) → \texttt{ExactRepair}; \(\Phi_1>0,\ \Gamma_2=0\) → \texttt{ClosedSurvivor}; \(\Phi_1>0,\ \Gamma_2>0\) → \texttt{ActiveClosureFailure}; \textbf{no declared \(\sigma_2\)} → \texttt{NoRule\ /\ Refused} (\emph{not} \texttt{ExactRepair}, and emphatically not \(\Gamma_2=0\) --- see §4 and §15 rule 5); instantiation of a \texttt{Density}/\texttt{trace\_norm} slot → \texttt{OracleNeeded}. The cohomological part of this classification is three-way; \texttt{NoRule\ /\ Refused} is a fourth \textbf{routing} outcome, not a fourth cohomology class.
+
+\textbf{Authority:} none. This paper may diagnose, price, route, or construct structure inside a declared obstruction regime. It does not mint authority. Any authority-bearing use requires a separate CODA-FDA / GTLA descent packet, terminalizer, evidence ceiling, replay witness, and \texttt{IsAuth} guard.
+
+\textbf{Formalization-status firewall.} Any Lean, Rust, or replay artifact cited here supports only the exact finite statement it mechanizes. It does not automatically discharge PL-GTOC, Q, continuum, physical-realization, or GTLA authority obligations. A status upgrade requires an explicit theorem-ledger mapping, hypotheses check, build receipt, axiom/sorry audit, and adversary acceptance. Concretely for this paper: the Lean artifacts are \texttt{Int}-valued and cover the \(\Gamma_2\) half of the \(C_3\) replay only; \(\Phi_1\), \(R_{cl}\), the \(\ell^1\) minimization, and every \(\mathbb{R}\)-valued statement in §1--§7 are \textbf{unmechanized}; and the Rust suite is conformance evidence for the implementation, not evidence for a theorem.
+
+\textbf{Import / Oracle boundary.} Any use of Hilbert space, Born uniqueness, phase, continuum, probability semantics, dynamics, physical interpretation, tensor composition, or empirical realization is an imported representation structure unless explicitly constructed at this paper's declared degree. Imported structures are not DDA operations and do not produce authority. This paper constructs \textbf{none} of them: \texttt{Density}, \texttt{trace\_norm}, \texttt{rho}, \texttt{xi}, \(\rho\), \(\phi^*\), and \(\Xi\) are declared slots and opaque primitives (see the §8.1 import fence), and the \(\mathbb{R}\)-valued ambient of \(C^k\) is itself declared, not constructed.
+
+\textbf{Detector adequacy warning.} A replayable detector/profile is not automatically adequate for a claim. A collapsing detector can make every profile exact. Any authority-bearing GTLA use requires a \texttt{DetectorAdequacy} certificate naming the protected distinctions, adversarial cases, and known blind spots for the declared claim scope. This paper supplies \textbf{no} such certificate, and its own degree-separation theorem exhibits the paradigm blind spot: a \(C^1\)-only detector cannot see \(\Gamma_2\) at all, so a profile that looks green under a \(C^1\)-only detector carries no information about closure failure. §15 rule 5 blocks the worst collapse (a missing \texttt{Complex2} must never read as \(\Gamma_2=0\)), but the adequacy of a \emph{supplied} \((\Phi_1,\Gamma_2,R_{cl},\Xi)\) profile for any particular claim is neither established nor claimed here.
+
+\subsubsection{Genesis-Bias Fence --- No Prior State-Space}\label{genesis-bias-fence-no-prior-state-space}
+
+This paper does not begin with a global ambient state space, an ambient manifold, a physical system, a sample space, a Hilbert space, an observer, a temporal order, or a possibility domain. It begins with a \textbf{declared finite graph} \(P=(V,E)\) and, separately and optionally, a \textbf{declared finite 2-cell attachment} \(\sigma_2\) (§1).
+
+The central object --- the closure defect \(\Gamma_2=\|d_1h_1\|_{1;g}\) --- is defined from packet-local data only: a residual \(h_1\in C^1\) obtained from a declared solver, and an incidence operator \(d_1\) that exists \textbf{only because \(\sigma_2\) was declared}. There is no prior 2-cell structure waiting to be discovered in \((V,E)\): attaching \(\sigma_2\) is an admission, and the paper's central result is precisely that this admission is not recoverable from \(C^1\) data (§2).
+
+Common stronger readings, priced: (i) \emph{``\(\Gamma_2\) is a property of the graph''} --- false; it is a property of the declared pair \((P,\sigma_2)\), and \(\sigma_2\) is not induced by \(P\). (ii) \emph{``a missing 2-cell means there is no closure defect''} --- refused; a missing \(\sigma_2\) yields \textbf{no readout}, not a zero (§4, §15 rule 5). (iii) \emph{``the cochain degrees are ontological levels''} --- refused; they are declared grading positions in an admitted complex. (iv) \emph{``the \(\mathbb{R}\) ambient is given''} --- no; it is a declared scalar specialization, and no mechanized artifact here uses it.
+
+\begin{quote}
+\textbf{GENESIS-BIAS AUDIT.} Does this section explain degree-wise obstruction by presupposing a prior container, substrate, state-space, law, observer, temporal order, possibility domain, sample space, Hilbert space, physical system, or authority source? If so, declare and price that antecedent, replace it with packet-local data, or stop with an OBSTRUCTION.
+\end{quote}
+
+\subsection{Falsifiability}\label{falsifiability}
+
+The degree-separation claim is falsified by exhibiting a faithful reconstruction of \(\Gamma_2=\|d_1 h_1\|_1\) from \(C^1\) data alone, with no explicit 2-cell incidence \(d_1\). The typing discipline is falsified by a well-typed DSL program that computes acceptance outside \texttt{eval}, or that treats a missing \texttt{Complex2} as \(\Gamma_2=0\). The §6 information-loss claim is falsified only by a specified aggregation scheme that both departs from the \(\ell^1\)-edge decomposition and nevertheless preserves the sign, orientation, and edge-local decomposition data needed by the DSL.
+
+\subsection{Related Work and Positioning}\label{related-work-and-positioning}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Discrete exterior calculus / discrete de Rham} {[}1, 2{]}: the graded complex \(C^0\to C^1\to C^2\) and \(d_1\circ d_0=0\) are standard; the contribution is treating the operators as typed DSL primitives with degree-checked composition.
+\item
+  \textbf{Typed / graded term languages and static typing} {[}3{]}: invalid degree composition is rejected before execution, in the spirit of typed lambda calculi.
+\item
+  \textbf{Cellular sheaves and sheaf Laplacians} {[}4{]}: degree-wise diagnostics generalize to sheaf cochains; here the paper stays at the constant-sheaf graph level.
+\item
+  \textbf{Companion corpus papers} 006 (\(\Phi_1\)), 009 (\(\Xi\) as external primitive), 011 (evaluator) {[}5{]}.
+\end{enumerate}
+
+\subsection{References}\label{references}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Carroll, J. H. (2026). \emph{Primitive Axiomatics of Finite Obstruction Calculus.} Zenodo. \url{https://zenodo.org/records/20651224}
+\item
+  M. Desbrun, E. Kanso, and Y. Tong, ``Discrete differential forms for computational modeling,'' in \emph{Discrete Differential Geometry}, Birkhäuser, 2008.
+\item
+  B. C. Pierce, \emph{Types and Programming Languages}, MIT Press, 2002.
+\item
+  J. Hansen and R. Ghrist, ``Toward a spectral theory of cellular sheaves,'' \emph{Journal of Applied and Computational Topology} \textbf{3} (2019), 315--358.
+\item
+  J. H. Carroll, ``\(\ell^1\)-Native Cohomology of Defect Fields'' (\url{https://zenodo.org/uploads/20186523}); ``Conditional Density Lift and Dual-Witness Ξ Functional'' (\url{https://zenodo.org/records/20192297}); ``Operator Dynamics and Structural Constraints in \(\ell^1\) Obstruction Systems'' (\url{https://zenodo.org/records/20213064}). Zenodo, 2026.
+\end{enumerate}
+
+\subsection{Document History}\label{document-history}
+
+The full chronological revision history for this monograph is maintained in the companion change log: \url{degree_wise_dsl_change_log.md}.
+
+\end{document}

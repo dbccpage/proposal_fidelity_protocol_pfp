@@ -1,0 +1,343 @@
+[
+  {
+    "name": "chain",
+    "request": {
+      "nodes": [
+        {
+          "node_id": "a",
+          "operation_id": "op:a",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        },
+        {
+          "node_id": "b",
+          "operation_id": "op:b",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        }
+      ],
+      "edges": [
+        {
+          "source_node_id": "a",
+          "source_output": "Code",
+          "target_node_id": "b",
+          "target_input": "Prompt"
+        }
+      ]
+    },
+    "outcome": {
+      "is_valid": true,
+      "node_count": 2,
+      "edge_count": 1,
+      "cycles": [],
+      "colour_mismatches": [],
+      "orphaned_edges": [],
+      "topological_order": [
+        "a",
+        "b"
+      ],
+      "execution_stages": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ],
+      "duplicate_node_ids": []
+    }
+  },
+  {
+    "name": "duplicates",
+    "request": {
+      "nodes": [
+        {
+          "node_id": "a",
+          "operation_id": "op:a",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        },
+        {
+          "node_id": "a",
+          "operation_id": "op:a",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        }
+      ],
+      "edges": []
+    },
+    "outcome": {
+      "is_valid": false,
+      "node_count": 2,
+      "edge_count": 0,
+      "cycles": [],
+      "colour_mismatches": [],
+      "orphaned_edges": [],
+      "topological_order": [],
+      "execution_stages": [],
+      "duplicate_node_ids": [
+        "a"
+      ]
+    }
+  },
+  {
+    "name": "missing_node",
+    "request": {
+      "nodes": [
+        {
+          "node_id": "a",
+          "operation_id": "op:a",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        }
+      ],
+      "edges": [
+        {
+          "source_node_id": "a",
+          "source_output": "Code",
+          "target_node_id": "absent",
+          "target_input": "Prompt"
+        }
+      ]
+    },
+    "outcome": {
+      "is_valid": false,
+      "node_count": 1,
+      "edge_count": 1,
+      "cycles": [],
+      "colour_mismatches": [],
+      "orphaned_edges": [
+        "Edge (a -> absent) references non-existent node"
+      ],
+      "topological_order": [],
+      "execution_stages": [],
+      "duplicate_node_ids": []
+    }
+  },
+  {
+    "name": "cycle",
+    "request": {
+      "nodes": [
+        {
+          "node_id": "a",
+          "operation_id": "op:a",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        },
+        {
+          "node_id": "b",
+          "operation_id": "op:b",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        }
+      ],
+      "edges": [
+        {
+          "source_node_id": "a",
+          "source_output": "Code",
+          "target_node_id": "b",
+          "target_input": "Prompt"
+        },
+        {
+          "source_node_id": "b",
+          "source_output": "Code",
+          "target_node_id": "a",
+          "target_input": "Prompt"
+        }
+      ]
+    },
+    "outcome": {
+      "is_valid": false,
+      "node_count": 2,
+      "edge_count": 2,
+      "cycles": [
+        [
+          "a",
+          "b",
+          "a"
+        ]
+      ],
+      "colour_mismatches": [],
+      "orphaned_edges": [],
+      "topological_order": [],
+      "execution_stages": [],
+      "duplicate_node_ids": []
+    }
+  },
+  {
+    "name": "wrong_port",
+    "request": {
+      "nodes": [
+        {
+          "node_id": "a",
+          "operation_id": "op:a",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        },
+        {
+          "node_id": "b",
+          "operation_id": "op:b",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": []
+        }
+      ],
+      "edges": [
+        {
+          "source_node_id": "a",
+          "source_output": "wrong",
+          "target_node_id": "b",
+          "target_input": "Prompt"
+        }
+      ]
+    },
+    "outcome": {
+      "is_valid": false,
+      "node_count": 2,
+      "edge_count": 1,
+      "cycles": [],
+      "colour_mismatches": [
+        "Source node a does not output 'wrong'"
+      ],
+      "orphaned_edges": [],
+      "topological_order": [
+        "a",
+        "b"
+      ],
+      "execution_stages": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ],
+      "duplicate_node_ids": []
+    }
+  },
+  {
+    "name": "wrong_colour",
+    "request": {
+      "nodes": [
+        {
+          "node_id": "a",
+          "operation_id": "op:a",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [],
+          "output_colours": [
+            [
+              "Code",
+              "python"
+            ]
+          ]
+        },
+        {
+          "node_id": "b",
+          "operation_id": "op:b",
+          "inputs": [
+            "Prompt"
+          ],
+          "outputs": [
+            "Code"
+          ],
+          "input_colours": [
+            [
+              "Prompt",
+              "prose"
+            ]
+          ],
+          "output_colours": []
+        }
+      ],
+      "edges": [
+        {
+          "source_node_id": "a",
+          "source_output": "Code",
+          "target_node_id": "b",
+          "target_input": "Prompt"
+        }
+      ]
+    },
+    "outcome": {
+      "is_valid": false,
+      "node_count": 2,
+      "edge_count": 1,
+      "cycles": [],
+      "colour_mismatches": [
+        "Colour mismatch: a.Code (python) -> b.Prompt (prose)"
+      ],
+      "orphaned_edges": [],
+      "topological_order": [
+        "a",
+        "b"
+      ],
+      "execution_stages": [
+        [
+          "a"
+        ],
+        [
+          "b"
+        ]
+      ],
+      "duplicate_node_ids": []
+    }
+  }
+]

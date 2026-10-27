@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:mub_linear_inversion_two_design_purity:v0.1.0
+title: Complete MUB inversion, two-design and purity
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: mub_linear_inversion_two_design_purity
+  symbol: mub_linear_inversion_two_design_purity
+  ascii_symbol: mub_linear_inversion_two_design_purity
+  notation: Complete MUB inversion, two-design and purity
+  domain:
+  - Admitted complete finite MUB carriers d+1 bases; explicit two-design entry budget
+  codomain:
+    description: Declared finite results of core_quantum_physics::mub; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Rho=sum pP-I inverts every operator
+- Sum P tensor P=I+SWAP
+- Tr rho²=sum p²-1 for trace-one Hermitian inversions
+- Every deterministic basis valuation has purity d
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: mub
+  symbols:
+  - MubSystem
+  - MubSystem::try_reconstruct_state
+  - MubSystem::verify_two_design_with_budget
+  - MubSystem::purity_from_probabilities
+  - MubSystem::deterministic_valuation_purity
+  required_tests:
+  - measurement_exact_laws::prime_power_mubs_replay_projectors_two_design_and_inversion
+  - measurement_exact_laws::tomography_normalization_and_algebra_are_separate_from_state_admission
+negative_tests:
+- measurement_exact_laws::tomography_normalization_and_algebra_are_separate_from_state_admission
+doctrine:
+  summary: Rho=sum pP-I inverts every operator; Sum P tensor P=I+SWAP; Tr rho²=sum p²-1 for trace-one Hermitian
+    inversions; Every deterministic basis valuation has purity d.
+  non_role:
+  - An algebraic inversion or normalized rows alone is not an admitted density
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

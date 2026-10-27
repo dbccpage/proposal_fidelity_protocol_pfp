@@ -1,0 +1,93 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:composition_root:v1.0.0
+title: Immutable OEOS Composition Root
+kind: host_contract
+status: proposed
+layer: 09_host
+role: CompositionRoot
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+      - urn:core:oeos:cas_store:v1.0.0
+      - urn:core:oeos:filesystem_adapter:v1.0.0
+      - urn:core:oeos:process_manager:v1.0.0
+      - urn:core:oeos:worker_host:v1.0.0
+    proof_obligations:
+      - id: CMP-INV-001
+        statement: Required bindings are exact, unique, complete, and acyclic before the root freezes.
+        verification_status: open
+      - id: CMP-INV-002
+        statement: Missing, duplicate, partial, dynamically injected, or cyclic bindings fail startup closed.
+        verification_status: open
+      - id: CMP-INV-003
+        statement: Freezing host bindings neither activates proposed contracts nor grants inward authority.
+        verification_status: open
+      - id: CMP-INV-004
+        statement: Configuration and task implementation identities are bound before any host request executes.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - COMPOSITION_CYCLE_REFUSED
+      - COMPOSITION_DUPLICATE_REFUSED
+      - COMPOSITION_MISSING_REFUSED
+      - COMPOSITION_UNFROZEN_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: exact_host_bindings
+      type: urn:core:oeos:type:exact_host_bindings:v1.0.0
+      required: true
+  outputs:
+    - name: frozen_composition_root
+      type: urn:core:oeos:type:frozen_composition_root:v1.0.0
+      required: true
+  typed_refusals:
+    - COMPOSITION_CYCLE_REFUSED
+    - COMPOSITION_DUPLICATE_REFUSED
+    - COMPOSITION_MISSING_REFUSED
+    - COMPOSITION_UNFROZEN_REFUSED
+  platform_requirements:
+    - profile: immutable_process_composition
+      requirements:
+        - exact_port_protocol_checks
+        - complete_dependency_graph
+        - freeze_before_dispatch
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares the outer wiring boundary that binds concrete host ports without owning inward semantics.
+  non_role:
+    - service_locator_for_domain_code
+    - dynamic_plugin_loader
+    - action_license_boundary
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - successful_composition_does_not_activate_all_proposed_contracts
+  invariants:
+    - bindings_are_unique_and_acyclic
+    - frozen_root_rejects_runtime_registration
+  allowed_operations:
+    - validate_exact_bindings
+    - freeze_complete_composition
+    - resolve_declared_host_port
+  forbidden_operations:
+    - dynamic_runtime_registration
+    - partial_startup
+    - infer_inward_authority_from_host_binding

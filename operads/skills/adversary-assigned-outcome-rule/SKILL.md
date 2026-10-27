@@ -4,7 +4,7 @@ description: "Count all assigned task outcomes."
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-assigned-outcome-rule.json"
-  core-contracts-digest: "sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f"
+  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "rule"
   core-residual: "unknown"
@@ -22,7 +22,7 @@ Before reporting a success rate, state the assigned unit, eligibility population
 
 ## Digested lesson
 
-Source: `_ic/nara/historical/oewas007/research/inputs/pfp_second_pass_20261008/integration_evidence.md` @ `32454fda2b42454792f6d49ec22e7304a4e30ba6` (sha256:48141cda3a979576cdf92a16b5e6411dbb6208433461183ec9d8cd78e9b9b0e2).
+Source: `_ic/nara/historical/oewas007/research/inputs/pfp_second_pass_20261008/integration_evidence.md` @ `32454fda2b42454792f6d49ec22e7304a4e30ba6` (sha256:0b9987b888e3b0202d3c571b583d543b48e26e47d39df6108cce3a5c2750f778).
 
 Source excerpt (evidence to inspect):
 
@@ -54,7 +54,7 @@ One solved + 99 allowed-task valid refusals yields S/(S+F)=100% but S/N=1%.
 
 Ordered signature: `(candidate: Code) -> result: Audit`.
 
-Contracts: `sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f`.
+Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

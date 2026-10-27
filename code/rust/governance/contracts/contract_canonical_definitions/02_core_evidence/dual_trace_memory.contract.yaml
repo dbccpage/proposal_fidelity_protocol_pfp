@@ -1,0 +1,59 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:dual_trace_memory:v1.0.0
+title: Dual Trace Memory (Append-Only Trace, Replay Narrative, Bounded Memory)
+kind: evidence_contract
+status: mathematical_wip
+layer: 02_evidence
+role: Replay
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - RuntimeMutation
+    - Terminalization
+    required: []
+  constitution:
+    contract_dependencies:
+    - TraceArtifact
+    - ContractConstitution
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+rust_binding:
+  crate: core_replay
+  module: dual_trace_memory
+  symbols:
+  - DUAL_TRACE_SCHEMA_V1
+  - TraceEventKindV1
+  - TraceEventV1
+  - AppendOnlyTraceV1
+  - ReplayStateV1
+  - ReplayFactV1
+  - ReplayResidualV1
+  - ReplayTerminalV1
+  - derive_markdown_narrative_v1
+  - MemoryReferenceV1
+  - ImprovementCandidateV1
+  - RunRetrospectiveV1
+  - emit_retrospective_v1
+  - DualTraceError
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"

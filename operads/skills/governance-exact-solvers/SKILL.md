@@ -4,7 +4,7 @@ description: "Consolidated exact rational arithmetic, discrete Hamiltonian solve
 operad_source_colours: ["Code", "Proof"]
 operad_target_colour: "Receipt"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 families: [governance, exact-math]
 ---
 

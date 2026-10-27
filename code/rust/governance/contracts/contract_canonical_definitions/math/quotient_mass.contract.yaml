@@ -1,0 +1,106 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quotient_mass:v1.0.0
+title: Quotient mass (Q¹ mass metric packaging)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:hashes:v1.0.0
+    - urn:core:math:phi1:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quotient_mass
+  symbol: m_Q([ω])
+  ascii_symbol: QuotientMass
+  notation: mass of a class in Q¹ under a declared quotient metric (default Φ₁)
+  domain:
+  - class [ω] ∈ Q¹ = C¹ / im(d₀)
+  - declared quotient metric (default = Φ₁ weighted ℓ¹ quotient norm)
+  codomain:
+    description: Nonnegative mass of a residual class in Q¹ under the declared metric. Default metric is Φ₁; other
+      metrics require explicit declaration.
+requirements:
+  required_structures:
+  - Quotient space Q¹ with finite presentations
+  - Declared metric on Q¹ (default Φ₁)
+  - Nonnegative mass scalar
+  - Compatibility of metric declaration with weight profile
+laws:
+- 'Default-metric law: unless otherwise declared, quotient mass equals Φ₁([ω]).'
+- 'Nonnegativity: mass ≥ 0.'
+- 'Zero law: mass = 0 iff class is metric-zero (exact under Φ₁ default).'
+- 'Declaration law: non-default metrics must be named; silent metric swap is refuse.'
+- 'Separation fence: quotient mass is not Γ₂ closure defect.'
+- 'Authority law: no PROVED / GlobalGreen / ActionLicense from mass alone.'
+replay:
+  requirements:
+  - Deterministic evaluation under declared metric
+  - Metric identity hashed when multi-metric modes exist
+relationships:
+- urn:core:math:phi1:v1.0.0 — default metric
+- urn:core:math:phi1_obstruction_mass:v1.0.0 — closely related packaging
+- urn:core:math:gamma2_closure_defect:v1.0.0 — distinct
+rust_binding:
+  crate: core_types
+  module: quotient_mass
+  symbols:
+  - QuotientMass
+  required_tests:
+  - test_quotient_mass_rejects_negative
+negative_tests:
+- Undeclared metric swap must be rejected
+- Negative mass must be rejected
+- Mass identified with Γ₂ must be rejected
+- Authority / GlobalGreen from mass alone must be rejected
+- Claiming PROVED / HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'Quotient mass packages a nonnegative metric on Q¹ (default Φ₁). Nonclaim: not Γ₂; not authority; not
+    PROVED; not GlobalGreen.'
+  non_role:
+  - Closure defect Γ₂
+  - Trichotomy classification
+  - Authority / PROVED / GlobalGreen / HoTT
+wip:
+- Explicit multi-metric registry if needed beyond Φ₁ default
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B4_FOC_RESIDUAL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth B4: default-to-Φ₁ clarified; avoid smash with obstruction_mass packaging.'
+    recommendation: If objects are identical, future merge only with ≃ witness; for now keep both.
+    pass: meth_b4_foc_residual
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: HAS_RS_BINDING
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: quotient_mass module present.
+    file: engine/crates_rs/core_types/src/quotient_mass.rs
+    delta: MATCH
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: '[SCOPE FENCE]'
+    detail: Possible near-duplicate of phi1_obstruction_mass — residual, not silent merge.

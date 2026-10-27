@@ -1,0 +1,45 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_corpus_file_ref:v1.0.0"
+title: "Corpus File Reference (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    CorpusFileRef represents a single relative POSIX file entry with SHA-256 and byte size.
+  invariants:
+    - "path is a normalized relative POSIX path."
+    - "byte_count is nonnegative."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.entities.research_packets
+  python_type: "CorpusFileRef"
+  form: dataclass
+  fields:
+    - name: path
+    - name: sha256
+    - name: byte_count

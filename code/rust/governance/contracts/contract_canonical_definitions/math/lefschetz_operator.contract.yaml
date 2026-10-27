@@ -1,0 +1,123 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:lefschetz_operator:v0.1.0
+title: Lefschetz Pairing Diagnostic Contract (finite cochain Ξ-channel)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_lefschetz_pairing_diagnostic
+  symbol: ⟨α, L·β⟩ on finite cochains
+  ascii_symbol: lefschetz_operator
+  notation: weighted/structural pairing diagnostic — not Hard Lefschetz theorem
+  domain:
+  - finite-dimensional cochain (or chain) vectors α, β
+  - structural operator L (shift/adjacency — not learned)
+  - bilinear pairing form on the finite ambient space
+  codomain:
+    description: 'A diagnostic pairing value and optional defect/shift scores used in routing (Ξ-channel).
+      Explicitly NOT the classical Hard Lefschetz isomorphism L^k : H^{n-k} ≅ H^{n+k} on compact Kähler
+      manifolds.'
+requirements:
+  required_structures:
+  - Finite ambient dimension for α, β, L
+  - L is structural (declared adjacency/shift), not a trained free matrix
+  - Pairing is deterministic bilinear form on the finite space
+  - Outputs are diagnostic only (no accept/reject authority)
+laws:
+- 'Diagnostic law: object computes ⟨α, L·β⟩ (and declared defects) deterministically.'
+- 'Scope fence: does not assert Hard Lefschetz isomorphisms on continuum Kähler cohomology.'
+- 'Degree honesty: if graded shift is claimed, degrees must be declared; otherwise ungraded finite pairing
+  only.'
+- 'Non-decision law: pairing may inform routing; it does not mint Φ₁ acceptance or authority.'
+- 'Authority law: no PROVED/GlobalGreen/HoTT from this contract alone.'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No wall-clock dependence
+  - Deterministic pairing evaluation
+relationships:
+- urn:core:math:exact_carrier:v0.1.0 — finite cochain ambient
+- urn:core:math:cochain_complex:v0.1.0 — graded ambient when used
+- urn:core:math:inner_product:v0.1.0 — pairing language
+- urn:core:math:basic_matrix:v1.0.0 — matrix form of L when stored densely
+rust_binding:
+  crate: core_homology
+  module: lefschetz
+  symbols:
+  - LefschetzPairing
+  # Result type is LefschetzPairing, not LefschetzPairingResult.
+  # Dimension mismatch is refused. Hard Lefschetz, learned-L, accept/
+  # reject authority, and PROVED/GlobalGreen stay unnamed.
+  # The module is cfg(any()) — never compiled; coboundary_matrix is absent.
+  required_tests:
+  - dimension_mismatch_returns_error
+negative_tests:
+- Claiming Hard Lefschetz isomorphism theorem discharge from this object must be rejected
+- Using a learned free L as if structural without declaration must be rejected
+- Dimension mismatch between α, β, L must be rejected
+- Using pairing as sole accept/reject authority must be rejected
+- Artifact claiming PROVED/GlobalGreen/HoTT from this contract alone must be rejected
+doctrine:
+  summary: 'Finite Lefschetz-style pairing diagnostic for cochain routing (Ξ-channel). Live RS documents
+    that this is a weighted inner-product diagnostic, not Hard Lefschetz. B3 meth repaired YAML to match
+    that honesty. Nonclaim: does not claim PROVED; does not claim GlobalGreen; does not claim HoTT/Hard
+    Lefschetz theorem.'
+  non_role:
+  - Hard Lefschetz theorem on compact Kähler manifolds
+  - Full primitive cohomology / sl(2) representation theory
+  - Acceptance authority (Φ₁)
+  - PROVED / GlobalGreen / HoTT discharge
+  legacy_contract_id: urn:math:contract:LefschetzOperator:v1.0.0
+  migration_note: 'B3 meth: removed continuum Hard Lefschetz overclaim; redefined as finite pairing diagnostic.'
+wip:
+- 'Optional graded L: H^p → H^{p+2} discrete model as a separate object if needed.'
+- Exact rational pairing vs f64 residual in some call sites.
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B3_LEGACY_SHELL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'B3: YAML previously overclaimed Hard Lefschetz; repaired to finite diagnostic matching lefschetz.rs
+      scope fence.'
+    recommendation: Object-specific math settled for this pass; align code under ADR-007a where YAML is
+      ahead or code still over-scopes. Not PROVED; not GlobalGreen; not LEAN4.
+    pass: b3_legacy_shells_meth
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: MATH-OVERCLAIM-REPAIRED
+    severity: high
+    claim_class: '[STANDARD]'
+    detail: 'Prior shell cited L^k : H^{n-k} ≅ H^{n+k}. That is continuum Kähler geometry; estate RS does
+      not implement it. Repaired under meth review.'
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: SCOPE_ALIGNED
+    severity: info
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates/core_homology/src/lefschetz.rs
+    detail: RS explicitly non-Hard-Lefschetz pairing diagnostic. After B3 YAML repair, scopes align; residual
+      on exact symbol export names. Not PROVED.
+    delta: MATCH_SCOPE

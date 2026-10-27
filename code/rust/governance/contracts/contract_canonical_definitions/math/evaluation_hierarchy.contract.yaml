@@ -1,0 +1,331 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:evaluation_hierarchy:v1.0.0
+title: Evaluation hierarchy
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1_obstruction_mass:v1.0.0
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    - urn:core:math:xi_tie_breaker:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: evaluation_hierarchy
+  ascii_symbol: evaluation_hierarchy
+  symbol: evaluation_hierarchy
+  notation: evaluation_hierarchy
+  domain:
+  - 'carrier: instance of evaluation_hierarchy'
+  codomain:
+    description: Mathematical object declared by Evaluation hierarchy (structural shell).
+requirements:
+  required_structures:
+  - Carrier for evaluation_hierarchy must be finite/explicit where claimed
+  - Object kind and domain/codomain (or equivalent) must be declared
+  - Operations, if any, must preserve declared structure
+  - No authority effect may be self-assigned by the structure
+laws:
+- Evaluation hierarchy is a pure mathematical structure (AuthorityEffect none)
+- All declared required_structures must hold for a valid instance
+- 'Replay is deterministic: no external state, no randomness, no wall-clock'
+- This contract does not mint customer claims or GlobalGreen
+rust_binding:
+  crate: core_policy
+  module: evaluation_hierarchy
+  symbols:
+  - DiagnosticComparison
+  - classify_guarded_non_worse
+  - compare_guarded_diagnostics
+  - guarded_non_worse
+  - guarded_strictly_improves
+  required_tests:
+  - tied_diagnostics_preserve_and_mismatched_xi_is_incomparable
+  - nonfinite_xi_is_invalid
+negative_tests:
+- Artifact claiming Evaluation hierarchy without required structures must be rejected
+- Empty or ill-typed carrier for evaluation_hierarchy must be rejected
+- Artifact claiming authority or admissibility must be rejected
+- Artifact claiming PROVED/GlobalGreen from this contract alone must be rejected
+- Non-deterministic or external-state-dependent construction must be rejected
+doctrine:
+  summary: 'Lexicographic diagnostic order over before/after Φ₁, Γ₂, and optionally Ξ. Nonclaim: this contract does
+    not claim HoTT/Univalence discharge, PROVED status, or GlobalGreen.'
+  symbol: lexicographic(Φ₁, Γ₂, Ξ)
+  ascii_symbol: lexicographic(Phi1,Gamma2,Xi)
+  1. Contract metadata:
+    title: Evaluation hierarchy
+    version: 0.1.0
+    object_type: lexicographic_diagnostic_order
+  2. Mathematical object / functional role:
+    role: Lexicographic diagnostic order over before/after Φ₁, Γ₂, and optionally Ξ.
+    purpose: Defines diagnostic comparison of before/after triples; not a policy decision.
+    non_role:
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+    - Does not compare diagnostics across unrelated carriers without transport.
+  3. Domain and codomain:
+    domain: before/after diagnostic tuples with compatible carrier, definitions, and comparison mode
+    codomain:
+    - StrictlyImproves
+    - Preserves
+    - NonWorse
+    - Worsens
+    - Incomparable
+    - Invalid
+  4. Required structures:
+    required:
+    - Φ₁_before
+    - Φ₁_after
+    - Γ₂_before
+    - Γ₂_after
+    - 'comparison mode: exact or tolerance'
+    - carrier/layer compatibility or declared transport
+    - weight profile compatibility or declared weight transport
+    optional:
+    - Ξ_before
+    - Ξ_after
+    - Ξ tie policy
+    required_if_approximate:
+    - tolerance profile
+  5. Definition:
+    lexicographic_order: Compare Φ₁ first, Γ₂ second, Ξ third if used.
+    strictly_improves_rule: 'A proposal strictly improves iff:
+
+      1. Φ₁_after < Φ₁_before, or
+
+      2. Φ₁_after tied with Φ₁_before and Γ₂_after < Γ₂_before, or
+
+      3. Φ₁ and Γ₂ tied and Ξ is used and Ξ_after < Ξ_before.
+
+      '
+    preserves_rule: 'A proposal preserves iff:
+
+      - Φ₁_after tied with Φ₁_before, and
+
+      - Γ₂_after tied with Γ₂_before, and
+
+      - Ξ is omitted or Ξ_after tied with Ξ_before.
+
+      '
+    non_worse_rule: 'A proposal is non-worse iff it strictly improves or preserves.
+
+      '
+    worsens_rule: 'A proposal worsens iff:
+
+      - Φ₁_after > Φ₁_before, or
+
+      - Φ₁ tied and Γ₂_after > Γ₂_before, or
+
+      - Φ₁ and Γ₂ tied, Ξ is used, and Ξ_after > Ξ_before.
+
+      '
+    incomparable_rule: 'A proposal is incomparable if carriers, layers, weight profiles,
+
+      comparison modes, diagnostic definitions, or required transports do not match.
+
+      '
+    override_forbidden:
+    - Γ₂ cannot override Φ₁.
+    - Ξ cannot override Φ₁.
+    - Ξ cannot override Γ₂.
+    resource_bounds: R_cl or other resource closure bounds are separate declared constraints if used.
+  6. Laws and invariants:
+    lexicographic_priority: Φ₁ first, Γ₂ second, Ξ third.
+    tie_required: Lower-priority keys are inspected only after higher-priority keys tie under comparison mode.
+    xi_optional: Ξ may be omitted; if omitted, comparison stops at Γ₂.
+    no_policy_authority: The hierarchy does not decide policy admissibility or customer-facing claims.
+    carrier_compatibility: No cross-carrier comparison without declared transport.
+  7. Equality / equivalence rules:
+    tie: Tie means exact equality in exact mode or equivalence under declared tolerance profile.
+    comparison: All scalar comparisons require finite values and declared comparison mode.
+    transported_equality: Transported comparisons require explicit carrier/layer/weight transport.
+  8. Replay / determinism requirements:
+    requirements:
+    - Same comparison mode before/after.
+    - Tolerance profile hash if approximate.
+    - Carrier/layer hashes match or transport is declared.
+    - Weight profile hashes match or weight transport is declared.
+    - Ξ omitted unless explicitly declared.
+    - No NaN.
+    - No infinite diagnostic values.
+    - No raw float comparison without comparison mode.
+  9. Relationship to other Core primitives:
+    relationships:
+      Phi1: Dominant key.
+      Gamma2: Secondary key only after Φ₁ tie.
+      Xi: Tertiary key only after Φ₁ and Γ₂ tie.
+      Trichotomy: Uses Φ₁ and Γ₂ but does not replace trichotomy.
+      evaluators: Used by evaluators as diagnostic order, not policy.
+  10. Rust descriptor shape:
+    sketch: "pub struct EvaluationHierarchyDescriptor {\n    pub comparison_mode_hash: String,\n    pub uses_xi:\
+      \ bool,\n\n    pub carrier_before_hash: String,\n    pub carrier_after_hash: String,\n    pub transport_hash:\
+      \ Option<String>,\n\n    pub weight_profile_before_hash: Option<String>,\n    pub weight_profile_after_hash:\
+      \ Option<String>,\n    pub weight_transport_hash: Option<String>,\n\n    pub phi1_before_hash: String,\n \
+      \   pub phi1_after_hash: String,\n    pub gamma2_before_hash: String,\n    pub gamma2_after_hash: String,\n\
+      \    pub xi_before_hash: Option<String>,\n    pub xi_after_hash: Option<String>,\n}\n\npub enum DiagnosticComparison\
+      \ {\n    StrictlyImproves,\n    Preserves,\n    NonWorse,\n    Worsens,\n    Incomparable,\n    Invalid,\n\
+      }\n"
+  11. Negative definition tests:
+    tests:
+    - Accept because Ξ improves while Φ₁ worsens.
+    - Accept because Γ₂ improves while Φ₁ worsens.
+    - Use Ξ before Γ₂.
+    - Compare floats without tolerance profile.
+    - Compare across different carriers without transport.
+    - Compare across different weight profiles without weight transport.
+    - All diagnostics tied but result marked Worsens.
+    - All diagnostics tied but result marked StrictlyImproves.
+    - Ξ omitted but comparison requires Ξ improvement.
+    - NaN diagnostic treated as comparable.
+  12. Open questions / WIP status:
+    wip:
+    - Resource closure bound composition.
+    - Canonical tolerance comparison vocabulary.
+    - Transport policy for cross-carrier comparison.
+    - Whether Ξ omission yields partial order or truncated lexicographic order.
+  compact_yaml:
+    EVALUATION_HIERARCHY_CONTRACT:
+      symbol: lexicographic(Φ₁,Γ₂,Ξ)
+      ascii_symbol: lexicographic(Phi1,Gamma2,Xi)
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: before/after diagnostic tuples with compatible carrier/comparison mode
+      codomain:
+      - StrictlyImproves
+      - Preserves
+      - NonWorse
+      - Worsens
+      - Incomparable
+      - Invalid
+      required_structures:
+      - before/after Φ₁
+      - before/after Γ₂
+      - before/after Ξ if used
+      - comparison mode
+      - carrier compatibility or transport
+      - tolerance profile if approximate
+      definition: 'lexicographic diagnostic order: Φ₁ first, Γ₂ second, Ξ third if used'
+      laws:
+      - Γ₂ cannot override Φ₁
+      - Ξ cannot override Φ₁/Γ₂
+      - lower keys inspected only after higher-key tie
+      - resource bounds separate
+      forbidden_interpretations:
+      - policy decision
+      - customer claim
+      - Ξ-first comparison
+      - cross-carrier comparison without transport
+      - non-worse means strictly improves only
+      relationships:
+      - used by evaluators
+      - not policy
+      - depends on Φ₁/Γ₂/Ξ contracts
+      negative_tests:
+      - Ξ improves but Φ₁ worsens
+      - Γ₂ improves but Φ₁ worsens
+      - Ξ before Γ₂
+      - floats without tolerance
+      - carrier mismatch
+      - all tied marked as improvement
+      open_questions:
+      - resource closure bounds
+      - transport policy
+      - tolerance vocabulary
+  non_role:
+  - Authority minting or GlobalGreen discharge
+  - Customer-facing claims or product assurances
+  - Full encyclopedia mechanization of evaluation_hierarchy (deferred)
+  - HoTT/Univalence theorem discharge from this contract alone
+  - Runtime enforcement as proof of mathematical truth
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_MATH_BLOCK
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_MATH_BLOCK
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_LAWS_OR_REQUIREMENTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: Missing or not detected field gate G_LAWS_OR_REQUIREMENTS
+    recommendation: Repair under meth-level math re-review (ADR-007); not GlobalGreen.
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_REQUIRED_STRUCTURES
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: required_structures missing or empty'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NEGATIVE_TESTS
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: negative_tests missing or empty'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: G_NON_ROLE
+    severity: medium
+    claim_class: '[STANDARD]'
+    detail: 'DEEP Stage-1: doctrine.non_role missing'
+    recommendation: Repair under meth-level math re-review (ADR-007/007a); not GlobalGreen.
+    pass: stage1_deep_has_rs
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_STRUCTURAL_REPAIR
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth-level structural repair applied: ensure descriptor.authority_effect=none + customer_claim_allowed=false;
+      create math block; set math.object_kind; set math.domain; set math.codomain; create requirements; set required_structures;
+      set laws; set negative_tests; set doctrine.non_role (anti-theater); add overclaim nonclaim fence to doctrine.summary.
+      Not PROVED; not GlobalGreen; human re-review still required for math depth.'
+    recommendation: Continue meth re-review for object-specific laws; code follows YAML (ADR-007a).
+    pass: stage1_meth_repair_has_rs
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: REALIZATION_PRESENT_CORE_MATCH
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates_rs/core_policy/src/evaluation_hierarchy.rs
+    yaml_law: Guarded lex comparison Φ₁ ≻ Γ₂ ≻ Ξ; Ξ only on Φ₁/Γ₂ ties
+    code_behavior: 'compare_guarded_diagnostics / guarded_strictly_improves / guarded_non_worse / classify_guarded_non_worse
+      implement lex order on BigRational Phi1 then Gamma2 then optional f64 Xi. DiagnosticComparison enum covers
+      StrictlyImproves|Preserves|NonWorse| Worsens|Incomparable|Invalid.
+
+      '
+    delta: MATCH
+    detail: 'rust_binding symbols all resolve in evaluation_hierarchy.rs. Code matches the guarded hierarchy core;
+      full YAML doctrine surface is broader (open questions, carrier transport) than this pure comparator module.
+
+      '
+    recommendation: 'Keep comparator pure; do not mint policy/authority from comparison outcomes. No PROVED/GlobalGreen.
+
+      '

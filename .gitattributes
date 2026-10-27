@@ -7,3 +7,24 @@ contracts/** text eol=lf
 SCORING.md text eol=lf
 *.png binary
 *.ico binary
+# Every governed source is scored or baselined by the SHA-256 of its bytes, so
+# checkouts on every platform must hold the repository's LF bytes.
+*.py text eol=lf
+*.rs text eol=lf
+*.lean text eol=lf
+*.cs text eol=lf
+# code/ mirrors the internal tree, which pins every text file to LF; its digest pins
+# and contract hashes are over those LF bytes.
+code/** text eol=lf
+# operads/ digests its contracts, skills and rules over their LF bytes (catalogue
+# compiler, typed contracts, rule gate), so a CRLF checkout fails to compile.
+operads/** text eol=lf
+eis/antibodies/** text eol=lf
+# Lesson sources the typed contracts pin by SHA-256.
+_ic/** text eol=lf
+
+# demos/ challenge packages pin case files and manifests by the SHA-256 of their LF bytes.
+demos/** text eol=lf
+
+# Images stay binary even under code/, which is pinned to LF text above.
+*.gif binary

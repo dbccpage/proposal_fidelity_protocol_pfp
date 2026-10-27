@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:binary_field:v0.1.0
+title: 'Binary Field GF(2^k) Contract'
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_field
+  symbol: 'GF(2^k) with bit-mask elements and the symplectic trace form'
+  ascii_symbol: binary_field
+  notation: 'GF(2^k) with bit-mask elements and the symplectic trace form'
+  domain:
+  - 'degree k >= 1'
+  - 'modulus: irreducible polynomial of exact degree k, as a bit mask'
+  - 'element: bit mask below 2^k'
+  codomain:
+    description: 'The field GF(2^k) with carry-less arithmetic, the absolute trace, the symplectic trace form on GF(2^k)^2 and the binary Pauli phase algebra.'
+requirements:
+  required_structures:
+  - 'The modulus must be an irreducible polynomial of exactly the declared degree; any other modulus is refused'
+  - 'Hermitian Paulis are self-adjoint involutions'
+laws:
+- 'x * x = x + 1 and x * (x + 1) = 1 in GF(4) = F_2[x]/(x^2 + x + 1)'
+- 'Every nonzero element has a multiplicative inverse'
+- 'The trace of GF(4) takes the values 0, 0, 1, 1 on 0, 1, x, x + 1'
+- 'A line group has one element per subset of its generators'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact arithmetic only; no floating point and no tolerance
+relationships:
+- 'finite_field serves as the general GF(p^k) of which this is the packed p = 2 case'
+- 'gf2_matrix is not built yet; the GF(2) linear algebra is scheduled as a separate module'
+rust_binding:
+  crate: core_number_theory
+  module: binary_field
+  symbols:
+  - 'BinaryField'
+  - 'BinaryPauli'
+  - 'find_irreducible_binary_polynomial'
+  - 'binary_polynomial_coefficients'
+  - 'build_line_group'
+  required_tests:
+  - 'the_first_irreducible_polynomials_are_the_known_ones'
+  - 'gf4_multiplication_and_trace_match_hand_computation'
+  - 'every_nonzero_element_has_an_inverse'
+  - 'a_reducible_modulus_is_refused'
+  - 'a_modulus_of_the_wrong_degree_is_refused'
+  - 'hermitian_paulis_are_self_adjoint_involutions'
+  - 'a_line_group_has_one_element_per_subset_of_generators'
+negative_tests:
+- 'A reducible modulus must be refused'
+- 'A modulus of the wrong degree must be refused'
+doctrine:
+  summary: 'Packed binary fields GF(2^k) with the trace and the symplectic trace form used by the Weyl-board spread checks, and the binary Pauli phase algebra.'
+  non_role:
+  - 'Fields of characteristic other than 2'
+  - 'GF(2) matrix elimination'
+wip:
+- 'BinaryField::new panics (assert) on a bad modulus instead of returning a typed error'

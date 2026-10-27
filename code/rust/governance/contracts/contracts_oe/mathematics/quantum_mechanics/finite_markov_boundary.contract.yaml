@@ -1,0 +1,66 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_markov_boundary:v0.1.0
+title: Exact Markov population dynamics
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_markov_boundary
+  symbol: finite_markov_boundary
+  ascii_symbol: finite_markov_boundary
+  notation: Exact Markov population dynamics
+  domain:
+  - Finite rational row-stochastic matrix and normalized population; powers<=4096.
+  codomain:
+    description: Declared finite results of core_quantum_physics::stochastic_unitary_boundary; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Evolution is the row-population law pT.
+- Stationarity and detailed balance are checked exactly.
+- Dobrushin contraction is half the largest L1 distance between rows.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: stochastic_unitary_boundary
+  symbols:
+  - MarkovKernel
+  required_tests:
+  - markov_stationarity_and_dobrushin_contraction_are_computed
+negative_tests:
+- markov_stationarity_and_dobrushin_contraction_are_computed
+doctrine:
+  summary: Evolution is the row-population law pT.; Stationarity and detailed balance are checked exactly.;
+    Dobrushin contraction is half the largest L1 distance between rows..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

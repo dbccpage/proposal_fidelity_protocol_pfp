@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_r_matrix:v0.1.0
+title: Exact Invertible Exchange Matrices
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_r_matrix
+  symbol: finite_r_matrix
+  ascii_symbol: finite_r_matrix
+  notation: Exact Invertible Exchange Matrices
+  domain:
+  - A finite exact-field square matrix with a checked inverse, or an exchange matrix from checked fusion channels.
+  codomain:
+    description: Declared finite results of core_quantum_physics::r_matrix; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The native Hecke construction obeys (R-qI)(R+q^-1 I)=0.
+- The braid relation is replayed by tensoring the actual matrix.
+- Ising channel exchanges retain both exact channel phases.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: r_matrix
+  symbols:
+  - RMatrix
+  required_tests:
+  - hecke_r_matrix_satisfies_braid_and_quadratic_relations
+  - ising_exchange_has_both_exact_channel_phases
+  - exchange_admission_refuses_oversized_inverse_work
+negative_tests:
+- Singular, empty, rectangular or oversized candidates are refused.
+- A nonzero braid or Hecke residual is not accepted as equality.
+- Inverse-admission work beyond the native budget refuses before reduction, even for an invertible identity
+  input.
+doctrine:
+  summary: The native Hecke construction obeys (R-qI)(R+q^-1 I)=0.; The braid relation is replayed by tensoring
+    the actual matrix.; Ising channel exchanges retain both exact channel phases..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

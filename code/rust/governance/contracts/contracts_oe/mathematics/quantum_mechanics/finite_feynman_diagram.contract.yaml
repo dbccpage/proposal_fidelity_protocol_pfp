@@ -1,0 +1,76 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_feynman_diagram:v0.1.0
+title: Exact Wick Contractions and Diagram Symmetry Factors
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_feynman_diagram
+  symbol: finite_feynman_diagram
+  ascii_symbol: finite_feynman_diagram
+  notation: Exact Wick Contractions and Diagram Symmetry Factors
+  domain:
+  - At most twenty Gaussian legs for exact pairing counts, with at most 65536 materialized pairings.
+  - Finite half-edge pairings, at most eight bounded-valence vertices, and phi4 vacuum order at most three.
+  codomain:
+    description: Declared finite results of core_quantum_physics::feynman_diagram; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The exact pairing count is the odd double factorial for even leg counts.
+- Every half-edge occurs once, and pairing incidence determines loops, components and connectivity.
+- Symmetry factors use exact vertex automorphisms, parallel-edge factorials and loop reversal factors.
+- Phi4 vacuum sums through order three are 1/8,35/384,385/3072; connected sums are 1/8,1/12,11/96.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: feynman_diagram
+  symbols:
+  - FeynmanDiagram
+  - wick_pairing_count
+  - wick_pairings
+  - phi4_vacuum_diagrams
+  required_tests:
+  - wick_pairings_count_is_the_double_factorial
+  - vacuum_symmetry_factors_and_connected_sums_match_phi4_coefficients
+negative_tests:
+- Odd leg counts, reused or missing half-edges, malformed valences and materialization/permutation budget excess
+  are refused.
+doctrine:
+  summary: The exact pairing count is the odd double factorial for even leg counts.; Every half-edge occurs
+    once, and pairing incidence determines loops, components and connectivity.; Symmetry factors use exact
+    vertex automorphisms, parallel-edge factorials and loop reversal factors.; Phi4 vacuum sums through order
+    three are 1/8,35/384,385/3072; connected sums are 1/8,1/12,11/96..
+  non_role:
+  - No continuum renormalization or momentum-space amplitude claim.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

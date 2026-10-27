@@ -1,0 +1,97 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quillen_equivalence:v0.1.0
+title: Quillen Equivalence
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quillen_equivalence
+  symbol: 'F ⊣ G : M ⇆ N (Quillen equivalence)'
+  ascii_symbol: quillen_equivalence
+  notation: 'F ⊣ G : M ⇆ N (Quillen equivalence)'
+  domain:
+  - 'quillen_adjunction: F ⊣ G between model categories M and N'
+  - 'derived_unit: η: Id → RG ∘ LF (natural isomorphism on Ho(M))'
+  - 'derived_counit: ε: LF ∘ RG → Id (natural isomorphism on Ho(N))'
+  codomain:
+    description: 'A Quillen adjunction F ⊣ G : M ⇆ N together with witnesses that
+      the derived unit and counit are natural isomorphisms on homotopy categories
+      Ho(M) and Ho(N).
+
+      '
+requirements:
+  required_structures:
+  - The underlying adjunction must be a Quillen adjunction
+  - Derived unit must be a natural isomorphism on Ho(M)
+  - Derived counit must be a natural isomorphism on Ho(N)
+  - Artifact hash must be deterministic and reproducible
+laws:
+- F ⊣ G is a Quillen adjunction
+- 'Derived unit η: Id → RG ∘ LF is a natural isomorphism'
+- 'Derived counit ε: LF ∘ RG → Id is a natural isomorphism'
+- 'For X cofibrant and Y fibrant, F(X) → Y is a weak equivalence iff X → G(Y) is a
+  weak equivalence
+
+  '
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+  - Computation functions are content-addressed
+relationships:
+- urn:math:contract:QuillenAdjunction:v0.1.0 serves as Provides the underlying Quillen
+  adjunction F ⊣ G
+- urn:math:contract:ModelCategory:v0.1.0 serves as Defines the model categories M
+  and N
+- urn:math:contract:DerivedFunctor:v0.1.0 serves as Provides derived functors LF and
+  RG
+- urn:math:contract:HomotopyCategory:v0.1.0 serves as Defines homotopy categories
+  Ho(M) and Ho(N)
+- urn:math:contract:NaturalTransformation:v0.1.0 serves as Defines natural transformations
+  (unit and counit)
+negative_tests:
+- quillen_adjunction_id does not resolve to valid Quillen adjunction
+- Derived unit fails to be an isomorphism on some object
+- Derived counit fails to be an isomorphism
+doctrine:
+  summary: 'A Quillen equivalence is a Quillen adjunction F ⊣ G : M ⇆ N where the
+    derived adjunction LF ⊣ RG is an equivalence of homotopy categories. Equivalently,
+    for cofibrant X and fibrant Y, F(X) → Y is a weak equivalence iff X → G(Y) is.'
+  non_role:
+  - Does not construct specific model categories
+  - Does not compute homotopy limits or colimits
+  - Does not provide zig-zag equivalence composition algorithms
+wip:
+- Quillen equivalence implies equivalence of ∞-categories
+- Zig-zag of Quillen equivalences also gives equivalence
+- 'Detecting Quillen equivalence: check on generators'
+- Contract defines the core structure but ∞-category equivalence needs formalization
+- Zig-zag composition algorithm not yet specified
+- Generator-based detection would improve efficiency for large model categories
+rust_binding:
+  crate: core_higher_category_theory
+  module: model_category
+  symbols:
+  - ModelCategory
+  - ModelMorphism
+  required_tests:
+  - test_model_category_positive_verification
+  - test_kill_mut_p3_01_two_out_of_three_violation

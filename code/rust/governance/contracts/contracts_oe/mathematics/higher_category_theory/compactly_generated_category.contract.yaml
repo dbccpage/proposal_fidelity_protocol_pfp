@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:compactly_generated_category:v0.1.0
+title: Compactly Generated Category Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: presentable_infinity_category
+  symbol: C with C^ω ⊂ C
+  ascii_symbol: compactly_generated_category
+  notation: C with C^ω ⊂ C (compact generators generating C under filtered colimits)
+  domain:
+  - 'infinity_category: underlying presentable ∞-category'
+  - 'compact_objects: small set of compact generators C^ω'
+  - 'accessibility_cardinal: ω (smallest infinite cardinal)'
+  codomain:
+    description: A compactly generated ∞-category is a presentable ∞-category with ω-accessibility, generated under filtered colimits by an essentially small subcategory of compact objects C^ω.
+requirements:
+  required_structures:
+  - Category has small filtered colimits.
+  - All specified compact objects satisfy finite presentation: morphisms from K to filtered colimits factor through a finite stage.
+  - Every object in C is presented as a filtered colimit of compact generators.
+  - All operations respect OperationLimits and Builder allocation caps.
+  - Structure hash is deterministically content-addressed.
+laws:
+- 'Colimit existence: filtered colimits exist in C'
+- 'Compactness law: for each K ∈ C^ω and filtered diagram D, Hom(K, colim D) ≃ colim Hom(K, D)'
+- 'Factorization: any morphism from a compact object to a colimit factors essentially uniquely through a finite stage'
+- 'Generation: C is the Ind-completion of C^ω'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validator functions are content-addressed
+  - Given same data, produces identical artifact hash
+relationships:
+- urn:core:math:infinity_category:v0.1.0 serves as Underlying ∞-category structure
+- urn:core:math:quasi_category:v0.1.0 serves as Model for underlying ∞-category
+rust_binding:
+  crate: core_higher_category_theory
+  module: compactly_generated
+  symbols:
+  - CompactlyGeneratedCategory
+  - CompactObject
+  - FilteredDiagram
+  - DiagramStage
+  - FactorizationWitness
+  required_tests:
+  - test_compactly_generated_category_positive_verification
+  - test_kill_mut_p3_06_compact_factorization_violation
+lean4_binding:
+  module: HigherCategoryTheory.CompactlyGenerated
+  symbols:
+  - FilteredSystem
+  - IsCompactObject
+  - CompactlyGeneratedCategory
+  - compact_factorization
+  - identitySystem
+  - compact_id_factorization
+negative_tests:
+- Factorization witness claims nonexistent diagram stage (MUT-P3-06)
+- Object not in compact generators and lacking presenting diagram
+- Presenting diagram contains non-compact stage objects
+doctrine:
+  summary: A compactly generated ∞-category is a presentable ∞-category generated under filtered colimits by a small collection of compact objects. Compact objects play the role of finite objects (e.g. finite spectra in Sp, perfect complexes in D(R)).
+  non_role:
+  - Unbounded inaccessible categories
+  - Categories lacking small colimits
+wip:
+  - Ind-completion functor Ind(C^ω) ≃ C
+  - Relation to presentable symmetric monoidal categories

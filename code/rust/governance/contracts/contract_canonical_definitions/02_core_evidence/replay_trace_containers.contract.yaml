@@ -1,0 +1,105 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:replay_trace_containers:v1.0.0
+title: Replay trace containers
+kind: evidence_contract
+status: active
+layer: 02_evidence
+role: Trace
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:evidence:trace_artifact:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies:
+    - urn:core:evidence:trace_artifact:v1.0.0
+    emits: EvidenceEnvelope
+    authority_layer: Evidence
+    replay_certificates:
+    - schema_hash
+  constraints:
+    immutable_after_emit: true
+    mutation_forbidden: true
+doctrine:
+  summary: >-
+    The two concrete replay-side trace containers. StepTrace<T> holds an ordered
+    list of step records; LayeredTrace<T> holds a flat collection of layer
+    records. Both keep their backing Vec private and expose it only through
+    borrowing and consuming accessors, and both implement the TraceArtifact and
+    ImmutableTrace traits defined by the foundation contract.
+  vocabulary_ownership: >-
+    This module re-exports the trace-artifact vocabulary (TraceArtifact,
+    ImmutableTrace, VoidTrace, and the Decision/Analysis/Validation/ActionResult
+    artifact markers) from core_types::trace_artifact so that existing
+    core_replay::trace::* paths keep resolving. That vocabulary is OWNED by
+    urn:core:evidence:trace_artifact:v1.0.0 and is deliberately NOT listed in
+    this contract's symbols; the foundation crate holds it so governance law in
+    core_contracts can depend on it without depending on this verification
+    crate (SG-LAYER-001 / PO-LAYER). Listing it here would create a second
+    canonical owner for one vocabulary.
+  reexport_shim_ruling: >-
+    Operator ruling (2026-07-18), recorded here because this module was first
+    mistaken for a pure shim: a pure re-export shim is NOT exempt from file
+    inventory or contract coverage. It is exempt only from independent semantic
+    ownership, and only when it contains no behavior beyond `pub use` of a
+    separately contracted canonical owner; the canonical owner then retains all
+    mathematical, validation, serialization, terminalization and authority
+    obligations. THIS MODULE DOES NOT MEET THAT CONDITION -- alongside the
+    re-exports it defines StepTrace<T> and LayeredTrace<T> with constructors,
+    accessors, Serialize/Deserialize derives and trait impls -- so it is
+    contracted as a hybrid: canonical owner of those two containers (see
+    symbols) and a non-owning re-export surface for the foundation vocabulary
+    (see vocabulary_ownership). If the containers are ever relocated and only
+    `pub use` remains, narrow this contract to the shim form.
+  non_role:
+  - >-
+    Does not verify a trace. These are containers; replay verification is
+    urn:core:evidence:replay_kernel:v1.0.0.
+  - >-
+    Does not decide admissibility, terminalize, or emit authority. A trace
+    records what happened; it does not license anything.
+  - >-
+    Does not define the trace-artifact vocabulary it re-exports.
+  - >-
+    Does not enforce immutability at the type level. `immutable_after_emit` is
+    a contract obligation on callers, not a property of the types. The
+    containers derive Clone, Serialize and Deserialize, so a caller can
+    deserialize or clone-and-rebuild one. The private fields prevent in-place
+    mutation, not reconstruction.
+  - >-
+    Not the linear-algebra trace operator. urn:core:math:trace:v0.1.0 is the
+    diagonal sum of a matrix, an unrelated object that shares the name.
+wip:
+- >-
+  The containers are generic over T with no bound at construction. The
+  TraceArtifact and ImmutableTrace impls apply only where T is Clone plus
+  Serialize plus Deserialize, so a StepTrace of some other T is constructible
+  but is not a trace artifact.
+- >-
+  No replay certificate binds a container instance to the run that produced it.
+  schema_hash is declared but nothing in this module computes or checks it.
+rust_binding:
+  crate: core_replay
+  module: trace
+  symbols:
+  - StepTrace
+  - LayeredTrace
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:evidence:replay_kernel:v1.0.0"

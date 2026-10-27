@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_packed_hermitian_operators:v0.1.0
+title: Exact packed Hermitian contraction and positive solve
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_packed_hermitian_operators
+  symbol: exact_packed_hermitian_operators
+  ascii_symbol: exact_packed_hermitian_operators
+  notation: Exact packed Hermitian contraction and positive solve
+  domain:
+  - Positive finite dimension, exact Involution field, HermitianOrdered norm for LDL and solves
+  codomain:
+    description: Declared finite results of core_linear_algebra::packed_hermitian; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Packed contraction includes both conjugate off-diagonal updates
+- Rank-two update preserves Hermiticity and exact complex coherence
+- Square-root-free LDL reconstructs the original packed operator
+- Positive-definite triangular solve independently replays A*x=b
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_linear_algebra
+  module: packed_hermitian
+  symbols:
+  - ExactPackedHermitian::new
+  - ExactPackedHermitian::mul_vec_accumulate
+  - ExactPackedHermitian::quadratic_form
+  - ExactPackedHermitian::rank_two_update
+  - ExactPackedHermitian::ldl_decomposition
+  - ExactPackedHermitian::solve_positive_definite
+  required_tests:
+  - packed_hermitian::exact_packed_laws::rank_two_update_and_ldl_solve_retain_complex_coherences
+negative_tests:
+- packed_hermitian::exact_packed_laws::rank_two_update_and_ldl_solve_retain_complex_coherences
+doctrine:
+  summary: Packed contraction includes both conjugate off-diagonal updates; Rank-two update preserves Hermiticity
+    and exact complex coherence; Square-root-free LDL reconstructs the original packed operator; Positive-definite
+    triangular solve independently replays A*x=b.
+  non_role:
+  - No square root or numerical Cholesky factor is asserted in a field that lacks it
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

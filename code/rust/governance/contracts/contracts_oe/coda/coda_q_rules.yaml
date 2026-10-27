@@ -1,0 +1,63 @@
+# CODA-Q Rules Specification
+# Level Q Quarantined Frontier Probes
+paper_identity: CODA-Q
+legacy_file_identity: 008_coda_q.md
+canonical_version: v1.0.2
+authority_effect: None
+layer: Layer 5 (Q — The Continuum)
+
+primitives:
+  q_box: "Q = (question, scope, forbidden_promotions)"
+  q_probe: "p_Q = (Q, claim, budget, representation)"
+  q_packet: "P_Q = (definitions, observer, representation, allowed_moves, verifier, terminalizer, budget)"
+  q_obstruction: "Core_Q(P_Q) = locate(AttemptedDescent(P_Q) not in T_auth)"
+  q_residual: "R_Q = Residual(Q, P_Q, Core_Q)"
+  q_status:
+    - toy_descent
+    - partial_descent
+    - representation_only
+    - obstruction_found
+    - no_known_lift
+    - survivor
+    - refuted
+    - do_not_publish_as_claim
+
+equations:
+  q_receipt_pipeline:
+    latex: "Q \\longrightarrow P_Q \\longrightarrow D(P_Q) \\longrightarrow \\Omega_Q \\longrightarrow R_Q \\longrightarrow P_{\\mathrm{next}}"
+    description: "Quarantine probe pipeline mapping large question into obstruction receipt and next probe"
+  q_firewall:
+    latex: "\\mathsf{QStatus}(P_Q) \\not\\implies \\mathsf{Authority}(Q)"
+    description: "Q receipt status does not confer authority over the frontier question"
+  primitive_descent:
+    latex: "\\mathsf{PrimitiveDescent}_M(x) := \\mathsf{noticed}_M(x) \\wedge \\mathsf{measured}_M(x) \\wedge \\mathsf{repeated}_M(x) \\wedge \\mathsf{compared}_M(x) \\wedge \\mathsf{shared}_M(x)"
+    description: "Multi-aspect primitive descent replacing unindexed being"
+  mode_being:
+    latex: "\\mathsf{ModeBeing}_M(x) := \\mathsf{PrimitiveDescent}_M(x) \\wedge \\mathsf{terminalized}_M(x)"
+    description: "Mode-indexed being defined as primitive descent plus terminalization"
+  finite_descent_permission:
+    latex: "\\mathsf{FiniteDescentPermission}_{\\mathsf{shadow}}(\\mathsf{target}) := \\exists F:\\mathsf{Profile}\\to\\mathsf{Target},\\; \\forall x,\\ F(\\operatorname{prof}(x))=\\mathsf{target}(x)"
+    description: "Permission to assert a target claim requires explicit decoder factorization through declared profile"
+  disjoint_coproduct_q_or_authority:
+    latex: "\\mathsf{QOrAuthority} := \\mathsf{q}(\\mathsf{QStatus}) \\sqcup \\mathsf{authority}(\\mathsf{AuthorityTerminal})"
+    description: "Pointwise constructor disjointness of Q receipt statuses and authority terminals"
+
+enforcement_rules:
+  - id: CODA-Q-RULE-001
+    name: "Quarantine Discipline"
+    statement: "Level Q publishes frontier probes and obstruction receipts; it does not mint authority or solve frontier questions."
+  - id: CODA-Q-RULE-002
+    name: "Profile Collision Blocks Factorization"
+    statement: "If two worlds share a profile prof(a) = prof(b) but have target(a) != target(b), decoder factorization is impossible."
+  - id: CODA-Q-RULE-003
+    name: "Descent Is Primitive"
+    statement: "Being is not primitive; primitive descent under a declared engagement mode is primitive."
+  - id: CODA-Q-RULE-004
+    name: "Q Admission Debt Completeness"
+    statement: "QHeld requires complete debt: finite shadow, refinement relation, declared topology, convergence route, descent trigger."
+
+claim_discipline:
+  supports: "Supports frontier question quarantine, obstruction receipt emission, and profile collision identification."
+  does_not_support: "Does not support quantum ontology, consciousness claims, RH proofs, or uncertified authority promotion."
+  narrowest_defensible_claim: "Localizes specific obstruction classes preventing finite descent of frontier probes."
+  next_test_needed: "Automated verification of QAdmissionDebt gap detection on incomplete Q probe submissions."

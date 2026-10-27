@@ -1,0 +1,57 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:simplicial_defect:v1.0.0
+title: simplicial_defect
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: simplicial_defect
+  symbol: simplicial_defect
+  ascii_symbol: simplicial_defect
+  notation: simplicial_defect
+  domain:
+  - Declared finite input carrier
+  codomain:
+    description: Successive exact coboundaries and their L1 masses, evaluated by Gamma2 on an explicitly oriented
+      finite simplicial carrier. Missing boundary faces refuse.
+  definition:
+    evaluation: Successive exact coboundaries and their L1 masses, evaluated by Gamma2 on an explicitly oriented
+      finite simplicial carrier. Missing boundary faces refuse.
+laws:
+- Successive exact coboundaries and their L1 masses, evaluated by Gamma2 on an explicitly oriented finite simplicial
+  carrier. Missing boundary faces refuse.
+- Evaluation evidence does not authorize a state transition.
+rust_binding:
+  crate: core_functional
+  module: simplicial_defect
+  symbols:
+  - SimplicialDefectError
+  - SimplicialDefects
+  - evaluate_simplicial_defects
+  required_tests:
+  - oriented_triangle_has_one_closure_value_and_orientation_invariant_mass
+  - missing_faces_and_repeated_vertices_are_refusals
+negative_tests:
+- Malformed input or an impermissible comparison is refused.
+doctrine:
+  summary: Successive exact coboundaries and their L1 masses, evaluated by Gamma2 on an explicitly oriented finite
+    simplicial carrier. Missing boundary faces refuse.
+  non_role:
+  - Authorization

@@ -1,7 +1,7 @@
 ---
 paths:
-  - "engine/**"
-  - "adversary/infrastructure/providers/**"
+  - "code/rust/**"
+  - "ops/adversary/**"
   - "**/adapters/**"
 ---
 

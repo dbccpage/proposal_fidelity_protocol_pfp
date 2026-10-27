@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_nonnegative_packing:v0.1.0
+title: Bounded exact nonnegative packing certificates
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_nonnegative_packing
+  symbol: exact_nonnegative_packing
+  ascii_symbol: exact_nonnegative_packing
+  notation: Bounded exact nonnegative packing certificates
+  domain:
+  - Nonnegative rational A,b with at most64 rows and columns; shared declared candidate budget
+  codomain:
+    description: Declared finite results of core_solvers::convex_geometry; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Zero is feasible and unconstrained positive-objective columns refuse as unbounded
+- Zero-bound constraints force incident variables to zero
+- Finite primal and complementary dual active-set enumeration is complete within declared bounds
+- Independent replay of primal feasibility, dual inequalities and equal objectives proves optimality
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_solvers
+  module: solver_convex_vertex_enum
+  symbols:
+  - PackingWitness
+  - packing_optimum
+  - verify_packing_witness
+  required_tests:
+  - solver_convex_vertex_enum::tests::packing_optima_match_complete_small_grid_and_reject_corrupted_certificates
+negative_tests:
+- solver_convex_vertex_enum::tests::packing_optima_match_complete_small_grid_and_reject_corrupted_certificates
+doctrine:
+  summary: Zero is feasible and unconstrained positive-objective columns refuse as unbounded; Zero-bound constraints
+    force incident variables to zero; Finite primal and complementary dual active-set enumeration is complete
+    within declared bounds; Independent replay of primal feasibility, dual inequalities and equal objectives
+    proves optimality.
+  non_role:
+  - No infeasibility follows from an empty vertex list and a budget refusal is not a verdict
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,62 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED. The `structure:` block below is read by
+# pfp_runtime/build.rs, which generates an exhaustive destructure
+# of the named Rust type plus a serde conformance test. Adding, removing or
+# renaming a field without amending this contract is a COMPILE ERROR, not a
+# review finding.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:critical_peak_claim:v1.0.0"
+title: "Claimed Critical Peak"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    A producer's claim of one source term with two divergent reductions.
+  invariants:
+    - "Every field is producer testimony. The host re-derives both endpoints and never reads them as facts."
+    - "steps_inspected is producer-declared and MUST NOT be copied into a host verdict unreconciled."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp_runtime
+  rust_module: rewriting
+  rust_type: "CriticalPeakClaim"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: source
+      rust_type: "String"
+    - name: left
+      rust_type: "ReductionPath"
+    - name: right
+      rust_type: "ReductionPath"
+    - name: join
+      rust_type: "Option<String>"
+    - name: steps_inspected
+      rust_type: "u64"
+    - name: step_budget
+      rust_type: "u64"

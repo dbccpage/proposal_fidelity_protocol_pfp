@@ -1,0 +1,155 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:eigenvalue:v0.1.0
+title: Eigenvalue and Eigenvector Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: eigenvalue_eigenvector_pair
+  symbol: Av = λv, spectrum σ(A) = {λ₁, λ₂, ..., λₙ}
+  ascii_symbol: eigenvalue
+  notation: Av = λv, spectrum σ(A) = {λ₁, λ₂, ..., λₙ}
+  domain:
+  - 'operator: linear_map A: V → V'
+  - 'eigenvalue: scalar λ ∈ K'
+  - 'eigenvector: non_zero_vector v ∈ V'
+  - 'multiplicity: algebraic and geometric multiplicity'
+  codomain:
+    description: 'For a linear operator A: V → V, an eigenvalue λ ∈ K and eigenvector v ∈ V satisfy Av = λv with v ≠ 0. For symmetric real matrices, eigenvalues are real and form the spectrum σ(A).
+
+      '
+requirements:
+  required_structures:
+  - Matrix must have equal number of rows and columns
+  - Matrix must satisfy A[i,j] = A[j,i] within tolerance
+  - All matrix entries must be finite (no NaN, Inf)
+  - All computed eigenvalues must be finite
+  - abs_tol >= 0, rel_tol >= 0, both finite
+  - Eigenvalues returned in ascending order
+  - Results must not be used for candidate acceptance, ranking, rewards, or descent
+laws:
+- Av = λv for non-zero vector v
+- det(A - λI) = 0 determines eigenvalues
+- For symmetric real A, all eigenvalues λᵢ ∈ ℝ
+- Eigenvectors for distinct eigenvalues of symmetric A are orthogonal
+- tr(A) = Σλᵢ (sum of eigenvalues)
+- det(A) = Πλᵢ (product of eigenvalues)
+- A = QΛQ^T where Λ = diag(λ₁, ..., λₙ) and Q orthogonal
+replay:
+  requirements:
+  - No external state
+  - No randomness (nalgebra eigenvalue solver is deterministic)
+  - No time-dependent data
+  - Same input matrix and tolerances always produce same eigenvalues
+  - Floating-point operations may vary across platforms (use tolerance)
+relationships:
+- urn:math:contract:BasicMatrix:v1.0.0 serves as matrix_representation
+- urn:math:contract:LinearMap:v0.1.0 serves as linear_operator
+- urn:math:contract:VectorSpace:v0.1.0 serves as domain_and_codomain
+- urn:math:contract:Field:v0.1.0 serves as scalar_domain
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::eigen
+  symbols:
+  - SymmetricEigenvalueReport
+  - SymmetricEigenError
+  - compute_sorted_symmetric_eigenvalues
+  # One test per mechanically-checkable negative_test, in declaration order.
+  # The last negative_test is doctrinal (candidate-acceptance authority) and
+  # has no unit test.
+  required_tests:
+  - test_non_square_matrix
+  - test_nan_entry
+  - test_infinite_entry
+  - test_negative_tolerance
+  - test_non_symmetric
+  - test_near_symmetric_rejected
+negative_tests:
+- Matrix with unequal row lengths must be rejected
+- Matrix containing NaN must be rejected
+- Matrix containing Inf or -Inf must be rejected
+- Negative abs_tol or rel_tol must be rejected
+- Matrix with A[i,j] ≠ A[j,i] beyond tolerance must be rejected
+- Matrix with small asymmetry exceeding tolerance must be rejected
+- Attempt to use eigenvalues for candidate acceptance must be blocked
+doctrine:
+  summary: Defines eigenvalues and eigenvectors for symmetric real matrices over finite dimensional vector spaces. An eigenvalue λ and corresponding eigenvector v satisfy the fundamental equation Av = λv where A is a linear operator. This contract provides spectral decomposition, characteristic polynomial computation, and determinant-trace relationships. This is a numerical diagnostic helper only and confers no authority for proofs, certificates, or ranking decisions.
+  non_role:
+  - Authority for candidate acceptance, ranking, or rewards (forbidden)
+  - Proof certificates or descent validation (requires symbolic verification)
+  - Generalized eigenvalue problems Av = λBv (separate contract)
+  - Complex eigenvalues or non-symmetric matrices (requires complex spectral theory)
+  - Infinite-dimensional operators (requires functional analysis)
+  - Eigenvector computation (currently eigenvalues only)
+  - Certification of numerical accuracy (approximate only)
+wip:
+- Should eigenvector computation be added to this contract or separate?
+- How to handle generalized eigenvalue problems Av = λBv?
+- How to extend to complex eigenvalues for non-symmetric matrices?
+- Should we provide symbolic eigenvalue computation for small matrices?
+- How to certify numerical accuracy bounds for eigenvalues?
+- Can eigenvalue results be promoted to authority-bearing contracts?
+- Currently restricted to symmetric real matrices only
+- Eigenvalues computed via nalgebra::SymmetricEigen (approximate)
+- No eigenvector computation (eigenvalues only)
+- Strictly diagnostic - no authority for proofs or decisions
+- Floating-point tolerance required for symmetry check
+- Sorted output guaranteed for deterministic replay
+- Empty matrix (dimension 0) handled as special case
+- Trace and determinant computed from eigenvalues (post-hoc)
+- No support for infinite-dimensional operators
+- No support for complex eigenvalues or non-Hermitian matrices
+
+# === CANONICAL CONTRACT ABOVE ===
+# Stage-2 realization scan (chunk 03, 2026-07-31). AuthorityEffect: None.
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STAGE1_MECHANICAL_PASS
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Mechanical GTLA field gates passed (authority/math/non_role/structures/laws-or-requirements/negative_tests). Not PROVED."
+    recommendation: "Repair under meth-level math re-review (ADR-007); not GlobalGreen."
+
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: REALIZATION_PRESENT_DIAGNOSTIC_ONLY
+    severity: medium
+    claim_class: "[CODE_DEMO_RUST]"
+    file: engine/crates/core_linear_algebra/src/linear_algebra/eigen.rs
+    yaml_law: >
+      Symmetric real eigenvalues with Av=λv, spectral relations; rust_binding module "eigen"
+      (resolved under linear_algebra::eigen)
+    code_behavior: >
+      compute_sorted_symmetric_eigenvalues + SymmetricEigenvalueReport/SymmetricEigenError:
+      square/finite/symmetry/tolerance gates; nalgebra SymmetricEigen; sorted f64 eigenvalues.
+      No eigenvector output; 0-dim accepted; doctrine matches diagnostic-only fence.
+    delta: MATCH_CORE_WITH_NUMERICAL_SCOPE
+    detail: >
+      Binding symbols present. Structural negative paths (non-square, NaN/Inf, bad tol,
+      asymmetry) align with YAML negative_tests. Spectral identities (trace/det/QΛQ^T) are
+      stated in YAML but not discharged as proofs in code — numerical helper only.
+    recommendation: >
+      Keep authority fence. Align rust_binding.module to linear_algebra::eigen if gate
+      requires fully-qualified path. No PROVED/GlobalGreen.

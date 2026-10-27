@@ -8,6 +8,8 @@ from typing import Annotated, Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, model_validator
 
+from operads.canon import CAPABILITY_WIRE_TYPE, OPERAD_COLOUR
+
 from ..domain.anti_skills.anti_skill_v2 import PredicateAtomV1, PredicateExpressionV1
 from ..domain.anti_skills.json_wire import loads_strict_json
 from ..domain.capability_catalog_v1 import ResourceRefV1
@@ -16,10 +18,8 @@ PROFILE = "oewas.sorted-ascii-json.v1"
 SCHEMA = "oewas.typed-capability.v1"
 ROOT = "operads/catalog/contracts/v1"
 Identifier = Annotated[str, Field(pattern=r"^[a-z][a-z0-9-]{0,63}$")]
-Colour = Literal[
-    "Audit", "Code", "Contract", "Diagram", "Ledger", "Paper", "Post", "Proof", "Receipt", "State"
-]
-WireType = Literal["anti_skill_subject", "anti_skill_hits", "typed_audit_receipt", "code_text"]
+Colour = Literal[OPERAD_COLOUR]
+WireType = Literal[CAPABILITY_WIRE_TYPE]
 Text = Annotated[str, Field(min_length=1, max_length=4096)]
 
 

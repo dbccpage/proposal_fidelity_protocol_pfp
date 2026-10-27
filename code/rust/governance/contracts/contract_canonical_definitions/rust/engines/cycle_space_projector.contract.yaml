@@ -1,0 +1,46 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:qm:cycle_space_projector:file:v1.1.0
+crate: engines
+file: crates_rs/engines/src/quantum/cycle_space_projector.rs
+role: diagnostic_cycle_space_projector
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - approximate_numeric_cycle_space_basis_for_graph_diagnostics
+does_not_own:
+  - exact_homology_certificate
+  - phi1
+  - gamma2
+  - authority
+may_call:
+  - nalgebra
+must_not:
+  - claim exact homology certificate
+  - use wrong nullspace orientation
+  - return node-space vectors as edge-space cycles
+  - panic on rectangular incidence cases
+  - mint authority
+exactness:
+  numeric_mode: f64_diagnostic_only
+  exact_certificate_allowed: false
+  expected_cycle_vector_space: edge_space_kernel_of_incidence_B
+forbidden_substrings:
+  - "exact homology certificate"
+  - "CertifiedAuthority"
+  - "ExactRepair"
+  - "panic!"
+  - "unwrap()"
+  - "expect("
+required_substrings:
+  - "B * v"
+  - "n_edges"
+required_tests:
+  - cycle_basis_vectors_have_edge_dimension
+  - cycle_basis_satisfies_incidence_kernel
+  - rectangular_incidence_no_panic
+  - two_triangles_shared_vertex_cycle_rank
+lean_obligations:
+  - QM-D7 cycle-space projector returns edge vectors v with B*v = 0

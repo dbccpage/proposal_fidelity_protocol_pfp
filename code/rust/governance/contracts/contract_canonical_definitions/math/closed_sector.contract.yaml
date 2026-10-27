@@ -1,0 +1,168 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:closed_sector:v1.0.0
+title: Closed degree-1 sector
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:cochain_layer:v1.0.0
+    - urn:core:math:gamma2_closure_defect:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Z¹ is the subspace of degree-1 cochains whose degree-1 coboundary vanishes.
+  symbol: Z¹
+  ascii_symbol: Z1
+  formula: Z¹ = ker(d₁)
+  1. Contract metadata:
+    title: Closed degree-1 sector
+    version: 0.1.0
+    object_type: kernel_subspace
+  2. Mathematical object / functional role:
+    role: Z¹ is the subspace of degree-1 cochains whose degree-1 coboundary vanishes.
+    purpose: Separates closed residuals from open obstruction residuals.
+    non_role:
+    - Does not imply exact repair.
+    - Does not imply Φ₁ = 0.
+    - Does not classify policy admissibility.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: 'C¹ with d₁: C¹ → C²'
+    codomain: subspace Z¹ ⊆ C¹
+  4. Required structures:
+    required:
+    - 'd₁: C¹ → C²'
+    - C¹ basis
+    - C² basis
+    - coefficient domain R
+    optional_materialization:
+    - kernel basis for Z¹
+    - kernel basis normalization policy
+  5. Definition:
+    closed_condition: h ∈ Z¹ iff d₁h = 0.
+    closure_mode:
+      exact: Closed iff d₁h = 0 exactly.
+      tolerance: Closed within tolerance iff ||d₁h|| <= ε under a declared tolerance profile.
+    closure_defect: Γ₂([h]) = ||d₁h||₁; Γ₂ = 0 iff h is closed in exact mode.
+  6. Laws and invariants:
+    kernel: Z¹ = ker(d₁).
+    subspace: Z¹ is a subspace/submodule of C¹ over the declared coefficient domain.
+    exacts_are_closed: B¹ ⊆ Z¹ whenever d₁ ∘ d₀ = 0.
+    degree_requirement: Z¹ is undefined without C² and d₁ data.
+    closed_not_exact: h ∈ Z¹ does not imply h ∈ B¹.
+  7. Equality / equivalence rules:
+    element_equality: Closed elements are equal as C¹ vectors under the fixed basis.
+    closed_sector_equivalence: Closed sectors are identified only under strict layer equality or a declared
+      layer equivalence.
+    tolerance_equality: Approximate closure requires declared tolerance profile and does not equal exact
+      closure.
+  8. Replay / determinism requirements:
+    requirements:
+    - d₁h computation must replay exactly or under declared tolerance profile.
+    - Kernel basis policy must be deterministic if Z¹ basis is materialized.
+    - Layer, d₁, C¹ basis, and C² basis must be frozen for replay.
+  9. Relationship to other Core primitives:
+    relationships:
+      B1: B¹ ⊆ Z¹ when d₁d₀ = 0.
+      Q1: A closed representative may still define a nonzero class in Q¹.
+      H1: H¹ = Z¹ / B¹.
+      Gamma2: Γ₂ detects failure to lie in Z¹.
+      Phi1: Φ₁ distinguishes exact from non-exact closed residuals.
+      StabilizedSurvivor: Φ₁ > 0 and Γ₂ = 0 means closed non-exact residual.
+      OpenObstruction: Φ₁ > 0 and Γ₂ > 0 means residual is not closed.
+  10. Rust descriptor shape:
+    sketch: "pub struct ClosedSectorDescriptor {\n    pub layer_hash: String,\n    pub d1_hash: String,\n\
+      \    pub c1_basis_hash: String,\n    pub c2_basis_hash: String,\n    pub coefficient_domain_hash:\
+      \ String,\n    pub kernel_basis_hash: Option<String>,\n    pub kernel_basis_policy_hash: Option<String>,\n\
+      \    pub tolerance_profile_hash: Option<String>,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - Closed claim with d₁h != 0 in exact mode.
+    - Closed claim with ||d₁h|| > ε in tolerance mode.
+    - Missing d₁.
+    - Degree-2 structure absent.
+    - h ∈ Z¹ interpreted as h ∈ B¹.
+    - h ∈ Z¹ interpreted as Φ₁ = 0.
+    - Kernel basis materialized without deterministic basis policy.
+  12. Open questions / WIP status:
+    wip:
+    - Kernel basis normalization policy.
+    - Exact-vs-tolerance closure modes.
+    - Submodule handling when coefficient domain is not a field.
+  compact_yaml:
+    CLOSED_SECTOR_CONTRACT:
+      symbol: Z¹
+      ascii_symbol: Z1
+      formula: Z¹=ker(d₁)
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: C¹ with d₁:C¹→C²
+      codomain: Z¹⊆C¹
+      required_structures:
+      - d₁
+      - C¹ basis
+      - C² basis
+      - coefficient domain R
+      definition: h∈Z¹ iff d₁h=0
+      laws:
+      - Z¹ is kernel of d₁
+      - B¹⊆Z¹ when d₁d₀=0
+      - closed does not imply exact
+      forbidden_interpretations:
+      - closed sector without C²/d₁
+      - Γ₂ without degree-2 data
+      - closed means exact
+      - h∈Z¹ implies Φ₁=0
+      relationships:
+      - H¹=Z¹/B¹
+      - Γ₂ detects nonclosure
+      - Φ₁ distinguishes exact from non-exact closed residuals
+      - stabilized survivor requires Φ₁>0 and Γ₂=0
+      negative_tests:
+      - d₁h nonzero
+      - missing d₁
+      - missing C²
+      - closed treated as exact
+      - kernel basis without policy
+      open_questions:
+      - kernel basis policy
+      - tolerance closure mode
+      - non-field coefficient domains
+
+# === CANONICAL CONTRACT ABOVE ===
+# Debate below is NON-CANONICAL. AuthorityEffect: none. Not contract law.
+
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none; do not read as certification."
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects: []
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: NO_DEDICATED_REALIZATION
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: >
+      No dedicated Rust realization resolved for this math contract
+      (rust_binding missing or non-resolving; no unambiguous matching .rs module).
+    recommendation: >
+      Land a one-YAML-one-file realization under ADR-007a, or keep DEFERRED explicitly.
+    file: null
+    delta: YAML_AHEAD_OF_CODE

@@ -1,0 +1,90 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:associator_witness:v0.1.0
+title: AssociatorWitness Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: associator_witness
+  symbol: 'alpha_{A,B,C}: (A * B) * C -> A * (B * C)'
+  ascii_symbol: associator_witness
+  notation: 'alpha_{A,B,C}: (A * B) * C -> A * (B * C)'
+  domain:
+  - 'left_object: object_or_morphism_A'
+  - 'middle_object: object_or_morphism_B'
+  - 'right_object: object_or_morphism_C'
+  - 'source_bracketing: (A * B) * C'
+  - 'target_bracketing: A * (B * C)'
+  - 'associator_morphism: invertible_map alpha: source -> target'
+  - 'inverse_morphism: alpha_inverse: target -> source'
+  codomain:
+    description: 'A tuple (A, B, C, alpha_{A,B,C}) where A, B, C are composable objects or morphisms and alpha is the invertible coherence map from the left bracketing to the right bracketing.
+
+      '
+requirements:
+  required_structures:
+  - alpha_inverse . alpha = id on source, alpha . alpha_inverse = id on target
+  - Source is (A * B) * C and target is A * (B * C)
+  - Associator is natural with respect to morphisms in A, B, C
+  - Artifact hash is deterministically computed from structural data
+laws:
+- 'alpha is an isomorphism: alpha_inverse . alpha = id and alpha . alpha_inverse = id'
+- alpha is natural in A, B, C
+- Source is (A * B) * C and target is A * (B * C)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Associator and inverse application from canonical morphism tables
+  - Rechecking must reproduce invertibility_witness_hash
+relationships:
+- urn:math:contract:Category:v1.0.0 serves as Ambient category containing the objects and morphisms
+- urn:math:contract:NaturalTransformation:v1.0.0 serves as Associator is a natural isomorphism
+- urn:math:contract:Equivalence:v1.0.0 serves as Invertibility of the associator morphism
+negative_tests:
+- Associator morphism without valid inverse must be rejected
+- Source/target not matching (A*B)*C and A*(B*C) must be rejected
+- Non-natural associator must be rejected
+- Artifact claiming authority must be rejected
+doctrine:
+  summary: 'An associator witness records the coherence isomorphism alpha_{a,b,c}: (a * b) * c -> a * (b * c) for a triple of composable morphisms (or objects in a monoidal category). The witness includes the source triple, the two bracketings, and the invertible 2-cell mediating between them. It must satisfy the pentagon coherence condition when composed with other associator witnesses.'
+  non_role:
+  - Full monoidal category validation (separate contract)
+  - Pentagon axiom global verification (that requires all associators)
+  - Unitor witnesses (separate left/right unitor contracts)
+  - Mac Lane coherence theorem proof (meta-theorem)
+wip:
+- Should the pentagon axiom be checked here or only at the monoidal category level?
+- How to handle lax associators (non-invertible) for lax monoidal functors?
+- Should the contract track which coherence theorem applies (Mac Lane)?
+- Currently records a single associator instance, not the full natural family
+- Pentagon axiom verification requires all four-fold associators (separate contract)
+- Mac Lane coherence theorem asserts all diagrams commute but is not checked here
+- Lax associators (non-invertible) may need a separate contract
+rust_binding:
+  crate: core_higher_category_theory
+  module: bicategory
+  symbols:
+    - Invertible2Cell
+    - FiniteBicategory
+    - Bicategory
+  required_tests:
+    - test_invertibility_violation_caught
+    - test_triangle_coherence_verified

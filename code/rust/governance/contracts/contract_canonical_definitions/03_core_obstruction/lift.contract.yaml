@@ -1,0 +1,326 @@
+schema_version: core.contract.v1
+contract_id: urn:core:obstruction:lift:v1.0.0
+title: Lift
+kind: obstruction_contract
+status: mathematical_wip
+layer: 03_obstruction
+role: Lift
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - Obstruction
+    - Witness
+    - CertificateKernel
+    - Meta
+    - Engine
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the Lift boundary.
+
+
+    Lift defines licensed carrier extension.
+
+    Lift does not repair, retry, adapt, search, override policy, terminalize, mutate by itself,
+
+    or execute by itself.
+
+    '
+  non_role: &id002
+  - repair
+  - retry
+  - adapter conversion
+  - operator application
+  - search expansion
+  - policy override
+  - direct execution
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate, terminalize,
+
+      authorize transitions, execute transitions, license lifts, prove minimality, or upgrade
+
+      evidence authority.
+
+
+      An LLM may propose a LiftRequest or MetaLiftContract candidate, but that proposal is
+
+      EvidenceOnly until checked by MetaJudgment, CertificateKernel, and the Licensing boundary.
+
+      '
+  effect_class_binding:
+    doctrine: 6
+    text: 'Lift is NOT an effect-class (E/I/C/R/M). Lift is lift machinery -- it defines how the
+
+      structural carrier expands to internalize an irreducible obstruction. The effect-classes
+
+      E, I, C, R, M operate within a fixed carrier; Lift changes the carrier itself.
+
+      '
+    operator_note: 'Only E (exact repair), I (quotient isometry), C (context embedding), R (residual projection),
+
+      and M (refused mutation) are operators. Lift is not an operator.
+
+      See fixed_layer_operator_algebra_contract.md.
+
+      '
+  classification:
+    subsystem: Obstruction Resolution
+    role: Licensed carrier extension (lift machinery).
+    classification: Obstruction layer -- carrier expansion.
+  core_definition: 'A Lift defines exactly how the structural carrier expands to internalize an irreducible
+
+    obstruction. It is not an arbitrary modification.
+
+    '
+  what_lift_is_not:
+  - repair
+  - retry
+  - adapter conversion
+  - operator application
+  - search expansion
+  - policy override
+  what_lift_is: 'A typed licensed transition schema from C_N to C_{N+1}, executable only by Engine after
+    a
+
+    valid LiftLicense is present.
+
+    '
+  core_invariant: No lift without inhabited LiftLicense.
+  lift_artifact:
+    description: Every lift requires a rigorous structural derivation.
+    schema:
+      source_carrier: C_N
+      target_carrier: C_{N+1}
+      delta: schema_extension
+      obstruction_witness: witness_id
+      descent_blocked_witness: exhaustion_witness_id
+      persistence_witness: persistence_witness_id
+      authority_license: license_id
+      cost_derivation: eta_cost_struct
+      minimality_argument: congruence_restoration_proof
+    artifact_envelopes:
+      LiftRequest: EvidenceEnvelope
+      MetaLiftDecision: DecisionEnvelope
+      MetaLiftContract: EvidenceEnvelope or FactEnvelope after checking
+      LiftLicense: ActionLicense
+      EngineAppliedLift: Action
+  structural_representation:
+    lift_request:
+      struct_name: LiftRequest
+      fields:
+      - name: request_id
+        type: LiftRequestId
+      - name: source_carrier
+        type: CarrierRef
+      - name: target_carrier_schema
+        type: CarrierSchemaRef
+      - name: obstruction_ref
+        type: ObstructionId
+      - name: requested_delta
+        type: CarrierDelta
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: request_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    lift_license:
+      struct_name: LiftLicense
+      fields:
+      - name: license_id
+        type: LiftLicenseId
+      - name: contract_ref
+        type: MetaLiftContractId
+      - name: source_carrier
+        type: CarrierRef
+      - name: target_carrier_schema
+        type: CarrierSchemaRef
+      - name: obstruction_ref
+        type: ObstructionId
+      - name: allowed_delta
+        type: CarrierDelta
+      - name: authority_refs
+        type: Vec<AuthorityRef>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: expiry
+        type: Option<Epoch>
+      - name: license_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: AuthorizesTransition
+    meta_lift_contract:
+      struct_name: MetaLiftContract
+      fields:
+      - name: contract_id
+        type: MetaLiftContractId
+      - name: source_carrier
+        type: CarrierRef
+      - name: target_carrier_schema
+        type: CarrierSchemaRef
+      - name: obstruction_ref
+        type: ObstructionId
+      - name: carrier_delta
+        type: CarrierDelta
+      - name: minimality_witness
+        type: WitnessId
+      - name: persistence_witness
+        type: WitnessId
+      - name: descent_blocked_witness
+        type: WitnessId
+      - name: preservation_requirements
+        type: Vec<InvariantId>
+      - name: forbidden_losses
+        type: Vec<InvariantId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: replay_refs
+        type: Vec<ReplayRef>
+      - name: contract_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+        promotion_condition: checked_evidence_boundary_passed
+    enums:
+    - name: CarrierDelta
+      variants:
+      - name: AddGenerator
+        fields:
+          generator_kind: GeneratorKind
+      - name: AddContext
+        fields:
+          context_kind: ContextKind
+      - name: AddObservable
+        fields:
+          observable_kind: ObservableKind
+      - name: AddRelation
+        fields:
+          relation_kind: RelationKind
+      - name: AddCell
+        fields:
+          cell_kind: CellKind
+      - name: AddBoundary
+        fields:
+          boundary_kind: BoundaryKind
+      - name: ChangeRepresentation
+        fields:
+          representation_kind: RepresentationKind
+  execution_boundary: "Lift artifacts do not execute carrier extension.\n\nOnly Engine may execute a lift,\
+    \ and only after a valid LiftLicense is present.\n\nRequired flow:\n  ObstructionArtifact / checked\
+    \ obstruction evidence\n  -> LiftRequest\n  -> MetaJudgment\n  -> MetaLiftDecision\n  -> checked MetaLiftContract\n\
+    \  -> LiftLicense\n  -> Engine executes licensed lift\n  -> Trace records action\n"
+  decision_boundary: 'Lift defines licensed carrier expansion. Engine executes lift only after a valid
+
+    LiftLicense authorizes the checked MetaLiftContract and required replay/certificate
+
+    checks pass.
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - apply_lift_now(
+    - execute_lift(
+    - mutate_carrier(
+    - override_policy(
+    - retry_lift(
+    - repair_via_lift
+    - search_expansion(
+    - PolicyDecision
+    - TerminalEnvelope
+    - EngineResult
+    - ALLOW_OUTPUT
+    - BLOCK_OUTPUT
+    - GaugeOp
+    - AdapterOp
+    - ForgetfulOp
+    - OperatorFactEnvelope
+    - OperatorId
+    - OperatorKind
+    - BasisOperator
+    - ExtendOperatorClass
+    - ExtendEffectClass
+    - self_license(
+    - self_execute(
+    - embed_license_in_contract
+  required_tests:
+  - lift_without_license_fails
+  - lift_without_obstruction_fails
+  - lift_without_minimality_witness_fails
+  - lift_without_persistence_witness_fails
+  - lift_does_not_execute
+  - lift_does_not_mutate_carrier
+  - lift_does_not_override_policy
+  - lift_license_hash_is_stable
+  - lift_request_defaults_to_evidence_only
+  - metalift_contract_defaults_to_evidence_only
+  - lift_license_authority_effect_is_authorizes_transition
+  - engine_lift_action_authority_effect_is_state_transition
+  - carrier_delta_cannot_extend_effect_class
+  - lift_request_does_not_contain_own_license
+  - lift_license_references_checked_contract
+  - metalift_contract_does_not_embed_license
+  - lift_license_authorizes_but_does_not_execute
+  - lift_without_engine_execution_does_not_mutate_carrier
+  - lift_requires_obstruction_witness_persistence_and_minimality_evidence
+  - new_effect_class_requires_constitutional_amendment
+  - no_forbidden_op_suffix_tokens
+  negative_capability_tests:
+  - name: test_lift_without_license_fails
+    language: python
+    code: "def test_lift_without_license_fails():\n  req = LiftRequest(\n    source_carrier=\"C0\",\n\
+      \    target_carrier=\"C1\",\n    obstruction_ref=\"obs1\",\n    license_ref=None,\n  )\n  with pytest.raises(ValueError):\n\
+      \    validate_lift_request(req, {})\n"
+  canonical_invariant: 'Lift machinery separates request, decision, contract, license, and execution.
+    LiftRequest
+
+    is EvidenceOnly. MetaJudgment decides admissibility. MetaLiftContract describes the
+
+    carrier-extension schema. LiftLicense authorizes the Engine to attempt the transition.
+
+    Engine alone executes the lift. Lift does not repair, adapt, search, override policy,
+
+    terminalize, mutate, or execute by itself.
+
+    '
+  legacy_metadata:
+    name: Lift
+    role: Licensed carrier extension
+    version: '2.0'
+    classification: obstruction
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - DecisionEnvelope
+    - ActionLicense
+    - FactEnvelope
+    - EvidenceEnvelope
+    referenced_domain_kinds:
+    - WitnessEnvelope
+    - CertificateEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.

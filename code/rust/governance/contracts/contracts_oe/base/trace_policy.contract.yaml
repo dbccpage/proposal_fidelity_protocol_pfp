@@ -1,0 +1,38 @@
+schema_version: core.contract.v1
+contract_id: urn:core:evidence:trace_policy:v1.0.0
+title: TracePolicy
+kind: evidence_contract
+status: active
+layer: 02_evidence
+role: Policy
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Access and recording policy for execution trace collection.
+  non_role: []
+rust_binding:
+  crate: core_replay
+  module: trace_policy
+  symbols:
+  - TracePolicy
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_evidence_contract:v1.0.0"
+  coalescence_mode: "specializes"
+  coalesces_with:
+    - "urn:core:evidence:trace_artifact:v1.0.0"

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Operad type registry gate: the YAML type registry against the code and data that declare it.
+"""Operad type registry gate: the operad canon against the code and data that declare it.
 
-The registry is ``skill_operad/yaml/operad_types/*.yaml``. Each type names its canonical value
-set and every source that declares or uses it today: a Python enum, ``Literal`` or constant, a
+Each type's canonical value set is defined once, in the Rust crate ``code/rust/core_operad_canon``,
+and read here from its generated rendering ``operads/canon/operad_canon.json``. The registry,
+``skill_operad/yaml/operad_types/*.yaml``, lists every source that declares or uses each type today: a Python enum, ``Literal`` or constant, a
 Rust enum or struct, a field in a JSON or YAML data file, or a field in skill frontmatter. The
 gate extracts each source and fails when its values differ from the values the registry records
 for it, so a source cannot drift without the registry being updated in the same change.
@@ -30,6 +31,9 @@ from pathlib import Path
 import yaml
 
 REGISTRY_DIR = Path(__file__).resolve().parents[1] / "yaml" / "operad_types"
+CANON_JSON = Path("operads") / "canon" / "operad_canon.json"
+CANON_FIELDS = ("status", "closed", "values", "decision", "letters_of")
+IMPORT_ROOTS = ("", "ops")  # the repository root, and ops/ whose packages import as top-level names
 STATUSES = frozenset({"SETTLED", "PROPOSED"})
 SOURCE_KINDS = ("python", "rust_enum", "rust_struct", "data", "skills")
 ROLES = ("declares", "uses", "part")
@@ -179,6 +183,19 @@ def extract(root: Path, source: dict) -> list:
     return _skills(root, source)
 
 
+def load_canon(root: Path) -> dict[str, dict]:
+    """The canonical block of every type, from the canon's generated JSON."""
+    document = json.loads((root / CANON_JSON).read_text(encoding="utf-8"))
+    return {entry["id"]: {key: entry[key] for key in CANON_FIELDS if key in entry} for entry in document["types"]}
+
+
+def _ensure_import_roots(root: Path) -> None:
+    for relative in IMPORT_ROOTS:
+        path = str((root / relative).resolve())
+        if path not in sys.path:
+            sys.path.insert(0, path)
+
+
 def load_registry(directory: Path = REGISTRY_DIR) -> list[dict]:
     types = []
     for path in sorted(directory.glob("*.yaml")):
@@ -205,6 +222,7 @@ def _label(source: dict) -> str:
 
 
 def check_type(root: Path, entry: dict, canonical_of: dict[str, set[str]] | None = None) -> list[Finding]:
+    """Check one type; ``entry["canonical"]`` is the canon's block (or a test registry's own)."""
     type_id = entry.get("id", "?")
     findings = []
     canonical = entry.get("canonical") or {}
@@ -245,22 +263,43 @@ def check_type(root: Path, entry: dict, canonical_of: dict[str, set[str]] | None
     if alphabet:
         letters = (canonical_of or {}).get(alphabet, set())
         agree.append(all(char in letters for value in values for char in value))
-    if not agree:
+    if not agree and not entry.get("external"):
         findings.append(Finding(type_id, "NO_SOURCES", "every type names at least one source"))
     elif status == "SETTLED" and not all(agree):
         findings.append(Finding(type_id, "SETTLED_BUT_DIVERGENT", "a source differs from the canonical set"))
-    elif status == "PROPOSED" and all(agree):
+    elif status == "PROPOSED" and all(agree) and not entry.get("external"):
         findings.append(Finding(type_id, "PROPOSED_BUT_AGREED", "every source agrees; mark it SETTLED"))
     if status == "PROPOSED" and not str(canonical.get("decision", "")).strip():
         findings.append(Finding(type_id, "DECISION_MISSING", "a proposed type states the decision needed"))
     return findings
 
 
+def _attach_canon(types: list[dict], canon: dict[str, dict], complete: bool) -> list[Finding]:
+    """Give each registry entry its canonical block from the canon; the YAML must not restate it."""
+    findings = []
+    for entry in types:
+        type_id = entry.get("id", "?")
+        if type_id in canon:
+            if "canonical" in entry:
+                findings.append(Finding(type_id, "CANONICAL_RESTATED",
+                    f"{entry['_file']} restates values that core_operad_canon defines; delete the block"))
+            entry["canonical"] = canon[type_id]
+        elif complete or "canonical" not in entry:
+            findings.append(Finding(type_id, "NOT_IN_CANON", "add the type to code/rust/core_operad_canon"))
+    if complete:
+        registered = {entry.get("id") for entry in types}
+        findings.extend(Finding(type_id, "UNREGISTERED", "the canon defines a type no registry entry lists")
+                        for type_id in canon if type_id not in registered)
+    return findings
+
+
 def run(root: Path, directory: Path = REGISTRY_DIR) -> tuple[list[dict], list[Finding]]:
+    """Check a registry; the checked-in one must list exactly the canon's types."""
+    _ensure_import_roots(root)
     types = load_registry(directory)
+    findings = _attach_canon(types, load_canon(root), complete=directory == REGISTRY_DIR)
     canonical_of = {entry.get("id"): set(map(str, (entry.get("canonical") or {}).get("values") or []))
                     for entry in types}
-    findings = []
     seen = set()
     for entry in types:
         if entry.get("id") in seen:
@@ -277,8 +316,6 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # DDC letters include U+039B
     root = (args.repo_root or repo_root()).resolve()
-    if str(root) not in sys.path:
-        sys.path.insert(0, str(root))
     types, findings = run(root)
     if args.observe:
         for entry in types:

@@ -4,7 +4,7 @@ description: "Gate PFP and Symbol Game work: isolated answers, strict schemas, r
 operad_source_colours: ["Code", "Paper"]
 operad_target_colour: "Receipt"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 families: [governance, pfp, symbol-game, testing, clean-architecture]
 ---
 

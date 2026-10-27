@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_unitary_cayley_atlas:v0.1.0
+title: Exact Unitary Cayley Phase Atlas
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_unitary_cayley_atlas
+  symbol: exact_unitary_cayley_atlas
+  ascii_symbol: exact_unitary_cayley_atlas
+  notation: Exact Unitary Cayley Phase Atlas
+  domain:
+  - Hermitian/unitary exact matrices of square dimension 1..=32 over a declared ComplexField
+  codomain:
+    description: Declared finite results of core_lie_theory::cayley_unitary; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Cayley generator and step are inverse charts on their admitted domains
+- Composition uses the exact rational generator law
+- A scalar unit phase changes the chart and admits the swap excluded by the identity chart
+- A cut-locus refusal carries the exact kernel dimension
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_lie_theory
+  module: cayley_unitary
+  symbols:
+  - cayley_unitary
+  - cayley_generator
+  - phase_chart_generator
+  - phase_chart_step
+  - compose_generators
+  - UnitaryCayleyError
+  required_tests:
+  - cayley_charts_invert_and_compose_exactly
+  - a_phase_chart_admits_the_swap_excluded_from_the_identity_chart
+  - malformed_nonhermitian_nonunitary_and_nonunit_phase_are_refused
+negative_tests:
+- Non-Hermitian, nonunitary, rectangular and nonunit-phase inputs are refused
+- The identity chart refuses an exact -1 eigenvalue
+doctrine:
+  summary: Cayley generator and step are inverse charts on their admitted domains; Composition uses the exact
+    rational generator law; A scalar unit phase changes the chart and admits the swap excluded by the identity
+    chart; A cut-locus refusal carries the exact kernel dimension.
+  non_role:
+  - No matrix exponential or continuum-time evolution claim
+  - A chart domain is not the entire unitary group
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

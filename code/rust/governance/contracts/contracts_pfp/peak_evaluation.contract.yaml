@@ -1,0 +1,70 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED. The `structure:` block below is read by
+# pfp_runtime/build.rs, which generates an exhaustive destructure
+# of the named Rust type plus a serde conformance test. Adding, removing or
+# renaming a field without amending this contract is a COMPILE ERROR, not a
+# review finding.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:peak_evaluation:v1.0.0"
+title: "Critical Peak Evaluation"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY", "FW-PRESENTATION-UNKNOWN"]
+
+doctrine:
+  summary: >-
+    A peak verdict together with the provenance of the rules that produced it.
+    The verdict alone is presentation-relative and reads as a host guarantee it
+    is not; this packet is what makes the difference visible on the wire.
+  invariants:
+    - "presentation_digest is derived by the host from the presentation it
+       evaluated, never copied from the claim."
+    - "A decision verdict (Joined or NotJoinable) reached under a
+       ProducerDeclared presentation is reported by token() as
+       SELF_CONSISTENT_ONLY, never as JOINED or NOT_JOINABLE."
+    - "NeedsEvidence and BoundedWithUnjoinedPeak decide nothing, so provenance
+       does not change their token."
+    - "The FW-PRESENTATION-UNKNOWN obligation is raised whenever the
+       presentation is unpinned, whatever the verdict is: it is a fact about
+       the rules, not about the claim."
+    - "The verdict is never suppressed. The join really does exist under the
+       declared rules; what is withheld is the host's endorsement of it."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp_runtime
+  rust_module: rewriting
+  rust_type: "PeakEvaluation"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: verdict
+      rust_type: "PeakVerdict"
+    - name: presentation_digest
+      rust_type: "String"
+    - name: authority
+      rust_type: "PresentationAuthority"
+    - name: obligations
+      rust_type: "Vec<String>"

@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_lattice_gauge:v0.1.0
+title: Finite Ising and Z2 Gauss carriers
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_lattice_gauge
+  symbol: finite_lattice_gauge
+  ascii_symbol: finite_lattice_gauge
+  notation: Finite Ising and Z2 Gauss carriers
+  domain:
+  - Open TFIM1..8 sites and admitted finite F2 chain complex.
+  codomain:
+    description: Declared finite results of core_quantum_physics::lattice_gauge_manybody_benchmark; exact
+      and diagnostic routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The bit-basis Ising Hamiltonian is computed exactly.
+- Gauss states are the kernel of d1 and have dimension2^(E-rank d1).
+- Magnetic cycle flips preserve Gauss constraints and noncycles are refused.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: lattice_gauge_manybody_benchmark
+  symbols:
+  - open_tfim
+  - Z2LatticeGauge
+  required_tests:
+  - finite_ising_spectrum_and_gauss_constraints_use_declared_carriers
+negative_tests:
+- finite_ising_spectrum_and_gauss_constraints_use_declared_carriers
+doctrine:
+  summary: The bit-basis Ising Hamiltonian is computed exactly.; Gauss states are the kernel of d1 and have
+    dimension2^(E-rank d1).; Magnetic cycle flips preserve Gauss constraints and noncycles are refused..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

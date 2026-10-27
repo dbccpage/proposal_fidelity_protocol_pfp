@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:causal_commuting_scopes:v0.1.0
+title: Finite microcausality and declared tensor-factor scope
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: causal_commuting_scopes
+  symbol: causal_commuting_scopes
+  ascii_symbol: causal_commuting_scopes
+  notation: Finite microcausality and declared tensor-factor scope
+  domain:
+  - Finite posets up to4096 events, common Hermitian carrier<=64; scoped two-qubit factors
+  codomain:
+    description: Declared finite results of core_quantum_physics::commuting_observables; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- General causality checks every incomparable commutator
+- Certificates record and replay the exact incomparable pair set
+- Factor labels are accepted only after matrix membership is verified
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: commuting_observables
+  symbols:
+  - check_microcausality
+  - verify_microcausality_certificate
+  - is_local_factor_operator
+  - validate_observable_assignment
+  required_tests:
+  - measurement_exact_laws::general_microcausality_does_not_require_a_two_factor_colouring
+negative_tests:
+- measurement_exact_laws::general_microcausality_does_not_require_a_two_factor_colouring
+doctrine:
+  summary: General causality checks every incomparable commutator; Certificates record and replay the exact
+    incomparable pair set; Factor labels are accepted only after matrix membership is verified.
+  non_role:
+  - An odd cycle obstructs a two-colour factor assignment rather than general commuting observables
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

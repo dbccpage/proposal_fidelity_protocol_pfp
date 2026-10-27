@@ -1,0 +1,52 @@
+{
+  "fixture_id": "pos_oracle_needed_continuum",
+  "kind": "positive_boundary",
+  "authority_effect": "None",
+  "global_green": false,
+  "finite_qm_contract_field_refs": {
+    "schema_version": "FiniteQMContractV1",
+    "contract_urn": "urn:core:math:finite_qm:v1.0.0",
+    "field_names": [
+      "schema_version",
+      "contract_urn",
+      "authority_effect",
+      "carrier",
+      "certificate",
+      "continuum_debt"
+    ]
+  },
+  "system": {
+    "shadows": ["K1", "K2"],
+    "refinements": [["K1", "K2"]],
+    "topology": "finite_matrix_norm_topology",
+    "cofinal_for_query": true,
+    "error_budget": { "numer": 0, "denom": 1 },
+    "convergence_witness": null
+  },
+  "cases": [
+    {
+      "case_id": "python_dual_parity_finite",
+      "require_continuum": false,
+      "expected_status": "pass",
+      "expected_terminal": "FiniteShadowReplay"
+    },
+    {
+      "case_id": "python_dual_parity_continuum",
+      "require_continuum": true,
+      "expected_status": "conditional",
+      "expected_terminal": "OracleNeeded(Convergence)"
+    }
+  ],
+  "distributions": [
+    {
+      "case_id": "pure_atom_joint",
+      "a": { "n": 2, "masses": [5, 0] },
+      "b": { "n": 2, "masses": [1, 0] },
+      "expected_product_masses": [5, 0, 0, 0],
+      "expected_marg_a": [5, 0],
+      "expected_marg_b": [5, 0],
+      "expected_a_pure": true,
+      "expected_a_mixed": false
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:flat_cyclic_gauge_classes:v0.1.0
+title: Flat Cyclic Gauge Classes Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_group_cohomology_count
+  symbol: '|H^1(X; Z_n)| = |Hom(H_1(X; Z), Z_n)|'
+  ascii_symbol: flat_cyclic_gauge_classes
+  notation: 'classes of flat Z_n-connections on a 2-complex X modulo vertex gauge; count = n^(z - r) * prod_i gcd(d_i, n)'
+  domain:
+  - 'complex: a CellComplex whose faces are closed boundary walks'
+  - 'order: n >= 1, the order of the cyclic group Z_n'
+  codomain:
+    description: 'The exact number of gauge classes of flat connections with values in Z_n, as an unbounded integer, together with the cycle rank z of the edge graph.
+
+      '
+requirements:
+  required_structures:
+  - 'n >= 1; n = 0 is refused'
+  - 'Every face boundary must be a closed walk of edges with directions +1 or -1, else the class count is refused'
+  - 'The count is exact: the face boundaries in the coordinates of the z edges off a spanning forest are reduced by Smith normal form over the integers (no modular shortcut, no enumeration)'
+laws:
+- 'Gauge classes of all Z_n connections on the edge graph number n^z, with z = E - V + (number of connected components) the cycle rank'
+- 'Gauge classes of flat connections number |H^1(X; Z_n)| = |Hom(H_1(X; Z), Z_n)| (universal coefficients; H_0 is free)'
+- 'With M the integer matrix of face boundaries in the off-forest coordinates, rank r and invariant factors d_1 | ... | d_r, the count is n^(z - r) times the product of gcd(d_i, n); without faces, or when every face boundary cancels, it is n^z'
+- 'Simply connected complexes (a disk, a tetrahedron boundary) have one class; the torus has n^2; the projective plane cell complex (one loop, one face with boundary e e) has gcd(2, n); the Klein bottle has n gcd(2, n)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact BigInt elimination; the exponent and the modulus reduction are checked conversions
+relationships:
+- urn:core:math:tree_gauge_fixing:v0.1.0 serves as The same spanning forest identifies a gauge class with its residuals on the off-forest edges
+- urn:core:math:smith_normal_form:v0.1.0 serves as The invariant factors of the face-boundary matrix come from core_linear_algebra
+rust_binding:
+  crate: core_holonomy
+  module: gauge_fixing
+  symbols:
+  - flat_cyclic_gauge_classes
+  - cycle_rank
+  required_tests:
+  - a_cyclic_group_of_order_zero_is_refused
+  - faces_that_are_not_closed_walks_are_refused
+  - cycle_rank_is_edges_minus_vertices_plus_components
+  - flat_cyclic_classes_match_the_first_cohomology_of_each_complex
+  - flat_cyclic_classes_agree_with_brute_force_enumeration_of_connections_and_gauge_orbits
+  - quarter_turn_gauge_classes_are_counted_by_the_cycle_rank
+negative_tests:
+- A cyclic group of order 0 must be refused
+- A face whose boundary steps are not a closed walk, name a missing edge, or carry a direction other than +1 or -1 must be refused
+doctrine:
+  summary: 'The number of flat Z_n gauge classes is computed from the spanning forest and the Smith normal form of the face boundaries, and checked against brute-force enumeration of every Z_n connection and every vertex gauge on small complexes, including cell complexes with torsion in H_1 (projective plane, Klein bottle) and lattices with antiparallel edges (2 x 2 torus).'
+  non_role:
+  - Cohomology with non-cyclic coefficient groups
+  - Non-abelian flat connections modulo gauge
+  - Higher cohomology groups (see the F2 cohomology contract for H^k with F2 coefficients)
+wip:
+- 'Only cyclic coefficient groups Z_n are counted; the class of each connection is not enumerated, only its number'

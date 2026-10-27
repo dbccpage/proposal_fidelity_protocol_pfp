@@ -1,0 +1,100 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cyclotomic_integer_ring:v0.1.0
+title: Canonical Integral Cyclotomic Ring
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: cyclotomic_integer_ring
+  symbol: cyclotomic_integer_ring
+  ascii_symbol: cyclotomic_integer_ring
+  notation: Canonical Integral Cyclotomic Ring
+  domain:
+  - Runtime conductor n in 1..=1024
+  - A single Vec<BigInt> canonical power basis modulo the monic cyclotomic polynomial
+  - Rational ingestion proves every coefficient integral and checks its declared count budget; default admission
+    limit 512 coefficients
+  codomain:
+    description: Declared finite results of core_number_theory::cyclotomic_integer; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Canonical integer reduction preserves ring products and character-table inner products
+- Conjugation is an involutive ring automorphism; zeta times its conjugate and zeta^n both equal one
+- Stored coefficient count equals phi(n); the allocating rational adapter view is canonically trimmed
+- The norm is Res(Phi_n,value), an integer, and units are precisely elements of norm plus or minus one
+- 256-bit input coefficients survive admission and exact Gaussian norm replay without narrowing
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: cyclotomic_integer
+  symbols:
+  - CyclotomicInteger
+  - CyclotomicIntegerError
+  - CyclotomicInteger::new
+  - CyclotomicInteger::with_budget
+  - CyclotomicInteger::from_integer
+  - CyclotomicInteger::from_formal_sum
+  - CyclotomicInteger::root_of_unity
+  - CyclotomicInteger::coefficients
+  - CyclotomicInteger::coefficient_values
+  - CyclotomicInteger::norm
+  - CyclotomicInteger::is_unit
+  required_tests:
+  - the_modulus_is_the_monic_integer_cyclotomic_polynomial
+  - the_stored_coefficient_count_is_the_totient
+  - the_sum_of_all_nth_roots_of_unity_vanishes
+  - a_root_of_unity_times_its_conjugate_is_one
+  - conjugation_is_an_involutive_ring_automorphism
+  - a_conductor_three_element_reduces_and_compares_canonically
+  - invalid_conductors_and_mismatched_operands_are_refused
+  - as_integer_reads_only_true_integers
+  - roots_satisfy_the_order_and_defining_polynomial
+  - canonical_norms_agree_with_fixed_conductor_fields
+  - construction_refuses_invalid_conductors_coefficients_and_cross_ring_arithmetic
+  - integral_admission_and_character_arithmetic_share_unbounded_integer_coefficients
+negative_tests:
+- Conductor zero or greater than 1024, coefficient count overflow, and nonintegral rational coefficients are
+  typed refusals
+- Cross-conductor arithmetic is refused
+- Zero and the tested nonunit Gaussian integer have nonunit norm
+doctrine:
+  summary: Canonical integer reduction preserves ring products and character-table inner products; Conjugation
+    is an involutive ring automorphism; zeta times its conjugate and zeta^n both equal one; Stored coefficient
+    count equals phi(n); the allocating rational adapter view is canonically trimmed; The norm is Res(Phi_n,value),
+    an integer, and units are precisely elements of norm plus or minus one; 256-bit input coefficients survive
+    admission and exact Gaussian norm replay without narrowing.
+  non_role:
+  - No second numerical ring in Lie or native campaign adapters
+  - No classification of class groups or derivation of cyclotomic unit generators
+  - No numerical approximation or implicit conductor compositum
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

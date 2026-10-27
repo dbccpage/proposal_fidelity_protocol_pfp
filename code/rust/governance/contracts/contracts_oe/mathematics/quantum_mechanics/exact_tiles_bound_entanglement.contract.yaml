@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_tiles_bound_entanglement:v0.1.0
+title: Replayed Tiles bound-entangled density
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_tiles_bound_entanglement
+  symbol: exact_tiles_bound_entanglement
+  ascii_symbol: exact_tiles_bound_entanglement
+  notation: Replayed Tiles bound-entangled density
+  domain:
+  - Bounded finite bipartite exact density operators; declared orthogonal product families; explicit subset
+    replay bound
+  codomain:
+    description: Declared finite results of core_quantum_physics::higher_dim; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Tiles complement has rank four and is PPT but entangled by UPB criterion
+- The supplied five product rays are orthogonal and unextendible
+- The complement is normalized by its exact rank
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: higher_dim
+  symbols:
+  - tiles
+  required_tests:
+  - states_channels_exact_tests::tiles_bound_entanglement_and_local_separability_criteria_are_replayed
+negative_tests:
+- states_channels_exact_tests::tiles_bound_entanglement_and_local_separability_criteria_are_replayed
+doctrine:
+  summary: Tiles complement has rank four and is PPT but entangled by UPB criterion; The supplied five product
+    rays are orthogonal and unextendible; The complement is normalized by its exact rank.
+  non_role:
+  - PPT alone is not sufficient for separability beyond 2x2 and 2x3
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,168 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:mutation_operator:v1.0.0
+title: Mutation operator refusal class M
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Refused undeclared mutation class.
+  symbol: M
+  ascii_symbol: Mutation
+  operator_class_symbol: M
+  1. Contract metadata:
+    title: Mutation operator refusal class M
+    version: 0.1.0
+    object_type: mathematical_refusal_class
+  2. Mathematical object / functional role:
+    role: Typed refusal letter M in DDC alphabet A_DDC.
+    purpose: Refuses an invalid, unwitnessed, or out-of-budget transition attempt, leaving abstract state unchanged.
+    non_role:
+    - Is not a silent failure or crash; it is an explicit typed step receipt in the hash-chained tape.
+    - Does not alter the abstract data state (Ddc.M_preserves_state).
+    - Is not repair and does not confer authority.
+    - Does not permit ungrounded intake requests to enter the tape (DDC-M-02).
+  3. Domain and codomain:
+    domain: attempt at invalid, unwitnessed, out-of-budget, or boundary-breaching transition
+    codomain: M typed refusal step receipt with state unchanged and control moved to Refused
+  4. Required structures:
+    required:
+    - attempted action
+    - reason code from the closed vocabulary of 7 typed reasons (DDC-M-01)
+    - data state (carrier, residual, Phi1, Gamma2, adequate) left strictly identical
+    closed_refusal_vocabulary:
+    - REFUSED_INVALID_WITNESS: required witness missing or untyped (DDC-M-03)
+    - REFUSED_BUDGET_EXHAUSTED: step or subset count exceeds budget (DDC-M-04)
+    - REFUSED_NON_ZERO_CURL: exact repair attempted on non-exact defect (DDC-E-04)
+    - REFUSED_UNLICENSED_LIFT: structural lift attempted without valid license (DDC-L-04)
+    - REFUSED_REQUIRES_LIFT: closed survivor cannot be repaired locally, requires lift (Demo 3)
+    - REFUSED_MISSING_LOSS_LEDGER: descent attempted without explicit LossLedger (Demo 5)
+    - REFUSED_DETECTOR_INADEQUATE: detector collapsing or blind (Demo 4)
+  5. Definition:
+    action: M(s) = s with control transitioned to Refused and reason recorded.
+    preservation: carrier, residual, Phi_1, Gamma_2, and adequacy are unchanged.
+    receipt: M emits a deterministic step receipt chained to previous tape hash.
+  6. Laws and invariants:
+    law_3_refusal_absorption: After M, only C (changed scope), Lambda (licensed lift), or T (terminalization) may follow (Ddc.refusal_absorbing).
+    state_preservation: A lawful M leaves the data state completely unchanged (Ddc.M_preserves_state).
+    closed_vocabulary: The refusal reason must belong to the closed set of 7 declared reasons (DDC-M-01).
+    no_retry_without_lift: Retrying the same refused operation without changed carrier (C) or license (Lambda) is rejected.
+    absorbing_composition: M cannot be silently bypassed; untyped moves collapse to M.
+  7. Equality / equivalence rules:
+    class_equality: M labels are equal as refusal class labels; reason codes distinguish causes.
+    witness_equivalence: Two M receipts are equal iff their states, reasons, and previous hashes match.
+  8. Replay / determinism requirements:
+    requirements:
+    - Refusal reason code serialized.
+    - Deterministic step receipt emitted.
+    - State hash before equals state hash after.
+  9. Relationship to other Core primitives:
+    relationships:
+      A_DDC: M is the 7th letter of A_DDC = {E, R, C, I, Lambda, D, M, T}.
+      control_fsm: Transitions control from Open to Refused.
+      C: C resets control from Refused back to Open by changing the carrier scope.
+      Lambda: Lambda resets control from Refused back to Open by extending carrier capacity under license.
+      T: T may follow M on residual terminal if Gamma_2 = 0.
+      IntakeRefusal: Ungrounded locus is an intake refusal and never enters the tape (DDC-M-02).
+  10. Rust descriptor shape:
+    sketch: "pub struct MutationOperatorDescriptor {\n    pub source_layer_hash: String,\n    pub attempted_action_hash:\
+      \ String,\n    pub mutation_kind: MutationKind,\n    pub protected_boundary_hashes_before: Vec<String>,\n\
+      \    pub protected_boundary_hashes_after: Vec<String>,\n    pub witness_hash: String,\n    pub lift_contract_hash:\
+      \ Option<String>,\n}\n\npub enum MutationKind {\n    CarrierChange,\n    BasisChange,\n    CoefficientDomainChange,\n\
+      \    BoundaryMapChange,\n    QuotientStructureChange,\n    ObserverBoundaryChange,\n    WeightProfileChange,\n\
+      \    ToleranceProfileChange,\n    Phi1Damage,\n    UndeclaredLift,\n    OutOfLayerAction,\n    UnknownUnclassified,\n\
+      }\n"
+  11. Negative definition tests:
+    tests:
+    - Hidden basis change.
+    - Hidden carrier change.
+    - Hidden coefficient-domain change.
+    - d₀ or d₁ changed silently.
+    - Q¹ structure changed silently.
+    - Observer boundary changed silently.
+    - Φ₁ damage mislabeled as repair.
+    - Lift performed without LiftContract.
+    - Carrier-expanded action claims Φ₁ improvement without lift declaration.
+    - Out-of-layer action labeled E/I/C/R.
+    - M admitted into fixed-layer algebra.
+  12. Open questions / WIP status:
+    wip:
+    - Canonical mutation witness taxonomy.
+    - LiftContract interface.
+    - Boundary hash bundle format.
+    - Whether UnknownUnclassified should always collapse to M or a separate meta-outcome.
+  compact_yaml:
+    MUTATION_OPERATOR_CONTRACT:
+      symbol: M
+      ascii_symbol: Mutation
+      operator_class_symbol: M
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: fixed-layer action attempt
+      codomain: mutation refusal class
+      required_structures:
+      - attempted action
+      - reason code from 7-element closed vocabulary
+      - data state identical before and after
+      definition: typed refusal letter M in A_DDC recording why an attempted move was refused
+      laws:
+      - Law 3: after M, only C, Lambda, or T may follow
+      - state unchanged (Ddc.M_preserves_state)
+      - control transitions to Refused (Ddc.M_refuses)
+      - reason code from closed vocabulary
+      forbidden_interpretations:
+      - silent failure
+      - data state mutation
+      - positive authority
+      - retry without changed scope or license
+      relationships:
+      - 7th letter of A_DDC
+      - C resets to Open with changed carrier
+      - Lambda resets to Open with licensed capacity
+      - ungrounded intake refused before tape
+      negative_tests:
+      - reason not in closed vocabulary
+      - data state mutated under M
+      - retry of refused op without C or Lambda
+      - ungrounded locus admitted to tape
+      open_questions:
+      - witness taxonomy
+      - boundary hash bundle
+
+# =============================================================================
+# ⚠️  nomos_debate_NOT_CANONICAL  —  NON-CANONICAL DEBATE ONLY
+#     NOT contract law · NOT enforced · AuthorityEffect: none
+#     Chunk 06 Stage-2 (rip-math-contracts) — 2026-07-31
+# =============================================================================
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; not enforced as obligations; AuthorityEffect None"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects: []
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: NO_DEDICATED_REALIZATION
+    severity: info
+    claim_class: "[SCOPE FENCE]"
+    detail: >
+      No rust_binding and no unambiguous dedicated math realization .rs file
+      resolved for this stem under engine/crates. Stage-2 records absence
+      only; does not mint PROVED/GlobalGreen.
+    delta: YAML_AHEAD_OF_CODE

@@ -1,0 +1,31 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:qm:quantum_information_engine:file:v1.0.0
+crate: engines
+file: crates_rs/engines/src/quantum/quantum_information_engine.rs
+role: quantum_information_diagnostic_engine
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - von_neumann_entropy_calculations
+  - quantum_mutual_information_metrics
+does_not_own:
+  - thermodynamic_entropy_oracle
+  - authority
+may_call:
+  - engines::quantum::entropy
+must_not:
+  - claim universal thermodynamic entropy proof
+  - mint authority
+exactness:
+  numeric_mode: f64_entropy_diagnostics
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect::None"
+required_tests:
+  - test_quantum_information_entropy_calculations

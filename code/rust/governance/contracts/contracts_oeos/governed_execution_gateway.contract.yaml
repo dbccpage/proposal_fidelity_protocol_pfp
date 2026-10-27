@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:governed_execution_gateway:v1.0.0
+title: Governed Agentic Execution Gateway
+kind: host_contract
+status: proposed
+layer: 09_host
+role: GovernedExecutionGateway
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+      - urn:core:oeos:composition_root:v1.0.0
+      - urn:core:oeos:daemon:v1.0.0
+      - urn:core:oeos:telemetry_sink:v1.0.0
+    proof_obligations:
+      - id: GEG-INV-001
+        statement: Every governed host submission binds one exact task envelope, capability snapshot, route plan, policy digest, and repository revision before effects.
+        verification_status: open
+      - id: GEG-INV-002
+        statement: Skill selection, context binding, invocation, and output use remain distinct evidence events and no later stage is inferred.
+        verification_status: open
+      - id: GEG-INV-003
+        statement: A terminal outer receipt links exact inner receipts without taking semantic ownership of Adversary, OEWAS, or Symbol Game evidence.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - GOVERNED_CONTEXT_REFUSED
+      - GOVERNED_POLICY_REFUSED
+      - GOVERNED_ROUTE_REFUSED
+      - GOVERNED_TASK_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: task_envelope
+      type: urn:core:oeos:type:task_envelope:v1.0.0
+      required: true
+  outputs:
+    - name: harness_run_receipt
+      type: urn:core:oeos:type:harness_run_receipt:v1.0.0
+      required: true
+  typed_refusals:
+    - GOVERNED_CONTEXT_REFUSED
+    - GOVERNED_POLICY_REFUSED
+    - GOVERNED_ROUTE_REFUSED
+    - GOVERNED_TASK_REFUSED
+  platform_requirements:
+    - profile: local_single_operator_gateway
+      requirements:
+        - deterministic_route_binding
+        - hash_chained_lifecycle_events
+        - independently_verified_terminal_receipt
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares the OEOS host gateway for a governed agentic task lifecycle while preserving inward semantic and admission owners.
+  non_role:
+    - anti_skill_admission_authority
+    - inner_dag_semantic_owner
+    - routing_policy_admission_authority
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - task_completion_does_not_prove_skill_fidelity_without_skill_use_events
+  invariants:
+    - one_task_id_binds_one_hash_chained_lifecycle
+    - route_and_policy_digests_precede_worker_dispatch
+  allowed_operations:
+    - accept_governed_task_envelope
+    - coordinate_preflight_execution_and_verification
+    - seal_non_authoritative_run_receipt
+  forbidden_operations:
+    - admit_routing_or_anti_skill_policy
+    - infer_unobserved_native_sessions
+    - promote_inner_receipt_authority

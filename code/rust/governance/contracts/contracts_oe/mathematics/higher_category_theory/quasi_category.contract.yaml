@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:quasi_category:v0.1.0
+title: Quasi-Category (Infinity-Category) Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: quasi_category
+  symbol: 'C : (∞, 1)-Cat'
+  ascii_symbol: quasi_category
+  notation: C as simplicial set where every inner horn Λ^k_n (0 < k < n) admits a filler
+  domain:
+  - 'simplicial_set: underlying simplicial set X_•'
+  - 'inner_horns: collection of inner horns Λ^k_n for 0 < k < n'
+  codomain:
+    description: A quasi-category (or Joyal ∞-category, weak Kan complex) is a simplicial set in which every inner horn Λ^k_n (0 < k < n) has a filler Δ^n → X. Inner 2-horns correspond to composable pairs of morphisms, and filling provides associative composition up to coherent higher homotopies.
+requirements:
+  required_structures:
+  - Underlying simplicial set satisfies all 5 simplicial identities.
+  - Every inner horn Λ^k_n (0 < k < n) has at least one filler n-simplex.
+  - Horn boundary faces agree on common intersections.
+  - Kan complexes unconditionally satisfy quasi-category condition.
+  - Deterministic content-addressed artifact hash.
+laws:
+- 'Inner horn filling: every inner horn Λ^k_n → X (0 < k < n) admits a filler Δ^n → X'
+- 'Kan complexes are quasi-categories: any simplicial set filling all horns fills inner horns'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Simplices and horns serialized in canonical discrete order
+  - Given same data, produces identical artifact hash
+relationships:
+- urn:core:math:simplicial_set:v0.1.0 serves as Provides the underlying simplicial set structure
+- urn:core:math:infinity_category:v0.1.0 serves as Specific model presentation for (∞,1)-categories
+- urn:core:math:stable_infinity_category:v0.1.0 serves as Stable ∞-categories are pointed quasi-categories with invertible suspension
+rust_binding:
+  crate: core_higher_category_theory
+  module: simplicial_set
+  symbols:
+  - QuasiCategoryValidator
+  - KanComplexValidator
+  - Horn
+  - SimplicialSet
+  required_tests:
+  - test_simplicial_set_and_quasi_category_positive_verification
+  - test_kill_mut_p3_04_quasi_category_inner_horn_filling_violation
+lean4_binding:
+  module: HigherCategoryTheory.SimplicialSet
+  symbols:
+  - IsQuasiCategory
+  - IsKanComplex
+  - kan_complex_is_quasi_category
+negative_tests:
+- Inner horn lacks a filler n-simplex (MUT-P3-04)
+- Outer horn passed to inner horn validator
+- Horn faces boundary mismatch
+doctrine:
+  summary: A quasi-category is a simplicial set where all inner horns can be filled. Developed by Boardman-Vogt and Joyal, and systematically elaborated by Lurie (Higher Topos Theory), quasi-categories provide the canonical model for (∞,1)-categories where 1-morphisms compose weakly up to coherent invertible higher cells.
+  non_role:
+  - Strict 1-categories
+  - Unbounded higher categories (∞,n) for n > 1
+wip:
+  - Joyal model structure on simplicial sets
+  - Straightening and unstraightening equivalences

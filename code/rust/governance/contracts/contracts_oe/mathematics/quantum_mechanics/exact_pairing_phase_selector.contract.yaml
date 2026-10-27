@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_pairing_phase_selector:v0.1.0
+title: Exact Pairing Phase Selector
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_pairing_phase_selector
+  symbol: exact_pairing_phase_selector
+  ascii_symbol: exact_pairing_phase_selector
+  notation: Exact Pairing Phase Selector
+  domain:
+  - Declared bilinear or conjugate-linear pairing on Gaussian rational amplitudes and unit phases
+  codomain:
+    description: Declared finite results of core_quantum_physics::complex_structure_selector; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Conjugate pairing cross terms are invariant under every declared unit phase
+- Bilinear pairing transforms by u^2 and is invariant for all pairs only under plus/minus one
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: complex_structure_selector
+  symbols:
+  - PairingInvolution
+  - PairingInvolution::cross_term
+  - PairingInvolution::phase_factor
+  required_tests:
+  - conjugate_pairing_cross_terms_are_invariant_under_every_unit_phase
+  - bilinear_pairing_cross_terms_are_invariant_only_under_the_two_signs
+negative_tests:
+- A quarter-turn unit phase changes the bilinear cross term while leaving the conjugate cross term fixed
+doctrine:
+  summary: Conjugate pairing cross terms are invariant under every declared unit phase; Bilinear pairing transforms
+    by u^2 and is invariant for all pairs only under plus/minus one.
+  non_role:
+  - No derivation of a preferred pairing from unsigned primitive data
+  - Regular representation and group arithmetic are owned by their sovereign foundations
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,170 @@
+stage: 2
+name: ideation
+executor: model
+requires:
+- 1
+version: 0.2.0
+derived_under_policy: SPK-001
+authority_effect: None
+claim_hygiene_profile: claim_hygiene_strict_v1
+description: Research role 2. PromptResponse and numbered StageNResponse require the
+  declared runtime adapter.
+input_contract: null
+response_schema:
+  additionalProperties: false
+  description: Actual model response. Descriptive strings and true|false placeholders
+    belong only to the template.
+  properties:
+    derived_under_policy:
+      const: SPK-001
+      title: Derived Under Policy
+      type: string
+      x-slot: data
+    summary:
+      $ref: '#/$defs/ResponseSummaryValue'
+      x-slot: data
+    sections:
+      type: array
+      minItems: 2
+      maxItems: 2
+      prefixItems:
+      - type: object
+        additionalProperties: false
+        properties:
+          name:
+            const: sources
+          rows:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                source_id:
+                  type: string
+                uri:
+                  type: string
+                locator:
+                  type: string
+                access_status:
+                  type: string
+                read_scope:
+                  type: string
+                claim_ids:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - source_id
+              - uri
+              - locator
+              - access_status
+              - read_scope
+              - claim_ids
+        required:
+        - name
+        - rows
+      - type: object
+        additionalProperties: false
+        properties:
+          name:
+            const: candidates
+          rows:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                candidate_id:
+                  type: string
+                question_id:
+                  type: string
+                statement:
+                  type: string
+                claim_kind:
+                  type: string
+                source_ids:
+                  type: array
+                  items:
+                    type: string
+                assumptions:
+                  type: array
+                  items:
+                    type: string
+                witness_text:
+                  type: string
+              required:
+              - candidate_id
+              - question_id
+              - statement
+              - claim_kind
+              - source_ids
+              - assumptions
+              - witness_text
+        required:
+        - name
+        - rows
+      items: false
+    process_integrity:
+      $ref: '#/$defs/ProcessIntegrityValue'
+      x-slot: data
+  required:
+  - derived_under_policy
+  - summary
+  - process_integrity
+  - sections
+  title: PromptResponse
+  type: object
+  $schema: https://json-schema.org/draft/2020-12/schema
+  $defs:
+    ProcessIntegrityValue:
+      additionalProperties: false
+      properties:
+        seed_allows_theory_refutation:
+          title: Seed Allows Theory Refutation
+          type: boolean
+          x-slot: data
+        detected_prompt_biases:
+          default: []
+          items:
+            minLength: 1
+            pattern: \S
+            type: string
+          title: Detected Prompt Biases
+          type: array
+          x-slot: data
+        should_continue:
+          title: Should Continue
+          type: boolean
+          x-slot: data
+      required:
+      - seed_allows_theory_refutation
+      - should_continue
+      title: ProcessIntegrityValue
+      type: object
+    ResponseSummaryValue:
+      additionalProperties: false
+      properties:
+        narrowest_defensible_thesis:
+          minLength: 1
+          pattern: \S
+          title: Narrowest Defensible Thesis
+          type: string
+          x-slot: data
+        evidence_scope:
+          minLength: 1
+          pattern: \S
+          title: Evidence Scope
+          type: string
+          x-slot: data
+        next_concrete_test:
+          minLength: 1
+          pattern: \S
+          title: Next Concrete Test
+          type: string
+          x-slot: data
+      required:
+      - narrowest_defensible_thesis
+      - evidence_scope
+      - next_concrete_test
+      title: ResponseSummaryValue
+      type: object

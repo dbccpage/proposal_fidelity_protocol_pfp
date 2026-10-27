@@ -1,0 +1,63 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_hermitian_algebraic_spectrum:v0.1.0
+title: Exact full-degree real Hermitian spectrum
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_hermitian_algebraic_spectrum
+  symbol: exact_hermitian_algebraic_spectrum
+  ascii_symbol: exact_hermitian_algebraic_spectrum
+  notation: Exact full-degree real Hermitian spectrum
+  domain:
+  - Bounded Hermitian operators over Q(i); shared exact characteristic polynomials and real-root isolation
+  codomain:
+    description: Declared finite results of core_quantum_physics::exact_operator; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Full-degree real algebraic roots retain exact multiplicity
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: exact_operator
+  symbols:
+  - ExactOperator::spectrum
+  required_tests:
+  - exact_operator::tests::an_irrational_spectrum_is_isolated_not_approximated
+negative_tests:
+- exact_operator::tests::the_spectrum_of_a_non_hermitian_operator_is_refused
+doctrine:
+  summary: Full-degree real algebraic roots retain exact multiplicity.
+  non_role:
+  - Isolation evidence is not a claim that all algebraic eigenvectors belong to Q(i)
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

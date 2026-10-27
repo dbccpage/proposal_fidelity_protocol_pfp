@@ -1,0 +1,270 @@
+"""Replay original source-25 joint result marks and raw marked observations.
+
+Every mathematical operation calls the pinned original functions. Finite
+input enumeration and receipt encoding do not substitute mathematical code.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib
+import itertools
+import json
+import stat
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+INPUTS = ROOT / "manifests" / "marked_result_inputs.json"
+
+
+def regular(path: Path) -> bytes:
+    info = path.lstat()
+    if not stat.S_ISREG(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+        raise ValueError(f"not a regular source/control file: {path}")
+    for parent in path.parents:
+        info = parent.lstat()
+        if not stat.S_ISDIR(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            raise ValueError(f"source/control parent is not a regular directory: {parent}")
+    return path.read_bytes()
+
+
+def require(condition: bool, detail: str) -> None:
+    if not condition:
+        raise ValueError(detail)
+
+
+def verify_unchanged(snapshot: dict[Path, str]) -> None:
+    for path, digest in snapshot.items():
+        require(
+            hashlib.sha256(regular(path)).hexdigest() == digest, f"replay input changed: {path}"
+        )
+
+
+def stream(digest, data) -> None:
+    digest.update(json.dumps(data, ensure_ascii=False, separators=(",", ":")).encode() + b"\n")
+
+
+def wire(fs) -> list:
+    return [fs.n, list(map(str, fs.state.r)), list(map(str, fs.state.s)), list(fs.filled)]
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-root", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    require(not args.output.exists() and not args.output.is_symlink(), "refusing existing output")
+    verifier_path = Path(__file__).absolute()
+    verifier, control = regular(verifier_path), regular(INPUTS)
+    manifest = json.loads(control)
+    require(manifest["schema"] == "wdp-marked-result-inputs-v1", "unknown input schema")
+    snapshot = {
+        verifier_path: hashlib.sha256(verifier).hexdigest(),
+        INPUTS: hashlib.sha256(control).hexdigest(),
+    }
+    source_paths = set()
+    for row in manifest["files"]:
+        path = args.source_root / row["repository"] / row["path"]
+        body = regular(path)
+        require(len(body) == row["bytes"], f"source size drift: {path}")
+        require(hashlib.sha256(body).hexdigest() == row["sha256"], f"source hash drift: {path}")
+        require(
+            hashlib.sha1(f"blob {len(body)}\0".encode() + body).hexdigest() == row["git_blob"],
+            f"source blob drift: {path}",
+        )
+        snapshot[path] = row["sha256"]
+        source_paths.add(path.resolve())
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, str(args.source_root / "H3V7N5QF" / "code"))
+    modules_before = set(sys.modules)
+    source = importlib.import_module("twentyfifth.state")
+    raising = importlib.import_module("twentythird.state")
+
+    def module_closure():
+        imported = set()
+        for name, module in list(sys.modules.items()):
+            if name in modules_before:
+                continue
+            path = getattr(module, "__file__", None)
+            if path and name.split(".")[0] not in sys.stdlib_module_names:
+                resolved = Path(path).resolve()
+                require(resolved in source_paths, f"unbound imported source: {name}")
+                imported.add(resolved)
+        require(imported == source_paths, "declared source closure differs from actual imports")
+
+    module_closure()
+
+    def state(v):
+        return source.FState(
+            source.DState(v[0], tuple(map(int, v[1])), tuple(map(int, v[2]))),
+            tuple(tuple(t) for t in v[3]),
+        )
+
+    def mark(fs):
+        n, normal, filled = source.result_mark(fs)
+        return [n, list(map(str, normal)), list(filled)]
+
+    def raise_terms(fs, counts):
+        return source.FState(raising.raise_terms(fs.state, counts), fs.filled)
+
+    def observations(fs):
+        return [
+            wire(source.canonical_state(fs)),
+            mark(fs),
+            wire(source.plain_state(fs)),
+            wire(source.swap25(fs)),
+            list(source.balance_record(fs)),
+            list(source.unbalanced(fs)),
+            wire(source.nothing_with(fs)),
+        ]
+
+    digest = hashlib.sha256()
+    states = raisings = rewritings = alignments = 0
+    corpus = manifest["corpus"]
+
+    def record(fs):
+        nonlocal states, raisings, rewritings, alignments
+        raised, renamed = [], []
+        before_mark = mark(fs)
+        for counts in itertools.product(range(corpus["raising_radix"]), repeat=fs.n):
+            after = raise_terms(fs, counts)
+            require(mark(after) == before_mark, "raising changed the joint result mark")
+            raised.append(
+                [list(map(str, counts)), wire(after), mark(after), source.balance_record(after)]
+            )
+            raisings += 1
+        for image in itertools.permutations(range(fs.n)):
+            after = source.rewrite25(fs, image)
+            require(mark(after) == before_mark, "rewriting changed the joint result mark")
+            renamed.append([list(image), wire(after), mark(after), source.balance_record(after)])
+            rewritings += 1
+        moved = source.rewrite25(fs, tuple(reversed(range(fs.n))))
+        target = raise_terms(moved, tuple(x % 2 for x in range(fs.n)))
+        alignment = [wire(target), wire(source.align(fs, target))]
+        alignments += 1
+        stream(digest, [wire(fs), observations(fs), raised, renamed, alignment])
+        states += 1
+
+    for n in range(corpus["binary_r_and_s_max_n"] + 1):
+        for cells in itertools.product(range(2), repeat=2 * n * n):
+            record(source.FState(source.DState(n, cells[: n * n], cells[n * n :])))
+    n = corpus["binary_r_zero_s_n"]
+    for r in itertools.product(range(2), repeat=n * n):
+        for filled in corpus["filled_subsets"]:
+            record(source.FState(source.DState(n, r, (0,) * (n * n)), tuple(map(tuple, filled))))
+    for v in corpus["extra_inputs"]:
+        record(state(v))
+
+    a, b = (state(v) for v in corpus["extra_inputs"][:2])
+    require(mark(a) != mark(b), "joint-incidence countermodel not reproduced")
+    require(
+        raising.result_key(a.state) == raising.result_key(b.state)
+        and mark(source.nothing_with(a)) == mark(source.nothing_with(b)),
+        "separate-component equality failed",
+    )
+    try:
+        source.align(a, b)
+    except ValueError:
+        pass
+    else:
+        raise ValueError("distinct joint marks aligned")
+
+    empty_two = source.FState(source.DState(2, (0,) * 4, (0,) * 4))
+    raised_two = raise_terms(empty_two, (1, 0))
+    add = next(
+        c
+        for c in source.changes(empty_two)
+        if isinstance(c, source.Change) and c.kind == source.Kind.ADD_TERM
+    )
+    added = [source.perform(fs, add) for fs in (empty_two, raised_two)]
+    filled_after_add = [source.perform(fs, source.Filling(0, 1, 2)) for fs in added]
+    require(
+        mark(empty_two) == mark(raised_two) and mark(added[0]) != mark(added[1]),
+        "term-addition non-descent failed",
+    )
+    require(
+        source.balance_record(filled_after_add[0]) != source.balance_record(filled_after_add[1]),
+        "later-fill balance failed",
+    )
+
+    zero_four = state(corpus["extra_inputs"][2])
+    raised_four = raise_terms(zero_four, (0, 0, 1, 0))
+    identify = next(
+        c
+        for c in source.changes(zero_four)
+        if isinstance(c, source.Change) and c.kind == source.Kind.IDENTIFY and c.x == 0 and c.y == 1
+    )
+    identified = [source.perform(fs, identify) for fs in (zero_four, raised_four)]
+    require(
+        mark(zero_four) == mark(raised_four) and mark(identified[0]) != mark(identified[1]),
+        "identification non-descent failed",
+    )
+    require(
+        not source.unbalanced(raised_four) and source.unbalanced(identified[1]),
+        "identification balance obstruction failed",
+    )
+
+    directions = [
+        state([3, ["0", "1"] + ["0"] * 7, ["0"] * 9, [t]]) for t in ((0, 1, 2), (0, 2, 1))
+    ]
+    require(
+        source.balance_record(directions[0]) != source.balance_record(directions[1]),
+        "oriented balance countermodel failed",
+    )
+    module_closure()
+    verify_unchanged(snapshot)
+    result = {
+        "schema": "wdp-marked-result-receipt-v1",
+        "authority_effect": "None",
+        "inputs_sha256": hashlib.sha256(control).hexdigest(),
+        "verifier_sha256": hashlib.sha256(verifier).hexdigest(),
+        "bound_inputs": len(manifest["files"]),
+        "post_execution_rehash": "unchanged",
+        "scope": "finite original-function oracle, distinct from arbitrary-size table proofs and the full programme",
+        "corpus": {
+            "states": states,
+            "bulk_raisings": raisings,
+            "rewritings": rewritings,
+            "alignments": alignments,
+            "stream_sha256": digest.hexdigest(),
+        },
+        "joint_incidence_countermodel": {
+            "states": [wire(a), wire(b)],
+            "observations": [observations(a), observations(b)],
+        },
+        "term_addition_countermodel": {
+            "before": [wire(empty_two), wire(raised_two)],
+            "after": list(map(wire, added)),
+            "after_fill": list(map(wire, filled_after_add)),
+            "marks_before": [mark(empty_two), mark(raised_two)],
+            "marks_after": list(map(mark, added)),
+            "balance_after_fill": list(map(source.balance_record, filled_after_add)),
+        },
+        "identification_countermodel": {
+            "before": [wire(zero_four), wire(raised_four)],
+            "after": list(map(wire, identified)),
+            "marks_before": [mark(zero_four), mark(raised_four)],
+            "marks_after": list(map(mark, identified)),
+            "balance_before": [
+                source.balance_record(zero_four),
+                source.balance_record(raised_four),
+            ],
+            "balance_after": list(map(source.balance_record, identified)),
+        },
+        "orientation_countermodel": {
+            "states": list(map(wire, directions)),
+            "observations": list(map(observations, directions)),
+        },
+    }
+    args.output.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(json.dumps(result["corpus"]))
+
+
+if __name__ == "__main__":
+    main()

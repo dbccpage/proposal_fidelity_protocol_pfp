@@ -1,0 +1,280 @@
+[package]
+autotests = false
+name = "core_adversary"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+description = "Adversary routing, exact admission and seat gateway behind Arena ports"
+
+[dependencies]
+core_operad_canon = { path = "../core_operad_canon" }
+core_types = { path = "../core_types" }
+core_wdp = { path = "../core_wdp" }
+pfp_runtime = { path = "../pfp_runtime" }
+core_epistemic_immune_system = { path = "../core_epistemic_immune_system" }
+core_operads = { path = "../core_operads" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["arbitrary_precision", "raw_value"] }
+indexmap = { version = "2", features = ["serde"] }
+serde_yaml = "0.9"
+num-bigint = "0.4"
+num-rational = { version = "0.4", features = ["serde"] }
+num-integer = "0.1"
+num-traits = "0.2"
+sha2 = "0.10"
+hex = "0.4"
+base64 = "0.22"
+unicode-normalization = "0.1"
+regex = "1.10"
+ryu = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+tempfile = "3"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "native-tls"] }
+core_epk = { path = "../core_local_green_global_red_lggr" }
+core_linear_algebra = { package = "linear_algebra", path = "../core_linear_algebra" }
+
+[dev-dependencies]
+ed25519-dalek = "2.2"
+core_epk = { path = "../core_local_green_global_red_lggr" }
+core_linear_algebra = { package = "linear_algebra", path = "../core_linear_algebra" }
+
+[target.'cfg(unix)'.dev-dependencies]
+libc = "0.2"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_adversary`.
+
+[[test]]
+name = "authenticated_kernel_gate"
+path = "../tests/core_adversary/authenticated_kernel_gate.rs"
+
+[[test]]
+name = "authenticated_process_gates"
+path = "../tests/core_adversary/authenticated_process_gates.rs"
+
+[[test]]
+name = "authorization_parity"
+path = "../tests/core_adversary/authorization_parity.rs"
+
+[[test]]
+name = "bout_auxiliary_parity"
+path = "../tests/core_adversary/bout_auxiliary_parity.rs"
+
+[[test]]
+name = "candidate_check_custody"
+path = "../tests/core_adversary/candidate_check_custody.rs"
+
+[[test]]
+name = "candidate_check_parity"
+path = "../tests/core_adversary/candidate_check_parity.rs"
+
+[[test]]
+name = "carrier_parity"
+path = "../tests/core_adversary/carrier_parity.rs"
+
+[[test]]
+name = "complete_bout_parity"
+path = "../tests/core_adversary/complete_bout_parity.rs"
+
+[[test]]
+name = "council_parity"
+path = "../tests/core_adversary/council_parity.rs"
+
+[[test]]
+name = "evidence_parity"
+path = "../tests/core_adversary/evidence_parity.rs"
+
+[[test]]
+name = "evidence_parser_parity"
+path = "../tests/core_adversary/evidence_parser_parity.rs"
+
+[[test]]
+name = "gateway_parity"
+path = "../tests/core_adversary/gateway_parity.rs"
+
+[[test]]
+name = "gateway_reply_recovery"
+path = "../tests/core_adversary/gateway_reply_recovery.rs"
+
+[[test]]
+name = "journal_acceptance"
+path = "../tests/core_adversary/journal_acceptance.rs"
+
+[[test]]
+name = "journal_parity"
+path = "../tests/core_adversary/journal_parity.rs"
+
+[[test]]
+name = "novella_parity"
+path = "../tests/core_adversary/novella_parity.rs"
+
+[[test]]
+name = "obstruction_parity"
+path = "../tests/core_adversary/obstruction_parity.rs"
+
+[[test]]
+name = "perception_lift_parity"
+path = "../tests/core_adversary/perception_lift_parity.rs"
+
+[[test]]
+name = "persistence_parity"
+path = "../tests/core_adversary/persistence_parity.rs"
+
+[[test]]
+name = "pfp_gateway"
+path = "../tests/core_adversary/pfp_gateway.rs"
+
+[[test]]
+name = "proposal_parity"
+path = "../tests/core_adversary/proposal_parity.rs"
+
+[[test]]
+name = "research_loop_replay"
+path = "../tests/core_adversary/research_loop_replay.rs"
+
+[[test]]
+name = "research_pack"
+path = "../tests/core_adversary/research_pack.rs"
+
+[[test]]
+name = "residual_parity"
+path = "../tests/core_adversary/residual_parity.rs"
+
+[[test]]
+name = "routing_parity"
+path = "../tests/core_adversary/routing_parity.rs"
+
+[[test]]
+name = "skill_run"
+path = "../tests/core_adversary/skill_run.rs"
+
+[[test]]
+name = "source_contract_intergates"
+path = "../tests/core_adversary/source_contract_intergates.rs"
+
+[[test]]
+name = "specialization"
+path = "../tests/core_adversary/specialization.rs"
+
+[[test]]
+name = "storage_parity"
+path = "../tests/core_adversary/storage_parity.rs"
+
+[[test]]
+name = "witness_parity"
+path = "../tests/core_adversary/witness_parity.rs"
+
+[[test]]
+name = "oewas_oeeis_bridge"
+path = "../tests/core_adversary/oewas_oeeis_bridge.rs"
+
+[[test]]
+name = "reporting_projection"
+path = "../tests/core_adversary/reporting_projection.rs"
+
+[[test]]
+name = "dialectic_kernel"
+path = "../tests/core_adversary/dialectic_kernel.rs"
+
+[[test]]
+name = "joint_kernel_soundness"
+path = "../tests/core_adversary/joint_kernel_soundness.rs"
+
+[[test]]
+name = "panel_modes"
+path = "../tests/core_adversary/panel_modes.rs"
+
+# Stage targets, formerly the `core_adversary` crate. Sources and fixtures live in `../tests/core_adversary/stage`.
+
+[[test]]
+name = "stage_challenge_parity"
+path = "../tests/core_adversary/stage/challenge_parity.rs"
+
+[[test]]
+name = "stage_diagnostic_projection_parity"
+path = "../tests/core_adversary/stage/diagnostic_projection_parity.rs"
+
+[[test]]
+name = "stage_emission_parity"
+path = "../tests/core_adversary/stage/emission_parity.rs"
+
+[[test]]
+name = "stage_exact_parity"
+path = "../tests/core_adversary/stage/exact_parity.rs"
+
+[[test]]
+name = "stage_file_adapters"
+path = "../tests/core_adversary/stage/file_adapters.rs"
+
+[[test]]
+name = "stage_genealogy_parity"
+path = "../tests/core_adversary/stage/genealogy_parity.rs"
+
+[[test]]
+name = "stage_oscillation_parity"
+path = "../tests/core_adversary/stage/oscillation_parity.rs"
+
+[[test]]
+name = "stage_python_parity"
+path = "../tests/core_adversary/stage/python_parity.rs"
+
+[[test]]
+name = "stage_receipt_parity"
+path = "../tests/core_adversary/stage/receipt_parity.rs"
+
+[[test]]
+name = "stage_record_validation_parity"
+path = "../tests/core_adversary/stage/record_validation_parity.rs"
+
+[[test]]
+name = "stage_run_parity"
+path = "../tests/core_adversary/stage/run_parity.rs"
+
+[[test]]
+name = "stage_scheduler_parity"
+path = "../tests/core_adversary/stage/scheduler_parity.rs"
+
+[[test]]
+name = "stage_synthetic_diagnostic_parity"
+path = "../tests/core_adversary/stage/synthetic_diagnostic_parity.rs"
+
+[[test]]
+name = "stage_terminal_replay_parity"
+path = "../tests/core_adversary/stage/terminal_replay_parity.rs"
+
+[[test]]
+name = "stage_valuation_parity"
+path = "../tests/core_adversary/stage/valuation_parity.rs"
+
+[[test]]
+name = "stage_ddc_tape_evaluator_falsification"
+path = "../tests/core_adversary/stage/ddc_tape_evaluator_falsification.rs"
+
+[[test]]
+name = "stage_oscillation_rational_falsification"
+path = "../tests/core_adversary/stage/oscillation_rational_falsification.rs"
+
+# Provider targets, formerly the `core_providers` crate. Sources and fixtures live in `../tests/core_adversary/providers`.
+
+[[test]]
+name = "provider_anthropic_fixture"
+path = "../tests/core_adversary/providers/anthropic_fixture.rs"
+
+[[test]]
+name = "provider_budget_policy"
+path = "../tests/core_adversary/providers/budget_policy.rs"
+
+[[test]]
+name = "provider_local_http"
+path = "../tests/core_adversary/providers/local_http.rs"
+
+[[test]]
+name = "provider_message_parity"
+path = "../tests/core_adversary/providers/message_parity.rs"
+
+[[test]]
+name = "provider_python_parity"
+path = "../tests/core_adversary/providers/python_parity.rs"
+
+[[test]]
+name = "provider_settlement_contract"
+path = "../tests/core_adversary/providers/settlement_contract.rs"

@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:prime_power_mub_construction:v0.1.0
+title: Prime-power finite trace-character MUB construction
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: prime_power_mub_construction
+  symbol: prime_power_mub_construction
+  ascii_symbol: prime_power_mub_construction
+  notation: Prime-power finite trace-character MUB construction
+  domain:
+  - Odd prime compile-time characteristic, declared finite-field degree and matrix-entry budget
+  codomain:
+    description: Declared finite results of core_quantum_physics::mub::odd_prime; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Trace-character chirps yield q+1 bases of q rank-one projectors
+- Every generated family replays the canonical projector laws
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: mub::odd_prime
+  symbols:
+  - build_odd_prime_power_mub
+  - build_odd_prime_mub_d3
+  - build_odd_prime_mub_d5
+  required_tests:
+  - measurement_exact_laws::prime_power_mubs_replay_projectors_two_design_and_inversion
+negative_tests:
+- measurement_exact_laws::prime_power_mubs_replay_projectors_two_design_and_inversion
+doctrine:
+  summary: Trace-character chirps yield q+1 bases of q rank-one projectors; Every generated family replays
+    the canonical projector laws.
+  non_role:
+  - No unbounded prime-power construction or composite completeness conclusion
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

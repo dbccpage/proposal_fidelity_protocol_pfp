@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:stacky_groupoid:v0.1.0
+title: StackyGroupoid Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: groupoid_in_stacks
+  symbol: G_1 ⇉ G_0 in Stacks
+  ascii_symbol: stacky_groupoid
+  notation: G_1 ⇉ G_0 in Stacks
+  domain:
+  - 'object_stack: Stack G_0'
+  - 'morphism_stack: Stack G_1'
+  - 'structure_maps: source, target, composition, identity, inverse'
+  codomain:
+    description: A pair of stacks (G_0, G_1) with structure morphisms
+requirements:
+  required_structures:
+  - G_0 and G_1 are stacks
+  - Groupoid axioms hold (associativity, identity, inverse)
+  - Coherence conditions for 2-morphisms
+  - All artifacts are content-addressed via SHA-256
+laws:
+- G_0 and G_1 are stacks (2-sheaves)
+- Source, target, composition, identity, inverse satisfy groupoid laws
+- Associativity and unit laws hold up to coherent 2-morphisms
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators are content-addressed
+relationships:
+- urn:math:contract:Stack:v0.1.0 serves as Object and morphism stacks must satisfy stack contract
+- urn:math:contract:Groupoid:v0.1.0 serves as Internal groupoid structure in the 2-category of stacks
+negative_tests:
+- G_0 or G_1 fails stack condition
+- Associativity, identity, or inverse laws fail
+- Coherence conditions for 2-morphisms fail
+- Structure maps are not well-defined morphisms
+doctrine:
+  summary: A stacky groupoid is a groupoid object in stacks, providing a presentation of 2-stacks and higher geometric objects.  Stacky groupoids arise in orbifold theory and higher gauge theory.
+  non_role:
+  - Higher stacks beyond 2-stacks
+  - General ∞-groupoids
+  - Non-geometric stacky structures
+wip:
+- '2-stacks from stacky groupoids: formalize quotient construction'
+- 'Orbifold Euler characteristics: define and compute'
+- 'Stringy orbifold cohomology: integration with existing cohomology'
+- Morita equivalence of stacky groupoids needs full implementation
+- Proper and étale conditions require additional validators
+- Integration with existing Stack contract pending

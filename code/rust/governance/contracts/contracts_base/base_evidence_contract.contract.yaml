@@ -1,0 +1,55 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+schema_version: core.contract.v2
+contract_id: "urn:core:constitution:base_evidence_contract:v2.0.0"
+title: "Base Evidence & Audit Contract"
+kind: "evidence_contract"
+layer: "00_constitution"
+role: "AnalysisUnit"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  clean_architecture_layer: domain
+  dependencies:
+    contracts: []
+    lean4_theorems: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: ["REFUSAL_INVALID_ARGUMENTS", "REFUSAL_GATE_FAILED", "REFUSAL_INVARIANT_BREACH"]
+
+doctrine:
+  summary: >-
+    Foundational contract for cryptographic receipts, dual witness certificates, and trace records.
+  invariants:
+    - "Evidence records must reference verified CAS content digests."
+    - "Self-certification is strictly prohibited."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+    - "implicit_coercion"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+    - no_undeclared_state_transition
+
+specification:
+  algebraic_structure:
+    carrier_type: "EvidenceCarrier"
+    operations:
+      []
+  ports:
+    input_packet: "urn:core:packet:work_packet:v1.0.0"
+    output_packet: "urn:core:packet:swarm_run_receipt:v1.0.0"
+    error_type: "Refusal"
+  verification:
+    fitness_test: null
+    lean4_file: null

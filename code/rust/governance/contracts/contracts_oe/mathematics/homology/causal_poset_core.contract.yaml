@@ -1,0 +1,67 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:causal_poset_core:v0.1.0
+title: Finite causal posets
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: causal_poset_core
+  symbol: causal_poset_core
+  ascii_symbol: causal_poset_core
+  notation: Finite causal posets
+  domain:
+  - Declared finite carrier and strict relation with typed cycle, index and operation refusals.
+  codomain:
+    description: Declared finite results of core_homology::finite_poset; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The transitive closure is strict and acyclic.
+- Spacelike pairs are incomparable pairs.
+- Linear extensions preserve every strict relation.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_homology
+  module: finite_poset
+  symbols:
+  - FinitePoset
+  required_tests:
+  - a_missing_composite_violates_transitivity_and_is_named
+  - incomparable_pairs_are_order_incomparability_not_integer_inequality
+negative_tests:
+- generating_relations_close_transitively_and_refuse_cycles
+doctrine:
+  summary: The transitive closure is strict and acyclic.; Spacelike pairs are incomparable pairs.; Linear extensions
+    preserve every strict relation..
+  non_role:
+  - The pure order carrier belongs to homology; C1/C2 census and fixtures belong to the native program.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

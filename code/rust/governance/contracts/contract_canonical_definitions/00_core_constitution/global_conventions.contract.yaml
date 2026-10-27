@@ -1,0 +1,191 @@
+schema_version: core.contract.v1
+contract_id: urn:core:constitution:global_conventions:v1.0.0
+title: GlobalConventions
+kind: constitution_contract
+status: mathematical_wip
+layer: 00_constitution
+role: Constitution
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'These conventions apply to all Engine contracts and Rust implementations.
+
+    They define how contract laws become enforceable code, tests, and typed APIs.
+
+    These conventions do not define artifact families, authority effects, or authority
+
+    flow. Those are owned by the ContractConstitution and GlobalContractTaxonomy.
+
+    '
+  non_role: &id002
+  - unchecked law claims
+  - implicit partial APIs
+  - hidden runtime validation
+  - untyped invariants
+  - silent evidence promotion
+  - authority-changing conventions
+  - convention-defined local taxonomy
+  pattern_a_algebraic_laws_as_property_tests: 'For any law like associativity, identity, functor laws,
+    d^2=0, etc.:
+
+    - Provide a Law module with proptests or deterministic finite checks.
+
+    - Provide witness constructors for small counterexamples in debug builds.
+
+    - Keep the law documented on the trait and testable via helpers.
+
+    Every algebraic law MUST have at least one of: deterministic finite law check,
+
+    property test, witness-based counterexample test, replayable certificate verification.
+
+    '
+  pattern_b_invariants_as_types: 'Prefer checked constructors. Invalid states should be unrepresentable
+    when practical.
+
+    If invalid states cannot be made unrepresentable, the contract MUST name the Validator
+
+    that rejects them. Validators prove shape, domain, or representation admissibility
+
+    only. They MUST NOT upgrade authority unless the validator contract explicitly owns
+
+    that checked boundary.
+
+    '
+  pattern_c_total_vs_partial_apis: 'For operations that may fail:
+
+    - Provide try_* returning Result<_, Error>
+
+    - Provide *_unchecked behind unsafe or internal modules
+
+    - Make domain constraints explicit
+
+    No public contract API may silently clamp, coerce, repair, infer, fabricate, or
+
+    default missing evidence.
+
+    '
+  pattern_d_canonical_hashing: 'Every replay-relevant artifact MUST expose an artifact-specific canonical
+    hash set.
+
+    At minimum: input_hash, output_hash.
+
+    When relevant: config_hash, schema_hash, evidence_hash, trace_hash.
+
+    Hashes MUST be computed from canonical serialization.
+
+    Hash presence proves replay identity only. It does not prove semantic truth or authority.
+
+    '
+  pattern_e_negative_capability_tests: 'Every contract MUST include tests proving what the component cannot
+    do.
+
+    Required categories when applicable: does not mutate, does not execute, does not
+
+    terminalize, does not license transitions, does not authorize transitions, does not
+
+    create certificates, does not upgrade evidence authority, does not interpret policy,
+
+    does not call solvers unless explicitly declared, does not inspect forbidden
+
+    measurements, does not perform hidden service lookup, does not emit multiple primary
+
+    artifact families, same input produces same output hash.
+
+    '
+  pattern_f_service_boundary_calls:
+    forbidden:
+    - direct cross-layer import
+    - hidden global registry access
+    - ambient runtime lookup
+    - database handle hidden in BaseType
+    - implicit engine handle
+    - implicit policy handle
+    - implicit terminalizer handle
+    - implicit certificate signer
+    - implicit solver backend
+    allowed:
+    - declared service trait
+    - typed artifact reference
+    - certificate reference
+    - witness reference
+    - replay manifest reference
+    - checked packet reference
+    - measurement envelope reference
+    - action license reference
+  pattern_g_fail_closed: 'Ambiguous, missing, malformed, or unverifiable evidence MUST fail closed.
+
+    Fail closed means: return typed error, emit invalid/indeterminate report, emit
+
+    refusal where the role owns refusal, do not repair silently, do not promote evidence
+
+    authority, do not proceed by default, do not substitute policy defaults unless
+
+    declared by policy contract.
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - unwrap_authority
+    - default_if_missing
+    - silent_clamp
+    - implicit_coerce
+    - implicit_infer
+    - auto_repair
+    - auto_certify
+    - auto_license
+    - auto_execute
+    - global_registry_lookup
+    - ambient_runtime_lookup
+    - unchecked_public
+    - hidden_service_lookup
+    - promote_evidence
+    - authority_upgrade
+  required_tests:
+  - laws_have_property_or_finite_tests
+  - prose_only_law_is_rejected
+  - partial_api_uses_try_prefix_or_result
+  - unchecked_api_not_public
+  - public_api_does_not_silently_clamp_coerce_or_repair
+  - replay_artifacts_have_hashes
+  - canonical_serialization_hash_stable
+  - hash_presence_does_not_imply_truth
+  - negative_capability_tests_declared
+  - missing_evidence_fails_closed
+  - fail_closed_does_not_promote_authority
+  - service_calls_use_declared_interfaces
+  - hidden_service_lookup_rejected
+  canonical_invariant: 'Contract laws must become typed APIs, property tests, finite checks, hashes, witnesses,
+
+    certificates, replay checks, or explicit fail-closed errors. Conventions enforce
+
+    authority boundaries but do not define new authority.
+
+    '
+  legacy_metadata:
+    name: GlobalConventions
+    role: Shared implementation and testing conventions (Patterns A-G)
+    version: '2.0'
+    classification: constitution
+    split_from: contract_constitution.md (lines 760-941)
+    doctrine_version: 2026-05
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: StructureArtifact
+    domain_output_kind: ConventionRule
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.

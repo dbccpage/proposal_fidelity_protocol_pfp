@@ -4,7 +4,7 @@ description: "Use a prompt-attached candidate to review silent structured-input 
 metadata:
   core-arity: "1"
   core-contract: "operads/catalog/contracts/v1/lessons/adversary-input-coercion-antibody.json"
-  core-contracts-digest: "sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f"
+  core-contracts-digest: "sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3"
   core-generated: "oewas.typed-capability.v1"
   core-kind: "antibody"
   core-residual: "unknown"
@@ -32,7 +32,7 @@ Compare the harmful and benign examples in the attached candidate guidance. The 
 
 ## Digested lesson
 
-Source: `eis/antibodies/specs/anti_silent_input_schema_coercion.yaml` @ `827d3b47743393a96441751de40e1b4be2b33d9e` (sha256:8d74188d8b6bbb73fc4ce0c954e6e0978d3e1708ebd424241af2714e55872d26).
+Source: `eis/antibodies/anti_silent_input_schema_coercion.yaml` @ `827d3b47743393a96441751de40e1b4be2b33d9e` (sha256:7117daab59775eebc4378feb6c400b37a5279da10c9f8c2a365fb6004885b399).
 
 Source excerpt (evidence to inspect):
 
@@ -80,7 +80,7 @@ Use the bound prompt when reviewing this failure class. Candidate only; the exis
 
 Ordered signature: `(code: Code) -> findings: Audit`.
 
-Contracts: `sha256:eeec5a0d727eae41436369698416eabff393a33d0ea7c7eb250036af9296661f`.
+Contracts: `sha256:b001073b031beccde6ad42883e2af5fc4efa04d205c7648b4f029f1c33ce50a3`.
 
 Source admission: `Unadmitted`. AuthorityEffect: None.
 This on-demand instruction package does not install an ambient rule, execute a detector or activate an antibody.

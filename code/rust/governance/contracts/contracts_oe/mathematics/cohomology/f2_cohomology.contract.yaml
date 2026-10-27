@@ -1,0 +1,99 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:f2_cohomology:v0.1.0
+title: F2 Cohomology of a Finite Chain Complex Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: cohomology_with_coefficients_in_f2
+  symbol: 'H^k(X; F_2) = Z^k / B^k with Z^k = ker delta^k, B^k = im delta^(k-1), delta^k = (d_{k+1})^T'
+  ascii_symbol: f2_cohomology
+  notation: 'chain complex C_top -> ... -> C_1 -> C_0 of GF(2) vector spaces with d_{k-1} d_k = 0; cochains are vectors of length n_k'
+  domain:
+  - 'cell counts n_0, ..., n_top and boundary matrices d_k of shape n_{k-1} x n_k over GF(2)'
+  - 'or a SimplicialComplex (boundary coefficients reduced mod 2), or an IntegralChainComplex reduced mod 2'
+  codomain:
+    description: 'Bases of cycles, boundaries, cocycles and coboundaries; bases of H_k and H^k as cycles and cocycles; the dimensions and the exact counts |Z^k|, |B^k|, |H^k| as unbounded integers; the coordinates of the class of a cocycle; and the solution set of the coboundary equation delta^k s = w as an affine space over the cocycles.
+
+      '
+requirements:
+  required_structures:
+  - 'd_{k-1} d_k = 0 is checked when the complex is built, and the shapes must match the cell counts'
+  - 'Exact GF(2) elimination only'
+  - 'Every degree, cochain length and boundary shape is validated and a failure is a typed ComplexError'
+laws:
+- 'delta^k delta^(k-1) = 0, the transpose of d_{k-1} d_k = 0'
+- 'dim H^k = dim Z^k - dim B^k = n_k - rank delta^k - rank delta^(k-1); |Z^k| = 2^(dim Z^k) and |Z^k| = |B^k| |H^k|'
+- 'Over a field dim H_k(X; F_2) = dim H^k(X; F_2)'
+- 'Euler-Poincare: sum over k of (-1)^k n_k equals sum over k of (-1)^k dim H^k(X; F_2)'
+- 'Universal coefficients: dim H^k(X; F_2) = rank H_k(X; Z) + t_k + t_(k-1), where t_j is the number of even invariant factors in the torsion of H_j(X; Z)'
+- 'The coordinates of the class of a cocycle in the basis of H^k are a linear map onto the group of classes, zero exactly on coboundaries, each class hit |B^k| times'
+- 'Torsor: the solutions of delta^k s = w are empty unless w is a coboundary, and then form a coset of Z^k: a particular solution plus any cocycle, |Z^k| solutions in all'
+- 'On a closed connected surface every edge lies on two faces, so delta^1 s has even weight, and delta^1 s = w is solvable exactly when w has even weight; a single face is an obstruction'
+- 'Values: circle (1,1), disk (1,0,0), sphere and octahedron (1,0,1), 7-vertex torus (1,2,1), 6-vertex projective plane (1,1,1), 5-vertex Mobius band (1,1,0); the cell complexes of the projective plane, Klein bottle and torus give (1,1,1), (1,2,1), (1,2,1)'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Bases come out in a fixed order (free columns ascending)
+relationships:
+- urn:core:math:gf2_linear_algebra:v0.1.0 serves as The elimination every count and basis is computed with
+- urn:core:math:bockstein_homomorphism:v0.1.0 serves as The Bockstein map on this cohomology, from the integral lift
+- urn:core:math:square_lattice_complex:v0.1.0 serves as Lattice complexes are the main large-scale carriers
+- urn:core:math:cell_complex:v0.1.0 serves as The carrier a chain complex comes from
+rust_binding:
+  crate: core_homology
+  module: f2_cohomology
+  symbols:
+  - F2ChainComplex
+  - ComplexError
+  required_tests:
+  - a_chain_complex_refuses_malformed_boundary_data
+  - degrees_outside_the_complex_are_refused
+  - coordinates_refuse_a_cochain_that_is_not_a_cocycle
+  - simplicial_complexes_have_the_known_f2_cohomology
+  - cocycle_coboundary_and_class_counts_of_small_complexes
+  - cocycle_and_coboundary_counts_agree_with_brute_force_enumeration
+  - euler_poincare_holds_for_cells_homology_and_cohomology
+  - f2_cohomology_follows_from_integral_homology_by_universal_coefficients
+  - torsion_is_seen_by_f2_but_not_by_q
+  - homology_and_cohomology_bases_are_cycles_and_cocycles_independent_modulo_boundaries
+  - coordinates_of_a_cocycle_class_are_a_linear_map_onto_the_class_group
+  - solutions_of_the_coboundary_equation_are_a_torsor_over_the_cocycles
+  - on_a_closed_surface_the_coboundary_equation_is_solvable_exactly_for_even_weight
+  - with_h2_zero_every_two_cochain_is_a_coboundary
+  - the_zero_right_hand_side_has_the_cocycles_themselves_as_solutions
+  - the_point_and_the_empty_complex_are_complexes
+negative_tests:
+- A chain complex with no degrees, a wrong number of boundary maps, a boundary of the wrong shape, or boundaries that do not compose to zero must be refused
+- A degree above the top degree, or a boundary of degree 0, must be refused
+- A cochain of the wrong length must be refused
+- The class coordinates of a cochain that is not a cocycle must be refused
+- A single face on a closed surface must have no solution of the coboundary equation
+doctrine:
+  summary: 'Cohomology with F_2 coefficients of any finite chain complex, from simplicial complexes or arbitrary cell complexes, by exact elimination. Counts of cocycles, coboundaries and solutions are checked against enumeration of every cochain; dimensions against the universal coefficient theorem with Smith normal form over Z (an independent elimination) and against the rational Betti numbers of the simplicial code; and the coboundary equation is shown to be a torsor over the cocycles, the statement behind the lifts of a flat bundle to a double cover.'
+  non_role:
+  - Cup products and Steenrod squares (only the Bockstein map, in a separate contract)
+  - Coefficients other than F_2 (see the integral complex for Z)
+  - Stiefel-Whitney classes of a bundle (this contract gives the linear algebra the statement delta^1 s = w_2 needs, not w_2 itself)
+  - Persistent homology
+wip:
+- 'core_homology::homology_computer::compute still ignores its coefficient-field request and CoefficientDomain::FiniteField remains a tag; nothing in this module replaces those shells'
+- 'A general Stiefel-Whitney class computation from a cell structure is not provided'

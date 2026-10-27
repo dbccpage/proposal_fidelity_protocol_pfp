@@ -1,0 +1,98 @@
+schema_version: "core.contract.v1"
+contract_id: "urn:core:math:cochain_group:v1.0.0"
+title: "Cochain Group"
+kind: "math_contract"
+status: "mathematical_wip"
+layer: "math"
+
+descriptor:
+  authority_effect: "none"
+  evidence_ceiling: "ShapeOnly"
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+
+math:
+  object_kind: "graded_module_component"
+  symbol: "C^n"
+  ascii_symbol: "CochainGroup"
+  notation: "C^n"
+  domain:
+    - "a cohomological degree n (integer)"
+    - "a coefficient domain (ring or field)"
+    - "an optional finite basis for free modules"
+  codomain:
+    description: "a single degree component C^n of a graded cochain object (purely structural)"
+  definition:
+    degree_invariant: "every cochain in C^n has cohomological degree n"
+    module_structure: "C^n is a module over the coefficient domain"
+    component_membership: "membership is determined by degree and coefficient domain"
+
+requirements:
+  required_structures:
+    - "a degree n that appears at most once in the parent graded object"
+    - "a coefficient domain shared with the parent complex"
+    - "an optional finite basis under which cochains are coordinate vectors"
+    - "a deterministic component hash derived from degree, coefficient domain, and basis"
+  compatibility:
+    - "the coefficient domain must match the parent cochain complex"
+    - "a declared basis must span all cochains as coordinate vectors"
+
+laws:
+  degree_uniqueness: "Each degree n appears at most once in the parent graded object."
+  coefficient_consistency: "All cochains in C^n use the same declared coefficient domain as the parent."
+  basis_coordinates: "When a basis is declared, every cochain is expressible as a coordinate vector over it."
+  descriptive_only: "C^n is a carrier; it classifies nothing and confers no authority."
+
+equivalence:
+  component_equality: "Two components are equal iff parent hash, degree, coefficient domain, and basis hash agree."
+  hash_stability: "The component hash is a pure function of (parent, degree, coefficient domain, basis)."
+
+replay:
+  requirements:
+    - "no external state, randomness, or time-dependent data"
+    - "degree lookup is a pure function of the parent hash and the degree"
+    - "the same degree in the same complex reproduces the same artifact hash"
+    - "deterministic SHA-256 component hash"
+
+relationships:
+  CochainComplex: "C^n is the degree-n component of a [[cochain_complex]]."
+  Coboundary: "Coboundary maps delta_n : C^n → C^{n+1} act between adjacent components."
+  Cocycle: "Cocycles Z^n = ker delta_n are a submodule of C^n."
+  Cohomology: "Cohomology classes H^n are represented by elements of C^n modulo coboundaries."
+
+negative_tests:
+  - "Degree absent from the parent graded object or cochain complex"
+  - "Component hash mismatch with the parent declaration"
+  - "Coefficient-domain mismatch with the parent"
+  - "Coordinate-vector length exceeding the basis dimension"
+  - "Artifact claiming authority or admissibility classification"
+  - "Attempt to terminalize or emit customer-facing claims"
+  - "Non-deterministic operations (randomness, external state, time-dependent data)"
+
+doctrine:
+  summary: >
+    The cohomological degree component C^n of a graded cochain object — the carrier for
+    n-cochains, coboundaries, cocycles, and cohomology classes H^n. Purely structural;
+    confers no authority.
+  non_role:
+    - "Does not classify admissibility of cochains."
+    - "Does not emit policy decisions or authority markers."
+    - "Does not produce customer-facing claims or certificates."
+    - "Does not terminalize artifacts or confer authority."
+
+wip:
+  - "Focuses on finite/free cases with explicit bases."
+  - "Future versions may extend to projective/injective resolutions."
+  - "Coordinate encoding assumes fixed basis-ordering conventions."
+  - "Interaction with the universal coefficient theorem is not yet specified."

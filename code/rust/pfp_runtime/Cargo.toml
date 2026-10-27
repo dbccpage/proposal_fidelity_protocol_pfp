@@ -1,0 +1,131 @@
+[package]
+autotests = false
+name = "pfp_runtime"
+version.workspace = true
+edition = "2021"
+description = "Symbol Game round loop: candidate packets, host round records, frontier state, and exact domain adapters"
+authors = ["Sentinel Contributors"]
+license.workspace = true
+
+[dependencies]
+linear_algebra = { path = "../core_linear_algebra" }
+core_kernel = { path = "../core_kernel" }
+core_operad_theory = { path = "../core_operad_theory" }
+core_prompt_civilization = { path = "../core_prompt_civilization" }
+core_wdp = { path = "../core_wdp" }
+core_functional = { path = "../core_functional" }
+core_quantum_physics = { path = "../core_quantum_physics" }
+core_homology = { path = "../core_homology" }
+core_holonomy = { path = "../core_holonomy" }
+num-bigint = "0.4"
+num-rational = { version = "0.4", features = ["num-bigint"] }
+num-traits = "0.2"
+num-integer = "0.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["arbitrary_precision", "raw_value"] }
+unicode-normalization = "0.1"
+sha2 = "0.10"
+hex = "0.4"
+thiserror = "2"
+ryu = "1.0"
+blake3 = "1.8"
+serde_yaml = "0.9"
+
+[build-dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+
+[[bin]]
+name = "symgam"
+path = "src/main.rs"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/pfp_runtime`.
+
+[[test]]
+name = "canonical_parity"
+path = "../tests/pfp_runtime/canonical_parity.rs"
+
+[[test]]
+name = "curriculum"
+path = "../tests/pfp_runtime/curriculum.rs"
+
+[[test]]
+name = "digest_is_canonical"
+path = "../tests/pfp_runtime/digest_is_canonical.rs"
+
+[[test]]
+name = "engine_turn_driver"
+path = "../tests/pfp_runtime/engine_turn_driver.rs"
+
+[[test]]
+name = "f2_shape_invariant"
+path = "../tests/pfp_runtime/f2_shape_invariant.rs"
+
+[[test]]
+name = "host_interface"
+path = "../tests/pfp_runtime/host_interface.rs"
+
+[[test]]
+name = "jcs_vectors"
+path = "../tests/pfp_runtime/jcs_vectors.rs"
+
+[[test]]
+name = "modular_residue_contract"
+path = "../tests/pfp_runtime/modular_residue_contract.rs"
+
+[[test]]
+name = "operand_injection"
+path = "../tests/pfp_runtime/operand_injection.rs"
+
+[[test]]
+name = "permutation_order"
+path = "../tests/pfp_runtime/permutation_order.rs"
+
+[[test]]
+name = "pfp_task_turn"
+path = "../tests/pfp_runtime/pfp_task_turn.rs"
+
+[[test]]
+name = "immune_fence"
+path = "../tests/pfp_runtime/immune_fence.rs"
+
+[[test]]
+name = "private_wire_unknown_fields"
+path = "../tests/pfp_runtime/private_wire_unknown_fields.rs"
+
+[[test]]
+name = "prompt_artifact_parity"
+path = "../tests/pfp_runtime/prompt_artifact_parity.rs"
+
+[[test]]
+name = "stabilizer"
+path = "../tests/pfp_runtime/stabilizer.rs"
+
+[[test]]
+name = "stabilizer_certificate_binding"
+path = "../tests/pfp_runtime/stabilizer_certificate_binding.rs"
+
+[[test]]
+name = "stabilizer_energy_width"
+path = "../tests/pfp_runtime/stabilizer_energy_width.rs"
+
+[[test]]
+name = "stabilizer_phase_reconciliation"
+path = "../tests/pfp_runtime/stabilizer_phase_reconciliation.rs"
+
+[[test]]
+name = "synthesis_dag"
+path = "../tests/pfp_runtime/synthesis_dag.rs"
+
+[[test]]
+name = "wp6_expectation_corpus"
+path = "../tests/pfp_runtime/wp6_expectation_corpus.rs"
+
+[[test]]
+name = "operad_tests"
+path = "../tests/pfp_runtime/operad_tests.rs"
+
+[[test]]
+name = "cochain_tests"
+path = "../tests/pfp_runtime/cochain_tests.rs"
+

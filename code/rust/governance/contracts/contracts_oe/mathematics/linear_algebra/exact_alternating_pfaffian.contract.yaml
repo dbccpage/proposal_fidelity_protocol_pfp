@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_alternating_pfaffian:v0.1.0
+title: Exact Alternating-Matrix Pfaffian
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_alternating_pfaffian
+  symbol: exact_alternating_pfaffian
+  ascii_symbol: exact_alternating_pfaffian
+  notation: Exact Alternating-Matrix Pfaffian
+  domain:
+  - Even square matrices of dimension 0..=128 over an exact field, with zero diagonal and A^T=-A
+  codomain:
+    description: Declared finite results of linear_algebra::exact_pfaffian; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Simultaneous row/column pivot swaps change the Pfaffian sign
+- The skew Schur recurrence gives pf(A)^2=det(A)
+- The empty Pfaffian is one and a singular alternating matrix has zero Pfaffian
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_linear_algebra
+  module: exact_pfaffian
+  symbols:
+  - PfaffianError
+  - pfaffian
+  required_tests:
+  - pfaffian_sign_pivoting_and_determinant_square_are_exact
+  - non_alternating_and_odd_carriers_are_refused
+negative_tests:
+- Odd/rectangular/oversized and nonalternating carriers are refused; noninvertible field pivots are typed errors
+doctrine:
+  summary: Simultaneous row/column pivot swaps change the Pfaffian sign; The skew Schur recurrence gives pf(A)^2=det(A);
+    The empty Pfaffian is one and a singular alternating matrix has zero Pfaffian.
+  non_role:
+  - No floating determinant sign or spectral approximation
+  - No automatic claim that a finite-chain Pfaffian is a bulk invariant
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

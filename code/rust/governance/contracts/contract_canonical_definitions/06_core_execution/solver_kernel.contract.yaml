@@ -1,0 +1,151 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:solver_kernel:v1.0.0
+title: SolverKernel
+kind: execution_contract
+status: mathematical_wip
+layer: 06_execution
+role: SolverKernel
+descriptor:
+  authority_effect: evidence_only
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - CertificateKernel
+    - ReplayKernel
+    - MeasurementKernel
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'SolverKernel performs declared computation. Raw solver outputs are EvidenceOnly. Checked
+
+    solver outputs may support FactOnly computational claims only after independent checking,
+
+    replay, exact arithmetic, certificate, or tolerance-bound validation. Solver output does not
+
+    authorize transitions and does not become canonical measurement output unless routed through
+
+    MeasurementKernel.
+
+    '
+  non_role: &id002
+  - evaluation
+  - search
+  - policy_definition
+  - certification_authority
+  - terminal_mapping
+  - execution
+  - mutation
+  - transition_authorization
+  - action_licensing
+  authority_defaults:
+    solver_output: EvidenceOnly
+    checked_solver_output: FactOnly only after declared checking/replay/certificate boundary.
+    evaluator_routing: RequiresEvaluator may be used by consumers after checking when a judgment is needed.
+  structural_representation:
+    raw:
+      struct_name: SolverOutput
+      fields:
+      - name: solver_id
+        type: SolverId
+      - name: problem_ref
+        type: ProblemRef
+      - name: output_payload_ref
+        type: EvidenceRef
+      - name: arithmetic_mode
+        type: ArithmeticMode
+      - name: tolerance_profile_ref
+        type: Option<ToleranceProfileRef>
+      - name: replay_ref
+        type: Option<ReplayRef>
+      - name: output_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+    checked:
+      struct_name: CheckedSolverOutput
+      fields:
+      - name: solver_output_ref
+        type: SolverOutputRef
+      - name: checker_ref
+        type: CheckerRef
+      - name: checked_problem_hash
+        type: Hash256
+      - name: checked_output_hash
+        type: Hash256
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: authority_effect
+        type: AuthorityEffect
+        default: FactOnly
+  flow: 'ProblemRef
+
+    -> SolverKernel
+
+    -> SolverOutput
+
+    -> Checker / ReplayKernel / CertificateKernel
+
+    -> CheckedSolverOutput or EvidenceEnvelope
+
+    -> MeasurementKernel if canonical measurement is needed
+
+    -> Evaluator if judgment is needed
+
+    '
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - mutate_state
+    - authorize_transition
+    - license_transition
+    - self_certify
+    - compute_phi
+    - rank_candidates
+    - score_candidate
+  required_tests:
+  - solver_output_defaults_to_evidence_only
+  - checked_solver_output_may_be_factonly_after_checks
+  - solver_does_not_evaluate
+  - solver_does_not_search
+  - solver_does_not_certify_itself
+  - solver_does_not_emit_action_license
+  - solver_does_not_authorize_transition
+  - solver_does_not_execute
+  - solver_output_not_canonical_measurement_without_measurement_kernel
+  canonical_invariant: 'Solver computes only. It does not decide, certify itself, measure canonically,
+    license,
+
+    authorize, execute, mutate, or define policy.
+
+    '
+  legacy_metadata:
+    name: SolverKernel
+    source_file: non-math/06_execution/solver_contract.md
+    active: true
+    machine_authority: true
+    role: Mathematical computation kernel
+    version: '2.0'
+    classification: computation
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: EvidenceEnvelope
+    referenced_output_families:
+    - FactEnvelope
+    - Record
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_execution_contract:v1.0.0"

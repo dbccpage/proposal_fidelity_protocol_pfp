@@ -1,0 +1,54 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:verified_phi1_certificate:file:v1.0.0
+title: Finite exact Phi1 primal-dual verifier and immutable evidence
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/phi1.rs
+layer: functional
+role: finite_exact_certificate_verifier
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - finite_rational_primal_dual_verification
+  - dimension_and_weight_validation
+  - zero_denominator_refusal_before_arithmetic
+  - private_verified_result
+  - read_only_certificate_export
+does_not_own:
+  - certificate_generating_solver
+  - carrier_or_native_host_authentication
+  - policy_or_actor_licensing
+  - general_mathematical_proof_authority
+may_call: []
+must_not:
+  - seal_a_scalar_without_matching_primal_dual_bounds
+  - accept_zero_denominators_from_typed_raw_ratios
+  - silently_ignore_unknown_certificate_fields
+  - expose_mutable_verified_evidence
+  - promote_a_certificate_to_release_or_task_authority
+exactness:
+  mode: exact_finite_rational_certificate
+  exact_constructor_required: true
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "fn verify_exact_certificate("
+  - "ZeroRationalDenominator"
+  - "pub fn certificate(&self)"
+required_tests:
+  - "phi1::tests::exact_certificate_proves_quotient_distance"
+  - "phi1::tests::certificate_export_is_read_only_and_modified_copies_need_reverification"
+  - "phi1::tests::zero_denominators_are_refused_in_every_certificate_field"
+  - "phi1::tests::certificate_requires_matching_primal_residual"
+  - "phi1::tests::certificate_requires_dual_annihilator"
+  - "phi1::tests::certificate_requires_dual_norm_bound"
+  - "phi1::tests::certificate_requires_matching_dual_value"
+  - "phi1::tests::certificate_rejects_missing_d0_c0_c1_data"
+  - "phi1::tests::certificate_rejects_negative_reported_value"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

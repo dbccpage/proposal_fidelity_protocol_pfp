@@ -1,0 +1,148 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:image_kernel:v0.1.0
+title: Image and Kernel Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: image_kernel_pair
+  symbol: 'Im(f), Ker(f) for f: V → W'
+  ascii_symbol: image_kernel
+  notation: 'Im(f), Ker(f) for f: V → W'
+  domain:
+  - 'linear_map: linear_map_f'
+  - 'image: Im(f) = {f(v) : v ∈ V} ⊆ W'
+  - 'kernel: Ker(f) = {v ∈ V : f(v) = 0} ⊆ V'
+  - 'rank: dim(Im(f))'
+  - 'nullity: dim(Ker(f))'
+  codomain:
+    description: Image and kernel subspaces of a linear map
+requirements:
+  required_structures:
+  - All computations use a sealed CheckedExactField (Rational64 or BigRational, with no integer primitives permitted)
+  - RREF computation produces unique canonical form
+  - Image basis uses original matrix pivot columns (not RREF columns)
+  - Kernel basis constructed from free variable assignments
+  - rank + nullity = domain dimension
+  - Both image and kernel bases are linearly independent
+laws:
+- Im(f) ⊆ W (subspace of codomain)
+- Ker(f) ⊆ V (subspace of domain)
+- dim(V) = dim(Im(f)) + dim(Ker(f))
+- ∀v ∈ Ker(f), f(v) = 0
+- Image basis vectors are linearly independent
+- Kernel basis vectors are linearly independent
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact rational arithmetic via CheckedExactField (no floating-point, no integer truncation)
+  - Canonical RREF algorithm (unique output)
+  - Artifact existence verified via content-addressing
+relationships:
+- urn:math:contract:LinearMap:v0.1.0 serves as defines_linear_transformation
+- urn:math:contract:VectorSpace:v0.1.0 serves as defines_domain_and_codomain_spaces
+- urn:math:contract:BasicMatrix:v1.0.0 serves as matrix_representation_for_computation
+- urn:math:contract:Field:v0.1.0 serves as scalar_field_K
+rust_binding:
+  crate: core_linear_algebra
+  module: linear_algebra::image_kernel
+  symbols:
+  - ExactRowReduction
+  - RankRref
+  - RawSubspaceBasis
+  - ExactLinearAlgebraError
+  - solve_in_image
+  - ImageMembership
+  - ImageMembershipWitness
+  # One test per mechanically-checkable negative that the source actually
+  # rejects or whose production output is falsifiable. Non-canonical RREF
+  # is computed, not a constructor input. Integer primitives fail at
+  # compile time (doctest compile_fail, not a fn). Those stay unnamed.
+  required_tests:
+  - image_membership_rejects_dimension_mismatch
+  - rank_plus_nullity_equals_domain_dimension
+  - kernel_basis_vectors_map_to_zero
+  - image_basis_vectors_are_linearly_independent
+  - kernel_basis_vectors_are_linearly_independent
+  - rank_and_rref_is_deterministic
+negative_tests:
+- Invalid matrix dimensions or out-of-bounds access must be rejected
+- rank + nullity != domain_dimension must be rejected
+- Vector not mapping to zero must not be in kernel basis
+- Linearly dependent image basis vectors must be rejected
+- Linearly dependent kernel basis vectors must be rejected
+- Non-canonical RREF form must be rejected
+- Same inputs producing different outputs must be rejected
+- Integer primitive matrices (e.g. BasicMatrix<i64>) must fail compilation (CheckedExactField sealed)
+doctrine:
+  summary: 'This contract defines the image (range) Im(f) and kernel (nullspace) Ker(f) of a linear map f: V → W between finite-dimensional vector spaces over an exact field K. The image is the set of all outputs {f(v) : v ∈ V} ⊆ W, and the kernel is the set of all inputs mapping to zero {v ∈ V : f(v) = 0} ⊆ V. The contract guarantees the rank-nullity theorem: dim(V) = dim(Im(f)) + dim(Ker(f)). This implementation uses exact rational arithmetic via sealed CheckedExactField protocol (Rational64 and BigRational) with row reduction (RREF) to compute basis representations for both subspaces (one_oears.md ruling 4).'
+  non_role:
+  - Orthogonal bases (requires inner product structure)
+  - Approximate numerical computation (use exact rational arithmetic)
+  - Infinite-dimensional spaces (only finite-dimensional vector spaces)
+  - Change-of-basis tracking (basis identity is opaque)
+  - Continuous maps (discrete linear algebra only)
+wip:
+- Should we provide orthogonal bases via Gram-Schmidt (requires inner product)?
+- How to handle rational overflow detection and recovery?
+- Should we expose RREF as a separate FactEnvelope?
+- How to integrate with higher-level VectorSpace/Subspace contracts?
+- Should we provide change-of-basis tracking for bases?
+- Rational64 enforced by i64 OverflowCeiling refusal with fallback to BigRational
+- Integer primitives fail at compile time via sealed CheckedExactField
+- Bases are ''raw'' (no coordinate system identity attached)
+- Image basis uses original matrix columns (geometric interpretation)
+- Kernel basis uses standard free variable construction
+- RREF is computed once and reused for both image and kernel
+- No caching of RREF results across multiple queries
+- Thread-safe (immutable operations only)
+
+# === CANONICAL CONTRACT ABOVE ===
+nomos_debate_NOT_CANONICAL:
+  banner: "NON-CANONICAL DEBATE ONLY — not contract law; AuthorityEffect none; never promote from this block alone"
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: STAGE1_MECHANICAL_PASS
+    severity: info
+    claim_class: "[STANDARD]"
+    detail: "Mechanical GTLA field gates passed (authority/math/non_role/structures/laws-or-requirements/negative_tests). Not PROVED."
+    recommendation: "Repair under meth-level math re-review; not GlobalGreen."
+
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: MODULE_PATH_ALIGNED
+    severity: info
+    claim_class: "[CODE_DEMO_RUST]"
+    file: core_linear_algebra/src/linear_algebra/image_kernel.rs
+    yaml_law: "rust_binding.module: linear_algebra::image_kernel; rank-nullity; CheckedExactField generics (Rational64, BigRational)"
+    code_behavior: >
+      File lives under linear_algebra::image_kernel (re-exported at crate::image_kernel).
+      Symbols ExactRowReduction, RankRref, RawSubspaceBasis, ExactLinearAlgebraError,
+      solve_in_image, ImageMembership, ImageMembershipWitness present. Exact checked
+      Rational64 and BigRational RREF with sealed CheckedExactField protocol.
+    detail: >
+      Module path and sealed field protocol match YAML intent; integer primitives refused.
+    delta: MATCH_EXACT
+

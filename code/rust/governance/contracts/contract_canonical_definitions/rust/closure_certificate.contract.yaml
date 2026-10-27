@@ -1,0 +1,64 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_certifiers:closure_certificate:v1.1.0
+title: ClosureCertificate
+status: active
+crate: core_certifiers
+file: crates_rs/core_certifiers/src/closure_certificate.rs
+layer: 02_evidence
+role: canonical_closure_certifier
+authority_effect: fact_only
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+- closure_certificate_exact_status
+- closure_certificate_diagnostic_status
+- closure_replay_binding
+does_not_own:
+- Gamma2 computation
+- Phi1 computation
+- trichotomy classification
+- authority minting
+- lift acceptance
+- operator execution
+may_call:
+- core_functional::gamma2::VerifiedExactGamma2
+- core_policy::trichotomy
+- core_replay::*
+must_not:
+- self-certify Gamma2
+- compute Gamma2 from raw d1/h matrices
+- classify exact closure through f64 tolerance
+- mint authority
+- terminalize
+- accept raw string closure status as certified
+- mutate packets or deposits
+exactness:
+  mode: mixed_exact_and_diagnostic
+  exact_constructor_required: true
+  exact_status_rule: Gamma2 == 0 -> Closed; Gamma2 > 0 -> Open
+  approximate_modes_allowed: true
+  approximate_modes_authority_effect: none
+  approximate_modes_must_be_named_diagnostic: true
+forbidden_substrings:
+- CertifiedAuthority::certify
+- authority_from_outcome_f13
+- mint_authority(
+- AuthorityCeiling::FullCertifier
+required_substrings:
+- VerifiedExactGamma2
+- new_exact
+- diagnostic
+required_tests:
+- closure_certificate_exact_zero_gamma_is_closed
+- closure_certificate_exact_positive_gamma_is_open
+- closure_certificate_diagnostic_cannot_authorize
+- closure_certificate_rejects_unverified_gamma2
+lean_obligations:
+- 'L-CERT-4: exact closure certificate theorem: Gamma2 = 0 iff Closed; Gamma2 > 0
+  iff Open under exact rational Gamma2'
+- 'L-M1.5: computed Gamma2 from d1 equals classifier input'
+notes:
+- If exact and approximate closure remain in one file, tests must prove exact constructor
+  never uses tolerance.

@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:stack:v0.1.0
+title: Stack Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: pseudofunctor
+  symbol: 'F: C^op → Cat satisfying descent for {U_i → U} ∈ J(U)'
+  ascii_symbol: stack
+  notation: 'F: C^op → Cat satisfying descent for {U_i → U} ∈ J(U)'
+  domain:
+  - 'site: Site (C, J) with Grothendieck topology'
+  - 'pseudofunctor: F: C^op → Cat with coherence isomorphisms'
+  - 'descent_data: Descent categories Des({U_i}) for each covering'
+  codomain:
+    description: 'Pseudofunctor F: C^op → Cat on a site (C, J)'
+requirements:
+  required_structures:
+  - The site (C, J) must exist and be validated
+  - Object assignment, restriction functors, and coherence isomorphisms must be well-defined
+  - For each covering, F(U) → Des is fully faithful
+  - For each covering, F(U) → Des is essentially surjective
+  - Artifact hash computed as SHA-256 over contract_id, version, site_id, pseudofunctor_hash
+laws:
+- For any covering {U_i → U}, F(U) → Des({U_i}) is fully faithful
+- For any covering {U_i → U}, F(U) → Des({U_i}) is essentially surjective
+- Coherence isomorphisms (gf)* ≅ f* g* satisfy cocycle condition
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Pseudofunctor data serialized in canonical order
+relationships:
+- urn:math:contract:Site:v0.1.0 serves as Provides the site (C, J) on which the stack is defined
+- urn:math:contract:Category:v1.0.0 serves as Provides the target category Cat for the pseudofunctor
+- urn:math:contract:Functor:v1.0.0 serves as Defines restriction functors and descent functors
+negative_tests:
+- site_id does not resolve to a valid Site
+- Coherence isomorphisms don't satisfy cocycle condition
+- F(U) → Des not fully faithful for some covering
+- F(U) → Des not essentially surjective for some covering
+doctrine:
+  summary: 'A Stack is a category-valued presheaf F: C^op → Cat (or Gpd) on a site (C, J) satisfying the descent condition for objects and morphisms. Stacks generalize sheaves to handle groupoid-valued data. The contract validates descent/gluing for both objects and isomorphisms.'
+  non_role:
+  - Higher stacks (n-stacks for n > 1) or (∞,1)-categorical stacks
+  - Algebraic geometry-specific geometric structure (beyond categorical descent)
+  - Derived stacks or spectral stacks
+wip:
+- Stacks in groupoids (all morphisms invertible) are most common
+- Algebraic stacks have additional geometric structure
+- 2-sheaves and higher stacks use (∞,1)-categories
+- Currently supports 1-stacks (Cat-valued presheaves)
+- Groupoid-valued case is the primary use case for moduli problems
+- Future work may extend to algebraic stacks with geometric conditions

@@ -1,0 +1,85 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:isomorphism:v0.1.0
+title: Isomorphism Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: isomorphism
+  symbol: 'f: A ≅ B with inverse g, where g ∘ f = id_A and f ∘ g = id_B'
+  ascii_symbol: isomorphism
+  notation: 'f: A ≅ B with inverse g, where g ∘ f = id_A and f ∘ g = id_B'
+  domain:
+  - 'morphism: Morphism f: A → B'
+  - 'inverse: Morphism g: B → A'
+  - 'domain: Object A'
+  - 'codomain: Object B'
+  codomain:
+    description: 'An isomorphism consists of two morphisms f: A → B and g: B → A in a category C, where composition in both orders yields identity morphisms on the respective objects.
+
+      '
+requirements:
+  required_structures:
+  - 'The morphism f: A → B must exist and be valid'
+  - 'The inverse morphism g: B → A must exist and be valid'
+  - dom(f) = cod(g) = A and cod(f) = dom(g) = B
+  - Composition g ∘ f must equal id_A
+  - Composition f ∘ g must equal id_B
+  - Artifact hash must be deterministic and reproducible
+laws:
+- g ∘ f = id_A
+- f ∘ g = id_B
+- dom(f) = cod(g) = A and cod(f) = dom(g) = B
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Given same morphism and inverse, must produce identical artifact hash
+relationships:
+- urn:math:contract:Morphism:v0.1.0 serves as Provides the underlying morphisms f and g
+- urn:math:contract:Category:v0.1.0 serves as Provides the categorical context for composition and identity
+negative_tests:
+- morphism_id does not resolve to Morphism artifact
+- inverse_id does not resolve to Morphism artifact
+- dom(f) ≠ cod(g)
+- g ∘ f ≠ id_A
+- f ∘ g ≠ id_B
+doctrine:
+  summary: 'An Isomorphism is a morphism f: A → B that has a two-sided inverse g: B → A such that g ∘ f = id_A and f ∘ g = id_B. The contract validates the morphism and its inverse, verifying the isomorphism conditions.'
+  non_role:
+  - Automatic detection of isomorphisms from morphisms alone
+  - Category-specific isomorphism detection (e.g., bijection detection)
+  - Natural isomorphisms between functors (covered by NaturalTransformation contract)
+  - Proof that inverses are unique (this is a theorem, not a validation)
+wip:
+- The contract requires explicit inverse; detecting isomorphisms from morphisms alone is category-dependent
+- Isomorphism uniqueness (inverse is unique) is a theorem, not a validation - should we include a proof witness?
+- Natural isomorphisms between functors are in the NaturalTransformation contract - should we reference it explicitly?
+- Current implementation requires explicit morphism and inverse IDs
+- Composition and inversion operations are deterministic
+- All validators are content-addressed for replay
+- May need category-specific isomorphism detection in future versions
+rust_binding:
+  crate: core_category_theory
+  module: functor
+  symbols:
+    - IsomorphismOfCategories
+  required_tests:
+    - validate_ok

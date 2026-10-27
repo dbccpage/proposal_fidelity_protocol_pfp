@@ -11,10 +11,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from pilots.llm_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_public_set,
 )
-from pfp.tests.demo_004.a_mechanism.c001_attention_distractor_mask.solver import (
+from pilots.llm_mechanism.c001_attention_distractor_mask.solver import (
     verify_certificate,
 )
 from pfp.domain.contracts.pfp_runtime import PfpTaskPrompt
@@ -23,7 +23,7 @@ from pfp.use_cases.pfp_proposal import task_turn_validator
 from .catalog import ROOT, canonical, digest, relative
 
 
-CHALLENGE_PATH = ROOT / "pfp/tests/demo_004/a_mechanism/c001_attention_distractor_mask"
+CHALLENGE_PATH = ROOT / "pilots/llm_mechanism/c001_attention_distractor_mask"
 TASK_PATH = CHALLENGE_PATH.with_name("c001_attention_distractor_mask_task_level.md")
 GENERATOR_PATH = CHALLENGE_PATH / "case_generator.py"
 SOURCE_PATHS = (Path(__file__), TASK_PATH, GENERATOR_PATH, CHALLENGE_PATH / "solver.py",

@@ -1,0 +1,123 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:stochastic_map:v0.1.0
+title: Stochastic Map Contract
+kind: math_contract
+status: active
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: finite_stochastic_kernel
+  symbol: 'M : Fin(m) → Fin(n), M_ij = P(Y = j | X = i), rows summing to 1'
+  ascii_symbol: stochastic_map
+  notation: 'p ↦ pM (pushforward), f ↦ Mf (pullback), f;g = fg (composition), M ⊗ N (tensor), δ(M) = (1/2) max_(i,i'') ∑_j |M_ij - M_i''j|'
+  domain:
+  - 'source_n, target_n: sizes ≥ 1'
+  - 'rows: source_n rows of target_n exact rationals, each entry ≥ 0, each row summing to exactly 1'
+  codomain:
+    description: 'A row-stochastic rational matrix: a morphism of the category of finite stochastic kernels. Composition is the matrix product, identities are identity matrices, the tensor product is the Kronecker product, and with copy, discard, projections and swap the category is a Markov category. Equality is equality of shape and entries; the label is provenance only.
+
+      '
+requirements:
+  required_structures:
+  - 'Every row sums to exactly one and every entry is nonnegative; the fields are private so a value is always validated'
+  - 'A distribution acts on the right, p ↦ pM, and composition "first f, then g" is the matrix product f g'
+  - 'Composition and application require the target size to equal the next source size, and refuse a mismatch'
+  - 'Sizes that overflow usize in a product are refused, and a matrix power is bounded by a declared maximum exponent'
+laws:
+- 'Composition is associative, identities are two-sided units, and pushforward is a functor: (pA)B = p(AB)'
+- 'Pullback is adjoint to pushforward: ∑_i p_i (Mf)_i = ∑_j (pM)_j f_j'
+- 'Interchange: (A ⊗ B);(C ⊗ D) = (A;C) ⊗ (B;D), and (p ⊗ r)(A ⊗ B) = pA ⊗ rB'
+- 'Copy and discard are a cocommutative comonoid, and a map commutes with copy exactly when it is deterministic'
+- 'Swap is natural: swap;(g ⊗ f) = (f ⊗ g);swap'
+- 'Bayesian inversion swaps prior and likelihood: p_i M_ij = q_j K_ji with q = pM, and inverting twice returns the original kernel when the prior has full support'
+- 'TV(pM, qM) ≤ δ(M) TV(p, q) with δ(M) in [0, 1], equality for some pair of point masses, δ = 0 exactly when all rows are equal, δ = 1 exactly when two rows have disjoint supports'
+- 'A square map is doubly stochastic exactly when it fixes the uniform distribution and all column sums are 1; convex mixtures of permutations and the transposes of doubly stochastic maps are doubly stochastic'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All arithmetic is exact in BigRational
+  - Composition agrees with the dense matrix product of core_linear_algebra
+relationships:
+- urn:core:math:finite_probability_simplex:v0.1.0 serves as The distributions a map acts on
+- urn:core:math:joint_table:v0.1.0 serves as A prior and a kernel make a joint table, whose conditionals are kernels
+- urn:core:math:stationary_distribution:v0.1.0 serves as An endomorphism is a Markov chain
+- urn:core:math:majorization:v0.1.0 serves as Doubly stochastic maps are exactly the maps that decrease a vector in the majorization order
+- urn:core:math:basic_matrix:v1.0.0 serves as Dense exact storage and the independent matrix product
+rust_binding:
+  crate: core_finite_probability
+  module: stochastic_map
+  symbols:
+  - StochasticMap
+  - StochasticMap::try_from_rows
+  - StochasticMap::compose
+  - StochasticMap::apply
+  - StochasticMap::pullback
+  - StochasticMap::tensor
+  - StochasticMap::from_function
+  - StochasticMap::permutation
+  - StochasticMap::bayesian_inverse
+  - StochasticMap::dobrushin_coefficient
+  - StochasticMap::is_doubly_stochastic
+  - StochasticMap::power
+  required_tests:
+  - a_non_row_stochastic_matrix_is_refused_at_its_row
+  - malformed_shapes_and_negative_entries_are_refused_with_their_positions
+  - composition_and_application_refuse_mismatched_carriers
+  - a_permutation_is_validated_and_its_inverse_composes_to_the_identity
+  - a_function_becomes_a_deterministic_map_and_composition_composes_functions
+  - a_target_with_zero_mass_has_no_posterior_and_is_refused
+  - the_transpose_of_a_map_that_is_not_doubly_stochastic_is_refused
+  - powers_agree_with_repeated_composition_and_are_bounded
+  - structural_maps_refuse_a_size_that_overflows_before_allocating
+  - composition_is_associative_and_the_action_agrees_with_it
+  - composition_agrees_with_the_dense_matrix_product_of_linear_algebra
+  - pullback_is_adjoint_to_pushforward_on_enumerated_functions
+  - the_interchange_law_and_the_action_on_products_hold
+  - copy_and_discard_are_a_comonoid
+  - a_map_commutes_with_copy_exactly_when_it_is_deterministic
+  - projections_recover_the_factors_of_a_product_and_swap_is_natural
+  - the_bayesian_inverse_reproduces_the_joint_distribution_and_inverts_back
+  - total_variation_contracts_by_at_most_the_dobrushin_coefficient_and_the_bound_is_tight
+  - the_dobrushin_coefficient_has_the_expected_extreme_values
+  - doubly_stochastic_means_the_uniform_distribution_is_preserved
+  - convex_mixtures_of_permutations_are_doubly_stochastic_and_the_transpose_is_too
+  - composition_passes_the_i64_ceiling_exactly
+
+negative_tests:
+- A matrix with a row that does not sum to exactly one must be refused, naming the row
+- A zero source or target, a wrong row count or row length, or a negative entry must be refused with its position
+- Composition or application with mismatched carrier sizes must be refused
+- A function image outside the target, or a list that is not a bijection, must be refused as a permutation
+- A function with no points must be refused
+- A Bayesian inverse with a target point of zero mass must be refused
+- The transpose of a map that is not doubly stochastic must be refused
+- A matrix power above the declared maximum exponent, or of a non-square map, must be refused
+- A structural map whose size product overflows usize must be refused before any allocation
+doctrine:
+  summary: 'A finite stochastic map is a row-stochastic rational matrix whose rows are checked to sum to exactly one, so composing kernels has no fixed-width ceiling and no tolerance. The monoidal structure (tensor, copy, discard, projections, swap) is verified by the Markov-category laws on enumerated maps, including the characterisation of deterministic maps as those that commute with copying, and composition is cross-checked against the dense matrix product of linear algebra. The Dobrushin coefficient is exact and its contraction bound is tight.'
+  non_role:
+  - Quantum channels, Kraus operators or any Born-rule claim
+  - Continuous kernels or infinite carriers
+  - Floating-point transition probabilities
+  - Conditional independence or causal structure
+wip:
+- 'Rows are stored as Vec<Vec<BigRational>> and converted to BasicMatrix on demand; a BasicMatrix-native representation is not adopted'
+- 'Only the row-stochastic convention is provided; the column-stochastic transpose convention used by core_wdp StochasticUpdate converts through transpose'
+- 'Kantorovich transport and coupling optimisation between marginals are not implemented'

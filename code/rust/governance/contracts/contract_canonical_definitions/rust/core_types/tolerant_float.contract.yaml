@@ -1,0 +1,55 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_types:tolerant_float:v1.0.0
+title: TolerantFloat
+status: active
+crate: core_types
+file: crates_rs/core_types/src/tolerant_float.rs
+role: utility
+authority_effect: none
+evidence_ceiling: DiagnosticOnly
+customer_claim_allowed: false
+runtime_enforcement: false
+owns:
+- a finite float carried together with the epsilon it is meaningful to
+- tolerant comparison, spelled out at the call site
+does_not_own:
+- equality
+- any residual, diagnostic, or terminal
+- exact arithmetic, which is core_kernel::exact
+may_call: []
+must_not:
+- implement PartialEq, Eq, Hash or Ord
+- admit a non-finite value
+- be used to decide a diagnostic class or a terminal
+exactness:
+  mode: approximate_by_declaration
+  exact_constructor_required: false
+  approximate_modes_allowed: true
+laws:
+- 'Finiteness law: construction refuses NaN and both infinities, so no downstream
+  arithmetic has to test for them.'
+- 'Epsilon locality law: convergence is measured against the value''s own declared
+  epsilon, never a global constant.'
+- 'No-equality law: tolerant equality is not transitive -- with epsilon 1, 0 ~ 1 and
+  1 ~ 2 but 0 !~ 2 -- and PartialEq is specified to be transitive. Implementing it
+  made every HashMap, sort, dedup and assert_eq! over this type unsound. A tolerant
+  comparison must be spelled tolerant_eq where the epsilon is visible.'
+- 'Scope law: this type is for quantities that are genuinely approximate. A residual,
+  a diagnostic class, and a terminal are none of those.'
+forbidden_substrings:
+- 'impl PartialEq for TolerantFloat'
+- 'derive(PartialEq'
+- 'impl Eq for TolerantFloat'
+- 'impl Hash for TolerantFloat'
+required_substrings:
+- 'pub fn tolerant_eq'
+- 'value: f64'
+required_tests:
+- rejects_nan
+- rejects_infinity
+- rejects_negative_epsilon
+- bounded_enforces_limits
+- tolerant_equality_is_not_transitive_which_is_why_it_is_not_partial_eq
+- convergence_is_measured_against_the_declared_epsilon_not_a_global_one
+lean_obligations: []

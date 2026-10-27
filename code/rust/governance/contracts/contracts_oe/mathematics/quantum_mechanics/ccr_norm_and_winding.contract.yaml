@@ -1,0 +1,73 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:ccr_norm_and_winding:v0.1.0
+title: CCR trace norm defect and finite clock-shift winding
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: ccr_norm_and_winding
+  symbol: ccr_norm_and_winding
+  ascii_symbol: ccr_norm_and_winding
+  notation: CCR trace norm defect and finite clock-shift winding
+  domain:
+  - Square Q(i) carriers1..128, nonzero rational scalar; winding conductor1..128 away from the principal-log
+    cut
+  codomain:
+    description: Declared finite results of core_quantum_physics::norm_approximation_frontier; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Tr([Q,P]-lambda I)=-d lambda
+- Cauchy-Schwarz replays the normalized Hilbert-Schmidt lower bound
+- Canonical clock-shift action has central phase zeta_d on every basis coordinate
+- Principal winding is the sum of exact turns
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: norm_approximation_frontier
+  symbols:
+  - CcrDefectCertificate
+  - certify_ccr_defect
+  - ClockShiftWinding
+  - clock_shift_winding
+  required_tests:
+  - measurement_exact_laws::ccr_trace_defect_and_clock_shift_winding_replay_exactly
+negative_tests:
+- measurement_exact_laws::ccr_trace_defect_and_clock_shift_winding_replay_exactly
+doctrine:
+  summary: Tr([Q,P]-lambda I)=-d lambda; Cauchy-Schwarz replays the normalized Hilbert-Schmidt lower bound;
+    Canonical clock-shift action has central phase zeta_d on every basis coordinate; Principal winding is the
+    sum of exact turns.
+  non_role:
+  - The finite winding calculation cites the topological index obstruction; it does not construct logarithmic
+    functional calculus
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

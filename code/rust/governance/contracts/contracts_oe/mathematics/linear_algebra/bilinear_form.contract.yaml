@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:bilinear_form:v0.1.0
+title: Bilinear Form Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: bilinear_form
+  symbol: 'B: V x W -> K (as matrix with respect to bases)'
+  ascii_symbol: bilinear_form
+  notation: 'B: V x W -> K (as matrix with respect to bases)'
+  domain:
+  - 'left_vector_space: vector_space_V'
+  - 'right_vector_space: vector_space_W'
+  - 'field: field_K'
+  - 'matrix: m_x_n_scalar_matrix'
+  codomain:
+    description: Bilinear map V x W -> K encoded by matrix representation
+requirements:
+  required_structures:
+  - Left and right vector spaces must be over the same field K
+  - V x W domain carriers must be compatible
+  - Matrix dimensions must match basis lengths (m = dim(V), n = dim(W))
+  - All matrix entries must be valid scalars in field K
+  - All hashes (carrier, basis, matrix, field) must be valid
+laws:
+- V, W, and K all use the same field
+- Matrix dimensions match basis lengths (m = dim(V), n = dim(W))
+- B(av + bv', w) = aB(v,w) + bB(v',w) for all a,b in K
+- B(v, aw + bw') = aB(v,w) + bB(v,w') for all a,b in K
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Evaluation B(v,w) must replay deterministically from canonical vector components and matrix entries
+  - Field arithmetic operations must be deterministic
+relationships:
+- urn:math:contract:VectorSpace:v0.1.0 serves as defines_left_and_right_vector_spaces
+- urn:math:contract:Field:v0.1.0 serves as defines_common_field_K
+- urn:math:contract:BasicMatrix:v1.0.0 serves as matrix_representation_of_bilinear_form
+negative_tests:
+- V and W over different fields must be rejected
+- Matrix dimensions not matching basis lengths must be rejected
+- Matrix with invalid scalar entry must be rejected
+- Claiming positive-definiteness without FactEnvelope must be rejected
+- BilinearForm claiming authority or admissibility must be rejected
+- Same inputs producing different hashes must be rejected
+doctrine:
+  summary: BilinearForm is a finite matrix-backed map V x W -> K that is linear in each argument over a declared field K. Bilinear forms encode pairings, Gram matrices, symplectic forms, quadratic precursors, and inner-product substrate facts. The contract forms the structure only; symmetry, nondegeneracy, positivity, and inner-product status are separate FactEnvelopes or contracts.
+  non_role:
+  - Symmetry, nondegeneracy, positivity are separate FactEnvelopes
+  - Inner-product status is a separate contract
+  - Classification of admissibility or policy decisions
+  - Certificate generation or authority claims
+wip:
+- Decide row/column convention for V x W universally
+- Define sesquilinear forms separately for complex Hilbert spaces
+- How to handle symmetry, alternating, and degenerate properties (via FactEnvelope?)
+- Should inner-product status be a separate contract or FactEnvelope?
+- Symmetry, nondegeneracy, positivity are separate FactEnvelopes
+- Row/column convention for V x W needs to be universally decided
+- Sesquilinear forms for complex Hilbert spaces may need separate contract
+- Matrix representation uses basis hashes for V and W
+- Evaluation B(v,w) computed deterministically via canonical field arithmetic
+- No authority, admissibility, or customer-facing claims allowed

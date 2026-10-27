@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:determinant:v0.1.0
+title: Determinant Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: determinant
+  symbol: det(A) ∈ K (or R)
+  ascii_symbol: determinant
+  notation: det(A) ∈ K (or R)
+  domain:
+  - 'matrix: square_matrix_or_endomorphism'
+  - 'coefficient_domain: field_K_or_ring_R'
+  - 'dimension: n'
+  - 'output: scalar_in_K_or_R'
+  codomain:
+    description: Scalar value computed from square matrix over field K or commutative ring R
+requirements:
+  required_structures:
+  - Input matrix must be square
+  - Matrix coefficients must belong to declared field or ring
+  - Determinant algorithm must be specified (elimination, Bareiss, Leibniz, or declared)
+  - Re-running algorithm on same input must produce same output hash
+  - Scalar output hash must match determinant result
+laws:
+- Matrix must be square (dimension n×n)
+- Coefficients must be valid elements of declared field or commutative ring
+- Determinant computation must be deterministic and reproducible
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Canonical matrix bytes from BasicMatrix contract
+  - Algorithm reference must be deterministic (elimination, Bareiss, Leibniz, declared)
+  - Pivot/sign conventions recorded in ComputationWitness
+relationships:
+- urn:math:contract:Field:v0.1.0 serves as defines_coefficient_field
+- urn:math:contract:BasicMatrix:v0.1.0 serves as defines_matrix_structure
+negative_tests:
+- Non-square matrix must be rejected
+- Coefficients not in valid field or ring must be rejected
+- Sign convention violation must be rejected
+- Hash mismatch between computed and stored must be rejected
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: Determinant records the deterministic scalar determinant of a square matrix or finite endomorphism over a declared field or commutative ring. This contract defines the structure, validation, and deterministic computation of matrix determinants.
+  non_role:
+  - Determinant does not classify admissibility
+  - No policy decisions or certificates emitted
+  - No customer-facing claims
+  - Separate exact symbolic determinants from approximate numeric determinants (WIP)
+wip:
+- How to separate exact symbolic determinants from approximate numeric determinants?
+- How to encode determinant over non-field commutative rings?
+- Should we support additional algorithms (e.g., LU decomposition with partial pivoting)?
+- How to handle determinants of matrices with variable-size entries (infinite fields)?
+- Currently supports elimination, Bareiss, Leibniz, and declared algorithms
+- Exact vs approximate determinants deferred (WIP)
+- Non-field ring support requires additional validation (WIP)
+- Algorithm reference must be deterministic and reproducible
+- No authority claims permitted (purely mathematical contract)

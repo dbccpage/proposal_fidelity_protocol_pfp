@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:su2_level_two_foam:v0.1.0
+title: Exact SU2 level2 Racah recoupling
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: su2_level_two_foam
+  symbol: su2_level_two_foam
+  ascii_symbol: su2_level_two_foam
+  notation: Exact SU2 level2 Racah recoupling
+  domain:
+  - Integrable labels0..2; normalized F coefficients over Q(sqrt2), full raw six-j amplitudes as exact signed
+    factor/positive-root certificates, and at most4096 declared tetrahedra.
+  codomain:
+    description: Declared finite results of core_general_relativity::spin_foam; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Quantum dimensions are1,sqrt2,1.
+- Racah six-j coefficients use exact q-factorials and admissibility.
+- Every admitted F recoupling block is orthogonal.
+- Raw amplitudes requiring fourth roots retain the root certificate; quadratic narrowing is a typed refusal.
+- Normalized F radicands combine dimensions and Racah prefactors before root extraction.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_general_relativity
+  module: spin_foam
+  symbols:
+  - ising_admissible
+  - quantum_dimension
+  - ising_six_j
+  - ising_f
+  - ising_six_j_radical
+  - RacahCoefficient
+  - SpinFoam
+  required_tests:
+  - su2_level_two_racah_recouplings_are_orthogonal_for_every_admissible_sector
+negative_tests:
+- su2_level_two_racah_recouplings_are_orthogonal_for_every_admissible_sector
+doctrine:
+  summary: Quantum dimensions are1,sqrt2,1.; Racah six-j coefficients use exact q-factorials and admissibility.;
+    Every admitted F recoupling block is orthogonal.; Raw amplitudes requiring fourth roots retain the root
+    certificate; quadratic narrowing is a typed refusal.; Normalized F radicands combine dimensions and Racah
+    prefactors before root extraction..
+  non_role:
+  - This finite Ising/SU2_2 model is not an EPRL amplitude or continuum gravitational path integral.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

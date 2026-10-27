@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_ks_ray_hypergraph:v0.1.0
+title: Exact Kochen-Specker ray and pair constraints
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_ks_ray_hypergraph
+  symbol: exact_ks_ray_hypergraph
+  ascii_symbol: exact_ks_ray_hypergraph
+  notation: Exact Kochen-Specker ray and pair constraints
+  domain:
+  - Finite exact-field rays dimension1..16, up to512 rays, bounded Boolean fuel
+  codomain:
+    description: Declared finite results of core_quantum_physics::kochen_specker; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every context is a genuine full orthogonal frame
+- All orthogonal pair exclusions remain independent of context exact-one constraints
+- Public ray and pair mutations are revalidated
+- Primitive Pythagorean rational rays have a unique odd-coordinate colour
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: kochen_specker
+  symbols:
+  - RaySystem
+  - RaySystem::problem
+  - RaySystem::decide
+  - RaySystem::deletion_minimal_core
+  - cabello_18
+  - peres_33
+  - pythagorean_colour
+  required_tests:
+  - measurement_exact_laws::kochen_specker_rays_preserve_field_pair_and_context_constraints
+negative_tests:
+- measurement_exact_laws::kochen_specker_rays_preserve_field_pair_and_context_constraints
+doctrine:
+  summary: Every context is a genuine full orthogonal frame; All orthogonal pair exclusions remain independent
+    of context exact-one constraints; Public ray and pair mutations are revalidated; Primitive Pythagorean
+    rational rays have a unique odd-coordinate colour.
+  non_role:
+  - Finite KS uncolourability is distinct from Bell locality and no dense/infinite ray theorem is claimed
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

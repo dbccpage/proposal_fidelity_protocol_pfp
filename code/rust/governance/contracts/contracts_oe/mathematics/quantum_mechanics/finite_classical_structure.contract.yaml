@@ -1,0 +1,71 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_classical_structure:v0.1.0
+title: Exact Classical Copying Structures
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_classical_structure
+  symbol: finite_classical_structure
+  ascii_symbol: finite_classical_structure
+  notation: Exact Classical Copying Structures
+  domain:
+  - A complete Gaussian-rational orthonormal basis on a finite Hilbert space.
+  codomain:
+    description: Declared finite results of core_quantum_physics::classical_structure; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Delta equals sum_b (b tensor b) b dagger and epsilon equals sum_b b dagger.
+- The maps form a special commutative dagger Frobenius algebra.
+- Copyable coalgebra points satisfy Delta(v)=v tensor v and epsilon(v)=1; zero is excluded.
+- Mutual unbiasedness is exactly |inner(b,c)| squared = 1/d for every cross-basis pair.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: classical_structure
+  symbols:
+  - ClassicalStructure
+  required_tests:
+  - rational_rotated_basis_is_a_classical_structure_with_only_basis_points_copyable
+  - complex_rational_unbiased_basis_is_complementary
+negative_tests:
+- Incomplete or nonorthonormal bases and mismatched dimensions are refused.
+- Zero is not a classical point despite satisfying the copying equation alone.
+doctrine:
+  summary: Delta equals sum_b (b tensor b) b dagger and epsilon equals sum_b b dagger.; The maps form a special
+    commutative dagger Frobenius algebra.; Copyable coalgebra points satisfy Delta(v)=v tensor v and epsilon(v)=1;
+    zero is excluded.; Mutual unbiasedness is exactly |inner(b,c)| squared = 1/d for every cross-basis pair..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

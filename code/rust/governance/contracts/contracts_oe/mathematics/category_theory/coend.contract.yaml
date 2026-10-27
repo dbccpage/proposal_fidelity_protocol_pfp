@@ -1,0 +1,78 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:coend:v0.1.0
+title: Coend Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: universal_cowedge
+  symbol: ∫^c F(c,c)
+  ascii_symbol: coend
+  notation: ∫^c F(c,c)
+  domain:
+  - 'bifunctor: F: C^op × C → D'
+  - 'cowedge: (w, ω_c: F(c,c) → w) dinatural'
+  - 'coend_object: ∫^c F(c,c) in D'
+  codomain:
+    description: 'Universal dinatural transformation from bifunctor F: C^op × C → D'
+requirements:
+  required_structures:
+  - F must be a valid bifunctor C^op × C → D
+  - Cowedge must be dinatural in c
+  - Coend must satisfy the universal property of cowedges
+laws:
+- 'F: C^op × C → D is a bifunctor'
+- 'Cowedge ω_c: F(c,c) → w is dinatural in c'
+- 'For any cowedge (w, ω_c), there exists unique u: ∫^c F(c,c) → w such that ω_c = u ∘ ι_c'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Validators and computation functions are content-addressed
+relationships:
+- 'urn:math:contract:Bifunctor:v1.0.0 serves as Coend is defined for bifunctors F: C^op × C → D'
+- urn:math:contract:Category:v1.0.0 serves as Source and target categories for bifunctor
+- urn:math:contract:NaturalTransformation:v1.0.0 serves as Dinaturality is a generalization of naturality
+negative_tests:
+- F is not a valid bifunctor
+- Cowedge is not dinatural
+- Universal property does not hold
+doctrine:
+  summary: 'A coend is a universal dinatural transformation for a bifunctor F: C^op × C → D, written ∫^c F(c,c). Coends generalize colimits and coequalizers, and are fundamental to tensor products of functors and the calculus of profunctors.'
+  non_role:
+  - Weighted coends (WIP)
+  - Enriched coends (WIP)
+  - ∞-categorical coends (WIP)
+wip:
+- Weighted coends
+- Enriched coends
+- ∞-categorical coends
+- Initial version focuses on classical coends in ordinary categories
+- Tensor product and left Kan extension formulas implemented
+- 'Future work: weighted, enriched, and higher categorical versions'
+rust_binding:
+  crate: core_category_theory
+  module: coend
+  symbols:
+  - DeclaredFiniteCoend
+  - validate_coend_input
+  required_tests:
+  - trivial_coend_single_object
+  - coend_with_identification

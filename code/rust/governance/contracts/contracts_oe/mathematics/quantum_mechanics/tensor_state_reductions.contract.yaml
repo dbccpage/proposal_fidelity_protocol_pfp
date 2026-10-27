@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:tensor_state_reductions:v0.1.0
+title: Exact tensor states, reductions and product statistics
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: tensor_state_reductions
+  symbol: tensor_state_reductions
+  ascii_symbol: tensor_state_reductions
+  notation: Exact tensor states, reductions and product statistics
+  domain:
+  - Positive Hermitian trace-one exact ordered-field factors; joint dimension<=64
+  codomain:
+    description: Declared finite results of core_quantum_physics::composition_tensor_mub; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The computed tensor is independently admitted as a state
+- Both partial traces replay the original source factors
+- Product statistics factor into local trace pairings
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: composition_tensor_mub
+  symbols:
+  - TensorStateCertificate
+  - compose_density
+  - verify_tensor_state
+  - product_statistic
+  required_tests:
+  - measurement_exact_laws::tensor_states_replay_both_reductions_and_product_statistics
+negative_tests:
+- measurement_exact_laws::tensor_states_replay_both_reductions_and_product_statistics
+doctrine:
+  summary: The computed tensor is independently admitted as a state; Both partial traces replay the original
+    source factors; Product statistics factor into local trace pairings.
+  non_role:
+  - A tensor construction and its laws do not prove composition uniqueness
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

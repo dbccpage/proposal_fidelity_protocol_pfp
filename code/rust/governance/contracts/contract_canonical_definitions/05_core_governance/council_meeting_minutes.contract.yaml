@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:governance:council_meeting_minutes:v1.0.0
+title: CouncilMeetingMinutes
+kind: governance_contract
+status: mathematical_wip
+layer: 05_governance
+role: Policy
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - AuthInterface
+    - PolicyContract
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  capabilities:
+    forbidden:
+    - CertificateSigning
+    - Terminalization
+    required: []
+doctrine:
+  binding_review_20261014: "The declared Rust crate/module is absent from the active Cargo workspace. Withdraw this realization binding; the retained specification has no executable implementation credit from it."
+  summary: >
+    CouncilMeetingMinutes record the deliberative outcomes, decisions, action items,
+    and dissents from a council meeting. Generated LLM theater provides oppositional
+    counterargument logs and human embodiment for the system. Minutes confer zero
+    math-layer authority; they record governance deliberation and route code-change
+    action items to Blackrod for enforcement.
+  mathematical_role: >
+    The MinuteCat mapping `render_minutes : Meeting → MarkdownMinutes` serializes
+    decisions, dissents, and action items into an immutable governance ledger.
+  non_role:
+  - Minting or upgrading math-layer authority
+  - Signing or wrapping certificates
+  - Terminalizing or executing an operator
+  llm_boundary_law:
+    doctrine: 5
+    text: >
+      LLM-generated meeting minutes and oppositional dialogue capture deliberative theater
+      and counterarguments. They serve as diagnostic/deliberative material only and
+      never mint math-layer authority.
+  authority_boundary:
+    may:
+    - Format meeting decisions, dissents, action items, and oppositional minutes
+    - Consolidate council reports and route action items to Blackrod
+    must_not:
+    - Mint or upgrade math-layer authority
+    - Override math-layer certificate gates
+  required_tests:
+  - minutes_require_meeting_id_and_council_id
+  - minutes_confers_no_math_authority
+  canonical_invariant: >
+    CouncilMeetingMinutes capture governance decisions, dissents, and LLM-generated
+    counterargument theater; they confer zero math-layer authority and route action
+    items without voting power transfer.
+  references:
+  - engine/crates/sentinel_councils/councils/council_governance.md
+  - engine/crates/sentinel_councils/src/minutes.rs
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_governance_contract:v1.0.0"

@@ -1,0 +1,776 @@
+# Registry of Glyph Games (Symbol Game Atlas v3.1.0)
+# Machine-readable specifications for Book Before Book 0
+# UTF-8 pure encoding without BOM
+
+schema_version: "3.1.0"
+registry_id: "registry_glyph_games"
+total_games: 19
+authority_effect: "None"
+implementation_default: "proposed_fixture_unless_verifier_ref_is_named"
+legacy_field_policy: "canonical_paper values are unreplayed literature context, not proof or implementation authority"
+canonical_profiles:
+  python_typed_wire: "core-canonical-v1"
+  rust_host_envelope: "core-sorted-json-no-float-v1"
+  rfc8785: "only_when_the_named_schema_or_renderer_explicitly_requires_it"
+difficulty_tiers:
+  - tier: 1
+    name: "Straightforward"
+    description: "Discovering legal support, token masking, and algebraic normal forms."
+  - tier: 2
+    name: "Near-Miss"
+    description: "Discovering future viability, cycle traps, and boundary defect descent."
+  - tier: 3
+    name: "Adversarial"
+    description: "Discovering verifier primacy, debate localization, exact certificates, and authority boundaries."
+  - tier: 4
+    name: "Epistemic & Experimental"
+    description: "Discovering constraint pressure, bounded termination, validator theater, activation coverage, mock nulls, and experimental debate rendering."
+
+games:
+  # Tier 1: Straightforward
+  - game_id: "glyph_game_01_parity_tile"
+    fixture_id: "fixture_glyph_game_01_v1"
+    name: "Parity Tile"
+    tier: 1
+    theme: "Legal Support & Immediate Token Frontier Masking"
+    control_object: "Legal Support A_G(h)"
+    canonical_paper: "PICARD (Scholak et al., 2021) / Paper #01"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "ADMITTED_TERMINAL_VALID"
+    nonclaims:
+      - "One four-bit replay is not an implementation or proof of PICARD or arbitrary grammar masking."
+    mutation_fixture:
+      mutation: "change_the_final_bit_so_total_parity_is_odd"
+      expected: "REFUSE_GOAL_PREDICATE"
+    board_dimension: [1, 4]
+    alphabet: ["0", "1"]
+    initial_state:
+      tape: ["_", "_", "_", "_"]
+      cursor: 0
+    goal_predicate:
+      type: "even_parity_non_zero"
+      condition: "sum(tape) % 2 == 0 and sum(tape) > 0 and '_' not in tape"
+    pedagogical_trap: "Student trap: '0000' satisfies even parity (0 % 2 == 0) but is rejected by the strict non-zero positivity guard (sum > 0)."
+    transition_rules:
+      - step: 0
+        legal_support: ["0", "1"]
+      - step: 1
+        legal_support: ["0", "1"]
+      - step: 2
+        legal_support: ["0", "1"]
+      - step: 3
+        legal_support_formula: "[(sum(tape[0:3])) % 2]"
+    canonical_trace:
+      steps:
+        - step_index: 0
+          emitted_symbol: "1"
+          resulting_tape: ["1", "_", "_", "_"]
+          support_width: 2
+        - step_index: 1
+          emitted_symbol: "0"
+          resulting_tape: ["1", "0", "_", "_"]
+          support_width: 2
+        - step_index: 2
+          emitted_symbol: "1"
+          resulting_tape: ["1", "0", "1", "_"]
+          support_width: 2
+        - step_index: 3
+          emitted_symbol: "0"
+          resulting_tape: ["1", "0", "1", "0"]
+          support_width: 1
+          status: "ADMITTED_TERMINAL_VALID"
+
+  - game_id: "glyph_game_02_bracket_balance"
+    fixture_id: "fixture_glyph_game_02_v1"
+    name: "Bracket Balance"
+    tier: 1
+    theme: "Incremental Stack Automata & Dynamic Parsing Guards"
+    control_object: "Legal Support A_G(h)"
+    canonical_paper: "PICARD (Scholak et al., 2021) / Paper #01"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "ADMITTED_TERMINAL_VALID"
+    nonclaims:
+      - "One bounded Dyck-1 trace does not establish termination or correctness for arbitrary grammars."
+    mutation_fixture:
+      mutation: "emit_a_closing_bracket_at_stack_depth_zero"
+      expected: "REFUSE_NEGATIVE_STACK_DEPTH"
+    max_length: 6
+    max_stack_depth: 3
+    alphabet: ["[", "]"]
+    initial_state:
+      stack_depth: 0
+      emitted_tokens: []
+      remaining_slots: 6
+    invariants:
+      - "stack_depth >= 0"
+      - "stack_depth <= max_stack_depth"
+      - "stack_depth <= remaining_slots"
+    goal_predicate:
+      type: "balanced_dyck_1"
+      condition: "len(emitted_tokens) == 6 and stack_depth == 0"
+    canonical_trace:
+      steps:
+        - step: 0
+          emitted: "["
+          depth_after: 1
+          legal_support_next: ["[", "]"]
+        - step: 1
+          emitted: "["
+          depth_after: 2
+          legal_support_next: ["[", "]"]
+        - step: 2
+          emitted: "]"
+          depth_after: 1
+          legal_support_next: ["[", "]"]
+        - step: 3
+          emitted: "["
+          depth_after: 2
+          legal_support_next: ["]"]
+        - step: 4
+          emitted: "]"
+          depth_after: 1
+          legal_support_next: ["]"]
+        - step: 5
+          emitted: "]"
+          depth_after: 0
+          status: "ADMITTED_TERMINAL_VALID"
+
+  - game_id: "glyph_game_03_monoid_train"
+    fixture_id: "fixture_glyph_game_03_v1"
+    name: "Monoid Train"
+    tier: 1
+    theme: "Free Monoids & Canonical Normal Form Reduction"
+    control_object: "Semantic Validity V(AST)"
+    canonical_paper: "Amenable Semigroups (Capraro & Morrison, 2013) / Paper #16"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "ADMITTED_TERMINAL_VALID"
+    nonclaims:
+      - "This one trace does not prove global termination, confluence, or uniqueness of normal forms."
+    generators: ["a", "b", "c"]
+    rewrite_rules:
+      - from: "ba"
+        to: "ab"
+      - from: "ca"
+        to: "ac"
+      - from: "cb"
+        to: "bc"
+    initial_state: "cbaabc"
+    target_normal_form: "aabbcc"
+    canonical_trace:
+      steps:
+        - step: 0
+          current_word: "cbaabc"
+          applied_rule: "ba -> ab"
+          resulting_word: "cababc"
+        - step: 1
+          current_word: "cababc"
+          applied_rule: "ca -> ac"
+          resulting_word: "acbabc"
+        - step: 2
+          current_word: "acbabc"
+          applied_rule: "ba -> ab"
+          resulting_word: "acabbc"
+        - step: 3
+          current_word: "acabbc"
+          applied_rule: "ca -> ac"
+          resulting_word: "aacbbc"
+        - step: 4
+          current_word: "aacbbc"
+          applied_rule: "cb -> bc"
+          resulting_word: "aabcbc"
+        - step: 5
+          current_word: "aabcbc"
+          applied_rule: "cb -> bc"
+          resulting_word: "aabbcc"
+          status: "ADMITTED_TERMINAL_VALID"
+    mutation_fixture:
+      mutation: "delete_one_character_from_any_resulting_word"
+      expected: "REFUSE_LENGTH_OR_MULTIPLICITY_CHANGE"
+
+  # Tier 2: Near-Miss
+  - game_id: "glyph_game_04_cycle_trap"
+    fixture_id: "fixture_glyph_game_04_v1"
+    name: "Cycle Trap"
+    tier: 2
+    theme: "Lookahead Horizon & Expected Future Grammaticality (EFG)"
+    control_object: "Probability Measure Q(t|h)"
+    canonical_paper: "Grammar-Aligned Decoding (Park et al., 2025) / Paper #02"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "ADMITTED_TERMINAL_VALID"
+    nonclaims:
+      - "The H=3 calculation is not an unbounded reachability or termination result."
+    mutation_fixture:
+      mutation: "change_efg_score_C_without_recomputing_the_declared_H3_probability_tree"
+      expected: "REFUSE_EFG_RECEIPT_MISMATCH"
+    horizon: 3
+    transition_policy: "Uniform 0.5 probability over outgoing edges"
+    graph:
+      nodes: ["S", "A", "B", "C", "T"]
+      edges:
+        - from: "S"
+          to: ["A", "B"]
+        - from: "A"
+          to: ["C", "T"]
+        - from: "C"
+          to: ["A"]
+        - from: "B"
+          to: ["T"]
+    initial_node: "S"
+    terminal_node: "T"
+    analysis:
+      node_A:
+        immediate_legal_support: ["C", "T"]
+        efg_score_C: "1/2"  # Exact finite-tree probability under the declared H=3 policy
+        efg_score_T: "1/1"  # Exact immediate-terminal probability
+        gcd_failure_risk: "Uniform sampling at A enters A<->C limit cycle with probability 0.5"
+    pedagogical_trap: "Student trap: Local grammar allows both C and T at node A. Without declaring horizon H=3 and transition probabilities, EFG cannot be computed."
+    canonical_trace:
+      steps:
+        - step: 0
+          current: "S"
+          action: "move_to_A"
+        - step: 1
+          current: "A"
+          action: "move_to_T"
+          efg_filter_applied: true
+          suppressed_deadend: "C"
+          status: "ADMITTED_TERMINAL_VALID"
+
+  - game_id: "glyph_game_05_bridge_crossing"
+    fixture_id: "fixture_glyph_game_05_v1"
+    name: "Bridge Crossing"
+    tier: 2
+    theme: "Boundary Defect Potential Phi_1 & Safety Invariant Preservation"
+    control_object: "Semantic Invariant Phi_1"
+    canonical_paper: "Causal Discovery & Anomaly Detection (Meli, 2024) / Paper #05"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "ADMITTED_TERMINAL_VALID"
+    nonclaims:
+      - "The trace preserves a safety invariant; it proves neither strict descent nor move optimality."
+    mutation_fixture:
+      mutation: "leave_Wolf_and_Goat_together_without_Farmer"
+      expected: "REFUSE_SAFETY_INVARIANT"
+    entities: ["Farmer", "Wolf", "Goat", "Cabbage"]
+    boat_capacity: 2
+    conflict_rules:
+      - conflict: ["Wolf", "Goat"]
+        unmonitored_by: "Farmer"
+        penalty_phi1: 1
+      - conflict: ["Goat", "Cabbage"]
+        unmonitored_by: "Farmer"
+        penalty_phi1: 1
+    goal_state: "all_entities_on_right_bank"
+    pedagogical_trap: "Student trap: Bridge Crossing demonstrates safety invariant preservation (Phi_1 == 0 at every intermediate state), NOT strict descent of an initial defect."
+    canonical_trace:
+      steps:
+        - step: 0
+          action: "Farmer carries Goat to Right"
+          left_bank: ["Wolf", "Cabbage"]
+          right_bank: ["Farmer", "Goat"]
+          phi_1: 0
+        - step: 1
+          action: "Farmer returns alone to Left"
+          left_bank: ["Farmer", "Wolf", "Cabbage"]
+          right_bank: ["Goat"]
+          phi_1: 0
+        - step: 2
+          action: "Farmer carries Wolf to Right"
+          left_bank: ["Cabbage"]
+          right_bank: ["Farmer", "Wolf", "Goat"]
+          phi_1: 0
+        - step: 3
+          action: "Farmer returns with Goat to Left"
+          left_bank: ["Farmer", "Goat", "Cabbage"]
+          right_bank: ["Wolf"]
+          phi_1: 0
+        - step: 4
+          action: "Farmer carries Cabbage to Right"
+          left_bank: ["Goat"]
+          right_bank: ["Farmer", "Wolf", "Cabbage"]
+          phi_1: 0
+        - step: 5
+          action: "Farmer returns alone to Left"
+          left_bank: ["Farmer", "Goat"]
+          right_bank: ["Wolf", "Cabbage"]
+          phi_1: 0
+        - step: 6
+          action: "Farmer carries Goat to Right"
+          left_bank: []
+          right_bank: ["Farmer", "Wolf", "Goat", "Cabbage"]
+          phi_1: 0
+          status: "ADMITTED_TERMINAL_VALID"
+
+  - game_id: "glyph_game_06_register_shuffle"
+    fixture_id: "fixture_glyph_game_06_v1"
+    name: "Register Shuffle"
+    tier: 2
+    theme: "Bytecode Register Machine & Preserved Checksums"
+    control_object: "Operational Authority Auth(R)"
+    canonical_paper: "Self-Correction Survey (Pan et al., 2024) / Paper #11"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "ADMITTED_TERMINAL_VALID"
+    nonclaims:
+      - "A preserved sum checksum is not a proof of general program semantics or authority."
+    mutation_fixture:
+      mutation: "replace_a_SWAP_with_ZERO_R1"
+      expected: "REFUSE_CHECKSUM_INVARIANT"
+    registers: ["R1", "R2", "R3"]
+    initial_values:
+      R1: 5
+      R2: 3
+      R3: 2
+    target_values:
+      R1: 2
+      R2: 5
+      R3: 3
+    checksum_invariant: "R1 + R2 + R3 == 10"
+    pedagogical_trap: "Student trap: Permutations (SWAP) preserve the linear sum checksum. Arithmetic ops (ADD, ZERO) break sum conservation unless modular invariants are enforced."
+    canonical_trace:
+      steps:
+        - step: 0
+          op: "SWAP R1, R2"
+          state: {R1: 3, R2: 5, R3: 2}
+          checksum: 10
+        - step: 1
+          op: "SWAP R1, R3"
+          state: {R1: 2, R2: 5, R3: 3}
+          checksum: 10
+          status: "ADMITTED_TERMINAL_VALID"
+
+  # Tier 3: Adversarial
+  - game_id: "glyph_game_07_dual_witness_duel"
+    fixture_id: "fixture_glyph_game_07_v1"
+    name: "Dual Witness Duel"
+    tier: 3
+    theme: "Stackelberg Verifier Primacy & Disagreement Localization"
+    control_object: "Disagreement Localization DAG"
+    canonical_paper: "AI Safety via Debate (Irving et al., 2018) & Prover-Verifier Games (Anil et al., 2021) / Papers #03, #07"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "CANDIDATE_PATH_REJECTED"
+    nonclaims:
+      - "A queried collision rejects the committed path; it does not prove that the maze is UNSAT."
+    board_grid: [4, 4]
+    hidden_obstacles: [[1, 1], [2, 2]]
+    prover_role: "Proposes discrete trajectory from (0, 0) to (3, 3)"
+    verifier_role: "Queries intermediate transition cell under budget B = 2"
+    precommitment_required: true
+    pedagogical_trap: "Student trap: A verifier querying 2 spots cannot certify an arbitrary global path without a Merkle tree commitment or PCP protocol."
+    canonical_trace:
+      steps:
+        - turn: 1
+          agent: "Prover"
+          action: "Commit fixture_path_01 before the verifier chooses a query"
+        - turn: 2
+          agent: "Verifier"
+          action: "Query edge at step 2: (1, 1) -> (2, 1)"
+        - turn: 3
+          agent: "Prover"
+          action: "Reveal vertex coordinate (1, 1) + clearance certificate"
+        - turn: 4
+          agent: "Verifier"
+          action: "Check coordinate against obstacle map -> COLLISION_DETECTED"
+          verdict: "CANDIDATE_PATH_REJECTED"
+          finding: "The disclosed path collides at one queried vertex. Maze satisfiability remains open."
+    mutation_fixture:
+      mutation: "replace CANDIDATE_PATH_REJECTED with REFUSED_UNSAT"
+      expected: "REFUSE_SCOPE_ESCALATION"
+
+  - game_id: "glyph_game_08_deceptive_gauge"
+    fixture_id: "fixture_glyph_game_08_v1"
+    name: "Deceptive Gauge"
+    tier: 3
+    theme: "Assumption Reframing on the Finite 9-Dot Board"
+    control_object: "Reframe with an explicit preservation ledger"
+    canonical_paper: "Dynamic Structure in Games (Wang et al., 2024) & IRM4MLS (Soyez et al., 2013) / Papers #13, #17"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "PROPOSED_REFRAME_FIXTURE_PASS"
+    board_points:
+      - [0, 0]
+      - [1, 0]
+      - [2, 0]
+      - [0, 1]
+      - [1, 1]
+      - [2, 1]
+      - [0, 2]
+      - [1, 2]
+      - [2, 2]
+    preserved_constraints:
+      - "cover_all_nine_points"
+      - "four_straight_segments"
+      - "continuous_pen_path"
+    changed_assumption: "Segment endpoints may leave the convex hull of the nine points."
+    canonical_trace:
+      steps:
+        - step: 0
+          frame: "endpoints_inside_convex_hull"
+          action: "Bounded enumeration finds no accepted four-segment fixture in the declared search set."
+          status: "BOUNDED_WITH_OPEN_REFRAME"
+        - step: 1
+          action: "Append a child frame; retain the original board and failed attempts."
+          frame: "endpoints_may_leave_convex_hull"
+        - step: 2
+          polyline: [[0, 2], [2, 0], [-1, 0], [2, 3], [2, 0]]
+          action: "Replay four straight segments and check coverage of all nine points."
+          status: "PROPOSED_REFRAME_FIXTURE_PASS"
+    nonclaims:
+      - "This is a reframe, not a typed carrier-changing transport."
+      - "No physical or cohomological obstruction is established."
+    mutation_fixture:
+      mutation: "remove_out_of_hull_endpoint_minus_1_0"
+      expected: "REFUSE_POINT_COVERAGE_OR_SEGMENT_COUNT"
+
+  # Tier 4: Epistemic & Experimental
+  - game_id: "glyph_game_09_legal_doors"
+    fixture_id: "fixture_glyph_game_09_v1"
+    name: "Legal Doors"
+    tier: 4
+    theme: "Constraint Pressure & Retained Probability Mass"
+    control_object: "Pressure pi(h) = -log m(h)"
+    canonical_paper: "StructureBench & Masking Pressure (2025/2026)"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "ADMITTED_TERMINAL_VALID"
+    nonclaims:
+      - "The stated pressures are numerical toys; model behavior requires a named benchmark replay."
+    mutation_fixture:
+      mutation: "replace_nonzero_pressure_0.010_with_zero"
+      expected: "REFUSE_PRESSURE_VALUE_MISMATCH"
+    board_dimension: [1, 50]
+    initial_state:
+      open_doors_count: 50
+      retained_mass_ratio: "1/100"
+    pedagogical_trap: "Student trap: Assuming 50 legal doors means unconstrained generation, when retained mass m(h) = 0.01 creates violent distribution displacement."
+    canonical_trace:
+      steps:
+        - step: 0
+          legal_doors_b: 50
+          retained_mass_ratio: "1/100"
+          pressure_pi_decimal_approx: "4.605"
+          pressure_approximation_method: "three-decimal truncation of -ln(1/100)"
+          phenomenon: "Model stalls / repeats tokens under severe distribution pressure"
+        - step: 1
+          legal_doors_b: 1
+          retained_mass_ratio: "99/100"
+          pressure_pi_decimal_approx: "0.010"
+          pressure_approximation_method: "three-decimal truncation of -ln(99/100)"
+          phenomenon: "Low but non-zero displacement hypothesis; requires a model benchmark."
+          status: "ADMITTED_TERMINAL_VALID"
+
+  - game_id: "glyph_game_10_endless_snake"
+    fixture_id: "fixture_glyph_game_10_v1"
+    name: "The Endless Snake"
+    tier: 4
+    theme: "One Fuel-Bounded Grammar Trace"
+    control_object: "Finite fuel counter"
+    canonical_paper: "Grammar-Constrained Decoding / Monograph 04.5"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "BOUNDED_TRACE_COMPLETED"
+    grammar_rules:
+      - "S -> ( S )"
+      - "S -> NUM"
+    pedagogical_trap: "Student trap: One completed fuel-bounded trace does not prove that every grammar derivation terminates."
+    canonical_trace:
+      steps:
+        - step: 0
+          rule: "S -> ( S )"
+          expression_after: "(S)"
+          fuel_remaining: 2
+        - step: 1
+          rule: "S -> ( S )"
+          expression_after: "((S))"
+          fuel_remaining: 1
+        - step: 2
+          rule: "S -> NUM"
+          expression_after: "((NUM))"
+          fuel_remaining: 0
+          status: "BOUNDED_TRACE_COMPLETED"
+    nonclaims:
+      - "This trace is not a global strong-normalization or grammar-termination proof."
+    mutation_fixture:
+      mutation: "apply S_to_parenthesized_S when fuel_is_zero"
+      expected: "REFUSE_FUEL_EXHAUSTED"
+
+  - game_id: "glyph_game_11_two_judges_agree"
+    fixture_id: "fixture_glyph_game_11_v1"
+    name: "Two Judges Agree"
+    tier: 4
+    theme: "Validator Theater vs Grounded Truth Predicates"
+    control_object: "Executable Truth Predicate V_x(w) = 1"
+    canonical_paper: "Agent-to-Agent Validation Review Counterexample / Monograph 00.2"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "VALIDATOR_THEATER_REJECTED"
+    nonclaims:
+      - "Agent agreement is not truth, verification, authorization, or independent evidence."
+    mutation_fixture:
+      mutation: "accept_bot_consensus_without_running_the_prime_counterexample"
+      expected: "REFUSE_VALIDATOR_THEATER"
+    pedagogical_trap: "Student trap: Believing that when Bot A and Bot B agree on natural language prose, the claim is verified."
+    canonical_trace:
+      steps:
+        - step: 0
+          bot_a: "Emits false arithmetic theorem: 'All primes > 10 are divisible by 3'"
+          bot_b: "Reviews text: 'Sounds perfectly sound and logical!'"
+          consensus_status: "AGREEMENT_REACHED"
+        - step: 1
+          verifier_V_x: "Executes prime check on 11 -> 11 % 3 == 2 != 0"
+          terminal_verdict: "VALIDATOR_THEATER_REJECTED"
+
+  - game_id: "glyph_game_12_four_lamps"
+    fixture_id: "fixture_glyph_game_12_v1"
+    name: "Four Lamps"
+    tier: 4
+    theme: "Coverage-Driven Verification & 4-Outcome Obligation Matrices"
+    control_object: "Activation Coverage vs Correctness Coverage"
+    canonical_paper: "Coverage-Driven Verification (2025) / Monograph 08.3"
+    implementation_status: "proposed_finite_fixture"
+    verifier_ref: null
+    expected_outcome: "MATRIX_COMPLETE_WITH_FAILURE_AND_INCONCLUSIVE"
+    nonclaims:
+      - "Activation coverage does not imply correctness when a triggered case fails or is inconclusive."
+    outcomes: ["TRIGGERED_PASS", "TRIGGERED_FAIL", "NOT_TRIGGERED", "INCONCLUSIVE"]
+    pedagogical_trap: "Student trap: Reporting 100% requirement coverage when tests only checked preconditions without verifying that assertions passed."
+    canonical_trace:
+      steps:
+        - step: 0
+          test_case: "Precondition not met"
+          lamp_status: "NOT_TRIGGERED"
+        - step: 1
+          test_case: "Precondition met, assertion passed"
+          lamp_status: "TRIGGERED_PASS"
+        - step: 2
+          test_case: "Precondition met, assertion failed"
+          lamp_status: "TRIGGERED_FAIL"
+          activation_covered: true
+          correctness_passed: false
+        - step: 3
+          test_case: "Precondition met, verifier budget exhausted"
+          lamp_status: "INCONCLUSIVE"
+          activation_covered: true
+          correctness_passed: null
+          status: "MATRIX_COMPLETE_WITH_FAILURE_AND_INCONCLUSIVE"
+    mutation_fixture:
+      mutation: "count TRIGGERED_FAIL as not activated"
+      expected: "REFUSE_ACTIVATION_SEMANTICS"
+
+  - game_id: "glyph_game_13_shuffled_star_map"
+    fixture_id: "fixture_glyph_game_13_v1"
+    name: "The Shuffled Star Map"
+    tier: 4
+    theme: "Nuisance Models & Empirical Mock-Null Exceedance"
+    control_object: "Proposed Robust Classification Receipt (Mock-Null Protocol)"
+    canonical_paper: "Fermi LAT Supernova Catalog Epistemic Transfer / Monograph 00.2"
+    implementation_status: "proposed_mock_null_fixture"
+    verifier_ref: null
+    expected_outcome: "CANDIDATE_REQUIRES_DOMAIN_VERIFIER"
+    mock_null_protocol:
+      trials: 10000
+      seed: 1313
+      null_generator_ref: "fixture_scramble_preserving_density_v1"
+      statistic: "maximum_connected_cluster_size"
+      decision_rule: "Report empirical exceedance frequency; do not call it FDR without a declared multiple-testing procedure."
+    pedagogical_trap: "Student trap: Treating a low empirical mock-null frequency as truth or as a false-discovery rate without a declared family of tests."
+    canonical_trace:
+      steps:
+        - step: 0
+          primary_grid_cluster: "Candidate Constellation Alpha detected"
+        - step: 1
+          scrambled_mock_null: "Statistic at least as large as Alpha appears in 4500 of 10000 null trials"
+          exceedance_count: 4500
+          trial_count: 10000
+          empirical_exceedance_ratio: "4500/10000"
+          classification: "MARGINAL_NOISE_REJECTED"
+        - step: 2
+          robust_cluster_beta: "Statistic at least as large as Beta appears in 1 of 10000 null trials"
+          exceedance_count: 1
+          trial_count: 10000
+          empirical_exceedance_ratio: "1/10000"
+          classification: "LOW_NULL_FREQUENCY_CANDIDATE"
+          status: "CANDIDATE_REQUIRES_DOMAIN_VERIFIER"
+    nonclaims:
+      - "The mock-null frequency is not a physical detection claim."
+      - "No false-discovery rate is established without a multiple-testing protocol."
+    mutation_fixture:
+      mutation: "change one_of_10000 to zero without rerunning fixtures"
+      expected: "REFUSE_COUNT_RECEIPT_MISMATCH"
+
+  - game_id: "glyph_game_14_critical_pair_fork"
+    fixture_id: "fixture_glyph_game_14_v1"
+    name: "Critical-Pair Fork"
+    tier: 2
+    theme: "Bounded Rewriting Evidence"
+    control_object: "pfp_runtime::evaluate_peak"
+    implementation_status: "implemented_exact_adapter"
+    verifier_ref: "pfp_runtime/src/rewriting/mod.rs"
+    verifier_function: "evaluate_peak"
+    presentation:
+      signature: ["a", "b"]
+      rules:
+        - name: "r_left"
+          lhs: "ab"
+          rhs: "ba"
+        - name: "r_right"
+          lhs: "ba"
+          rhs: "ab"
+    critical_peak_claim:
+      source: "aba"
+      left:
+        steps: ["r_left"]
+        endpoint: "baa"
+      right:
+        steps: ["r_right"]
+        endpoint: "aab"
+      join: null
+      steps_inspected: 2
+      step_budget: 4
+    expected_outcome: "BOUNDED_WITH_UNJOINED_PEAK"
+    nonclaims:
+      - "An unjoined bounded peak is not a general nonconfluence theorem."
+      - "evaluate_peak validates declared structure, rule names, presentation custody, and critical_pairs() membership; it replays only the declared paths and does not search for or invent them."
+    mutation_fixture:
+      mutation: "declare a rewrite step absent from the presentation"
+      expected: "NEEDS_EVIDENCE"
+      expected_obligation: "path applies a rule which the presentation does not declare"
+
+  - game_id: "glyph_game_15_open_frontier"
+    fixture_id: "fixture_glyph_game_15_v1"
+    name: "Open Frontier"
+    tier: 3
+    theme: "Anti-Exhaustion and Terminal Proposals"
+    control_object: "FrontierState and TerminalProposal"
+    implementation_status: "implemented_exact_adapter"
+    verifier_ref: "pfp_runtime/src/packets.rs"
+    constructor: "TerminalProposal::new"
+    frontier_state:
+      state_ref: "fixture_glyph_game_15_frontier_v1"
+      parent_lineage: []
+      claims: []
+      obligations:
+        - id: "obligation_branch_b"
+          description: "Inspect surviving branch_b."
+          discharged: false
+      findings: []
+      surviving_branches: ["branch_b"]
+      pruned_branches: []
+      budget:
+        rounds_remaining: 0
+        branches_remaining: 1
+      stop_reason: null
+    terminal_proposal_input:
+      narrowest_claim: "Search stopped with branch_b unvisited."
+      all_branches_inspected: false
+    expected_stop_reason_variant: "BoundedWithOpenFrontier"
+    expected_outcome: "BOUNDED_WITH_OPEN_FRONTIER"
+    nonclaims:
+      - "Budget exhaustion with an open node is not search-space exhaustion."
+      - "The API trusts scheduler-owned all_branches_inspected; it does not prove that an upstream scheduler retained every branch."
+      - "Public fields and Serde deserialization can bypass TerminalProposal::new; imported proposals require replay against the frontier and scheduler record."
+    mutation_fixture:
+      mutation: "set all_branches_inspected=true while rounds_remaining=0"
+      expected: "BOUNDED_WITH_OPEN_FRONTIER"
+
+  - game_id: "glyph_game_16_exact_rational_duel"
+    fixture_id: "fixture_glyph_game_16_v1"
+    name: "Exact Rational Duel"
+    tier: 3
+    theme: "Exact Primal and Dual Certificate Replay"
+    control_object: "verify_lp_certificate and verify_l1_certificate"
+    implementation_status: "implemented_exact_adapter"
+    verifier_ref: "pfp_runtime/src/rational.rs"
+    verifier_function: "verify_lp_certificate"
+    coefficient_profile: "num_rational::BigRational"
+    exact_lp_fixture:
+      a:
+        - ["1", "1"]
+        - ["1", "0"]
+        - ["0", "1"]
+      b: ["4", "2", "3"]
+      c: ["3", "2"]
+      primal_x: ["2", "2"]
+      dual_u: ["2", "1", "0"]
+      expected_certificate:
+        primal_objective: "10"
+        dual_objective: "10"
+    expected_outcome: "EXACT_CERTIFICATE_PASS"
+    nonclaims:
+      - "The verifier checks a supplied pair; it does not solve arbitrary programs."
+      - "Python and Rust agreeing on an exact score is local replay, not a promotion."
+    mutation_fixture:
+      mutation: "perturb one objective coefficient by 1/1000000000000"
+      expected: "REFUSE_EXACT_OBJECTIVE_MISMATCH"
+
+  - game_id: "glyph_game_17_candidate_host_split"
+    fixture_id: "fixture_glyph_game_17_v1"
+    name: "Candidate/Host Split"
+    tier: 3
+    theme: "Authority Separation by Type"
+    control_object: "CandidateMovePacket and RoundRecord::seal"
+    implementation_status: "implemented_exact_adapter"
+    verifier_ref: "pfp_runtime/src/packets.rs"
+    candidate_type_absent_fields: ["canonical_digest", "verified", "receipt", "authority_effect", "terminal_status"]
+    current_unknown_field_behavior: "Serde drops these unknown candidate keys; RoundRecord::seal recomputes the candidate digest while accepting caller-supplied host observations."
+    expected_outcome: "HOST_COMPUTES_CANDIDATE_DIGEST_IN_LOCAL_RECORD"
+    nonclaims:
+      - "A sealed local round record is not global verification or admission."
+      - "Strict unknown-field refusal is proposed adapter hardening, not current CandidateMovePacket behavior."
+      - "RoundRecord derives Deserialize, and its candidate digest does not bind parse, finding, replay, disposition, or successor fields."
+    mutation_fixture:
+      mutation: "candidate supplies canonical_digest and verified=true"
+      expected: "DROP_UNKNOWN_AUTHORITY_FIELDS_AND_RECOMPUTE_CANDIDATE_DIGEST"
+
+  - game_id: "glyph_game_18_transport_without_promotion"
+    fixture_id: "fixture_glyph_game_18_v1"
+    name: "Transport Without Promotion"
+    tier: 3
+    theme: "Translation Does Not Confer Validity"
+    control_object: "prime_algorithm_1::transport and LossLedger"
+    implementation_status: "implemented_external_exact_adapter"
+    verifier_ref: "core_wdp/src/prime_algos/prime_algorithm_1.rs"
+    verifier_function: "transport"
+    hash_fixture_helper: "fn h(n: u8) -> Hash256 { Hash256([n; 32]) }"
+    transport_call:
+      from: "h(1)"
+      to: "h(2)"
+      payload: "h(9)"
+      loss_ledger: "LossLedger::empty()"
+      source_was_admitted: true
+    expected_transport_status: "TransportStatus::Proposed"
+    expected_authority_effect: "AuthorityEffect::None"
+    expected_outcome: "TRANSPORTED_AS_PROPOSED"
+    nonclaims:
+      - "This adapter is not current Symbol Game host support for carrier-changing lifts."
+      - "An empty loss ledger is an explicit claim, not missing evidence."
+    mutation_fixture:
+      mutation: "set target_status to admitted because source was admitted"
+      expected: "REFUSE_AUTHORITY_LAUNDERING"
+
+  - game_id: "glyph_game_19_dispute_bisection"
+    fixture_id: "fixture_glyph_game_19_v1"
+    name: "Adversary Dispute Bisection"
+    tier: 4
+    theme: "Public Claim-DAG Disagreement Localization"
+    control_object: "Proposed seven-act projection over the non-default nonlinear eight-scene graph assembly"
+    implementation_status: "proposed_renderer"
+    verifier_ref: null
+    specification_ref: "adversary/_design_docs/06_spec_research_grounded_debate_and_solver_routing.md"
+    roles: ["proposer", "critic", "frozen_judge"]
+    data_policy: "public claims only; no personal, family, or minor data"
+    identity_policy: "stable content and lineage ids; timestamps are telemetry only"
+    required_records: ["precommitment", "role_assignment", "claim_dag", "model_lineage", "judge_finding", "replay_manifest"]
+    expected_outcome: "LOCALIZED_FINDING_OR_HOLD"
+    nonclaims:
+      - "Personas are removable strategy profiles with no verdict or receipt authority."
+      - "Shared-model agreement is not independent confirmation."
+      - "Embedding plateaus are heuristic and may only propose REFRAME or HOLD."
+    mutation_fixture:
+      mutation: "allow the judge to rewrite a candidate after precommitment"
+      expected: "REFUSE_FROZEN_JUDGE_MUTATION"

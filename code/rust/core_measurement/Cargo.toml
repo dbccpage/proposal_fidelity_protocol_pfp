@@ -1,0 +1,33 @@
+[package]
+autotests = false
+name = "core_measurement"
+version.workspace = true
+license.workspace = true
+edition = "2021"
+
+[dependencies]
+core_kernel = { path = "../core_kernel" }
+# Numerical types
+num-bigint = { version = "0.4", features = ["serde"] }
+num-rational = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+
+# Internal dependencies
+core_types = { path = "../core_types" }
+
+[dev-dependencies]
+serde_json = "1.0"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_measurement`.
+
+
+[[test]]
+name = "finite_response"
+path = "../tests/core_measurement/finite_response.rs"
+
+[[test]]
+name = "raw_evidence_boundary"
+path = "../tests/core_measurement/raw_evidence_boundary.rs"

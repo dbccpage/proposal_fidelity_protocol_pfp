@@ -1,0 +1,72 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+schema_version: core.contract.v2
+contract_id: "urn:core:crate:discrete_deformation_algebra:v2.0.0"
+title: "Discrete Deformation Calculus"
+kind: "math_contract"
+layer: "10_math_crates"
+role: "MathematicalKernel"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  clean_architecture_layer: domain
+  dependencies:
+    contracts: []
+    lean4_theorems: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - "REFUSED_INVALID_WITNESS"
+      - "REFUSED_BUDGET_EXHAUSTED"
+      - "REFUSED_NON_ZERO_CURL"
+      - "REFUSED_UNLICENSED_LIFT"
+      - "REFUSED_REQUIRES_LIFT"
+      - "REFUSED_MISSING_LOSS_LEDGER"
+      - "REFUSED_DETECTOR_INADEQUATE"
+
+doctrine:
+  summary: >-
+    Discrete Deformation Calculus (DDC) 8-letter operational trace alphabet
+    A_DDC = {E, R, C, I, Lambda, D, M, T}, 8 candidate runtime laws, and Merkle-chained step validation.
+  invariants:
+    - "DDC transitions execute under operational alphabet A_DDC = {E, R, C, I, Lambda, D, M, T}."
+    - "Every step records deterministic input/output digests and witness flags chained by SHA-256."
+    - "Law 2 (Terminal Absorption): No steps admitted after T."
+    - "Law 3 (Refusal Absorption): After M, only C, Lambda, or T may follow."
+    - "Law 4 (Lift Trigger): Structural lift Lambda requires license and trigger (ClosedResidual or DetectorInadequate)."
+    - "Law 5 (Integration Requires Receipt): Step integration I requires verified step receipt."
+    - "Law 6 (Descent Requires Loss Ledger): Scale descent D requires explicit LossLedger recording dropped dimensions and lost mass."
+    - "Law 7 (Exact Repair Discharges): Exact repair E requires before-class ExactRepair and discharges to zero without crossing classes."
+    - "Law 8 (Context Exposure Is Not Repair): Context exposure C changes carrier and never lowers Phi_1 or Gamma_2."
+    - "Four-Axis Separation: DiagnosticClass != RoutingTerminal != ExtensionStatus != AuthorityStatus."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+    - "implicit_coercion"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+    - no_undeclared_state_transition
+    - no_unpriced_obstruction_decrease
+
+specification:
+  algebraic_structure:
+    carrier_type: "DiscreteDeformationAlgebraCarrier"
+    operations:
+      []
+  ports:
+    input_packet: "urn:core:packet:work_packet:v1.0.0"
+    output_packet: "urn:core:packet:swarm_run_receipt:v1.0.0"
+    error_type: "Refusal"
+  verification:
+    fitness_test: null
+    lean4_file: null

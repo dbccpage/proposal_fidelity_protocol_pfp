@@ -1,0 +1,52 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:verified_obstruction_mass:file:v1.0.0
+title: Certificate-backed obstruction mass and versioned replay wire
+status: active_provisional
+crate: core_types
+file: crates_rs/core_types/src/obstruction_mass.rs
+layer: functional
+role: exact_certificate_evidence_boundary
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - versioned_certificate_wire
+  - certificate_replay_on_deserialization
+  - immutable_verified_mass
+  - retained_caller_binding_labels
+  - non_authority_display_approximation
+does_not_own:
+  - carrier_or_native_host_authentication
+  - runtime_actor_licensing
+  - task_completion_or_terminalization
+  - arbitrary_code_execution
+may_call: []
+must_not:
+  - construct_certified_mass_from_an_unverified_scalar
+  - deserialize_without_primal_dual_replay
+  - accept_unknown_wire_fields_or_schema
+  - mint_authority_from_exact_zero
+  - reinterpret_failed_display_conversion_as_exact_zero
+exactness:
+  mode: exact_finite_rational_certificate
+  exact_constructor_required: true
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "Phi1Functional::verify_exact_certificate(certificate)"
+  - "core.verified-obstruction-mass.v1"
+required_tests:
+  - "obstruction_mass::tests::verified_mass_roundtrip_retains_certificate_and_labels"
+  - "obstruction_mass::tests::tampered_mass_certificate_is_replayed_and_refused"
+  - "obstruction_mass::tests::certified_mass_requires_both_matching_witnesses"
+  - "obstruction_mass::tests::negative_mass_cannot_be_certified"
+  - "obstruction_mass::tests::scalar_only_legacy_wire_and_missing_certificate_are_refused"
+  - "obstruction_mass::tests::future_schema_and_forged_authority_are_refused"
+  - "obstruction_mass::tests::zero_carrier_is_refused_on_both_construction_paths"
+  - "obstruction_mass::tests::huge_exact_mass_is_not_rejected_or_rounded_to_zero_for_display"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

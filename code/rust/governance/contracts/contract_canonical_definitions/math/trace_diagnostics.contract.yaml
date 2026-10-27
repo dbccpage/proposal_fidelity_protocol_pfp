@@ -1,0 +1,90 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:trace_diagnostics:v1.0.0
+title: Legacy f64 reasoning-trace features (not Φ₁, Γ₂ or Ξ)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:phi1:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: trace_scalar_features
+  symbol: S(a), S̄(a), V(a), I(a)
+  ascii_symbol: TraceDiagnostics
+  notation: S(a) = Σ a_i a_{i+1};  S̄(a) = S(a)/(Σ a_i² + ε);  V(a) = mean |a_{i+1} − a_i|;  I(a) = mean_{i
+    ≠ b} |a_i|
+  domain:
+  - finite f64 trace a
+  - caller-chosen f64 ε for the normalized pairing
+  - optional boundary index b for the interior magnitude
+  codomain:
+    description: f64 scalar features of a trace. shift_pairing_coherence and normalized_shift_pairing_coherence
+      return Err for an empty trace; the other two return 0.0 on degenerate input. None of them is an
+      obstruction functional.
+  definition:
+    shift_pairing: S(a) = Σ_i a_i a_{i+1}; empty trace refused
+    normalized_shift_pairing: S(a) / (Σ_i a_i² + ε)
+    mean_adjacent_variation: Σ_i |a_{i+1} − a_i| / (n − 1), and 0 when n < 2
+    interior_delta_magnitude: mean of |a_i| over i ≠ b; 0 for an empty trace, for a one-entry trace with
+      no boundary, and when every entry is excluded
+laws:
+- 'Name fence: earlier homology code called S a shift-Xi score and V a normalized Gamma2. S is not the
+  primal-dual density-distance Ξ, and V inspects no coboundary, so it is not the closure defect Γ₂.'
+- 'Obstruction fence: these features do not certify an obstruction class, a quotient distance or a closure
+  defect.'
+- 'Floating-point scope: all four are f64 computations with no NaN or infinity guard. With ε = 0 and an
+  all-zero trace, S̄ is 0/0.'
+- 'Refusal law: shift_pairing_coherence refuses an empty trace; its normalized form inherits that refusal.'
+- 'Boundary law: interior_delta_magnitude excludes only the entry at the declared boundary index; an out-of-range
+  index excludes nothing.'
+- 'Authority law: no feature from this module mints AuthorityEffect, PROVED, GlobalGreen or ActionLicense.'
+replay:
+  requirements:
+  - No external state, randomness or wall-clock
+  - Deterministic f64 evaluation in declared order; not exact arithmetic
+relationships:
+- urn:core:math:xi_tie_breaker:v1.0.0 — canonical Ξ; not computed here
+- urn:core:math:gamma2_closure_defect:v1.0.0 — canonical Γ₂; not computed here
+- urn:core:math:phi1:v1.0.0 — canonical Φ₁; not computed here
+rust_binding:
+  crate: core_functional
+  module: trace_diagnostics
+  symbols:
+  - shift_pairing_coherence
+  - normalized_shift_pairing_coherence
+  - mean_adjacent_variation
+  - interior_delta_magnitude
+  required_tests:
+  - shift_pairing_preserves_signed_trace_behavior
+  - adjacent_variation_preserves_trace_length_normalization
+  - interior_magnitude_excludes_only_declared_boundary
+negative_tests:
+- An empty trace must be refused by the shift pairing
+doctrine:
+  summary: 'Legacy scalar features over finite f64 reasoning traces, kept apart from the canonical finite
+    obstruction functionals in phi1, gamma2 and xi. They are routing features only. Nonclaim: not Φ₁,
+    Γ₂ or Ξ; not exact; not authority; not PROVED; not GlobalGreen.'
+  non_role:
+  - Canonical Φ₁, Γ₂ or Ξ
+  - Exact rational arithmetic
+  - Obstruction classification or certification
+  - Authority minting, ActionLicense, PROVED or GlobalGreen
+wip:
+- 'OPEN_OBLIGATION nonfinite_inputs: NaN, infinities and the ε = 0 zero-energy case are passed through
+  rather than refused; AuthorityEffect: None.'
+- 'OPEN_OBLIGATION single_entry_interior: interior_delta_magnitude returns 0 for a one-entry trace with
+  no boundary instead of |a₀|; recorded as current behavior, not endorsed; AuthorityEffect: None.'

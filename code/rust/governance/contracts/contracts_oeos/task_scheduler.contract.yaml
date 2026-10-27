@@ -1,0 +1,55 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+schema_version: core.contract.v2
+contract_id: "urn:core:os:task_scheduler:v2.0.0"
+title: "Deterministic 8-Stage Waist Task Scheduler"
+kind: "os_contract"
+layer: "20_os_kernel"
+role: "OperatingSystemKernel"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  clean_architecture_layer: domain
+  dependencies:
+    contracts: []
+    lean4_theorems: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: ["REFUSAL_INVALID_ARGUMENTS", "REFUSAL_GATE_FAILED", "REFUSAL_INVARIANT_BREACH"]
+
+doctrine:
+  summary: >-
+    Deterministic task scheduler orchestrating 8-stage waist execution with step-level budget limits.
+  invariants:
+    - "Execution order is deterministic and reproducible."
+    - "Tasks exceeding budget limit are halted with Refusal."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+    - "implicit_coercion"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+    - no_undeclared_state_transition
+
+specification:
+  algebraic_structure:
+    carrier_type: "TaskSchedulerCarrier"
+    operations:
+      []
+  ports:
+    input_packet: "urn:core:packet:work_packet:v1.0.0"
+    output_packet: "urn:core:packet:swarm_run_receipt:v1.0.0"
+    error_type: "Refusal"
+  verification:
+    fitness_test: null
+    lean4_file: null

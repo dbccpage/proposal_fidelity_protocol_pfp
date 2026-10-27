@@ -1,10 +1,8 @@
 ---
 paths:
-  - "operations/**"
+  - "ops/operations/**"
   - "education/**"
-  - "cognitive_operations/**"
   - ".github/**"
-  - "pytest.ini"
 ---
 
 # Rule: Subsystem Relocation & Estate Purity

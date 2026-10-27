@@ -1,0 +1,194 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:cochain_layer:v1.0.0
+title: Finite cochain layer
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: Finite R-modules or finite-dimensional R-vector spaces C⁰, C¹, C² with coboundary maps d₀ and
+    d₁.
+  symbol: C⁰, C¹, C²; d₀:C⁰→C¹; d₁:C¹→C²
+  ascii_symbol: C0,C1,C2,d0,d1
+  1. Contract metadata:
+    title: Finite cochain layer
+    version: 0.1.0
+    object_type: finite_cochain_layer
+    primitive_scope: degree 0 through degree 2 cochain data
+  2. Mathematical object / functional role:
+    role: Finite R-modules or finite-dimensional R-vector spaces C⁰, C¹, C² with coboundary maps d₀ and
+      d₁.
+    purpose: Freezes the carrier on which B¹, Z¹, Q¹, H¹, Φ₁, Γ₂, and Ξ are meaningful.
+    non_role:
+    - Does not compute obstruction mass.
+    - Does not classify obstruction status.
+    - Does not issue certificates.
+    - Does not terminalize.
+    - Does not produce customer-facing claims.
+  3. Domain and codomain:
+    domain: finite ordered bases for C⁰, C¹, C² over coefficient ring or field R
+    codomain: valid finite cochain layer descriptor
+    maps:
+      d0: C⁰ → C¹
+      d1: C¹ → C²
+  4. Required structures:
+    coefficient_domain:
+      value: declared ring or field R
+      arithmetic_mode:
+        allowed:
+        - exact
+        - tolerance_bounded
+        exact_preferred: true
+        approximate_requires_tolerance_profile: true
+    bases:
+    - basis_C0
+    - basis_C1
+    - basis_C2
+    dimensions:
+    - dim_C0
+    - dim_C1
+    - dim_C2
+    matrices:
+    - d₀ matrix over R with shape dim_C1 × dim_C0
+    - d₁ matrix over R with shape dim_C2 × dim_C1
+    manifest: carrier_manifest_hash
+    ordering: basis ordering for every degree
+    weights:
+      optional: true
+      role: norm/evaluation data for Φ₁, Γ₂, Ξ; not required for d₁d₀=0 layer validity
+  5. Definition:
+    valid_layer: 'A layer is valid iff all bases are finite and ordered, all matrix entries lie in R,
+      matrix shapes match declared dimensions, carrier_manifest_hash is present, and d₁ ∘ d₀ = 0.
+
+      '
+    frozen_data:
+    - R
+    - bases
+    - dimensions
+    - d₀
+    - d₁
+    - carrier manifest hash
+    - basis ordering
+    - norm weights if used
+  6. Laws and invariants:
+    exactness: d₁ ∘ d₀ = 0
+    dimension_compatibility: rows(d₀)=dim_C1, cols(d₀)=dim_C0, rows(d₁)=dim_C2, cols(d₁)=dim_C1
+    coefficient_closure: all vector and matrix entries are elements of R
+    frozen_carrier: Φ₁, Γ₂, Q¹, and H¹ cannot be compared across different carrier hashes without an explicit
+      transport contract
+    basis_dependence: Coordinate vectors and matrices are meaningful only relative to the declared ordered
+      bases
+  7. Equality / equivalence rules:
+    strict_equality: same R, same dimensions, same ordered bases, identical d₀/d₁ matrices, same weights
+      if used, same carrier_manifest_hash
+    equivalent_layers: 'invertible basis changes U₀,U₁,U₂ over R with U₁ d₀ = d₀'' U₀ and U₂ d₁ = d₁''
+      U₁, preserving declared weights or carrying an explicit weight transport.
+
+      '
+    transport_required: Any cross-layer comparison requires declared layer equivalence or transport contract.
+  8. Replay / determinism requirements:
+    requirements:
+    - Matrix multiplication d₁d₀ is deterministic.
+    - Basis serialization is canonical.
+    - Carrier hash is content-addressed from frozen data.
+    - Exact arithmetic is used unless a tolerance profile is declared.
+    - Approximate replay cannot be treated as exact replay.
+  9. Relationship to other Core primitives:
+    relationships:
+      B1: B¹ = im(d₀)
+      Z1: Z¹ = ker(d₁)
+      Q1: Q¹ = C¹ / B¹
+      H1: H¹ = Z¹ / B¹ when d₁d₀ = 0
+      Phi1: Φ₁ is a quotient norm/obstruction mass on Q¹
+      Gamma2: Γ₂ is the closure defect ||d₁h||₁
+      Xi: Ξ is a tertiary diagnostic after Φ₁ and Γ₂
+      Trichotomy: ExactRepair/StabilizedSurvivor/OpenObstruction depend on Φ₁ and Γ₂ defined over this
+        layer
+  10. Rust descriptor shape:
+    sketch: "pub struct CochainLayerDescriptor {\n    pub coefficient_domain: String,\n    pub arithmetic_mode:\
+      \ ArithmeticMode,\n    pub dim_c0: usize,\n    pub dim_c1: usize,\n    pub dim_c2: usize,\n    pub\
+      \ basis_c0_hash: String,\n    pub basis_c1_hash: String,\n    pub basis_c2_hash: String,\n    pub\
+      \ d0_hash: String,\n    pub d1_hash: String,\n    pub carrier_manifest_hash: String,\n    pub weight_profile_hash:\
+      \ Option<String>,\n    pub tolerance_profile_hash: Option<String>,\n}\n\npub enum ArithmeticMode\
+      \ {\n    Exact,\n    ToleranceBounded,\n}\n"
+  11. Negative definition tests:
+    tests:
+    - d₁d₀ ≠ 0.
+    - basis mismatch between matrix shape and declared dimensions.
+    - coefficient outside R.
+    - dimension mismatch.
+    - missing carrier manifest.
+    - same dimensions treated as same carrier without hash/equivalence.
+    - cross-layer Φ₁ or Γ₂ comparison without transport contract.
+    - approximate layer treated as exact layer.
+  12. Open questions / WIP status:
+    wip:
+    - Exact arithmetic domains should be preferred for certificates.
+    - Approximate matrix layers require a declared tolerance profile and cannot be treated as exact.
+    - Layer equivalence over non-field rings requires stricter module-isomorphism rules.
+    - Weight transport rules under basis change must be specified.
+  compact_yaml:
+    COCHAIN_LAYER_CONTRACT:
+      symbol: C⁰,C¹,C²,d₀,d₁
+      ascii_symbol: C0,C1,C2,d0,d1
+      status: mathematical_definition_wip
+      authority_effect: none
+      customer_claim_allowed: false
+      domain: finite ordered cochain modules over R
+      codomain: valid cochain layer
+      required_structures:
+      - R
+      - finite ordered bases
+      - dimensions
+      - d₀ matrix
+      - d₁ matrix
+      - d₁d₀=0
+      - carrier_manifest_hash
+      - basis_ordering
+      - optional weight profile
+      - tolerance profile if approximate
+      definition: valid iff finite typed matrices over R have compatible dimensions, declared bases, carrier
+        hash, and d₁d₀=0
+      laws:
+      - d₁∘d₀=0
+      - basis/order/hash frozen before Φ₁/Γ₂/Q¹/H¹
+      - cross-layer comparison requires transport
+      forbidden_interpretations:
+      - unfrozen carrier
+      - implicit coefficient domain
+      - same dimensions imply same layer
+      - basis-free comparison without transport
+      - Γ₂ without C²/d₁
+      relationships:
+      - B¹=im(d₀)
+      - Z¹=ker(d₁)
+      - Q¹=C¹/B¹
+      - H¹=Z¹/B¹
+      - Φ₁ defined on Q¹
+      - Γ₂ uses d₁
+      negative_tests:
+      - d₁d₀ nonzero
+      - basis mismatch
+      - coefficient outside R
+      - dimension mismatch
+      - missing carrier manifest
+      - cross-layer comparison without transport
+      open_questions:
+      - tolerance profiles for approximate numeric carriers
+      - non-field module equivalence
+      - weight transport

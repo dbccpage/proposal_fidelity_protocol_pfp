@@ -1,0 +1,136 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:phi1:v1.0.0
+title: Φ₁ quotient obstruction functional
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+    - urn:core:math:binary_degree_functional:v1.0.0
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: phi1_functional
+  symbol: Φ₁
+  ascii_symbol: Phi1
+  notation: Φ₁([ω]) = inf_{α ∈ C⁰} ‖ω − d₀α‖_{1,w}
+  domain:
+  - 'finite cochain layer (C⁰, C¹, d₀ : C⁰ → C¹) over a coefficient field/ring'
+  - weight profile w for weighted ℓ¹ on C¹ (default unweighted)
+  - class [ω] ∈ Q¹ = C¹ / im(d₀), represented by ω ∈ C¹
+  codomain:
+    description: Nonnegative scalar (exact rational preferred) equal to the weighted ℓ¹ quotient distance
+      from ω to B¹ = im(d₀). Not authority; not Γ₂.
+  definition:
+    formula: Φ₁([ω]) = inf_α ‖ω − d₀α‖_{1,w}
+    exact_repair: Φ₁([ω]) = 0 iff [ω] = 0 in Q¹ (exact repair exists)
+    residual: A minimizing residual h* = ω − d₀α* realizes the infimum when attained
+requirements:
+  required_structures:
+  - Finite C⁰, C¹ with declared bases/presentations
+  - Coboundary/repair map d₀: C⁰ → C¹
+  - Weighted ℓ¹ norm ‖·‖_{1,w} on C¹
+  - Quotient space Q¹ = C¹ / im(d₀)
+  - Representative ω ∈ C¹ for the class
+  - For certified claims: primal witness (α*, h*) and dual witness (exact mode)
+laws:
+- 'Quotient-norm law: Φ₁([ω]) equals the infimal weighted ℓ¹ distance from ω to im(d₀).'
+- 'Nonnegativity: Φ₁ ≥ 0.'
+- 'Exact-repair law: Φ₁([ω]) = 0 iff ω ∈ im(d₀) (class is exact).'
+- 'Representative invariance: if ω'' = ω + d₀α then Φ₁([ω'']) = Φ₁([ω]).'
+- 'Separation fence: Φ₁ is not Γ₂; never identify obstruction mass with closure defect.'
+- 'Hierarchy law: Φ₁ is primary; Γ₂ is secondary after Φ₁ selection (FOC standing law).'
+- 'Authority law: Φ₁ alone mints no AuthorityEffect, PROVED, GlobalGreen, or ActionLicense.'
+replay:
+  requirements:
+  - No external state / randomness / wall-clock
+  - Exact rational arithmetic for certified claims
+  - Primal-dual certificate replay when certification is claimed
+  - No NaN / infinite scalars
+relationships:
+- urn:core:math:phi1_obstruction_mass:v1.0.0 — packaged mass scalar / obstruction-mass object
+- urn:core:math:gamma2_closure_defect:v1.0.0 — secondary closure defect (distinct)
+- urn:core:math:quotient_mass:v1.0.0 — related quotient mass packaging
+- urn:core:math:exact_repair:v1.0.0 — repair α reducing Φ₁
+- urn:core:math:finite_obstruction_trichotomy:v0.2.0 — classifies using Φ₁ and Γ₂
+- urn:core:math:cochain_complex:v1.0.0 — ambient graded cochain data
+rust_binding:
+  crate: core_functional
+  module: phi1
+  symbols:
+  - ExactPhi1Certificate
+  - VerifiedExactPhi1
+  - Phi1Functional
+  - Phi1FormReplayError
+  - PrimalDualDiagnostic
+  - PrimalDualDiagnosticError
+  - DualWitnessError
+  - BinaryPhi1Evaluation
+  required_tests:
+  - certificate_rejects_missing_d0_c0_c1_data
+  - certificate_rejects_negative_reported_value
+  - integer_mass_rejects_overflow_and_mismatched_carriers
+  - form_replay_checks_dual_gap
+negative_tests:
+- Φ₁ claimed without d₀ / C⁰ / C¹ data must be rejected
+- Negative Φ₁ must be rejected
+- Φ₁ identified with Γ₂ or ‖d₁h‖ must be rejected
+- Φ₁ used alone to mint authority / ActionLicense / GlobalGreen must be rejected
+- Floating heuristic emitted as exact certified Φ₁ must be rejected
+- NaN/infinite scalar must be rejected
+- Claiming PROVED / HoTT discharge from this contract alone must be rejected
+doctrine:
+  summary: 'Φ₁ is the weighted ℓ¹ quotient obstruction mass on Q¹ = C¹/im(d₀). Primary FOC residual scalar.
+    Nonclaim: not Γ₂; not authority; not PROVED; not GlobalGreen; not HoTT discharge.'
+  non_role:
+  - Closure defect Γ₂ (gamma2_closure_defect)
+  - Policy admissibility / ActionLicense
+  - Certificates that mint legal authority
+  - PROVED / GlobalGreen / HoTT discharge
+  - Continuum ℓ¹ without finite declared bases
+wip:
+- Weight-profile catalog standardization
+- Dual-witness canonical schema versions
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B4_FOC_RESIDUAL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'Meth B4: lifted Φ₁ quotient-norm laws; Φ₁≠Γ₂ fence; authority refuse. Not PROVED.'
+    recommendation: Stage-2 realization audit under ADR-007a.
+    pass: meth_b4_foc_residual
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: HAS_RS_BINDING
+    severity: low
+    claim_class: '[CODE_DEMO_RUST]'
+    detail: core_functional::phi1 exports ExactPhi1Certificate / Phi1Functional. Structural MATCH expected
+      for exact rational path; full dual-witness audit residual.
+    file: engine/crates_rs/core_functional/src/phi1.rs
+    yaml_law: Φ₁ = inf ‖ω−d₀α‖_{1,w}
+    code_behavior: Exact certificate types and functional surface.
+    delta: MATCH
+  - reviewer: techne-master-of-proofs-and-derivations
+    role: PROOF_META_REVIEW
+    code: PANEL_CONSISTENT
+    severity: info
+    claim_class: '[SCOPE FENCE]'
+    detail: Φ₁≠Γ₂ fence is load-bearing FOC law. Not PROVED; not GlobalGreen.

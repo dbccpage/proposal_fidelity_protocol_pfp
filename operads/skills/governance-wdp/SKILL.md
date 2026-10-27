@@ -4,7 +4,7 @@ description: "Consolidated Witnessed Difference Programme (WDP) governance gate 
 operad_source_colours: ["Code", "Paper", "State", "Proof"]
 operad_target_colour: "Receipt"
 operad_arity: 4
-operad_residual: "unknown"
+operad_residual: neutral
 families: [governance, wdp, coda, ddc, prime-algos, atlas, mathematical-solvers]
 ---
 

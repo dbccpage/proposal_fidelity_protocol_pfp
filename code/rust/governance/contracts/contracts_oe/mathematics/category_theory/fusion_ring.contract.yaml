@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:fusion_ring:v0.1.0
+title: Fusion Ring Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: based_ring
+  symbol: 'K_0 with a x b = sum_c N_{ab}^c c'
+  ascii_symbol: fusion_ring
+  notation: 'N_{ab}^c in Z_{>=0}, unit 0, dual a*'
+  domain:
+  - 'labels: simple objects 0..r-1, the unit at label 0, r at most 32'
+  - 'structure_constants: non-negative integers N_{ab}^c'
+  - 'duality: the unique a* with N_{a a*}^0 = 1'
+  codomain:
+    description: 'A table of non-negative integer structure constants that satisfies the unit, associativity, duality and Frobenius-reciprocity laws. The ring of a braided category is commutative.'
+requirements:
+  required_structures:
+  - Structure constants are checked non-negative integers; sums are checked and never wrap
+  - Label 0 is the unit
+  - Every label has a dual and duality is an involution
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Exact integer arithmetic only; fusion-path counts are arbitrary precision
+laws:
+- 'unit: N_{0a}^c = N_{a0}^c = delta_{ac}'
+- 'associativity: sum_e N_{ab}^e N_{ec}^d = sum_f N_{bc}^f N_{af}^d'
+- 'duality: N_{ab}^0 = 1 exactly for b = a*, and (a*)* = a'
+- 'Frobenius reciprocity: N_{ab}^c = N_{a* c}^b = N_{c b*}^a'
+- 'the Frobenius-Perron dimension of a is the largest real root of det(x - N_a) with (N_a)_{bc} = N_{ab}^c'
+- 'the global dimension D^2 = sum_a d_a^2 is the Perron eigenvalue of sum_a N_a N_{a*}'
+- 'the number of fusion paths from the unit through a word w to c is the c-th entry of the product of the fusion matrices of w applied to the unit vector'
+relationships:
+- urn:core:math:fusion_category:v0.1.0 serves as The ring of a fusion category is a fusion ring; the category adds F-symbols
+- urn:core:math:modular_data:v0.1.0 serves as The Verlinde formula ties a modular S-matrix to the ring
+negative_tests:
+- A table whose unit row is not the identity must be refused as a unit defect
+- A table with N_{ab}^c != N_{ba}^c must be reported as a commutativity defect when commutativity is required
+- A table violating associativity must be refused and report the first failing index
+- A table in which the unit occurs twice in a x a must be refused as having no dual
+- A table violating Frobenius reciprocity must be refused
+- A table of the wrong flat length, or of rank zero or above the maximum, must be refused
+- A label outside 0..rank must be refused
+- Fusion-path counts must not wrap (a count that does not fit u64 is an error, not a wrapped number)
+rust_binding:
+  crate: core_fusion_categories
+  module: fusion_ring
+  symbols:
+  - FusionTable
+  - FusionRing
+  - RingDefect
+  - AbelianGroup
+  required_tests:
+  - mutated_tables_are_refused_by_exactly_the_law_they_break
+  - frobenius_reciprocity_is_a_separate_law_with_its_own_defect
+  - shapes_and_labels_are_refused_with_typed_errors
+  - sigma_paths_count_the_parity_sectors_with_exact_arithmetic
+  - frobenius_perron_dimensions_are_exact
+  - the_catalog_rings_have_their_known_shape
+doctrine:
+  summary: 'The based ring of simple objects of a fusion category, as a validated table of non-negative integer structure constants, with exact Frobenius-Perron dimensions (integer, quadratic surd, or an isolated root with a Sturm-certified rational interval).'
+  non_role:
+  - Does not decide whether a ring is categorifiable (that needs F-symbols)
+  - Does not compute anything for rings of rank above 32
+  - Makes no statement about any physical system
+wip:
+- Frobenius-Perron dimensions of higher degree are isolated roots, not closed forms
+- Non-commutative rings are accepted by validation but have no braided structure
+- Lean counterparts are not written

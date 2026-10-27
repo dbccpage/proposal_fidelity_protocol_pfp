@@ -1,0 +1,82 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:residual_projection_operator:v0.1.0
+title: Residual Projection Operator Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: projection_operator
+  symbol: 'P: M -> M, P^2 = P, M = ker(P) + im(P)'
+  ascii_symbol: residual_projection_operator
+  notation: 'P: M -> M, P^2 = P, M = ker(P) + im(P)'
+  domain:
+  - 'ambient_module: M (the module being decomposed)'
+  - 'resolved_submodule: N = ker(P) (resolved component)'
+  - 'residual_submodule: R = im(P) (residual component)'
+  - 'projection_map: P: M -> M (idempotent endomorphism)'
+  - 'complement_map: Id - P: M -> M (resolved projection)'
+  codomain:
+    description: 'An idempotent linear map P: M -> M together with the resolved submodule N = ker(P) and the residual submodule R = im(P).
+
+      '
+requirements:
+  required_structures:
+  - P must be verified as a linear map on M
+  - P^2 = P must be verified
+  - ker(P) must equal the declared resolved submodule N
+  - M = ker(P) + im(P) must be a valid direct sum
+  - Matrix representation of P must be content-addressed
+laws:
+- 'P is a linear map: P(a*m + b*n) = a*P(m) + b*P(n)'
+- P^2 = P (applying P twice equals applying once)
+- ker(P) equals the resolved submodule N
+- M = ker(P) + im(P) as internal direct sum
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Matrix multiplication is deterministic
+  - Idempotency check is deterministic
+  - All matrices use canonical serialization
+relationships:
+- urn:math:contract:ResidualObject:v0.1.0 serves as defines_residual_objects_that_live_in_image_of_P
+- urn:math:contract:DirectSum:v0.1.0 serves as defines_direct_sum_decomposition_structure
+negative_tests:
+- Operator that is not linear must be rejected
+- Operator where P^2 != P must be rejected
+- Operator whose kernel does not equal declared resolved submodule must be rejected
+- Decomposition where M != ker(P) + im(P) must be rejected
+- Projection operator artifact claiming authority must be rejected
+- Projection operator artifact claiming admissibility must be rejected
+doctrine:
+  summary: 'A ResidualProjectionOperator P: M -> M is an idempotent linear map (P^2 = P) that decomposes a module M into resolved and residual components: M = ker(P) + im(P), where ker(P) is the resolved subspace and im(P) is the residual subspace. Given a morphism f: A -> M, the resolved subspace is im(f) and the residual projection P extracts the component of any element that lies outside im(f). This is the algebraic mechanism for isolating what remains unresolved after a computation step.'
+  non_role:
+  - Choosing which complement to project onto (that is a regime decision)
+  - Policy on projection method selection
+  - Authority over projection correctness beyond algebraic verification
+  - Customer-facing claims about projection quality
+wip:
+- Should we support orthogonal projections (requiring inner product structure)?
+- How to handle projections in infinite-dimensional spaces?
+- Should oblique projections be supported or only orthogonal ones?
+- Currently assumes finite-dimensional modules
+- Orthogonal vs oblique projection distinction deferred
+- Infinite-dimensional projections deferred to future version
+- Self-adjointness condition (for orthogonal projections) not yet enforced

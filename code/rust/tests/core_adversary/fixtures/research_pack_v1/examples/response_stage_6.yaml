@@ -1,0 +1,20 @@
+derived_under_policy: SPK-001
+summary:
+  narrowest_defensible_thesis: A stale review cannot evaluate the revised candidate.
+  evidence_scope: Synthetic response for schema validation only.
+  next_concrete_test: Change candidate bytes after freeze and require re-evaluation.
+sections:
+- name: objections
+  rows:
+  - objection_id: OBJ_STALE
+    claim_id: CLAIM_REVIEW
+    candidate_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+    attack: Review binds an earlier candidate.
+    evidence_refs:
+    - fixture:stale_review
+    result: PROPOSED_OBJECTION
+    repair_test: Bind review to current candidate bytes.
+process_integrity:
+  seed_allows_theory_refutation: true
+  detected_prompt_biases: []
+  should_continue: true

@@ -1,0 +1,58 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# COMPILE-TIME ENFORCED. The `structure:` block below is read by
+# pfp/build.rs, which generates an exhaustive destructure
+# of the named Rust type plus a serde conformance test.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:coda_evaluate_receipt_v1:v1.0.0"
+title: "CODA Evaluate Receipt v1"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD", "FW-DUPLICATE-KEY"]
+
+doctrine:
+  summary: >-
+    CodaEvaluateReceiptV1, the answer of the coda_evaluate runtime action: diagnostic, routing, and authority axes produced by the Master Normal Form pipeline evaluator, bound to the request by input_digest.
+  invariants:
+    - "The shape declared here is the shape in coda.rs, enforced at compile time by an exhaustive destructure."
+    - "input_digest is framed SHA-256 over the sorted, whitespace-free request JSON under domain core.symbol-game.coda-evaluate-request.v1."
+    - "Carries three distinct axes: diagnostic, routing, and authority."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  rust_crate: pfp
+  rust_module: coda
+  rust_type: "CodaEvaluateReceiptV1"
+  form: struct
+  serde:
+    deny_unknown_fields: true
+  fields:
+    - name: schema_version
+    - name: input_digest
+    - name: input_id
+    - name: diagnostic
+    - name: routing
+    - name: authority
+    - name: detail
+    - name: authority_effect
+    - name: premise_source

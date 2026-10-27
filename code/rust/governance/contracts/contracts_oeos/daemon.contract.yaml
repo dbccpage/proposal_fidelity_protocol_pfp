@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:daemon:v1.0.0
+title: Bounded Daemon Host
+kind: host_contract
+status: proposed
+layer: 09_host
+role: DaemonHost
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+      - urn:core:oeos:composition_root:v1.0.0
+      - urn:core:oeos:telemetry_sink:v1.0.0
+      - urn:core:oeos:worker_host:v1.0.0
+    proof_obligations:
+      - id: DMN-INV-001
+        statement: A daemon binds only declared listeners after the composition root is complete and frozen.
+        verification_status: open
+      - id: DMN-INV-002
+        statement: Startup, drain, cancellation, hard-stop, and cleanup deadlines are finite and platform-specific.
+        verification_status: open
+      - id: DMN-INV-003
+        statement: Health and telemetry surfaces are bounded operational signals and never authoritative evidence.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - DAEMON_BIND_REFUSED
+      - DAEMON_SHUTDOWN_REFUSED
+      - DAEMON_STARTUP_REFUSED
+      - DAEMON_WORKER_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: frozen_daemon_configuration
+      type: urn:core:oeos:type:frozen_daemon_configuration:v1.0.0
+      required: true
+  outputs:
+    - name: daemon_lifecycle_result
+      type: urn:core:oeos:type:daemon_lifecycle_result:v1.0.0
+      required: true
+  typed_refusals:
+    - DAEMON_BIND_REFUSED
+    - DAEMON_SHUTDOWN_REFUSED
+    - DAEMON_STARTUP_REFUSED
+    - DAEMON_WORKER_REFUSED
+  platform_requirements:
+    - profile: portable_service_host
+      requirements:
+        - bounded_listener_count
+        - declared_signal_or_service_control_mapping
+        - bounded_shutdown_sequence
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares a bounded long-running host around a frozen composition root.
+  non_role:
+    - background_solver_semantics
+    - health_based_authority
+    - worker_result_evaluation
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - liveness_does_not_certify_semantic_correctness
+  invariants:
+    - listener_and_worker_counts_are_bounded
+    - shutdown_deadlines_are_finite
+  allowed_operations:
+    - start_frozen_service_host
+    - report_bounded_liveness
+    - drain_and_stop_service_host
+  forbidden_operations:
+    - dynamic_listener_registration
+    - unbounded_session_accumulation
+    - promote_health_status_to_evidence

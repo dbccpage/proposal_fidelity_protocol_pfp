@@ -1,0 +1,166 @@
+schema_version: core.contract.v1
+contract_id: urn:core:constitution:law_hierarchy:v1.0.0
+title: LawGenerationHierarchy
+kind: constitution_contract
+status: mathematical_wip
+layer: 00_constitution
+role: Constitution
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    - GlobalConventions
+    - GlobalContractTaxonomy
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the engine law hierarchy from human doctrine to generated
+
+    Rust enforcement.
+
+    '
+  non_role: &id002
+  - hand-written contract definitions
+  - hand-written contract images
+  - hand-written law assignments
+  - hand-written capability assignments
+  - hand-written file manifests
+  - generated code self-certification
+  - markdown imported as machine authority
+  - rust inventing obligations absent from YAML
+  - schema-local authority enums
+  - schema-local artifact family enums
+  - build script authority promotion
+  canonical_flow:
+  - contracts_markdown
+  - contracts_yaml
+  - canonical ontology in law_enforcement/kinds.rs
+  - YAML schema in law_enforcement/schema.rs
+  - build.rs validation and generation
+  - OUT_DIR generated contract images/descriptors/manifests
+  - law_enforcement/generated.rs include bridge
+  - law_enforcement/laws.rs gates
+  - law/traits behavior vocabulary
+  - law_enforcement/macros.rs implementation binding
+  - validation reports
+  - witness artifacts
+  layers:
+    human_doctrine:
+      location: contracts_markdown/
+      role: Human-readable doctrine, boundaries, negative capabilities, and contract explanations
+      rules:
+      - Markdown explains contract meaning.
+      - Markdown MUST NOT be imported by Rust enforcement, build scripts, macros, validators, or runtime
+        contract registries.
+      - Markdown must have a corresponding YAML contract before enforcement.
+    machine_obligation:
+      location: contracts_yaml/
+      role: Machine-readable canonical obligations
+      rules:
+      - YAML is the canonical source of machine-enforced contract obligations after schema validation.
+      - Every enforced law, capability, prohibition must live in YAML.
+      - Rust code must not invent obligations not present in YAML.
+      - YAML must align with the corresponding Markdown doctrine.
+    yaml_legality:
+      location: law_enforcement/schema.rs
+      role: Validates YAML contract shape
+      responsibilities:
+      - Define contract YAML schema structs
+      - Validate required fields
+      - Reject malformed, unknown artifact families, unknown authority effects
+      - Reject stale authority effects
+    build_generation:
+      location: build.rs
+      role: Reads YAML, validates contracts, generates OUT_DIR Rust artifacts
+      generates:
+      - SealedContractDescriptor instances
+      - ContractImage marker types
+      - Static schema alignment assertions
+      - File audit manifests
+      - Law/capability assignment maps
+      must_fail_on:
+      - Malformed YAML
+      - Schema violation
+      - Missing required field
+      - Impossible authority
+      - Multiple primary artifact families
+      - Unknown or stale authority effects
+      - Collapsed EvidenceEnvelope/FactEnvelope
+      - Collapsed ActionLicense/Action
+      - Local taxonomy instead of canonical
+    generated_include_bridge:
+      location: law_enforcement/generated.rs
+      role: Include bridge for OUT_DIR generated Rust
+      forbidden:
+      - manually declaring contract images
+      - manually declaring contract metadata
+      - manually declaring file audit manifests
+      - manually declaring authority-effect mappings
+    categorical_ontology:
+      location: law_enforcement/kinds.rs
+      role: 'Canonical ontology: artifact families, authority effects, kernel/role/law/capability kinds'
+    strict_law_gates:
+      location: law_enforcement/laws.rs
+      role: Law marker traits, forbidden-capability traits, compile-time gates
+    operational_traits:
+      location: law/traits/
+      role: Behavioral traits describing component behavior shapes
+    macro_binding:
+      location: law_enforcement/macros.rs
+      role: Bind Rust implementations to generated contract images
+    validation:
+      location: validation/
+      role: Validate contract artifacts, file audit manifests, law compliance
+    witness:
+      location: witness/
+      role: Evidence and law witnesses, replayable proof artifacts
+  never_hand_written:
+  - Contract definitions/identifiers
+  - Contract images (marker types)
+  - Law/capability assignments
+  - File manifests
+  - Authority/artifact taxonomy enums (outside kinds.rs)
+  - Generated satisfaction claims
+  canonical_invariant: 'Markdown explains doctrine. YAML declares machine obligations. kinds.rs owns canonical
+
+    ontology. schema.rs validates YAML shape. build.rs generates contract identities and
+
+    obligation images. Rust traits express behavior. Law gates enforce declared legality.
+
+    Macros bind implementations to generated obligations. Validators audit conformance.
+
+    Witnesses provide evidence. None of these layers may invent authority absent from
+
+    validated YAML and canonical taxonomy.
+
+    '
+  legacy_metadata:
+    name: LawGenerationHierarchy
+    role: Defines Markdown -> YAML -> generated Rust -> enforcement -> validation -> witness hierarchy
+    version: '2.0'
+    classification: constitution
+    doctrine_version: 2026-05
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: StructureArtifact
+    domain_output_kind: GenerationRule
+    referenced_output_families:
+    - StructureArtifact
+    referenced_domain_kinds:
+    - ConstitutionalLaw
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_constitution_contract:v1.0.0"

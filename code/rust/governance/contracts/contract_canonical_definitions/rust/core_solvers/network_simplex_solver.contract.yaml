@@ -1,0 +1,35 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_solvers:network_simplex_solver:v1.0.0
+title: Network Simplex and Graph Flow Solver Contract
+status: active
+crate: core_solvers
+file: crates_rs/core_solvers/src/network_simplex_solver.rs
+role: network_simplex_and_minimum_cost_flow_solver
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - network_simplex_basis_maintenance
+  - minimum_cost_flow_pivoting
+  - gomory_hu_tree_construction
+  - max_flow_min_cut_computation
+does_not_own:
+  - continuous_manifold_geodesics
+  - authority_promotion
+may_call:
+  - core_types
+must_not:
+  - return_optimal_flow_violating_conservation
+  - report_negative_cycle_unhandled
+exactness:
+  numeric_mode: exact_integer_and_f64_flow
+  exact_certificate_allowed: true
+forbidden_substrings:
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "NetworkSimplex"
+required_tests:
+  - test_network_simplex_correctness
+lean_obligations: []

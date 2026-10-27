@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_frobenius_algebra:v0.1.0
+title: Exact Finite Frobenius Algebras
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_frobenius_algebra
+  symbol: finite_frobenius_algebra
+  ascii_symbol: finite_frobenius_algebra
+  notation: Exact Finite Frobenius Algebras
+  domain:
+  - Exact multiplication, unit, comultiplication and counit on one finite Gaussian-rational carrier.
+  - A nondegenerate trace form when constructing the dual-basis coproduct.
+  codomain:
+    description: Declared finite results of core_quantum_physics::frobenius_algebra; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Associativity, coassociativity, both unit and counit laws, and both Frobenius equations are replayed.
+- Copying has special scalar one and is commutative and dagger.
+- M2 is noncommutative with special scalar two; the cyclic group algebra on three elements has special scalar
+  three.
+- Inverting the actual trace Gram matrix yields the exact dual-basis coproduct.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: frobenius_algebra
+  symbols:
+  - FrobeniusAlgebra
+  - FrobeniusDefect
+  required_tests:
+  - copy_structure_is_special_commutative_dagger_frobenius
+  - matrix_and_cyclic_group_algebras_have_computed_special_scalars
+negative_tests:
+- Dimension mismatch, degenerate trace form, storage excess and a nonzero structural defect are refused.
+doctrine:
+  summary: Associativity, coassociativity, both unit and counit laws, and both Frobenius equations are replayed.;
+    Copying has special scalar one and is commutative and dagger.; M2 is noncommutative with special scalar
+    two; the cyclic group algebra on three elements has special scalar three.; Inverting the actual trace Gram
+    matrix yields the exact dual-basis coproduct..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

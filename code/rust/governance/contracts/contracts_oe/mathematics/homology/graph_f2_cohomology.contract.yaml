@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:graph_f2_cohomology:v0.1.0
+title: Exact Binary Graph Cohomology
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: graph_f2_cohomology
+  symbol: graph_f2_cohomology
+  ascii_symbol: graph_f2_cohomology
+  notation: Exact Binary Graph Cohomology
+  domain:
+  - Finite irreflexive graphs, with explicit mask limits for the legacy carrier and bounded bitpacked dimensions
+    for general graphs.
+  codomain:
+    description: Declared finite results of core_homology::graph_f2; exact and diagnostic routes retain their
+      stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- A coboundary is the endpoint parity difference.
+- Primitive preimages reproduce removable edge patterns.
+- Cycle-space elements annihilate every coboundary; odd pairing with a supplied cycle certifies nonremovability.
+- A forty-edge cycle has an independently replayable obstruction beyond the mask-width carrier.
+- Bounded minimum Hamming quotient enumerates actual admitted repairs.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_homology
+  module: graph_f2
+  symbols:
+  - PatternCarrier
+  - GraphCohomologyF2
+  - pattern_pairing
+  required_tests:
+  - graphs_beyond_mask_width_have_replayable_cycle_obstructions
+negative_tests:
+- Self loops, invalid endpoints, out-of-carrier bits, empty assignment families and exhausted finite searches
+  are refused.
+doctrine:
+  summary: A coboundary is the endpoint parity difference.; Primitive preimages reproduce removable edge patterns.;
+    Cycle-space elements annihilate every coboundary; odd pairing with a supplied cycle certifies nonremovability.;
+    A forty-edge cycle has an independently replayable obstruction beyond the mask-width carrier.; Bounded
+    minimum Hamming quotient enumerates actual admitted repairs..
+  non_role:
+  - The binary Hamming quotient is not the rational weighted L1 quotient functional.
+  - No operational authority.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

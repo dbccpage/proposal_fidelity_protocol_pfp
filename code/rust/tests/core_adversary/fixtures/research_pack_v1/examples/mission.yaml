@@ -1,0 +1,36 @@
+mission_id: RESEARCH_LOOP_AUDIT_EXAMPLE
+run_id: LOCAL_REPLAY_ONLY
+original_seed_ref: ../seed.txt
+original_question: Audit researcher_workflow.md against the supplied Fable-like workflow, long-horizon
+  workflow and PFP contracts. Produce a bounded research-loop contract with explicit evidence, revision
+  and stopping rules. Preserve proposal/evaluation/authorization separation and the original research
+  question.
+lane: mixed
+required_claim_ids:
+- CLAIM_STAGE5_HOST_ONLY
+- CLAIM_READABLE_TEMPLATE_EMPTY
+done_predicates:
+- Exact source spans for both contract facts are retained.
+- Counterexample with a stale review is rejected by the host decision model.
+owned_paths:
+- runs/LOCAL_REPLAY_ONLY/
+forbidden_surfaces:
+- sources/
+- prompts/
+source_inventory: ../audit/source_inventory.yaml
+capability_bindings:
+  local_read: bound in conformance replay
+  source_search: unbound
+  provider: unbound
+  formal_checker: unbound
+verifier_routes:
+  CLAIM_STAGE5_HOST_ONLY: exact supplied schema/model inspection
+  CLAIM_READABLE_TEMPLATE_EMPTY: exact supplied template inspection
+budget:
+  max_model_calls: 32
+  max_total_tokens: 120000
+  max_cost_microusd: 0
+  max_rounds: 3
+  max_tool_calls: 64
+retention_policy: Keep failed candidates and all raw observations; final receipt is a fixture receipt
+  only.

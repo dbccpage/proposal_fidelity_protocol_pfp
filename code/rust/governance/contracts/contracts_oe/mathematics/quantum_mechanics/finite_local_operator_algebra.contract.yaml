@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_local_operator_algebra:v0.1.0
+title: Exact Finite Unital Star Algebras
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_local_operator_algebra
+  symbol: finite_local_operator_algebra
+  ascii_symbol: finite_local_operator_algebra
+  notation: Exact Finite Unital Star Algebras
+  domain:
+  - Finite Gaussian-rational square operator generators on Hilbert dimension at most sixteen.
+  - Declared closure and exact field operation budgets.
+  codomain:
+    description: Declared finite results of core_quantum_physics::local_operator_algebra; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The retained independent basis contains the identity and is closed under multiplication and dagger.
+- The commutant is the simultaneous commutator kernel; the center is its intersection with the algebra.
+- The even two-mode Majorana algebra has dimension eight and center and commutant dimension two.
+- A local Pauli tensor algebra has the complementary tensor algebra as commutant.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: local_operator_algebra
+  symbols:
+  - LocalOperatorAlgebra
+  required_tests:
+  - even_fermion_algebra_has_dimension_eight_and_two_dimensional_center
+  - pauli_local_algebra_commutant_is_the_complement_region
+  - oversized_algebra_constraint_packets_refuse_before_dense_materialization
+negative_tests:
+- Ragged, rectangular, carrier-mismatched and over-budget generators are refused.
+- Dense center and commutant constraint packets above canonical storage or scalar-operation budgets refuse
+  before materialization.
+doctrine:
+  summary: The retained independent basis contains the identity and is closed under multiplication and dagger.;
+    The commutant is the simultaneous commutator kernel; the center is its intersection with the algebra.;
+    The even two-mode Majorana algebra has dimension eight and center and commutant dimension two.; A local
+    Pauli tensor algebra has the complementary tensor algebra as commutant..
+  non_role:
+  - No PROVED, GlobalGreen, customer claim, or operational authority.
+  - No extension beyond the declared finite carrier and exact computation budgets.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,89 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:sum_type:v0.1.0
+title: Sum Type Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: type_former
+  symbol: coprod_{i in I} A_i or A_1 + A_2 + ... + A_n
+  ascii_symbol: sum_type
+  notation: coprod_{i in I} A_i or A_1 + A_2 + ... + A_n
+  domain:
+  - 'index_set: finite_ordered_set'
+  - 'summand_types: indexed_family_of_types'
+  - 'total_space: tagged_union_set'
+  codomain:
+    description: 'A Sum Type consists of: - Index set I: a finite set of tags - Summand types: {A_i}_{i in I}, a type for each tag - Total space: the disjoint union coprod_{i in I} A_i = {(i, a) | i in I, a: A_i} - Injections: inj_i: A_i -> coprod A_i for each i
+
+      '
+requirements:
+  required_structures:
+  - Index set I must be non-empty
+  - Each summand type A_i must resolve to a valid type artifact
+  - All tags in I must be distinct
+  - Total space equals the disjoint union of all summand types
+  - StructureArtifact hash matches canonical serialization
+laws:
+- 'For each i in I and a: A_i, inj_i(a) is an element of the sum type'
+- 'Every element of the sum type is inj_i(a) for exactly one i in I and one a: A_i'
+- 'Given f_i: A_i -> C for all i, there exists a unique [f_i]: coprod A_i -> C'
+- '[f_i](inj_j(a)) = f_j(a) for all j in I and a: A_j'
+- 'For g: coprod A_i -> C, g = [g o inj_i]_{i in I}'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Tags serialized as sorted byte strings separated by U+001E
+  - Summand type IDs serialized as 32-byte hashes in tag order
+  - Tagged values serialized as (tag_length, tag_bytes, value_length, value_bytes)
+  - All validators and computation functions are content-addressed
+relationships:
+- urn:math:contract:Category:v0.1.0 serves as Sum types are coproducts in the category of types
+negative_tests:
+- Index set I is empty
+- Tags contain duplicates ['A', 'A']
+- Tags are not sorted ['B', 'A']
+- 3 tags but only 2 summand types
+- A summand type artifact does not resolve
+- Value is not an element of the summand type for the given tag
+- Tag is not in the index set
+- Case analysis missing a case for one tag
+- Different serialization conventions produce different hashes
+doctrine:
+  summary: 'A Sum Type (coproduct type) encodes a tagged disjoint union of a finite family of types. Given an index set I and types {A_i}_{i in I}, the sum type coprod_{i in I} A_i consists of pairs (i, a) where i in I is a tag and a: A_i. For the binary case, A + B has injections inl: A -> A + B and inr: B -> A + B. Elimination is by case analysis: given a function f_i: A_i -> C for each i, there is a unique function [f_i]: coprod A_i -> C. The contract validates injection, case analysis (elimination), and the computation rule (beta: [f_i](inj_j(a)) = f_j(a)).'
+  non_role:
+  - Does not encode dependent sums (use SigmaType for that)
+  - Does not handle infinite index sets
+  - Does not verify decidability of tag equality
+  - Does not support quotient types or higher inductive types
+  - Does not handle recursive sum types (inductive types)
+wip:
+- Should the contract support empty sum types (initial object / void type)?
+- How should recursive sum types (inductive types) be handled?
+- Should the contract encode the decidability of tag comparison?
+- How should sum types interact with the sigma type contract for dependent sums?
+- Should unique elimination (up to propositional equality) be verified?
+- Only finite index sets and finite summand types are directly encodable
+- Binary sum type A + B is the special case with I = {0, 1}
+- Tags are byte strings to support arbitrary naming conventions
+- Total space size is the sum of all summand type cardinalities
+- Case analysis exhaustiveness requires exactly one function per tag
+- All operations are deterministic and content-addressed for replay

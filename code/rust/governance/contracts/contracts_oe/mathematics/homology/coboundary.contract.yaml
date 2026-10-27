@@ -1,0 +1,79 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:coboundary:v0.1.0
+title: Coboundary Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: coboundary
+  symbol: beta = delta_{n-1}(alpha), beta ∈ B^n(C) ⊆ Z^n(C) ⊆ C^n
+  ascii_symbol: coboundary
+  notation: beta = delta_{n-1}(alpha), beta ∈ B^n(C) ⊆ Z^n(C) ⊆ C^n
+  domain:
+  - 'cochain_complex: C^•'
+  - 'source_cochain_group: C^{n-1}'
+  - 'target_cochain_group: C^n'
+  - 'coboundary_map: delta_{n-1}: C^{n-1} → C^n'
+  - 'preimage_cochain: alpha ∈ C^{n-1}'
+  - 'coboundary_cochain: beta = delta_{n-1}(alpha) ∈ C^n'
+  codomain:
+    description: Cochain beta in C^n that is the image of coboundary map delta_{n-1}
+requirements:
+  required_structures:
+  - Preimage cochain alpha must be valid member of C^{n-1}
+  - Coboundary map must have degree +1 (maps C^{n-1} to C^n)
+  - Coboundary cochain beta must equal delta_{n-1}(alpha)
+  - Coboundary cochain beta must be valid member of C^n
+  - Coboundary beta must satisfy delta_n(beta) = 0
+laws:
+- beta = delta_{n-1}(alpha) for some alpha ∈ C^{n-1}
+- delta_n(beta) = 0 (follows from delta² = 0)
+- Preimage cochain alpha is valid member of C^{n-1}
+- Coboundary cochain beta is valid member of C^n
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Coboundary computation is deterministic
+  - Cochain representations are canonical
+  - Coboundary map is content-addressed
+relationships:
+- urn:math:contract:CochainComplex:v0.1.0 serves as defines_cochain_complex_structure
+- urn:math:contract:CoboundaryMap:v0.1.0 serves as defines_coboundary_map_delta
+- urn:math:contract:CochainGroup:v0.1.0 serves as defines_source_and_target_cochain_groups
+negative_tests:
+- Preimage alpha not in C^{n-1} must be rejected
+- Coboundary beta not in C^n must be rejected
+- delta(alpha) != declared coboundary beta must be rejected
+- Coboundary map with wrong degree must be rejected
+- Coboundary artifact claiming authority must be rejected
+- Coboundary artifact claiming admissibility must be rejected
+doctrine:
+  summary: A Coboundary is a cochain beta in C^n that is the image beta = delta_{n-1}(alpha) of a cochain alpha in C^{n-1}, where delta is the coboundary map of a cochain complex. Coboundaries are exact cocycles and form the quotient denominator for cohomology classes. This contract defines the structure, validation, and deterministic operations for coboundaries, ensuring that they are properly witnessed as images of coboundary maps.
+  non_role:
+  - Cocycle classification (separate Cocycle contract)
+  - Cohomology class computation (separate CohomologyClass contract)
+  - Coboundary representative selection (deferred)
+wip:
+- Should we define normalized coboundary representatives?
+- Currently assumes finite cochain complexes
+- Coboundary representative selection is not yet specified
+- Relationship to Cocycle contract needs clarification
+- Dual to Boundary contract in chain complexes

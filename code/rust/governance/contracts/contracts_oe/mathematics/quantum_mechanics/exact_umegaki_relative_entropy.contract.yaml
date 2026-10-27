@@ -1,0 +1,75 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_umegaki_relative_entropy:v0.1.0
+title: Exact support and algebraic noncommuting Umegaki entropy
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_umegaki_relative_entropy
+  symbol: exact_umegaki_relative_entropy
+  ascii_symbol: exact_umegaki_relative_entropy
+  notation: Exact support and algebraic noncommuting Umegaki entropy
+  domain:
+  - PSD trace-one operators over Q(i), rational LogForms or isolated real spectra and bounded interval precision
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_relative_entropy; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Finiteness is exact rank(sigma+rho)=rank(sigma)
+- Tr rho log sigma includes noncommuting spectral weights
+- Interval Lagrange spectral weights use exact moments Tr rho sigma^k
+- Klein and data-processing comparisons use certified logarithm bounds and exact equality
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_relative_entropy
+  symbols:
+  - QuantumRelativeEntropy::support_included
+  - QuantumRelativeEntropy::exact
+  - QuantumRelativeEntropy::enclosure
+  - QuantumRelativeEntropy::klein_exact
+  - QuantumRelativeEntropy::data_processing
+  - QuantumRelativeEntropy::petz_renyi_two_moment
+  required_tests:
+  - states_channels_exact_tests::coherent_information_and_relative_entropy_use_full_operators
+  - states_channels_exact_tests::arbitrary_algebraic_relative_entropy_encloses_noncommuting_spectral_weights
+negative_tests:
+- states_channels_exact_tests::arbitrary_algebraic_relative_entropy_encloses_noncommuting_spectral_weights
+- states_channels_exact_tests::population_entropy_revalidates_storage_and_refuses_spectral_copies_before_allocation
+doctrine:
+  summary: Finiteness is exact rank(sigma+rho)=rank(sigma); Tr rho log sigma includes noncommuting spectral
+    weights; Interval Lagrange spectral weights use exact moments Tr rho sigma^k; Klein and data-processing
+    comparisons use certified logarithm bounds and exact equality.
+  non_role:
+  - Refuses unresolved interval separation; does not claim generic algebraic eigenspace extension
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

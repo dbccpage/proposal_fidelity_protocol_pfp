@@ -1,0 +1,37 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_solvers:l1_obstruction_solver:v1.0.0
+title: L1 Norm and Obstruction Solver Family Contract
+status: active
+crate: core_solvers
+file: crates_rs/core_solvers/src/solver_subgradient_l1.rs
+role: l1_norm_and_residual_quotient_solver
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - l1_gauge_minimization_inf_d0_alpha
+  - subgradient_l1_descent
+  - admm_consensus_splitting
+  - phi1_boundary_minimization
+  - q_obstruction_duality_gap
+does_not_own:
+  - global_continuum_limit
+  - authority_promotion
+may_call:
+  - core_linear_algebra
+  - core_homology
+must_not:
+  - claim_unbounded_descent_without_residual_receipt
+  - ignore_non_zero_duality_gap
+exactness:
+  numeric_mode: f64_optimization_with_residual_bounds
+  exact_certificate_allowed: true
+forbidden_substrings:
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect"
+required_tests:
+  - test_l1_obstruction_solver_convergence
+lean_obligations: []

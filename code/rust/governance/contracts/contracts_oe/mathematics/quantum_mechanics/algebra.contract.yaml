@@ -1,0 +1,81 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:algebra:v0.1.0
+title: Algebra Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: algebra
+  symbol: (A, +, mu, R) or (A, +, *, 1_A, R)
+  ascii_symbol: algebra
+  notation: (A, +, mu, R) or (A, +, *, 1_A, R)
+  domain:
+  - 'underlying_module: r_module'
+  - 'base_ring: commutative_ring_R'
+  - 'multiplication: bilinear_map A x A -> A'
+  - 'unit: optional_element_1_A'
+  codomain:
+    description: 'An R-module A with a bilinear multiplication mu: A x A -> A, optional unit element, and the underlying ring R of scalars.
+
+      '
+requirements:
+  required_structures:
+  - A satisfies R-module axioms (abelian group + scalar multiplication)
+  - Multiplication is R-bilinear
+  - Multiplication is associative (if declared associative)
+  - Unit element satisfies mu(1,a) = mu(a,1) = a (if declared unital)
+  - Artifact hash is deterministically computed from structural data
+laws:
+- A is an R-module under addition and scalar multiplication
+- mu(ra + sb, c) = r*mu(a,c) + s*mu(b,c) and mu(a, rb + sc) = r*mu(a,b) + s*mu(a,c)
+- mu(mu(a,b), c) = mu(a, mu(b,c)) for all a, b, c in A
+- mu(1_A, a) = mu(a, 1_A) = a for all a in A (if unital)
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - All algebra operations from canonical structure tables
+  - Rechecking must reproduce axiom_witness_hash
+relationships:
+- urn:math:contract:Module:v1.0.0 serves as Underlying R-module structure
+- urn:math:contract:Ring:v1.0.0 serves as Base ring R of scalars
+- urn:math:contract:BilinearForm:v0.1.0 serves as Multiplication is a bilinear map
+negative_tests:
+- Multiplication that is not R-bilinear must be rejected
+- Declared associative but mu(mu(a,b),c) != mu(a,mu(b,c))
+- Declared unital but unit axiom fails
+- Underlying module axioms violated
+- Artifact claiming authority or admissibility must be rejected
+doctrine:
+  summary: 'An algebra over a ring R is an R-module A equipped with an R-bilinear multiplication mu: A x A -> A. In the unital associative case, this multiplication is associative and has a unit element 1_A. Algebras unify ring theory and module theory, serving as the foundation for operator algebras, Lie algebras, Clifford algebras, and DG-algebras.'
+  non_role:
+  - Lie algebras (non-associative, separate contract)
+  - DG-algebras (graded with differential, separate contract)
+  - C*-algebras and operator algebras (topological extensions)
+  - Coalgebras and bialgebras (dual structure, separate contract)
+wip:
+- Should commutative algebras be a separate contract or a FactEnvelope?
+- How to handle graded algebras (separate contract vs parametric extension)?
+- Should the algebra contract support non-associative algebras like Lie algebras?
+- Relationship to operad algebras and E_n-algebras?
+- Currently targets finite-dimensional associative unital algebras
+- Non-associative and non-unital variants need flags
+- Graded algebras, filtered algebras, and DG-algebras are separate contracts
+- Tensor algebra, symmetric algebra, exterior algebra are constructors on modules

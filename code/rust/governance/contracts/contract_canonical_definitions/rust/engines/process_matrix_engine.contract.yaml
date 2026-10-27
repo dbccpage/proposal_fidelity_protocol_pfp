@@ -1,0 +1,47 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:qm:process_matrix_engine:file:v1.1.0
+crate: engines
+file: crates_rs/engines/src/quantum/process_matrix_engine.rs
+role: process_matrix_diagnostic_engine
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - psd_hermitian_process_matrix_diagnostics
+  - generalized_born_score_diagnostics
+  - choi_helper_diagnostics
+does_not_own:
+  - full_causal_separability_solver
+  - physical_noncausality_certificate
+  - authority
+  - born_theorem
+may_call:
+  - engines::quantum::density_matrix
+  - engines::quantum::quantum_channel
+must_not:
+  - claim full causal-separability solving
+  - certify noncausal physics
+  - use scalar bound violation as authority
+  - hide failed PSD or Hermitian validation
+  - mint authority
+exactness:
+  numeric_mode: f64_diagnostic_or_checked_numeric
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "ExactRepair"
+  - "AuthorityEffect::Authorize"
+  - "full causal-separability solver"
+  - "certifies noncausal"
+required_substrings:
+  - "diagnostic"
+  - "AuthorityEffect::None"
+required_tests:
+  - process_matrix_reports_authority_none
+  - scalar_bound_violation_is_diagnostic_only
+  - non_psd_process_matrix_rejected
+  - no_full_causal_separability_claim
+lean_obligations:
+  - QM-P1 process matrix diagnostics mint no authority

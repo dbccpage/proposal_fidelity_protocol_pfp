@@ -1,0 +1,427 @@
+schema_version: core.contract.v1
+contract_id: urn:core:lifts:lift_license:v1.0.0
+title: LiftLicense
+kind: lift_contract
+status: mathematical_wip
+layer: 08_lifts
+role: LiftLicense
+descriptor:
+  authority_effect: authorizes_transition
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    - GlobalContractTaxonomy
+    - MetaJudgmentAndMetaLift
+    - Lift
+    - Obstruction
+    - Witness
+    - CertificateKernel
+    - ReplayKernel
+    - Trace
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+  constitution:
+    contract_dependencies: *id001
+    emits: ActionLicense
+    authority_layer: Action
+    replay_certificates:
+    - schema_hash
+    - license hash
+    - replay manifest ref
+  constraints:
+    scope_bound: true
+    non_transferable: true
+    authority_does_not_exceed_evidence: true
+    mutation_forbidden: true
+  replay:
+    required:
+    - replayable post-lift manifest
+    - replay manifest ref
+    - license hash
+  witnesses:
+    required:
+    - checked obstruction
+    - context witness
+    - repair exhaustion evidence
+doctrine:
+  summary: 'This contract defines the LiftLicense boundary.
+
+
+    LiftLicense is a scoped ActionLicense for structural ascent. It authorizes only the
+
+    declared carrier/schema/level transition and only with attached checked obstruction,
+
+    context witness, repair exhaustion, persistence, delta-minimality, constructor-set,
+
+    replay, and authority evidence.
+
+
+    LiftLicense does not execute, mutate, repair, certify itself, terminalize, or transfer
+
+    across scope. Engine alone executes the licensed transition.
+
+    '
+  non_role: &id002
+  - execution
+  - state mutation
+  - self-licensing
+  - self-certification
+  - lift without checked obstruction
+  - lift without context witness
+  - lift without repair exhaustion evidence
+  - lift without delta-minimality evidence
+  - lift without replay manifest
+  - authority above attached evidence
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate,
+
+      terminalize, authorize transitions, execute transitions, license lifts, prove
+
+      minimality, or upgrade evidence authority.
+
+
+      LLM output may propose LiftRequest, LiftLicense, or MetaLiftContract candidates,
+
+      but those proposals are EvidenceOnly until checked by MetaJudgment, CertificateKernel,
+
+      ReplayKernel, and the licensing boundary.
+
+      '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'LiftLicense authority MUST NOT exceed the authority of its attached evidence,
+
+      declared checker capability, MetaJudgment decision, and governing contract.
+
+
+      A LiftLicense may authorize only the specific structural ascent described by its
+
+      checked contract and evidence references.
+
+      '
+  classification:
+    subsystem: Obstruction Resolution / Structural Ascent
+    role: Scoped ActionLicense for structural ascent authorization.
+    classification: Lifts layer -- licensing boundary.
+  governing_rule: 'No structural lift L_n -> L_{n+1}, S(n) -> S(n+1), or carrier/schema expansion may
+
+    occur without a replayable LiftLicense.
+
+
+    A LiftLicense authorizes the Engine to attempt the declared transition. It is not the
+
+    transition, does not mutate the carrier, and does not execute itself.
+
+
+    A LiftLicense authorizes a state transition into a higher structural complexity. It
+
+    requires independent checking, proof of non-congruence, and delta-minimality before
+
+    transition.
+
+    '
+  artifact_authority_ladder:
+    levels:
+    - Generated
+    - Parsed
+    - Checked
+    - Evaluated
+    - Licensed
+    - Executed
+    - Recorded
+    separation_law: 'Licensed and Executed are distinct. Licensed authorizes. Executed changes state
+
+      through Engine. Recorded writes Trace.
+
+
+      Terminal outcomes may exist alongside licensing, but terminalization is not execution.
+
+      '
+    contract_law: 'LiftLicense does not execute.
+
+      Engine executes.
+
+      Trace records.
+
+      '
+  structural_representation:
+    lift_license:
+      struct_name: LiftLicense
+      fields:
+      - name: license_id
+        type: LiftLicenseId
+      - name: level
+        type: LevelRef
+      - name: source_carrier
+        type: CarrierRef
+      - name: target_carrier_schema
+        type: CarrierSchemaRef
+      - name: lift_request_ref
+        type: LiftRequestId
+      - name: metalift_contract_ref
+        type: MetaLiftContractId
+      - name: meta_decision_ref
+        type: MetaDecisionId
+      - name: checked_obstruction_ref
+        type: ObstructionId
+      - name: checked_packet_ref
+        type: CheckedPacketRef
+      - name: context_witness_ref
+        type: WitnessId
+      - name: repair_exhaustion_certificate
+        type: CertificateId
+      - name: persistence_certificate
+        type: CertificateId
+      - name: minimality_certificate
+        type: CertificateId
+      - name: constructor_set_hash
+        type: Hash256
+      - name: delta
+        type: LiftDelta
+      - name: delta_minimality_ref
+        type: CertificateId
+      - name: after_manifest_ref
+        type: CarrierManifestRef
+      - name: replay_manifest_ref
+        type: ReplayManifestId
+      - name: replay_hash
+        type: Hash256
+      - name: evidence_refs
+        type: Vec<EvidenceRef>
+      - name: witness_refs
+        type: Vec<WitnessId>
+      - name: certificate_refs
+        type: Vec<CertificateId>
+      - name: authority_refs
+        type: Vec<AuthorityRef>
+      - name: expiry
+        type: Option<Epoch>
+      - name: license_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: AuthorizesTransition
+    lift_license_validation_report:
+      struct_name: LiftLicenseValidationReport
+      fields:
+      - name: license_id
+        type: LiftLicenseId
+      - name: status
+        type: LiftLicenseValidationStatus
+      - name: checked_refs
+        type: Vec<EvidenceRef>
+      - name: report_hash
+        type: Hash256
+      - name: authority_effect
+        type: AuthorityEffect
+        default: EvidenceOnly
+        promotion_condition: FactOnly_only_after_checking
+    enums:
+    - name: LiftAdmissibilityDecision
+      variants:
+      - AdmissibleForLicensing
+      - BudgetUnknown
+      - ContextIncomplete
+      - MinimalityUnknown
+      - TrustFailure
+      - ObstructionUnchecked
+      - RepairExhaustionUnproven
+      - PersistenceUnproven
+      - ReplayUnavailable
+      - AuthorityInsufficient
+    - name: LiftLicenseValidationStatus
+      variants:
+      - Valid
+      - Expired
+      - ScopeMismatch
+      - MissingEvidence
+      - MissingCertificate
+      - ReplayMismatch
+      - AuthorityInsufficient
+      - HashMismatch
+      - Revoked
+  scope_binding: "A LiftLicense is scope-bound.\n\nIt authorizes only:\n  - the declared source carrier;\n\
+    \  - the declared target carrier schema;\n  - the declared carrier delta;\n  - the declared obstruction;\n\
+    \  - the declared level transition;\n  - the declared replay manifest;\n  - the declared evidence\
+    \ and certificate set.\n\nIt MUST NOT be reused for a different carrier, obstruction, packet, constructor\
+    \ family,\nlevel, schema, or delta.\n"
+  licensability_conditions:
+  - The obstruction packet is checked
+  - The obstruction is attached to a declared carrier, equivalence, and context family
+  - Admissible same-carrier repair is exhausted or blocked under declared budget
+  - A context witness supports non-congruence
+  - Persistence and irreducibility evidence are attached
+  - The constructor family is declared and hashed
+  - Delta-minimality is checked inside declared grammar and budget
+  - The post-lift carrier manifest is replayable
+  - Authority references permit this class of lift
+  - Certificate authority does not exceed attached evidence authority
+  verdict_and_licensing_authority: 'Evaluator may evaluate lower-level facts, exhaustion metrics, measurements,
+    and
+
+    candidate quality within declared evaluator authority.
+
+
+    MetaJudgment judges lift admissibility from submitted evidence.
+
+
+    TerminalMapper / LicensingBoundary may seal terminal lift outcomes or issue a
+
+    LiftLicense when its contract permits.
+
+
+    LiftLicense authorizes ascent.
+
+
+    Engine executes the licensed transition.
+
+
+    Trace records what happened.
+
+
+    AdmissibleForLicensing is not a LiftLicense. It is a decision result that may support
+
+    license issuance by the licensing boundary.
+
+    '
+  non_transferability_law: 'A LiftLicense is not transferable across carriers, schemas, levels, contexts,
+
+    obstruction IDs, packets, constructor sets, or replay manifests.
+
+
+    Any mismatch between the license scope and the attempted Engine transition invalidates
+
+    the license for that transition.
+
+    '
+  expiry_and_revocation_law: 'A LiftLicense MAY expire or be revoked according to declared governance
+    rules.
+
+
+    Expired or revoked licenses MUST NOT authorize Engine execution.
+
+
+    Revocation does not rewrite history. Trace records prior use; future execution must
+
+    fail closed.
+
+    '
+  engine_consumption_law:
+    description: Engine may consume a LiftLicense only as an authorization input.
+    verification_checklist:
+    - license hash
+    - scope match
+    - expiry/revocation status
+    - required certificate refs
+    - replay manifest ref
+    - target carrier schema
+    - allowed delta
+    - authority effect is AuthorizesTransition
+    constraint: Engine MUST NOT repair missing license evidence.
+  forbidden_authority_shortcuts:
+    doctrine: 'Authority can only be promoted by typed evidence, never by fluency, solver
+
+      confidence, or convenience.
+
+      '
+    shortcuts:
+    - lift because search timed out
+    - lift because solver confidence is high
+    - lift because LLM explanation is fluent
+    - lift because a dashboard score is low
+    - lift because a candidate looks minimal
+    - lift without checked obstruction
+    - lift without context witness
+    - lift without repair exhaustion evidence
+    - lift without replayable post-lift manifest
+    - lift by reusing a license from a different scope
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute_lift(
+    - apply_lift_now(
+    - mutate_carrier(
+    - self_license(
+    - self_certify(
+    - trust_llm_authority
+    - solver_confidence_lift
+    - timeout_lift
+    - score_based_lift
+    - reuse_license_for_different_scope
+    - override_scope(
+    - skip_replay_check
+    - skip_minimality_check
+    - skip_context_witness_check
+    - skip_obstruction_check
+    - embed_execution_in_license
+  required_tests:
+  - lift_license_authority_effect_is_authorizes_transition
+  - lift_license_does_not_execute
+  - engine_requires_lift_license_for_structural_ascent
+  - engine_rejects_expired_lift_license
+  - engine_rejects_revoked_lift_license
+  - engine_rejects_scope_mismatch
+  - engine_rejects_license_hash_mismatch
+  - lift_license_requires_checked_obstruction
+  - lift_license_requires_checked_packet
+  - lift_license_requires_context_witness
+  - lift_license_requires_repair_exhaustion_certificate
+  - lift_license_requires_persistence_certificate
+  - lift_license_requires_minimality_certificate
+  - lift_license_requires_replay_manifest
+  - lift_license_requires_constructor_set_hash
+  - lift_license_is_not_transferable
+  - lift_license_validation_report_does_not_authorize
+  - admissible_for_licensing_is_not_lift_license
+  - llm_cannot_license_lift
+  - solver_confidence_cannot_license_lift
+  - timeout_cannot_license_lift
+  canonical_invariant: 'LiftLicense is a scoped ActionLicense for structural ascent. It authorizes only
+    the
+
+    declared carrier/schema/level transition and only with attached checked obstruction,
+
+    context witness, repair exhaustion, persistence, delta-minimality, constructor-set,
+
+    replay, and authority evidence. LiftLicense does not execute, mutate, repair, certify
+
+    itself, terminalize, or transfer across scope. Engine alone executes the licensed
+
+    transition.
+
+    '
+  legacy_metadata:
+    name: LiftLicense
+    role: Structural-ascent authorization and context-lift licensing boundary
+    version: '2.0'
+    classification: lifts
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: ActionLicense
+    referenced_output_families:
+    - EvidenceEnvelope
+    - FactEnvelope
+    - DecisionEnvelope
+    - WitnessEnvelope
+    - CertificateEnvelope
+    - Record
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+rust_binding:
+  crate: core_lifts
+  module: lift_license
+  symbols:
+  - LiftLicense
+

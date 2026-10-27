@@ -1,0 +1,49 @@
+schema_version: core.contract.v1
+contract_id: urn:core:execution:genesis_report_operation:v1.0.0
+title: Finite Genesis report installation
+kind: execution_contract
+status: active
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  customer_claim_allowed: false
+definition:
+  scope: One source-bound finite history table and declared continuation language.
+  operator: Copy a checked partition into a detached state; no search or I/O.
+  pipeline: Typed manifest only; the native host sequences the stages.
+  engine: Commit the exact detached state using core_policy ActionLicense.
+  host_persistence: SQLite compare-and-swap stores state and trace atomically.
+  immutable_episode:
+  - target
+  - request
+  - source
+  - binary
+  - contract
+  - allowance
+  valuation_profile:
+    phi: Remaining finite report-partition rank, computed by core_wdp.
+    gamma2_is_zero: Legacy policy field used here for passed finite descent/global admission; no numerical
+      cochain Gamma2 is claimed.
+  required_checks:
+  - Every stage binds the same carrier, questions, request and contract.
+  - Native evaluation and replay use the original retained request.
+  - Selected repair prefix has zero remaining report rank.
+  - Every requested continuation descends to the declared quotient.
+  - Any requested global fact is Certified on the original histories.
+  - Failed proposals consume a durable attempt before native computation.
+  - Native licenses never deserialize from a Python or model-produced record.
+  - Carrier and trace commit against the same pre-state, once per target.
+  exclusions:
+  - No claim of arbitrary-history closure or full Genesis passage semantics.
+  - No repair of an empty or ambiguous global fiber by splitting report labels.
+  - No external tool, repository, publication or provider-call permission.
+  - A JSON trace is evidence, not a reusable ActionLicense capability.
+  updated: '2026-10-14'
+rust_binding:
+  crate: pfp
+  module: report_operation
+  symbols:
+  - describe
+  - execute
+role: Runtime

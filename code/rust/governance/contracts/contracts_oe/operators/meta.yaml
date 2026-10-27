@@ -1,0 +1,357 @@
+schema_version: "1.0.0"
+contract_id: "os:meta_planner"
+name: "MetaPlanner Contract"
+title: "MetaPlanner — General Higher-Order Planner"
+version: "1.2.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  MetaPlanner is the stateless, deterministic higher-order control planner.
+  It consumes EvaluationResults (J), MeasurementRefs (M), admitted operator descriptors (O),
+  and immutable attempt/trace history (H). It selects the next lawful Operator (OperatorSelection),
+  proposes a regime-lift request (MetaLiftRequest) when the current operator regime is exhausted,
+  or returns typed no-continuation (NoLawfulContinuation).
+  Formally, M: (J, O, H, S) -> OperatorSelection | MetaLiftRequest | NoLawfulContinuation.
+  MetaPlanner does not decide whether a lift is proven/admissible (that is MetaLiftJudgment),
+  does not issue licenses (that is LicensingBoundary), does not measure, execute, or mutate state.
+
+layer: "OS"
+module_path: "meta"
+
+governs:
+  - "meta/**"
+  - "operator/meta/**"
+  - "core_*/*meta*.rs"
+
+does_not_govern:
+  - "operator/lambda/**"
+  - "operator/reducer/**"
+  - "operator/transform/**"
+  - "generator/**"
+  - "constructor/**"
+  - "functional/**"
+  - "homological/**"
+  - "lift/**"
+  - "certifier/**"
+  - "replay/**"
+  - "id_run/**"
+  - "pipeline/**"
+  - "engines/**"
+
+claims:
+  - id: "OP-L0-META-PLANNER"
+    description: "MetaPlanner is a deterministic, read-only higher-order planner over admitted operator descriptors, immutable measurements, evaluation judgments, traces, and carrier descriptions. It selects a lawful next Operator, emits a MetaLiftRequest when a regime is exhausted, or returns typed no-continuation. It does not execute, measure, evaluate evidence, judge lifts, or issue licenses."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "META-PLANNER-NO-EXECUTION"
+    description: "MetaPlanner emits selections or lift requests; it does not execute operators, engines, repairs, or lifts."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "META-PLANNER-LIFT-REQUEST-ONLY"
+    description: "MetaPlanner may emit a detached MetaLiftRequest (AuthorityEffect::EvidenceOnly), but carrier extension judgment is performed by MetaLiftJudgment and execution is committed by Engine."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "META-PLANNER-NO-AUTH"
+    description: "MetaPlanner selections and lift requests carry AuthorityEffect::None or EvidenceOnly; MetaPlanner cannot mint authority or issue licenses."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+  - id: "META-PLANNER-SELECTION-ONLY"
+    description: "MetaPlanner selects an OperatorKey from admitted operators based on declared MetaRules and existing evidence; it does not instantiate or execute operators."
+    status: "active"
+    provenance: "Operator OS Doctrine"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  canonical_functional_computation: "forbidden"
+  terminalize: "forbidden"
+  certify: "forbidden"
+  execute: "forbidden"
+  carrier_mutation: "forbidden"
+  lift_execution: "forbidden"
+  engine_loop: "forbidden"
+  runtime_orchestration: "forbidden"
+  search: "forbidden_except_declared_finite_structural_classification"
+  deterministic: true
+  total_over_admitted_domain: true
+  stateless: true
+  read_only: true
+  typed_failure_required: true
+  detached_plan_output_required: true
+
+allowed:
+  - "read admitted operator descriptors"
+  - "read immutable MeasurementRefs"
+  - "read immutable EvaluationResults"
+  - "read externally checked functional evidence"
+  - "read immutable traces and attempt history"
+  - "read declared carrier descriptions"
+  - "apply declared deterministic MetaRules over finite admitted operator set"
+  - "classify structural admissibility"
+  - "classify typed composability"
+  - "classify rewrite admissibility"
+  - "emit OperatorSelection"
+  - "emit CompositionPlan"
+  - "emit RewritePlan"
+  - "emit detached MetaLiftRequest"
+  - "emit NoLawfulContinuation"
+  - "emit typed refusal"
+  - "emit structural rejection reason"
+  - "emit TraceSignal"
+  - "attach non-authoritative provenance"
+
+forbidden:
+  - "compute Φ₁"
+  - "compute Γ₂"
+  - "compute R_cl"
+  - "compute Ξ"
+  - "call Phi1Functional"
+  - "call Gamma2Functional"
+  - "call XiFunctional"
+  - "classify trichotomy"
+  - "mint CertifiedAuthority"
+  - "mint LiftLicense"
+  - "judge MetaLiftAdmissibility"
+  - "call CertifiedAuthority::certify"
+  - "call terminalize"
+  - "emit AuthorityEffect::Authorize"
+  - "execute operator"
+  - "execute engine"
+  - "apply lift"
+  - "mutate carrier"
+  - "mutate state"
+  - "accept candidate as runtime state"
+  - "run adaptive search"
+  - "perform MCTS"
+
+judgment_shape:
+  preferred: "Result<MetaPlannerResult, MetaPlannerFailure>"
+  allowed_meta_result_variants:
+    - "OperatorSelection"
+    - "CompositionPlan"
+    - "RewritePlan"
+    - "MetaLiftRequest"
+    - "NoLawfulContinuation"
+    - "MetaPlannerFailure"
+  subordinate_structural_judgments:
+    - "Admissible"
+    - "Inadmissible"
+    - "Composable"
+    - "NotComposable"
+    - "RewriteAllowed"
+    - "RewriteRejected"
+    - "TypedRefusal"
+
+operator_selection:
+  detached: true
+  authority_effect: "none"
+  required_fields:
+    - "selection_id"
+    - "operator_key"
+    - "operator_descriptor_ref"
+    - "state_ref"
+    - "evaluation_refs"
+    - "measurement_refs"
+    - "precondition_refs"
+    - "selection_rule_id"
+    - "selection_basis_refs"
+    - "authority_effect_none"
+
+meta_lift_request:
+  detached: true
+  authority_effect: "evidence_only"
+  semantic_target: "LiftSubsystem"
+  required_fields:
+    - "request_id"
+    - "source_ref"
+    - "obstruction_ref"
+    - "carrier_before_ref"
+    - "regime_exhaustion_evidence_refs"
+    - "authority_effect_evidence_only"
+  must_not_include:
+    - "executed_state"
+    - "LiftLicense"
+    - "CertifiedAuthority"
+
+authority_ascent:
+  ladder:
+    - "MetaLiftRequest (AuthorityEffect::EvidenceOnly)"
+    - "MetaLiftPlan (AuthorityEffect::EvidenceOnly)"
+    - "DetachedLiftResult (AuthorityEffect::None or EvidenceOnly)"
+    - "Certificate evidence (EvidenceOnly)"
+    - "MetaLiftJudgment (AuthorityEffect::RequestsDecision)"
+    - "LiftLicense (AuthorityEffect::AuthorizesTransition — created ONLY by LicensingBoundary)"
+    - "EngineAction (AuthorityEffect::StateTransition — committed ONLY by Engine)"
+
+canonical_workflow:
+  sequence:
+    - "MetaPlanner produces MetaLiftRequest when regime is exhausted."
+    - "Lift subsystem constructs detached proposed carrier extension (MetaLiftPlan / ProposedCarrier)."
+    - "Functionals produce MeasurementEvidence; Certifiers produce checked certificate evidence."
+    - "MetaLiftJudgment evaluates submitted evidence references and emits MetaLiftJudgment (RequestsDecision)."
+    - "LicensingBoundary evaluates judgment and issues LiftLicense (AuthorizesTransition)."
+    - "Engine commits the exact already-computed licensed ProposedCarrier to runtime state."
+
+exhaustion_inputs:
+  stateless: true
+  allowed_references:
+    - "OperatorAttemptRef"
+    - "OperatorFixedPointRef"
+    - "OperatorFailureRef"
+    - "EvaluationRef"
+    - "MeasurementRef"
+  notes:
+    - "History is provided via immutable external Trace/Replay or RunState."
+    - "Meta maintains no mutable hidden state."
+
+trace_signal_rule:
+  produces_trace_signal: true
+  emits_trace_artifact: false
+  allowed_signals:
+    - "META_SELECTED_OPERATOR"
+    - "META_PROPOSED_LIFT"
+    - "META_REFUSED_CONTINUATION"
+    - "META_CLASSIFIED_COMPOSITION"
+  notes:
+    - "TraceSignal is returned to caller and handed to the Runtime Trace Coordinator."
+    - "MetaResult is sent to Pipeline/RunCoordinator for execution decision."
+    - "TraceSignal must not drive execution."
+
+failure_shape:
+  enum: "MetaFailure"
+  required_variants:
+    - "OutsideAdmittedDomain"
+    - "MalformedOperatorDescriptor"
+    - "MalformedTrace"
+    - "MalformedCandidate"
+    - "CompositionTypeMismatch"
+    - "CarrierChangeRequiresLiftPlan"
+    - "LiftPlanPreconditionsMissing"
+    - "RewriteRuleNotApplicable"
+    - "NonFiniteInput"
+
+composition_firewall:
+  closure_claim_status: "not_proven"
+  generativity_claim_status: "not_proven"
+  notes:
+    - "Meta may classify typed composition."
+    - "Meta does not prove operator closure."
+    - "Meta does not prove operators arise from obstruction management."
+    - "Meta does not execute generator tapes."
+    - "String-level composition is not executable composition."
+
+validator_requirements:
+  forbidden_substrings:
+    - "CertifiedAuthority"
+    - "authority_from_outcome_f13"
+    - "terminalize"
+    - "mint_authority"
+    - "Phi1Functional"
+    - "Gamma2Functional"
+    - "XiFunctional"
+    - "classify_exact"
+    - "ExactRepair"
+    - "AuthorityEffect::Authorize"
+    - "apply_lift"
+    - "execute_lift"
+    - "mutate_state"
+    - "mutate_carrier"
+    - "run_engine"
+    - "while "
+    - "loop "
+    - "thread_rng"
+    - "rand::"
+    - "std::fs"
+    - "File::"
+    - "unwrap()"
+    - "expect("
+  required_patterns:
+    - "Result<"
+    - "MetaFailure"
+  required_tests:
+    - "meta_is_deterministic"
+    - "meta_is_read_only"
+    - "meta_outputs_judgment_or_plan"
+    - "meta_does_not_execute_plan"
+    - "meta_lift_is_detached_plan_only"
+    - "meta_does_not_compute_functionals"
+    - "meta_does_not_mint_authority"
+    - "meta_rejects_type_mismatch"
+
+lean_obligations:
+  - id: "META-L0"
+    theorem: "Meta judgments are read-only classifications over admitted descriptors/traces/candidates."
+    status: "needed"
+
+  - id: "META-L1"
+    theorem: "MetaLiftPlan is detached and does not mutate carrier."
+    status: "needed"
+
+  - id: "META-L2"
+    theorem: "Meta composability judgment does not imply execution."
+    status: "needed"
+
+  - id: "META-L3"
+    theorem: "Meta rewrite admissibility does not imply authority."
+    status: "needed"
+
+  - id: "META-L4"
+    theorem: "Meta cannot mint authority."
+    status: "needed"
+
+  - id: "META-L5"
+    theorem: "Meta does not prove operator closure or generativity."
+    status: "needed"
+
+  - id: "META-L6"
+    theorem: "Meta operator selection does not imply operator execution."
+    status: "needed"
+
+  - id: "META-L7"
+    theorem: "Meta selection depends only on admitted immutable inputs and declared MetaRule."
+    status: "needed"
+
+  - id: "META-L8"
+    theorem: "Meta cannot compute or alter functional measurements used in selection."
+    status: "needed"
+
+  - id: "META-L9"
+    theorem: "Selected Operator must belong to the admitted operator ecology supplied to Meta."
+    status: "needed"
+
+  - id: "META-L10"
+    theorem: "Meta cannot select an Operator whose declared preconditions are unsatisfied."
+    status: "needed"
+
+  - id: "META-L11"
+    theorem: "If no same-regime Operator is lawfully selectable, Meta returns either MetaLiftPlan or NoLawfulContinuation; it may not synthesize a hidden Operator."
+    status: "needed"
+
+  - id: "META-L12"
+    theorem: "MetaLiftPlan does not imply carrier extension."
+    status: "needed"
+
+  - id: "META-L13"
+    theorem: "Repeated identical MetaInput under identical MetaRule produces identical MetaResult."
+    status: "needed"
+
+notes:
+  - "Meta is not an Engine."
+  - "Meta is not a Generator."
+  - "Meta is not a Certifier."
+  - "Meta is not a Functional."
+  - "Meta selects the next OperatorKey, but Pipeline enacts execution."
+  - "Meta may propose lift plans, but it may not execute lifts."
+  - "Lift computes; Engine commits."
+  - "Carrier extension requires explicit lift/engine validation and rollback."
+
+relationships:
+  extends:
+    - "os:base_legacy_contract"

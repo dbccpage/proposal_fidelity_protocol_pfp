@@ -1,0 +1,76 @@
+[package]
+autotests = false
+name = "core_number_theory"
+version.workspace = true
+edition = "2021"
+description = "Foundational exact number theory: rationals, polynomials, quadratic and cyclotomic fields, real-embedding signs, finite fields, GF(2) linear algebra, character sums (AuthorityEffect None)"
+license.workspace = true
+
+[dependencies]
+# The scalar tower (`Semiring`/`Ring`/`Field`/`ExactRing`) is owned by linear algebra;
+# every exact scalar here implements it so `BasicMatrix<T>` and the generic exact
+# algorithms apply to it.
+linear_algebra = { path = "../core_linear_algebra" }
+# Tier 0: the exact rational `Interval` used for isolating intervals and enclosures.
+core_kernel = { path = "../core_kernel" }
+core_combinatorics = { path = "../core_combinatorics" }
+num-rational = { version = "0.4", features = ["serde"] }
+num-bigint = { version = "0.4", features = ["serde"] }
+num-traits = "0.2"
+num-integer = "0.1"
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2"
+
+[dev-dependencies]
+# Wire round-trips of the serialisable exact types.
+serde_json = "1.0"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_number_theory`.
+
+[[test]]
+name = "certified_angles"
+path = "../tests/core_number_theory/certified_angles.rs"
+
+[[test]]
+name = "cyclotomic24_identities"
+path = "../tests/core_number_theory/cyclotomic24_identities.rs"
+
+[[test]]
+name = "cyclotomic_ring_admission"
+path = "../tests/core_number_theory/cyclotomic_ring_admission.rs"
+
+[[test]]
+name = "cyclotomic_scalar_laws"
+path = "../tests/core_number_theory/cyclotomic_scalar_laws.rs"
+
+[[test]]
+name = "dyadic_presentation"
+path = "../tests/core_number_theory/dyadic_presentation.rs"
+
+[[test]]
+name = "factorization_residue"
+path = "../tests/core_number_theory/factorization_residue.rs"
+
+[[test]]
+name = "finite_field_character_sums"
+path = "../tests/core_number_theory/finite_field_character_sums.rs"
+
+[[test]]
+name = "gaussian_regular"
+path = "../tests/core_number_theory/gaussian_regular.rs"
+
+[[test]]
+name = "gf2_tests"
+path = "../tests/core_number_theory/gf2_tests.rs"
+
+[[test]]
+name = "involution_hermitian_laws"
+path = "../tests/core_number_theory/involution_hermitian_laws.rs"
+
+[[test]]
+name = "polynomial_map"
+path = "../tests/core_number_theory/polynomial_map.rs"
+
+[[test]]
+name = "rational_turn_character"
+path = "../tests/core_number_theory/rational_turn_character.rs"

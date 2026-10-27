@@ -1,0 +1,102 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:unitor_witness:v0.1.0
+title: UnitorWitness Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: witness-record
+  symbol: W_unitor(A, lambda_A) or W_unitor(A, rho_A)
+  ascii_symbol: unitor_witness
+  notation: W_unitor(A, lambda_A) or W_unitor(A, rho_A)
+  domain:
+  - 'object_hash: SHA-256 hash of the object A'
+  - 'unit_object_hash: SHA-256 hash of the monoidal unit I'
+  - 'monoidal_structure_hash: SHA-256 hash of the monoidal category structure'
+  - 'unitor_direction: left | right'
+  - 'forward_map_hash: SHA-256 hash of lambda_A or rho_A'
+  - 'inverse_map_hash: SHA-256 hash of lambda_A^{-1} or rho_A^{-1}'
+  - 'composition_identity_hash: SHA-256 hash proving forward . inverse = id'
+  - 'inverse_composition_identity_hash: SHA-256 hash proving inverse . forward = id'
+  - 'triangle_identity_witness_hash: SHA-256 hash of triangle identity check (optional)'
+  codomain:
+    description: 'A structured record containing the object identifier, the unitor direction (left or right), the forward map, the inverse map, composition identity proofs, and triangle identity coherence data.
+
+      '
+requirements:
+  required_structures:
+  - Unitor direction must be exactly 'left' or 'right'
+  - Domain and codomain of the forward map match the expected tensor product with the unit
+  - forward . inverse = id on the codomain
+  - inverse . forward = id on the domain
+  - Triangle identity coherence condition is satisfied (when witnessing both left and right)
+  - Witness hash is deterministic from inputs
+laws:
+- 'The unitor map is an isomorphism: forward . inverse = id and inverse . forward = id'
+- Domain of left unitor is I tensor A, codomain is A (vice versa for right)
+- The triangle identity relating associator, left unitor, and right unitor holds
+- The witness is consistent with the natural transformation structure at object A
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - No random numbers
+  - No wall-clock data
+  - No network calls
+  - All map and composition data are fixed byte arrays
+relationships:
+- urn:math:contract:MonoidalCategory:v0.1.0 serves as Provides monoidal structure (tensor, unit, associator)
+- urn:math:contract:NaturalTransformation:v0.1.0 serves as Unitors are natural transformations
+- urn:math:contract:Isomorphism:v0.1.0 serves as Unitors must be isomorphisms
+negative_tests:
+- Reject unitor direction that is not 'left' or 'right'
+- Reject witness where domain/codomain do not match monoidal structure
+- Reject witness where forward . inverse does not yield identity
+- Reject witness where triangle identity fails
+- Reject witness that claims policy approval or terminal success
+- Reject witness with invalid SHA-256 hash format
+doctrine:
+  summary: 'UnitorWitness records verifiable evidence that the left or right unitor isomorphism of a monoidal category holds for a given object A. The left unitor lambda_A : I tensor A -> A and the right unitor rho_A : A tensor I -> A are natural isomorphisms required by the monoidal structure. This witness captures the map, its inverse, the composition checks (lambda_A composed with lambda_A^{-1} = id, and vice versa), and the triangle identity coherence condition. It is purely structural and confers no authority.'
+  non_role:
+  - Does not classify admissibility
+  - Does not emit policy decisions
+  - Does not emit certificates
+  - Does not terminalize operations
+  - Does not produce customer-facing claims
+  - Does not define the monoidal category itself (see MonoidalCategory contract)
+  - Does not verify naturality across all objects (only witnesses one object at a time)
+wip:
+- Should the triangle identity witness be mandatory or optional?
+- Extend to bicategorical unitors (lax/oplax)?
+- Define interaction with Pentagon identity witness for associator
+- Currently witnesses one object at a time; naturality across all objects is not checked
+- Triangle identity verification requires associator data from a separate contract
+- May need parametrization over different monoidal structures (strict, non-strict)
+- Consider adding support for symmetric monoidal unitors
+rust_binding:
+  crate: core_higher_category_theory
+  module: bicategory
+  symbols:
+    - Invertible2Cell
+    - FiniteBicategory
+    - Bicategory
+  required_tests:
+    - test_invertibility_violation_caught
+    - test_triangle_coherence_verified

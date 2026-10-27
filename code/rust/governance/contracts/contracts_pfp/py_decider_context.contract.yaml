@@ -1,0 +1,65 @@
+# =============================================================================
+# ENGINE CANONICAL SYSTEM CONTRACT
+# Schema Version: core.contract.v2
+# AuthorityEffect: None
+# =============================================================================
+# ENFORCED BY TEST, NOT BY COMPILER. Python has no compile step, so the
+# `structure:` block below is read by
+# pfp/tests/test_packet_contracts.py, which imports the
+# named type and compares its fields or members against this contract. That is
+# a weaker guarantee than the Rust side's build failure and is labelled as such
+# rather than implied to be equivalent.
+# =============================================================================
+
+schema_version: core.contract.v2
+contract_id: "urn:core:packet:symbol_game:py_decider_context:v1.0.0"
+title: "Decider Context (Python)"
+kind: "packet_contract"
+layer: "40_packets"
+role: "PacketSpecification"
+status: active
+council_owner: "L3_logos_techne"
+
+descriptor:
+  authority_effect: None
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: true
+  clean_architecture_layer: domain
+  refusals:
+    may_emit: ["FW-UNKNOWN-FIELD"]
+
+doctrine:
+  summary: >-
+    Everything a row decider may consult, and every part of it
+    host-side. Never on a wire; contracted because its shape is the
+    boundary between what the host knows and what the packet said.
+  invariants:
+    - "presentation is already RESOLVED when this object is built. The
+       packet contributed a name and the lookup happened against the
+       host pins beforehand, so no decider can be handed rules a
+       producer wrote."
+    - "presentation_ref records the name the packet asked for even when it
+       resolved to nothing, so a blind spot can say WHICH name went
+       unfound."
+    - "Empty is the honest default. A decider needing something absent
+       reports UNCHECKABLE and names what was missing; it never falls
+       back to whatever single presentation happens to be pinned,
+       which would report REDERIVED having guessed the subject of the
+       sentence."
+  non_roles:
+    - "authority_source"
+    - "promotion_granter"
+  required_negative_capabilities:
+    - no_self_certification
+    - no_implicit_authority_upgrade
+
+structure:
+  language: python
+  python_module: pfp.domain.row_rederivation
+  python_type: "DeciderContext"
+  form: dataclass
+  fields:
+    - name: carrier
+    - name: presentation
+    - name: presentation_ref
+    - name: pins

@@ -1,0 +1,77 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_simplicial_dynamics:v0.1.0
+title: Finite Regge data and Cauchy constraints
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_simplicial_dynamics
+  symbol: finite_simplicial_dynamics
+  ascii_symbol: finite_simplicial_dynamics
+  notation: Finite Regge data and Cauchy constraints
+  domain:
+  - Nondegenerate checked tetrahedral carrier; rational SO(3) Cayley edge holonomies; bounded3D/4D central-force
+    input.
+  codomain:
+    description: Declared finite results of core_general_relativity::simplicial_dynamics; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Signed simplex boundary sums obey boundary nilpotency.
+- Symmetric central forces conserve total linear and angular momentum.
+- Cayley evolution preserves rotation holonomies.
+- Degenerate and unused vertices are refused.
+- Each tetrahedral Gauss node sums its actual nonzero outward face fluxes; vertex relabeling preserves closure.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_general_relativity
+  module: simplicial_dynamics
+  symbols:
+  - ReggeFourSimplex
+  - CauchySlice
+  - bianchi
+  - emit_angular
+  required_tests:
+  - simplex_boundary_bianchi_is_oriented_boundary_nilpotency
+  - cauchy_slice_refuses_degenerate_or_unused_vertices_and_preserves_rotations
+  - finite_central_force_and_emitted_bivector_conserve_total_momentum
+negative_tests:
+- cauchy_slice_refuses_degenerate_or_unused_vertices_and_preserves_rotations
+doctrine:
+  summary: Signed simplex boundary sums obey boundary nilpotency.; Symmetric central forces conserve total
+    linear and angular momentum.; Cayley evolution preserves rotation holonomies.; Degenerate and unused vertices
+    are refused.; Each tetrahedral Gauss node sums its actual nonzero outward face fluxes; vertex relabeling
+    preserves closure..
+  non_role:
+  - Boundary nilpotency is not the nonlinear Regge dual-holonomy Bianchi identity. Ordinary scalar commutators
+    and relaxation proposals do not certify Dirac closure or convergence.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

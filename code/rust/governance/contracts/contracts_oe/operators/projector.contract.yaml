@@ -1,0 +1,47 @@
+schema_version: "1.0.0"
+contract_id: "os:projector"
+name: "Projector Contract"
+version: "1.0.0"
+
+kind: "os_doctrine_contract"
+status: "active_doctrine"
+enforcement_status: "enforced"
+
+description: >
+  A Projector is a deterministic, stateless, single-step typed Operator that
+  maps a Carrier space onto a well-defined residual subspace or quotient space.
+  It satisfies idempotency (P(P(x)) = P(x)) under a specific TiePolicy and is
+  Phi-nonincreasing.
+
+layer: "OS"
+module_path: "operators::projector"
+
+governs:
+  - "operators/projectors/**"
+
+does_not_govern:
+  - "core_functional/**"
+  - "core_certifiers/**"
+
+claims:
+  - id: "PROJ-L1"
+    description: "Projectors map from a carrier space onto a valid subspace with deterministic loss of information."
+    status: "active"
+    provenance: "Projector OS Doctrine PROJ-L1"
+
+  - id: "PROJ-L2"
+    description: "Projectors are idempotent: repeated application yields the identical residual representative."
+    status: "active"
+    provenance: "Projector OS Doctrine PROJ-L2"
+
+rules:
+  authority_effect: "none"
+  mutation: "forbidden"
+  phi_nonincrease_required: true
+  deterministic: true
+  stateless: true
+  idempotent: true
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_file_contract:file:v1.0.0"

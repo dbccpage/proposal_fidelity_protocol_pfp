@@ -49,6 +49,14 @@ _GIT_GLOBAL_OPTS_WITH_ARGS = {
 }
 
 
+#: The rule each refusal enforces (operads/rules/git/rl_hook_command_and_file_fences.md).
+RULE_PUSH = "RULE_GIT_NO_FORCE_OR_MAIN_PUSH_001"
+RULE_STAGING = "RULE_GIT_EXPLICIT_STAGING_001"
+RULE_COMMIT = "RULE_GIT_NO_COMMIT_ALL_001"
+RULE_PYTEST = "RULE_PYTEST_TARGETED_RUNS_001"
+RULE_QUOTED_STASH = "RULE_SHELL_QUOTED_STASH_REF_001"
+
+
 def _split_into_commands(tokens: List[str]) -> List[List[str]]:
     """Split token stream on shell operators (&&, ||, ;, |, &)."""
     commands: List[List[str]] = []
@@ -270,6 +278,7 @@ def evaluate_command(command: str) -> Tuple[bool, str]:
     if _UNQUOTED_STASH_RE.search(cmd_text):
         return (
             False,
+            f"[{RULE_QUOTED_STASH}] "
             "Unquoted PowerShell stash syntax (`stash@{N}`) causes shell evaluation errors. Enclose in quotes, e.g. 'stash@{0}'.",
         )
 
@@ -314,15 +323,15 @@ def evaluate_command(command: str) -> Tuple[bool, str]:
                 if subcommand == "push":
                     allowed, reason = _inspect_git_push(git_args)
                     if not allowed:
-                        return False, reason
+                        return False, f"[{RULE_PUSH}] {reason}"
                 elif subcommand == "add":
                     allowed, reason = _inspect_git_add(git_args)
                     if not allowed:
-                        return False, reason
+                        return False, f"[{RULE_STAGING}] {reason}"
                 elif subcommand == "commit":
                     allowed, reason = _inspect_git_commit(git_args)
                     if not allowed:
-                        return False, reason
+                        return False, f"[{RULE_COMMIT}] {reason}"
                 break
             continue
 
@@ -330,7 +339,7 @@ def evaluate_command(command: str) -> Tuple[bool, str]:
         if exe == "pytest":
             allowed, reason = _inspect_pytest(sub_cmd[1:])
             if not allowed:
-                return False, reason
+                return False, f"[{RULE_PYTEST}] {reason}"
             continue
 
         if exe in ("python", "python3", "py"):
@@ -339,7 +348,7 @@ def evaluate_command(command: str) -> Tuple[bool, str]:
                 if token == "-m" and idx + 1 < len(args) and args[idx + 1].lower() == "pytest":
                     allowed, reason = _inspect_pytest(args[idx + 2 :])
                     if not allowed:
-                        return False, reason
+                        return False, f"[{RULE_PYTEST}] {reason}"
                     break
 
     return True, ""

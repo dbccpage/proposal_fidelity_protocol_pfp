@@ -1,0 +1,74 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:rank:v0.1.0
+title: Rank
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: linear_map_invariant
+  symbol: 'rank(A) = r, where A: F^m → F^n, r = dim(im(A))'
+  ascii_symbol: rank
+  notation: 'rank(A) = r, where A: F^m → F^n, r = dim(im(A))'
+  domain:
+  - 'matrix_hash: Blake3 hash of canonical matrix bytes'
+  - 'coefficient_domain_id: Identifier for coefficient domain (field/ring)'
+  - 'coefficient_domain_hash: Hash of coefficient domain specification'
+  codomain:
+    description: Non-negative integer measuring image dimension
+requirements:
+  required_structures:
+  - Matrix must have valid row and column counts
+  - Coefficient domain must be supported and properly specified
+  - Algorithm reference must identify a deterministic rank algorithm
+  - Rank must satisfy 0 ≤ rank ≤ min(row_count, column_count)
+  - All hash fields must be consistent with their source data
+  - Row reduction witness must be consistent with rank value
+laws:
+- 0 ≤ rank(A) ≤ min(m, n) for A ∈ Mat_{m×n}(F)
+- Rank computation must be deterministic and reproducible
+- 'rank(A) + nullity(A) = n for A: F^n → F^m'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Re-running declared rank algorithm over same canonical matrix bytes must reproduce same rank_value_hash
+relationships:
+- urn:math:contract:Matrix:v1.0.0 serves as Matrix structure and canonical representation
+- urn:math:contract:CoefficientDomain:v1.0.0 serves as Coefficient domain specification (field/ring)
+negative_tests:
+- Reject rank greater than min(row_count, column_count)
+- Reject unsupported coefficient domain
+- Reject pivot witness inconsistent with normal form
+- Reject rank hash mismatch
+- Reject artifact claiming authority or admissibility
+doctrine:
+  summary: Rank records the deterministic rank of a finite matrix or linear map over a declared coefficient domain. It measures image dimension and supports kernel/image/cokernel computations, exactness checks, dimension formulas, finite obstruction complexes, and linear independence tests.
+  non_role:
+  - Does not classify admissibility
+  - Does not emit policy decisions
+  - Does not emit certificates
+  - Does not terminalize
+  - Does not produce customer-facing claims
+wip:
+- Define separate numerical rank contract with tolerance ledger
+- Decide module rank behavior over non-field rings
+- Current implementation assumes field coefficient domain
+- Numerical rank with tolerance requires separate contract
+- Module rank over non-field rings may need different validation

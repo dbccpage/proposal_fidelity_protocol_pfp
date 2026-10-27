@@ -1,0 +1,31 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:engine:obstruction_branch_search_engine:file:v1.0.0
+crate: engines
+file: crates_rs/engines/src/obstruction_branch_search.rs
+role: obstruction_branch_search_engine
+status: active_provisional
+authority_effect: none
+customer_claim_allowed: false
+runtime_enforcement: required
+owns:
+  - obstruction_tree_search
+  - candidate_branch_pruning
+does_not_own:
+  - univalence_solver
+  - authority
+may_call:
+  - core
+must_not:
+  - claim complete obstruction elimination
+  - mint authority
+exactness:
+  numeric_mode: finite_branch_search
+  exact_certificate_allowed: false
+forbidden_substrings:
+  - "CertifiedAuthority"
+  - "AuthorityEffect::Authorize"
+required_substrings:
+  - "AuthorityEffect::None"
+required_tests:
+  - test_obstruction_branch_search

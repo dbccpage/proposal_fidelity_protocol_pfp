@@ -1,0 +1,59 @@
+schema_version: core.file_contract.v1
+kind: rust_file_contract
+contract_id: urn:core:rust:core_functional:quotient_l1_seminorm:file:v1.0.0
+title: Bound finite quotient L1 certificate evaluation
+status: active_provisional
+crate: core_functional
+file: crates_rs/core_functional/src/l1_seminorm.rs
+layer: functional
+role: immutable_quotient_seminorm_certificate_evaluator
+authority_effect: none
+evidence_ceiling: LocalReplay
+customer_claim_allowed: false
+runtime_enforcement: true
+owns:
+  - fixed_finite_rational_boundary_and_positive_weight_binding
+  - shared_exact_Phi1_admission_without_duplicated_verifier_law
+  - immutable_canonical_configuration
+  - explicit_foreign_boundary_and_weight_refusal
+  - typed_invalid_certificate_propagation
+does_not_own:
+  - optimizer_or_certificate_generation
+  - raw_representative_norm_as_quotient_distance
+  - ambient_graded_complex_or_graph_authentication
+  - basis_change_or_transport_licensing
+  - actor_authority_or_task_completion
+  - legacy_float_EdgeCochain_API_compatibility
+may_call:
+  - core_functional::phi1::Phi1Functional::verify_exact_certificate
+must_not:
+  - return_a_scalar_without_matching_primal_and_dual_evidence
+  - accept_a_valid_certificate_bound_to_other_boundary_or_weights
+  - mutate_the_configured_quotient_presentation
+  - require_full_rank_or_forbid_a_legitimate_zero_subspace
+  - interpret_zero_seminorm_as_legal_authority
+exactness:
+  mode: exact_finite_rational_primal_dual_certificate
+  exact_constructor_required: true
+  approximate_modes_allowed: false
+forbidden_substrings: []
+required_substrings:
+  - "pub struct L1Seminorm"
+  - "Phi1Functional::verify_exact_certificate"
+  - "L1SeminormError::BoundaryBindingMismatch"
+  - "L1SeminormError::WeightBindingMismatch"
+required_tests:
+  - "l1_seminorm::tests::quotient_value_is_not_raw_mass_and_is_invariant_under_exact_shifts"
+  - "l1_seminorm::tests::boundary_vectors_have_zero_seminorm_with_nonzero_representative"
+  - "l1_seminorm::tests::zero_image_has_the_weighted_raw_norm_and_zero_dimension_is_explicit"
+  - "l1_seminorm::tests::invalid_dimensions_raggedness_and_weights_are_shared_typed_refusals"
+  - "l1_seminorm::tests::raw_zero_denominators_cannot_enter_configuration_or_submitted_evidence"
+  - "l1_seminorm::tests::a_valid_certificate_for_another_boundary_is_not_rebound"
+  - "l1_seminorm::tests::a_valid_certificate_for_other_weights_is_not_rebound"
+  - "l1_seminorm::tests::false_optima_and_mutated_primal_data_do_not_become_measurements"
+  - "l1_seminorm::tests::signed_unreduced_representations_bind_by_exact_rational_value"
+  - "l1_seminorm::tests::dependent_boundary_columns_do_not_require_an_invented_full_rank_condition"
+lean_obligations: []
+relationships:
+  extends:
+    - urn:core:constitution:base_file_contract:file:v1.0.0

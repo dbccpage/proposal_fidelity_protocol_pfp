@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:binary_local_deterministic_vertices:v0.1.0
+title: Finite binary local deterministic probability vertices
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: binary_local_deterministic_vertices
+  symbol: binary_local_deterministic_vertices
+  ascii_symbol: binary_local_deterministic_vertices
+  notation: Finite binary local deterministic probability vertices
+  domain:
+  - Declared1..20 binary variables and up to256 distinct-variable covered contexts, with upfront assignment/coordinate/entry
+    limits
+  codomain:
+    description: Declared finite results of core_finite_probability::local_deterministic; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Every full assignment restricts to one point mass per declared context
+- Each deterministic row normalizes
+- Malformed covers and unavailable enumeration sizes refuse before allocation
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_finite_probability
+  module: local_deterministic
+  symbols:
+  - LocalVertexLimits
+  - binary_local_vertices
+  required_tests:
+  - local_deterministic::tests::bell_vertices_are_point_tables_on_every_context
+  - local_deterministic::tests::vertex_carrier_refuses_bad_contexts_and_budget_before_work
+negative_tests:
+- local_deterministic::tests::bell_vertices_are_point_tables_on_every_context
+- local_deterministic::tests::vertex_carrier_refuses_bad_contexts_and_budget_before_work
+doctrine:
+  summary: Every full assignment restricts to one point mass per declared context; Each deterministic row normalizes;
+    Malformed covers and unavailable enumeration sizes refuse before allocation.
+  non_role:
+  - Carrier construction makes no convex, contextuality or quantum membership verdict
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

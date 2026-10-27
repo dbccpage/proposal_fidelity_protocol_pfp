@@ -1,0 +1,112 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:shor_topos:v0.1.0
+title: Shor Period Geometry Contract (discrete modular period extraction)
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: discrete_shor_period_geometry
+  symbol: period r of a^x mod N via discrete phase/path geometry
+  ascii_symbol: shor_topos
+  notation: topological period extraction (legacy name shor_topos; not an elementary topos)
+  domain:
+  - integers base a, modulus N > 1, finite step bound
+  - modular exponentiation trace f(x)=a^x mod N
+  - discrete phase / path-sum style amplitude bookkeeping (finite)
+  codomain:
+    description: A finite discrete geometry for period finding inspired by Shor's algorithm. Despite the
+      historical stem name 'shor_topos', this contract does NOT claim an elementary topos (finite limits,
+      exponentials, subobject classifier) as implemented law.
+requirements:
+  required_structures:
+  - Finite modular trace generator parameters (a, N, max_steps)
+  - Deterministic trace sequence
+  - Declared period-extraction / interference scoring is finite and replayable
+  - No claim of quantum hardware authority
+laws:
+- 'Trace law: modular sequence is generated deterministically from (a,N,max_steps).'
+- 'Period law: a candidate period r is a discrete fixed-point/resonance claim under the declared scoring
+  — not a quantum supremacy certificate.'
+- 'Name honesty: stem ''shor_topos'' is legacy; object is discrete period geometry, not a verified elementary
+  topos.'
+- 'Authority law: no PROVED/GlobalGreen/HoTT/quantum-authority from this contract alone.'
+replay:
+  requirements:
+  - No external state
+  - No randomness (unless explicitly seeded and recorded)
+  - No wall-clock dependence
+  - Deterministic modular arithmetic
+relationships:
+- urn:core:math:chain_complex:v0.1.0 — optional homology residual language
+- urn:core:math:exact_carrier:v0.1.0 — optional exact bookkeeping ambient
+
+negative_tests:
+- Claiming elementary topos axioms as discharged by this module must be rejected
+- N ≤ 1 or invalid modular parameters must be rejected
+- Nondeterministic period claims without recorded seed must be rejected
+- Claiming quantum hardware execution from pure modular trace must be rejected
+- Artifact claiming PROVED/GlobalGreen/HoTT from this contract alone must be rejected
+doctrine:
+  binding_review_20261014: "The declared Rust crate/module is absent from the active Cargo workspace. Withdraw this realization binding; the retained specification has no executable implementation credit from it."
+  summary: 'Discrete modular period-extraction geometry historically named shor_topos. B3 meth removes
+    elementary-topos overclaim. Live RS provides modular traces and period-finding geometry sketches.
+    Nonclaim: does not claim PROVED; does not claim GlobalGreen; does not claim HoTT or topos theorem
+    discharge.'
+  non_role:
+  - Elementary topos theory (Ω-object, finite limits package)
+  - Quantum circuit hardware execution certificates
+  - Cryptanalytic claims against production RSA
+  - PROVED / GlobalGreen / HoTT discharge
+  legacy_contract_id: urn:math:contract:ShorTopos:v1.0.0
+  migration_note: 'B3 meth: renamed mathematical object to discrete period geometry; kept stem id for
+    corpus continuity; forbade topos axiom overclaim.'
+wip:
+- Whether to mint a new stem discrete_shor_period_geometry and deprecate shor_topos name.
+- Full interference scoring vs modular_trace-only surface.
+nomos_debate_NOT_CANONICAL:
+  banner: NON-CANONICAL DEBATE ONLY — not contract law; not enforced; AuthorityEffect None
+  not_part_of_contract_law: true
+  authority_effect: none
+  potential_defects:
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: METH_B3_LEGACY_SHELL
+    severity: info
+    claim_class: '[STANDARD]'
+    detail: 'B3: repaired topos overclaim; object is discrete Shor-inspired period geometry.'
+    recommendation: Object-specific math settled for this pass; align code under ADR-007a where YAML is
+      ahead or code still over-scopes. Not PROVED; not GlobalGreen; not LEAN4.
+    pass: b3_legacy_shells_meth
+  - reviewer: panepistimion-math-prof
+    role: MATH_CANONICAL_REVIEW
+    code: MATH-OVERCLAIM-REPAIRED
+    severity: high
+    claim_class: '[STANDARD]'
+    detail: Prior shell asserted elementary topos axioms. Live module is modular period geometry (L098-style).
+      Overclaim removed under meth review.
+  realization_delta_vs_implemented_math_file:
+  - reviewer: panepistimion-cs-prof-ml-ai-info
+    role: CS_IMPL_DELTA_REVIEW
+    code: NAME_LEGACY_PARTIAL_IMPL
+    severity: medium
+    claim_class: '[CODE_DEMO_RUST]'
+    file: engine/crates/core_topology_theory_theory/src/shor_topos.rs
+    detail: generate_modular_trace and related geometry present; not a topos engine. After YAML repair,
+      name residual remains. Not PROVED.
+    delta: MATCH_SCOPE_WITH_LEGACY_NAME

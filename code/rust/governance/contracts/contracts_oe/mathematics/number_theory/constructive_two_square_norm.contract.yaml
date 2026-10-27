@@ -1,0 +1,68 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:constructive_two_square_norm:v0.1.0
+title: Factorization and constructive Gaussian two-square norms
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: constructive_two_square_norm
+  symbol: constructive_two_square_norm
+  ascii_symbol: constructive_two_square_norm
+  notation: Factorization and constructive Gaussian two-square norms
+  domain:
+  - Nonnegative arbitrary-precision integers; declared exact factorization and Gaussian construction budgets
+  codomain:
+    description: Declared finite results of core_number_theory::sums_of_squares; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Odd valuations of3mod4 primes are an exact negative obstruction
+- Cornacchia certificates for1mod4 primes compose through Gaussian multiplication
+- Every returned norm is replayed exactly and complete small search supplies an independent comparison
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_number_theory
+  module: sums_of_squares
+  symbols:
+  - two_squares
+  - TwoSquaresError
+  required_tests:
+  - sums_of_squares::tests::factor_norms_match_complete_small_search_and_cross_old_machine_ceiling
+negative_tests:
+- sums_of_squares::tests::factor_norms_match_complete_small_search_and_cross_old_machine_ceiling
+doctrine:
+  summary: Odd valuations of3mod4 primes are an exact negative obstruction; Cornacchia certificates for1mod4
+    primes compose through Gaussian multiplication; Every returned norm is replayed exactly and complete small
+    search supplies an independent comparison.
+  non_role:
+  - Budget exhaustion does not prove nonrepresentability; no fixed-width integer ceiling
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

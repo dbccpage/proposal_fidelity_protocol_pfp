@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_hadamard_walk:v0.1.0
+title: Finite-time Hadamard line and coined walks
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_hadamard_walk
+  symbol: finite_hadamard_walk
+  ascii_symbol: finite_hadamard_walk
+  notation: Finite-time Hadamard line and coined walks
+  domain:
+  - Declared finite coin/carrier; line simulation 0<=t<=256 with parity support inside [-t,t].
+  codomain:
+    description: Declared finite results of core_quantum_physics::quantum_walk; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- The rational scaled symmetric initial state evolves by the exact Hadamard coin.
+- Finite-time probabilities normalize and mean/variance are computed.
+- Finite Cayley carrier light-cone results do not certify a positive asymptotic ballistic coefficient.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: quantum_walk
+  symbols:
+  - CoinedWalk
+  - hadamard_line
+  - HadamardLineDistribution
+  required_tests:
+  - infinite_line_hadamard_walk_has_exact_finite_time_light_cone_and_variance
+negative_tests:
+- infinite_line_hadamard_walk_has_exact_finite_time_light_cone_and_variance
+doctrine:
+  summary: The rational scaled symmetric initial state evolves by the exact Hadamard coin.; Finite-time probabilities
+    normalize and mean/variance are computed.; Finite Cayley carrier light-cone results do not certify a positive
+    asymptotic ballistic coefficient..
+  non_role:
+  - Finite physical declarations do not confer program admission or certify an undeclared continuum limit.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

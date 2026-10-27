@@ -1,0 +1,72 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:contextual_tower_walk:v0.1.0
+title: Context-sensitive finite tower walk
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: contextual_tower_walk
+  symbol: contextual_tower_walk
+  ascii_symbol: contextual_tower_walk
+  notation: Context-sensitive finite tower walk
+  domain:
+  - At most4096 projection points and256 declared contexts, work<=2^24; bounded edge arrays with nonnegative
+    weights.
+  codomain:
+    description: Declared finite results of core_quantum_physics::tower_walk_validator; exact and diagnostic
+      routes retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- A trigger is an equal projection pair separated by a declared context.
+- Holonomy commutators use the sovereign holonomy domain.
+- Edge and trace norms use canonical exact radicals.
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: tower_walk_validator
+  symbols:
+  - find_lift_trigger
+  - holonomy_commutator
+  - scalar_edge_norm
+  - rotational_edge_norm
+  - half_trace_norm_2x2
+  required_tests:
+  - contextual_lift_trigger_is_computed_and_bad_inputs_are_refused
+negative_tests:
+- contextual_lift_trigger_is_computed_and_bad_inputs_are_refused
+doctrine:
+  summary: A trigger is an equal projection pair separated by a declared context.; Holonomy commutators use
+    the sovereign holonomy domain.; Edge and trace norms use canonical exact radicals..
+  non_role:
+  - A trigger or a Boolean composite marker is not an admission certificate; program packet replay remains
+    native.
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

@@ -1,0 +1,382 @@
+schema_version: core.contract.v1
+contract_id: urn:core:state:type_and_kind:v1.0.0
+title: TypeAndKind
+kind: state_contract
+status: mathematical_wip
+layer: 01_state
+role: BaseType
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: &id001
+    - ContractConstitution
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+doctrine:
+  summary: 'This contract defines the BaseType boundary.
+
+
+    BaseTypes are inert schema-bound data.
+
+    BaseTypes do not validate themselves, repair themselves, compute heavy derived values, mutate
+
+    external state, terminalize, or execute.
+
+    '
+  non_role: &id002
+  - validation
+  - repair
+  - computation
+  - solver invocation
+  - search invocation
+  - policy interpretation
+  - terminalization
+  - execution
+  - authority promotion
+  - hidden service handles
+  llm_boundary_law:
+    doctrine: 5
+    text: 'The LLM is a candidate generator only. It MUST NOT certify, validate, evaluate, terminalize,
+
+      authorize transitions, execute transitions, or upgrade evidence authority.
+
+
+      LLM output may propose BaseType or kind definitions, but those proposals are EvidenceOnly until
+
+      checked against this contract and the SchemaKernel.
+
+      '
+  certificate_authority_bound:
+    doctrine: 6
+    text: 'Certificate authority MUST NOT exceed attached evidence authority. No type certificate may
+      claim
+
+      authority beyond the evidence it binds.
+
+      '
+  classification:
+    subsystem: Type System
+    role: Inert schema-bound data definition.
+    classification: 'State layer -- TypeAndKind is NOT an operator. It defines the type system and kind
+      hierarchy that operators and state spaces are built upon. TypeAndKind has no effect-class assignment
+      (effect_class: none). Only the five canonical effect-classes (E, I, C, R, M) are operators.'
+  core_definition: 'A BaseType is a non-executable, schema-bound structural data object with explicit
+    fields and
+
+    declared invariants, supporting only field access, declared invariant listing, canonical
+
+    serialization, and trivial bounded projection, and containing no embedded execution logic,
+
+    orchestration, search, policy behavior, or external dependencies.
+
+
+    BaseType may expose declared invariants as data references, but it must not decide whether those
+
+    invariants hold for itself.
+
+    '
+  architectural_mandate:
+  - name: Formally Enforced Non-Executable Restriction
+    description: 'A BaseType MUST NOT expose any method that:
+
+      - Mutates external state
+
+      - Performs IO
+
+      - Invokes operators, engines, or solvers
+
+      - Performs iteration over alternative states
+
+
+      Allowed methods must be strictly restricted to:
+
+      - Field accessors
+
+      - Pure projections (O(1) or bounded structural computation)
+
+      - Declared invariant accessors
+
+      '
+  - name: Separation of Invariants vs Validation Logic
+    description: 'BaseType declares invariants; Validators enforce them.
+
+      A BaseType MUST NOT validate itself. It MUST NOT silently "fix" or repair invalid data.
+
+      '
+  - name: Strict Mutability Semantics
+    enum_name: MutabilityMode
+    default: Immutable
+    variants:
+    - Immutable
+    - Controlled:
+        allowed_fields: '&''static [&''static str]'
+    - FrozenAfterConstruction
+    description: 'Mutability is tightly restricted and structurally typed.
+
+      - Mutation must not violate declared invariants.
+
+      - Mutation must not trigger external side effects.
+
+      Controlled mutability is allowed only during construction or within explicitly declared
+
+      builder/initialization boundaries. Runtime mutation of authority-bearing state requires a
+
+      licensed transition outside BaseType.
+
+      '
+  - name: Boundary Law (Representation Identity)
+    description: 'Two BaseTypes are identical if and only if:
+
+      - They share the same SchemaRef
+
+      - They share the same field structure
+
+      - They share the same invariant set
+
+
+      Any change in SchemaRef implies a fundamentally different type, thus requiring an Adapter
+
+      to map between them. Schema version changes require Adapter unless the change is explicitly
+
+      declared backward-compatible by SchemaKernel.
+
+      '
+  - name: No Lazy Computation
+    description: 'A BaseType MUST NOT contain lazy-evaluated fields that trigger computation when accessed.
+
+      All heavy derivation belongs in declared Functional, Observable, Solver, Evaluator, or other
+
+      appropriate boundary—not in type accessors.
+
+      '
+  - name: No Internal Caching
+    description: 'A BaseType MUST NOT maintain internal caches that affect observable outputs. Same input
+      must
+
+      guarantee identical observable behavior to preserve determinism.
+
+      '
+  - name: Explicit Fields
+    description: 'All fields within a BaseType MUST be:
+
+      - Declared
+
+      - Typed
+
+      - Serializable
+
+
+      Forbidden patterns include:
+
+      - Hidden metadata
+
+      - Implicit derived fields
+
+      - Runtime-only shadow fields
+
+      '
+  - name: Serialization Law
+    description: 'A BaseType MUST support canonical serialization. Serialization must preserve all invariants
+
+      and type identity, which is critical for tracing, persistence, and mathematical reproducibility.
+
+      Canonical serialization MUST produce stable bytes for hashing.
+
+
+      Serialization proves stable representation only. It does not validate invariants or prove
+
+      semantic truth.
+
+      '
+  - name: Strict Role Classification
+    description: 'A BaseType MUST declare exactly ONE primary role (e.g. State, Artifact, Value). Secondary
+      roles
+
+      must be explicit extensions to prevent semantic ambiguity.
+
+      '
+  - name: No Dependency Handles
+    description: 'A BaseType MUST NOT contain:
+
+      - Arc<...> to engine services
+
+      - Database handles
+
+      - Runtime schedulers
+
+      - Policy engines
+
+      - Registries
+
+
+      Even if the handle is "unused," it violates the strictly pure data boundary of the type.
+
+      '
+  canonical_rust_boundary:
+    trait_name: BaseType
+    sealed: true
+    methods:
+    - name: schema_ref
+      return_type: '&''static SchemaRef'
+    - name: schema_version
+      return_type: '&''static SchemaVersion'
+    - name: kind_id
+      return_type: '&''static KindId'
+    - name: declared_invariants
+      return_type: '&''static [InvariantRef]'
+    - name: role_id
+      return_type: '&''static RoleId'
+    - name: canonical_serialization_id
+      return_type: '&''static CanonicalSerializationId'
+    note: This interface cleanly separates schema identity and invariant declarations from enforcement.
+      BaseType must not enforce its own invariants.
+  authority_effect:
+    description: 'A BaseType instance is inert data. A TypeDefinition artifact describing a BaseType is
+
+      StructureArtifact and may be EvidenceOnly until schema-checked. The BaseType value itself
+
+      carries no authority effect.
+
+      '
+    default: AuthorityEffect::None
+    forbidden_emissions:
+    - EvidenceOnly
+    - FactOnly
+    - RequiresEvaluator
+    - RequestsDecision
+    - AuthorizesTransition
+    - StateTransition
+    typedef_note: A TypeDefinition artifact describing a BaseType may be EvidenceOnly until schema-checked.
+  required_subsystems:
+    description: 'The BaseType cannot carry the burden of schema identity alone. It requires a dedicated
+      SchemaKernel:
+
+      '
+    subsystems:
+    - SchemaKernel
+    - KindKernel
+    - RoleKernel
+    - InvariantKernel
+    - ValidationKernel
+    - AdapterKernel
+    - SerializationKernel
+    explicit_structures:
+    - SchemaRef
+    - SchemaVersion
+    - KindId
+    - InvariantRef
+    - CanonicalSerializationId
+    - RoleId
+  admissibility_checklist:
+  - No executable logic beyond accessors
+  - Invariants declared, not enforced internally
+  - Mutability is explicit and bounded
+  - Schema identity is explicit
+  - No lazy computation
+  - No internal caches
+  - All fields are explicit and serializable
+  - Canonical serialization exists
+  - Exactly one primary semantic role
+  - No dependency handles
+  forbidden_implementation_tokens:
+    scope: behavior, not substring
+    tokens:
+    - execute(
+    - terminalize(
+    - interpret_policy
+    - EngineDecision
+    - PolicyDecision
+    - TerminalEnvelope
+    - solve_
+    - search_
+    - generate_candidates
+    - apply_operator
+    - mutate_runtime
+    - database_handle
+    - scheduler_handle
+    - registry_handle
+    - engine_handle
+    - policy_handle
+    - solver_handle
+  required_tests:
+    purity_tests:
+    - basetype_has_no_io
+    - basetype_has_no_operator_handles
+    - basetype_has_no_lazy_fields
+    - basetype_has_no_internal_cache
+    - schema_change_requires_adapter
+    - canonical_serialization_roundtrip_preserves_identity
+    - validation_unit_enforces_invariants_not_basetype
+    - basetype_declares_exactly_one_primary_role
+    integration_tests:
+    - pipeline_handoff_rejects_different_schema_ref
+    - adapter_required_when_schema_versions_differ
+    - trace_hash_stable_under_canonical_serialization
+    - engine_cannot_store_runtime_services_inside_state_basetypes
+    - analysis_can_read_basetype_but_cannot_mutate_or_repair
+    required_tests:
+    - basetype_authority_effect_is_none
+    - basetype_does_not_validate_itself
+    - basetype_does_not_mutate_external_state
+    - basetype_has_no_solver_handles
+    - basetype_has_no_policy_handles
+    - basetype_has_no_runtime_handles
+    - canonical_serialization_bytes_stable
+    - schema_version_change_requires_adapter
+    - basetype_value_has_no_authority_effect
+    - typedef_artifact_is_structure_not_fact
+    - basetype_declares_kind_id
+    - basetype_declares_invariants_but_does_not_enforce
+    - serialization_does_not_validate_invariants
+    - controlled_mutability_is_construction_scoped
+    - basetype_contains_no_engine_policy_solver_or_registry_handles
+  target_architecture:
+    note: 'The type layer relies on a clear separation of kernels:'
+    layers:
+    - name: BaseType
+      role: inert data only
+    - name: SchemaKernel
+      role: schema identity and versioning
+    - name: InvariantKernel
+      role: invariant declarations
+    - name: ValidationKernel
+      role: invariant enforcement
+    - name: AdapterKernel
+      role: schema migration and representation conversion
+    - name: SerializationKernel
+      role: canonical bytes and hashing
+  canonical_invariant: 'BaseType is inert schema-bound data. It declares schema, kind, role, invariants,
+    and canonical
+
+    serialization identity, but it does not validate, repair, search, solve, evaluate, terminalize,
+
+    authorize, mutate external state, or execute. BaseType values carry no authority effect;
+
+    TypeDefinition artifacts are StructureArtifact.
+
+    '
+  legacy_metadata:
+    name: TypeAndKind
+    role: Defines the type system and kind hierarchy for all typed entities in the engine
+    classification: state
+    effect_class: none
+    depends_on: *id001
+    forbidden_authority: *id002
+    primary_output_family: StructureArtifact
+    referenced_output_families:
+    - EvidenceEnvelope
+    llm_boundary: LLM is candidate generator only. LLM output carries no authority.
+
+relationships:
+  extends:
+    - "urn:core:constitution:base_state_contract:v1.0.0"

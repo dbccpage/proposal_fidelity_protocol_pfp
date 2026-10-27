@@ -1,0 +1,88 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:equivalence:v0.1.0
+title: Equivalence Contract
+kind: math_contract
+status: exact_rational_classifier_implemented
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: equivalence
+  symbol: 'A ≃ B, f: A ≃ B'
+  ascii_symbol: equivalence
+  notation: 'A ≃ B, f: A ≃ B'
+  domain:
+  - 'domain: Type A'
+  - 'codomain: Type B'
+  - 'function: f: A → B'
+  - 'proof: Equivalence proof term'
+  codomain:
+    description: 'An equivalence consists of a function f: A → B together with a proof that f is an equivalence. The proof can be given in multiple equivalent forms: bi-invertible, half-adjoint equivalence, or contractible fibers.
+
+      '
+requirements:
+  required_structures:
+  - Domain type A and codomain type B must exist and be resolvable
+  - Function f must have type A → B
+  - 'Proof type must be one of: bi_invertible, half_adjoint, contractible_fibers'
+  - Proof data must constitute a valid equivalence proof of the specified type
+  - Artifact hash must be SHA-256 over canonical representation
+laws:
+- 'For all b: B, the fiber f^{-1}(b) is contractible'
+- 'There exist g, h: B → A such that fg ∼ id and hf ∼ id'
+- 'There exists g: B → A, proofs fg ∼ id, gf ∼ id, and coherence'
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Proof data serialized canonically
+  - Validators and computation functions are content-addressed
+relationships:
+- 'urn:math:contract:Function:v0.1.0 serves as Provides the underlying function f: A → B'
+- urn:math:contract:Type:v0.1.0 serves as Provides domain and codomain types A and B
+- urn:math:contract:IdentityType:v0.1.0 serves as Used in proof terms and homotopy equivalences
+negative_tests:
+- domain_type_id does not resolve
+- codomain_type_id does not resolve
+- function does not have type A → B
+- proof_type = 'magic' (not recognized)
+- proof_data missing required components
+- function is not an equivalence (e.g., not surjective)
+doctrine:
+  summary: 'An Equivalence (A ≃ B) in HoTT is a function f: A → B together with a proof that f is an equivalence (bi-invertible, half- adjoint, or contractible fibers).  Equivalences are the correct notion of "sameness" for types.  The contract validates the function and its equivalence proof.'
+  non_role:
+  - Does not handle equivalences between types in different universes without care
+  - Does not automatically convert between different proof representations
+  - Does not handle non-constructive proofs of equivalence
+wip:
+- The three definitions of equivalence (bi-invertible, half-adjoint, contractible fibers) are logically equivalent; proof conversion should be implemented as ComputationWitness operations
+- Univalence states (A ≃ B) ≃ (A = B); this relates Equivalence to IdentityType and needs contract integration
+- Equivalences between types in different universes require careful handling and universe level tracking
+- Contract version 0.1.0 establishes basic structure for HoTT equivalences
+- Current implementation focuses on contractible fibers definition as primary
+- Proof conversion between different equivalence definitions to be added in future version
+- Integration with univalence axiom requires coordination with IdentityType contract
+rust_binding:
+  crate: core_category_theory
+  module: functor::equivalence_of_categories
+  symbols:
+    - EquivalenceOfCategories
+  required_tests:
+    - validate_ok
+    - validate_rejects_empty
+    - validate_rejects_missing_functors

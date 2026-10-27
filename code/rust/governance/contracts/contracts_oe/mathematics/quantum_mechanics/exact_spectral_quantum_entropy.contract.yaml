@@ -1,0 +1,70 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:exact_spectral_quantum_entropy:v0.1.0
+title: Exact rational and algebraic spectral entropy
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: exact_spectral_quantum_entropy
+  symbol: exact_spectral_quantum_entropy
+  ascii_symbol: exact_spectral_quantum_entropy
+  notation: Exact rational and algebraic spectral entropy
+  domain:
+  - Finite exact density operators, rational spectral LogForms or isolated algebraic intervals; bounded precision
+  codomain:
+    description: Declared finite results of core_quantum_physics::entropy; exact and diagnostic routes retain
+      their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- Entropy retains eigenvalue multiplicity and exact zero support
+- Algebraic entropy enclosures narrow without invented rational projectors
+- -log Tr rho² is exact Renyi2 LogForm
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: entropy
+  symbols:
+  - Entropy::von_neumann_exact
+  - Entropy::von_neumann_enclosure
+  - Entropy::renyi_two_exact
+  required_tests:
+  - states_channels_exact_tests::algebraic_spectrum_entropy_has_a_certified_interval_instead_of_fake_projectors
+  - states_channels_exact_tests::coherent_information_and_relative_entropy_use_full_operators
+negative_tests:
+- states_channels_exact_tests::diagnostic_faces_refuse_nan_tolerances_and_invalid_public_storage
+- states_channels_exact_tests::population_entropy_revalidates_storage_and_refuses_spectral_copies_before_allocation
+doctrine:
+  summary: Entropy retains eigenvalue multiplicity and exact zero support; Algebraic entropy enclosures narrow
+    without invented rational projectors; -log Tr rho² is exact Renyi2 LogForm.
+  non_role:
+  - No diagonal population entropy is presented as full-operator entanglement entropy
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

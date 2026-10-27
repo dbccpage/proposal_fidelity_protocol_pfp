@@ -1,0 +1,95 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:matrix:v0.1.0
+title: Matrix Contract
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: ShapeOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+math:
+  object_kind: linear_map_representation
+  symbol: 'M: V → W where dim(V)=n, dim(W)=m'
+  ascii_symbol: matrix
+  notation: 'M: V → W where dim(V)=n, dim(W)=m'
+  domain:
+  - 'domain_space: finite-dimensional vector space over field K with ordered basis'
+  - 'codomain_space: finite-dimensional vector space over same field K with ordered basis'
+  - 'entries: m × n array of field elements (row-major order)'
+  codomain:
+    description: 'Rectangular array of field elements with dimensions determined by domain and codomain vector spaces, each with an ordered basis
+
+      '
+requirements:
+  required_structures:
+  - entries array dimensions match domain/codomain dimensions
+  - all entries are valid field elements
+  - basis hashes match provided basis lists
+  - domain and codomain are over the same field
+  - computed hash matches embedded hash
+laws:
+- entries array has exactly m rows and n columns where m=codomain_dimension, n=domain_dimension
+- every entry is a valid element of field K
+- domain and codomain spaces are both over the same field K
+replay:
+  requirements:
+  - No external state
+  - No randomness
+  - No time-dependent data
+  - Row-major order serialization for entries
+  - Field elements encoded according to canonical byte layout in field_spec
+  - Validators identified by content hash (SHA-256 of source/WASM bytecode)
+relationships:
+- urn:math:contract:Field:v1.0.0 serves as Defines the field K over which the vector spaces are defined
+- urn:math:contract:VectorSpace:v1.0.0 serves as Defines the domain and codomain vector spaces
+negative_tests:
+- 'domain_dimension = 3, codomain_dimension = 2, but entries array is 2×4
+
+  '
+- 'field_spec = "GF(7)", but an entry contains the byte pattern representing "9", which is not a valid element of GF(7)
+
+  '
+- 'provided domain_basis_hash does not match the SHA-256 of the actual ordered basis list
+
+  '
+- 'ComputationWitness for "multiply" between a 3×2 matrix A and a 4×3 matrix B (inner dimensions 2 ≠ 4 make product undefined)
+
+  '
+- 'domain_space declared over ℝ, codomain_space declared over ℂ
+
+  '
+- 'FactEnvelope asserting "trace = 0" for a 2×3 matrix
+
+  '
+doctrine:
+  summary: A Matrix represents a linear map between two finite-dimensional vector spaces (domain and codomain) over a field K, expressed in terms of chosen ordered bases. This contract defines the structure, its validation, and allowed deterministic computations and decidable facts. It is purely structural; it does not confer any authority, nor does it decide admissibility for any application.
+  non_role:
+  - Does not assert algebraic properties (rank, eigenvalues, positive-definiteness)
+  - Does not confer authority
+  - Does not decide admissibility for applications
+  - Does not support infinite-dimensional vector spaces
+  - Does not define sparse or compressed storage formats
+wip:
+- The exact canonical form for basis vectors (e.g., symbolic names, abstract coordinates) has not been standardised; the current placeholder defines a basis as an ordered list of Unicode strings that are normalised using NFKC before hashing.
+- The contract is limited to finite-dimensional vector spaces. Extensions to free modules over rings or infinite-dimensional Hilbert spaces are deferred.
+- The treatment of real and complex floating-point numbers is postponed to a companion 'FieldContract' that specifies rounding rules and tolerance. At present, Matrix only supports exact fields.
+- FactEnvelope types and their deterministic validator signatures will be enumerated in a forthcoming 'MatrixProperties' sub-contract.
+- No sparse or compressed storage format is defined. The StructureArtifact always uses a dense row-major representation.
+- 'Status: mathematical_wip'
+- 'Authority effect: none (fixed, cannot be overridden)'
+- 'Customer claims: not allowed'
+- All validators must run in sequence; only if all succeed is a StructureArtifact created
+- 'Fully deterministic contract: identical inputs produce identical hashes and witnesses'

@@ -1,0 +1,90 @@
+[package]
+autotests = false
+name = "core_lie_theory"
+version.workspace = true
+edition = "2021"
+description = "Exact finite groups, Lie groups and Lie algebras over number fields: Cayley charts, SU(2)/SO(3), Lorentz boosts, su(N), Clifford algebras, Pauli/symplectic groups, Weyl-Heisenberg (AuthorityEffect None)"
+license.workspace = true
+
+[dependencies]
+core_category_theory = { path = "../core_category_theory" }
+# Exact scalars (rationals, cyclotomic and quadratic fields, GF(2)) are owned by number theory;
+# exact matrices and elimination are owned by linear algebra. This crate builds group and
+# Lie-algebra structure on top of them and carries no private copy of either.
+core_number_theory = { path = "../core_number_theory" }
+linear_algebra = { path = "../core_linear_algebra" }
+num-rational = "0.4"
+num-bigint = "0.4"
+num-traits = "0.2"
+num-integer = "0.1"
+thiserror = "2"
+
+# Shared integration-test targets. Sources and fixtures live in `../tests/core_lie_theory`.
+
+[[test]]
+name = "boost_composition_tests"
+path = "../tests/core_lie_theory/boost_composition_tests.rs"
+
+[[test]]
+name = "cayley"
+path = "../tests/core_lie_theory/cayley.rs"
+
+[[test]]
+name = "clifford_regression"
+path = "../tests/core_lie_theory/clifford_regression.rs"
+
+[[test]]
+name = "finite_group"
+path = "../tests/core_lie_theory/finite_group.rs"
+
+[[test]]
+name = "finite_groupoid_algebra"
+path = "../tests/core_lie_theory/finite_groupoid_algebra.rs"
+
+[[test]]
+name = "finite_path_algebra"
+path = "../tests/core_lie_theory/finite_path_algebra.rs"
+
+[[test]]
+name = "heisenberg"
+path = "../tests/core_lie_theory/heisenberg.rs"
+
+[[test]]
+name = "lie_algebra"
+path = "../tests/core_lie_theory/lie_algebra.rs"
+
+[[test]]
+name = "lorentz"
+path = "../tests/core_lie_theory/lorentz.rs"
+
+[[test]]
+name = "lorentz_boost_tests"
+path = "../tests/core_lie_theory/lorentz_boost_tests.rs"
+
+[[test]]
+name = "rotation"
+path = "../tests/core_lie_theory/rotation.rs"
+
+[[test]]
+name = "rotation_groups_tests"
+path = "../tests/core_lie_theory/rotation_groups_tests.rs"
+
+[[test]]
+name = "su2"
+path = "../tests/core_lie_theory/su2.rs"
+
+[[test]]
+name = "su_n"
+path = "../tests/core_lie_theory/su_n.rs"
+
+[[test]]
+name = "twisted_abelian_algebra"
+path = "../tests/core_lie_theory/twisted_abelian_algebra.rs"
+
+[[test]]
+name = "unitary_generator_admission"
+path = "../tests/core_lie_theory/unitary_generator_admission.rs"
+
+[[test]]
+name = "weyl_intertwiner"
+path = "../tests/core_lie_theory/weyl_intertwiner.rs"

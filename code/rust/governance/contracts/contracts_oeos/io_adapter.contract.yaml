@@ -1,0 +1,86 @@
+schema_version: core.contract.v1
+contract_id: urn:core:oeos:io_adapter:v1.0.0
+title: Bounded Stream Adapter
+kind: host_contract
+status: proposed
+layer: 09_host
+role: IOAdapter
+descriptor:
+  authority_effect: none
+  evidence_ceiling: RequirementsOnly
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts:
+      - urn:core:oeos:capability_guard:v1.0.0
+    proof_obligations:
+      - id: IO-INV-001
+        statement: Stream reads and writes use bounded checked loops with explicit byte ceilings.
+        verification_status: open
+      - id: IO-INV-002
+        statement: Text-mode host output has an explicit strict UTF-8 encoding policy.
+        verification_status: open
+      - id: IO-INV-003
+        statement: Broken, truncated, or timed-out streams return typed refusals and never silent completion.
+        verification_status: open
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit:
+      - STREAM_BOUNDS_REFUSED
+      - STREAM_ENCODING_REFUSED
+      - STREAM_SHORT_IO_REFUSED
+      - STREAM_TIMEOUT_REFUSED
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships:
+  abstract: false
+  extends:
+    - urn:core:constitution:base_host_contract:v1.0.0
+requirements:
+  inputs:
+    - name: bounded_stream_request
+      type: urn:core:oeos:type:bounded_stream_request:v1.0.0
+      required: true
+  outputs:
+    - name: exact_stream_result
+      type: urn:core:oeos:type:exact_stream_result:v1.0.0
+      required: true
+  typed_refusals:
+    - STREAM_BOUNDS_REFUSED
+    - STREAM_ENCODING_REFUSED
+    - STREAM_SHORT_IO_REFUSED
+    - STREAM_TIMEOUT_REFUSED
+  platform_requirements:
+    - profile: portable_stream_io
+      requirements:
+        - checked_short_io_loops
+        - strict_utf8_text_mode
+        - explicit_timeout_policy
+      verification_status: requirements_only
+  evidence_ceiling: RequirementsOnly
+doctrine:
+  summary: >-
+    Declares bounded binary and UTF-8 stream effects without interpreting the payload.
+  non_role:
+    - payload_semantics
+    - authoritative_trace_generation
+    - evaluator_output
+  nonclaims:
+    - does_not_create_mathematical_facts_or_witnesses
+    - does_not_issue_action_licenses
+    - does_not_authorize_engine_state_transitions
+    - non_blocking_behavior_is_limited_to_a_declared_stream_profile
+  invariants:
+    - byte_limits_are_checked_before_buffer_growth
+    - partial_writes_are_retried_or_refused
+  allowed_operations:
+    - read_bounded_stream
+    - write_exact_stream_bytes
+    - flush_and_close_stream
+  forbidden_operations:
+    - unbounded_stream_read
+    - silent_encoding_replacement
+    - report_partial_write_as_complete

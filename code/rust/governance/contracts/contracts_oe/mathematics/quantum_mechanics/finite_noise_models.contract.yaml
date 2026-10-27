@@ -1,0 +1,69 @@
+schema_version: core.contract.v1
+contract_id: urn:core:math:finite_noise_models:v0.1.0
+title: Exact depolarizing and thermal amplitude-damping channels
+kind: math_contract
+status: mathematical_wip
+layer: math
+descriptor:
+  authority_effect: none
+  evidence_ceiling: LocalReplay
+  runtime_enforcement: false
+  customer_claim_allowed: false
+  dependencies:
+    contracts: []
+    proof_obligations: []
+  terminals:
+    may_emit: []
+    may_support: []
+  refusals:
+    may_emit: []
+  operator_classes:
+    may_support: []
+    must_not_self_assign: true
+relationships: []
+math:
+  object_kind: finite_noise_models
+  symbol: finite_noise_models
+  ascii_symbol: finite_noise_models
+  notation: Exact depolarizing and thermal amplitude-damping channels
+  domain:
+  - Positive finite dimension; rational mixing weights and amplitude survival coefficient
+  codomain:
+    description: Declared finite results of core_quantum_physics::exact_channel; exact and diagnostic routes
+      retain their stated arithmetic, limits and refusals.
+requirements:
+  required_structures:
+  - Declared finite carriers, basis order, dimensions and coefficient domain
+  - Exact arithmetic on the exact face; an explicitly diagnostic numerical face if declared
+  - Unsupported inputs and exhausted computations return their declared refusal
+laws:
+- General depolarizing fixes I/d and contracts every traceless operator
+- Generalized amplitude damping fixes the declared exact thermal state
+- Trace preservation includes complex coherences
+replay:
+  requirements:
+  - No external state
+  - No time-dependent data
+  - Deterministic mathematical replay on identical inputs
+  - Independent operator or witness replay where a certificate is returned
+rust_binding:
+  crate: core_quantum_physics
+  module: exact_channel
+  symbols:
+  - ExactKrausChannel::depolarizing
+  - ExactKrausChannel::generalized_amplitude_damping
+  - ExactChoiMatrix::entanglement_fidelity
+  required_tests:
+  - states_channels_exact_tests::generalized_amplitude_damping_has_the_exact_thermal_fixed_state
+  - states_channels_exact_tests::channels_have_choi_kraus_metric_stinespring_and_ordinary_routes
+negative_tests:
+- states_channels_exact_tests::rectangular_channel_factorization_and_malformed_choi_refusals
+doctrine:
+  summary: General depolarizing fixes I/d and contracts every traceless operator; Generalized amplitude damping
+    fixes the declared exact thermal state; Trace preservation includes complex coherences.
+  non_role:
+  - No temperature fit, experimental fidelity claim or unsupported irrational same-field Kraus coefficient
+  - PROVED, GlobalGreen, operational authority or human mathematics acceptance
+wip:
+- Executable finite laws remain local implementation evidence pending human mathematics review
+- No mechanized theorem discharge or lifecycle acceptance is asserted

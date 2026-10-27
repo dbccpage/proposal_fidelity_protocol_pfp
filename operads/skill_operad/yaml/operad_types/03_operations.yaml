@@ -1,199 +1,116 @@
 # OEOP operad type registry, family 3 of 6: operations, DDC and residuals.
+# Where each operad type is declared or used. The canonical values are not written here: they
+# live once in code/rust/core_operad_canon and are read from operads/canon/operad_canon.json.
+# operad_type_registry.py fails when a source drifts from the canon or from what is recorded here.
+# Roles: declares (must equal canonical), uses (subset), part (union of parts must equal it).
+# external: why some of a type's sources cannot be checked: they were not copied into this repository.
 # AuthorityEffect: None.
 schema_version: core.oeop.operad-types.v1
 family: operations
 authority_effect: None
 types:
-  - id: operation_kind
-    description: Kinds of operation in the coloured operad kernel.
-    canonical: {status: SETTLED, closed: true, values: [Identity, Generator, Composite]}
-    sources:
-      - rust_enum: engine/crates_rs/core_operad_theory/src/foundation/operation.rs#OperationKind
-        values: [Identity, Generator, Composite]
-  - id: operad_variant
-    description: Whether an operad is planar or symmetric.
-    canonical: {status: SETTLED, closed: true, values: [Planar, Symmetric]}
-    sources:
-      - rust_enum: engine/crates_rs/core_operad_theory/src/foundation/colored_operad.rs#OperadVariant
-        values: [Planar, Symmetric]
-  - id: operation_term
-    description: Term constructors of composed operations.
-    canonical: {status: SETTLED, closed: true, values: [Identity, Primitive, Substitute, Admitted]}
-    sources:
-      - rust_enum: engine/crates_rs/core_operad_theory/src/kernel/terms.rs#OperationTerm
-        values: [Identity, Primitive, Substitute, Admitted]
-  - id: operad_tree
-    description: Tree shape of a prompt operad composition.
-    canonical: {status: SETTLED, closed: true, values: [Leaf, Node, NullTree]}
-    sources:
-      - rust_enum: engine/crates_rs/core_symbol_game_runtime/src/operad.rs#OperadTree
-        values: [Leaf, Node, NullTree]
-  - id: op_binding_kind
-    description: How an op in the op inventory is executed.
-    canonical: {status: SETTLED, closed: true, values: [host, pfp_turn]}
-    sources:
-      - python: operads.skill_operad.skill_compiler.op_inventory:HostBinding.model_fields[kind]
-        role: part
-        values: [host]
-      - python: operads.skill_operad.skill_compiler.op_inventory:PfpTurnBinding.model_fields[kind]
-        role: part
-        values: [pfp_turn]
-      - data: operads/skill_operad/yaml/op_inventory.yaml
-        select: skills.*.ops.*.binding.kind
-        mode: distinct
-        role: uses
-        values: [host]
-  - id: inventory_op
-    description: Ops declared in the op inventory.
-    canonical:
-      status: SETTLED
-      closed: true
-      values: [ara.bind_source_hashes, ara.receipt, ara.refute, glossa.merge_hits, glossa.propose_replacements,
-               glossa.report, glossa.scan_hype_code, glossa.scan_hype_prose, gti.layout_check, gti.receipt,
-               gti.shadow_scan, mnc.gate, mnc.purge, sfh.report, sfh.scan]
-    sources:
-      - data: operads/skill_operad/yaml/op_inventory.yaml
-        select: skills.*.ops.*.op_id
-        mode: distinct
-        values: [ara.bind_source_hashes, ara.receipt, ara.refute, glossa.merge_hits, glossa.propose_replacements,
-                 glossa.report, glossa.scan_hype_code, glossa.scan_hype_prose, gti.layout_check, gti.receipt,
-                 gti.shadow_scan, mnc.gate, mnc.purge, sfh.report, sfh.scan]
-  - id: inventory_anti_op
-    description: Anti-ops declared in the op inventory.
-    canonical:
-      status: SETTLED
-      closed: true
-      values: [ara.refuse_undeclared_omission, ara.refuse_unrecomputed_hash, glossa.refuse_missing_claim_envelope,
-               gti.refuse_duplicate_test_basename, gti.refuse_sys_path_hack, sfh.refuse_bare_except,
-               sfh.refuse_pass_handler, sfh.refuse_rust_unwrap]
-    sources:
-      - data: operads/skill_operad/yaml/op_inventory.yaml
-        select: skills.*.anti_ops.*.op_id
-        mode: distinct
-        values: [ara.refuse_undeclared_omission, ara.refuse_unrecomputed_hash, glossa.refuse_missing_claim_envelope,
-                 gti.refuse_duplicate_test_basename, gti.refuse_sys_path_hack, sfh.refuse_bare_except,
-                 sfh.refuse_pass_handler, sfh.refuse_rust_unwrap]
-  - id: prompt_anti_op
-    description: Built-in keyword detectors for prompt-hierarchy anti-ops.
-    canonical:
-      status: SETTLED
-      closed: true
-      values: [glossa.refuse_missing_claim_envelope, pfp.refuse_scalar_proxy_theorem_substitution,
-               pfp.refuse_target_fitting_constant_compensation, pfp.refuse_unlicensed_causality,
-               pfp.refuse_unlicensed_multiplication, pfp.refuse_unmapped_continuum_import,
-               pfp.refuse_witness_certificate_desynchronization]
-    sources:
-      - python: operads.domain.prompt_hierarchy.evaluator:DEFAULT_KEYWORD_PATTERNS
-        values: [glossa.refuse_missing_claim_envelope, pfp.refuse_scalar_proxy_theorem_substitution,
-                 pfp.refuse_target_fitting_constant_compensation, pfp.refuse_unlicensed_causality,
-                 pfp.refuse_unlicensed_multiplication, pfp.refuse_unmapped_continuum_import,
-                 pfp.refuse_witness_certificate_desynchronization]
-  - id: ddc_letter
-    description: The Discrete Deformation Calculus operational alphabet A_DDC.
-    canonical: {status: SETTLED, closed: true, values: [E, R, C, I, Λ, D, M, T]}
-    note: >-
-      All three declarations name the same eight letters; the Rust enum spells them out and
-      maps them back through DdcOp::letter. Proposed ownership: the Rust core_wdp DdcOp is the
-      authority, DdcLetter is the Python trace twin, and DdcRune (documented as deprecated) is
-      removed once its callers move to DdcLetter.
-    sources:
-      - python: operads.skill_operad.ddc_trace_logger:DdcLetter
-        values: [E, R, C, I, Λ, D, M, T]
-      - python: operads.domain.ddc_execution.ddc_step:DdcRune
-        values: [C, R, E, I, Λ, D, M, T]
-      - rust_enum: engine/crates_rs/core_wdp/src/ddc/ddc_alphabet.rs#DdcOp
-        rust_map: letter
-        values: [ExactRepair, ResidualProjection, ContextExposure, Integration, Lift, Descent, Refusal, Terminalize]
-  - id: ddc_repair_stage
-    description: Stages of a DDC code-repair operation; Λ and D are not repair stages.
-    canonical: {status: SETTLED, closed: true, values: [C, R, E, I, M, T]}
-    sources:
-      - python: operads.contracts.ddc_code_repair_v1:RepairOperationWireV1.model_fields[stage]
-        values: [C, R, E, I, M, T]
-  - id: dda_operation_kind
-    description: Operation kinds on the DDC degree tower.
-    canonical: {status: SETTLED, closed: true, values: [SuccessorProbe, ResidualUpdate, CarrierLift]}
-    sources:
-      - rust_enum: engine/crates_rs/core_wdp/src/ddc/degree_tower.rs#DdaOperationKind
-        values: [SuccessorProbe, ResidualUpdate, CarrierLift]
-  - id: residual_effect
-    description: What an operad morphism does to the residual it acts on.
-    canonical:
-      status: PROPOSED
-      closed: true
-      values: [unknown, contractive, neutral, dilative]
-      decision: >-
-        Three vocabularies are in use. The Python enum has the four values above. The schema in
-        operad_data_type.yaml has eight values and no neutral or dilative. The catalogues use
-        exact, diagnostic and ExactRationalCertificate, and the signature identities use
-        residual_unknown. Proposed: keep the four Python values, which describe what happens to
-        the residual, and map the rest as in legacy_map. exact, exact_receipt and
-        ExactRationalCertificate describe the evidence an operation emits, not its residual
-        effect, so they move to a separate evidence field.
-      legacy_map:
-        preserving: neutral
-        diagnostic: neutral
-        residual_unknown: unknown
-        exact: "(not a residual effect: evidence kind)"
-        exact_receipt: "(not a residual effect: evidence kind)"
-        ExactRationalCertificate: "(not a residual effect: evidence kind)"
-    sources:
-      - python: operads.domain.ddc_execution.enums:ResidualEffect
-        values: [unknown, contractive, neutral, dilative]
-      - data: .agents/skill_operads/operad_data_type.yaml
-        select: $defs.ResidualEffectKind.enum
-        values: [contractive, exact, exact_receipt, preserving, diagnostic, unknown, residual_unknown,
-                 ExactRationalCertificate]
-      - data: operads/skill_operad/json/capability_catalog.v1.json
-        select: skills.*.residual_effect
-        mode: distinct
-        role: uses
-        values: [ExactRationalCertificate, diagnostic, exact, unknown]
-      - data: operads/skill_operad/json/operad_signature.json
-        select: operations.*.residual_effect
-        mode: distinct
-        role: uses
-        values: [ExactRationalCertificate, diagnostic, exact, unknown]
-      - data: operads/skill_operad/json/operad_signature.json
-        select: identities.*.residual_effect
-        mode: distinct
-        role: uses
-        values: [residual_unknown]
-  - id: morphism_execution_status
-    description: Outcome of applying a morphism.
-    canonical: {status: SETTLED, closed: true, values: [SUCCESS, CONTRACTIVE_PASS, NEUTRAL_PASS, REFUSED, FAILED]}
-    sources:
-      - python: operads.domain.ddc_execution.enums:MorphismExecutionStatus
-        values: [SUCCESS, CONTRACTIVE_PASS, NEUTRAL_PASS, REFUSED, FAILED]
-  - id: cohomology_degree
-    description: Meta-operad obstruction degree.
-    canonical:
-      status: SETTLED
-      closed: true
-      values: [H0_INVARIANT_FENCE, H1_FIRST_ORDER_DEFORMATION, H2_REPAIR_OBSTRUCTION, HN_HIGHER_COHERENCE]
-    sources:
-      - python: operads.skill_operad.meta_operad:CohomologyDegree
-        field: name
-        values: [H0_INVARIANT_FENCE, H1_FIRST_ORDER_DEFORMATION, H2_REPAIR_OBSTRUCTION, HN_HIGHER_COHERENCE]
-  - id: evidence_type
-    description: Kinds of operad evidence observation.
-    canonical:
-      status: SETTLED
-      closed: true
-      values: [compilation, budget_audit, associativity, slice_verification, cochain_obstruction]
-    sources:
-      - python: operads.domain.operad.evidence:EvidenceType
-        values: [compilation, budget_audit, associativity, slice_verification, cochain_obstruction]
-  - id: open_obligation_kind
-    description: Kinds of obligation an evidence receipt can leave open.
-    canonical:
-      status: SETTLED
-      closed: true
-      values: [unverified_claim, unavailable_gate, type_precision_loss, ambiguous_import, missing_oracle,
-               anti_pattern_detected, dirty_worktree, packaging_mismatch, counterexample_not_property_based,
-               architectural_smell, security_or_resource_boundary, escalation_required, invariant_not_reexecutable]
-    sources:
-      - python: operads.skill_operad.evidence_receipt:OpenObligationKind
-        values: [unverified_claim, unavailable_gate, type_precision_loss, ambiguous_import, missing_oracle,
-                 anti_pattern_detected, dirty_worktree, packaging_mismatch, counterexample_not_property_based,
-                 architectural_smell, security_or_resource_boundary, escalation_required, invariant_not_reexecutable]
+- id: operation_kind
+  sources:
+  - rust_enum: code/rust/core_operad_theory/src/foundation/operation.rs#OperationKind
+    values: [Identity, Generator, Composite]
+- id: operad_variant
+  sources:
+  - rust_enum: code/rust/core_operad_theory/src/foundation/colored_operad.rs#OperadVariant
+    values: [Planar, Symmetric]
+- id: operation_term
+  sources:
+  - rust_enum: code/rust/core_operad_theory/src/kernel/terms.rs#OperationTerm
+    values: [Identity, Primitive, Substitute, Admitted]
+- id: operad_tree
+  external: the Rust prompt runtime crate (core_symbol_game_runtime/src/operad.rs) was not copied into this repository
+  sources: []
+- id: op_binding_kind
+  sources:
+  - python: operads.skill_operad.skill_compiler.op_inventory:HostBinding.model_fields[kind]
+    role: part
+    values: [host]
+  - python: operads.skill_operad.skill_compiler.op_inventory:PfpTurnBinding.model_fields[kind]
+    role: part
+    values: [pfp_turn]
+  - data: operads/skill_operad/yaml/op_inventory.yaml
+    select: skills.*.ops.*.binding.kind
+    mode: distinct
+    role: uses
+    values: [host]
+- id: inventory_op
+  sources:
+  - data: operads/skill_operad/yaml/op_inventory.yaml
+    select: skills.*.ops.*.op_id
+    mode: distinct
+    values: [ara.bind_source_hashes, ara.receipt, ara.refute, glossa.merge_hits, glossa.propose_replacements, glossa.report,
+      glossa.scan_hype_code, glossa.scan_hype_prose, gti.layout_check, gti.receipt, gti.shadow_scan, mnc.gate, mnc.purge,
+      sfh.report, sfh.scan]
+- id: inventory_anti_op
+  sources:
+  - data: operads/skill_operad/yaml/op_inventory.yaml
+    select: skills.*.anti_ops.*.op_id
+    mode: distinct
+    values: [ara.refuse_undeclared_omission, ara.refuse_unrecomputed_hash, glossa.refuse_missing_claim_envelope,
+      gti.refuse_duplicate_test_basename, gti.refuse_sys_path_hack, sfh.refuse_bare_except, sfh.refuse_pass_handler,
+      sfh.refuse_rust_unwrap]
+- id: prompt_anti_op
+  sources:
+  - python: operads.domain.prompt_hierarchy.evaluator:DEFAULT_KEYWORD_PATTERNS
+    values: [glossa.refuse_missing_claim_envelope, pfp.refuse_scalar_proxy_theorem_substitution, pfp.refuse_target_fitting_constant_compensation,
+      pfp.refuse_unlicensed_causality, pfp.refuse_unlicensed_multiplication, pfp.refuse_unmapped_continuum_import,
+      pfp.refuse_witness_certificate_desynchronization]
+- id: ddc_letter
+  sources:
+  - python: operads.skill_operad.ddc_trace_logger:DdcLetter
+    values: [E, R, C, I, Λ, D, M, T]
+  - rust_enum: code/rust/core_operad_canon/src/lib.rs#DdcOp
+    rust_map: letter
+    values: [ExactRepair, ResidualProjection, ContextExposure, Integration, Lift, Descent, Refusal, Terminalize]
+- id: ddc_repair_stage
+  sources:
+  - python: operads.contracts.ddc_code_repair_v1:RepairOperationWireV1.model_fields[stage]
+    values: [C, R, E, I, M, T]
+- id: dda_operation_kind
+  sources:
+  - rust_enum: code/rust/core_wdp/src/ddc/degree_tower.rs#DdaOperationKind
+    values: [SuccessorProbe, ResidualUpdate, CarrierLift]
+- id: residual_effect
+  external: the operand registry and operad data-type schema (.agents/skill_operads/) were not copied into this
+    repository
+  sources:
+  - python: operads.domain.ddc_execution.enums:ResidualEffect
+    values: [unknown, contractive, neutral, dilative]
+  - data: operads/skill_operad/json/capability_catalog.v1.json
+    select: skills.*.residual_effect
+    mode: distinct
+    role: uses
+    values: [ExactRationalCertificate, contractive, diagnostic, exact, neutral, unknown]
+  - data: operads/skill_operad/json/operad_signature.json
+    select: operations.*.residual_effect
+    mode: distinct
+    role: uses
+    values: [ExactRationalCertificate, contractive, diagnostic, exact, neutral, unknown]
+  - data: operads/skill_operad/json/operad_signature.json
+    select: identities.*.residual_effect
+    mode: distinct
+    role: uses
+    values: [residual_unknown]
+- id: morphism_execution_status
+  sources:
+  - python: operads.domain.ddc_execution.enums:MorphismExecutionStatus
+    values: [SUCCESS, CONTRACTIVE_PASS, NEUTRAL_PASS, REFUSED, FAILED]
+- id: cohomology_degree
+  sources:
+  - python: operads.skill_operad.meta_operad:CohomologyDegree
+    field: name
+    values: [H0_INVARIANT_FENCE, H1_FIRST_ORDER_DEFORMATION, H2_REPAIR_OBSTRUCTION, HN_HIGHER_COHERENCE]
+- id: evidence_type
+  sources:
+  - python: operads.domain.operad.evidence:EvidenceType
+    values: [compilation, budget_audit, associativity, slice_verification, cochain_obstruction]
+- id: open_obligation_kind
+  sources:
+  - python: operads.skill_operad.evidence_receipt:OpenObligationKind
+    values: [unverified_claim, unavailable_gate, type_precision_loss, ambiguous_import, missing_oracle, anti_pattern_detected,
+      dirty_worktree, packaging_mismatch, counterexample_not_property_based, architectural_smell, security_or_resource_boundary,
+      escalation_required, invariant_not_reexecutable]
