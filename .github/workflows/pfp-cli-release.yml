@@ -7,7 +7,7 @@ on:
     tags: ["pfp-cli-v*"]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -26,6 +26,10 @@ jobs:
         working-directory: code/rust/pfp_cli
     steps:
       - uses: actions/checkout@v4
+      - name: Tag matches the crate version
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
+          test "$GITHUB_REF_NAME" = "pfp-cli-v$version" || { echo "tag $GITHUB_REF_NAME does not match version $version"; exit 1; }
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
@@ -36,7 +40,7 @@ jobs:
         run: |
           name="pfp-${GITHUB_REF_NAME#pfp-cli-}-${{ matrix.target }}"
           mkdir "$name"
-          cp "target/${{ matrix.target }}/release/${{ matrix.exe }}" README.md "$name/"
+          cp "target/${{ matrix.target }}/release/${{ matrix.exe }}" README.md ../../../LICENSE "$name/"
           if [ "${{ runner.os }}" = "Windows" ]; then
             7z a "$name.zip" "$name" >/dev/null && echo "ASSET=$name.zip" >> "$GITHUB_ENV"
           else
@@ -50,6 +54,8 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/download-artifact@v4
         with:

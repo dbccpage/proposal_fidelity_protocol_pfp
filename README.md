@@ -2,8 +2,10 @@
 
 AuthorityEffect: None.
 
-**Try it in ten seconds.** `pfp` checks a prompt and your model's reply for the
-ways they leave things to chance. One small binary: offline, read-only.
+**`pfp`** checks a prompt and your model's reply for the ways they leave things
+to chance: a model certifying its own work, digests it made up, role fields
+that claim authority, a prompt that states the verdict it wants. One small
+binary: offline, read-only, under a second.
 
 ![pfp check finding nine problems in a release-agent prompt and its JSON reply](code/rust/pfp_cli/demo/demo.gif)
 
@@ -12,6 +14,9 @@ cargo install --locked --git https://github.com/dbccpage/proposal_fidelity_proto
 pfp demo
 pfp check --prompt your_prompt.md model_reply.json
 ```
+
+Building from source clones this repository and takes a few minutes the first
+time; prebuilt binaries will be on the Releases page.
 
 More in [`code/rust/pfp_cli`](code/rust/pfp_cli/README.md).
 

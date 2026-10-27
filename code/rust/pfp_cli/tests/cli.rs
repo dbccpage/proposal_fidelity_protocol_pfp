@@ -22,6 +22,10 @@ fn stdout(o: &Output) -> String {
     String::from_utf8_lossy(&o.stdout).into_owned()
 }
 
+fn stderr(o: &Output) -> String {
+    String::from_utf8_lossy(&o.stderr).into_owned()
+}
+
 /// A fresh, empty folder for one test.
 fn scratch(name: &str) -> PathBuf {
     let dir = PathBuf::from(env!("CARGO_TARGET_TMPDIR")).join(name);
@@ -226,7 +230,7 @@ fn seal_refuses_paths_outside_the_folder() {
     for bad in ["../a.md", absolute.as_str(), "sub/../a.md"] {
         let o = pfp(&dir, &["seal", bad]);
         assert_eq!(o.status.code(), Some(2), "{bad}");
-        assert!(String::from_utf8_lossy(&o.stderr).contains("PATH_OUTSIDE_ROOT"));
+        assert!(stderr(&o).contains("PATH_OUTSIDE_ROOT"));
     }
     assert_eq!(
         pfp(&dir, &["seal", "a.md", "a.md"]).status.code(),
@@ -293,8 +297,8 @@ fn replay_refuses_tampered_and_foreign_packets() {
 
     fs::write(dir.join("f.json"), "{\"format\": \"other\"}").expect("write");
     let o = pfp(&dir, &["replay", "f.json"]);
-    assert_eq!(o.status.code(), Some(1));
-    assert!(stdout(&o).contains("UNSUPPORTED_FORMAT"));
+    assert_eq!(o.status.code(), Some(2), "not a packet: cannot run");
+    assert!(stderr(&o).contains("UNSUPPORTED_FORMAT"));
 }
 
 #[test]
@@ -320,8 +324,8 @@ fn replay_never_reads_outside_root_even_with_valid_hashes() {
     )
     .expect("write");
     let o = pfp(&dir, &["replay", "evil.json"]);
-    assert_eq!(o.status.code(), Some(1));
-    assert!(stdout(&o).contains("PATH_OUTSIDE_ROOT"), "{}", stdout(&o));
+    assert_eq!(o.status.code(), Some(2));
+    assert!(stderr(&o).contains("PATH_OUTSIDE_ROOT"), "{}", stderr(&o));
 }
 
 #[test]
@@ -334,4 +338,157 @@ fn version_and_help() {
     let h = pfp(Path::new(CORPUS), &[]);
     assert_eq!(h.status.code(), Some(0));
     assert!(stdout(&h).contains("Read-only unless you pass --out"));
+}
+
+#[test]
+fn help_works_after_any_command_and_double_dash_ends_options() {
+    for args in [vec!["check", "--help"], vec!["seal", "-h"], vec!["help"]] {
+        let o = pfp(Path::new(CORPUS), &args);
+        assert_eq!(o.status.code(), Some(0), "{args:?}");
+        assert!(stdout(&o).contains("USAGE"));
+    }
+    let dir = scratch("double_dash");
+    fs::write(dir.join("--json"), "This is optimal.\n").expect("write");
+    let o = pfp(&dir, &["check", "--", "--json"]);
+    assert_eq!(o.status.code(), Some(1), "{}", stderr(&o));
+    assert!(stdout(&o).contains("OPTIMALITY_HALLUCINATION"));
+}
+
+#[test]
+fn stdin_is_read_at_most_once() {
+    assert_eq!(
+        pfp(Path::new(CORPUS), &["check", "--prompt", "-", "-"])
+            .status
+            .code(),
+        Some(2)
+    );
+}
+
+#[test]
+fn json_that_does_not_parse_is_never_a_silent_pass() {
+    let dir = scratch("malformed");
+    fs::write(
+        dir.join("dup.json"),
+        "{\"verified\": true, \"x\": 1, \"x\": 2}",
+    )
+    .expect("write");
+    let o = pfp(&dir, &["check", "dup.json"]);
+    assert_eq!(o.status.code(), Some(1));
+    assert!(stdout(&o).contains("MALFORMED_JSON"));
+}
+
+#[test]
+fn oversized_json_cannot_stall_the_run() {
+    let dir = scratch("oversized");
+    let items = vec!["\"admin\""; 40_000].join(",");
+    fs::write(dir.join("big.json"), format!("{{\"role\": [{items}]}}")).expect("write");
+    let started = std::time::Instant::now();
+    let o = pfp(&dir, &["check", "big.json"]);
+    assert_eq!(o.status.code(), Some(2));
+    assert!(started.elapsed().as_secs() < 5, "refused quickly");
+}
+
+#[test]
+fn directories_are_not_read() {
+    let dir = scratch("dirs");
+    fs::create_dir_all(dir.join("sub")).expect("mkdir");
+    let o = pfp(&dir, &["check", "sub"]);
+    assert_eq!(o.status.code(), Some(2));
+    assert!(stderr(&o).contains("sub is not a regular file"));
+    assert_eq!(
+        pfp(&dir, &["replay", "p.json", "--root", "nowhere"])
+            .status
+            .code(),
+        Some(2)
+    );
+}
+
+#[test]
+fn seal_out_dash_is_refused() {
+    let dir = scratch("seal_dash");
+    fs::write(dir.join("a.md"), "alpha\n").expect("write");
+    assert_eq!(
+        pfp(&dir, &["seal", "a.md", "--out", "-"]).status.code(),
+        Some(2)
+    );
+    assert!(!dir.join("-").exists());
+}
+
+#[cfg(unix)]
+mod unix {
+    use super::*;
+    use std::os::unix::ffi::OsStrExt;
+    use std::os::unix::fs::symlink;
+
+    #[test]
+    fn replay_does_not_follow_links_out_of_the_root() {
+        let dir = scratch("replay_symlink");
+        fs::create_dir_all(dir.join("work")).expect("mkdir");
+        fs::write(dir.join("secret"), "s3cret\n").expect("write");
+        fs::write(dir.join("work/a.md"), "s3cret\n").expect("write");
+        pfp(&dir.join("work"), &["seal", "a.md", "--out", "../p.json"]);
+        fs::remove_file(dir.join("work/a.md")).expect("rm");
+        symlink(dir.join("secret"), dir.join("work/a.md")).expect("link");
+        let o = pfp(&dir, &["replay", "p.json", "--root", "work"]);
+        assert_eq!(o.status.code(), Some(1));
+        assert!(stdout(&o).contains("PATH_OUTSIDE_ROOT"), "{}", stdout(&o));
+        let o = pfp(&dir.join("work"), &["seal", "a.md"]);
+        assert_eq!(
+            o.status.code(),
+            Some(2),
+            "seal refuses a link out of the folder too"
+        );
+    }
+
+    #[test]
+    fn fifos_are_refused_not_waited_on() {
+        let dir = scratch("fifo");
+        let made = Command::new("mkfifo")
+            .arg(dir.join("pipe"))
+            .status()
+            .expect("mkfifo");
+        assert!(made.success());
+        let o = pfp(&dir, &["check", "pipe"]);
+        assert_eq!(o.status.code(), Some(2));
+    }
+
+    #[test]
+    fn non_unicode_arguments_exit_two() {
+        let o = Command::new(env!("CARGO_BIN_EXE_pfp"))
+            .arg("check")
+            .arg(std::ffi::OsStr::from_bytes(b"\xff.md"))
+            .output()
+            .expect("runs");
+        assert_eq!(o.status.code(), Some(2));
+    }
+
+    #[test]
+    fn seal_reads_the_path_it_records() {
+        let dir = scratch("seal_backslash");
+        fs::create_dir_all(dir.join("x")).expect("mkdir");
+        fs::write(dir.join("x/y"), "real\n").expect("write");
+        fs::write(dir.join("x\\y"), "decoy\n").expect("write");
+        let o = pfp(&dir, &["seal", "x\\y"]);
+        assert_eq!(o.status.code(), Some(0));
+        let real = pfp_cli::packet::sha256_hex(b"real\n");
+        assert!(
+            stdout(&o).contains(&real),
+            "hashes x/y, the path it records"
+        );
+    }
+}
+
+#[cfg(target_os = "linux")]
+#[test]
+fn a_full_disk_is_an_error_not_a_silent_success() {
+    let out = fs::OpenOptions::new()
+        .write(true)
+        .open("/dev/full")
+        .expect("/dev/full");
+    let o = Command::new(env!("CARGO_BIN_EXE_pfp"))
+        .args(["explain"])
+        .stdout(out)
+        .output()
+        .expect("runs");
+    assert_eq!(o.status.code(), Some(2));
 }

@@ -59,23 +59,37 @@ pub fn sha256_hex(bytes: &[u8]) -> String {
     hex::encode(Sha256::digest(bytes))
 }
 
-/// Accept only plain relative paths: no root, no drive, no `..`, no empty parts.
-/// Backslashes become `/` so a packet sealed on Windows replays elsewhere.
+/// Windows device names: opening one reads a device, not a file.
+const RESERVED: [&str; 22] = [
+    "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8",
+    "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9",
+];
+
+fn bad_part(part: &str) -> bool {
+    let stem = part.split('.').next().unwrap_or(part).to_ascii_uppercase();
+    part.is_empty() || part == "." || part == ".." || RESERVED.contains(&stem.as_str())
+}
+
+/// Accept only plain relative paths: no root, no drive, no `.` or `..` parts,
+/// no empty parts, no control characters, no Windows device names. A leading
+/// `./` is dropped and backslashes become `/`, so a packet sealed on Windows
+/// replays elsewhere.
 pub fn normalize_path(raw: &str) -> Result<String, Problem> {
-    let path = raw.replace('\\', "/");
-    let bad = path.is_empty()
-        || path.starts_with('/')
-        || path.contains(':')
-        || path.split('/').any(|part| part.is_empty() || part == "..");
-    let path = path.trim_start_matches("./").to_owned();
-    if bad || path.is_empty() {
+    let slashed = raw.replace('\\', "/");
+    let path = slashed.strip_prefix("./").unwrap_or(&slashed);
+    let drive = path.as_bytes().get(1) == Some(&b':');
+    let bad = path.starts_with('/')
+        || drive
+        || path.chars().any(char::is_control)
+        || path.split('/').any(bad_part);
+    if bad {
         return Err(Problem::new(
             "PATH_OUTSIDE_ROOT",
             raw,
-            "use a relative path below the current folder (no `..`, no absolute path)",
+            "use a plain relative path below the current folder (no `..`, no absolute path, no device name)",
         ));
     }
-    Ok(path)
+    Ok(path.to_owned())
 }
 
 fn payload_digest(files: &[Entry]) -> String {
@@ -135,6 +149,7 @@ pub fn seal(files: &[(String, Vec<u8>)], tool: &str) -> Result<Envelope, Problem
 
 /// Parse envelope JSON and check its own hashes. Unknown fields are refused.
 pub fn parse_envelope(json: &[u8]) -> Result<Envelope, Problem> {
+    let json = json.strip_prefix(b"\xef\xbb\xbf").unwrap_or(json);
     let envelope: Envelope = serde_json::from_slice(json).map_err(|e| {
         Problem::new(
             "UNSUPPORTED_FORMAT",
@@ -167,6 +182,14 @@ pub fn parse_envelope(json: &[u8]) -> Result<Envelope, Problem> {
             ));
         }
     }
+    // `seal` always writes at least one file, sorted by path, each once.
+    if envelope.files.is_empty() || envelope.files.windows(2).any(|w| w[0].path >= w[1].path) {
+        return Err(Problem::new(
+            "UNSUPPORTED_FORMAT",
+            "",
+            "files must be non-empty, sorted and distinct",
+        ));
+    }
     Ok(envelope)
 }
 
@@ -174,6 +197,8 @@ pub fn parse_envelope(json: &[u8]) -> Result<Envelope, Problem> {
 pub enum OnDisk {
     Bytes(Vec<u8>),
     Missing,
+    /// The path resolves (through a link) to somewhere outside the root.
+    Outside,
 }
 
 /// Compare an envelope with the bytes on disk. An empty result means every
@@ -187,6 +212,13 @@ pub fn replay(envelope: &Envelope, read: impl Fn(&str) -> OnDisk) -> Vec<Problem
                     "FILE_MISSING",
                     &entry.path,
                     "the sealed file is missing or cannot be read",
+                ));
+            }
+            OnDisk::Outside => {
+                problems.push(Problem::new(
+                    "PATH_OUTSIDE_ROOT",
+                    &entry.path,
+                    "the path leads outside the folder; it was not read",
                 ));
             }
             OnDisk::Bytes(bytes) if sha256_hex(&bytes) != entry.sha256 => {

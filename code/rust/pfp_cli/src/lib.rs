@@ -11,7 +11,9 @@ pub mod catalog;
 pub mod check;
 pub mod packet;
 
-pub use check::{builtin_checks, run_checks, Check, Finding, Input, Report, Severity, Text};
+pub use check::{
+    builtin_checks, read_doc, run_checks, Check, Doc, Finding, Input, Report, Severity, Text,
+};
 
 /// `pfp-cli <version>`, recorded in every packet.
 pub const TOOL: &str = concat!("pfp-cli ", env!("CARGO_PKG_VERSION"));
@@ -30,8 +32,9 @@ pub fn render_report(report: &Report, color: bool) -> String {
         }
     };
     let place_of = |f: &Finding| match (f.line, f.pointer.as_str()) {
-        (Some(line), _) => format!("line {line}"),
-        (None, pointer) => pointer.to_owned(),
+        (Some(line), "") => format!("line {line}"),
+        (Some(line), pointer) => format!("line {line} {}", clean(pointer)),
+        (None, pointer) => clean(pointer),
     };
     let code_width = report
         .findings
@@ -42,7 +45,7 @@ pub fn render_report(report: &Report, color: bool) -> String {
     let place_width = report
         .findings
         .iter()
-        .map(|f| place_of(f).len())
+        .map(|f| place_of(f).chars().count())
         .max()
         .unwrap_or(0);
     let mut out = String::new();
@@ -50,7 +53,7 @@ pub fn render_report(report: &Report, color: bool) -> String {
     for f in &report.findings {
         if f.source != current {
             current = &f.source;
-            out.push_str(&paint("1", current));
+            out.push_str(&paint("1", &clean(current)));
             out.push('\n');
         }
         let place = place_of(f);
@@ -63,7 +66,7 @@ pub fn render_report(report: &Report, color: bool) -> String {
             "  {severity}  {:<code_width$}  {:<place_width$}  {}\n",
             f.code,
             place,
-            catalog::find(&f.code).map_or(f.message.as_str(), |e| e.short)
+            clean(catalog::find(&f.code).map_or(f.message.as_str(), |e| e.short))
         ));
     }
     let detectors = report.detectors_run.len();
@@ -79,6 +82,21 @@ pub fn render_report(report: &Report, color: bool) -> String {
         ));
     }
     out
+}
+
+/// Escape control characters so text from a file or a model cannot move the
+/// cursor, rewrite earlier lines, or retitle the terminal.
+pub fn clean(text: &str) -> String {
+    text.chars()
+        .flat_map(|c| {
+            let escaped: Vec<char> = if c.is_control() {
+                c.escape_default().collect()
+            } else {
+                vec![c]
+            };
+            escaped
+        })
+        .collect()
 }
 
 /// `1 finding`, `2 findings`.

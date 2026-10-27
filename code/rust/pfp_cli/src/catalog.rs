@@ -19,7 +19,7 @@ pub fn wiki_url(page: &str) -> String {
     format!("{WIKI}{page}")
 }
 
-pub const ENTRIES: [Entry; 19] = [
+pub const ENTRIES: &[Entry] = &[
     Entry {
         code: "SELF_CERTIFICATION",
         short: "the model certifies its own work",
@@ -38,10 +38,10 @@ pub const ENTRIES: [Entry; 19] = [
     },
     Entry {
         code: "CONCLUSION_PRELOAD",
-        short: "the prompt dictates the answer",
-        what: "The prompt fixes the answer it asks for (\"it must be verified\", \"conclude that it is certified\").",
+        short: "the prompt states the verdict it asks for",
+        what: "The prompt tells the model the outcome (\"confirm that it passes\", \"conclude that it is safe\", \"the answer must be ...\").",
         why: "A prompt that states the conclusion gets the conclusion back, whatever the evidence says.",
-        instead: "Ask whether the claim holds and what evidence decides it. Allow \"no\" as an answer.",
+        instead: "Ask whether it holds and what evidence decides it. Allow \"no\" as an answer.",
         wiki: "Rewriting",
     },
     Entry {
@@ -74,14 +74,6 @@ pub const ENTRIES: [Entry; 19] = [
         what: "A complexity claim (O(n), linear time, ...) with no algorithm, cost model or measurement.",
         why: "Complexity claims are easy to state and often wrong.",
         instead: "Name the algorithm and cost model, or measure.",
-        wiki: "Rewriting",
-    },
-    Entry {
-        code: "BRANCH_DROP_EXHAUSTION",
-        short: "\"exhaustive\" while branches remain",
-        what: "The output claims an exhaustive search while known branches are unexplored.",
-        why: "\"Exhaustive\" is only true when nothing is left to explore.",
-        instead: "List what was not explored, or finish exploring it.",
         wiki: "Rewriting",
     },
     Entry {
@@ -123,6 +115,14 @@ pub const ENTRIES: [Entry; 19] = [
         why: "With no way out, a model guesses. PFP law 4: refuse with a type, leave the state unchanged.",
         instead: "Add a line like: \"If you cannot answer from the given material, reply exactly: CANNOT_ANSWER: <reason>.\"",
         wiki: "Rewriting",
+    },
+    Entry {
+        code: "MALFORMED_JSON",
+        short: "JSON that does not parse strictly",
+        what: "The output looks like JSON (or has a ```json block) but does not parse strictly: a syntax error, a trailing comma, or a duplicate key.",
+        why: "Lenient parsers disagree about such JSON, so two programs can read different values from it. Its fields were checked as plain text only.",
+        instead: "Make the model emit strict JSON (structured output or a schema), and parse it strictly before use.",
+        wiki: "EIS",
     },
     Entry {
         code: "DIGEST_MISMATCH",
