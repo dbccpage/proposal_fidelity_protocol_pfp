@@ -36,25 +36,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from operads.canon import OPERAD_COLOUR
+
 # The ten colours, measured from the garden and matching the vocabulary
 # `EPIC-OE-OEWAS-RUST-001` pins ("Ten colours | Shared Python/Rust vocabulary
 # fixture | Reorder, omit, or add one colour"). Closed: an operation whose
 # colour is outside this set cannot be composed with anything, and silently
 # admitting it would make composability depend on spelling.
-OPERAD_COLOURS = frozenset(
-    {
-        "Audit",
-        "Code",
-        "Contract",
-        "Diagram",
-        "Ledger",
-        "Paper",
-        "Post",
-        "Proof",
-        "Receipt",
-        "State",
-    }
-)
+OPERAD_COLOURS = frozenset(OPERAD_COLOUR)
 
 
 class SubstitutionError(RuntimeError):

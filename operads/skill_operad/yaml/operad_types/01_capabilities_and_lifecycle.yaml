@@ -1,74 +1,57 @@
 # OEOP operad type registry, family 1 of 6: capability kinds and lifecycle.
-# Each type records its canonical values and every source that declares or uses them.
-# operad_type_registry.py fails when a source drifts from what is recorded here.
+# Where each operad type is declared or used. The canonical values are not written here: they
+# live once in code/rust/core_operad_canon and are read from operads/canon/operad_canon.json.
+# operad_type_registry.py fails when a source drifts from the canon or from what is recorded here.
 # Roles: declares (must equal canonical), uses (subset), part (union of parts must equal it).
+# external: why some of a type's sources cannot be checked: they were not copied into this repository.
 # AuthorityEffect: None.
 schema_version: core.oeop.operad-types.v1
 family: capabilities_and_lifecycle
 authority_effect: None
 types:
-  - id: capability_kind
-    description: The kind discriminator of a typed capability.
-    canonical: {status: SETTLED, closed: true, values: [skill, anti_skill, rule, helpful_pattern, anti_pattern, antibody]}
-    sources:
-      - data: operads/catalog/contracts/v1/typed_capability.schema.json
-        select: discriminator.mapping
-        mode: keys
-        values: [anti_pattern, anti_skill, antibody, helpful_pattern, rule, skill]
-  - id: invocation_mode
-    description: How a catalogued skill is invoked.
-    canonical: {status: SETTLED, closed: true, values: [discipline, entry, on-demand]}
-    sources:
-      - data: operads/skill_operad/json/capability_catalog.v1.json
-        select: skills.*.invocation
-        mode: distinct
-        role: uses
-        values: [discipline, entry, on-demand]
-  - id: lifecycle_declaration
-    description: Lifecycle facet 1 of 5, how an operation came to exist.
-    canonical: {status: SETTLED, closed: true, values: [Declared, Abstract, Synthesized]}
-    sources:
-      - python: operads.domain.value_objects.lifecycle_facets:DeclarationFacet
-        values: [Declared, Abstract, Synthesized]
-  - id: lifecycle_schema_binding
-    description: Lifecycle facet 2 of 5, whether a schema is bound.
-    canonical: {status: SETTLED, closed: true, values: [Unbound, Bound, AnySchema]}
-    sources:
-      - python: operads.domain.value_objects.lifecycle_facets:SchemaBindingFacet
-        values: [Unbound, Bound, AnySchema]
-  - id: lifecycle_executor_binding
-    description: Lifecycle facet 3 of 5, whether an executor is bound.
-    canonical: {status: SETTLED, closed: true, values: [Unbound, Bound, ExternalService]}
-    sources:
-      - python: operads.domain.value_objects.lifecycle_facets:ExecutorBindingFacet
-        values: [Unbound, Bound, ExternalService]
-  - id: lifecycle_validation
-    description: Lifecycle facet 4 of 5, the validation result.
-    canonical: {status: SETTLED, closed: true, values: [Unchecked, Validated, Failed]}
-    sources:
-      - python: operads.domain.value_objects.lifecycle_facets:ValidationFacet
-        values: [Unchecked, Validated, Failed]
-  - id: lifecycle_admission
-    description: Lifecycle facet 5 of 5, the admission state.
-    canonical: {status: SETTLED, closed: true, values: [Unadmitted, Admitted, Retired]}
-    sources:
-      - python: operads.domain.value_objects.lifecycle_facets:AdmissionFacet
-        values: [Unadmitted, Admitted, Retired]
-  - id: lifecycle_stage_legacy
-    description: The older single-axis lifecycle stage of a skill package, superseded by the five facets.
-    canonical: {status: SETTLED, closed: true, values: [DRAFT, TYPED, BOUND, TESTED, COMPOSABLE, ADMITTED]}
-    sources:
-      - python: operads.infrastructure.legacy.catalog_v2:LIFECYCLE_STATES
-        values: [ADMITTED, BOUND, COMPOSABLE, DRAFT, TESTED, TYPED]
-      - data: operads/registry/lifecycle.yaml
-        select: packages.*.stage
-        mode: distinct
-        role: uses
-        values: [BOUND, TESTED, TYPED]
-  - id: meta_skill_status
-    description: Status of a synthesized meta-skill.
-    canonical: {status: SETTLED, closed: true, values: [provisional, promoted, certified, retired]}
-    sources:
-      - data: .agents/skill_operads/operad_data_type.yaml
-        select: $defs.MetaSkillStatus.enum
-        values: [provisional, promoted, certified, retired]
+- id: capability_kind
+  sources:
+  - data: operads/catalog/contracts/v1/typed_capability.schema.json
+    select: discriminator.mapping
+    mode: keys
+    values: [anti_pattern, anti_skill, antibody, helpful_pattern, rule, skill]
+- id: invocation_mode
+  sources:
+  - data: operads/skill_operad/json/capability_catalog.v1.json
+    select: skills.*.invocation
+    mode: distinct
+    role: uses
+    values: [discipline, entry, on-demand]
+- id: lifecycle_declaration
+  sources:
+  - python: operads.domain.value_objects.lifecycle_facets:DeclarationFacet
+    values: [Declared, Abstract, Synthesized]
+- id: lifecycle_schema_binding
+  sources:
+  - python: operads.domain.value_objects.lifecycle_facets:SchemaBindingFacet
+    values: [Unbound, Bound, AnySchema]
+- id: lifecycle_executor_binding
+  sources:
+  - python: operads.domain.value_objects.lifecycle_facets:ExecutorBindingFacet
+    values: [Unbound, Bound, ExternalService]
+- id: lifecycle_validation
+  sources:
+  - python: operads.domain.value_objects.lifecycle_facets:ValidationFacet
+    values: [Unchecked, Validated, Failed]
+- id: lifecycle_admission
+  sources:
+  - python: operads.domain.value_objects.lifecycle_facets:AdmissionFacet
+    values: [Unadmitted, Admitted, Retired]
+- id: lifecycle_stage_legacy
+  sources:
+  - python: operads.infrastructure.legacy.catalog_v2:LIFECYCLE_STATES
+    values: [ADMITTED, BOUND, COMPOSABLE, DRAFT, TESTED, TYPED]
+  - data: operads/registry/lifecycle.yaml
+    select: packages.*.stage
+    mode: distinct
+    role: uses
+    values: [BOUND, TESTED, TYPED]
+- id: meta_skill_status
+  external: the operand registry and operad data-type schema (.agents/skill_operads/) were not copied into this
+    repository
+  sources: []

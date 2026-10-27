@@ -14,24 +14,12 @@ from pathlib import PurePosixPath
 from types import MappingProxyType
 from typing import Any
 
+from operads.canon import OPERAD_COLOUR
 from operads.domain.value_objects.authority import AuthorityEffect
 
 NAME_PATTERN = re.compile(r"^[a-z0-9_\-]+$")
 DIGEST_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
-ADMITTED_COLOURS = frozenset(
-    {
-        "State",
-        "Proof",
-        "Paper",
-        "Code",
-        "Contract",
-        "Receipt",
-        "Ledger",
-        "Diagram",
-        "Audit",
-        "Post",
-    }
-)
+ADMITTED_COLOURS = frozenset(OPERAD_COLOUR)
 ADMITTED_RESIDUAL = "unknown"
 DECLARATION_STRICT_EXPLICIT = "STRICT_EXPLICIT"
 DECLARATION_COMPATIBILITY_DEFAULTED = "COMPATIBILITY_DEFAULTED"

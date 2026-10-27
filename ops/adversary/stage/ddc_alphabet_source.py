@@ -1,4 +1,6 @@
-"""Read the Rust DDC alphabet and install it into the stage domain.
+"""Read the Rust DDC alphabet from the operad canon and install it into the stage domain.
+
+The alphabet is `DdcOp::letter` in `code/rust/core_operad_canon/src/lib.rs`, its one definition.
 
 The domain parser does not open this file. AuthorityEffect: None.
 """
@@ -11,18 +13,10 @@ from pathlib import Path
 def read_ddc_alphabet_source() -> str:
     here = Path(__file__).resolve()
     for parent in here.parents:
-        candidate = (
-            parent
-            / "engine"
-            / "crates_rs"
-            / "core_wdp"
-            / "src"
-            / "ddc"
-            / "ddc_alphabet.rs"
-        )
+        candidate = parent / "code" / "rust" / "core_operad_canon" / "src" / "lib.rs"
         if candidate.is_file():
             return candidate.read_text(encoding="utf-8")
-    raise FileNotFoundError("ddc_alphabet.rs was not found")
+    raise FileNotFoundError("code/rust/core_operad_canon/src/lib.rs was not found")
 
 
 def install_ddc_alphabet() -> None:

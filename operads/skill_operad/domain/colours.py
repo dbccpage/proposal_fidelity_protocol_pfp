@@ -8,20 +8,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import FrozenSet, Iterable, Sequence
 
+from operads.canon import OPERAD_COLOUR
+
 from .errors import InvalidColourError
 
-ADMITTED_FINITE_COLOURS: FrozenSet[str] = frozenset({
-    "Audit",
-    "Code",
-    "Contract",
-    "Diagram",
-    "Ledger",
-    "Paper",
-    "Post",
-    "Proof",
-    "Receipt",
-    "State",
-})
+ADMITTED_FINITE_COLOURS: FrozenSet[str] = frozenset(OPERAD_COLOUR)
 
 
 @dataclass(frozen=True)

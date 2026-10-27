@@ -55,11 +55,11 @@ def test_uses_is_a_subset_and_parts_must_cover_the_set(tmp_path):
 
 
 def test_rust_letter_map_and_open_carriers(tmp_path):
-    ddc = {"rust_enum": "engine/crates_rs/core_wdp/src/ddc/ddc_alphabet.rs#DdcOp", "rust_map": "letter",
+    ddc = {"rust_enum": "code/rust/core_operad_canon/src/lib.rs#DdcOp", "rust_map": "letter",
            "values": ["ExactRepair", "ResidualProjection", "ContextExposure", "Integration", "Lift", "Descent",
                       "Refusal", "Terminalize"]}
     assert _codes(tmp_path, _type(["E", "R", "C", "I", "Λ", "D", "M", "T"], ddc)) == []
-    struct = {"rust_struct": "engine/crates_rs/core_operad_theory/src/foundation/colour.rs#OperadColour",
+    struct = {"rust_struct": "code/rust/core_operad_theory/src/foundation/colour.rs#OperadColour",
               "values": []}
     assert "SETTLED_BUT_DIVERGENT" in _codes(tmp_path, _type(["Audit"], struct, closed=True))
     assert _codes(tmp_path, _type(["Audit"], struct, closed=False)) == []
@@ -83,3 +83,18 @@ def test_letters_of_refuses_a_motif_outside_the_alphabet(tmp_path):
                                     {"data": "no/such/file.yaml", "select": "a", "values": []}])
 def test_an_unreadable_source_fails_closed(tmp_path, source):
     assert "SOURCE_UNREADABLE" in _codes(tmp_path, _type(["x"], source))
+
+
+def test_the_registry_reads_values_from_the_canon_and_may_not_restate_them(tmp_path):
+    canon = registry.load_canon(ROOT)
+    restated = {"id": "pfp_polarity", "canonical": {"status": "SETTLED", "values": POLARITY["values"]},
+                "sources": [POLARITY]}
+    assert "CANONICAL_RESTATED" in _codes(tmp_path, restated)
+    assert _codes(tmp_path, {"id": "pfp_polarity", "sources": [POLARITY]}) == []
+    assert canon["pfp_polarity"]["values"] == POLARITY["values"]
+    assert "NOT_IN_CANON" in _codes(tmp_path, {"id": "no_such_type", "sources": [POLARITY]})
+
+
+def test_an_external_type_needs_no_readable_source(tmp_path):
+    assert "NO_SOURCES" in _codes(tmp_path, {"id": "operad_tree", "sources": []})
+    assert _codes(tmp_path, {"id": "operad_tree", "external": "not copied in", "sources": []}) == []

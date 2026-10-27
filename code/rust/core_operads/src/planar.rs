@@ -9,9 +9,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::{collections::BTreeSet, str::FromStr};
 
-pub const OPERAD_COLOURS: [&str; 10] = [
-    "Audit", "Code", "Contract", "Diagram", "Ledger", "Paper", "Post", "Proof", "Receipt", "State",
-];
+pub use core_operad_canon::OPERAD_COLOURS;
 
 fn push_escaped_char(result: &mut String, character: char, quote: char) {
     match character {

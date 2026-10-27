@@ -8,20 +8,9 @@ from __future__ import annotations
 
 from enum import Enum
 
+from operads.canon import OperadColour
 
-class OperadColour(str, Enum):
-    """Admitted finite colors in the colored operad fibration."""
-
-    AUDIT = "Audit"
-    CODE = "Code"
-    CONTRACT = "Contract"
-    DIAGRAM = "Diagram"
-    LEDGER = "Ledger"
-    PAPER = "Paper"
-    POST = "Post"
-    PROOF = "Proof"
-    RECEIPT = "Receipt"
-    STATE = "State"
+__all__ = ["OperadColour", "ResidualEffect", "MorphismExecutionStatus"]
 
 
 class ResidualEffect(str, Enum):
