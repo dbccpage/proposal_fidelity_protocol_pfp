@@ -1,0 +1,176 @@
+{
+  "mutation_id": "mut_18_count_star_for_count_col",
+  "description": "Uses COUNT(*) instead of COUNT(name), falsely counting NULL names",
+  "case": {
+    "case_id": "c059_b16_count_col_nulls",
+    "schema": {
+      "users": {
+        "id": "INTEGER",
+        "name": "TEXT",
+        "role_id": "INTEGER",
+        "status": "TEXT"
+      },
+      "roles": {
+        "role_id": "INTEGER",
+        "role_name": "TEXT",
+        "clearance": "INTEGER"
+      },
+      "facts": {
+        "id": "INTEGER",
+        "f_val": "INTEGER",
+        "g_verdict": "INTEGER",
+        "l_prod": "INTEGER"
+      }
+    },
+    "spec": {
+      "op": "group",
+      "from": "users",
+      "by": [
+        "role_id"
+      ],
+      "agg": {
+        "named_count": {
+          "func": "count_col",
+          "arg": "name"
+        }
+      }
+    },
+    "protected": [
+      "role_id"
+    ],
+    "test_databases": [
+      {
+        "users": [
+          {
+            "id": 1,
+            "name": "Alice",
+            "role_id": 10,
+            "status": "active"
+          },
+          {
+            "id": 2,
+            "name": "Bob",
+            "role_id": null,
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "name": "Charlie",
+            "role_id": 20,
+            "status": null
+          },
+          {
+            "id": 4,
+            "name": "David",
+            "role_id": null,
+            "status": null
+          },
+          {
+            "id": 5,
+            "name": "Eve",
+            "role_id": 10,
+            "status": "active"
+          }
+        ],
+        "roles": [
+          {
+            "role_id": 10,
+            "role_name": "Admin",
+            "clearance": 5
+          },
+          {
+            "role_id": 20,
+            "role_name": "User",
+            "clearance": 1
+          },
+          {
+            "role_id": 30,
+            "role_name": "Guest",
+            "clearance": null
+          }
+        ],
+        "facts": [
+          {
+            "id": 1,
+            "f_val": 100,
+            "g_verdict": 1,
+            "l_prod": 1
+          },
+          {
+            "id": 2,
+            "f_val": null,
+            "g_verdict": 0,
+            "l_prod": 1
+          },
+          {
+            "id": 3,
+            "f_val": 200,
+            "g_verdict": null,
+            "l_prod": null
+          },
+          {
+            "id": 4,
+            "f_val": 300,
+            "g_verdict": 1,
+            "l_prod": null
+          },
+          {
+            "id": 5,
+            "f_val": null,
+            "g_verdict": null,
+            "l_prod": 0
+          }
+        ]
+      },
+      {
+        "users": [
+          {
+            "id": 1,
+            "name": null,
+            "role_id": null,
+            "status": null
+          },
+          {
+            "id": 2,
+            "name": null,
+            "role_id": null,
+            "status": null
+          }
+        ],
+        "roles": [
+          {
+            "role_id": null,
+            "role_name": null,
+            "clearance": null
+          }
+        ],
+        "facts": [
+          {
+            "id": 1,
+            "f_val": null,
+            "g_verdict": null,
+            "l_prod": null
+          },
+          {
+            "id": 2,
+            "f_val": null,
+            "g_verdict": null,
+            "l_prod": null
+          }
+        ]
+      },
+      {
+        "users": [],
+        "roles": [],
+        "facts": []
+      }
+    ]
+  },
+  "candidate": {
+    "case_id": "c059_b16_count_col_nulls",
+    "status": "SOLVED",
+    "sql": "SELECT role_id, COUNT(*) AS named_count FROM users GROUP BY role_id",
+    "preflight_sql": "SELECT * FROM users WHERE role_id IS NULL",
+    "null_ledger": []
+  }
+}
