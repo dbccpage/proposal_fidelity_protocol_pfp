@@ -42,3 +42,11 @@
 - PFP: [overview](Rewriting-PFP.md) · [residual repair](Rewriting-PFP-Residual-Repair.md) · [dialects](Rewriting-PFP-Dialects.md) · [prompts as graphs](Rewriting-PFP-Graph-Prompts.md)
 - WDP: [overview](Rewriting-WDP.md) · [DDC](Rewriting-WDP-DDC.md) · [examples](Rewriting-WDP-Examples.md)
 - Shells: [overview](Rewriting-Shells.md) · [worked example](Rewriting-Shells-Example.md)
+
+**Steering examples**
+
+- [Overview](Steering.md)
+- Prompt: [geometry](Steering-Prompt-Geometry.md) · [admitted guidance](Steering-Admitted-Guidance.md) · [compact profiles](Steering-Compact-Prompt-Profiles.md) · [selected hint](Steering-Selected-Hint.md) · [plain seed](Steering-Plain-Seed-Experiment.md) · [families](Steering-Prompt-Families.md)
+- Decoding: [self-certification masking](Steering-Self-Certification-Masking.md) · [attention and activation](Steering-Attention-And-Activation.md)
+- Acceptance: [clarify](Steering-Clarify-Instead-Of-Inventing.md) · [closed schema](Steering-Closed-Artifact-Schema.md) · [checked reuse](Steering-Checked-Reuse.md) · [honest verdicts](Steering-Honest-Verdicts.md) · [truthful turns](Steering-Truthful-Turn-Record.md) · [mediated calls](Steering-Mediated-Model-Calls.md) · [critique loop](Steering-Critique-Loop.md) · [pressure screens](Steering-Pressure-Screens.md) · [self-certification screen](Steering-Self-Certification-Screen.md) · [failure-first](Steering-Failure-First-Accounting.md)
+- Learning: [from runs](Steering-Learning-From-Runs.md) · [harness evolution](Steering-Harness-Evolution.md)
