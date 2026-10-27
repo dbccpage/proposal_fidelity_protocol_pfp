@@ -20,7 +20,7 @@ Each module was copied byte for byte from `dbccpage/the_symbol_game` at commit `
 | `SLevel` | L2D | import of the five modules above that need it |
 | `PrimitiveDifference` | L3D | import of `ShadowBoundary`; also the Lean anchor of `code/rust/core_homotopy_type_theory` |
 
-Scores follow `SCORING.md` v2.0.0: a level, then the weakest of the five gates. They come from the re-homing review of 2026-10-27, which made one reviewer pass and two adversary passes. **No module here reaches the L4D floor of `SCORING.md` §1.5.** This folder is not in any governed population of `governance/policy.json`, so `governance/tools/checker.py` does not check it.
+Scores follow `SCORING.md` v2.0.0: a level, then the weakest of the five gates. They come from the re-homing review of 2026-10-27, which made one reviewer pass and two adversary passes. **No module here reaches the L4D floor of `SCORING.md` §1.5.** Since 2026-10-27 `lean4/**/*.lean` is in the Lean 4 population of `governance/policy.json`, and its 11 `.lean` files are grandfathered in `governance/baseline.json` at the bytes copied in PR #34. Any edit to one of them ends that exemption, and the edited file then needs a completed `.contract.score.json` companion at the L4D floor.
 
 Not moved, and why:
 
