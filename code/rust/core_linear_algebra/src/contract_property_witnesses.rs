@@ -97,7 +97,7 @@ mod rank_nullity_witness {
 }
 
 #[cfg(test)]
-mod __omega_linear_algebra_property_witnesses {
+mod __core_linear_algebra_property_witnesses {
     use crate::backend::basic_matrix::{BasicMatrix, CheckedNumeric, MatrixError};
     use crate::linear_algebra::complex_matrix::{
         CMatrix, CVector, ComplexMatrix, ComplexMatrixError, C64,

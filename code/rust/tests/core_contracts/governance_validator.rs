@@ -449,7 +449,7 @@ fn binding_fixture(
     role: Option<ComponentRole>,
 ) -> (PathBuf, CoreContractV1) {
     let mut contract: CoreContractV1 = serde_yaml::from_str(include_str!(
-        "../../../../governance/contracts/contract_canonical_definitions/math/quantum_gaps.contract.yaml"
+        "../../governance/contracts/contract_canonical_definitions/math/quantum_gaps.contract.yaml"
     ))
     .expect("real named-symbol contract must parse");
     contract.contract_id = id.into();
@@ -465,14 +465,14 @@ fn distinct_real_symbols_can_share_their_actual_module() {
         (
             PathBuf::from("quantum_gaps.contract.yaml"),
             serde_yaml::from_str(include_str!(
-                "../../../../governance/contracts/contract_canonical_definitions/math/quantum_gaps.contract.yaml"
+                "../../governance/contracts/contract_canonical_definitions/math/quantum_gaps.contract.yaml"
             ))
             .unwrap(),
         ),
         (
             PathBuf::from("quantum_gap_functional.contract.yaml"),
             serde_yaml::from_str(include_str!(
-                "../../../../governance/contracts/contract_canonical_definitions/math/quantum_gap_functional.contract.yaml"
+                "../../governance/contracts/contract_canonical_definitions/math/quantum_gap_functional.contract.yaml"
             ))
             .unwrap(),
         ),

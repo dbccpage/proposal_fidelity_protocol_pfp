@@ -26,7 +26,7 @@ fn fixture() -> Value {
 }
 
 fn invoke(raw: &[u8]) -> (i32, Value) {
-    let mut child = Command::new(env!("CARGO_BIN_EXE_omega_contract_binding_audit"))
+    let mut child = Command::new(env!("CARGO_BIN_EXE_core_contract_binding_audit"))
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())

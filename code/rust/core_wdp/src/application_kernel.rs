@@ -838,7 +838,7 @@ mod tests {
     #[test]
     fn fifteen_independent_reference_records_are_replayed_without_search() {
         let fixture: Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"), "/../../../applications/wdp_products/reference/certified_progress/evidence/records.json"
+            env!("CARGO_MANIFEST_DIR"), "/../applications/wdp_products/reference/certified_progress/evidence/records.json"
         ))).unwrap();
         let records = fixture["records"].as_array().unwrap();
         assert_eq!(records.len(), 15);

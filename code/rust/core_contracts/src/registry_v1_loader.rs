@@ -376,7 +376,7 @@ mod tests {
     fn real_positive_v1_fixture_still_validates() {
         let text = include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
-            "/../../../governance/tests/fixtures/core_contracts/v1/good/finite_obstruction_trichotomy.contract.yaml"
+            "/../governance/tests/fixtures/core_contracts/v1/good/finite_obstruction_trichotomy.contract.yaml"
         ));
         let report = temporary_corpus(Some(text));
         assert_eq!(report.seen, 1);

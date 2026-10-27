@@ -5,7 +5,7 @@ pub struct BoundaryError_a4accca1;
 #[allow(dead_code, non_camel_case_types, missing_docs)]
 pub type BoundaryResult_a4accca1<T> = std::result::Result<T, BoundaryError_a4accca1>;
 #[cfg(test)]
-mod __omega_homology_property_witnesses {
+mod __core_homology_property_witnesses {
     use crate::coboundary::CoboundaryMap;
     use crate::cochain_complex::CochainComplex;
     use crate::cocycle::Cocycle;

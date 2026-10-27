@@ -16,7 +16,7 @@ use std::path::Path;
 #[test]
 fn trichotomy_v1_loads_and_validates() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/tests/fixtures/core_contracts/v1/good");
+        .join("../governance/tests/fixtures/core_contracts/v1/good");
     let report = load_v1_dir(&dir).expect("fixture dir readable");
     assert_eq!(report.loaded, 1, "expected exactly the trichotomy fixture");
     assert!(
@@ -40,7 +40,7 @@ fn trichotomy_v1_loads_and_validates() {
 
 fn poison_fixture(name: &str) -> String {
     let p = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/tests/fixtures/core_contracts/v1/poison")
+        .join("../governance/tests/fixtures/core_contracts/v1/poison")
         .join(name);
     std::fs::read_to_string(p).expect("poison fixture exists")
 }

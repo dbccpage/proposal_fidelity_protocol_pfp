@@ -94,7 +94,7 @@ impl BoundaryRecordaa831788 {
 }
 
 #[cfg(test)]
-mod __omega_functional_property_witnesses {
+mod __core_functional_property_witnesses {
     use num_bigint::BigInt;
     use num_rational::BigRational;
     use core_functional::gamma2::{

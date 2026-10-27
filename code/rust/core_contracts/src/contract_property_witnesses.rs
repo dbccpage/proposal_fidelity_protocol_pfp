@@ -5,7 +5,7 @@ pub struct BoundaryError_f4466d52;
 #[allow(dead_code, non_camel_case_types, missing_docs)]
 pub type BoundaryResult_f4466d52<T> = std::result::Result<T, BoundaryError_f4466d52>;
 #[cfg(test)]
-mod __omega_contracts_property_witnesses {
+mod __core_contracts_property_witnesses {
     use crate::traits::fixed_layer::OperatorClass;
 
     #[test]

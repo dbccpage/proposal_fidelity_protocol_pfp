@@ -1,0 +1,16 @@
+schema_version: "core.contract.v1"
+contract_id: "urn:core:lifts:poison:v0.1.0"
+title: "Poison - lift license without authority machinery"
+kind: "lift_contract"
+status: "mathematical_wip"
+role: "LiftLicense"
+# No constitution/constraints/replay/witnesses -> validate_lift_license (via
+# validate_registry) must reject. validate_v1 alone passes (role present, valid enums),
+# proving the authority machinery is enforced by the registry layer, not cosmetic.
+descriptor:
+  authority_effect: "authorizes_transition"
+  evidence_ceiling: "LocalReplay"
+  dependencies: { contracts: [], proof_obligations: [] }
+  terminals: { may_emit: [], may_support: [] }
+  refusals: { may_emit: [] }
+  operator_classes: { may_support: [], must_not_self_assign: true }

@@ -602,7 +602,7 @@ fn lift_license_loads_and_validates() {
 #[test]
 fn lift_license_without_machinery_is_rejected_by_registry() {
     let p = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../../governance/tests/fixtures/core_contracts/v1/poison/lift_missing_machinery.yaml");
+        .join("../governance/tests/fixtures/core_contracts/v1/poison/lift_missing_machinery.yaml");
     let c: CoreContractV1 = serde_yaml::from_str(&std::fs::read_to_string(p).unwrap()).unwrap();
     let err = core_contracts::validate::validate_registry(&[c.to_descriptor()]).unwrap_err();
     let e = err.to_lowercase();
