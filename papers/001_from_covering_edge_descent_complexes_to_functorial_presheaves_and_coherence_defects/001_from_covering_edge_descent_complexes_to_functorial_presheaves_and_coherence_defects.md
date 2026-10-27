@@ -1,0 +1,951 @@
+<!-- markdownlint-disable MD013 MD028 MD031 MD032 MD060 -->
+
+# From Covering-Edge Descent Complexes to Functorial Presheaves and Coherence Defects
+
+*Subtitle:* Strict Functorial Completion, Coboundary-Curvature Duality, and the Finite Obstruction Boundary
+
+*Author:* Jeremy H. Carroll
+
+*Date:* 2026-10-02
+
+*License:* Creative Commons Attribution 4.0 International (CC-BY-4.0)
+
+*Status:* Pre-Print (v2.0)
+
+*Version:* 2.0.0
+
+*Research supplement:* 2026-10-14 (working; not redeposited)
+
+---
+
+> **Vocabulary note.** This paper is written inside the CODA discipline,
+> which fixes a checklist of structural roles (what counts as a difference,
+> what carries it, what repairs are licensed, what residue survives, and what
+> the paper authorises --- here, nothing). That checklist is declared in full
+> in [Appendix A](#appendix-a-mechanism-inventory). It is programme vocabulary,
+> not standard mathematical usage, and no result below depends on reading it
+> first.
+
+## Abstract
+
+Covering-edge descent data on a finite poset assigns restriction maps only to adjacent comparable elements. A strict presheaf extension requires path independence of all saturated-chain composites (**Path A**). Alternatively, declaring maps on every comparable pair gives the composition defect $K_{c,b,a}=r_{b,a}r_{c,b}-r_{c,a}$ (**Path B**). We show $(d_1d_0s)_{c,b,a}=K_{c,b,a}s(c)$, characterize the flat locus, and compute the degree-3 boundary of the section-valued curvature. The operator identity $\delta_2K=0$ holds without flatness, whereas $\delta_2\delta_1T=K\circ T-T\circ K$ can be nonzero; a generic $H^2$ quotient therefore remains unavailable.
+
+The finite computational extensions (**Path C**) include exact rational distance-to-image LP certificates, an additive normal form under path-independent cover data, bounded-curvature routing, and diamond commutator traces. The normal form retains mixed terms on longer triples. A cost-two distinction ledger records a declared charge rather than an independently derived operator norm. Simplicial face-poset examples verify the operator cocycle without identifying it with Regge deficit angles. Bell marginal restrictions remain flat even for a contextual PR box: contextuality is measured separately by failure of a nonnegative normalized global probability extension. An exact rational enclosure is given for the algebraic number $2(\sqrt{2}-1)$. The new observed 2-category, protected linear quotient and weighted path bounds declare their question-preservation premises. Metric hinge holonomy is derived for rational normal rotations, with an explicit observation and winding countermodel. Cyclotomic matrix fixtures certify finite Wilson-loop identities, gauge covariance, and ordered tetrahedral product closure.
+
+The October 14 supplement constructs the all-degree strict-chain operator algebra, its graded Leibniz law, and $D^2f=K\smile f-f\smile K$, with $DK=0$. Vertexwise invertible basis changes conjugate curvature and cannot rectify a non-flat system. A flat extension preserving the covers exists exactly when all saturated path products agree, and is then unique. Exact Rust and independent Python controls implement a bounded rational profile. A supplementary Lean kernel verifies the graded parity-algebra identities under explicit differential-algebra assumptions; the paper's pinned Lean package was not replayed. The historical manifest remains historical evidence. Higher coherence, physical spacetime, and generic non-flat cohomology remain outside these results.
+
+---
+
+## 1. Introduction and Positioning
+
+In the analysis of decentralized, distributed, or factorized approximations on a finite poset $(P,\le)$, local data are compared across covering edges by contractive linear maps:
+$$
+r_{b,a}:F(b)\to F(a),\qquad (a,b)\in E_{\mathrm{cov}}(P),
+$$
+where $E_{\mathrm{cov}}(P)=\{(a,b)\in P\times P:a\prec b\}$. This data suffices to define a degree-0 difference operator:
+$$
+C^0 \xrightarrow{\ d_0\ } C^1,\qquad (d_0s)(a,b)=r_{b,a}s(b)-s(a),
+$$
+measuring local disagreement across adjacent nodes. However, covering-edge data alone does not define a restriction map $r_{c,a}:F(c)\to F(a)$ for non-covering pairs $a<c$. Without such maps, there is neither a presheaf functor nor a higher coboundary complex.
+
+There are two mathematically honest routes forward:
+
+1. **Path A (Strict Presheaf Completion):** Assume that all saturated chains between comparable pairs yield identical composite restrictions. This assumption completes the covering-edge data into a genuine functor $P^{\mathrm{op}}\to\mathbf{Ban}$.
+2. **Path B (Curvature Cochain):** Declare comparable-pair restrictions directly and measure the defect of chain composition via a typed degree-2 curvature cochain $K$.
+
+The conceptual dividing line is the **Local Green, Global Red (LGGR)** principle: local covering-edge checks may be satisfied everywhere ($d_0s=0$ on covering edges) while higher chain composition remains obstructed ($K\ne0$). Path A eliminates this obstruction by hypothesis; Path B records and prices it as structural data.
+
+**Scope.** The algebraic identities apply to finite posets with linear restriction maps; the Banach-presheaf formulation additionally requires contractivity. Python fixtures use finite rational matrices and do not certify arbitrary Banach norms. No claims are made regarding infinite-dimensional limits, physical spacetime, or quantum gravity.
+
+---
+
+## 2. Path A: Strict Functorial Presheaves
+
+### 2.1 Strict Presheaf Formulation
+
+Let $(P,\le)$ be a finite partially ordered set.
+
+> **[DEFINITION] Definition 2.1 — Functorial Banach Presheaf.** A functorial Banach presheaf on $P$ is a contravariant functor $F:P^{\mathrm{op}}\to\mathbf{Ban}$. It assigns a Banach space $F(a)$ to each element $a\in P$ and a contractive linear map $r_{c,a}:F(c)\to F(a)$ to each comparable pair $a\le c$, satisfying:
+> 1. Identity law: $r_{a,a}=\mathrm{id}_{F(a)}$ for all $a\in P$.
+> 2. Composition law: $r_{c,a}=r_{b,a}\circ r_{c,b}$ for all $a\le b\le c$ in $P$.
+
+> **[PROVEN, CONDITIONAL] Proposition 2.1a — Strict Completion from Covering Edges.** Let $P$ be a finite poset equipped with Banach fibers $F(a)$ and contractive linear maps $r_{b,a}:F(b)\to F(a)$ on all covering edges $a\prec b$. If for every comparable pair $a\le c$, the composition of restriction maps along every saturated chain from $a$ to $c$ is identical, then there exists a unique functorial Banach presheaf $\widehat F:P^{\mathrm{op}}\to\mathbf{Ban}$ extending the covering-edge data.
+>
+> *Proof.* For any $a\le c$, choose any saturated chain $a=x_0\prec x_1\prec \cdots \prec x_k=c$. Define $\widehat r_{c,a}=r_{x_1,x_0}\circ r_{x_2,x_1}\circ \cdots \circ r_{x_k,x_{k-1}}$, and set $\widehat r_{a,a}=\mathrm{id}_{F(a)}$. By assumption, $\widehat r_{c,a}$ is independent of the chosen chain, making the assignment well-defined. Contractivity is preserved because finite compositions of contractive maps are contractive. For any triple $a\le b\le c$, concatenating a saturated chain from $a$ to $b$ with one from $b$ to $c$ yields a saturated chain from $a$ to $c$. The composite along this chain equals $\widehat r_{c,a}$ by definition and equals $\widehat r_{b,a}\circ\widehat r_{c,b}$ by associativity. Uniqueness is immediate since covering edges generate all saturated chains. $\square$
+
+The finite algebraic kernel is mechanized in Lean 4 (`StrictCompletion.lean`):
+`strict_completion_from_covering_edges`, `strict_completion_unique_from_chain`, `diamond_path_independence_of_common_completion`, `StrictCompletion.chain_law`, and `StrictCompletion.diamond_from_chain_law`.
+
+### 2.2 Diamonds and Scalar Witnesses
+
+For an elementary diamond $a\prec b_1\prec c$ and $a\prec b_2\prec c$, strict functoriality forces path-independence:
+
+> **[PROVEN, CONDITIONAL] Lemma 2.2 — Diamond Path-Independence.** Under Proposition 2.1a,
+> $$
+> r_{b_1,a}\circ r_{c,b_1} = r_{b_2,a}\circ r_{c,b_2}.
+> $$
+>
+> *Proof.* Both sides equal the unique comparable-pair extension $\widehat r_{c,a}$. $\square$
+
+> **[PROVEN, EXAMPLE] Scalar Diamond Witness.** Let $F(x)=\mathbb{R}$ on a single diamond $a<b<c$. Let $r_{c,b}=\alpha$, $r_{b,a}=\beta$, and $r_{c,a}=\mu$. Then the composition defect on $v\in\mathbb{R}$ evaluates to
+> $$
+> K_{c,b,a}(v)=\beta(\alpha v)-\mu v = (\beta\alpha-\mu)v.
+> $$
+> The defect vanishes if and only if $\beta\alpha=\mu$. (Mechanized in Lean 4 as `Paper001a.scalar_diamond_curvature`.)
+
+### 2.3 Categorical Interface Unlock
+
+> **[STANDARD, CONDITIONAL] Proposition 2.3 — Categorical Interface Unlock (1-categorical only).** Under Proposition 2.1a, the system satisfies the axioms of a 1-categorical presheaf, unlocking:
+> 1. The category of elements $\int_P F$ (Grothendieck construction).
+> 2. Functorial colimits and limits.
+> 3. Standard descent diagrams over subposets.
+>
+> *Scope fence:* This proposition does not assert an $\infty$-categorical enhancement, a model structure, higher homotopy coherence, or physical dynamics.
+
+---
+
+## 3. Path B: Curvature Cochains and Higher Boundaries
+
+Path B declares comparable-pair restrictions directly, making no path-independence assumptions.
+
+### 3.1 Composition Curvature
+
+> **[DEFINITION] Definition 3.1 — Composition Curvature.** For any comparable triple $a\le b\le c$ in $P$, the curvature operator $K_{c,b,a}:F(c)\to F(a)$ is defined by
+> $$
+> K_{c,b,a} = r_{b,a}\circ r_{c,b} - r_{c,a}.
+> $$
+
+If $K_{c,b,a}\ne 0$, the system fails the presheaf composition law on that triple. **[INTERPRETIVE]** We interpret $K$ as a typed coherence defect.
+
+*Scope fence:* $K$ is a degree-2 cochain, not a proven cohomology class in a full $H^2$ theory.
+
+### 3.2 The Differential Identity $d_1 d_0 = K$
+
+Let the cochain spaces over $P$ be:
+$$
+C^0 = \prod_{x\in P} F(x),\qquad
+C^1 = \prod_{a\le b} F(a),\qquad
+C^2 = \prod_{a\le b\le c} F(a).
+$$
+The coboundary operators are defined by:
+$$
+(d_0 s)(a,b) = r_{b,a}s(b) - s(a),
+$$
+$$
+(d_1 g)(a,b,c) = r_{b,a}(g(b,c)) - g(a,c) + g(a,b).
+$$
+
+> **[PROVEN, CONDITIONAL] Theorem 3.2 — Coboundary-Curvature Identity.** For every section $s\in C^0$ and every comparable triple $a\le b\le c$:
+> $$
+> (d_1(d_0 s))(a,b,c) = K_{c,b,a}(s(c)).
+> $$
+>
+> *Proof.* Direct expansion yields:
+> $$
+> \begin{aligned}
+> (d_1(d_0 s))(a,b,c)
+> &= r_{b,a}(r_{c,b}s(c) - s(b)) - (r_{c,a}s(c) - s(a)) + (r_{b,a}s(b) - s(a)) \\
+> &= r_{b,a}(r_{c,b}s(c)) - r_{b,a}s(b) - r_{c,a}s(c) + s(a) + r_{b,a}s(b) - s(a) \\
+> &= (r_{b,a}\circ r_{c,b} - r_{c,a})(s(c)) \\
+> &= K_{c,b,a}(s(c)).
+> \end{aligned}
+> $$
+> All intermediate section values $s(a)$ and $s(b)$ cancel by linearity. $\square$
+
+Mechanized in Lean 4 as `Paper001a.TripleRestriction.d1_d0_eq_curvature`.
+
+> **[PROVEN, CONDITIONAL] Corollary 3.3 — Flat Locus Equivalence.** The following are equivalent:
+> 1. $K_{c,b,a}=0$ for all $a\le b\le c$ (the system is flat).
+> 2. $d_1(d_0 s)=0$ for all sections $s\in C^0$.
+> 3. The restriction system satisfies chain composition on all triples.
+>
+> *Proof.* (1) $\implies$ (2) is immediate from Theorem 3.2. Conversely, if $d_1(d_0 s)=0$ for all $s$, let $v\in F(c)$ be arbitrary. Choosing a section with $s(c)=v$ implies $K_{c,b,a}(v)=0$, whence $K_{c,b,a}=0$. The equivalence of (1) and (3) is Definition 3.1. $\square$
+
+Mechanized in Lean 4 as `TripleRestriction.flat_iff_chainComposable` and `TripleRestriction.d1_d0_zero_iff_flat`.
+
+### 3.3 Degree-3 Boundary for Curvature ($d_2 K$)
+
+For a quadruple $a\le b\le c\le d$, define the degree-2 coboundary $d_2:C^2\to C^3$ by:
+$$
+(d_2 h)(a,b,c,d) = r_{b,a}(h(b,c,d)) - h(a,c,d) + h(a,b,d) - h(a,b,c).
+$$
+Evaluating on the curvature cochain $h(x,y,z)=K_{z,y,x}(s(z))$:
+
+> **[PROVEN, CONDITIONAL] Theorem 3.4 — Finite $d_2K$ Boundary.** For any quadruple $a\le b\le c\le d$ and sections $s(d)\in F(d)$, $s(c)\in F(c)$:
+> $$
+> (d_2 K(s))(a,b,c,d) = K_{c,b,a}(r_{d,c}s(d)) - K_{c,b,a}(s(c)).
+> $$
+> Consequently, $d_2 K$ vanishes if:
+> 1. The lower triple is flat ($K_{c,b,a}=0$).
+> 2. The section is edge-compatible along the top link ($r_{d,c}s(d)=s(c)$).
+>
+> *Proof.* Expand $d_2$ on the curvature cochain terms:
+> $$
+> r_{b,a}K_{d,c,b}(s(d)) - K_{d,c,a}(s(d)) + K_{d,b,a}(s(d)) - K_{c,b,a}(s(c)).
+> $$
+> Substituting definitions:
+> $$
+> r_{b,a}(r_{c,b}r_{d,c} - r_{d,b})s(d) - (r_{c,a}r_{d,c} - r_{d,a})s(d) + (r_{b,a}r_{d,b} - r_{d,a})s(d) - K_{c,b,a}(s(c)).
+> $$
+> Regrouping:
+> $$
+> (r_{b,a}r_{c,b}r_{d,c} - r_{b,a}r_{d,b} - r_{c,a}r_{d,c} + r_{d,a} + r_{b,a}r_{d,b} - r_{d,a})s(d) - K_{c,b,a}(s(c))
+> = (r_{b,a}r_{c,b} - r_{c,a})(r_{d,c}s(d)) - K_{c,b,a}(s(c)),
+> $$
+> which is identically $K_{c,b,a}(r_{d,c}s(d)) - K_{c,b,a}(s(c))$. $\square$
+
+Mechanized in Lean 4 as `QuadRestriction.d2_curvature_eq_lower_curvature_difference`, `QuadRestriction.d2_curvature_zero_of_lower_flat`, and `QuadRestriction.d2_curvature_zero_of_edge_compatible`.
+
+### 3.4 Primitive Difference / LGGR Boundary
+
+Let data packets carry a local payload and a global curvature defect: $p = (x.\mathrm{payload}, x.\mathrm{curvature})$. Consider the primitive difference relation comparing only payloads:
+$$
+\delta(x, y) = (x.\mathrm{payload}, y.\mathrm{payload}),\qquad \mathrm{ZeroRel}(x,y) \iff x.\mathrm{payload} = y.\mathrm{payload}.
+$$
+
+> **[PROVEN, CONDITIONAL] Theorem 3.5 — Payload-Curvature LGGR Boundary.**
+> 1. Local payload observations factor through the payload-only quotient: there exists $F$ such that $F([p]) = p.\mathrm{payload}$.
+> 2. If two packets have identical payloads but differing curvatures ($k\ne l$), no curvature observation factors through the payload-only quotient.
+> 3. If and only if the equivalence relation preserves both payload and curvature does curvature descend to the quotient.
+
+Mechanized in Lean 4 as `Paper001a.payload_classifier_factors`, `Paper001a.curvature_not_factor_through_payload_quotient`, and `Paper001a.payload_green_curvature_red`.
+
+### 3.5 Operator Cocycle and the Curved-Complex Boundary
+
+To test whether $K$ can define an invariant cohomology class rather than only a section-dependent defect, introduce operator-valued cochains $C^p(P, \mathbf{Hom})$:
+- $C^1(P, \mathbf{Hom})$ assigns $T_{b,a}: F(b) \to F(a)$ for each comparable pair $a \le b$.
+- $C^2(P, \mathbf{Hom})$ assigns $H_{c,b,a}: F(c) \to F(a)$ for each triple $a \le b \le c$.
+- $C^3(P, \mathbf{Hom})$ assigns $\Omega_{d,c,b,a}: F(d) \to F(a)$ for each quadruple $a \le b \le c \le d$.
+
+The operator coboundaries are defined by:
+$$
+\begin{aligned}
+(\delta_1 T)_{c,b,a} &= r_{b,a} \circ T_{c,b} - T_{c,a} + T_{b,a} \circ r_{c,b}, \\
+(\delta_2 H)_{d,c,b,a} &= r_{b,a} \circ H_{d,c,b} - H_{d,c,a} + H_{d,b,a} - H_{c,b,a} \circ r_{d,c}.
+\end{aligned}
+$$
+
+> **[PROVEN, CONDITIONAL] Theorem 3.6 — Unconditional Operator Cocycle Identity.**
+> For any finite poset $P$, arbitrary fibers $F(x)$, and arbitrary restriction maps $r_{b,a}$, the curvature cochain $K_{c,b,a} = r_{b,a} \circ r_{c,b} - r_{c,a}$ satisfies:
+> $$
+> (\delta_2 K)(a,b,c,d) = r_{b,a} \circ K_{d,c,b} - K_{d,c,a} + K_{d,b,a} - K_{c,b,a} \circ r_{d,c} \equiv 0
+> $$
+> identically on every quadruple $a \le b \le c \le d$, with zero hypothesis on section edge-compatibility or lower flatness.
+>
+> *Proof.* Direct expansion into compositions yields:
+> $$
+> \begin{aligned}
+> (\delta_2 K)(a,b,c,d)
+> &= r_{b,a}(r_{c,b}r_{d,c} - r_{d,b}) - (r_{c,a}r_{d,c} - r_{d,a}) + (r_{b,a}r_{d,b} - r_{d,a}) - (r_{b,a}r_{c,b} - r_{c,a})r_{d,c} \\
+> &= r_{b,a}r_{c,b}r_{d,c} - r_{b,a}r_{d,b} - r_{c,a}r_{d,c} + r_{d,a} + r_{b,a}r_{d,b} - r_{d,a} - r_{b,a}r_{c,b}r_{d,c} + r_{c,a}r_{d,c} \\
+> &= 0. \quad \square
+> \end{aligned}
+> $$
+
+Mechanized in Lean 4 as `Paper001a.QuadRestrictionOp.delta2_operator_curvature_identically_zero` and verified in Python via `code/cohomology_quotient.py`.
+
+> **[PROVEN, EXAMPLE] Theorem 3.7 — Generic $H^2$ Quotient Obstruction.**
+> The maps above do not form a cochain complex on an arbitrary non-flat restriction system. In general,
+> $$
+> (\delta_2\delta_1T)_{d,c,b,a}
+> =K_{c,b,a}\circ T_{d,c}-T_{b,a}\circ K_{d,c,b},
+> $$
+> which need not vanish. For scalar fibers with $r_{b,a}=2$, $r_{c,b}=3$, $r_{c,a}=0$, $T_{d,c}=1$, and the other relevant $T$ components zero, the residual is $6$. Therefore $\mathrm{im}(\delta_1)$ is not generally contained in $\ker(\delta_2)$, so $\ker(\delta_2)/\mathrm{im}(\delta_1)$ is not a defined generic quotient for Path B.
+
+The Python `OperatorCochainImageDiagnostic` performs exact membership tests in $\mathrm{im}(\delta_1)$ only. On a separately established flat complex, the usual quotient construction may be considered; no generic gauge-equivalence or rectification theorem is claimed here.
+
+---
+
+## 4. Finite Extensions, Model Consequences, and Evidence Boundaries
+
+Sections 4.1–4.11 retain their existing numbers for traceability. They distinguish algebraic identities, conditional constructions, declared model conventions, and finite examples. Passing an example or mutation test is evidence for that fixture; it is not a proof of every surrounding interpretation.
+
+### 4.1 Curved Differential Derivation Identity (Theorem 4.1)
+
+In non-flat restriction systems where $K \ne 0$, the coboundary operators $\delta$ do not form a standard nilquadratic cochain complex ($\delta^2 \ne 0$). We show that the defect is governed by the inner commutator with the curvature cochain.
+
+> **[PROVEN, CONDITIONAL] Theorem 4.1 — Curved Differential Derivation Identity.**
+> Let $(P, \le)$ be a finite poset equipped with Banach fibers $F(x)$ and declared comparable-pair restriction maps $r_{b,a}$. On the operator cochain space $C^1(P, \mathbf{Hom})$, the composition $\delta_2 \delta_1$ satisfies:
+> $$
+> (\delta_2 \delta_1 T)_{d,c,b,a} = [K, T]_{d,c,b,a} = K_{c,b,a} \circ T_{d,c} - T_{b,a} \circ K_{d,c,b}
+> $$
+> for all quadruples $a \le b \le c \le d$, while the curvature itself satisfies $\delta_2(K) \equiv 0$. The all-degree strict-chain construction below supplies the additional product and differential laws; it does not construct compositor 2-cells.
+>
+> *Proof.* Expanding $(\delta_2(\delta_1 T))_{d,c,b,a}$ using the definition of $\delta_2$ on $H = \delta_1 T$:
+> $$
+> (\delta_2 H)_{d,c,b,a} = r_{b,a} \circ (\delta_1 T)_{d,c,b} - (\delta_1 T)_{d,c,a} + (\delta_1 T)_{d,b,a} - (\delta_1 T)_{c,b,a} \circ r_{d,c}.
+> $$
+> Substituting $(\delta_1 T)_{z,y,x} = r_{y,x} \circ T_{z,y} - T_{z,x} + T_{y,x} \circ r_{z,y}$ and collecting terms with respect to $T$, the cross terms involving $r_{y,x} \circ r_{z,y}$ recombine with the direct terms $r_{z,x}$ to form $K_{z,y,x} = r_{y,x} \circ r_{z,y} - r_{z,x}$. All purely linear terms cancel identically, leaving $K_{c,b,a} \circ T_{d,c} - T_{b,a} \circ K_{d,c,b}$. The cocycle condition $\delta_2(K) = 0$ follows from Theorem 3.6. $\square$
+
+*Computational verification:* Tested in `code/curved_bicomplex.py` and `code/tests/test_curved_bicomplex.py::test_nonflat_diamond_matrix_2x2_fibers`.
+
+**All-degree construction (PO001-ALL-DEGREE-CURVED).** Fix modules $V_x$ over a commutative unital ring and use linear maps, or Banach fibers and bounded linear maps. Declare the strict-chain carrier
+$$
+C^n=\prod_{x_0<\cdots<x_n}\operatorname{Hom}(V_{x_n},V_{x_0}),\qquad n\ge0.
+$$
+Here degree zero consists of vertex endomorphisms, distinct from the section-valued $C^0$ in §3.2. Self-restrictions are identities when recovering the full presheaf interface; the executable strict-chain profile has no separate self-edge inputs. Its product, internal-face differential, and connection are
+$$
+\begin{aligned}
+(f\smile g)_{x_0\ldots x_{p+q}}
+ &=f_{x_0\ldots x_p}\circ g_{x_p\ldots x_{p+q}},\\
+(bf)_{x_0\ldots x_{n+1}}
+ &=\sum_{i=1}^{n}(-1)^i f_{x_0\ldots\widehat{x_i}\ldots x_{n+1}},\\
+A_{x,y}&=r_{y,x},\qquad
+Df=bf+A\smile f-(-1)^n f\smile A,\\
+K&=bA+A\smile A.
+\end{aligned}
+$$
+The empty internal sum in degree zero is zero. Only internal deletions occur in $b$, so endpoint types agree; deleting endpoints instead would require extra transports. The unit is the degree-zero family of identity maps. Degrees beyond the maximum strict-chain length minus one are zero spaces.
+
+> **[PROVEN, CONDITIONAL] Theorem 4.1a — All-Degree Curved Operator Algebra.** This is a unital associative graded algebra with
+> $$
+> b^2=0,\quad b(f\smile g)=bf\smile g+(-1)^p f\smile bg,
+> $$
+> $$
+> D(f\smile g)=Df\smile g+(-1)^p f\smile Dg,\qquad
+> D^2f=K\smile f-f\smile K,\qquad DK=0.
+> $$
+> Thus $(C^\bullet,b)$ is a differential graded algebra; $(C^\bullet,D,K)$ is its curved counterpart. It is generally noncommutative.
+>
+> *Proof.* Associativity and the unit follow componentwise from composition. For $b^2$, every pair of internal deletions $i<j$ occurs twice, with signs $(-1)^{i+j-1}$ and $(-1)^{i+j}$, and cancels. In $b(f\smile g)$ split deleted vertices at $i\le p$ and $i>p$. The first group is $bf\smile g$, sharing vertex $x_{p+1}$; the second is $(-1)^p f\smile bg$, sharing $x_p$. This establishes the Leibniz law also when one degree is zero. Expanding the graded commutator $[A,f]=A\smile f-(-1)^n f\smile A$ gives its Leibniz law, and hence that of $D$. Apply both laws once more: the terms involving $bf$ cancel and $b^2f=0$, leaving
+> $$
+> D^2f=(bA)\smile f-f\smile(bA)
+>       +(A\smile A)\smile f-f\smile(A\smile A).
+> $$
+> Finally $bK=(bA)\smile A-A\smile bA$, while
+> $A\smile K-K\smile A=A\smile bA-(bA)\smile A$.
+> Their sum is $DK=0$. All sums are finite; no norm or convergence assumption is used. On strict triples and quadruples, $D$ recovers $\delta_1$ and $\delta_2$. $\square$
+
+The same interior-deletion formulas can be placed on weak chains, but this is a different cochain carrier. Extending a strict-chain cochain by zero on repeated vertices does not intertwine $b$: on $(x,x,y)$, $bA=-A_{x,y}$ can be nonzero. The implementation and the flatness detector below use strict chains, without a claim about normalized weak-chain subcomplexes.
+
+> **[PROVEN, CONDITIONAL] Corollary 4.1b — Full Operator Detector of Flatness.** For this carrier, $K=0$ if and only if $D^2$ vanishes on every degree-zero operator cochain; equivalently, $D^2=0$ in every degree.
+>
+> *Proof.* Flatness implies nilpotence by Theorem 4.1a. Conversely, for each strict triple $x<y<z$ take the degree-zero vertex selector $e_z$, identity at $z$ and zero elsewhere. Then $(K\smile e_z-e_z\smile K)_{x,y,z}=K_{x,y,z}$. If every such $D^2e_z$ vanishes, every curvature component vanishes. $\square$
+
+The full operator carrier is essential: testing only the global identity cochain always gives $[K,1]=0$ and does not detect curvature. Over $\mathbb Q$, the graded commutator $[f,g]=f\smile g-(-1)^{pq}g\smile f$ also gives a graded Lie algebra: expanding the six associative triple products establishes graded Jacobi, and the Leibniz law makes $b$ a Lie derivation. The curvature equation is $K=bA+\tfrac12[A,A]$, so flatness is the Maurer–Cartan equation in this declared algebra. This is an algebraic Lie bridge, with no physical symmetry group inferred.
+
+*Evidence scope.* The written theorem applies to the declared all-degree carrier on any finite poset. `code/operator_incidence_dga.py` is an independent rational reference, with `code/tests/test_operator_incidence_dga.py` controls. The reusable Rust owner is `omega_homology::restriction_dga`; its executable profile has at most eight vertices and fiber dimensions at most four, complete component coverage, and exact rational arithmetic. Nonzero $D^2$ controls occur in degrees zero through four on an eight-vertex chain. `lean4/AllDegreeCurvature.lean` retains the earlier assumed-law parity kernel. `lean4/ConcreteIncidence.lean` constructs the recursive signed internal deletion, overlapping cup and covariant derivative over an arbitrary common noncommutative coefficient ring. It constructs strict-poset chain components and establishes their intrinsic positive-degree nilpotence, graded Leibniz and curvature square from those definitions; degree-zero endpoint actions have a separate concrete square theorem. The varying endpoint-Hom construction is now faithfully embedded by `lean4/HeterogeneousIncidence.lean`, including intrinsic strict-poset operations and the vertex selector; graded Jacobi remains a written proof with native controls, outside this Lean replay. The supplementary reproduction profile and printed axiom dependencies are recorded in [the derivation review](docs/derivations_2026_10_14.md).
+
+
+### 4.1c Faithful heterogeneous endpoint-Hom transport
+
+For modules $V_x$ over a commutative ring, set $E=\prod_xV_x$ and let
+$i_x:V_x\to E$ and $p_x:E\to V_x$ be the coordinate injection and projection.
+For finite $P$, $E$ is also the finite direct sum. Define
+$$
+L_{xz}(f)=i_x f p_z\in\operatorname{End}(E).
+$$
+The identities $p_xi_x=I$ and $p_xi_z=0$ for $x\ne z$ give
+$$
+p_xL_{xz}(f)i_z=f,\qquad
+L_{xy}(f)L_{yz}(g)=L_{xz}(fg).
+$$
+Thus every corner map is injective, addition is preserved, and internal
+face deletion commutes with $L$ because its endpoints are fixed. Each
+cup cut has a common pivot, so $L(f\smile g)=Lf\smile Lg$.
+Consequently the already constructed common-ring deletion and covariant
+identities transfer faithfully to the actual varying Hom fibers.
+Strict subchains remain strict; embedding also commutes with zero extension
+and restriction. This establishes intrinsic strict-poset $b^2=0$ and
+$D^2=[K,-]$ without adding differential laws as assumptions.
+
+Let $e_x=L_{xx}(I)$. These are orthogonal idempotents. On a strict triple
+$x<y<z$, the vertex selector supported at $z$ gives
+$L_{xz}(K)e_z-0L_{xz}(K)=L_{xz}(K)$, so a vanishing selected component
+forces $K=0$ by extraction. Degree-zero endpoint square is supplied by the
+concrete kernel; the selector identity is proved in the heterogeneous kernel.
+
+*Scope.* `HeterogeneousIncidence.lean` establishes these injection, composition,
+transport, strict-poset square and detector identities for arbitrary modules
+with the declared types. The finite Rust corner owner is
+`omega_homology::block_embedding`, retaining the original carrier identity.
+The six-term graded Jacobi expansion in §4.1 is a written mathematical proof
+and an exact native control; it is not a new Lean theorem. Neither the embedding
+nor Jacobi declares a physically available Lie action.
+
+### 4.2 Four-Term Operator Comparison and the Higher-Coherence Boundary (Theorem 4.2)
+
+> **[PROVEN, CONDITIONAL] Theorem 4.2 — Four-Term Operator Comparison.** For declared linear restrictions on $a\le b\le c\le d$,
+> $$
+> r_{b,a}K_{d,c,b}+K_{d,b,a}
+> =K_{d,c,a}+K_{c,b,a}r_{d,c}.
+> $$
+> *Proof.* Substitute $K_{z,y,x}=r_{y,x}r_{z,y}-r_{z,x}$. Both sides reduce, by associativity, to $r_{b,a}r_{c,b}r_{d,c}-r_{d,a}$. This is Theorem 3.6 rearranged. $\square$
+
+All terms are maps $F(d)\to F(a)$. The identity compares two ways of accumulating operator defects. It does not supply categories as fibers, natural transformations as compositor 2-cells, units, or higher coherence. In particular, $K_{c,b,a}:F(c)\to F(a)$ need not be an endomorphism, so an expression $I+K_{c,b,a}$ is generally not typed. The following realization adds a specific target 2-category and admission premises; the four-term identity alone supplies neither.
+
+*Computational verification:* `code/tests/test_cohomology_quotient.py::test_operator_cocycle_identity_linear_chain`.
+
+
+### 4.2a A typed observed 2-category and normal lax functor
+
+Declare an object $(V,Q)$ with a vector space and a finite family of linear
+questions $Q:V\to A_Q$. Put $N_Q=\ker Q$. A 1-cell
+$f:(V,Q)\to(W,R)$ is a linear map satisfying $fN_Q\subseteq N_R$.
+There is exactly one 2-cell $f\Rightarrow g$ between parallel 1-cells when
+$R(g-f)=0$, and no 2-cell otherwise. Its retained label is $\alpha=g-f$.
+Vertical composition adds differences; the identity label is zero.
+For $\beta:g\Rightarrow g'$ and $\alpha:f\Rightarrow f'$,
+$$
+\beta*\alpha=g'f'-gf=g\alpha+\beta f+\beta\alpha.
+$$
+The mixed term is essential. The label is invisible because $\alpha$ has
+image in $N_R$, $g'$ preserves that kernel, and $\beta f$ is invisible
+at the final object. This establishes horizontal closure; omitting the 1-cell
+kernel condition can expose a formerly invisible distinction. Matrix
+associativity gives associative 1-composition; addition and uniqueness give
+vertical associativity, units, horizontal associativity and interchange.
+Hence these objects, arrows and cells form a specified strict, locally thin
+2-category. The cells are invertible comparisons of declared answers, with
+no inference of physically reversible dynamics or a natural transformation
+between unspecified fiber categories.
+
+View $P^{op}$ as a locally discrete 2-category. Give every vertex its declared
+$Q_x$, set $r_{xx}=I$, require every $r_{xy}$ to preserve question kernels,
+and require $Q_xK_{xyz}=0$ on every strict triple. Then the assignments have
+compositors
+$$
+\phi_{xyz}:r_{xy}r_{yz}\Rightarrow r_{xz},\qquad
+\phi_{xyz}=r_{xz}-r_{xy}r_{yz}=-K_{xyz}.
+$$
+Self-edge unit cells have label zero. On a quadruple, both composites are
+parallel and have the same label:
+$$
+(r_{xz}-r_{xy}r_{yz})r_{zw}+(r_{xw}-r_{xz}r_{zw})
+=r_{xy}(r_{yw}-r_{yz}r_{zw})+(r_{xw}-r_{xy}r_{yw})
+=r_{xw}-r_{xy}r_{yz}r_{zw}.
+$$
+Every five-way pentagon commutes because its paths are admitted parallel
+cells in a locally thin hom-category. This is a normal lax functor into the
+specified target. Since its comparison cells are invertible, it is also a
+pseudofunctor into that target.
+With full separating questions, a cell exists only for equal operators and
+these premises force $K=0$. With zero questions, all parallel maps compare:
+that codiscrete envelope loses all protected distinctions. Intermediate
+questions can retain nonzero invisible curvature, as the exact controls show.
+A rectangular $K$ is a difference label with endpoints, never an untyped
+$I+K$. Arbitrary visible curvature is refused.
+
+*Scope.* The construction and complete coherence proof are written above.
+`omega_homology::observed_2category` verifies the actual carrier identities,
+1-cells and every compositor. `code/observed_transport.py` independently
+checks units, interchange, pentagon and refusals.
+`TransportIdentities.lean` replays the ring comparison kernels; it does not
+formalize the entire typed 2-category. This realizes one observer-sensitive
+comparison semantics, not all possible higher-cell extensions or native
+Genesis dynamics.
+
+### 4.3 Exact Primal-Dual Distance-to-Image Certification (Theorem 4.3)
+
+Choose bases in the finite operator-cochain spaces and write $D$ for the rational matrix of $\delta_1$. For a rational cochain $Z$ (including $Z=K$), define
+$$
+D_1(Z)=\min_t\|Z-Dt\|_1,
+$$
+where the norm is the sum of absolute coordinate entries in these declared bases. This is a distance to a linear image, not a generic $H^2$ class or a theorem about nonlinear gauge transformations.
+
+> **[PROVEN, CONDITIONAL] Theorem 4.3 — Exact Primal-Dual Certification.** The primal and dual programs
+> $$
+> \min_{t,u}\mathbf{1}^Tu\quad\text{subject to}\quad -u\le Z-Dt\le u,
+> $$
+> $$
+> \max_\lambda\lambda^TZ\quad\text{subject to}\quad D^T\lambda=0,\quad\|\lambda\|_\infty\le1
+> $$
+> attain the same rational value. An independently checked feasible primal-dual pair with equal objectives certifies this optimum.
+>
+> *Proof.* The primal is feasible at $t=0,u=|Z|$ and bounded below by zero. The dual is feasible at zero. Finite linear-programming duality gives attainment and equal objectives, and rational data admit rational optimal solutions. Weak duality makes a feasible equal-objective pair a directly checkable certificate. $\square$
+
+*Computational verification:* `code/exact_coda_solver.py` (`ExactCodaL1Solver`) and `code/tests/test_coda_dual_witness.py::test_obstructed_cochain_positive_phi1_zero_gap`. These tests include arbitrary cochains; a positive certificate for one cochain does not assert positivity for every curvature cochain. The certificate establishes the declared finite LP, with no cryptographic authenticity claim.
+
+### 4.4 Conditional Additive Normal Form (Theorem 4.4)
+
+> **[PROVEN, CONDITIONAL] Theorem 4.4 — Cover-Preserving Additive Normal Form.** Suppose $r$ is declared on all comparable pairs of a finite poset, with identity maps on self-pairs, and its covering maps satisfy the path-independence hypothesis of Proposition 2.1a. Let $\widehat r$ be their unique strict completion and set $A_{c,a}=r_{c,a}-\widehat r_{c,a}$. Then $r=\widehat r+A$, $A=0$ on covers and identities, and
+> $$
+> \begin{aligned}
+> K_{c,b,a}={}&\widehat r_{b,a}A_{c,b}+A_{b,a}\widehat r_{c,b}\\
+> &+A_{b,a}A_{c,b}-A_{c,a}.
+> \end{aligned}
+> $$
+> If both $a\prec b$ and $b\prec c$ are covering pairs, this reduces to $K_{c,b,a}=-A_{c,a}$.
+>
+> *Proof.* Proposition 2.1a constructs $\widehat r$ under the stated hypothesis. Expand $(\widehat r_{b,a}+A_{b,a})(\widehat r_{c,b}+A_{c,b})-(\widehat r_{c,a}+A_{c,a})$ and cancel the flat-background terms. The cover-pair specialization sets both inner corrections to zero. $\square$
+
+This is an additive decomposition; no orthogonality or direct-sum structure is asserted. The path-independence hypothesis is necessary for a flat background preserving every cover. On the contractive scalar diamond $a\prec x,y\prec d$, the choices $r_{x,a}=r_{d,x}=1/2$, $r_{y,a}=1/3$, and $r_{d,y}=1/2$ give path products $1/4$ and $1/6$. No such background exists. Selecting a spanning forest cannot repair the omitted path.
+
+On the longer chain $a\prec b\prec c\prec d$ with covers $1/2$, direct maps $r_{c,a}=r_{d,b}=1/3$, and $r_{d,a}=1/10$, the triple $(a,b,d)$ has $K_{d,b,a}=1/15$, whereas $-A_{d,a}=1/40$. The mixed terms are essential.
+
+*Computational verification:* `code/curved_bicomplex.py::decompose_normal_form` refuses noncommuting cover data. The exact positive, refusal, and longer-triple tests are in `code/tests/test_review_boundaries.py`.
+
+**Declared gauge and rectification boundary (PO001-GAUGE-RECTIFICATION).** Use the vertexwise change-of-basis group $G=\prod_x\operatorname{GL}(V_x)$ of linear automorphisms (bounded with bounded inverses for Banach fibers), with declared inverses $h_x=g_x^{-1}$, acting by
+$$
+r^g_{y,x}=g_xr_{y,x}h_y,\qquad
+f^g_{x_0\ldots x_n}=g_{x_0}f_{x_0\ldots x_n}h_{x_n}.
+$$
+These are algebraic basis changes. General linear transformations need not preserve fixed Banach norms; if contractivity in those norms is required, restrict to admitted isometries or transport the norms. No operational availability or unitary interpretation is assumed.
+
+> **[PROVEN, CONDITIONAL] Theorem 4.4a — Gauge No-Go and Unique Flat Cover Extension.** The declared action preserves the product and intertwines $b$ and $D$:
+> $$
+> (f\smile u)^g=f^g\smile u^g,\qquad
+> (bf)^g=b(f^g),\qquad
+> (D_Af)^g=D_{A^g}(f^g),\qquad
+> K(r^g)_{x,y,z}=g_xK(r)_{x,y,z}h_z.
+> $$
+> Consequently a gauge orbit contains a flat representative if and only if the original restriction system is flat. Separately, prescribed cover maps have a cover-preserving flat extension if and only if every saturated-chain product with the same endpoints agrees; this extension is unique, with identities on self-pairs.
+>
+> *Proof.* In a cup product the adjacent factors $h_{x_p}g_{x_p}$ cancel. Internal deletions leave both endpoints unchanged, so $b$ commutes with the action. These two facts yield the $D$ and $K$ formulas. Multiplying a zero transformed curvature on the left by $h_x$ and on the right by $g_z$ recovers the original component; hence zero curvature is invariant. For the extension criterion, necessity follows by applying functoriality to each saturated chain. For sufficiency, define each comparable-pair map to be its common saturated-chain product and identities to be identity maps. Concatenation of saturated chains establishes composition; generation by covers yields uniqueness, as in Proposition 2.1a. This compares all saturated paths, not only selected diamonds. $\square$
+
+The scalar diamond above is an exact obstruction to cover-preserving flat extension: $1/4\ne1/6$. Conversely, commuting covers can admit $\widehat r$ while the independently declared long-edge maps of $r$ make $K(r)\ne0$. Replacing those long-edge maps by $\widehat r$ removes curvature by changing the restriction system. It is not an invertible gauge transformation of that curved system. The expansion in Theorem 4.4 retains both mixed terms.
+
+Nor does a norm optimum select a canonical representative. For $w=(1,0)$ and repair line $\operatorname{span}(1,1)$,
+$$
+\|w-t(1,1)\|_1=|1-t|+|t|\ge1,
+$$
+with equality for every $0\le t\le1$. A distance-to-image certificate therefore supplies neither a unique repair nor gauge rectification. The curved algebra also leaves Theorem 3.7 intact: an ordinary $H^2$ quotient requires $\operatorname{im}\delta_1\subseteq\ker\delta_2$ in the actual chosen complex. Other gauge actions, noninvertible coarse-grainings, and physical rectification mechanisms require their own definitions and are not classified here.
+
+*Evidence scope.* `code/tests/test_gauge_rectification.py` independently checks the declared action, flat extension, path obstruction, mixed terms, malformed inverses, and nonunique norm minimizers. `omega_homology::restriction_dga` checks inverse identities and returns disagreeing paths rather than admitting incomplete cover data. The supplementary Lean kernel shows only that invertible endpoint factors preserve zero; it does not mechanize arbitrary-poset saturated-path enumeration or physical gauge availability.
+
+### 4.5 Prime Triad Descent Soundness and Bounded-Curvature Routing (Theorem 4.5)
+
+Finite operational packet routing across curved posets is governed by the Omega Engine Algorithm Prime Triad:
+- **Algorithm Prime -1:** Grounding of primitives and carrier honesty.
+- **Algorithm Prime 000:** Local covering-edge declaration order ($a \prec b$).
+- **Algorithm Prime 001:** Adapter descent soundness verification.
+- **Algorithm Prime 002:** Continue-until-unauthorized control law with curvature budget $\kappa \le \kappa_{\max}$.
+
+> **[PROVEN, CONDITIONAL] Theorem 4.5 — Prime Triad Bounded-Curvature Routing Law.**
+> Let a packet $\pi$ traverse a path $\gamma = (x_0 \prec x_1 \prec \cdots \prec x_k)$ in $P$. Under Algorithm Prime 002, the packet is authorized to proceed if and only if:
+> 1. Every step is an elementary covering edge (Prime 000).
+> 2. The adapter map satisfies descent soundness $\|r_{x_{i}, x_{i-1}} v - v_{i-1}\| \le \epsilon$ (Prime 001).
+> 3. The accumulated path curvature does not exceed the declared threshold:
+>    $$
+>    \kappa(\gamma) = \sum_{i=1}^{k-1} \|K_{x_{i+1}, x_i, x_{i-1}}\|_1 \le \kappa_{\max}.
+>    $$
+> If $\kappa(\gamma) > \kappa_{\max}$, Prime 002 halts immediately, revokes transmission authority, and logs a hashed tombstone in the cemetery DAG.
+>
+> *Proof.* Immediate from the operational definition of the Prime 002 state machine. The hash-chain checker detects inconsistencies in its stored receipt fields. It does not authenticate independently supplied measurements or prevent an actor from recomputing hashes. $\square$
+
+*Computational verification:* Implemented in `code/prime_triad_router.py` and tested in `code/tests/test_prime_triad_router.py`.
+
+### 4.6 DDC Operational Commutator on Poset Lattices (Theorem 4.6)
+
+In Discrete Deformation Calculus (DDC), discrete state transitions are encoded using the 8-letter canonical rune alphabet:
+$$
+\mathcal{A}_{\mathrm{DDC}} = \{E, R, C, I, \Lambda, D, M, T\},
+$$
+representing Expansion ($E$), Reduction ($R$), Contraction ($C$), Insertion ($I$), Lift ($\Lambda$), Descent ($D$), Mutation ($M$), and Terminal ($T$).
+
+> **[PROVEN, CONDITIONAL] Theorem 4.6 — DDC Operational Commutator Theorem.**
+> On an elementary diamond lattice $a \prec b_1, b_2 \prec c$, let $\Lambda_{b_1, a}$ and $D_{a, b_1}$ denote the lift and descent operations along the left branch, and $\Lambda_{b_2, a}, D_{a, b_2}$ along the right branch. The operational commutator:
+> $$
+> \llbracket \Lambda, D \rrbracket = D_{a, b_1} \circ \Lambda_{c, b_1} - D_{a, b_2} \circ \Lambda_{c, b_2}
+> $$
+> evaluates identically to the diamond holonomy defect $K_{c, b_1, a} - K_{c, b_2, a}$. The commutator vanishes if and only if the diamond is flat.
+>
+> *Proof.* Expanding the definitions of lift and descent as restriction and extension maps on poset sections: $D_{a, b} \circ \Lambda_{c, b} = r_{b, a} \circ r_{c, b}$. Subtraction across the two branches gives $(r_{b_1, a} \circ r_{c, b_1} - r_{c, a}) - (r_{b_2, a} \circ r_{c, b_2} - r_{c, a}) = K_{c, b_1, a} - K_{c, b_2, a}$. $\square$
+
+*Computational verification:* Implemented in `code/ddc_poset_trace.py` and tested in `code/tests/test_ddc_and_downmap_mutations.py::test_ddc_diamond_commutator_flat_vs_curved`.
+
+### 4.7 Distinction Collapse and the Declared Cost-Two Ledger (Model Consequence 4.7)
+
+The finite down-map model declares a set of protected distinction records and charges $\mu_1=2$ for each active record whose endpoints receive the same image.
+
+> **[MODEL CONSEQUENCE] Statement 4.7 — Declared Ledger Charge.** If $m$ active protected records collapse under the supplied down-map, its ledger entry has
+> $$
+> \mathrm{loss\_count}=m,\qquad \mathrm{loss\_cost\_mu1}=2m.
+> $$
+> *Proof.* The implementation counts these records and assigns their count times the declared cost. $\square$
+
+This convention does not derive $\|K\|_1\ge2m$ for an independent operator curvature. The legacy field `induced_curvature_norm` stores the same declared charge; it is not a second measurement. `verify_antimorphic_curvature_lower_bound` checks a separately supplied value against the charge, so any interpretation as an operator-norm lower bound needs additional hypotheses and evidence. Records with different rationales may describe the same endpoint pair; the charge counts records, not necessarily distinct pairs.
+
+*Computational verification:* `code/symbol_game_downmap.py` and `code/tests/test_ddc_and_downmap_mutations.py::test_symbol_game_downmap_distinction_collapse_and_loss_ledger`.
+
+
+### 4.7a Flatness does not protect information
+
+> **[PROVEN, EXAMPLE] Proposition 4.7a — Positive Normalized Flat Loss.** Let every fiber of the three-vertex chain be $\mathbb R^3$, and assign every strict comparable pair the map
+> $$
+> P=\begin{pmatrix}1/2&1/2&0\\1/2&1/2&0\\0&0&1\end{pmatrix}.
+> $$
+> Then the restriction system is flat, positive, probability-normalization preserving, and contractive in the induced $\ell^1$ norm. Nevertheless, it identifies $x=e_1$ and $y=e_2$, although the protected question $q(v)=v_1$ has $q(x)-q(y)=1$.
+>
+> *Proof.* Direct multiplication gives $P^2=P$, hence the unique triple has $K=P^2-P=0$. Entries are nonnegative and every column sums to one, so $P$ preserves the probability simplex and $\|P\|_{1\to1}=1$. But $Px=Py=(1/2,1/2,0)^T$, while $q(x)=1$ and $q(y)=0$. Counting this collapsed protected record gives the declared charge $2$, independently of the zero operator norm. $\square$
+
+Consequently, positivity, normalization, contractivity and a positive lost-record charge cannot imply any strictly positive curvature floor. The map fails an obligation to preserve $q$, even though it satisfies composition flatness. This is the WDP protected-question boundary: consistency of operations and sufficiency of retained answers are separate properties. As a supplied quantum example, qubit dephasing also identifies the two $\sigma_x$ eigenstates with $I/2$ and is idempotent, so using it on each edge again gives $K=0$. Its projector Kraus operators certify a completely positive trace-preserving map; this assumes the qubit carrier and does not derive it from histories.
+
+### 4.7b What does give a quantitative curvature bound
+
+> **[PROVEN, CONDITIONAL] Proposition 4.7b — Measured Path Separation.** In declared coordinate bases, let $B=r_{b,a}r_{c,b}$, $R=r_{c,a}$, and $K=B-R$. Suppose an input difference $d$ and output linear question $\ell$ satisfy $Rd=0$ and $|\ell Bd|\ge\eta>0$. Then
+> $$
+> \|K\|_{1\to1}\ge\frac{\eta}{\|\ell\|_\infty\|d\|_1},\qquad
+> \sum_{ij}|K_{ij}|\ge\frac{\eta}{\|\ell\|_\infty\|d\|_\infty}.
+> $$
+> *Proof.* Since $Rd=0$, $|\ell Kd|=|\ell Bd|\ge\eta$. The triangle inequality bounds this by $\|\ell\|_\infty\|Kd\|_1\le\|\ell\|_\infty\|K\|_{1\to1}\|d\|_1$. Alternatively, expanding the finite sum bounds it by $\|\ell\|_\infty\|d\|_\infty\sum_{ij}|K_{ij}|$. Positive separation makes both denominators positive. Division yields both bounds. The one-coordinate choice $B=[\eta/(LV)]$, $R=[0]$, $d=[V]$, $\ell=[L]$, with $L,V>0$, attains equality. $\square$
+
+This premise compares two actual paths: one destroys the difference, while the other retains a measured answer. It is stronger than loss under a single map. Rescaling $B$ rescales the measured separation and curvature together. Repeating a record does not multiply either norm. An additive entrywise bound $m\eta$ instead requires $m$ distinct coordinates with independently verified $|K_{ij}|\ge\eta$; a charge convention supplies neither coordinate disjointness nor separation.
+
+*Evidence scope.* `omega_functional::loss_curvature` checks the operators, endpoint shapes, direct collapse and positive separation, and computes both norms from all entries. `verify_triangle_separation` constructs $B$ from the two supplied restrictions. Independent controls are `code/loss_curvature.py` and `code/tests/test_loss_curvature.py`. `lean4/FlatLossAndCurvature.lean` formalizes the explicit countermodel; it does not formalize the general norm inequalities. The quantum control is a calculation inside its supplied finite carrier.
+
+
+### 4.7c Minimal linear reports and lawful transport
+
+Let $Q$ be a finite rational question matrix. The rows of the nonzero RREF
+matrix $B$ form a basis of its row space. Select its pivot columns and let
+$S$ inject the corresponding coordinate vectors. Then
+$$
+BS=I,\quad Q=(QS)B,\quad P=I-SB,\quad \operatorname{im}P=\ker B=\ker Q.
+$$
+Indeed the pivot submatrix of $B$ is $I$; expressing each row of $Q$ in the
+row basis yields the decoder identity. The converse inclusion of row spaces
+comes from row elimination, giving $Qx=Qy$ iff $Bx=By$. Thus $B$ realizes
+$V/\ker Q$, the coarsest quotient preserving these answers, of dimension
+$\operatorname{rank}Q$. Any other answer-preserving report must distinguish
+different $B$-classes; a linear such report has rank at least that of $Q$.
+All-zero questions give a zero-dimensional report, not a division error.
+
+For declared $T:V\to W$ with source and target bases $B_s,B_t$, a report map
+$D$ with $DB_s=B_tT$ exists exactly when
+$$
+B_tTP_s=0.
+$$
+Necessity follows by multiplying the replay identity by $P_s$.
+For sufficiency put $D=B_tTS_s$ and use $I=S_sB_s+P_s$.
+It is unique because any competing replay multiplied by $S_s$ equals $D$.
+For composable admitted $T,U$, uniqueness gives
+$D(UT)=D(U)D(T)$. Original target answers replay as
+$Q_tT=(Q_tS_t)D(T)B_s$. By induction this holds for every composition of
+admitted maps, so the kernel condition protects the specified future linear
+experiments as well as the current report. Equal dimensions or ranks alone
+are insufficient: for $Q=(1,0)$, $T=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$
+exposes the invisible vector $(0,1)$ and is refused.
+
+This is a precise finite linear instance of WDP operational minimality.
+It presupposes the state, scalar and question families. It does not derive
+positivity, quantum composition, costs, continuation availability, physical
+substance, or all native Genesis histories. A protected probability experiment
+may be represented by linear questions only after its probability carrier
+and admitted operations are independently specified.
+The reusable owner is `omega_functional::protected_linear_quotient`;
+Python uses a different row basis and obtains the same equivalence classes.
+The split-descent Lean kernels assume a checked section and kernel premise;
+RREF construction and minimality are written proofs and executed exact algebra.
+
+### 4.7d The actual composed-path error bound
+
+For endpoint-compatible maps $A_i,B_i:V_i\to V_{i+1}$, acting chronologically
+on columns, write $A_{>i}=A_{m-1}\cdots A_{i+1}$ and
+$B_{<i}=B_{i-1}\cdots B_0$, with identity empty products. Then
+$$
+A_{m-1}\cdots A_0-B_{m-1}\cdots B_0
+=\sum_{i=0}^{m-1}A_{>i}(A_i-B_i)B_{<i}.
+$$
+Replace the rightmost differing factor one at a time, or induct on $m$;
+neighboring intermediate products cancel. For compatible induced norms,
+$$
+\|A_{m-1}\cdots A_0-B_{m-1}\cdots B_0\|
+\le\sum_i\|A_{>i}\|\,\|A_i-B_i\|\,\|B_{<i}\|.
+$$
+This follows from the triangle inequality and submultiplicativity and bounds
+the final answer discrepancy by the displayed quantity times $\|v\|$.
+The Rust owner `omega_functional::path_error` retains both actual paths,
+computes each term, replays the residual, and measures the induced $\ell^1$
+norms of the prefix and suffix products. A sum of local errors is valid
+without weights only under independently established contractivity.
+The scalar pair $(A_0,B_0)=(1,0)$ followed by $(100,100)$ has local total
+error 1 and endpoint error 100. For all $A_i=2,B_i=1$, the weighted bound
+is exactly $2^m-1$, so its coefficients cannot be uniformly decreased.
+`TransportIdentities.lean` formalizes the arbitrary finite ring-word expansion;
+the norm theorem is written, with exact native and Python controls.
+No numerical error certificate grants operational admission or authenticates
+a declared price. Full native DDC/history transport remains a separate goal.
+
+### 4.8 Simplicial Face-Poset Operator Cocycle (Theorem 4.8)
+
+> **[PROVEN, CONDITIONAL] Theorem 4.8 — Face-Poset Operator Identity.** Let $\mathcal P(T)$ be the finite face-inclusion poset of a simplicial complex, equipped with declared linear restrictions on comparable faces. Its composition curvature satisfies $\delta_2K=0$ on every four-face chain.
+>
+> *Proof.* Apply Theorem 3.6 to this finite poset. No metric or rotation-group assumption is needed. $\square$
+
+The module's Regge terminology is a model interpretation. Its rational matrix fixtures need not lie in $\mathrm{SO}(n)$; they contain no metric edge lengths or dihedral angles. A separately specified ordered loop product $W$ has defect $W-I$, which is not automatically the comparable-triple defect $r_{b,a}r_{c,b}-r_{c,a}$. Deriving a Regge deficit-angle formula or a geometric Bianchi identity requires a geometric connection and a proved identification; neither follows from these fixtures.
+
+*Computational verification:* `code/tests/test_regge_face_poset.py::test_regge_bianchi_identity_across_dimensions` verifies this operator identity on the declared face-poset examples.
+
+### 4.9 Bell Contextuality and Global Probability Extension (Theorem 4.9)
+
+In the Abramsky–Brandenburger framework, noncontextuality concerns a global probability model whose marginals reproduce the observed contexts. It is distinct from functoriality of marginalization maps.
+
+> **[PROVEN, CONDITIONAL] Theorem 4.9 — Finite Gluing Criterion.** Let $e$ stack the four normalized Bell–CHSH context distributions, let $M_{\mathrm{glue}}$ map a distribution on the 16 deterministic assignments to those marginals, and let $\Delta_{16}$ denote the nonnegative normalized simplex. Define
+> $$
+> \Gamma_{\mathrm{context}}(e)=\min_{p\in\Delta_{16}}\|e-M_{\mathrm{glue}}p\|_1.
+> $$
+> Then $\Gamma_{\mathrm{context}}(e)=0$ if and only if such a global probability extension exists. The marginal restriction system itself is flat, including when $e$ is a contextual PR box.
+>
+> *Proof.* The simplex is compact, so the continuous objective attains its minimum. Its value is zero exactly when all marginal coordinates agree. Composition of marginalization equals marginalization to the smaller context, independently of $e$, so the operator curvature is zero. $\square$
+
+The exact finite LP gives $\Gamma_{\mathrm{context}}=2$ and CHSH value $S=4$ for the PR box, with zero primal-dual gap. Deterministic local models have distance zero. The stacked four-context $L_1$ normalization is essential: this quantity is not $\|K\|_1$ and is not the distance $D_1$ of §4.3. Tests of the PR/white-noise family at rational parameters do not constitute a certificate for an arbitrary irrational quantum model. The algebraic number in §4.10 is enclosed separately.
+
+*Computational verification:* `code/tests/test_quantum_sheaf_contextuality.py::test_pr_box_maximal_contextuality` and `code/tests/test_review_boundaries.py::test_flat_bell_restrictions_do_not_imply_global_probability_extension`.
+
+### 4.10 Exact Enclosure of an Algebraic Number (Example 4.10)
+
+> **[PROVEN, EXAMPLE] Statement 4.10 — Rational Enclosure.** For the algebraic number $q=2(\sqrt2-1)$,
+> $$
+> \frac{828}{1000}<q<\frac{829}{1000},\qquad U-L=\frac1{1000}.
+> $$
+> *Proof.* Both $1+L/2$ and $1+U/2$ are positive, and exact rational squaring gives
+> $$
+> (1+L/2)^2=\frac{499849}{250000}<2
+> <\frac{8003241}{4000000}=(1+U/2)^2.
+> $$
+> Monotonicity of squaring on positive reals yields the enclosure. $\square$
+
+This establishes an enclosure for this algebraic expression. It does not identify it with a computed operator curvature, execute an irrational-input Bell LP, or provide an algorithm for arbitrary transcendental inputs without an effective representation.
+
+*Computational verification:* `code/tests/test_review_boundaries.py::test_algebraic_contextuality_rational_enclosure` includes a shifted-endpoint negative control.
+
+
+### 4.10a Metric-bound dihedral and deficit enclosures
+
+Fix a triangle hinge and a distinct cyclic link of $m\in\{3,\ldots,16\}$ vertices. Consecutive link vertices and the hinge specify the incident 4-simplices. Supply exactly one rational squared length for every edge used by these simplices; shared faces therefore inherit the same metric. Each simplex must have a positive-definite Euclidean Gram matrix. These are finite local metric and gluing data, without a global spacetime or a comparison to an arbitrary supplied holonomy word.
+
+Using one hinge vertex as origin, form the $4\times4$ rational Gram matrix
+$$
+G_{ij}=(s_{0i}+s_{0j}-s_{ij})/2.
+$$
+Positive leading principal minors certify positive definiteness. Separate the two tangent hinge directions from the two opposite vertices and take the Schur complement. Write its entries as $a,b,c$, with $a,b>0$ and $d=ab-c^2>0$. The interior dihedral angle is
+$$
+\theta=\begin{cases}
+\arctan(\sqrt d/c),&c>0,\\
+\pi/2,&c=0,\\
+\pi-\arctan(\sqrt d/(-c)),&c<0.
+\end{cases}
+$$
+This follows by orthogonally removing the hinge-tangent components: the remaining normal-plane vectors have dot product $c$, squared norms $a,b$, and unsigned parallelogram area $\sqrt d$. The branch is the interior angle in $(0,\pi)$.
+
+> **[PROVEN, CONDITIONAL] Proposition 4.10a — Certified Finite Geometric Enclosure.** For these effective inputs, the following rational procedures enclose each specified dihedral angle and the deficit $\delta=2\pi-\sum_i\theta_i$. Each accepted result has width at most its positive rational request $\varepsilon$. Unsupported inputs and exhausted arithmetic budgets receive a refusal, not a sign verdict.
+>
+> *Proof.* For $q\ge0$, choose $b$ with $2^{-b}\le\varepsilon$ and let $k=\lfloor\sqrt{\lfloor q2^{2b}\rfloor}\rfloor$. Then $k^2\le q2^{2b}<(k+1)^2$. Thus $[k/2^b,(k+1)/2^b]$ encloses $\sqrt q$ with the required width; rational square roots may be returned exactly.
+>
+> For $0\le x\le1/2$, integrate the finite geometric identity for $1/(1+t^2)$ to obtain
+> $$
+> \arctan x=\sum_{k=0}^{N-1}\frac{(-1)^kx^{2k+1}}{2k+1}
+> +(-1)^N\int_0^x\frac{t^{2N}}{1+t^2}\,dt.
+> $$
+> The integral lies between zero and $x^{2N+1}/(2N+1)\le4^{-N}$. The sum and its signed next-term endpoint therefore enclose the answer. Oddness handles negative inputs. For $1/2<x\le1$, use
+> $$\arctan x=\arctan(1/2)+\arctan\frac{x-1/2}{1+x/2},$$
+> whose second argument lies in $[0,1/3]$. For $x>1$, use $\arctan x=\pi/2-\arctan(1/x)$.
+>
+> Machin's identity $\pi=16\arctan(1/5)-4\arctan(1/239)$ supplies a rational enclosure of $\pi$. To check the identity, successive tangent-doubling gives $5/12$ and $120/119$; subtracting the angle with tangent $1/239$ yields tangent one. The angle $4\arctan(1/5)-\arctan(1/239)$ lies in $(0,\pi/2)$, so it equals $\pi/4$. The elementary bounds $x-x^3/3\le\arctan x\le x$ establish the required branch. Budget each arctangent width at $\varepsilon/20$ to obtain a $\pi$ interval of width at most $\varepsilon$.
+>
+> For $c\ne0$, set $t=\varepsilon/4$ and enclose $\sqrt d$ with width at most $|c|t$. Evaluate arctangent at both rational endpoints divided by $|c|$, each with width at most $t$. Monotonicity and $|\arctan u-\arctan v|\le|u-v|$ bound the combined width by $3t$. The obtuse branch adds a $\pi$ interval of width at most $t$. The right-angle branch uses $\pi/2$. Finally, for a star, request each angle and $\pi$ to width $\varepsilon/(m+2)$. Rational interval subtraction gives total width at most $\varepsilon$. $\square$
+
+The implementation profile checks positive denominators and at most 1,024 numerator/denominator bits, permits 1,024 series terms and 2,048 dyadic bits, and refuses an intermediate argument exceeding its profile. For accepted scalar input requests, $\varepsilon\ge2^{-1024}$; all series sub-budgets need fewer than 1,024 terms, and dyadic refinement needs at most 1,024 bits.
+
+A simple geometry class with guaranteed resource termination has integer squared lengths between $1$ and $2^{16}$, positive Gram matrices, and $0<\varepsilon\le1$ with numerator and denominator at most 64 bits. The hinge tangent determinant numerator is a positive integer at most $2^{34}$. Schur entries have a common denominator at most $2^{35}$, absolute value at most $2^{16}$, and nonzero $|c|\ge2^{-35}$. Including the star error budget needs fewer than 110 dyadic bits. The discriminant and arctangent endpoint numerators and denominators consequently stay below 1,024 bits. More general rational metric inputs are evaluated when their intermediates fit the declared profile; validity of a geometry alone is not a promise to bypass resource refusals.
+
+*Independent reference.* `code/certified_geometry.py` uses bisection for square roots and a different positive series:
+$$
+\arctan x=\frac{x}{1+x^2}\sum_{k\ge0}c_kz^k,\quad
+z=\frac{x^2}{1+x^2},\quad c_0=1,\quad c_k=\frac{2k}{2k+1}c_{k-1}.
+$$
+For $0\le x\le1$, expand the integral $x\int_0^1(1+x^2t^2)^{-1}\,dt$ in powers of $z(1-t^2)$. Integration by parts gives these coefficients, with $0<c_k\le1$; the tail after $N$ terms is at most $xz^N$. The reference obtains $\pi$ from $4\arctan1$, independently of Machin's identity, and uses SymPy determinants and inversion rather than the native Gaussian routine.
+
+### 4.10b A sign verdict needs separation evidence
+
+An interval $[L,U]$ with $L>0$ certifies $\delta\ge L>0$; one with $U<0$ certifies $\delta\le U<0$. These endpoints are verified separation evidence computed from the metric. An interval containing zero returns `ContainsZero` and terminates without a nonvanishing claim. Refinement may be repeated, but no bound ensures zero exclusion on flat inputs. If a separate proof establishes $|\delta|\ge\sigma>0$, any containing interval of width less than $\sigma$ must exclude zero. An unverified caller assertion of separation is insufficient.
+
+Regular 4-simplices give $\cos\theta=1/4$: three- and four-sector stars have positive deficits, while five- and six-sector stars have negative deficits. Four orthogonal sectors have $\theta=\pi/2$ and zero deficit, retained by the interval sign classifier. These are controls within the declared input class. They do not identify geometric $\delta$ with comparable-triple operator $K$, nor prove an unrestricted geometry or quantum theorem.
+
+*Evidence scope.* Reusable scalar enclosures belong to `omega_number_theory::certified_angles`, reusing `omega_kernel::interval` and the existing integer square root. Metric extraction and the source-bound closed-star report belong to `omega_general_relativity::certified_dihedral`, reusing `linear_algebra::regge_exact`. Focused native and independent Python results are recorded in [the current derivation review](docs/loss_incidence_angles_2026_10_14.md). Containment and stopping are written mathematical proofs; no Lean proof of the transcendental estimates is claimed.
+
+
+### 4.10c Metric hinge transport and its exact observation
+
+A Euclidean metric hinge star from §4.10a supplies its cyclic sectors and
+positive normal Gram data $(a_i,b_i,c_i)$. In each hinge-adapted oriented
+orthonormal frame the consecutive normal rays have interior angle $\theta_i$,
+with
+$$
+\cos\theta_i=\frac{c_i}{\sqrt{a_ib_i}},\qquad
+\sin\theta_i=\frac{\sqrt{a_ib_i-c_i^2}}{\sqrt{a_ib_i}}>0.
+$$
+Declare face gluing that fixes the identified hinge tangent plane and changes
+normal coordinates by $R(-\theta_i)$. This is the oriented unfolding
+connection of the piecewise Euclidean star: the metric determines each angle,
+while the common hinge identification, cyclic orientation and adapted frames
+are additional declared data. The links are
+$H_i=\operatorname{diag}(I_2,R(-\theta_i))$. Their chronological loop is
+$$
+W=H_{m-1}\cdots H_0
+=\operatorname{diag}(I_2,R(-\sum_i\theta_i))
+=\operatorname{diag}(I_2,R(\delta)),\quad
+\delta=2\pi-\sum_i\theta_i.
+$$
+Rotations add their angles; $2\pi$ periodicity yields the last equality.
+Reversing the cyclic path reverses order and inverts each link, giving $W^{-1}$.
+At local frame changes $g_i\in SO(4)$ the links become
+$H_i'=g_{i+1}H_ig_i^{-1}$, with $g_m=g_0$. Telescoping gives the loop
+at a specified common basepoint $b$ as $W_b'=g_bW_bg_b^{-1}$.
+Products at different basepoints must be compared by their connecting
+transport, not silently multiplied as if their frames agreed.
+
+The exact Rust class accepts precisely stars for which these normal cosines
+and sines are rational; it tests rational square roots of their squares,
+including the sign of $c_i$, and refuses other algebraic rotations. Its metric
+angle intervals remain valid beyond this class. A declared triangle observation
+sets its early map to $H_0$, late map to $H_{m-1}\cdots H_1$ and direct map
+to $I$ after closed endpoint-frame identification. Only for this explicit
+observation does $K=W-I$. It is not an identification for arbitrary posets.
+
+Two countermodels fix the interpretation. Three orthogonal sectors have
+$\delta=\pi/2$ and $W\ne I$; an explicit four-vertex operator extension still
+satisfies the nonempty quadruple identity $DK=0$. Thus additive Bianchi
+alone does not force this ordered metric loop to close. Eight orthogonal
+sectors have $\delta=-2\pi$ yet $W=I$. Thus even this metric correspondence
+loses the unwrapped deficit unless winding/branch information is retained.
+No Lorentzian, global spacetime, arbitrary algebraic rotation or quantum
+physical reconstruction is claimed. Metric, oriented connection, basepoint,
+observation and operational availability remain separate premises.
+The owner is `omega_general_relativity::metric_hinge_transport`; its forged
+frame and metric controls independently revalidate public matrix inputs.
+
+### 4.11 Exact Non-Abelian Gauge Holonomies on 4D Simplicial Complexes (Theorem 4.11)
+
+The following finite matrix construction studies non-abelian ordered holonomies. It supplies exact algebraic fixtures; it makes no claim of novelty over all prior discrete gauge formulations or of a physical spacetime reconstruction.
+
+We implement exact discrete non-abelian gauge group representations over the cyclotomic field $\mathbb{Q}(\zeta_8)$, where $\zeta_8 = e^{2\pi i / 8} = \frac{1+i}{\sqrt{2}}$. Because $\sqrt{2} = \zeta_8 - \zeta_8^3$ and $i = \zeta_8^2$, the field $\mathbb{Q}(\zeta_8) \cong \mathbb{Q}[x] / \langle x^4 + 1 \rangle$ furnishes an exact 4-dimensional rational vector space containing all roots needed for the quaternion group $Q_8 \subset \mathrm{SU}(2)$, the binary tetrahedral group $2T \subset \mathrm{SU}(2)$, the standard single-qubit Clifford $+ T$ group $\langle H, T \rangle$, and exact 4D spacetime rotations in $\mathrm{SO}(4)$ via the canonical double-cover epimorphism $\mathrm{Spin}(4) \cong \mathrm{SU}(2) \times \mathrm{SU}(2) \to \mathrm{SO}(4)$ acting by quaternion conjugation $q \mapsto U_L q U_R^\dagger$.
+
+> **[PROVEN, CONDITIONAL] Theorem 4.11 — Exact Non-Abelian 4D Simplicial Gauge Holonomy.**
+> Let $\Delta_4$ be a 4-dimensional simplicial complex and let $h = \sigma^2$ be a 2-dimensional triangular hinge shared by a cyclic star of $m$ 4-simplices $(\sigma^4_0, \sigma^4_1, \dots, \sigma^4_{m-1})$. Assigning exact unitary link holonomies $U_e \in \mathcal{U}_n(\mathbb{Q}(\zeta_8))$ to directed dual edges connecting adjacent 4-simplices around $h$:
+> 1. **Path-Ordered Wilson Holonomy:** The hinge holonomy $W(h) = \mathcal{P} \prod_{i=0}^{m-1} U_{\sigma^4_i, \sigma^4_{i+1}}$ is strictly unitary ($W(h)^\dagger W(h) = I$) and evaluated in exact rational arithmetic over $\mathbb{Q}(\zeta_8)$.
+> 2. **Curvature Defect Operator:** The simplicial non-abelian curvature defect $K(h) = W(h) - I$ vanishes ($K(h) = 0$) if and only if the dual connection around the hinge is gauge-flat.
+> 3. **Gauge Covariance & Trace Invariance:** Under local discrete gauge transformations $U_{ij} \mapsto \Omega_i U_{ij} \Omega_j^\dagger$ with $\Omega_i \in \mathcal{U}_n(\mathbb{Q}(\zeta_8))$, the Wilson holonomy transforms by conjugation $W(h) \mapsto \Omega_0 W(h) \Omega_0^\dagger$, ensuring that the normalized Wilson loop trace $\frac{1}{n}\operatorname{Tr}(W(h))$ is strictly gauge-invariant in $\mathbb{Q}(\zeta_8)$.
+> 4. **Quaternion $\mathrm{SO}(4)$ Action:** For any pair of $\mathrm{SU}(2)$ holonomies $(U_L, U_R)$ over $\mathbb{Q}(\zeta_8)$, the induced map on $\mathbb{R}^4 \cong \mathbb{H}$ produces an exact orthogonal matrix $R \in \mathrm{SO}(4) \cap \mathcal{M}_4(\mathbb{Q}(\sqrt{2}))$ satisfying $R^T R = I_4$ and $\det(R) = +1$ with zero rounding error.
+>
+> *Proof.* Exact polynomial arithmetic in $\mathbb{Q}[x]/\langle x^4+1 \rangle$ satisfies the ring and field axioms without rounding error. Dual basis inversion and unitarity are certified by exact conjugate transposition. Gauge covariance follows from the cyclic cancellation $\Omega_i^\dagger \Omega_i = I$ in the path-ordered product. The quaternion action gives the standard double-cover homomorphism to $\mathrm{SO}(4)$ in the $\{1,i,j,k\}$ basis; $(-I,-I)$ acts trivially, so this is not an injective embedding. $\square$
+
+*Computational verification:* Implemented in `code/cyclotomic_gauge.py` and tested in `code/tests/test_cyclotomic_gauge_4d.py`.
+
+> **[PROVEN, CONDITIONAL] Corollary 4.11a — Discrete Non-Abelian Bianchi Identity on 4-Simplices.**
+> On any 4-simplex $\sigma^4 = (v_0, v_1, v_2, v_3, v_4)$ with unitary link variables $U_{uv} \in \mathcal{U}_n(\mathbb{Q}(\zeta_8))$ assigned to its 10 edges:
+> 1. **Ordered Tetrahedral Product Identity:** For each 3-cell (tetrahedron) $\tau = (v_0, v_1, v_2, v_3) \subset \partial \sigma^4$ with basepoint $v_0$, the ordered product of the three meeting face holonomies $W_1 = W(v_0, v_3, v_1)$, $W_2 = W(v_0, v_2, v_3)$, $W_3 = W(v_0, v_1, v_2)$ and the basepoint-transported opposite face holonomy $W_{\text{opp}, 0} = U_{v_1, v_0} W(v_1, v_2, v_3) U_{v_0, v_1}$ closes to identity identically:
+>    $$
+>    \mathcal{B}(\tau, v_0) = W_1 \cdot W_2 \cdot W_3 \cdot W_{\text{opp}, 0}^\dagger = I_n.
+>    $$
+> 2. **Boundary 4-Simplex Bianchi Closure:** Transporting all 5 tetrahedral Bianchi operators to a common basepoint $v_0$ via link variables, the boundary product over $\partial \sigma^4$ satisfies:
+>    $$
+>    \mathcal{B}(\partial \sigma^4) = \prod_{p=0}^4 \mathcal{B}_0(\tau_p) = I_n,
+>    $$
+>    with zero curvature defect in exact cyclotomic arithmetic over $\mathbb{Q}(\zeta_8)$ for arbitrary non-abelian connections (including $Q_8$, $2T$, and $\mathrm{SO}(4)$).
+> 3. **Fixture Mutation Sensitivity:** Selected noncommuting fixtures produce a nonzero residual after an orientation, order, or link-consistency mutation. This is a finite test result, not an unrestricted claim: an identity face loop or commuting face holonomies can make such a mutation invisible.
+>
+> *Proof.* With the declared orientation and multiplication order, cancellation of inverse links gives $W_1W_2W_3=W_{\mathrm{opp},0}$, so multiplication by $W_{\mathrm{opp},0}^\dagger$ gives identity. Conjugating each identity to the common basepoint and multiplying the five identities gives the boundary statement. This latter product is a consequence of the tetrahedral identities, not an independent higher-coherence theorem. The additive residual $F_1+F_2+F_3-F_{\mathrm{opp},0}$ need not vanish; the exact identity is multiplicative. $\square$
+
+*Computational verification:* Implemented in `code/cyclotomic_gauge.py` (`FourSimplexGaugeSystem`) and tested in `code/tests/test_cyclotomic_gauge_4d.py` (24 passing unit and adversarial mutation tests).
+
+---
+
+## 5. Discussion and Structural Comparison
+
+| Property | Path A | Path B | Finite extensions (Path C) |
+|---|---|---|---|
+| Input | Cover maps with path-independent saturated chains | Declared comparable-pair maps | Declared maps, bases, and model-specific data |
+| Output | Unique strict presheaf | Composition defect $K$ | Conditional additive normal form; finite LP certificates; routing traces |
+| Differential | $d_1d_0=0$ | $d_1d_0s=K(s)$ | $\delta_2K=0$ and the stated curvature residual for $\delta_2\delta_1$ |
+| Categorical status | Strict 1-categorical interface | No generic $H^2$ quotient | All-degree strict-chain curved algebra; full lax 2-presheaf remains open |
+| Diagnostics | Flatness under the cover hypothesis | Local compatibility can coexist with nonzero $K$ | Distance-to-image, probability-gluing distance, and ledger charges have separate definitions |
+
+## 6. Scope and Open Obligations
+
+The claims concern finite posets, specified linear maps, and the stated finite matrix and LP models. They do not establish physical dynamics, infinite-poset limits, observer-independent norms, or higher cohomology. A dual LP certificate does not repair the missing inclusion $\operatorname{im}\delta_1\subseteq\ker\delta_2$ and cannot promote a non-flat system to a generic $H^2$ class.
+
+The five connected derivations now supply faithful heterogeneous-fiber Lean transport, a specified observed 2-category and normal lax functor, a metric hinge-holonomy correspondence for the exact rational rotation class, a minimal protected linear report with unique lawful transport, and sharp weighted path-error bounds. Their current scopes and executions are recorded in [the five-derivation supplement](docs/five_connected_derivations_2026_10_14.md). Graded Jacobi remains written and native rather than formally replayed; the typed 2-category is not wholly Lean-formalized. General geometric connections and algebraic/Lorentzian extensions remain open. The full native Genesis/DDC correspondence is blocked on preservation/reflection, continuations, prices and availability. Section 4.4 classifies only the declared vertexwise invertible basis-change action. Operator flatness, loss of information and Bell positive gluing remain distinct; none forces a quantum carrier or identifies physical substance.
+
+## Appendix A: Mechanism Inventory
+
+The CODA terms below name programme roles. Their mathematical content is limited to the stated definitions and hypotheses.
+
+| Slot | Value |
+|---|---|
+| Primitive differences | Cover-edge section differences; payload distinctions; declared protected distinction records. |
+| Carriers / structure | Finite posets, linear fibers, comparable-pair maps, finite face posets, and Bell measurement contexts. |
+| Cochain sequence | Section-valued $C^0,C^1,C^2,C^3$ and the specified operator-cochain spaces. Non-flat operators need not form a complex. |
+| Coboundary maps | The declared $d_0,d_1,d_2$ and $\delta_1,\delta_2$, with the identities of §3 and §4.1. |
+| Zero relation | Operator flatness $K=0$; separately, equal payloads and zero diamond path difference. |
+| Licensed repairs | Unique strict completion under path independence; conditional additive normal form; finite rational distance-to-image optimization. |
+| Quotient / Q1 | Payload quotient only when its classifier descends. No generic non-flat cohomology quotient is constructed. |
+| Residuals | Composition curvature; section-valued degree-3 boundary; operator differential residual; separately declared ledger charge $2m$. |
+| Witnesses | Exact Python fixtures and primal-dual pairs; selected current Lean elaboration and declaration-specific axiom output; historical manifests remain separate. |
+| Observers / profiles | Section and payload evaluators, declared coordinate norms, probability-gluing LP, and finite routing profile. |
+| Anomalons | Residual native-history, general geometric, graded-Jacobi formalization and physical reconstruction obligations; exact counterexamples prevent stronger promotion. |
+| Completion law | Strict chain composition under the cover hypothesis; $d_1d_0s=K(s)$; $\delta_2K=0$. |
+| Terminal / route | Choose Path A under its hypothesis or record Path B defects; then apply each finite extension under its own hypotheses. Evidence is claim-specific. |
+| Authority status | None. These mathematical and model statements carry no operational or institutional authority. |
+
+---
+
+## Appendix B: Claim-Type Ledger
+
+The IDs match both companion ledgers. Prose statements, finite tests and the selected current Lean replay have distinct scopes. Historical source presence does not certify a current whole-package build.
+
+| # | ID | Claim | Type | Evidence / scope |
+|---|---|---|---|---|
+| 1 | PO001-C01 | Definition 2.1: Functorial Banach Presheaf | `[DEFINITION]` | §2.1; definitional; not applicable. |
+| 2 | PO001-C02 | Proposition 2.1a: Strict Completion from Covering Edges | `[PROVEN, CONDITIONAL]` | §2.1; prose proof; lean source present not replayed. |
+| 3 | PO001-C03 | Lemma 2.2: Diamond Path-Independence | `[PROVEN, CONDITIONAL]` | §2.2; prose proof; lean source present not replayed. |
+| 4 | PO001-C04 | Proposition 2.3: Categorical Interface Unlock | `[STANDARD, CONDITIONAL]` | §2.3; standard theory; not applicable. |
+| 5 | PO001-C05 | Definition 3.1: Composition Curvature Operator | `[DEFINITION]` | §3.1; definitional; lean source present not replayed. |
+| 6 | PO001-C06 | Theorem 3.2: Coboundary-Curvature Identity d1 d0 = K | `[PROVEN, CONDITIONAL]` | §3.2; prose proof; lean source present not replayed. |
+| 7 | PO001-C07 | Corollary 3.3: Flat Locus Equivalence | `[PROVEN, CONDITIONAL]` | §3.2; prose proof; lean source present not replayed. |
+| 8 | PO001-C08 | Scalar Diamond Curvature Witness | `[PROVEN, EXAMPLE]` | §2.2; exact calculation; lean source present not replayed. |
+| 9 | PO001-C09 | Theorem 3.4: Finite d2 K Boundary Formula | `[PROVEN, CONDITIONAL]` | §3.3; prose proof; lean source present not replayed. |
+| 10 | PO001-C10 | Theorem 3.5: Payload-Curvature LGGR Boundary | `[PROVEN, CONDITIONAL]` | §3.4; prose proof; lean source present not replayed. |
+| 11 | PO001-C11 | Theorem 3.6: Unconditional Operator Cocycle Identity | `[PROVEN, CONDITIONAL]` | §3.5; prose proof; lean source present not replayed. |
+| 12 | PO001-C12 | Theorem 3.7: Generic H^2 Quotient Obstruction | `[PROVEN, EXAMPLE]` | §3.5; exact calculation; finite python fixtures. |
+| 13 | PO001-C13 | Curvature Cochain Interpretation | `[INTERPRETIVE]` | §3.1, §5, §3.5; discursive; not applicable. |
+| 14 | PO001-C14 | Scope Fences | `[SCOPE FENCE]` | §6; axiomatic negative; not applicable. |
+| 15 | PO001-C15 | Open H^2 Promotion | `[OPEN]` | §3.5, §6; open; not mechanized. |
+| 16 | PO001-C16 | Theorem 4.1: Curved Differential Derivation Identity | `[PROVEN, CONDITIONAL]` | §4.1, §4.1a–b; written all-degree proof; faithful varying-Hom poset Lean transport; graded Jacobi written/native; bounded exact controls. |
+| 17 | PO001-C17 | Theorem 4.2: Four-Term Operator Comparison | `[PROVEN, CONDITIONAL]` | §4.2–a; written observed 2-category, units and pentagon; ring kernels and exact controls. |
+| 18 | PO001-C18 | Theorem 4.3: Exact Primal-Dual Distance-to-Image Certification | `[PROVEN, CONDITIONAL]` | §4.3; prose proof; finite python fixtures. |
+| 19 | PO001-C19 | Theorem 4.4: Cover-Preserving Additive Normal Form | `[PROVEN, CONDITIONAL]` | §4.4; prose proof; finite python fixtures. |
+| 20 | PO001-C20 | Theorem 4.5: Prime Triad Bounded-Curvature Routing Law | `[PROVEN, CONDITIONAL]` | §4.5; prose proof; finite python fixtures. |
+| 21 | PO001-C21 | Theorem 4.6: DDC Operational Commutator on Poset Lattices | `[PROVEN, CONDITIONAL]` | §4.6; prose proof; finite python fixtures. |
+| 22 | PO001-C22 | Statement 4.7: Declared Cost-Two Ledger Charge | `[MODEL CONSEQUENCE]` | §4.7–d; declared charge, flat-loss refutation, protected linear quotient and sharp weighted path bounds. |
+| 23 | PO001-C23 | Theorem 4.8: Simplicial Face-Poset Operator Cocycle | `[PROVEN, CONDITIONAL]` | §4.8; prose proof; finite python fixtures. |
+| 24 | PO001-C24 | Theorem 4.9: Bell Global Probability Gluing Criterion | `[PROVEN, CONDITIONAL]` | §4.9; prose proof; finite python fixtures. |
+| 25 | PO001-C25 | Example 4.10: Rational Enclosure of an Algebraic Number | `[PROVEN, EXAMPLE]` | §4.10–c; metric angle enclosures, rational normal transport and branch countermodel. |
+| 26 | PO001-C26 | Theorem 4.11: Exact Non-Abelian 4D Simplicial Gauge Holonomy | `[PROVEN, CONDITIONAL]` | §4.11; prose proof; finite python fixtures. |
+| 27 | PO001-C27 | Corollary 4.11a: Ordered Tetrahedral Product Identity | `[PROVEN, CONDITIONAL]` | §4.11; prose proof; finite python fixtures. |
+
+---
+
+## Data and Code Availability
+
+Paper sources and independent finite reference artifacts are maintained in this package tree under `CC-BY-4.0` (text) and `Apache-2.0` (code). The working October 14 supplement has not been redeposited. Its reusable Rust owner is maintained separately in the repository:
+
+- **Manuscript:** `covering_edge_descent.md`, `covering_edge_descent.tex`, `covering_edge_descent.pdf`.
+- **Claim Ledgers:** Companion `covering_edge_descent_claim_ledger.md` and `covering_edge_descent_claim_ledger.yaml`.
+- **Change Log:** Companion `covering_edge_descent_change_log.md`.
+- **Lean 4 Sources (`lean4/`):** 20 theorem/module sources plus `lakefile.lean`. The current focused replay uses explicitly migrated stable Lean 4.34.0 and exact Mathlib/dependency pins; the concrete incidence, flat-loss, heterogeneous incidence and transport identity modules are elaborated. This does not certify every older root or the whole manuscript. The September 27 manifest and earlier receipts remain historical records; see `lean4/README.md` and the current derivation review for exact limits.
+- **Python Computational Engine (`code/`, `code/tests/`):** Finite exact rational and cyclotomic examples, counterexamples, LP certificates, and model traces. Current replay results and limitations are recorded in `docs/review_2026_10_02.md`; tests do not establish every general mathematical claim.
+- **Reusable Rust:** `omega_homology::restriction_dga`, with focused tests in that crate; the standalone paper package includes the independent Python model and the source/replay commitments in `code/operator_incidence_verification.json`.
+- **Checksum Manifest:** `SHA256SUMS` covering all package files.
+
+Reproduction commands from package root:
+```bash
+python scripts/verify_package.py
+# Optional reader-format rebuild (Pandoc and XeLaTeX required):
+python scripts/build_paper.py
+```
+
+---
+
+## References
+
+1. Watrous, J. (2018). *The Theory of Quantum Information*. Cambridge University Press.
+2. Mac Lane, S. (1998). *Categories for the Working Mathematician*. Springer.
+3. Carroll, J. H. (2026). Paper 000, *Projection Obstruction for Factorized States*. Zenodo. <https://zenodo.org/records/21752743>.
+4. Carroll, J. H. (2026). Paper 001, *From Covering-Edge Descent Complexes to Functorial Presheaves and Coherence Defects*. Zenodo. <https://zenodo.org/records/20710765>.
+5. Regge, T. (1961). *General relativity without coordinates*. Il Nuovo Cimento, 19(3), 558-571.
+6. Abramsky, S., & Brandenburger, A. (2011). *The sheaf-theoretic structure of non-locality and contextuality*. New Journal of Physics, 13(11), 113036. <https://arxiv.org/abs/1102.0264>.
+7. Fine, A. (1982). *Hidden variables, joint probability, and the Bell inequalities*. Physical Review Letters, 48(5), 291.
+8. Loday, J.-L. (1998). *Cyclic Homology*. Springer.
+

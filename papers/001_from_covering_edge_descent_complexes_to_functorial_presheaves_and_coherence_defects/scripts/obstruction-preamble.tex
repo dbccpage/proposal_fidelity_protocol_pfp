@@ -1,0 +1,89 @@
+% House preamble for the projection-obstruction paper line.
+%
+%  Typesetting is not evidence for any claim.
+%
+% Reviewed 2026-10-02. The `paper-build` skill names a shared
+% obstruction-paper-kit preamble; no such file exists in this tree, so this
+% deposit carries its own and the archive is self-contained.
+%
+% xelatex, not pdflatex: the manuscript uses twelve non-ASCII characters
+% (section sign, en and em dash, superscript one and two, script ell, capital
+% Pi, omega, subscript one, less-or-equal, greater-or-equal, nu) that pdflatex
+% cannot set without per-character declarations.
+
+\usepackage{etoolbox}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Latin Modern Roman}
+% Latin Modern Mono, not DejaVu or Consolas: it ships with every
+% TeX distribution, so the archive builds on a machine that has
+% only TeX Live or MiKTeX and no extra fonts installed.
+\setmonofont{Latin Modern Mono}[Scale=0.85]
+\setmathfont{Latin Modern Math}
+
+\usepackage{amsmath,amssymb,amsthm}
+\providecommand{\llbracket}{\lBrack}
+\providecommand{\rrbracket}{\rBrack}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{microtype}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.4em}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=RoyalBlue,urlcolor=RoyalBlue,
+            citecolor=RoyalBlue,breaklinks=true]{hyperref}
+% fvextra, not plain fancyvrb: `breaklines` is an fvextra option, and
+% fancyvrb alone answers "Package keyval Error: breaklines undefined".
+% pandoc defines the Highlighting environment itself, so this preamble sets
+% the options globally rather than redefining the environment and racing it.
+\usepackage{fvextra}
+\usepackage{framed}
+\fvset{breaklines=true,breakanywhere=true,fontsize=\small}
+
+% The manuscript tables contain long claim and evidence identifiers. Small type and a
+% relaxed tolerance keep them inside the text block instead of overflowing.
+\AtBeginEnvironment{longtable}{\small}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+
+% Pandoc emits \tightlist; define it so the run does not fail when the
+% template that normally supplies it is not used.
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Blockquotes carry the paper's refusal boxes and vocabulary notes, so they
+% need to read as set-apart rather than merely indented.
+\definecolor{quoterule}{gray}{0.75}
+\renewenvironment{quote}
+  {\begin{leftbar}\small}
+  {\end{leftbar}}
+
+% Long file and declaration names are the paper's main source of overfull
+% boxes: `po000_l003_double_commutator_estimates.lean` and friends are set in
+% typewriter, which by default neither hyphenates nor breaks, so a name wider
+% than the remaining line runs into the margin. [htt] lets typewriter text
+% hyphenate; the underscore and the other separators below give TeX explicit
+% break points inside an identifier, which is what a reader would break at
+% anyway.
+\usepackage[htt]{hyphenat}
+\usepackage{xurl}
+\emergencystretch=3em
+\sloppy
+
+\usepackage{etoolbox}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{0.6em}{}
+
+\setcounter{secnumdepth}{0}   % the manuscript numbers its own sections
+\setcounter{tocdepth}{2}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{14pt}
+\fancyhead[L]{\footnotesize PO-001: Covering-Edge Descent}
+\fancyhead[R]{\footnotesize PO-001 \textbullet\ v2.0 \textbullet\ 2026-10-02}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}

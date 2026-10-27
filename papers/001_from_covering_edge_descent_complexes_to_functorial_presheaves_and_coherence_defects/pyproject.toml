@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "po001-covering-edge-descent"
+version = "2.0.0"
+description = "Covering-Edge Descent Complexes, Functorial Presheaves, and Coherence Defects"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Jeremy H. Carroll" }]
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24.0",
+    "pytest>=7.0.0",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+notebooks = ["jupyter>=1.0.0", "ipywidgets>=8.0.0", "matplotlib>=3.7.0"]
+dev = ["pytest-cov>=4.0.0", "mypy>=1.8"]
+
+[tool.setuptools]
+packages = []
+
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+pythonpath = ["code"]
+addopts = "-p no:debugging"
+
+[tool.coverage.run]
+source = ["code"]
+omit = ["*/tests/*", "*/__pycache__/*", "*/monograph_narrative_harmonizer.py"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+skip_empty = true
+
+[tool.mypy]
+files = ["code"]
+python_version = "3.11"
+warn_unused_ignores = false

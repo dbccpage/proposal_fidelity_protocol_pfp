@@ -1,0 +1,105 @@
+{
+  "receipt_schema": "omega.covering_edge_descent.execution_receipt.v1",
+  "benchmark_name": "Covering Edge Descent to Functorial Presheaves Verification Suite",
+  "paper_id": "PO-001",
+  "version": "2.0.0",
+  "timestamp_utc": "2026-09-27T23:13:00Z",
+  "scenarios": [
+    {
+      "name": "Diamond Poset Commuting Path A Strict Presheaf Completion",
+      "poset_elements": ["bot", "x", "y", "top"],
+      "covering_edges": [["bot", "x"], ["bot", "y"], ["x", "top"], ["y", "top"]],
+      "initial_defect_K": "0",
+      "steps": [
+        {
+          "step": "verify_diamond_property",
+          "diamonds_count": 1,
+          "is_diamond_closed": true
+        },
+        {
+          "step": "evaluate_path_a_commutation",
+          "independent_diamond_verified": true,
+          "commuting": true
+        },
+        {
+          "step": "compute_path_a_completion",
+          "completion_status": "StrictPresheafConstructed",
+          "differential_identity": "d1_d0_eq_0"
+        }
+      ]
+    },
+    {
+      "name": "Diamond Poset Non-Commuting Path B Curvature Cochain",
+      "poset_elements": ["bot", "x", "y", "top"],
+      "covering_edges": [["bot", "x"], ["bot", "y"], ["x", "top"], ["y", "top"]],
+      "initial_defect_K": "NonZero",
+      "steps": [
+        {
+          "step": "evaluate_path_b_curvature",
+          "K_bot_x_top": "1",
+          "is_flat": false
+        },
+        {
+          "step": "verify_theorem_3_2_differential_defect",
+          "identity": "d1_d0_eq_K",
+          "verified": true
+        },
+        {
+          "step": "verify_degree_3_boundary_identity",
+          "identity": "d2_K_eq_0",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "name": "Primitive Difference LGGR Quotient Boundary Certification",
+      "poset_elements": ["bot", "x", "y", "top"],
+      "steps": [
+        {
+          "step": "construct_primitive_difference",
+          "delta_before": "1",
+          "delta_after": "0"
+        },
+        {
+          "step": "quotient_class_projection",
+          "quotient_status": "ObstructionClassAdmitted",
+          "lggr_boundary_admitted": true
+        }
+      ]
+    },
+    {
+      "name": "Operator Cocycle and Generic H2 Obstruction",
+      "poset_elements": ["bot", "x", "y", "top"],
+      "steps": [
+        {
+          "step": "evaluate_unconditional_operator_cocycle",
+          "identity": "delta_2_K_identically_zero",
+          "verified_unconditional": true
+        },
+        {
+          "step": "evaluate_delta1_image_membership",
+          "c1_dim": 16,
+          "c2_dim": 32,
+          "diagnostic": "exact_im_delta1_membership_only",
+          "exact_rational_elimination": true,
+          "generic_h2_quotient_constructed": false
+        },
+        {
+          "step": "verify_curved_complex_counterexample",
+          "identity": "delta_2_delta_1_nonzero_on_nonflat_system",
+          "exact_scalar_residual": 6,
+          "open_h2_obligation": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_scenarios": 4,
+    "total_invariants_checked": 10,
+    "violations_detected": 0,
+    "open_obligations_remaining": 1,
+    "status": "PASS_SCOPED_CHECKS_WITH_OPEN_H2_OBLIGATION"
+  },
+  "authority_effect": "None",
+  "evidence_scope": "local exact finite replay; not a content digest or H2 proof"
+}
