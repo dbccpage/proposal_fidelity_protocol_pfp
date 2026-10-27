@@ -123,18 +123,27 @@ def check_hooks(repo_root: Path, registry: dict) -> list[HookFinding]:
         in_hooks = str(invariant.get("enforced_by", "")).startswith(HOOKS_ROOT)
         if in_hooks and invariant["status"] in ACTIVE and identifier not in listed:
             findings.append(HookFinding("R10_HOOK_UNLISTED", identifier, "enforced in a hook script no hook lists"))
-    target = repo_root / HOOKS_JSON
-    try:
-        current = target.read_bytes().replace(b"\r\n", b"\n").decode("utf-8")
-    except (OSError, UnicodeDecodeError):
-        current = None
-    if current != render_text(registry):
-        findings.append(HookFinding("R10_HOOKS_DRIFT", HOOKS_JSON, "differs from the register; run --write"))
+    expected = render_text(registry)
+    for relative in hooks_json_paths(repo_root, registry):
+        try:
+            current = (repo_root / relative).read_bytes().replace(b"\r\n", b"\n").decode("utf-8")
+        except (OSError, UnicodeDecodeError):
+            current = None
+        if current != expected:
+            findings.append(HookFinding("R10_HOOKS_DRIFT", relative, "differs from the register; run --write"))
     return findings
 
 
+def hooks_json_paths(repo_root: Path, registry: dict) -> list[str]:
+    """The canonical hooks.json and the copy in each host root that has a hooks folder."""
+    hosts = [f"{host}/hooks/hooks.json" for host in registry.get("host_roots", [])]
+    return [HOOKS_JSON, *(path for path in hosts if (repo_root / path).parent.is_dir())]
+
+
 def write_hooks(repo_root: Path, registry: dict) -> None:
-    (repo_root / HOOKS_JSON).write_text(render_text(registry), encoding="utf-8", newline="\n")
+    text = render_text(registry)
+    for relative in hooks_json_paths(repo_root, registry):
+        (repo_root / relative).write_text(text, encoding="utf-8", newline="\n")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -147,7 +156,7 @@ def main(argv: list[str] | None = None) -> int:
     registry = yaml.safe_load(Path(args.registry).read_text(encoding="utf-8"))
     if args.write:
         write_hooks(root, registry)
-        print(f"wrote {HOOKS_JSON}")
+        print(f"wrote {', '.join(hooks_json_paths(root, registry))}")
     findings = check_hooks(root, registry)
     for finding in findings:
         print(f"  {finding.render()}")
