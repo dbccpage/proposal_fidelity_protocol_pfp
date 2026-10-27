@@ -26,7 +26,7 @@ the output afterwards.
 | --- | --- | --- |
 | [PFP Lab](PFP-Lab.md) | The host side: claims checked by recomputation, refusals kept in the receipt, retraction | `python -m pfp_lab.cli.main run --pack refusal-gallery` |
 | Pure Python modules in `pfp/`, `eis/` and `ops/adversary/` | Single checks such as clarification, two-signal admission and pressure screens | Set `$env:PYTHONPATH = "ops;."` in PowerShell, then import them |
-| The local swarm in `ops/adversary/` | The full multi-role run (prompt preparation, turns, checks, reports) | Not runnable yet: its command line still needs governance modules that were not copied in |
+| The local swarm in `ops/adversary/` | The full multi-role run (prompt preparation, turns, checks, reports) | The command line starts: from the `ops` folder, set `$env:PYTHONPATH = ".;.."` and run `python -m adversary.entrypoints.cli --help`. A run also needs `CORE_SYMBOL_GAME_HOST` pointing at the built `pfp` binary and a role roster, which is not published, so `teamwork start` stops at the roster for now |
 | `HfLocalRunner` in `pfp/infrastructure/adapters/decode_controls/` | Decode masks, attention edits and activation steering on a local model | Needs PyTorch, `transformers` and a locally cached small model |
 | Native host in `code/rust/` | Prompt geometry, the immune-fence renderer and critique parsing | `cargo build --manifest-path code/rust/Cargo.toml -p pfp` (wiring the built host into the Python adapters is not finished) |
 
