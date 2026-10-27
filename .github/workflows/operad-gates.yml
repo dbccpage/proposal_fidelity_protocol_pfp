@@ -26,3 +26,11 @@ jobs:
       # Rules: every ENFORCED or PARTIAL invariant names a check that exists, and hooks.json is generated from the register.
       - run: python -m operads.skill_operad.skill_compiler.rule_gate --repo-root .
       - run: python -m pytest -q operads/skill_operad/skill_compiler/tests/test_rule_gate.py operads/skill_operad/skill_compiler/tests/test_hook_compiler.py
+      - run: python -m pip install pydantic
+      # Catalogue: the committed projection equals a fresh compile, and every BOUND executor starts.
+      - run: python -m operads.infrastructure.capability_catalog_compiler --check --repo-root .
+        env:
+          PYTHONPATH: ops:.
+      - run: python -m pytest -q operads/tests/unit/test_executor_bindings.py
+        env:
+          PYTHONPATH: ops:.
