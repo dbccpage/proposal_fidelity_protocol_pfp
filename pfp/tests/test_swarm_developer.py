@@ -12,8 +12,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.entrypoints.cli import swarm_developer
+from operations.domain.rop.result import Err, Ok
+from pfp.entrypoints.cli import swarm_developer
 
 
 def test_verify_governance_skill(tmp_path: Path) -> None:
@@ -23,7 +23,7 @@ def test_verify_governance_skill(tmp_path: Path) -> None:
     assert res_missing.error.code == "SWARM_GOVERNANCE_MISSING"
 
     # 2. Existing governance skill
-    gov_dir = tmp_path / "omega_engine_operads" / "skills" / "governance-pfp"
+    gov_dir = tmp_path / "operads" / "skills" / "governance-pfp"
     gov_dir.mkdir(parents=True)
     gov_file = gov_dir / "SKILL.md"
     gov_file.write_text("# Governance Symbol Game\nAuthorityEffect: None.\n", encoding="utf-8")
@@ -163,13 +163,13 @@ def test_audit_clean_architecture_boundaries(tmp_path: Path) -> None:
     # 1. Non-domain path is ignored
     non_domain = tmp_path / "use_cases" / "service.py"
     non_domain.parent.mkdir(parents=True)
-    non_domain.write_text("import omega_engine.use_cases\n", encoding="utf-8")
+    non_domain.write_text("import engine.use_cases\n", encoding="utf-8")
     assert swarm_developer.audit_clean_architecture_boundaries(non_domain) == []
 
     # 2. Domain path with outer layer import is flagged
     domain_bad = tmp_path / "domain" / "entity.py"
     domain_bad.parent.mkdir(parents=True)
-    domain_bad.write_text("from omega_engine_operations.use_cases import run\n", encoding="utf-8")
+    domain_bad.write_text("from operations.use_cases import run\n", encoding="utf-8")
     violations = swarm_developer.audit_clean_architecture_boundaries(domain_bad)
     assert len(violations) == 1
     assert "use_cases" in violations[0]
@@ -197,7 +197,7 @@ def test_cli_validate_contract_digest_mismatch(tmp_path: Path, monkeypatch) -> N
         encoding="utf-8",
     )
     # Ensure governance skill exists in tmp_path
-    gov_dir = tmp_path / "omega_engine_operads" / "skills" / "governance-pfp"
+    gov_dir = tmp_path / "operads" / "skills" / "governance-pfp"
     gov_dir.mkdir(parents=True)
     (gov_dir / "SKILL.md").write_text("# Test\n", encoding="utf-8")
     monkeypatch.setattr(swarm_developer, "resolve_repo_root", lambda: tmp_path)
@@ -278,7 +278,7 @@ def test_resolve_repo_root_refuses_without_git_checkout(monkeypatch) -> None:
 
 def test_auto_repair_triggers_autop_and_writes_receipt(tmp_path: Path, monkeypatch) -> None:
     # 1. Setup mock repo root in tmp_path with governance skill
-    gov_dir = tmp_path / "omega_engine_operads" / "skills" / "governance-pfp"
+    gov_dir = tmp_path / "operads" / "skills" / "governance-pfp"
     gov_dir.mkdir(parents=True)
     (gov_dir / "SKILL.md").write_text("# Governance\nAuthorityEffect: None.\n", encoding="utf-8")
 
@@ -337,7 +337,7 @@ def test_auto_repair_triggers_autop_and_writes_receipt(tmp_path: Path, monkeypat
     assert stage_0["status"] == "PASS"
     assert stage_0["details"]["item_count"] == 1
     assert stage_0["details"]["extracted_error_count"] >= 1
-    assert "WOLAND-REPAIR-REPAIR-TEST-001-R1" in stage_0["details"]["paper_ids"]
+    assert "ADVERSARY-REPAIR-REPAIR-TEST-001-R1" in stage_0["details"]["paper_ids"]
 
     # Verify that evidence_envelope recorded autop_receipts
     envelope_file = (
@@ -357,7 +357,7 @@ def test_auto_repair_triggers_autop_and_writes_receipt(tmp_path: Path, monkeypat
 
 
 def test_failing_round_without_auto_repair_does_not_trigger_autop(tmp_path: Path, monkeypatch) -> None:
-    gov_dir = tmp_path / "omega_engine_operads" / "skills" / "governance-pfp"
+    gov_dir = tmp_path / "operads" / "skills" / "governance-pfp"
     gov_dir.mkdir(parents=True)
     (gov_dir / "SKILL.md").write_text("# Governance\nAuthorityEffect: None.\n", encoding="utf-8")
 

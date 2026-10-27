@@ -10,7 +10,7 @@ from typing import Any, Dict, Optional
 
 import yaml
 
-from omega_engine_pfp.domain.modes import (
+from pfp.domain.modes import (
     ModeCluster,
     ModeContract,
     ModesManifest,
@@ -22,7 +22,7 @@ def resolve_repo_root() -> Path:
     current = Path(__file__).resolve()
     for parent in current.parents:
         if (parent / ".git").exists() or (
-            (parent / "omega_engine_pfp").is_dir()
+            (parent / "pfp").is_dir()
             and (parent / "ow").is_dir()
         ):
             return parent
@@ -44,15 +44,15 @@ def find_modes_dir(start_path: Optional[Path] = None) -> Path:
     # An explicit root remains isolated from the installed catalog so callers
     # can inspect another estate or receive a genuine missing-resource error.
     candidates = [
-        root / "omega_engine_pfp" / "infrastructure" / "yaml" / "modes",
+        root / "pfp" / "infrastructure" / "yaml" / "modes",
         root / "infrastructure" / "yaml" / "modes",
         root
-        / "omega_engine_education"
+        / "education"
         / "documentation"
         / "030_the_symbol_game_proposal_fidelity_protocol_pfp"
         / "modes",
-        root / "ow" / "omega_engine_pfp_v0.2" / "modes",
-        root / "ow" / "pfp" / "omega_engine_pfp_v0.2" / "modes",
+        root / "ow" / "pfp_v0.2" / "modes",
+        root / "ow" / "pfp" / "pfp_v0.2" / "modes",
         root / "ow" / "pfp" / "modes",
         root / "ow" / "modes",
     ]

@@ -6,38 +6,38 @@ import sqlite3
 import pytest
 import yaml
 
-from omega_engine_woland.tests.pilots.relational_spacetime import compact_trials as round_
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
-from omega_engine_pfp.infrastructure.adapters import pfp_experiment
-from omega_engine_pfp.tests._po035_historical import historical_experiment
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import (
+from adversary.tests.pilots.relational_spacetime import compact_trials as round_
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
+from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
+from pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from pfp.infrastructure.adapters import pfp_experiment
+from pfp.tests._po035_historical import historical_experiment
+from pfp.infrastructure.adapters.pfp_evidence import (
     canonical,
     digest,
     write_once,
 )
-from omega_engine_pfp.use_cases.pfp_derivation_loops import run_derivation_loops
+from pfp.use_cases.pfp_derivation_loops import run_derivation_loops
 
 
 def test_current_sources_bind_canonical_versioned_profile():
     pins = round_.sources()["files"]
     assert str(round_.TEMPLATES.relative_to(round_.ROOT)).replace("\\", "/") == (
-        "omega_engine_pfp/infrastructure/yaml/prompts/templates"
+        "pfp/infrastructure/yaml/prompts/templates"
     )
     assert (
-        "omega_engine_pfp/infrastructure/yaml/prompts/templates/"
+        "pfp/infrastructure/yaml/prompts/templates/"
         "template_role_registry.yaml"
     ) in pins
     assert (
-        "omega_engine_pfp/infrastructure/yaml/prompts/templates/"
+        "pfp/infrastructure/yaml/prompts/templates/"
         "template_pfp_r0001.yaml"
     ) in pins
-    assert "omega_engine_education/pilots/evidence/po035_simplified_20261012/spec.yaml" not in pins
-    assert not any(path.startswith("omega_engine_education/pfp/") for path in pins)
-    assert "omega_engine_pfp/infrastructure/numbered_prompts.py" in pins
-    assert "omega_engine_education/pilots/relational_spacetime/compact_prompts.py" not in pins
+    assert "education/pilots/evidence/po035_simplified_20261012/spec.yaml" not in pins
+    assert not any(path.startswith("education/pfp/") for path in pins)
+    assert "pfp/infrastructure/numbered_prompts.py" in pins
+    assert "education/pilots/relational_spacetime/compact_prompts.py" not in pins
 
 
 def test_current_campaign_does_not_reuse_frozen_namespace():

@@ -15,22 +15,22 @@ RESEARCH_DIR = Path(__file__).resolve().parent.parent.parent
 if str(RESEARCH_DIR) not in sys.path:
     sys.path.insert(0, str(RESEARCH_DIR))
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import TokenFrontier, TowerGrammar
-from omega_engine_pfp.domain.mssn_research.grammar.foundational_policies import (
+from pfp.domain.mssn_research.grammar.entities import TokenFrontier, TowerGrammar
+from pfp.domain.mssn_research.grammar.foundational_policies import (
     check_alphabet_conformance,
     check_quantifier_mask_depth,
     check_wire_round_trip,
     check_zero_mass_fence,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.lexical import (
+from pfp.domain.mssn_research.grammar.lexical import (
     Alphabet,
     FrontierCandidate,
     ParserStateId,
     ProbabilityMass,
     QuantifierMask,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
+from pfp.domain.mssn_research.packets.value_objects import RefusalCode
+from pfp.domain.mssn_research.shared_kernel.value_objects import Rational, StageLevel
 
 
 class TestGrammarValueObjects(unittest.TestCase):

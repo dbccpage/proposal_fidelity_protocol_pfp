@@ -11,22 +11,22 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_pfp.domain.aggregates.cycle_balance_aggregate import CycleBalanceQuartetAggregate
-from omega_engine_pfp.domain.aggregates.pilot_aggregate import PilotAggregate
-from omega_engine_pfp.domain.aggregates.rewriting_aggregate import SpanPartitionAggregate
-from omega_engine_pfp.domain.value_objects.numerics import BoundedTemperature
-from omega_engine_pfp.domain.value_objects.topology import ByteSpanVO
-from omega_engine_pfp.domain.value_objects.identifiers import CheckerIdVO
-from omega_engine_pfp.domain.value_objects.numerics import DifficultyRung
-from omega_engine_pfp.domain.value_objects.taxonomy import EvaluationStatusVO
-from omega_engine_pfp.domain.value_objects.numerics import MicroUsdSpend
-from omega_engine_pfp.domain.value_objects.identifiers import PilotId
-from omega_engine_pfp.domain.value_objects.identifiers import PromptId
-from omega_engine_pfp.domain.value_objects.identifiers import RequestId
-from omega_engine_pfp.domain.value_objects.identifiers import Sha256Digest
-from omega_engine_pfp.domain.value_objects.taxonomy import SpanRoleVO
-from omega_engine_pfp.domain.value_objects.taxonomy import TaskFamilyVO
-from omega_engine_pfp.domain.value_objects.taxonomy import TrialStatusVO
+from pfp.domain.aggregates.cycle_balance_aggregate import CycleBalanceQuartetAggregate
+from pfp.domain.aggregates.pilot_aggregate import PilotAggregate
+from pfp.domain.aggregates.rewriting_aggregate import SpanPartitionAggregate
+from pfp.domain.value_objects.numerics import BoundedTemperature
+from pfp.domain.value_objects.topology import ByteSpanVO
+from pfp.domain.value_objects.identifiers import CheckerIdVO
+from pfp.domain.value_objects.numerics import DifficultyRung
+from pfp.domain.value_objects.taxonomy import EvaluationStatusVO
+from pfp.domain.value_objects.numerics import MicroUsdSpend
+from pfp.domain.value_objects.identifiers import PilotId
+from pfp.domain.value_objects.identifiers import PromptId
+from pfp.domain.value_objects.identifiers import RequestId
+from pfp.domain.value_objects.identifiers import Sha256Digest
+from pfp.domain.value_objects.taxonomy import SpanRoleVO
+from pfp.domain.value_objects.taxonomy import TaskFamilyVO
+from pfp.domain.value_objects.taxonomy import TrialStatusVO
 
 
 class TestPilotAggregateInvariants(unittest.TestCase):

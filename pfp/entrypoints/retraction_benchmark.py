@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from omega_engine_pfp.infrastructure.retraction_benchmark import (
+from pfp.infrastructure.retraction_benchmark import (
     CONDITIONS,
     DEFAULT_MODEL,
     replay_outputs,

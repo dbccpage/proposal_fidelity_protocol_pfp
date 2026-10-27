@@ -19,7 +19,7 @@ families: [meta]
 ## The executable
 
 ```bash
-python omega_engine_operads/skills/declared-vs-actual-gate/scripts/check_declared_programs.py
+python operads/skills/declared-vs-actual-gate/scripts/check_declared_programs.py
 ```
 
 Exit 0 all checks pass, 1 at least one `BLOCKED`, 2 the gate could not run -- which is a refusal, not a pass. `--json` emits the receipt.

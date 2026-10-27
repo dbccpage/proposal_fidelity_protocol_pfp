@@ -25,8 +25,8 @@ from pathlib import Path
 COMMIT = "6f649c611c2b751db4abf4cba541bf2403575590"
 DEMO = "research/mssn_sn_tower/demos/demo_2/"
 PREFIX = "paper011_recovered_demo2"
-BRIDGE = "omega_engine_pfp/domain/bridge/"
-DOMAIN = "omega_engine_pfp/domain/"
+BRIDGE = "pfp/domain/bridge/"
+DOMAIN = "pfp/domain/"
 PAPER = Path(__file__).absolute().parents[1]
 TRACES = (
     "demo2_r1_stoquastic_1790206738.jsonl",
@@ -172,7 +172,7 @@ def adapt(raw: bytes, name: str) -> tuple[ast.Module, dict]:
                 raise RecoveryError("UNDECLARED_TOP_LEVEL_SIDE_EFFECT")
         if isinstance(node, ast.ImportFrom):
             original = ast.unparse(node)
-            if node.module == "omega_engine_pfp.domain":
+            if node.module == "pfp.domain":
                 if {alias.name for alias in node.names} != {"PacketEnvelopeV2"}:
                     raise RecoveryError("UNDECLARED_ENGINE_IMPORT")
                 reason = "deferred annotation only; no packet constructor or admission invoked"
@@ -312,14 +312,14 @@ def parse_rounds(raw: bytes) -> list[dict]:
                 }
             )
         if [r["speaker"] for r in roles] != [
-            "Begemot",
-            "Koroviev",
-            "Jeremy",
-            "Polina",
-            "Liudmila",
-            "Yaroslava",
-            "Yeshua",
-            "Woland",
+            "Gauge Breaker",
+            "Defect Hunter",
+            "Bare Metal Anchor",
+            "Overconfidence Probe",
+            "Resilience",
+            "Punchlist",
+            "Truth Repair",
+            "Adversary",
         ]:
             raise RecoveryError("COMPLETE_ORIGINAL_ROLE_ORDER_REQUIRED")
         if score is None:
@@ -552,7 +552,7 @@ def historical_metadata(value):
 
 def dialogue_audit(repo: Path, output: Path, pins: dict, journal: list) -> dict:
     # Decode historical metadata through the original domain owner, without packet admission.
-    root = "omega_engine_pfp/domain/"
+    root = "pfp/domain/"
     inputs = []
     modules = {}
     for name, relative in (
@@ -637,7 +637,7 @@ def dialogue_audit(repo: Path, output: Path, pins: dict, journal: list) -> dict:
                 packet, candidate, score, prior, round_["round"]
             )
             for expected, actual in zip(round_["roles"], rendered):
-                candidate_dependent = expected["speaker"] == "Begemot" and score.phi_1 > 0
+                candidate_dependent = expected["speaker"] == "Gauge Breaker" and score.phi_1 > 0
                 comparisons.append(
                     {
                         "path": check["narrative_path"],

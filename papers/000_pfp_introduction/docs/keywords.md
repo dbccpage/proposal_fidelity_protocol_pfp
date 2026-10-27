@@ -6,7 +6,7 @@
 - Minimal Symbol System (MSS-N)
 - Proposal-and-check workflow
 - Independent referee receipt
-- Wire vocabulary Sigma_Landau
+- Wire vocabulary Sigma_Examiner
 - Angle-bracket presentation
 - Exact rational arithmetic
 - Observational separation

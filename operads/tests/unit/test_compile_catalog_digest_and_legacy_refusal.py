@@ -20,38 +20,38 @@ from typing import Tuple
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
-from omega_engine_operads.application.commands.compile_catalog import (
+from operations.domain.rop.result import Err, Ok, Result
+from operads.application.commands.compile_catalog import (
     CompileCatalogHandler,
     catalog_content_digest,
 )
-from omega_engine_operads.application.dtos.command_dtos import (
+from operads.application.dtos.command_dtos import (
     CompileCatalogCommand,
 )
-from omega_engine_operads.application.ports.estate_source_port import (
+from operads.application.ports.estate_source_port import (
     EstateSourcePort,
 )
-from omega_engine_operads.application.ports.legacy_catalog_reader_port import (
+from operads.application.ports.legacy_catalog_reader_port import (
     LegacyCatalogReaderPort,
 )
-from omega_engine_operads.application.ports.skill_document_parser_port import (
+from operads.application.ports.skill_document_parser_port import (
     SkillDocumentParserPort,
 )
-from omega_engine_operads.domain.entities.operation_v3 import (
+from operads.domain.entities.operation_v3 import (
     OperationV3,
     PortSpecV3,
 )
-from omega_engine_operads.domain.entities.skill_document_v3 import (
+from operads.domain.entities.skill_document_v3 import (
     SkillDocumentV3,
 )
-from omega_engine_operads.domain.errors.domain_errors import (
+from operads.domain.errors.domain_errors import (
     DomainInvariantError,
     OeopDomainError,
 )
-from omega_engine_operads.domain.value_objects.content_digest import (
+from operads.domain.value_objects.content_digest import (
     ContentDigest,
 )
-from omega_engine_operads.domain.value_objects.identifier import (
+from operads.domain.value_objects.identifier import (
     CausationId,
     ColourId,
     CorrelationId,
@@ -61,7 +61,7 @@ from omega_engine_operads.domain.value_objects.identifier import (
     SchemaRef,
     SkillId,
 )
-from omega_engine_operads.domain.value_objects.lifecycle_facets import (
+from operads.domain.value_objects.lifecycle_facets import (
     AdmissionFacet,
     DeclarationFacet,
     ExecutorBindingFacet,
@@ -69,13 +69,13 @@ from omega_engine_operads.domain.value_objects.lifecycle_facets import (
     SkillLifecycleV3,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.providers.system_clock import (
+from operads.infrastructure.providers.system_clock import (
     SystemClock,
 )
-from omega_engine_operads.infrastructure.providers.uuid_id_generator import (
+from operads.infrastructure.providers.uuid_id_generator import (
     UuidIdGenerator,
 )
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import (
+from operads.infrastructure.storage.sqlite_unit_of_work import (
     SqliteUnitOfWork,
 )
 

@@ -8,8 +8,8 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any, Mapping, Protocol, Sequence, runtime_checkable
 
-from omega_engine_pfp.domain.biochem.allostery import AllostericDecision
-from omega_engine_pfp.domain.biochem.proofreading import DissociationReceipt
+from pfp.domain.biochem.allostery import AllostericDecision
+from pfp.domain.biochem.proofreading import DissociationReceipt
 
 
 @runtime_checkable

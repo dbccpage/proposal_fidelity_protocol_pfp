@@ -11,11 +11,11 @@ import urllib.request
 
 import pytest
 
-from omega_engine_pfp.infrastructure import formal_matrix as matrix
+from pfp.infrastructure import formal_matrix as matrix
 
 
 def gateway(tmp_path, **options):
-    from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+    from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
     return make_gateway(tmp_path, **options)
 

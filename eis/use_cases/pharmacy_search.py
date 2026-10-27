@@ -15,8 +15,8 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Protocol, cast
 
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
 
 from ..domain.external_admission import AdmissionError
 from ..domain.pharmacy_search import PharmacyQuery, PharmacySearchResult

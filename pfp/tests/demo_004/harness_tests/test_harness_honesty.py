@@ -18,7 +18,7 @@ them, that:
 * run roots come from the resolver, never from ``parents[N]`` arithmetic.
 
 Every write goes to pytest's temporary directories; the challenges conftest
-points OMEGA_INTELLIGENCE_ROOT at one as well.
+points CORE_INTELLIGENCE_ROOT at one as well.
 """
 
 from __future__ import annotations
@@ -36,11 +36,11 @@ from types import ModuleType
 
 import pytest
 
-from omega_engine_operations.use_cases.cicd import challenge_harness_lints as lints
+from operations.use_cases.cicd import challenge_harness_lints as lints
 
 CHALLENGES = Path(__file__).resolve().parents[1]
 REPO_ROOT = CHALLENGES.parents[2]
-PKG_PREFIX = "omega_engine_projects.mssn_sn_symgam.challenges"
+PKG_PREFIX = "projects.mssn_sn_symgam.challenges"
 
 C011 = f"{PKG_PREFIX}.b_cohomology.c011_cycle_rank_ladder_coboundary_repair"
 C015 = f"{PKG_PREFIX}.b_cohomology.c015_persistent_homology_barcodes"
@@ -187,8 +187,8 @@ def test_a_lone_carriage_return_is_not_normalised(tmp_path: Path) -> None:
 
 
 def test_family_a_gate_refuses_an_empty_suite_and_labels_a_consistent_one() -> None:
-    gate_mod = importlib.import_module(f"{C011}.governance.woland_gate")
-    gate = gate_mod.WolandGate()
+    gate_mod = importlib.import_module(f"{C011}.governance.adversary_gate")
+    gate = gate_mod.AdversaryGate()
     assert gate.determine_terminal_verdict([]) == INCONSISTENT
     assert gate.determine_terminal_verdict([{"verdict": "PASS", "agreement": True}]) == CONSISTENT
     assert (
@@ -199,9 +199,9 @@ def test_family_a_gate_refuses_an_empty_suite_and_labels_a_consistent_one() -> N
 def test_count_gates_refuse_zero_of_zero_mutations() -> None:
     """Counterexample (C054): the gate passed with 0 of 0 mutations killed."""
     family_b = importlib.import_module(
-        f"{C015}.governance.woland_gate"
-    ).evaluate_woland_terminal_gate
-    family_c = importlib.import_module(f"{C018}.governance.woland_gate").evaluate_woland_gate
+        f"{C015}.governance.adversary_gate"
+    ).evaluate_adversary_terminal_gate
+    family_c = importlib.import_module(f"{C018}.governance.adversary_gate").evaluate_adversary_gate
     full = {"total_cases": 5, "passed_cases": 5, "mutations_total": 4, "mutations_killed": 4}
     assert family_b(full, True)[0] == CONSISTENT
     assert family_b({**full, "mutations_total": 0, "mutations_killed": 0}, True)[0] == INCONSISTENT
@@ -217,7 +217,7 @@ def test_count_gates_refuse_zero_of_zero_mutations() -> None:
         ]
         == INCONSISTENT
     )
-    c032 = importlib.import_module(f"{C032}.governance.woland_gate").determine_terminal_verdict
+    c032 = importlib.import_module(f"{C032}.governance.adversary_gate").determine_terminal_verdict
     assert c032(0, 0, 0) == INCONSISTENT
     assert c032(3, 3, 3) == CONSISTENT
 
@@ -238,7 +238,7 @@ def test_flat_scripts_label_from_exact_counts(key: str) -> None:
 
 def test_family_a_defect_values_are_exact_without_tolerance() -> None:
     """Counterexample (c021): phi1 = 1e-6 passed under a float tolerance."""
-    gate = importlib.import_module(f"{C011}.governance.woland_gate").WolandGate()
+    gate = importlib.import_module(f"{C011}.governance.adversary_gate").AdversaryGate()
     cases = [{"verdict": "PASS", "agreement": True}]
     assert gate.determine_terminal_verdict(cases, phi1=Fraction(1, 10**9)) == INCONSISTENT
     assert gate.determine_terminal_verdict(cases, phi1=0, gamma2=Fraction(0)) == CONSISTENT
@@ -253,9 +253,9 @@ def test_family_a_defect_values_are_exact_without_tolerance() -> None:
 
 
 def test_failed_bundle_write_leaves_a_failure_receipt_and_deletes_nothing(tmp_path: Path) -> None:
-    """Counterexample (c021 woland_gate.py:274-276): a failed write rmtree'd the staged folder."""
-    gate_mod = importlib.import_module(f"{C011}.governance.woland_gate")
-    target = tmp_path / "_intelligence" / "_woland" / "runs" / "failing_run"
+    """Counterexample (c021 adversary_gate.py:274-276): a failed write rmtree'd the staged folder."""
+    gate_mod = importlib.import_module(f"{C011}.governance.adversary_gate")
+    target = tmp_path / "_intelligence" / "_adversary" / "runs" / "failing_run"
     with pytest.raises(TypeError):
         gate_mod.persist_single_bundle(
             target_dir=target,
@@ -276,10 +276,10 @@ def test_failed_bundle_write_leaves_a_failure_receipt_and_deletes_nothing(tmp_pa
 
 
 def test_persisted_bundle_carries_the_label_scope_and_measured_values(tmp_path: Path) -> None:
-    gate = importlib.import_module(f"{C011}.governance.woland_gate").WolandGate(
+    gate = importlib.import_module(f"{C011}.governance.adversary_gate").AdversaryGate(
         base_repo_root=tmp_path
     )
-    verdict, woland_dir, sg_dir, _ = gate.evaluate_and_persist(
+    verdict, adversary_dir, sg_dir, _ = gate.evaluate_and_persist(
         task_key="t1",
         run_id="r1",
         case_results=[
@@ -295,19 +295,19 @@ def test_persisted_bundle_carries_the_label_scope_and_measured_values(tmp_path: 
         defect_count=1,
     )
     assert verdict == INCONSISTENT
-    assert woland_dir == tmp_path / "_intelligence" / "_woland" / "runs" / "t1"
-    receipt = json.loads((woland_dir / "receipt.json").read_text(encoding="utf-8"))
+    assert adversary_dir == tmp_path / "_intelligence" / "_adversary" / "runs" / "t1"
+    receipt = json.loads((adversary_dir / "receipt.json").read_text(encoding="utf-8"))
     assert (
         receipt["verdict"] == INCONSISTENT
         and receipt["gate_scope"] == "REFERENCE_SOLVER_SELF_CHECK"
     )
     assert (receipt["case_count"], receipt["passed_count"], receipt["phi1"]) == (2, 1, None)
-    report = (woland_dir / "novella.md").read_text(encoding="utf-8")
+    report = (adversary_dir / "novella.md").read_text(encoding="utf-8")
     for templated in ("100% concordance", "$0.05", "70B", "cost = 26", "Act IV"):
         assert templated not in report
     steps = [
         json.loads(line)
-        for line in (woland_dir / "dda_actions.jsonl").read_text(encoding="utf-8").splitlines()
+        for line in (adversary_dir / "dda_actions.jsonl").read_text(encoding="utf-8").splitlines()
     ]
     assert steps[-1]["payload"]["label"] == INCONSISTENT
     assert all("repaired" not in json.dumps(step) for step in steps)
@@ -410,7 +410,7 @@ def test_flat_script_with_no_mutations_refuses_and_leaves_a_failure_receipt(tmp_
     assert caught.value.code == "EMPTY_MUTATION_SUITE"
     run_dirs = [
         p
-        for p in (store / "_intelligence" / "_woland" / "runs").iterdir()
+        for p in (store / "_intelligence" / "_adversary" / "runs").iterdir()
         if not p.name.startswith(".")
     ]
     assert len(run_dirs) == 1
@@ -422,7 +422,7 @@ def test_flat_script_writes_under_the_resolved_intelligence_root(
 ) -> None:
     module = _flat_copy(tmp_path, mutations=1)
     module.run_gate()
-    runs = isolated_intelligence_root / "_intelligence" / "_woland" / "runs"
+    runs = isolated_intelligence_root / "_intelligence" / "_adversary" / "runs"
     (run_dir,) = [p for p in runs.iterdir() if not p.name.startswith(".")]
     receipt = json.loads((run_dir / "receipt.json").read_text(encoding="utf-8"))
     assert receipt["pre_run_commitment"] is False

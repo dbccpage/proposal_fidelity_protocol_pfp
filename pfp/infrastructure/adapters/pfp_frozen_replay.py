@@ -19,7 +19,7 @@ import sys
 import tempfile
 
 
-_PROMPT_SOURCE_PREFIX = "omega_engine_education/pfp/infrastructure/yaml/prompts/versioned/"
+_PROMPT_SOURCE_PREFIX = "education/pfp/infrastructure/yaml/prompts/versioned/"
 _PROMPT_RESOURCE_PREFIX = "infrastructure/yaml/prompts/versioned/"
 # Original identities and original byte digests; not current-render input pins.
 _FROZEN_PROMPT_SOURCES = {
@@ -65,13 +65,13 @@ def read_frozen_prompt_source(original_path: str) -> bytes:
     if selected is None:
         raise ValueError("UNKNOWN_FROZEN_PROMPT_SOURCE")
     relative, expected = selected
-    target = resources.files("omega_engine_pfp").joinpath(_PROMPT_RESOURCE_PREFIX + relative)
+    target = resources.files("pfp").joinpath(_PROMPT_RESOURCE_PREFIX + relative)
     try:
         raw = target.read_bytes()
     except FileNotFoundError as exc:
         try:
             raw = subprocess.check_output(
-                ["git", "show", f"56e1e552c5:omega_engine_pfp/{_PROMPT_RESOURCE_PREFIX}{relative}"],
+                ["git", "show", f"56e1e552c5:pfp/{_PROMPT_RESOURCE_PREFIX}{relative}"],
                 cwd=Path(__file__).resolve().parents[3],
                 stderr=subprocess.DEVNULL,
             )
@@ -114,8 +114,8 @@ def replay_bundle(repository: Path, bundle: Path, profile: str) -> object:
         # contain replay scripts; it must never replace a pinned source.
         for name in manifest["evidence_paths"]:
             source_name = (
-                "omega_engine_woland/tests/pilots" + name[len("omega_engine_education/pilots"):]
-                if name == "omega_engine_education/pilots" or name.startswith("omega_engine_education/pilots/")
+                "adversary/tests/pilots" + name[len("education/pilots"):]
+                if name == "education/pilots" or name.startswith("education/pilots/")
                 else name
             )
             shutil.copytree(

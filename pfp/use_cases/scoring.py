@@ -155,17 +155,17 @@ def mass_from_ids(ids: Sequence[str], *, unit: float = 1.0) -> float:
 
 
 def residual_drop_mass(
-    omega_mass: float,
+    core_mass: float,
     residual_mass: float,
     *,
     cost: float = 0.0,
 ) -> tuple[float, float | None, float]:
-    if omega_mass < 0 or residual_mass < 0:
+    if core_mass < 0 or residual_mass < 0:
         raise ValueError(REFUSAL_NEGATIVE_MAGNITUDE)
     if cost < 0:
         raise ValueError("cost must be nonnegative")
-    delta = float(omega_mass) - float(residual_mass)
-    relative = delta / omega_mass if omega_mass > 0 else None
+    delta = float(core_mass) - float(residual_mass)
+    relative = delta / core_mass if core_mass > 0 else None
     return delta, relative, delta / (1.0 + float(cost))
 
 
@@ -208,10 +208,10 @@ def residual_drop_from_ids(
 ) -> ResidualDropV1:
     has_dual = dual_witness_present if dual_witness_present is not None else bool(dual_witness_ref)
     if not legal:
-        omega_mass = mass_from_ids(before_ids, unit=unit)
+        core_mass = mass_from_ids(before_ids, unit=unit)
         return ResidualDropV1(
-            omega_mass=omega_mass,
-            residual_mass=omega_mass,
+            core_mass=core_mass,
+            residual_mass=core_mass,
             delta=-float("inf"),
             relative_drop=0.0,
             eliminated_ids=(),
@@ -225,9 +225,9 @@ def residual_drop_from_ids(
             refusal_code=refusal_code or REFUSAL_ILLEGAL_PROPOSAL,
         )
 
-    omega_mass = mass_from_ids(before_ids, unit=unit)
+    core_mass = mass_from_ids(before_ids, unit=unit)
     residual_mass = mass_from_ids(after_ids, unit=unit)
-    delta, relative, efficiency = residual_drop_mass(omega_mass, residual_mass, cost=cost)
+    delta, relative, efficiency = residual_drop_mass(core_mass, residual_mass, cost=cost)
     eliminated, opened, retained = set_delta(before_ids, after_ids)
     colour = residual_colour_from_mass(
         residual_mass,
@@ -237,7 +237,7 @@ def residual_drop_from_ids(
     if declared_colour == "Exact" and declared_colour != colour and not has_dual:
         raise ValueError(REFUSAL_EXACT_WITHOUT_DUAL)
     return ResidualDropV1(
-        omega_mass=omega_mass,
+        core_mass=core_mass,
         residual_mass=residual_mass,
         delta=delta,
         relative_drop=relative,
@@ -276,9 +276,9 @@ def residual_drop_from_ledger_maps(
     dual_witness_present: bool | None = None,
 ) -> ResidualDropV1:
     has_dual = dual_witness_present if dual_witness_present is not None else bool(dual_witness_ref)
-    omega_mass = mass_from_magnitudes(before_map)
+    core_mass = mass_from_magnitudes(before_map)
     residual_mass = mass_from_magnitudes(after_map)
-    delta, relative, efficiency = residual_drop_mass(omega_mass, residual_mass, cost=cost)
+    delta, relative, efficiency = residual_drop_mass(core_mass, residual_mass, cost=cost)
     eliminated, opened, retained = set_delta(tuple(before_map), tuple(after_map))
     colour = residual_colour_from_mass(
         residual_mass,
@@ -286,7 +286,7 @@ def residual_drop_from_ledger_maps(
         open_ids=tuple(after_map),
     )
     return ResidualDropV1(
-        omega_mass=omega_mass,
+        core_mass=core_mass,
         residual_mass=residual_mass,
         delta=delta,
         relative_drop=relative,
@@ -382,7 +382,7 @@ def score_discrete_proposal(
 
 
 def score_cochain_proposal(
-    omega_cochain: Mapping[str, Exact | int | str],
+    core_cochain: Mapping[str, Exact | int | str],
     proposal: CandidateProposal,
     *,
     known_kill_conditions: Mapping[str, str] | None = None,
@@ -392,8 +392,8 @@ def score_cochain_proposal(
     # Boundary normalization only; Rust owns every norm, subtraction and comparison.
     try:
         wire = {
-            key: to_canonical_string(coerce_exact(value, field=f"omega_cochain[{key!r}]"))
-            for key, value in omega_cochain.items()
+            key: to_canonical_string(coerce_exact(value, field=f"core_cochain[{key!r}]"))
+            for key, value in core_cochain.items()
         }
     except NotExactError as exc:
         return _illegal_score(proposal, Fraction(0), f"{REFUSAL_INEXACT_COCHAIN}: {exc}")
@@ -401,7 +401,7 @@ def score_cochain_proposal(
     result = port.invoke_scoring(
         "score_cochain_proposal",
         {
-            "omega_cochain": wire,
+            "core_cochain": wire,
             "proposal": _proposal_wire(proposal),
             **_policy(known_kill_conditions, admitted_constructors),
         },

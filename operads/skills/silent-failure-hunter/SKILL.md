@@ -31,12 +31,12 @@ The **Silent Failure Hunter** diagnoses and eliminates silent failure modes acro
    - Every failure path must return an explicit `Err(Refusal(code=..., message=..., locus=...))`.
    - In Python, unvalidated `.unwrap()` invocations without prior `.is_ok` or match assertions are flagged.
 3. **Rust Panic & Fall-Through Discipline:**
-   - Production crates in `omega_engine/crates_rs/` must not use un-annotated `.unwrap()` or `.expect()`.
+   - Production crates in `engine/crates_rs/` must not use un-annotated `.unwrap()` or `.expect()`.
    - Every panic site must carry an explicit `// Invariant:` or `// Safety:` justification explaining why the state is mathematically guaranteed to be inhabited.
 4. **Diagnostic Scanner Execution:**
    - Run the diagnostic scanner locally:
      ```bash
-     py -3.12 -m omega_engine_operations.domain.cicd.silent_failure_scan <path>
+     py -3.12 -m operations.domain.cicd.silent_failure_scan <path>
      ```
    - Emits structured `SilentFailureFinding` records reporting the file, line, kind, and remediation guidance.
 

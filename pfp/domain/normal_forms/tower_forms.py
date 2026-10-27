@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any, Mapping, Optional, Sequence
 
-from omega_engine_pfp.domain.tower.parser import GAMMA_38, parse_packet
+from pfp.domain.tower.parser import GAMMA_38, parse_packet
 
 # =============================================================================
 # Part 3: MSS-N Tower Normal Forms (TBNF, DBCNF, ZFNF, DHNF)

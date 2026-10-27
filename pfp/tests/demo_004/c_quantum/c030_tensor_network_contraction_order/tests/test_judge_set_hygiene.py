@@ -9,12 +9,12 @@ import importlib
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c030_tensor_network_contraction_order.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c030_tensor_network_contraction_order.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
 
 _JUDGE = importlib.import_module(
-    "omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c030_tensor_network_contraction_order.judge_packet"
+    "projects.mssn_sn_symgam.challenges.c_quantum.c030_tensor_network_contraction_order.judge_packet"
 )
 JUDGE_DIR = Path(list(_JUDGE.__path__)[0])
 PACKAGE_DIR = JUDGE_DIR.parent

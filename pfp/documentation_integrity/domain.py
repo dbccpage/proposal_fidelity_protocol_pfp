@@ -11,11 +11,11 @@ import re
 from pathlib import Path
 from typing import Any
 
-from omega_engine_pfp.domain.documentation_integrity.models import FindingLedger
-from omega_engine_pfp.domain.documentation_integrity.policies import (
+from pfp.domain.documentation_integrity.models import FindingLedger
+from pfp.domain.documentation_integrity.policies import (
     extension_kind as extension_kind,
 )
-from omega_engine_pfp.domain.documentation_integrity.policies import (
+from pfp.domain.documentation_integrity.policies import (
     is_document_relative_path as is_document_relative_path,
 )
 
@@ -26,7 +26,7 @@ _REPO = next(
     (
         p
         for p in SCRIPT_PATH.parents
-        if (p / ".git").exists() or (p / "omega_engine_education").is_dir()
+        if (p / ".git").exists() or (p / "education").is_dir()
     ),
     SCRIPT_PATH.parents[2],
 )
@@ -34,7 +34,7 @@ _REPO = next(
 
 DOC_ROOT = (
     _REPO
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "030_the_symbol_game_proposal_fidelity_protocol_pfp"
 )

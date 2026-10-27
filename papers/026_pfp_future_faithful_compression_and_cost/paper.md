@@ -149,7 +149,7 @@ The author-review rendering does not replace a historical deposit or archive.
 
 ## Sources and relation to the programme
 
-This draft builds on the [WDP manuscript](../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
+This draft builds on the [WDP manuscript](../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
 [Paper 021's source-and-execution distinctions](../021_recreated_demos_and_proposal_fidelity_evidence/paper.md),
 and the [corrected findings notices](../symbol_game_challenge_and_demos_findings/README.md).
 [Paper 022](../022_pfp_frontier_research/paper.md) supplies a

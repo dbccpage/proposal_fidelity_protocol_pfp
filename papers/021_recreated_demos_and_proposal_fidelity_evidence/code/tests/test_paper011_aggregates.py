@@ -80,7 +80,7 @@ def test_paper011_original_ast_fixture_cannot_claim_historical_or_full_scopes(fa
 
 def original_ast_source():
     root = (next((p for p in CODE.parents if (p / ".git").exists()), None) or CODE.parents[6])
-    return (root / "omega_engine_pfp/controllers/symbol_game_controller.py").read_bytes()
+    return (root / "pfp/controllers/symbol_game_controller.py").read_bytes()
 
 
 def test_paper011_original_ast_data_uses_original_callback_without_controller_side_effects():
@@ -121,9 +121,9 @@ def test_paper011_injected_ast_port_has_no_passing_fallback(envelope):
         port.invoke("functional_evaluate", {"actual_input": "retained by outer tape"})
 
 
-def test_paper011_woland_import_refuses_unpinned_owner_instead_of_ambient_import(context):
+def test_paper011_adversary_import_refuses_unpinned_owner_instead_of_ambient_import(context):
     with pytest.raises(aggregate.AggregateReplayError, match="UNPINNED_INPUT"):
-        aggregate.PinnedWolandFinder(context).find_spec("omega_engine_woland")
+        aggregate.PinnedAdversaryFinder(context).find_spec("adversary")
 
 
 def test_paper011_empty_prefix_prevents_loading_an_accepted_stale_pyc(

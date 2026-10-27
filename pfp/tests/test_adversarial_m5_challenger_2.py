@@ -11,7 +11,7 @@ Empirically challenges:
 3. Live Runner Full Raw Capture:
    - Verification of zero truncation in full_raw_session.jsonl.
 
-Soviet Lev Landau Discipline: Invariant, Break, Witness, Mutation.
+Examiner Discipline: Invariant, Break, Witness, Mutation.
 Claim Hygiene: Bounded phrasing; zero forbidden hype words.
 AuthorityEffect: None.
 ZERO-FLOAT Law: Pure Fraction or integer operations.
@@ -26,17 +26,17 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence, Tuple
 import pytest
 
-from omega_engine_pfp.domain.sovereignty import (
+from pfp.domain.sovereignty import (
     AttentionMaskInterventionReceipt,
     CarrierProjectionReceipt,
     IndependentHostReplayVerdict,
 )
-from omega_engine_pfp.domain.sandbox import (
+from pfp.domain.sandbox import (
     ContainerProfile,
     ProcessBoundaryConfig,
     SeamExecutionResult,
 )
-from omega_engine_pfp.domain.shared_kernel.result import Failure, Result, Success
+from pfp.domain.shared_kernel.result import Failure, Result, Success
 
 class TestAdversarialM5Challenger2:
     """Empirical challenger test suite stress-testing M5 invariants."""
@@ -221,7 +221,7 @@ class TestAdversarialM5Challenger2:
     def test_challenge_main_rs_real_refusal_codes_preservation(self) -> None:
         """Challenge Container Sandbox Seam: verify preservation of main.rs refusal codes.
 
-        - Invariant: The native runtime `omega_symbol_game_runtime/src/main.rs` defines exact,
+        - Invariant: The native runtime `core_symbol_game_runtime/src/main.rs` defines exact,
           typed refusal codes for specific input defects:
           1. REQUEST_NOT_JSON: when input bytes fail serde_json parsing.
           2. D0_MALFORMED: when F2Matrix::from_rows fails due to ragged row dimensions.
@@ -238,7 +238,7 @@ class TestAdversarialM5Challenger2:
         except json.JSONDecodeError as err:
             parsed_json_ok = False
             refusal_payload_not_json = {
-                "schema_version": "omega.symgam.refusal.v1",
+                "schema_version": "core.symgam.refusal.v1",
                 "refused": True,
                 "code": "REQUEST_NOT_JSON",
                 "detail": str(err),
@@ -257,7 +257,7 @@ class TestAdversarialM5Challenger2:
         is_ragged = len({len(row) for row in d0_ragged}) > 1
         assert is_ragged is True
         refusal_payload_d0 = {
-            "schema_version": "omega.symgam.refusal.v1",
+            "schema_version": "core.symgam.refusal.v1",
             "refused": True,
             "code": "D0_MALFORMED",
             "detail": "matrix data length does not match rows x cols",
@@ -271,7 +271,7 @@ class TestAdversarialM5Challenger2:
         d1_edges_expected = 4
         assert d0_edges != d1_edges_expected
         refusal_payload_shape = {
-            "schema_version": "omega.symgam.refusal.v1",
+            "schema_version": "core.symgam.refusal.v1",
             "refused": True,
             "code": "BOARD_SHAPE_MISMATCH",
             "detail": f"dimension mismatch: {d1_edges_expected} columns cannot multiply {d0_edges} rows",

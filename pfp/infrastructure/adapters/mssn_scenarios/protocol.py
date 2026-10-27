@@ -32,15 +32,15 @@ from copy import deepcopy
 from dataclasses import asdict, dataclass, field
 from typing import Any, Optional, Sequence
 
-from omega_engine_pfp.infrastructure.adapters.mssn_research.bqnf_zero import (
+from pfp.infrastructure.adapters.mssn_research.bqnf_zero import (
     check_alpha_witness,
     check_cochain_packet,
     check_left_null_witness,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.meron_witness import (
+from pfp.infrastructure.adapters.mssn_research.meron_witness import (
     verify_meron_witness,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.sign_switching import (
+from pfp.infrastructure.adapters.mssn_research.sign_switching import (
     verify_cycle,
     verify_gauge,
 )
@@ -201,8 +201,8 @@ FIXTURES: dict[str, dict[str, Any]] = {
 def run_detectors(
     moves: Sequence[MoveProposal], state: HostState, fixture: dict[str, Any]
 ) -> list[str]:
-    from omega_engine_epistemic_immune_system.domain.value_objects import DetectorRule
-    from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import (
+    from eis.domain.value_objects import DetectorRule
+    from eis.infrastructure.mssn_ports import (
         DEMO3_MATCHER_ID,
         ProtocolMatcher,
     )

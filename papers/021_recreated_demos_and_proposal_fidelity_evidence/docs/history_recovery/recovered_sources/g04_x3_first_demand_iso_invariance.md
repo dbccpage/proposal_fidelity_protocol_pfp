@@ -17,7 +17,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The trap is in the wording. Stakes label pairs of datum indices, and the implemented isomorphism permutes datum indices. "Invariant" therefore has several readings, and one of them is already refuted.
 
-This challenge stresses precise statement-making by the Symbol Game, OEWAS (Omega Engine Workflows, Agents, Skills) census pipelines, and OEEIS (Omega Engine Epistemic Immune System) refusal of the refuted reading.
+This challenge stresses precise statement-making by the Symbol Game, OEWAS (Engine Workflows, Agents, Skills) census pipelines, and OEEIS (Engine Epistemic Immune System) refusal of the refuted reading.
 
 ## 3. Formal Problem and Bounds
 
@@ -56,7 +56,7 @@ The packet also contains `runner.py` and `accounting.json`.
 
 The operator holds out: length-5 sequences from each base, sampled with the operator's seed; two operator-declared stakes beyond the seven; relabel controls, where a transported stake must give the same verdict; a poisoned claim that X-3c holds for every stake.
 
-The second checker is independent. It uses `omega_engine/crates_rs/omega_ooutwire_primitives` (`canonical.rs`, `renaming.rs`, `separability.rs`) to compute both demand and isomorphism.
+The second checker is independent. It uses `engine/crates_rs/core_ooutwire_primitives` (`canonical.rs`, `renaming.rs`, `separability.rs`) to compute both demand and isomorphism.
 
 The gate runner is `python ci/run_gates.py`, at HEAD.
 
@@ -110,7 +110,7 @@ The catalog row requires none of these. They are recommended:
 
 **19L57G1, read-only.** At HEAD: `19L57G1:research/second_index/` (`index.py`, `STATUS.md`, `receipts/index.json`, `lean/SecondIndex/`) and `19L57G1:research/second/SEED.md`; at `3100c4e`: `19L57G1:code/derivation/iso.py` and `model.py`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_ooutwire_primitives` and `omega_engine_pfp/domain/immune/treg.py`.
+**the_symbol_game.** `engine/crates_rs/core_ooutwire_primitives` and `pfp/domain/immune/treg.py`.
 
 **Upgrades.**
 

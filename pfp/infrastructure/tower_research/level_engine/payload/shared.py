@@ -12,10 +12,10 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping, Sequence
 
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.qi import QI
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q
+from operations.use_cases.level_engine.research_engine.exact.qi import QI
+from operations.use_cases.level_engine.research_engine.level import Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 
 Data = Callable[[FiniteStructure], Sequence[tuple[str, str, str]]]
 Table = list[list[QI]]
@@ -120,7 +120,7 @@ def render(module: str, title: str, defs: Sequence[str], fixtures: Sequence[Fixt
            calls: Mapping[str, str]) -> str:
     """A certificate module: the definitions, each evaluated fixture's data,
     and one theorem per certificate stating the verdict the engine computed."""
-    from omega_engine_operations.use_cases.level_engine.research_engine import lean_text as T
+    from operations.use_cases.level_engine.research_engine import lean_text as T
 
     by = {f.fid: f for f in fixtures}
     lines = T.header(module, title, defs)

@@ -15,13 +15,13 @@ import re
 import time
 from typing import Any, Optional, Sequence, Tuple
 
-from omega_engine_governance.domain.intelligence_community import canonical_intelligence_route
-from omega_engine_pfp.domain import PacketEnvelopeV2
-from omega_engine_pfp.domain.ports.run_artifact_port import (
+from governance.domain.intelligence_community import canonical_intelligence_route
+from pfp.domain import PacketEnvelopeV2
+from pfp.domain.ports.run_artifact_port import (
     RunArtifactSinkPort,
     create_filesystem_artifact_sink,
 )
-from omega_engine_pfp.functional_boundary import require_rust_functional
+from pfp.functional_boundary import require_rust_functional
 
 from .pharmacy_seeder import PharmacySeeder
 from .sbe import SBEAnalyzer

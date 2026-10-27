@@ -2,8 +2,8 @@
 
 **AuthorityEffect:** `None`  
 **Governing Standard:** Containment Law, Template Integrity, External Verification Gateway  
-**Architectural Synthesis:** [`06_prompt_packet_stage_synthesis.md`](../../../../omega_engine_education/documentation/004_oepfp/docs/06_prompt_packet_stage_synthesis.md)  
-**Authoritative Monograph:** [`21_prompt_template_contracts_and_single_prompt_standard.md`](../../../../omega_engine_education/documentation/004_oepfp/docs/21_prompt_template_contracts_and_single_prompt_standard.md)  
+**Architectural Synthesis:** [`06_prompt_packet_stage_synthesis.md`](../../../../education/documentation/004_oepfp/docs/06_prompt_packet_stage_synthesis.md)  
+**Authoritative Monograph:** [`21_prompt_template_contracts_and_single_prompt_standard.md`](../../../../education/documentation/004_oepfp/docs/21_prompt_template_contracts_and_single_prompt_standard.md)  
 
 This directory defines the unversioned prompt templates, schemas, and representation forms for the Proposal Fidelity Protocol (PFP) and the Symbol Game educational estate. All filenames observe the standardized format `template_<slug>.yaml` with `len(slug) <= 20`. Historical versions are retained in Git history rather than on-disk version directories.
 
@@ -13,7 +13,7 @@ The finite-QM derivation profile consists of
 The [`operad catalog`](finite_qm_operad_catalog.json) stays a separate lookup
 asset and is never appended to the system prompt. These profile files have
 explicit schema IDs and are separate from the generic `templates/` naming catalog. See the
-[workflow guide](../../../../omega_engine_education/documentation/004_oepfp/docs/22_unified_pfp_v4_operad_workflow_and_hacks.md)
+[workflow guide](../../../../education/documentation/004_oepfp/docs/22_unified_pfp_v4_operad_workflow_and_hacks.md)
 for stage instructions, repair prompting, technique attachment points and CLI usage.
 
 ---
@@ -74,8 +74,8 @@ All runtime prompt templates adhere to the naming format `template_<slug>.yaml` 
 ### 2.4 Canonical Documentation & Architectural Monograph
 
 The formal mathematical specifications, containment law derivation, and Single Prompt Standard have been consolidated into canonical education documentation:
-- [`21_prompt_template_contracts_and_single_prompt_standard.md`](../../../../omega_engine_education/documentation/004_oepfp/docs/21_prompt_template_contracts_and_single_prompt_standard.md): Authoritative specification for $P \mapsto P^* \to \{p_i\}$, containment law, SPK-001 policy manifest, and v2 template contracts.
-- [`06_prompt_packet_stage_synthesis.md`](../../../../omega_engine_education/documentation/004_oepfp/docs/06_prompt_packet_stage_synthesis.md): Architectural semiotics and 4-axis separation (Prompt, Packet, Stage, Mode).
+- [`21_prompt_template_contracts_and_single_prompt_standard.md`](../../../../education/documentation/004_oepfp/docs/21_prompt_template_contracts_and_single_prompt_standard.md): Authoritative specification for $P \mapsto P^* \to \{p_i\}$, containment law, SPK-001 policy manifest, and v2 template contracts.
+- [`06_prompt_packet_stage_synthesis.md`](../../../../education/documentation/004_oepfp/docs/06_prompt_packet_stage_synthesis.md): Architectural semiotics and 4-axis separation (Prompt, Packet, Stage, Mode).
 
 
 ---
@@ -107,7 +107,7 @@ graph LR
 
 ---
 
-## 5. Woland Prompt Anti-Patterns
+## 5. Adversary Prompt Anti-Patterns
 
 1. **Self-Certifying Prompts:** Instructions asking the LLM to output `"verified": true` or `"all tests passed"`. Such assertions are ignored; only host verifier receipts determine status.
 2. **Prompt-Level Opcodes:** Attempting to inject host-internal instruction codes into public prompts. Prompts operate strictly on public grammar starts and declared modes.

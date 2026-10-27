@@ -2,7 +2,7 @@
 
 This example exercises the existing typed compiler, task selector and signed
 instruction-admission port. Its retained source is
-`catalog/contracts/v1/woland_claim_audit.json`, SHA-256
+`catalog/contracts/v1/adversary_claim_audit.json`, SHA-256
 `b81f25486057701057f0d5bac9628324768e98824f8f11b6252d8ee6214dcb28`.
 The independent contextual requirement is the literal ordered signature
 `(findings: Audit, subject: Contract) -> receipt: Receipt`, with explicit schema
@@ -11,7 +11,7 @@ and validator revision pins. It is not an arity copied from a compiled operation
 Run from the repository root with OpenSSH's `ssh-keygen` available:
 
 ```text
-python -B -m omega_engine_operads.documentation.examples.prior_art_contract_binding --repo-root . --output .scratch/source-contract/result.json
+python -B -m operads.documentation.examples.prior_art_contract_binding --repo-root . --output .scratch/source-contract/result.json
 ```
 
 The example compiles actual retained resources, selects the bounded one-operation

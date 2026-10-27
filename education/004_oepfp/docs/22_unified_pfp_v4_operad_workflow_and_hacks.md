@@ -3,16 +3,16 @@
 AuthorityEffect: None. Revised 2026-10-18 after the initial registry-dump design
 was rejected. These three linked YAML files are the delivery:
 
-- [prompt_template.yaml](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml): actual system and user prompts for doing a derivation, with the mathematical operad toolbox, four mining missions, certificate construction and output instructions.
-- [workflow.yaml](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml): stage instructions, inputs, outputs, checks, transitions and answer-free repair guidance.
-- [mode.yaml](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml): one `FINITE_QM_DERIVATION` mode with budgets, provider policy and six attached LLM techniques.
+- [prompt_template.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml): actual system and user prompts for doing a derivation, with the mathematical operad toolbox, four mining missions, certificate construction and output instructions.
+- [workflow.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml): stage instructions, inputs, outputs, checks, transitions and answer-free repair guidance.
+- [mode.yaml](../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml): one `FINITE_QM_DERIVATION` mode with budgets, provider policy and six attached LLM techniques.
 
 The [copyable system prompt](../_how_to_play/v4_operad_container_and_p_star_loop/finite_qm_pfp_system_prompt.md)
 is rendered from the template. The source catalog remains a separate
 lookup asset. It is never appended to the system prompt. Registered software
 skills and mathematical operad families are distinct objects.
 
-Source check (2026-10-22, pin `305b9690f97fc3f5c13e361cfe752a6d5dc7ad8d`): `workflow.yaml` declares six stages (`P0_MINE_OPERAD` to `P5_RECORD`, entry P0, terminal P5); `mode.yaml` sets `max_candidate_attempts: 2` and lists six techniques `H1_POPULATE_BEFORE_EXECUTE`, `H2_DECOY_EQUATIONS`, `H3_WITNESS_FIRST`, `H4_C4_DIAGNOSTIC`, `H5_FRESH_CONTEXT_RESIDUAL_REPAIR` and `H6_MASKED_SECOND_VIEW`; [finite_qm_operad_catalog.json](../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm_operad_catalog.json) has 744 `entries`. P1 lists H1 to H4. The 2026-10-20 figure of 584 is historical.
+Source check (2026-10-22, pin `305b9690f97fc3f5c13e361cfe752a6d5dc7ad8d`): `workflow.yaml` declares six stages (`P0_MINE_OPERAD` to `P5_RECORD`, entry P0, terminal P5); `mode.yaml` sets `max_candidate_attempts: 2` and lists six techniques `H1_POPULATE_BEFORE_EXECUTE`, `H2_DECOY_EQUATIONS`, `H3_WITNESS_FIRST`, `H4_C4_DIAGNOSTIC`, `H5_FRESH_CONTEXT_RESIDUAL_REPAIR` and `H6_MASKED_SECOND_VIEW`; [finite_qm_operad_catalog.json](../../../../pfp/infrastructure/yaml/prompts/finite_qm_operad_catalog.json) has 744 `entries`. P1 lists H1 to H4. The 2026-10-20 figure of 584 is historical.
 
 ## Count one family, then the catalog
 

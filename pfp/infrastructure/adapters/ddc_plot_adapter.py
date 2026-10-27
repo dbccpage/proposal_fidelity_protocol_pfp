@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-from omega_engine_pfp.domain.ddc.visualize import (
+from pfp.domain.ddc.visualize import (
     LyapunovTracker,
     export_lyapunov_descent_data,
 )

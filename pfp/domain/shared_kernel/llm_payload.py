@@ -23,11 +23,11 @@ from .schema import SchemaVersion
 from .task_objective import TaskObjective
 from .turn import TurnKind, TurnModality, TurnRole
 
-LLM_TURN_SCHEMA: str = "omega.symbol-game.llm-turn.v1"
+LLM_TURN_SCHEMA: str = "core.symbol-game.llm-turn.v1"
 LLM_TURN_FAMILY: str = "llm_turn"
 LLM_TURN_PACKET_FAMILY: str = "llm_turn_v1"
-PAYLOAD_DOMAIN: str = "omega.symbol-game.llm-turn-payload.v1"
-TURN_MANIFEST_DOMAIN: str = "omega.symbol-game.llm-turn-manifest.v1"
+PAYLOAD_DOMAIN: str = "core.symbol-game.llm-turn-payload.v1"
+TURN_MANIFEST_DOMAIN: str = "core.symbol-game.llm-turn-manifest.v1"
 LLM_TURN_TERMINAL_TARGET: str = "TypedTurnOrProsePromptRefused"
 LLM_TURN_EVIDENCE_CEILING: str = "ReplayableLabEvidence"
 LLM_TURN_ORACLE_POLICY: str = "IndependentHostEvaluationRequired"

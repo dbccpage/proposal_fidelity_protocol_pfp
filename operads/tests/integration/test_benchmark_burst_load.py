@@ -12,7 +12,7 @@ from pathlib import Path
 import httpx
 from fastapi import FastAPI
 
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.bootstrap import OeopContainer
 
 
 class TestBenchmarkBurstLoad(unittest.IsolatedAsyncioTestCase):

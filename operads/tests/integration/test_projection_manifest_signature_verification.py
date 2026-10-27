@@ -8,17 +8,17 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from omega_engine_operads.application.commands.compile_projection import (
+from operads.application.commands.compile_projection import (
     CompileProjectionCommand,
 )
-from omega_engine_operads.domain.entities.catalog_v3 import EstateCatalogV3
-from omega_engine_operads.domain.entities.operation_v3 import (
+from operads.domain.entities.catalog_v3 import EstateCatalogV3
+from operads.domain.entities.operation_v3 import (
     OperationV3,
     PortSpecV3,
 )
-from omega_engine_operads.domain.value_objects.authority import AuthorityEffect
-from omega_engine_operads.domain.value_objects.content_digest import ContentDigest
-from omega_engine_operads.domain.value_objects.identifier import (
+from operads.domain.value_objects.authority import AuthorityEffect
+from operads.domain.value_objects.content_digest import ContentDigest
+from operads.domain.value_objects.identifier import (
     CausationId,
     ColourId,
     CorrelationId,
@@ -27,7 +27,7 @@ from omega_engine_operads.domain.value_objects.identifier import (
     OperationId,
     SchemaRef,
 )
-from omega_engine_operads.domain.value_objects.lifecycle_facets import (
+from operads.domain.value_objects.lifecycle_facets import (
     AdmissionFacet,
     DeclarationFacet,
     ExecutorBindingFacet,
@@ -35,8 +35,8 @@ from omega_engine_operads.domain.value_objects.lifecycle_facets import (
     SkillLifecycleV3,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
-from omega_engine_operads.infrastructure.providers.manifest_signature_provider import (
+from operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.providers.manifest_signature_provider import (
     ManifestSignatureProvider,
 )
 
@@ -131,7 +131,7 @@ class TestProjectionManifestSignatureVerification(unittest.TestCase):
             epoch=1,
             target_format=proj.target_format,
             payload=proj.payload,
-            signer_id="author:anomalon:primary",
+            signer_id="author:sentinel:primary",
             secret_key=self.author_key,
         )
 
@@ -155,7 +155,7 @@ class TestProjectionManifestSignatureVerification(unittest.TestCase):
             epoch=1,
             target_format="json",
             payload=raw_payload,
-            signer_id="author:anomalon:primary",
+            signer_id="author:sentinel:primary",
             secret_key=self.author_key,
         )
 
@@ -187,7 +187,7 @@ class TestProjectionManifestSignatureVerification(unittest.TestCase):
             epoch=1,
             target_format="json",
             payload=raw_payload,
-            signer_id="author:anomalon:primary",
+            signer_id="author:sentinel:primary",
             secret_key=self.author_key,
         )
 
@@ -217,7 +217,7 @@ class TestProjectionManifestSignatureVerification(unittest.TestCase):
             epoch=1,
             target_format="json",
             payload='{"status": "ok"}',
-            signer_id="author:anomalon:primary",
+            signer_id="author:sentinel:primary",
             secret_key=self.author_key,
         )
 

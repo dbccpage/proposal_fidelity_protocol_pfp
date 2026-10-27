@@ -27,4 +27,4 @@ If the chosen reading says a repeated filling changes nothing and is not a chang
 
 ## Historical Limit
 
-This repairs the split in the twenty-fifth state excerpt. It does not define `balances`, which that excerpt names and does not contain. It does not rerun the twenty-fifth derivation. `AP_MD_009` owns a nested pass on a failed exit. `woland-strict-input-pattern` owns a typed refusal at ingress. A refusal that is labeled as a refusal is not this defect.
+This repairs the split in the twenty-fifth state excerpt. It does not define `balances`, which that excerpt names and does not contain. It does not rerun the twenty-fifth derivation. `AP_MD_009` owns a nested pass on a failed exit. `adversary-strict-input-pattern` owns a typed refusal at ingress. A refusal that is labeled as a refusal is not this defect.

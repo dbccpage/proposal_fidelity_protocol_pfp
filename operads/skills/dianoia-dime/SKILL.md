@@ -63,7 +63,7 @@ When executed during `/rip-papers` (after `/paper-release`), DIME constructs the
    - **Claim Prose & Math Cell:** Displays exact claim statement, LaTeX equations, and Lean 4 formalization status.
    - **Production Code Import Cell:** Direct imports from package `code/` library (no manuscript-only duplicate math).
    - **Interactive Widget Cell:** `ipywidgets` continuous sliders/knobs (`FloatSlider`, `Dropdown`, `ToggleButton`) with live output refresh and `HAS_WIDGETS` static fallback.
-   - **Embedded Test Verification Cell:** Programmatically executes corresponding Lev Landau pytest assertions (`pytest.main(["code/tests/...", "-k", "test_claim"])`) and displays live test results.
+   - **Embedded Test Verification Cell:** Programmatically executes corresponding Examiner pytest assertions (`pytest.main(["code/tests/...", "-k", "test_claim"])`) and displays live test results.
    - **Lean 4 Bijection Link:** Points to corresponding Lean 4 theorem signature.
 6. **Notebook 2 — `jupyter_notebooks/002_refutation_sandbox.ipynb` (Interactive Falsification & Adversarial Sandbox):**
    - **Hypothesis Breaker Cells:** Allows reviewers to test parameter choices beyond validity boundaries, off-manifold points, uncontractive maps, and non-linear gauges.

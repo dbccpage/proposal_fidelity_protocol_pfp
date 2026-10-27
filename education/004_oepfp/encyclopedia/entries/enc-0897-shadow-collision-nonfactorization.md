@@ -11,16 +11,16 @@ tower_level: null
 primitive: difference
 aliases: ["paper:sn-packets:shadow-collision-nonfactorization", "paper:sn-packets:generic-lggr-shadow-boundary"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "s_n_packets_and_the_symbol_game.md §11 'Theorem 16: Shadow Collision Blocks Factorization'"
 uses: ["ENC-0888", "ENC-0889", "ENC-0896"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_factorization.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_factorization.lean"
   - "PaperER007.shadow_collision_blocks_total_decoder"
   - "PaperER007.shadow_factorization_implies_fiber_invariance"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_typed_packet_shadow.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_typed_packet_shadow.lean"
   - "PaperER007.no_typed_packet_decoder_of_collision"
   - "PaperER007.finite_typed_packet_projection_collides"
   - "PaperER007.finite_typed_packet_targets_differ"
@@ -41,7 +41,7 @@ world.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
 
 The Lean theorem names are:
 

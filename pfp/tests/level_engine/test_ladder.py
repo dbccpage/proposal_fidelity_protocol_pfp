@@ -15,21 +15,21 @@ from pathlib import Path
 
 import pytest
 
-import omega_engine_operations.use_cases.level_engine.research_engine.ladder as L
-import omega_engine_operations.use_cases.level_engine.research_engine.ladder_cert as C
-from omega_engine_operations.domain.level_engine_context import (
+import operations.use_cases.level_engine.research_engine.ladder as L
+import operations.use_cases.level_engine.research_engine.ladder_cert as C
+from operations.domain.level_engine_context import (
     current_context,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import (
+from operations.use_cases.level_engine.research_engine.canon import (
     dumps,
     load_path,
     sha256_tag,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import (
+from operations.use_cases.level_engine.research_engine.errors import (
     NonDescent,
     Refusal,
 )
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward.lift import ladder_document
+from pfp.infrastructure.tower_research.level_engine.outward.lift import ladder_document
 
 ROOT = current_context().runtime_root
 Props = dict[str, object]

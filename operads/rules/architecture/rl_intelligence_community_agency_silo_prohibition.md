@@ -2,7 +2,7 @@
 rule_id: RL_ARCH_IC_001
 name: intelligence_community_agency_silo_prohibition
 category: architecture
-subsystem: omega_engine_governance
+subsystem: governance
 authority_effect: None
 paths:
   - "_ic/**"

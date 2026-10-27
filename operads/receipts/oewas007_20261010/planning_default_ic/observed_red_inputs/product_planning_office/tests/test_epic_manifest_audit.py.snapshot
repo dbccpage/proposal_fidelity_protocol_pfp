@@ -1,0 +1,850 @@
+from __future__ import annotations
+
+import hashlib
+import importlib.util
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+MODULE_PATH = Path(__file__).resolve().parents[1] / (
+    "use_cases/epic_manifest_audit.py"
+)
+SPEC = importlib.util.spec_from_file_location("epic_manifest_audit_test", MODULE_PATH)
+if SPEC is None or SPEC.loader is None:
+    raise RuntimeError(f"cannot load {MODULE_PATH}")
+audit = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = audit
+SPEC.loader.exec_module(audit)
+
+
+@pytest.fixture(autouse=True)
+def _patch_fixture_expected_count(
+    monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
+) -> None:
+    if "tmp_path" in request.fixturenames:
+        monkeypatch.setattr(audit, "EXPECTED_EPIC_COUNT", 1)
+
+
+def _entry(root: Path, relative_path: str) -> dict[str, Any]:
+    data = root.joinpath(*relative_path.split("/")).read_bytes()
+    return {
+        "bytes": len(data),
+        "path": relative_path,
+        "sha256": hashlib.sha256(data).hexdigest(),
+    }
+
+
+def _line_profile(data: bytes) -> tuple[int, str]:
+    without_crlf = data.replace(b"\r\n", b"")
+    if b"\r\n" in data:
+        ending = "CRLF"
+    elif b"\n" in without_crlf:
+        ending = "LF"
+    elif b"\r" in without_crlf:
+        ending = "CR"
+    else:
+        ending = "NONE"
+    return len(data.splitlines()), ending
+
+
+def _write_manifest(root: Path) -> Path:
+    epic_dir = root / audit.EPIC_DIRECTORY
+    epics = [
+        _entry(root, path.relative_to(root).as_posix())
+        for path in sorted(epic_dir.rglob("epic_oe_*_plan.md"))
+    ]
+    if audit.SOURCE_SNAPSHOT_PATH is not None:
+        source_entry = _entry(root, audit.SOURCE_SNAPSHOT_PATH)
+        source_data = root.joinpath(*audit.SOURCE_SNAPSHOT_PATH.split("/")).read_bytes()
+        line_count, line_ending = _line_profile(source_data)
+        source_entry.update(line_count=line_count, line_ending=line_ending)
+        sources = [source_entry]
+    else:
+        sources = []
+    manifest = {
+        "authority_effect": "None",
+        "content_set_sha256": audit.compute_content_set_sha256([*epics, *sources]),
+        "creates_execution_authority": False,
+        "epic_count": audit.EXPECTED_EPIC_COUNT,
+        "epics": epics,
+        "hash_algorithm": "sha256",
+        "schema_version": audit.SCHEMA_VERSION,
+        "source_snapshot_count": audit.EXPECTED_SOURCE_SNAPSHOT_COUNT,
+        "source_snapshots": sources,
+    }
+    path = root / audit.MANIFEST_PATH
+    path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def _make_repo(root: Path) -> Path:
+    epic_dir = root / audit.EPIC_DIRECTORY
+    epic_dir.mkdir(parents=True, exist_ok=True)
+    if audit.SOURCE_SNAPSHOT_PATH is not None:
+        source_path = root / audit.SOURCE_SNAPSHOT_PATH
+        source_path.parent.mkdir(parents=True, exist_ok=True)
+        source_path.write_bytes(b"memo line one\r\nmemo line two\r\n")
+    for index in range(1, audit.EXPECTED_EPIC_COUNT + 1):
+        epic_dir.joinpath(f"epic_oe_fixture_{index:03d}_plan.md").write_text(
+            "# Fixture epic\n\n"
+            "**Status:** `SPEC_ONLY`\n\n"
+            "**AuthorityEffect:** `None`\n",
+            encoding="utf-8",
+        )
+    return _write_manifest(root)
+
+
+def _manifest_data(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    assert isinstance(value, dict)
+    return value
+
+
+def test_baseline_packet_passes(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+
+    report = audit.audit_epic_manifest(tmp_path, manifest_path)
+
+    assert report.epic_count == audit.EXPECTED_EPIC_COUNT
+    assert report.source_snapshot_count == audit.EXPECTED_SOURCE_SNAPSHOT_COUNT
+    assert report.manifest_path == audit.MANIFEST_PATH
+    assert report.render().startswith("EPIC_MANIFEST_OK ")
+    assert report.render().endswith("AuthorityEffect=None")
+
+
+def test_content_mutation_fails_closed(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    epic = tmp_path / audit.EPIC_DIRECTORY / "epic_oe_fixture_001_plan.md"
+    epic.write_bytes(epic.read_bytes() + b"changed\n")
+
+    with pytest.raises(audit.EpicManifestError, match="BYTE_COUNT_MISMATCH"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+@pytest.mark.parametrize("mutation", ["missing", "extra"])
+def test_inventory_mutation_fails_closed(tmp_path: Path, mutation: str) -> None:
+    manifest_path = _make_repo(tmp_path)
+    epic_dir = tmp_path / audit.EPIC_DIRECTORY
+    if mutation == "missing":
+        epic_dir.joinpath(
+            f"epic_oe_fixture_{audit.EXPECTED_EPIC_COUNT:03d}_plan.md"
+        ).unlink()
+    else:
+        epic_dir.joinpath(
+            f"epic_oe_fixture_{audit.EXPECTED_EPIC_COUNT + 1:03d}_plan.md"
+        ).write_text(
+            "# Extra\n\n**Status:** `SPEC_ONLY`\n\n"
+            "**AuthorityEffect:** `None`\n",
+            encoding="utf-8",
+        )
+
+    with pytest.raises(audit.EpicManifestError, match="EPIC_INVENTORY_COUNT"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_duplicate_json_key_is_rejected(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    raw = manifest_path.read_text(encoding="utf-8")
+    manifest_path.write_text(
+        raw.replace(
+            '  "authority_effect": "None",',
+            '  "authority_effect": "None",\n  "authority_effect": "None",',
+            1,
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(audit.EpicManifestError, match="DUPLICATE_JSON_KEY"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_unknown_epic_status_is_rejected_even_with_fresh_hashes(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    epic = tmp_path / audit.EPIC_DIRECTORY / "epic_oe_fixture_001_plan.md"
+    epic.write_text(
+        "# Fixture epic\n\n**Status:** `DRAFT_FOR_OPERATOR_REVIEW`\n\n"
+        "**AuthorityEffect:** `None`\n",
+        encoding="utf-8",
+    )
+    _write_manifest(tmp_path)
+
+    with pytest.raises(audit.EpicManifestError, match="UNKNOWN_STATUS"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_manifest_hash_mutation_is_rejected(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    manifest = _manifest_data(manifest_path)
+    manifest["epics"][0]["sha256"] = "0" * 64
+    manifest["content_set_sha256"] = audit.compute_content_set_sha256(
+        [*manifest["epics"], *manifest["source_snapshots"]]
+    )
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="SHA256_MISMATCH"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_unknown_schema_field_is_rejected(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    manifest = _manifest_data(manifest_path)
+    manifest["unexpected"] = True
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="SCHEMA_KEYS"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "error_code"),
+    [
+        ("authority_effect", "Some", "AUTHORITY_EFFECT"),
+        ("creates_execution_authority", True, "EXECUTION_AUTHORITY"),
+    ],
+)
+def test_manifest_cannot_mint_authority(
+    tmp_path: Path, field: str, value: Any, error_code: str
+) -> None:
+    manifest_path = _make_repo(tmp_path)
+    manifest = _manifest_data(manifest_path)
+    manifest[field] = value
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match=error_code):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_source_line_metadata_is_exact(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    memo_rel = f"{audit.EPIC_DIRECTORY}/fixture_memo.txt"
+    monkeypatch.setattr(audit, "SOURCE_SNAPSHOT_PATH", memo_rel)
+    monkeypatch.setattr(audit, "EXPECTED_SOURCE_SNAPSHOT_COUNT", 1)
+    manifest_path = _make_repo(tmp_path)
+    manifest = _manifest_data(manifest_path)
+    manifest["source_snapshots"][0]["line_ending"] = "LF"
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="LINE_ENDING_MISMATCH"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_write_refuses_a_manifest_path_outside_the_repository(tmp_path: Path) -> None:
+    """`--write` regenerates custody data, so it must not become an arbitrary
+    file writer through a relative escape such as ``../outside.json``."""
+    repo_root = tmp_path / "repo"
+    _make_repo(repo_root)
+    outside = tmp_path / "outside.json"
+
+    rc = audit.main(
+        [
+            "--repo-root",
+            str(repo_root),
+            "--manifest",
+            "../outside.json",
+            "--write",
+        ]
+    )
+
+    assert rc == 1
+    assert not outside.exists()
+
+
+def test_write_refuses_an_alternate_in_tree_manifest(tmp_path: Path) -> None:
+    """A custom in-tree path is useful for read-only audit experiments but it
+    is not the canonical register the write mode is allowed to replace."""
+    manifest_path = _make_repo(tmp_path)
+    alternate = manifest_path.parent / "candidate.json"
+    alternate.write_text(manifest_path.read_text(encoding="utf-8"), encoding="utf-8")
+
+    rc = audit.main(
+        [
+            "--repo-root",
+            str(tmp_path),
+            "--manifest",
+            str(alternate.relative_to(tmp_path)),
+            "--write",
+        ]
+    )
+
+    assert rc == 1
+    assert alternate.read_text(encoding="utf-8") == manifest_path.read_text(encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# One corruption per refusal code
+# ---------------------------------------------------------------------------
+#
+# The audit declares 25 refusal codes. A code no test can provoke is
+# indistinguishable from one that cannot fire, and this is a FAIL-CLOSED byte
+# register: every branch below is a way a tampered manifest could otherwise be
+# accepted.
+
+
+def _corrupt(manifest_path: Path, mutate) -> None:
+    """Apply `mutate` to the manifest dict and write it back."""
+    data = _manifest_data(manifest_path)
+    mutate(data)
+    manifest_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+
+def _set(key: str, value: Any):
+    def apply(data: dict[str, Any]) -> None:
+        data[key] = value
+
+    return apply
+
+
+#: (refusal code, mutation applied to the manifest dict)
+MANIFEST_CORRUPTIONS = [
+    ("SCHEMA_VERSION", _set("schema_version", "core.not-the-schema.v0")),
+    ("AUTHORITY_EFFECT", _set("authority_effect", "Some")),
+    ("EXECUTION_AUTHORITY", _set("creates_execution_authority", True)),
+    ("HASH_ALGORITHM", _set("hash_algorithm", "md5")),
+    ("EPIC_COUNT", _set("epic_count", 999)),
+    ("SCHEMA_TYPE", _set("epics", "not a list")),
+]
+
+
+@pytest.mark.parametrize(
+    ("code", "mutate"),
+    MANIFEST_CORRUPTIONS,
+    ids=[f"{code}-{index}" for index, (code, _) in enumerate(MANIFEST_CORRUPTIONS)],
+)
+def test_a_corrupted_manifest_field_fails_closed(
+    tmp_path: Path, code: str, mutate
+) -> None:
+    """Mutation: soften the matching guard in the audit and its row turns red."""
+    manifest_path = _make_repo(tmp_path)
+    _corrupt(manifest_path, mutate)
+
+    with pytest.raises(audit.EpicManifestError, match=code):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_entries_out_of_lexical_order_fail_closed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Order is what makes the content-set hash reproducible.
+
+    Mutation: drop the `paths != sorted(paths)` check and this fails.
+    """
+    monkeypatch.setattr(audit, "EXPECTED_EPIC_COUNT", 2)
+    manifest_path = _make_repo(tmp_path)
+    _corrupt(manifest_path, lambda data: data["epics"].reverse())
+
+    with pytest.raises(audit.EpicManifestError, match="ENTRY_ORDER"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_repeated_path_fails_closed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Two rows for one file let a second, false byte count ride along.
+
+    Mutation: drop the `len(set(paths))` check and this fails.
+    """
+    monkeypatch.setattr(audit, "EXPECTED_EPIC_COUNT", 2)
+    manifest_path = _make_repo(tmp_path)
+
+    def duplicate(data: dict[str, Any]) -> None:
+        data["epics"][1] = json.loads(json.dumps(data["epics"][0]))
+
+    _corrupt(manifest_path, duplicate)
+
+    with pytest.raises(audit.EpicManifestError, match="DUPLICATE_PATH|ENTRY_ORDER"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_negative_byte_count_fails_closed(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+
+    def negate(data: dict[str, Any]) -> None:
+        data["epics"][0]["bytes"] = -1
+
+    _corrupt(manifest_path, negate)
+
+    with pytest.raises(audit.EpicManifestError, match="NEGATIVE_INTEGER"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_malformed_sha256_fails_closed(tmp_path: Path) -> None:
+    """A digest that is not 64 lowercase hex characters is not a digest."""
+    manifest_path = _make_repo(tmp_path)
+
+    def bad_hash(data: dict[str, Any]) -> None:
+        data["epics"][0]["sha256"] = "NOTAHASH"
+
+    _corrupt(manifest_path, bad_hash)
+
+    with pytest.raises(audit.EpicManifestError):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_non_ascii_path_fails_closed(tmp_path: Path) -> None:
+    """Look-alike characters are how a register is made to name another file.
+
+    Mutation: drop the ASCII check and this fails.
+    """
+    manifest_path = _make_repo(tmp_path)
+
+    def unicode_path(data: dict[str, Any]) -> None:
+        data["epics"][0]["path"] = data["epics"][0]["path"].replace("epic", "epıc")
+
+    _corrupt(manifest_path, unicode_path)
+
+    with pytest.raises(audit.EpicManifestError, match="NONASCII_PATH|NONCANONICAL_PATH"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_traversing_path_fails_closed(tmp_path: Path) -> None:
+    """`..` in a registered path is an escape attempt, not a relative path."""
+    manifest_path = _make_repo(tmp_path)
+
+    def traverse(data: dict[str, Any]) -> None:
+        data["epics"][0]["path"] = "../outside.md"
+
+    _corrupt(manifest_path, traverse)
+
+    with pytest.raises(audit.EpicManifestError):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_duplicate_json_key_fails_closed(tmp_path: Path) -> None:
+    """`json.loads` keeps the LAST of two identical keys silently.
+
+    A register that accepts `"epic_count": 31, "epic_count": 1` audits the one
+    it did not display.
+
+    Mutation: drop `_reject_duplicate_keys` and this fails.
+    """
+    manifest_path = _make_repo(tmp_path)
+    text = manifest_path.read_text(encoding="utf-8")
+    text = text.replace('{\n  "authority_effect"', '{\n  "epic_count": 1,\n  "authority_effect"', 1)
+    manifest_path.write_text(text, encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="DUPLICATE_JSON_KEY"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_nonstandard_json_constant_fails_closed(tmp_path: Path) -> None:
+    """Python's json accepts `NaN` and `Infinity`; JSON does not.
+
+    Mutation: drop the constant hook and this fails.
+    """
+    manifest_path = _make_repo(tmp_path)
+    text = manifest_path.read_text(encoding="utf-8").replace(
+        '"epic_count": %d' % audit.EXPECTED_EPIC_COUNT, '"epic_count": NaN', 1
+    )
+    manifest_path.write_text(text, encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="NONSTANDARD_JSON_CONSTANT"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_an_unreadable_manifest_fails_closed(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    manifest_path.unlink()
+
+    with pytest.raises(audit.EpicManifestError, match="MANIFEST_READ"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_registered_file_that_is_gone_fails_closed(tmp_path: Path) -> None:
+    """Custody over a file that no longer exists is not custody."""
+    manifest_path = _make_repo(tmp_path)
+    (tmp_path / audit.EPIC_DIRECTORY / "epic_oe_fixture_001_plan.md").unlink()
+
+    with pytest.raises(audit.EpicManifestError):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_mixed_line_endings_in_the_source_snapshot_fail_closed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A snapshot half CRLF and half LF has no stable line profile."""
+    memo_rel = f"{audit.EPIC_DIRECTORY}/fixture_memo.txt"
+    monkeypatch.setattr(audit, "SOURCE_SNAPSHOT_PATH", memo_rel)
+    monkeypatch.setattr(audit, "EXPECTED_SOURCE_SNAPSHOT_COUNT", 1)
+    manifest_path = _make_repo(tmp_path)
+    source = tmp_path.joinpath(*memo_rel.split("/"))
+    source.write_bytes(b"one\r\ntwo\nthree\r\n")
+
+    with pytest.raises(audit.EpicManifestError):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_missing_repo_root_is_a_typed_refusal_not_a_traceback(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A mistyped --repo-root must refuse, not raise FileNotFoundError.
+
+    `resolve(strict=True)` threw before the REPO_ROOT guard three lines below
+    could fire, and `main` catches only `EpicManifestError` -- so the declared
+    refusal was unreachable for the most ordinary mistake a caller can make,
+    and the operator got a traceback instead of a code.
+
+    Mutation: drop the `except OSError` around the resolve and this fails in
+    both directions at once.
+    """
+    absent = tmp_path / "not-a-repo"
+
+    with pytest.raises(audit.EpicManifestError, match="REPO_ROOT"):
+        audit.audit_epic_manifest(absent, absent / audit.MANIFEST_PATH)
+
+    assert audit.main(["--repo-root", str(absent)]) == 1
+    assert "REPO_ROOT" in capsys.readouterr().err
+
+
+def test_a_repo_root_that_is_a_file_is_also_a_typed_refusal(tmp_path: Path) -> None:
+    """The paired control: the guard must survive for a path that DOES exist."""
+    not_a_dir = tmp_path / "a-file"
+    not_a_dir.write_text("x", encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="REPO_ROOT"):
+        audit.audit_epic_manifest(not_a_dir, not_a_dir)
+
+
+def test_the_use_case_raises_the_domain_error_class() -> None:
+    """#183 imported EpicManifestError from the domain. A second local class of
+    the same name would make ``except EpicManifestError`` miss domain ``fail()``.
+
+    Mutation: restore a local EpicManifestError in the use case and this fails.
+    """
+    from product_planning_office.domain.manifest_models import (
+        EpicManifestError as DomainError,
+    )
+
+    assert audit.EpicManifestError is DomainError
+
+
+# ---------------------------------------------------------------------------
+# The entrypoint
+# ---------------------------------------------------------------------------
+
+
+def test_main_reports_ok_and_exits_zero_on_a_clean_packet(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _make_repo(tmp_path)
+
+    code = audit.main(["--repo-root", str(tmp_path)])
+
+    out = capsys.readouterr().out
+    assert code == 0
+    assert out.startswith("EPIC_MANIFEST_OK ")
+    assert "AuthorityEffect=None" in out
+
+
+def test_main_reports_the_error_code_and_exits_nonzero(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A refusal must name its code on stdout or stderr, not just exit.
+
+    Mutation: swallow the `EpicManifestError` in `main` and this fails.
+    """
+    manifest_path = _make_repo(tmp_path)
+    _corrupt(manifest_path, _set("hash_algorithm", "md5"))
+
+    code = audit.main(["--repo-root", str(tmp_path)])
+
+    captured = capsys.readouterr()
+    assert code != 0
+    assert "HASH_ALGORITHM" in (captured.out + captured.err)
+
+
+def test_main_write_regenerates_a_manifest_that_then_audits_clean(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """--write recomputes from disk; the result must satisfy the auditor.
+
+    Mutation: make `--write` a no-op and this fails, because the stale byte
+    count below survives.
+    """
+    manifest_path = _make_repo(tmp_path)
+    epic = tmp_path / audit.EPIC_DIRECTORY / "epic_oe_fixture_001_plan.md"
+    epic.write_bytes(epic.read_bytes() + b"grown\n")
+
+    code = audit.main(["--repo-root", str(tmp_path), "--write"])
+
+    assert code == 0
+    assert "EPIC_MANIFEST_WRITTEN" in capsys.readouterr().out
+    audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_main_write_refuses_to_target_a_manifest_other_than_the_registered_one(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """`3686c01d63` constrained regeneration; this is that constraint.
+
+    Without it `--write` is a general-purpose file writer pointed at whatever
+    path the caller names.
+
+    Mutation: drop the path comparison in `main` and this fails.
+    """
+    _make_repo(tmp_path)
+    elsewhere = tmp_path / "elsewhere.json"
+
+    code = audit.main(
+        ["--repo-root", str(tmp_path), "--write", "--manifest", str(elsewhere)]
+    )
+
+    captured = capsys.readouterr()
+    assert code != 0
+    assert not elsewhere.exists()
+    assert "--write may update only" in (captured.out + captured.err)
+
+
+# ---------------------------------------------------------------------------
+# The policy the register enforces on each epic it holds custody of
+# ---------------------------------------------------------------------------
+#
+# These are not schema checks. `UNKNOWN_STATUS` and `AUTHORITY_EFFECT` are the
+# status vocabulary and the authority ceiling, enforced per file at the point
+# where custody is taken. An epic that slips a status past this gate is an epic
+# whose lifecycle claim nothing checked.
+
+
+def _rewrite_first_epic(root: Path, body: str) -> None:
+    """Replace the first fixture epic's contents, then re-register the packet."""
+    (root / audit.EPIC_DIRECTORY / "epic_oe_fixture_001_plan.md").write_text(
+        body, encoding="utf-8"
+    )
+    _write_manifest(root)
+
+
+def test_a_status_outside_the_oikonomia_vocabulary_fails_closed(tmp_path: Path) -> None:
+    """`SPEC_ONLY` is admissible; `TOTALLY_DONE` is not.
+
+    Mutation: widen `OIKONOMIA_STATUSES` and this row goes green on a status
+    no part of the estate knows how to read.
+    """
+    manifest_path = _make_repo(tmp_path)
+    _rewrite_first_epic(
+        tmp_path,
+        "# Fixture\n\n**Status:** `TOTALLY_DONE`\n\n**AuthorityEffect:** `None`\n",
+    )
+
+    with pytest.raises(audit.EpicManifestError, match="UNKNOWN_STATUS"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_every_declared_status_in_the_vocabulary_is_accepted(tmp_path: Path) -> None:
+    """The negative control for the test above.
+
+    A gate that refused every status would pass it while making the register
+    unusable. Each admissible value is exercised.
+    """
+    manifest_path = _make_repo(tmp_path)
+    for status in sorted(audit.OIKONOMIA_STATUSES):
+        _rewrite_first_epic(
+            tmp_path,
+            f"# Fixture\n\n**Status:** `{status}`\n\n**AuthorityEffect:** `None`\n",
+        )
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_an_epic_claiming_authority_fails_closed(tmp_path: Path) -> None:
+    """The authority ceiling, enforced per file.
+
+    A planning document may not declare an AuthorityEffect other than None.
+    Mutation: drop the comparison and a plan can grant itself authority.
+    """
+    manifest_path = _make_repo(tmp_path)
+    _rewrite_first_epic(
+        tmp_path,
+        "# Fixture\n\n**Status:** `SPEC_ONLY`\n\n**AuthorityEffect:** `Promoted`\n",
+    )
+
+    with pytest.raises(audit.EpicManifestError, match="AUTHORITY_EFFECT"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_an_epic_declaring_a_field_twice_fails_closed(tmp_path: Path) -> None:
+    """Two Status lines mean the register cannot say which one it recorded.
+
+    Mutation: read `matches[0]` without checking cardinality and the first
+    silently wins.
+    """
+    manifest_path = _make_repo(tmp_path)
+    _rewrite_first_epic(
+        tmp_path,
+        "# Fixture\n\n**Status:** `SPEC_ONLY`\n\n**Status:** `LIVE`\n\n"
+        "**AuthorityEffect:** `None`\n",
+    )
+
+    with pytest.raises(audit.EpicManifestError, match="MARKDOWN_FIELD_CARDINALITY"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_an_epic_missing_its_status_fails_closed(tmp_path: Path) -> None:
+    """Zero matches is the other half of the cardinality rule."""
+    manifest_path = _make_repo(tmp_path)
+    _rewrite_first_epic(tmp_path, "# Fixture\n\n**AuthorityEffect:** `None`\n")
+
+    with pytest.raises(audit.EpicManifestError, match="MARKDOWN_FIELD_CARDINALITY"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_an_epic_that_is_not_utf8_fails_closed(tmp_path: Path) -> None:
+    """Custody is over decodable text, not arbitrary bytes.
+
+    Mutation: decode with errors="replace" and undecodable bytes pass as prose.
+    """
+    _make_repo(tmp_path)
+    (tmp_path / audit.EPIC_DIRECTORY / "epic_oe_fixture_001_plan.md").write_bytes(
+        b"\xff\xfe# Fixture\n\n**Status:** `SPEC_ONLY`\n"
+    )
+    manifest_path = _write_manifest(tmp_path)
+
+    with pytest.raises(audit.EpicManifestError, match="EPIC_NOT_UTF8"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+# ---------------------------------------------------------------------------
+# Structural refusals
+# ---------------------------------------------------------------------------
+
+
+def test_a_manifest_that_is_not_json_fails_closed(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    manifest_path.write_text("{ not json at all", encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="INVALID_JSON"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_manifest_whose_root_is_a_list_fails_closed(tmp_path: Path) -> None:
+    """Mutation: drop the `isinstance(value, dict)` check and this fails."""
+    manifest_path = _make_repo(tmp_path)
+    manifest_path.write_text("[]", encoding="utf-8")
+
+    with pytest.raises(audit.EpicManifestError, match="TOP_LEVEL_TYPE"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_an_invalid_line_ending_token_fails_closed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """`line_ending` is a closed set; "MIXED" is not a member of it."""
+    memo_rel = f"{audit.EPIC_DIRECTORY}/fixture_memo.txt"
+    monkeypatch.setattr(audit, "SOURCE_SNAPSHOT_PATH", memo_rel)
+    monkeypatch.setattr(audit, "EXPECTED_SOURCE_SNAPSHOT_COUNT", 1)
+    manifest_path = _make_repo(tmp_path)
+    _corrupt(
+        manifest_path,
+        lambda data: data["source_snapshots"][0].__setitem__("line_ending", "MIXED"),
+    )
+
+    with pytest.raises(audit.EpicManifestError, match="INVALID_LINE_ENDING"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_an_entry_that_is_not_an_object_fails_closed(tmp_path: Path) -> None:
+    manifest_path = _make_repo(tmp_path)
+    _corrupt(manifest_path, lambda data: data["epics"].__setitem__(0, "a string"))
+
+    with pytest.raises(audit.EpicManifestError, match="SCHEMA_TYPE"):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+def test_a_registered_path_that_is_a_directory_fails_closed(tmp_path: Path) -> None:
+    """A directory has no bytes to take custody of."""
+    manifest_path = _make_repo(tmp_path)
+    victim = tmp_path / audit.EPIC_DIRECTORY / "epic_oe_fixture_001_plan.md"
+    victim.unlink()
+    victim.mkdir()
+
+    with pytest.raises(audit.EpicManifestError):
+        audit.audit_epic_manifest(tmp_path, manifest_path)
+
+
+# --------------------------------------------------------------------------
+# The real repository
+#
+# Every test above builds its own repository under `tmp_path`. That makes them
+# fast and hermetic, and it means none of them can see the manifest this
+# repository actually ships. A real drift -- `epic_oe_cwgate_001` edited from
+# 8140 to 9513 bytes without the manifest being regenerated -- therefore reached
+# `origin/main` with all 48 fixture tests green.
+#
+# Regenerate with:
+#     python product_planning_office/use_cases/epic_manifest_audit.py --write
+# --------------------------------------------------------------------------
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_the_shipped_manifest_audits_clean() -> None:
+    """The check whose absence let a drift reach `origin/main`."""
+    report = audit.audit_epic_manifest(REPO_ROOT)
+    assert report.epic_count == audit.EXPECTED_EPIC_COUNT
+
+
+def test_the_shipped_manifest_registers_every_plan_file_on_disk() -> None:
+    """Counted from the filesystem, not restated from the manifest.
+
+    Reading the count back out of the manifest would agree with itself no
+    matter what the epics directory contains.
+    """
+    on_disk = sorted(
+        p.relative_to(REPO_ROOT).as_posix()
+        for p in (REPO_ROOT / audit.EPIC_DIRECTORY).rglob("epic_oe_*_plan.md")
+    )
+    manifest = json.loads(
+        (REPO_ROOT / audit.MANIFEST_PATH).read_text(encoding="utf-8")
+    )
+    registered = sorted(entry["path"] for entry in manifest["epics"])
+
+    assert registered == on_disk
+    assert len(on_disk) == audit.EXPECTED_EPIC_COUNT
+
+
+def test_an_unregistered_plan_file_in_the_real_tree_is_refused() -> None:
+    """The drift itself, reproduced: a plan file the manifest does not know.
+
+    The probe is removed in `finally`, and the audit is re-run afterwards to
+    prove the working tree was left as it was found -- a test that repairs the
+    repository badly would otherwise poison every test after it.
+    """
+    intruder = (
+        REPO_ROOT / audit.EPIC_DIRECTORY / "epic_oe_zzz_998_manifest_probe_plan.md"
+    )
+    assert not intruder.exists(), "probe file already present; refusing to clobber"
+    intruder.write_text("# Unregistered probe\n", encoding="utf-8")
+    try:
+        with pytest.raises(audit.EpicManifestError):
+            audit.audit_epic_manifest(REPO_ROOT)
+    finally:
+        intruder.unlink()
+
+    assert (
+        audit.audit_epic_manifest(REPO_ROOT).epic_count
+        == audit.EXPECTED_EPIC_COUNT
+    )
+
+
+@pytest.mark.parametrize("relative", [
+    "oepfp/epic_oe_pfp_006_genesis_recomposition_and_level_engine_estate_resettlement_plan.md",
+    "oewas/epic_oe_oewas_007_american_ic_partition_and_typed_schema_plan.md",
+    "oeadversary/epic_oe_adversary_consolidated_residual_plan.md",
+    "oeprojects/mub6/epic_oe_nested_fixture_plan.md",
+])
+def test_nested_epic_mutation_is_detected(tmp_path: Path, relative: str) -> None:
+    """Previously excluded suites must participate in byte custody."""
+    epic_dir = tmp_path / audit.EPIC_DIRECTORY
+    epic = epic_dir / relative
+    epic.parent.mkdir(parents=True, exist_ok=True)
+    epic.write_text("# Nested fixture\n\n**Status:** `RESEARCH_HOLD`\n\n"
+                    "**AuthorityEffect:** `None`\n", encoding="utf-8")
+    manifest = _write_manifest(tmp_path)
+    assert audit.audit_epic_manifest(tmp_path, manifest).epic_count == 1
+    original = epic.read_bytes()
+    epic.write_bytes(original.replace(b"Nested", b"Mutate"))
+    with pytest.raises(audit.EpicManifestError, match="SHA256_MISMATCH"):
+        audit.audit_epic_manifest(tmp_path, manifest)
+    epic.write_bytes(original)
+    assert audit.audit_epic_manifest(tmp_path, manifest).epic_count == 1

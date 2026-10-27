@@ -14,8 +14,8 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Mapping
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_woland.stage.infrastructure.file_lock import AdvisoryFileLock
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from adversary.stage.infrastructure.file_lock import AdvisoryFileLock
 
 from ..domain.models import AntibodyEntryV1, CemeteryHeadstoneV1, GenealogyEntryV1
 from ..domain.ports import CemeterySink, GenealogyStorePort
@@ -46,7 +46,7 @@ class FileCemeteryAdapter(CemeterySink):
     """Lossless storage for dead findings and killed candidates under cemetery directory."""
 
     def __init__(self, cemetery_dir: str | Path | None = None) -> None:
-        self.cemetery_dir = Path(cemetery_dir or "_ic/darpa/woland/cemetery")
+        self.cemetery_dir = Path(cemetery_dir or "_ic/darpa/adversary/cemetery")
         self.headstones: list[CemeteryHeadstoneV1] = []
         self._lock = threading.RLock()
 
@@ -70,7 +70,7 @@ class FileCemeteryAdapter(CemeterySink):
                 Refusal(
                     code="CEMETERY_RECORD_FAILED",
                     message=f"Failed to record headstone: {exc}",
-                    locus="omega_engine_prompt_civilization.infrastructure.genealogy_adapter.FileCemeteryAdapter",
+                    locus="pciv.infrastructure.genealogy_adapter.FileCemeteryAdapter",
                 )
             )
 
@@ -86,7 +86,7 @@ class FileGenealogyAdapter(GenealogyStorePort):
             if permanent.exists():
                 self.genealogy_file = permanent
             else:
-                self.genealogy_file = Path("_ic/darpa/woland/prompt_genealogy.jsonl")
+                self.genealogy_file = Path("_ic/darpa/adversary/prompt_genealogy.jsonl")
         self.entries: list[GenealogyEntryV1] = []
         self._head_sha256: str | None = None
         self._next_sequence: int = 0
@@ -221,7 +221,7 @@ class FileGenealogyAdapter(GenealogyStorePort):
                         Refusal(
                             code="COLLISION_DETECTED",
                             message=f"Conflicting genealogy entry for child_run_key={entry.child_run_key}",
-                            locus="omega_engine_prompt_civilization.infrastructure.genealogy_adapter.FileGenealogyAdapter",
+                            locus="pciv.infrastructure.genealogy_adapter.FileGenealogyAdapter",
                         )
                     )
 
@@ -259,7 +259,7 @@ class FileGenealogyAdapter(GenealogyStorePort):
                 Refusal(
                     code="GENEALOGY_RECORD_FAILED",
                     message=f"Failed to record genealogy entry: {exc}",
-                    locus="omega_engine_prompt_civilization.infrastructure.genealogy_adapter.FileGenealogyAdapter",
+                    locus="pciv.infrastructure.genealogy_adapter.FileGenealogyAdapter",
                 )
             )
 
@@ -277,7 +277,7 @@ class FileGenealogyAdapter(GenealogyStorePort):
                 Refusal(
                     code="GENEALOGY_READ_FAILED",
                     message=f"Failed to read genealogy: {exc}",
-                    locus="omega_engine_prompt_civilization.infrastructure.genealogy_adapter.FileGenealogyAdapter",
+                    locus="pciv.infrastructure.genealogy_adapter.FileGenealogyAdapter",
                 )
             )
 
@@ -287,7 +287,7 @@ class FileAntibodyAdapter:
     """Immune antibody store: loads antibodies from compost history and accumulates failures."""
 
     def __init__(self, antibody_dir: str | Path | None = None) -> None:
-        self.antibody_dir = Path(antibody_dir or "_ic/darpa/woland/antibodies")
+        self.antibody_dir = Path(antibody_dir or "_ic/darpa/adversary/antibodies")
         self.failure_counts: dict[str, int] = {}
         self.antibodies: dict[str, AntibodyEntryV1] = {}
         self._records: dict[str, AntibodyEntryV1] = {}
@@ -333,7 +333,7 @@ class FileAntibodyAdapter:
                 Refusal(
                     code="ANTIBODY_LOAD_FAILED",
                     message=f"Failed to load antibodies: {exc}",
-                    locus="omega_engine_prompt_civilization.infrastructure.genealogy_adapter.FileAntibodyAdapter",
+                    locus="pciv.infrastructure.genealogy_adapter.FileAntibodyAdapter",
                 )
             )
 
@@ -394,7 +394,7 @@ class FileAntibodyAdapter:
                 Refusal(
                     code="ANTIBODY_RECORD_FAILED",
                     message=f"Failed to record failure pattern: {exc}",
-                    locus="omega_engine_prompt_civilization.infrastructure.genealogy_adapter.FileAntibodyAdapter",
+                    locus="pciv.infrastructure.genealogy_adapter.FileAntibodyAdapter",
                 )
             )
 

@@ -2,8 +2,8 @@
 import pytest
 import json
 from hashlib import sha256
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign
+from operations.domain.rop.result import Ok
+from pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign
 
 
 class Transport:

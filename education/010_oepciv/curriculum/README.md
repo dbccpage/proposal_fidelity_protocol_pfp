@@ -22,8 +22,8 @@ From governed prompt material and lineage DAG separation to hop-bounded Lamarcki
 ## Architectural Reference
 
 - Progressive levels catalog: [`../levels/`](../levels/)
-- Epic planning reference: [`omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md`](../../../../omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)
-- Pure Rust calculus crate: [`omega_prompt_civilization`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/lib.rs)
+- Epic planning reference: [`product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md`](../../../../product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md)
+- Pure Rust calculus crate: [`core_prompt_civilization`](../../../../engine/crates_rs/core_prompt_civilization/src/lib.rs)
 
 ---
 

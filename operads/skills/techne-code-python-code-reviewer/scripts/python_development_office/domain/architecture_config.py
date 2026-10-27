@@ -23,15 +23,15 @@ class DependencyException:
 
 @dataclass(frozen=True)
 class ArchitectureConfig:
-    # Retargeted for CODA. Upstream listed omega_engine_operations,
-    # omega_engine and omega_engine_governance; none of those exist here.
+    # Retargeted for CODA. Upstream listed operations,
+    # engine and governance; none of those exist here.
     source_roots: tuple[str, ...] = (
         "src",
         "app",
         "scripts",
         "ci",
         "coda_atlas",
-        "omega_engine_operations",
+        "operations",
     )
     layers: dict[str, tuple[str, ...]] = field(
         default_factory=lambda: {
@@ -64,7 +64,7 @@ class ArchitectureConfig:
         }
     )
     # Empty by default in CODA. Upstream shipped four entries, each naming an
-    # omega_engine_operations module pair that does not exist in this tree —
+    # operations module pair that does not exist in this tree —
     # carrying them would be a debt register describing a different repository.
     # Add entries here (or via --config) as real debt is found, one exact
     # consumer/provider pair at a time. A layer-wide allowance is not an

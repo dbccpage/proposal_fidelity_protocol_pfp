@@ -9,36 +9,36 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.skill_operad.application.use_cases.dispatch_operation_use_case import (
+from operads.skill_operad.application.use_cases.dispatch_operation_use_case import (
     DispatchOperationUseCase,
 )
-from omega_engine_operads.skill_operad.application.use_cases.record_trace_use_case import (
+from operads.skill_operad.application.use_cases.record_trace_use_case import (
     RecordTraceUseCase,
 )
-from omega_engine_operads.skill_operad.application.use_cases.validate_operad_use_case import (
+from operads.skill_operad.application.use_cases.validate_operad_use_case import (
     ValidateOperadUseCase,
     validate_composition_grading,
 )
-from omega_engine_operads.skill_operad.domain.colours import (
+from operads.skill_operad.domain.colours import (
     ADMITTED_FINITE_COLOURS,
     Colour,
 )
-from omega_engine_operads.skill_operad.domain.errors import (
+from operads.skill_operad.domain.errors import (
     Err,
     InvalidColourError,
     Ok,
 )
-from omega_engine_operads.domain.operad.errors import ArityMismatchError, IllTypedCompositionError, Ok as RegistryOk, Err as RegistryErr
-from omega_engine_operads.skill_operad.domain.evidence import DiagnosticObservation
-from omega_engine_operads.domain.operad.operad import ColouredOperad
-from omega_engine_operads.domain.operad.operation import (
+from operads.domain.operad.errors import ArityMismatchError, IllTypedCompositionError, Ok as RegistryOk, Err as RegistryErr
+from operads.skill_operad.domain.evidence import DiagnosticObservation
+from operads.domain.operad.operad import ColouredOperad
+from operads.domain.operad.operation import (
     OperationId,
     OperationSignature,
 )
-from omega_engine_operads.skill_operad.infrastructure.adapters.file_lock_adapter import (
+from operads.skill_operad.infrastructure.adapters.file_lock_adapter import (
     exclusive_file_lock,
 )
-from omega_engine_operads.skill_operad.infrastructure.repositories.json_operad_repository import (
+from operads.skill_operad.infrastructure.repositories.json_operad_repository import (
     JsonOperadRepository,
 )
 

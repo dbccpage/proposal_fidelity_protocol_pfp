@@ -31,7 +31,7 @@ An efficiency sentence names enumeration and the strong direct reconstruction be
 
 The counts 20375, 125, and 125, and the audit sentence that forbids an enumeration-only comparison, are the historical witness in [AP_MD_031_enumeration_baseline_credits_cochain](../../anti/markdown/AP_MD_031_enumeration_baseline_credits_cochain.md). This digest did not rerun them. The frozen comparison already uses the direct baseline. This pattern does not say a current manuscript still claims a cochain speedup.
 
-`AP_MD_004` still owns an unfixed comparison family for unique acceptance. `woland-check-sensitivity-pattern` still owns a component check that misses a property-changing mutation. `woland-proof-scope-rule` still owns a collision or fidelity claim widened past its premises. This pattern only stops an efficiency sentence from crediting a cochain encoding with a gain the direct reconstruction already has.
+`AP_MD_004` still owns an unfixed comparison family for unique acceptance. `adversary-check-sensitivity-pattern` still owns a component check that misses a property-changing mutation. `adversary-proof-scope-rule` still owns a collision or fidelity claim widened past its premises. This pattern only stops an efficiency sentence from crediting a cochain encoding with a gain the direct reconstruction already has.
 
 ## Dual
 

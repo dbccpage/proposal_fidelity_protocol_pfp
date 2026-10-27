@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Complete sets of d + 1 mutually unbiased bases (MUBs) exist in every prime-power dimension (Wootters and Fields 1989). Whether four MUBs exist in d = 6 is open. The task therefore tests two things at once: exact construction where the answer is known, and refusal where it is not. A solver that "completes" d = 6 by analogy is wrong, however well formatted its output.
 
-Generation is hard in d = 4, 8 and 9, where arithmetic modulo d fails and the construction must use the finite field GF(d). Verification is cheap: orthonormality and unbiasedness are finitely many exact inner products in a cyclotomic field. The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) retrieval of the finite-field construction and OEEIS (Omega Engine Epistemic Immune System) screening of overclaims on an open problem.
+Generation is hard in d = 4, 8 and 9, where arithmetic modulo d fails and the construction must use the finite field GF(d). Verification is cheap: orthonormality and unbiasedness are finitely many exact inner products in a cyclotomic field. The task stresses OEWAS (Engine Workflows, Agents, Skills) retrieval of the finite-field construction and OEEIS (Engine Epistemic Immune System) screening of overclaims on an open problem.
 
 ## 3. Formal Problem and Bounds
 
@@ -62,7 +62,7 @@ A `SOLVED` answer is complete when the checker verifies every orthogonality and 
 
 ## 7. Arms and Baselines
 
-Arms A–D per the protocol, each synthesizing the solver. Arm E is the no-model baseline: the estate's existing constructions for d = 2, 3, 4, 5 and the d = 6 tensor product, extended with the odd-prime-power and characteristic-two Weyl constructions in `omega_mub`. If E already covers every `SOLVED` case, a pass in A shows automation, not a model advantage. Arm F does not apply.
+Arms A–D per the protocol, each synthesizing the solver. Arm E is the no-model baseline: the estate's existing constructions for d = 2, 3, 4, 5 and the d = 6 tensor product, extended with the odd-prime-power and characteristic-two Weyl constructions in `core_mub`. If E already covers every `SOLVED` case, a pass in A shows automation, not a model advantage. Arm F does not apply.
 
 ## 8. Budget, Models and Provenance
 
@@ -99,9 +99,9 @@ Operands expected: (1) for odd prime p, the quadratic-chirp bases ω^{a x² + b 
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_quantum_physics/src/mub/` (`odd_prime.rs` d = 3, 5; `char_two.rs` d = 2, 4; `composite.rs` d = 6 tensor product; `algebra.rs` `verify_mub_projector_algebra`).
-- `omega_engine/crates_rs/omega_number_theory/src/finite_field.rs` (GF(p^k)), `cyclotomic.rs` (`Cyc5`, `Cyc8`, `Cyc12`, `Cyc24`) and `cyclotomic28.rs` (contains ζ₇).
-- `omega_engine/crates_rs/omega_mub` (`odd_prime_power_weyl.rs`, `char_two_weyl_board.rs`, `composite_controls.rs`). The d = 6 research modules there are about the open problem and must not be used to claim a solution.
+- `engine/crates_rs/core_quantum_physics/src/mub/` (`odd_prime.rs` d = 3, 5; `char_two.rs` d = 2, 4; `composite.rs` d = 6 tensor product; `algebra.rs` `verify_mub_projector_algebra`).
+- `engine/crates_rs/core_number_theory/src/finite_field.rs` (GF(p^k)), `cyclotomic.rs` (`Cyc5`, `Cyc8`, `Cyc12`, `Cyc24`) and `cyclotomic28.rs` (contains ζ₇).
+- `engine/crates_rs/core_mub` (`odd_prime_power_weyl.rs`, `char_two_weyl_board.rs`, `composite_controls.rs`). The d = 6 research modules there are about the open problem and must not be used to claim a solution.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

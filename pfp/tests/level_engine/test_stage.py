@@ -8,23 +8,23 @@ import dataclasses
 
 import pytest
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import encode
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import StageRefusal
-from omega_engine_operations.use_cases.level_engine.research_engine.guards import ResourceBound
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import (
+from operations.use_cases.level_engine.research_engine.encoding import encode
+from operations.use_cases.level_engine.research_engine.errors import StageRefusal
+from operations.use_cases.level_engine.research_engine.guards import ResourceBound
+from operations.use_cases.level_engine.research_engine.kinds import (
     Closure,
     Holds,
     Total,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.regimek import (
+from operations.use_cases.level_engine.research_engine.regimek import (
     BASE,
     RegimeK,
     Stage,
     host,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed import NewDatum, NewInst
-from omega_engine_operations.use_cases.level_engine.research_engine.search import Exhaustion
-from omega_engine_operations.use_cases.level_engine.research_engine.stage import (
+from operations.use_cases.level_engine.research_engine.sealed import NewDatum, NewInst
+from operations.use_cases.level_engine.research_engine.search import Exhaustion
+from operations.use_cases.level_engine.research_engine.stage import (
     FORBIDDEN_FIELDS,
     LevelCounter,
     Licence,
@@ -37,8 +37,8 @@ from omega_engine_operations.use_cases.level_engine.research_engine.stage import
     route,
     stage_lt,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward.lift import (
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from pfp.infrastructure.tower_research.level_engine.outward.lift import (
     to_lift_certificate,
 )
 
@@ -160,7 +160,7 @@ def test_typed_stops() -> None:
 def test_restrict_is_identity_on_the_source_and_refuses_new_terms() -> None:
     s = toy()
     assert restrict(BASE, (), s) == ()
-    from omega_engine_operations.use_cases.level_engine.research_engine.errors import NonDescent
+    from operations.use_cases.level_engine.research_engine.errors import NonDescent
 
     with pytest.raises(NonDescent):
         restrict(BASE, (NewInst(1, (0, 0, 0)),), s)

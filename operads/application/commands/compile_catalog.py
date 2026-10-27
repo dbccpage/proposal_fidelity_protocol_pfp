@@ -6,7 +6,7 @@ import hashlib
 import json
 from typing import Any, Dict, Mapping, Optional
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 
 from ...domain.entities.catalog_v3 import CapabilitySliceV3, EstateCatalogV3
 from ...domain.entities.operation_v3 import OperationV3, PortSpecV3

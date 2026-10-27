@@ -10,10 +10,10 @@ Short narrated videos of this same material go in [videos/](../videos/). Each cl
 
 If the page is long, read one section and run the matching notebook cells. Leave the next section for the next sitting.
 
-# Genesis, Symbol Game, and Omega Engine: a finite evidence lab
+# Genesis, Symbol Game, and Engine: a finite evidence lab
 
 This is an independent teaching fixture, not a
-replay of `19L57G1`, a production Omega Engine run, or a theorem about every
+replay of `19L57G1`, a production Engine run, or a theorem about every
 Symbol Game board. Run all cells, then change the marked inputs and run again.
 Only the Python standard library is required.
 
@@ -54,6 +54,6 @@ Tower files for this sitting:
 - [research/mssn_sn_tower/_theory/README.md](../../../../../research/mssn_sn_tower/_theory/README.md)
 - [research/mssn_sn_tower/_theory/03_the_symbol_game.md](../../../../../research/mssn_sn_tower/_theory/03_the_symbol_game.md)
 - [research/mssn_sn_tower/_theory/09_authority_fences.md](../../../../../research/mssn_sn_tower/_theory/09_authority_fences.md)
-- [research/mssn_sn_tower/education_crosswalk_genesis_omega.md](../../../../../research/mssn_sn_tower/education_crosswalk_genesis_omega.md)
+- [research/mssn_sn_tower/education_crosswalk_genesis_core.md](../../../../../research/mssn_sn_tower/education_crosswalk_genesis_core.md)
 
 Frontier sitting already on disk: [N0_the_genesis_distinction.md](../../600_mssn_frontier/N0_the_genesis_distinction/N0_the_genesis_distinction.md). It is a different folder. This lesson does not replace it.

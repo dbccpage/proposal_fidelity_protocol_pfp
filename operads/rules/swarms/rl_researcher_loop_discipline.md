@@ -1,7 +1,7 @@
 ---
 paths:
-  - "omega_engine_woland/**"
-  - "omega_engine/crates_rs/omega_woland/**"
+  - "adversary/**"
+  - "engine/crates_rs/core_adversary/**"
 ---
 
 # Rule: Research Loop Discipline (WF_RESEARCH_PFP)

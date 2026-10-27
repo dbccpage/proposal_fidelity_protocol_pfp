@@ -25,7 +25,7 @@ operad_residual: "unknown"
 
 ## Live ledger pointer
 
-Ops: `omega_engine_atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/docs/lean_zulip_legibility_ops.md` §8
+Ops: `atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/docs/lean_zulip_legibility_ops.md` §8
 
 ## Terminals
 

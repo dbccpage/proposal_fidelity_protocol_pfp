@@ -1,6 +1,6 @@
 # OEWAS V3 Operadic Architecture, Clean Layering & Categorical Flowchart Guide
 
-This guide presents the formal architecture and models of **OEWAS V3 (Omega Engine Workflows, Agents, and Skills)**. It details how **Agents, Skills, Meta-Skills, Operands, Residuals, and Anti-Skills** operate within a colored multicategory (operad) and Clean Architecture framework.
+This guide presents the formal architecture and models of **OEWAS V3 (Engine Workflows, Agents, and Skills)**. It details how **Agents, Skills, Meta-Skills, Operands, Residuals, and Anti-Skills** operate within a colored multicategory (operad) and Clean Architecture framework.
 
 ---
 
@@ -85,7 +85,7 @@ The default container deliberately binds no `AgentLicense` witness. Its licensed
 ```mermaid
 flowchart TD
     subgraph AgentLayer["1. Agent & Execution Context"]
-        Agent["Agent (e.g. Thanatos / Woland)"]
+        Agent["Agent (e.g. Thanatos / Adversary)"]
         Lic["AgentLicense<br/>(ceiling: L3_Logos, ops: Σ_ops)"]
         Ctx["ExecutionContext<br/>(CorrelationId, CausationId, IdempotencyKey)"]
         Agent --> Lic
@@ -291,7 +291,7 @@ flowchart LR
 ## 6. Canonical Directory & Component Tree Layout
 
 ```text
-omega_engine_operads/
+operads/
 ├── __init__.py                               # Public exports
 ├── domain/                                    # Pure WAS Domain (Zero Infra Dependencies)
 │   ├── __init__.py
@@ -336,7 +336,7 @@ omega_engine_operads/
 │   │   └── app.py                             # create_app() with OpenAPI/Swagger & health endpoints
 │   └── cli/                                   # CLI Tooling (Windows CP1252/UTF-8 Safe)
 │       ├── __init__.py
-│       ├── __main__.py                        # python -m omega_engine_operads.frontend.cli
+│       ├── __main__.py                        # python -m operads.frontend.cli
 │       └── main.py                            # compile-estate, verify-catalog, show-catalog subcommands
 ├── infrastructure/                            # Adapters (Implementing Inward Ports)
 │   ├── __init__.py

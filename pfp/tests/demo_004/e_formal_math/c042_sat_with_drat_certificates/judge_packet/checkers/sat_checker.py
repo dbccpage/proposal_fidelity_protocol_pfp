@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import (
     check_problem_solution,
 )
 

@@ -6,7 +6,7 @@ operad_target_colour declarations in skill manifests/headers (DEF-OP-01).
 
 Default mode is **dry-run / report-only**. Writes require explicit consent:
 
-    OMEGA_BULK_OPERAD_INGEST=1 python .agents/operad/bulk_operad_ingest.py
+    CORE_BULK_OPERAD_INGEST=1 python .agents/operad/bulk_operad_ingest.py
 
 AuthorityEffect: None. Does not mint residual_effect=contractive.
 """
@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 from typing import Any, List, Optional, Tuple
 
-WRITE_ENV = "OMEGA_BULK_OPERAD_INGEST"
+WRITE_ENV = "CORE_BULK_OPERAD_INGEST"
 
 VALID_COLOURS = {
     "State",
@@ -161,7 +161,7 @@ def propose_ingest(
         "existing_ops": len(existing),
         "collisions": collisions,
         "note": (
-            "DEF-OP-01 explicit gate: dry-run unless OMEGA_BULK_OPERAD_INGEST=1. "
+            "DEF-OP-01 explicit gate: dry-run unless CORE_BULK_OPERAD_INGEST=1. "
             "Requires explicit manifest colour declarations."
         ),
     }
@@ -180,7 +180,7 @@ def apply_ingest(
     origin: str = "external",
     operad_dir: Path | None = None,
 ) -> dict[str, Any]:
-    """Write proposed ops. Requires OMEGA_BULK_OPERAD_INGEST=1."""
+    """Write proposed ops. Requires CORE_BULK_OPERAD_INGEST=1."""
     if os.environ.get(WRITE_ENV) != "1":
         plan = propose_ingest(skills_raw, origin=origin, operad_dir=operad_dir)
         plan["applied"] = False

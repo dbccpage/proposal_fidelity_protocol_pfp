@@ -127,7 +127,7 @@ def test_fw_replay_independent_host_verification():
 
 
 def test_fw_carrier_pinned_alphabet_rejects_unpinned_codepoints():
-    """FW-CARRIER: pinning alphabet to {a, b} strictly rejects z and Omega."""
+    """FW-CARRIER: pinning alphabet to {a, b} strictly rejects z and Core."""
     host = PacketFirewallHost(carrier_alphabet={"a", "b"})
 
     # 'a' and 'b' with syntax spaces/arrows pass
@@ -139,10 +139,10 @@ def test_fw_carrier_pinned_alphabet_rejects_unpinned_codepoints():
     assert v_z.admitted is False
     assert v_z.refusal_code == FirewallRefusalCode.FW_CARRIER_VIOLATION
 
-    # 'Omega' (Greek letter) must be rejected
-    v_omega = host.check_fw_carrier("a -> \u03a9")
-    assert v_omega.admitted is False
-    assert v_omega.refusal_code == FirewallRefusalCode.FW_CARRIER_VIOLATION
+    # 'Core' (Greek letter) must be rejected
+    v_core = host.check_fw_carrier("a -> \u03a9")
+    assert v_core.admitted is False
+    assert v_core.refusal_code == FirewallRefusalCode.FW_CARRIER_VIOLATION
 
     # Strict payload check without syntax tolerance
     assert host.check_fw_payload_carrier("ab").admitted is True

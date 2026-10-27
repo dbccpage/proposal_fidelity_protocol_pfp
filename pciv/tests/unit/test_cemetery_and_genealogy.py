@@ -4,11 +4,11 @@ import hashlib
 import json
 from pathlib import Path
 
-from omega_engine_prompt_civilization.domain import (
+from pciv.domain import (
     CemeteryHeadstoneV1,
     GenealogyEntryV1,
 )
-from omega_engine_prompt_civilization.infrastructure.genealogy_adapter import (
+from pciv.infrastructure.genealogy_adapter import (
     FileAntibodyAdapter,
     FileCemeteryAdapter,
     FileGenealogyAdapter,
@@ -20,9 +20,9 @@ def test_cemetery_records_headstone(tmp_path: Path) -> None:
     headstone = CemeteryHeadstoneV1(
         candidate_id="cand_dead_1",
         run_key="run_test_1",
-        scene_id="act2_retinue_debate",
+        scene_id="act2_panel_debate",
         cause_of_death="CHEAP_GATE_FAILED: Empty response",
-        killing_seat_id="seat_hella",
+        killing_seat_id="seat_syntax_prefilter",
         evidence_refs=(),
         candidate_payload_sha256="sha256:" + hashlib.sha256(b"dummy").hexdigest(),
         round_index=1,
@@ -40,9 +40,9 @@ def test_cemetery_filename_is_not_derived_from_candidate_path(tmp_path: Path) ->
     headstone = CemeteryHeadstoneV1(
         candidate_id="candidate/../../escape",
         run_key="run_test_1",
-        scene_id="act2_retinue_debate",
+        scene_id="act2_panel_debate",
         cause_of_death="REFUSED",
-        killing_seat_id="seat_hella",
+        killing_seat_id="seat_syntax_prefilter",
         evidence_refs=(),
         candidate_payload_sha256="sha256:" + hashlib.sha256(b"dummy").hexdigest(),
     )

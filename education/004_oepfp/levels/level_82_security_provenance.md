@@ -22,10 +22,10 @@ reachable_terminal_statuses:
   - Refused
   - Invalid
 source_paths:
-  - omega_engine_education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
+  - education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
+  - education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
+  - education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
+  - education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
 ---
 
 # The Symbol Game Level 82: Software Supply Chain Provenance (SLSA v1.0)
@@ -38,7 +38,7 @@ source_paths:
 **Primary Domain Error Code:** `ERR_SIGNED_MANIFEST_DEFECT`  
 **Evaluator Module:** `SecurityGovernanceModule` (`SupplyChainProvenanceContract`)  
 
-**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `SecurityGovernanceModule` or contract `SupplyChainProvenanceContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs).
+**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `SecurityGovernanceModule` or contract `SupplyChainProvenanceContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs).
 
 ---
 
@@ -51,7 +51,7 @@ $$\mathcal{S}_{82} = \Big( \mathcal{C},\; \mathcal{R}_{\text{active}},\; \mathca
 - **Carrier ($\mathcal{C}$):** `Cryptographic build receipts, content-addressed materials, and signed in-toto/SLSA v1.0 statements`. Pinned and immutable upon arena initialization.
 - **Active State ($\mathcal{R}_{\text{active}}$):** Current assigned valuations, configurations, and candidate structures configured on the carrier.
 - **Evaluator Register ($\mathcal{D}_{\text{evaluator}}$):** Instantiation of `SecurityGovernanceModule` via `SupplyChainProvenanceContract` calculating level-specific objective defect metrics.
-- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `omega-canonical-v1` is not RFC 8785).
+- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `core-canonical-v1` is not RFC 8785).
 - **Invariants ($\mathcal{I}_{\text{invariants}}$):** Fuel ceiling ($T \le 8$), boundary protection masks, and non-mutation constraints.
 
 ### Conceptual Arena Scope
@@ -109,7 +109,7 @@ Proposals at Level 82 are specified as JSON envelopes for the proposed (not yet 
     "max_repair_ops": 3
   },
   "candidate_payload": {
-    "subject_name": "omega_engine_referee",
+    "subject_name": "referee",
     "subject_digest": "sha256:a1b2c3d4e5f67890...",
     "builder_id": "https://trusted-builder.local/v1",
     "build_type": "https://slsa.dev/provenance/v1",

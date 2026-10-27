@@ -13,12 +13,12 @@ primitive: null
 aliases:
   - "paper:er007:fixed-alphabet-unary-nesting"
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md Current Formal Core and Part III Q3"
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_proof_ledger.md Current PaperER007 Lean Core"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md Current Formal Core and Part III Q3"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_proof_ledger.md Current PaperER007 Lean Core"
 uses: []
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_grammar_depth_ceiling.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_grammar_depth_ceiling.lean"
   - "PaperER007.FixedAlphabetTerm.fixed_alphabet_nesting_preserves_declarations"
 extracted: 2026-07-19
 migration: EXTRACTED
@@ -51,7 +51,7 @@ between a grammar ceiling and S(n) is assumed.
 ## Proof Pointer
 
 Mechanized in
-omega_engine/lean4/008_engine_runtime/007_the_symbol_game/PaperER007/L007_06_GrammarDepthCeiling.lean.
+engine/lean4/008_engine_runtime/007_the_symbol_game/PaperER007/L007_06_GrammarDepthCeiling.lean.
 
 The exact Lean theorems are:
 

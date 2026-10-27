@@ -8,8 +8,8 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from omega_engine_pfp.domain.representation.models import TurnView
-from omega_engine_pfp.domain.representation.ports import RepresentationPort
+from pfp.domain.representation.models import TurnView
+from pfp.domain.representation.ports import RepresentationPort
 
 
 class GlyphPacketRepresentation(RepresentationPort):

@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from omega_engine_governance.contracts import AuthorityEffect
-from omega_engine_pfp.domain.entities.research_packets import ResearchStepPacket
+from governance.contracts import AuthorityEffect
+from pfp.domain.entities.research_packets import ResearchStepPacket
 
 
 def _step():
@@ -16,7 +16,7 @@ def _step():
 def test_research_step_replays_with_exact_v1_none_and_causal_bindings():
     trace = _step().to_replay_trace("c" * 64, "evidence_only_human_review_required")
     expected = {
-        "schema_version": "omega.replay_trace.v1", "paper_sha256": "a" * 64,
+        "schema_version": "core.replay_trace.v1", "paper_sha256": "a" * 64,
         "proposal_sha256": "b" * 64, "gate_receipt_sha256": "c" * 64,
         "loop_pass": 2, "step_index": 3,
         "status": "evidence_only_human_review_required", "authority_effect": "none",

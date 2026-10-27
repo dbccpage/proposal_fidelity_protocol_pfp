@@ -5,7 +5,7 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_pfp.infrastructure.braid_tournament import (
+from pfp.infrastructure.braid_tournament import (
     DEFAULT_NOISE_BUDGETS,
     AdaptiveBraidTournament,
     ProposerStrategyConfig,

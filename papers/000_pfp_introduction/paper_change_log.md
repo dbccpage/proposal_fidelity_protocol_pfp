@@ -4,10 +4,10 @@
 
 Recorded canonical Zenodo record <https://zenodo.org/records/23108137> (DOI: `10.5281/zenodo.23108137`, Concept DOI: `10.5281/zenodo.23108137`) across deposit metadata, `README.md`, publication catalog, and atlas `zenodo_records.md`.
 
-## 2026-10-02 — Landau companion PDFs
+## 2026-10-02 — Examiner companion PDFs
 
 Compiled the four companion Markdown sources to PDFs in
-`_lev_landau_theoretical_minimum_quiz/`: the Apartment 50 preface, the learner
+`_lev_examiner_theoretical_minimum_quiz/`: the Apartment 50 preface, the learner
 guide, the examination, and the instructor key. The release manifest and dated
 ZIP include those PDFs beside the Markdown sources. The Markdown remains the
 editable text. No Zenodo deposit or DOI is claimed.
@@ -15,7 +15,7 @@ editable text. No Zenodo deposit or DOI is claimed.
 ## 2026-10-02 — Review repairs before release
 
 Incorporated the 2026-10-02 publication review's local repairs. Replaced the
-Landau companion with a learner guide, a twenty-question core examination,
+Examiner companion with a learner guide, a twenty-question core examination,
 four optional capstones, and a separate instructor key. Scoped the Apartment
 50 preface to the chalkboard round. Moved observation-index type checking
 ahead of the missing-separator result, and added four malformed-index

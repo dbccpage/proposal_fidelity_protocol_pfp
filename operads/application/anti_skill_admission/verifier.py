@@ -10,7 +10,7 @@ from __future__ import annotations
 import hashlib
 from typing import Any, TypeVar
 
-from omega_engine_operations.domain.rop.result import Refusal, Result
+from operations.domain.rop.result import Refusal, Result
 
 from .retirement import runtime_retired
 

@@ -23,7 +23,7 @@ Prompt rewriting sits strictly between **Prompts** (`../prompts/`) and **Packeti
 
 | Item | Type | Purpose & Scope |
 |---|---|---|
-| [`rewriting_strategies_pfp_wire.md`](rewriting_strategies_pfp_wire.md) | Master Specification | Master PFP rewriting specification consolidating prompt expansion $P \to P^\star \to \{P^\star_{\text{sub } ij}\}$, $\Gamma_{38}$ wire substrate, polygraph confluence, and Woland Retinue 13-gate verification matrix. |
+| [`rewriting_strategies_pfp_wire.md`](rewriting_strategies_pfp_wire.md) | Master Specification | Master PFP rewriting specification consolidating prompt expansion $P \to P^\star \to \{P^\star_{\text{sub } ij}\}$, $\Gamma_{38}$ wire substrate, polygraph confluence, and Adversary Panel 13-gate verification matrix. |
 | [`../pilots/pilot_output/`](../pilots/pilot_output/) | Pilot Test Data & Results | Execution outputs, [`results.md`](../pilots/pilot_output/results.md), and [`tests.md`](../pilots/pilot_output/tests.md) from prompt rewriting pilot runs. |
 
 ---

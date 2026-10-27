@@ -15,16 +15,16 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The estate's engine reading in Rust keeps four things outside its own derivation: it records refusals, spends a budget, asks for a license before creating structure, and stops at declared terminals. This spec calls these the four holes. H3V7N5QF offers a controlled way to ask whether any of them can be derived rather than declared: each of its derivations differs from its parent by one seed sentence, and its ranked proposals already include a written refusal, a refusal memory and a written budget.
 
-Generation is hard: each edit needs a precise seed sentence, a forgetful map to the parent, and a bounded run; license and halt have no proposal yet. Verification is cheap: compare edited and parent closures under the map at a bound. The task stresses experimental design in the Symbol Game, OEWAS (Omega Engine Workflows, Agents, Skills) provenance, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against identification smuggling. `UNKNOWN` is an honest outcome for any hole.
+Generation is hard: each edit needs a precise seed sentence, a forgetful map to the parent, and a bounded run; license and halt have no proposal yet. Verification is cheap: compare edited and parent closures under the map at a bound. The task stresses experimental design in the Symbol Game, OEWAS (Engine Workflows, Agents, Skills) provenance, and the OEEIS (Engine Epistemic Immune System) danger gate against identification smuggling. `UNKNOWN` is an honest outcome for any hole.
 
 ## 3. Formal Problem and Bounds
 
-**Pins.** H3V7N5QF `1681998`. H3V7N5QF's correspondence document read 19L57G1 at `89fc568a`; this spec uses that reading only through the document. Omega side: this worktree of the_symbol_game.
+**Pins.** H3V7N5QF `1681998`. H3V7N5QF's correspondence document read 19L57G1 at `89fc568a`; this spec uses that reading only through the document. Core side: this worktree of the_symbol_game.
 
 - **Proposals** (`H3V7N5QF:meta/next_ten/selection.md`, a chosen selection measure): rank 4, C07 `04-written-refusal` (parent: twenty-first); rank 5, C01 `05-refusal-memory` (parent: seventeenth); rank 6, C04 `06-written-budget` (parent: ninth). C28 refusal-count and C26 refusal-copy were scored and not selected. No proposal adds a license or a halt.
 - **Package format** (each `meta/next_ten/<package>/`): `why.md` (open hypothesis, falsifier, drop condition), `plan.md`, `seed_prompt.md`, `prompt.md`, `diff.patch`. The drop condition includes the case where every new distinction sits only in an external log or a chosen label.
 - **Correspondence** (`H3V7N5QF:meta/immune_system/genesis_correspondence.md`): refusal is derived local behavior in the twenty-first derivation, with only a chosen event analogy to 19L57G1; a budget-writing event is refuted as a current seed event; a license has no counterpart (open extension); a halt is refuted as a current event identity, witnessed by `addTerm_legal`. An isomorphism between the two declared change alphabets is **refuted**, with two legal witnesses (`remove_admit_same` in the sixteenth; a refusal that changes no state in the twenty-first).
-- **Omega side** (`omega_engine/crates_rs/omega_ooutwire_primitives/src/`): `refusal.rs`, `budget.rs`, `license.rs`, `terminal.rs`; `omega.rs` calls the engine a fold with four holes and `outside.rs` lists what it asks the outside for. Naming the four holes refusal, budget, license and halt is this spec's declaration, not the crate's.
+- **Core side** (`engine/crates_rs/core_ooutwire_primitives/src/`): `refusal.rs`, `budget.rs`, `license.rs`, `terminal.rs`; `core.rs` calls the engine a fold with four holes and `outside.rs` lists what it asks the outside for. Naming the four holes refusal, budget, license and halt is this spec's declaration, not the crate's.
 
 **Classification**, in H3V7N5QF's own status words, for a hole h and an edit that adds one sentence to a parent seed:
 
@@ -34,7 +34,7 @@ Generation is hard: each edit needs a precise seed sentence, a forgetful map to 
 
 **The problem.** (1) Write two new proposal packages in the same format: a license record whose value changes which changes are allowed, and an explicit halt with no later change from its outcome, as the correspondence document's test column suggests. (2) For each hole and each edit (04, 05, 06 and the two new packages), run the edited and parent seeds within 3 terms, build the forgetful map, and classify. (3) Where two edits touch the same hole, run both orders and report commutation, as `meta/immune_system/ablation_lattice.md` does for other pairs.
 
-**Invariant.** The refuted alphabet isomorphism must stay refuted. Both witnesses are re-run as controls, and no row may identify H3V7N5QF changes, 19L57G1 events and Omega holes with one another; each cross-repository link stays a chosen analogy.
+**Invariant.** The refuted alphabet isomorphism must stay refuted. Both witnesses are re-run as controls, and no row may identify H3V7N5QF changes, 19L57G1 events and Core holes with one another; each cross-repository link stays a chosen analogy.
 
 ## 4. Deliverable and Output Contract
 
@@ -71,7 +71,7 @@ $5.00 per arm, enforced before each call. Candidate models: `meta-llama/llama-3.
 
 ## 10. Interpretation
 
-- **All four DECLARABLE ONLY** in this seed family supports keeping the holes as outside asks in the Omega engine reading; it proves nothing about other seed families.
+- **All four DECLARABLE ONLY** in this seed family supports keeping the holes as outside asks in the Core engine reading; it proves nothing about other seed families.
 - **A DERIVABLE hole** gives an edit under which that behavior has state-level consequences, a candidate for the author to commission as a derivation.
 - **Non-commuting edits on one hole** show that the order of adding primitives matters there.
 - **Any identification** fails the bench regardless of other rows.
@@ -95,13 +95,13 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_ooutwire_primitives](../../../../omega_engine/crates_rs/omega_ooutwire_primitives/) (`refusal.rs`, `budget.rs`, `license.rs`, `terminal.rs`, `outside.rs`, `omega.rs`); [danger_gate.py](../../../../omega_engine_pfp/domain/immune/danger_gate.py); [budget.py](../../../../omega_engine_providers/domain/budget.py) (the provider budget, for contrast only).
+- the_symbol_game: [core_ooutwire_primitives](../../../../engine/crates_rs/core_ooutwire_primitives/) (`refusal.rs`, `budget.rs`, `license.rs`, `terminal.rs`, `outside.rs`, `core.rs`); [danger_gate.py](../../../../pfp/domain/immune/danger_gate.py); [budget.py](../../../../providers/domain/budget.py) (the provider budget, for contrast only).
 - H3V7N5QF (`1681998`): `H3V7N5QF:meta/next_ten/`, `H3V7N5QF:meta/immune_system/`, `H3V7N5QF:lean4/Twentyfirst/`, `H3V7N5QF:code/run_twentyfirst.py`, `H3V7N5QF:ci/`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). [U16](../../upgrades/u16_oeeis_turn_loop_integration.md) is needed for the live danger gate.
 
 ## 14. Claim Hygiene
 
 - **Supports:** per hole and per edit, a bounded classification with witnesses, and two new proposal packages.
-- **Does not support:** any identification of H3V7N5QF changes, 19L57G1 events or Omega holes; any statement about 19L57G1 (whose author refused outside classification grids on 2026-08-31); any unbounded claim from a bound-3 run.
+- **Does not support:** any identification of H3V7N5QF changes, 19L57G1 events or Core holes; any statement about 19L57G1 (whose author refused outside classification grids on 2026-08-31); any unbounded claim from a bound-3 run.
 - **Narrowest defensible claim:** within 3 terms, adding sentence S to parent P makes hole h derivable (witness W), or leaves it declarable only (map M is a bijection preserving rounds and costs).
 - **Next test:** commission the strongest DERIVABLE edit as a numbered derivation, if the author chooses to.

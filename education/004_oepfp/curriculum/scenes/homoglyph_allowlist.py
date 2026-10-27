@@ -25,7 +25,7 @@ def _find_repo_root(p: Path = Path(__file__).resolve()) -> Path:
 
 _ROOT = _find_repo_root()
 _SCENES = Path(__file__).resolve().parent
-_DOMAIN = _ROOT / "omega_engine_pfp" / "domain"
+_DOMAIN = _ROOT / "pfp" / "domain"
 
 GREEK = "\u03b1"  # U+03B1 GREEK SMALL LETTER ALPHA
 APL = "\u237a"  # U+237A APL FUNCTIONAL SYMBOL ALPHA

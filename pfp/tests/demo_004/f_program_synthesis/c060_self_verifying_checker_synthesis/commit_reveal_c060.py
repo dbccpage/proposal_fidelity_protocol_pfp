@@ -1,4 +1,4 @@
-"""Commit-Reveal Protocol and Woland Reality Gate for C060: Checker Synthesis Scored by Mutation Kill Rate."""
+"""Commit-Reveal Protocol and Adversary Reality Gate for C060: Checker Synthesis Scored by Mutation Kill Rate."""
 
 import hashlib
 import json
@@ -10,16 +10,16 @@ REPO_ROOT = Path(__file__).resolve().parents[5]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
     verify_candidate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.generate_mutations import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.generate_mutations import (
     get_mutants,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.independent_checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.independent_checker import (
     independent_check,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.reference_solver.checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.reference_solver.checker import (
     check as ref_check,
 )
 
@@ -39,11 +39,11 @@ def run_gate():
 
     t0 = time.time()
     run_id = f"c060_eval_{int(t0)}"
-    runs_dir = REPO_ROOT / "_ic/darpa/woland" / "runs" / run_id
+    runs_dir = REPO_ROOT / "_ic/darpa/adversary" / "runs" / run_id
     runs_dir.mkdir(parents=True, exist_ok=True)
 
     print("================================================================================")
-    print("WOLAND TERMINAL REALITY GATE: C060 CHECKER SYNTHESIS SCORED BY MUTATION KILL RATE")
+    print("ADVERSARY TERMINAL REALITY GATE: C060 CHECKER SYNTHESIS SCORED BY MUTATION KILL RATE")
     print(f"Run ID: {run_id}")
     print(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(t0))} UTC")
     print("================================================================================")
@@ -129,7 +129,7 @@ def run_gate():
     print(f"TERMINAL GATE VERDICT: {verdict}")
     print("================================================================================")
 
-    # 5. Persist Woland Intelligence Bundle (4 files)
+    # 5. Persist Adversary Intelligence Bundle (4 files)
     receipt = {
         "run_id": run_id,
         "challenge_id": "c060_self_verifying_checker_synthesis",
@@ -177,7 +177,7 @@ def run_gate():
         f.write(json.dumps({"action": "TERMINAL_GATE", "verdict": verdict}) + "\n")
 
     with open(runs_dir / "novella.md", "w", encoding="utf-8") as f:
-        f.write(f"# Woland Terminal Reality Gate: Run {run_id}\n\n")
+        f.write(f"# Adversary Terminal Reality Gate: Run {run_id}\n\n")
         f.write("- **Challenge:** C060 Checker Synthesis Scored by Mutation Kill Rate\n")
         f.write(f"- **Solver Commitment:** `{solver_commitment}`\n")
         f.write(f"- **Hidden Cases:** {passed_cases}/{total_cases} ({pass_rate:.1f}%)\n")
@@ -186,7 +186,7 @@ def run_gate():
         )
         f.write(f"- **Verdict:** `{verdict}`\n")
 
-    print(f"\nPersisted 4-file Woland intelligence bundle to {runs_dir}")
+    print(f"\nPersisted 4-file Adversary intelligence bundle to {runs_dir}")
     return verdict == "PASS_TO_MASTER"
 
 

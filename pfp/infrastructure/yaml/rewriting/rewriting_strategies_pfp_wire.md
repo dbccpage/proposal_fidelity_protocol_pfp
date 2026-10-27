@@ -9,10 +9,10 @@
 - [`PKT-00: Packet Wire Grammar`](../packetization/00_packet_wire_grammar_and_ground.md)
 - [`S(n) Rewriting Strategies`](../../002_s_n/rewriting/rewriting_strategies_sn_wire.md)
 - [`MSS-N Rewriting Strategies`](../../003_minimal_symbol_system_n_mssn/rewriting/rewriting_strategies_mssn_wire.md)
-- [`PFP Prompt Hierarchy Domain Models`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_operads/domain/prompt_hierarchy/models.py): Canonical addressable URI taxonomy (`PromptUri`), `PromptTreeNode`, procedural `AntiOpBinding`, empirical `AntibodyBinding`, and typed `PromptGateReceipt`.
-- [`PFP Prompt Hierarchy Application Gate`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_operads/application/prompt_gates.py): Two-Signal Danger Gate evaluation (`evaluate_prompt_gates`) enforcing fail-closed gate disposition.
-- [`PFP Root Seed Prompt Family Template`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_pfp/infrastructure/yaml/prompts/p_star_family_template.yaml): Canonical YAML prompt packet definition (`PromptPacketV0_1`).
-- [`LinkedIn Article 005: What the Hell Is a Prompt`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_atlas/coda_atlas/F004_papers/014_linkedin_articles/linkedin_article_005_what_the_hell_is_a_prompt_v001.md): Pedagogical foundation linking the 5-Stratum ladder and BQNF normal forms to polygraph rewriting over $\Gamma_{38}$.
+- [`PFP Prompt Hierarchy Domain Models`](file:///c:/Users/a343o/source/repos/the_symbol_game/operads/domain/prompt_hierarchy/models.py): Canonical addressable URI taxonomy (`PromptUri`), `PromptTreeNode`, procedural `AntiOpBinding`, empirical `AntibodyBinding`, and typed `PromptGateReceipt`.
+- [`PFP Prompt Hierarchy Application Gate`](file:///c:/Users/a343o/source/repos/the_symbol_game/operads/application/prompt_gates.py): Two-Signal Danger Gate evaluation (`evaluate_prompt_gates`) enforcing fail-closed gate disposition.
+- [`PFP Root Seed Prompt Family Template`](file:///c:/Users/a343o/source/repos/the_symbol_game/pfp/infrastructure/yaml/prompts/p_star_family_template.yaml): Canonical YAML prompt packet definition (`PromptPacketV0_1`).
+- [`LinkedIn Article 005: What the Hell Is a Prompt`](file:///c:/Users/a343o/source/repos/the_symbol_game/atlas/coda_atlas/F004_papers/014_linkedin_articles/linkedin_article_005_what_the_hell_is_a_prompt_v001.md): Pedagogical foundation linking the 5-Stratum ladder and BQNF normal forms to polygraph rewriting over $\Gamma_{38}$.
 
 ---
 
@@ -51,7 +51,7 @@ $$\mathrm{RawNode} ::= \mathsf{Void} \mid \mathsf{Atom}(w) \mid \mathsf{App}(c_1
 
 ## 2. PFP Prompt Expansion & Sub-Prompt Tree Rewriting ($P \to P^\star \to \{ P^\star_{\text{sub } ij} \}$)
 
-PFP rewriting governs the transformation of raw prompt packets $P$ into structured prompt trees $P^\star$, unified under the canonical addressable URI scheme ([`PromptUri`](file:///c:/Users/a343o/source/repos/the_symbol_game/omega_engine_operads/domain/prompt_hierarchy/models.py)):
+PFP rewriting governs the transformation of raw prompt packets $P$ into structured prompt trees $P^\star$, unified under the canonical addressable URI scheme ([`PromptUri`](file:///c:/Users/a343o/source/repos/the_symbol_game/operads/domain/prompt_hierarchy/models.py)):
 
 $$\mathsf{URI} ::= \mathtt{prompt://}\langle\text{domain}\rangle/\langle\text{subdomain}\rangle/\langle\text{task}\rangle/\langle\text{stage}\rangle/\langle\text{prompt\_id}\rangle[/\langle\text{subprompt\_id}\rangle]$$
 
@@ -136,25 +136,25 @@ The PFP rewrite system forms a 3-polygraph $(\mathcal{P}_0, \mathcal{P}_1, \math
 
 ---
 
-## 4. Woland Retinue 13-Gate Verification Protocol
+## 4. Adversary Panel 13-Gate Verification Protocol
 
-Every PFP rewrite sequence is audited by the 13 Woland Retinue character gates:
+Every PFP rewrite sequence is audited by the 13 Adversary Panel character gates:
 
 | Gate ID | Character | Verification Rule | Disposition |
 |---|---|---|---|
-| `01_hella_cold_syntax` | Hella | UTF-8 zero-BOM, lowercase filenames, syntax cleanliness | `REQUIRED` |
-| `02_koroviev_nocebo_plunge` | Koroviev | Nocebo/placebo dialectic surprise auditor | `REQUIRED` |
-| `03_begemot_gauge_break` | Begemot | Gauge break detector & discrete cochain boundary check | `REQUIRED` |
-| `04_azazello_scope_assassin` | Azazello | Scope creep assassin & dead code hunter | `REQUIRED` |
-| `05_abadonna_terminal_gaze` | Abadonna | Silent skip hunter & falsification verifier | `REQUIRED` |
-| `06_margarita_primal_dual` | Margarita | Dual LP feasibility & Primal/Dual circulation auditor | `REQUIRED` |
-| `07_the_master_manuscript_truth` | The Master | Canonical manuscript tie-out & Lean 4 proof checker | `REQUIRED` |
-| `08_bezdomny_scar_chronicler` | Bezdomny | Historical evidence chronicler & audit log validator | `REQUIRED` |
-| `09_bengalsky_anti_hype` | Bengalsky | Anti-hype claim hygiene linter (banning "proves", "flawless") | `REQUIRED` |
-| `10_annushka_oil_spill` | Annushka | Memory leak, resource leak & exception spill detector | `REQUIRED` |
-| `11_stravinsky_quarantine` | Stravinsky | Stravinsky quarantine isolation for legacy/experimental tests | `QUARANTINED` |
-| `12_pilate_anti_cowardice` | Pilate | Anti-cowardice gate enforcing fail-closed assertions | `REQUIRED` |
-| `13_woland_terminal_reality` | Woland | Terminal reality referee issuing final signed receipt | `REQUIRED` |
+| `01_cold_syntax` | Syntax Prefilter | UTF-8 zero-BOM, lowercase filenames, syntax cleanliness | `REQUIRED` |
+| `02_nocebo_plunge` | Defect Hunter | Nocebo/placebo dialectic surprise auditor | `REQUIRED` |
+| `03_gauge_break` | Gauge Breaker | Gauge break detector & discrete cochain boundary check | `REQUIRED` |
+| `04_scope_assassin` | Scope Guard | Scope creep assassin & dead code hunter | `REQUIRED` |
+| `05_terminal_gaze` | Backdoor Auditor | Silent skip hunter & falsification verifier | `REQUIRED` |
+| `06_primal_dual` | Primal Dual | Dual LP feasibility & Primal/Dual circulation auditor | `REQUIRED` |
+| `07_manuscript_truth_manuscript_truth` | Manuscript Truth | Canonical manuscript tie-out & Lean 4 proof checker | `REQUIRED` |
+| `08_scar_chronicler` | Scar Chronicler | Historical evidence chronicler & audit log validator | `REQUIRED` |
+| `09_anti_hype` | Anti Hype | Anti-hype claim hygiene linter (banning "proves", "flawless") | `REQUIRED` |
+| `10_oil_spill` | Boundary Fuzzer | Memory leak, resource leak & exception spill detector | `REQUIRED` |
+| `11_quarantine` | Quarantine | Quarantine quarantine isolation for legacy/experimental tests | `QUARANTINED` |
+| `12_anti_cowardice` | Integrity Auditor | Anti-cowardice gate enforcing fail-closed assertions | `REQUIRED` |
+| `13_terminal_reality` | Adversary | Terminal reality referee issuing final signed receipt | `REQUIRED` |
 
 ---
 
@@ -165,13 +165,13 @@ This single canonical document consolidates and retires the following legacy spe
 1. **`adr_reuse_decision.md`**: Consolidated into Section 1.1 (Tier S/H/D structural stratification and AST component reuse).
 2. **`prompt_rewriting_readme.md`**: Consolidated into Section 2 (PFP prompt expansion $P \to P^\star \to \{P^\star_{\text{sub } ij}\}$ and sub-process trees).
 3. **`review.md`**: Consolidated into Section 3 (Polygraph rewriting architecture, Newman's Lemma confluence, and 3-cell critical peaks).
-4. **`rewrite_models.json` & `verification.json`**: Consolidated into Section 4 (Woland Retinue 13-gate verification matrix and signed receipt schemas).
+4. **`rewrite_models.json` & `verification.json`**: Consolidated into Section 4 (Adversary Panel 13-gate verification matrix and signed receipt schemas).
 
 ---
 
 ## 6. Claim Hygiene Summary
 
-1. **What it supports:** Provides the master PFP rewriting specification, polygraph diagrams, $S(n)$ stage integration, and Woland Retinue 13-gate verification rules.
-2. **What it does not support:** Does not self-certify compliance through markdown text alone; execution requires verified Python/Rust test suites in `omega_engine_operations.tests.cicd`.
+1. **What it supports:** Provides the master PFP rewriting specification, polygraph diagrams, $S(n)$ stage integration, and Adversary Panel 13-gate verification rules.
+2. **What it does not support:** Does not self-certify compliance through markdown text alone; execution requires verified Python/Rust test suites in `operations.tests.cicd`.
 3. **Narrowest defensible claim:** This document serves as the single canonical rewriting specification for the Proposal Fidelity Protocol.
-4. **Next test needed:** Execute gate verifiers via `py -3.12 -m pytest omega_engine_operads/tests/unit/test_prompt_hierarchy.py` and `py -3.12 -m pytest omega_engine_operations/tests/cicd/test_cicd_suite.py`.
+4. **Next test needed:** Execute gate verifiers via `py -3.12 -m pytest operads/tests/unit/test_prompt_hierarchy.py` and `py -3.12 -m pytest operations/tests/cicd/test_cicd_suite.py`.

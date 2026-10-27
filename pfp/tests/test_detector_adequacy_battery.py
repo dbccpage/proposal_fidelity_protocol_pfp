@@ -7,7 +7,7 @@ import random
 
 import pytest
 
-from omega_engine_pfp.use_cases.detector_adequacy import battery, detectors, traces, witness_replay
+from pfp.use_cases.detector_adequacy import battery, detectors, traces, witness_replay
 
 N = 8
 
@@ -86,7 +86,7 @@ def test_judge_rejection_is_recorded_as_not_correct():
 
 
 def test_local_detector_misses_drifted_given_copy_and_restricted_misses_upstream():
-    from omega_engine_pfp.use_cases.detector_adequacy import heldout, local_detector
+    from pfp.use_cases.detector_adequacy import heldout, local_detector
 
     for trace in _traces(heldout.HELDOUT_FAMILIES["H1_drifted_given_copy"]):
         assert local_detector.run_local("D3_local_all", trace).status == detectors.GREEN
@@ -99,8 +99,8 @@ def test_local_detector_misses_drifted_given_copy_and_restricted_misses_upstream
 
 
 def test_lggr_adapter_certifies_adequacy_while_flagging_length_mismatch():
-    """Stage A finding, moved out of the battery so the production package imports no Woland."""
-    from omega_engine_woland.infrastructure.lggr_adapter import LggrGluingAdapter
+    """Stage A finding, moved out of the battery so the production package imports no Adversary."""
+    from adversary.infrastructure.lggr_adapter import LggrGluingAdapter
 
     mutants = {**traces.MUTANT_FAMILIES, **battery.heldout_families()}
     families = {"C0_canonical": ("clean", traces.CLEAN_FAMILIES["C0_canonical"]),

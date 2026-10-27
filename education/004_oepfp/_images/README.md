@@ -17,7 +17,7 @@ The numbered series, by filename topic:
 
 | Range | Topics seen in filenames |
 |---|---|
-| `fig_001`-`fig_012` | primitive void and marks, directed cut, horn and cycle obstruction, cochain complex, quotient space, Hodge decomposition, anomalon, two-phase simplex, primal-dual gap, float hazard, Lyapunov descent |
+| `fig_001`-`fig_012` | primitive void and marks, directed cut, horn and cycle obstruction, cochain complex, quotient space, Hodge decomposition, sentinel, two-phase simplex, primal-dual gap, float hazard, Lyapunov descent |
 | `fig_013`-`fig_030` | DDA/DAG routing, dual PageRank, de Bruijn graphs, transfer operator and zeta, Euler product, Ramanujan bound, presheaves, monad adjunction, ind-object tower, relation algebra, 6NF cochains, observer stack |
 | `fig_031`-`fig_049` | authority ladder, refusal taxonomy, non-authority disjointness, Fano gap, refusal lattice, terminalization, quantifier ladder, non-Turing-completeness, Godel point, Regge and Cayley-Menger, deficit angle, Bianchi closure |
 | `fig_050`-`fig_065` | packet envelope zones, 16-family taxonomy, envelope vs ODP, extension audit matrix, per-lift dialects, BQNF view maintenance, tower roles, non-creation, Lean 4 architecture, simplex tableau, sovereignty layers, lineage, carrier exhaustion, roadmap |

@@ -1,0 +1,596 @@
+"""Engine Governance Types & Protocols (Python Runtime Bindings).
+
+Mirrors the canonical YAML schemas in `governance/_types/`.
+Provides strong typing, dataclasses, enums, protocols, domain events, commands,
+and schema loaders for the CouncilDeliberation bounded context.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from enum import Enum, IntEnum
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Protocol, runtime_checkable
+import yaml
+
+
+# ──── Enums ────
+
+class CouncilLevel(IntEnum):
+    """Hierarchical tier level of a governance council."""
+    L0_ROOT = 0
+    L1_CURIOUS = 1
+    L2_HIGH = 2
+    L3_PRIMARY_DOMAIN = 3
+    L4_SPECIALIZED = 4
+
+
+class MeetingSectionName(str, Enum):
+    """The 3 canonical sections of a council meeting and agenda."""
+    OPENING = "opening"
+    BODY = "body"
+    CLOSING = "closing"
+    ADJOURNED = "adjourned"
+
+
+class SessionStatus(str, Enum):
+    """Strict DDD lifecycle state of a council deliberation session."""
+    SCHEDULED = "SCHEDULED"
+    CONVENED = "CONVENED"
+    DEBATING = "DEBATING"
+    VOTING = "VOTING"
+    DECIDED = "DECIDED"
+    CRYSTALLIZED = "CRYSTALLIZED"
+    ADJOURNED = "ADJOURNED"
+    VETOED = "VETOED"
+
+
+# Backward compatibility alias
+MeetingStatus = SessionStatus
+
+
+class VoteValue(str, Enum):
+    """Individual vote value."""
+    AYE = "AYE"
+    NAY = "NAY"
+    ABSTAIN = "ABSTAIN"
+
+
+class VoteResult(str, Enum):
+    """Outcome of a council legislative vote."""
+    UNANIMOUSLY_PASSED = "UNANIMOUSLY PASSED"
+    PASSED = "PASSED"
+    REJECTED = "REJECTED"
+    TABLED = "TABLED"
+    PENDING = "PENDING"
+
+
+class AuthorityEffectEnum(str, Enum):
+    """Authority promotion ceiling."""
+    NONE = "None"
+    CERTIFIED = "Certified"
+    MUTATION = "Mutation"
+
+
+# ──── Base Protocols ────
+
+@runtime_checkable
+class IType(Protocol):
+    """Abstract base type protocol that all governance entity models satisfy."""
+    type: str
+    name: str
+    category: str
+    description: str
+    schema_file: str
+    required_properties: List[str]
+    invariants: List[str]
+    authority_effect: str
+
+
+@runtime_checkable
+class ICouncilMember(Protocol):
+    """Simple universal council member interface (iCouncilMember)."""
+    handle: str
+    role: str
+    archetype: Optional[str]
+    mandate: str
+    council_id: str
+    voting_rights: bool
+    attendance_status: str
+
+    def cast_vote(self, motion_id: str, vote: VoteValue) -> VoteCast:
+        ...
+
+    def introduce_motion(self, title: str, text: str) -> MotionIntroduced:
+        ...
+
+    def present_argument(self, topic: str, stance: str) -> CounterargumentPresented:
+        ...
+
+    def raise_point_of_order(self, reason: str) -> PointOfOrderRaised:
+        ...
+
+    def sign_crystallization(self, meeting_id: str, content_hash: str) -> str:
+        ...
+
+
+# ──── Domain Entities & Value Objects ────
+
+@dataclass(frozen=True, slots=True)
+class CouncilMember:
+    """A seated participant of a council holding an official seat and mandate."""
+    handle: str
+    role: str
+    archetype: str
+    mandate: str
+    council_id: str = "cc"
+    voting_rights: bool = True
+    attendance_status: str = "present"
+    affiliations: List[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True, slots=True)
+class CouncilDelegate:
+    """An inter-council liaison representing another council tier."""
+    handle: str
+    represented_council: str
+    domain: str
+    reporting_mandate: str
+
+
+@dataclass(frozen=True, slots=True)
+class EnforcementOfficer:
+    """An orthogonal governance authority or estate steward (e.g. Blackrod)."""
+    handle: str
+    title: str
+    authority_scope: str
+    ruling_powers: List[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True, slots=True)
+class TheArchitect:
+    """The human sovereign authority (ooutwire / Jeremy H. Carroll)."""
+    handle: str = "ooutwire"
+    delegates: List[str] = field(default_factory=lambda: ["Punchlist", "Overconfidence Probe"])
+    authority_level: str = "Sovereign Human Authority"
+    complaint_channel: str = "Procurator Escalation Channel"
+
+
+@dataclass(frozen=True, slots=True)
+class TruthWitness:
+    """Permanent ethical and ground truth witness (e.g. Truth Repair)."""
+    name: str
+    role: str
+    evaluation_focus: str
+
+
+@dataclass(frozen=True, slots=True)
+class AdversarialMirror:
+    """Dialectic stress-testing entity and panel (e.g. Adversary and Panel)."""
+    principal: str
+    panel_members: List[str]
+    mandate: str
+    quarters_location: str
+
+
+@dataclass(frozen=True, slots=True)
+class CouncilGuest:
+    """An invited specialist advisor or temporary attendee."""
+    handle: str
+    affiliation: str
+    invitation_reason: str
+    speaking_rights: str = "full_speaking"
+
+
+@dataclass(frozen=True, slots=True)
+class StandingOpenInvitation:
+    """Standing open invitation preserved in silence (God)."""
+    entity: str = "God"
+    status: str = "Preserved in silence; recorded under claim discipline"
+    authority_effect: str = "None"
+
+
+@dataclass(slots=True)
+class AttendanceTaxonomies:
+    """The 6 canonical attendance taxonomies for council proceedings."""
+    members: List[CouncilMember] = field(default_factory=list)
+    delegates: List[CouncilDelegate] = field(default_factory=list)
+    enforcement_officers: List[EnforcementOfficer] = field(default_factory=list)
+    the_architect: TheArchitect = field(default_factory=TheArchitect)
+    truth_witnesses: List[TruthWitness] = field(default_factory=list)
+    adversarial_mirror: Optional[AdversarialMirror] = None
+    guests: List[CouncilGuest] = field(default_factory=list)
+    standing_open_invitation: StandingOpenInvitation = field(default_factory=StandingOpenInvitation)
+
+
+@dataclass(frozen=True, slots=True)
+class InvestigationRef:
+    """Binding reference to an investigation report conducted by Blackrod/agents."""
+    investigation_id: str
+    investigator: str
+    subject: str
+    status: str
+    location: str
+
+
+@dataclass(slots=True)
+class CouncilMotion:
+    """A formal legislative motion debated and voted upon."""
+    motion_id: str
+    title: str
+    proposer: str
+    context: str
+    votes: Dict[str, VoteValue] = field(default_factory=dict)
+    result: VoteResult = VoteResult.PENDING
+    directives: List[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True, slots=True)
+class GovernanceRuling:
+    """An authoritative ruling issued by Blackrod or the Council."""
+    ruling_id: str
+    authority: str
+    authority_ceiling: str = "AuthorityEffect: None"
+    sandbox_requirements: str = ""
+    prime_rule_preservation: str = "Rule Prime 0-0 Invariant"
+
+
+@dataclass(frozen=True, slots=True)
+class ActionItem:
+    """Terminal action item assigned during the closing section."""
+    item_id: str
+    task: str
+    owner: str
+    skill: str
+    deliverable: str
+    deadline_or_priority: str = "Immediate"
+
+
+# ──── Domain Events (Meeting Lifecycle) ────
+
+@dataclass(frozen=True, slots=True)
+class MeetingConvened:
+    """Emitted when the Procurator calls the meeting to order."""
+    meeting_id: str
+    council_id: str
+    timestamp: str
+    location: str
+    convening_authority: str
+
+
+@dataclass(frozen=True, slots=True)
+class RollCallCompleted:
+    """Emitted when attendance is recorded and quorum is verified."""
+    meeting_id: str
+    present_members: List[str]
+    quorum_verified: bool
+
+
+@dataclass(frozen=True, slots=True)
+class AgendaAdopted:
+    """Emitted when the 3-section agenda is ratified."""
+    meeting_id: str
+    agenda_id: str
+
+
+@dataclass(frozen=True, slots=True)
+class DebateStarted:
+    """Emitted when debate begins (debate_start)."""
+    meeting_id: str
+    topic: str
+
+
+@dataclass(frozen=True, slots=True)
+class CounterargumentPresented:
+    """Emitted when an argument or counterargument is delivered."""
+    meeting_id: str
+    speaker: str
+    topic: str
+    argument_text: str
+
+
+@dataclass(frozen=True, slots=True)
+class DebateEnded:
+    """Emitted when debate closes (debate_end)."""
+    meeting_id: str
+    summary_of_arguments: str
+
+
+@dataclass(frozen=True, slots=True)
+class MotionIntroduced:
+    """Emitted when a motion is introduced."""
+    meeting_id: str
+    motion_id: str
+    title: str
+    proposer: str
+
+
+@dataclass(frozen=True, slots=True)
+class VoteCast:
+    """Emitted when a member casts a vote."""
+    meeting_id: str
+    motion_id: str
+    member_handle: str
+    vote: VoteValue
+
+
+@dataclass(frozen=True, slots=True)
+class MotionDecided:
+    """Emitted when motion votes are tallied and decided (decide)."""
+    meeting_id: str
+    motion_id: str
+    result: VoteResult
+    directives: List[str]
+
+
+@dataclass(frozen=True, slots=True)
+class RulingIssued:
+    """Emitted when a governance ruling is issued."""
+    meeting_id: str
+    ruling_id: str
+    authority: str
+    authority_ceiling: str
+
+
+@dataclass(frozen=True, slots=True)
+class ActionItemAssigned:
+    """Emitted when a terminal action item is assigned."""
+    meeting_id: str
+    item_id: str
+    task: str
+    owner: str
+    deliverable: str
+
+
+@dataclass(frozen=True, slots=True)
+class MinutesCrystallized:
+    """Emitted when minutes are sealed with SHA-256 digest."""
+    meeting_id: str
+    content_hash: str
+    landing_file: str
+
+
+@dataclass(frozen=True, slots=True)
+class MeetingAdjourned:
+    """Emitted when meeting is formally stopped/adjourned."""
+    meeting_id: str
+    council_id: str
+    adjournment_timestamp: str
+
+
+@dataclass(frozen=True, slots=True)
+class PointOfOrderRaised:
+    """Emitted when a procedural point of order is raised."""
+    meeting_id: str
+    member_handle: str
+    reason: str
+
+
+@dataclass(frozen=True, slots=True)
+class CouncilVetoApplied:
+    """Emitted when Blackrod applies an orthogonal veto."""
+    meeting_id: str
+    veto_reason: str
+
+
+# ──── Meeting Sections Models ────
+
+@dataclass(slots=True)
+class MeetingSectionOpening:
+    """Section 1: Opening - Scene setup, roll call, convening call, and agenda adoption."""
+    the_scene: str
+    present: List[str]
+    opening_remarks: str
+    agenda_adoption: str
+    quorum_verification: bool = True
+
+
+@dataclass(slots=True)
+class MeetingSectionBody:
+    """Section 2: Body - Capability audits, investigations, debate, rulings, motions."""
+    production_capability_audit: Optional[str] = None
+    investigation_reviews: List[InvestigationRef] = field(default_factory=list)
+    architect_complaints: List[Dict[str, str]] = field(default_factory=list)
+    adversarial_debates: List[Dict[str, Any]] = field(default_factory=list)
+    governance_rulings: List[GovernanceRuling] = field(default_factory=list)
+    motions_and_votes: List[CouncilMotion] = field(default_factory=list)
+    eviction_actions: List[Dict[str, str]] = field(default_factory=list)
+
+
+@dataclass(slots=True)
+class MeetingSectionClosing:
+    """Section 3: Closing - Terminal action items, crystallization seal, adjournment."""
+    terminal_action_items: List[ActionItem] = field(default_factory=list)
+    crystallization_seal: str = "Minutes Crystallized"
+    next_session_notice: str = ""
+    adjournment: str = "Meeting Adjourned"
+
+
+@dataclass(slots=True)
+class CouncilMeeting:
+    """A convened council meeting structured into opening, body, and closing sections."""
+    meeting_id: str
+    council_id: str
+    date: str
+    location: str
+    classification: str
+    convening_authority: str
+    content_hash: str
+    invariance_level: str = "Tier 8"
+    logic_system: str = "Governance & Adversarial Debate"
+    status: SessionStatus = SessionStatus.CRYSTALLIZED
+    opening: Optional[MeetingSectionOpening] = None
+    body: Optional[MeetingSectionBody] = None
+    closing: Optional[MeetingSectionClosing] = None
+
+
+# ──── Full Council Type Specification Model ────
+
+@dataclass(slots=True)
+class CouncilType:
+    """Exhaustive model of the Council type implementing IType."""
+    type: str = "council"
+    name: str = "Council"
+    category: str = "Governance Structure"
+    description: str = "A deliberative and oversight body organized in a hierarchical topology."
+    schema_file: str = "./councils.yaml"
+    required_properties: List[str] = field(default_factory=list)
+    invariants: List[str] = field(default_factory=list)
+    authority_effect: str = "None"
+    attendance_taxonomies: Optional[AttendanceTaxonomies] = None
+
+
+# ──── Schema Loaders ────
+
+_TYPES_DIR = Path(__file__).resolve().parent
+
+
+def load_master_types(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse _master_types.yaml."""
+    target = path or (_TYPES_DIR / "_master_types.yaml")
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def load_councils_ddd(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse councils.yaml (strict DDD specification)."""
+    target = path or (_TYPES_DIR / "councils.yaml")
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def load_council_member_interface(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse council_member.yaml (iCouncilMember interface)."""
+    target = path or (_TYPES_DIR / "council_member.yaml")
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+@dataclass(slots=True)
+class CouncilMemberProfile:
+    """Council member narrative persona and profile model."""
+    profile_id: str
+    member_name: str
+    handle: str
+    council_id: str
+    role: str
+    archetype: Optional[str] = None
+    background_narrative: str = ""
+    core_perspective: str = ""
+    strengths: List[str] = field(default_factory=list)
+    biases_and_blindspots: List[str] = field(default_factory=list)
+    primary_responsibilities: List[str] = field(default_factory=list)
+    voting_principles: str = ""
+
+
+def load_member_profile_schema(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse member_profile.yaml."""
+    target = path or (_TYPES_DIR / "member_profile.yaml")
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+# ──── Rule, Prime Rule, Lexicon, and Abbreviation Types ────
+
+class RuleStatus(str, Enum):
+    """Lifecycle state of an operational rule."""
+    FROZEN = "FROZEN"
+    ACTIVE = "ACTIVE"
+    DRAFT = "DRAFT"
+    PROPOSED = "PROPOSED"
+    DEPRECATED = "DEPRECATED"
+
+
+@dataclass(slots=True)
+class Rule:
+    """Operational governance rule or quality constraint."""
+    id: str
+    name: str
+    canonical_code: str
+    status: RuleStatus | str
+    text: str
+    applies_to: List[str] = field(default_factory=list)
+    date: Optional[str] = None
+    authority_effect: str = "None"
+    enforcement: Optional[Dict[str, Any]] = None
+    exceptions: List[str] = field(default_factory=list)
+
+
+@dataclass(slots=True)
+class PrimeRule:
+    """Foundational Prime Directive (PRIME_00 to PRIME_09)."""
+    id: str
+    name: str
+    order: int
+    text: str
+    binding_meaning: str
+    family: str = "prime"
+    loading: str = "always"
+    mutability: str = "immutable_except_by_ooutwire"
+    forbidden_actions: List[str] = field(default_factory=list)
+    allowed_enforcement_actions: List[str] = field(default_factory=list)
+    authority_effect: str = "Sovereign"
+
+
+@dataclass(slots=True)
+class LexiconTerm:
+    """Canonical term in the universal glossary."""
+    term: str
+    category: str
+    definition: str
+    symbol: Optional[str] = None
+    aliases: List[str] = field(default_factory=list)
+    related_terms: List[str] = field(default_factory=list)
+    formal_reference: Optional[str] = None
+
+
+@dataclass(slots=True)
+class Abbreviation:
+    """Standardized acronym / abbreviation specification."""
+    acronym: str
+    expansion: str
+    domain: str
+    alt_expansion: Optional[str] = None
+    coda_layer: Optional[str] = None
+    is_deprecated: bool = False
+    superseded_by: Optional[str] = None
+    description: Optional[str] = None
+
+
+def load_rules(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse rules.yaml."""
+    target = path or (_TYPES_DIR / "rules" / "rules.yaml")
+    if not target.exists():
+        target = _TYPES_DIR / "rules.yaml"
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def load_prime_rules(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse prime_rules.yaml."""
+    target = path or (_TYPES_DIR / "rules" / "prime_rules.yaml")
+    if not target.exists():
+        target = _TYPES_DIR / "prime_rules.yaml"
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def load_lexicon(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse lexicon.yaml."""
+    target = path or (_TYPES_DIR / "lexicon.yaml")
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def load_abbreviations(path: Optional[Path] = None) -> Dict[str, Any]:
+    """Load and parse abbreviations.yaml."""
+    target = path or (_TYPES_DIR / "abbreviations.yaml")
+    with open(target, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def load_intelligence_community(path: Optional[Path] = None) -> Dict[str, str]:
+    """Return a fresh dictionary through the canonical model's YAML boundary."""
+    target = path or (_TYPES_DIR / "intelligence_community.yaml")
+    raw = yaml.safe_load(target.read_text(encoding="utf-8"))
+    return dict(raw["intelligence_community"])

@@ -1,11 +1,11 @@
-"""Unit tests for Railway-Oriented Programming (ROP) in omega_engine_pfp."""
+"""Unit tests for Railway-Oriented Programming (ROP) in pfp."""
 
 from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.controllers.symbol_game_engine import SymbolGameEngine
-from omega_engine_pfp.domain.shared_kernel.result import (
+from pfp.controllers.symbol_game_engine import SymbolGameEngine
+from pfp.domain.shared_kernel.result import (
     Result,
     ResultError,
     err,
@@ -72,8 +72,8 @@ def test_rop_failure_keeps_the_typed_refusal_code_and_cause() -> None:
     The refusal code ``RUST_FUNCTIONAL_REQUIRED`` and the original exception were
     lost on the failure track, so a caller could not tell a refusal from a bug.
     """
-    from omega_engine_pfp.domain.exceptions import TypedRefusalError
-    from omega_engine_pfp.functional_boundary import RustFunctionalRequired
+    from pfp.domain.exceptions import TypedRefusalError
+    from pfp.functional_boundary import RustFunctionalRequired
 
     engine = SymbolGameEngine()
     res = engine.solve_problem_result("a problem", task_id="rop_typed")
@@ -96,7 +96,7 @@ def test_rop_does_not_turn_a_defect_into_a_refusal(monkeypatch: pytest.MonkeyPat
         engine.solve_problem_result("a problem")
 
     def refusing(**kwargs):
-        from omega_engine_pfp.domain.exact.errors import ExactRefusal
+        from pfp.domain.exact.errors import ExactRefusal
 
         raise ExactRefusal("PORT_UNBOUND", "no adapter")
 

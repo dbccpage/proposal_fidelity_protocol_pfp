@@ -1,9 +1,9 @@
 """Exact Quantum Stabilizer Tableau Solver for C021 (Q40-R).
 
 Exposes an explicit native Rust stabilizer composition:
-1. `omega_engine_pfp.domain.quantum.stabilizer_solver`
-2. `omega_engine_pfp.domain.quantum.certificate_checker`
-3. `omega_engine_pfp.infrastructure.quantum.dense_checker`
+1. `pfp.domain.quantum.stabilizer_solver`
+2. `pfp.domain.quantum.certificate_checker`
+3. `pfp.infrastructure.quantum.dense_checker`
 
 Complete native outcomes are retained; no swarm authorization is implied.
 
@@ -15,13 +15,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.ports.stabilizer_port import StabilizerPort
-from omega_engine_pfp.domain.quantum.certificate_checker import check_certificate
-from omega_engine_pfp.domain.quantum.stabilizer_solver import solve as domain_solve
-from omega_engine_pfp.infrastructure.adapters.stabilizer_rust_adapter import (
+from pfp.domain.ports.stabilizer_port import StabilizerPort
+from pfp.domain.quantum.certificate_checker import check_certificate
+from pfp.domain.quantum.stabilizer_solver import solve as domain_solve
+from pfp.infrastructure.adapters.stabilizer_rust_adapter import (
     StabilizerRustAdapter,
 )
-from omega_engine_pfp.infrastructure.quantum.dense_checker import verify_dense_spectrum
+from pfp.infrastructure.quantum.dense_checker import verify_dense_spectrum
 
 
 @dataclass(frozen=True)

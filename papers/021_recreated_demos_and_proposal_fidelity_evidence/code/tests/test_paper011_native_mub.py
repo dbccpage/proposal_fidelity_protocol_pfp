@@ -39,7 +39,7 @@ def report_fixture():
         row["all_hold"] = True
         results.append(row)
     payload = {
-        "schema": "omega.mub6.conj2-verification.v3",
+        "schema": "core.mub6.conj2-verification.v3",
         "total_triples_tested": 7,
         "total_triples_passed": 7,
         "total_triples_failed": 0,

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import quadrilateral_of
+from pfp.infrastructure.normal_forms.contract_model import quadrilateral_of
 
 
 def migrate_v0_to_v1(doc: dict) -> dict[str, Any]:

@@ -2,7 +2,7 @@
 symbol_game_runner.py
 ======================
 
-Canonical Use Case orchestrating the Symbol Game Control Spine with Multi-Agent Woland Debate
+Canonical Use Case orchestrating the Symbol Game Control Spine with Multi-Agent Adversary Debate
 and continuous Unified Narrative Script (UNS) Trace emission.
 
 AuthorityEffect: None.
@@ -16,11 +16,11 @@ from pathlib import Path
 import time
 from typing import Any, Dict, List, Optional, Sequence
 
-from omega_engine_pfp.domain import PacketEnvelopeV2
-from omega_engine_pfp.domain.bridge.ast_cochain_extractor import (
+from pfp.domain import PacketEnvelopeV2
+from pfp.domain.bridge.ast_cochain_extractor import (
     ASTCochainExtractor,
 )
-from omega_engine_pfp.domain.bridge.symbol_game_engine import (
+from pfp.domain.bridge.symbol_game_engine import (
     ObstructionScore,
     SymbolGameDialogueArguer,
     SymbolGamePacketCompiler,
@@ -193,9 +193,9 @@ class SymbolGameRunnerUseCase:
         refactoring_payload = {
             "title": "Multi-Step Code Refactoring Packet: Clean Architecture Decoupling",
             "target_modules": [
-                "omega_engine_pfp.domain",
-                "omega_engine_pfp.use_cases",
-                "omega_engine_pfp.controllers",
+                "pfp.domain",
+                "pfp.use_cases",
+                "pfp.controllers",
             ],
             "initial_defects": [
                 "ast:circular_dependency_between_runner_and_engine",
@@ -321,7 +321,7 @@ class SymbolGameRunnerUseCase:
         max_steps: int = 4,
     ) -> Dict[str, Any]:
         """
-        Runs a standard multi-round problem reduction under Woland character debate.
+        Runs a standard multi-round problem reduction under Adversary character debate.
         """
         effective_task_id = task_id or f"task_{int(time.time())}"
 

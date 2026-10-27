@@ -48,9 +48,9 @@ from itertools import combinations
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operads.domain.prompt_hierarchy.evaluator import collect_derivation_map_operads
-from omega_engine_operads.domain.prompt_hierarchy.models import DerivationMapOperadReport, PromptTreeNode
-from omega_engine_operads.domain.prompt_hierarchy.parser import load_prompt_node_from_binding_dict
+from operads.domain.prompt_hierarchy.evaluator import collect_derivation_map_operads
+from operads.domain.prompt_hierarchy.models import DerivationMapOperadReport, PromptTreeNode
+from operads.domain.prompt_hierarchy.parser import load_prompt_node_from_binding_dict
 
 RELATIONAL_BINDING_FILENAMES: tuple[str, ...] = (
     "p_rel_01_survivor_tower_and_retraction.binding.yaml",
@@ -231,10 +231,10 @@ def _extract_lean_theorem_rhs_tuple(source: str, theorem_name: str) -> tuple[Any
 def load_coupled_native_rust_and_lean4_witnesses(
     repo_root: Path | None = None,
 ) -> CoupledNativeWitnessBindingReceipt:
-    """Bind Stage 1-7 Code and Proof witnesses directly to omega_symbol_game Rust and Lean 4."""
+    """Bind Stage 1-7 Code and Proof witnesses directly to core_symbol_game Rust and Lean 4."""
     root = repo_root or Path(__file__).resolve().parents[3]
-    rust_rel = "omega_engine/crates_rs/omega_symbol_game/src/coupled_relational_operad.rs"
-    rust_test_rel = "omega_engine/crates_rs/tests/omega_symbol_game/coupled_relational_operad.rs"
+    rust_rel = "engine/crates_rs/core_symbol_game/src/coupled_relational_operad.rs"
+    rust_test_rel = "engine/crates_rs/tests/core_symbol_game/coupled_relational_operad.rs"
     lean_rel = "lean4/quantum_mechanics/CoupledRelationalProjectors.lean"
 
     rust_path = root / rust_rel

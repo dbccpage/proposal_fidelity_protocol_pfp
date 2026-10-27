@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 
-from omega_engine_woland.tests.pilots.judge_packet_audit import responders, worker
+from adversary.tests.pilots.judge_packet_audit import responders, worker
 
 
 @dataclass(frozen=True)
@@ -139,7 +139,7 @@ def test_worker_path_holds_both_roots_in_import_style_order(tmp_path) -> None:
     # ``from reference_solver...`` imports, which need the package root on the path
     from argparse import Namespace
 
-    from omega_engine_woland.tests.pilots.judge_packet_audit import audit
+    from adversary.tests.pilots.judge_packet_audit import audit
 
     options = Namespace(call_timeout=1, solver_timeout=1)
     desc = {

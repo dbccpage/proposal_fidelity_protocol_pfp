@@ -60,7 +60,7 @@ equipped to check.
 
 ```yaml
 [GLYPH CALCULUS]
-schema: omega.glyph_calculus.draft.v1
+schema: core.glyph_calculus.draft.v1
 
 carrier:
   members:
@@ -119,7 +119,7 @@ certificate.
 
 ```yaml
 calculus_receipt:
-  schema: omega.glyph_receipt.draft.v1
+  schema: core.glyph_receipt.draft.v1
   carrier_digest: "<sha256 of canonical carrier bytes>"
   operations:
     - index: 0

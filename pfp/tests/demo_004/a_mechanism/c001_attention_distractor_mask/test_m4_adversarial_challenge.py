@@ -37,14 +37,14 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_case,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.run_woland_bout import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.run_adversary_bout import (
     DDC_LETTERS,
     assert_witness_dominance,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
     ConstraintSystem,
     audit_witness,
     format_int,
@@ -54,11 +54,11 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
     solve_single_repair,
     verify_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.test_c001_mechanism import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.test_c001_mechanism import (
     compute_mcnemar_exact,
 )
 
-from omega_engine_operations.domain.rop.result import Refusal
+from operations.domain.rop.result import Refusal
 
 # ===========================================================================
 # 1. Witness Dominance Bypass Attacks

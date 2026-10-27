@@ -8,61 +8,61 @@ The machine artifact contains all 303 infrastructure/YAML-estate files (259 YAML
 
 ## Current evidence and interfaces
 
-- **types_base** — `omega_engine_pfp/domain/types/base.py:18-88` (SHA256 `388bb2435536948eb7175d72961505797f4c95ce303594f8526b145cc2371f1c`): Pydantic base permits extra ignore and coercion; pilot domain model adds forbid/frozen; ordinary safe_load helpers.
-- **data_catalog_duplicate** — `omega_engine_pfp/infrastructure/yaml/pfp_data_types.yaml:600-621` (SHA256 `23bdd11fc81b6178be5422c9c2124d2a16f79cd2d1880650e1b73a69d58f1a1d`): Duplicate authority_effect field, ordinary YAML mapping retains latter value.
-- **schema_register** — `omega_engine_pfp/infrastructure/yaml/schemas/schema_register.yaml:1-40` (SHA256 `d59e3db5c109dbd88770eae294da349e8a5d05e937c750b7acfc5ce3af5d6312`): Typed register lists nine envelope schemas and four grammar schema documents; register itself is the fourteenth YAML file.
-- **gate_register** — `omega_engine_pfp/infrastructure/yaml/gates/gate_register.yaml:1-158` (SHA256 `648d0fc1a8a8f7a987abf8c491490220819292b29252028b97f2b14e91e48e87`): 22 primary gates, ten intergates, three empirical gates registered; declarations only.
-- **stage_controller** — `omega_engine_pfp/infrastructure/yaml/stages/controller.yaml:15-65` (SHA256 `85da3c15cb760c7b8605521d394095af2c0db3e832952b2f91db2ce2f7c25e83`): Carrier/profile is explicit; Stage5 host execution; candidate validity distinct from verification; original artifacts bound.
-- **stages_metadata** — `omega_engine_pfp/infrastructure/yaml/stages/stage_types.yaml:20-93` (SHA256 `04e53838a5bf57c1396328e637faf5f762a1f979ecc808ff4c936f1dbbefe212`): Model and host executor branches have different response/input contracts; YAML declarative constraints.
-- **rewriting_metadata** — `omega_engine_pfp/infrastructure/yaml/rewriting/rewriting_types.yaml:1-43` (SHA256 `e8f8a6c215116e56aaf2fb5338130ff12b7d985ba1872ff9ce603fd2414c4c53`): Byte partition and external codebook mss-boundary-v1 metadata.
-- **fixture** — `omega_engine_pfp/infrastructure/yaml/fixtures/fix_negative_mutation_fixtures.yaml:1-32` (SHA256 `a9e1677cc86ede7681661c299fd53f78d8460ef710b5c0e6766f599498ded3dd`): Negative candidate examples and expected statuses are test data, not gate execution.
-- **fixture_multidoc** — `omega_engine_pfp/infrastructure/yaml/fixtures/fix_fable_long_horizon_task_packet.yaml:1-58` (SHA256 `4df7f3857b79de77ff89d2201ab711ec5472ffdf1f267be1f942ccee5efa3929`): Two-document YAML: canonical task packet plus explicitly historical predecessor; single-document model loaders are not the right entry point.
-- **checker_catalog** — `omega_engine_pfp/infrastructure/yaml/taxonomy/checkers.yaml:1-41` (SHA256 `a1c6141be1a6ec59489c96481fbc92d341bd949afdad7b29ccaab764b3c1d68c`): Checker IDs and response_schema={} catalog descriptions require executable owner binding.
-- **rewriting_types** — `omega_engine_pfp/domain/types/rewriting.py:24-73` (SHA256 `873ef175f92494d8dbac7993eb6a813d9ab26fe349cb6261079bde8487527ead`): Pydantic byte intervals and gap-free partition; wire_profile/example remain dict[str,Any].
-- **domain_ports** — `omega_engine_pfp/domain/kernel/ports.py:25-118` (SHA256 `bec2ed6969da822afae5609b7aae46774356ae8cb17a0f4c0b985ee89418ce0d`): Storage, gate evaluator, LLM provider and independent host verifier ports; many states remain Dict[str,Any].
-- **exact_ports** — `omega_engine_pfp/domain/ports/exact_ports.py:15-110` (SHA256 `ee0710abd8c3bdc2a5bba89725732fd0976d4d90f8f77b9d827ec4ae979d8497`): Linear algebra/homology/holonomy/functional/digest domain protocols already exist.
-- **exact_adapter** — `omega_engine_pfp/infrastructure/adapters/exact_rust_adapter.py:55-102` (SHA256 `5337cff3c55575623b8366fa88799b8e8ffdaba9d650d3960f645140012099c0`): Native mathematical adapter refuses absent host and dispatches exact operations; not Python fallback.
-- **stage_policy** — `omega_engine_pfp/use_cases/pfp_stages.py:125-161` (SHA256 `51d98b308de33cfc332f9d8d79b62309fed12406e142f0ca908d5688dbb839bd`): Contiguous stage prefix, host-only Stage5 and explicit blocked/residual statuses; stage count alone is not theorem proof.
-- **stage_execution** — `omega_engine_pfp/use_cases/execute_stage_pipeline.py:107-187` (SHA256 `c1e51af387db2095817e39b83764c853fd6f2f36750b5e7c6644791d5ff69fe3`): Catalog and host-verifier dependency ports; typed result/error envelopes around orchestration.
-- **controller_defaults** — `omega_engine_pfp/controllers/pfp_controller.py:53-81` (SHA256 `5f198703e5ffa9a4c8a7af8533a569fa90a4ba229959653931d786762e7a5e6f`): Default uses Python attestation evaluator; pipeline constructor does not inject required host_verifier.
-- **api** — `omega_engine_pfp/entrypoints/api/router.py:31-115` (SHA256 `2f1dab1f9fb65591676b29b6a81bce430df4bb7dc6404c47e4d2c0907d12eeaa`): Presentation API starts from Mapping[str,Any], exposes compile/verify/evaluate/score routes and defaults.
-- **attestation_gate** — `omega_engine_pfp/infrastructure/gate_evaluators.py:44-99` (SHA256 `120e2b2044fa20880ade4af4981a0ec835faac19e393409d426fd60a67070166`): 13 gate attestation predicates explicitly do not re-execute underlying checks.
-- **attestation_receipt** — `omega_engine_pfp/infrastructure/gate_evaluators.py:243-277` (SHA256 `120e2b2044fa20880ade4af4981a0ec835faac19e393409d426fd60a67070166`): Legacy tribunal selects recognized thirteen keys; hashes summary and labels all-pass AttestedPass.
-- **native_gate** — `omega_engine/crates_rs/omega_woland/src/primary_gates.rs:1-104` (SHA256 `a33f2eeb5ff8605dce644bd8bccd5bcef932332d6fc00e42ca4ebeaa23cb8af9`): 25 registered native primary/empirical predicate implementations, required witness fields, missing witness HOLD.
-- **native_gate_dispatch** — `omega_engine/crates_rs/omega_woland/src/primary_gates.rs:1243-1270` (SHA256 `a33f2eeb5ff8605dce644bd8bccd5bcef932332d6fc00e42ca4ebeaa23cb8af9`): describe/evaluate native boundary and can_authorize false.
-- **native_intergate** — `omega_engine/crates_rs/omega_woland/src/intergates.rs:1-70` (SHA256 `3abb0a47c29256e816389e6a9fbd8e87efa4ac96bfb27dfb1e5a4877e4b3e020`): Ten concrete transition predicates bound to YAML spec bytes.
-- **python_operad** — `omega_engine_pfp/domain/operad/operad.py:28-129` (SHA256 `a27cae3d8bce627acadd34c3745e5ccabbc11ad20e600ebf9548639624b2ac5b`): Polarized triad, licensed slices and string-valued port type composition; registration is separate from executable semantics.
-- **python_proposal_payload** — `omega_engine_pfp/domain/operad/morphisms.py:59-99` (SHA256 `dad0fb4a80f7f7322cb2b4658eb72f052580f6141ef27205202085b0772d5676`): Constructive morphism proposes dict payload; no domain mathematical checker is executed.
-- **finite_dpo** — `omega_engine_pfp/domain/rewriting/finite_dpo.py:15-20` (SHA256 `f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a`): Fixed-schema bounds:128 parts,256 links,32 attrs,65536 attribute bytes,1024 fuel.
-- **finite_dpo_rule** — `omega_engine_pfp/domain/rewriting/finite_dpo.py:85-132` (SHA256 `f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a`): Typed finite graph and identity-key monic interface inclusions; no general ACSet schema interpreter.
-- **finite_dpo_apply** — `omega_engine_pfp/domain/rewriting/finite_dpo.py:196-289` (SHA256 `f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a`): Registered rule with explicit injective natural match, protected boundaries, dangling condition, deterministic fresh IDs, fuel and digests.
-- **regex_json** — `omega_engine_pfp/use_cases/llm_turn.py:131-143` (SHA256 `755c25de3af85f54d643cc768aa9e60ec97bfd9175ae619858e4ea3d4d76e978`): Regex JSON fence extraction into untyped dictionary at a compatibility seam.
-- **regex_receipt** — `omega_engine_pfp/use_cases/prompt_artifact.py:225-240` (SHA256 `b52b450e2bf3496c0125e2e1ba3245bb3602d22b1374765cdcdaab3d904fbaf7`): Regex receipt block parser checks duplicate fields but does not provide full typed certificate semantics.
-- **rewrite_prompt** — `omega_engine_pfp/use_cases/rewrite_prompt.py:25-75` (SHA256 `9d6abf8e0693a3f85ee2a62e80f89c37c953405bd2414912240fb1b6e1921e68`): Boundary formatting and string rendering; not the finite DPO executor.
-- **runtime_envelope** — `omega_engine/crates_rs/omega_symbol_game/src/invoke.rs:63-113` (SHA256 `1e7ea119cec6b03140ab6c06ea529efc36cfc212045d41804021beff8b70ae91`): deny_unknown_fields outer RuntimeRequestV1; action String and payload Value remain dynamic; RuntimeOutcomeV1 carries optional Value/error.
-- **runtime_dispatch** — `omega_engine/crates_rs/omega_symbol_game/src/invoke.rs:175-230` (SHA256 `1e7ea119cec6b03140ab6c06ea529efc36cfc212045d41804021beff8b70ae91`): Canonical/functional/immune/workflow/rewriting action dispatch reuses native owners.
-- **native_prepared_turn** — `omega_engine/crates_rs/omega_symbol_game_runtime/src/pfp_task_turn.rs:77-185` (SHA256 `aa95ebb1b1425c76796691f783701917fbe14b2c733ba54da85290f47ecc12d6`): PreparedTaskTurn binds task/attempt/input/checker, excludes hidden-label context, parses strict duplicate-free JSON; one string-answer role profile.
-- **operad_composition** — `omega_engine/crates_rs/omega_operad_theory/src/foundation/colored_operad.rs:16-185` (SHA256 `7dda3a38076293517a4280753ad37dd0492dca2073dab923cc1bd075d5622514`): Planar and symmetric colored operad structural composition and permutations already exist.
-- **span_operand** — `omega_engine/crates_rs/omega_operad_theory/src/foundation/span_operand.rs:35-115` (SHA256 `760aca85a8dde8a4e33b5bfc5a4caf78d988da0791a61266f51b0d5ab0905145`): new checks line order/BOM; from_raw_text computes content hash; verify_integrity explicitly replays hash/length. Supplied digest/length/colour are not independently admitted by new.
-- **typed_kernel** — `omega_engine/crates_rs/omega_operad_theory/src/kernel/terms.rs:14-44` (SHA256 `b123fc011a0f342b5330b09f7cbfb7fdafe824b0cf6fff8acafefa4e0251d57f`): Canonical typed operation terms and normalization foundation.
-- **kernel_operation** — `omega_engine/crates_rs/omega_operad_theory/src/kernel/model.rs:148-298` (SHA256 `4f714835cea1388d9a9995d68d7d8c5e8feca1b2f701b31feda8e143989bae53`): PortSpec, BoundarySignature, OperandRef, OperationSpec bind identifiers/executor digests/effects/authority.
-- **workflow_runtime** — `omega_engine/crates_rs/omega_workflows_agents_skills/src/operad_runtime.rs:30-104` (SHA256 `7db066cdcff55ea8bbe69240404150c824baf0464fdf206160d41a7fbb7b1c7d`): Bounded inventory trees normalized by canonical kernel; only identity/pair/i64 sum execute; guarded/external binding refuses NOT_EXECUTABLE.
-- **legacy_json_action** — `omega_engine/crates_rs/omega_operad_theory/src/realization/algebra_over_operad.rs:52-104` (SHA256 `ffb1e7742ff81f796648eb56754838238425f8847bcddc815f75f2741c026bad`): Legacy realization has serde_json::Value callbacks and string carrier names.
-- **legacy_realization_receipt** — `omega_engine/crates_rs/omega_operad_theory/src/realization/algebra_over_operad.rs:118-130` (SHA256 `ffb1e7742ff81f796648eb56754838238425f8847bcddc815f75f2741c026bad`): Legacy realization receipt includes fixed emitted_at string.
-- **legacy_realization_fallback** — `omega_engine/crates_rs/omega_operad_theory/src/realization/algebra_over_operad.rs:170-181` (SHA256 `ffb1e7742ff81f796648eb56754838238425f8847bcddc815f75f2741c026bad`): Unregistered action returns structural JSON packaging; distinguish construction from executed semantics.
-- **rewrite_peak_scope** — `omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/peak.rs:24-79` (SHA256 `769318597fada337b37910d2f9b4ef1fd8f07474fc1f9c8766f0c51900b10f5d`): Joined/bounded/closed-disjoint one-peak verdicts distinguish exhaustive finite closure from failed search; no system confluence claim.
-- **qm_density** — `omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs:100-130` (SHA256 `a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a`): ExactDensityMatrix admission over Q(i) verifies density predicates.
-- **qm_partial_trace** — `omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs:216-260` (SHA256 `a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a`): Exact tensor/partial traces and linear entropy owner.
-- **qm_channel** — `omega_engine/crates_rs/omega_quantum_physics/src/exact_channel.rs:3-38` (SHA256 `f1d09b2ed881bae5f2e4686f005a8b99bf56fa379a9c025c17e3de986bf6191f`): Weighted exact CPTP/Choi/Stinespring owner and clear representation bounds; f64 diagnostics distinct.
-- **qm_entropy** — `omega_engine/crates_rs/omega_quantum_physics/src/entropy.rs:1-15` (SHA256 `0e73ce50afbb8b0f2c6457e343315927ac6fe35275048bcac2caa8d2fbbeb1d0`): Full-density exact logarithmic forms distinguished from population diagnostics; irrational spectrum requires enclosures.
-- **qm_entropy_enclosure** — `omega_engine/crates_rs/omega_quantum_physics/src/entropy.rs:58-110` (SHA256 `0e73ce50afbb8b0f2c6457e343315927ac6fe35275048bcac2caa8d2fbbeb1d0`): Rational interval entropy enclosure for algebraic spectra; native number-theory/root isolation/log enclosure reuse.
-- **qm_relative_entropy** — `omega_engine/crates_rs/omega_quantum_physics/src/quantum_relative_entropy.rs:61-125` (SHA256 `8f7cf29345508ff9a998affc6821f679d245276b7dedf5f8190e6f120d65fee6`): Support check; exact LogForm on rational spectra; interval extension for algebraic spectra.
-- **lean_models** — `omega_engine_pfp/domain/lean_bridge/models.py:78-109` (SHA256 `d8ef2ca443f1d79fb8951a8a50eb49b70872e29b9ab3ef0bcadf025634b5b3ed`): Lean request/receipt are data, not proof kernel execution.
-- **lean_audit** — `omega_engine/crates_rs/omega_symbol_game_runtime/src/lean_verify.rs:40-80` (SHA256 `8066e6b7c122dc421ef1f5b339be3bd91c82a98837110cd76e8378b964f9a393`): Scan/audit accepts source/output metadata including build_success/harness_elaborated; independent host-observed execution must supply them.
-- **eis_auth** — `omega_engine/crates_rs/omega_epistemic_immune_system/src/authenticated.rs:1-85` (SHA256 `4df14061991d31681a0b835e96111ad66370bb224825746714a5a03c30b2d8e1`): Existing Ed25519 explicit-key trust policy, purpose/scopes/source+subject+context binding and evidence envelope.
-- **eis_signing_bytes** — `omega_engine/crates_rs/omega_epistemic_immune_system/src/authenticated.rs:193-218` (SHA256 `4df14061991d31681a0b835e96111ad66370bb224825746714a5a03c30b2d8e1`): Existing ordered signing profile binds exact bytes; authentication is relative to supplied operator policy.
-- **metadata_seal** — `omega_engine/crates_rs/omega_operad_theory/src/kernel/cells.rs:184-267` (SHA256 `222cbab30e982e254e9a92c3e60ce6bac8c111828a407c934ef747af4febbd17`): Attestation new checks metadata/prefix; public ReplayVerifiedAttestation::seal wraps it without verification. Do not use the wrapper name as proof of authenticated replay.
-- **operator_signature** — `omega_engine/crates_rs/omega_symbol_game/src/woland_live_admission.rs:289-320` (SHA256 `ae2e8fb5943a8d03941e7405b7fc725327b200d178ba6e70f8561dad369a3641`): Actual ssh-keygen detached-signature checking for live instruction plans; a different authority boundary from zero-authority evidence receipts.
+- **types_base** — `pfp/domain/types/base.py:18-88` (SHA256 `388bb2435536948eb7175d72961505797f4c95ce303594f8526b145cc2371f1c`): Pydantic base permits extra ignore and coercion; pilot domain model adds forbid/frozen; ordinary safe_load helpers.
+- **data_catalog_duplicate** — `pfp/infrastructure/yaml/pfp_data_types.yaml:600-621` (SHA256 `23bdd11fc81b6178be5422c9c2124d2a16f79cd2d1880650e1b73a69d58f1a1d`): Duplicate authority_effect field, ordinary YAML mapping retains latter value.
+- **schema_register** — `pfp/infrastructure/yaml/schemas/schema_register.yaml:1-40` (SHA256 `d59e3db5c109dbd88770eae294da349e8a5d05e937c750b7acfc5ce3af5d6312`): Typed register lists nine envelope schemas and four grammar schema documents; register itself is the fourteenth YAML file.
+- **gate_register** — `pfp/infrastructure/yaml/gates/gate_register.yaml:1-158` (SHA256 `648d0fc1a8a8f7a987abf8c491490220819292b29252028b97f2b14e91e48e87`): 22 primary gates, ten intergates, three empirical gates registered; declarations only.
+- **stage_controller** — `pfp/infrastructure/yaml/stages/controller.yaml:15-65` (SHA256 `85da3c15cb760c7b8605521d394095af2c0db3e832952b2f91db2ce2f7c25e83`): Carrier/profile is explicit; Stage5 host execution; candidate validity distinct from verification; original artifacts bound.
+- **stages_metadata** — `pfp/infrastructure/yaml/stages/stage_types.yaml:20-93` (SHA256 `04e53838a5bf57c1396328e637faf5f762a1f979ecc808ff4c936f1dbbefe212`): Model and host executor branches have different response/input contracts; YAML declarative constraints.
+- **rewriting_metadata** — `pfp/infrastructure/yaml/rewriting/rewriting_types.yaml:1-43` (SHA256 `e8f8a6c215116e56aaf2fb5338130ff12b7d985ba1872ff9ce603fd2414c4c53`): Byte partition and external codebook mss-boundary-v1 metadata.
+- **fixture** — `pfp/infrastructure/yaml/fixtures/fix_negative_mutation_fixtures.yaml:1-32` (SHA256 `a9e1677cc86ede7681661c299fd53f78d8460ef710b5c0e6766f599498ded3dd`): Negative candidate examples and expected statuses are test data, not gate execution.
+- **fixture_multidoc** — `pfp/infrastructure/yaml/fixtures/fix_fable_long_horizon_task_packet.yaml:1-58` (SHA256 `4df7f3857b79de77ff89d2201ab711ec5472ffdf1f267be1f942ccee5efa3929`): Two-document YAML: canonical task packet plus explicitly historical predecessor; single-document model loaders are not the right entry point.
+- **checker_catalog** — `pfp/infrastructure/yaml/taxonomy/checkers.yaml:1-41` (SHA256 `a1c6141be1a6ec59489c96481fbc92d341bd949afdad7b29ccaab764b3c1d68c`): Checker IDs and response_schema={} catalog descriptions require executable owner binding.
+- **rewriting_types** — `pfp/domain/types/rewriting.py:24-73` (SHA256 `873ef175f92494d8dbac7993eb6a813d9ab26fe349cb6261079bde8487527ead`): Pydantic byte intervals and gap-free partition; wire_profile/example remain dict[str,Any].
+- **domain_ports** — `pfp/domain/kernel/ports.py:25-118` (SHA256 `bec2ed6969da822afae5609b7aae46774356ae8cb17a0f4c0b985ee89418ce0d`): Storage, gate evaluator, LLM provider and independent host verifier ports; many states remain Dict[str,Any].
+- **exact_ports** — `pfp/domain/ports/exact_ports.py:15-110` (SHA256 `ee0710abd8c3bdc2a5bba89725732fd0976d4d90f8f77b9d827ec4ae979d8497`): Linear algebra/homology/holonomy/functional/digest domain protocols already exist.
+- **exact_adapter** — `pfp/infrastructure/adapters/exact_rust_adapter.py:55-102` (SHA256 `5337cff3c55575623b8366fa88799b8e8ffdaba9d650d3960f645140012099c0`): Native mathematical adapter refuses absent host and dispatches exact operations; not Python fallback.
+- **stage_policy** — `pfp/use_cases/pfp_stages.py:125-161` (SHA256 `51d98b308de33cfc332f9d8d79b62309fed12406e142f0ca908d5688dbb839bd`): Contiguous stage prefix, host-only Stage5 and explicit blocked/residual statuses; stage count alone is not theorem proof.
+- **stage_execution** — `pfp/use_cases/execute_stage_pipeline.py:107-187` (SHA256 `c1e51af387db2095817e39b83764c853fd6f2f36750b5e7c6644791d5ff69fe3`): Catalog and host-verifier dependency ports; typed result/error envelopes around orchestration.
+- **controller_defaults** — `pfp/controllers/pfp_controller.py:53-81` (SHA256 `5f198703e5ffa9a4c8a7af8533a569fa90a4ba229959653931d786762e7a5e6f`): Default uses Python attestation evaluator; pipeline constructor does not inject required host_verifier.
+- **api** — `pfp/entrypoints/api/router.py:31-115` (SHA256 `2f1dab1f9fb65591676b29b6a81bce430df4bb7dc6404c47e4d2c0907d12eeaa`): Presentation API starts from Mapping[str,Any], exposes compile/verify/evaluate/score routes and defaults.
+- **attestation_gate** — `pfp/infrastructure/gate_evaluators.py:44-99` (SHA256 `120e2b2044fa20880ade4af4981a0ec835faac19e393409d426fd60a67070166`): 13 gate attestation predicates explicitly do not re-execute underlying checks.
+- **attestation_receipt** — `pfp/infrastructure/gate_evaluators.py:243-277` (SHA256 `120e2b2044fa20880ade4af4981a0ec835faac19e393409d426fd60a67070166`): Legacy tribunal selects recognized thirteen keys; hashes summary and labels all-pass AttestedPass.
+- **native_gate** — `engine/crates_rs/core_adversary/src/primary_gates.rs:1-104` (SHA256 `a33f2eeb5ff8605dce644bd8bccd5bcef932332d6fc00e42ca4ebeaa23cb8af9`): 25 registered native primary/empirical predicate implementations, required witness fields, missing witness HOLD.
+- **native_gate_dispatch** — `engine/crates_rs/core_adversary/src/primary_gates.rs:1243-1270` (SHA256 `a33f2eeb5ff8605dce644bd8bccd5bcef932332d6fc00e42ca4ebeaa23cb8af9`): describe/evaluate native boundary and can_authorize false.
+- **native_intergate** — `engine/crates_rs/core_adversary/src/intergates.rs:1-70` (SHA256 `3abb0a47c29256e816389e6a9fbd8e87efa4ac96bfb27dfb1e5a4877e4b3e020`): Ten concrete transition predicates bound to YAML spec bytes.
+- **python_operad** — `pfp/domain/operad/operad.py:28-129` (SHA256 `a27cae3d8bce627acadd34c3745e5ccabbc11ad20e600ebf9548639624b2ac5b`): Polarized triad, licensed slices and string-valued port type composition; registration is separate from executable semantics.
+- **python_proposal_payload** — `pfp/domain/operad/morphisms.py:59-99` (SHA256 `dad0fb4a80f7f7322cb2b4658eb72f052580f6141ef27205202085b0772d5676`): Constructive morphism proposes dict payload; no domain mathematical checker is executed.
+- **finite_dpo** — `pfp/domain/rewriting/finite_dpo.py:15-20` (SHA256 `f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a`): Fixed-schema bounds:128 parts,256 links,32 attrs,65536 attribute bytes,1024 fuel.
+- **finite_dpo_rule** — `pfp/domain/rewriting/finite_dpo.py:85-132` (SHA256 `f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a`): Typed finite graph and identity-key monic interface inclusions; no general ACSet schema interpreter.
+- **finite_dpo_apply** — `pfp/domain/rewriting/finite_dpo.py:196-289` (SHA256 `f5a32aac1c82376030d3fd7bfa68a7e906f5945008d3869dc8e4ac6d1089ba5a`): Registered rule with explicit injective natural match, protected boundaries, dangling condition, deterministic fresh IDs, fuel and digests.
+- **regex_json** — `pfp/use_cases/llm_turn.py:131-143` (SHA256 `755c25de3af85f54d643cc768aa9e60ec97bfd9175ae619858e4ea3d4d76e978`): Regex JSON fence extraction into untyped dictionary at a compatibility seam.
+- **regex_receipt** — `pfp/use_cases/prompt_artifact.py:225-240` (SHA256 `b52b450e2bf3496c0125e2e1ba3245bb3602d22b1374765cdcdaab3d904fbaf7`): Regex receipt block parser checks duplicate fields but does not provide full typed certificate semantics.
+- **rewrite_prompt** — `pfp/use_cases/rewrite_prompt.py:25-75` (SHA256 `9d6abf8e0693a3f85ee2a62e80f89c37c953405bd2414912240fb1b6e1921e68`): Boundary formatting and string rendering; not the finite DPO executor.
+- **runtime_envelope** — `engine/crates_rs/core_symbol_game/src/invoke.rs:63-113` (SHA256 `1e7ea119cec6b03140ab6c06ea529efc36cfc212045d41804021beff8b70ae91`): deny_unknown_fields outer RuntimeRequestV1; action String and payload Value remain dynamic; RuntimeOutcomeV1 carries optional Value/error.
+- **runtime_dispatch** — `engine/crates_rs/core_symbol_game/src/invoke.rs:175-230` (SHA256 `1e7ea119cec6b03140ab6c06ea529efc36cfc212045d41804021beff8b70ae91`): Canonical/functional/immune/workflow/rewriting action dispatch reuses native owners.
+- **native_prepared_turn** — `engine/crates_rs/core_symbol_game_runtime/src/pfp_task_turn.rs:77-185` (SHA256 `aa95ebb1b1425c76796691f783701917fbe14b2c733ba54da85290f47ecc12d6`): PreparedTaskTurn binds task/attempt/input/checker, excludes hidden-label context, parses strict duplicate-free JSON; one string-answer role profile.
+- **operad_composition** — `engine/crates_rs/core_operad_theory/src/foundation/colored_operad.rs:16-185` (SHA256 `7dda3a38076293517a4280753ad37dd0492dca2073dab923cc1bd075d5622514`): Planar and symmetric colored operad structural composition and permutations already exist.
+- **span_operand** — `engine/crates_rs/core_operad_theory/src/foundation/span_operand.rs:35-115` (SHA256 `760aca85a8dde8a4e33b5bfc5a4caf78d988da0791a61266f51b0d5ab0905145`): new checks line order/BOM; from_raw_text computes content hash; verify_integrity explicitly replays hash/length. Supplied digest/length/colour are not independently admitted by new.
+- **typed_kernel** — `engine/crates_rs/core_operad_theory/src/kernel/terms.rs:14-44` (SHA256 `b123fc011a0f342b5330b09f7cbfb7fdafe824b0cf6fff8acafefa4e0251d57f`): Canonical typed operation terms and normalization foundation.
+- **kernel_operation** — `engine/crates_rs/core_operad_theory/src/kernel/model.rs:148-298` (SHA256 `4f714835cea1388d9a9995d68d7d8c5e8feca1b2f701b31feda8e143989bae53`): PortSpec, BoundarySignature, OperandRef, OperationSpec bind identifiers/executor digests/effects/authority.
+- **workflow_runtime** — `engine/crates_rs/core_workflows_agents_skills/src/operad_runtime.rs:30-104` (SHA256 `7db066cdcff55ea8bbe69240404150c824baf0464fdf206160d41a7fbb7b1c7d`): Bounded inventory trees normalized by canonical kernel; only identity/pair/i64 sum execute; guarded/external binding refuses NOT_EXECUTABLE.
+- **legacy_json_action** — `engine/crates_rs/core_operad_theory/src/realization/algebra_over_operad.rs:52-104` (SHA256 `ffb1e7742ff81f796648eb56754838238425f8847bcddc815f75f2741c026bad`): Legacy realization has serde_json::Value callbacks and string carrier names.
+- **legacy_realization_receipt** — `engine/crates_rs/core_operad_theory/src/realization/algebra_over_operad.rs:118-130` (SHA256 `ffb1e7742ff81f796648eb56754838238425f8847bcddc815f75f2741c026bad`): Legacy realization receipt includes fixed emitted_at string.
+- **legacy_realization_fallback** — `engine/crates_rs/core_operad_theory/src/realization/algebra_over_operad.rs:170-181` (SHA256 `ffb1e7742ff81f796648eb56754838238425f8847bcddc815f75f2741c026bad`): Unregistered action returns structural JSON packaging; distinguish construction from executed semantics.
+- **rewrite_peak_scope** — `engine/crates_rs/core_symbol_game_runtime/src/rewriting/peak.rs:24-79` (SHA256 `769318597fada337b37910d2f9b4ef1fd8f07474fc1f9c8766f0c51900b10f5d`): Joined/bounded/closed-disjoint one-peak verdicts distinguish exhaustive finite closure from failed search; no system confluence claim.
+- **qm_density** — `engine/crates_rs/core_quantum_physics/src/density_matrix.rs:100-130` (SHA256 `a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a`): ExactDensityMatrix admission over Q(i) verifies density predicates.
+- **qm_partial_trace** — `engine/crates_rs/core_quantum_physics/src/density_matrix.rs:216-260` (SHA256 `a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a`): Exact tensor/partial traces and linear entropy owner.
+- **qm_channel** — `engine/crates_rs/core_quantum_physics/src/exact_channel.rs:3-38` (SHA256 `f1d09b2ed881bae5f2e4686f005a8b99bf56fa379a9c025c17e3de986bf6191f`): Weighted exact CPTP/Choi/Stinespring owner and clear representation bounds; f64 diagnostics distinct.
+- **qm_entropy** — `engine/crates_rs/core_quantum_physics/src/entropy.rs:1-15` (SHA256 `0e73ce50afbb8b0f2c6457e343315927ac6fe35275048bcac2caa8d2fbbeb1d0`): Full-density exact logarithmic forms distinguished from population diagnostics; irrational spectrum requires enclosures.
+- **qm_entropy_enclosure** — `engine/crates_rs/core_quantum_physics/src/entropy.rs:58-110` (SHA256 `0e73ce50afbb8b0f2c6457e343315927ac6fe35275048bcac2caa8d2fbbeb1d0`): Rational interval entropy enclosure for algebraic spectra; native number-theory/root isolation/log enclosure reuse.
+- **qm_relative_entropy** — `engine/crates_rs/core_quantum_physics/src/quantum_relative_entropy.rs:61-125` (SHA256 `8f7cf29345508ff9a998affc6821f679d245276b7dedf5f8190e6f120d65fee6`): Support check; exact LogForm on rational spectra; interval extension for algebraic spectra.
+- **lean_models** — `pfp/domain/lean_bridge/models.py:78-109` (SHA256 `d8ef2ca443f1d79fb8951a8a50eb49b70872e29b9ab3ef0bcadf025634b5b3ed`): Lean request/receipt are data, not proof kernel execution.
+- **lean_audit** — `engine/crates_rs/core_symbol_game_runtime/src/lean_verify.rs:40-80` (SHA256 `8066e6b7c122dc421ef1f5b339be3bd91c82a98837110cd76e8378b964f9a393`): Scan/audit accepts source/output metadata including build_success/harness_elaborated; independent host-observed execution must supply them.
+- **eis_auth** — `engine/crates_rs/core_epistemic_immune_system/src/authenticated.rs:1-85` (SHA256 `4df14061991d31681a0b835e96111ad66370bb224825746714a5a03c30b2d8e1`): Existing Ed25519 explicit-key trust policy, purpose/scopes/source+subject+context binding and evidence envelope.
+- **eis_signing_bytes** — `engine/crates_rs/core_epistemic_immune_system/src/authenticated.rs:193-218` (SHA256 `4df14061991d31681a0b835e96111ad66370bb224825746714a5a03c30b2d8e1`): Existing ordered signing profile binds exact bytes; authentication is relative to supplied operator policy.
+- **metadata_seal** — `engine/crates_rs/core_operad_theory/src/kernel/cells.rs:184-267` (SHA256 `222cbab30e982e254e9a92c3e60ce6bac8c111828a407c934ef747af4febbd17`): Attestation new checks metadata/prefix; public ReplayVerifiedAttestation::seal wraps it without verification. Do not use the wrapper name as proof of authenticated replay.
+- **operator_signature** — `engine/crates_rs/core_symbol_game/src/adversary_live_admission.rs:289-320` (SHA256 `ae2e8fb5943a8d03941e7405b7fc725327b200d178ba6e70f8561dad369a3641`): Actual ssh-keygen detached-signature checking for live instruction plans; a different authority boundary from zero-authority evidence receipts.
 
 ## YAML coverage
 
@@ -129,15 +129,15 @@ Evidence: regex_json, regex_receipt, rewrite_prompt, runtime_envelope. Keep boun
 
 | Concern | Existing owner | Boundary |
 |---|---|---|
-| Metadata/YAML and CLI/API assembly | omega_engine_pfp domain/types,contracts; infrastructure/model_loading; controllers/entrypoints | Unify strict canonical loader and versioned catalogue compiler; reject duplicate keys before model construction. |
-| Exact coefficients/algebra | omega_number_theory; linear_algebra::exact_field | Never copy elimination, PSD, eigenvalue/root or exact-number algorithms into the operad compiler. |
-| Cochains/quotients/defect | omega_homology; omega_holonomy; omega_functional; omega_solvers | Compile declared carrier/profile to existing owner IDs; require submitted witnesses rather than assertion booleans. |
-| Operad syntax/normalization | omega_operad_theory::kernel; foundation; omega_workflows_agents_skills::operad_runtime | Extend registered typed executor bindings and strict carrier admission, remove structural fallback from acceptance routes; lawful symmetric action needs explicit equivariance checks. |
-| DPO finite graphs | omega_engine_pfp/domain/rewriting/finite_dpo.py | First port one fixed attributed graph profile into an orthogonal omega_category_theory module, then add a schema interpreter only with explicit finite functor/equation/naturality admission. No native ACSet DPO owner found in audited crates. |
-| Native executable gates | omega_woland::{primary_gates,intergates}; omega_symbol_game dispatch | Route PFP stage/checker ports to this owner, preserving AttestedPass as a different result from executed check. |
-| Density/channel/entropy | omega_quantum_physics::{density_matrix,exact_channel,entropy,quantum_relative_entropy,trace_norm_certificate}; omega_finite_probability::log_form; omega_kernel::interval | Add only typed execution adapters; finite bundle interpretation and RG/GKSL semantic models need new explicit profile and empirical bridge. |
-| Digest/authentication | omega_operad_theory::kernel::canonical; omega_symbol_game_runtime canonical profiles; omega_epistemic_immune_system::authenticated | Carry zero-authority receipt separately from optional authenticated envelope; do not conflate SHA256 or metadata seal with signature verification. |
-| Lean reflection/replay | Lean4 proof kernel; omega_symbol_game_runtime::lean_verify; omega_woland kernel observation | Typed compiler/reflection theorem plus host-observed sandboxed process evidence; source scanner and supplied booleans alone cannot validate a theorem. |
+| Metadata/YAML and CLI/API assembly | pfp domain/types,contracts; infrastructure/model_loading; controllers/entrypoints | Unify strict canonical loader and versioned catalogue compiler; reject duplicate keys before model construction. |
+| Exact coefficients/algebra | core_number_theory; linear_algebra::exact_field | Never copy elimination, PSD, eigenvalue/root or exact-number algorithms into the operad compiler. |
+| Cochains/quotients/defect | core_homology; core_holonomy; core_functional; core_solvers | Compile declared carrier/profile to existing owner IDs; require submitted witnesses rather than assertion booleans. |
+| Operad syntax/normalization | core_operad_theory::kernel; foundation; core_workflows_agents_skills::operad_runtime | Extend registered typed executor bindings and strict carrier admission, remove structural fallback from acceptance routes; lawful symmetric action needs explicit equivariance checks. |
+| DPO finite graphs | pfp/domain/rewriting/finite_dpo.py | First port one fixed attributed graph profile into an orthogonal core_category_theory module, then add a schema interpreter only with explicit finite functor/equation/naturality admission. No native ACSet DPO owner found in audited crates. |
+| Native executable gates | core_adversary::{primary_gates,intergates}; core_symbol_game dispatch | Route PFP stage/checker ports to this owner, preserving AttestedPass as a different result from executed check. |
+| Density/channel/entropy | core_quantum_physics::{density_matrix,exact_channel,entropy,quantum_relative_entropy,trace_norm_certificate}; core_finite_probability::log_form; core_kernel::interval | Add only typed execution adapters; finite bundle interpretation and RG/GKSL semantic models need new explicit profile and empirical bridge. |
+| Digest/authentication | core_operad_theory::kernel::canonical; core_symbol_game_runtime canonical profiles; core_epistemic_immune_system::authenticated | Carry zero-authority receipt separately from optional authenticated envelope; do not conflate SHA256 or metadata seal with signature verification. |
+| Lean reflection/replay | Lean4 proof kernel; core_symbol_game_runtime::lean_verify; core_adversary kernel observation | Typed compiler/reflection theorem plus host-observed sandboxed process evidence; source scanner and supplied booleans alone cannot validate a theorem. |
 
 ## Mathematical interpretation limits
 
@@ -504,7 +504,7 @@ class LeanReflection(Frozen):
     build_observer: OwnerBinding
     harness_observer: OwnerBinding
 class Registry(Frozen):
-    schema_version: Literal['omega.oepfp.engine.v1.1rc']
+    schema_version: Literal['core.oepfp.engine.v1.1rc']
     authority_effect: Literal['None']
     colours: tuple[Colour, ...]
     operations: tuple[Operation, ...]
@@ -529,7 +529,7 @@ class Registry(Frozen):
                 raise ValueError('unknown colour')
         return self
 class RunRequest(Frozen):
-    schema_version: Literal['omega.oepfp.run.v1.1rc']
+    schema_version: Literal['core.oepfp.run.v1.1rc']
     request_id: Id
     registry_digest: Digest
     sources: tuple[Source, ...]
@@ -539,7 +539,7 @@ class RunRequest(Frozen):
     trust_policy_digest: Digest
     authority_effect: Literal['None']
 class ExecutionReceipt(Frozen):
-    schema_version: Literal['omega.oepfp.receipt.v1.1rc']
+    schema_version: Literal['core.oepfp.receipt.v1.1rc']
     request_digest: Digest
     registry_digest: Digest
     executable_digest: Digest
@@ -555,7 +555,7 @@ class ExecutionReceipt(Frozen):
     authority_effect: Literal['None']
 class SignedReceipt(Frozen):
     receipt: ExecutionReceipt
-    # Existing omega.eis.signed-attestation.v1 document, independently verified
+    # Existing core.eis.signed-attestation.v1 document, independently verified
     # under the supplied trust policy. This field's presence grants no authority.
     detached_attestation: ArtifactRef
     trust_policy_digest: Digest
@@ -570,9 +570,9 @@ Sketch only: the named checked wrapper types are proposed owner-admitted value o
 ```rust
 // PROPOSAL ONLY; extend canonical owners, do not introduce a second math runtime.
 // All checked wrappers below have private fields and owner-only admission APIs.
-use omega_operad_theory::kernel::{model::OperationSpec, terms::{OperationTerm, NormalizedTerm}};
-use omega_quantum_physics::{density_matrix::ExactDensityMatrix, exact_channel::ExactKrausChannel};
-use omega_kernel::interval::Interval;
+use core_operad_theory::kernel::{model::OperationSpec, terms::{OperationTerm, NormalizedTerm}};
+use core_quantum_physics::{density_matrix::ExactDensityMatrix, exact_channel::ExactKrausChannel};
+use core_kernel::interval::Interval;
 
 pub trait TypedOperadEngine {
     fn admit_registry(&self, manifest: RegistryProposal, budget: &Budget) -> Result<CheckedRegistry, Refusal>;

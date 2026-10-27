@@ -9,12 +9,12 @@ import dataclasses
 import json
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     DetectionContext,
     detect,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import NATIVE_CLASS_CODES
-from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
+from eis.infrastructure.native_pharmacy import NATIVE_CLASS_CODES
+from pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
     NEGATIVE_FIXTURES,
     POSITIVE_FIXTURES,
 )
@@ -48,7 +48,7 @@ def main():
         rows.append({"id": case["id"], "candidate": case["candidate"], "context": context,
             "expected": {"findings": findings, "subject_digest": report.subject_digest,
                 "semantic_payload_digest": report.semantic_payload_digest}})
-    path = Path(__file__).resolve().parents[2] / "omega_engine/crates_rs/tests/omega_prompt_civilization/fixtures/python_pharmacy_overlap_v1.json"
+    path = Path(__file__).resolve().parents[2] / "engine/crates_rs/tests/core_prompt_civilization/fixtures/python_pharmacy_overlap_v1.json"
     path.write_text(json.dumps({"vectors": rows}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Frozen {len(rows)} shared pharmacy projection vectors from the Python oracle.")
 

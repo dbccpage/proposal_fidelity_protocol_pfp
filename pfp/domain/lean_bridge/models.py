@@ -108,5 +108,5 @@ class LeanVerificationReceipt:
     refusal_code: str | None = None
     details: str | None = None
     authority_effect: str = "None"
-    schema_version: str = "omega.symbol_game.lean_verification_receipt.v1"
+    schema_version: str = "core.symbol_game.lean_verification_receipt.v1"
 

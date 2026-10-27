@@ -8,7 +8,7 @@ accepted a composite "prime" place and crashed on a non-integer coefficient.
 from __future__ import annotations
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c048_ternary_quadratic_forms.judge_packet.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c048_ternary_quadratic_forms.judge_packet.independent_checker import (
     independent_check,
 )
 

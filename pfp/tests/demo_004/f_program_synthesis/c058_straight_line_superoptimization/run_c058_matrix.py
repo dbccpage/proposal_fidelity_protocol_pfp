@@ -4,10 +4,10 @@ Sends the cases below to each declared model and scores the replies with both
 judge checkers. This script makes live provider calls; run it only with an
 explicit authorization of provider, budget and data handling, from the
 repository root, as
-``py -3.12 -m omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.run_c058_matrix --output-dir <new directory> --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048``.
+``py -3.12 -m pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.run_c058_matrix --output-dir <new directory> --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048``.
 Shared behaviour (explicit configuration, opaque case tokens, full raw
 responses, INFRA_ERROR and CHECKER_DEFECT outcomes, no overwriting) lives in
-``omega_engine_pfp/infrastructure/synthesis_matrix.py``.
+``pfp/infrastructure/synthesis_matrix.py``.
 
 Correction, 2026-09-29: the earlier runner read a ``.env`` file, sent case IDs that name
 the expected answer (for example ``c058_m01_w8_xor_sub``,
@@ -21,17 +21,17 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-_repo_root = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir() and (p / "omega_engine_woland").is_dir())
+_repo_root = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir() and (p / "adversary").is_dir())
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.exact_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.exact_checker import (
     verify_candidate,
 )
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.independent_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.independent_checker import (
     check_candidate_indep,
 )
-from omega_engine_pfp.infrastructure.synthesis_matrix import (
+from pfp.infrastructure.synthesis_matrix import (
     MatrixSpec,
     main,
 )

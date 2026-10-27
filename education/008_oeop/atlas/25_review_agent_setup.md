@@ -8,8 +8,8 @@ source_paths:
   - .agents/skills
   - .agents/rules
   - .agents/agents
-  - omega_engine_workflows_agents_skills/skill_operad
-  - omega_engine_woland/use_cases/governance_dispatch.py
+  - workflows_agents_skills/skill_operad
+  - adversary/use_cases/governance_dispatch.py
 last_verified: 2026-10-07
 ---
 
@@ -35,7 +35,7 @@ AuthorityEffect: None. This is a review proposal; nothing here was applied to tr
 2. **39 of 40 subagent definitions declare `tools: []`.** Per the Claude Code sub-agent
    documentation an empty tool list "usually refuses to launch the subagent ... `Agent would be
    spawned with zero tools`". The repo's own generator writes that value
-   (`omega_engine_workflows_agents_skills/infrastructure/autopoiesis/agent_learning.py:124`), and the
+   (`workflows_agents_skills/infrastructure/autopoiesis/agent_learning.py:124`), and the
    same line asks for `model: inherit` while all 40 files say `model: opus`.
 3. **Hooks are not wired for Claude Code.** `.claude/hooks/hooks.json` holds the git-guard and BOM
    hooks, but Claude Code reads project hooks only from `.claude/settings.json` (none is tracked);
@@ -43,15 +43,15 @@ AuthorityEffect: None. This is a review proposal; nothing here was applied to tr
    So "never push to main" and "no whole-suite pytest" are prose, not gates, in Claude sessions.
 4. **The skill listing overflows its budget.** 251 skills carry 55,669 B of descriptions. In this
    session only the first 74 (alphabetical, through `governance-pedagogy`) were listed with
-   descriptions; 176 (70%) were listed by name only, including `woland`, `research`,
+   descriptions; 176 (70%) were listed by name only, including `adversary`, `research`,
    `deep-research` and every `techne-*`. 19 `ext-*` skills spend listing budget on the placeholder
    description "Operad operation <name>".
 5. **The operad is a registry of whole skills, not a composition engine.** 251 operations (one per
    SKILL.md), 10 colours, 231 of 251 with `residual_effect: unknown`, 41 typed `State -> State`.
-   No caller selects skills through it: `/woland` hard-codes four governance skills by digest, its
+   No caller selects skills through it: `/adversary` hard-codes four governance skills by digest, its
    council maps seats to synthetic `skill_<seat>` IDs that match no package, `/research` binds
    capabilities as free text, the operad router skill is prose for the model to execute, and the
-   Woland anti-skill port reports itself disconnected.
+   Adversary anti-skill port reports itself disconnected.
 6. **The rule-scoping work on this branch holds up.** `rule_gate` passes (exit 0) with 15,861 B
    always-loaded; but path-scoped rules now cost 18.7–93.7 KB on first touch of a directory, mostly
    from groups of rules that share identical globs, and 81 of 102 registered invariants are still
@@ -63,15 +63,15 @@ is in section 7.
 ## 2. Method, and what of /deep-research could not run here
 
 `/deep-research` is `/research` with a larger budget (`.claude/skills/deep-research/SKILL.md:15-37`).
-`/research` drives the Rust controller `omega_woland::research_loop` through
-`py -3.12 -m omega_engine_woland.entrypoints.cli research ...` (`.claude/skills/research/SKILL.md:36`).
+`/research` drives the Rust controller `core_adversary::research_loop` through
+`py -3.12 -m adversary.entrypoints.cli research ...` (`.claude/skills/research/SKILL.md:36`).
 
 What failed in this container:
 
 | Step | Command | Result |
 |---|---|---|
-| Pack check | `timeout 60 python3 -m omega_engine_woland.entrypoints.cli research check-pack` | `ModuleNotFoundError: No module named 'networkx'` (import chain through `omega_engine_woland/domain/cochain/metrics_evaluator.py:18`) |
-| Controller | `NativeResearchLoopHost._invoke` (`omega_engine_woland/infrastructure/researcher/native_research_host.py:55-68`) | needs the `RustSymbolGameHost` native binary; not built here (a `-j 1` workspace build was judged out of budget) |
+| Pack check | `timeout 60 python3 -m adversary.entrypoints.cli research check-pack` | `ModuleNotFoundError: No module named 'networkx'` (import chain through `adversary/domain/cochain/metrics_evaluator.py:18`) |
+| Controller | `NativeResearchLoopHost._invoke` (`adversary/infrastructure/researcher/native_research_host.py:55-68`) | needs the `RustSymbolGameHost` native binary; not built here (a `-j 1` workspace build was judged out of budget) |
 | Interpreter | `py -3.12` | absent (Linux); `python3` is 3.13.16 |
 | Paid dispatch | — | deep profile keeps `max_cost_microusd: 0`; no grant was given |
 
@@ -88,7 +88,7 @@ the findings below are host-checked facts or marked *inferred*.
 - Q1. What loads into every Claude Code turn for this repo, and how large is each part?
 - Q2. How are the four host trees mirrored, and what does the mirroring cost?
 - Q3. What does the operad model today, and is it used to pick skills at run time?
-- Q4. How do `/woland`, `omega_engine_woland` and `/research` choose skills and anti-skills?
+- Q4. How do `/adversary`, `adversary` and `/research` choose skills and anti-skills?
 - Q5. Which content is duplicated, stale, contradictory, over budget, or already enforced in code?
 - Q6. What would a runtime composition API through the operad need?
 
@@ -122,13 +122,13 @@ Computed with a matcher over each rule's `paths:` frontmatter
 
 | First file touched | Rules loaded | Bytes |
 |---|---:|---:|
-| `omega_engine_pfp/domain/tower/ast.py` | 12 | 93,720 |
-| `omega_engine_atlas/coda_atlas/x/papers/a.lean` | 9 | 78,761 |
-| `omega_engine/crates_rs/omega_woland/src/lib.rs` | 7 | 58,955 |
-| `omega_engine_woland/use_cases/base_swarm/specializations.py` | 6 | 37,239 |
-| `omega_engine_workflows_agents_skills/skill_operad/skill_compiler/rule_gate.py` | 5 | 35,997 |
-| `omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py` | 4 | 32,018 |
-| `.claude/skills/woland/SKILL.md` | 2 (+ `.claude/AGENTS.md` 34,658) | 18,742 |
+| `pfp/domain/tower/ast.py` | 12 | 93,720 |
+| `atlas/coda_atlas/x/papers/a.lean` | 9 | 78,761 |
+| `engine/crates_rs/core_adversary/src/lib.rs` | 7 | 58,955 |
+| `adversary/use_cases/base_swarm/specializations.py` | 6 | 37,239 |
+| `workflows_agents_skills/skill_operad/skill_compiler/rule_gate.py` | 5 | 35,997 |
+| `operations/use_cases/packaging/sync_cross_host_skills.py` | 4 | 32,018 |
+| `.claude/skills/adversary/SKILL.md` | 2 (+ `.claude/AGENTS.md` 34,658) | 18,742 |
 
 Groups of rules with identical globs always load together:
 
@@ -239,18 +239,18 @@ is four copies of session logs. Skill scripts are 323,089 B per host, also ×4.
 
 ### F6. How the swarms pick skills today (Q4)
 
-- `/woland`: `omega_engine_woland/use_cases/governance_dispatch.py:86-136` hard-codes four skills
+- `/adversary`: `adversary/use_cases/governance_dispatch.py:86-136` hard-codes four skills
   (`governance-symbol-game`, `governance-ddc`, `governance-coda`, `governance-clean-arch`) and binds
   them by SHA-256 of `.agents/skills/<id>/SKILL.md`. When the file is missing it returns
   `"0" * 64` (`governance_dispatch.py:57`), which the always-loaded
   `rl_review_evidence_reproducibility.md` forbids ("Zero Hardcoded or Simulated Fallback Hashes").
-- Woland council: `omega_engine/crates_rs/omega_woland/src/council.rs:195-214` classifies seats by
+- Adversary council: `engine/crates_rs/core_adversary/src/council.rs:195-214` classifies seats by
   substring of the role name (`"filter"`, `"scanner"` → `TESTER` with colours `Audit, State`) and
-  sets `required_operations` to `id.replacen("seat_", "skill_", 1)` — IDs such as `skill_koroviev`
+  sets `required_operations` to `id.replacen("seat_", "skill_", 1)` — IDs such as `skill_defect_hunter`
   that match no skill package (skill names forbid underscores).
-- `.claude/skills/woland/SKILL.md` (19,441 B, 217 lines) names no other skill to invoke; selection
+- `.claude/skills/adversary/SKILL.md` (19,441 B, 217 lines) names no other skill to invoke; selection
   is persona prose.
-- Anti-skills: `omega_engine_woland/infrastructure/estates/oewas_anti_skill.py:1-9` — "Without one
+- Anti-skills: `adversary/infrastructure/estates/oewas_anti_skill.py:1-9` — "Without one
   the gate holds every subject ... the probe reports the port disconnected ... no native host action
   exposes the Rust detector yet." `.agents/anti_skills/admitted/registry.json` has 4 specs.
 - `/research`: mission `capability_bindings` are free-text strings (`examples/mission.yaml:21-25`:
@@ -262,7 +262,7 @@ is four copies of session logs. Skill scripts are 323,089 B per host, also ×4.
 - `sync_cross_host_skills.py:64-82`: roster of four skill roots; `DEFAULT_SKILLS` names
   `lib-coda-librarian`, `lib-encyclopedia-librarian`, `lib-lean4-librarian`, none of which exist.
 - 62 skill scripts (56 skills) live inside host trees, ×4; AGENTS.md says gates belong in
-  `omega_engine_operations` or Rust crates.
+  `operations` or Rust crates.
 - Session logs mirrored (section 3.3).
 - `RULE_OPERAD_DIR_LAYOUT_001` (`rl_operad_architecture_and_swarm_nomenclature.md`) prescribes
   `.agents/operad/yaml/` and `json/`; `ls -d .agents/operad` → missing. 20 Python files still name
@@ -274,7 +274,7 @@ is four copies of session logs. Skill scripts are 323,089 B per host, also ×4.
   scope: 33 rules × 4 hosts): `CANDIDATE=81, ENFORCED=13, PARTIAL=8`.
 - Fully enforced files that could become short stubs naming their tests:
   `swarms/rl_researcher_loop_discipline.md` (7 ENFORCED, 3,876 B),
-  `swarms/rl_woland_base_swarm_specialization.md` (4 ENFORCED, 4,399 B).
+  `swarms/rl_adversary_base_swarm_specialization.md` (4 ENFORCED, 4,399 B).
 - Files with no registered invariant ID at all (prose only): `authority/rl_gtla_rules_rubric.md`,
   both `claims/*`, `git/*`, `rl_clean_architecture_and_subsystem_governance.md`,
   `rl_intelligence_digestion_and_archiving_discipline.md`, all three `math/*` except
@@ -297,7 +297,7 @@ is four copies of session logs. Skill scripts are 323,089 B per host, also ×4.
 ### F9. Skills within the size budget, but near it (Q5)
 
 - `budget_gate` (`python3 -m ...skill_compiler.budget_gate`, exit 0): all pass.
-- Largest: `governance-symbol-game` 19,984 B, `woland` 19,441 B, `panep-math-and-physics-prof`
+- Largest: `governance-symbol-game` 19,984 B, `adversary` 19,441 B, `panep-math-and-physics-prof`
   18,288 B. Median SKILL.md 2,708 B; 14 above 10 KB. Total SKILL.md text 1,041,418 B; 132 reference
   files; total skill tree 2,665,557 B per host.
 
@@ -311,7 +311,7 @@ is four copies of session logs. Skill scripts are 323,089 B per host, also ×4.
 
 - Supports: the byte counts above; that 39 agent files contradict the documented `tools` contract;
   that `.claude/hooks/hooks.json` is not a documented Claude Code project hook location; that
-  selection paths in `/woland` and `/research` do not consult the operad.
+  selection paths in `/adversary` and `/research` do not consult the operad.
 - Does not support: that agents fail in every Claude Code version (the doc says "usually"; a
   launch attempt was not possible from this subagent); the exact token cost (ratio inferred); that
   the listing cut-off order is alphabetical in general (the doc says least-invoked first; this
@@ -337,9 +337,9 @@ change belongs.
 | 3 | Add a tracked `.claude/settings.json`: register the existing `pre_tool_git_guard.py` and BOM linter through a small portable launcher (`python3` on Linux, `py -3.12` on Windows), and set `skillOverrides` for low-priority skills. Classify it canon-for-Claude in `host_root_parity.py`. | Turns the push / whole-suite / BOM directives into gates; lets ~4 KB of AGENTS.md prose shrink to pointers | Medium: a wrong matcher blocks commands; test the hook scripts with fixtures first | Pre-tool hook (code) |
 | 4 | Fit the skill listing: rewrite the 19 `ext-*` descriptions (or `disable-model-invocation: true`), delete or alias the 6 prefix duplicates and merge 6 `goo-*`, cap descriptions at ~160 B with the trigger first, add `paths:` to domain skills (papers, Lean, Genesis), and add a CI check that the summed listing stays under the 1% budget. | From 74 to ~200+ skills with descriptions (*inferred*); −~10–20 KB listing | Low–medium: renames ripple into `operad_signature.json`, catalogs, registry YAMLs | Skills + CI (`pr_fast_gate` when `.agents/skills/**` changes) |
 | 5 | Make `.claude/AGENTS.md` small and generated: move the 13.9 KB register table to a generated, non-loaded file (rule_gate already owns the register), move the Four-Host and consolidation procedures into `governance-host-parity` references, fix the inverted micro-skill clause and the "rules are injected every turn" sentence, keep only estate-wide negative constraints. Generate all five register documents from `rules_registry.yaml`. | 34,658 → ~8,000 B (−~26 KB) on first touch | Low; `register_documents` and the parity tests change together | Rule text + operations code (generator) |
-| 6 | Build the runtime composition API through the operad (detail in 6.1): typed small ops, an `oewas compose` resolver in `omega_engine_operations`, anti-skill gate wired in, callers (`/woland`, `/research`) bind op IDs instead of prose or digests. | Selection leaves the model's black box; dozens of skills can become name-only or `disable-model-invocation` | High effort; medium risk of a parallel registry if the old one is not retired | Operations code + Rust port; skills become thin |
+| 6 | Build the runtime composition API through the operad (detail in 6.1): typed small ops, an `oewas compose` resolver in `operations`, anti-skill gate wired in, callers (`/adversary`, `/research`) bind op IDs instead of prose or digests. | Selection leaves the model's black box; dozens of skills can become name-only or `disable-model-invocation` | High effort; medium risk of a parallel registry if the old one is not retired | Operations code + Rust port; skills become thin |
 | 7 | Consolidate path-scoped rules: merge each identical-glob group (papers 37.1 KB, math 30.0 KB, genesis 21.5 KB, python 15.4 KB) into one leaf per group under the 12 KB ceiling, give every invariant an ID, and replace the two fully ENFORCED swarm rules with stubs naming their Rust tests. | First-touch load for `symbol_game/domain/tower` 93.7 → ~45 KB; papers 37 → ≤12 KB (*inferred* from merge targets) | Medium: wording loss; keep negative examples | Rules + rule_gate; heavy semantic checks nightly |
-| 8 | Repository hygiene: make `documentation/sessions` canon-only or move it to `_intelligence/` (−~39 MB of mirror copies); move skill scripts to `omega_engine_operations` and leave thin wrappers; remove stale `.agents/operad` references and rule clause, `DEFAULT_SKILLS` ghosts, the `six_host_parity` / `.gemini` route; replace the `"0" * 64` fallback with a typed refusal plus a negative test. | Smaller greps, fewer stale instructions; one rule violation closed | Low | Operations code + CI (host parity) |
+| 8 | Repository hygiene: make `documentation/sessions` canon-only or move it to `_intelligence/` (−~39 MB of mirror copies); move skill scripts to `operations` and leave thin wrappers; remove stale `.agents/operad` references and rule clause, `DEFAULT_SKILLS` ghosts, the `six_host_parity` / `.gemini` route; replace the `"0" * 64` fallback with a typed refusal plus a negative test. | Smaller greps, fewer stale instructions; one rule violation closed | Low | Operations code + CI (host parity) |
 | 9 | Shrink the always-loaded GTLA rubric: drop section 8 links to a pointer (−3,044 B), remove the forbidden verb at line 12, keep the seven fences. | 15,861 → ~12,500 B always-loaded | Low | Rule |
 | 10 | Extend `pr_fast_gate` (path-triggered): `budget_gate`, `host_root_parity`, an agent-frontmatter validator (`tools` non-empty, known `model`), and the listing budget check; keep full catalog regeneration and cross-host hash sweeps nightly. | Catches F2/F4 regressions at PR time | Low | CI |
 
@@ -361,15 +361,15 @@ language for agents, which checks channel types at every connection before any m
    an index of ops. This is where `decomposition_inventory.yaml` would live (absent today).
 2. **Ops and anti-ops in one signature.** Register anti-skills as ops with target colour
    `Audit` (or a `Refusal` colour) and a polarity, using `yaml/polarity_pairs.yaml`; a composite is
-   admissible only if every attached anti-op returns clear. Wire the Woland anti-skill port to that
+   admissible only if every attached anti-op returns clear. Wire the Adversary anti-skill port to that
    detector instead of `HOLD`.
-3. **Resolver as code.** `omega_engine_operations` CLI/API:
+3. **Resolver as code.** `operations` CLI/API:
    `compose --inputs Paper,Contract --goal Receipt [--exclude-residual unknown] [--max-depth k]`
    returns a planar term (JSON) or a typed refusal (`NO_ADMISSIBLE_PATH`, `TYPE_MISMATCH`), built on
    `formal_compose`. `run` executes the callables of a term and writes receipts. Replace the prose
    router skill with a one-line pointer to this CLI.
 4. **Callers bind IDs, not prose.** `/research` `capability_bindings` and `verifier_routes` name op
-   IDs; Woland seats name real op IDs rather than `skill_<seat>`; `governance_dispatch` resolves its
+   IDs; Adversary seats name real op IDs rather than `skill_<seat>`; `governance_dispatch` resolves its
    bundle by query (colour + family) and refuses when a package is missing.
 5. **Residuals measured, not declared.** Fill `residual_effect` from eval/receipt evidence
    (`evidence_trace.json`, `eval_runner.py`) and leave `unknown` out of automatic composition.
@@ -402,9 +402,9 @@ Each slice targets `main` directly, small enough for one review.
 8. **Operad v2 schema.** Subcolours, op/anti-op schema, `decomposition_inventory.yaml` for 5 pilot
    skills (for example `glossa-claim-hygiene-linter`, `techne-silent-failure-hunter`,
    `governance-test-isolation`, `adversarial-receipt-audit`, `meta-no-comments`). (Reform 6.1–6.2)
-9. **Resolver.** `compose`/`run` in `omega_engine_operations` with tests including a red mutation
+9. **Resolver.** `compose`/`run` in `operations` with tests including a red mutation
    (a mistyped wiring must refuse). (Reform 6.3)
-10. **Callers.** `/research` mission binds op IDs; Woland seats and `governance_dispatch` query the
+10. **Callers.** `/research` mission binds op IDs; Adversary seats and `governance_dispatch` query the
     resolver; anti-skill port connected. Retire the prose router skill. (Reform 6.4–6.7)
 
 ## 8. Changeset shape at review time

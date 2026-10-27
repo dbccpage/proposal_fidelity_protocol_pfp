@@ -4,8 +4,8 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_pfp.domain.decoding.errors import DecodingError, DecodingRefusalCode
-from omega_engine_pfp.domain.decoding.polygraph import (
+from pfp.domain.decoding.errors import DecodingError, DecodingRefusalCode
+from pfp.domain.decoding.polygraph import (
     Confluence2Cell,
     RewriteStep,
     TarskiPolygraph,

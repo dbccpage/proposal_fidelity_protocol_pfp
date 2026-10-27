@@ -8,31 +8,31 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_operads.application.commands.compile_catalog import (
+from operations.domain.rop.result import Err, Ok
+from operads.application.commands.compile_catalog import (
     operation_content_digest,
 )
-from omega_engine_operads.application.dtos.api_error_dto import ApiErrorDTO
-from omega_engine_operads.application.dtos.success_dtos import (
+from operads.application.dtos.api_error_dto import ApiErrorDTO
+from operads.application.dtos.success_dtos import (
     WorkflowValidationResultDTO,
 )
-from omega_engine_operads.application.typed_workflow_compiler import (
+from operads.application.typed_workflow_compiler import (
     WorkflowCompileRefusal,
     compile_typed_workflow,
 )
-from omega_engine_operads.contracts.typed_capabilities_v1 import canonical_bytes
-from omega_engine_operads.contracts.typed_workflow_v1 import TypedWorkflowWireV1
-from omega_engine_operads.domain.entities.typed_workflow import (
+from operads.contracts.typed_capabilities_v1 import canonical_bytes
+from operads.contracts.typed_workflow_v1 import TypedWorkflowWireV1
+from operads.domain.entities.typed_workflow import (
     TypedWorkflowV1,
     WorkflowBindingV1,
     WorkflowInputV1,
     WorkflowNodeV1,
 )
-from omega_engine_operads.domain.value_objects.content_digest import ContentDigest
-from omega_engine_operads.domain.value_objects.lifecycle_facets import (
+from operads.domain.value_objects.content_digest import ContentDigest
+from operads.domain.value_objects.lifecycle_facets import (
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.typed_contract_compiler import (
+from operads.infrastructure.typed_contract_compiler import (
     compile_typed_contracts,
 )
 
@@ -54,7 +54,7 @@ def _node(node_id, document):
 def _example():
     docs = compile_typed_contracts(ROOT).documents
     workflow = TypedWorkflowV1(
-        "woland-review",
+        "adversary-review",
         "audit",
         tuple(_node(n, doc) for n, doc in zip(("audit", "guard"), docs, strict=True)),
         (WorkflowBindingV1("guard", "audit", 0),),
@@ -134,7 +134,7 @@ def test_real_typed_pair_compiles_ordered_unadmitted_candidate():
     result = _compile(docs, workflow, validate_graph=graph_port)
     assert result.plan.operation_count == 2
     assert result.occurrence_order == ("guard", "audit")
-    assert result.plan.operation_ids == ("woland-scope-falsifier", "woland-claim-audit")
+    assert result.plan.operation_ids == ("adversary-scope-falsifier", "adversary-claim-audit")
     assert tuple(str(port.colour_id) for port in result.plan.inputs) == ("Contract", "Contract")
     assert str(result.plan.output.colour_id) == "Receipt"
     assert result.plan.admission == "Unadmitted"
@@ -243,9 +243,9 @@ def test_finite_repeated_operation_has_fresh_occurrences_and_bound_digest():
     assert result.occurrence_order == ("guard-1", "guard-0", "audit")
     assert result.plan.operation_count == 3
     assert result.plan.operation_ids == (
-        "woland-scope-falsifier",
-        "woland-scope-falsifier",
-        "woland-claim-audit",
+        "adversary-scope-falsifier",
+        "adversary-scope-falsifier",
+        "adversary-claim-audit",
     )
     assert result.plan.ordered_operand_bodies[0] == result.plan.ordered_operand_bodies[1]
     renamed = replace(workflow, workflow_id="finite-repeat-other")

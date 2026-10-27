@@ -45,10 +45,10 @@ Scan a file, directory, or the active repository for comment slop without modify
 
 ```bash
 # Scan specific directory
-py -3.12 -m omega_engine_operations.use_cases.packaging.comment_slop_router omega_engine_pfp/
+py -3.12 -m operations.use_cases.packaging.comment_slop_router pfp/
 
 # Run via skill entrypoint
-py -3.12 omega_engine_operads/skills/techne-comment-slop-hunter-killer/scripts/run.py --scan-only omega_engine_pfp/
+py -3.12 operads/skills/techne-comment-slop-hunter-killer/scripts/run.py --scan-only pfp/
 ```
 
 ### 2. Verbose Scan (List Every Finding)
@@ -56,7 +56,7 @@ py -3.12 omega_engine_operads/skills/techne-comment-slop-hunter-killer/scripts/r
 Print file path, line number, category, and cleaned comment text for every detected artifact:
 
 ```bash
-py -3.12 -m omega_engine_operations.use_cases.packaging.comment_slop_router --verbose omega_engine_pfp/
+py -3.12 -m operations.use_cases.packaging.comment_slop_router --verbose pfp/
 ```
 
 ### 3. Fix / Reroute Mode
@@ -64,7 +64,7 @@ py -3.12 -m omega_engine_operations.use_cases.packaging.comment_slop_router --ve
 Extract slop comments, strip them from source code, and append audit records to `.agents/documentation/slop_audit/`:
 
 ```bash
-py -3.12 -m omega_engine_operations.use_cases.packaging.comment_slop_router --fix omega_engine_pfp/
+py -3.12 -m operations.use_cases.packaging.comment_slop_router --fix pfp/
 ```
 
 ---

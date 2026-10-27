@@ -20,7 +20,7 @@ import math
 import random
 import unittest
 
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     JoinDependency,
     RelationalSchema,
@@ -36,7 +36,7 @@ from omega_engine_pfp.domain.normal_forms.relational import (
     find_candidate_keys,
     is_5nf_implied_by_keys,
 )
-from omega_engine_pfp.domain.normal_forms.relational_advanced import (
+from pfp.domain.normal_forms.relational_advanced import (
     check_eknf,
     decompose_bcnf_tree,
     gyo_reduction,
@@ -47,7 +47,7 @@ from omega_engine_pfp.domain.normal_forms.relational_advanced import (
     temporal_6nf_decompose,
     temporal_interval_join,
 )
-from omega_engine_pfp.domain.normal_forms.relational_extensions import (
+from pfp.domain.normal_forms.relational_extensions import (
     verify_candidate_keys_antichain,
 )
 

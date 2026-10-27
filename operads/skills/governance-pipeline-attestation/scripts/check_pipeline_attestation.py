@@ -24,7 +24,7 @@ def check_pipeline_attestation(root: Path) -> int:
     # 1. Check for float tolerance violations in core guard implementations
     fda_core = (
         root
-        / "omega_engine_atlas"
+        / "atlas"
         / "coda_atlas"
         / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "docs" / "source_archive" / "coda_component_packages"
         / "fda"
@@ -50,7 +50,7 @@ def check_pipeline_attestation(root: Path) -> int:
     # 2. Check for probe defect firewall tests
     coda_test = (
         root
-        / "omega_engine_atlas"
+        / "atlas"
         / "coda_atlas"
         / "F004_papers" / "001_finite_obstruction_calculus" / "000_witnessed_difference_programme" / "docs" / "source_archive" / "coda_component_packages"
         / "cs_q"

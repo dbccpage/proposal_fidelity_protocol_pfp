@@ -1,7 +1,7 @@
 """Canonical identifiers for the anti-skill domain.
 
 `canonical_id` is carried over from the retired Python higher-operad kernel
-(`omega_engine/kernel/higher_operad/canonical.py`, removed in f4c6fcf3) and is
+(`engine/kernel/higher_operad/canonical.py`, removed in f4c6fcf3) and is
 byte-identical to it, so anti-skill spec, registry and profile identifiers
 recorded before the relocation still recompute.
 

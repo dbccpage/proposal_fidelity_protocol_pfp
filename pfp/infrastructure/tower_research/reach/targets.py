@@ -85,7 +85,7 @@ def _restricted_import(
 
 def load_checker(source: bytes, name: str) -> types.ModuleType:
     """Execute a checker from its pinned bytes in a fresh module."""
-    from omega_engine_pfp.infrastructure.adapters.mssn_research.checkers.assemble import (
+    from pfp.infrastructure.adapters.mssn_research.checkers.assemble import (
         assemble_checker_source,
     )
 

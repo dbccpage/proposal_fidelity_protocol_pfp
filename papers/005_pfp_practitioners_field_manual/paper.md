@@ -12,7 +12,7 @@ Package review snapshot: `e11c07ce90318309f058c8097ffd1c440a8ffb84`; package-loc
 
 ## Abstract
 
-This instructional preprint presents a reproducible proposal-check workflow on a finite directed graph with exact rational edge claims. A three-edge inconsistency has a hand-checkable weighted minimum of three. The worked session distinguishes minimizing the residual of unchanged claims from admitting a consistent replacement, and follows both refusals and restoration of a saved state. The companion provides an exact Python enumeration route and a separately configured native route, with explicit input, verification, and evidence boundaries. The Landau-style examination and study guide extend the session through counterexamples and an executable capstone. The contribution is a scoped practitioner workflow; no new theorem or measured model-performance result is claimed.
+This instructional preprint presents a reproducible proposal-check workflow on a finite directed graph with exact rational edge claims. A three-edge inconsistency has a hand-checkable weighted minimum of three. The worked session distinguishes minimizing the residual of unchanged claims from admitting a consistent replacement, and follows both refusals and restoration of a saved state. The companion provides an exact Python enumeration route and a separately configured native route, with explicit input, verification, and evidence boundaries. The Examiner-style examination and study guide extend the session through counterexamples and an executable capstone. The contribution is a scoped practitioner workflow; no new theorem or measured model-performance result is claimed.
 
 ## Purpose and reader outcome
 
@@ -20,7 +20,7 @@ This guide takes one small inconsistent graph through a complete session: declar
 
 A **proposal** is a candidate supplied by a person, script, or model. A **host** is the program that applies the declared checks. A **receipt** records what a particular execution checked and returned. These roles matter because a plausible proposal can be wrong, while a successful check can establish less than its surrounding prose suggests.
 
-The first session uses a scripted proposer. No model account, API key, or live conversation is needed. You should finish able to explain both an accepted move and the limits of its acceptance. The companion [Landau quiz](./_lev_landau_theoretical_minimum_quiz/quiz.md) has 32 questions in eight levels; its [study guide and instructor key](./_lev_landau_theoretical_minimum_quiz/study_guide.md) supplies worked answers, refusal cases, and a capstone replay.
+The first session uses a scripted proposer. No model account, API key, or live conversation is needed. You should finish able to explain both an accepted move and the limits of its acceptance. The companion [Examiner quiz](./_lev_examiner_theoretical_minimum_quiz/quiz.md) has 32 questions in eight levels; its [study guide and instructor key](./_lev_examiner_theoretical_minimum_quiz/study_guide.md) supplies worked answers, refusal cases, and a capstone replay.
 
 ## 1. Declare the instance before solving it
 
@@ -93,14 +93,14 @@ Use Python 3.10 or newer. The Python companion is self-contained: it carries cop
 The native calculator itself is not part of this package. For the baseline route, use a separate checkout or worktree at the recorded code baseline, confirm its revision with `git rev-parse HEAD`, then build `solve_graph_phi1` with that checkout's Rust workspace:
 
 ```powershell
-cargo build --locked -j 1 --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_functional --bin solve_graph_phi1
+cargo build --locked -j 1 --manifest-path engine/crates_rs/Cargo.toml -p core_functional --bin solve_graph_phi1
 ```
 
 The following Windows PowerShell setup, run from the repository root, assumes the reviewed executable already exists at the shown path:
 
 ```powershell
-$env:OMEGA_FUNCTIONAL_GRAPH_BIN = (Resolve-Path omega_engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
-$env:OMEGA_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:OMEGA_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
+$env:CORE_FUNCTIONAL_GRAPH_BIN = (Resolve-Path engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
+$env:CORE_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:CORE_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
 ```
 
 Use the actual output path if Cargo has a custom target directory. Other platforms use their native executable name. The digest pins the executable bytes used by the adapter; it is not an independent attestation that those bytes were reproducibly built from the intended source.
@@ -112,7 +112,7 @@ python code/quickstart.py --non-interactive
 python code/play_demo.py
 ```
 
-The repository's [functional-boundary notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/FUNCTIONAL_BOUNDARY.md) describe the native setup at the baseline. The transport implementation is [native_functional.py](code/native_functional.py). A missing executable, missing or mismatched digest, native refusal, or malformed native response prevents an accepted native result. Treat that outcome as an environment or evidence issue to resolve before relying on the host calculation.
+The repository's [functional-boundary notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/FUNCTIONAL_BOUNDARY.md) describe the native setup at the baseline. The transport implementation is [native_functional.py](code/native_functional.py). A missing executable, missing or mismatched digest, native refusal, or malformed native response prevents an accepted native result. Treat that outcome as an environment or evidence issue to resolve before relying on the host calculation.
 
 ### Offline arithmetic when the native calculator is unavailable
 
@@ -141,7 +141,7 @@ This is an arithmetic worksheet. It neither calls the native adapter nor emits a
 
 [play_demo.py](code/play_demo.py) imports the package's copy of the [graph governor](code/l1_symbol_game_governor.py). It uses the manuscript's weights (1,2,3) throughout. The all-zero potential costs six; the original quotient minimum is three. The session prints and returns its selected `calculation_path` (`native` or `python-enumeration`) and its weights. This path label describes the calculator selection; it is not a source-to-binary attestation or a native receipt.
 
-When `OMEGA_FUNCTIONAL_GRAPH_BIN` is set, the governor asks that native calculator, and any refusal or error it returns stops the step; no Python value is substituted. When it is not set, the governor computes the quotient minimum by exact Python enumeration of spanning-tree potentials. Without a configured calculator the session therefore still runs, but its printed values are Python enumeration results, not native results. Edge weights must be exact integers or fractions on both paths; floating-point and Boolean weights are refused. The package test `code/tests/test_play_demo.py` checks the table below on the enumeration path, and again through the native calculator when pins are configured. Enumeration can grow combinatorially with the graph; this small-session route is not a general scalability claim or an implementation of a proposal-attempt budget.
+When `CORE_FUNCTIONAL_GRAPH_BIN` is set, the governor asks that native calculator, and any refusal or error it returns stops the step; no Python value is substituted. When it is not set, the governor computes the quotient minimum by exact Python enumeration of spanning-tree potentials. Without a configured calculator the session therefore still runs, but its printed values are Python enumeration results, not native results. Edge weights must be exact integers or fractions on both paths; floating-point and Boolean weights are refused. The package test `code/tests/test_play_demo.py` checks the table below on the enumeration path, and again through the native calculator when pins are configured. Enumeration can grow combinatorially with the graph; this small-session route is not a general scalability claim or an implementation of a proposal-attempt budget.
 
 | Step | Proposed action | Expected observation |
 | --- | --- | --- |
@@ -199,8 +199,8 @@ python -m pytest code/tests/test_manual_contracts.py -q
 
 The [fixture](code/tests/conftest.py) consumes only two explicitly supplied pins:
 
-- Executable path: `OMEGA_FUNCTIONAL_GRAPH_BIN`.
-- Executable digest: `OMEGA_FUNCTIONAL_GRAPH_SHA256`.
+- Executable path: `CORE_FUNCTIONAL_GRAPH_BIN`.
+- Executable digest: `CORE_FUNCTIONAL_GRAPH_SHA256`.
 
 It discovers no checkout, builds no program, and creates no pin. Missing configuration skips, with that reason, every test that requests native execution. A malformed digest, unreadable configured executable, or digest mismatch fails those tests with an explicit message. The worksheet, the offline session, the refusal, exact-input, parser, and scaffold checks, and the vendored-source header checks still run without native configuration. The commands are replay instructions, not a reported fresh pass.
 

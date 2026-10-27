@@ -11,9 +11,9 @@ maturity: draft
 claim_status: verified
 authority_effect: "None"
 source_paths:
-- omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-- omega_engine_epistemic_immune_system/domain/external_admission.py
-- omega_engine/crates_rs/omega_epistemic_immune_system/src/lib.rs
+- product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+- eis/domain/external_admission.py
+- engine/crates_rs/core_epistemic_immune_system/src/lib.rs
 prerequisites: []
 aliases:
 - oeeis

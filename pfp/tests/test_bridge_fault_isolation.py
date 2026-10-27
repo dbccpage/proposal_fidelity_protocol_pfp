@@ -12,17 +12,17 @@ import pytest
 
 def _load_with_missing_sister(name: str) -> ModuleType:
     path = Path(__file__).resolve().parents[1] / "domain" / "bridge" / f"{name}.py"
-    full_name = f"omega_engine_pfp.domain.bridge.{name}"
+    full_name = f"pfp.domain.bridge.{name}"
     spec = importlib.util.spec_from_file_location(full_name, path)
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
-    module.__package__ = "omega_engine_pfp.domain.bridge"
+    module.__package__ = "pfp.domain.bridge"
     original_import = builtins.__import__
 
     def blocked_import(import_name: str, *args: object, **kwargs: object):
         if (
-            import_name.startswith("omega_engine_woland.stage")
-            or import_name.startswith("omega_engine_epistemic_immune_system")
+            import_name.startswith("adversary.stage")
+            or import_name.startswith("eis")
             or "ast_cochain" in import_name
         ):
             raise ImportError("simulated missing sister context")

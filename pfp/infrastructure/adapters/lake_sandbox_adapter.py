@@ -17,18 +17,18 @@ import time
 from collections.abc import Callable
 from typing import Any
 
-from omega_engine_operating_system.adapters.rust_host.ffi import (
+from operating_system.adapters.rust_host.ffi import (
     Err,
     Ok,
     Refusal,
     Result,
 )
-from omega_engine_pfp.domain.lean_bridge.models import (
+from pfp.domain.lean_bridge.models import (
     LeanVerificationRequest,
     LeanVerificationReceipt,
 )
-from omega_engine_pfp.domain.ports.lean_port import LeanVerifierPort
-from omega_engine_pfp.ffi import RustSymbolGameHost, get_default_host
+from pfp.domain.ports.lean_port import LeanVerifierPort
+from pfp.ffi import RustSymbolGameHost, get_default_host
 
 
 class LakeSandboxAdapter(LeanVerifierPort):

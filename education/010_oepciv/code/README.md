@@ -24,5 +24,5 @@ This package contains diagnostic, verification, and simulation engines for Promp
 Execute targeted tests using Python 3.12:
 
 ```bash
-py -3.12 -m pytest omega_engine_education/documentation/010_oepciv/code/tests/test_prompt_civilization_levels.py -v
+py -3.12 -m pytest education/documentation/010_oepciv/code/tests/test_prompt_civilization_levels.py -v
 ```

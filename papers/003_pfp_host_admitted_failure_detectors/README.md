@@ -26,7 +26,7 @@ repository against them. It reports no new model trial.
   import modules that are not part of this deposit.
 - `docs/`: the deposit description, references, reproduction boundary, review
   response, and historical validation records.
-- `_lev_landau_theoretical_minimum_quiz/`: 24 problems over levels 0-7,
+- `_lev_examiner_theoretical_minimum_quiz/`: 24 problems over levels 0-7,
   a prerequisite study guide, a separate instructor key with exact numerical
   answers, and the fictional Apartment 50 preface.
 - `verify_deposit.py`, `scripts/`, `tools/`: release tooling from the series

@@ -5,24 +5,24 @@ from dataclasses import asdict
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.external_admission import AdmissionError
-from omega_engine_epistemic_immune_system.domain.thymus import ThymusGate
-from omega_engine_epistemic_immune_system.domain.value_objects import DetectorRule
-from omega_engine_epistemic_immune_system.infrastructure.authenticated_custody import (
+from eis.domain.external_admission import AdmissionError
+from eis.domain.thymus import ThymusGate
+from eis.domain.value_objects import DetectorRule
+from eis.infrastructure.authenticated_custody import (
     AuthenticatedEisLedger,
     NativeAttestationVerifier,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import PatternMatcher
-from omega_engine_epistemic_immune_system.infrastructure.native_domain import native_admission
-from omega_engine_epistemic_immune_system.tests.auth_support import (
+from eis.infrastructure.mssn_ports import PatternMatcher
+from eis.infrastructure.native_domain import native_admission
+from eis.tests.auth_support import (
     NOW,
     binding,
     digest,
     policy,
     signed,
 )
-from omega_engine_epistemic_immune_system.use_cases.antibody_admission import assess_antibody
-from omega_engine_operads.infrastructure.storage.receipt_ledger import (
+from eis.use_cases.antibody_admission import assess_antibody
+from operads.infrastructure.storage.receipt_ledger import (
     GENESIS_DIGEST,
     ReceiptLedger,
 )

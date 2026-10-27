@@ -20,7 +20,7 @@ import re
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_case,
     generate_hidden_base_set,
     generate_mutation_cases,
@@ -29,13 +29,13 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
     generate_relabel_controls,
     map_spans_to_token_positions,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.pipeline_contract import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.pipeline_contract import (
     validate_pipeline_pins,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
     solve,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
     ConstraintSystem,
     audit_witness,
     extract_contradiction_cycle,
@@ -410,7 +410,7 @@ def test_frozen_pipeline_json_exists_and_conforms():
     with open(pipeline_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    assert data["schema"] == "omega.symbol-game.pipeline.v1"
+    assert data["schema"] == "core.symbol-game.pipeline.v1"
     assert data["challenge_id"] == "C001"
     assert data["attention_implementation"] == "eager"
     assert data["intervention"] == "distractor_key_mask"

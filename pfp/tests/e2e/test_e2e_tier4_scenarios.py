@@ -2,13 +2,13 @@
 
 AuthorityEffect: None.
 Reference: TEST_INFRA.md Tier 4 Specification.
-Soviet Lev Landau Falsification Methodology:
+Examiner Falsification Methodology:
 Every test explicitly documents Invariant, Break, Witness, and Mutation.
 Claim Hygiene: Uses bounded, defensible phrasing; zero forbidden hype words.
 
 Flagship Scenarios:
 1. Full Autopoietic Cycle (P01, P02, P03, P10, P17, P36)
-2. Woland 7-Act Theatrical Tribunal (P06, P07, P14, P16, P30)
+2. Adversary 7-Act Theatrical Tribunal (P06, P07, P14, P16, P30)
 3. Discrete Manifold Retraction & Subturn Forcing (P23, P25, P26, P27, P40)
 4. End-to-End Cryptographic Envelope & FFI Transport (P44, P47, P48, P50, P51)
 5. Crosswalk 101-Stage Atlas Verification (P28, P29, P38, P39, P43)
@@ -27,34 +27,34 @@ from typing import Any
 import pytest
 
 # Exact Rational Arithmetic & Errors
-from omega_engine_pfp.domain.exact.q import Q, ONE, ZERO, parse_q, fmt_q
-from omega_engine_pfp.domain.exact.errors import ExactError
+from pfp.domain.exact.q import Q, ONE, ZERO, parse_q, fmt_q
+from pfp.domain.exact.errors import ExactError
 
 # Cryptographic Envelope & Codec
-from omega_engine_pfp.domain.packet_codec import (
+from pfp.domain.packet_codec import (
     PacketCodec,
     canonical_json_bytes,
     compute_sha256,
 )
 
 # Presentation Pins & Carrier
-from omega_engine_pfp.domain.presentation_pins import (
+from pfp.domain.presentation_pins import (
     PresentationPins,
 )
-from omega_engine_pfp.domain.carrier_decoding import (
+from pfp.domain.carrier_decoding import (
     DecodingReceipt,
     ConstraintMode,
     provider_capability,
     verify_emission,
     carrier_gbnf,
 )
-from omega_engine_pfp.domain.glyph_calculus import (
+from pfp.domain.glyph_calculus import (
     Carrier,
     CarrierMember,
 )
 
 # Tower Grammar, Parser, Wire & Simplicial Validation
-from omega_engine_pfp.domain.tower.parser import (
+from pfp.domain.tower.parser import (
     parse_packet,
     serialize_packet,
     validate_level3_simplex,
@@ -63,7 +63,7 @@ from omega_engine_pfp.domain.tower.parser import (
     App,
     Diff,
 )
-from omega_engine_pfp.domain.tower.wire import (
+from pfp.domain.tower.wire import (
     parse_wire,
     emit_wire,
     parse_compact,
@@ -77,7 +77,7 @@ from omega_engine_pfp.domain.tower.wire import (
 )
 
 # Demos & Descent
-from omega_engine_pfp.domain.demos import (
+from pfp.domain.demos import (
     exact_functional,
     strict_descent,
     refuse_model_functionals,
@@ -85,7 +85,7 @@ from omega_engine_pfp.domain.demos import (
 )
 
 # Immune System, Pharmacy & Tolerance
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     FailureClass,
     Disposition,
     DetectionContext,
@@ -93,20 +93,20 @@ from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
     HostReplayReceipt,
     detect,
 )
-from omega_engine_epistemic_immune_system.domain.allostery import (
+from eis.domain.allostery import (
     AllostericConsensusGate,
     HillParameters,
 )
-from omega_engine_epistemic_immune_system.domain.danger_gate import (
+from eis.domain.danger_gate import (
     TwoSignalDangerGate,
 )
-from omega_engine_epistemic_immune_system.domain.thymus import (
+from eis.domain.thymus import (
     ThymusGate,
 )
-from omega_engine_epistemic_immune_system.domain.clonal_selection import (
+from eis.domain.clonal_selection import (
     ClonalSelectionEngine,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
     Signal1Match,
@@ -115,39 +115,39 @@ from omega_engine_epistemic_immune_system.domain.value_objects import (
 )
 
 # Demo Execution Infrastructure
-from omega_engine_pfp.infrastructure.demos.execution import run, verify
-from omega_engine_pfp.infrastructure.demos.catalog import lookup, scenario_fixture, scenarios
-from omega_engine_operating_system.adapters.rust_host.ffi import locate_host_binary
+from pfp.infrastructure.demos.execution import run, verify
+from pfp.infrastructure.demos.catalog import lookup, scenario_fixture, scenarios
+from operating_system.adapters.rust_host.ffi import locate_host_binary
 
 
 # Quarantine Ledger Entities
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.grammar.entities import (
     EpistemicQuarantineLedger,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
+from pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
     serialize_ledger_to_jsonl,
     deserialize_ledger_from_jsonl,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     QuarantinedShadowPacket,
     PontryaginKillFlags,
     HostFenceAudit,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
-from omega_engine_pfp.infrastructure.adapters.mssn_research.sign_switching import (
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.infrastructure.adapters.mssn_research.sign_switching import (
     classify_sign_gauge,
     verify_cycle,
     verify_gauge,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.lift_policies import (
+from pfp.domain.mssn_research.grammar.lift_policies import (
     check_lift_necessity_certificate,
     execute_bounded_lift_necessity_search,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import LiftGoal
+from pfp.domain.mssn_research.grammar.spectral_geometry import LiftGoal
 
 # Boundary Functional & Problem Runner
-from omega_engine_pfp.use_cases.problem_runner import ProblemRunnerUseCase
-from omega_engine_pfp.functional_boundary import (
+from pfp.use_cases.problem_runner import ProblemRunnerUseCase
+from pfp.functional_boundary import (
     RustFunctionalRequired,
 )
 
@@ -155,7 +155,7 @@ from omega_engine_pfp.functional_boundary import (
 def _assert_native_immune_run(receipt: dict, output: Path) -> None:
     """An immune scenario runs the native pharmacy detector.
 
-    With a built host (OMEGA_SYMBOL_GAME_HOST or the workspace target) it must be
+    With a built host (CORE_SYMBOL_GAME_HOST or the workspace target) it must be
     CHECKED. Without one it must be the typed refusal NATIVE_PHARMACY_UNAVAILABLE
     naming the missing binary, and that refusal must itself replay.
     """
@@ -274,8 +274,8 @@ class TestRealWorldApplicationScenariosTier4:
         assert roundtrip_res.is_ok
         assert len(roundtrip_res.unwrap().entries) == 1
 
-    def test_scenario_2_woland_theatrical_tribunal_and_cognitive_profile(self, tmp_path: Path) -> None:
-        """Scenario 2: Woland 7-Act Theatrical Tribunal & Dialectical Frame Breaking (P06, P07, P14, P16, P30).
+    def test_scenario_2_adversary_theatrical_tribunal_and_cognitive_profile(self, tmp_path: Path) -> None:
+        """Scenario 2: Adversary 7-Act Theatrical Tribunal & Dialectical Frame Breaking (P06, P07, P14, P16, P30).
         
         Exercises:
         - 4E Cognitive Science dossier candidate screening and immune probes.
@@ -289,7 +289,7 @@ class TestRealWorldApplicationScenariosTier4:
         - Mutation: Accepting cycle as gauge transformation violates discrete holonomy conservation.
         """
         # Step 1: Run 4E CogSci Autopoiesis demo scenario
-        demo_out = tmp_path / "woland_cogsci_run"
+        demo_out = tmp_path / "adversary_cogsci_run"
         receipt = run("demo_4e_cogsci_autopoiesis", demo_out)
         _assert_native_immune_run(receipt, demo_out)
 
@@ -409,7 +409,7 @@ class TestRealWorldApplicationScenariosTier4:
         assert parse_dag(emit_dag(wire_node)) == wire_node
 
         # Step 4: Regime manifest byte-level SHA-256 verification
-        regimes_dir = Path("omega_engine_pfp/regimes")
+        regimes_dir = Path("pfp/regimes")
         manifest_path = regimes_dir / "regime_manifest.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         for regime_key, record in manifest.items():
@@ -420,7 +420,7 @@ class TestRealWorldApplicationScenariosTier4:
             assert hashlib.sha256(content).hexdigest() == record["sha256"]
 
         # Step 5: FFI Seam Purity
-        ffi_code = Path("omega_engine_pfp/ffi.py").read_text(encoding="utf-8")
+        ffi_code = Path("pfp/ffi.py").read_text(encoding="utf-8")
         assert "subprocess" not in ffi_code
         assert "os.system" not in ffi_code
 

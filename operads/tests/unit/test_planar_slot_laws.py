@@ -7,7 +7,7 @@ AuthorityEffect: None.
 
 import pytest
 
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain.planar_substitution import (
     OperadOperation,
     SubstitutionError,
     associativity_witness,

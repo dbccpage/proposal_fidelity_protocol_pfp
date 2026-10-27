@@ -51,7 +51,7 @@ impl Inst {
 /// Admitted state, externally read-only; trusted crate code can construct it.
 ///
 /// ```compile_fail
-/// use omega_ooutwire_primitives::regime::Regime;
+/// use core_ooutwire_primitives::regime::Regime;
 /// let mut r = Regime::genesis();
 /// r.data.clear();
 /// ```

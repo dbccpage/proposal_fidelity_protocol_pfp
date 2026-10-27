@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 
-This reference specifies the four-tag claim legend, proof truth boundaries, and audience floor separation for all `omega_engine_education` notebooks and prose.
+This reference specifies the four-tag claim legend, proof truth boundaries, and audience floor separation for all `education` notebooks and prose.
 
 ## The Four-Tag Claim Legend
 

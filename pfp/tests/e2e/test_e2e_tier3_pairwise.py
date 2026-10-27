@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 Reference: TEST_INFRA.md Tier 3 Specification.
-Soviet Lev Landau Falsification Methodology:
+Examiner Falsification Methodology:
 Every test explicitly documents Invariant, Break, Witness, and Mutation.
 Claim Hygiene: Uses bounded, defensible phrasing; zero forbidden hype words.
 """
@@ -19,25 +19,25 @@ from typing import Any
 import pytest
 
 # Exact Rational Arithmetic
-from omega_engine_pfp.domain.exact.q import Q, ONE, ZERO, parse_q, fmt_q
-from omega_engine_pfp.domain.exact.errors import ExactError
+from pfp.domain.exact.q import Q, ONE, ZERO, parse_q, fmt_q
+from pfp.domain.exact.errors import ExactError
 
 # Packet Codec & Sealing
-from omega_engine_pfp.domain.packet_codec import (
+from pfp.domain.packet_codec import (
     PacketCodec,
     canonical_json_bytes,
     compute_sha256,
 )
 
 # Presentation Pins
-from omega_engine_pfp.domain.presentation_pins import (
+from pfp.domain.presentation_pins import (
     PresentationPins,
     PinnedPresentation,
     PinnedRule,
 )
 
 # Carrier Constrained Decoding & Glyphs
-from omega_engine_pfp.domain.carrier_decoding import (
+from pfp.domain.carrier_decoding import (
     DecodingReceipt,
     ConstraintMode,
     provider_capability,
@@ -46,10 +46,10 @@ from omega_engine_pfp.domain.carrier_decoding import (
     logit_bias_ban,
     OPENAI_BAN_BIAS,
 )
-from omega_engine_pfp.domain.glyph_calculus import Carrier, CarrierMember, Finding
+from pfp.domain.glyph_calculus import Carrier, CarrierMember, Finding
 
 # Tower Grammar, Parser, and Wire
-from omega_engine_pfp.domain.tower.parser import (
+from pfp.domain.tower.parser import (
     parse_packet,
     serialize_packet,
     validate_packet_semantics,
@@ -69,7 +69,7 @@ from omega_engine_pfp.domain.tower.parser import (
     GAMMA_38,
     SIGMA_36,
 )
-from omega_engine_pfp.domain.tower.wire import (
+from pfp.domain.tower.wire import (
     parse_wire,
     emit_wire,
     parse_compact,
@@ -85,7 +85,7 @@ from omega_engine_pfp.domain.tower.wire import (
 )
 
 # Demos & Descent
-from omega_engine_pfp.domain.demos import (
+from pfp.domain.demos import (
     exact_functional,
     strict_descent,
     refuse_model_functionals,
@@ -94,7 +94,7 @@ from omega_engine_pfp.domain.demos import (
 )
 
 # Epistemic Immune System & Pharmacy
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     FailureClass,
     Disposition,
     DetectionContext,
@@ -102,23 +102,23 @@ from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
     HostReplayReceipt,
     detect,
 )
-from omega_engine_epistemic_immune_system.domain.allostery import (
+from eis.domain.allostery import (
     AllostericConsensusGate,
     AllostericDecision,
     HillParameters,
 )
-from omega_engine_epistemic_immune_system.domain.danger_gate import (
+from eis.domain.danger_gate import (
     TwoSignalDangerGate,
     DangerEvaluationResult,
 )
-from omega_engine_epistemic_immune_system.domain.thymus import (
+from eis.domain.thymus import (
     ThymusGate,
     ThymusSelectionResult,
 )
-from omega_engine_epistemic_immune_system.domain.clonal_selection import (
+from eis.domain.clonal_selection import (
     ClonalSelectionEngine,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
     Signal1Match,
@@ -127,34 +127,34 @@ from omega_engine_epistemic_immune_system.domain.value_objects import (
 )
 
 # Quarantine & Cemetery Persistence
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.grammar.entities import (
     EpistemicQuarantineLedger,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
+from pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
     serialize_ledger_to_jsonl,
     deserialize_ledger_from_jsonl,
     packet_to_dict,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_repository import (
+from pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_repository import (
     EpistemicQuarantineRepository,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     QuarantinedShadowPacket,
     PontryaginKillFlags,
     HostFenceAudit,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     StageLevel,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.errors import (
     LedgerTruncationError,
     LedgerIntegrityError,
     RefusalCode,
 )
 
 # Boundary Functional & Problem Runner
-from omega_engine_pfp.use_cases.problem_runner import ProblemRunnerUseCase
-from omega_engine_pfp.functional_boundary import (
+from pfp.use_cases.problem_runner import ProblemRunnerUseCase
+from pfp.functional_boundary import (
     RustFunctionalRequired,
     require_rust_functional,
 )

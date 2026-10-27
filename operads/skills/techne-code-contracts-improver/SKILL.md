@@ -30,7 +30,7 @@ operad_residual: "unknown"
 
 ### 4. Census counts are tripwires — bump them, never dodge them
 
-### 3. The Python `omega_contracts` package is a hash-pinned mirror
+### 3. The Python `core_contracts` package is a hash-pinned mirror
 
 ### 2. The layer firewall is one-directional
 

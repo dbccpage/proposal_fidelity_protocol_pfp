@@ -6,7 +6,7 @@ import re
 from enum import Enum
 from typing import Any, Callable
 from pydantic import Field, field_validator
-from omega_engine_pfp.domain.types.base import PfpBaseModel
+from pfp.domain.types.base import PfpBaseModel
 
 
 class DomainCategory(str, Enum):

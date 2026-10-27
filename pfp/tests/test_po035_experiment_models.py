@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from omega_engine_woland.tests.pilots.relational_spacetime import decoding_controls as models
+from adversary.tests.pilots.relational_spacetime import decoding_controls as models
 
 
 def documents():

@@ -1,7 +1,7 @@
 """Retired: compile parsed skill definitions into higher-operad OperationSpec terms.
 
 The target type, `OperationSpec`, belonged to the Python higher-operad kernel,
-retired in f4c6fcf3; `omega_engine/crates_rs/omega_operad_theory` is its Rust
+retired in f4c6fcf3; `engine/crates_rs/core_operad_theory` is its Rust
 successor and has no Python seam yet. Under RULE_RUST_CRATES_RS_EXCLUSIVE_001
 both entry points fail closed with a typed `RUNTIME_RETIRED` refusal and compile
 nothing. The implementation remains in git history before this retirement.
@@ -15,12 +15,12 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operations.domain.rop.result import Refusal, Result
+from operations.domain.rop.result import Refusal, Result
 
 from ..kernel_retirement import kernel_retired
 from ..models import SkillSpecV1
 
-_LOCUS = "omega_engine_operads.legacy.compile_operad_terms"
+_LOCUS = "operads.legacy.compile_operad_terms"
 
 
 class CompileOperadTermsUseCase:

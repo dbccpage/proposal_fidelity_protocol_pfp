@@ -8,23 +8,23 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.woland_candidate_plan import (
+from operads.application.adversary_candidate_plan import (
     PlanNodeV01,
     compile_candidate_plan,
 )
-from omega_engine_operads.contracts.typed_capabilities_v1 import (
+from operads.contracts.typed_capabilities_v1 import (
     ROOT as CONTRACT_ROOT,
 )
-from omega_engine_operads.contracts.typed_capabilities_v1 import (
+from operads.contracts.typed_capabilities_v1 import (
     canonical_bytes,
     contract_json_schema,
     parse_typed_capability,
 )
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.domain.capability_catalog_v1 import (
     decode_capability_catalog,
     encode_capability_catalog,
 )
-from omega_engine_operads.infrastructure.typed_contract_compiler import (
+from operads.infrastructure.typed_contract_compiler import (
     TypedContractCompileRefusal,
     compile_typed_contracts,
 )
@@ -33,15 +33,15 @@ ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pyproject.toml"
 
 
 def test_generated_markdown_exposes_the_typed_signature_to_existing_discovery():
-    import omega_engine_operations.infrastructure.skill_parser_registration  # noqa: F401
-    from omega_engine_operations.domain.packaging.skill_frontmatter_audit import audit_document
+    import operations.infrastructure.skill_parser_registration  # noqa: F401
+    from operations.domain.packaging.skill_frontmatter_audit import audit_document
 
     bundle = compile_typed_contracts(ROOT)
     assert bundle.packages
     for skill_id, raw in bundle.packages:
         finding = audit_document(skill_id, raw)
         assert finding.is_clean, finding.render()
-        assert b'omega-residual: "unknown"' in raw
+        assert b'core-residual: "unknown"' in raw
         assert b"Source admission: `Unadmitted`" in raw
 
 
@@ -49,14 +49,14 @@ def test_typed_pair_reuses_catalog_and_composes_without_self_admission():
     bundle = compile_typed_contracts(ROOT)
     assert decode_capability_catalog(encode_capability_catalog(bundle.catalog)) == bundle.catalog
     assert {s.skill_id for s in bundle.catalog.skills}.issuperset({
-        "woland-claim-audit",
-        "woland-scope-falsifier",
+        "adversary-claim-audit",
+        "adversary-scope-falsifier",
     })
     assert all(s.executor.state == "UNBOUND" for s in bundle.catalog.skills)
     assert all(not op.lifecycle.is_executable for op in bundle.operations)
     plan = compile_candidate_plan(
         bundle.documents,
-        PlanNodeV01("woland-claim-audit", ((0, PlanNodeV01("woland-scope-falsifier")),)),
+        PlanNodeV01("adversary-claim-audit", ((0, PlanNodeV01("adversary-scope-falsifier")),)),
         allowed_effects=frozenset({"read_subject", "emit_finding"}),
     )
     assert plan.operation_count == 2
@@ -100,14 +100,14 @@ def _edit(root, filename, change):
 )
 def test_source_cannot_promote_coerce_or_add_unrecognized_semantics(tmp_path, change):
     root = _estate(tmp_path)
-    _edit(root, "woland_claim_audit.json", change)
+    _edit(root, "adversary_claim_audit.json", change)
     with pytest.raises(TypedContractCompileRefusal, match="CONTRACT_SCHEMA_REFUSED"):
         compile_typed_contracts(root)
 
 
 def test_listing_cap_refuses_before_projection(tmp_path):
     root = _estate(tmp_path)
-    _edit(root, "woland_claim_audit.json", lambda value: value.update(description="x" * 121))
+    _edit(root, "adversary_claim_audit.json", lambda value: value.update(description="x" * 121))
     with pytest.raises(TypedContractCompileRefusal, match="DESCRIPTION_REFUSED"):
         compile_typed_contracts(root)
 
@@ -124,21 +124,21 @@ def test_listing_cap_refuses_before_projection(tmp_path):
     ],
 )
 def test_wire_refuses_ambiguous_or_noncanonical_bytes(transform):
-    raw = (ROOT / CONTRACT_ROOT / "woland_claim_audit.json").read_bytes()
+    raw = (ROOT / CONTRACT_ROOT / "adversary_claim_audit.json").read_bytes()
     with pytest.raises(ValueError):
         parse_typed_capability(transform(raw))
 
 
 def test_resource_edit_refuses_until_new_digest_is_explicitly_authored(tmp_path):
     root = _estate(tmp_path)
-    body = root / CONTRACT_ROOT / "instructions/woland_claim_audit.md"
+    body = root / CONTRACT_ROOT / "instructions/adversary_claim_audit.md"
     body.write_bytes(body.read_bytes() + b"Additional scoped instruction.\n")
     with pytest.raises(TypedContractCompileRefusal, match="RESOURCE_BINDING_REFUSED"):
         compile_typed_contracts(root)
     raw = body.read_bytes()
     _edit(
         root,
-        "woland_claim_audit.json",
+        "adversary_claim_audit.json",
         lambda v: v["instruction"].update(
             sha256=hashlib.sha256(raw).hexdigest(),
             byte_length=len(raw),
@@ -153,7 +153,7 @@ def test_predicate_mutation_cannot_redefine_the_named_scope_binding(tmp_path):
     root = _estate(tmp_path)
     _edit(
         root,
-        "woland_scope_falsifier.json",
+        "adversary_scope_falsifier.json",
         lambda v: v["predicate"]["atoms"][0].update(
             operator="EQUAL_FIELDS",
         ),
@@ -163,7 +163,7 @@ def test_predicate_mutation_cannot_redefine_the_named_scope_binding(tmp_path):
 
 
 def test_relabelled_controls_fail_real_evaluation_even_with_updated_pins(tmp_path):
-    from omega_engine_operads.domain.anti_skills import (
+    from operads.domain.anti_skills import (
         AntiSkillFixtureBankV1,
         canonical_json_bytes,
     )
@@ -177,7 +177,7 @@ def test_relabelled_controls_fail_real_evaluation_even_with_updated_pins(tmp_pat
     path.write_bytes(raw)
     _edit(
         root,
-        "woland_scope_falsifier.json",
+        "adversary_scope_falsifier.json",
         lambda v: v["fixtures"].update(
             sha256=hashlib.sha256(raw).hexdigest(),
             byte_length=len(raw),
@@ -190,9 +190,9 @@ def test_relabelled_controls_fail_real_evaluation_even_with_updated_pins(tmp_pat
 @pytest.mark.parametrize(
     "filename,change",
     [
-        ("woland_claim_audit.json", lambda v: v["inputs"].reverse()),
-        ("woland_claim_audit.json", lambda v: v.update(guard="unknown-guard")),
-        ("woland_scope_falsifier.json", lambda v: v.update(dependencies=["woland-claim-audit"])),
+        ("adversary_claim_audit.json", lambda v: v["inputs"].reverse()),
+        ("adversary_claim_audit.json", lambda v: v.update(guard="unknown-guard")),
+        ("adversary_scope_falsifier.json", lambda v: v.update(dependencies=["adversary-claim-audit"])),
     ],
 )
 def test_composition_and_dependency_errors_refuse(tmp_path, filename, change):
@@ -205,7 +205,7 @@ def test_composition_and_dependency_errors_refuse(tmp_path, filename, change):
 def test_generated_files_use_standard_frontmatter_and_existing_estate_catalog(tmp_path):
     import yaml
 
-    from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+    from operads.infrastructure.capability_catalog_compiler import (
         CatalogCompileRefusal,
         compile_capability_catalog,
     )

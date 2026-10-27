@@ -5,15 +5,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.application.ddc_execution.meta_operad_engine import (
+from operads.application.ddc_execution.meta_operad_engine import (
     MetaOperadEngineUseCase,
 )
-from omega_engine_operads.domain.ddc_execution.errors import (
+from operads.domain.ddc_execution.errors import (
     OperadDomainError,
     Refusal,
 )
-from omega_engine_operads.domain.ddc_execution.execution import EvaluationOutcome
-from omega_engine_operads.domain.operad.errors import Err, Result
+from operads.domain.ddc_execution.execution import EvaluationOutcome
+from operads.domain.operad.errors import Err, Result
 
 from .registry import FileOperadRegistry
 from .trace_storage import FileTraceStorage
@@ -23,7 +23,7 @@ def find_repo_root(start: Path | None = None) -> Path:
     initial = (start or Path.cwd()).resolve()
     for candidate in (initial, *initial.parents):
         if (candidate / ".git").exists() and (
-            candidate / "omega_engine_operads"
+            candidate / "operads"
         ).is_dir():
             return candidate
     raise Refusal("OPERAD_ROOT_UNAVAILABLE", f"No repository marker above {initial}")

@@ -2,7 +2,7 @@
 
 A seat transport receives a ``SeatTurnRequestV1`` and returns a
 ``SeatTurnReplyV1``. PFP owns the transports, so it owns these two types; the
-Woland stage runtime imports them from here. AuthorityEffect: None.
+Adversary stage runtime imports them from here. AuthorityEffect: None.
 """
 
 from __future__ import annotations

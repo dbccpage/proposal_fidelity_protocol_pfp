@@ -7,8 +7,8 @@ This page replaces the earlier claim that paper-local toy tests establish
 production behavior or permanent zero-loss retention.
 
 The actual sink is
-`omega_engine_pfp/infrastructure/persistence/cemetery_sink.py`.
-Its tests are `omega_engine_pfp/tests/test_cemetery_sink.py`.
+`pfp/infrastructure/persistence/cemetery_sink.py`.
+Its tests are `pfp/tests/test_cemetery_sink.py`.
 They include restart, unchanged-header tail truncation, interior payload
 tampering, extra keys, malformed UTF-8, Boolean counts, and fixed-marker
 cases. A retained external anchor is required for the stronger snapshot
@@ -20,7 +20,7 @@ the repository sink. It needs the full repository checkout and skips when the
 sink source is absent.
 
 Detector-maintenance examples come from
-`omega_engine_pfp/tests/test_immune_defect_regressions.py`, including
+`pfp/tests/test_immune_defect_regressions.py`, including
 the inclusive toxicity threshold, invalid regular expressions, batch-invariant
 decay, and the self panel's limited base-content diversity.
 

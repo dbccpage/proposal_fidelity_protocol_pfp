@@ -12,8 +12,8 @@ import pytest
 import yaml
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.prompts import pfp_prompt as P
-from omega_engine_pfp.domain.rewriting import prompt_containment as C
+from pfp.domain.prompts import pfp_prompt as P
+from pfp.domain.rewriting import prompt_containment as C
 
 _here = Path(__file__).resolve()
 ROOT = _here.parents[2] / "infrastructure" / "yaml"
@@ -25,7 +25,7 @@ H = "d" * 64
 
 def _prompt(text="Summarize this.", **over) -> dict:
     base = {
-        "schema_version": "omega.pfp.prompt.v1",
+        "schema_version": "core.pfp.prompt.v1",
         "prompt_id": H,
         "user_prompt": text,
         "content_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
@@ -54,7 +54,7 @@ def test_valid_prompt_and_optional_system_prompt():
         {"content_sha256": "0" * 64},  # digest of other bytes
         {"prompt_id": "short"},
         {"authority_effect": "Grant"},
-        {"schema_version": "omega.pfp.prompt.v0"},
+        {"schema_version": "core.pfp.prompt.v0"},
         {"system_prompt": 5},
         {"extra": 1},
     ],

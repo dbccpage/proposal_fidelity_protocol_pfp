@@ -10,15 +10,15 @@ maturity: supported-laboratory
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-- omega_engine/crates_rs/omega_symbol_game/Cargo.toml
-- omega_engine/crates_rs/omega_symbol_game/src/lib.rs
-- omega_engine/crates_rs/omega_symbol_game/src/main.rs
-- omega_engine/crates_rs/tests/omega_symbol_game/host_contract.rs
-- omega_engine/crates_rs/omega_symbol_game/src/protocol.rs
-- omega_engine/crates_rs/omega_symbol_game/src/invoke.rs
+- engine/crates_rs/core_symbol_game/Cargo.toml
+- engine/crates_rs/core_symbol_game/src/lib.rs
+- engine/crates_rs/core_symbol_game/src/main.rs
+- engine/crates_rs/tests/core_symbol_game/host_contract.rs
+- engine/crates_rs/core_symbol_game/src/protocol.rs
+- engine/crates_rs/core_symbol_game/src/invoke.rs
 source_revision: c419cc6beb
 prerequisites: []
-verification: py -3.12 -m omega_engine_pfp.scripts.docs_integrity validate
+verification: py -3.12 -m pfp.scripts.docs_integrity validate
 aliases: []
 related:
 - 09_runtime_actions_and_governor.md
@@ -31,7 +31,7 @@ verification_scope: command list and limits read from main.rs, protocol.rs and i
 
 AuthorityEffect: None.
 
-omega_symbol_game is the supported native laboratory host for one narrow,
+core_symbol_game is the supported native laboratory host for one narrow,
 exact candidate-evaluation path. Its output is unsigned laboratory evidence,
 not an admission or promotion decision.
 
@@ -40,8 +40,8 @@ not an admission or promotion decision.
 With no operation argument, the binary reads one bounded HostRequestV1 JSON
 document from standard input and writes a HostOutcomeV1 JSON document to
 standard output. The supported profile is evaluate_candidate with request
-schema omega.oesos.rust-prime-host-request.v1 and outcome schema
-omega.oesos.rust-prime-host-outcome.v1.
+schema core.oesos.rust-prime-host-request.v1 and outcome schema
+core.oesos.rust-prime-host-outcome.v1.
 
 The host parses strictly, recomputes request and packet identifiers, validates
 the carrier manifest, performs exact replay, checks the supplied candidate
@@ -52,7 +52,7 @@ refusals.
 
 | Command | Input | Output | Scope |
 | --- | --- | --- | --- |
-| --mcp | MCP messages on stdin | MCP responses on stdout | Serves `omega_symbol_game::mcp` (added to this table 2026-10-20) |
+| --mcp | MCP messages on stdin | MCP responses on stdout | Serves `core_symbol_game::mcp` (added to this table 2026-10-20) |
 | --describe | none | host description JSON | Schemas, limits, registry hash, source revision, attestation |
 | --describe-runtime | none | runtime description JSON | Derived adapter list only |
 | --derive-carrier-manifest | CarrierDeclarationV1 JSON | carrier manifest JSON | Manifest construction |
@@ -60,18 +60,18 @@ refusals.
 | invoke | RuntimeRequestV1 JSON | RuntimeOutcomeV1 JSON | Dispatchable runtime actions |
 | default | HostRequestV1 JSON | HostOutcomeV1 JSON | Supported exact candidate evaluation |
 
-The dispatch order in [main.rs](../../../../omega_engine/crates_rs/omega_symbol_game/src/main.rs) (lines 19-127 at the 2026-10-20 pin) is: `--mcp`, `--describe`, `--describe-runtime`, then read stdin, then `--derive-carrier-manifest`, `classify-board`, `invoke`, then the default evaluation when no argument is given. Any other first argument returns the error `unsupported operation` after stdin has been read.
+The dispatch order in [main.rs](../../../../engine/crates_rs/core_symbol_game/src/main.rs) (lines 19-127 at the 2026-10-20 pin) is: `--mcp`, `--describe`, `--describe-runtime`, then read stdin, then `--derive-carrier-manifest`, `classify-board`, `invoke`, then the default evaluation when no argument is given. Any other first argument returns the error `unsupported operation` after stdin has been read.
 
 Use the workspace manifest:
 
 ~~~powershell
-cargo run --quiet --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game -- --describe
+cargo run --quiet --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game -- --describe
 ~~~
 
 ## Resource fences
 
 The supported request has a one-megabyte ceiling (`MAX_HOST_REQUEST_BYTES = 1_048_576`
-in [protocol.rs](../../../../omega_engine/crates_rs/omega_symbol_game/src/protocol.rs)
+in [protocol.rs](../../../../engine/crates_rs/core_symbol_game/src/protocol.rs)
 line 19), exactly one candidate, and declared bounds for edges, vertices plus faces, dense matrix cells, Prime
 writes, and timeout. Exact values use minimally encoded decimal strings and
 BigRational semantics; JSON floats are refused.
@@ -79,7 +79,7 @@ BigRational semantics; JSON floats are refused.
 The `invoke` path reads a larger prefix, `MAX_PROMPT_ARTIFACT_RUNTIME_REQUEST_BYTES = 12 * 1024 * 1024`
 (12,582,912 bytes), so the large prompt-artifact actions can be identified; other runtime actions keep
 the complete-envelope limit `MAX_RUNTIME_REQUEST_BYTES = 65_536` (64 KiB)
-([invoke.rs](../../../../omega_engine/crates_rs/omega_symbol_game/src/invoke.rs) lines 47 and 53).
+([invoke.rs](../../../../engine/crates_rs/core_symbol_game/src/invoke.rs) lines 47 and 53).
 The dense-matrix cell bound is also `1_048_576` (`MAX_DENSE_MATRIX_CELLS`, protocol.rs line 22).
 
 The declared timeout is an intake field, not an in-process wall-clock
@@ -106,7 +106,7 @@ policy, or authority.
 The host contract test is the executable construction reference:
 
 ~~~powershell
-cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test host_contract
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test host_contract
 ~~~
 
 For packet formats and profile distinctions, continue with

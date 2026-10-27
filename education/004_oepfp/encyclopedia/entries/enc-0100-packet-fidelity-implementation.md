@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:VII.4", "po:PO-PFI"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §VII.4 'Theorem VII.4'"
+  - "canonical_core_math_spine.md v1.5.2 §VII.4 'Theorem VII.4'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -53,7 +53,7 @@ the §VII.3 gate.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §VII.4
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §VII.4
   (statement copied verbatim). Original header line:
   `**Theorem VII.4 (Packet Fidelity Implementation).** [PROVED-PROSE] The`
 

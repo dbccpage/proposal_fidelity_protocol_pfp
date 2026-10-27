@@ -13,7 +13,7 @@
 
 **Challenge:** C059: SQL Synthesis under Three-Valued-Logic Fences  
 **Domain:** `f_program_synthesis` (Domain F)  
-**Tier:** T2 | **Protocol:** SG-CP v1 (Woland Terminal Reality Gate & Dual Checkers)  
+**Tier:** T2 | **Protocol:** SG-CP v1 (Adversary Terminal Reality Gate & Dual Checkers)  
 **Date:** September 2026  
 **Reality Gate Run ID:** `c059_eval_1790651964`  
 **Solver SHA-256 Digest:** `020fd7bb1fa503f0147860006946a207d96aa3bf5cdbf2d8d3eaee4ab28ae23b`  
@@ -24,11 +24,11 @@
 
 Challenge C059 evaluates whether autonomous models can synthesize a frozen compiler from JSON relational-algebra specifications to dialect-neutral SQL adhering strictly to Kleene Three-Valued Logic (3VL), totality preflights on protected columns, and exact multiset bag preservation across hidden null-adversarial databases.
 
-Under the Woland Terminal Reality Gate commit-reveal protocol:
+Under the Adversary Terminal Reality Gate commit-reveal protocol:
 - **Solver Commitment:** Committed SHA-256 digest `020fd7bb1fa503f0147860006946a207d96aa3bf5cdbf2d8d3eaee4ab28ae23b` before revealing the judge packet.
 - **Hidden Test Evaluation:** **64 / 64 (100.0%)** hidden evaluation cases passed across dual checkers (SQLite runtime exact checker vs. pure Python in-memory relational algebra engine).
 - **Mutation Stress Testing:** **48 / 48 (100.0%)** hostile mutations killed by both checkers with **0 escapes**.
-- **Woland Gate Verdict:** `PASS_TO_MASTER`.
+- **Adversary Gate Verdict:** `PASS_TO_MASTER`.
 
 In the empirical benchmark sweep across 10 diverse relational problem instances:
 - **LLaMA 3.3 70B Instruct:** **8 / 10 passed (80.0%)**

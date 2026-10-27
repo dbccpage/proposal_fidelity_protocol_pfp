@@ -57,7 +57,7 @@ Command-line syntax and terminal execution guidance for Windows environments.
 
 ## Design Philosophy
 
-Following Omega Engine's paradigm:
+Following Engine's paradigm:
 
 - `_shared/` = Reusable components (constraints, base templates, checklists, laws)
 - `_templates/` = Scaffolding templates for creating new skills, operad operations, agent slices, and workflows

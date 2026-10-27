@@ -3,7 +3,7 @@
 from pathlib import Path
 import tempfile
 import unittest
-from omega_engine_operads.application.dtos import (
+from operads.application.dtos import (
     CompileCatalogCommand,
     GetCatalogQuery,
     ValidateWorkflowsQuery,
@@ -11,13 +11,13 @@ from omega_engine_operads.application.dtos import (
     WorkflowEdgeDTO,
     WorkflowNodeDTO,
 )
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     CausationId,
     CorrelationId,
     EstateRef,
     IdempotencyKey,
 )
-from omega_engine_operads.infrastructure.bootstrap import (
+from operads.infrastructure.bootstrap import (
     OeopContainer,
     create_oeop_container,
 )

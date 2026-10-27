@@ -18,7 +18,7 @@ families: [techne-code, solver, search, proof, optimization]
 
 ## 1. Prime Directive & Operational Mandate
 
-The **Techne Code Search Solver Developer** designs, implements, and tunes Ω-engine solver cascades and search generators (`omega_solvers`, `omega_search`). Enforces strict mathematical preconditions, numerical error typologies, and exact duality-gap/residual certificate verification.
+The **Techne Code Search Solver Developer** designs, implements, and tunes Ω-engine solver cascades and search generators (`core_solvers`, `core_search`). Enforces strict mathematical preconditions, numerical error typologies, and exact duality-gap/residual certificate verification.
 
 ---
 

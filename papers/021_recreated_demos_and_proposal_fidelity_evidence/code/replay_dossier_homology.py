@@ -145,7 +145,7 @@ def build(args) -> None:
     executable = output / "paper011_native_dossier_homology.exe"
     argv = [str(rustc), "--edition", "2021", "--crate-name", "paper011_native_dossier_homology",
             str(SOURCE), "-L", f"dependency={args.deps.resolve()}",
-            "--extern", f"omega_symbol_game_runtime={args.runtime_rlib.resolve()}",
+            "--extern", f"core_symbol_game_runtime={args.runtime_rlib.resolve()}",
             "--extern", f"serde_json={args.serde_rlib.resolve()}", "-o", str(executable)]
     run = subprocess.run(argv, capture_output=True, check=False, timeout=180)
     (output / "stdout.bin").write_bytes(run.stdout)

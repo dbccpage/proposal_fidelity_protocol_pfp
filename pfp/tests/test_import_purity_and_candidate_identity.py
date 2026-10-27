@@ -11,13 +11,13 @@ from typing import Any
 
 def test_candidate_artifact_identity() -> None:
     """Verify CandidateArtifactV1 identity across domain modules (UOW-7 §7.4)."""
-    from omega_engine_pfp.domain.entities import (
+    from pfp.domain.entities import (
         CandidateArtifactV1 as C_Root,
     )
-    from omega_engine_pfp.domain.entities.candidate_artifact import (
+    from pfp.domain.entities.candidate_artifact import (
         CandidateArtifactV1 as C_Direct,
     )
-    from omega_engine_pfp.domain.entities.packet_envelope import (
+    from pfp.domain.entities.packet_envelope import (
         CandidateArtifactV1 as C_Envelope,
     )
 
@@ -41,12 +41,12 @@ def test_candidate_artifact_identity() -> None:
 
 
 def test_import_purity_and_explicit_initialization() -> None:
-    """Verify import omega_engine_pfp has zero side effects and initialize_exact_ports is explicit."""
-    import omega_engine_pfp
+    """Verify import pfp has zero side effects and initialize_exact_ports is explicit."""
+    import pfp
 
-    assert hasattr(omega_engine_pfp, "initialize_exact_ports")
-    assert callable(omega_engine_pfp.initialize_exact_ports)
-    assert "initialize_exact_ports" in omega_engine_pfp.__all__
+    assert hasattr(pfp, "initialize_exact_ports")
+    assert callable(pfp.initialize_exact_ports)
+    assert "initialize_exact_ports" in pfp.__all__
 
     # Calling initialize_exact_ports should execute cleanly
-    omega_engine_pfp.initialize_exact_ports()
+    pfp.initialize_exact_ports()

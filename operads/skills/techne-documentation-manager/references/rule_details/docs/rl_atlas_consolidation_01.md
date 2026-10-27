@@ -6,14 +6,14 @@ Parent: [Atlas Consolidation & EADC Addressing](../../../../../rules/docs/rl_atl
 
 ---
 paths:
-- "omega_engine_atlas/**"
+- "atlas/**"
 ---
 
 # Rule: Encyclopedia Anomalanica (EADC) & Atlas Consolidation Invariants
 
 **AuthorityEffect:** None.
 
-All agent operations within `omega_engine_atlas/coda_atlas/` and source consolidation passes must strictly comply with the following invariants. Detailed multi-step integration procedures reside in [`governance-wdp`](../../../../governance-wdp/references/eadc_consolidation_protocol.md).
+All agent operations within `atlas/coda_atlas/` and source consolidation passes must strictly comply with the following invariants. Detailed multi-step integration procedures reside in [`governance-wdp`](../../../../governance-wdp/references/eadc_consolidation_protocol.md).
 
 ---
 
@@ -48,5 +48,5 @@ All agent operations within `omega_engine_atlas/coda_atlas/` and source consolid
 
 ## 4. Test Harness & Contract Path Portability
 
-- Test suites, verification harnesses, and contract parsers that resolve documentation chapters (e.g. `omega_engine_education/documentation/`) must resolve 3-digit EADC numbering conventions (`014_normal_forms`, `003_minimal_symbol_system_n_mssn`).
+- Test suites, verification harnesses, and contract parsers that resolve documentation chapters (e.g. `education/documentation/`) must resolve 3-digit EADC numbering conventions (`014_normal_forms`, `003_minimal_symbol_system_n_mssn`).
 - Hardcoding legacy unpadded 2-digit prefixes (`13_normal_forms`, `15_normal_forms`) is prohibited in test harnesses. Test path resolvers must use canonical 3-digit paths with dynamic discovery fallbacks (`path.glob("*_normal_forms/contracts_normal_forms")`) to remain resilient across atlas re-indexing passes.

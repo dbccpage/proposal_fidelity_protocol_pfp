@@ -1,7 +1,7 @@
 """Targeted Clean Architecture Layer Purity Test.
 
-Verifies that domain modules in `omega_engine_pfp/domain/cohomology`
-and `omega_engine_pfp/domain/ddc` have zero imports from outer layers,
+Verifies that domain modules in `pfp/domain/cohomology`
+and `pfp/domain/ddc` have zero imports from outer layers,
 specifically `ffi.py` (process FFI seam) and `infrastructure/`.
 
 AuthorityEffect: None.
@@ -17,7 +17,7 @@ import unittest
 class TestDomainLayerPurity(unittest.TestCase):
     def setUp(self) -> None:
         self.repo_root = Path(__file__).resolve().parents[2]
-        self.symbol_game_root = self.repo_root / "omega_engine_pfp"
+        self.symbol_game_root = self.repo_root / "pfp"
         self.cohomology_dir = self.symbol_game_root / "domain" / "cohomology"
         self.ddc_dir = self.symbol_game_root / "domain" / "ddc"
 
@@ -46,17 +46,17 @@ class TestDomainLayerPurity(unittest.TestCase):
             imports = self._get_imports(py_path)
             for lineno, imp in imports:
                 # Level 3 relative import from domain/cohomology/foo.py:
-                # `...ffi` resolves to `omega_engine_pfp.ffi`
-                # `...infrastructure` resolves to `omega_engine_pfp.infrastructure`
+                # `...ffi` resolves to `pfp.ffi`
+                # `...infrastructure` resolves to `pfp.infrastructure`
                 is_ffi = (
                     imp == "...ffi"
                     or imp.endswith(".ffi")
-                    or "omega_engine_pfp.ffi" in imp
+                    or "pfp.ffi" in imp
                 )
                 is_infra = (
                     imp == "...infrastructure"
                     or ".infrastructure" in imp
-                    or "omega_engine_pfp.infrastructure" in imp
+                    or "pfp.infrastructure" in imp
                 )
                 if is_ffi:
                     violations.append(

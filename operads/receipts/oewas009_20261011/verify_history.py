@@ -22,7 +22,7 @@ for row in inventory["files"]:
         if actual != row["sha256"]:
             failures.append({"path": relative, "expected": row["sha256"], "actual": actual})
 record = {
-    "schema_version": "omega.oewas009.historical-byte-check.v1",
+    "schema_version": "core.oewas009.historical-byte-check.v1",
     "inventory_sha256": hashlib.sha256(inventory_path.read_bytes()).hexdigest(),
     "source_revision": inventory["source_revision"],
     "source_file_count": len(inventory["files"]),

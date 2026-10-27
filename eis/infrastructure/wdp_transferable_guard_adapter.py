@@ -1,6 +1,6 @@
 """Immune-system binding for the P3 transferable guard.
 
-``omega_wdp::rejection_reuse`` and ``omega_wdp::guard_transfer`` are missing.
+``core_wdp::rejection_reuse`` and ``core_wdp::guard_transfer`` are missing.
 This adapter raises that refusal and does not report a successful transfer.
 AuthorityEffect: None.
 """
@@ -9,15 +9,15 @@ from __future__ import annotations
 
 from typing import Any, Mapping, NoReturn
 
-from omega_engine_applications.wdp_products.p3_guard_transfer.adapter import (
+from applications.wdp_products.p3_guard_transfer.adapter import (
     GUARD_TRANSFER_OWNER,
 )
-from omega_engine_epistemic_immune_system.use_cases.transferable_guard_library import (
+from eis.use_cases.transferable_guard_library import (
     GuardTransferEvaluationRequest,
     GuardTransferRefusal,
 )
 
-REJECTION_REUSE_OWNER = "omega_wdp::rejection_reuse"
+REJECTION_REUSE_OWNER = "core_wdp::rejection_reuse"
 
 
 class WdpTransferableGuardAdapter:

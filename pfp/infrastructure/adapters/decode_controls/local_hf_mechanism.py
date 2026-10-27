@@ -14,13 +14,13 @@ from contextlib import contextmanager
 from hashlib import sha256
 from typing import Any, Callable
 
-from omega_engine_pfp.domain.ports.decode_control_port import (
+from pfp.domain.ports.decode_control_port import (
     ControlKind,
     DecodeControlPort,
     DecodeControlReceipt,
     DecodeControlSpec,
 )
-from omega_engine_pfp.ffi import get_default_host
+from pfp.ffi import get_default_host
 
 
 class LocalHfMechanismAdapter(DecodeControlPort):

@@ -28,7 +28,7 @@ _worktree_root = next(
     (
         parent
         for parent in Path(__file__).resolve().parents
-        if (parent / "omega_engine_pfp").is_dir() and (parent / "omega_engine_woland").is_dir()
+        if (parent / "pfp").is_dir() and (parent / "adversary").is_dir()
     ),
     None,
 )
@@ -38,27 +38,27 @@ if _worktree_root is not None and str(_worktree_root) not in sys.path:
 if TYPE_CHECKING:
     from openai import OpenAI
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.budget_controller import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.budget_controller import (
     BudgetController,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import (
     get_hidden_base_cases,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import (
     verify_consistency_certificate,
     verify_cycle_repair,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.controls import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.controls import (
     build_logit_bias_map,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.runner import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.runner import (
     mcnemar_exact_p_value,
     wilson_score_interval as wilson_score_interval,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
     validate_json_schema,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner import (
     SYSTEM_PROMPT,
     _complete_case,
     _trace_metadata,
@@ -69,10 +69,10 @@ from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.emp
     _public_input,
     _protocol_hash,
 )
-from omega_engine_pfp.infrastructure.synthesis_matrix import RunnerRefusal
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
+from pfp.infrastructure.synthesis_matrix import RunnerRefusal
+from pfp.infrastructure.task_turn import prepare_task_turn
 
-from omega_engine_woland.domain.providers.types import DecodingParamsV1
+from adversary.domain.providers.types import DecodingParamsV1
 
 
 @dataclass
@@ -541,7 +541,7 @@ def _paired_analysis(baseline_traces, current_traces, *, cases=None):
 
 def _recheck_trace(trace, case):
     import base64
-    from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls import (
+    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls import (
         empirical_001_runner as schema_arm,
     )
 
@@ -679,7 +679,7 @@ def run_test_002_empirical_sweep(
         baseline_traces, report["case_traces"], cases=cases
     )
     if output_dir is not None:
-        from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner import (
+        from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner import (
             _persist,
         )
 

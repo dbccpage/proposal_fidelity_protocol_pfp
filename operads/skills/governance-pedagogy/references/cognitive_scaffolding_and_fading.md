@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 
-This reference formalizes the educational literature findings on novice-to-expert scaffolding across `omega_engine_education` tracks, grounded in the deterministic findings of `teaching_and_learning_findings.md`.
+This reference formalizes the educational literature findings on novice-to-expert scaffolding across `education` tracks, grounded in the deterministic findings of `teaching_and_learning_findings.md`.
 
 ## Literature Foundations
 

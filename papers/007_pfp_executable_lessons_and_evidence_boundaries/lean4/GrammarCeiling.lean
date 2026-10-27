@@ -45,7 +45,7 @@ theorem rests only on standard kernel axioms within the
 `SemiringTransportAxiomAudit` set.
 -/
 
-namespace OmegaCosmology.SymbolGame
+namespace CoreCosmology.SymbolGame
 
 /-- The grammar ceiling `S(n)` — the worst-case norm at level `n`. -/
 def grammarCeiling (n : Nat) : Nat :=
@@ -127,4 +127,4 @@ theorem expressivity_norm_le_grammar_ceiling
 
 #print axioms expressivity_norm_le_grammar_ceiling
 
-end OmegaCosmology.SymbolGame
+end CoreCosmology.SymbolGame

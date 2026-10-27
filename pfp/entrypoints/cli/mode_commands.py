@@ -8,12 +8,12 @@ import json
 from functools import partial
 from typing import Any
 
-from omega_engine_pfp.infrastructure.adapters.mode_discovery import (
+from pfp.infrastructure.adapters.mode_discovery import (
     discover_modes_manifest,
     load_all_mode_contracts,
     validate_mode_catalog_closure,
 )
-from omega_engine_pfp.use_cases.modes import (
+from pfp.use_cases.modes import (
     GetModeUseCase,
     ListModesUseCase,
     ValidateModesUseCase,

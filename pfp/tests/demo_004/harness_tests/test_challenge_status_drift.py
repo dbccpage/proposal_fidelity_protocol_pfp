@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.tools.challenge_status import (
+from projects.mssn_sn_symgam.challenges.tools.challenge_status import (
     check_relative_links,
     generate_status_data,
     parse_catalog_challenges,

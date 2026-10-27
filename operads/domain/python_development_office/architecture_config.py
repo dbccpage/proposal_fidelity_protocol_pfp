@@ -38,9 +38,9 @@ class DependencyException:
 @dataclass(frozen=True)
 class ArchitectureConfig:
     source_roots: tuple[str, ...] = (
-        "omega_engine_operations",
-        "omega_engine",
-        "omega_engine_governance",
+        "operations",
+        "engine",
+        "governance",
         "src",
         "app",
     )
@@ -77,8 +77,8 @@ class ArchitectureConfig:
     dependency_exceptions: tuple[DependencyException, ...] = field(
         default_factory=lambda: (
             DependencyException(
-                consumer=("omega_engine_operations.use_cases.verification.system_red_team.probes"),
-                provider="omega_engine_operating_system.adapters",
+                consumer=("operations.use_cases.verification.system_red_team.probes"),
+                provider="operating_system.adapters",
                 rationale=(
                     "Adversarial verification probe suite directly instantiates "
                     "in-memory foreign subsystem fixtures (adapters) to execute "
@@ -87,8 +87,8 @@ class ArchitectureConfig:
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer=("omega_engine_operations.use_cases.verification.system_red_team.probes"),
-                provider="omega_engine_operating_system.entrypoints.api",
+                consumer=("operations.use_cases.verification.system_red_team.probes"),
+                provider="operating_system.entrypoints.api",
                 rationale=(
                     "Adversarial verification probe suite directly instantiates "
                     "in-memory foreign subsystem API entrypoints to execute "
@@ -97,8 +97,8 @@ class ArchitectureConfig:
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer=("omega_engine_operations.use_cases.verification.system_red_team.probes"),
-                provider="omega_engine_operating_system.infrastructure",
+                consumer=("operations.use_cases.verification.system_red_team.probes"),
+                provider="operating_system.infrastructure",
                 rationale=(
                     "Adversarial verification probe suite directly instantiates "
                     "in-memory foreign subsystem task store infrastructure to execute "
@@ -107,8 +107,8 @@ class ArchitectureConfig:
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer=("omega_engine_operations.use_cases.verification.system_red_team.probes"),
-                provider="omega_engine_operads.infrastructure.bootstrap",
+                consumer=("operations.use_cases.verification.system_red_team.probes"),
+                provider="operads.infrastructure.bootstrap",
                 rationale=(
                     "Adversarial verification probe suite directly instantiates "
                     "in-memory OEWAS container infrastructure to execute "
@@ -117,145 +117,145 @@ class ArchitectureConfig:
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.cicd.ddc_tape_native",
-                provider="omega_engine_operating_system.adapters.rust_host.ffi",
+                consumer="operations.use_cases.cicd.ddc_tape_native",
+                provider="operating_system.adapters.rust_host.ffi",
                 rationale="Native DDC tape runner delegates to OS FFI adapter.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.cicd.theory_fixture_suite",
-                provider="omega_engine_operating_system.adapters.rust_host.ffi",
+                consumer="operations.use_cases.cicd.theory_fixture_suite",
+                provider="operating_system.adapters.rust_host.ffi",
                 rationale="Theory fixture suite delegates to OS FFI adapter.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.cicd.education_strands_gate",
-                provider="omega_engine_education.education_app.infrastructure.strands.strand_verifier_adapter",
+                consumer="operations.use_cases.cicd.education_strands_gate",
+                provider="education.education_app.infrastructure.strands.strand_verifier_adapter",
                 rationale="CI/CD education strands gate instantiates the education strand verifier adapter.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.bind",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.bind",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine bind use case consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.bootstrap",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.bootstrap",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine bootstrap consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.freeze",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.freeze",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine freeze consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.gate",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.gate",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine gate consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.inject",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.inject",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine inject consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.lean_audit",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.lean_audit",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine lean audit consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.lean_build",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.lean_build",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine lean build consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.lean_gen",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.lean_gen",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine lean gen consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.lift_check",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.lift_check",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine lift check consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.preflight_draft",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.preflight_draft",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine preflight draft consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.reach_ledger_check",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.reach_ledger_check",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine reach ledger check consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.reach_replay",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.reach_replay",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine reach replay consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.research_engine.components",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.research_engine.components",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Research engine components consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.research_engine.hygiene",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.research_engine.hygiene",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Research engine hygiene consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.research_engine.ladder_cert",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.research_engine.ladder_cert",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Research engine ladder cert consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.research_engine.level",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.research_engine.level",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Research engine level consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.research_engine.sealed",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.research_engine.sealed",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Research engine sealed consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operations.use_cases.level_engine.vendor",
-                provider="omega_engine_pfp.infrastructure.tower_research.level_engine.context",
+                consumer="operations.use_cases.level_engine.vendor",
+                provider="pfp.infrastructure.tower_research.level_engine.context",
                 rationale="Level engine vendor consumes symbol game context infrastructure.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operads.application.queries.validate_workflows",
-                provider="omega_engine_operating_system.adapters.rust_host.ffi",
+                consumer="operads.application.queries.validate_workflows",
+                provider="operating_system.adapters.rust_host.ffi",
                 rationale="Workflow graph validation query delegates to the sovereign OS FFI adapter.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operads.infrastructure.bootstrap",
+                consumer="operads.infrastructure.bootstrap",
                 provider="controllers.python_facade",
                 rationale="OEWAS composition root container wires Python facade controller.",
                 owner="python-development-office",
             ),
             DependencyException(
-                consumer="omega_engine_operads.infrastructure.bootstrap",
+                consumer="operads.infrastructure.bootstrap",
                 provider="controllers.router",
                 rationale="OEWAS composition root container wires FastAPI router controller on demand.",
                 owner="python-development-office",

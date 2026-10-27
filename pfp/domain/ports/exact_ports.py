@@ -1,7 +1,7 @@
 """Domain protocols for exact arithmetic, linear algebra, and digest operations.
 
 Enforces Clean Architecture inward dependency by defining domain ports that can
-be backed either by pure Python domain kernels or native Rust crates (omega_engine/crates_rs).
+be backed either by pure Python domain kernels or native Rust crates (engine/crates_rs).
 
 AuthorityEffect: None.
 """
@@ -37,7 +37,7 @@ class ExactLinearAlgebraPort(Protocol):
 
 @runtime_checkable
 class ExactHomologyPort(Protocol):
-    """Protocol for simplicial complexes, chain complexes, and homology (omega_homology)."""
+    """Protocol for simplicial complexes, chain complexes, and homology (core_homology)."""
 
     def compute_betti_numbers(self, complex_descriptor: object) -> list[int]: ...
 
@@ -52,7 +52,7 @@ class ExactHomologyPort(Protocol):
 
 @runtime_checkable
 class ExactHolonomyPort(Protocol):
-    """Protocol for discrete connection, holonomy, and curvature (omega_holonomy)."""
+    """Protocol for discrete connection, holonomy, and curvature (core_holonomy)."""
 
     def path_holonomy(self, connection: object, path: Sequence[str]) -> object: ...
 
@@ -73,7 +73,7 @@ class ExactHolonomyPort(Protocol):
 
 @runtime_checkable
 class ExactFunctionalPort(Protocol):
-    """Protocol for defect functionals Phi_1, Gamma_2, and Xi (omega_functional)."""
+    """Protocol for defect functionals Phi_1, Gamma_2, and Xi (core_functional)."""
 
     def evaluate(
         self,
@@ -91,7 +91,7 @@ class ExactFunctionalPort(Protocol):
 
 @runtime_checkable
 class ExactPharmacyPort(Protocol):
-    """Protocol for pharmacy defect and failure-class detection (omega_prompt_civilization)."""
+    """Protocol for pharmacy defect and failure-class detection (core_prompt_civilization)."""
 
     def pharmacy_detect(
         self, candidate_json: str, context: str = ""
@@ -113,7 +113,7 @@ class ExactDigestPort(Protocol):
 
 @runtime_checkable
 class RetractionEnginePort(Protocol):
-    """Protocol for retraction turn and loop descent validation (omega_symbol_game::epics)."""
+    """Protocol for retraction turn and loop descent validation (core_symbol_game::epics)."""
 
     def retraction_turn(
         self,

@@ -23,8 +23,8 @@ RESEARCH_DIR = Path(__file__).resolve().parent.parent.parent
 if str(RESEARCH_DIR) not in sys.path:
     sys.path.insert(0, str(RESEARCH_DIR))
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import TowerGrammar
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.entities import TowerGrammar
+from pfp.domain.mssn_research.grammar.errors import (
     AlternationBudgetError,
     BianchiNilpotenceError,
     BQNFRoutingError,
@@ -34,11 +34,11 @@ from omega_engine_pfp.domain.mssn_research.grammar.errors import (
     PolygraphConfluenceError,
     UnboundedQuantifierError,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.quantifier_policies import (
+from pfp.domain.mssn_research.grammar.quantifier_policies import (
     check_bounded_quantifier_block,
     check_phi4_dual_certificate,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.rewriting_policies import (
+from pfp.domain.mssn_research.grammar.rewriting_policies import (
     check_bqnf_route_repair,
     check_dda_event_proof,
     check_expansion_cycle,
@@ -46,7 +46,7 @@ from omega_engine_pfp.domain.mssn_research.grammar.rewriting_policies import (
     check_runtime_kernel_irredundance,
     check_step_continuity,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.rewriting import (
+from pfp.domain.mssn_research.grammar.rewriting import (
     BQNFRoute,
     BQNFViewCochain,
     DDAEventRecord,
@@ -59,7 +59,7 @@ from omega_engine_pfp.domain.mssn_research.grammar.rewriting import (
     RewriteStep,
     RuntimeKernel,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.quantification import (
+from pfp.domain.mssn_research.grammar.quantification import (
     BoundedAlternationBlock,
     BoundedVarDecl,
     ExactBianchiComplex4D,
@@ -67,10 +67,10 @@ from omega_engine_pfp.domain.mssn_research.grammar.quantification import (
     QuantifierKind,
     QuantifierPolarityMask,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import ExactRationalMatrix
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, Rational, StageLevel
+from pfp.domain.mssn_research.grammar.exact_structures import ExactRationalMatrix
+from pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
+from pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, Rational, StageLevel
 
 
 class TestLevel11Polygraphs(unittest.TestCase):
@@ -320,10 +320,10 @@ class TestLevel13AlternationAndBQNFRoutes(unittest.TestCase):
             [0, 2]
         ])
         alpha = (Rational(3, 1), Rational(1, 1))
-        omega_expected = (Rational(2, 1), Rational(2, 1))
+        core_expected = (Rational(2, 1), Rational(2, 1))
 
         valid_cochain = BQNFViewCochain(
-            omega=omega_expected,
+            omega=core_expected,
             d0_potential=alpha,
             d0_matrix=d0_mat,
             quotient_status="EXACT_ZERO",

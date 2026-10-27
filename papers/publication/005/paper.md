@@ -97,7 +97,7 @@ event statement is factually correct.
 ## 3. Choose the executable path
 
 The supported tutorial in this package is
-[code/quickstart.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/quickstart.py).
+[code/quickstart.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/quickstart.py).
 Its Python wrapper sends exact graph inputs to the pinned Rust
 calculator. The repository also contains a separate historical root
 `quickstart.py`; the commands here intentionally name the package file.
@@ -105,9 +105,9 @@ calculator. The repository also contains a separate historical root
 Use Python 3.10 or newer. The package is self-contained: it carries
 copies of the two modules it needs from the repository, the native graph
 adapter
-[code/native_functional.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/native_functional.py)
+[code/native_functional.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/native_functional.py)
 and the Paper 004 graph governor
-[code/l1_symbol_game_governor.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py).
+[code/l1_symbol_game_governor.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py).
 Each copy begins with a header that names its source path and commit,
 gives the SHA-256 of the source bytes, and lists the local changes.
 Apart from its header, the adapter differs from the source baseline only
@@ -125,15 +125,15 @@ The native calculator itself is not part of this package. Build the
 repository's Rust workspace, on any platform:
 
 ``` powershell
-cargo build --locked -j 1 --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_functional --bin solve_graph_phi1
+cargo build --locked -j 1 --manifest-path engine/crates_rs/Cargo.toml -p core_functional --bin solve_graph_phi1
 ```
 
 The following Windows PowerShell setup, run from the repository root,
 assumes the reviewed executable already exists at the shown path:
 
 ``` powershell
-$env:OMEGA_FUNCTIONAL_GRAPH_BIN = (Resolve-Path omega_engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
-$env:OMEGA_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:OMEGA_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
+$env:CORE_FUNCTIONAL_GRAPH_BIN = (Resolve-Path engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
+$env:CORE_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:CORE_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
 ```
 
 Use the actual output path if Cargo has a custom target directory. Other
@@ -151,10 +151,10 @@ python code/play_demo.py
 ```
 
 The repository's [functional-boundary
-notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/FUNCTIONAL_BOUNDARY.md)
+notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/FUNCTIONAL_BOUNDARY.md)
 describe the native setup at the baseline. The transport implementation
 is
-[native_functional.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/native_functional.py).
+[native_functional.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/native_functional.py).
 A missing executable, missing or mismatched digest, native refusal, or
 malformed native response prevents an accepted native result. Treat that
 outcome as an environment or evidence issue to resolve before relying on
@@ -191,16 +191,16 @@ execute.
 
 ## 4. Follow the complete session
 
-[play_demo.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/play_demo.py)
+[play_demo.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/play_demo.py)
 imports the package's copy of the [graph
-governor](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py).
+governor](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/l1_symbol_game_governor.py).
 Its graph uses weights (1,2,2), a legacy variant of the common series
 example's (1,2,3). Both have the same unique cheapest edge, minimum
 three, and displayed repair. The all-zero potential costs five in the
 script and six in the common example; those are scores of one potential,
 not the quotient minima.
 
-When `OMEGA_FUNCTIONAL_GRAPH_BIN` is set, the governor asks that native
+When `CORE_FUNCTIONAL_GRAPH_BIN` is set, the governor asks that native
 calculator, and any refusal or error it returns stops the step; no
 Python value is substituted. When it is not set, the governor computes
 the quotient minimum by exact Python enumeration of spanning-tree
@@ -324,9 +324,9 @@ python -m pytest code/tests/test_quickstart_native.py -q
 ```
 
 The
-[fixture](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/tests/conftest.py)
-consumes only explicitly supplied `OMEGA_FUNCTIONAL_GRAPH_BIN` and
-`OMEGA_FUNCTIONAL_GRAPH_SHA256`. It discovers no checkout, builds no
+[fixture](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/tests/conftest.py)
+consumes only explicitly supplied `CORE_FUNCTIONAL_GRAPH_BIN` and
+`CORE_FUNCTIONAL_GRAPH_SHA256`. It discovers no checkout, builds no
 program, and creates no pin. Missing configuration skips, with that
 reason, every test that requests native execution. A malformed digest,
 unreadable configured executable, or digest mismatch fails those tests
@@ -336,9 +336,9 @@ vendored-source header checks still run without native configuration.
 The commands are replay instructions, not a reported fresh pass.
 
 The existing [execution
-receipt](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/paper_033_execution_receipt.json),
+receipt](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/paper_033_execution_receipt.json),
 [cross-domain
-receipt](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/cross_domain_symbol_game_receipt.json),
+receipt](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/cross_domain_symbol_game_receipt.json),
 and series completion receipt are historical artifacts until their
 source and executable bindings are reconciled with a new run. A SHA-256
 digest can bind bytes. It does not establish their truth, authenticate
@@ -363,7 +363,7 @@ modeling step that requires justification. Renaming vertices to
 justification.
 
 The package's [four labeled graph
-scenarios](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/multi_domain_symbol_game_bouts.py)
+scenarios](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/multi_domain_symbol_game_bouts.py)
 illustrate repeated use of the finite interface. Their labels do not
 establish market equilibrium, authorization security, or a quantum no-go
 theorem. The governed scripts make no LLM calls, so hypothetical
@@ -373,7 +373,7 @@ For model integration, keep the proposer behind the same boundary: parse
 the proposed fields, check the declared carrier and operations,
 recompute the relevant property, and save the actual response. Consult
 [the streaming
-harness](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/005_pfp_practitioners_field_manual/code/llm_streaming_harness.py)
+harness](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/005_pfp_practitioners_field_manual/code/llm_streaming_harness.py)
 as an implementation example; reviewing its adapter does not establish a
 live provider run. The harness accepts integers and exact rational
 strings as claim values and refuses a JSON float or Boolean before any
@@ -412,7 +412,7 @@ scripted session. The package tests check the session table on the
 governor's exact Python enumeration path. For this revision the
 native-requesting tests were also run against a `solve_graph_phi1`
 executable built on Windows (x86_64-pc-windows-msvc, Rust 1.98.0) with
-`cargo build --locked -j 1` from the `omega_functional` crate, whose
+`cargo build --locked -j 1` from the `core_functional` crate, whose
 source is unchanged since the code baseline; with that executable and
 its SHA-256
 (`2b0379557993246cacb1ed8964f9f096964019ecc1c2fb781e6b18f2ca6c8a65`)

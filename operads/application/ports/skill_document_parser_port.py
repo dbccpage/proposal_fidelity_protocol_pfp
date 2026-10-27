@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from omega_engine_operations.domain.rop.result import Result
+from operations.domain.rop.result import Result
 from ...domain.entities.skill_document_v3 import SkillDocumentV3
 from ...domain.errors.domain_errors import OeopDomainError
 from ...domain.value_objects.identifier import SkillId

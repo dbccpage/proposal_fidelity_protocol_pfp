@@ -12,11 +12,11 @@ primitive: null
 aliases: ["paper:sn-packets:full-intent-trusted-parser", "paper:sn-packets:trusted-parser-oracle-gate"]
 sources:
   - "s_n_packets_and_the_symbol_game.md §3 'Theorem 3.1: Full Intent Requires a Trusted Parser Certificate'"
-  - "crates/omega_representation/src/fidelity.rs"
+  - "crates/core_representation/src/fidelity.rs"
 uses: ["ENC-0112", "ENC-0888"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -42,7 +42,7 @@ natural-language intent.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean`.
 
 The Lean theorem names are:
 
@@ -63,7 +63,7 @@ axiom-free.
 
 - This entry mechanizes the paper's trusted-parser/oracle discipline in the
   same shape as the Rust `TrustedParserCertificate` and `FullIntentCertificate`
-  gate in `omega_representation`.
+  gate in `core_representation`.
 - It refines [[ENC-0888]]: packetization and typed fidelity are evidence, not
   unrestricted intent authority.
 - The theorem locates the parser trust base. It does not implement the

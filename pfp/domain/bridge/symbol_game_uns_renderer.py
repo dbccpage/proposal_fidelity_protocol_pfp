@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any, Dict, Sequence
 
-from omega_engine_pfp.domain import PacketEnvelopeV2
+from pfp.domain import PacketEnvelopeV2
 
 from .sbe import SBEAnalyzer
 from .symbol_game_models import SymbolGameStepResult

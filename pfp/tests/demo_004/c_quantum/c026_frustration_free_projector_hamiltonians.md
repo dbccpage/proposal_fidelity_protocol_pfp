@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 For H = Σᵢ Pᵢ with each Pᵢ a projector (Pᵢ² = Pᵢ = Pᵢ†), every term is positive semidefinite, so H has a zero-energy state exactly when the kernels of all Pᵢ (each extended by the identity off its support) have a nonzero common intersection. Such an H is called frustration-free. The check reduces to exact kernel intersection, which is cheap for the bounds below. Finding the answer by reasoning about "which local states satisfy every term" is not: entangled kernels, and local satisfiability that fails globally, trip heuristic search.
 
-The task stresses exact linear algebra through host calls in OEWAS (Omega Engine Workflows, Agents, Skills) and OEEIS (Omega Engine Epistemic Immune System) screening of product-state guesses presented as the whole ground space.
+The task stresses exact linear algebra through host calls in OEWAS (Engine Workflows, Agents, Skills) and OEEIS (Engine Epistemic Immune System) screening of product-state guesses presented as the whole ground space.
 
 ## 3. Formal Problem and Bounds
 
@@ -63,7 +63,7 @@ A frustration-free certificate is complete when every basis vector is annihilate
 
 ## 7. Arms and Baselines
 
-Arms A–D per the protocol, each synthesizing the solver. Arm E is the no-model baseline: direct kernel intersection with `omega_linear_algebra`. E should pass everything, so C026 measures whether an arm reaches exact linear algebra reliably rather than whether it beats E. Arm F does not apply.
+Arms A–D per the protocol, each synthesizing the solver. Arm E is the no-model baseline: direct kernel intersection with `core_linear_algebra`. E should pass everything, so C026 measures whether an arm reaches exact linear algebra reliably rather than whether it beats E. Arm F does not apply.
 
 ## 8. Budget, Models and Provenance
 
@@ -100,8 +100,8 @@ Operands expected: (1) frustration-free means a nonzero common kernel, found ter
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_linear_algebra` (`image_kernel.rs`, `exact_ldlt.rs`, `determinant.rs`).
-- `omega_engine/crates_rs/omega_quantum_physics` (exact finite quantum mechanics), including `src/rational.rs` and `cyclotomic.rs` (`GaussianRat`).
+- `engine/crates_rs/core_linear_algebra` (`image_kernel.rs`, `exact_ldlt.rs`, `determinant.rs`).
+- `engine/crates_rs/core_quantum_physics` (exact finite quantum mechanics), including `src/rational.rs` and `cyclotomic.rs` (`GaussianRat`).
 - A Kronecker-extension helper and the left-inverse check are new work in Rust.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 

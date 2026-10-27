@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from omega_engine_woland.tests.pilots.judge_packet_audit import summaries
+from adversary.tests.pilots.judge_packet_audit import summaries
 
 DESC = {
     "checkers": [{"role": "exact"}, {"role": "independent"}],

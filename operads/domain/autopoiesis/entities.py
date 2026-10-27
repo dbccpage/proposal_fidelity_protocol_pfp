@@ -1,4 +1,4 @@
-"""Domain entities and value objects for the Omega Autopoiesis Engine.
+"""Domain entities and value objects for the Core Autopoiesis Engine.
 
 Defines immutable records for harvested artifacts, snapshots, mined skills,
 and mined antibodies.

@@ -8,7 +8,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.mechanism_sessions import (
+from pfp.infrastructure.mechanism_sessions import (
     exact_baseline, prepare_session_turn, replay_session, session_result, start_session, submit_session_turn,
 )
 

@@ -41,12 +41,12 @@ _YAML_LOADER = (
 ALLOWED: dict[tuple[str, str], str] = {
     (
         "use_cases/demos/antimorphism_farm/run.py",
-        "omega_engine_pfp.infrastructure.demos.canonical",
+        "pfp.infrastructure.demos.canonical",
     ): _FARM_CODEC,
     ("domain/definitions_loader.py", "yaml"): _YAML_LOADER,
-    ("use_cases/antibody_admission.py", "omega_engine_epistemic_immune_system.infrastructure.native_domain"): _NATIVE_DELEGATION,
-    ("use_cases/guard_activation.py", "omega_engine_epistemic_immune_system.infrastructure.native_domain"): _NATIVE_DELEGATION,
-    ("use_cases/provisional_promotion.py", "omega_engine_epistemic_immune_system.infrastructure.native_domain"): _NATIVE_DELEGATION,
+    ("use_cases/antibody_admission.py", "eis.infrastructure.native_domain"): _NATIVE_DELEGATION,
+    ("use_cases/guard_activation.py", "eis.infrastructure.native_domain"): _NATIVE_DELEGATION,
+    ("use_cases/provisional_promotion.py", "eis.infrastructure.native_domain"): _NATIVE_DELEGATION,
 }
 
 
@@ -91,7 +91,7 @@ def _under(name: str, prefix: str) -> bool:
 
 def _foreign_context(name: str) -> str | None:
     top = name.split(".")[0]
-    if top.startswith("omega_engine") and top != PACKAGE:
+    if top.startswith("engine") and top != PACKAGE:
         return top
     return None
 

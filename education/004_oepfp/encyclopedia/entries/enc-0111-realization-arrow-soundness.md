@@ -43,7 +43,7 @@ checks
 \mathsf{packet.ceiling}\le D.\mathsf{ceiling}\le s^\#.\mathsf{ceiling},
 \]
 runs the registered family realizer, and requires typed-pair fidelity before it
-seals a `TypedOmegaPacket`.
+seals a `TypedCorePacket`.
 
 ## Proof
 
@@ -62,7 +62,7 @@ grammar and schema preservation. The explicit chain
 \(\mathsf{packet.ceiling}\le D.\mathsf{ceiling}\le s^\#.\mathsf{ceiling}\)
 witnesses ceiling preservation. The successful object carries proposal
 evidence and host declarations only: it has no authority field, no
-`CertifiedAuthority`, and no deserialization constructor. Omega authority
+`CertifiedAuthority`, and no deserialization constructor. Core authority
 remains constructible only from terminalized finite descent. Therefore the realization arrow cannot create authority. \(\square\)
 
 ## Lean Obligations
@@ -73,7 +73,7 @@ remains constructible only from terminalized finite descent. Therefore the reali
 
 ## Notes
 
-- The arrow itself (`η_SG^♯ : RawLLMOutput → TypedOmegaPacket+𝔽`, Kleisli arrow,
+- The arrow itself (`η_SG^♯ : RawLLMOutput → TypedCorePacket+𝔽`, Kleisli arrow,
   NOT a functor, PO-10 OPEN) is canonical §X.1 = [[ENC-0105]]; the source's own
   canonical-home blockquote states that "canonical §X.1 declares the arrow but
   does not reproduce this proof body" — only this soundness theorem and its proof
@@ -83,7 +83,7 @@ remains constructible only from terminalized finite descent. Therefore the reali
   \[
   \eta_{\mathrm{SG}}^\sharp(r)=\mathsf{inl}(P)
   \Rightarrow
-  P:\mathsf{TypedOmegaPacket}
+  P:\mathsf{TypedCorePacket}
   \]
   with declared family, ceiling, terminal policy, and verifier scope. Every
   other input returns \(\mathsf{inr}(\phi)\)."
@@ -103,8 +103,8 @@ remains constructible only from terminalized finite descent. Therefore the reali
   authority non-construction routed through PO-AUTH-NC. NOT merged into the
   Statement.
 - Variant status: "PROVED-PROSE and IMPLEMENTED/MACHINE-CHECKED for the
-  workspace `omega_representation` boundary" (Rust binding:
-  `omega_representation/src/{packet.rs,functor.rs,fidelity.rs}`;
+  workspace `core_representation` boundary" (Rust binding:
+  `core_representation/src/{packet.rs,functor.rs,fidelity.rs}`;
   `RealizationFunctor::realize_raw` implements steps 1–7); "Operational
   rollout remains OPEN for the older standalone `products/symbol_game`
   adapters." The machine check is Rust, not Lean — `lean_status` unchanged.

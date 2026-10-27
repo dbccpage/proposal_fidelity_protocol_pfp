@@ -44,7 +44,7 @@ to a fresh run. Test references name files under `code/tests/`.
                     outcomes
 
   G005-07           Hashes bind declared   Guide Section 6; [functional-boundary                                                                                                             No unsigned producer
-                    bytes; current replay  notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/FUNCTIONAL_BOUNDARY.md)   authentication or
+                    bytes; current replay  notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/FUNCTIONAL_BOUNDARY.md)   authentication or
                     needs matching sources at the baseline                                                                                                                                   semantic proof
                     and inputs
 

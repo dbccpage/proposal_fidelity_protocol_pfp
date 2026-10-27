@@ -26,8 +26,8 @@ def _find_repo_root(p: Path = Path(__file__).resolve()) -> Path:
 
 REPO_ROOT = _find_repo_root()
 _GEN_CANDIDATES = [
-    REPO_ROOT / "omega_engine_education" / "documentation" / "001_oegen",
-    REPO_ROOT / "omega_engine_education" / "documentation" / "2_genesis",
+    REPO_ROOT / "education" / "documentation" / "001_oegen",
+    REPO_ROOT / "education" / "documentation" / "2_genesis",
 ]
 GENESIS_DIR = next((d for d in _GEN_CANDIDATES if d.is_dir()), _GEN_CANDIDATES[0])
 GENESIS_LEVELS_DIR = GENESIS_DIR / "levels"
@@ -37,9 +37,9 @@ GENESIS_README = GENESIS_DIR / "README.md"
 GENESIS_LEVELS_README = GENESIS_LEVELS_DIR / "README.md"
 
 _ONGOING_CANDIDATES = [
-    REPO_ROOT / "omega_engine_education" / "documentation" / "005_oegenong",
-    REPO_ROOT / "omega_engine_education" / "documentation" / "060_genesis_ongoing",
-    REPO_ROOT / "omega_engine_education" / "documentation" / "6_genesis_ongoing",
+    REPO_ROOT / "education" / "documentation" / "005_oegenong",
+    REPO_ROOT / "education" / "documentation" / "060_genesis_ongoing",
+    REPO_ROOT / "education" / "documentation" / "6_genesis_ongoing",
 ]
 GENESIS_ONGOING_DIR = next((d for d in _ONGOING_CANDIDATES if d.is_dir()), _ONGOING_CANDIDATES[0])
 GENESIS_ONGOING_IMAGES_DIR = GENESIS_ONGOING_DIR / "_images"

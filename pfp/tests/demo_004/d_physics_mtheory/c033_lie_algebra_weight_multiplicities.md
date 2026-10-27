@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Freudenthal's recursion gives the multiplicity of every weight in an irreducible representation from its highest weight. The Weyl dimension formula gives the total dimension as an exact rational product. Their agreement, Σ over dominant weights of multiplicity × Weyl-orbit size = dimension, is a cheap global check. A tensor-product decomposition is checked by multiplying characters exactly. Producing the numbers is error-prone: inner products need the right symmetric form, orbit sizes need the right stabilizers, and B-type and C-type label conventions are easy to swap.
 
-This is the group-theory layer beneath C032 and C040. It stresses OEWAS (Omega Engine Workflows, Agents, Skills) recursion with host arithmetic, and OEEIS (Omega Engine Epistemic Immune System) screening of multiplicity tables that are dimensionally consistent but wrong weight by weight.
+This is the group-theory layer beneath C032 and C040. It stresses OEWAS (Engine Workflows, Agents, Skills) recursion with host arithmetic, and OEEIS (Engine Epistemic Immune System) screening of multiplicity tables that are dimensionally consistent but wrong weight by weight.
 
 ## 3. Formal Problem and Bounds
 
@@ -107,7 +107,7 @@ Operands expected: (1) orbit size |W| / |W_μ| with the stabilizer read from zer
 ## 13. Estate Reuse and Prerequisites
 
 - No Lie-algebra module exists in the estate. The Cartan data, Freudenthal, Kostant and Brauer–Klimyk implementations are new Rust work and will be shared with C032 and C040.
-- `omega_engine/crates_rs/omega_kernel` for exact rationals and `omega_engine/crates_rs/omega_linear_algebra` for the inverse Cartan matrix.
+- `engine/crates_rs/core_kernel` for exact rationals and `engine/crates_rs/core_linear_algebra` for the inverse Cartan matrix.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

@@ -5,13 +5,13 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 
-from omega_engine_pfp.domain.normal_forms.bqnf_validator import (
+from pfp.domain.normal_forms.bqnf_validator import (
     BqnfBoundary,
     BqnfCdcEvent,
     BqnfValidator,
 )
-from omega_engine_pfp.domain.normal_forms.fixture_ports import parse_bqnf_fixture_payload
-from omega_engine_pfp.infrastructure.normal_forms.bqnf_fixture_loader import (
+from pfp.domain.normal_forms.fixture_ports import parse_bqnf_fixture_payload
+from pfp.infrastructure.normal_forms.bqnf_fixture_loader import (
     JsonYamlBqnfFixtureLoader,
 )
 

@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import Any, Iterator
 
-from omega_engine_prompt_civilization.domain.intelligence_metabolism.models import (
+from pciv.domain.intelligence_metabolism.models import (
     MinedRecordV1,
     MiningFailureV1,
 )

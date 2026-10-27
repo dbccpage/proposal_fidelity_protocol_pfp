@@ -1,4 +1,4 @@
-"""Compatibility re-exports for AST models from omega_engine_woland.stage."""
+"""Compatibility re-exports for AST models from adversary.stage."""
 from __future__ import annotations
 
 from .ast_cochain_extractor import (

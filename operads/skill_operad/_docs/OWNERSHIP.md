@@ -1,10 +1,10 @@
 # Ownership -- `skill_operad/` executable tree
 
-> **HISTORICAL.** `.agents/operad/` is absent. The executable tree is `omega_engine_operads/skill_operad/`. See [chapter 23](../../../omega_engine_education/documentation/008_oewas/atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
+> **HISTORICAL.** `.agents/operad/` is absent. The executable tree is `operads/skill_operad/`. See [chapter 23](../../../education/documentation/008_oewas/atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
 
 **AuthorityEffect: None.**
 
-The executable operad tree is `skill_operad/` inside `omega_engine_operads`. `.agents/operad/` is a historical path and is not on this tree.
+The executable operad tree is `skill_operad/` inside `operads`. `.agents/operad/` is a historical path and is not on this tree.
 
 ## Current ownership boundary (this package)
 
@@ -29,7 +29,7 @@ Correct mathematical name of the structure in use: **coloured non-symmetric mult
 
 | Surface | Job |
 | --- | --- |
-| `omega_engine/crates/homotopy_type_theory/` | Engine formal library (identity, truncation, quasi-category, A∞ sketches, ...) |
+| `engine/crates/homotopy_type_theory/` | Engine formal library (identity, truncation, quasi-category, A∞ sketches, ...) |
 | `skill_operad/` | Skill multicategory typing, residual honesty, dispatch, antibody duals. This is the executable tree. |
 
 When application code needs formal math, depend on the engine math crates. Do not re-implement identity types, univalence, or higher inductive types inside `skill_operad/`.

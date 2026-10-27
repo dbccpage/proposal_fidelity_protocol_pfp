@@ -14,13 +14,13 @@ from dataclasses import asdict, dataclass, field
 from importlib.resources import files
 from pathlib import Path
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     ContextRefusal,
     LevelEngineResourcesPort,
     configure_context,
 )
-from omega_engine_pfp.domain.tower.level_engine import LevelEngineOutcome
-from omega_engine_pfp.infrastructure.tower_evidence.level_engine import EvidenceRefusal
+from pfp.domain.tower.level_engine import LevelEngineOutcome
+from pfp.infrastructure.tower_evidence.level_engine import EvidenceRefusal
 
 from .runner import ResearchLevelEngineRunner
 
@@ -94,7 +94,7 @@ def _inputs(challenge_id: str, candidate_bytes: bytes, protected_pairs: object) 
 
 
 def _checker_sources() -> dict[str, bytes]:
-    operations = Path(str(files("omega_engine_operations")))
+    operations = Path(str(files("operations")))
     engine = operations / "use_cases" / "level_engine" / "research_engine"
     checker = {"engine/" + name: _read(engine / name) for name in _ENGINE_REQUIRED}
     checker["domain/level_engine_context.py"] = _read(operations / "domain/level_engine_context.py")
@@ -212,7 +212,7 @@ class FiniteLevelEngineConsumer:
                 raise EvidenceRefusal("REPLAY_IDENTITY_MISMATCH", "Unexpected runner identity or grade")
             if replay.terminal != "FIXTURE_EXPECTATIONS_MATCHED":
                 raise EvidenceRefusal(replay.terminal, "Fixture calibration is unavailable or mismatched")
-            from omega_engine_operations.use_cases.level_engine.research_engine.level import (
+            from operations.use_cases.level_engine.research_engine.level import (
                 Fixture,
                 decide_fixture,
                 load_spec,
@@ -255,9 +255,9 @@ class FiniteLevelEngineConsumer:
 
 
 def _candidate_structure(raw: bytes):
-    from omega_engine_operations.use_cases.level_engine.research_engine.canon import loads
-    from omega_engine_operations.use_cases.level_engine.research_engine.errors import Refusal
-    from omega_engine_operations.use_cases.level_engine.research_engine.structure import from_json
+    from operations.use_cases.level_engine.research_engine.canon import loads
+    from operations.use_cases.level_engine.research_engine.errors import Refusal
+    from operations.use_cases.level_engine.research_engine.structure import from_json
 
     def require(condition: bool) -> None:
         if not condition:

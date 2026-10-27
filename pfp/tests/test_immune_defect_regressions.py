@@ -11,14 +11,14 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.domain.biochem.proofreading import HopfieldNinioProofreader
-from omega_engine_pfp.domain.immune.clonal_selection import (
+from pfp.domain.biochem.proofreading import HopfieldNinioProofreader
+from pfp.domain.immune.clonal_selection import (
     ClonalCandidate,
     ClonalSelectionEngine,
     KillConditionRefusal,
 )
-from omega_engine_pfp.domain.immune.thymus import SelfPanel
-from omega_engine_pfp.domain.immune.treg import TregSupervisor
+from pfp.domain.immune.thymus import SelfPanel
+from pfp.domain.immune.treg import TregSupervisor
 
 
 def _rule(half_life_runs: int = 10, pattern: str = r"eval_unrestricted_code") -> ClonalCandidate:

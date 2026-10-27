@@ -528,7 +528,7 @@ def run_cross_domain_symbol_game_suite(receipt_path: Optional[os.PathLike[str] |
         "authority_effect": "None",
         "scope": "Illustrative finite graph encodings; no external domain theorem or benchmark baseline.",
         "timestamp_epoch": int(time.time()),
-        "native_engine_sha256": os.environ.get("OMEGA_FUNCTIONAL_GRAPH_SHA256"),
+        "native_engine_sha256": os.environ.get("CORE_FUNCTIONAL_GRAPH_SHA256"),
         "domains": {}
     }
 

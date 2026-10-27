@@ -11,9 +11,9 @@ maturity: canonical
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp/infrastructure/adapters/retained_profile_cec_bridge.py
-  - omega_engine_pfp/use_cases/cec_bridge.py
-  - omega_engine_education/documentation/004_oepfp
+  - pfp/infrastructure/adapters/retained_profile_cec_bridge.py
+  - pfp/use_cases/cec_bridge.py
+  - education/documentation/004_oepfp
 last_verified: 2026-10-20
 verification_scope: source inspection of the CEC bridge modules and stage definitions; no test run
 ---
@@ -22,7 +22,7 @@ verification_scope: source inspection of the CEC bridge modules and stage defini
 
 **Status:** Canonical Foundations Monograph  
 **AuthorityEffect:** `None`  
-**Governing Standard:** Landau Theoretical Minimum & Claim Hygiene Rule  
+**Governing Standard:** Examiner Theoretical Minimum & Claim Hygiene Rule  
 
 ---
 
@@ -142,7 +142,7 @@ $$C_0 \xrightarrow{\;e_1\;} C_1 \xrightarrow{\;e_2\;} C_2 \dots \xrightarrow{\;e
 
 ## 5. Implementation Reality in Sovereign Code
 
-The module `retained_profile_cec_bridge.py` (`omega_engine_pfp/infrastructure/adapters/retained_profile_cec_bridge.py`) is an isolated finite reference evaluator implementing the CEC pattern on a concrete carrier:
+The module `retained_profile_cec_bridge.py` (`pfp/infrastructure/adapters/retained_profile_cec_bridge.py`) is an isolated finite reference evaluator implementing the CEC pattern on a concrete carrier:
 * A retained difference exists before an observer;
 * An observer induces a profile difference and a zero relation;
 * Only a protected retained difference hidden by that observer is an **active obstruction**;
@@ -168,7 +168,7 @@ $$\boxed{
 \end{aligned}
 }$$
 
-Stage count at the 2026-10-20 pin: the earlier text said "8-Stage". The public controller [controller.yaml](../../../../omega_engine_pfp/infrastructure/yaml/stages/controller.yaml) declares `public_stage_count: 11`, `StageName` in [stages.py](../../../../omega_engine_pfp/domain/stages/stages.py) lists the same eleven names (admit through evidence_plan), and `run-seed --stages` accepts 1 to 11 with default 5 ([pfp.py](../../../../omega_engine_pfp/entrypoints/cli/pfp.py) line 75). The separate finite-QM research workflow has six stages P0 to P5 ([22](22_unified_pfp_v4_operad_workflow_and_hacks.md)).
+Stage count at the 2026-10-20 pin: the earlier text said "8-Stage". The public controller [controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml) declares `public_stage_count: 11`, `StageName` in [stages.py](../../../../pfp/domain/stages/stages.py) lists the same eleven names (admit through evidence_plan), and `run-seed --stages` accepts 1 to 11 with default 5 ([pfp.py](../../../../pfp/entrypoints/cli/pfp.py) line 75). The separate finite-QM research workflow has six stages P0 to P5 ([22](22_unified_pfp_v4_operad_workflow_and_hacks.md)).
 
 ### Verdict on Needing CEC:
 1. **For fixed-context PFP runs:** CEC is **not** invoked. PFP verifies candidates against the declared context contracts; if an obstruction cannot be repaired at depth $n$, PFP fails closed and emits a typed refusal (`REFUSED`, `NO_ACTIVE_OBSTRUCTION`, or `OpenObstruction`).
@@ -181,8 +181,8 @@ Stage count at the 2026-10-20 pin: the earlier text said "8-Stage". The public c
 
 A comprehensive census of the repository estate identified three distinct historical expansions for the acronym CEC:
 1. **Context Extension Calculus:** The load-bearing, mathematically grounded definition formalized in `math/04_conservative_context_extension_and_descent.md`, `levels/`, and `retained_profile_cec_bridge.py`.
-2. **Continuous Evaluation Criterion (slated for retirement, still present):** At the 2026-10-20 pin the stub remains in [`domain/ports/cec_bridge.py`](../../../../omega_engine_pfp/domain/ports/cec_bridge.py) (`ICecBridgeAdapter`, docstring "Continuous Evaluation Criterion"), [`use_cases/cec_bridge.py`](../../../../omega_engine_pfp/use_cases/cec_bridge.py) and [`infrastructure/adapters/cec_bridge_adapter.py`](../../../../omega_engine_pfp/infrastructure/adapters/cec_bridge_adapter.py). Both implementations return `status: REFUSED` with `refusal_code: CEC_EVALUATOR_UNAVAILABLE`. Continuous metrics conflict with PFP's exact rational arithmetic.
-3. **Cochain Equivalence Class (retired in this document, still registered):** At the 2026-10-20 pin, [`abbreviations.yaml`](../../../../omega_engine_governance/anomalon_councils/documentation/abbreviations.yaml) line 59 still gives `expansion: Cochain Equivalence Class`. No backing code was found. The register needs its own correction; this page cannot change it.
+2. **Continuous Evaluation Criterion (slated for retirement, still present):** At the 2026-10-20 pin the stub remains in [`domain/ports/cec_bridge.py`](../../../../pfp/domain/ports/cec_bridge.py) (`ICecBridgeAdapter`, docstring "Continuous Evaluation Criterion"), [`use_cases/cec_bridge.py`](../../../../pfp/use_cases/cec_bridge.py) and [`infrastructure/adapters/cec_bridge_adapter.py`](../../../../pfp/infrastructure/adapters/cec_bridge_adapter.py). Both implementations return `status: REFUSED` with `refusal_code: CEC_EVALUATOR_UNAVAILABLE`. Continuous metrics conflict with PFP's exact rational arithmetic.
+3. **Cochain Equivalence Class (retired in this document, still registered):** At the 2026-10-20 pin, [`abbreviations.yaml`](../../../../governance/sentinel_councils/documentation/abbreviations.yaml) line 59 still gives `expansion: Cochain Equivalence Class`. No backing code was found. The register needs its own correction; this page cannot change it.
 
 ---
 
@@ -202,4 +202,4 @@ A comprehensive census of the repository estate identified three distinct histor
    - CEC defines a formal 6-tuple and audit criteria for conservative context extensions in finite symbol games, implemented in reference Python code under fail-closed verification.
 
 4. **Next test needed:**
-   - Execute `py -3.12 -m pytest omega_engine_pfp/tests/test_cec_bridge_unavailable.py` to verify typed refusal behavior on unconfigured continuous metrics.
+   - Execute `py -3.12 -m pytest pfp/tests/test_cec_bridge_unavailable.py` to verify typed refusal behavior on unconfigured continuous metrics.

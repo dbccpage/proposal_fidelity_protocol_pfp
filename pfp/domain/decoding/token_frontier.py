@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Sequence, Union
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Failure, Result, Success, err, ok
+from pfp.domain.mssn_research.shared_kernel.result import Failure, Result, Success, err, ok
 from .errors import (
     DecodingError,
     DecodingRefusalCode,

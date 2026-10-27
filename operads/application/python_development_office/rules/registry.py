@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from omega_engine_operads.application.python_development_office.rules.base import (
+from operads.application.python_development_office.rules.base import (
     ArchitectureRule,
     AstRule,
     BaseRule,
@@ -33,16 +33,16 @@ class RuleRegistry:
     @classmethod
     def create_default(cls) -> RuleRegistry:
         """Instantiate registry populated with all standard pitfall and architecture rules."""
-        from omega_engine_operads.application.python_development_office.rules.clean_arch import (
+        from operads.application.python_development_office.rules.clean_arch import (
             CleanArchitectureDependencyRule,
         )
-        from omega_engine_operads.application.python_development_office.rules.ddd import (
+        from operads.application.python_development_office.rules.ddd import (
             DomainMustNotImportFrameworkRule,
         )
-        from omega_engine_operads.application.python_development_office.rules.mvc import (
+        from operads.application.python_development_office.rules.mvc import (
             ThinControllerRule,
         )
-        from omega_engine_operads.application.python_development_office.rules.python_pitfalls import (
+        from operads.application.python_development_office.rules.python_pitfalls import (
             ALL_PITFALL_RULES,
         )
 

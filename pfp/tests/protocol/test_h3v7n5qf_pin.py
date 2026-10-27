@@ -7,10 +7,10 @@ from pathlib import Path
 
 
 def _load():
-    repo = next(p for p in Path(__file__).resolve().parents if (p / '.git').exists() or (p / 'omega_engine_education').is_dir())
+    repo = next(p for p in Path(__file__).resolve().parents if (p / '.git').exists() or (p / 'education').is_dir())
     path = (
         repo
-        / "omega_engine_education"
+        / "education"
         / "documentation"
         / "005_genesis_ongoing"
         / "code"

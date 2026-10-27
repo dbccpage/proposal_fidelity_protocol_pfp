@@ -18,8 +18,8 @@ from fractions import Fraction
 from pathlib import Path
 
 import pytest
-from omega_engine_operads.skill_operad.coloured_operad import ColouredOperad
-from omega_engine_operads.skill_operad.ddc_operad_parser import (
+from operads.skill_operad.coloured_operad import ColouredOperad
+from operads.skill_operad.ddc_operad_parser import (
     DdcOperadParser,
     OperadCompositionReceipt,
 )

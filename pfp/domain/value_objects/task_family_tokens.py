@@ -51,7 +51,7 @@ TASK_FAMILY_TOKENS = frozenset((
     'tower_lift_necessity',
     'tui_glyph_visualization',
     'weighted_cycle_duality',
-    'woland_tribunal_dialectic',
+    'adversary_tribunal_dialectic',
     'pfp_a_mechanism',
     'attention_distractor_mask',
     'attention_steering_sweep_correctness',

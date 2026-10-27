@@ -11,25 +11,25 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_woland.domain.instruction_ingress import instruction_request_digest
-from omega_engine_woland.domain.models import WolandBoutRequestV1
-from omega_engine_woland.infrastructure.oewas_instruction_ingress import (
+from adversary.domain.instruction_ingress import instruction_request_digest
+from adversary.domain.models import AdversaryBoutRequestV1
+from adversary.infrastructure.oewas_instruction_ingress import (
     OeopSourceRouteV01, SignedOeopInstructionIngress, read_candidate_route,
     read_route_documents, workload_profile_digest,
 )
-from omega_engine_woland.use_cases.base_swarm.specializations import RESEARCH_PROFILE_V01
-from omega_engine_operads.application.commands.compile_catalog import operation_content_digest
-from omega_engine_operads.application.woland_candidate_plan import PlanNodeV01, PlanRefusal, candidate_plan_material
-from omega_engine_operads.application.woland_candidate_plan import compile_candidate_plan
-from omega_engine_operads.domain.value_objects.identifier import SkillId
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import LosslessMarkdownParserAdapter
-from omega_engine_operads.application.woland_instruction_admission import source_snapshot_digest
-from omega_engine_operads.application.woland_task_selection import WolandTaskShapeV01, select_candidate_plan
-from omega_engine_operads.domain.capability_catalog_v1 import encode_capability_catalog
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
-from omega_engine_operads.infrastructure.capability_catalog_compiler import compile_capability_catalog
+from adversary.use_cases.base_swarm.specializations import RESEARCH_PROFILE_V01
+from operads.application.commands.compile_catalog import operation_content_digest
+from operads.application.adversary_candidate_plan import PlanNodeV01, PlanRefusal, candidate_plan_material
+from operads.application.adversary_candidate_plan import compile_candidate_plan
+from operads.domain.value_objects.identifier import SkillId
+from operads.infrastructure.parser.markdown_parser_adapter import LosslessMarkdownParserAdapter
+from operads.application.adversary_instruction_admission import source_snapshot_digest
+from operads.application.adversary_task_selection import AdversaryTaskShapeV01, select_candidate_plan
+from operads.domain.capability_catalog_v1 import encode_capability_catalog
+from operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.capability_catalog_compiler import compile_capability_catalog
 
-PROJECTION_PATH = "omega_engine_operads/catalog/projections/v3/selected.json"
+PROJECTION_PATH = "operads/catalog/projections/v3/selected.json"
 
 
 @pytest.mark.parametrize("path", [".agents/skills/../new/SKILL.md", ".agents/skills/new//SKILL.md", ".agents/skills/new\\other/SKILL.md"])
@@ -46,16 +46,16 @@ def test_pure_projected_compiler_refuses_escaping_projection_path_before_io():
         "source_path": path, "content_digest": str(operation_content_digest(document.operations[0]))}]}
     with pytest.raises(PlanRefusal, match="PROJECTION_INVALID"):
         compile_candidate_plan((document,), PlanNodeV01("route.new"), projection=projection,
-                               projection_path="omega_engine_operads/catalog/projections/v3/../foreign.json")
+                               projection_path="operads/catalog/projections/v3/../foreign.json")
 
 
 def test_selected_digested_canonical_route_reaches_existing_instruction_reader():
     root = Path(__file__).resolve().parents[3]
-    source = "omega_engine_operads/catalog/contracts/v1/lessons/woland-strict-input-pattern.json"
-    route = replace(_route("woland-strict-input-pattern"), source_kind="typed_contracts", source_paths=(source,))
+    source = "operads/catalog/contracts/v1/lessons/adversary-strict-input-pattern.json"
+    route = replace(_route("adversary-strict-input-pattern"), source_kind="typed_contracts", source_paths=(source,))
     documents = read_route_documents(root, route)
     assert len(documents) == 1 and documents[0].source_relative_path == source
-    assert str(documents[0].operations[0].operation_id) == "woland-strict-input-pattern"
+    assert str(documents[0].operations[0].operation_id) == "adversary-strict-input-pattern"
     assert documents[0].operations[0].lifecycle.admission.value == "Unadmitted"
     assert "BAD_STEP" in documents[0].operands[0].instruction_body
 
@@ -112,7 +112,7 @@ def _route(root_id):
 def _selection(root, request, route):
     candidate = read_candidate_route(root, route)
     operation = candidate.documents[0].operations[0]
-    task = WolandTaskShapeV01(instruction_request_digest(request), route.workload_profile_id,
+    task = AdversaryTaskShapeV01(instruction_request_digest(request), route.workload_profile_id,
         route.workload_profile_digest, route.domain_id, operation.inputs, operation.output)
     return task, select_candidate_plan(task, (candidate,))
 
@@ -126,7 +126,7 @@ def _signed_ingress(tmp_path, root, request, route):
         generated = subprocess.run([ssh, "-q", "-t", "ed25519", "-N", "", "-f", str(key)], capture_output=True)
         assert generated.returncode == 0, generated.stderr.decode(errors="replace")
     manifest = {
-        "schema_version": "oewas.woland.instruction_admission.v0.1", "decision": "APPROVE",
+        "schema_version": "oewas.adversary.instruction_admission.v0.1", "decision": "APPROVE",
         "reviewer_identity": "fixture.operator", "authority_effect": "None", "request_digest": task.request_digest,
         "task_shape_digest": selected.task_shape_digest, "workload_profile_id": task.workload_profile_id,
         "workload_profile_digest": task.workload_profile_digest, "domain_id": task.domain_id,
@@ -137,7 +137,7 @@ def _signed_ingress(tmp_path, root, request, route):
     path.write_bytes((json.dumps(manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=True) + "\n").encode())
     signature = tmp_path / "admission.json.sig"
     signature.unlink(missing_ok=True)
-    subprocess.run([ssh, "-Y", "sign", "-f", str(key), "-n", "oewas-woland-instruction-v0.1", str(path)],
+    subprocess.run([ssh, "-Y", "sign", "-f", str(key), "-n", "oewas-adversary-instruction-v0.1", str(path)],
                    check=True, capture_output=True)
     trust = tmp_path / "allowed_signers"
     trust.write_text("fixture.operator " + (tmp_path / "fixture_key.pub").read_text())
@@ -162,8 +162,8 @@ def test_retirement_and_replacement_survive_actual_catalog_storage_and_source_re
         assert str(retired.replacement_operation_id) == "route.new"
         assert projection["catalog_digest"] != original["catalog_digest"]
         with pytest.raises(PlanRefusal, match="OPERATION_RETIRED"):
-            _selection(root, WolandBoutRequestV1("Check", "retired_projection"), _route("route.old"))
-        request = WolandBoutRequestV1("Check", "replacement_projection")
+            _selection(root, AdversaryBoutRequestV1("Check", "retired_projection"), _route("route.old"))
+        request = AdversaryBoutRequestV1("Check", "replacement_projection")
         _task, selected = _selection(root, request, _route("route.new"))
         assert candidate_plan_material(selected.plan)["projection"] == projection
         assert (PROJECTION_PATH, "sha256:" + hashlib.sha256((root / PROJECTION_PATH).read_bytes()).hexdigest()) in selected.plan.source_digests
@@ -179,7 +179,7 @@ def test_actual_signed_predispatch_rejects_old_projection_then_accepts_replaceme
     root, container = _estate(tmp_path)
     try:
         _project(root, container)
-        request = WolandBoutRequestV1("Check evidence", "signed_retirement_projection", fixture_mode=True)
+        request = AdversaryBoutRequestV1("Check evidence", "signed_retirement_projection", fixture_mode=True)
         old_ingress = _signed_ingress(tmp_path, root, request, _route("route.old"))
         old_receipt = old_ingress.pre_dispatch(request).unwrap()
         (root / ".agents/skills/old/SKILL.md").write_bytes(_source("old", retired=True, replacement="route.new"))
@@ -209,7 +209,7 @@ def test_missing_replacement_holds_projection_migration(tmp_path):
 
 @pytest.mark.parametrize("extra_count", [0, 90])
 def test_native_consumer_refuses_signed_projection_omission_before_provider_io(tmp_path, extra_count):
-    from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost, _runtime_request_bytes
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost, _runtime_request_bytes
 
     root, container = _estate(tmp_path)
     try:
@@ -219,14 +219,14 @@ def test_native_consumer_refuses_signed_projection_omission_before_provider_io(t
             path.parent.mkdir(parents=True)
             path.write_bytes(_source(name))
         _project(root, container)
-        request = WolandBoutRequestV1("Check evidence", "native_retirement_projection", fixture_mode=False)
+        request = AdversaryBoutRequestV1("Check evidence", "native_retirement_projection", fixture_mode=False)
         ingress = _signed_ingress(tmp_path, root, request, _route("route.new"))
         receipt = ingress.pre_dispatch(request).unwrap()
         admission = ingress.native_admission(request).unwrap()
         transport = receipt.native_instruction_plan()
         payload = {
             "task_key": request.task_key, "objective": request.objective, "repo_root": str(root),
-            "woland_output_dir": str(root / "_ic/woland"), "resources_root": str(Path(__file__).resolve().parents[3]),
+            "adversary_output_dir": str(root / "_ic/adversary"), "resources_root": str(Path(__file__).resolve().parents[3]),
             "ledger_path": str(tmp_path / "never-written.jsonl"), "bout_id": "projection-boundary",
             "config_path": str(tmp_path / "never-read.yaml"), "live": True,
             "max_rounds": request.max_rounds, "compute_budget": request.compute_budget,
@@ -235,16 +235,16 @@ def test_native_consumer_refuses_signed_projection_omission_before_provider_io(t
             "instruction_plan": transport, "instruction_admission": admission, "inherit_environment": False,
         }
         if extra_count:
-            encoded = _runtime_request_bytes("woland_bout", payload).unwrap()
+            encoded = _runtime_request_bytes("adversary_bout", payload).unwrap()
             assert 65536 < len(encoded) < 1048576
 
         def native_refusal():
-            envelope = RustSymbolGameHost().invoke_runtime("woland_bout", payload).unwrap()
+            envelope = RustSymbolGameHost().invoke_runtime("adversary_bout", payload).unwrap()
             assert envelope["success"] is True
             return envelope["result"]["refusal"]
 
         healthy = native_refusal()
-        assert healthy["code"] == "WOLAND_REQUEST_INVALID" and "live execution settings" in healthy["message"]
+        assert healthy["code"] == "ADVERSARY_REQUEST_INVALID" and "live execution settings" in healthy["message"]
         # This fixture decision is genuinely signed again, so the missing optional
         # projection must be caught by its consumer rather than a stale signature.
         admission["plan_material"].pop("projection")
@@ -258,7 +258,7 @@ def test_native_consumer_refuses_signed_projection_omission_before_provider_io(t
         transport["manifest_digest"] = "sha256:" + hashlib.sha256(raw).hexdigest()
         ingress.signature_path.unlink()
         subprocess.run([ingress.ssh_keygen, "-Y", "sign", "-f", str(tmp_path / "fixture_key"),
-                        "-n", "oewas-woland-instruction-v0.1", str(ingress.manifest_path)],
+                        "-n", "oewas-adversary-instruction-v0.1", str(ingress.manifest_path)],
                        check=True, capture_output=True)
         refusal = native_refusal()
         assert refusal["code"] == "NATIVE_INSTRUCTION_ADMISSION_INVALID"

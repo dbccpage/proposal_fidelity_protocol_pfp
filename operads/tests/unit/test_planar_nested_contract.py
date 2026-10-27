@@ -1,6 +1,6 @@
 """Nonzero nested slots and ordered-boundary controls for the actual planar kernel."""
 
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain.planar_substitution import (
     OperadOperation,
     associativity_witness,
 )

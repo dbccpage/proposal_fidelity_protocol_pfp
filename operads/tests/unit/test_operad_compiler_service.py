@@ -10,7 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 import pytest
 
-from omega_engine_operads.application.operad import (
+from operads.application.operad import (
     OperadBudgetService,
     OperadCompilerService,
 )

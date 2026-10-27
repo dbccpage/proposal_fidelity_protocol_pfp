@@ -8,15 +8,15 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
-from omega_engine_pfp.infrastructure.openrouter_seat_gateway import (
+from operations.domain.rop.result import Ok
+from pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
+from pfp.infrastructure.openrouter_seat_gateway import (
     CallLedger,
     RoutedSeatExecutor,
     SeatTurnRefused,
     parse_machine_block,
 )
-from omega_engine_pfp.infrastructure.seat_transport.routing import (
+from pfp.infrastructure.seat_transport.routing import (
     BudgetPolicy,
     RouteLeg,
     RoutingTable,
@@ -45,14 +45,14 @@ def _table(per_bout: int = 1_000_000, per_day: int = 10_000_000) -> RoutingTable
         cheap_share_min=Fraction(1, 2),
         budget=BudgetPolicy(per_bout, per_day),
         seats=(
-            SeatRoute("Koroviev", "strong", legs),
-            SeatRoute("Begemot", "cheap", legs),
-            SeatRoute("Hella", "deterministic"),
+            SeatRoute("Defect Hunter", "strong", legs),
+            SeatRoute("Gauge Breaker", "cheap", legs),
+            SeatRoute("Syntax Prefilter", "deterministic"),
         ),
     )
 
 
-def _request(seat: str = "Koroviev") -> SeatTurnRequestV1:
+def _request(seat: str = "Defect Hunter") -> SeatTurnRequestV1:
     return SeatTurnRequestV1(scene_id="s1", seat_id=seat, prompt_text="judge this", candidate_id="c1")
 
 
@@ -162,7 +162,7 @@ def test_day_budget_counts_prior_ledger_spend(tmp_path):
 
 def test_non_model_and_unknown_seats_refuse(tmp_path):
     ex = _executor(tmp_path, {"openrouter": lambda *a: _raw(GOOD_BLOCK)})
-    assert ex._execute_legacy_fixture(_request("Hella")).error.code == "SEAT_NOT_MODEL_BACKED"
+    assert ex._execute_legacy_fixture(_request("Syntax Prefilter")).error.code == "SEAT_NOT_MODEL_BACKED"
     assert ex._execute_legacy_fixture(_request("Nobody")).error.code == "SEAT_ROUTE_MISSING"
 
 
@@ -240,7 +240,7 @@ def test_huge_input_is_refused_before_sending(tmp_path):
         bout_id="bout-1",
         today=lambda: "2026-10-04",
     )
-    huge = SeatTurnRequestV1(scene_id="s1", seat_id="Koroviev", prompt_text="x" * 5000, candidate_id="c1")
+    huge = SeatTurnRequestV1(scene_id="s1", seat_id="Defect Hunter", prompt_text="x" * 5000, candidate_id="c1")
     assert ex._execute_legacy_fixture(huge).error.code == "INPUT_TOO_LARGE"
     assert calls == []
     (rec,) = _ledger(tmp_path)
@@ -259,6 +259,6 @@ def test_cheap_tier_cap_applies_within_bout_while_strong_continues(tmp_path):
         max_output_tokens=64,
         today=lambda: "2026-10-04",
     )
-    assert isinstance(ex._execute_legacy_fixture(_request("Begemot")), Ok)
-    assert ex._execute_legacy_fixture(_request("Begemot")).error.code == "BUDGET_TIER_EXCEEDED"
-    assert isinstance(ex._execute_legacy_fixture(_request("Koroviev")), Ok)
+    assert isinstance(ex._execute_legacy_fixture(_request("Gauge Breaker")), Ok)
+    assert ex._execute_legacy_fixture(_request("Gauge Breaker")).error.code == "BUDGET_TIER_EXCEEDED"
+    assert isinstance(ex._execute_legacy_fixture(_request("Defect Hunter")), Ok)

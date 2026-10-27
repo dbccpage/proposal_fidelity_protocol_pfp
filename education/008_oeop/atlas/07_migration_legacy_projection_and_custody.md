@@ -35,7 +35,7 @@ working tree now uses `panepistimion-paper-package-techne` in all five affected
 prefixes and refreshes the 41 exact four-host hash/size records with the repository’s
 deterministic refresh script.
 
-The Woland projection manifest also referenced retired or renamed skills. It now
+The Adversary projection manifest also referenced retired or renamed skills. It now
 uses:
 
 | Retired reference | Current successor |
@@ -43,7 +43,7 @@ uses:
 | `techne-code-python-principal-developer` | `techne-code-python-developer` |
 | `adversarial-receipt-audit` | `thanatos-adversarial-receipt-audit` |
 | `oeops-evidence-receipt-harness` | `techne-oeops-evidence-receipt-harness` |
-| `omega-old-man-chatgpt-red-team` | `thanatos-old-man-chatgpt-red-team` |
+| `core-chatgpt-red-team` | `thanatos-chatgpt-red-team` |
 | two retired architecture/scanner entries | one `techne-code-principal-architect` |
 
 The repaired selection has 21 unique skills and no missing references. Its
@@ -63,7 +63,7 @@ The dual-read adapter synthesizes permissive placeholder operations and lifecycl
 facets that do not arise from real schema/executor validation. It is a compatibility
 reader, not admission evidence.
 
-## Woland projection
+## Adversary projection
 
 The projection is explicitly shadow-only, `AuthorityEffect: None`, and cutover
 false. It is a selected byte-bound view over current skills. It is not a scheduler,

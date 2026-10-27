@@ -21,11 +21,11 @@ $$\boxed{\text{A mathematical realization } R(S(n)) \text{ has no authority to e
 | **1. Genesis Core** | Forced by Genesis derivation from `<>`. Domain-neutral and representation-free. | Opaque seeds `<>`, admission events, observational profiles, collapse pairs, cost floors, retraction down-maps $r_N$. | Graphs, matrices, metric tensors, manifolds, physical coordinates. |
 | **2. Formal Shadows ($R(S(n))$)** | Mathematical models representing core structures without defining them. | Directed graphs $a \to b$, simplices $\Delta_k$, Gram matrices $G$, transfer operators $\mathcal{L}$, dagger categories. | Claiming authority to advance $S(n)$; omitting shadow-local variable prefixes. |
 | **3. Applications** | External domain mappings and physical analogies. Zero state authority. | Discrete Regge spacetime, lattice gauge holonomies, quantum analogies, attention masks. | Elevating physical metaphors into Genesis derivation rules. |
-| **4. Verification** | Hermetic execution engines and proof checkers emitting receipts. | Lean 4 proof terms, sovereign Rust crates (`omega_homology`), JSON receipt logs. | Soft or unlogged validation; unverified heuristic convergence. |
+| **4. Verification** | Hermetic execution engines and proof checkers emitting receipts. | Lean 4 proof terms, sovereign Rust crates (`core_homology`), JSON receipt logs. | Soft or unlogged validation; unverified heuristic convergence. |
 
 ## 3. Four-Directory Filesystem Architecture
 
-All documentation under `omega_engine_education/documentation/0_s_n/` partitions into four physical subdirectories:
+All documentation under `education/documentation/0_s_n/` partitions into four physical subdirectories:
 
 1. `core/`: Native derivations ($S(0)$ through $S(6)$).
 2. `realizations/<domain>/`: Categorized by domain (`simplicial/`, `dynamics/`, `category/`, `logic/`, `epistemic/`, `analysis/`). Shadows are prohibited from carrying numerical `level_XX` stage identities or posing as Genesis stages.

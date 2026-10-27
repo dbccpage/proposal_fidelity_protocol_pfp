@@ -10,16 +10,16 @@ skills or mint promotion.
 | --- | --- |
 | `cases.json` | Case catalog (≥10 known-failure / routing cases) |
 | `fixtures/` | Synthetic SKILL.md snippets for parity scans |
-| Runner | `omega_engine_operads/skill_operad/skill_compiler/eval_runner.py` |
+| Runner | `operads/skill_operad/skill_compiler/eval_runner.py` |
 
 ## Run
 
 ```bash
-python omega_engine_operads/skill_operad/skill_compiler/eval_runner.py
+python operads/skill_operad/skill_compiler/eval_runner.py
 
 # or
 
-python -m pytest omega_engine_operads/skill_operad/skill_compiler/tests/test_eval_bank.py
+python -m pytest operads/skill_operad/skill_compiler/tests/test_eval_bank.py
 ```
 
 ## Rule

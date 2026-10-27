@@ -15,13 +15,13 @@ operad_residual: "unknown"
 
 ## When to use
 
-Before and after any change to `omega_engine_operads/skills/_shared/` or `_templates/`, and
+Before and after any change to `operads/skills/_shared/` or `_templates/`, and
 whenever a skill adds a citation into either.
 
 ## Inputs
 
-- `omega_engine_operads/skills/_shared/**` and `_templates/**`
-- `omega_engine_operads/skills/_shared/_manifest.json`
+- `operads/skills/_shared/**` and `_templates/**`
+- `operads/skills/_shared/_manifest.json`
 - `.agents/operad/skill_compiler/routes.yaml` (across host roots)
 
 ## Protocol

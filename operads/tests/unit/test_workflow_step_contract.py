@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_operads.domain.planar_substitution import OperadOperation
-from omega_engine_operads.domain.workflow_graph import (
+from operads.domain.planar_substitution import OperadOperation
+from operads.domain.workflow_graph import (
     WorkflowError,
     unknown_operations,
     validate_workflow,

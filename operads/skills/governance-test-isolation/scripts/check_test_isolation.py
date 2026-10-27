@@ -24,33 +24,33 @@ def check_basetemp_safety(repo_root: Path) -> list[str]:
 
 def check_rust_tests_exclusivity(repo_root: Path) -> list[str]:
     violations = []
-    rust_tests = repo_root / "omega_engine" / "tests"
+    rust_tests = repo_root / "engine" / "tests"
     if rust_tests.is_dir():
         py_files = list(rust_tests.glob("*.py"))
         if py_files:
             violations.append(
-                f"RULE_OMEGA_ENGINE_TESTS_RUST_EXCLUSIVE_001 violated: Python test files found in omega_engine/tests: {[p.name for p in py_files]}"
+                f"RULE_TESTS_RUST_EXCLUSIVE_001 violated: Python test files found in engine/tests: {[p.name for p in py_files]}"
             )
     return violations
 
 
 def check_cargo_workspace_root(repo_root: Path) -> list[str]:
     """Automated check for RULE_CARGO_WORKSPACE_ROOT_001:
-    1. Canonical workspace manifest must exist at omega_engine/crates_rs/Cargo.toml and declare [workspace].
+    1. Canonical workspace manifest must exist at engine/crates_rs/Cargo.toml and declare [workspace].
     2. Repository root must NOT contain a Cargo.toml manifest.
     """
     violations = []
-    workspace_manifest = repo_root / "omega_engine" / "crates_rs" / "Cargo.toml"
+    workspace_manifest = repo_root / "engine" / "crates_rs" / "Cargo.toml"
     if not workspace_manifest.is_file():
         violations.append(
-            "RULE_CARGO_WORKSPACE_ROOT_001 violated: Canonical Cargo workspace manifest missing at omega_engine/crates_rs/Cargo.toml"
+            "RULE_CARGO_WORKSPACE_ROOT_001 violated: Canonical Cargo workspace manifest missing at engine/crates_rs/Cargo.toml"
         )
     else:
         try:
             content = workspace_manifest.read_text(encoding="utf-8")
             if "[workspace]" not in content:
                 violations.append(
-                    "RULE_CARGO_WORKSPACE_ROOT_001 violated: omega_engine/crates_rs/Cargo.toml does not contain '[workspace]' table declaration"
+                    "RULE_CARGO_WORKSPACE_ROOT_001 violated: engine/crates_rs/Cargo.toml does not contain '[workspace]' table declaration"
                 )
         except Exception as e:
             violations.append(f"RULE_CARGO_WORKSPACE_ROOT_001 violated: Cannot read {workspace_manifest}: {e}")
@@ -66,14 +66,14 @@ def check_cargo_workspace_root(repo_root: Path) -> list[str]:
 
 def check_rust_core_crate_test_hermeticity(repo_root: Path) -> list[str]:
     """Automated check for RULE_RUST_CORE_CRATE_TEST_HERMETICITY_001:
-    1. Core crate integration tests in omega_engine/crates_rs/tests/*/ must be strictly hermetic.
+    1. Core crate integration tests in engine/crates_rs/tests/*/ must be strictly hermetic.
     2. Tests must depend exclusively on canonical schemas, stdlib fixtures, or local checked-in test vectors.
     3. Strictly prohibited from referencing or depending on unpromoted scratch directories (scratch/, \\scratch),
        transient design demos or version folders (ow/pfp/, ow/ow_0_demo/, 1_symbol_game_versions),
        or machine-specific absolute path roots (e.g. C:\\Users, /Users, /home).
     """
     violations = []
-    crates_rs = repo_root / "omega_engine" / "crates_rs"
+    crates_rs = repo_root / "engine" / "crates_rs"
     if not crates_rs.is_dir():
         return violations
 

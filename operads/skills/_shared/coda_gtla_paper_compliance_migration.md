@@ -34,7 +34,7 @@
 - `paper-proof-signoff` (authority witness) — attests over receipts, emits `terminal_receipt`-shape or `RepairRequired/OpenObstruction/RefusalRecommended/OracleRequired`; **never mints `AuthorizedLocalResult`**; ENC read+regen-verify only (C2); C5 path fix.
 - `paper-release` (release boundary) — **C2 fix: no longer edits ENC "in lockstep"** — routes `ClaimLedgerRepair`+`LeanObligation` and BLOCKs on drift; `PASSED` = proposal until human promotion; C5 path fix.
 - `paper-build` (bundle builder) — contract ref; `BUILD: COMPLETE` mints nothing; `.zip`/Zenodo = PaperReleaseBundle proposal.
-- `math-prover`, `math-adversary`, `omega-math-dev`, `panep-math-and-physics-prof` — light wiring: sovereign-header `families: [coda-gtla-papers]`, contract reference, constraints; `math-adversary` notes its six gates are the single shared list (no fork); `panep-math-and-physics-prof` marked firewall HOME (referenced, not subordinated). Existing doctrine untouched.
+- `math-prover`, `math-adversary`, `core-math-dev`, `panep-math-and-physics-prof` — light wiring: sovereign-header `families: [coda-gtla-papers]`, contract reference, constraints; `math-adversary` notes its six gates are the single shared list (no fork); `panep-math-and-physics-prof` marked firewall HOME (referenced, not subordinated). Existing doctrine untouched.
 
 **Modified governance (2):**
 
@@ -48,7 +48,7 @@ Diffstat: 12 tracked files +368/−51, plus 2 new files.
 **Resolved (contradictions from census):**
 
 - **C1** adversary-writes → `paper-adversary` read-only.
-- **C2** ENC write-owner conflict → `entries/**` owned by `/omega-math-dev`; proof-signoff blocks-only, release routes obligations (no lockstep ENC edit).
+- **C2** ENC write-owner conflict → `entries/**` owned by `/core-math-dev`; proof-signoff blocks-only, release routes obligations (no lockstep ENC edit).
 - **C3** build enable/disable seam → single source: role table (paper-build is the separate bundle builder).
 - **C4** two shared docs → one contract consolidating/cross-linking `paper_hygiene_standard.md`.
 - **C5** proof-ledger path drift → corrected to `research/encyclopedia/proof_ledgers/proof_ledger_<YYYYMMDD>.md` across improver/adversary/proof-signoff/release; checker guards regression.
@@ -59,7 +59,7 @@ Diffstat: 12 tracked files +368/−51, plus 2 new files.
 - **R2** no single Rust terminal enum — §3 reconciliation table.
 - **R3** `TypedRefusal`→`Refused(RefusalSource)`. **R4** `LiftLicenseNeeded` 3 spellings. **R5** `Invalid`/`InfrastructureFailure` only in doc+`gate_verdict`.
 - **R6** promotion/receipt names design-only (conductor schemas) — **being canonicalized by the concurrent conductor-doc workstream; re-reconcile when it lands.**
-- **R7** operator-manifest gaps (`observer`/`witnesses`/`operator id` absent from `omega.agent_work.v1`) → paper-operator profile (Appendix E).
+- **R7** operator-manifest gaps (`observer`/`witnesses`/`operator id` absent from `core.agent_work.v1`) → paper-operator profile (Appendix E).
 - **R8** ODP §5 vs trichotomy spellings. **R9** §8 expected "S6 research-blocked"; Paper 000 records `OPEN/[CONJECTURE,CONDITIONAL]` — fixtures key on the paper. **R10** proof-ledger path (now fixed in skills; the fixture papers/ledgers themselves still carry the old pointer — a paper-edit obligation, not a skill change).
 
 **New residuals found by the fixture dry-runs (paper-side, out of scope for this task — routed, not fixed):**
@@ -83,7 +83,7 @@ Not claimed: this proves no paper, does not establish CODA_GTLA globally, proves
 
 1. **Re-reconcile R6** once the conductor-doc workstream finalizes the receipt/terminal names; the alias layer localizes the change to contract §3/§0 + Appendix B/D.
 2. Automate the runtime-only checks (receipt-shape emission, per-paper Claim-Ledger parity) — today `encyclopedia_audit.py` covers the ENC NDJSON graph, not paper markdown; a `paper.claim_ledger.reconcile` operator implementation is the follow-up.
-3. Route the fixture-discovered paper residuals (Paper 000 norm typing; Paper 000a ledger drift) to `/omega-math-dev` / `/rip-papers` as separate paper-edit work.
+3. Route the fixture-discovered paper residuals (Paper 000 norm typing; Paper 000a ledger drift) to `/core-math-dev` / `/rip-papers` as separate paper-edit work.
 4. Run `auto-symmetry-hunter --families-only` on the family after any future skill edit (cadence: on any family edit).
 
 ---
@@ -100,7 +100,7 @@ Using only the canonical terminal set.
 | C3 build enable/disable seam (reconciled to role table; two dated rulings still live in-file) | **StabilizedSurvivor** |
 | Runtime receipt-shape emission + per-paper Claim-Ledger parity automation | **OpenObstruction** (contract specifies; not yet coded — recommendation 2) |
 | R6 conductor receipt/terminal vocabulary (design-only, in-flight) | **OracleNeeded** (external: awaits the conductor-doc workstream) |
-| R7 operator-manifest fields absent from `omega.agent_work.v1` | **LiftLicenseNeeded** (paper-operator profile defined; upstream schema unchanged) |
+| R7 operator-manifest fields absent from `core.agent_work.v1` | **LiftLicenseNeeded** (paper-operator profile defined; upstream schema unchanged) |
 | Fixture-discovered paper residuals (Paper 000 norm typing; Paper 000a ledger drift) | **OpenObstruction** (routed to paper-edit owners; out of scope here) |
 | R9 spec-vs-paper "S6 research-blocked" | **Refused** (spec expectation declined; keyed to the paper's real status) |
 | Skill bundle activation | **Refused** (governed `OperatorImprovementCandidate`; human promotion required) |

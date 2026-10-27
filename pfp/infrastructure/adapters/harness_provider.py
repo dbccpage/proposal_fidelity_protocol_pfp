@@ -3,30 +3,30 @@
 import json
 from dataclasses import dataclass
 
-from omega_engine_operads.domain.autopoiesis.learning import canonical
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_pfp.infrastructure.adapters.harness_budget import HarnessBudgetLedger
-from omega_engine_woland.domain.providers.allowlist import ModelAllowlist
-from omega_engine_woland.domain.providers.budget import (
+from operads.domain.autopoiesis.learning import canonical
+from operations.domain.rop.result import Err
+from pfp.infrastructure.adapters.harness_budget import HarnessBudgetLedger
+from adversary.domain.providers.allowlist import ModelAllowlist
+from adversary.domain.providers.budget import (
     BudgetController,
     GatewayPolicy,
     PriceTable,
     ModelPricingObservationV1,
     utc_now,
 )
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     CandidateRequest,
     DecodingParamsV1,
     Provider,
     ProviderError,
 )
-from omega_engine_woland.infrastructure.providers.anthropic_messages import (
+from adversary.infrastructure.providers.anthropic_messages import (
     AnthropicTransport,
     build_anthropic_body,
     observe_anthropic_usage,
 )
-from omega_engine_woland.infrastructure.providers.credential_source import resolve_credential
-from omega_engine_woland.infrastructure.providers.gateway import OearsLlmGateway
+from adversary.infrastructure.providers.credential_source import resolve_credential
+from adversary.infrastructure.providers.gateway import OearsLlmGateway
 
 
 @dataclass(frozen=True)

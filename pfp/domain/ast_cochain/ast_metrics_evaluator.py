@@ -1,7 +1,7 @@
 """AST structural checks and a fail-closed functional evaluation boundary.
 
 Dependency complexes can be built in Python. Their PHI and GAMMA2 values
-require an adapter backed by ``omega_functional`` before a report is emitted.
+require an adapter backed by ``core_functional`` before a report is emitted.
 """
 
 from __future__ import annotations
@@ -10,7 +10,7 @@ from typing import Optional, Tuple
 
 import numpy as np
 
-from omega_engine_pfp.functional_boundary import require_rust_functional
+from pfp.functional_boundary import require_rust_functional
 
 from .ast_dependency_complex import DependencyComplex
 from .ast_models import ASTEvaluationReport

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Automated Normal Form Contract Validator Script.
 
-Validates all normal form YAML contracts in omega_engine_pfp/infrastructure/yaml/normal_forms/
+Validates all normal form YAML contracts in pfp/infrastructure/yaml/normal_forms/
 against standard.yaml, normal_form_contract_schema.yaml, index.yaml, and the canonical
-testing harness in omega_engine_pfp/infrastructure/yaml/normal_forms/.
+testing harness in pfp/infrastructure/yaml/normal_forms/.
 
 Invariants Checked:
 1. Deterministic YAML parsing across all contracts.
@@ -42,13 +42,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 
-from omega_engine_pfp.infrastructure.normal_form_loading import audit_specs_directory
-from omega_engine_pfp.infrastructure.normal_forms.catalog import (
+from pfp.infrastructure.normal_form_loading import audit_specs_directory
+from pfp.infrastructure.normal_forms.catalog import (
     _contract_paths,
     check_catalog,
     validate_contract,
 )
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import load_yaml
+from pfp.infrastructure.normal_forms.contract_model import load_yaml
 
 DEFAULT_CONTRACTS_DIR = Path(__file__).resolve().parents[2] / "infrastructure/yaml/normal_forms"
 _STANDARDS_DIR = DEFAULT_CONTRACTS_DIR / "_golden_nfs"

@@ -18,49 +18,49 @@ from hashlib import sha256
 from pathlib import Path
 from uuid import uuid4
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.infrastructure.adapters.pfp_campaign import (
+from operations.domain.rop.result import Err, Ok
+from pfp.infrastructure.adapters.pfp_campaign import (
     micro,
     snapshot_pricing,
 )
-from omega_engine_woland.domain.providers.attempt import (
+from adversary.domain.providers.attempt import (
     AdmittedRequest,
     CompletionOutcome,
     ProviderFailure,
     RetryClass,
 )
-from omega_engine_woland.domain.providers.allowlist import ModelAllowlist
-from omega_engine_woland.domain.providers.budget import (
+from adversary.domain.providers.allowlist import ModelAllowlist
+from adversary.domain.providers.budget import (
     BUILTIN_OBSERVED_AT_UTC,
     BudgetController,
     GatewayPolicy,
     PriceTable,
     utc_now,
 )
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     Provider,
     ProviderConfigError,
     ProviderError,
     check_reply_bytes,
 )
-from omega_engine_woland.infrastructure.providers.anthropic_messages import (
+from adversary.infrastructure.providers.anthropic_messages import (
     AnthropicTransport,
     parse_anthropic_response,
 )
-from omega_engine_woland.infrastructure.providers.budget_ledger import SqliteBudgetLedger
-from omega_engine_woland.infrastructure.providers.credential_source import resolve_credential
-from omega_engine_woland.infrastructure.providers.gateway import (
+from adversary.infrastructure.providers.budget_ledger import SqliteBudgetLedger
+from adversary.infrastructure.providers.credential_source import resolve_credential
+from adversary.infrastructure.providers.gateway import (
     OearsLlmGateway,
     fixture_transport,
     unbudgeted_gateway,
 )
-from omega_engine_woland.infrastructure.providers.generation_reconciler import GenerationReconciler
-from omega_engine_woland.infrastructure.providers.openai_compat import (
+from adversary.infrastructure.providers.generation_reconciler import GenerationReconciler
+from adversary.infrastructure.providers.openai_compat import (
     OpenAiCompatTransport,
     observe_openai_compat_usage,
 )
-from omega_engine_woland.infrastructure.providers.openrouter_transport import resolve_openrouter_key
-from omega_engine_woland.use_cases.providers.completion import request_digest
+from adversary.infrastructure.providers.openrouter_transport import resolve_openrouter_key
+from adversary.use_cases.providers.completion import request_digest
 
 
 def create_accounted_openrouter_gateway(
@@ -120,7 +120,7 @@ def create_accounted_openrouter_gateway(
     if callable(observe_key):
         observe_key(key.value)
     if trace is not None:
-        from omega_engine_pfp.infrastructure.trace.provider_dispatch import DurableDispatchTransport
+        from pfp.infrastructure.trace.provider_dispatch import DurableDispatchTransport
         transport = DurableDispatchTransport(trace, transport, artifact_store=artifact_store, live=True)
     if allow_unbounded_cost or max_estimated_cost_microusd is not None:
         gateway = unbudgeted_gateway(provider=Provider.OPENROUTER, model=model,
@@ -153,7 +153,7 @@ def create_accounted_openrouter_gateway(
 
 
 ANTHROPIC_COST_BASIS = "anthropic-standard-rated-v1"
-# Rated run-wide ceiling for one Anthropic run. Raised from $0.50 for a full Sonnet Retinue, then
+# Rated run-wide ceiling for one Anthropic run. Raised from $0.50 for a full Sonnet Panel, then
 # to $4 because an Opus run reserves twice each call's worst case and stops at 80%.
 ANTHROPIC_RUN_CEILING_MICROUSD = 4_000_000
 # Output bound for one Anthropic call; thinking shares it, so 3000 truncated Opus builders.
@@ -464,7 +464,7 @@ class DurableRunGateway:
                     or candidate.cost_usd is None):
                 return _run_refusal("PROVIDER_IDENTITY_MISMATCH")
             attempt = self.budget.attempt(claim["provider_attempt_id"])
-            from omega_engine_woland.domain.providers.types import BudgetReceipt
+            from adversary.domain.providers.types import BudgetReceipt
             receipt = BudgetReceipt(**attempt["receipt"])
             admitted = AdmittedRequest(claim["provider_attempt_id"], claim["reservation_id"],
                 binding["request_digest"], provider, model, request,
@@ -579,7 +579,7 @@ def _run_ledger(path):
             table = connection.execute("SELECT 1 FROM sqlite_master WHERE name='provider_budget'").fetchone()
             rows = connection.execute("SELECT id FROM provider_budget").fetchall() if table else []
             if rows:
-                if len(rows) != 1 or rows[0][0] not in {"pfp-hard-run-v1", "woland-pfp-estimated"}:
+                if len(rows) != 1 or rows[0][0] not in {"pfp-hard-run-v1", "adversary-pfp-estimated"}:
                     raise ValueError("DURABLE_RUN_FINANCIAL_POLICY_MISMATCH")
                 budget_id = rows[0][0]
     return SqliteBudgetLedger(path, budget_id=budget_id)
@@ -1050,7 +1050,7 @@ class NativeAnthropicCampaign:
         if (entry['state']!='unknown' or original.get('dispatch')!='REPLIED'
                 or not 200<=original.get('status',0)<300 or not raw):
             raise ValueError('RETAINED_REPLY_REQUIRED')
-        from omega_engine_pfp.infrastructure.seat_transport.anthropic_messages import read_retained_reply
+        from pfp.infrastructure.seat_transport.anthropic_messages import read_retained_reply
         data=read_retained_reply(raw,original['status'])
         if sha256(data).hexdigest()!=raw['sha256'].removeprefix('sha256:') or len(data)!=raw['bytes']:
             raise ValueError('REPLAY_RAW_MISMATCH')

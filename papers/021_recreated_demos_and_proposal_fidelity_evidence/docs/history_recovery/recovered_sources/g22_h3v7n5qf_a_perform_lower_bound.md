@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The seventeenth derivation of H3V7N5QF strikes the ban on `xrx` but keeps the obstruction paragraph. Under the A-perform reading an obstructed change is entered, so a single identification can create a loop, and the base cost formula stops being a lower bound. No replacement is proved (17:O2). The A-perform closure is also uncertified, because no count independent of the exploration exists (17:O4).
 
-Generation is hard: a lower bound must be valid on every state, including those reached through loops, and must be proved. Verification is cheap: compare the bound with breadth-first rounds at the bound, and compare two independent listings of the loop states. The task stresses proof under a changed rule, OEWAS (Omega Engine Workflows, Agents, Skills) certification by independent counts, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against reusing the refuted base formula.
+Generation is hard: a lower bound must be valid on every state, including those reached through loops, and must be proved. Verification is cheap: compare the bound with breadth-first rounds at the bound, and compare two independent listings of the loop states. The task stresses proof under a changed rule, OEWAS (Engine Workflows, Agents, Skills) certification by independent counts, and the OEEIS (Engine Epistemic Immune System) danger gate against reusing the refuted base formula.
 
 ## 3. Formal Problem and Bounds
 
@@ -98,7 +98,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_solvers](../../../../omega_engine/crates_rs/omega_solvers/) (exact weighted LP); [omega_search](../../../../omega_engine/crates_rs/omega_search/).
+- the_symbol_game: [core_solvers](../../../../engine/crates_rs/core_solvers/) (exact weighted LP); [core_search](../../../../engine/crates_rs/core_search/).
 - H3V7N5QF (`1681998`): `H3V7N5QF:code/seventeenth/`, `H3V7N5QF:code/run_seventeenth.py`, `H3V7N5QF:lean4/Seventeenth/` (`Perform.lean`, `Step.lean`), `H3V7N5QF:evidence/seventeenth/`, `H3V7N5QF:code/xry/cost.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), and [U17](../../upgrades/u17_lean_verifier_backend.md) (with Mathlib) for the Lean proof (the catalog row lists no extras and should add U17).
 

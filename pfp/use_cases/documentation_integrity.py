@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-from omega_engine_pfp.domain.documentation_integrity.models import (
+from pfp.domain.documentation_integrity.models import (
     ExecutionReceipt,
     IntegrityRefusal,
     IntegrityRequest,
 )
-from omega_engine_pfp.domain.documentation_integrity.ports import (
+from pfp.domain.documentation_integrity.ports import (
     ClockPort,
     DocumentationIntegrityGatewayPort,
 )
-from omega_engine_pfp.domain.kernel.result import Result
+from pfp.domain.kernel.result import Result
 
 
 class DocumentationIntegrityService:

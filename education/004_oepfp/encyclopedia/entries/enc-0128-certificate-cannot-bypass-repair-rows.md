@@ -9,12 +9,12 @@ tower_level: null
 primitive: null
 aliases: []
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "symbol_game_math_spine.md trunk Part III §3.3 'Corollary (Certificate Cannot Bypass Repair Rows)'"
 uses: ["ENC-0127"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_terminalizer_policy.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_terminalizer_policy.lean"
   - "PaperER007.refusal_rows_preempt_certificate"
   - "PaperER007.repair_rows_preempt_certificate"
   - "PaperER007.refusal_or_repair_preempts_certificate"

@@ -27,12 +27,12 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.calculus_receipt import RowOutcome
-from omega_engine_pfp.domain.row_rederivation import rederive_statement
+from pfp.domain.calculus_receipt import RowOutcome
+from pfp.domain.row_rederivation import rederive_statement
 
 VECTORS_PATH = (
     Path(__file__).resolve().parents[2]
-    / "omega_engine_governance"
+    / "governance"
     / "contracts"
     / "pinned"
     / "modular_residue_vectors.json"
@@ -48,7 +48,7 @@ def _label(case: dict) -> str:
 
 
 def test_the_vectors_file_is_the_one_this_estate_pins() -> None:
-    assert _BODY["schema"] == "omega.modular_residue_vectors.v1"
+    assert _BODY["schema"] == "core.modular_residue_vectors.v1"
     assert _BODY["authority_effect"] == "None"
 
 

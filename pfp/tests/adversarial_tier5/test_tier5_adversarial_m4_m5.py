@@ -14,7 +14,7 @@ White-box empirical stress testing of domain components across M4–M5:
 - domain/exact/wire.py (RationalWire canonical integers without slash, RationalDualityGap)
 - domain/ports/ (All @runtime_checkable domain protocol conformance)
 
-Soviet Lev Landau Discipline: Invariant, Break, Witness, Mutation on each test.
+Examiner Discipline: Invariant, Break, Witness, Mutation on each test.
 Claim Hygiene: Bounded phrasing; zero forbidden hype words.
 AuthorityEffect: None.
 ZERO-FLOAT Law: Pure Fraction, integer, or discrete relations.
@@ -30,7 +30,7 @@ from typing import Any, Mapping, Sequence, Tuple
 import pytest
 
 # 1. Decoding domain imports
-from omega_engine_pfp.domain.decoding import (
+from pfp.domain.decoding import (
     AntimorphismTransitionModel,
     Confluence2Cell,
     CriticalPair,
@@ -57,14 +57,14 @@ from omega_engine_pfp.domain.decoding import (
 )
 
 # 3. Genesis domain imports
-from omega_engine_pfp.domain.genesis import (
+from pfp.domain.genesis import (
     GenesisStage,
     GenesisStagePin,
     InvariantTriad,
 )
 
 # 4. Tower lift domain imports
-from omega_engine_pfp.domain.tower_lift import (
+from pfp.domain.tower_lift import (
     BinaryRelation,
     CarrierSet,
     LiftExhaustionReceipt,
@@ -72,14 +72,14 @@ from omega_engine_pfp.domain.tower_lift import (
 )
 
 # 5. AST cochain domain imports
-from omega_engine_pfp.domain.ast_cochain import (
+from pfp.domain.ast_cochain import (
     AstCochainReceipt,
     DependencyEdge,
     LggrVerdict,
 )
 
 # 6. Claim hygiene domain imports
-from omega_engine_pfp.domain.claim_hygiene import (
+from pfp.domain.claim_hygiene import (
     CitationAnchor,
     FORBIDDEN_HYPE_REPLACEMENTS,
     PaperClaim,
@@ -87,38 +87,38 @@ from omega_engine_pfp.domain.claim_hygiene import (
 )
 
 # 7. Sandbox domain imports
-from omega_engine_pfp.domain.sandbox import (
+from pfp.domain.sandbox import (
     ContainerProfile,
     ProcessBoundaryConfig,
     SeamExecutionResult,
 )
 
 # 9. Sovereignty domain imports
-from omega_engine_pfp.domain.sovereignty import (
+from pfp.domain.sovereignty import (
     AttentionMaskInterventionReceipt,
     CarrierProjectionReceipt,
     IndependentHostReplayVerdict,
 )
 
 # 10. Dual witness domain imports
-from omega_engine_pfp.domain.dual_witness import (
+from pfp.domain.dual_witness import (
     ExactDualWitnessCertificate,
 )
 
 # 11. Lean bridge domain imports
-from omega_engine_pfp.domain.lean_bridge import (
+from pfp.domain.lean_bridge import (
     FormalCertificateBridge,
     LeanProofWitness,
 )
 
 # 12. Exact rational wire domain imports
-from omega_engine_pfp.domain.exact import (
+from pfp.domain.exact import (
     RationalDualityGap,
     RationalWire,
 )
 
 # 13. Domain ports imports
-from omega_engine_pfp.domain.ports.decoding_ports import (
+from pfp.domain.ports.decoding_ports import (
     IAntimorphismService,
     ICohomologyBarcodeAnalyzer,
     ILogitsProvider,
@@ -126,24 +126,24 @@ from omega_engine_pfp.domain.ports.decoding_ports import (
     IQuarantineLedgerPort,
     ITokenFrontierEvaluator,
 )
-from omega_engine_pfp.domain.ports.genesis_ports import (
+from pfp.domain.ports.genesis_ports import (
     IGenesisCrosswalkOracle,
     IGenesisStageRegistry,
 )
-from omega_engine_pfp.domain.ports.tower_lift_ports import (
+from pfp.domain.ports.tower_lift_ports import (
     IFiniteExhaustionSearch,
     ILiftNecessityVerifier,
 )
-from omega_engine_pfp.domain.ports.ast_cochain_ports import (
+from pfp.domain.ports.ast_cochain_ports import (
     IAstDependencyParser,
     ILggrArbiter,
 )
-from omega_engine_pfp.domain.ports.flagship_ports import (
+from pfp.domain.ports.flagship_ports import (
     ExactDualLpPort,
     LeanKernelBridgePort,
     ProcessSandboxPort,
 )
-from omega_engine_pfp.domain.shared_kernel.result import Failure, Result, Success
+from pfp.domain.shared_kernel.result import Failure, Result, Success
 
 
 
@@ -923,7 +923,7 @@ class TestTier5AdversarialM4M5:
           RationalDualityGap computes gap = |primal - dual| and confirms optimality iff gap == 0.
         - Break: Serialization emitting '1/1'; parsing decimal string '0.5'; parsing zero denominator '3/0'.
         - Witness: to_wire() == '1'; ValueError on decimal float; ZeroDivisionError on '3/0'.
-        - Mutation: A mutant serializing Fraction(1, 1) as '1/1' breaks omega_kernel::parse_exact.
+        - Mutation: A mutant serializing Fraction(1, 1) as '1/1' breaks core_kernel::parse_exact.
         """
         # Invariant 1: Canonical integers WITHOUT slash
         assert RationalWire(Fraction(1, 1)).to_wire() == "1"

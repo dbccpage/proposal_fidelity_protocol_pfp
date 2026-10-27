@@ -137,7 +137,7 @@ This checks that all members of each family (sprint-workflow, code-quality, data
 | Sprint Phase | UROS Tier | CODEX Lambda | Sovereign Role | 4E Mode |
 |-------------|-----------|-------------|---------------|---------|
 | Sprint Retrospective | Tier 15 | LAMBDA-170 | Inspector | Extended |
-| Techne Code Soviet Inspector Report | Tier 10 | LAMBDA-100 | Inspector | Enacted |
+| Techne Code Inspector Report | Tier 10 | LAMBDA-100 | Inspector | Enacted |
 | Blackrod Assessment | Tier 14 | LAMBDA-151 | Analyst | Enacted |
 | Signal Extraction | Tier 7 | LAMBDA-046 | Analyst | Embodied |
 | Web Edit Detection | Tier 11 | LAMBDA-129 | Inspector | Embedded |
@@ -148,7 +148,7 @@ This checks that all members of each family (sprint-workflow, code-quality, data
 
 Whenever this skill encounters any error, build failure, veto, linter defect, anti-pattern breach, proof/contract obstruction, or process violation:
 1. Automatically create a formal investigation report under:
-   `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
+   `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{skill_name}_{defect_id}.md`
 2. Include full error trace/context, root cause analysis, affected files, and recommended workflow remediation plan for Blackrod review.
 
 ## Related Skills
@@ -159,7 +159,7 @@ Whenever this skill encounters any error, build failure, veto, linter defect, an
 | sprint-execution | Provides outcomes to review |
 | sprint-devops-review | Precedes: DevOps audit feeds findings into retrospective |
 | sprint-review | Initial approval before execution |
-| `techne-code-soviet-inspector` | Review test quality metrics for the sprint |
+| `techne-code-inspector` | Review test quality metrics for the sprint |
 | autoskill | MUST run during retrospective (Step 11). Blocking. Run before /auto-improve-autoskill. |
 | auto-symmetry-hunter | Can audit family compliance during retrospective |
 | blackrod | Reviews enforcement effectiveness |

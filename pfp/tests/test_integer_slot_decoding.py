@@ -6,9 +6,9 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_pfp.domain import carrier_decoding
-from omega_engine_pfp.domain.ports.decode_control_port import ControlKind
-from omega_engine_pfp.infrastructure.adapters.decode_controls import VllmDecodeAdapter
+from pfp.domain import carrier_decoding
+from pfp.domain.ports.decode_control_port import ControlKind
+from pfp.infrastructure.adapters.decode_controls import VllmDecodeAdapter
 
 
 def test_slot_grammar_requires_three_separated_signed_integers():

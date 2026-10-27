@@ -7,10 +7,10 @@ import importlib
 import json
 from typing import Any
 
-from omega_engine_operads.infrastructure.autopoiesis.learning_runtime import (
+from operads.infrastructure.autopoiesis.learning_runtime import (
     build_learning_completion,
 )
-from omega_engine_operads.infrastructure.autopoiesis.learning_store import (
+from operads.infrastructure.autopoiesis.learning_store import (
     LearningStore,
 )
 
@@ -32,7 +32,7 @@ class AutoPLearningPresenter:
             if paths:
                 parser.error("maintenance does not accept learning sources")
             receipt = {
-                "schema": "omega.autop.receipt.v2",
+                "schema": "core.autop.receipt.v2",
                 "mode": "maintenance",
                 "overall_status": "NO_CHANGE",
                 "reason": "MAINTENANCE_ONLY_NO_LEARNING",

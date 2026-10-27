@@ -11,10 +11,10 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.gates.gate_engine import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.gates.gate_engine import (
     verify_dag_prompt_node_reply,
 )
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
     DAG_ALL_177_SPECS,
     DAG_PROMPT_35_SPECS,
     DAG_REMAINING_142_SPECS,
@@ -24,7 +24,7 @@ from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.mine
     DEFAULT_PROMPTS_DIR,
     mine_operads_for_dag_prompt_node,
 )
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.run_finite_qm_pfp import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.run_finite_qm_pfp import (
     run_benchmark_1000,
 )
 

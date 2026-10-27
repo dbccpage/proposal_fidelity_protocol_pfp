@@ -10,10 +10,10 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.freudenthal_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.freudenthal_checker import (
     verify_freudenthal_certificate,
 )
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.kostant_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.kostant_checker import (
     verify_kostant_certificate,
 )
 

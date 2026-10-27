@@ -17,9 +17,9 @@ from __future__ import annotations
 import shutil
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers import exact_checker, independent_checker
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import lean_compiler
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers import exact_checker, independent_checker
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver import lean_compiler
 
 pytestmark = pytest.mark.skipif(shutil.which("lean") is None, reason="lean is not installed")
 

@@ -14,7 +14,7 @@ An agent can propose changes to the software that organizes its own
 attempts. Whether the changes improve research performance is an
 experimental question; whether a particular submitted result passes a
 declared checker is a separate verification question. We implement an
-explicit experimental re-entry path over existing Omega Engine
+explicit experimental re-entry path over existing Engine
 subsystems, inspired by mechanisms reported for AIDE2. The path retains
 candidate ancestry, isolates candidate execution, reserves provider
 liability against one durable budget, separates public feedback from
@@ -65,7 +65,7 @@ later revision of the external paper appears.
                           existing typed workflow
                           compilation
 
-  Woland                  Explicit research       Experimental selection
+  Adversary                  Explicit research       Experimental selection
                           orchestration, public   does not deploy a
                           search, private         capability
                           evaluation,

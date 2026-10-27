@@ -12,28 +12,28 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
-from omega_engine_pfp.domain.aggregates.llm_turn_run_root import LlmTurnPayloadV1
-from omega_engine_pfp.domain.aggregates.prompt_artifact import (
+from pfp.domain.aggregates.llm_turn_run_root import LlmTurnPayloadV1
+from pfp.domain.aggregates.prompt_artifact import (
     EliminationReceiptV1,
     PromptArtifactV1,
 )
-from omega_engine_pfp.domain.aggregates.prompt_artifact import (
+from pfp.domain.aggregates.prompt_artifact import (
     compile_prompt_artifact as compile_canonical_prompt_artifact,
 )
-from omega_engine_pfp.domain.aggregates.prompt_artifact import (
+from pfp.domain.aggregates.prompt_artifact import (
     render_prompt_body as render_canonical_prompt_body,
 )
-from omega_engine_pfp.domain.aggregates.research_claim import (
+from pfp.domain.aggregates.research_claim import (
     canonical_json_artifact_bytes,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import CanonicalizationError
-from omega_engine_pfp.domain.validation import (
+from pfp.domain.shared_kernel.canonical import CanonicalizationError
+from pfp.domain.validation import (
     _fail,
     _require_stable_id,
     normalize_utf8_lf,
     raw_content_sha256,
 )
-from omega_engine_pfp.domain.value_objects import (
+from pfp.domain.value_objects import (
     DemandItemV1,
     ObjectiveTypedV1,
     ObstructionHintV1,

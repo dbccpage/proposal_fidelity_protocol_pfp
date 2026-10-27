@@ -1,5 +1,5 @@
 {
-  "schema_version": "omega.qddc.local-validation.v1",
+  "schema_version": "core.qddc.local-validation.v1",
   "authority_effect": "None",
   "recorded_at_utc": "2026-10-16T02:58:19.094898+00:00",
   "base_commit": "c451b1e8fb78a539833bbf06ede55b37287825d3",
@@ -13,11 +13,11 @@
         "-j",
         "1",
         "-p",
-        "omega_quantum_physics",
+        "core_quantum_physics",
         "--test",
         "qddc"
       ],
-      "cwd": "/workspace/the_symbol_game/omega_engine/crates_rs",
+      "cwd": "/workspace/the_symbol_game/engine/crates_rs",
       "environment": {
         "PATH": "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:<inherited PATH>",
         "CARGO_HOME": "/workspace/.toolchains/cargo"
@@ -26,7 +26,7 @@
       "exit_status": 0,
       "scope": "9 tests; qddc integration target only",
       "output_sha256": "1cb1e7dd6cf200fc2926abdb613d4292961c5dca12409e8a457f33d0ca3ace65",
-      "output_tail": "    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.08s\n     Running ../tests/omega_quantum_physics/qddc.rs (target/debug/deps/qddc-dc3bcadbe2096579)\n\nrunning 9 tests\ntest bounds_and_cross_carrier_errors_fail_closed ... ok\ntest empty_carriers_and_invalid_complexes_are_distinguished ... ok\ntest lindblad_derivative_is_trace_zero_but_euler_need_not_be_positive ... ok\ntest rational_interferometer_has_a_dark_port_and_preserves_total_norm ... ok\ntest selected_probe_order_changes_joint_probability_and_handles_zero_branch ... ok\ntest retraction_is_idempotent_and_has_exact_outside_weight_law ... ok\ntest complex_coefficients_and_gauge_rotation_transport_the_harmonic_part ... ok\ntest triangle_components_reconstruct_and_filling_removes_harmonic_cycle ... ok\ntest derived_repair_space_is_exact_not_harmonic ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n"
+      "output_tail": "    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.08s\n     Running ../tests/core_quantum_physics/qddc.rs (target/debug/deps/qddc-dc3bcadbe2096579)\n\nrunning 9 tests\ntest bounds_and_cross_carrier_errors_fail_closed ... ok\ntest empty_carriers_and_invalid_complexes_are_distinguished ... ok\ntest lindblad_derivative_is_trace_zero_but_euler_need_not_be_positive ... ok\ntest rational_interferometer_has_a_dark_port_and_preserves_total_norm ... ok\ntest selected_probe_order_changes_joint_probability_and_handles_zero_branch ... ok\ntest retraction_is_idempotent_and_has_exact_outside_weight_law ... ok\ntest complex_coefficients_and_gauge_rotation_transport_the_harmonic_part ... ok\ntest triangle_components_reconstruct_and_filling_removes_harmonic_cycle ... ok\ntest derived_repair_space_is_exact_not_harmonic ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n"
     },
     {
       "name": "canonical process host",
@@ -37,11 +37,11 @@
         "-j",
         "1",
         "-p",
-        "omega_symbol_game",
+        "core_symbol_game",
         "--bin",
-        "omega_symbol_game"
+        "core_symbol_game"
       ],
-      "cwd": "/workspace/the_symbol_game/omega_engine/crates_rs",
+      "cwd": "/workspace/the_symbol_game/engine/crates_rs",
       "environment": {
         "PATH": "/workspace/.toolchains/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:<inherited PATH>",
         "CARGO_HOME": "/workspace/.toolchains/cargo"
@@ -50,7 +50,7 @@
       "exit_status": 0,
       "scope": "Compiled canonical host with seven QDDC actions",
       "output_sha256": "c9a6de4ed8a2fffc9c57ae7e8b060bc0c23b5288709c69936a8a5112516c10b3",
-      "output_tail": "  |     ^^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: use of deprecated constant `std::f64::INFINITY`: replaced by the `INFINITY` associated constant on `f64`\n  --> omega_engines/src/quantum/density_diagnostics.rs:84:24\n   |\n84 |             .fold(f64::INFINITY, f64::min);\n   |                        ^^^^^^^^\n   |\n   = note: `#[warn(deprecated)]` on by default\n\nwarning: `omega_engines` (lib) generated 2 warnings (run `cargo fix --lib -p omega_engines` to apply 1 suggestion)\n   Compiling omega_pipelines v0.1.0 (/workspace/the_symbol_game/omega_engine/crates_rs/omega_pipelines)\n   Compiling omega_symbol_game v0.1.0 (/workspace/the_symbol_game/omega_engine/crates_rs/omega_symbol_game)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 14s"
+      "output_tail": "  |     ^^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: use of deprecated constant `std::f64::INFINITY`: replaced by the `INFINITY` associated constant on `f64`\n  --> engines/src/quantum/density_diagnostics.rs:84:24\n   |\n84 |             .fold(f64::INFINITY, f64::min);\n   |                        ^^^^^^^^\n   |\n   = note: `#[warn(deprecated)]` on by default\n\nwarning: `engines` (lib) generated 2 warnings (run `cargo fix --lib -p engines` to apply 1 suggestion)\n   Compiling core_pipelines v0.1.0 (/workspace/the_symbol_game/engine/crates_rs/core_pipelines)\n   Compiling core_symbol_game v0.1.0 (/workspace/the_symbol_game/engine/crates_rs/core_symbol_game)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 14s"
     },
     {
       "name": "native Python integration",
@@ -64,13 +64,13 @@
         "-p",
         "no:cacheprovider",
         "--basetemp=/workspace/scratch/qddc-final-pytest",
-        "omega_engine_pfp/tests/test_qddc_native.py"
+        "pfp/tests/test_qddc_native.py"
       ],
       "cwd": "/workspace/the_symbol_game",
       "environment": {
         "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
         "PYTHONPATH": "/workspace/the_symbol_game",
-        "OMEGA_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/omega_engine/crates_rs/target/debug/omega_symbol_game"
+        "CORE_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/engine/crates_rs/target/debug/core_symbol_game"
       },
       "tool_version": "Python 3.12.14; pytest 9.1.1; Pydantic 2.13.4",
       "exit_status": 0,
@@ -82,7 +82,7 @@
       "name": "Lean kernel check",
       "command": [
         "/workspace/.toolchains/lean-4.34.0-linux/bin/lean",
-        "omega_engine_pfp/formal/qddc/Qddc.lean"
+        "pfp/formal/qddc/Qddc.lean"
       ],
       "cwd": "/workspace/the_symbol_game",
       "environment": {
@@ -101,9 +101,9 @@
         "-m",
         "ruff",
         "check",
-        "omega_engine_pfp/domain/homology/qddc.py",
-        "omega_engine_pfp/infrastructure/adapters/qddc_rust_adapter.py",
-        "omega_engine_pfp/tests/test_qddc_native.py"
+        "pfp/domain/homology/qddc.py",
+        "pfp/infrastructure/adapters/qddc_rust_adapter.py",
+        "pfp/tests/test_qddc_native.py"
       ],
       "cwd": "/workspace/the_symbol_game",
       "environment": {},
@@ -121,9 +121,9 @@
         "ruff",
         "format",
         "--check",
-        "omega_engine_pfp/domain/homology/qddc.py",
-        "omega_engine_pfp/infrastructure/adapters/qddc_rust_adapter.py",
-        "omega_engine_pfp/tests/test_qddc_native.py"
+        "pfp/domain/homology/qddc.py",
+        "pfp/infrastructure/adapters/qddc_rust_adapter.py",
+        "pfp/tests/test_qddc_native.py"
       ],
       "cwd": "/workspace/the_symbol_game",
       "environment": {},
@@ -140,9 +140,9 @@
         "--edition",
         "2021",
         "--check",
-        "omega_engine/crates_rs/omega_quantum_physics/src/qddc.rs",
-        "omega_engine/crates_rs/tests/omega_quantum_physics/qddc.rs",
-        "omega_engine/crates_rs/omega_symbol_game/src/invoke/qddc.rs"
+        "engine/crates_rs/core_quantum_physics/src/qddc.rs",
+        "engine/crates_rs/tests/core_quantum_physics/qddc.rs",
+        "engine/crates_rs/core_symbol_game/src/invoke/qddc.rs"
       ],
       "cwd": "/workspace/the_symbol_game",
       "environment": {},
@@ -170,7 +170,7 @@
       "name": "repository fast PR gate",
       "command": [
         "/workspace/scratch/mub6-five-venv/bin/python",
-        "omega_engine_operations/use_cases/cicd/pr_fast_gate.py",
+        "operations/use_cases/cicd/pr_fast_gate.py",
         "--base",
         "origin/main",
         "--workers",
@@ -180,13 +180,13 @@
       "environment": {
         "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
         "PYTHONPATH": "/workspace/the_symbol_game",
-        "OMEGA_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/omega_engine/crates_rs/target/debug/omega_symbol_game"
+        "CORE_SYMBOL_GAME_HOST": "/workspace/the_symbol_game/engine/crates_rs/target/debug/core_symbol_game"
       },
       "tool_version": "Python 3.12.14; pytest 9.1.1; ruff 0.17.1",
       "exit_status": 0,
       "scope": "14 branch files; syntax, lint, line endings and the changed native-integration Python test. Untriggered checks explicitly NOT_CHECKED.",
       "output_sha256": "fe2068aa5f9d2ba2272c403d1f80e996159af0c509a49e9b8bbe4c5f0685e45e",
-      "output_tail": "pr_fast_gate: 14 changed files (3 Python) vs origin/main\n[PASS] syntax\n[PASS] ruff\n[PASS] line-endings\n[NOT_CHECKED] rule-gate\n    no input of this check changed\n[NOT_CHECKED] op-inventory\n    no input of this check changed\n[NOT_CHECKED] skill-listing\n    no input of this check changed\n[NOT_CHECKED] lesson-folders\n    no input of this check changed\n[NOT_CHECKED] dual-text-parity\n    no input of this check changed\n[PASS] tests\n    PASS omega_engine_pfp/tests/test_qddc_native.py\npr_fast_gate: PASS in 1s"
+      "output_tail": "pr_fast_gate: 14 changed files (3 Python) vs origin/main\n[PASS] syntax\n[PASS] ruff\n[PASS] line-endings\n[NOT_CHECKED] rule-gate\n    no input of this check changed\n[NOT_CHECKED] op-inventory\n    no input of this check changed\n[NOT_CHECKED] skill-listing\n    no input of this check changed\n[NOT_CHECKED] lesson-folders\n    no input of this check changed\n[NOT_CHECKED] dual-text-parity\n    no input of this check changed\n[PASS] tests\n    PASS pfp/tests/test_qddc_native.py\npr_fast_gate: PASS in 1s"
     },
     {
       "name": "documentation invariants",
@@ -200,14 +200,14 @@
       "exit_status": 1,
       "scope": "Ten invariant fixtures pass. Two documentation-path checks fail: missing Genesis levels and S(n) sn.md. Both paths are absent on the PR base and the checker is unchanged.",
       "output_sha256": "d11213d5785e136a853eadde1aaafc7c2423d61807bffc5d5f0b1c2a690e97ca",
-      "output_tail": "[FAIL] check_genesis_documentation_cross_references: Missing Genesis levels directory: /workspace/the_symbol_game/omega_engine_education/documentation/001_genesis/levels\n[FAIL] check_sn_level_documentation_purity: Missing S(n) navigation: sn.md\n=== GOVERNANCE-PFP INVARIANT CHECK ===\n[PASS] exact_rational_holonomy: Exact rational cycle holonomy verified (sum = 0 for coboundary, != 0 for frustrated)\n[PASS] stage_opcode_formula: Stage opcode allocation formula base(N) = 128 + 8*(N-22) verified\n[PASS] simplicial_gram_matrix: Simplicial Gram matrix is positive definite (det = 3/4)\n[PASS] retraction_law: Stage retraction down-map law d_N(u_N(x)) = x verified with anti-default guard\n[PASS] wire_syntax_rules: Wire syntax rules verified (balanced delimiters and Sigma_36 alphabet)\n[PASS] exact_type_equality: Value Object exact-type equality invariant verified\n[PASS] ground_truth_isolation: Ground-truth isolation verified (zero expected-answer tokens in participant schema)\n[PASS] strict_type_enforcement: Strict SPK-001 schema and type purity verified (fail-closed refusal on coercion)\n[PASS] cryptographic_replay_binding: Cryptographic replay binding verified (tampered raw replies trigger digest mismatch)\n[PASS] fail_closed_budget_accounting: Fail-closed budget accounting verified (missing cost metadata halts with UNRECONCILED_COST)\n-----------------------------------------------\nALL 10 GOVERNANCE-PFP INVARIANTS PASSED."
+      "output_tail": "[FAIL] check_genesis_documentation_cross_references: Missing Genesis levels directory: /workspace/the_symbol_game/education/documentation/001_genesis/levels\n[FAIL] check_sn_level_documentation_purity: Missing S(n) navigation: sn.md\n=== GOVERNANCE-PFP INVARIANT CHECK ===\n[PASS] exact_rational_holonomy: Exact rational cycle holonomy verified (sum = 0 for coboundary, != 0 for frustrated)\n[PASS] stage_opcode_formula: Stage opcode allocation formula base(N) = 128 + 8*(N-22) verified\n[PASS] simplicial_gram_matrix: Simplicial Gram matrix is positive definite (det = 3/4)\n[PASS] retraction_law: Stage retraction down-map law d_N(u_N(x)) = x verified with anti-default guard\n[PASS] wire_syntax_rules: Wire syntax rules verified (balanced delimiters and Sigma_36 alphabet)\n[PASS] exact_type_equality: Value Object exact-type equality invariant verified\n[PASS] ground_truth_isolation: Ground-truth isolation verified (zero expected-answer tokens in participant schema)\n[PASS] strict_type_enforcement: Strict SPK-001 schema and type purity verified (fail-closed refusal on coercion)\n[PASS] cryptographic_replay_binding: Cryptographic replay binding verified (tampered raw replies trigger digest mismatch)\n[PASS] fail_closed_budget_accounting: Fail-closed budget accounting verified (missing cost metadata halts with UNRECONCILED_COST)\n-----------------------------------------------\nALL 10 GOVERNANCE-PFP INVARIANTS PASSED."
     },
     {
       "name": "lesson folder shape",
       "command": [
         "/workspace/scratch/mub6-five-venv/bin/python",
         "-m",
-        "omega_engine_education.scripts.check_lesson_folders",
+        "education.scripts.check_lesson_folders",
         "--repo-root",
         "."
       ],
@@ -224,7 +224,7 @@
       "command": [
         "/workspace/scratch/mub6-five-venv/bin/python",
         "-m",
-        "omega_engine_education.scripts.verify_dual_text_parity",
+        "education.scripts.verify_dual_text_parity",
         "--repo-root",
         "."
       ],
@@ -240,7 +240,7 @@
       "name": "WDP conditional workflow scope",
       "command": [
         "/workspace/scratch/mub6-five-venv/bin/python",
-        "omega_engine_operations/use_cases/cicd/wdp_contract_scope.py",
+        "operations/use_cases/cicd/wdp_contract_scope.py",
         "--base",
         "c451b1e8fb78a539833bbf06ede55b37287825d3"
       ],
@@ -254,35 +254,35 @@
     }
   ],
   "source_sha256": {
-    "omega_engine/crates_rs/Cargo.lock": "8169c0a6351b72ffd201fa9c245f78bf8cb72a19f321c242e42ef99077b53c7e",
-    "omega_engine/crates_rs/omega_linear_algebra/src/exact_field/rational_bareiss.rs": "3ded1fa202f9721a3734c056674e0449461c4caead67d7b4f099966182df4fea",
-    "omega_engine/crates_rs/omega_quantum_physics/Cargo.toml": "6297575edc0e79f93660d8c55d6533d0313428984c1c71a1503a7ffe10cb8917",
-    "omega_engine/crates_rs/omega_quantum_physics/src/density_matrix.rs": "a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a",
-    "omega_engine/crates_rs/omega_quantum_physics/src/exact_channel.rs": "f1d09b2ed881bae5f2e4686f005a8b99bf56fa379a9c025c17e3de986bf6191f",
-    "omega_engine/crates_rs/omega_quantum_physics/src/exact_operator.rs": "3af2547a882a4bca86a0991d76d3f367d1db5254c4da71c0fcf515b6fbdbf626",
-    "omega_engine/crates_rs/omega_quantum_physics/src/lib.rs": "55682f2892d311c3ff35693871bb6d4a6b4cad363d81a47698c6d5b2c860acaf",
-    "omega_engine/crates_rs/omega_quantum_physics/src/qddc.rs": "d8c3601d76c6ff9dbcf6b86b7edb6e31b1962847ed081a2ecca9ec9f8ac6372f",
-    "omega_engine/crates_rs/omega_solvers/src/cert_hodge_decomp.rs": "61a8e34bfbf2ce49ca11f0ccc50ddf20f6859f9a2033b1f5a6d5d29a56536fef",
-    "omega_engine/crates_rs/omega_solvers/src/solver_hodge_rational_decomp.rs": "e898333b603b813f6f1183fa97f0e3a300c356413dc48e79096d32661c8f55a9",
-    "omega_engine/crates_rs/omega_symbol_game/src/invoke.rs": "5bc255806a54d11d31f1036b098fc39c1a6adfc2e52429c1d5010c7b3b6d2e64",
-    "omega_engine/crates_rs/omega_symbol_game/src/invoke/native_matrix.rs": "993ce85fd42585188c4cda13f4cdec109863e7bed9a7ed7884abd6c9f90449e4",
-    "omega_engine/crates_rs/omega_symbol_game/src/invoke/qddc.rs": "0fc821e816697102e453bc025d385c60b29f7500ee347102397cdb7d4ed95682",
-    "omega_engine/crates_rs/tests/omega_quantum_physics/qddc.rs": "d4b6440dcacf12817fa7b2c60b1bd5736facd410f027947629ff350e35524de0",
-    "omega_engine_operating_system/adapters/rust_host/ffi.py": "da18f5391a62e8098c679c1c6211a43dc9e3b67d28d239e84593b6f562252d48",
-    "omega_engine_operating_system/adapters/rust_host/majorana_math.py": "835a84549b3682ad7b93297666941ece43819ac164a8ad36e5de76356765c5fc",
-    "omega_engine_pfp/documentation/qddc_finite_calculus.md": "5f32cab21755ef77b7bb919a80540bf07fc614ecff0ae69d8e3cabf7f548771c",
-    "omega_engine_pfp/domain/homology/qddc.py": "e1916e9ea487b6942ccb5a4a78a3b1a02988bc1d48bd4c459b77d816c4dccf37",
-    "omega_engine_pfp/formal/qddc/Qddc.lean": "a42b1508f7fdb2faf643f974f5f8607d7a6449d04c3f61d717013e9d26aad687",
-    "omega_engine_pfp/formal/qddc/lakefile.toml": "d2424419488bf636827715a392cae1195c14aa7156d57d5a471d44b0f7101c7c",
-    "omega_engine_pfp/formal/qddc/lean-toolchain": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632",
-    "omega_engine_pfp/infrastructure/adapters/qddc_rust_adapter.py": "0a19b87b90f18bb8bd615fabe2554ba673d7b97a609dec23b24608bbb817831e",
-    "omega_engine_pfp/tests/test_qddc_native.py": "acaf7984feaa043927a33e1f40dd80bc7337078ee0bfb68b8512f2c524e6bcf9",
+    "engine/crates_rs/Cargo.lock": "8169c0a6351b72ffd201fa9c245f78bf8cb72a19f321c242e42ef99077b53c7e",
+    "engine/crates_rs/core_linear_algebra/src/exact_field/rational_bareiss.rs": "3ded1fa202f9721a3734c056674e0449461c4caead67d7b4f099966182df4fea",
+    "engine/crates_rs/core_quantum_physics/Cargo.toml": "6297575edc0e79f93660d8c55d6533d0313428984c1c71a1503a7ffe10cb8917",
+    "engine/crates_rs/core_quantum_physics/src/density_matrix.rs": "a3b3314a9a5fa098f3351587e38d7e8759cccf770caa79ed6f82124a531a960a",
+    "engine/crates_rs/core_quantum_physics/src/exact_channel.rs": "f1d09b2ed881bae5f2e4686f005a8b99bf56fa379a9c025c17e3de986bf6191f",
+    "engine/crates_rs/core_quantum_physics/src/exact_operator.rs": "3af2547a882a4bca86a0991d76d3f367d1db5254c4da71c0fcf515b6fbdbf626",
+    "engine/crates_rs/core_quantum_physics/src/lib.rs": "55682f2892d311c3ff35693871bb6d4a6b4cad363d81a47698c6d5b2c860acaf",
+    "engine/crates_rs/core_quantum_physics/src/qddc.rs": "d8c3601d76c6ff9dbcf6b86b7edb6e31b1962847ed081a2ecca9ec9f8ac6372f",
+    "engine/crates_rs/core_solvers/src/cert_hodge_decomp.rs": "61a8e34bfbf2ce49ca11f0ccc50ddf20f6859f9a2033b1f5a6d5d29a56536fef",
+    "engine/crates_rs/core_solvers/src/solver_hodge_rational_decomp.rs": "e898333b603b813f6f1183fa97f0e3a300c356413dc48e79096d32661c8f55a9",
+    "engine/crates_rs/core_symbol_game/src/invoke.rs": "5bc255806a54d11d31f1036b098fc39c1a6adfc2e52429c1d5010c7b3b6d2e64",
+    "engine/crates_rs/core_symbol_game/src/invoke/native_matrix.rs": "993ce85fd42585188c4cda13f4cdec109863e7bed9a7ed7884abd6c9f90449e4",
+    "engine/crates_rs/core_symbol_game/src/invoke/qddc.rs": "0fc821e816697102e453bc025d385c60b29f7500ee347102397cdb7d4ed95682",
+    "engine/crates_rs/tests/core_quantum_physics/qddc.rs": "d4b6440dcacf12817fa7b2c60b1bd5736facd410f027947629ff350e35524de0",
+    "operating_system/adapters/rust_host/ffi.py": "da18f5391a62e8098c679c1c6211a43dc9e3b67d28d239e84593b6f562252d48",
+    "operating_system/adapters/rust_host/majorana_math.py": "835a84549b3682ad7b93297666941ece43819ac164a8ad36e5de76356765c5fc",
+    "pfp/documentation/qddc_finite_calculus.md": "5f32cab21755ef77b7bb919a80540bf07fc614ecff0ae69d8e3cabf7f548771c",
+    "pfp/domain/homology/qddc.py": "e1916e9ea487b6942ccb5a4a78a3b1a02988bc1d48bd4c459b77d816c4dccf37",
+    "pfp/formal/qddc/Qddc.lean": "a42b1508f7fdb2faf643f974f5f8607d7a6449d04c3f61d717013e9d26aad687",
+    "pfp/formal/qddc/lakefile.toml": "d2424419488bf636827715a392cae1195c14aa7156d57d5a471d44b0f7101c7c",
+    "pfp/formal/qddc/lean-toolchain": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632",
+    "pfp/infrastructure/adapters/qddc_rust_adapter.py": "0a19b87b90f18bb8bd615fabe2554ba673d7b97a609dec23b24608bbb817831e",
+    "pfp/tests/test_qddc_native.py": "acaf7984feaa043927a33e1f40dd80bc7337078ee0bfb68b8512f2c524e6bcf9",
     "pyproject.toml": "e89f179a87b2a46e1aca9285d415e6baff14ad6be0e73ab9bf2f55bc699ac9f6",
-    "omega_engine_operations/use_cases/cicd/pr_fast_gate.py": "be99021181d7521d8ffe3fb6f656c79900e854d6560ee2af9f30672386d12796",
+    "operations/use_cases/cicd/pr_fast_gate.py": "be99021181d7521d8ffe3fb6f656c79900e854d6560ee2af9f30672386d12796",
     ".agents/skills/governance-pfp/scripts/check_symbol_game.py": "6be094e8d62685f5fa36e5c419a7e2877a1a9704d844319516d6998f4922c88a",
-    "omega_engine_education/scripts/check_lesson_folders.py": "66c412d1446afe52b1763fb9e88d96ea9c55de2f0961f463195ae815e64cc4f8",
-    "omega_engine_education/scripts/verify_dual_text_parity.py": "f7d73887cfc36245d5092eba1be095fdf168f6ea00fc72f4094a3e42f47bd734",
-    "omega_engine_operations/use_cases/cicd/wdp_contract_scope.py": "058744c83cab97e84469849e5fb3436c898110f98800b91a0ed132f20b183300"
+    "education/scripts/check_lesson_folders.py": "66c412d1446afe52b1763fb9e88d96ea9c55de2f0961f463195ae815e64cc4f8",
+    "education/scripts/verify_dual_text_parity.py": "f7d73887cfc36245d5092eba1be095fdf168f6ea00fc72f4094a3e42f47bd734",
+    "operations/use_cases/cicd/wdp_contract_scope.py": "058744c83cab97e84469849e5fb3436c898110f98800b91a0ed132f20b183300"
   },
   "scope_limits": [
     "Lean Hodge proof covers the filled triangle, not arbitrary complexes or Rust implementation correctness.",
@@ -313,8 +313,8 @@
   "baseline_documentation_evidence": {
     "base": "c451b1e8fb78a539833bbf06ede55b37287825d3",
     "paths_absent_from_git_tree": [
-      "omega_engine_education/documentation/001_genesis/levels",
-      "omega_engine_education/documentation/002_s_n/sn.md"
+      "education/documentation/001_genesis/levels",
+      "education/documentation/002_s_n/sn.md"
     ],
     "command": [
       "git",
@@ -323,8 +323,8 @@
       "--name-only",
       "c451b1e8fb78a539833bbf06ede55b37287825d3",
       "--",
-      "omega_engine_education/documentation/001_genesis/levels",
-      "omega_engine_education/documentation/002_s_n/sn.md"
+      "education/documentation/001_genesis/levels",
+      "education/documentation/002_s_n/sn.md"
     ],
     "exit_status": 0,
     "output": "",

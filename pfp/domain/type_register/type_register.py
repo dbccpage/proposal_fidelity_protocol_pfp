@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 A *type* here is a Pydantic model or an ``Enum`` subclass defined at module
 level in a tracked ``.py`` file of the PFP (its root, plus
-``omega_engine_education/code/``; see :func:`resolve`). Test files, ``demos/`` and
+``education/code/``; see :func:`resolve`). Test files, ``demos/`` and
 ``papers/`` are outside the census: demo-local types live and die with their demo, and
 each paper package is a hermetic deposit that must not import another paper's code, so
 its types are not shared PFP types (three papers each define their own ``MoveType``).

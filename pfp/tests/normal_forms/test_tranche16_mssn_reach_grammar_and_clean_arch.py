@@ -3,7 +3,7 @@
 Aligned Contracts & Systems:
 - research/mssn_sn_tower/code/python/
 - reach, grammar, autopoietic, godel_point, packet_contracts, wire, stages, cells, updown_maps
-- omega_engine_pfp/domain/tower/
+- pfp/domain/tower/
 
 Invariants Enforced:
 1. MSS-N Grammar Levels 0-8 recursive descent deterministic AST parsing and round-trip serialization.
@@ -55,7 +55,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from enum import Enum, auto
 
-from omega_engine_pfp.infrastructure.tower_research.reach.canonical import (
+from pfp.infrastructure.tower_research.reach.canonical import (
     canonical_bytes,
     compact_line,
     digest,
@@ -90,14 +90,14 @@ def probe_self_application(
     return GodelOutcome.GODEL_BREAK, {"outcome": "STUCK", "trace": []}
 
 
-from omega_engine_pfp.domain.tower.alternation import (
+from pfp.domain.tower.alternation import (
     GeographyGame,
     evaluate_full_five_alternation,
     evaluate_naive_four_collapse,
 )
-from omega_engine_pfp.domain.tower.cells import Cell
-from omega_engine_pfp.domain.tower.golden_corpus import VALID
-from omega_engine_pfp.domain.tower.parser import (
+from pfp.domain.tower.cells import Cell
+from pfp.domain.tower.golden_corpus import VALID
+from pfp.domain.tower.parser import (
     App,
     Atom,
     Diff,
@@ -105,11 +105,11 @@ from omega_engine_pfp.domain.tower.parser import (
     parse_packet,
     serialize_packet,
 )
-from omega_engine_pfp.domain.tower.parser import (
+from pfp.domain.tower.parser import (
     SyntaxError as GrammarSyntaxError,
 )
-from omega_engine_pfp.domain.tower.updown_maps import d_1, u_0
-from omega_engine_pfp.domain.tower.wire import (
+from pfp.domain.tower.updown_maps import d_1, u_0
+from pfp.domain.tower.wire import (
     ALNUM,
     WireError,
     emit_wire,
@@ -308,7 +308,7 @@ class TestTranche16MssnReachGrammarAndCleanArch(unittest.TestCase):
         """Test 296: Asserts that reach.ledger records entries with strictly monotonic sequence indices and cryptographic digest chaining."""
         cand1 = (
             REPO_ROOT
-            / "omega_engine_pfp"
+            / "pfp"
             / "infrastructure"
             / "tower_research"
             / "reach"
@@ -482,7 +482,7 @@ class TestTranche16MssnReachGrammarAndCleanArch(unittest.TestCase):
         """Test 302: Asserts that stages.tsv forms a valid directed acyclic graph (DAG) with zero cyclic dependencies across stage prerequisites."""
         cand1 = (
             REPO_ROOT
-            / "omega_engine_pfp"
+            / "pfp"
             / "infrastructure"
             / "tower_research"
             / "reach"
@@ -592,8 +592,8 @@ class TestTranche16MssnReachGrammarAndCleanArch(unittest.TestCase):
     def test_clean_arch_domain_zero_outer_import_ast_linter(self) -> None:
         """Test 306: AST boundary test: scans all modules in domain/ and asserts zero import statements referencing use_cases, infrastructure, controllers, or external web/DB frameworks."""
         domain_dirs = [
-            REPO_ROOT / "omega_engine_pfp" / "domain",
-            REPO_ROOT / "omega_engine_woland" / "domain",
+            REPO_ROOT / "pfp" / "domain",
+            REPO_ROOT / "adversary" / "domain",
         ]
         forbidden_tokens = (
             "use_cases",
@@ -632,8 +632,8 @@ class TestTranche16MssnReachGrammarAndCleanArch(unittest.TestCase):
     def test_clean_arch_use_cases_depend_only_on_domain_ast_linter(self) -> None:
         """Test 307: AST boundary test: scans all use cases and asserts imports are restricted to domain/ and standard library ports."""
         use_case_dirs = [
-            REPO_ROOT / "omega_engine_pfp" / "use_cases",
-            REPO_ROOT / "omega_engine_woland" / "use_cases",
+            REPO_ROOT / "pfp" / "use_cases",
+            REPO_ROOT / "adversary" / "use_cases",
         ]
         forbidden_tokens = ("controllers", "frontend")
         violations: List[Tuple[str, str]] = []
@@ -663,8 +663,8 @@ class TestTranche16MssnReachGrammarAndCleanArch(unittest.TestCase):
     def test_clean_arch_no_reexport_shims_scanner(self) -> None:
         """Test 308: AST boundary test: asserts that no module contains legacy alias assignments or wildcard * re-exports faking backward compatibility."""
         scan_dirs = [
-            REPO_ROOT / "omega_engine_pfp" / "domain",
-            REPO_ROOT / "omega_engine_woland" / "domain",
+            REPO_ROOT / "pfp" / "domain",
+            REPO_ROOT / "adversary" / "domain",
         ]
         wildcard_violations: List[Tuple[str, str]] = []
 
@@ -689,8 +689,8 @@ class TestTranche16MssnReachGrammarAndCleanArch(unittest.TestCase):
     def test_rop_result_monad_every_use_case_returns_result(self) -> None:
         """Test 309: AST linter: verifies that every public use case entrypoint function specifies return type Result[T, E] or typed record."""
         use_case_dirs = [
-            REPO_ROOT / "omega_engine_pfp" / "use_cases",
-            REPO_ROOT / "omega_engine_woland" / "use_cases",
+            REPO_ROOT / "pfp" / "use_cases",
+            REPO_ROOT / "adversary" / "use_cases",
         ]
         missing_return_annotations: List[str] = []
 

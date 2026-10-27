@@ -2,18 +2,18 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::io::{self, Read};
 
-use omega_ooutwire_primitives::bounds::Bounds;
-use omega_ooutwire_primitives::closure::closure_challenge_orbits;
-use omega_ooutwire_primitives::event::Event;
-use omega_ooutwire_primitives::mark::{Mark, Pair};
-use omega_ooutwire_primitives::measure::MeasureKind;
-use omega_ooutwire_primitives::minima::{min_responses, quotient};
-use omega_ooutwire_primitives::reading::{Reading, READING_F, READING_L};
-use omega_ooutwire_primitives::regime::Regime;
-use omega_ooutwire_primitives::replay::replay;
-use omega_ooutwire_primitives::response::response_valid_naive;
-use omega_ooutwire_primitives::token::Token;
-use omega_ooutwire_primitives::tree::build_tree;
+use core_ooutwire_primitives::bounds::Bounds;
+use core_ooutwire_primitives::closure::closure_challenge_orbits;
+use core_ooutwire_primitives::event::Event;
+use core_ooutwire_primitives::mark::{Mark, Pair};
+use core_ooutwire_primitives::measure::MeasureKind;
+use core_ooutwire_primitives::minima::{min_responses, quotient};
+use core_ooutwire_primitives::reading::{Reading, READING_F, READING_L};
+use core_ooutwire_primitives::regime::Regime;
+use core_ooutwire_primitives::replay::replay;
+use core_ooutwire_primitives::response::response_valid_naive;
+use core_ooutwire_primitives::token::Token;
+use core_ooutwire_primitives::tree::build_tree;
 use serde_json::{json, Value};
 
 fn number(value: &Value, key: &str) -> Result<usize, String> {

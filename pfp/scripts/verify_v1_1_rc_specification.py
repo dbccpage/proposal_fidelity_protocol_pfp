@@ -21,11 +21,11 @@ import zlib
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-EVIDENCE_DIRECTORY = Path("omega_engine_pfp/documentation/oepfp_v1_1_rc_evidence")
+EVIDENCE_DIRECTORY = Path("pfp/documentation/oepfp_v1_1_rc_evidence")
 DEFAULT_MANIFEST = EVIDENCE_DIRECTORY / "source_manifest.json"
 DEFAULT_CENSUS = EVIDENCE_DIRECTORY / "census.json"
-MONOGRAPH = Path("omega_engine_pfp/documentation/oepfp_v1_1_rc_specification.md")
-EXPECTED_WOLAND_MODULES = 308
+MONOGRAPH = Path("pfp/documentation/oepfp_v1_1_rc_specification.md")
+EXPECTED_ADVERSARY_MODULES = 308
 GZIP_SCHEMA = "oepfp.forensic_extract.v1"
 
 
@@ -289,20 +289,20 @@ def _validate_census(census: dict[str, Any]) -> dict[str, int]:
     antibodies = _coverage(
         census.get("antibodies"), {f"AB-{i:03}" for i in range(1, 20)}, "antibodies"
     )
-    modules = census.get("woland_modules")
+    modules = census.get("adversary_modules")
     _require(
-        isinstance(modules, list) and len(modules) == EXPECTED_WOLAND_MODULES,
-        f"census must contain exactly {EXPECTED_WOLAND_MODULES} Woland modules",
+        isinstance(modules, list) and len(modules) == EXPECTED_ADVERSARY_MODULES,
+        f"census must contain exactly {EXPECTED_ADVERSARY_MODULES} Adversary modules",
     )
     paths = []
     for row in modules:
-        item = _object(row, "Woland module")
+        item = _object(row, "Adversary module")
         path = item.get("path")
-        _require(isinstance(path, str) and bool(path), "Woland module path must be a string")
+        _require(isinstance(path, str) and bool(path), "Adversary module path must be a string")
         paths.append(path)
         _validate_module_status(item)
         _require(not item["executed_now"], "static audit cannot claim a module executed now")
-    _require(len(set(paths)) == len(paths), "duplicate Woland module path")
+    _require(len(set(paths)) == len(paths), "duplicate Adversary module path")
     for row in pilots:
         _validate_pilot_status(row)
         _require(not row["executed_now"], "static audit cannot claim a pilot executed now")
@@ -310,7 +310,7 @@ def _validate_census(census: dict[str, Any]) -> dict[str, int]:
         "curriculum": len(curriculum),
         "pilots": len(pilots),
         "antibodies": len(antibodies),
-        "woland_modules": len(modules),
+        "adversary_modules": len(modules),
     }
 
 
@@ -353,10 +353,10 @@ def _validate_module_status(row: dict[str, Any]) -> None:
     executed = row.get("executed_now")
     _require(
         isinstance(provenance, str) and provenance in {"source_only", "recorded", "executed_now"},
-        f"Woland module {row['path']} has invalid provenance",
+        f"Adversary module {row['path']} has invalid provenance",
     )
     _require(
-        isinstance(executed, bool), f"Woland module {row['path']} executed_now must be boolean"
+        isinstance(executed, bool), f"Adversary module {row['path']} executed_now must be boolean"
     )
     _require(
         executed == (provenance == "executed_now"),
@@ -417,9 +417,9 @@ def verify(
     census = _object(_read_json(census_file), "census")
     _require(census.get("base_commit") == base_commit, "census base_commit mismatch")
     counts = _validate_census(census)
-    for row in census["woland_modules"]:
+    for row in census["adversary_modules"]:
         _require(
-            row["path"] in members, f"Woland module omitted from source_manifest: {row['path']}"
+            row["path"] in members, f"Adversary module omitted from source_manifest: {row['path']}"
         )
     gzip_paths = sorted(
         item["path"] for item in manifest["artifacts"] if item["path"].endswith(".json.gz")

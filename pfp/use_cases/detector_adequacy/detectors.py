@@ -36,7 +36,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 PI_RELATIVE_PATH = (
-    "omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/"
+    "atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/"
     "033_reasoning_trace_validation_via_l1_obstruction_geometry/code/"
     "mod_reasoning_trace_validation_core.py"
 )
@@ -48,7 +48,7 @@ NONCERTIFYING = "noncertifying"
 
 def repo_root(start: Path = Path(__file__).resolve()) -> Path:
     for parent in start.parents:
-        if (parent / "pyproject.toml").is_file() and (parent / "omega_engine_pfp").is_dir():
+        if (parent / "pyproject.toml").is_file() and (parent / "pfp").is_dir():
             return parent
     raise FileNotFoundError("repository root with pyproject.toml not found")
 
@@ -318,7 +318,7 @@ def run_detector(name: str, trace: Dict[str, Any]) -> Verdict:
                        str(verdict.diagnostics.get("error", verdict.status)))
     dual = verdict.dual_witness or {}
     named: Dict[str, Fraction] = {}
-    for e, w in omega.items():
+    for e, w in core.items():
         if w != 0 and dual.get(e, Fraction(0)) != 0:
             named[owner[e]] = named.get(owner[e], Fraction(0)) + w
     return Verdict(name, RED, verdict.status, verdict.phi_1, certified, tuple(sorted(named.items())), None)

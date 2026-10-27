@@ -51,7 +51,7 @@ class PfpNextWorkItem(PfpBaseModel):
 
 
 class PfpFableLongHorizonTaskPacket(PfpBaseModel):
-    schema_version: str = Field(default="omega.symbol-game.packet-envelope.v2")
+    schema_version: str = Field(default="core.symbol-game.packet-envelope.v2")
     task_id: str
     packet_id: str
     packet_family: str

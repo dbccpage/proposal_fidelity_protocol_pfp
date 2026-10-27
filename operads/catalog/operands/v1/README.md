@@ -9,7 +9,7 @@ are the provenance unit. A plan selects explicit paths—never a directory glob
 or a model-generated path—and ordered substitution checks all colour, schema,
 and validator boundaries. The compiler returns `Unadmitted` candidates only.
 
-The `woland/claim_hygiene.md` specimen is intentionally **unbound** and must
+The `adversary/claim_hygiene.md` specimen is intentionally **unbound** and must
 be refused as a plan until real versioned schemas, validators, executor, and
 independent instruction-admission receipts are pinned. OEEIS antibody
 admission is a separate decision and cannot admit OEWAS instructions. Zero digests here mean
@@ -17,7 +17,7 @@ admission is a separate decision and cannot admit OEWAS instructions. Zero diges
 or treat frontmatter as authority. Once the ingress cutover is verified,
 `.agents` should contain only discoverability shims and governance pointers.
 
-`woland/migration_inventory.json` pins the current legacy Woland skill bytes
+`adversary/migration_inventory.json` pins the current legacy Adversary skill bytes
 and three source line spans for the first small-clause candidates. Its coverage
 is explicitly partial and its paraphrase equivalence is unverified. These
 candidate files are parseable but intentionally fail plan compilation with

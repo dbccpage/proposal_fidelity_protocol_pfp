@@ -48,7 +48,7 @@ AuthorityEffect: None.
 import json
 import os
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
 from typing import Any, Dict, List
 
 # Load the observers configuration from JSON

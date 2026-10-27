@@ -11,9 +11,9 @@ maturity: canonical
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp
-  - omega_engine_pfp/entrypoints/cli/swarm_developer.py
-  - omega_engine_education/documentation/004_oepfp
+  - pfp
+  - pfp/entrypoints/cli/swarm_developer.py
+  - education/documentation/004_oepfp
 last_verified: 2026-10-20
 verification_scope: named types, skills and file paths checked against tracked source; the loop itself was not run
 ---
@@ -21,7 +21,7 @@ verification_scope: named types, skills and file paths checked against tracked s
 # 12. PR Review Formal Verification Loop & Adversarial Review Prompts
 
 **AuthorityEffect:** `None`  
-**Estate:** `omega_engine_education/documentation/004_oepfp/docs/` (historically `ow/omega_engine_pfp_v0.2/04_pfp_cec/`, no longer present)  
+**Estate:** `education/documentation/004_oepfp/docs/` (historically `ow/pfp_v0.2/04_pfp_cec/`, no longer present)  
 **Parent Document:** [`README.md`](README.md)  
 **Status:** Verification Loop Specification v3.0  
 
@@ -29,10 +29,10 @@ verification_scope: named types, skills and file paths checked against tracked s
 >
 > | Element | Status |
 > | --- | --- |
-> | `SwarmEvidenceEnvelopeV1` | Written as `evidence_envelope.json` by the composite developer CLI [swarm_developer.py](../../../../omega_engine_pfp/entrypoints/cli/swarm_developer.py) (lines 484-560). There is no Python or Rust class of that name. |
+> | `SwarmEvidenceEnvelopeV1` | Written as `evidence_envelope.json` by the composite developer CLI [swarm_developer.py](../../../../pfp/entrypoints/cli/swarm_developer.py) (lines 484-560). There is no Python or Rust class of that name. |
 > | Stage 3, antibodies AB-01 to AB-07 | Not implemented. No code defines them; the pre-genesis strand calls these names labels, not admitted antibodies (see [00](00_master_synthesis_and_cartography.md)). |
-> | Stage 5, Old Man Red Team | A skill, `omega-old-man-red-team`, exists in the host skill roots; `AuditFindingV1` appears only in skill-operad JSON catalogs, not as a code type. |
-> | Session prompts in section 4 | They name `packetization/*.md`, `symbol_game_math_spine.md` and `ow/pfp/3_code/`, none of which is present. Before using a session prompt, substitute current files, for example [04](04_symbol_game_architecture.md), [11](11_mss_n_machine_wire_registry.md) and the PFP application `omega_engine_pfp/`. |
+> | Stage 5, Red Team Red Team | A skill, `core-red-team`, exists in the host skill roots; `AuditFindingV1` appears only in skill-operad JSON catalogs, not as a code type. |
+> | Session prompts in section 4 | They name `packetization/*.md`, `symbol_game_math_spine.md` and `ow/pfp/3_code/`, none of which is present. Before using a session prompt, substitute current files, for example [04](04_symbol_game_architecture.md), [11](11_mss_n_machine_wire_registry.md) and the PFP application `pfp/`. |
 
 ---
 
@@ -46,7 +46,7 @@ graph TD
     Gate1 --> Gate2["2. Protected Path Firewall<br/>(Assert zero mutation of protected crates)"]
     Gate2 --> Gate3["3. Immune Antibody Array<br/>(Evaluate AB-01 through AB-07)"]
     Gate3 --> Gate4["4. Targeted Test Replay<br/>(Local CI execution, zero whole-suite sweeps)"]
-    Gate4 --> Gate5["5. Adversarial Red-Team Audit<br/>(Old Man Red Team counterexample hunt)"]
+    Gate4 --> Gate5["5. Adversarial Red-Team Audit<br/>(Red Team Red Team counterexample hunt)"]
     
     Gate5 -- Blockers Found --> Reject["Reject / Request Repair (&le; 3 rounds)"]
     Gate5 -- Clean Receipt --> Pass["Emit SwarmEvidenceEnvelopeV1<br/>(Awaiting human merge signal)"]
@@ -62,7 +62,7 @@ graph TD
 * **Zero Linter Warnings:** Zero tolerance for unused imports (`F401`), unused variables (`F841`), or import sorting violations (`I001`).
 
 ### Stage 2: Protected Path & Sovereign Boundary Firewall
-* Asserts that candidate diffs do not touch protected paths (`omega_engine_governance/`, core Rust solver crates, planning manifests).
+* Asserts that candidate diffs do not touch protected paths (`governance/`, core Rust solver crates, planning manifests).
 * Asserts inward clean architecture dependency: `domain/` must have zero imports from `use_cases/`, `infrastructure/`, or `frontend/`.
 
 ### Stage 3: Immune Antibody Gate Array
@@ -74,7 +74,7 @@ graph TD
 * Strictly enforces the **No Whole-Suite Sweeps** directive.
 * Enforces the **Zero GitHub Actions** directive: all verification executes locally.
 
-### Stage 5: Adversarial Red-Team Audit (Old Man Red Team)
+### Stage 5: Adversarial Red-Team Audit (Red Team Red Team)
 * An independent, read-only adversarial agent inspects the diff looking for:
   1. Boundary condition violations;
   2. Hidden ungrounded assumptions;
@@ -163,8 +163,8 @@ Verify:
 
 ```text
 Now read all Rust source files in the Symbol Game crates:
-- omega_engine/crates_rs/omega_symbol_game/src/
-- omega_engine/crates_rs/omega_symbol_game_runtime/src/
+- engine/crates_rs/core_symbol_game/src/
+- engine/crates_rs/core_symbol_game_runtime/src/
 - ow/pfp/3_code/  (historical path; not present at the 2026-10-20 pin)
 
 Map every Rust trait and struct to its corresponding mathematical object 

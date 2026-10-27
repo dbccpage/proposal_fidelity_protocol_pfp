@@ -9,8 +9,8 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
 
 
 def _wire(value: Any) -> Any:

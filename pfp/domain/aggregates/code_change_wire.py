@@ -11,13 +11,13 @@ import json
 import re
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.shared_kernel.path import is_normalized_relative_posix
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.path import is_normalized_relative_posix
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     domain_digest,
     thaw,
 )
-from omega_engine_pfp.domain.validation import (
+from pfp.domain.validation import (
     MAX_ARRAY_LENGTH,
     MAX_ID_LENGTH,
     MAX_STRING_LENGTH,
@@ -34,12 +34,12 @@ from omega_engine_pfp.domain.validation import (
     _require_string,
 )
 
-CODE_CHANGE_PROPOSAL_SCHEMA = "omega.symbol-game.code-change-proposal.v1"
-CODE_CHANGE_PATCH_SCHEMA = "omega.symbol-game.code-change-patch.v1"
-GATE_RECEIPT_SCHEMA = "omega.symbol-game.gate-receipt.v1"
-CODE_CHANGE_RUN_ROOT_SCHEMA = "omega.symbol-game.code-change-run-root.v1"
-CODE_CHANGE_ATTEMPT_SCHEMA = "omega.symbol-game.code-change-attempt.v1"
-CODE_CHANGE_REPAIR_SCHEMA = "omega.symbol-game.code-change-repair.v1"
+CODE_CHANGE_PROPOSAL_SCHEMA = "core.symbol-game.code-change-proposal.v1"
+CODE_CHANGE_PATCH_SCHEMA = "core.symbol-game.code-change-patch.v1"
+GATE_RECEIPT_SCHEMA = "core.symbol-game.gate-receipt.v1"
+CODE_CHANGE_RUN_ROOT_SCHEMA = "core.symbol-game.code-change-run-root.v1"
+CODE_CHANGE_ATTEMPT_SCHEMA = "core.symbol-game.code-change-attempt.v1"
+CODE_CHANGE_REPAIR_SCHEMA = "core.symbol-game.code-change-repair.v1"
 
 REFUSAL_PROTECTED_FILE_PATCHED = "REFUSAL_PROTECTED_FILE_PATCHED"
 REFUSAL_TOUCHED_OUTSIDE_OWNED = "REFUSAL_TOUCHED_OUTSIDE_OWNED"
@@ -53,11 +53,11 @@ REFUSAL_BUDGET_EXHAUSTED = "REFUSAL_BUDGET_EXHAUSTED"
 CODE_CHANGE_PACKET_FAMILY = "code_change_proposal_v1"
 CODE_CHANGE_FAMILY = "code_change_proposal"
 
-PATH_MANIFEST_DOMAIN = "omega.symbol-game.code-change-path-manifest.v1"
-PAYLOAD_DOMAIN = "omega.symbol-game.code-change-proposal-payload.v1"
-PATCH_DOMAIN = "omega.symbol-game.code-change-patch.v1"
-GATE_RECEIPT_DOMAIN = "omega.symbol-game.gate-receipt.v1"
-RUN_ROOT_DOMAIN = "omega.symbol-game.code-change-run-root.v1"
+PATH_MANIFEST_DOMAIN = "core.symbol-game.code-change-path-manifest.v1"
+PAYLOAD_DOMAIN = "core.symbol-game.code-change-proposal-payload.v1"
+PATCH_DOMAIN = "core.symbol-game.code-change-patch.v1"
+GATE_RECEIPT_DOMAIN = "core.symbol-game.gate-receipt.v1"
+RUN_ROOT_DOMAIN = "core.symbol-game.code-change-run-root.v1"
 
 CODE_CHANGE_TERMINAL_TARGET = "TransportValidatedOrTypedRefusal"
 CODE_CHANGE_EVIDENCE_CEILING = "ReplayableLabEvidence"

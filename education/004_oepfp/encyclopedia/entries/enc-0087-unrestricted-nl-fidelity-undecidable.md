@@ -9,8 +9,8 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.8"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
-  - "canonical_omega_math_spine.md v1.5.2 §IV.2 'Theorem IV.8'"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "canonical_core_math_spine.md v1.5.2 §IV.2 'Theorem IV.8'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -56,7 +56,7 @@ Since $F$ is assumed to be a mechanical decider, it would decide the Halting Pro
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.2
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.2
   (statement copied verbatim, including the parenthetical). Original header
   line:
   `**Theorem IV.8 (Unrestricted NL Fidelity Is Undecidable).** [PROVED] If the seed is unrestricted natural language, packet fidelity is not mechanically decidable. (Reduction to the halting problem.)`

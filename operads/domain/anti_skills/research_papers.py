@@ -209,7 +209,7 @@ ACTIVE_ANTI_SKILLS: Tuple[AntiSkillDefinition, ...] = (
         "ANTI-GHOST-ARTIFACT-CITATION",
         "Ghost Artifact Citation",
         "MAJOR",
-        "Citing excised internal review dossiers (*bulgakov*) as preserved docs.",
+        "Citing excised internal review dossiers (*novelist*) as preserved docs.",
     ),
     AntiSkillDefinition(
         27,

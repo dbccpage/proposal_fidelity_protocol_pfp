@@ -60,7 +60,7 @@ pins the exact construction calls in both existing factories and rejects raw
 imports elsewhere. It checks source drift, not runtime policy or Python privacy.
 
 **Comparison is by value, never by identity.** Provider types now have one
-canonical home in `omega_engine_woland.domain.providers.types`, with no research-host
+canonical home in `adversary.domain.providers.types`, with no research-host
 aliases. Confinement still compares declared values: serialized inputs and
 independently constructed enum values must not bypass the fixture boundary.
 
@@ -73,10 +73,10 @@ import os
 from pathlib import Path
 from typing import Any, Callable, Optional, Sequence, Tuple
 
-from omega_engine_woland.domain.providers.allowlist import (
+from adversary.domain.providers.allowlist import (
     ModelAllowlist,
 )
-from omega_engine_woland.domain.providers.budget import (
+from adversary.domain.providers.budget import (
     DEFAULT_BUDGET_MICROUSD,
     DEFAULT_MAX_OUTPUT_TOKENS,
     BudgetController,
@@ -85,9 +85,9 @@ from omega_engine_woland.domain.providers.budget import (
     fixture_pricing_observation,
     utc_now,
 )
-from omega_engine_woland.domain.providers.types import Provider
-from omega_engine_woland.domain.providers.ledger import BudgetLedger
-from omega_engine_woland.infrastructure.providers.gateway import (
+from adversary.domain.providers.types import Provider
+from adversary.domain.providers.ledger import BudgetLedger
+from adversary.infrastructure.providers.gateway import (
     OearsLlmGateway,
 )
 

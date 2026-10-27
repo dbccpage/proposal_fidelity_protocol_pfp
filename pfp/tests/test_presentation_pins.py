@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.presentation_pins import (
+from pfp.domain.presentation_pins import (
     PinnedPresentation,
     PinnedRule,
     PresentationPins,
@@ -21,7 +21,7 @@ from omega_engine_pfp.domain.presentation_pins import (
 
 GOVERNANCE_PINS = (
     Path(__file__).resolve().parents[2]
-    / "omega_engine_governance"
+    / "governance"
     / "contracts"
     / "pinned"
     / "symbol_game_presentations.json"
@@ -59,7 +59,7 @@ class TestTheGovernancePinFile:
         body = json.loads(GOVERNANCE_PINS.read_text(encoding="utf-8"))
         assert [pin["name"] for pin in body["pins"]] == ["c5", "c6"]
 
-    def test_c6_is_the_landau_control_and_says_so(self) -> None:
+    def test_c6_is_the_examiner_control_and_says_so(self) -> None:
         """A control in a production registry must announce itself.
 
         The pin file's own doctrine says to pin only a system this estate
@@ -73,7 +73,7 @@ class TestTheGovernancePinFile:
         assert "NEGATIVE CONTROL" in c6["note"]
 
     def test_c6_has_period_six_over_five_symbols(self) -> None:
-        # Landau's g(5) = 6. The two numbers that a size-capped checker confuses.
+        # Examiner's g(5) = 6. The two numbers that a size-capped checker confuses.
         body = json.loads(GOVERNANCE_PINS.read_text(encoding="utf-8"))
         c6 = PresentationPins.from_wire(body["pins"]).resolve("c6")
         assert c6 is not None

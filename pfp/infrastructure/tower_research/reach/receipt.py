@@ -35,7 +35,7 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.lean_bridge.models import STANDARD_LEAN_AXIOMS
+from pfp.domain.lean_bridge.models import STANDARD_LEAN_AXIOMS
 
 from . import targets, transport
 from .canonical import (

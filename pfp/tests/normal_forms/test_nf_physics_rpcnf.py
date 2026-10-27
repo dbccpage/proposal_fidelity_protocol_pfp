@@ -9,10 +9,10 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.sn_dispatch import RPCNF_ID
-from omega_engine_pfp.infrastructure.normal_forms.sn_dispatch import checker_for
-from omega_engine_pfp.infrastructure.normal_forms.sn_dispatch import evaluate_rpcnf
-from omega_engine_pfp.infrastructure.normal_forms.sn_dispatch import evaluate_sn_transition
+from pfp.infrastructure.normal_forms.sn_dispatch import RPCNF_ID
+from pfp.infrastructure.normal_forms.sn_dispatch import checker_for
+from pfp.infrastructure.normal_forms.sn_dispatch import evaluate_rpcnf
+from pfp.infrastructure.normal_forms.sn_dispatch import evaluate_sn_transition
 
 _KEY = ["phi0", "phi1", "phi2", "phi3"]
 _MINIMAL_ROWS = [

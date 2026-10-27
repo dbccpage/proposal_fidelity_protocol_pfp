@@ -8,13 +8,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import PharmacyCatalogRepository
-from omega_engine_epistemic_immune_system.domain.pharmacy_seeder import PharmacySeeder
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.domain.pharmacy_seeder import PharmacySeeder
+from eis.infrastructure.pharmacy_writer import (
     filesystem_byte_writer,
     filesystem_catalog_bytes,
 )
-from omega_engine_epistemic_immune_system.use_cases.admitted_antibody_query import (
+from eis.use_cases.admitted_antibody_query import (
     admitted_antibodies,
 )
 

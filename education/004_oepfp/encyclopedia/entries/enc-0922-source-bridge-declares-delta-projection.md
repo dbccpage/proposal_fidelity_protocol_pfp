@@ -15,7 +15,7 @@ sources:
 uses: ["ENC-0895", "ENC-0905", "ENC-0912", "ENC-0921"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -42,7 +42,7 @@ exactly by first coordinate `2`.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean`.
 
 The Lean theorem names are:
 

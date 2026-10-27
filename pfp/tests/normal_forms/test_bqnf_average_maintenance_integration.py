@@ -14,12 +14,12 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict
 
-from omega_engine_pfp.domain.normal_forms.bqnf_validator import (
+from pfp.domain.normal_forms.bqnf_validator import (
     BqnfBoundary,
     BqnfCdcEvent,
     BqnfValidator,
 )
-from omega_engine_pfp.infrastructure.normal_forms.bqnf_fixture_loader import (
+from pfp.infrastructure.normal_forms.bqnf_fixture_loader import (
     JsonYamlBqnfFixtureLoader,
 )
 
@@ -27,7 +27,7 @@ from omega_engine_pfp.infrastructure.normal_forms.bqnf_fixture_loader import (
 def _find_repo_root() -> Path:
     current = Path(__file__).resolve()
     for parent in current.parents:
-        if (parent / ".git").exists() or (parent / "omega_engine_pfp").is_dir():
+        if (parent / ".git").exists() or (parent / "pfp").is_dir():
             return parent
     return current.parents[3]
 
@@ -35,7 +35,7 @@ def _find_repo_root() -> Path:
 _REPO_ROOT = _find_repo_root()
 _YAML_FIXTURE_PATH = (
     _REPO_ROOT
-    / "omega_engine_pfp"
+    / "pfp"
     / "infrastructure"
     / "yaml"
     / "fixtures"
@@ -43,7 +43,7 @@ _YAML_FIXTURE_PATH = (
 )
 _JSON_FIXTURE_PATH = (
     _REPO_ROOT
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "014_normal_forms"
     / "demos"

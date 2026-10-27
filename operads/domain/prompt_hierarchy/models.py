@@ -119,7 +119,7 @@ class ImmuneFenceBinding:
             raise ValueError("IMMUNE_FENCE_LIMIT_INVALID")
 
 
-from omega_engine_operads.domain.operad.colours import ADMITTED_FINITE_COLOURS
+from operads.domain.operad.colours import ADMITTED_FINITE_COLOURS
 
 
 @dataclass(frozen=True)
@@ -214,7 +214,7 @@ class PromptGateReceipt:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "schema_version": "omega.prompt_hierarchy.gate_receipt.v1",
+            "schema_version": "core.prompt_hierarchy.gate_receipt.v1",
             "prompt_uri": self.prompt_uri,
             "status": self.status,
             "anti_ops_evaluated": list(self.anti_ops_evaluated),

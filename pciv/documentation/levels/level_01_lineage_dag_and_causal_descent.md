@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/genealogy.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/genealogy.rs
 ---
 
 # Prompt Civ Level 01: Lineage DAG & Causal Descent: Two-Graph Separation
 
 **AuthorityEffect:** None.  
 **Level:** Level 01 (Causal Lineage & Reference Topologies)  
-**Rust Genealogy Seam:** [`omega_prompt_civilization::genealogy`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/genealogy.rs)  
+**Rust Genealogy Seam:** [`core_prompt_civilization::genealogy`](../../../engine/crates_rs/core_prompt_civilization/src/genealogy.rs)  
 **Primary Graphs:** `InheritanceDAG` (Causal), `ReferenceGraph` (Associational)  
 **Core Falsifiers:** `F-LINEAGE-01`, `F-RANK-01`
 
@@ -76,7 +76,7 @@ Level 01 establishes the **Two-Graph Separation Law**:
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::genealogy
+// core_prompt_civilization::genealogy
 pub enum InheritanceRelationship {
     DirectMutation { operator_id: OperatorId },
     Repair { defect_hash: [u8; 32] },

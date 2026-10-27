@@ -29,22 +29,22 @@ import pytest
 def isolate_durable_storage(tmp_path: Any, monkeypatch: pytest.MonkeyPatch) -> None:
     """Isolate event log and CAS persistence per test under tmp_path."""
     monkeypatch.setattr(
-        "omega_engine_operating_system.adapters.prompt_civ.event_log.DurableEventLogV1.DEFAULT_LOG_PATH",
+        "operating_system.adapters.prompt_civ.event_log.DurableEventLogV1.DEFAULT_LOG_PATH",
         tmp_path / "event_log.jsonl",
     )
     monkeypatch.setattr(
-        "omega_engine_operating_system.adapters.prompt_civ.cas.ContentAddressedStorageV1.DEFAULT_STORAGE_DIR",
+        "operating_system.adapters.prompt_civ.cas.ContentAddressedStorageV1.DEFAULT_STORAGE_DIR",
         tmp_path / "cas",
     )
     monkeypatch.setattr(
-        "omega_engine_operating_system.adapters.packet_seat.PacketSeatAdapterV1.DEFAULT_TURNS_DIR",
+        "operating_system.adapters.packet_seat.PacketSeatAdapterV1.DEFAULT_TURNS_DIR",
         tmp_path / "turns",
     )
 
 
 def test_f_rank_01_fitter_child_lifts_parent_more() -> None:
     """F-RANK-01: Controlled single-parent test: higher child pass fraction q_c produces higher parent r_inv."""
-    from omega_engine_operating_system.adapters.prompt_civ.rank import (
+    from operating_system.adapters.prompt_civ.rank import (
         AncestralRankCalculatorV1,
     )
 
@@ -69,7 +69,7 @@ def test_f_rank_01_fitter_child_lifts_parent_more() -> None:
 
 def test_f_rank_02_verifier_reconstructs_transition_matrix() -> None:
     """F-RANK-02: Verifier reconstructs P<- from bound graph and evidence to reject forged matrices."""
-    from omega_engine_operating_system.adapters.prompt_civ.rank import (
+    from operating_system.adapters.prompt_civ.rank import (
         RankCertificateVerifierV1,
     )
 
@@ -94,7 +94,7 @@ def test_f_rank_02_verifier_reconstructs_transition_matrix() -> None:
 
 def test_f_rank_03_solver_budgets_reported_honestly() -> None:
     """F-RANK-03: Exceeding N <= 1000, E <= 5000, or bit-length 4096 returns BUDGET_EXHAUSTED."""
-    from omega_engine_operating_system.adapters.prompt_civ.rank import (
+    from operating_system.adapters.prompt_civ.rank import (
         ExactRowReductionSolverV1,
     )
 
@@ -107,7 +107,7 @@ def test_f_rank_03_solver_budgets_reported_honestly() -> None:
 
 def test_f_res_03_rank_alone_decides_nothing() -> None:
     """F-RES-03: Holding subject bytes, evidence, and policy fixed, reversing rank leaves custody unchanged."""
-    from omega_engine_epistemic_immune_system.domain.external_admission import (
+    from eis.domain.external_admission import (
         CustodyDecisionEngineV1,
     )
 
@@ -134,7 +134,7 @@ def test_f_res_03_rank_alone_decides_nothing() -> None:
 
 def test_f_res_04_near_clones_deduplicated_before_ranking() -> None:
     """F-RES-04: Near-clones with identical (state, action) digests are deduplicated before ranking."""
-    from omega_engine_operating_system.adapters.prompt_civ.rank import (
+    from operating_system.adapters.prompt_civ.rank import (
         AncestralRankCalculatorV1,
     )
 
@@ -169,7 +169,7 @@ def test_f_res_04_near_clones_deduplicated_before_ranking() -> None:
 
 def test_f_evt_01_event_identity_separate_from_payload() -> None:
     """F-EVT-01: Producer-minted event_id prevents collisions; identical replay is idempotent no-op."""
-    from omega_engine_operating_system.adapters.prompt_civ.event_log import (
+    from operating_system.adapters.prompt_civ.event_log import (
         DurableEventLogV1,
         PromptCivEventV1,
     )
@@ -209,7 +209,7 @@ def test_f_evt_01_event_identity_separate_from_payload() -> None:
 
 def test_f_evt_02_same_id_different_bytes_is_conflict() -> None:
     """F-EVT-02: Same event_id with different payload raises EVENT_IDENTITY_CONFLICT."""
-    from omega_engine_operating_system.adapters.prompt_civ.event_log import (
+    from operating_system.adapters.prompt_civ.event_log import (
         DurableEventLogV1,
         EventIdentityConflictError,
         PromptCivEventV1,
@@ -246,7 +246,7 @@ def test_f_evt_02_same_id_different_bytes_is_conflict() -> None:
 
 def test_f_evt_03_cas_objects_durable_source_artifacts() -> None:
     """F-EVT-03: Missing or corrupted CAS objects raise CAS_OBJECT_MISSING or CAS_DIGEST_MISMATCH."""
-    from omega_engine_operating_system.adapters.prompt_civ.cas import (
+    from operating_system.adapters.prompt_civ.cas import (
         ContentAddressedStorageV1,
     )
 
@@ -267,7 +267,7 @@ def test_f_evt_03_cas_objects_durable_source_artifacts() -> None:
 
 def test_f_evt_04_unknown_provider_outcomes_handled_honestly() -> None:
     """F-EVT-04: Crash after SENT and before capture recorded as OUTCOME_UNKNOWN; retry requires authorization."""
-    from omega_engine_operating_system.adapters.packet_seat import (
+    from operating_system.adapters.packet_seat import (
         PacketSeatAdapterV1,
     )
 
@@ -285,7 +285,7 @@ def test_f_evt_04_unknown_provider_outcomes_handled_honestly() -> None:
 
 def test_f_evt_05_replaying_captured_responses_makes_zero_provider_calls() -> None:
     """F-EVT-05: Replaying projections after RESPONSE_CAPTURED performs zero provider calls."""
-    from omega_engine_operating_system.adapters.packet_seat import (
+    from operating_system.adapters.packet_seat import (
         PacketSeatAdapterV1,
         ProviderCallSpy,
     )
@@ -304,7 +304,7 @@ def test_f_evt_05_replaying_captured_responses_makes_zero_provider_calls() -> No
 
 def test_f_tx_01_crash_recovery_replays_event_log_to_consistent_state() -> None:
     """F-TX-01: Crash between log append and projection recovers exact state without duplicated evidence."""
-    from omega_engine_operating_system.adapters.prompt_civ.persistence import (
+    from operating_system.adapters.prompt_civ.persistence import (
         PromptCivProjectionEngineV1,
     )
 
@@ -321,7 +321,7 @@ def test_f_tx_01_crash_recovery_replays_event_log_to_consistent_state() -> None:
 
 def test_f_meta_01_meta_proposals_take_effect_only_in_future_external_epoch() -> None:
     """F-META-01: MetaOperatorProposalV1 takes effect only in future external epoch; cannot change own checkers."""
-    from omega_engine_operating_system.adapters.prompt_civ.forge import (
+    from operating_system.adapters.prompt_civ.forge import (
         MetaOperatorProposalV1,
         MetaProposalRegistryV1,
     )
@@ -343,7 +343,7 @@ def test_f_meta_01_meta_proposals_take_effect_only_in_future_external_epoch() ->
 
 def test_f_e2e_01_reference_only_invariance() -> None:
     """F-E2E-01: Adding RetrievedPrecedent edge leaves rank and inherited immunity byte-identical."""
-    from omega_engine_operating_system.adapters.prompt_civ.e2e import (
+    from operating_system.adapters.prompt_civ.e2e import (
         PromptCivE2EFixtureV1,
     )
 
@@ -360,10 +360,10 @@ def test_f_e2e_01_reference_only_invariance() -> None:
 
 def test_f_e2e_02_witnessed_descent() -> None:
     """F-E2E-02: Without causal witness, no edge or propagation exists; with witness, propagation reaches parent."""
-    from omega_engine_operating_system.adapters.prompt_civ.e2e import (
+    from operating_system.adapters.prompt_civ.e2e import (
         PromptCivE2EFixtureV1,
     )
-    from omega_engine_prompt_civilization.domain.causal_witness import seal_causal_witness
+    from pciv.domain.causal_witness import seal_causal_witness
 
     fixture = PromptCivE2EFixtureV1()
 

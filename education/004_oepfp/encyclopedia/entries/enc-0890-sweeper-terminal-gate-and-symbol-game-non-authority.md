@@ -11,15 +11,15 @@ tower_level: null
 primitive: null
 aliases: ["paper:sn-packets:sweeper-gate", "paper:sn-packets:no-authority-output"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "s_n_packets_and_the_symbol_game.md §6-§7"
-  - "crates/omega_sweep_kernel/src/terminalize.rs"
-  - "crates/omega_symbol_game/src/refusal.rs"
+  - "crates/core_sweep_kernel/src/terminalize.rs"
+  - "crates/core_symbol_game/src/refusal.rs"
 uses: ["ENC-0805", "ENC-0813", "ENC-0845"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_sweeper.lean"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_operation_tree_fold.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_sweeper.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_operation_tree_fold.lean"
   - "PaperER007.recursive_fold_retains_child_outputs"
   - "PaperER007.recursive_fold_composes_child_effect"
   - "PaperER007.admitted_operation_effect_none"
@@ -44,7 +44,7 @@ outputs authority.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_sweeper.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_sweeper.lean`.
 
 The Lean theorem names are:
 
@@ -59,13 +59,13 @@ The Lean theorem names are:
 - `SnSymbolGameAndPackets.formal_replay_remains_non_authority`
 
 `lake build SnSymbolGameAndPackets` succeeds. The gate proofs are finite Boolean
-case analyses; the formal replay theorem imports the existing OmegaCore
+case analyses; the formal replay theorem imports the existing CoreCore
 non-promotion kernel.
 
 ## Notes
 
 - The mechanized gate is a finite model of the runtime condition in
-  `omega_sweep_kernel/src/terminalize.rs`; it is not a full formalization of
+  `core_sweep_kernel/src/terminalize.rs`; it is not a full formalization of
   the YAML validator.
 - The operation-color theorem captures the product-level authority firewall:
   the Symbol Game may emit terminal/evidence material, but authority remains

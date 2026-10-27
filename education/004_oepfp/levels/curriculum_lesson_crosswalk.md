@@ -7,8 +7,8 @@ maturity: instructional
 claim_status: specified
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/004_oepfp/curriculum/curriculum_125_master.md
-  - omega_engine_education/documentation/004_oepfp/levels/README.md
+  - education/documentation/004_oepfp/curriculum/curriculum_125_master.md
+  - education/documentation/004_oepfp/levels/README.md
 ---
 
 # The Symbol Game: Selected Curriculum & Lesson Crosswalk
@@ -22,13 +22,13 @@ source_paths:
 
 ## 1. Overview & Educational Philosophy
 
-The Symbol Game bridges formal mathematical verification with accessible, tiered pedagogy. This document provides a **selected curriculum crosswalk** linking key foundational, algebraic, geometric, physical, and agentic levels of the 101-stage Symbol Game suite to concrete hands-on learning modules located under `omega_engine_education/curriculum/3_the_symbol_game_proposal_fidelity_protocol_pfp/` (not found at pin). While intermediate or specialized trans-base stages (e.g. between 24 and 46) do not each have an isolated standalone sitting, landmark stages map directly to pedagogical units:
+The Symbol Game bridges formal mathematical verification with accessible, tiered pedagogy. This document provides a **selected curriculum crosswalk** linking key foundational, algebraic, geometric, physical, and agentic levels of the 101-stage Symbol Game suite to concrete hands-on learning modules located under `education/curriculum/3_the_symbol_game_proposal_fidelity_protocol_pfp/` (not found at pin). While intermediate or specialized trans-base stages (e.g. between 24 and 46) do not each have an isolated standalone sitting, landmark stages map directly to pedagogical units:
 
 - **Track 000 (Beginners, Ages 5 to 500):** Intuitive physical and visual metaphors (drawing boundaries, walking cycles, elevator cuts).
 - **Track 100 (Novices, Software & Prompts):** Model interfaces, logit masks, JSON schema envelopes, and token frontier control.
 - **Track 200 (Intermediates, Discrete Homology):** Exact rational linear programming, $L_1$ defect descent, and DDA state contractions.
 - **Track 300 (Advanced, Higher-Degree Cell Complexes):** Simplicial chains, Regge deficit calculus, Cayley-Menger determinants, and sheaf gluing.
-- **Track 400 (Researchers, Physics & Swarms):** Quantum density matrices, fermion sign problems, bounded quantifier complexity, and Woland multi-agent swarms.
+- **Track 400 (Researchers, Physics & Swarms):** Quantum density matrices, fermion sign problems, bounded quantifier complexity, and Adversary multi-agent swarms.
 - **Track 600 (MSS-N Frontier):** Full 101-stage research series from $N=0$ (`N0_the_genesis_distinction`) to $N=100$ (`N100_open_horizon_and_release`).
 - **Track 610 (MSS-N Domain Realizations):** 6 realized carrier adapters (ANSI SQL, computation, cosmology, LLMs, mathematics, quantum physics).
 - **Tracks 700–990 (Specialized Sittings):** Math, grammar, packets, theory, interactive foundations, and genesis pins.
@@ -42,9 +42,9 @@ The Symbol Game bridges formal mathematical verification with accessible, tiered
 
 ## 2. Selected Level-to-Lesson Crosswalk Table
 
-> **Link check (2026-10-20, pin `c419cc6beb`).** The former tree `omega_engine_education/curriculum/` no longer exists; the PFP lessons now live in [`../curriculum/`](../curriculum/) as `<track>/concepts/<lesson>.md` and `<track>/notebooks/<lesson>.ipynb`. All 156 lesson and notebook links whose files exist there were repointed. The 27 links into the former `curriculum/1_mssn/600_mssn_frontier/` (the `N0` to `N100` MSS-N lessons) and the old curriculum root have no file at the pin and are kept as plain text marked "(not found at pin)". The how-to-play links now point to [`../_how_to_play/`](../_how_to_play/). Notebooks were not executed in this check.
+> **Link check (2026-10-20, pin `c419cc6beb`).** The former tree `education/curriculum/` no longer exists; the PFP lessons now live in [`../curriculum/`](../curriculum/) as `<track>/concepts/<lesson>.md` and `<track>/notebooks/<lesson>.ipynb`. All 156 lesson and notebook links whose files exist there were repointed. The 27 links into the former `curriculum/1_mssn/600_mssn_frontier/` (the `N0` to `N100` MSS-N lessons) and the old curriculum root have no file at the pin and are kept as plain text marked "(not found at pin)". The how-to-play links now point to [`../_how_to_play/`](../_how_to_play/). Notebooks were not executed in this check.
 >
-> **Spot check (2026-10-22, pin `305b9690f9`).** Not a rerun of all 156 links. These three targets still exist: [`lesson_000_01`](../curriculum/000_beginners/concepts/lesson_000_01_the_empty_slate.md), [`lesson_200_12` notebook](../curriculum/200_intermediates/notebooks/lesson_200_12_dual_circulation_certificates.ipynb) and [`02_the_rules_of_the_board.md`](../_how_to_play/02_the_rules_of_the_board.md). The old root `omega_engine_education/curriculum/` is still absent. Notebooks were not executed.
+> **Spot check (2026-10-22, pin `305b9690f9`).** Not a rerun of all 156 links. These three targets still exist: [`lesson_000_01`](../curriculum/000_beginners/concepts/lesson_000_01_the_empty_slate.md), [`lesson_200_12` notebook](../curriculum/200_intermediates/notebooks/lesson_200_12_dual_circulation_certificates.ipynb) and [`02_the_rules_of_the_board.md`](../_how_to_play/02_the_rules_of_the_board.md). The old root `education/curriculum/` is still absent. Notebooks were not executed.
 
 | Level | Level Document | Domain | Primary Pedagogical Lessons | Interactive Lab Notebook |
 |:---:|:---|:---|:---|:---|
@@ -78,7 +78,7 @@ The Symbol Game bridges formal mathematical verification with accessible, tiered
 | **62** | [`level_62_discrete_lattice_gauge.md`](level_62_discrete_lattice_gauge.md) | Track 300 (Advanced) | [300.22 Shift Transformations and Curvature H](../curriculum/300_advanced/concepts/lesson_300_22_shift_transformations_and_curvature_h.md) | [`lesson_300_22_shift_transformations_and_curvature_h.ipynb`](../curriculum/300_advanced/notebooks/lesson_300_22_shift_transformations_and_curvature_h.ipynb) |
 | **66** | [`level_66_signed_sum_models.md`](level_66_signed_sum_models.md) | Track 400 (Researchers) | [400.11 Physics of the Fermion Sign Problem](../curriculum/400_researchers/concepts/lesson_400_11_physics_of_the_fermion_sign_problem.md)<br/>[400.12 Merons as Cohomological Obstructions](../curriculum/400_researchers/concepts/lesson_400_12_merons_as_cohomological_obstructions.md) | [`lesson_400_11_physics_of_the_fermion_sign_problem.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_11_physics_of_the_fermion_sign_problem.ipynb)<br/>[`lesson_400_12_merons_as_cohomological_obstructions.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_12_merons_as_cohomological_obstructions.ipynb) |
 | **67** | [`level_67_sign_problem_lower_bounds.md`](level_67_sign_problem_lower_bounds.md) | Track 400 (Researchers) | [400.15 The NP-Hardness Boundary](../curriculum/400_researchers/concepts/lesson_400_15_the_np_hardness_boundary.md) | [`lesson_400_15_the_np_hardness_boundary.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_15_the_np_hardness_boundary.ipynb) |
-| **85** | [`level_85_agent_task_routing.md`](level_85_agent_task_routing.md) | Track 400 (Researchers) | [400.23 The Woland Swarm Axiom](../curriculum/400_researchers/concepts/lesson_400_23_the_woland_swarm_axiom.md) | [`lesson_400_23_the_woland_swarm_axiom.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_23_the_woland_swarm_axiom.ipynb) |
+| **85** | [`level_85_agent_task_routing.md`](level_85_agent_task_routing.md) | Track 400 (Researchers) | [400.23 The Adversary Swarm Axiom](../curriculum/400_researchers/concepts/lesson_400_23_the_adversary_swarm_axiom.md) | [`lesson_400_23_the_adversary_swarm_axiom.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_23_the_adversary_swarm_axiom.ipynb) |
 | **86** | [`level_86_multi_agent_traces.md`](level_86_multi_agent_traces.md) | Track 400 (Researchers) | [400.24 Dialectical 9-Dot Gauge Breaks](../curriculum/400_researchers/concepts/lesson_400_24_dialectical_9_dot_gauge_breaks.md)<br/>[400.25 Professional Capstone](../curriculum/400_researchers/concepts/lesson_400_25_professional_capstone.md) | [`lesson_400_24_dialectical_9_dot_gauge_breaks.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_24_dialectical_9_dot_gauge_breaks.ipynb)<br/>[`lesson_400_25_professional_capstone.ipynb`](../curriculum/400_researchers/notebooks/lesson_400_25_professional_capstone.ipynb) |
 
 ---
@@ -86,7 +86,7 @@ The Symbol Game bridges formal mathematical verification with accessible, tiered
 ## 3. How to Use the Learning Materials with the Game Levels
 
 1. **For Learners & Students:** Read the conceptual narrative in the corresponding lesson markdown file, then run the interactive `.ipynb` notebook to see the calculation evaluated in real-time.
-2. **For Engine Developers & Players:** Use the formal specification in the `levels/level_XX_...md` document to build packet envelopes. No level referee is implemented at the source pin (see the "Source status" line in each level file), and the runtime packet sealer `omega-canonical-v1` is not RFC 8785.
+2. **For Engine Developers & Players:** Use the formal specification in the `levels/level_XX_...md` document to build packet envelopes. No level referee is implemented at the source pin (see the "Source status" line in each level file), and the runtime packet sealer `core-canonical-v1` is not RFC 8785.
 3. **For Educators:** Follow the 4-tier age guidance (Ages 5 to 500) to introduce foundational boundary distinction concepts before presenting formal cochain complexes.
 
 ---

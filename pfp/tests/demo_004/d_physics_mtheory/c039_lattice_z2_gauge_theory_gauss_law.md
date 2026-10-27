@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Kitaev's toric code (Kitaev 2003) places a qubit on each edge of a cellulated surface, with star operators A_v (the product of X over the edges at v, the Z₂ Gauss law) and plaquette operators B_p (the product of Z around face p). On a closed orientable surface of genus g the ground-space degeneracy is 2^{2g} = |H¹(Σ_g; Z₂)|. More generally, for any closed connected surface the number of logical qubits is k = E − (V − 1) − (F − 1) = 2 − χ = dim H¹(Σ; Z₂), which covers the non-orientable cases as well.
 
-The answer is topological: it must not change when the cellulation is refined. The certificate is concrete: stabilizer ranks and 2k logical operators with the standard commutation pattern. The task joins cohomology to a stabilizer code, stressing OEWAS (Omega Engine Workflows, Agents, Skills) handoff between homology and Pauli algebra, and OEEIS (Omega Engine Epistemic Immune System) screening of the orientable formula applied to non-orientable surfaces.
+The answer is topological: it must not change when the cellulation is refined. The certificate is concrete: stabilizer ranks and 2k logical operators with the standard commutation pattern. The task joins cohomology to a stabilizer code, stressing OEWAS (Engine Workflows, Agents, Skills) handoff between homology and Pauli algebra, and OEEIS (Engine Epistemic Immune System) screening of the orientable formula applied to non-orientable surfaces.
 
 ## 3. Formal Problem and Bounds
 
@@ -57,7 +57,7 @@ Logical operators are Pauli words over the edges. A degeneracy answer is complet
 - **Relabel and gauge controls:** 10 controls: vertex and edge relabelling; a refinement of a base surface (subdivided faces, or L × L to 2L × 2L); the dual cellulation, which exchanges X and Z. GSD is invariant under all of them.
 - **Poisoned-but-schema-valid cases:** 6 cases: non-orientable surfaces where a solver may infer "genus" and apply 2^{2g}; CW complexes with repeated edges in one face, where multiplicities must be taken mod 2; a cellulation mixing a 12-gon face with triangles, so that lattice-specific formulas for square or triangular tilings give the wrong ranks.
 - **Exact checker (Rust):** F2 stabilizer ranks, commutation tests and span membership for logicals.
-- **Independent second checker:** dim H¹(Σ; Z₂) from integral homology in `omega_homology` (Smith normal form) and the universal coefficient theorem: the rank of H₁(Σ; Z) plus the number of even torsion factors. For complexes with E ≤ 10, a dense exact check of the ground space of −Σ A_v − Σ B_p over Q is added.
+- **Independent second checker:** dim H¹(Σ; Z₂) from integral homology in `core_homology` (Smith normal form) and the universal coefficient theorem: the rank of H₁(Σ; Z) plus the number of even torsion factors. For complexes with E ≤ 10, a dense exact check of the ground space of −Σ A_v − Σ B_p over Q is added.
 - **Mutation suite:** k computed as 2g for a non-orientable surface, a logical that anticommutes with one star, a z-logical that is a product of plaquettes (trivial), a commutation matrix with an off-diagonal 1, a star rank V instead of V − 1, a nonzero dimension for an odd-charge sector.
 
 ## 7. Arms and Baselines
@@ -99,9 +99,9 @@ Operands expected: (1) k = 2 − χ for closed connected surfaces; (2) edge mult
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_homology` (cell and simplicial complexes, Betti numbers, integral torsion by Smith normal form, H⁰ and H¹ reports).
-- `omega_engine/crates_rs/omega_quantum_physics/src/toric.rs` (the 2 × 2 toric code with Wilson loops and the −1 braiding check) and `pauli.rs`; `omega_engine/crates_rs/omega_majorana` torus play for layouts, diagnostic only.
-- `omega_engine/crates_rs/omega_holonomy` (Wilson loops, flatness) as a cross-check of B_p = +1 as flat Z₂ connections.
+- `engine/crates_rs/core_homology` (cell and simplicial complexes, Betti numbers, integral torsion by Smith normal form, H⁰ and H¹ reports).
+- `engine/crates_rs/core_quantum_physics/src/toric.rs` (the 2 × 2 toric code with Wilson loops and the −1 braiding check) and `pauli.rs`; `engine/crates_rs/core_majorana` torus play for layouts, diagnostic only.
+- `engine/crates_rs/core_holonomy` (Wilson loops, flatness) as a cross-check of B_p = +1 as flat Z₂ connections.
 - A general Rust stabilizer tableau and span-membership test is part of [U14](../../upgrades/u14_rust_quantum_stabilizer_port.md).
 - Upgrades: base [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), plus U14.
 

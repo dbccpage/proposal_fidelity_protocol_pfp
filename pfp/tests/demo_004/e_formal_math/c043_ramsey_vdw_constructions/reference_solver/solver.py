@@ -8,19 +8,19 @@ import hashlib
 from itertools import combinations
 from typing import Dict, List, Optional
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
     edge_index,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.ddc_tracer import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.ddc_tracer import (
     DDCTracer,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.local_search import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.local_search import (
     parse_fixed_edges,
     parse_fixed_elements,
     solve_ramsey2_paley,
     solve_vdw_local_search,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.sat_bridge import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.sat_bridge import (
     encode_ramsey2_to_cnf,
     encode_vdw_to_cnf,
     solve_via_sat,
@@ -193,7 +193,7 @@ def solve(case: dict) -> dict:
         # Fast path: Greenwood-Gleason on GF(16)
         if n <= 16:
             tracer.record_i("greenwood_gleason_16", "")
-            from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.local_search import (
+            from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.local_search import (
                 embed_greenwood_gleason_16,
             )
 

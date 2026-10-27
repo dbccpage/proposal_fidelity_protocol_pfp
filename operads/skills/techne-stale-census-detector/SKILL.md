@@ -65,8 +65,8 @@ miscounted; it was wrong because it was a literal.
 ## Running it
 
 ```powershell
-python omega_engine_operations/domain/cicd/stale_census_audit.py
-python omega_engine_operations/domain/cicd/stale_census_audit.py --path omega_engine/_tests_unit
+python operations/domain/cicd/stale_census_audit.py
+python operations/domain/cicd/stale_census_audit.py --path engine/_tests_unit
 ```
 
 Exit `0` clean, `1` findings, `2` refusal. The report always states its
@@ -115,7 +115,7 @@ elsewhere into a false positive, and a detector that cries wolf stops being read
 ## Provenance
 
 Built from the sprint 001-039 Blackrod enforcement audit. Held by
-`omega_engine_operations/tests/unit/test_stale_census_audit.py` (15 tests),
+`operations/tests/unit/test_stale_census_audit.py` (15 tests),
 including a positive control for every absence assertion, a refusal matrix, and
 a mutation-verified floor. First run against the estate rather than fixtures, per
 sprint 035: it found four literals, one already red and three latent.

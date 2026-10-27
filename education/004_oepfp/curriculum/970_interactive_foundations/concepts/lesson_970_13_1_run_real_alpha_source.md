@@ -16,7 +16,7 @@ This practicum runs the actual Alpha 0.2 Rust
 interpreter and the Paper 032 Python host governor. The two have no
 proved semantic bridge. Our one-edge adapter below is an explicit
 teaching declaration; its success cannot promote an Alpha observation
-into a theorem, a production Omega Engine decision, or a universal
+into a theorem, a production Engine decision, or a universal
 human-reasoning claim.
 
 **Prerequisites:** Genesis levels 1, 2, 8; Alpha
@@ -41,7 +41,7 @@ of any outside domain label remains a separate interpretation.
 
 **Grades:** `[Executed]` means these commands ran here;
 `[Declared]` labels the adapter and board; `[Open]` marks transfer from
-the Alpha source model to a general Omega Engine or external domain.
+the Alpha source model to a general Engine or external domain.
 
 ## 1. Run real Alpha source
 
@@ -64,7 +64,7 @@ exercise points, not research authority.
 > - **[Open]**: something this sitting does not decide.
 ## Anchors
 
-- Former notebook: `13_alpha_to_omega_execution`
+- Former notebook: `13_alpha_to_core_execution`
 - The code checks one finite example. It is not a general proof.
 
 ## Exercise

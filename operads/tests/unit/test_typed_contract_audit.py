@@ -10,34 +10,34 @@ from pathlib import Path
 import pytest
 from pydantic import TypeAdapter
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_operads.application.typed_contract_audit import (
+from operations.domain.rop.result import Err, Ok
+from operads.application.typed_contract_audit import (
     TypedContractAuditReceiptV1,
     audit_typed_contracts,
 )
-from omega_engine_operads.application.woland_candidate_plan import (
+from operads.application.adversary_candidate_plan import (
     PlanNodeV01,
     compile_candidate_plan,
 )
-from omega_engine_operads.application.woland_instruction_admission import (
+from operads.application.adversary_instruction_admission import (
     source_snapshot_digest,
 )
-from omega_engine_operads.application.woland_task_selection import (
-    WolandCandidateRouteV01,
-    WolandTaskShapeV01,
+from operads.application.adversary_task_selection import (
+    AdversaryCandidateRouteV01,
+    AdversaryTaskShapeV01,
     select_candidate_plan,
 )
-from omega_engine_operads.domain.anti_skills import AntiSkillSubjectV1
-from omega_engine_operads.infrastructure.typed_contract_compiler import (
+from operads.domain.anti_skills import AntiSkillSubjectV1
+from operads.infrastructure.typed_contract_compiler import (
     compile_typed_contracts,
 )
 
 ROOT = next(
     path
     for path in Path(__file__).resolve().parents
-    if (path / ".git").exists() and (path / "omega_engine_operads").is_dir()
+    if (path / ".git").exists() and (path / "operads").is_dir()
 )
-CONTRACTS = Path("omega_engine_operads/catalog/contracts/v1")
+CONTRACTS = Path("operads/catalog/contracts/v1")
 EFFECTS = frozenset({"read_subject", "emit_finding"})
 
 
@@ -67,7 +67,7 @@ def _clone(tmp_path: Path) -> Path:
 
 
 def _change_instruction(clone: Path, *, repin: bool) -> None:
-    record_path = clone / CONTRACTS / "woland_claim_audit.json"
+    record_path = clone / CONTRACTS / "adversary_claim_audit.json"
     record = json.loads(record_path.read_bytes())
     body_path = clone / record["instruction"]["path"]
     changed = body_path.read_bytes() + b"\nRetain the changed finite source binding.\n"
@@ -294,7 +294,7 @@ def test_receipt_refuses_malformed_wire_and_transplanted_evidence() -> None:
 
 
 def test_signed_helper_refuses_unavailable_fresh_evidence_before_signature(tmp_path: Path) -> None:
-    from omega_engine_operads.application.typed_contract_audit import (
+    from operads.application.typed_contract_audit import (
         verify_typed_contract_admission,
     )
 
@@ -316,19 +316,19 @@ def _signed_fixture(tmp_path: Path):
     clone = _clone(tmp_path)
     subject = _subject()
     package = compile_typed_contracts(clone)
-    root = PlanNodeV01("woland-claim-audit", ((0, PlanNodeV01("woland-scope-falsifier")),))
+    root = PlanNodeV01("adversary-claim-audit", ((0, PlanNodeV01("adversary-scope-falsifier")),))
     plan = compile_candidate_plan(package.documents, root, allowed_effects=EFFECTS)
-    task = WolandTaskShapeV01(
+    task = AdversaryTaskShapeV01(
         subject.subject_id,
         "fixture-profile",
         "sha256:" + "a" * 64,
         "fixture-domain",
         plan.inputs,
         plan.output,
-        required_operation_ids=frozenset({"woland-claim-audit", "woland-scope-falsifier"}),
+        required_operation_ids=frozenset({"adversary-claim-audit", "adversary-scope-falsifier"}),
         allowed_effects=EFFECTS,
     )
-    route = WolandCandidateRouteV01(
+    route = AdversaryCandidateRouteV01(
         "route.typed-contract-audit",
         task.workload_profile_id,
         task.workload_profile_digest,
@@ -338,7 +338,7 @@ def _signed_fixture(tmp_path: Path):
     )
     selected = select_candidate_plan(task, (route,))
     manifest = {
-        "schema_version": "oewas.woland.instruction_admission.v0.1",
+        "schema_version": "oewas.adversary.instruction_admission.v0.1",
         "decision": "APPROVE",
         "reviewer_identity": "human.fixture",
         "authority_effect": "None",
@@ -370,7 +370,7 @@ def _signed_fixture(tmp_path: Path):
             "-f",
             str(key_path),
             "-n",
-            "oewas-woland-instruction-v0.1",
+            "oewas-adversary-instruction-v0.1",
             str(manifest_path),
         ],
         check=True,
@@ -395,7 +395,7 @@ def _signed_fixture(tmp_path: Path):
 
 
 def test_external_signature_admits_only_exact_fresh_instruction_evidence(tmp_path: Path) -> None:
-    from omega_engine_operads.application.typed_contract_audit import (
+    from operads.application.typed_contract_audit import (
         verify_typed_contract_admission,
     )
 
@@ -414,8 +414,8 @@ def test_external_signature_admits_only_exact_fresh_instruction_evidence(tmp_pat
         result.instruction_admission.ordered_operand_bodies == selected.plan.ordered_operand_bodies
     )
     assert result.instruction_admission.operation_ids == (
-        "woland-scope-falsifier",
-        "woland-claim-audit",
+        "adversary-scope-falsifier",
+        "adversary-claim-audit",
     )
     assert selected.admission == selected.plan.admission == "Unadmitted"
     assert package.anti_spec.status == "PROPOSED"
@@ -441,7 +441,7 @@ def test_external_signature_admits_only_exact_fresh_instruction_evidence(tmp_pat
 
 
 def test_signed_instruction_refuses_subject_transplant_and_actual_finding(tmp_path: Path) -> None:
-    from omega_engine_operads.application.typed_contract_audit import (
+    from operads.application.typed_contract_audit import (
         verify_typed_contract_admission,
     )
 
@@ -461,12 +461,12 @@ def test_signed_instruction_refuses_subject_transplant_and_actual_finding(tmp_pa
 
 
 def test_old_signature_refuses_rebound_source_and_fixture_changes(tmp_path: Path) -> None:
-    from omega_engine_operads.application.typed_contract_audit import (
+    from operads.application.typed_contract_audit import (
         verify_typed_contract_admission,
     )
 
     subject, package, _selected, clone, arguments = _signed_fixture(tmp_path)
-    original_record = (clone / CONTRACTS / "woland_claim_audit.json").read_bytes()
+    original_record = (clone / CONTRACTS / "adversary_claim_audit.json").read_bytes()
     original_body_path = clone / json.loads(original_record)["instruction"]["path"]
     original_body = original_body_path.read_bytes()
     _change_instruction(clone, repin=True)
@@ -477,12 +477,12 @@ def test_old_signature_refuses_rebound_source_and_fixture_changes(tmp_path: Path
     assert refused.error.code == "PLAN_OR_SCOPE_MISMATCH"
 
     # Restore the first change: the fixture-only control must be independent.
-    (clone / CONTRACTS / "woland_claim_audit.json").write_bytes(original_record)
+    (clone / CONTRACTS / "adversary_claim_audit.json").write_bytes(original_record)
     original_body_path.write_bytes(original_body)
     restored = verify_typed_contract_admission(subject, **arguments)
     assert isinstance(restored, Ok), restored
 
-    anti_path = clone / CONTRACTS / "woland_scope_falsifier.json"
+    anti_path = clone / CONTRACTS / "adversary_scope_falsifier.json"
     anti = json.loads(anti_path.read_bytes())
     bank_path = clone / anti["fixtures"]["path"]
     bank = package.fixture_bank
@@ -505,7 +505,7 @@ def test_old_signature_refuses_rebound_source_and_fixture_changes(tmp_path: Path
 
 
 def test_missing_and_tampered_signature_evidence_refuses(tmp_path: Path) -> None:
-    from omega_engine_operads.application.typed_contract_audit import (
+    from operads.application.typed_contract_audit import (
         verify_typed_contract_admission,
     )
 

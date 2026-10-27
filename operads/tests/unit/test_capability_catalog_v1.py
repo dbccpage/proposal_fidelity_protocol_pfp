@@ -7,14 +7,14 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.domain.capability_catalog_v1 import (
     CapabilityCatalogRefusal,
     CapabilityCatalogV1,
     decode_capability_catalog,
     encode_capability_catalog,
     seal_capability_catalog,
 )
-from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+from operads.infrastructure.capability_catalog_compiler import (
     HOST_NAMES,
     CatalogCompileRefusal,
     compile_capability_catalog,
@@ -98,7 +98,7 @@ def test_catalog_uses_frontmatter_descriptions_without_inventing_absent_agents()
     assert skills["techne-code-lossless-parser"].equivariant is False
     assert skills["techne-code-lossless-parser"].agent_scope == (
         "all",
-        "techne-code-soviet-builder",
+        "techne-code-builder",
         "techne-dev",
     )
     assert "ow-bureau-mole-hunting" in skills
@@ -253,7 +253,7 @@ def test_catalog_decoder_refuses_duplicate_unknown_float_and_noncanonical_json(
 def test_catalog_domain_has_no_infrastructure_dependency() -> None:
     source = (
         REPO_ROOT
-        / "omega_engine_operads/domain/capability_catalog_v1.py"
+        / "operads/domain/capability_catalog_v1.py"
     )
     tree = ast.parse(source.read_text(encoding="utf-8"))
     imported = {

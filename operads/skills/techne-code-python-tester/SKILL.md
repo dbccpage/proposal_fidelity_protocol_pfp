@@ -32,11 +32,11 @@ encoded anti-patterns; it does **not** certify behavioral adequacy.
 3. Run the deterministic quality gate on every changed or new test file:
 
    ```text
-   <configured-python> omega_engine_operads/skills/techne-code-python-tester/scripts/test_quality_gate.py <test-paths>
+   <configured-python> operads/skills/techne-code-python-tester/scripts/test_quality_gate.py <test-paths>
    ```
 
    Exit 1 = findings present. Treat findings as **Critical** mechanical defects.
-4. Require the shape of a real test (align with Soviet Builder):
+4. Require the shape of a real test (align with Builder):
    - state the invariant under test (even if only in a comment or receipt);
    - include at least one negative / refusal / malformed / boundary case;
    - assert exact observable state or error, not mere non-exception.
@@ -89,7 +89,7 @@ Every run must leave a machine-readable receipt:
 
 ```json
 {
-  "schema": "omega.python_test_receipt.v1",
+  "schema": "core.python_test_receipt.v1",
   "interpreter": "<sys.executable>",
   "pytest_version": "...",
   "collection": {"status": "PASS|FAIL|BLOCKED", "command": "...", "exit": 0},
@@ -105,10 +105,10 @@ Every run must leave a machine-readable receipt:
 }
 ```
 
-## Relationship to the Soviet pair
+## Relationship to the Strict pair
 
-- **Soviet Inspector** — semantic / tier / SQL / safety / obstruction judge. Issues VETO.
-- **Soviet Builder** — Landau author. Constructs tests under Theoretical Minimum + mutation kill.
+- **Inspector** — semantic / tier / SQL / safety / obstruction judge. Issues VETO.
+- **Builder** — Examiner author. Constructs tests under Theoretical Minimum + mutation kill.
 - **This skill** — Python execution specialist + mechanical pre-filter + receipt producer.
 
 Do not duplicate the Inspector’s semantic vetoes here. Feed gate findings and raw

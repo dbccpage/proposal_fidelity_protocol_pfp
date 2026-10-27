@@ -15,10 +15,10 @@ _repo_root = next(p for p in Path(__file__).resolve().parents if (p / "pyproject
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
     solve,
 )
 

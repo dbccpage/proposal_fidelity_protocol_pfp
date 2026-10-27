@@ -4,7 +4,7 @@ use linear_algebra::backend::basic_matrix::BasicMatrix;
 use linear_algebra::determinant::bareiss_determinant;
 use linear_algebra::smith_normal_form::{smith_normal_form_checked, SmithDiagonal};
 use num_bigint::BigInt;
-use omega_homology::integral_chain_complex::{IntegralChainComplex, SparseIntegerMatrix};
+use core_homology::integral_chain_complex::{IntegralChainComplex, SparseIntegerMatrix};
 use serde_json::{json, Value};
 use std::io::{self, Read};
 

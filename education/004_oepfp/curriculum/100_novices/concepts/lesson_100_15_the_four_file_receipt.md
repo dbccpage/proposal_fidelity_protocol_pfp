@@ -67,6 +67,6 @@ print('Exercise verified successfully!')
 
 | Anchor Type | Target Link |
 | :--- | :--- |
-| **Curriculum Anchor** | `Woland Specification` |
+| **Curriculum Anchor** | `Adversary Specification` |
 | **Authority Effect** | `None` |
 | **Zero-Float Law** | Enforced (`fractions.Fraction` or exact integers) |

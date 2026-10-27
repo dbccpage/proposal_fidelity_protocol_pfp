@@ -27,15 +27,15 @@ A series report and `swarm_review_summary.json` state a pipeline status the co-l
 
 ## Witness
 
-Historical receipts. This digest did not rerun gates, pytest, or Lean. Source folder `_ic/inr/omega_paper_reviews/symbol_game_swarm_2026-09-28/`.
+Historical receipts. This digest did not rerun gates, pytest, or Lean. Source folder `_ic/inr/core_paper_reviews/symbol_game_swarm_2026-09-28/`.
 
 `swarm_review_summary.json` for `002_the_symbol_game_signed_presentations_and_search_frontier` sets `run_all.exit_code` to 1 and `overall_status` to `NEEDS_REVISION`. Stage 1 is `FAIL`. Its error is:
 
-> Old Man Red Team Blocker: MISSING_DUAL_WITNESS: Exactness claimed without dual certificate or gap witness.
+> Red Team Red Team Blocker: MISSING_DUAL_WITNESS: Exactness claimed without dual certificate or gap witness.
 
 That rollup row also warns that `proves` occurs twice and `universal` once, and it sets stage `techne_code_swarm_and_tests` to `NOT_APPLICABLE`. `THE_SYMBOL_GAME_SWARM_REVIEW_REPORT.md` puts the same package on `NEEDS_REVISION` and names that dual-witness blocker, tests under `tests/` rather than `code/tests/`, and those hype words.
 
-`002_the_symbol_game_signed_presentations_and_search_frontier/run_all_receipt.json` is `SWARM_REV_20260928_164851`, `timestamp_utc` `2026-09-28T16:48:51.241355+00:00`. `overall_status` is `PASS`. Stage 1 is `PASS`, `old_man_verdict` is `GO`, and `old_man_dual_witness` is `N_A`. Stage 1 `warnings` is empty. `old_man_survived` includes:
+`002_the_symbol_game_signed_presentations_and_search_frontier/run_all_receipt.json` is `SWARM_REV_20260928_164851`, `timestamp_utc` `2026-09-28T16:48:51.241355+00:00`. `overall_status` is `PASS`. Stage 1 is `PASS`, `red_team_verdict` is `GO`, and `red_team_dual_witness` is `N_A`. Stage 1 `warnings` is empty. `red_team_survived` includes:
 
 > Obstruction persistence admitted honestly; no spurious exactness claim.
 

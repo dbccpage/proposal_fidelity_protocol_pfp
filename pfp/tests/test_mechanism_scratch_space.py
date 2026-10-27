@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.infrastructure.mechanism_scratch_space import (
+from pfp.infrastructure.mechanism_scratch_space import (
     HostScratchLedger,
     prepare_scratch_cut_turn,
     stationary_cut_binding,
@@ -17,7 +17,7 @@ from omega_engine_pfp.infrastructure.mechanism_scratch_space import (
 
 
 PROTOCOL = Path(__file__).resolve().parents[2] / (
-    "omega_engine_pfp/tests/demo_004/a_mechanism/"
+    "pfp/tests/demo_004/a_mechanism/"
     "c006_host_scratch_space_vs_cot.md"
 )
 CLAIMS = {"a->b": 1, "b->c": 2, "c->a": 3, "b->d": 1, "d->a": 2, "c->d": 1}
@@ -151,7 +151,7 @@ def test_malformed_raw_bytes_and_undeclared_cut_fields_are_not_coerced():
 
 
 def test_consumed_raw_cut_emits_am4_observation_without_faking_host_acceptance():
-    from omega_engine_pfp.infrastructure.mechanism_scratch_space import check_scratch_cut_turn
+    from pfp.infrastructure.mechanism_scratch_space import check_scratch_cut_turn
 
     state = ledger()
     prepared = turn(state)
@@ -171,8 +171,8 @@ def test_consumed_raw_cut_emits_am4_observation_without_faking_host_acceptance()
 def test_real_existing_finite_cochain_checker_rejects_bad_cut_and_checks_zero_control():
     from fractions import Fraction
 
-    from omega_engine_pfp.domain.solvers.simplicial_cochain import CochainCarrier, Simplicial1Cochain
-    from omega_engine_pfp.infrastructure.mechanism_scratch_space import check_scratch_cut_turn
+    from pfp.domain.solvers.simplicial_cochain import CochainCarrier, Simplicial1Cochain
+    from pfp.infrastructure.mechanism_scratch_space import check_scratch_cut_turn
 
     state = ledger()
     prepared = turn(state)

@@ -20,7 +20,7 @@ import pytest
 PACKAGE = Path(__file__).resolve().parents[2]
 PAPER = PACKAGE / "paper.md"
 NOTEBOOK = PACKAGE / "jupyter_notebooks" / "007_moving_a_discrepancy.ipynb"
-COCHAINS = Path("omega_engine_pfp", "domain", "ddc", "cochains.py")
+COCHAINS = Path("pfp", "domain", "ddc", "cochains.py")
 
 EDGES = (("a", "b"), ("b", "c"), ("c", "a"))
 CLAIMS = {edge: Q(1, 3) for edge in EDGES}

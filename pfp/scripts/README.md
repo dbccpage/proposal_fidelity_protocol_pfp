@@ -15,10 +15,10 @@ Holds the executable composition root for the documentation-integrity bounded co
 ## 3. Run
 
 ```text
-py -3.12 omega_engine_pfp/scripts/docs_integrity.py validate
+py -3.12 pfp/scripts/docs_integrity.py validate
 ```
 
-The package form is equivalent: `py -3.12 -m omega_engine_pfp.scripts.docs_integrity validate`.
+The package form is equivalent: `py -3.12 -m pfp.scripts.docs_integrity validate`.
 
 ## 4. Scope
 

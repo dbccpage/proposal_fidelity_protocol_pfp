@@ -12,7 +12,7 @@ import pytest
 import yaml
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.rewriting import rewriting_types as M
+from pfp.domain.rewriting import rewriting_types as M
 
 _here = Path(__file__).resolve()
 ROOT = _here.parents[2] / "infrastructure" / "yaml"

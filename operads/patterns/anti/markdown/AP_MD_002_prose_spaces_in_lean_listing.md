@@ -26,12 +26,12 @@ A printed Lean listing replaces identifiers with prose words that contain spaces
 
 ## Witness
 
-Historical. This is the 2026-10-08 publication review, not a fresh compilation and not a reopened manuscript. Commit `c33fb25be7f7bb340eb7345d90134dc116bac244`. Source: `_ic/inr/omega_paper_reviews/2026-10-08_paper027_publication_review/review.md`.
+Historical. This is the 2026-10-08 publication review, not a fresh compilation and not a reopened manuscript. Commit `c33fb25be7f7bb340eb7345d90134dc116bac244`. Source: `_ic/inr/core_paper_reviews/2026-10-08_paper027_publication_review/review.md`.
 
 > The “verbatim listing” contains:
 > namespace Residual Closure Layer
 > end Residual Closure Layer
-> OmegaCore.Residual Closure Layer.residual_not_auth
+> CoreCore.Residual Closure Layer.residual_not_auth
 > The unescaped spaces do not form the single namespace/qualified identifier required here. A prose vocabulary substitution has reached executable text.
 
 The same review's missing paths and unresolved build receipt are not this witness. `AP_MD_001` owns advertised paths the package does not contain. This digest did not reopen the manuscript or run Lean.

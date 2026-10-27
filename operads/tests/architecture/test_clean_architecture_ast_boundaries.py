@@ -5,7 +5,7 @@ applied. The previous extractor read only ``node.module`` and ignored
 ``node.level``, so ``from ..infrastructure import x`` inside ``domain/`` was
 recorded as ``infrastructure`` (or, for ``from .. import infrastructure``, not at
 all) and could never match a forbidden prefix such as
-``omega_engine_operads.infrastructure``. Every layer rule was
+``operads.infrastructure``. Every layer rule was
 therefore blind to the import style the package itself uses most.
 """
 
@@ -22,19 +22,19 @@ REPO_ROOT = ROOT.parent
 # asserted to be present in the discovered set, so an on-disk discovery that
 # found nothing cannot turn the rule into a vacuous pass.
 NAMED_OTHER_CONTEXTS = (
-    "omega_engine_epistemic_immune_system",
-    "omega_engine_pfp",
-    "omega_engine_woland",
+    "eis",
+    "pfp",
+    "adversary",
 )
 
 
 def _discover_other_contexts() -> Tuple[str, ...]:
-    """Every sibling ``omega_engine_*`` package on disk, plus the named four."""
+    """Every sibling ``*`` package on disk, plus the named four."""
     found = {
         child.name
         for child in REPO_ROOT.iterdir()
         if child.is_dir()
-        and child.name.startswith("omega_engine_")
+        and child.name.startswith("")
         and child.name != PACKAGE
     }
     return tuple(sorted(found | set(NAMED_OTHER_CONTEXTS)))
@@ -104,7 +104,7 @@ def _foreign_infrastructure(imported: str) -> bool:
     """Whether a module is another bounded context's infrastructure layer."""
     parts = imported.split(".")
     return (
-        parts[0].startswith("omega_engine")
+        parts[0].startswith("engine")
         and parts[0] != PACKAGE
         and "infrastructure" in parts[1:]
     )
@@ -253,7 +253,7 @@ class CleanArchitectureBoundaryTests(unittest.TestCase):
 
     def test_cross_context_imports_are_caught_in_source(self) -> None:
         domain_imports = extract_imports_from_source(
-            "from omega_engine_woland.domain import models\n",
+            "from adversary.domain import models\n",
             f"{PACKAGE}.domain.example",
             is_package=False,
         )
@@ -261,7 +261,7 @@ class CleanArchitectureBoundaryTests(unittest.TestCase):
             _violations("example.py", domain_imports, _discover_other_contexts())
         )
         app_imports = extract_imports_from_source(
-            "import omega_engine_pfp.infrastructure.adapters.x\n",
+            "import pfp.infrastructure.adapters.x\n",
             f"{PACKAGE}.application.example",
             is_package=False,
         )

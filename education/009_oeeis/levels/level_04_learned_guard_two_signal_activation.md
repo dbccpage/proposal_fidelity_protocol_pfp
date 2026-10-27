@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/danger_gate.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/danger_gate.py
 ---
 
 # EIS Level 04: Learned-Guard Conjunction & Two-Signal Activation
 
 **AuthorityEffect:** None.  
 **Level:** Level 04 (Dual-Signal Conjunction & Operational Activation)  
-**Python Danger Seam:** [`omega_engine_epistemic_immune_system.domain.danger_gate`](../../../../omega_engine_epistemic_immune_system/domain/danger_gate.py)  
+**Python Danger Seam:** [`eis.domain.danger_gate`](../../../../eis/domain/danger_gate.py)  
 **Primary Types:** `TwoSignalDangerGate`, `DangerSignalV1`, `ActivationDisposition`  
 **Core Invariant:** Learned-Guard Conjunction Law (Prevention of `TWO_SIGNAL_COLLAPSE`)
 
@@ -85,7 +85,7 @@ In OEEIS, Level 04 establishes the **Learned-Guard Conjunction Law**:
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_epistemic_immune_system.domain.danger_gate
+# eis.domain.danger_gate
 class TwoSignalDangerGate:
     def evaluate_activation(
         self,

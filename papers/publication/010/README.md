@@ -6,7 +6,7 @@ Markdown rendering (`paper.md`), and its claim ledger. `source.md` and
 their original repository-relative links. Use the linked renderings for reading.
 
 Code baseline: a623568eb0f853b968bc419bf06dfc6af256ab02. Revised source path:
-`omega_engine_atlas/coda_atlas/omega_engine_pfp/010_holonomy_checks_and_model_pilots/paper.md`.
+`atlas/coda_atlas/pfp/010_holonomy_checks_and_model_pilots/paper.md`.
 
 Build identities are in `build_receipt.json`; the collection manifest records
 all inputs and outputs. Related revised papers link to sibling packages; code

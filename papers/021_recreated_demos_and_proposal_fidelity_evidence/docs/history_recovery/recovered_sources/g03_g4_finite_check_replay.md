@@ -17,7 +17,7 @@ G4 is the conjecture that the sealed engine is the import branch. `19L57G1:paper
 
 The withdrawal is recorded in two places at HEAD `b55fc96a`: entry `CL-G1-G4-FINITE` in `19L57G1:paper/paper_claim_ledger.md`, and the entry "G4 correspondence and lock-receipt correction (2026-08-26)" in `19L57G1:paper/paper_change_log.md`. The ledger's falsifier field names what is missing: a declared collapse-preserving adapter that passes each actual chain pair to the engine, followed by a replayable finite run.
 
-Writing such a harness honestly is the hard part, and the withdrawn attempt shows how easy it is to fool oneself. Checking a run is cheap: log every engine call's arguments. The challenge stresses host-side instrumentation, OEWAS (Omega Engine Workflows, Agents, Skills) code synthesis, and OEEIS (Omega Engine Epistemic Immune System) detection of the same defect recurring.
+Writing such a harness honestly is the hard part, and the withdrawn attempt shows how easy it is to fool oneself. Checking a run is cheap: log every engine call's arguments. The challenge stresses host-side instrumentation, OEWAS (Engine Workflows, Agents, Skills) code synthesis, and OEEIS (Engine Epistemic Immune System) detection of the same defect recurring.
 
 ## 3. Formal Problem and Bounds
 
@@ -61,7 +61,7 @@ The packet also includes `runner.py` and `accounting.json`.
 
 **Held-out inputs:** Chains `n = 16..18`; relabel controls: a presentation-token renaming of `base_R(n)`, and the chain reversal where one exists; a poisoned adapter that preserves the pair count but not collapse.
 
-**Second checker.** `omega_engine/crates_rs/omega_ooutwire_primitives` (`minima.rs`, `canonical.rs`, `separability.rs`).
+**Second checker.** `engine/crates_rs/core_ooutwire_primitives` (`minima.rs`, `canonical.rs`, `separability.rs`).
 
 **Gates.** `python ci/run_gates.py` at HEAD `b55fc96a`.
 
@@ -115,7 +115,7 @@ The catalog row requires none. These are recommended:
 
 **19L57G1, read-only.** At `3100c4e`: `19L57G1:code/derivation/generator.py`, `candidates.py`, `iso.py`, `observe.py` and `engine.py`; at HEAD: `19L57G1:paper/paper_claim_ledger.md` (`CL-G1-G4-FINITE`), `19L57G1:research/g1_local_class/STATUS.md` and `19L57G1:research/alpha_engine/SOURCE_MANIFEST.json`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_ooutwire_primitives` and `omega_engine_pfp/domain/immune/danger_gate.py`.
+**the_symbol_game.** `engine/crates_rs/core_ooutwire_primitives` and `pfp/domain/immune/danger_gate.py`.
 
 **Upgrades.**
 

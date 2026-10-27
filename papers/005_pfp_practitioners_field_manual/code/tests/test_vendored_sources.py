@@ -30,7 +30,7 @@ FIELD = re.compile(
     r"|baseline-commit|baseline-sha256): (\S+)$",
     re.M,
 )
-ADAPTER_PATH = "omega_engine_providers.adapters.native_functional"
+ADAPTER_PATH = "providers.adapters.native_functional"
 BOOTSTRAP_NAMES = {"_find_repo_root", "_REPO_ROOT"}
 VENDORED = {
     "native_functional.py": {

@@ -2,7 +2,7 @@
 
 A seat transport is a callable ``SeatTurnRequestV1 -> SeatTurnReplyV1`` that declares
 ``protocol_id == SYMBOL_GAME_PROTOCOL_V2`` and is defined inside this package. Swarm
-runtimes (Woland and its specialisations) accept nothing else, so every model call is
+runtimes (Adversary and its specialisations) accept nothing else, so every model call is
 mediated by Symbol Game code: budgeted routing (``RoutedSeatExecutor``), the OpenRouter
 turn executor, or a scripted transport that makes no network call.
 
@@ -13,14 +13,14 @@ from __future__ import annotations
 
 from typing import Callable
 
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnReplyV1, SeatTurnRequestV1
+from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1, SeatTurnRequestV1
 
-SYMBOL_GAME_PROTOCOL_V2 = "omega.symbol_game.protocol.v2"
-_PACKAGE_PREFIXES = ("omega_engine_pfp.", "omega_engine_woland.infrastructure.")
+SYMBOL_GAME_PROTOCOL_V2 = "core.symbol_game.protocol.v2"
+_PACKAGE_PREFIXES = ("pfp.", "adversary.infrastructure.")
 
 
 def is_symbol_game_transport(candidate: object) -> bool:
-    """True only for a transport defined in Symbol Game or Woland infrastructure that declares the v2 protocol."""
+    """True only for a transport defined in Symbol Game or Adversary infrastructure that declares the v2 protocol."""
     return (
         getattr(candidate, "protocol_id", None) == SYMBOL_GAME_PROTOCOL_V2
         and any(type(candidate).__module__.startswith(prefix) for prefix in _PACKAGE_PREFIXES)

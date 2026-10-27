@@ -8,8 +8,8 @@ claim_status: finite-derivation
 authority_effect: "None"
 source_revision: 000ee9b0c234eda74340e424d6cfb3f6ec001df7
 source_paths:
-  - omega_engine_pfp/fixtures/finite_qm_workflow/c4_public_input.json
-  - omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json
+  - pfp/fixtures/finite_qm_workflow/c4_public_input.json
+  - pfp/fixtures/finite_qm_workflow/c4_work_unit.json
 last_verified: 2026-10-22
 verification_scope: exact integer arithmetic rechecked 2026-10-22 at 305b9690f9 against c4_public_input.json, which is unchanged since c419cc6beb; c4_work_unit.json changed only the sha256 of cochain.rs; native checker not executed
 ---
@@ -137,7 +137,7 @@ For fourth edge `4`, the same potential matches every edge and the residual is z
 
 With original dual `(-1,-1,-1,0)`, vertices 0 and 3 have net values `1` and `-1`. Thus the dual is not conserved, even though its coordinate bound holds. It cannot cancel `dot(w,d0*b)` for every potential.
 
-The displayed rational arithmetic was independently checked during this review under Python 3.12.10. No native checker was run for this lesson. The [source work unit](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json) explicitly retains the unpaid quantum imports. A finite mathematical check establishes only its stated predicates; a task schema and an authorization policy answer different questions.
+The displayed rational arithmetic was independently checked during this review under Python 3.12.10. No native checker was run for this lesson. The [source work unit](../../../../pfp/fixtures/finite_qm_workflow/c4_work_unit.json) explicitly retains the unpaid quantum imports. A finite mathematical check establishes only its stated predicates; a task schema and an authorization policy answer different questions.
 
 ## Listen, then watch
 
@@ -172,4 +172,4 @@ The sections above are the reading. This block is the same example in one spoken
 
 Write the four rows of `d0` from the edge list, multiply `d1*d0`, and prove the lower-bound inequality symbolically rather than numerically. Then explore the family with fourth edge `t`: the same path potential leaves residual `t-4`; choose the sign of the dual to obtain `phi1=|t-4|`. Separate the case `t=4`, where several feasible duals can attain the same zero objective. Explain which part of this argument depends on this single-cycle complex before transporting it to a different carrier.
 
-Sources: the [public matrix data](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_public_input.json), [certificate predicates](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json), and [native adapter](../../../../omega_engine_pfp/infrastructure/finite_qm_cochain_judge.py). These sources bind the finite example; this lesson makes no empirical physics claim.
+Sources: the [public matrix data](../../../../pfp/fixtures/finite_qm_workflow/c4_public_input.json), [certificate predicates](../../../../pfp/fixtures/finite_qm_workflow/c4_work_unit.json), and [native adapter](../../../../pfp/infrastructure/finite_qm_cochain_judge.py). These sources bind the finite example; this lesson makes no empirical physics claim.

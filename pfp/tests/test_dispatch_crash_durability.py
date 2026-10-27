@@ -42,11 +42,11 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operating_system.adapters.security import (
+from operating_system.adapters.security import (
     FixtureOnlyAeadProtector,
 )
-from omega_engine_operating_system.infrastructure import EncryptedArtifactCas
-from omega_engine_pfp.infrastructure.trace import (
+from operating_system.infrastructure import EncryptedArtifactCas
+from pfp.infrastructure.trace import (
     CRASH_MODEL_ABRUPT_PROCESS_EXIT,
     DISPATCH_COMPLETE,
     DISPATCH_EVIDENCE_MISSING,
@@ -200,7 +200,7 @@ def test_recovery_runs_in_a_process_that_never_saw_the_write(tmp_path):
             (
                 "import sys,json;"
                 f"sys.path.insert(0, {str(Path(__file__).resolve().parents[2])!r});"
-                "from omega_engine_pfp.infrastructure.trace import "
+                "from pfp.infrastructure.trace import "
                 "scan_trace, derive_dispatch_outcomes, derive_status;"
                 f"s = scan_trace({str(trace_path)!r});"
                 "o = derive_dispatch_outcomes(s.records);"

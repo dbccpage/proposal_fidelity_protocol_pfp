@@ -7,13 +7,13 @@ import json
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.infrastructure.skill_garden.archive_lane import (
+from operads.infrastructure.skill_garden.archive_lane import (
     ArchiveRefusal,
     archive_skills,
     restore_skills,
     verify_archive,
 )
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     repo_root_from,
 )
 
@@ -29,8 +29,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         node.add_argument(
             "--manifest",
             default=(
-                "omega_engine_product_planning_office/"
-                "_project_anomalon_codename_woland/planned_archive.md"
+                "product_planning_office/"
+                "_project_sentinel_codename_adversary/planned_archive.md"
             ),
         )
         if name == "archive":

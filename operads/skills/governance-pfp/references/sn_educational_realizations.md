@@ -1,7 +1,7 @@
 # External Genesis Study & S(n) Educational Realizations Protocol
 
 **AuthorityEffect:** None.  
-**Domain Scope:** External study and pedagogical realizations (`dbccpage/19L57G1` analogy). Does NOT govern autonomous Omega Engine mathematical foundations or operational lift admission.
+**Domain Scope:** External study and pedagogical realizations (`dbccpage/19L57G1` analogy). Does NOT govern autonomous Engine mathematical foundations or operational lift admission.
 
 This reference documents the external Genesis $S(n)$ four-layer architecture, epistemic one-way arrow, and realization provenance discipline.
 
@@ -9,7 +9,7 @@ This reference documents the external Genesis $S(n)$ four-layer architecture, ep
 
 ## 1. External Genesis Epistemic Boundary
 
-- **Autonomous Omega Engine Decoupling:** Omega Engine mathematics derives autonomously from Discrete Deformation Calculus (DDC) and simplicial cochains. $S(n)$ Genesis structures represent an external conceptual analogy studied in `dbccpage/19L57G1` (tag `sealed-derivation-v1`).
+- **Autonomous Engine Decoupling:** Engine mathematics derives autonomously from Discrete Deformation Calculus (DDC) and simplicial cochains. $S(n)$ Genesis structures represent an external conceptual analogy studied in `dbccpage/19L57G1` (tag `sealed-derivation-v1`).
 - **Epistemic One-Way Arrow:** $S(n) \xrightarrow{\rho} R(S(n))$. Genesis states may be mapped into mathematical models $\rho(S(n))$, but properties proved inside a model return to Genesis only through an explicitly proved reflection bridge. Discovering rich structures in $R(S(n))$ confers zero authority to extend Genesis.
 
 ---

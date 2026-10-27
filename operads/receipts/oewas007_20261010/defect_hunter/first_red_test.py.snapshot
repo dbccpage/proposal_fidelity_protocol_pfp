@@ -1,0 +1,30 @@
+"""Public dictionary/model canon boundary parity; no routing authority."""
+
+from __future__ import annotations
+
+import pytest
+import yaml
+
+from governance._types.types import load_intelligence_community
+from governance.domain.intelligence_community import IntelligenceCommunity
+
+
+AGENCIES = tuple(code for code in (
+    "odni", "cia", "nsa", "dia", "nro", "nga", "fbi", "cdc", "inr", "darpa", "nara"
+))
+
+
+def canon():
+    return {code: f"Mission for {code}" for code in AGENCIES}
+
+
+def write_canon(tmp_path, value):
+    path = tmp_path / "canon.yaml"
+    path.write_text(yaml.safe_dump(value), encoding="utf-8", newline="\n")
+    return path
+
+
+def test_public_dictionary_loader_rejects_pair_list_as_agency_mapping(tmp_path):
+    path = write_canon(tmp_path, {"intelligence_community": list(map(list, canon().items()))})
+    with pytest.raises(ValueError, match="Malformed intelligence community YAML"):
+        load_intelligence_community(path)

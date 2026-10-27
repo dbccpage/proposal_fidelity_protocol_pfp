@@ -8,22 +8,22 @@ from typing import Any, cast
 
 import pytest
 
-import omega_engine_pfp.infrastructure.tower_research.level_engine.outward.bundles as B
-from omega_engine_operations.domain.level_engine_context import (
+import pfp.infrastructure.tower_research.level_engine.outward.bundles as B
+from operations.domain.level_engine_context import (
     current_context,
 )
-from omega_engine_operations.use_cases.level_engine.bind import TREE_REPLAYS
-from omega_engine_operations.infrastructure.level_engine_ports import ports
-from omega_engine_operations.use_cases.level_engine.bootstrap import build
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import dumps, sha256_tag
-from omega_engine_operations.use_cases.level_engine.research_engine.components import available
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import IntakeRefusal
-from omega_engine_operations.use_cases.level_engine.research_engine.hygiene import (
+from operations.use_cases.level_engine.bind import TREE_REPLAYS
+from operations.infrastructure.level_engine_ports import ports
+from operations.use_cases.level_engine.bootstrap import build
+from operations.use_cases.level_engine.research_engine.canon import dumps, sha256_tag
+from operations.use_cases.level_engine.research_engine.components import available
+from operations.use_cases.level_engine.research_engine.errors import IntakeRefusal
+from operations.use_cases.level_engine.research_engine.hygiene import (
     report,
     scan,
     scan_text,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.level import (
+from operations.use_cases.level_engine.research_engine.level import (
     ROOT,
     FixtureVerdict,
     LevelResult,
@@ -34,7 +34,7 @@ from omega_engine_operations.use_cases.level_engine.research_engine.level import
     load_spec,
     run_level,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.preflight import (
+from operations.use_cases.level_engine.research_engine.preflight import (
     CheckerPin,
     bar,
     load_checker,
@@ -254,7 +254,7 @@ def test_round_p7b_levels_host_texts_and_decide_them(results: dict[str, LevelRes
     """Round P7B: the apparatus levels that need text host it, and every new
     level meets its frozen expectations with every clause claimed natively
     or decoded; 025 is answered by derivability alone."""
-    from omega_engine_operations.use_cases.level_engine.research_engine.level import load_fixtures
+    from operations.use_cases.level_engine.research_engine.level import load_fixtures
 
     with_texts = {cid for cid in P7B if any(fx.structure.texts for fx in load_fixtures(ROOT / "payload" / cid))}
     assert {"signed_chains", "rerun_calls", "grounded_traces", "covered_clauses", "counted_runs",
@@ -511,7 +511,7 @@ def test_native_layers_are_clean() -> None:
 
 
 def test_the_scan_counts_each_kind_of_hit() -> None:
-    from omega_engine_operations.use_cases.level_engine.research_engine.hygiene import _firewall
+    from operations.use_cases.level_engine.research_engine.hygiene import _firewall
 
     assert scan_text("curva" + "ture")[0] == 1
     assert scan_text("the " + "m" + "ss rows")[2] == 1

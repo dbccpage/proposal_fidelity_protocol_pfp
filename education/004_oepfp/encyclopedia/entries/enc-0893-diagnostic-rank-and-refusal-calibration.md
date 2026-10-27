@@ -12,11 +12,11 @@ primitive: null
 aliases: ["paper:sn-packets:diagnostic-rank-refusal-calibration"]
 sources:
   - "s_n_packets_and_the_symbol_game.md §9 'Theorem 12: Ranking and Refusal Calibration Are Diagnostic'"
-  - ".planning/2026-06-12-omega-engine-immune-review.md §20 'Missing Theorem List'"
+  - ".planning/2026-06-12-immune-review.md §20 'Missing Theorem List'"
 uses: ["ENC-0803", "ENC-0804", "ENC-0890"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -32,7 +32,7 @@ refusals.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
 
 The Lean theorem names are:
 

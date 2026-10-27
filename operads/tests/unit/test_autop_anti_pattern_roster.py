@@ -9,10 +9,10 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
-ORCHESTRATOR = REPO / "omega_engine_operads" / "skills" / "auto-oe-autop" / "scripts" / "orchestrate_autop.py"
+ORCHESTRATOR = REPO / "operads" / "skills" / "auto-oe-autop" / "scripts" / "orchestrate_autop.py"
 LEAN_AUDITOR = (
     REPO
-    / "omega_engine_operads"
+    / "operads"
     / "skills"
     / "techne-code-lean4-anti-patterns"
     / "scripts"
@@ -20,13 +20,13 @@ LEAN_AUDITOR = (
 )
 RUST_AUDITOR = (
     REPO
-    / "omega_engine_operads"
+    / "operads"
     / "skills"
     / "techne-code-rust-anti-patterns"
     / "scripts"
     / "rust_anti_pattern_auditor.py"
 )
-LINT = REPO / "omega_engine_operads" / "skills" / "auto-anti-pattern-lint" / "scripts" / "anti_pattern_lint.py"
+LINT = REPO / "operads" / "skills" / "auto-anti-pattern-lint" / "scripts" / "anti_pattern_lint.py"
 CATALOG_SLOTS = (
     "autop",
     "html",
@@ -71,7 +71,7 @@ def _load_orchestrator():
 
 
 def _skill(root: Path, name: str, *, script: bool) -> None:
-    skill = root / "omega_engine_operads" / "skills" / name
+    skill = root / "operads" / "skills" / name
     skill.mkdir(parents=True)
     (skill / "SKILL.md").write_text(f"---\nname: {name}\n---\n", encoding="utf-8")
     if script:
@@ -81,17 +81,17 @@ def _skill(root: Path, name: str, *, script: bool) -> None:
 
 
 def test_catalog_slots_and_lean4_skill_exist() -> None:
-    catalog = REPO / "omega_engine_operads" / "patterns"
+    catalog = REPO / "operads" / "patterns"
     for name in CATALOG_SLOTS:
         assert (catalog / "anti" / name).is_dir(), f"anti/{name}"
         assert (catalog / "helpful" / name).is_dir(), f"helpful/{name}"
     assert (catalog / "anti" / "json" / "CATALOG_EMPTY.txt").is_file()
     assert (catalog / "helpful" / "json" / "CATALOG_EMPTY.txt").is_file()
     assert (
-        REPO / "omega_engine_operads" / "skills" / "techne-code-lean4-anti-patterns" / "SKILL.md"
+        REPO / "operads" / "skills" / "techne-code-lean4-anti-patterns" / "SKILL.md"
     ).is_file()
     module = _load_orchestrator()
-    found = module.discover_anti_pattern_skills(REPO / "omega_engine_operads" / "skills")
+    found = module.discover_anti_pattern_skills(REPO / "operads" / "skills")
     for skill_id in REQUIRED_SKILLS:
         assert skill_id in found
 
@@ -175,7 +175,7 @@ def test_rust_auditor_requires_ord_on_derived_enum(tmp_path: Path) -> None:
 
 
 def test_catalog_lint_accepts_the_live_estate_and_rejects_a_missing_slot(tmp_path: Path) -> None:
-    live = _run(LINT, "--catalog", str(REPO / "omega_engine_operads" / "patterns"), "--check")
+    live = _run(LINT, "--catalog", str(REPO / "operads" / "patterns"), "--check")
     assert live.returncode == 0, live.stdout + live.stderr
     slot = tmp_path / "patterns"
     for name in CATALOG_SLOTS:

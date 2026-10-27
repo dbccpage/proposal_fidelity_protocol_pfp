@@ -9,15 +9,15 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from omega_engine_pfp.domain.documentation_integrity.models import (
+from pfp.domain.documentation_integrity.models import (
     DocumentationCommand,
     ExecutionReceipt,
     FindingLedger,
     IntegrityRefusal,
     IntegrityRequest,
 )
-from omega_engine_pfp.domain.documentation_integrity.ports import FindingOutputPort
-from omega_engine_pfp.domain.kernel.result import Result
+from pfp.domain.documentation_integrity.ports import FindingOutputPort
+from pfp.domain.kernel.result import Result
 
 from .application import validate
 from .configuration import load_contract

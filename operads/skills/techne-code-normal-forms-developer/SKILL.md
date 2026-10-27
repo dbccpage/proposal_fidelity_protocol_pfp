@@ -95,7 +95,7 @@ For event-driven change-data-capture (CDC) tables:
 
 ## 4. Contract Schema Alignment (`smplx.nf.contract.v0` & `standard.yaml`)
 
-All implemented normal form contracts in `omega_engine_pfp/infrastructure/yaml/normal_forms/` must conform to `standard.yaml`:
+All implemented normal form contracts in `pfp/infrastructure/yaml/normal_forms/` must conform to `standard.yaml`:
 
 ```yaml
 schema_version: smplx.nf.contract.v0
@@ -154,9 +154,9 @@ authorization:
 
 ## 5. Execution & Verification Engines
 
-The operational engines live under `omega_engine_pfp/infrastructure/yaml/normal_forms/`:
-- [`nf_contract_parser.py`](../../../omega_engine_pfp/infrastructure/yaml/normal_forms/nf_contract_parser.py): Validates all 82 contracts against `standard.yaml`.
-- [`nf_evaluator.py`](../../../omega_engine_pfp/infrastructure/yaml/normal_forms/nf_evaluator.py): In-memory SQLite evaluation engine, CDC streaming repair, priority queue extrema cochains, and quantile sketch interpolation.
-- [`nf_harness.py`](../../../omega_engine_pfp/infrastructure/yaml/normal_forms/nf_harness.py): Closure, functional dependencies, candidate key finding, BCNF, 3NF, TBNF, DBCNF, ZFNF, DHNF, BSSNF, MICNF.
-- [`nf_examples.py`](../../../omega_engine_pfp/infrastructure/yaml/normal_forms/nf_examples.py): Order-line, Street-Journal-Title, and Heath's Theorem decompositions.
-- [`test_normal_forms.py`](../../../omega_engine_pfp/tests/normal_forms/test_normal_forms.py): Automated test suite.
+The operational engines live under `pfp/infrastructure/yaml/normal_forms/`:
+- [`nf_contract_parser.py`](../../../pfp/infrastructure/yaml/normal_forms/nf_contract_parser.py): Validates all 82 contracts against `standard.yaml`.
+- [`nf_evaluator.py`](../../../pfp/infrastructure/yaml/normal_forms/nf_evaluator.py): In-memory SQLite evaluation engine, CDC streaming repair, priority queue extrema cochains, and quantile sketch interpolation.
+- [`nf_harness.py`](../../../pfp/infrastructure/yaml/normal_forms/nf_harness.py): Closure, functional dependencies, candidate key finding, BCNF, 3NF, TBNF, DBCNF, ZFNF, DHNF, BSSNF, MICNF.
+- [`nf_examples.py`](../../../pfp/infrastructure/yaml/normal_forms/nf_examples.py): Order-line, Street-Journal-Title, and Heath's Theorem decompositions.
+- [`test_normal_forms.py`](../../../pfp/tests/normal_forms/test_normal_forms.py): Automated test suite.

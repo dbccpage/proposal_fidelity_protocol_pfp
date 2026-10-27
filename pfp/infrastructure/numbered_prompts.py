@@ -3,7 +3,7 @@
 The complete schema is a replay sidecar. The participant wire carries a compact
 layout, the verbatim seed, source context and explicit conditional licenses.
 Only a valid same-pilot, same-run workpad can enter the final stage.
-This infrastructure boundary composes the Woland pilot PO035 task profile;
+This infrastructure boundary composes the Adversary pilot PO035 task profile;
 its original seeds, historical experiment profiles and judges stay with the pilots.
 """
 
@@ -14,18 +14,18 @@ from pathlib import Path
 import jsonschema
 import yaml
 
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import canonical, digest, resource_root
-from omega_engine_pfp.use_cases.pfp_calculation_contracts import (
+from pfp.infrastructure.adapters.pfp_evidence import canonical, digest, resource_root
+from pfp.use_cases.pfp_calculation_contracts import (
     calculation_schema,
     public_workpad_schema,
 )
 
-from omega_engine_woland.tests.pilots.relational_spacetime import trial_prompts as experiment_prompts
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import CERTIFICATES
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import array
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import obj
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import (
+from adversary.tests.pilots.relational_spacetime import trial_prompts as experiment_prompts
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
+from adversary.tests.pilots.relational_spacetime.tasks import CERTIFICATES
+from adversary.tests.pilots.relational_spacetime.tasks import array
+from adversary.tests.pilots.relational_spacetime.tasks import obj
+from adversary.tests.pilots.relational_spacetime.tasks import (
     response_schema as frozen_response_schema,
 )
 
@@ -34,7 +34,7 @@ RECIPE = "PFP-R0001-v1.0.4"
 VERSION = "1.0.4"
 DEFAULT_RUN_ID = "po035_simplified_v1_0_4_20261013"
 REGISTRY_PATH = (
-    "omega_engine_pfp/infrastructure/yaml/prompts/templates/"
+    "pfp/infrastructure/yaml/prompts/templates/"
     "template_role_registry.yaml"
 )
 # Bound after the new role files are written; unversioned active registry.
@@ -110,10 +110,10 @@ def _pilot(pilot):
 
 def _resource_bytes(path):
     relocated = {
-        "omega_engine_education/pilots/relational_spacetime/tasks.py":
-            "omega_engine_woland/tests/pilots/relational_spacetime/tasks.py",
-        "omega_engine_education/pilots/relational_spacetime/trial_prompts.py":
-            "omega_engine_woland/tests/pilots/relational_spacetime/trial_prompts.py",
+        "education/pilots/relational_spacetime/tasks.py":
+            "adversary/tests/pilots/relational_spacetime/tasks.py",
+        "education/pilots/relational_spacetime/trial_prompts.py":
+            "adversary/tests/pilots/relational_spacetime/trial_prompts.py",
     }
     relative = path.relative_to(ROOT).as_posix()
     path = ROOT / relocated.get(relative, relative)

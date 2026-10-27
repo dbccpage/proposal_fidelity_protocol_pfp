@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign
+from operations.domain.rop.result import Ok
+from pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign
 
 
 def digest(value):
@@ -116,8 +116,8 @@ def test_conservative_settlement_cannot_hide_liability_above_reserve(tmp_path):
 
 
 def test_historical_ambiguous_trial_is_retained_without_preparing_or_resending(tmp_path):
-    from omega_engine_pfp.domain.pilots.management_ladder import item_bank
-    from omega_engine_pfp.infrastructure.management_ladder import trial, stage_summary
+    from pfp.domain.pilots.management_ladder import item_bank
+    from pfp.infrastructure.management_ladder import trial, stage_summary
     item = item_bank()[0]
     attempt = f'P1:{item.item_id}:M0:m:0'
     campaign = owner(tmp_path, Transport(unknown=True))
@@ -149,7 +149,7 @@ def test_reconciled_charge_still_consumes_stage_and_global_allowance(tmp_path):
 
 
 def test_preparation_binds_live_history_and_preserves_frozen_packet(tmp_path, monkeypatch):
-    from omega_engine_pfp.infrastructure import management_ladder as ladder
+    from pfp.infrastructure import management_ladder as ladder
     predecessor = tmp_path/'frozen'; predecessor.mkdir()
     old = dict(source_sha256={'owner.py':'a'*64}, native_host_sha256='b'*64)
     old_raw = json.dumps(old, indent=2).encode()
@@ -226,7 +226,7 @@ def test_retained_reply_settlement_binds_raw_request_and_existing_reservation(tm
 
 
 def test_active_registration_is_a_valid_multi_hop_predecessor(tmp_path,monkeypatch):
-    from omega_engine_pfp.infrastructure import management_ladder as ladder
+    from pfp.infrastructure import management_ladder as ladder
     old=dict(source_sha256={'owner.py':'a'*64},native_host_sha256='b'*64)
     active=dict(source_sha256={'owner.py':'c'*64},native_host_sha256='d'*64)
     live=tmp_path/'live.sqlite3'
@@ -251,10 +251,10 @@ def test_active_registration_is_a_valid_multi_hop_predecessor(tmp_path,monkeypat
 
 
 def test_native_retained_usage_replay_needs_no_key_or_provider_dispatch(tmp_path):
-    from omega_engine_pfp.infrastructure.seat_transport.anthropic_messages import AnthropicMessagesTransport
-    from omega_engine_pfp.infrastructure.management_ladder import PRICES
-    from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-    from omega_engine_operations.domain.rop.result import Err
+    from pfp.infrastructure.seat_transport.anthropic_messages import AnthropicMessagesTransport
+    from pfp.infrastructure.management_ladder import PRICES
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+    from operations.domain.rop.result import Err
     import os
     prices=json.loads(PRICES.read_bytes())
     transport=AnthropicMessagesTransport(observations=prices['observations'],at_utc=prices['at_utc'],
@@ -280,8 +280,8 @@ def test_native_retained_usage_replay_needs_no_key_or_provider_dispatch(tmp_path
     ({'path':'missing','bytes':16777217,'sha256':'0'*64},200),
     ({'path':'missing','bytes':0,'sha256':'0'*64},True)])
 def test_malformed_replay_refuses_before_native_call(raw,status):
-    from omega_engine_pfp.infrastructure.seat_transport.anthropic_messages import AnthropicMessagesTransport
-    from omega_engine_operations.domain.rop.result import Err
+    from pfp.infrastructure.seat_transport.anthropic_messages import AnthropicMessagesTransport
+    from operations.domain.rop.result import Err
     class NoCall:
         def invoke_runtime_with_file(self,*args,**kwargs):
             raise AssertionError('Malformed replay cannot reach native transport')
@@ -295,8 +295,8 @@ def test_malformed_replay_refuses_before_native_call(raw,status):
 def test_native_replay_bounds_declared_and_replaced_files_before_read(
     tmp_path,declared_size,actual_size,message
 ):
-    from omega_engine_pfp.infrastructure.management_ladder import PRICES
-    from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+    from pfp.infrastructure.management_ladder import PRICES
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
     prices=json.loads(PRICES.read_bytes())
     path=tmp_path/'bounded-raw'
     with path.open('wb') as handle:

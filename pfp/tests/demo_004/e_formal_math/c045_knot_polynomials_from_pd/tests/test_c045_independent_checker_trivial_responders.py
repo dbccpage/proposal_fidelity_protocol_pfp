@@ -14,13 +14,13 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.judge_packet.checkers import (
+from pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.judge_packet.checkers import (
     independent_checker,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.judge_packet.checkers.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.judge_packet.checkers.independent_checker import (
     check_independent,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.solver import (
     solve,
 )
 

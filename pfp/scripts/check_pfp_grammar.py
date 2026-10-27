@@ -10,10 +10,10 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-REPO = next((p for p in HERE.parents if (p / ".git").exists() or (p / "omega_engine_education").is_dir()), HERE.parents[2])
+REPO = next((p for p in HERE.parents if (p / ".git").exists() or (p / "education").is_dir()), HERE.parents[2])
 PFP_EBNF_PATH = (
     REPO
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "030_the_symbol_game_proposal_fidelity_protocol_pfp"
     / "grammar"
@@ -21,7 +21,7 @@ PFP_EBNF_PATH = (
 )
 CASES_PATH = (
     REPO
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "030_the_symbol_game_proposal_fidelity_protocol_pfp"
     / "grammar"
@@ -31,13 +31,13 @@ CASES_PATH = (
 # Import Grammar recognizer from 030_the_symbol_game_proposal_fidelity_protocol_pfp/grammar/check_grammars.py
 GRAMMAR_DIR = (
     REPO
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "030_the_symbol_game_proposal_fidelity_protocol_pfp"
     / "grammar"
 )
 if not GRAMMAR_DIR.is_dir():
-    GRAMMAR_DIR = REPO / "ow" / "omega_engine_pfp_v0.2" / "grammar"
+    GRAMMAR_DIR = REPO / "ow" / "pfp_v0.2" / "grammar"
 sys.path.insert(0, str(GRAMMAR_DIR))
 from check_grammars import Grammar
 

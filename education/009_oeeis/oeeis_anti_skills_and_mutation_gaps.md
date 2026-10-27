@@ -11,10 +11,10 @@ maturity: canonical
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_epistemic_immune_system_eis/oeeis_anti_skills_and_mutation_gaps.md
+  - education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/0_epistemic_immune_system_eis/oeeis_anti_skills_and_mutation_gaps.md
 source_revision: 44aff3782
 prerequisites: []
-verification: py -3.12 -m pytest omega_engine_education/the_symbol_game/tests/test_documentation_route_canonical.py
+verification: py -3.12 -m pytest education/the_symbol_game/tests/test_documentation_route_canonical.py
 aliases: []
 related:
   - oeeis_notes.md
@@ -184,10 +184,10 @@ connected to another, and none except the last is read by the OEWAS op resolver.
 
 | Registry | Location | Content at `201dc8d` |
 | :--- | :--- | :--- |
-| `ACTIVE_ANTI_SKILLS` | `omega_engine_operads/domain/anti_skills/research_papers.py:31` | 87 definitions |
+| `ACTIVE_ANTI_SKILLS` | `operads/domain/anti_skills/research_papers.py:31` | 87 definitions |
 | Antibodies | `.agents/antibodies/` | 51 top-level entries: 37 JSON and 12 YAML antibody files, plus the `definitions/` and `specs/` folders. The host mirrors hold 9 top-level entries each. |
 | Admitted antiskill registry | `.agents/antiskills/admitted/registry.json` | `specs: []` (empty); a `truth_boundary_v2/` folder beside it holds 5 files |
-| Op-inventory anti-ops | `omega_engine_operads/skill_operad/yaml/op_inventory.yaml` | 8 anti-ops; 3 bound to code, 3 with host detectors (all in `techne-silent-failure-hunter`) |
+| Op-inventory anti-ops | `operads/skill_operad/yaml/op_inventory.yaml` | 8 anti-ops; 3 bound to code, 3 with host detectors (all in `techne-silent-failure-hunter`) |
 
 **How the inventory anti-ops act** (`IMPLEMENTED`). Each is a guard predicate on one input slot of
 one op. The resolver's `run` evaluates it on that slot's value before the guarded op runs
@@ -197,7 +197,7 @@ refusal code. In `compose` the anti-ops are only listed beside the chosen tree
 without them.
 
 **Planned direction** (`PROPOSED`, workstream I4 of
-[EPIC-OE-OEWAS-012](../../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_012_woland_operad_binding_and_management_ladder_pilot_plan.md)). Fold the four registries into one anti-op
+[EPIC-OE-OEWAS-012](../../../product_planning_office/plans/epics/oewas/epic_oe_oewas_012_adversary_operad_binding_and_management_ladder_pilot_plan.md)). Fold the four registries into one anti-op
 type. A candidate anti-op is admitted through OEEIS negative selection: it is screened against a
 sealed clean self-panel (the thymus gate of [Level 03](levels/level_03_central_tolerance_and_thymus_gate.md)),
 and one that fires on clean material is dropped. OEEIS owns admission; OEWAS owns composition and
@@ -205,8 +205,8 @@ the run-time guard. None of this is built at `201dc8d`.
 
 ## 6. Status at 201dc8d (2026-10-15): certificate fields that are literals
 
-A same-day review of `omega_engine/crates_rs/omega_mub` (report
-`/mnt/project-files/reports/omega_mub_review_2026-10-15/report.md`; draft PR #1025) found the
+A same-day review of `engine/crates_rs/core_mub` (report
+`/mnt/project-files/reports/core_mub_review_2026-10-15/report.md`; draft PR #1025) found the
 failure this document's anti-skills exist to catch, at scale. The exact layer is sound
 (`Cyc24` arithmetic, exact PSD, the interval and basis cover engines). Many certificate verdicts
 built on it are literals or hold by construction, for example:
@@ -220,8 +220,8 @@ built on it are literals or hold by construction, for example:
 | Global gluing B2 | `mub6_global_gluing.rs:982` | A disjunction that is always true |
 
 No anti-skill in the four registries of §5 fires on any of these, and no mutation test turns
-them red. The committed `omega_mub_verify_all_receipt.json` reads 24/24 while the current code
-exits 1. (`[test]`, from the omega_mub review's local run.)
+them red. The committed `core_mub_verify_all_receipt.json` reads 24/24 while the current code
+exits 1. (`[test]`, from the core_mub review's local run.)
 
 **Candidate anti-op** (`PROPOSED`, not admitted): `CERTIFICATE-FIELD-NOT-COMPUTED`. It fires when
 a receipt or certificate field that carries a verdict is a constant, or does not change under a
@@ -229,4 +229,4 @@ mutation of its stated input. Admission follows the §5 direction: screened agai
 self-panel, with the receipts above as seeded positives. It belongs with the repository's
 mutation-bite pattern (one mutation per verdict field). Whether those receipts are downgraded to
 fixtures is decision D5 of
-[EPIC-OE-OEWAS-012](../../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_012_woland_operad_binding_and_management_ladder_pilot_plan.md).
+[EPIC-OE-OEWAS-012](../../../product_planning_office/plans/epics/oewas/epic_oe_oewas_012_adversary_operad_binding_and_management_ladder_pilot_plan.md).

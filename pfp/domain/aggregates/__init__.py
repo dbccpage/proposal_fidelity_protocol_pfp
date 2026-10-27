@@ -45,7 +45,7 @@ __all__ = [
 ]
 
 
-_PFP_EXPORTS = {'AggregateRoot': ('omega_engine_pfp.domain.aggregates.base', 'AggregateRoot'), 'CycleBalanceQuartetAggregate': ('omega_engine_pfp.domain.aggregates.cycle_balance_aggregate', 'CycleBalanceQuartetAggregate'), 'PilotAggregate': ('omega_engine_pfp.domain.aggregates.pilot_aggregate', 'PilotAggregate'), 'SpanPartitionAggregate': ('omega_engine_pfp.domain.aggregates.rewriting_aggregate', 'SpanPartitionAggregate')}
+_PFP_EXPORTS = {'AggregateRoot': ('pfp.domain.aggregates.base', 'AggregateRoot'), 'CycleBalanceQuartetAggregate': ('pfp.domain.aggregates.cycle_balance_aggregate', 'CycleBalanceQuartetAggregate'), 'PilotAggregate': ('pfp.domain.aggregates.pilot_aggregate', 'PilotAggregate'), 'SpanPartitionAggregate': ('pfp.domain.aggregates.rewriting_aggregate', 'SpanPartitionAggregate')}
 __all__ = list(dict.fromkeys([*__all__, *_PFP_EXPORTS]))
 
 def __getattr__(name: str):

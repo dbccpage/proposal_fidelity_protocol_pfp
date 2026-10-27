@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_epistemic_immune_system.domain import (
+from eis.domain import (
     AllostericConsensusGate,
     ClonalSelectionEngine,
     DangerDecision,
@@ -187,19 +187,19 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
 
     def test_immune_guarded_substitute_tolerated_and_suppressed(self) -> None:
         """Planar substitution guarded by the independent two-signal gate through the port."""
-        from omega_engine_operads.application.immune_guards import (
+        from operads.application.immune_guards import (
             immune_guarded_substitute,
         )
-        from omega_engine_operads.application.ports.immune_screen_port import (
+        from operads.application.ports.immune_screen_port import (
             DetectorIdentity,
             DetectorMatch,
             HostDangerObservation,
         )
-        from omega_engine_operads.domain.planar_substitution import (
+        from operads.domain.planar_substitution import (
             OperadOperation,
             SubstitutionError,
         )
-        from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+        from operads.infrastructure.immune import OeeisImmuneAdapter
 
         immune = OeeisImmuneAdapter()
         detector = DetectorIdentity("prompt-scanner", frozenset(), False)
@@ -233,20 +233,20 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
 
     def test_workflow_immune_guard_policy(self) -> None:
         """Workflow report gated by DangerSignalPolicy through the port."""
-        from omega_engine_operads.application.immune_guards import (
+        from operads.application.immune_guards import (
             validate_workflow_immune_guard,
         )
-        from omega_engine_operads.application.ports.immune_screen_port import (
+        from operads.application.ports.immune_screen_port import (
             DetectorIdentity,
             DetectorMatch,
             HostDangerObservation,
         )
-        from omega_engine_operads.domain.planar_substitution import OperadOperation
-        from omega_engine_operads.domain.workflow_graph import (
+        from operads.domain.planar_substitution import OperadOperation
+        from operads.domain.workflow_graph import (
             DangerSignalPolicy,
             WorkflowReport,
         )
-        from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+        from operads.infrastructure.immune import OeeisImmuneAdapter
 
         immune = OeeisImmuneAdapter()
         detector = DetectorIdentity("prompt-scanner", frozenset(), False)
@@ -284,17 +284,17 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
         """Planar substitution gated by the exact allosteric gate through the immune port."""
         from fractions import Fraction
 
-        from omega_engine_operads.application.immune_guards import (
+        from operads.application.immune_guards import (
             allosteric_consensus_substitute,
         )
-        from omega_engine_operads.application.ports.immune_screen_port import (
+        from operads.application.ports.immune_screen_port import (
             SensorReading,
         )
-        from omega_engine_operads.domain.planar_substitution import (
+        from operads.domain.planar_substitution import (
             OperadOperation,
             SubstitutionError,
         )
-        from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+        from operads.infrastructure.immune import OeeisImmuneAdapter
 
         immune = OeeisImmuneAdapter()
         theta = OperadOperation(name="theta_op", source_colours=("Code",), target_colour="Audit")
@@ -324,14 +324,14 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
 
     def test_admit_skill_with_thymus_gate(self) -> None:
         """Assert candidate skills are screened against self-panel fixtures."""
-        from omega_engine_operads.application.immune_guards import (
+        from operads.application.immune_guards import (
             admit_skill_with_thymus,
         )
-        from omega_engine_operads.domain.capability_catalog_v1 import (
+        from operads.domain.capability_catalog_v1 import (
             CapabilityCatalogRefusal,
             SkillCapabilityV1,
         )
-        from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+        from operads.infrastructure.immune import OeeisImmuneAdapter
 
         thymus = OeeisImmuneAdapter(self_panel=["theorem coboundary_nilpotent : d1 * d0 = 0"])
 
@@ -383,8 +383,8 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
         from fractions import Fraction
         from hashlib import sha256
 
-        from omega_engine_operads.domain.operad import OperadTregSupervisor
-        from omega_engine_operads.domain.operad.treg import CheckedFalsePositive
+        from operads.domain.operad import OperadTregSupervisor
+        from operads.domain.operad.treg import CheckedFalsePositive
 
         def checked(subject):
             return CheckedFalsePositive('anti-op', sha256(subject.encode()).hexdigest(),
@@ -422,7 +422,7 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
 
     def test_antimorphism_immune_bench_and_phagocytic_regenerator(self) -> None:
         """Assert AntimorphismImmuneBench and PhagocyticFormularyRegenerator filter and mature antibodies."""
-        from omega_engine_epistemic_immune_system.infrastructure import (
+        from eis.infrastructure import (
             CLEAN_PHYSICS_SELF_PANEL,
             AntimorphismImmuneBench,
             ImmuneBenchReport,
@@ -484,14 +484,14 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
         Mutation: dropping re.escape admits the '*' trigger (as a regex it does not
         match the fixture) and refuses 'c++' as a regex syntax error.
         """
-        from omega_engine_operads.application.immune_guards import (
+        from operads.application.immune_guards import (
             admit_skill_with_thymus,
         )
-        from omega_engine_operads.domain.capability_catalog_v1 import (
+        from operads.domain.capability_catalog_v1 import (
             CapabilityCatalogRefusal,
             SkillCapabilityV1,
         )
-        from omega_engine_operads.infrastructure.immune import OeeisImmuneAdapter
+        from operads.infrastructure.immune import OeeisImmuneAdapter
 
         thymus = OeeisImmuneAdapter(self_panel=["theorem coboundary_nilpotent : d1 * d0 = 0"])
 
@@ -524,7 +524,7 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
         """Unconfirmed suppression never contributes a false positive."""
         from fractions import Fraction
 
-        from omega_engine_operads.domain.operad import OperadTregSupervisor
+        from operads.domain.operad import OperadTregSupervisor
 
         supervisor = OperadTregSupervisor(tau_threshold=Fraction(2, 5))
         self.assertIsNone(supervisor.record_operation_step("op", suppressed=True, danger_confirmed=False))
@@ -540,7 +540,7 @@ class TestEpistemicImmuneSystem(unittest.TestCase):
 
     def test_immune_bench_report_rejects_inconsistent_counts(self) -> None:
         """A report whose counts disagree with its results must not construct."""
-        from omega_engine_epistemic_immune_system.infrastructure import ImmuneBenchReport
+        from eis.infrastructure import ImmuneBenchReport
 
         with self.assertRaises(ValueError):
             ImmuneBenchReport(total_rules_evaluated=5, admitted_rules=1, purged_rules=1, results=())

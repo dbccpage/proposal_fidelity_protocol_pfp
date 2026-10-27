@@ -174,7 +174,7 @@ A problem packet $P$ bundles three elements:
 When residuals remain, the protocol recurses ($P_0 \to P_1 \to \dots \to P_n \le 9$), refining the problem and incorporating new antibodies until an exact zero defect ($\Phi_1 = 0$) or bounded halt is reached.
 
 ### 5. Central Network Gateway Architecture
-All external model transport is centralized in `omega_engine_providers.llm_gateway.LlmGateway`:
+All external model transport is centralized in `providers.llm_gateway.LlmGateway`:
 - **Python Thinness Law:** Python provides a thin ($\approx 1\%$) orchestration boundary.
 - **Sovereign Rust Math Delegation:** All discrete cycle calculations, matrix contractions, and exact rational arithmetic reside in Rust crates.
 

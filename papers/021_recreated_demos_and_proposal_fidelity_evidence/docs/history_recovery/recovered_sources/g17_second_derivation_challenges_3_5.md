@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The second derivation of 19L57G1 has closed its inheritance, stream, stake and first-demand rungs, and the engine is the named leftover every later question waits on. The seed makes the work hard to generate: an engine must be declared with every capability counted, bundling is rejected, all tied minima are retained, and every node is replayed from genesis. It also makes it cheap to verify: every decision is by an implemented algorithm, every receipt regenerates byte-identically, and every gate is proved by injection.
 
-The task stresses long-horizon structure in the Symbol Game, OEWAS (Omega Engine Workflows, Agents, Skills) handoffs between stages, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against the seed's guarded words. A pass shows the game can produce a rung-shaped tree that survives the seed's own gates. It does not make the tree a rung of the second derivation; that is the author's decision (§3).
+The task stresses long-horizon structure in the Symbol Game, OEWAS (Engine Workflows, Agents, Skills) handoffs between stages, and the OEEIS (Engine Epistemic Immune System) danger gate against the seed's guarded words. A pass shows the game can produce a rung-shaped tree that survives the seed's own gates. It does not make the tree a rung of the second derivation; that is the author's decision (§3).
 
 ## 3. Formal Problem and Bounds
 
@@ -48,7 +48,7 @@ Public examples: two engines (one stake with growth under V1, one with the kind 
 - **Held-out.** Every engine at five held data, the stage `second_stake` left pending; census rows at that stage; the operator's frozen statements for question 4.
 - **Relabel controls.** Each run repeated with presentation tokens renamed; frontiers must agree up to the implemented isomorphism.
 - **Poisoned but schema-valid.** A "one declaration" engine that bundles two capabilities; a FORCED row resting on one engine; a receipt with a timestamp; a tie resolved silently.
-- **Checkers.** `python ci/run_gates.py` on the PR branch with the tree registered, the axiom audit, and the tree's own injection record. Independent second checker: the Rust reading in `omega_ooutwire_primitives` (`omega.rs`, `closure.rs`, `tree.rs`), replaying the exported frontiers.
+- **Checkers.** `python ci/run_gates.py` on the PR branch with the tree registered, the axiom audit, and the tree's own injection record. Independent second checker: the Rust reading in `core_ooutwire_primitives` (`core.rs`, `closure.rs`, `tree.rs`), replaying the exported frontiers.
 - **Mutation suite.** Drop a tie; merge two capabilities; replay one node from a non-genesis state; relabel a terminal kind.
 
 ## 7. Arms and Baselines
@@ -91,7 +91,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_ooutwire_primitives](../../../../omega_engine/crates_rs/omega_ooutwire_primitives/) (`omega.rs`, `closure.rs`, `tree.rs`, `terminal.rs`); [thymus.py](../../../../omega_engine_pfp/domain/immune/thymus.py).
+- the_symbol_game: [core_ooutwire_primitives](../../../../engine/crates_rs/core_ooutwire_primitives/) (`core.rs`, `closure.rs`, `tree.rs`, `terminal.rs`); [thymus.py](../../../../pfp/domain/immune/thymus.py).
 - 19L57G1 (`b55fc96a`): `19L57G1:research/second/` (`SEED.md`, `PLAN.md`, `MANUAL.md`), `19L57G1:research/second_stake/`, `19L57G1:research/second_stream/`, `19L57G1:research/second_index/`, `19L57G1:ci/run_gates.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), and [U17](../../upgrades/u17_lean_verifier_backend.md) for the Lean part (the catalog row lists no extras and should add U17).
 

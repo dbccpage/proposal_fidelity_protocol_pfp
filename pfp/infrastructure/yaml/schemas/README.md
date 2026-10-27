@@ -2,9 +2,9 @@
 
 **AuthorityEffect:** None.
 
-This directory is not the live packet schema directory. The YAML files here are test twins and a register of those twins. Live packet schemas are the JSON files in `omega_engine_pfp/packet_schemas/`.
+This directory is not the live packet schema directory. The YAML files here are test twins and a register of those twins. Live packet schemas are the JSON files in `pfp/packet_schemas/`.
 
-These files are not the public ladder. That ladder is `stage_1` through `stage_11` in `omega_engine_pfp/infrastructure/yaml/stages/`.
+These files are not the public ladder. That ladder is `stage_1` through `stage_11` in `pfp/infrastructure/yaml/stages/`.
 
 ## Twins of live packet schemas
 

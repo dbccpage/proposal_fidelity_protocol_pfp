@@ -32,7 +32,7 @@ If the complex stops at `C1`, say so. Then `H1 = C1/im(d0)` is the cokernel of t
 
 ## Limit
 
-Correct degree does not identify the quotient with a length, angle, deficit, connection, or physical dynamics. A complex with only one differential is the exception above, not a counterexample. The motivating sentences are the historical report in `_ic/inr/omega_paper_reviews/po035_2026-10-11/review.md`. This pattern does not assert that the current manuscript still contains them.
+Correct degree does not identify the quotient with a length, angle, deficit, connection, or physical dynamics. A complex with only one differential is the exception above, not a counterexample. The motivating sentences are the historical report in `_ic/inr/core_paper_reviews/po035_2026-10-11/review.md`. This pattern does not assert that the current manuscript still contains them.
 
 ## Dual
 

@@ -11,16 +11,16 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.shared_kernel.exact import (
+from pfp.domain.shared_kernel.exact import (
     Exact,
     NotExactError,
     coerce_exact,
     is_exact_value,
     to_canonical_string,
 )
-from omega_engine_pfp.domain.validation import _fail
+from pfp.domain.validation import _fail
 
-COBOUNDARY_SCORE_SCHEMA = "omega.symbol-game.coboundary-score.v1"
+COBOUNDARY_SCORE_SCHEMA = "core.symbol-game.coboundary-score.v1"
 COBOUNDARY_SCORE_FAMILY = "coboundary_score"
 AUTHORITY_EFFECT = "None"
 
@@ -228,7 +228,7 @@ class CoboundaryScoreResult:
             "proposal_id": self.proposal_id,
             # Exact values cross the wire as canonical strings, never as JSON
             # numbers: a JSON number is a float in most readers, and
-            # `omega-sorted-json-no-float-v1` refuses floats. Same choice the
+            # `core-sorted-json-no-float-v1` refuses floats. Same choice the
             # Rust face makes via `#[serde(with = "exact_wire")]`.
             "prior_residual_norm": to_canonical_string(self.prior_residual_norm),
             "post_residual_norm": to_canonical_string(self.post_residual_norm),
@@ -278,7 +278,7 @@ class CoboundaryScoreResult:
 class ResidualDropV1:
     """One scored residual transition omega -> R."""
 
-    omega_mass: float
+    core_mass: float
     residual_mass: float
     delta: float
     relative_drop: float | None
@@ -295,7 +295,7 @@ class ResidualDropV1:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "omega_mass": self.omega_mass,
+            "core_mass": self.core_mass,
             "residual_mass": self.residual_mass,
             "delta": self.delta,
             "relative_drop": self.relative_drop,

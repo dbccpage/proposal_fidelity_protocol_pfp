@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.calculus_receipt import (
+from pfp.domain.calculus_receipt import (
     CALCULUS_RECEIPT_SCHEMA,
     CalculusReceipt,
     CarrierAuthority,
@@ -13,7 +13,7 @@ from omega_engine_pfp.domain.calculus_receipt import (
     Terminal,
     carrier_digest,
 )
-from omega_engine_pfp.domain.glyph_calculus import Carrier
+from pfp.domain.glyph_calculus import Carrier
 
 CONTRACT_CARRIER = [
     {"symbol": "alpha", "codepoint": "U+03B1"},
@@ -315,7 +315,7 @@ class TestRefusalIsNotLaunderedIntoAPass:
     LEDGER = ["PROVE period(c5) = 5", "op QED", "REDUCE 17 mod 5 = 2"]
 
     def test_the_reviews_exact_scenario_no_longer_passes(self) -> None:
-        from omega_engine_pfp.domain.glyph_calculus import (
+        from pfp.domain.glyph_calculus import (
             REFUSAL_OP_UNDECLARED,
             lint_rows,
         )

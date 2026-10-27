@@ -1,10 +1,10 @@
-"""Soviet Landau-style Test Suite for Demo Q40 Quantum Stabilizer Solver.
+"""Examiner-style Test Suite for Demo Q40 Quantum Stabilizer Solver.
 
 Verifies:
 1. Invariant: Pauli algebra, symplectic GF(2) reduction, exact multiplication phases.
 2. Verification: 40/40 benchmark cases, certificate checks, dense matrix spectrum checks.
 3. Invariance: 8 relabelled controls match base cases in energy, dimension, and status.
-4. Soviet Inspector Falsification: 5 deliberate production mutations must trigger verified failures.
+4. Inspector Falsification: 5 deliberate production mutations must trigger verified failures.
 
 AuthorityEffect: None.
 """
@@ -14,12 +14,12 @@ from __future__ import annotations
 from fractions import Fraction
 import pytest
 
-from omega_engine_symbol_game.domain.quantum.certificate_checker import check_certificate
-from omega_engine_symbol_game.infrastructure.quantum.dense_checker import verify_dense_spectrum
-from omega_engine_symbol_game.domain.quantum.hamiltonian import HamiltonianTerm, QuantumHamiltonian
-from omega_engine_symbol_game.domain.quantum.pauli import PauliString
-from omega_engine_symbol_game.domain.quantum.stabilizer_solver import solve
-from omega_engine_symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import run_benchmark_40
+from symbol_game.domain.quantum.certificate_checker import check_certificate
+from symbol_game.infrastructure.quantum.dense_checker import verify_dense_spectrum
+from symbol_game.domain.quantum.hamiltonian import HamiltonianTerm, QuantumHamiltonian
+from symbol_game.domain.quantum.pauli import PauliString
+from symbol_game.domain.quantum.stabilizer_solver import solve
+from symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import run_benchmark_40
 
 
 # ---------------------------------------------------------------------------
@@ -209,12 +209,12 @@ def test_full_40_case_benchmark_execution():
 
 
 # ---------------------------------------------------------------------------
-# 5. Soviet Inspector Deliberate Mutation Falsification
+# 5. Inspector Deliberate Mutation Falsification
 # ---------------------------------------------------------------------------
 
-def test_soviet_falsification_corrupted_ground_energy():
+def test_strict_falsification_corrupted_ground_energy():
     case = {
-        "case_id": "test_soviet_1",
+        "case_id": "test_strict_1",
         "num_qubits": 2,
         "terms": [
             {"pauli": "ZZ", "weight": "1", "target_sign": 1},
@@ -237,9 +237,9 @@ def test_soviet_falsification_corrupted_ground_energy():
     assert "Reported energy 99 != true ground energy 0" in check["error"]
 
 
-def test_soviet_falsification_corrupted_generator_exponents():
+def test_strict_falsification_corrupted_generator_exponents():
     case = {
-        "case_id": "test_soviet_2",
+        "case_id": "test_strict_2",
         "num_qubits": 2,
         "terms": [
             {"pauli": "XX", "weight": "1", "target_sign": 1},
@@ -264,9 +264,9 @@ def test_soviet_falsification_corrupted_generator_exponents():
     assert "Decomposition algebraic mismatch" in check["error"]
 
 
-def test_soviet_falsification_omitted_minimizing_assignment():
+def test_strict_falsification_omitted_minimizing_assignment():
     case = {
-        "case_id": "test_soviet_3",
+        "case_id": "test_strict_3",
         "num_qubits": 2,
         "terms": [
             {"pauli": "XX", "weight": "1", "target_sign": 1},
@@ -287,9 +287,9 @@ def test_soviet_falsification_omitted_minimizing_assignment():
     assert "submitted count 1 != true count 3" in check["error"]
 
 
-def test_soviet_falsification_invalid_anticommuting_witness():
+def test_strict_falsification_invalid_anticommuting_witness():
     case = {
-        "case_id": "test_soviet_4",
+        "case_id": "test_strict_4",
         "num_qubits": 2,
         "terms": [
             {"pauli": "ZZ", "weight": "1", "target_sign": 1},
@@ -299,7 +299,7 @@ def test_soviet_falsification_invalid_anticommuting_witness():
     # Deliberate mutation: falsely claim commuting Hamiltonian is OUT_OF_SCOPE
     fake_refusal = {
         "status": "OUT_OF_SCOPE",
-        "case_id": "test_soviet_4",
+        "case_id": "test_strict_4",
         "refusal_code": "NONCOMMUTING_HAMILTONIAN",
         "anticommuting_pair": {
             "term_i": {"index": 0, "pauli": "ZZ"},
@@ -311,9 +311,9 @@ def test_soviet_falsification_invalid_anticommuting_witness():
     assert "actually commute; invalid refusal" in check["error"]
 
 
-def test_soviet_falsification_false_solved_on_anticommuting_input():
+def test_strict_falsification_false_solved_on_anticommuting_input():
     case = {
-        "case_id": "test_soviet_5",
+        "case_id": "test_strict_5",
         "num_qubits": 1,
         "terms": [
             {"pauli": "X", "weight": "1", "target_sign": 1},
@@ -323,7 +323,7 @@ def test_soviet_falsification_false_solved_on_anticommuting_input():
     # Deliberate mutation: falsely claim anticommuting Hamiltonian is SOLVED
     fake_solved = {
         "status": "SOLVED",
-        "case_id": "test_soviet_5",
+        "case_id": "test_strict_5",
         "num_qubits": 1,
         "num_terms": 2,
         "ground_state_energy": "0",
@@ -472,7 +472,7 @@ def test_original_challenge_format_compatibility():
 # ---------------------------------------------------------------------------
 
 def test_three_arm_cost_projection_execution():
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.three_arm_comparison import (
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.three_arm_comparison import (
         run_three_arm_comparison,
     )
     report = run_three_arm_comparison()
@@ -581,7 +581,7 @@ def test_certificate_checker_unknown_status_handling():
 
 def test_r155_01_public_interface_strict_keys_and_no_leakage():
     """R155-01: Public solve interface returns strictly the required keys with zero internal leakage."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.solver import solve as challenge_solve
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.solver import solve as challenge_solve
 
     # A. Commuting case
     case_solved = {
@@ -846,7 +846,7 @@ def test_float_and_bool_inputs_are_refused_as_inexact():
 
 def test_r155_01_public_decomposition_schema():
     """R155-01: Public wrapper emits decomposition rows strictly containing {id, mask, phase}."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.solver import solve as demo_solve
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.solver import solve as demo_solve
     case = {
         "id": "c_r155_01",
         "n": 2,
@@ -1025,7 +1025,7 @@ def test_r155_05_dense_checker_scale_invariance_and_noise_floor():
 
 def test_synthesis_extract_python_code():
     """Verifies robust code extraction across markdown formats."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import extract_python_code
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import extract_python_code
 
     fenced_py = "Here is my code:\n```python\ndef solve(case: dict) -> dict:\n    return {'status': 'SOLVED'}\n```\nDone."
     assert "def solve(" in extract_python_code(fenced_py)
@@ -1041,8 +1041,8 @@ def test_synthesis_extract_python_code():
 
 def test_synthesis_compile_and_test_solver_falsification():
     """Verifies that syntax errors, missing functions, and algebraic defects trigger clean refusals."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import compile_and_test_solver
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import compile_and_test_solver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
 
     public_cases = [c for c in generate_all_40_cases() if c.get("case_id") in (
         "q40_01_single_qubit_trivial", "q40_02_bell_stabilizer", "q40_03_noncommuting_pair", "q40_04_frustrated_triangle"
@@ -1074,13 +1074,13 @@ def test_synthesis_compile_and_test_solver_falsification():
 def test_synthesis_trial_offline_mock(tmp_path):
     """Verifies end-to-end program synthesis trial loop with offline mock backend."""
     from pathlib import Path
-    from omega_engine_providers.adapters.model_backends import MockBackend
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from providers.adapters.model_backends import MockBackend
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
 
     # Mock response returns the verified reference solver implementation
     solver_path = (
         Path(__file__).resolve().parents[3]
-        / "omega_engine_education"
+        / "education"
         / "documentation"
         / "3_the_symbol_game_proposal_fidelity_protocol_pfp"
         / "demos"
@@ -1091,7 +1091,7 @@ def test_synthesis_trial_offline_mock(tmp_path):
     if not solver_path.exists():
         solver_path = (
             Path(__file__).resolve().parents[3]
-            / "omega_engine_education"
+            / "education"
             / "curriculum"
             / "the_symbol_game"
             / "demos"
@@ -1101,7 +1101,7 @@ def test_synthesis_trial_offline_mock(tmp_path):
     if not solver_path.exists():
         solver_path = (
             Path(__file__).resolve().parents[3]
-            / "omega_engine_projects"
+            / "projects"
             / "mssn_sn_symgam"
             / "demos"
             / "demo_q40_quantum_solver"
@@ -1133,8 +1133,8 @@ def test_synthesis_trial_offline_mock(tmp_path):
 def test_synthesis_subprocess_sandbox_isolation(monkeypatch):
     """Verifies credential scrubbing, repository import protection, and execution timeout."""
     import os
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import compile_and_test_solver
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import compile_and_test_solver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
 
     # 1. Set sensitive environment variable in parent process
     monkeypatch.setenv("OPENROUTER_API_KEY", "super_secret_host_key")
@@ -1156,7 +1156,7 @@ def test_synthesis_subprocess_sandbox_isolation(monkeypatch):
 
     # Candidate attempts to cheat by importing internal repository modules under allow_repo_imports=False
     cheat_probe_code = (
-        "import omega_engine_symbol_game\n"
+        "import symbol_game\n"
         "def solve(case):\n"
         "    return {}\n"
     )
@@ -1177,8 +1177,8 @@ def test_synthesis_subprocess_sandbox_isolation(monkeypatch):
 
 def test_synthesis_multiturn_context_preservation(tmp_path):
     """Verifies that multi-turn retraction preserves prompt, prior completion, and diagnostic defect."""
-    from omega_engine_providers.adapters.model_backends import OpenRouterReceipt
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from providers.adapters.model_backends import OpenRouterReceipt
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
 
     recorded_calls: list[list[dict[str, str]]] = []
 
@@ -1233,7 +1233,7 @@ def test_synthesis_multiturn_context_preservation(tmp_path):
 
 def test_synthesis_outside_file_read_blocked(tmp_path):
     """Verifies that untrusted candidate solver cannot read host files outside sandbox."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     secret_file = tmp_path / "host_secret.txt"
     secret_file.write_text("SUPER_SECRET_PAYLOAD", encoding="utf-8")
@@ -1255,7 +1255,7 @@ def solve(case):
 
 def test_synthesis_network_socket_blocked():
     """Verifies that untrusted candidate solver cannot initiate network connections."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     network_code = """
 import socket
@@ -1273,8 +1273,8 @@ def solve(case):
 
 def test_synthesis_pre_call_budget_guard(tmp_path):
     """Verifies that the trial halts before making any API call if budget ceiling is exceeded."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
-    from omega_engine_providers.adapters.model_backends import MockBackend
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from providers.adapters.model_backends import MockBackend
 
     mock_backend = MockBackend(answer="def solve(case): return {}")
 
@@ -1292,8 +1292,8 @@ def test_synthesis_pre_call_budget_guard(tmp_path):
 
 def test_synthesis_freezing_gate_unsealing(tmp_path):
     """Verifies freezing gate locks SHA256 and out-of-sample benchmark is NOT unsealed on failure."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
-    from omega_engine_providers.adapters.model_backends import MockBackend
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from providers.adapters.model_backends import MockBackend
 
     mock_backend = MockBackend(answer="```python\ndef solve(case):\n    return {'status': 'UNKNOWN'}\n```")
 
@@ -1313,7 +1313,7 @@ def test_synthesis_freezing_gate_unsealing(tmp_path):
 
 def test_synthesis_os_open_probe_blocked(tmp_path):
     """Verifies that os.open on an outside file is blocked by runtime API fence (ChatGPT probe 1)."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     marker_file = tmp_path / "marker.txt"
     marker_file.write_text("MARKER_PAYLOAD", encoding="utf-8")
@@ -1336,7 +1336,7 @@ def solve(case):
 
 def test_synthesis_raw_socket_probe_blocked():
     """Verifies that import _socket; _socket.socket() is blocked by runtime fence (ChatGPT probe 2)."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     raw_socket_code = """
 import _socket
@@ -1354,7 +1354,7 @@ def solve(case):
 
 def test_synthesis_ctypes_blocked():
     """Verifies that ctypes access is blocked via sys.modules neutralization."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     # 1. Top-level import halted by sys.modules["ctypes"] = None
     ctypes_code_toplevel = """
@@ -1384,7 +1384,7 @@ def solve(case):
 
 def test_synthesis_ctypes_cdll_probe_blocked():
     """Verifies that ctypes.CDLL escape attempt is blocked by audit hook (ChatGPT review finding)."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     # Even if candidate attempts sys.modules.pop('ctypes') and calls CDLL,
     # the PEP 578 audit hook blocks ctypes.dlopen / ctypes.dlsym / ctypes.*
@@ -1415,7 +1415,7 @@ def solve(case):
 
 def test_synthesis_cffi_probe_blocked():
     """Verifies that cffi and _cffi_backend native module imports are halted by fence (ChatGPT review finding)."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     # 1. Direct cffi import is halted by sys.modules neutralization
     cffi_code = """
@@ -1444,7 +1444,7 @@ def test_synthesis_model_admission_gate_rejects_unadmitted_or_unpriced_models():
     """INVARIANT: Only verified eligible <= 70B models with registered price ceilings are admitted.
     BREAK: Arbitrary slugs like 'openai/gpt-5.4' or unpriced models run with guessed fallbacks.
     """
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
         calculate_turn_headroom_upper_bound,
         validate_and_admit_model,
     )
@@ -1482,8 +1482,8 @@ def test_synthesis_model_admission_gate_rejects_unadmitted_or_unpriced_models():
 
 def test_to_challenge_schema_strips_control_metadata_and_converts_weights():
     """Verifies to_challenge_schema converts all weights to [num, den] pairs and strips control metadata."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
         to_challenge_schema,
     )
 
@@ -1525,7 +1525,7 @@ def test_parse_weight_pair_refuses_bool_float_and_nonpositive_denominator():
     """
     from fractions import Fraction
 
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
         _parse_weight_pair,
         to_challenge_schema,
     )
@@ -1546,7 +1546,7 @@ def test_parse_weight_pair_refuses_bool_float_and_nonpositive_denominator():
 
 def test_synthesis_budget_headroom_upper_bound_calculation():
     """Verifies that calculate_turn_headroom_upper_bound computes strict worst-case upper bound."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.challenge_contract import (
         calculate_turn_headroom_upper_bound,
     )
 
@@ -1578,8 +1578,8 @@ def test_synthesis_budget_headroom_upper_bound_calculation():
 
 def test_synthesis_pre_call_budget_headroom_reservation(tmp_path):
     """Verifies that trial halts prior to turn 1 when the ceiling is below the reserved headroom."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
-    from omega_engine_providers.adapters.model_backends import MockBackend
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import run_program_synthesis_trial
+    from providers.adapters.model_backends import MockBackend
 
     mock_backend = MockBackend(answer="def solve(case): return {}")
 
@@ -1598,8 +1598,8 @@ def test_synthesis_pre_call_budget_headroom_reservation(tmp_path):
 
 def test_public_solver_original_challenge_schema():
     """Verifies solver.solve correctly processes original challenge schema with string term IDs."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver import solver
-    from omega_engine_symbol_game.domain.quantum.certificate_checker import check_certificate
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver import solver
+    from symbol_game.domain.quantum.certificate_checker import check_certificate
 
     # Solvable case with string term IDs
     case_solvable = {
@@ -1664,7 +1664,7 @@ def test_sandbox_fence_covers_os_level_escapes(tmp_path, body):
 
     The pre-fix runner monkey-patched builtins.open, so os.open/os.listdir read host files.
     """
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import SandboxedSolver
 
     target = tmp_path / "host_secret.txt"
     target.write_text("SUPER_SECRET_PAYLOAD", encoding="utf-8")
@@ -1684,7 +1684,7 @@ def test_sandbox_fence_covers_os_level_escapes(tmp_path, body):
 
 def test_dense_checker_fails_wrong_degeneracy_instead_of_inconclusive():
     """INVARIANT: a wrong degeneracy claim is FAILED. BREAK: round-off deltas > 0 routed to INCONCLUSIVE."""
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.generate_benchmark import generate_all_40_cases
 
     verdicts = []
     for case in generate_all_40_cases():
@@ -1717,7 +1717,7 @@ def test_dense_checker_fails_wrong_degeneracy_instead_of_inconclusive():
 )
 def test_model_ceiling_gate_rejects_substring_false_positives(model, admitted):
     """INVARIANT: only explicit <=70B open-weight ids pass. BREAK: 'mini' in 'gemini', '1b' in '671b'."""
-    from omega_engine_symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import _is_open_weight_at_most_70b
+    from symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import _is_open_weight_at_most_70b
 
     assert _is_open_weight_at_most_70b(model) is admitted
 
@@ -1742,8 +1742,8 @@ def test_term_ref_resolution_rejects_bool_ids():
 
 def test_synthesis_budget_guard_fails_closed_on_unreported_cost(tmp_path):
     """INVARIANT: unknown spend stops further calls. BREAK: backend reports $0 and the guard never trips."""
-    from omega_engine_providers.adapters.model_backends import OpenRouterReceipt
-    from omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import (
+    from providers.adapters.model_backends import OpenRouterReceipt
+    from projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial import (
         run_program_synthesis_trial,
     )
 
@@ -1765,7 +1765,7 @@ def test_synthesis_budget_guard_fails_closed_on_unreported_cost(tmp_path):
         def fetch_generation_cost(self, generation_id):
             return None
 
-    import omega_engine_projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial as st
+    import projects.mssn_sn_symgam.demos.demo_q40_quantum_solver.synthesis_trial as st
 
     original_sleep = st.time.sleep
     st.time.sleep = lambda _s: None
@@ -1909,14 +1909,14 @@ def test_checker_never_raises_on_hostile_field_values(field_path):
 )
 def test_model_ceiling_gate_uses_the_registry_not_the_model_name(model):
     """INVARIANT: size comes from the model registry. BREAK: a plausible '<n>b' token in an unregistered id was admitted."""
-    from omega_engine_symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import _is_open_weight_at_most_70b
+    from symbol_game.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import _is_open_weight_at_most_70b
 
     assert _is_open_weight_at_most_70b(model) is False
 
 
 def test_stabilizer_rust_adapter_parity():
     """Verify that StabilizerRustAdapter solves and checks cases via native Rust host."""
-    from omega_engine_symbol_game.infrastructure.adapters.stabilizer_rust_adapter import (
+    from symbol_game.infrastructure.adapters.stabilizer_rust_adapter import (
         StabilizerRustAdapter,
     )
 

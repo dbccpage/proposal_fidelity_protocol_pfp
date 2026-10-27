@@ -7,12 +7,12 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.domain.autopoiesis.learning import LearningBlocked
-from omega_engine_operads.infrastructure.autopoiesis.git_learning import (
+from operads.domain.autopoiesis.learning import LearningBlocked
+from operads.infrastructure.autopoiesis.git_learning import (
     GitHubLearningPublisher,
     command,
 )
-from omega_engine_operads.tests.autopoiesis.test_learning_loop import configured
+from operads.tests.autopoiesis.test_learning_loop import configured
 
 
 class LocalGitHub:

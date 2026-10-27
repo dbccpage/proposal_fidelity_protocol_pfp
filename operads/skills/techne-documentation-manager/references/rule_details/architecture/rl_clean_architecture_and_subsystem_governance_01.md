@@ -8,7 +8,7 @@ Parent: [Clean Architecture & Subsystem Governance](../../../../../rules/archite
 
 **AuthorityEffect:** None.
 
-This rule codifies pure generic runtime engine decoupling (omega_engine_woland.stage), Woland base swarm specialization, zero-facade direct canonical imports, domain bridge isolation, bounded context standard DDD module layouts, and pure domain sink decoupling.
+This rule codifies pure generic runtime engine decoupling (adversary.stage), Adversary base swarm specialization, zero-facade direct canonical imports, domain bridge isolation, bounded context standard DDD module layouts, and pure domain sink decoupling.
 
 Detailed operational, relocation, and antibody lifecycle invariants have been factored into modular sub-rules:
 - [`.agents/rules/architecture/rl_subsystem_relocation_and_estate_purity.md`](../../../../../rules/architecture/rl_subsystem_relocation_and_estate_purity.md): Bounded context gate and registry relocation closure, documentation `_docs/` isolation, curriculum storage encapsulation, and shadow prototype retirement.
@@ -20,16 +20,16 @@ Detailed operational, relocation, and antibody lifecycle invariants have been fa
 
 > **Base Engine Generality:**
 >
-> 1. `omega_engine_woland.stage` is a pure generic base framework containing generic scheduling, typed sink protocols (`UtsSink`, `UnsSink`, `DdaSink`, `SgtSink`, `CemeterySink`, `AntibodySink`, `GenealogySink`), and telemetry. It must NEVER contain character lore, dramatic novella rendering, or domain-specific dialectic branching.
-> 2. Specific swarms (such as the 7-Act Master & Margarita dialectic) must be isolated in dedicated bounded contexts (e.g. `omega_engine_woland`) with standard Clean Architecture layer boundaries.
-> 3. Bounded run executions must emit the five current Woland bundle files (`receipt.json`, `uns.md`, `ddc.jsonl`, `summary.json`, `uts.jsonl`) plus the `mam/` story folder (`mam.md`, `mam.tex`, `mam.pdf`) into isolated run folders under `_ic/<agency>/<swarm>/runs/<task_key>/` (e.g. `_ic/darpa/woland/runs/<task_key>/`). Writers never emit the retired tape copy `dda_actions.jsonl`; readers still accept it in older run folders. Skill-run receipts keep their own older layout.
-> 4. **Canonical Stage Dispatch from Tool CLIs**: Tool CLIs and standalone examiners must not create disconnected execution lifecycles or standalone success loops. CLI entry points must dispatch through canonical Woland stage runtime ports (e.g. `WolandSwarmService`), pass local examination findings and minted antibodies in `carrier_context`, map unavailable execution or runtime failures to typed refusals (`EXECUTION_UNAVAILABLE`), and preserve the stage run identity (`receipt_id`) in emitted output.
+> 1. `adversary.stage` is a pure generic base framework containing generic scheduling, typed sink protocols (`UtsSink`, `UnsSink`, `DdaSink`, `SgtSink`, `CemeterySink`, `AntibodySink`, `GenealogySink`), and telemetry. It must NEVER contain character lore, dramatic novella rendering, or domain-specific dialectic branching.
+> 2. Specific swarms (such as the 7-Act Master & Primal Dual dialectic) must be isolated in dedicated bounded contexts (e.g. `adversary`) with standard Clean Architecture layer boundaries.
+> 3. Bounded run executions must emit the five current Adversary bundle files (`receipt.json`, `uns.md`, `ddc.jsonl`, `summary.json`, `uts.jsonl`) plus the `mam/` story folder (`mam.md`, `mam.tex`, `mam.pdf`) into isolated run folders under `_ic/<agency>/<swarm>/runs/<task_key>/` (e.g. `_ic/darpa/adversary/runs/<task_key>/`). Writers never emit the retired tape copy `dda_actions.jsonl`; readers still accept it in older run folders. Skill-run receipts keep their own older layout.
+> 4. **Canonical Stage Dispatch from Tool CLIs**: Tool CLIs and standalone examiners must not create disconnected execution lifecycles or standalone success loops. CLI entry points must dispatch through canonical Adversary stage runtime ports (e.g. `AdversarySwarmService`), pass local examination findings and minted antibodies in `carrier_context`, map unavailable execution or runtime failures to typed refusals (`EXECUTION_UNAVAILABLE`), and preserve the stage run identity (`receipt_id`) in emitted output.
 
-## Woland Base Swarm Specialization Invariant
+## Adversary Base Swarm Specialization Invariant
 
 > **Swarm Inheritance and Composition Contract:**
 >
-> 1. **Base Swarm Gateway:** All domain, research, governance, software development, cognitive operations, and developer swarms must subclass `OmegaEngineWolandSwarm` or hold one through `bind_woland`, and declare a `SwarmSpecializationV1` per [`../swarms/rl_woland_base_swarm_specialization.md`](../../../../../rules/swarms/rl_woland_base_swarm_specialization.md).
+> 1. **Base Swarm Gateway:** All domain, research, governance, software development, cognitive operations, and developer swarms must subclass `AdversarySwarm` or hold one through `bind_adversary`, and declare a `SwarmSpecializationV1` per [`../swarms/rl_adversary_base_swarm_specialization.md`](../../../../../rules/swarms/rl_adversary_base_swarm_specialization.md).
 > 2. **Pure Domain Sink Decoupling:** Domain modules requiring artifact sinks must depend exclusively on abstract domain protocols (`RunArtifactSinkPort`), with concrete implementations injected into domain constructors. Dynamic `importlib` evasion in domain ports is strictly prohibited.
 
 ## Zero-Facade & Direct Canonical Import Invariant (`RULE_CLEAN_ARCH_NO_SHIMS_001`)
@@ -50,14 +50,14 @@ Detailed operational, relocation, and antibody lifecycle invariants have been fa
 
 > **Resilient Cross-Context Seam Protocol:**
 >
-> 1. **Collection-Time Fault Isolation**: Domain bridge modules (`domain/bridge/`) that interface with sister bounded contexts (e.g. `omega_engine_woland.stage`) must never cause unhandled import exceptions that break test collection across the host bounded context.
+> 1. **Collection-Time Fault Isolation**: Domain bridge modules (`domain/bridge/`) that interface with sister bounded contexts (e.g. `adversary.stage`) must never cause unhandled import exceptions that break test collection across the host bounded context.
 > 2. **Null-Object & Protocol Fallbacks**: When optional sister packages or external runtime engines are not installed or undergoing refactoring, domain bridges must provide typed Domain Protocol implementations or Null-Object fallbacks rather than unhandled top-level import crashes.
 
 ## Bounded Context DDD & Port Protocol Layout Invariant
 
 > **Standard DDD Domain Layout:**
 >
-> Every bounded context under `omega_engine_operations/domain/<bounded_context>/` must be structured into standard DDD modules:
+> Every bounded context under `operations/domain/<bounded_context>/` must be structured into standard DDD modules:
 >
 > 1. `enums.py`: Domain enumerations (`str, Enum`).
 > 2. `value_objects.py`: Strongly-typed Value Objects (`@dataclass(frozen=True)`) enforcing exact-type equality via explicit runtime checks (`if type(self) is not type(other): return False`) paired with explicit static narrowing (`if not isinstance(other, <Class>): return False`) to prevent Pitfall 037 (`assert` optimization stripping), and composite `hash((type(self), ...))`.

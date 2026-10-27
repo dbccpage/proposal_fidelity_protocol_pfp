@@ -12,7 +12,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[5]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.reference_solver.exact_f2 import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.reference_solver.exact_f2 import (
     mat_mul_f2,
     rank_f2,
 )
@@ -214,7 +214,7 @@ def apply_basis_change(case: dict[str, Any], seed: int) -> dict[str, Any]:
             p_mat = random_invertible_f2(d, rng)
             # Over F2, compute inverse
             # For d <= 4, invert via augmented RREF
-            from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.reference_solver.exact_f2 import (
+            from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.reference_solver.exact_f2 import (
                 row_reduce_f2,
             )
 

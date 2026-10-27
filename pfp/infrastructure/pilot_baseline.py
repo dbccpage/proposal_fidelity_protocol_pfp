@@ -10,9 +10,9 @@ from pathlib import Path
 
 import yaml
 
-PILOTS = "omega_engine_education/pilots/"
+PILOTS = "education/pilots/"
 CATALOG = PILOTS + "demo_004/catalog.yaml"
-MATRIX = "omega_engine_woland/tests/pilots/matrix/max_pilot_matrix.yaml"
+MATRIX = "adversary/tests/pilots/matrix/max_pilot_matrix.yaml"
 
 
 def build_baseline(root: Path, base: str) -> dict:

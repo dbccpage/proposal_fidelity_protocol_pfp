@@ -12,10 +12,10 @@ import sys
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
     solve,
 )
 
@@ -160,7 +160,7 @@ def test_self_loop_witness_must_cite_the_loop() -> None:
 
 def _greedy_identity_responder(case: dict) -> dict:
     """Identity switching plus a greedy maximal packing: cheap, and far from tight."""
-    from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.graph_blocks import (
+    from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.graph_blocks import (
         find_negative_cycle_packing,
         parse_graph,
     )
@@ -192,10 +192,10 @@ def test_identity_switching_with_greedy_packing_fails_on_every_large_case() -> N
 
 @pytest.mark.parametrize("checker", ["frustration", "independent"])
 def test_each_checker_requires_a_locally_optimal_switching(checker: str) -> None:
-    from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.frustration_checker import (
+    from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.frustration_checker import (
         check_frustration_certificate,
     )
-    from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.independent_checker import (
+    from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.independent_checker import (
         check_independent_frustration,
     )
 

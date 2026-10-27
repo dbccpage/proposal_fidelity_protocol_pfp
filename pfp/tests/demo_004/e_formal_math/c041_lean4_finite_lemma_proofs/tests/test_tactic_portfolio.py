@@ -1,7 +1,7 @@
 # AuthorityEffect: None.
 """Tests for Arm E deterministic tactic portfolio in C041."""
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.tactic_portfolio import solve_deterministic
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.tactic_portfolio import solve_deterministic
 
 
 def test_tactic_portfolio_proof():

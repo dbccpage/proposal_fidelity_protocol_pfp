@@ -1,4 +1,4 @@
-"""Connect bounded mode inputs to their mathematical owners below Woland."""
+"""Connect bounded mode inputs to their mathematical owners below Adversary."""
 from __future__ import annotations
 
 import importlib
@@ -14,8 +14,8 @@ ADDITIONAL_MODES=frozenset({9,10,11,12,16,17,18,20})
 
 
 def _seed_check(seed_id, payload):
-    from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SEED_IDS
+    from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
+    from pfp.infrastructure.pilot_runners.seed_checks import SEED_IDS
     _require(type(seed_id) is str and seed_id in SEED_IDS,"MODE_SEED_CHECKER_UNKNOWN")
     result=evaluate_seed_response(seed_id,payload)
     _require(not any("UNAVAILABLE" in reason for reason in result.failure_reasons),"MODE_CHECKER_UNAVAILABLE")
@@ -23,13 +23,13 @@ def _seed_check(seed_id, payload):
 
 
 def _lean(data):
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import advanced_check
+    from pfp.infrastructure.pilot_runners.seed_advanced_checks import advanced_check
     result=advanced_check(20,data)
     return dict(scope="Actual kernel elaboration of the declared Bit double-flip target only",evidence=result)
 
 
 def _cemetery(data):
-    from omega_engine_woland.stage.domain import (
+    from adversary.stage.domain import (
         CandidateProposalV1,
         CemeteryHeadstoneV1,
         strict_json_loads,
@@ -66,25 +66,25 @@ def _cemetery(data):
     return dict(scope="Exact supplied cemetery content and current rejection replay; no authentication of historical origin",records=artifacts)
 
 
-def _woland(data):
-    from omega_engine_pfp.domain.cohomology.certificate_checker import check_certificate
+def _adversary(data):
+    from pfp.domain.cohomology.certificate_checker import check_certificate
     _fields(data,{"case","candidate","negative_control"})
     results=[]
     for name in ("candidate","negative_control"):
         raw=_json(data[name]).encode("ascii")
         checked=check_certificate(data["case"],data[name])
         accepted=checked.passed and checked.status=="SOLVED"
-        _require(accepted==(name=="candidate"),"WOLAND_POSITIVE_OR_NEGATIVE_CONTROL_FAILED")
+        _require(accepted==(name=="candidate"),"ADVERSARY_POSITIVE_OR_NEGATIVE_CONTROL_FAILED")
         results.append(dict(candidate_id=name,candidate_content_sha256="sha256:"+sha256(raw).hexdigest(),
                             case_sha256="sha256:"+sha256(_json(data["case"]).encode("ascii")).hexdigest(),
                             verdict="ACCEPTED" if accepted else "REJECTED",reason=checked.error,
                             authority_effect="None"))
-    return dict(scope="The exact C011 checker shared with Woland and an adversarial control; no thirteen-persona bout claim",checks=results)
+    return dict(scope="The exact C011 checker shared with Adversary and an adversarial control; no thirteen-persona bout claim",checks=results)
 
 
 def _simplex(data):
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import boundary, rational
-    from omega_engine_pfp.domain.mssn_research.packets.invariants import _exact_det
+    from pfp.infrastructure.pilot_runners.seed_checks import boundary, rational
+    from pfp.domain.mssn_research.packets.invariants import _exact_det
     _fields(data,{"vertices","squared_lengths","squared_volume","holonomy"})
     vertices=data["vertices"]
     _require(type(vertices) is list and 3<=len(vertices)<=5 and all(type(v) is str and v for v in vertices)
@@ -169,10 +169,10 @@ def _consensus(data):
 
 
 def _mub(data):
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import rational
+    from pfp.infrastructure.pilot_runners.seed_checks import rational
     _fields(data,{"field","bases"})
     _require(data["field"]=="Q(zeta24)","MUB_FIELD_UNAVAILABLE")
-    owner=importlib.import_module("omega_engine_atlas.coda_atlas.F004_papers.010_mub6.code.mub_verify.mub_triples")
+    owner=importlib.import_module("atlas.coda_atlas.F004_papers.010_mub6.code.mub_verify.mub_triples")
     bases=data["bases"]
     _require(type(bases) is list and len(bases)==3,"MUB_CANDIDATE_TRIAD_REQUIRED")
     columns=[]
@@ -213,5 +213,5 @@ def _debate(data):
 def execute_additional_mode_check(mode_id,data):
     _require(mode_id in ADDITIONAL_MODES,"MODE_EXECUTOR_UNAVAILABLE")
     _require(type(data) is dict,"MODE_INPUT_REQUIRED")
-    result={9:_lean,10:_cemetery,11:_woland,12:_simplex,16:_perturb,17:_consensus,18:_mub,20:_debate}[mode_id](data)
+    result={9:_lean,10:_cemetery,11:_adversary,12:_simplex,16:_perturb,17:_consensus,18:_mub,20:_debate}[mode_id](data)
     return dict(_wire(result),mode_id=mode_id,input_sha256=sha256(_json(data).encode("ascii")).hexdigest(),authority_effect="None")

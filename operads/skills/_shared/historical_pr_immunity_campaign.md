@@ -31,11 +31,11 @@ and covers two GitHub repositories at that cutoff:
 
 | Repository | Pull requests | Merged | Closed unmerged | Frozen main at census |
 | --- | ---: | ---: | ---: | --- |
-| `dbccpage/anomalon` | 2,053 | 2,014 | 39 | `0d67ec76fd45d2b0968d039ea28997172b737200` |
-| `dbccpage/anomalonpy` | 62 | 62 | 0 | `6cb2af5607a7c7b3bf5aae523d018159cd3faf44` |
+| `dbccpage/sentinel` | 2,053 | 2,014 | 39 | `0d67ec76fd45d2b0968d039ea28997172b737200` |
+| `dbccpage/sentinelpy` | 62 | 62 | 0 | `6cb2af5607a7c7b3bf5aae523d018159cd3faf44` |
 
 The exact frozen workload is 2,115 PR records. PRs created after this census,
-including `anomalonpy` PR #63, are outside this v1 corpus unless a new manifest
+including `sentinelpy` PR #63, are outside this v1 corpus unless a new manifest
 is issued. The old PR number range has gaps, so a
 campaign inventories returned PR identities rather than manufacturing a
 contiguous number sequence.
@@ -56,11 +56,11 @@ custody by itself; archive it under an explicit ref or bundle before stash
 cleanup or garbage collection.
 
 The public OE v0.0 archive is a second, independently identified custody
-source: [`dbccpage/omega_engine_archive`](https://github.com/dbccpage/omega_engine_archive/tree/1c98ea7b9bb1fd76a987dd29753973699e055cb5/omega_engine_v0.0.0).
+source: [`dbccpage/archive`](https://github.com/dbccpage/archive/tree/1c98ea7b9bb1fd76a987dd29753973699e055cb5/v0.0.0).
 At the frozen checkpoint, repository commit
 `1c98ea7b9bb1fd76a987dd29753973699e055cb5` has commit-tree
 `6c9b16530bb911a17e72f64cfafd1d54f672b129`; its
-`omega_engine_v0.0.0` subtree is
+`v0.0.0` subtree is
 `bc5567973b8e13d2bbda7789543035f8c03d12dc` and contains 3,555 blobs and
 1,029 subtrees. The `.intelligence` subtree is
 `cb542747052bb0494aed3f41f78bf7623f03acec`, with 476 blobs, including 28
@@ -81,9 +81,9 @@ The v0.0 implementation already contains three important design witnesses:
 
 | v0.0 witness | Frozen Git blob | v1 interpretation |
 | --- | --- | --- |
-| `omega_core/src/prompt/immune.rs` | `87deb8d668e016079197aeafd482e81961b9ae2a` | A history of failure maps a problem into a forbidden reasoning region. Preserve this as a proposed anti-morphism, but count independent correction contexts rather than raw repetitions. |
-| `omega_core/src/prompt/trace.rs` | `08a663dfb31c63325dc5ae5f800888ef2992f72e` | The epistemic trace is the missing join table. Reconstruct it from exact prompt, response, review, check, repair, and disposition identities rather than a free-form narrative. |
-| `omega_core/src/prompt/hamiltonian_antibody.rs` | `2a26626a7f0e71229c091ab201c257d0e180c8a9` | Geometric failure modes may propose targeted constraints. The proposal remains inert until negative controls, independent replay, and human admission bind it. |
+| `core_core/src/prompt/immune.rs` | `87deb8d668e016079197aeafd482e81961b9ae2a` | A history of failure maps a problem into a forbidden reasoning region. Preserve this as a proposed anti-morphism, but count independent correction contexts rather than raw repetitions. |
+| `core_core/src/prompt/trace.rs` | `08a663dfb31c63325dc5ae5f800888ef2992f72e` | The epistemic trace is the missing join table. Reconstruct it from exact prompt, response, review, check, repair, and disposition identities rather than a free-form narrative. |
+| `core_core/src/prompt/hamiltonian_antibody.rs` | `2a26626a7f0e71229c091ab201c257d0e180c8a9` | Geometric failure modes may propose targeted constraints. The proposal remains inert until negative controls, independent replay, and human admission bind it. |
 
 This campaign therefore repairs v0.0 by strengthening custody, independence,
 counterexamples, and promotion separation; it does not discard the original
@@ -245,7 +245,7 @@ admitted by landing the kernel.
 ## 9. Scaling plan
 
 Use repository plus PR-number ranges of 50 with explicit manifests: 42 shards
-for `anomalon` and 2 for `anomalonpy`. Start with the contrastive pilot:
+for `sentinel` and 2 for `sentinelpy`. Start with the contrastive pilot:
 
 1. the 39 closed-unmerged PRs;
 2. the 15 duplicate-head pairs in the old repository;
@@ -254,7 +254,7 @@ for `anomalon` and 2 for `anomalonpy`. Start with the contrastive pilot:
 5. mega-PRs on a separate object-diff rail.
 
 GitHub's PR-files endpoint cannot be custodial for mega-PRs. It stops at 3,000
-files, while `anomalon` PR #1911 declares 9,008 changed files at the frozen
+files, while `sentinel` PR #1911 declares 9,008 changed files at the frozen
 cutoff. Anything above 1,000 files enters the mega-PR rail; anything above 3,000
 requires exact Git object diff reconstruction.
 

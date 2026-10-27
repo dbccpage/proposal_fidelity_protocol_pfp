@@ -5,13 +5,13 @@ from __future__ import annotations
 from collections.abc import Callable, Mapping, Sequence
 from typing import Any
 
-from omega_engine_epistemic_immune_system.use_cases.admitted_antibody_query import (
+from eis.use_cases.admitted_antibody_query import (
     admitted_antibodies,
 )
-from omega_engine_operads.domain.prompt_hierarchy.evaluator import (
+from operads.domain.prompt_hierarchy.evaluator import (
     evaluate_prompt_gates as evaluate_bound_prompt_gates,
 )
-from omega_engine_operads.domain.prompt_hierarchy.models import (
+from operads.domain.prompt_hierarchy.models import (
     PromptGateReceipt,
     PromptTreeNode,
 )

@@ -21,7 +21,7 @@ import re
 
 import pytest
 
-from omega_engine_pfp.infrastructure.trace import (
+from pfp.infrastructure.trace import (
     CHAIN_GENESIS,
     CRASH_MODEL_ABRUPT_PROCESS_EXIT,
     DURABILITY_BUFFERED_REPLAY,
@@ -597,7 +597,7 @@ def test_a_trace_from_another_schema_version_is_not_complete(tmp_path):
     path = _forged_trace(
         tmp_path,
         "future",
-        started=_started_payload(schema_version="omega.symbol-game.execution-trace.v3"),
+        started=_started_payload(schema_version="core.symbol-game.execution-trace.v3"),
     )
     assert scan_trace(path).records == []
     assert read_status(path) == STATUS_INCOMPLETE
@@ -692,13 +692,13 @@ def test_a_boolean_where_an_integer_belongs_is_refused(tmp_path):
 
 def _encrypted_ref(**overrides):
     value = {
-        "artifact_schema": "omega.provider.raw-response.v1",
+        "artifact_schema": "core.provider.raw-response.v1",
         "authority_effect": "None",
         "byte_length": 47,
         "encrypted_envelope_digest": "sha256:" + "c" * 64,
         "plaintext_sha256": "sha256:" + "b" * 64,
         "protector_id": "fixture-only-hmac-stream.v1",
-        "schema": "omega.oeos.encrypted-artifact-ref.v1",
+        "schema": "core.oeos.encrypted-artifact-ref.v1",
     }
     value.update(overrides)
     return value

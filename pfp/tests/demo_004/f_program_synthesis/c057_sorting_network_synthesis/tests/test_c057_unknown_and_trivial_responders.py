@@ -19,7 +19,7 @@ import math
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.judge_packet import (
+from pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.judge_packet import (
     exact_checker,
     independent_checker,
 )
@@ -284,7 +284,7 @@ def test_proven_optimal_table_is_disclosed_with_its_sources():
 
 def test_reference_solver_imports_and_passes_both_checkers_on_every_case():
     """Old code: ``reference_solver.solver`` raised NameError (``Optional``) at import."""
-    from omega_engine_pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.reference_solver.solver import (
+    from pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.reference_solver.solver import (
         solve,
     )
 

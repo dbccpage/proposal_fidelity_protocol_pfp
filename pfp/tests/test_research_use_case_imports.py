@@ -11,9 +11,9 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.exceptions import CanonicalizationError
-from omega_engine_pfp.use_cases import research
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.exceptions import CanonicalizationError
+from pfp.use_cases import research
 
 
 def test_the_envelope_name_is_the_domain_envelope() -> None:

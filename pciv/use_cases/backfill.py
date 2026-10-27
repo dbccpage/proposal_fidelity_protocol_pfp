@@ -40,7 +40,7 @@ class PromptCivBackfillEngineV1:
         admission_verifier: Callable[[dict, str], bool] | None = None,
         max_files: int = 1000, max_total_bytes: int = 64 * 1024 * 1024,
     ) -> None:
-        self.intelligence_root = Path(intelligence_root) if intelligence_root is not None else Path(os.environ.get("OMEGA_INTELLIGENCE_ROOT", ".")) / "_ic"
+        self.intelligence_root = Path(intelligence_root) if intelligence_root is not None else Path(os.environ.get("CORE_INTELLIGENCE_ROOT", ".")) / "_ic"
         self.output_root = output_root
         if output_root is not None and output_root.resolve().is_relative_to(self.intelligence_root.resolve()):
             raise ValueError("BACKFILL_OUTPUT_MUST_NOT_BE_INSIDE_SOURCE")

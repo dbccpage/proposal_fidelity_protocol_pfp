@@ -40,7 +40,7 @@ Challenge **C048 (`c048_ternary_quadratic_forms`)** tests arithmetic geometry, D
 We developed, verified, and sealed the reference solver package under SG-CP v1:
 - **Reference Solver:** Pure Python standard library implementation (`math`, Pollard's rho, Miller-Rabin primality, Holzer bound search, and Serre Hilbert symbol formulas over $\mathbb{Q}_v$).
 - **Judge Packet:** 64 hidden cases (20 solvable, 20 obstructed across $\infty, 2, p$; 16 relabel and gauge controls; 8 poisoned cases) and 48 hostile mutations.
-- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.066s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c048_eval_1790625286`.
+- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.066s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c048_eval_1790625286`.
 
 ---
 

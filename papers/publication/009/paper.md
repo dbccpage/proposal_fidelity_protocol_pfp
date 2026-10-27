@@ -23,7 +23,7 @@ information to preserve. This document provides a review procedure and
 worked examples. The only recorded model run it uses is a retained
 ten-trial trace, which Section 4.1 recounts as an example of reading a
 reported catch rate. Appendix A applies the procedure to one gate in
-this repository, the terminal gate of the seven-act Woland engine, with
+this repository, the terminal gate of the seven-act Adversary engine, with
 four falsifiers replayed on the audited code. It reports no measured
 psychological effect, search-escape rate, or general automated truth
 detector.
@@ -81,7 +81,7 @@ names or comments are insufficient. Conversely, a deliberately small
 check is useful when its stated property is equally small.
 
 The package's [semiotic-audit
-fixture](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py)
+fixture](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py)
 compares the strings `signified` and `interpretant`. It illustrates
 mismatched descriptions. It does not inspect downstream code, determine
 mathematical equivalence, or audit every execution path. Use a reviewer
@@ -106,13 +106,13 @@ The reviewer should request this distinction in the main explanation,
 not accept a caution several pages later that contradicts the headline.
 
 The [cycle
-lesson](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb)
+lesson](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb)
 reproduces the first reading with these values, and the [operator
 guide](../005/paper.pdf) shows both readings on an integer triangle.
 This package's [companion
-notebook](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/jupyter_notebooks/009_triangle_cycle_sum.ipynb)
+notebook](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/jupyter_notebooks/009_triangle_cycle_sum.ipynb)
 and [triangle
-tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_triangle_cycle_sum.py)
+tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_triangle_cycle_sum.py)
 recompute the numbers above with exact fractions.
 
 ## 4. Design a probe that could change the verdict
@@ -133,14 +133,14 @@ For an exact LP certificate, first supply feasible primal and dual
 witnesses with equal objectives. Then independently corrupt a primal
 bound, break dual closure, and retain a feasible but nonmatching dual
 objective. The [LP
-lesson](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/the_symbol_game/lessons/system_integration/200_intermediates/02_exact_lp_certificates.ipynb)
+lesson](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/the_symbol_game/lessons/system_integration/200_intermediates/02_exact_lp_certificates.ipynb)
 supplies these three distinct failure cases. These are source-inspected
 cases; no fresh replay result is reported here. Equal objective values
 alone cannot replace feasibility.
 
 For a digest-bound packet, change node content while keeping its old
 digest key. The [codec
-lesson](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/01_codecs_and_tamper_evidence.ipynb)
+lesson](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/the_symbol_game/lessons/system_integration/100_novices/01_codecs_and_tamper_evidence.ipynb)
 contains that mutation. Checking that a string has 64 characters would
 not test the same property.
 
@@ -158,10 +158,10 @@ obstruction, and an adversary model challenged or accepted each
 classification. The run covers two frustrated lattices, a five-site ring
 and a six-site cluster of corner-sharing triangles, each at five
 interaction strengths, for 10 trials. Its [replay
-receipt](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/demo2_r7_adversarial_debate_receipt.json)
+receipt](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/demo2_r7_adversarial_debate_receipt.json)
 reports the proposer as `meta-llama/llama-3.1-8b-instruct` and the
 adversary as `deepseek/deepseek-chat`. The
-[trace](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/demo2_r7_adversarial_debate_1790210039.jsonl)
+[trace](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/demo2_r7_adversarial_debate_1790210039.jsonl)
 itself records no model identifiers.
 
 Each trial's reference label comes from a program check, not from a
@@ -201,7 +201,7 @@ Four observations limit what the run shows:
 - The run says nothing about other models, lattices, or prompts.
 
 The package test
-[test_recorded_bout_counts.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_recorded_bout_counts.py)
+[test_recorded_bout_counts.py](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_recorded_bout_counts.py)
 recounts these cells from the trace and checks the receipt. It needs the
 full repository, because both files are kept in Paper 001's package, and
 it skips when this package is used on its own.
@@ -216,11 +216,11 @@ below, together with the two modules that the second file imports. Each
 copy matches the repository's `lean4` file at the code baseline except
 for a two-line provenance comment at the top. They build with Lean
 4.34.0 and no external libraries. The [axiom
-report](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt)
+report](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/axiom_report.txt)
 lists every theorem in the four copied modules; none uses an axiom other
 than `propext` and `Quot.sound`.
 
-[Level15AuthorityCalculus.lean](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean)
+[Level15AuthorityCalculus.lean](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/Level15AuthorityCalculus.lean)
 defines distinct state constructors and formalizes that designated
 proposal constructors differ from the terminal-authority constructor. It
 also defines an "independent verifier" by unequal parameter hashes and
@@ -228,7 +228,7 @@ shows that a state does not meet that definition against itself. These
 facts do not establish statistical independence of different models or
 guarantee that a runtime preserves the state partition.
 
-[TriggerNotLicense.lean](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/TriggerNotLicense.lean)
+[TriggerNotLicense.lean](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/lean4/TriggerNotLicense.lean)
 constructs a finite case with an active trigger and zero lift budget. It
 shows that a trigger can exist without a licensed target under those
 definitions. It does not preclude independently licensed actions under
@@ -277,7 +277,7 @@ workflow step; it grants no publication, deployment, or domain
 authority.
 
 The package's [toy verdict
-function](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py)
+function](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/code/tests/test_009_adversarial_reality_gate.py)
 maps supplied rational scores and flags to `PASS_TO_MASTER`, `REFUSE`,
 or `OPEN_RESIDUAL`. It does not compute those scores or establish that
 the flags describe reality. Its supplied-input tests cannot support a
@@ -386,8 +386,8 @@ original dates and scope and are not current execution evidence.
 ## Appendix A. Where a gate's verdict comes from
 
 This appendix applies Sections 2, 4 and 7 to one gate in this
-repository: the terminal gate of the seven-act Woland engine
-(`omega_engine_woland`) at commit
+repository: the terminal gate of the seven-act Adversary engine
+(`adversary`) at commit
 `30609de2c3928238715375a9bac608256fa381d8`. The gate is meant to
 authorize a proposal only when exact defect measures of the input are
 zero: a quotient defect, written $\Phi_1$, and a cycle defect, written
@@ -398,11 +398,11 @@ operation actually produced it?
 Four falsifiers answer that question. Each fixes an input, states the
 status a sound gate must give, and records the status the audited code
 gave. They were run on the audited commit by a script of this
-collection, `tools/replay_woland_gate_falsifiers.py`, which extracts the
+collection, `tools/replay_adversary_gate_falsifiers.py`, which extracts the
 needed packages with `git archive` and calls single act functions with a
 stub runtime that has no event sinks and no model port. Nothing is
 written and no model is called. The observed values below are those of
-its record, `verification/woland_gate_falsifiers.json` (both paths
+its record, `verification/adversary_gate_falsifiers.json` (both paths
 relative to the collection folder). File and line references are to the
 audited commit.
 
@@ -413,7 +413,7 @@ Table A.1. The name of each operation and what it does.
   ----------------------- ----------------------- --------------------------------------------------
   "Gauge break" and       A lifted carrier on     A node is added and the cochain is replaced by
   "carrier lift" (Act IV) which the input's       zero on every edge
-                          obstruction can be      (`omega_engine_woland/use_cases/act_helpers.py`,
+                          obstruction can be      (`adversary/use_cases/act_helpers.py`,
                           examined                lines 480 to 498); Act II then scores the zeros
                                                   (`use_cases/bout_service.py`, lines 266 to 277)
 
@@ -433,7 +433,7 @@ Table A.1. The name of each operation and what it does.
 "Novella" and "DDC      A narrative and a step  Fixed text and fixed steps into which only the
   tape" of a challenge    record of what the run  verdict, the counts and two numbers are
   gate                    did                     substituted (C012 copy,
-                                                  `governance/woland_gate.py`, lines 69 to 195)
+                                                  `governance/adversary_gate.py`, lines 69 to 195)
   --------------------------------------------------------------------------------------------------
 
 Table A.2. Falsifiers: fixed input, expected status, observed status.
@@ -509,10 +509,10 @@ replacement.
 Fix: commit `a054c8ce1` on branch `claude/mssn-study-corrections`. An
 Act IV lift now carries the input cochain to the lifted carrier, and a
 lift that lowers the measured obstruction is refused with
-`WOLAND_LIFT_LOWERED_OBSTRUCTION`. The default scorer reports that
+`ADVERSARY_LIFT_LOWERED_OBSTRUCTION`. The default scorer reports that
 nothing was measured, which cannot authorize, and Act VII requires exact
 rational zeros. The laundering falsifiers are in
-`omega_engine_woland/tests/test_honest_gate_falsifiers.py`.
+`adversary/tests/test_honest_gate_falsifiers.py`.
 
 ### A.2 Keyword adjudication (F2a, F2b)
 
@@ -526,7 +526,7 @@ critique claims.
 Fix: commit `a054c8ce1`. A critique is now a typed JSON block, and a
 critique that cannot be parsed blocks; no keyword decides. The keyword
 falsifiers are in the same test file and in
-`omega_engine_woland/tests/test_adversarial_m1_it2_1_challenger.py`.
+`adversary/tests/test_adversarial_m1_it2_1_challenger.py`.
 
 ### A.3 Phantom evidence references (F3)
 
@@ -559,7 +559,7 @@ simplex descent and a repaired coboundary. The copy also names challenge
 C011, from which it was copied. The chain of digests over these steps is
 internally consistent (Section 7), so a reader who checks only the chain
 would accept them. The challenges folder holds 36 files named
-`governance/woland_gate.py`, and the sentence about full agreement
+`governance/adversary_gate.py`, and the sentence about full agreement
 occurs verbatim in four of them.
 
 Fix: commit `e6fbc15cf` on the same branch. The 36 challenge copies of
@@ -567,7 +567,7 @@ the gate now report a reference run as `REFERENCE_SELF_CONSISTENT` or
 `REFERENCE_SELF_INCONSISTENT` with a stated `gate_scope`, and the
 narrative is a table of the measured counts with no templated claims.
 The tests are in
-`omega_engine_projects/mssn_sn_symgam/challenges/harness_tests/test_harness_honesty.py`.
+`projects/mssn_sn_symgam/challenges/harness_tests/test_harness_honesty.py`.
 
 ### A.5 What the audit supports
 
@@ -582,6 +582,6 @@ digest: that verdict alone when no carrier is declared, and that verdict
 together with exact zeros when one is. The receipt field
 `authorization_evidence` records which of the two applied. The verdict
 therefore comes from a bound checker receipt, the property Section 2
-asks a reviewer to locate. On the corrected commit the two Woland test
+asks a reviewer to locate. On the corrected commit the two Adversary test
 files named above pass (66 and 44 tests; the commands are in the
 collection's verification report).

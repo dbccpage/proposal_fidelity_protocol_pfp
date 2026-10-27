@@ -12,7 +12,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Satisfiability answers are cheap to check. A model is checked against the original problem, and an unsatisfiability claim is checked by replaying a clausal proof with drat-trim (Wetzler, Heule, Hunt 2014) or an LRAT checker (Cruz-Filipe et al. 2017). Producing them is not always cheap. Resolution refutations of the pigeonhole formulas need exponential size (Haken 1985), and so do Tseitin formulas on expanders (Urquhart 1987). A plain conflict-driven solver therefore stalls on them, even though extended resolution gives short pigeonhole proofs (Cook 1976) and DRAT's RAT rule on fresh variables can express such definitions.
 
-This stresses the Symbol Game's handling of large certificate artifacts: proofs are files bound by hash, not inline text. It also stresses the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that splits encoding from proving, and the OEEIS (Omega Engine Epistemic Immune System) where solver output is the tempting place to smuggle an unchecked claim. A pass shows that the module encodes and certifies these families. It does not show a better SAT solver.
+This stresses the Symbol Game's handling of large certificate artifacts: proofs are files bound by hash, not inline text. It also stresses the OEWAS (Engine Workflows, Agents, Skills) workflow that splits encoding from proving, and the OEEIS (Engine Epistemic Immune System) where solver output is the tempting place to smuggle an unchecked claim. A pass shows that the module encodes and certifies these families. It does not show a better SAT solver.
 
 ## 3. Formal Problem and Bounds
 
@@ -60,7 +60,7 @@ A complete certificate is one of two things. For `SAT`, a solution that the prob
 
 Arms A to D follow the protocol with identical sandbox tools. **Arm E** is the pinned CaDiCaL run directly on `F_P` with DRAT output, checked by drat-trim, with no model and no re-encoding.
 
-The estate's `omega_engine/crates_rs/omega_solvers/src/solver_cadical_unsat_core.rs` cannot serve as E. Its `localize` is a stub that always returns `None`, and the estate has no DRAT or LRAT code. A tie between A and E means the module added nothing beyond calling the solver. Arm F is not in the catalog row.
+The estate's `engine/crates_rs/core_solvers/src/solver_cadical_unsat_core.rs` cannot serve as E. Its `localize` is a stub that always returns `None`, and the estate has no DRAT or LRAT code. A tie between A and E means the module added nothing beyond calling the solver. Arm F is not in the catalog row.
 
 ## 8. Budget, Models and Provenance
 
@@ -92,7 +92,7 @@ The catalog declares no OEEIS hook. Observed mechanisms:
 - **Danger gate.** Signal 1 is an `UNSAT` claim; Signal 2 is a proof hash that does not bind `F_P`.
 - **Staged acceptance.** Staged acceptance in the style of `HopfieldNinioProofreader` runs hash binding, then drat-trim, then the LRAT replay before a proof is admitted.
 - **Expected antimorphisms:** AM-2 CUT_ABSOLUTE_CLAIM (`UNSAT` without a proof), AM-FSP-2 (a proof of the module's own encoding) and AM-3 (a `SAT` claim whose solution skips constraints).
-- **Layer 2:** grammar-masked JSON for the status envelope only, via `carrier_gbnf` in `omega_engine_symbol_game/domain/carrier_decoding.py` (unwired). Proofs are files and are never decoded under a mask.
+- **Layer 2:** grammar-masked JSON for the status envelope only, via `carrier_gbnf` in `symbol_game/domain/carrier_decoding.py` (unwired). Proofs are files and are never decoded under a mask.
 - **Layer 1:** not applicable.
 - **Scratch space:** the host keeps a per-family table of encodings tried and their proof sizes.
 
@@ -109,7 +109,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_solvers`, the catalog reuse row. Its CaDiCaL localizer is a stub, so a real solver backend with DRAT output is new work that belongs in that crate.
+- `engine/crates_rs/core_solvers`, the catalog reuse row. Its CaDiCaL localizer is a stub, so a real solver backend with DRAT output is new work that belongs in that crate.
 - Problem-level checkers should go in Rust next to it. The bench harness `bench/matrix/run_repair_matrix.py` shows the arm-matrix shape.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). The catalog row lists no extra upgrades; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended because the deliverable is synthesized code.
 

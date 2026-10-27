@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import pathlib
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
 

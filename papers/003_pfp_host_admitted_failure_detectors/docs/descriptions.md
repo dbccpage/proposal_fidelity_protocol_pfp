@@ -4,7 +4,7 @@ This preprint describes how a failure detector should be admitted into a proposa
 
 
 The first public version is 0.1.0; earlier 1.x labels identify internal drafts.
-The package includes a 24-problem Landau companion with a study guide and
+The package includes a 24-problem Examiner companion with a study guide and
 separate instructor key. The fresh publication review and execution record are
 `first_publication_review_2026_10_02.md` and
 `first_publication_validation_2026_10_02.json` in this directory.

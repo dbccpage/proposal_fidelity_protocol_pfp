@@ -65,7 +65,7 @@ def find_repo_root(start: Optional[Path] = None) -> Path:
     curr = (start or Path.cwd()).resolve()
     for _ in range(10):
         if (curr / ".git").exists() and (
-            (curr / "omega_engine").is_dir() or (curr / ".agents").is_dir()
+            (curr / "engine").is_dir() or (curr / ".agents").is_dir()
         ):
             return curr
         if curr.parent == curr:
@@ -103,9 +103,9 @@ def _load_healthy_pattern(dual_name: str, repo_root: Path, lang: str) -> Dict[st
         return {}
     if not dual_name.endswith(".md"):
         dual_name = f"{dual_name}.md"
-    hp_path = repo_root / "omega_engine_operads" / "patterns" / "helpful" / lang / dual_name
+    hp_path = repo_root / "operads" / "patterns" / "helpful" / lang / dual_name
     if not hp_path.is_file():
-        candidates = list((repo_root / "omega_engine_operads" / "patterns" / "helpful").glob(f"*/{dual_name}"))
+        candidates = list((repo_root / "operads" / "patterns" / "helpful").glob(f"*/{dual_name}"))
         if candidates:
             hp_path = candidates[0]
     if not hp_path.is_file():
@@ -123,7 +123,7 @@ def _load_healthy_pattern(dual_name: str, repo_root: Path, lang: str) -> Dict[st
 
 def _load_antibodies(repo_root: Path) -> Dict[str, Dict[str, Any]]:
     abs_dict: Dict[str, Dict[str, Any]] = {}
-    ab_dir = repo_root / "omega_engine_epistemic_immune_system" / "antibodies"
+    ab_dir = repo_root / "eis" / "antibodies"
     if not ab_dir.is_dir():
         return abs_dict
     for f in ab_dir.glob("ab_*.json"):
@@ -483,7 +483,7 @@ def audit_file(
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="Pattern catalog and changed files anti-pattern lint")
     repo_root = find_repo_root()
-    default_cat = repo_root / "omega_engine_operads" / "patterns"
+    default_cat = repo_root / "operads" / "patterns"
     parser.add_argument(
         "--catalog",
         default=str(default_cat),

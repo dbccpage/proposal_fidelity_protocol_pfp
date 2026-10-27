@@ -9,7 +9,7 @@ from typing import List
 
 import yaml
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 
 from ...application.ports.skill_document_parser_port import SkillDocumentParserPort
 from ...domain.entities.composition_v3 import CompositionV3

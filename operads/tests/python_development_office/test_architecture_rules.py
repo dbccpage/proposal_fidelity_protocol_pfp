@@ -5,29 +5,29 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.application.python_development_office.project import (
+from operads.application.python_development_office.project import (
     ProjectScanner,
 )
-from omega_engine_operads.application.python_development_office.rules.clean_arch import (
+from operads.application.python_development_office.rules.clean_arch import (
     CleanArchitectureDependencyRule,
 )
-from omega_engine_operads.application.python_development_office.rules.ddd import (
+from operads.application.python_development_office.rules.ddd import (
     DomainMustNotImportFrameworkRule,
 )
-from omega_engine_operads.application.python_development_office.rules.mvc import (
+from operads.application.python_development_office.rules.mvc import (
     ThinControllerRule,
     ViewDoesNotImportOrmRule,
 )
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.python_development_office import (
     ArchitectureConfig,
     DependencyException,
     ImportedSymbol,
     ModuleInfo,
 )
-from omega_engine_operads.infrastructure.python_development_office.config import (
+from operads.infrastructure.python_development_office.config import (
     load_config,
 )
-from omega_engine_operads.infrastructure.python_development_office.source_repository import (
+from operads.infrastructure.python_development_office.source_repository import (
     FileSystemSourceRepository,
 )
 
@@ -202,9 +202,9 @@ class TestArchitectureRules(unittest.TestCase):
             project_root=repository_root,
             sources=FileSystemSourceRepository(),
         )
-        targets = ["omega_engine_operations"]
+        targets = ["operations"]
         relocated = {
-            "omega_engine_operads": (
+            "operads": (
                 "domain/python_development_office", "application/python_development_office",
                 "infrastructure/python_development_office", "controllers/python_development_office_controller.py",
                 "frontend/cli/python_dev_cli.py", "domain/autopoiesis", "application/autopoiesis",
@@ -213,14 +213,14 @@ class TestArchitectureRules(unittest.TestCase):
                 "infrastructure/ddc_execution", "application/queries/validate_workflows.py",
                 "infrastructure/bootstrap.py",
             ),
-            "omega_engine_governance": (
+            "governance": (
                 "domain/actor_corpus", "use_cases/actor_corpus", "infrastructure/actor_corpus",
             ),
-            "omega_engine_prompt_civilization": (
+            "pciv": (
                 "domain/intelligence_metabolism", "use_cases/intelligence_metabolism",
                 "infrastructure/intelligence_metabolism",
             ),
-            "omega_engine_woland": (
+            "adversary": (
                 "domain/residual_algebra", "use_cases/scenes", "use_cases/research_swarm",
                 "infrastructure/dialogue", "infrastructure/scenes", "infrastructure/research_swarm",
             ),

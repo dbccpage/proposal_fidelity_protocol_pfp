@@ -15,16 +15,16 @@ import shutil
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance import (
-    woland_gate as woland_gate_module,
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance import (
+    adversary_gate as adversary_gate_module,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.budget_gate import (
     BudgetCeilingExceededError,
     BudgetGate,
     BudgetGateUnavailable,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.commit_reveal_runner import (
     ManifestCustodyError,
     lf_normalized_bytes,
     phase1_commit_judge,
@@ -32,12 +32,12 @@ from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_
     phase3_reveal_and_score,
     verify_manifest_entries,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.governance.adversary_gate import (
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
-from omega_engine_woland.domain.providers.types import Provider
+from adversary.domain.providers.types import Provider
 
 CHALLENGE_DIR = Path(__file__).resolve().parent.parent
 CONSISTENT = "REFERENCE_SELF_CONSISTENT"
@@ -93,12 +93,12 @@ def test_budget_gate_missing_provider_api_fails_closed():
     assert gate.budget_controller.spent_microusd == 0
 
 
-def test_woland_gate_novella_and_quad_persistence(tmp_path: Path):
-    """WolandGate must render the measured-values report and persist the 4-file bundle.
+def test_adversary_gate_novella_and_quad_persistence(tmp_path: Path):
+    """AdversaryGate must render the measured-values report and persist the 4-file bundle.
 
     Counterexample: the report used to be a fixed seven-act narrative that did not depend on
     the counts; it must now show the counts it was given and 'not reported' for the rest."""
-    gate = WolandGate(base_dir=tmp_path)
+    gate = AdversaryGate(base_dir=tmp_path)
     novella = gate.generate_novella(
         CONSISTENT, {"total_cases": 1, "concordance": "100%"}, case_id="test_case_01"
     )
@@ -130,10 +130,10 @@ def test_woland_gate_novella_and_quad_persistence(tmp_path: Path):
     assert "| Judge cases scored | 1 |" in (sink1 / "novella.md").read_text(encoding="utf-8")
 
 
-def test_woland_gate_labels_come_from_exact_counts():
+def test_adversary_gate_labels_come_from_exact_counts():
     """Counterexamples: an empty suite, one checker disagreement and a float Phi_1 must not be consistent,
     and a PASS_TO_MASTER label must be refused."""
-    gate = WolandGate(base_dir=Path("unused"))
+    gate = AdversaryGate(base_dir=Path("unused"))
     assert gate.determine_terminal_verdict(0, 0, 0) == INCONSISTENT
     assert gate.determine_terminal_verdict(46, 46, 45) == INCONSISTENT
     assert gate.determine_terminal_verdict(46, 46, 46) == CONSISTENT
@@ -143,20 +143,20 @@ def test_woland_gate_labels_come_from_exact_counts():
         gate.generate_novella("PASS_TO_MASTER", {})
 
 
-def test_woland_gate_never_replaces_a_run_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_adversary_gate_never_replaces_a_run_folder(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """Counterexample: a second run in the same second rmtree'd the first run folder and copied over it."""
 
-    class _Frozen(woland_gate_module.datetime):
+    class _Frozen(adversary_gate_module.datetime):
         @classmethod
         def now(cls, tz=None):
-            return cls(2026, 9, 29, 12, 0, 0, tzinfo=woland_gate_module.timezone.utc)
+            return cls(2026, 9, 29, 12, 0, 0, tzinfo=adversary_gate_module.timezone.utc)
 
-    monkeypatch.setattr(woland_gate_module, "datetime", _Frozen)
-    gate = WolandGate(task_key="c033_collision", base_dir=tmp_path)
+    monkeypatch.setattr(adversary_gate_module, "datetime", _Frozen)
+    gate = AdversaryGate(task_key="c033_collision", base_dir=tmp_path)
     first = gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="first")
     with pytest.raises(RunFolderExistsError):
         gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="second")
-    assert (first["woland_run_dir"] / "novella.md").read_text(encoding="utf-8") == "first"
+    assert (first["adversary_run_dir"] / "novella.md").read_text(encoding="utf-8") == "first"
 
 
 def test_commit_reveal_three_phases(tmp_path: Path):

@@ -5,13 +5,13 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.application.python_development_office.rules.registry import (
+from operads.application.python_development_office.rules.registry import (
     RuleRegistry,
 )
-from omega_engine_operads.application.python_development_office.visitor import (
+from operads.application.python_development_office.visitor import (
     scan_source_ast,
 )
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.python_development_office import (
     ArchitectureConfig,
 )
 

@@ -5,10 +5,10 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-from omega_engine_woland.domain.providers.types import CandidateRequest, Provider
-from omega_engine_woland.tests.test_teamwork_openrouter import Gateway
+from operations.domain.rop.result import Err, Ok
+from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+from adversary.domain.providers.types import CandidateRequest, Provider
+from adversary.tests.test_teamwork_openrouter import Gateway
 
 
 def gateway(tmp_path, *, cost=0.000010, limit=100, max_calls=2, generation=True):
@@ -53,9 +53,9 @@ def test_original_c006_wheel_fuel_40_fits_one_existing_estimated_gateway(tmp_pat
 
 
 def test_estimated_factory_allows_original_fuel_but_hard_scope_keeps_its_limit(monkeypatch, tmp_path):
-    from omega_engine_pfp.infrastructure import estimated_gateway
-    from omega_engine_woland.domain.providers.attempt import ProviderFailure, RetryClass
-    from omega_engine_woland.domain.providers.types import ProviderConfigError
+    from pfp.infrastructure import estimated_gateway
+    from adversary.domain.providers.attempt import ProviderFailure, RetryClass
+    from adversary.domain.providers.types import ProviderConfigError
 
     monkeypatch.setattr(estimated_gateway, "resolve_openrouter_key", lambda _: Err(
         ProviderFailure("TEST_CREDENTIAL_BOUNDARY", "test", RetryClass.TERMINAL)))
@@ -68,7 +68,7 @@ def test_estimated_factory_allows_original_fuel_but_hard_scope_keeps_its_limit(m
 
 
 def test_factory_preserves_explicit_http_timeout_and_refuses_invalid_before_credentials(monkeypatch):
-    from omega_engine_pfp.infrastructure import estimated_gateway
+    from pfp.infrastructure import estimated_gateway
 
     transports = []
     sentinel = object()
@@ -121,7 +121,7 @@ def test_missing_generation_identity_does_not_settle_or_retry(tmp_path):
 
 
 def test_generic_pricing_only_requires_actual_parameters_without_weakening_math_campaign(monkeypatch):
-    from omega_engine_pfp.infrastructure.adapters import pfp_campaign
+    from pfp.infrastructure.adapters import pfp_campaign
 
     row = dict(id="openai/gpt-4o-mini", pricing={"prompt": "0.00000015", "completion": "0.0000006"},
         supported_parameters=["max_tokens", "temperature"])
@@ -139,7 +139,7 @@ def actual_gateway(tmp_path, *, model="vendor/model", output=64, rates=None, cos
                    limit=50000, max_calls=6, run_id="objective-a"):
     from hashlib import sha256
 
-    from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+    from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
     calls = []
     def wire(provider, selected, request):
@@ -260,7 +260,7 @@ def test_raw_wire_recovers_crash_before_cost_settlement_without_sending_again(tm
 
 
 def test_optional_web_price_is_inactive_for_text_only_but_reasoning_price_refuses(tmp_path, monkeypatch):
-    from omega_engine_pfp.infrastructure.adapters import pfp_campaign
+    from pfp.infrastructure.adapters import pfp_campaign
     row = dict(id="vendor/model", pricing={"prompt": "0.0000001", "completion": "0.0000002",
         "web_search": "0.01"}, supported_parameters=["max_tokens"])
     class Catalog:
@@ -280,9 +280,9 @@ def test_optional_web_price_is_inactive_for_text_only_but_reasoning_price_refuse
 
 
 def test_mode_switch_cannot_create_a_second_budget_row(tmp_path):
-    from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-    from omega_engine_pfp.tests.test_durable_run_budget import bind
-    from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+    from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+    from pfp.tests.test_durable_run_budget import bind
+    from adversary.infrastructure.providers.gateway import unbudgeted_gateway
     hard, _ = bind(tmp_path)
     provider = unbudgeted_gateway(provider=Provider.OPENROUTER, model="vendor/model", transport=lambda *args: b"",
         max_output_tokens=64)
@@ -297,8 +297,8 @@ def test_mode_switch_cannot_create_a_second_budget_row(tmp_path):
 
 
 def test_actual_openrouter_request_includes_cost_usage_and_no_optional_tools(monkeypatch):
-    from omega_engine_woland.infrastructure.providers import http
-    from omega_engine_woland.infrastructure.providers.openai_compat import OpenAiCompatTransport
+    from adversary.infrastructure.providers import http
+    from adversary.infrastructure.providers.openai_compat import OpenAiCompatTransport
     calls = []
     def capture(url, headers, body, timeout):
         calls.append(body)

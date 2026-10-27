@@ -24,7 +24,7 @@ def _find_repo_root(p: Path = Path(__file__).resolve()) -> Path:
 
 _ROOT = _find_repo_root()
 _SCENES = Path(__file__).resolve().parent
-_DOMAIN = _ROOT / "omega_engine_pfp" / "domain"
+_DOMAIN = _ROOT / "pfp" / "domain"
 
 FOUR_FIELD = {
     "contract": "SYM-TRACK-A",
@@ -37,7 +37,7 @@ FOUR_FIELD = {
 def _load_codec():
     if str(_ROOT) not in sys.path:
         sys.path.insert(0, str(_ROOT))
-    from omega_engine_pfp.domain.packet_codec import (  # noqa: WPS433
+    from pfp.domain.packet_codec import (  # noqa: WPS433
         PacketCodec,
         canonical_json_bytes,
         compute_sha256,

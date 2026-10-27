@@ -15,7 +15,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
-from omega_engine_governance.infrastructure.storage.schema_totality import (
+from governance.infrastructure.storage.schema_totality import (
     SchemaContractError,
     columns,
     install_totality_fences,
@@ -23,7 +23,7 @@ from omega_engine_governance.infrastructure.storage.schema_totality import (
     tables,
     total_columns,
 )
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     RelationalSchema,
     check_2nf,
@@ -32,17 +32,17 @@ from omega_engine_pfp.domain.normal_forms.relational import (
     check_dependency_preservation,
     check_lossless_decomposition,
 )
-from omega_engine_pfp.domain.normal_forms.relational_advanced import (
+from pfp.domain.normal_forms.relational_advanced import (
     decompose_bcnf_tree,
     synthesize_3nf_bernstein,
 )
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
 
 
 def _repository_root() -> Path:
     for parent in Path(__file__).resolve().parents:
-        if (parent / "omega_engine_governance").is_dir() and (
-            parent / "omega_engine_education"
+        if (parent / "governance").is_dir() and (
+            parent / "education"
         ).is_dir():
             return parent
     raise SchemaContractError("repository schema anchors were not found")
@@ -50,18 +50,18 @@ def _repository_root() -> Path:
 
 ROOT = _repository_root()
 SCHEMA_FILES = (
-    "omega_engine_governance/infrastructure/storage/governance_schema.sql",
-    "omega_engine_pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql",
-    "omega_engine_pfp/infrastructure/yaml/normal_forms/exhaustive_candidates.sql",
-    "omega_engine_education/documentation/014_normal_forms/demos/normal_forms_schema.sql",
-    "omega_engine_pfp/infrastructure/yaml/normal_forms/_golden_nfs/normal_forms_schema.sql"
+    "governance/infrastructure/storage/governance_schema.sql",
+    "pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql",
+    "pfp/infrastructure/yaml/normal_forms/exhaustive_candidates.sql",
+    "education/documentation/014_normal_forms/demos/normal_forms_schema.sql",
+    "pfp/infrastructure/yaml/normal_forms/_golden_nfs/normal_forms_schema.sql"
     if (
         ROOT
-        / "omega_engine_pfp/infrastructure/yaml/normal_forms/_golden_nfs/normal_forms_schema.sql"
+        / "pfp/infrastructure/yaml/normal_forms/_golden_nfs/normal_forms_schema.sql"
     ).is_file()
-    else "omega_engine_pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql",
+    else "pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql",
 )
-LEDGER_FILE = "omega_engine_governance/infrastructure/storage/receipt_ledger_v1.py"
+LEDGER_FILE = "governance/infrastructure/storage/receipt_ledger_v1.py"
 
 
 def assert_exhaustive_candidates(expected: Sequence[str], observed: Sequence[str]) -> None:
@@ -219,8 +219,8 @@ def schema_sources() -> list[tuple[str, str]]:
     discovered = sorted(
         p.relative_to(ROOT).as_posix()
         for directory in (
-            ROOT / "omega_engine_governance",
-            ROOT / "omega_engine_education" / "documentation" / "014_normal_forms",
+            ROOT / "governance",
+            ROOT / "education" / "documentation" / "014_normal_forms",
             NORMAL_FORMS_DIR,
         )
         for p in directory.rglob("*.sql")
@@ -250,7 +250,7 @@ def audit_all_schemas() -> dict[str, Any]:
                 {"source": path, "tables": [table_contract(conn, t) for t in tables(conn)]}
             )
     return {
-        "schema_version": "omega.nf.schema-inventory.v1",
+        "schema_version": "core.nf.schema-inventory.v1",
         "schemas": inventory,
         "authority_effect": "None",
         "dependency_scope": "declared SQL keys only",

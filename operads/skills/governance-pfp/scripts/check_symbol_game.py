@@ -14,17 +14,17 @@ from typing import Tuple
 def check_genesis_documentation_cross_references() -> Tuple[bool, str]:
     """Verify Genesis modular level documentation, SVG schematics, and monograph cross-references."""
     repo_root = Path(__file__).resolve().parents[4]
-    if not (repo_root / "omega_engine_education").exists():
+    if not (repo_root / "education").exists():
         curr = Path(__file__).resolve().parent
         while curr != curr.parent:
-            if (curr / "omega_engine_education").exists():
+            if (curr / "education").exists():
                 repo_root = curr
                 break
             curr = curr.parent
 
     genesis_candidates = [
-        repo_root / "omega_engine_education" / "documentation" / "001_oegen",
-        repo_root / "omega_engine_education" / "documentation" / "2_genesis",
+        repo_root / "education" / "documentation" / "001_oegen",
+        repo_root / "education" / "documentation" / "2_genesis",
     ]
     genesis_dir = next((p for p in genesis_candidates if p.is_dir()), genesis_candidates[0])
     levels_dir = genesis_dir / "levels"
@@ -32,10 +32,10 @@ def check_genesis_documentation_cross_references() -> Tuple[bool, str]:
     levels_readme = levels_dir / "README.md"
 
     ongoing_candidates = [
-        repo_root / "omega_engine_education" / "documentation" / "005_oegenong",
-        repo_root / "omega_engine_education" / "documentation" / "060_genesis_ongoing",
-        repo_root / "omega_engine_education" / "documentation" / "6_genesis_ongoing",
-        repo_root / "omega_engine_education" / "documentation" / "4_genesis_ongoing",
+        repo_root / "education" / "documentation" / "005_oegenong",
+        repo_root / "education" / "documentation" / "060_genesis_ongoing",
+        repo_root / "education" / "documentation" / "6_genesis_ongoing",
+        repo_root / "education" / "documentation" / "4_genesis_ongoing",
     ]
     ongoing_dir = next((p for p in ongoing_candidates if p.is_dir()), ongoing_candidates[0])
     ongoing_images = ongoing_dir / "_images"
@@ -134,7 +134,7 @@ def check_genesis_documentation_cross_references() -> Tuple[bool, str]:
 
 def check_sn_level_documentation_purity() -> Tuple[bool, str]:
     """Walk the current lesson/domain layout and check local references."""
-    root = Path(__file__).resolve().parents[4] / "omega_engine_education/documentation/002_oesn"
+    root = Path(__file__).resolve().parents[4] / "education/documentation/002_oesn"
     for name in ("sn.md", "README.md", "reading_guide.md", "curriculum.md", "source_correspondence.md"):
         if not (root / name).is_file():
             return False, f"Missing S(n) navigation: {name}"

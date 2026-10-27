@@ -27,7 +27,7 @@ A Lean audit publication returns 0 and writes an audit receipt from a later sour
 
 ## Witness
 
-Historical receipts. This digest did not rerun the probe, pytest, the republication gate, or Lean. Source folder `_ic/inr/omega_paper_reviews/pfp_swarm_2026-09-27/`.
+Historical receipts. This digest did not rerun the probe, pytest, the republication gate, or Lean. Source folder `_ic/inr/core_paper_reviews/pfp_swarm_2026-09-27/`.
 
 `math_probe_results.json`:
 

@@ -15,25 +15,25 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.danger_gate import TwoSignalDangerGate
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_gate import TwoSignalDangerGate
+from eis.domain.danger_signals import (
     HOST_DANGER_SIGNAL_KINDS,
     SignalIndependenceRefusal,
     assert_signals_independent,
     signal1_digest,
 )
-from omega_engine_epistemic_immune_system.domain.ports import MatcherBindingRefusal
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.ports import MatcherBindingRefusal
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
     DetectorRule,
     Signal1Match,
     Signal2Danger,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     DetectionContext,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import (
+from eis.infrastructure.mssn_ports import (
     PHARMACY_MATCHER_ID,
     FixedSelfPanel,
     HostPayloadDangerSensor,
@@ -41,11 +41,11 @@ from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import (
     PharmacyMatcher,
     RunQuarantineSink,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import (
+from eis.infrastructure.native_pharmacy import (
     NativePharmacyReport,
     PharmacyFinding,
 )
-from omega_engine_epistemic_immune_system.use_cases.mssn_immune import screen
+from eis.use_cases.mssn_immune import screen
 
 MATCH = Signal1Match("model-verdict", "verified", 1.0, 2)
 RULE = DetectorRule("r1", "model-verdict", r"verified|phi1")

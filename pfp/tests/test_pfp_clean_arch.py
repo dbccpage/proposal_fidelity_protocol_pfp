@@ -1,8 +1,8 @@
 """Clean Architecture AST Invariant and Boundary Tests for PFP.
 
 Verifies:
-  1. Inward Dependency Purity: omega_engine_pfp/domain/ has ZERO outward imports.
-  2. Use Cases Purity: omega_engine_pfp/use_cases/ has zero infrastructure/frontend/entrypoints imports.
+  1. Inward Dependency Purity: pfp/domain/ has ZERO outward imports.
+  2. Use Cases Purity: pfp/use_cases/ has zero infrastructure/frontend/entrypoints imports.
   3. Domain Ports Integrity: All ports in domain/ports.py are pure abstract interfaces.
   4. Claim Hygiene: AuthorityEffect: None discipline enforced across models and receipts.
 
@@ -74,16 +74,16 @@ class TestPfpCleanArchitecture(unittest.TestCase):
     def test_domain_zero_outward_dependencies(self) -> None:
         """Domain layer must not import from outer layers."""
         forbidden = (
-            "omega_engine_education.education_app.use_cases",
-            "omega_engine_education.education_app.infrastructure",
-            "omega_engine_education.education_app.entrypoints",
-            "omega_engine_education.education_app.frontend",
-            "omega_engine_education.scripts",
-            "omega_engine_education.education_app.pedagogy",
-            "omega_engine_pfp.use_cases",
-            "omega_engine_pfp.infrastructure",
-            "omega_engine_pfp.controllers",
-            "omega_engine_pfp.frontend",
+            "education.education_app.use_cases",
+            "education.education_app.infrastructure",
+            "education.education_app.entrypoints",
+            "education.education_app.frontend",
+            "education.scripts",
+            "education.education_app.pedagogy",
+            "pfp.use_cases",
+            "pfp.infrastructure",
+            "pfp.controllers",
+            "pfp.frontend",
         )
         bare_roots = ("use_cases", "infrastructure", "frontend", "controllers")
         violations = self._import_violations(self.domain_dir, forbidden, bare_roots)
@@ -92,13 +92,13 @@ class TestPfpCleanArchitecture(unittest.TestCase):
     def test_use_cases_zero_infrastructure_dependencies(self) -> None:
         """Use cases layer must not import from infrastructure, entrypoints, frontend, or scripts."""
         forbidden = (
-            "omega_engine_education.education_app.infrastructure",
-            "omega_engine_education.education_app.entrypoints",
-            "omega_engine_education.education_app.frontend",
-            "omega_engine_education.scripts",
-            "omega_engine_pfp.infrastructure",
-            "omega_engine_pfp.controllers",
-            "omega_engine_pfp.frontend",
+            "education.education_app.infrastructure",
+            "education.education_app.entrypoints",
+            "education.education_app.frontend",
+            "education.scripts",
+            "pfp.infrastructure",
+            "pfp.controllers",
+            "pfp.frontend",
         )
         bare_roots = ("infrastructure", "frontend", "controllers")
         violations = self._import_violations(self.use_cases_dir, forbidden, bare_roots)

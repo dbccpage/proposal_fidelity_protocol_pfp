@@ -2,7 +2,7 @@
 
 from fractions import Fraction
 
-from omega_engine_epistemic_immune_system.domain.treg import TregSupervisor
+from eis.domain.treg import TregSupervisor
 
 
 def test_denominator_policies_are_not_silently_merged():

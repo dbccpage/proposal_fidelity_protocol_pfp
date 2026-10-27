@@ -9,7 +9,7 @@ AuthorityEffect: None
 
 from __future__ import annotations
 
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 from .shared import rows
 
 

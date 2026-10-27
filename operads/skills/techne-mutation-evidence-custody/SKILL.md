@@ -96,7 +96,7 @@ author's confidence.
 ## The harness, and what running it taught
 
 A harness now exists:
-`omega_engine_operations/use_cases/verification/mutation_harness.py`, driving
+`operations/use_cases/verification/mutation_harness.py`, driving
 pytest or cargo from a declarative catalogue and emitting the table above.
 Building it surfaced four rules that custody alone does not imply, each found by
 the harness getting them wrong first:

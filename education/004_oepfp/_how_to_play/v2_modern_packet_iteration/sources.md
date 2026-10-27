@@ -4,7 +4,7 @@ Law: DOCS_CONSOLIDATION_LAW.md Family 7 and section 2_how_to_play. YAML stays YA
 
 ## Dest machine contracts (not rewritten)
 
-- 2_how_to_play/how_to_play_yaml/mode_1_symbol_packet_iteration/controller.yaml (SPK-002; public_stage_count 5; rust_crate omega_symbol_game)
+- 2_how_to_play/how_to_play_yaml/mode_1_symbol_packet_iteration/controller.yaml (SPK-002; public_stage_count 5; rust_crate core_symbol_game)
 - stage_1_seed_packet.yaml, stage_2_symbol_expansion.yaml, stage_3_descent_audit.yaml, stage_4_adversarial_rounds.yaml, stage_5_terminal_prompt_synthesis.yaml, packet_family_registry.yaml
 - mode_2_proofer/controller.yaml and stage_1..stage_8 YAML
 - mode_5_operator/controller.yaml, stage_1_compression_gate.yaml, stage_2_ideation.yaml, stage_5_mss_mu_evaluator.yaml, stage_8_evidence_plan.yaml (other stages present; same 8-stage inventory)
@@ -24,8 +24,8 @@ Law: DOCS_CONSOLIDATION_LAW.md Family 7 and section 2_how_to_play. YAML stays YA
 
 ## Dest crate and theory pointers
 
-- code/rust/Cargo.toml (package name omega_symbol_game)
-- code/rust/README.md, src/bin/run_sg.rs, src/bin/omega_symbol_admit.rs, tests/symbol_packet_iteration_e2e.rs
+- code/rust/Cargo.toml (package name core_symbol_game)
+- code/rust/README.md, src/bin/run_sg.rs, src/bin/core_symbol_admit.rs, tests/symbol_packet_iteration_e2e.rs
 - 1_historical_documents/05_modern_synthesis.md
 - 0_research_briefs/20_modern_benchmark_opus_5_ultracoda.md
 - Paper 043 (The Symbol Game: Finite Packetization, LGGR, and the Authority Firewall) is the theory-spine pointer; math_spine is not canon for v2.

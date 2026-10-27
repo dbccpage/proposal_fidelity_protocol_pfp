@@ -5,7 +5,7 @@
 The [current paper](../paper.md) replaces the previous synthesis with a detector
 admission method, a source-audited host boundary, and a prespecified study.
 The previous response remains available in
-[the baseline Git record](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/003_pfp_host_admitted_failure_detectors/review_response.md).
+[the baseline Git record](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/003_pfp_host_admitted_failure_detectors/review_response.md).
 
 | Prior question | Current answer |
 | --- | --- |

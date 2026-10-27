@@ -5,9 +5,9 @@
 **Audience:** a human (or model) who will emit YAML packets into a host loop  
 **Machine contracts:** `2_how_to_play/how_to_play_yaml/` (not this file)  
 **Theory pointer:** Paper 043 — *The Symbol Game: Finite Packetization, LGGR, and the Authority Firewall*  
-**Live crate:** `omega_symbol_game`
+**Live crate:** `core_symbol_game`
 
-This is a player guide. It is not a proof, not a certificate, and not Omega authority. A finished run is staged YAML plus host terminals. Treat a completed run as a proof and you have already lost the game.
+This is a player guide. It is not a proof, not a certificate, and not Core authority. A finished run is staged YAML plus host terminals. Treat a completed run as a proof and you have already lost the game.
 
 YAML stays YAML. Do not paste the stage templates into a chat and call that the contract. Play *over* the hashed files under `how_to_play_yaml/`.
 
@@ -33,11 +33,11 @@ v1 (historical LP-forcing, May 2026) and this file must not be paraphrases of ea
 | --- | --- | --- |
 | Public stage count | Eight public stages: Compression Gate through Evidence Plan | **Five** public stages under SPK-002: Seed Packet → Symbol Expansion → Descent Audit → Adversarial Rounds → Terminal Prompt Synthesis. Eight stages remain **internal** for Mode 2 (proofer) and Mode 5 (operator) |
 | Theory-spine pointer | `symbol_game_math_spine.md` is canonical; the proof ledger is archival | **Paper 043** is the theory pointer (finite packetization, LGGR, authority firewall). math_spine is *not* canon for this version. dest papers/032 (PO-032) is a different dest monograph and is not this pointer |
-| Live crate / CLI | `cd omega_engine/products/symbol_game` then `run_proof_pipeline` / `run_operator_tower` / `symsys-pipeline` | Dest crate **`omega_symbol_game`** (`code/rust/`). Current bins: `run_sg`, `omega_symbol_admit`. The v1 cargo paths are not this crate's current bins |
+| Live crate / CLI | `cd engine/products/symbol_game` then `run_proof_pipeline` / `run_operator_tower` / `symsys-pipeline` | Dest crate **`core_symbol_game`** (`code/rust/`). Current bins: `run_sg`, `core_symbol_admit`. The v1 cargo paths are not this crate's current bins |
 
 If a document still says the public convention is Stage 1 Compression Gate through Stage 8 Evidence Plan, it is describing the **internal** 8-stage YAML (or the v1 architecture banner). It is not describing SPK-002 public play.
 
-The historical 8-stage binaries (`run_proof_pipeline`, `run_operator_tower`, `symsys-pipeline`) and the path `omega_engine/products/symbol_game` are the v1 architecture story. Do not treat them as live commands in this recovery tree.
+The historical 8-stage binaries (`run_proof_pipeline`, `run_operator_tower`, `symsys-pipeline`) and the path `engine/products/symbol_game` are the v1 architecture story. Do not treat them as live commands in this recovery tree.
 
 ---
 
@@ -46,7 +46,7 @@ The historical 8-stage binaries (`run_proof_pipeline`, `run_operator_tower`, `sy
 | Role | May | May not |
 | --- | --- | --- |
 | You / the model | Propose YAML matching the stage schema; name ambiguities, attacks, next tests | Upgrade `evidence_level`; mint `Certificate`; edit templates after the seed is frozen; wrap YAML in markdown fences |
-| Host (`omega_symbol_game`) | Parse, refuse, replay, inject Stage N into Stage N+1, emit terminals | Treat producer `verified: true` as a certificate |
+| Host (`core_symbol_game`) | Parse, refuse, replay, inject Stage N into Stage N+1, emit terminals | Treat producer `verified: true` as a certificate |
 | YAML contracts | Define schemas, enums, stop conditions, preamble | Change mid-run (SGI-001: hash mismatch is `PROCESS_OBSTRUCTION`) |
 | Paper 043 | State the finite-packet / LGGR / firewall claims this loop is playing under | Be replaced by a math_spine banner or by dest PO-032 inside a player guide |
 
@@ -67,7 +67,7 @@ Useful design rule, quoted as a play constraint not as metaphysics:
 **Mode id:** `symbol_packet_iteration`  
 **Controller:** `how_to_play_yaml/mode_1_symbol_packet_iteration/controller.yaml`  
 **Config:** `how_to_play_yaml/symsys_config.yaml` (`mode: symbol_packet_iteration`, `max_round_count: 5`)  
-**Backend runtime (from the controller):** `rust_crate: omega_symbol_game`, `public_stage_count: 5`, `internal_stage_count: 8`
+**Backend runtime (from the controller):** `rust_crate: core_symbol_game`, `public_stage_count: 5`, `internal_stage_count: 8`
 
 Every public artifact must carry:
 
@@ -251,7 +251,7 @@ An evidence plan **names** an evaluator. It does not run the oracle and it does 
 
 Authority ceilings (controller enum): `ShapeOnly`, `LocalReplay`, `BoundaryChecked`, `ExternalOracleRequired`, `EmpiricalOracleRequired`.
 
-`omega_symbol_admit` admits only `cochain_obstruction` and `code_rewrite` onto a **ShapeOnly** receipt with `authority_effect: None`, and refuses trailing prose / self-certification. That bin is not the five-stage loop; it is a ShapeOnly admission gate.
+`core_symbol_admit` admits only `cochain_obstruction` and `code_rewrite` onto a **ShapeOnly** receipt with `authority_effect: None`, and refuses trailing prose / self-certification. That bin is not the five-stage loop; it is a ShapeOnly admission gate.
 
 ---
 
@@ -265,7 +265,7 @@ These are the public play terminals this guide must teach:
 
 | Terminal | Meaning |
 | --- | --- |
-| **Certificate** | Host checks passed **within declared scope**. Not Omega authority. Not a theorem of Paper 043 merely because the YAML parsed |
+| **Certificate** | Host checks passed **within declared scope**. Not Core authority. Not a theorem of Paper 043 merely because the YAML parsed |
 | **Refusal** | Grammar, type, law, budget, or boundary violation |
 | **Repair** | Close enough for a deterministic repair; not a silent success |
 | **OracleNeeded** | An external prover/solver/oracle is required; the model does not become that oracle |
@@ -273,7 +273,7 @@ These are the public play terminals this guide must teach:
 | BudgetUnknown | Finite search ended before exhaustion |
 | NoRule | No admitted rule covers the move |
 
-`omega_symbol_admit` requested-terminal subset is Certificate / Refusal / Repair / OracleNeeded (no Continue). Continue belongs to the SPK-002 iteration loop.
+`core_symbol_admit` requested-terminal subset is Certificate / Refusal / Repair / OracleNeeded (no Continue). Continue belongs to the SPK-002 iteration loop.
 
 ### 6.2 Stage-5 synthesis field
 
@@ -424,15 +424,15 @@ Packetization is a partial map. Two worlds can share a packet shape and disagree
 
 ## 10. What you actually run in this dest tree
 
-Live crate: `code/rust/` package **`omega_symbol_game`**.
+Live crate: `code/rust/` package **`core_symbol_game`**.
 
-Current bins (read from dest sources; these replace v1's `cd omega_engine/products/symbol_game` story):
+Current bins (read from dest sources; these replace v1's `cd engine/products/symbol_game` story):
 
 **Parse / solve an LP or code-rewrite family (not the five-stage loop):**
 
 ```
-cargo run -p omega_symbol_game --bin run_sg -- parse
-cargo run -p omega_symbol_game --bin run_sg -- solve --fixture <path> --budget 2
+cargo run -p core_symbol_game --bin run_sg -- parse
+cargo run -p core_symbol_game --bin run_sg -- solve --fixture <path> --budget 2
 ```
 
 `run_sg solve` is a budgeted propose/validate/repair loop over a declared `lp<…>` or code-rewrite seed. The host decides each candidate. Default repair budget 2. `--live` needs the crate `live` feature. Firewall: prints evidence and a typed terminal; mints no authority.
@@ -440,7 +440,7 @@ cargo run -p omega_symbol_game --bin run_sg -- solve --fixture <path> --budget 2
 **ShapeOnly admission of one cochain_obstruction packet and one code_rewrite packet:**
 
 ```
-cargo run -p omega_symbol_game --bin omega_symbol_admit -- --proposal PATH [--receipt PATH]
+cargo run -p core_symbol_game --bin core_symbol_admit -- --proposal PATH [--receipt PATH]
 ```
 
 Refuses self-certification, trailing prose, and missing families. Receipt `authority_effect` is `None`. Ceiling is ShapeOnly.
@@ -448,7 +448,7 @@ Refuses self-certification, trailing prose, and missing families. Receipt `autho
 **Public five-stage SPK-002 loop (what this guide is for):** dest tests pin `SymbolPacketIterationRunner` over inlined SPK-002 YAML:
 
 ```
-cargo test -p omega_symbol_game --test symbol_packet_iteration_e2e
+cargo test -p core_symbol_game --test symbol_packet_iteration_e2e
 ```
 
 That test is the dest proof that the public loop is five stages, that SPK-001 is refused, that Round F is required, and that F2 / EmpiricalOracleRequired self-promotion is refused. It is not a theorem of the seed you typed.
@@ -456,13 +456,13 @@ That test is the dest proof that the public loop is five stages, that SPK-001 is
 Do **not** run the v1 commands as if they were dest-current:
 
 ```
-cd omega_engine/products/symbol_game
+cd engine/products/symbol_game
 cargo run -j 1 --bin run_proof_pipeline …
 cargo run -j 1 --bin run_operator_tower …
 cargo run -j 1 --bin symsys-pipeline --features legacy-pipeline …
 ```
 
-Those lines are how v1 taught the eight-stage crate layout. This crate's `Cargo.toml` does not ship those bins. Internal 8-stage **YAML** is still dest-present for Mode 2/5; the historical orchestrator binaries are not what `omega_symbol_game` currently exports.
+Those lines are how v1 taught the eight-stage crate layout. This crate's `Cargo.toml` does not ship those bins. Internal 8-stage **YAML** is still dest-present for Mode 2/5; the historical orchestrator binaries are not what `core_symbol_game` currently exports.
 
 `symsys_config.yaml` still names models and template paths. Treat it as the contract map (`templates` = five public stages; `proofer_templates` / `operator_templates` = internal eight). It does not authorize mid-run model shopping as evidence promotion (`forbid_status_upgrade_by_llm: true`).
 

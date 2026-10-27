@@ -1,7 +1,7 @@
 ---
 paths:
-  - "omega_engine_atlas/**"
-  - "omega_engine/crates_rs/**"
+  - "atlas/**"
+  - "engine/crates_rs/**"
   - "**/*coda*/**"
   - "**/*prime*/**"
   - "**/normal_forms/**"

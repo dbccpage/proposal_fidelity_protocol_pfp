@@ -6,7 +6,7 @@ AuthorityEffect: None.
 from fractions import Fraction
 import pytest
 
-from omega_engine_prompt_civilization.domain.elenchus import (
+from pciv.domain.elenchus import (
     ElenchusResult,
     SocraticElenchusBureau,
 )

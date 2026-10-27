@@ -8,13 +8,13 @@ import json
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.algebraic_engine import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.algebraic_engine import (
     parse_presentation,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.invariants import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.invariants import (
     compute_all_invariants,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.isomorphism_search import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.isomorphism_search import (
     extend_and_verify_isomorphism,
 )
 

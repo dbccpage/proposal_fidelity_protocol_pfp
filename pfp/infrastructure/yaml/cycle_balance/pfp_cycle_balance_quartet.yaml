@@ -1,7 +1,7 @@
 # Cycle-balance four-object lifecycle type catalog (matches pfp_cycle_balance_quartet.py)
 # AuthorityEffect: None.
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: omega.symbol_game.cycle_balance.quartet.v1
+$id: core.symbol_game.cycle_balance.quartet.v1
 title: Cycle Balance Quartet Types
 authority_effect: None
 digest_encoding: sorted-key compact UTF-8 JSON sha256 (not RFC 8785)
@@ -88,7 +88,7 @@ $defs:
       - boundary_matrices
       - active_obstruction
     properties:
-      schema_version: {const: omega.symbol_game.cycle_balance.problem.v1}
+      schema_version: {const: core.symbol_game.cycle_balance.problem.v1}
       problem_id: {type: string, minLength: 1}
       case_id: {type: string, minLength: 1}
       authority_effect: {const: None}
@@ -116,7 +116,7 @@ $defs:
       - claimed_integer_preimage_c
       - claimed_h1_status
     properties:
-      schema_version: {const: omega.symbol_game.cycle_balance.candidate.v1}
+      schema_version: {const: core.symbol_game.cycle_balance.candidate.v1}
       candidate_id: {type: string, minLength: 1}
       problem_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
       authority_effect: {const: None}
@@ -132,7 +132,7 @@ $defs:
     additionalProperties: false
     required: [schema_version, verifier_id, arithmetic_domain, problem_digest, verification_rules, static_bounds]
     properties:
-      schema_version: {const: omega.symbol_game.cycle_balance.verifier.v1}
+      schema_version: {const: core.symbol_game.cycle_balance.verifier.v1}
       verifier_id: {type: string, minLength: 1}
       arithmetic_domain: {$ref: '#/$defs/ArithmeticDomain'}
       problem_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
@@ -163,7 +163,7 @@ $defs:
       - claim_hygiene
       - receipt_digest
     properties:
-      schema_version: {const: omega.symbol_game.cycle_balance.receipt.v1}
+      schema_version: {const: core.symbol_game.cycle_balance.receipt.v1}
       receipt_id: {type: string, minLength: 1}
       authority_effect: {const: None}
       problem_digest: {type: string, pattern: '^[0-9a-f]{64}$'}

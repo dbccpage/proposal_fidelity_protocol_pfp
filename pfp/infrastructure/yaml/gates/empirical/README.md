@@ -5,7 +5,7 @@ AuthorityEffect: None.
 The native predicates evaluate finite measurements. The current
 [PFP command](../../../../entrypoints/empirical_gates.py) collects those
 measurements through the existing accounted PFP gateway or the optional
-[Egglog adapter](../../../adapters/egglog_prompt_rewriter.py). Woland delegates
+[Egglog adapter](../../../adapters/egglog_prompt_rewriter.py). Adversary delegates
 `empirical` to that same entrypoint. Historical YAML and receipts are unchanged.
 
 | Gate | Executed work | Claim boundary |
@@ -15,9 +15,9 @@ measurements through the existing accounted PFP gateway or the optional
 | [EMP003](03_egraph_preservation_gate.yaml) | Fifty actual Egglog executions of Mode 13's three fixed rules; extraction is independently checked for ordered source bytes, roles, boundaries and repeated constraint occurrences. | Finite representation preservation does not establish arbitrary prompt semantics or model performance. Smaller runs remain useful PARTIAL observations without a fifty-case gate payload. |
 
 ```powershell
-python -m omega_engine_woland.entrypoints.cli empirical --suite rewrites --plan
-python -m omega_engine_woland.entrypoints.cli empirical --suite rewrites --output target/rewrites.json --native-witness-output target/rewrite-witness.json
-python -m omega_engine_woland.entrypoints.cli empirical --replay target/rewrites.json
+python -m adversary.entrypoints.cli empirical --suite rewrites --plan
+python -m adversary.entrypoints.cli empirical --suite rewrites --output target/rewrites.json --native-witness-output target/rewrite-witness.json
+python -m adversary.entrypoints.cli empirical --replay target/rewrites.json
 ```
 
 Egglog is optional and pinned to 14.0.0; its wheel requires Python 3.12 or newer.
@@ -33,7 +33,7 @@ call/output limits and one shared estimated financial allowance. `--plan`
 makes no sends. Replay rechecks retained bytes and recomputes summaries with
 zero sends; it does not authenticate an operator-edited report. Original
 answers stay with the host oracle. See the
-[operator examples](../../../../../omega_engine_woland/documentation/retinue_gate_integration.md#empirical-gates)
+[operator examples](../../../../../adversary/documentation/panel_gate_integration.md#empirical-gates)
 for input shapes and bounds.
 
 Anthropic uses the same PFP/accounting boundary with `--provider anthropic`
@@ -48,7 +48,7 @@ The [example inputs](../../../../fixtures/empirical/) include ten tasks, twenty
 attacks, a benign control and the explicitly dated rate snapshot.
 
 `--native-witness-output` projects complete measurements into the existing
-`woland.native-gate-witnesses.v1` input. Multi-model results require an explicit
+`adversary.native-gate-witnesses.v1` input. Multi-model results require an explicit
 `--witness-model`; no model answer selects the gate or supplies its counts.
 Pass that file and its source report to a fresh shared teamwork task via
 `--native-gate-witness` and `--native-gate-source`. Legacy summary-only checks

@@ -2,10 +2,10 @@
 rule_id: RL_ENG_ORACLE_001
 name: fail_closed_epistemic_oracle_verification
 category: engineering
-subsystem: omega_engine_woland
+subsystem: adversary
 authority_effect: None
 paths:
-  - "omega_engine_atlas/**"
+  - "atlas/**"
 ---
 
 # Rule: Fail-Closed Epistemic Verification

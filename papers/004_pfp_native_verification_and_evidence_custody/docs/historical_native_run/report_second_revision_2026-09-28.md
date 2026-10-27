@@ -1,7 +1,7 @@
 # Verification of the PFP paper collection, revision of 2026-09-28
 
 This is an execution record for the revision of Papers 001 to 010 and of the
-meron-cluster benchmark (`omega_engine_projects/fsp/meron_sign_problem`, called
+meron-cluster benchmark (`projects/fsp/meron_sign_problem`, called
 011 here). It is not a peer review, and it claims no deposit, DOI, or
 acceptance. The report of the previous revision is kept as
 [report_first_revision_2026-09-28.md](report_first_revision_2026-09-28.md).
@@ -10,7 +10,7 @@ acceptance. The report of the previous revision is kept as
   `claude/pfp-paper-review-loop`.
 - Run recorded: 2026-09-29, 02:02 to 02:06 UTC (2026-09-28, 22:02 to 22:06 EDT),
   Windows 11, one package at a time.
-- Receipts: `_intelligence/omega_paper_reviews/pfp_loop_final2_20260929_020235/`,
+- Receipts: `_intelligence/core_paper_reviews/pfp_loop_final2_20260929_020235/`,
   one folder per package with `run_all_receipt.json`,
   `republication_gate_receipt.json` and both logs. An earlier run on the same
   day, `pfp_loop_final_20260929_013741`, found the three defects fixed before
@@ -31,10 +31,10 @@ nbformat 5.10.4; PyMuPDF 1.27.1; pdftotext 4.00; Pandoc 3.7.0.2; MiKTeX-XeTeX 4.
 Command, from the repository root, for each package `<p>`:
 
 ```text
-py -3.12 -m omega_engine_research_papers.use_cases.paper_review.cli run-all --paper-path <p> --output <receipt> --fuel 0 --no-auto-rebuild
+py -3.12 -m research_papers.use_cases.paper_review.cli run-all --paper-path <p> --output <receipt> --fuel 0 --no-auto-rebuild
 ```
 
-Scope: Stage 0 preflight and envelope, Stage 1 dialect firewall and the Old Man
+Scope: Stage 0 preflight and envelope, Stage 1 dialect firewall and the Red Team
 audit, Stage 2 `lake build` where a `lean4/` project exists, Stage 3 figure
 generation, every `code/tests/test_*.py` file run separately, and ruff over
 `code/`, Stage 4 fresh notebook replay compared cell by cell, Stage 5 three
@@ -63,7 +63,7 @@ tests skip there; the native runs are recorded below.
 
 ## Republication checklist (Stage Ω)
 
-Command: `py -3.12 -m omega_engine_research_papers.use_cases.paper_review.cli republication-gate --paper-path <p> --output <receipt>`.
+Command: `py -3.12 -m research_papers.use_cases.paper_review.cli republication-gate --paper-path <p> --output <receipt>`.
 Each receipt binds its result to a snapshot digest of the package files.
 
 | Package | Static PASS | Not applicable | Not verified | FAIL | Snapshot |
@@ -90,14 +90,14 @@ residual register describes them.
 
 These use native executables, which the review pipeline does not build.
 
-- Paper 004: `cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test <target>`
+- Paper 004: `cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test <target>`
   for `host_contract` (12 passed), `foundation_contract` (11), `invoke_contract`
   (32) and `native_cli_intake` (9); every command exited 0. The crate's source is
   identical to the code baseline `52cb5457`.
-- Paper 005: `cargo build --locked -j 1 --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_functional --bin solve_graph_phi1`
+- Paper 005: `cargo build --locked -j 1 --manifest-path engine/crates_rs/Cargo.toml -p core_functional --bin solve_graph_phi1`
   (exit 0; the crate's source is identical to the code baseline), then each of
-  the package's twelve test files with `OMEGA_FUNCTIONAL_GRAPH_BIN` set to that
-  executable and `OMEGA_FUNCTIONAL_GRAPH_SHA256` to its digest
+  the package's twelve test files with `CORE_FUNCTIONAL_GRAPH_BIN` set to that
+  executable and `CORE_FUNCTIONAL_GRAPH_SHA256` to its digest
   `2b0379557993246cacb1ed8964f9f096964019ecc1c2fb781e6b18f2ca6c8a65`:
   75 passed, none skipped, every command exited 0.
 - Papers 001 to 003: `cargo test -j 1 --manifest-path <package>/code/rust/Cargo.toml`
@@ -119,9 +119,9 @@ reused because their TeX was unchanged):
 
 ## Review tooling changed in this revision
 
-- `py -3.12 -m pytest omega_engine_research_papers/tests/paper_review/test_republication_gate.py -q`: 51 passed.
-- `py -3.12 -m pytest omega_engine_research_papers/tests/test_cli.py -q`: 8 passed.
-- `py -3.12 -m pytest omega_engine_research_papers/tests/paper_review/test_old_man_red_team.py -q`: 6 passed, including four new Gate 4 cases.
+- `py -3.12 -m pytest research_papers/tests/paper_review/test_republication_gate.py -q`: 51 passed.
+- `py -3.12 -m pytest research_papers/tests/test_cli.py -q`: 8 passed.
+- `py -3.12 -m pytest research_papers/tests/paper_review/test_red_team.py -q`: 6 passed, including four new Gate 4 cases.
 
 Historical receipts keep their original dates and scope and are not current
 execution evidence.

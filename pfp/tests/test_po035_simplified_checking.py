@@ -5,15 +5,15 @@ import json
 
 import pytest
 
-from omega_engine_woland.tests.pilots.relational_spacetime import finite_checks as checking
-from omega_engine_woland.tests.pilots.relational_spacetime import compact_checks as simplified_checking
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
-from omega_engine_pfp.infrastructure.numbered_prompts import prompt_id
-from omega_engine_pfp.infrastructure.numbered_prompts import response_schema
-from omega_engine_pfp.infrastructure.numbered_prompts import workpad_schema
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from adversary.tests.pilots.relational_spacetime import finite_checks as checking
+from adversary.tests.pilots.relational_spacetime import compact_checks as simplified_checking
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
+from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
+from pfp.infrastructure.numbered_prompts import FIELD_CARRIERS
+from pfp.infrastructure.numbered_prompts import prompt_id
+from pfp.infrastructure.numbered_prompts import response_schema
+from pfp.infrastructure.numbered_prompts import workpad_schema
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
 
 PILOTS = tuple(BY_ID)
 
@@ -390,7 +390,7 @@ def test_negative_control_on_initially_wrong_certificate_cannot_be_a_positive_ba
 
 
 def test_strict_equality_has_no_numeric_or_container_coercion():
-    from omega_engine_pfp.domain.contracts.pfp_calculations import same_typed_value
+    from pfp.domain.contracts.pfp_calculations import same_typed_value
 
     equal = same_typed_value
     assert not equal(True, 1)

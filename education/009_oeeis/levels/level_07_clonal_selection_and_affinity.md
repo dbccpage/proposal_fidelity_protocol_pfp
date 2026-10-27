@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/clonal_selection.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/clonal_selection.py
 ---
 
 # EIS Level 07: Clonal Selection & Affinity Maturation: Versioned Detector Evolution
 
 **AuthorityEffect:** None.  
 **Level:** Level 07 (Somatic Hypermutation of Detectors & Exact Rational Affinity)  
-**Python Clonal Seam:** [`omega_engine_epistemic_immune_system.domain.clonal_selection`](../../../../omega_engine_epistemic_immune_system/domain/clonal_selection.py)  
+**Python Clonal Seam:** [`eis.domain.clonal_selection`](../../../../eis/domain/clonal_selection.py)  
 **Primary Types:** `ClonalSelectionEngine`, `DetectorCloneV1`, `AffinityMetricsV1`  
 **Core Falsifiers:** `F-IMMUNE-08`
 
@@ -59,7 +59,7 @@ In biological immunology, *clonal selection and affinity maturation* describes h
 In OEEIS, Level 07 establishes **Clonal Selection for Epistemic Detectors**:
 - As software architectures evolve, existing detector patterns may become slightly imprecise or miss subtle permutations of a known vulnerability.
 - Specialized mutation operators clone existing detectors to sharpen their boundary conditions (e.g. refining a regex lookahead or tightening an AST node query).
-- **The Clonal Birth Invariant:** Every mutated detector is born as an un-admitted [`Candidate`](../../../../omega_engine_epistemic_immune_system/domain/clonal_selection.py); it never inherits the parent's admission status.
+- **The Clonal Birth Invariant:** Every mutated detector is born as an un-admitted [`Candidate`](../../../../eis/domain/clonal_selection.py); it never inherits the parent's admission status.
 - **Exact Rational Affinity:** Specificity and sensitivity are tracked as exact integer counts and rational fractions over $\mathbb{Q}$, completely barring arbitrary floating-point affinity scores.
 
 ---
@@ -92,7 +92,7 @@ In OEEIS, Level 07 establishes **Clonal Selection for Epistemic Detectors**:
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_epistemic_immune_system.domain.clonal_selection
+# eis.domain.clonal_selection
 @dataclass(frozen=True)
 class AffinityMetricsV1:
     true_positives: int

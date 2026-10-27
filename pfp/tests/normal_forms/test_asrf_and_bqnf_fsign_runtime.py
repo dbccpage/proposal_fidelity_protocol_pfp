@@ -1,9 +1,9 @@
 """Unit test fixtures executing runtime evaluation checks for nf.recursion.asrf and nf.physics.bqnf_fsign.
 
 Grounding Contracts:
-- omega_engine_education/documentation/13_normal_forms/contracts_normal_forms/nf.recursion.asrf.yaml
-- omega_engine_education/documentation/13_normal_forms/contracts_normal_forms/nf.physics.bqnf_fsign.yaml
-- omega_engine_education/documentation/13_normal_forms/contracts_normal_forms/normal_form_foundational_definitions.md
+- education/documentation/13_normal_forms/contracts_normal_forms/nf.recursion.asrf.yaml
+- education/documentation/13_normal_forms/contracts_normal_forms/nf.physics.bqnf_fsign.yaml
+- education/documentation/13_normal_forms/contracts_normal_forms/normal_form_foundational_definitions.md
 
 AuthorityEffect: None.
 """
@@ -17,13 +17,13 @@ from typing import Any, Dict, List
 
 import yaml
 
-from omega_engine_pfp.domain.normal_forms.asrf import AsrfResult, verify_asrf
-from omega_engine_pfp.domain.normal_forms.bqnf_fsign import (
+from pfp.domain.normal_forms.asrf import AsrfResult, verify_asrf
+from pfp.domain.normal_forms.bqnf_fsign import (
     BqnfFsignCertificateGate,
     FloatContaminationRefusal,
     verify_bqnf_fsign,
 )
-from omega_engine_pfp.infrastructure.normal_form_loading import validate_contract_file
+from pfp.infrastructure.normal_form_loading import validate_contract_file
 
 _CONTRACTS_DIR = Path(__file__).resolve().parents[2] / "infrastructure/yaml/normal_forms"
 

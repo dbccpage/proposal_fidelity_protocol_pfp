@@ -16,7 +16,7 @@ def _repo_root() -> Path:
     start = Path(__file__).resolve().parent
     for candidate in (start, *start.parents):
         if (candidate / ".agents").is_dir() and (
-            candidate / "omega_engine_operads"
+            candidate / "operads"
         ).is_dir():
             return candidate
     raise RuntimeError("repository root containing .agents and OEWAS was not found")
@@ -26,7 +26,7 @@ def main() -> int:
     repo_root = _repo_root()
     if str(repo_root) not in sys.path:
         sys.path.insert(0, str(repo_root))
-    from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+    from operads.infrastructure.capability_catalog_compiler import (
         HOST_NAMES,
         compile_capability_catalog,
         verify_host_projections,

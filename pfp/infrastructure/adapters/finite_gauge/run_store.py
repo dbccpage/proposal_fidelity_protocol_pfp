@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from threading import Lock, Thread
 
-from omega_engine_pfp.domain.finite_gauge import GaugeRefusal, GaugeRefusalCode, RunConfig
-from omega_engine_pfp.domain.kernel.result import Result
-from omega_engine_pfp.use_cases.finite_gauge_workbench import FiniteGaugeRun, GaugeRunRuntime
+from pfp.domain.finite_gauge import GaugeRefusal, GaugeRefusalCode, RunConfig
+from pfp.domain.kernel.result import Result
+from pfp.use_cases.finite_gauge_workbench import FiniteGaugeRun, GaugeRunRuntime
 
 
 class RunStore:

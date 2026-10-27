@@ -4,7 +4,7 @@ from enum import Enum
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
 class DdaLetter(str, Enum):
     E = "E"
     R = "R"
@@ -145,7 +145,7 @@ class ProcessEventLog:
             event_hash="",
         )
         event_hash = domain_digest(
-            "omega.oesos.process-event.v1", _event_hash_fields(shell)
+            "core.oesos.process-event.v1", _event_hash_fields(shell)
         )
         event = ProcessEvent(
             sequence=shell.sequence,
@@ -169,7 +169,7 @@ class ProcessEventLog:
         return (
             self._events[-1].event_hash
             if self._events
-            else domain_digest("omega.oesos.process-event.v1", ())
+            else domain_digest("core.oesos.process-event.v1", ())
         )
 
 
@@ -201,7 +201,7 @@ def verify_event_chain(
         ):
             return False
         expected = domain_digest(
-            "omega.oesos.process-event.v1", _event_hash_fields(event)
+            "core.oesos.process-event.v1", _event_hash_fields(event)
         )
         if event.event_hash != expected:
             return False

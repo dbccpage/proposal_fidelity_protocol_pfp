@@ -1,11 +1,11 @@
-from omega_engine_operads.skill_operad.resolver.resolver import run
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import OpInventory, OpSpec, SkillDecomposition, Wire, AntiOpSpec
+from operads.skill_operad.resolver.resolver import run
+from operads.skill_operad.skill_compiler.op_inventory import OpInventory, OpSpec, SkillDecomposition, Wire, AntiOpSpec
 
 
 def fixture(guard=None):
     op=OpSpec(op_id="pair", summary="ordered pair", inputs=("Code","Code"), output="Code")
     wire=Wire(op="pair",args=("Code","Code"))
-    inv=OpInventory(schema_version="omega.oewas.op_inventory.v2",skills=(SkillDecomposition(skill_id="test",ops=(op,),anti_ops=(guard,) if guard else (),wiring=wire),))
+    inv=OpInventory(schema_version="core.oewas.op_inventory.v2",skills=(SkillDecomposition(skill_id="test",ops=(op,),anti_ops=(guard,) if guard else (),wiring=wire),))
     return inv,wire
 
 
@@ -37,10 +37,10 @@ def test_executor_and_detector_exceptions_are_typed():
 
 
 def test_inventory_host_coverage_and_bounded_skill_execution(tmp_path):
-    from omega_engine_operads.skill_operad.resolver.executors import HOST_EXECUTORS, HOST_DETECTORS, executable_coverage
-    from omega_engine_operads.skill_operad.skill_compiler.op_inventory import load_inventory, INVENTORY_PATH
+    from operads.skill_operad.resolver.executors import HOST_EXECUTORS, HOST_DETECTORS, executable_coverage
+    from operads.skill_operad.skill_compiler.op_inventory import load_inventory, INVENTORY_PATH
     from pathlib import Path
-    from omega_engine_operads.skill_operad.resolver.resolver import digest
+    from operads.skill_operad.resolver.resolver import digest
     inventory=load_inventory(Path(INVENTORY_PATH))
     assert all(executable_coverage(inventory).values())
     def invoke(skill,values):
@@ -68,7 +68,7 @@ def test_inventory_host_coverage_and_bounded_skill_execution(tmp_path):
 
 
 def test_structural_identity_and_planar_input_order():
-    from omega_engine_operads.skill_operad.resolver.resolver import compose,Composition
+    from operads.skill_operad.resolver.resolver import compose,Composition
     inv,wire=fixture()
     term=compose(inv,["Code"],"Code",max_ops=0)
     assert isinstance(term,Composition) and term.ops==()
@@ -76,7 +76,7 @@ def test_structural_identity_and_planar_input_order():
 
 
 def test_execution_accounting_is_bound_not_inferred():
-    from omega_engine_operads.skill_operad.resolver.resolver import ExecutionResult
+    from operads.skill_operad.resolver.resolver import ExecutionResult
     inv,wire=fixture()
     r=run(inv,wire,[1,2],{"pair":lambda a,b:ExecutionResult([a,b],model="model",usage={"output_tokens":2},cost_micro_usd=42,context={"attempt":"a"})},{})
     assert r.steps[0].execution["cost_micro_usd"]==42
@@ -87,11 +87,11 @@ def test_execution_accounting_is_bound_not_inferred():
 
 def test_executable_coverage_drops_when_executor_removed(monkeypatch):
     from pathlib import Path
-    from omega_engine_operads.skill_operad.resolver.executors import HOST_EXECUTORS, executable_coverage
-    from omega_engine_operads.skill_operad.skill_compiler.op_inventory import load_inventory, INVENTORY_PATH
+    from operads.skill_operad.resolver.executors import HOST_EXECUTORS, executable_coverage
+    from operads.skill_operad.skill_compiler.op_inventory import load_inventory, INVENTORY_PATH
     inv=load_inventory(Path(INVENTORY_PATH))
     before=executable_coverage(inv)
-    from omega_engine_operads.skill_operad.resolver import executors
+    from operads.skill_operad.resolver import executors
     reduced=dict(HOST_EXECUTORS)
     del reduced["glossa.report"]
     monkeypatch.setattr(executors,"HOST_EXECUTORS",reduced)
@@ -101,10 +101,10 @@ def test_executable_coverage_drops_when_executor_removed(monkeypatch):
 
 
 def test_unadmitted_learned_guard_is_unavailable_not_cleared(monkeypatch):
-    from omega_engine_operads.domain.anti_skills.anti_skill_v2 import AntiSkillSpecV2
-    from omega_engine_operads.skill_operad.resolver.executors import AdmittedAntiSkillDetector
-    from omega_engine_epistemic_immune_system.domain.guard_activation import ActivationRefusal
-    from omega_engine_epistemic_immune_system.use_cases import guard_activation
+    from operads.domain.anti_skills.anti_skill_v2 import AntiSkillSpecV2
+    from operads.skill_operad.resolver.executors import AdmittedAntiSkillDetector
+    from eis.domain.guard_activation import ActivationRefusal
+    from eis.use_cases import guard_activation
     spec=AntiSkillSpecV2(spec_id="learned")
     def unavailable(*args,**kwargs):
         raise ActivationRefusal("NOT_EXTERNALLY_ADMITTED","no admission")

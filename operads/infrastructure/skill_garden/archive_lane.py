@@ -39,16 +39,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     garden_roster,
     last_used_index,
 )
 
-CANON = Path("omega_engine_operads") / "skills"
+CANON = Path("operads") / "skills"
 ARCHIVE = Path(".agents") / "archive" / "skills"
 MIRRORS = (".claude", ".codex", ".grok")
 RECEIPT_NAME = "ARCHIVE_RECEIPT.json"
-RECEIPT_SCHEMA = "omega.skill_garden.archive_receipt.v1"
+RECEIPT_SCHEMA = "core.skill_garden.archive_receipt.v1"
 
 # `[ \t]*`, never `\s*`: `\s` matches a newline, so an empty `approved_by:`
 # would let the regex reach the following line and report `approved_at: ...` as
@@ -69,7 +69,7 @@ def _run(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
 
 def _package_tree_hash(repo_root: Path, package: Path) -> str:
     """Reuse the estate's tree hash rather than writing a second one."""
-    from omega_engine_operations.use_cases.packaging.sync_cross_host_skills import (
+    from operations.use_cases.packaging.sync_cross_host_skills import (
         package_tree_hash,
     )
 
@@ -81,7 +81,7 @@ def parity_is_green(repo_root: Path) -> bool:
         _run(
             repo_root,
             "python",
-            "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py",
+            "operations/use_cases/packaging/sync_cross_host_skills.py",
             "--check",
         ).returncode
         == 0
@@ -134,13 +134,13 @@ def regenerate_derived_surfaces(repo_root: Path) -> list[str]:
     projections = _run(repo_root, "python", ".agents/operad/scripts/compile_operad_signatures.py")
     done.append(f"capability projections: rc={projections.returncode}")
 
-    registry = _run(repo_root, "python", "omega_engine_operads/skills/_shared/regen_family_registry.py")
+    registry = _run(repo_root, "python", "operads/skills/_shared/regen_family_registry.py")
     done.append(f"family_registry: rc={registry.returncode}")
 
     shared = _run(
         repo_root,
         "python",
-        "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py",
+        "operations/use_cases/packaging/sync_cross_host_skills.py",
         "--all",
     )
     done.append(f"mirror sync: rc={shared.returncode}")
@@ -221,7 +221,7 @@ def archive_skills(
                     "manifest": manifest_path.as_posix(),
                     "approved_by": approver,
                     "restore_command": (
-                        "python -m omega_engine_operads.infrastructure.skill_garden."
+                        "python -m operads.infrastructure.skill_garden."
                         f"archive_lane restore --skill-id {skill_id} --apply"
                     ),
                 },

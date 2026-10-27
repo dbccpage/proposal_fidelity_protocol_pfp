@@ -16,7 +16,7 @@ import sqlite3
 from threading import RLock
 from typing import Callable
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 
 from ...domain.errors.domain_errors import DomainInvariantError, OeopDomainError
 

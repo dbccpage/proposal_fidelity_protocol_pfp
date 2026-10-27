@@ -34,7 +34,7 @@ def test_normal_form_standard_schema():
     mod = _load_module(
         "normal_form_standard_schema",
         REPO_ROOT
-        / "omega_engine_pfp/infrastructure/normal_forms/_golden_nfs/normal_form_standard_schema.py",
+        / "pfp/infrastructure/normal_forms/_golden_nfs/normal_form_standard_schema.py",
     )
     standard_path = STANDARDS_DIR / "standard.yaml"
     assert standard_path.is_file()
@@ -55,7 +55,7 @@ def test_normal_form_contract_meta_schema():
     mod = _load_module(
         "normal_form_contract_schema",
         REPO_ROOT
-        / "omega_engine_pfp/infrastructure/normal_forms/_golden_nfs/normal_form_contract_schema.py",
+        / "pfp/infrastructure/normal_forms/_golden_nfs/normal_form_contract_schema.py",
     )
     schema_path = STANDARDS_DIR / "normal_form_contract_schema.yaml"
     assert schema_path.is_file()
@@ -71,7 +71,7 @@ def test_normal_form_definitions():
     mod = _load_module(
         "normal_form_definitions",
         REPO_ROOT
-        / "omega_engine_pfp/infrastructure/normal_forms/_golden_nfs/normal_form_definitions.py",
+        / "pfp/infrastructure/normal_forms/_golden_nfs/normal_form_definitions.py",
     )
     defs_path = STANDARDS_DIR / "normal_form_definitions.yaml"
     assert defs_path.is_file()
@@ -91,7 +91,7 @@ def test_validate_active_contracts():
     mod = _load_module(
         "normal_form_contract_schema",
         REPO_ROOT
-        / "omega_engine_pfp/infrastructure/normal_forms/_golden_nfs/normal_form_contract_schema.py",
+        / "pfp/infrastructure/normal_forms/_golden_nfs/normal_form_contract_schema.py",
     )
     sample_contracts = [
         "nf.classical.1nf.yaml",
@@ -115,9 +115,9 @@ def test_bcnf_decomposition_seed_invariance():
     import sys
 
     code = (
-        "from omega_engine_pfp.domain.normal_forms.relational import "
+        "from pfp.domain.normal_forms.relational import "
         "RelationalSchema, FunctionalDependency; "
-        "from omega_engine_pfp.domain.normal_forms.relational_advanced import "
+        "from pfp.domain.normal_forms.relational_advanced import "
         "decompose_bcnf_tree; "
         "s = RelationalSchema(frozenset('ABCDE'), frozenset(["
         "FunctionalDependency(frozenset('D'), frozenset('A')), "

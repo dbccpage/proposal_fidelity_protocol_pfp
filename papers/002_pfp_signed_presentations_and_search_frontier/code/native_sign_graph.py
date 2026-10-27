@@ -72,10 +72,10 @@ class NativeSignGraphRefused(RuntimeError):
 def find_binary() -> Optional[Path]:
     """Return an explicitly configured or package-local compiled executable.
 
-    OMEGA_SIGN_GRAPH_BIN may name the executable; otherwise only this crate's
+    CORE_SIGN_GRAPH_BIN may name the executable; otherwise only this crate's
     own target/release and target/debug directories are searched.
     """
-    env_bin = os.environ.get("OMEGA_SIGN_GRAPH_BIN")
+    env_bin = os.environ.get("CORE_SIGN_GRAPH_BIN")
     if env_bin and Path(env_bin).is_file():
         return Path(env_bin)
 

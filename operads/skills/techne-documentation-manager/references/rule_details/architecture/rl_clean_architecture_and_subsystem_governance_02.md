@@ -19,8 +19,8 @@ Parent: [Clean Architecture & Subsystem Governance](../../../../../rules/archite
 
 > **Canonical PFP Application Architecture:**
 >
-> 1. **Zero Ad-Hoc Harness Rebuilding:** Autonomous agents running PFP demos, stage pipelines, or Woland tribunal gates must invoke the canonical Clean Architecture entrypoints under `omega_engine_education` (`omega_engine_pfp.entrypoints.cli.pfp` or `omega_engine_education.scripts.run_pfp_demos`). Agents must NEVER author throwaway runner scripts in `documentation/` or temporary workspaces.
-> 2. **Pure Domain AST Isolation:** `omega_engine_education/domain/` and `omega_engine_pfp/domain/` must maintain zero inward dependency violations, enforced by static AST analysis in `test_pfp_clean_arch.py`.
+> 1. **Zero Ad-Hoc Harness Rebuilding:** Autonomous agents running PFP demos, stage pipelines, or Adversary tribunal gates must invoke the canonical Clean Architecture entrypoints under `education` (`pfp.entrypoints.cli.pfp` or `education.scripts.run_pfp_demos`). Agents must NEVER author throwaway runner scripts in `documentation/` or temporary workspaces.
+> 2. **Pure Domain AST Isolation:** `education/domain/` and `pfp/domain/` must maintain zero inward dependency violations, enforced by static AST analysis in `test_pfp_clean_arch.py`.
 > 3. **Exact Machine Receipts:** All demo executions, stage pipeline runs, and gate evaluations must emit typed `Receipt` objects bearing `authority_effect: "None"` and exact verification status.
 
 ## Module-to-Package Confluence Preservation Invariant (`RULE_MODULE_TO_PACKAGE_CONFLUENCE_001`)

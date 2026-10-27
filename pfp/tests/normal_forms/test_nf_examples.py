@@ -8,12 +8,12 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from omega_engine_pfp.domain.normal_forms.examples import (
+from pfp.domain.normal_forms.examples import (
     order_line_fails_second_normal_form,
     street_journal_title_passes_third_and_fails_boyce_codd,
     street_journal_title_split,
 )
-from omega_engine_pfp.infrastructure.normal_form_loading import validate_contract_file
+from pfp.infrastructure.normal_form_loading import validate_contract_file
 
 
 class TestNfExamples(unittest.TestCase):
@@ -34,7 +34,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(defects, [])
 
     def test_bqnf_cdc_examples_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_bqnf_cdc_property import (
+        from pfp.tests.normal_forms.test_bqnf_cdc_property import (
             TestBqnfCdcProperties,
         )
 
@@ -45,7 +45,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 6)
 
     def test_certificate_and_observer_freshness_properties_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_observer_freshness_certificate_property import (
+        from pfp.tests.normal_forms.test_observer_freshness_certificate_property import (
             TestCertificateVerifierProperties,
             TestObserverRelativeFreshnessProperties,
         )
@@ -60,7 +60,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 8)
 
     def test_cochain_physics_epistemic_properties_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_cochain_physics_epistemic_property import (
+        from pfp.tests.normal_forms.test_cochain_physics_epistemic_property import (
             TestBssnfGaugeSignProperties,
             TestDiscreteHodgeProperties,
             TestEqnfEpistemicQuotientProperties,
@@ -81,7 +81,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 8)
 
     def test_cross_domain_reconciliation_properties_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_cross_domain_reconciliation_property import (
+        from pfp.tests.normal_forms.test_cross_domain_reconciliation_property import (
             TestCrossDomainReconciliationProperties,
         )
 
@@ -93,7 +93,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 6)
 
     def test_chase_evaluator_passes(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_chase_evaluator import (
+        from pfp.tests.normal_forms.test_chase_evaluator import (
             TestChaseEvaluator,
             TestChaseMonotonicityProperties,
         )
@@ -108,7 +108,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 11)
 
     def test_quantile_sketch_properties_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_quantile_sketch_property import (
+        from pfp.tests.normal_forms.test_quantile_sketch_property import (
             TestQuantileSketchCochainProperties,
         )
 
@@ -120,7 +120,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 5)
 
     def test_relational_confluence_and_4nf_mvd_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_relational_confluence_and_4nf_mvd import (
+        from pfp.tests.normal_forms.test_relational_confluence_and_4nf_mvd import (
             TestArmstrongAxiomClosureProperties,
             TestCandidateKeyAntichainMinimality,
             TestChaseConfluenceAndOrderInvariance,
@@ -139,7 +139,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 8)
 
     def test_cross_domain_invariants_and_loss_ledger_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_cross_domain_invariants_and_loss_ledger import (
+        from pfp.tests.normal_forms.test_cross_domain_invariants_and_loss_ledger import (
             TestCrossDomainDefectCocycle,
             TestSealedLossLedgerTamperFalsification,
             TestTargetVerifierPrecedenceAndAuthorityLaundering,
@@ -158,7 +158,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 11)
 
     def test_physics_and_observer_lattice_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_physics_and_observer_lattice_properties import (
+        from pfp.tests.normal_forms.test_physics_and_observer_lattice_properties import (
             TestObserverLatticeMonotonicityProperties,
             TestSimplicialDiscreteHodgeDecomposition,
             TestZeroFloatDualityScalingInvariance,
@@ -175,7 +175,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 7)
 
     def test_pjnf_5nf_join_dependency_chase_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_pjnf_5nf_join_dependency_chase import (
+        from pfp.tests.normal_forms.test_pjnf_5nf_join_dependency_chase import (
             TestCandidateKeyEntailmentAndSufficientConditions,
             TestFagin5NFClassicalSchemas,
             TestLosslessJoinSynthesisAndValidation,
@@ -198,7 +198,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 25)
 
     def test_classical_nf_boundary_and_pjnf_synthesis_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_classical_nf_boundary_and_pjnf_synthesis import (
+        from pfp.tests.normal_forms.test_classical_nf_boundary_and_pjnf_synthesis import (
             TestClassicalNFBoundaryAndPJNFSynthesis,
         )
 
@@ -211,7 +211,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 18)
 
     def test_chase_algebra_and_bqnf_streaming_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_chase_algebra_and_bqnf_streaming import (
+        from pfp.tests.normal_forms.test_chase_algebra_and_bqnf_streaming import (
             TestChaseAlgebraAndBqnfStreaming,
         )
 
@@ -222,7 +222,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 13)
 
     def test_cross_domain_transport_and_freshness_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_cross_domain_transport_and_freshness import (
+        from pfp.tests.normal_forms.test_cross_domain_transport_and_freshness import (
             TestCrossDomainTransportAndFreshness,
         )
 
@@ -235,7 +235,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 13)
 
     def test_physics_fermion_optimization_and_hodge_suites_pass(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_physics_fermion_optimization_and_hodge import (
+        from pfp.tests.normal_forms.test_physics_fermion_optimization_and_hodge import (
             TestPhysicsFermionOptimizationAndHodge,
         )
 
@@ -248,7 +248,7 @@ class TestNfExamples(unittest.TestCase):
         self.assertEqual(res.testsRun, 12)
 
     def test_ddc_trace_replay_integration_passes(self) -> None:
-        from omega_engine_pfp.tests.normal_forms.test_ddc_trace_replay_integration import (
+        from pfp.tests.normal_forms.test_ddc_trace_replay_integration import (
             TestDdcTraceReplayIntegration,
         )
 

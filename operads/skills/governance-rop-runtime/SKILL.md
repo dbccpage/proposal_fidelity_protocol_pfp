@@ -18,7 +18,7 @@ AuthorityEffect: None.
 
 ## Consolidated Invariants
 
-1. **ROP Result Monad Strictness**: Eliminate naked exceptions, silent `pass`, or `sys.exit` in domain logic in favor of explicit `Result.ok(...)` and `Result.err(...)` ledgers (`goo-operad-rop-result-monad-gate`, `goo-woland-rop-monad-strictness`).
+1. **ROP Result Monad Strictness**: Eliminate naked exceptions, silent `pass`, or `sys.exit` in domain logic in favor of explicit `Result.ok(...)` and `Result.err(...)` ledgers (`goo-operad-rop-result-monad-gate`, `goo-adversary-rop-monad-strictness`).
 2. **Apparatus Probe vs Defect Firewall**: A malformed apparatus probe must raise an apparatus exception rather than corrupting semantic state trichotomies as computational STUCK states (`goo-probe-defect-firewall`, `goo-simulation-probe-error-defect-firewall`).
 3. **Atomic Trace Ledger Concurrency**: Evidence traces must use thread lock synchronization and atomic file staging (`.tmp` + `os.replace`) to prevent trace corruption during multi-agent execution (`goo-atomic-trace-ledger-concurrency-guard`).
 4. **Receipt Replayability & Value Object Equality**: Receipts must match producer hashes recorded at generation, and value objects must implement symmetric `__eq__` and `__hash__` across primitive types and Enums (`goo-receipt-replayability-gate`, `goo-polymorphic-value-object-equality-guard`).
@@ -30,5 +30,5 @@ AuthorityEffect: None.
 Run the ROP monad and runtime defect firewall check:
 
 ```bash
-python omega_engine_operads/skills/governance-rop-runtime/scripts/check_rop_runtime.py
+python operads/skills/governance-rop-runtime/scripts/check_rop_runtime.py
 ```

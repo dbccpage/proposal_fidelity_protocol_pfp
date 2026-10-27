@@ -1,0 +1,36 @@
+gate_id: "PFP-06-PRIMAL-DUAL"
+name: "Primal Dual Primal-Dual Cochain Evaluator"
+character: "Primal Dual"
+role: "Primal-Dual Cochain Evaluator & Dual TieR Witness"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "I am invisible and free! But the dual certificate binds tighter than diamond.
+   Show me the witness y*, or your claim of optimality is worthless."
+objective: >
+  Compute primal defect Phi1 and coboundary defect Gamma2 over Q.
+  Require a feasible dual witness vector y* in Q^m and zero gap for certified optimality.
+  Enforce mandatory deterministic tie-breaking resolution (TieR) when multiple optimal solutions exist.
+fences:
+  - "Primal Defect: Phi1(omega) = min_alpha ||omega - d0 alpha||_1 must be computed exactly over Q."
+  - "Coboundary Defect: Gamma2(omega) = ||d1 omega||_1 must be computed exactly over Q."
+  - "Dual Feasibility: d0^T y* = 0 and ||y*||_inf <= 1. For an optimum certificate require <y*, omega> = Phi1. A missing certificate is unverified evidence, not a zero gap."
+  - "TieR: Select the optimal residual h = omega - d0 alpha using the declared ordered basis and separating lexicographic key, with replayed optimality bounds for each tie objective. Do not lexicographically minimize ungauged alpha over its unbounded kernel."
+input_schema:
+  carrier:
+    vertices: "list[int]"
+    edges: "list[[int, int]]"
+    faces: "list[list[int]]"
+  omega: "list[int | Fraction]"
+  d0: "list[list[int]]"
+  d1: "list[list[int]]"
+expected_behavior: >
+  Computes Phi1, Gamma2, and validates the dual certificate y*. Classifies state into
+  Exact (Phi=0, Gamma=0), StabilizedSurvivor (Phi>0, Gamma=0), or OpenObstruction (Phi>0, Gamma>0).
+narrowest_defensible_claim: >
+  A feasible dual bounds the L1 cochain distance from below. Matching a replayed primal
+  residual gives an optimum certificate. The local active-set solver does not yet emit
+  the full sequential TieR certificate required by this gate.
+next_test_needed: >
+  Replay the selected residual and each declared lexicographic tie objective across runtimes.
+  Do not require a unique alpha unless its kernel gauge is separately fixed.

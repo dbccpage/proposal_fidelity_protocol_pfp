@@ -7,11 +7,11 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_operating_system.adapters.rust_host.ffi import (
+from operating_system.adapters.rust_host.ffi import (
     RUNTIME_OUTCOME_SCHEMA,
 )
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.ffi import get_default_host
+from operations.domain.rop.result import Ok
+from pfp.ffi import get_default_host
 
 
 def _outcome(crossing, action: str, *, success: bool = True):
@@ -48,7 +48,7 @@ def test_ffi_canonical_wire_and_digest():
     sample = {"zebra": 1, "apple": 2}
     wire_outcome = _outcome(host.canonical_wire(sample), "canonical_wire")
     wire = wire_outcome["result"]
-    assert wire[0] == "omega-canonical-v1"
+    assert wire[0] == "core-canonical-v1"
     assert wire[1] == "mapping"
 
     json_outcome = _outcome(host.canonical_json(sample), "canonical_json")
@@ -70,7 +70,7 @@ def test_ffi_null_wire_roundtrip_retains_native_outcomes():
         host.canonical_unwire(wire_outcome["result"]), "canonical_unwire"
     )
     assert null_outcome["result"] == wire_outcome["result"]
-    assert null_outcome["result"] == ["omega-canonical-v1", "null", None]
+    assert null_outcome["result"] == ["core-canonical-v1", "null", None]
     assert null_outcome["success"] is True
 
 

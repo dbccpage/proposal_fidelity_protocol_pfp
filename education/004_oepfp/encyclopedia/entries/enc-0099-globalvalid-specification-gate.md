@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:VII.3", "po:PO-PFVS"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §VII.3 'Theorem VII.3'"
+  - "canonical_core_math_spine.md v1.5.2 §VII.3 'Theorem VII.3'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -51,7 +51,7 @@ catalog audit #11, is located not eliminated). See PO-PFVS.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §VII.3
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §VII.3
   (statement copied verbatim). Original header line:
   `**Theorem VII.3 (GlobalValid Specification Gate).** [SPECIFIED] Strengthens`
 

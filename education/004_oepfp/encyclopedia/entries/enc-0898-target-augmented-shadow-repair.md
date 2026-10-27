@@ -15,7 +15,7 @@ sources:
 uses: ["ENC-0897", "ENC-0890"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -30,7 +30,7 @@ through the augmented shadow by projection onto the second coordinate.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
 
 The Lean theorem name is:
 

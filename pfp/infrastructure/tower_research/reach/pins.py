@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Mapping, Protocol
 
-from omega_engine_pfp.infrastructure.tower_evidence.level_engine import (
+from pfp.infrastructure.tower_evidence.level_engine import (
     EvidenceRefusal, LevelEngineEvidenceResolver,
 )
 

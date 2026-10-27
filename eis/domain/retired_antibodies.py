@@ -59,7 +59,7 @@ RETIRED_ANTIBODIES: Mapping[str, RetirementRecord] = MappingProxyType(
             RetirementRecord(
                 antibody_id="ab_syntax_error_e033d14a",
                 defect=(
-                    "defect:syntax_error:omega_engine_governance.anomalon_councils"
+                    "defect:syntax_error:governance.sentinel_councils"
                     ".ooutwire._docs._sap.ana_001_social_graph_v1.0.yaml"
                 ),
                 reason=(
@@ -71,14 +71,14 @@ RETIRED_ANTIBODIES: Mapping[str, RetirementRecord] = MappingProxyType(
             ),
             RetirementRecord(
                 antibody_id="ab_syntax_error_4cb62bc5",
-                defect="defect:syntax_error:omega_engine_operations.tests.unit.test_social_graph",
+                defect="defect:syntax_error:operations.tests.unit.test_social_graph",
                 reason=_PARSER_BUG,
                 repaired_by="6e3a10af12",
                 provenance=_PR_156,
             ),
             RetirementRecord(
                 antibody_id="ab_syntax_error_bb7045c0",
-                defect="defect:syntax_error:omega_engine_operations.use_cases.councils.__init__",
+                defect="defect:syntax_error:operations.use_cases.councils.__init__",
                 reason=_PARSER_BUG,
                 repaired_by="6e3a10af12",
                 provenance=_PR_156,

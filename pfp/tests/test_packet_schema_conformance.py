@@ -19,13 +19,13 @@ import jsonschema
 import pytest
 import yaml
 
-from omega_engine_pfp import packet_schemas
-from omega_engine_pfp.domain.aggregates import prompt_artifact
-from omega_engine_pfp.domain.aggregates.code_change_bind import build_code_change_proposal_envelope
-from omega_engine_pfp.domain.aggregates.code_change_proposal import CodeChangeProposalPayloadV1
-from omega_engine_pfp.domain.aggregates.llm_turn_run_root import build_llm_turn_envelope
-from omega_engine_pfp.domain.entities.candidate_artifact import CandidateArtifactV1
-from omega_engine_pfp.domain.entities.coboundary_score import CoboundaryScoreResult
+from pfp import packet_schemas
+from pfp.domain.aggregates import prompt_artifact
+from pfp.domain.aggregates.code_change_bind import build_code_change_proposal_envelope
+from pfp.domain.aggregates.code_change_proposal import CodeChangeProposalPayloadV1
+from pfp.domain.aggregates.llm_turn_run_root import build_llm_turn_envelope
+from pfp.domain.entities.candidate_artifact import CandidateArtifactV1
+from pfp.domain.entities.coboundary_score import CoboundaryScoreResult
 
 YAML_SCHEMAS = Path(packet_schemas.__file__).resolve().parents[1] / "infrastructure" / "yaml" / "schemas"
 
@@ -54,7 +54,7 @@ def _code_change() -> CodeChangeProposalPayloadV1:
     return CodeChangeProposalPayloadV1(
         objective="tighten a gate",
         source_revision="abc123",
-        owned_paths=("omega_engine_pfp/example.py",),
+        owned_paths=("pfp/example.py",),
         protected_paths=(),
         allowed_transforms=("edit",),
         candidate_budget=1,

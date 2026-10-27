@@ -11,9 +11,9 @@ from urllib.error import URLError
 
 import pytest
 
-import omega_engine_pfp.entrypoints.cli.demo_commands as demo_commands
-from omega_engine_pfp.infrastructure.demos.execution import run
-from omega_engine_woland.infrastructure.providers.credential_source import resolve_credential
+import pfp.entrypoints.cli.demo_commands as demo_commands
+from pfp.infrastructure.demos.execution import run
+from adversary.infrastructure.providers.credential_source import resolve_credential
 
 SENTINEL = "sk-or-live-receipt-sentinel-not-a-real-key"
 STUB_TEXT = "LIVE_PROVIDER_BYTES_not_the_fixture_reply"
@@ -25,7 +25,7 @@ LIVE_BOUNDS = dict(max_output_tokens=256, max_provider_calls=1,
 
 @pytest.fixture(autouse=True)
 def local_pricing(monkeypatch):
-    monkeypatch.setattr("omega_engine_pfp.infrastructure.estimated_gateway.snapshot_pricing",
+    monkeypatch.setattr("pfp.infrastructure.estimated_gateway.snapshot_pricing",
         lambda *a, **k: {"catalog_sha256": "fixture", "row": {"id": MODEL,
             "pricing": {"prompt": "0.000000001", "completion": "0.000000001"}}})
 

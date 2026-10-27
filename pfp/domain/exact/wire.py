@@ -4,7 +4,7 @@ AuthorityEffect: None.
 ZERO-FLOAT Law: Pure exact rational arithmetic in Fraction.
 Canonical wire serialization: Integer rationals with unit denominators serialize
 WITHOUT slash (e.g. '1', '-5', '0'), never as '1/1', preserving strict canonical
-parsing under omega_kernel::parse_exact. Non-integer rationals serialize as 'p/q'.
+parsing under core_kernel::parse_exact. Non-integer rationals serialize as 'p/q'.
 Clean Architecture: Zero outward dependencies.
 """
 

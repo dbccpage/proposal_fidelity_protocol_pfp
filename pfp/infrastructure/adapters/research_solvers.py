@@ -9,32 +9,32 @@ import math
 from dataclasses import dataclass
 from typing import Any
 
-from omega_engine_pfp.domain.entities.problem import (
+from pfp.domain.entities.problem import (
     RuntimeProblem,
     SolverManifest,
     SolverProposal,
 )
-from omega_engine_pfp.domain.entities.candidate_artifact import CandidateArtifactV1
-from omega_engine_pfp.domain.entities.projection_receipt import ProjectionReceipt
-from omega_engine_pfp.domain.entities.airy import (
+from pfp.domain.entities.candidate_artifact import CandidateArtifactV1
+from pfp.domain.entities.projection_receipt import ProjectionReceipt
+from pfp.domain.entities.airy import (
     AiryCriticalCarrierV1,
     AiryCriticalStateV1,
     ComplexScalarV1,
 )
-from omega_engine_pfp.domain.entities.airy_projector import (
+from pfp.domain.entities.airy_projector import (
     AiryCriticalProjector,
     AIRY_CARRIER_ID,
     AIRY_OBSTRUCTION_ID,
     AIRY_PACKET_FAMILY,
     AIRY_SOLVER_ID,
 )
-from omega_engine_pfp.domain.entities.cochain import (
+from pfp.domain.entities.cochain import (
     CochainCarrier,
     CochainState,
 )
-from omega_engine_pfp.domain.entities.cochain_projector import CochainProjector
-from omega_engine_pfp.use_cases.problem_builders.airy_problem import build_airy_problem
-from omega_engine_pfp.use_cases.problem_builders.coda_problem import build_coda_problem
+from pfp.domain.entities.cochain_projector import CochainProjector
+from pfp.use_cases.problem_builders.airy_problem import build_airy_problem
+from pfp.use_cases.problem_builders.coda_problem import build_coda_problem
 
 
 def _bounded_newton(

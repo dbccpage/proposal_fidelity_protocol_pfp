@@ -35,7 +35,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     append_usage_events,
     garden_roster,
     make_usage_event,
@@ -55,9 +55,9 @@ def home_projects_dir(home: Path | None = None) -> Path:
 def mangle(path: Path) -> str:
     """Claude Code's project-directory name for a working directory.
 
-    Observed: `C:\\Users\\a343o\\source\\repos\\anomalonpy` becomes
-    `C--Users-a343o-source-repos-anomalonpy`, and the worktree beneath it
-    becomes `...-anomalonpy--claude-worktrees-bg-session-worktree`. Each of
+    Observed: `C:\\Users\\a343o\\source\\repos\\sentinelpy` becomes
+    `C--Users-a343o-source-repos-sentinelpy`, and the worktree beneath it
+    becomes `...-sentinelpy--claude-worktrees-bg-session-worktree`. Each of
     `:`, `\\`, `/` and `.` maps to `-`.
     """
     text = str(path)

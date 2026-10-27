@@ -16,7 +16,7 @@ from l1_symbol_game_governor import ConstraintGraph, Edge, L1SymbolGameGovernor
 def run_capstone(verbose: bool = True) -> dict:
     graph = ConstraintGraph(("a", "b", "c"), (Edge("a", "b", 1), Edge("b", "c", 2), Edge("c", "a", 3)))
     governor = L1SymbolGameGovernor(graph)
-    path = "native" if os.environ.get("OMEGA_FUNCTIONAL_GRAPH_BIN") else "python-enumeration"
+    path = "native" if os.environ.get("CORE_FUNCTIONAL_GRAPH_BIN") else "python-enumeration"
     outcomes = []
 
     def say(message):

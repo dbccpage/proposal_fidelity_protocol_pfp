@@ -23,7 +23,7 @@ class PfpPrompt(BaseModel):
 
     model_config = ConfigDict(extra="forbid", strict=True, frozen=True)
 
-    schema_version: Literal["omega.pfp.prompt.v1"]
+    schema_version: Literal["core.pfp.prompt.v1"]
     prompt_id: StrictStr = Field(pattern=r"^[0-9a-f]{64}$")
     system_prompt: StrictStr | None = None
     user_prompt: StrictStr = Field(min_length=1)

@@ -4,10 +4,10 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_pfp.domain.pilots.management_ladder import item_bank,grade_answer,canonical_answer,control_answers
-from omega_engine_pfp.infrastructure.management_ladder import check_composition,p0,host_trial,analyze,registration,stage_summary,quote_scope,STAGE_CAPS,PLANNED_MAX_CALLS
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.infrastructure.pfp_operad import PfpTurnExecutor
+from pfp.domain.pilots.management_ladder import item_bank,grade_answer,canonical_answer,control_answers
+from pfp.infrastructure.management_ladder import check_composition,p0,host_trial,analyze,registration,stage_summary,quote_scope,STAGE_CAPS,PLANNED_MAX_CALLS
+from operations.domain.rop.result import Ok
+from pfp.infrastructure.pfp_operad import PfpTurnExecutor
 
 
 def test_each_family_exact_controls_and_compact_expansion():
@@ -51,7 +51,7 @@ def test_actual_pfp_executor_checks_binding_and_keeps_accounting():
         payload['answer']='checked proposal'
         return dict(checked=turn.check_completion(json.dumps(payload)),model='actual-model',generation_id='actual-generation',
             usage=dict(input_tokens=2,output_tokens=3),cost_microusd=7,cost_basis='METERED_ESTIMATE')
-    executor=PfpTurnExecutor('test.op','jeremy','v4','task','attempt',complete,lineage=('parent',),local_experiment_seed=12015)
+    executor=PfpTurnExecutor('test.op','bare_metal_anchor','v4','task','attempt',complete,lineage=('parent',),local_experiment_seed=12015)
     result=executor({'public':'input'})
     assert result.value=='checked proposal' and result.cost_micro_usd==7
     assert result.context['operation_id']=='test.op' and result.context['lineage']==['parent']
@@ -108,7 +108,7 @@ def test_missing_provider_is_prerequisite_failure_not_completed():
 
 
 def test_native_managed_pilot_records_actual_generation_and_stage_parent():
-    from omega_engine_pfp.infrastructure.management_ladder import _prepared,_op_run,VERSION,SEED
+    from pfp.infrastructure.management_ladder import _prepared,_op_run,VERSION,SEED
     item=next(item for item in item_bank() if item.item_id=='train-composition-2')
     attempt='P3:train-composition-2:M6:fixture-model:1'
     turn=_prepared(item,'M6',attempt)

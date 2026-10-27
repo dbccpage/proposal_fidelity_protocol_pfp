@@ -61,7 +61,7 @@ BUDGETED_KINDS = frozenset({"note", "checklist", "template"})
 LINE_BUDGETED_KINDS = frozenset({"note", "checklist"})
 
 MANIFEST_NAME = "_manifest.json"
-MANIFEST_SCHEMA = "omega.skill_garden.shared_manifest.v1"
+MANIFEST_SCHEMA = "core.skill_garden.shared_manifest.v1"
 
 _FRONTMATTER = re.compile(r"\A---\r?\n(.*?)\r?\n---\r?\n", re.S)
 _SHARED_REF = re.compile(r"_shared/([A-Za-z0-9_./-]+\.(?:md|py|sh))(#[A-Za-z0-9._-]+)?")
@@ -74,7 +74,7 @@ FOUR_HOST_SKILL_ROOTS = (
     ".codex/skills",
     ".grok/skills",
 )
-CANONICAL_SKILL_ROOT = "omega_engine_operads/skills"
+CANONICAL_SKILL_ROOT = "operads/skills"
 
 
 def source_prefix(repo_root: Path) -> str:
@@ -399,7 +399,7 @@ def _citation_pairs(repo_root: Path) -> list[tuple[str, bool]]:
 def _collect_citations(repo_root: Path) -> dict[str, list[str]]:
     found: dict[str, list[str]] = {}
     surfaces = list((repo_root / source_prefix(repo_root)).glob("*/SKILL.md"))
-    surfaces += list((repo_root / "omega_engine_operads" / "skill_operad" / "skill_compiler").glob("routes.yaml"))
+    surfaces += list((repo_root / "operads" / "skill_operad" / "skill_compiler").glob("routes.yaml"))
     for path in sorted(surfaces):
         text = path.read_text(encoding="utf-8", errors="ignore")
         for name, _anchor in _SHARED_REF.findall(text):

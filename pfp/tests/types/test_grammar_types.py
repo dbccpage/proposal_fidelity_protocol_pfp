@@ -17,8 +17,8 @@ from pydantic import ValidationError
 HERE = Path(__file__).resolve()
 candidates = [
     *HERE.parents,
-    *(p / "omega_engine_education/documentation/004_oepfp" for p in HERE.parents),
-    *(p / "omega_engine_education/documentation/030_the_symbol_game_proposal_fidelity_protocol_pfp" for p in HERE.parents),
+    *(p / "education/documentation/004_oepfp" for p in HERE.parents),
+    *(p / "education/documentation/030_the_symbol_game_proposal_fidelity_protocol_pfp" for p in HERE.parents),
 ]
 ROOT = next(p for p in candidates if (p / "grammar" / "grammar_types.py").is_file())
 GRAMMAR = ROOT / "grammar"

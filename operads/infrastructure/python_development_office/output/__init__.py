@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from omega_engine_operads.infrastructure.python_development_office.output.console_output import (
+from operads.infrastructure.python_development_office.output.console_output import (
     format_console_output,
 )
-from omega_engine_operads.infrastructure.python_development_office.output.json_output import (
+from operads.infrastructure.python_development_office.output.json_output import (
     format_json_output,
 )
 

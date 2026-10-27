@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Sign errors recur across the estate's traces: AM-5 global sign inversion in the Round-4d trace, and phase mistakes in the Q40 stabilizer work reviewed in [the Q40 review](../00_q40_review.md). Pauli products are a clean test bed. Single-qubit rules are exact and short (XY = iZ, YZ = iX, ZX = iY, the reversed orders give −i, and X² = Y² = Z² = I), and the phase of a string product is the product of per-site phases. Yet models must track a phase in {1, i, −1, −i} across many sites, which is where sign discipline fails.
 
-Activation steering adds a fixed direction to the residual stream; contrastive activation addition builds that direction from pairs of correct and incorrect completions (Rimsky et al. 2024; see also Turner et al. 2023). Whether such a direction improves exact task correctness, rather than style, is the open question here, and the equal-norm random vector is the control that separates "this direction" from "any push of this size". The challenge stresses the Symbol Game host, the OEWAS (Omega Engine Workflows, Agents, Skills) local runtime and a Rust phase-tracked checker (U14). The OEEIS (Omega Engine Epistemic Immune System) is not under test. A pass shows a sign-specific direction exists and helps on this family. It does not show the model represents quantum phases.
+Activation steering adds a fixed direction to the residual stream; contrastive activation addition builds that direction from pairs of correct and incorrect completions (Rimsky et al. 2024; see also Turner et al. 2023). Whether such a direction improves exact task correctness, rather than style, is the open question here, and the equal-norm random vector is the control that separates "this direction" from "any push of this size". The challenge stresses the Symbol Game host, the OEWAS (Engine Workflows, Agents, Skills) local runtime and a Rust phase-tracked checker (U14). The OEEIS (Engine Epistemic Immune System) is not under test. A pass shows a sign-specific direction exists and helps on this family. It does not show the model represents quantum phases.
 
 ## 3. Formal Problem and Bounds
 
@@ -52,8 +52,8 @@ In the certificate a phase i^k is written as its exponent k mod 4; the example's
 - **Hidden base cases:** 240 (80 per kind).
 - **Relabel controls:** 36 cases with the qubit order permuted (the result permutes with it).
 - **Poisoned but schema-valid:** 24 cases whose prompt includes a worked "example" with a sign error; products presented in reversed order (the phase changes sign when two anticommuting factors swap).
-- **Exact checker:** the Rust phase-tracked Pauli product from U14. `omega_quantum_physics::pauli` has commutation and the symplectic product but no phase-tracked string product today, which is why U14 is required.
-- **Independent second checker:** `omega_engine_symbol_game/domain/quantum/pauli.py` (`PauliString.multiply` returns the phase with the product), with a dense exact 2ⁿ × 2ⁿ Gaussian-integer matrix product for n ≤ 4 as a third, secondary check.
+- **Exact checker:** the Rust phase-tracked Pauli product from U14. `core_quantum_physics::pauli` has commutation and the symplectic product but no phase-tracked string product today, which is why U14 is required.
+- **Independent second checker:** `symbol_game/domain/quantum/pauli.py` (`PauliString.multiply` returns the phase with the product), with a dense exact 2ⁿ × 2ⁿ Gaussian-integer matrix product for n ≤ 4 as a third, secondary check.
 - **Checker mutation suite:** a phase off by a factor of −1, a phase off by i, a correct phase with one site exponent moved to another site, and a commutation sign computed from all overlapping sites instead of differing ones.
 
 ## 7. Arms and Baselines
@@ -107,7 +107,7 @@ operand equal_norm_random_control.v1 | kind: control | when: any steering vector
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine_symbol_game/domain/quantum/pauli.py` (second checker) and `omega_engine/crates_rs/omega_quantum_physics/src/pauli.rs` (commutation, symplectic product; to be extended by U14).
+- `symbol_game/domain/quantum/pauli.py` (second checker) and `engine/crates_rs/core_quantum_physics/src/pauli.rs` (commutation, symplectic product; to be extended by U14).
 - `bench/mechanism/local_attention_steering.py` (receipt pattern for interventions).
 - `research/mssn_sn_tower/demos/anti_morphism_observations.md` (AM-5).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).

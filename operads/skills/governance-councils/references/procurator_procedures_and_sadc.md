@@ -1,13 +1,13 @@
 # Procurator Procedures, SADC & Council Lift Reference
 
-This reference document defines the executive procedures, meeting chairs, anti-handwave questioning protocols, and multi-level escalation trees for all Procurator roles in the Anomalon Omega Engine.
+This reference document defines the executive procedures, meeting chairs, anti-handwave questioning protocols, and multi-level escalation trees for all Procurator roles in the Sentinel Engine.
 
 ---
 
 ## 1. Hierarchy & Escalation Tree
 
 ```text
-Anomalon (ooutwire)
+Sentinel (ooutwire)
 └── Curious Council (procurator_cc) — root inquiry, truth audits, triad (Chair / Jester / Oracle)
     ├── Upper Council (procurator_uc) — strategy, priority arbitration, resource allocation
     │   ├── Aletheia (procurator_ac) — truth, verification, citation integrity
@@ -88,13 +88,13 @@ On any high-importance or high-blast-radius issue (evidence deletion, cognitive 
 2. **Forced Level-Up Meeting:** The workflow MUST schedule and force a second meeting at the council situated **EXACTLY ONE LEVEL ABOVE** (Level $N \to N-1$, e.g. L3 SADC $\to$ L2 Logos, or L2 Logos $\to$ L1 Curious Council).
 3. **Mandatory Blackrod Investigation:**
    - Spawns `/blackrod` to conduct an orthogonal, uninhibited investigation.
-   - Blackrod creates an investigation note under `omega_engine/anomalon_councils/councils/blackrod/investigations/YYYYMMDD_<lift_slug>.md`.
+   - Blackrod creates an investigation note under `engine/sentinel_councils/councils/blackrod/investigations/YYYYMMDD_<lift_slug>.md`.
    - Blackrod presents the findings directly to `procurator_cc` and `procurator_lc`.
 
 ---
 
 ## 5. OEANS Delta Force Command Protocol
 
-The Secretary of the Curious Council holds emergency operational command authority over **OEANS (Omega Engine Agentic Nemesis Swarm)** alongside **Blackrod** and **ooutwire**.
+The Secretary of the Curious Council holds emergency operational command authority over **OEANS (Engine Agentic Nemesis Swarm)** alongside **Blackrod** and **ooutwire**.
 
 When critical security or compliance violations occur under crisis conditions, the Secretary may invoke the Thanatos Protocol to halt operations, isolate compromised artifacts, and mandate forensic verification.

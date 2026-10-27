@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver import (
+from pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver import (
     solve,
 )
 

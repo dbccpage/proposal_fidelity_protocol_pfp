@@ -130,7 +130,7 @@ def _review_b16_expected():
 
 def _review_local_a(seed_id):
     if seed_id in {"DEMO-N00", "DEMO-N01", "DEMO-N12"}:
-        from omega_engine_pfp.infrastructure.pilot_runners.seed_core_checks import native_expected
+        from pfp.infrastructure.pilot_runners.seed_core_checks import native_expected
         return native_expected(seed_id)
     if seed_id == "DEMO-N02":
         q = [0, 0]
@@ -381,10 +381,10 @@ def _mss_local_d(number):
 def mss_expected(number: int) -> dict:
     """Finite components implemented here, with explicit residual for larger targets."""
     if number in {3, 11, 16}:
-        from omega_engine_pfp.infrastructure.pilot_runners.seed_core_checks import core_expected
+        from pfp.infrastructure.pilot_runners.seed_core_checks import core_expected
         return core_expected(number)
     if number in {20,27,28} or (31 <= number <= 50 and number != 34):
-        from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import (
+        from pfp.infrastructure.pilot_runners.seed_advanced_checks import (
             advanced_expected,
         )
         return advanced_expected(number)
@@ -421,7 +421,7 @@ def mss_expected(number: int) -> dict:
 
 def _check_primary_special(seed_id, payload):
     if seed_id == "DEMO_20":
-        from omega_engine_pfp.infrastructure.pilot_runners.seed_advanced_checks import (
+        from pfp.infrastructure.pilot_runners.seed_advanced_checks import (
             advanced_check,
         )
         return advanced_check(20,payload)
@@ -443,7 +443,7 @@ def _check_primary_special(seed_id, payload):
         compare(payload, _native(attachment_expected()))
         return wire(attachment_expected())
     if seed_id == "DEMO-Q22":
-        from omega_engine_pfp.infrastructure.pilot_runners.seed_core_checks import channel_check
+        from pfp.infrastructure.pilot_runners.seed_core_checks import channel_check
         return channel_check(payload)
     return _DISPATCH_MISS
 
@@ -484,7 +484,7 @@ def _check_filled_triangle(seed_id, payload):
 
 def _check_metric_and_bouquet(seed_id, payload):
     if seed_id == "DEMO_14":
-        from omega_engine_pfp.infrastructure.pilot_runners.seed_core_checks import hodge_check
+        from pfp.infrastructure.pilot_runners.seed_core_checks import hodge_check
         return hodge_check(payload)
     if seed_id == "DEMO_23":
         if set(payload) != {"potential","dual","cycles","pairings","zero_repair"}:

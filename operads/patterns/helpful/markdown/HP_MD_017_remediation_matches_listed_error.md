@@ -27,13 +27,13 @@ Required work repeats the unresolved error and names a repair of that error. A p
 
 ## Limit
 
-The witness in [AP_MD_017_path_depth_called_math_research](../../anti/markdown/AP_MD_017_path_depth_called_math_research.md) is the historical folder `pfp_loop_final_20260929_013741`, paper 010, review `SWARM_REV_20260929_014727`. No gate was rerun. The receipt does not name the file. Finding that path stays with `/woland-check-sensitivity-pattern`.
+The witness in [AP_MD_017_path_depth_called_math_research](../../anti/markdown/AP_MD_017_path_depth_called_math_research.md) is the historical folder `pfp_loop_final_20260929_013741`, paper 010, review `SWARM_REV_20260929_014727`. No gate was rerun. The receipt does not name the file. Finding that path stays with `/adversary-check-sensitivity-pattern`.
 
 The same stage has `preflight_verdict` `PASSED` while `status` is `BLOCKED`. That nested word stays with `AP_MD_009` / `HP_MD_009`. This folder has no `exits.txt`.
 
 `stages_passed` counts `NOT_APPLICABLE` in this loop. `/declared-vs-actual-gate` already separates `VACUOUS` from `PASS`. This pattern does not replace that gate.
 
-Paper 010 also warns `GO_WITH_OBLIGATIONS` and two unhedged uses of "universal". Those strings are not in `unresolved_errors`. This pattern does not discharge them and does not supply the missing sentences. Formal scope stays with `/woland-proof-scope-rule`.
+Paper 010 also warns `GO_WITH_OBLIGATIONS` and two unhedged uses of "universal". Those strings are not in `unresolved_errors`. This pattern does not discharge them and does not supply the missing sentences. Formal scope stays with `/adversary-proof-scope-rule`.
 
 A listed mathematical gap may still require research. This pattern only refuses to hang that requirement on a path-depth count.
 

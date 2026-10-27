@@ -9,9 +9,9 @@ from __future__ import annotations
 import math
 from typing import Optional, Sequence
 
-from omega_engine_operads.domain.ddc_execution.enums import MorphismExecutionStatus
-from omega_engine_operads.domain.ddc_execution.errors import ArityMismatchError
-from omega_engine_operads.domain.ddc_execution.value_objects import (
+from operads.domain.ddc_execution.enums import MorphismExecutionStatus
+from operads.domain.ddc_execution.errors import ArityMismatchError
+from operads.domain.ddc_execution.value_objects import (
     ArtifactOutput,
     ExecutionRunRecord,
     OperadOperation,

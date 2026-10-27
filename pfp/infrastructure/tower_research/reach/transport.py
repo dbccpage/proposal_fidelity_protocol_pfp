@@ -5,7 +5,7 @@ AuthorityEffect: None. A certificate is issued ``PROPOSED`` with disposition
 disposition, and no disposition means admitted.
 
 This reconciles the two V1 types (W2-C05 section 5). The runtime type
-``omega.symgam.transport-certificate.v1`` is unchanged and is called the
+``core.symgam.transport-certificate.v1`` is unchanged and is called the
 *simplicial transport measure* in prose; submitting it where V2 is required is
 refused (``TC-V1-PRESENTED-AS-V2``). The atlas 05.1 draft is retired by this
 schema.
@@ -42,8 +42,8 @@ SCHEMA_ID = "mssn.transport-certificate.v2"
 LEDGER_SCHEMA_ID = "mssn.loss-ledger.v2"
 PAYLOAD_DOMAIN_TAG = "mssn.transport-certificate"
 LEDGER_DOMAIN_TAG = "mssn.loss-ledger"
-PROFILE = "omega-sorted-json-no-float-v1"
-V1_SCHEMA_IDS = frozenset({"omega.symgam.transport-certificate.v1", "omega.transport-certificate.v1"})
+PROFILE = "core-sorted-json-no-float-v1"
+V1_SCHEMA_IDS = frozenset({"core.symgam.transport-certificate.v1", "core.transport-certificate.v1"})
 V1_MARKER_FIELDS = frozenset({"schema_version", "source_vertices", "target_vertices", "dimensional_dilation"})
 
 CLASSIFICATIONS = frozenset({"PRESERVED", "WEAKENED", "DROPPED", "UNKNOWN"})

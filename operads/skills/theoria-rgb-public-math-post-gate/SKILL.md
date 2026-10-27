@@ -61,7 +61,7 @@ Thanatos or Glossa `REJECT` **cannot** be overridden by Mimesis or Oikonomia.
 
 ## Ops home
 
-`omega_engine_atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/docs/lean_zulip_legibility_ops.md`
+`atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/docs/lean_zulip_legibility_ops.md`
 
 ## Nonclaims
 

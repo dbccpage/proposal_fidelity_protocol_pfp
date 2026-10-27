@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 400 (Prompt Civ Foundations)  
 **Level Source:** Level 01 ([`level_01_lineage_dag_and_causal_descent.md`](../../levels/level_01_lineage_dag_and_causal_descent.md))  
-**Rust Seam:** [`omega_prompt_civilization::genealogy`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/genealogy.rs)
+**Rust Seam:** [`core_prompt_civilization::genealogy`](../../../../engine/crates_rs/core_prompt_civilization/src/genealogy.rs)
 
 ## 1. Pedagogical Objective
 Enforce the strict structural separation between the **Inheritance DAG** (causal mutation/descent) and the **Reference Graph** (associational citations).

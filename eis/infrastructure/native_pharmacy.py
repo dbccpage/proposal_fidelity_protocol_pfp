@@ -1,8 +1,8 @@
 """The native anti-skill pharmacy, reached through the Symbol Game host.
 
-`omega_prompt_civilization::pharmacy` (Rust) implements twelve failure classes.
+`core_prompt_civilization::pharmacy` (Rust) implements twelve failure classes.
 This adapter sends a candidate to the host action `pharmacy_detect`
-(`omega_engine_pfp.ffi.RustSymbolGameHost.pharmacy_detect`) and maps the
+(`pfp.ffi.RustSymbolGameHost.pharmacy_detect`) and maps the
 reply back to failure-class codes. Nothing is re-implemented here.
 
 The native persona detector checks structured persona fields. `PharmacyMatcher`
@@ -20,7 +20,7 @@ import re
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from omega_engine_epistemic_immune_system.domain.definitions_loader import (
+from eis.domain.definitions_loader import (
     load_native_pharmacy,
 )
 
@@ -168,7 +168,7 @@ class NativePharmacy:
 
     def _ensure_host(self) -> object:
         if self._host is None:
-            from omega_engine_pfp.ffi import RustSymbolGameHost
+            from pfp.ffi import RustSymbolGameHost
 
             try:
                 self._host = RustSymbolGameHost()

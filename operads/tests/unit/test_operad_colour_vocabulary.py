@@ -20,23 +20,23 @@ import pathlib
 
 import pytest
 
-from omega_engine_operads.application.operad.compiler_service import (
+from operads.application.operad.compiler_service import (
     OperadCompilerService,
 )
-from omega_engine_operads.domain.operad import ADMITTED_FINITE_COLOURS, Colour
-from omega_engine_operads.infrastructure.legacy.models import ADMITTED_COLOURS
+from operads.domain.operad import ADMITTED_FINITE_COLOURS, Colour
+from operads.infrastructure.legacy.models import ADMITTED_COLOURS
 
 _REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 _PACKAGE_SIGNATURE = (
     _REPO_ROOT
-    / "omega_engine_operads"
+    / "operads"
     / "skill_operad"
     / "json"
     / "operad_signature.json"
 )
 _OPERATIONS_SIGNATURE = (
     _REPO_ROOT
-    / "omega_engine_operations"
+    / "operations"
     / "skill_operad"
     / "json"
     / "operad_signature.json"

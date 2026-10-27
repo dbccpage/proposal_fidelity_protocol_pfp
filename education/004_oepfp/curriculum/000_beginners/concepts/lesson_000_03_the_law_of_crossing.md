@@ -56,7 +56,7 @@ If the page is long, read one section and run the matching notebook cells. Leave
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.tower import grammar
+from pfp.domain.tower import grammar
 
 # 1. Syntactic preservation: nested Apps are preserved in AST
 packet = grammar.parse("op<op<<>>>")

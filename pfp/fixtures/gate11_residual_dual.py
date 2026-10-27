@@ -4,7 +4,7 @@ AuthorityEffect: None. Host verifies model proposals; never mints GlobalGreen.
 Frozen K0 matches deepseek_reply_000 / SG-OESOS-GATE11-FW8-001 samples.
 
 Every Phi1, Gamma2 and diagnostic class below comes from an
-``ExactFunctionalPort`` -- in production the native host's ``omega_functional``.
+``ExactFunctionalPort`` -- in production the native host's ``core_functional``.
 This module compares a proposal's claims against those receipts; it computes
 none of the named functionals itself.
 """
@@ -15,9 +15,9 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.exact.errors import ExactRefusal
-from omega_engine_pfp.domain.ports.exact_ports import ExactFunctionalPort
-from omega_engine_pfp.domain.value_objects.functional_receipt import FunctionalReceipt
+from pfp.domain.exact.errors import ExactRefusal
+from pfp.domain.ports.exact_ports import ExactFunctionalPort
+from pfp.domain.value_objects.functional_receipt import FunctionalReceipt
 
 
 def Q(x: Any) -> Fraction:
@@ -217,7 +217,7 @@ def host_verify_fixtures(
         "authority_effect": "None",
         "packet_id": "SG-OESOS-GATE11-FW8-001",
         "family": "residual_dual_exactness_v0",
-        "functional_owner": "omega_engine/crates_rs/omega_functional",
+        "functional_owner": "engine/crates_rs/core_functional",
         "checks": [
             {"id": c.id, "passed": c.passed, "evidence": c.evidence} for c in checks
         ],
@@ -341,7 +341,7 @@ def certified_phi1(
 ) -> tuple[FunctionalReceipt | None, str | None]:
     """The host's certified receipt for one fixture, or the refusal naming why not.
 
-    Phi1 is certified by ``omega_functional`` from a verified primal-dual pair,
+    Phi1 is certified by ``core_functional`` from a verified primal-dual pair,
     so it no longer depends on the fixture carrying its own certificate.
     """
     try:

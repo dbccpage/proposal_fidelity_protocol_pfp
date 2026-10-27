@@ -1,0 +1,57 @@
+# EPIC-OE-INTEL-DIGESTION-ARCHIVE-001: Digestion Custody and Recoverable Archival
+
+**Epic ID:** `EPIC-OE-INTEL-DIGESTION-ARCHIVE-001`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+
+**Lifecycle scope:** Implemented pipeline; residual custody/recovery verification
+**Domain Root:** [adversary](../../../../adversary/) / [operations](../../../../operations/)
+**Execution Discipline:** Local first; scratch lifecycle fixtures; UTF-8 without BOM
+
+## Current implementation and lifecycle meaning
+
+[IntelligenceDigestionService](../../../../adversary/use_cases/intelligence_digestion/digestion_service.py) already collects/digests eligible intelligence and archives through a journal. [NativeIntelligenceLifecycle](../../../../operations/infrastructure/intelligence_digestion/native_lifecycle.py) delegates manifest, lifecycle and retention decisions to [core_intelligence](../../../../engine/crates_rs/core_intelligence/src/). Python supplies transport/filesystem orchestration rather than replacing native decision semantics.
+
+DISCHARGED and ABSORBED are distinct. An ABSORBED artifact may retain an open obligation transferred to a bound durable target. Archival is not proof that every obstruction is resolved. An absent source directory or empty queue alone provides no lifecycle verdict.
+
+## Residual sequence and acceptance
+
+1. Validate started, malformed, sealed-clean and defect-transfer fixtures through the real native decision port.
+2. Verify target digests and explicit obligation IDs before transfer; preserve blocked/error artifacts.
+3. Inject failures around prepared journal, move and commit boundaries on scratch disk. Reopen and prove idempotent recovery without overwrite or lost bytes.
+4. Evaluate retention separately. A valid archive decision is not deletion permission; preserve manifests and provenance. Any live cleanup requires a concrete bounded retained/deleted list and its own review.
+5. Treat mined antibodies, rules, skills and workflows as candidates for their own admission process. No output artifact is self-admitted by digestion.
+
+No new archive-directory project or unbounded terminal sweep is required. Historical inventory/completion checkboxes are not current execution receipts. The next useful work is finite negative/positive custody and recovery verification.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** Digestion and archival are already implemented by IntelligenceDigestionService with native lifecycle decisions and a recoverable journal. ABSORBED can archive an item with an explicitly transferred open obligation; DISCHARGED is different. Neither directory disappearance nor an empty active queue establishes defect resolution. Retention/deletion is a separate policy.
+
+**Bounded behavior and public port:** Call IntelligenceDigestionService.digest_and_archive against a temporary repository with actual NativeIntelligenceLifecycle.seal_manifest/evaluate_lifecycle/evaluate_retention. Observe typed DigestionReceipt records/blocked/errors, exact manifests, transferred obligations, journal and source/archive bytes. Replace filesystem/transport fault points only; do not mock the native decision being claimed.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Syntax Prefilter checks malformed input; Bare Metal Anchor/Techne implements the smallest production change; Defect Hunter and the Inspector challenge the independent oracle; Punchlist checks custody before Adversary records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | Started-only or malformed trace must remain active and blocked; preserve minimum terminal validation; a valid sealed clean run can discharge and archive. | Extend `operations/tests/intelligence_digestion/test_digestion_service.py::test_malformed_and_clean_terminal_controls`; independently authored sealed trace and exact active/archive file checks. |
+| 2 | Transfer a defect to a bound target and require ABSORBED with an open obligation, not DISCHARGED; a missing/transplanted target digest must block. Restore the target and recover transfer evidence. | Extend `operations/tests/intelligence_digestion/test_digestion_service.py::test_absorbed_obligation_target_transplant`; independent target digest and explicit expected unresolved obligation ID. |
+| 3 | Crash after prepared journal or archive move and reopen; incomplete transition must not lose/overwrite source; implement only missing idempotent recovery and verify the second recovery adds no duplicate. | Proposed `operations/tests/intelligence_digestion/test_digestion_recovery_controls.py::test_prepared_move_recovery_is_idempotent`; real temporary disk, before/after bytes and journal state. |
+| 4 | Corrupt sealed manifest, duplicate queue ID or native-host unavailability must preserve source and refuse; dry-run and retention-ineligible item cannot delete; restoring valid manifest/host recovers the same narrow lifecycle. | Extend `operations/tests/intelligence_digestion/test_native_lifecycle.py::test_native_refusal_and_retention_custody` and the one-file service suite; actual native decision for positive control and independently enumerated retained bytes. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Treat ABSORBED as DISCHARGED or bypass archive eligibility in [digestion_service.py](../../../../adversary/use_cases/intelligence_digestion/digestion_service.py); the open-obligation/started-only witnesses must fail. Disable transfer binding in [lifecycle.rs](../../../../engine/crates_rs/core_intelligence/src/lifecycle.rs) or retention fence in [retention.rs](../../../../engine/crates_rs/core_intelligence/src/retention.rs) and require the corresponding real-native refusal to fail. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+py -3.12 -m pytest operations/tests/intelligence_digestion/test_digestion_service.py -q
+py -3.12 -m pytest operations/tests/intelligence_digestion/test_digestion_recovery_controls.py -q
+py -3.12 -m pytest operations/tests/intelligence_digestion/test_native_lifecycle.py -q
+~~~
+
+**Cross-epic sink ownership:** Governance owns canonical contracts and decision schemas; Government Councils owns roster/attribution and deliberation applications; Operations owns classified packaging/parity; Adversary owns digestion orchestration while core_intelligence owns native lifecycle decisions. Skill/rule/antibody outputs enter their owning admission queue as candidates, with source/target digest custody. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Use scratch artifacts only. Digesting an item does not auto-admit an antibody/skill/rule, and transfer preserves open obligations. No broad archival sweep or live deletion is included; native skips/unavailability remain blockers. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

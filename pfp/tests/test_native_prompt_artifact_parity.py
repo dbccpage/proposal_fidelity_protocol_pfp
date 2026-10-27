@@ -15,19 +15,19 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.aggregates import prompt_artifact as domain
-from omega_engine_pfp.domain.aggregates.research_claim import canonical_json_artifact_bytes
-from omega_engine_pfp.domain.exceptions import DomainError
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest
-from omega_engine_pfp.domain.validation import MAX_BODY_BYTES
-from omega_engine_pfp.ffi import RustSymbolGameHost
-from omega_engine_pfp.use_cases import prompt_artifact as use_cases
+from pfp.domain.aggregates import prompt_artifact as domain
+from pfp.domain.aggregates.research_claim import canonical_json_artifact_bytes
+from pfp.domain.exceptions import DomainError
+from pfp.domain.shared_kernel.canonical import domain_digest
+from pfp.domain.validation import MAX_BODY_BYTES
+from pfp.ffi import RustSymbolGameHost
+from pfp.use_cases import prompt_artifact as use_cases
 
 
 @pytest.fixture(scope="module")
 def native_host() -> Path:
-    configured = os.environ.get("OMEGA_SYMBOL_GAME_HOST")
-    assert configured, "Set OMEGA_SYMBOL_GAME_HOST to the freshly tested native executable"
+    configured = os.environ.get("CORE_SYMBOL_GAME_HOST")
+    assert configured, "Set CORE_SYMBOL_GAME_HOST to the freshly tested native executable"
     binary = Path(configured)
     assert binary.is_file(), f"Native executable is unavailable: {binary}"
     return binary
@@ -35,7 +35,7 @@ def native_host() -> Path:
 
 def _invoke(native_host: Path, payload: dict) -> dict:
     request = {
-        "schema_version": "omega.symbol-game.runtime-request.v1",
+        "schema_version": "core.symbol-game.runtime-request.v1",
         "action": "prompt_artifact",
         "payload": payload,
     }
@@ -279,7 +279,7 @@ def _assert_wire_refused(native_host: Path, wire: dict) -> None:
 
 
 @pytest.mark.parametrize("field,value", [
-    ("schema_version", "omega.symbol-game.prompt-artifact.v2"),
+    ("schema_version", "core.symbol-game.prompt-artifact.v2"),
     ("family", "elimination_receipt"),
     ("regime_kind", "SYMBOL_GAME_ROUND"),
     ("regime_id", "A" * 64),
@@ -512,7 +512,7 @@ def test_legacy_explicit_id_is_preserved_but_not_promoted_to_content_addressed_i
 ], ids=["operation", "nested_objective", "regime"])
 def test_raw_duplicate_json_keys_never_reach_the_artifact_compiler(native_host, needle, replacement):
     request = json.dumps({
-        "schema_version": "omega.symbol-game.runtime-request.v1",
+        "schema_version": "core.symbol-game.runtime-request.v1",
         "action": "prompt_artifact", "payload": _compile_request(),
     }, separators=(",", ":"))
     assert needle in request

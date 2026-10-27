@@ -12,12 +12,12 @@ primitive: null
 aliases: ["paper:sn-packets:routed-seed-schema-readiness", "paper:sn-packets:closed-routed-seed-schema"]
 sources:
   - "s_n_packets_and_the_symbol_game.md §3 'Theorem 3.2: Routed Seed Schema Readiness Is Closed and Field-Complete'"
-  - "crates/omega_representation/src/types.rs"
-  - "crates/omega_representation/src/packet.rs"
+  - "crates/core_representation/src/types.rs"
+  - "crates/core_representation/src/packet.rs"
 uses: ["ENC-0112", "ENC-0888", "ENC-0925"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -50,7 +50,7 @@ language intent, and it does not create authority.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_s_level.lean`.
 
 The Lean theorem names are:
 
@@ -65,7 +65,7 @@ axiom-free.
 ## Notes
 
 - The theorem mirrors the Rust `RoutedSeed` schema in
-  `crates/omega_representation/src/types.rs` and its
+  `crates/core_representation/src/types.rs` and its
   `serde(deny_unknown_fields)` discipline.
 - It refines [[ENC-0888]] by separating packet-shape evidence from closed
   schema readiness.

@@ -14,9 +14,9 @@ the dated review receipt for this revision.
   -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   ID                Claim                            Evidence                                                                                                     Status and ceiling
   ----------------- -------------------------------- ------------------------------------------------------------------------------------------------------------ -------------------------------------------------------------------------------------
-  P3-01             The baseline Demo 3 host charges Repository `omega_engine_pfp/use_cases/mssn_sn_demos/demo_3/host.py`; repository test                Source-inspected at the baseline
+  P3-01             The baseline Demo 3 host charges Repository `pfp/use_cases/mssn_sn_demos/demo_3/host.py`; repository test                Source-inspected at the baseline
                     one unit of fuel for each        `test_poisoned_batch_rolls_covered_elements_back` in
-                    processed batch before applying  `omega_engine_pfp/tests/mssn_sn_demos/test_demo_3.py`
+                    processed batch before applying  `pfp/tests/mssn_sn_demos/test_demo_3.py`
                     it, restores covered elements,
                     witness, and phase when the
                     batch is refused, and does not
@@ -69,7 +69,7 @@ the dated review receipt for this revision.
                     does not check fuel or arm
                     scripts.
 
-  P3-08             In the two-signal table, Signal  Repository `omega_engine_pfp/domain/immune/danger_gate.py` (source-inspected);                       Decision table over supplied signals; signal truth and provenance are separate
+  P3-08             In the two-signal table, Signal  Repository `pfp/domain/immune/danger_gate.py` (source-inspected);                       Decision table over supplied signals; signal truth and provenance are separate
                     1 alone is diagnostic, a low or  `test_danger_gate.py::test_gate_signal1_alone_is_diagnostic`;
                     medium Signal 2 alone is         `test_danger_gate.py::test_gate_signal2_alone_critical_refuses`;
                     diagnostic, a high or critical   `test_danger_gate.py::test_gate_both_signals_refuse`
@@ -77,7 +77,7 @@ the dated review receipt for this revision.
                     signals refuse.
 
   P3-09             The repository self panel at the Repository test `test_canonical_self_panel_has_forty_distinct_base_contents` in                              Source-inspected corpus assertion; the package's synthetic panel only has the same
-                    baseline has 1,000 rows and 40   `omega_engine_pfp/tests/test_immune_defect_regressions.py`                                           shape
+                    baseline has 1,000 rows and 40   `pfp/tests/test_immune_defect_regressions.py`                                           shape
                     distinct base contents, ten per                                                                                                               (`test_demo_3_host.py::test_synthetic_self_panel_has_forty_distinct_base_contents`)
                     category.
 
@@ -93,8 +93,8 @@ the dated review receipt for this revision.
                     negation.
 
   P3-12             The earlier harvest behind the   Repository `research/mssn_sn_tower/demos/antimorphism_farm/harvest/antimorphism_harvest.jsonl`,              Provenance of identifiers only; not a measurement of model error rates or detector
-                    detector identifiers has 112     `omega_engine_epistemic_immune_system/infrastructure/mssn_domains.py`, and                                   accuracy
-                    rows: 102 author-written         `omega_engine_epistemic_immune_system/infrastructure/mssn_classifier.py` (identical at the baseline and at
+                    detector identifiers has 112     `eis/infrastructure/mssn_domains.py`, and                                   accuracy
+                    rows: 102 author-written         `eis/infrastructure/mssn_classifier.py` (identical at the baseline and at
                     scripted responses and 10        this revision)
                     responses from one model
                     (`qwen/qwen-2.5-7b-instruct`),
@@ -163,15 +163,15 @@ the dated review receipt for this revision.
                     rule exactly when the converse
                     holds.
 
-  P3-23             At commit `30609de2c`, the       `omega_engine_epistemic_immune_system/use_cases/demos/demo_4e_cogsci_autopoiesis/run_packaged_immune.py`     Source-inspected at the audited commit; line 178 is corrected in commit `fdc0035a8`
+  P3-23             At commit `30609de2c`, the       `eis/use_cases/demos/demo_4e_cogsci_autopoiesis/run_packaged_immune.py`     Source-inspected at the audited commit; line 178 is corrected in commit `fdc0035a8`
                     packaged immune demonstration    line 178; `infrastructure/mssn_ports.py` lines 27 to 39                                                      (Signal 2 from host checks, `TWO_SIGNAL_COLLAPSE` refusal;
-                    computes Signal 2 for its 24                                                                                                                  `omega_engine_epistemic_immune_system/tests/unit/test_two_signal_independence.py`, 18
+                    computes Signal 2 for its 24                                                                                                                  `eis/tests/unit/test_two_signal_independence.py`, 18
                     controls as a high-severity                                                                                                                   passed)
                     defect counting the matches, so
                     Lemma A(3) applies whenever the
                     screen admits every rule.
 
-  P3-24             At commit `30609de2c`, the       `omega_engine_epistemic_immune_system/domain/allostery.py` lines 68 and 74 to 79; `domain/value_objects.py`  Source-inspected at the audited commit; corrected in commit `fdc0035a8` (exact gate,
+  P3-24             At commit `30609de2c`, the       `eis/domain/allostery.py` lines 68 and 74 to 79; `domain/value_objects.py`  Source-inspected at the audited commit; corrected in commit `fdc0035a8` (exact gate,
                     allostery gate is the sum        (`HillParameters.calculate_cooperativity`)                                                                   per-sensor cap 1, minimum quorum 2 at the defaults;
                     threshold of Lemma B in floating                                                                                                              `tests/unit/test_allostery_exact.py`, 32 passed)
                     point; at its defaults it
@@ -181,7 +181,7 @@ the dated review receipt for this revision.
                     is not enforced; $t = 0$
                     activates on an empty list.
 
-  P3-25             At commit `30609de2c`, the       `omega_engine_epistemic_immune_system/domain/thymus.py` lines 77 to 99; `infrastructure/mssn_ports.py` lines Source-inspected at the audited commit; corrected in commit `fdc0035a8` (rules bind
+  P3-25             At commit `30609de2c`, the       `eis/domain/thymus.py` lines 77 to 99; `infrastructure/mssn_ports.py` lines Source-inspected at the audited commit; corrected in commit `fdc0035a8` (rules bind
                     screen tests each rule's regular 17 to 24 (the one matcher that executes the pattern) and 80 to 166;                                          their matcher and the screen runs it;
                     expression, while three of four  `use_cases/demos/demo_4e_cogsci_autopoiesis/run_packaged_immune.py` lines 118 to 122                         `tests/unit/test_thymus_binds_executed_matcher.py`, 22 passed)
                     matchers behind the same port
@@ -190,7 +190,7 @@ the dated review receipt for this revision.
                     expression is the failure-class
                     name.
 
-P3-26             Anti-skill V2 states the         `omega_engine_workflows_agents_skills/domain/anti_skill/anti_skill_v2.py`;                                   Source-inspected at the audited commit; describes a record format, not an effect
+P3-26             Anti-skill V2 states the         `workflows_agents_skills/domain/anti_skill/anti_skill_v2.py`;                                   Source-inspected at the audited commit; describes a record format, not an effect
                     admission record of Section 3 as `application/anti_skill/anti_skill_v2.py` lines 140 to 148; `application/anti_skill_admission/verifier.py`
                     types: a closed predicate        lines 25 to 45; `.agents/anti_skills/admitted/registry.json` (empty) and
                     language of at most 16 atoms     `.agents/anti_skills/admitted/truth_boundary_v2/`

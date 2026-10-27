@@ -2,7 +2,7 @@
 
 Targeted test suite verifying:
 - 7 base requirement kinds + sovereign HomologyBoundaryClosed & HolonomyLoopClosed.
-- Direct delegation of algebraic topology obligations to omega_homology & omega_holonomy.
+- Direct delegation of algebraic topology obligations to core_homology & core_holonomy.
 - Exhaustion enumeration parity with independent binomial formula.
 - Stage-change routing, 11-condition certification, licence gating, and LevelCounter.
 - Value Object Exact-Type Equality Invariant across all domain dataclasses.
@@ -17,8 +17,8 @@ from __future__ import annotations
 import dataclasses
 import pytest
 
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.exact.q import Q
+from pfp.domain.solvers import (
     BASE,
     AdmitDatum,
     AdmitForm,
@@ -87,7 +87,7 @@ from omega_engine_pfp.domain.solvers import (
     satisfies,
     universe_size,
 )
-from omega_engine_pfp.infrastructure.adapters.exact_rust_adapter import RustExactEngineAdapter
+from pfp.infrastructure.adapters.exact_rust_adapter import RustExactEngineAdapter
 
 DATUM = Stage("datum", 1, frozenset({"witness_inst", "witness_form", "datum"}), 2)
 ARITY3 = Stage("arity3", 1, frozenset({"witness_inst", "witness_form"}), 3)
@@ -119,7 +119,7 @@ def test_sovereign_domain_ports_are_rust_adapters() -> None:
 
 
 def test_homology_boundary_closed_native_delegation() -> None:
-    """Verify HomologyBoundaryClosed routes to native Rust omega_homology adapter."""
+    """Verify HomologyBoundaryClosed routes to native Rust core_homology adapter."""
     # Net cell boundary vanishing on closed cycle: 0->1, 1->2, 2->0 (sum of signed incident edges is 0)
     cycle_face = ((0, 1, 1), (1, 2, 1), (2, 0, 1))
     q_closed = HomologyBoundaryClosed("h_closed", (cycle_face,))
@@ -155,7 +155,7 @@ def test_homology_boundary_closed_native_delegation() -> None:
 
 
 def test_holonomy_loop_closed_native_delegation() -> None:
-    """Verify HolonomyLoopClosed routes to native Rust omega_holonomy adapter."""
+    """Verify HolonomyLoopClosed routes to native Rust core_holonomy adapter."""
     # 2x2 permutation matrix [[0, 1], [1, 0]]
     # Table 0: swap (order 2)
     t0 = ((Q(0), Q(1)), (Q(1), Q(0)))

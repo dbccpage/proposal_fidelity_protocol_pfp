@@ -2,8 +2,8 @@
 
 from fractions import Fraction
 
-from omega_engine_operads.domain.autopoiesis.research import IncumbentDecisionV1
-from omega_engine_prompt_civilization.use_cases.fitness import ParetoFrontSelectorV1
+from operads.domain.autopoiesis.research import IncumbentDecisionV1
+from pciv.use_cases.fitness import ParetoFrontSelectorV1
 
 
 def metrics(rows):

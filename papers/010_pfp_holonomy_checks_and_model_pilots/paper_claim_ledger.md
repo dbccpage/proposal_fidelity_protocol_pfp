@@ -10,17 +10,17 @@ commit), and *source inspection* (reading a retained script), and *historical re
 `tools/replay_formal_math_baselines.py`, which runs the challenge checkers from the
 cited commits on answers that need no mathematics; its output is recorded in the
 collection's `verification/formal_math_baselines.json`). Paths under
-`omega_engine_projects/` are relative to the repository root; the C017 folder is
-`omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c017_nonabelian_lattice_holonomy/`
+`projects/` are relative to the repository root; the C017 folder is
+`projects/mssn_sn_symgam/challenges/b_cohomology/c017_nonabelian_lattice_holonomy/`
 and the formal-mathematics folder is
-`omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/`. Claims withdrawn
+`projects/mssn_sn_symgam/challenges/e_formal_math/`. Claims withdrawn
 from the initial internal draft are listed in `paper_change_log.md`, not here.
 
 ## The initial internal draft (Section 1)
 
 | ID | Claim | Section | Kind | Evidence |
 | --- | --- | --- | --- | --- |
-| PFP10-00 | In the initial internal draft's package, the five prompt-filter stages were simple functions (a radius-one neighbourhood split, a list-membership test, two threshold comparisons, an ordered four-label line check, and a count of five listed symbols compared with three); no run, runner or receipt for the initial internal draft's filter benchmark or effect sizes is retained, and no effect was measured. | 1 | Source inspection | `paper.md` and `code/tests/test_010_adversarial_refusals_and_decimation.py` in this package folder at commit `35e3d7ba2e0e20904d17a79cc395980f50a1a0f1`; a search of the repository finds the benchmark and effect statements only in copies of the initial-draft paper. Engine components with similar names (an allosteric gate and a kinetic proofreader under `omega_engine_pfp/domain/`) are separate code, and no run of them against model answers is recorded |
+| PFP10-00 | In the initial internal draft's package, the five prompt-filter stages were simple functions (a radius-one neighbourhood split, a list-membership test, two threshold comparisons, an ordered four-label line check, and a count of five listed symbols compared with three); no run, runner or receipt for the initial internal draft's filter benchmark or effect sizes is retained, and no effect was measured. | 1 | Source inspection | `paper.md` and `code/tests/test_010_adversarial_refusals_and_decimation.py` in this package folder at commit `35e3d7ba2e0e20904d17a79cc395980f50a1a0f1`; a search of the repository finds the benchmark and effect statements only in copies of the initial-draft paper. Engine components with similar names (an allosteric gate and a kinetic proofreader under `pfp/domain/`) are separate code, and no run of them against model answers is recorded |
 
 ## Checker and mathematics (Section 2)
 
@@ -75,7 +75,7 @@ from the initial internal draft are listed in `paper_change_log.md`, not here.
 
 | ID | Claim | Section | Kind | Evidence |
 | --- | --- | --- | --- | --- |
-| PFP10-35 | `stealth/space-bunny-alpha` is a new free stealth model offered on OpenRouter as of 2026-09-28; the provider does not disclose its identity, size or training; its results are exploratory, fall outside SG-CP v1 §2, and may not be reproducible after the stealth period. | 3.1, 5 | Scope statement | Model identifier in the retained reports; no provider, size or training record exists; `omega_engine_projects/mssn_sn_symgam/challenges/01_challenge_protocol.md` §2 |
+| PFP10-35 | `stealth/space-bunny-alpha` is a new free stealth model offered on OpenRouter as of 2026-09-28; the provider does not disclose its identity, size or training; its results are exploratory, fall outside SG-CP v1 §2, and may not be reproducible after the stealth period. | 3.1, 5 | Scope statement | Model identifier in the retained reports; no provider, size or training record exists; `projects/mssn_sn_symgam/challenges/01_challenge_protocol.md` §2 |
 | PFP10-36 | No comparison between prompts or models is claimed; no statistical test was run; costs are not reported. | 4.1, 5 | Scope statement | Sections 4.1 and 5 |
 
 ## Erratum of version 0.1.0 (Section 4)

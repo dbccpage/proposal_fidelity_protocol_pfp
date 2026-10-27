@@ -20,36 +20,36 @@ import re
 from collections.abc import Mapping, Sequence
 from types import ModuleType
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     current_context,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import (
+from operations.use_cases.level_engine.research_engine.canon import (
     dumps,
     git_blob_id,
     load_path,
     sha256_tag,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import (
+from operations.use_cases.level_engine.research_engine.errors import (
     IntakeRefusal,
     Refusal,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.level import (
+from operations.use_cases.level_engine.research_engine.level import (
     LevelResult,
     check_expectations,
     check_kill_rules,
     load_fixtures,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed_evidence import (
+from operations.use_cases.level_engine.research_engine.sealed_evidence import (
     source as sealed_source,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import (
+from operations.use_cases.level_engine.research_engine.structure import (
     refuse_hollow,
     to_json,
 )
 
 ROOT = current_context().runtime_root
 REPO = current_context().repository_root
-REACH_PKG = "omega_engine_pfp.infrastructure.tower_research.reach"
+REACH_PKG = "pfp.infrastructure.tower_research.reach"
 LINEAGE = {"model_families": ["claude"], "shared_author": True,
            "note": "the harness and any draft checker share an author and a model family; "
                    "agreement between them is correlated evidence"}
@@ -115,7 +115,7 @@ def harness_sources(challenge_id: str) -> list[dict[str, str]]:
 
 
 def is_packet_level(challenge_id: str) -> bool:
-    from omega_engine_operations.use_cases.level_engine.research_engine.level import load_spec
+    from operations.use_cases.level_engine.research_engine.level import load_spec
 
     return hasattr(load_spec(challenge_id), "packets")
 
@@ -136,7 +136,7 @@ def fixture_inputs(challenge_id: str) -> list[tuple[str, str, object]]:
     """(fixture id, role, canonical input) for every fixture, mutation last."""
     d = ROOT / "payload" / challenge_id
     if is_packet_level(challenge_id):
-        from omega_engine_operations.use_cases.level_engine.research_engine.level import load_spec
+        from operations.use_cases.level_engine.research_engine.level import load_spec
 
         packets = getattr(load_spec(challenge_id), "packets")()
         return [(fid, role, {"packet": pk}) for fid, role, pk, _ in packets]
@@ -426,7 +426,7 @@ def implementation_provenance(challenge_id: str) -> dict[str, object]:
     sources = harness_sources(challenge_id)
     return {
         "kind": "installed_package_resources",
-        "package": "omega_engine_pfp.infrastructure.tower_research.level_engine",
+        "package": "pfp.infrastructure.tower_research.level_engine",
         "source_basis": "installed_resource_bytes",
         "sources": sources,
         "source_manifest_sha256": sha256_tag(dumps(sources)),
@@ -550,7 +550,7 @@ def transport_certificate(level: int, binding: Mapping[str, object], result: Lev
                    "row_sha256": row["row_sha256"]},
     }
     payload_digest = sha256_tag(b"mssn.transport-certificate\0" + dumps(payload))
-    envelope = {"canonicalization_profile": "omega-sorted-json-no-float-v1", "payload_digest": payload_digest,
+    envelope = {"canonicalization_profile": "core-sorted-json-no-float-v1", "payload_digest": payload_digest,
                 "payload_domain_tag": "mssn.transport-certificate"}
     envelope["record_digest"] = sha256_tag(dumps({**payload, "envelope": envelope}))
     return {**payload, "envelope": envelope}

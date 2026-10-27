@@ -5,7 +5,7 @@ Unit tests for DRAT proof verification engine.
 
 import unittest
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import verify_drat_certificate
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import verify_drat_certificate
 
 
 class TestDRATChecker(unittest.TestCase):

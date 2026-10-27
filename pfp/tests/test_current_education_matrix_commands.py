@@ -8,7 +8,7 @@ import pytest
 
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pyproject.toml").is_file())
-PILOTS = ROOT / "omega_engine_pfp/tests/demo_004"
+PILOTS = ROOT / "pfp/tests/demo_004"
 MATRICES = sorted(
     path
     for strand in ("e_formal_math", "f_program_synthesis")
@@ -27,7 +27,7 @@ import sys
 
 class NoLegacy(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
-        if fullname.split('.')[0] == 'omega_engine_projects':
+        if fullname.split('.')[0] == 'projects':
             raise ModuleNotFoundError('Retired owner: ' + fullname)
 
 def no_network(*args, **kwargs):

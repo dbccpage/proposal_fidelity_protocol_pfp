@@ -14,10 +14,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_prompt_civilization.infrastructure.intelligence_metabolism import (
+from pciv.infrastructure.intelligence_metabolism import (
     IntelligenceMiner,
 )
-from omega_engine_prompt_civilization.use_cases.intelligence_metabolism.digest import (
+from pciv.use_cases.intelligence_metabolism.digest import (
     DailyDigestGenerator,
 )
 
@@ -38,7 +38,7 @@ def intelligence_fixture(tmp_path: Path):
     root = tmp_path / "intel_root"
     root.mkdir()
 
-    from omega_engine_prompt_civilization.infrastructure.intelligence_metabolism.sources import (
+    from pciv.infrastructure.intelligence_metabolism.sources import (
         SOURCE_REGISTRY,
     )
 

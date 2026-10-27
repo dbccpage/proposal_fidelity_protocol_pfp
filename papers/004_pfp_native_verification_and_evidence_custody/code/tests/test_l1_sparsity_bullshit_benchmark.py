@@ -80,7 +80,7 @@ def test_firewall_rejections_on_corrupted_replies():
     bad_carrier_response = (
         "PROVE period(c5) = 5 evidence: cycle:c5\n"
         "REDUCE 17 mod 5 = 2 evidence: integer-mod-replay\n"
-        "LAND successor^2(omega_extraneous) = gamma evidence: cycle:c5"
+        "LAND successor^2(core_extraneous) = gamma evidence: cycle:c5"
     )
     passed, _ = deterministic_host_replay(task, bad_carrier_response, is_symbol_game=True)
     assert not passed

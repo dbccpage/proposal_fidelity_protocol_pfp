@@ -85,9 +85,9 @@ The WDP investigates how much mathematical and physical structure can be derived
 
 ## 7. Source Documentation Estate
 
-- **PFP Suite:** `omega_engine_education/documentation/004_oepfp/`
+- **PFP Suite:** `education/documentation/004_oepfp/`
   - `papers/`: Foundations, Two-Object Identity, Four Domains, Tripartite Law.
   - `levels/`: 22-Level Curriculum (Levels 0–21).
   - `grammar/` & `workflows/`: PFP, Packet Envelopes, Stealth Cochains, $L_1$ Projection.
   - `lean4/`: Formal Proof Ledger.
-- **WDP Curriculum:** `omega_engine_education/documentation/006_oewdp/`
+- **WDP Curriculum:** `education/documentation/006_oewdp/`

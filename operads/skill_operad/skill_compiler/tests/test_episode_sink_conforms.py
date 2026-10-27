@@ -41,7 +41,7 @@ BASELINE = (
     else HERE.parents[1] / "episode_sink_baseline.json"
 )
 
-EPISODE_SCHEMA = "omega.skill_compiler.episode.v1"
+EPISODE_SCHEMA = "core.skill_compiler.episode.v1"
 CONFIDENCE_OK = frozenset({"HIGH", "MEDIUM", "LOW"})
 
 #: Exactly the fields `episode.make_episode` emits.

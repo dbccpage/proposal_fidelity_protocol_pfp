@@ -21,7 +21,7 @@ Executing `cargo build` or `cargo test` inside an isolated git worktree without 
 ## Detection Signature
 
 - Process/Environment:
-  Invoking cargo commands in `.worktrees/<name>/omega_engine/crates_rs` with unset `CARGO_TARGET_DIR`.
+  Invoking cargo commands in `.worktrees/<name>/engine/crates_rs` with unset `CARGO_TARGET_DIR`.
 - Filesystem:
   Presence of a redundant local `target/` directory inside a worktree path.
 

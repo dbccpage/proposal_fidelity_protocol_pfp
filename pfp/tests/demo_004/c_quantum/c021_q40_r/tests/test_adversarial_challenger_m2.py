@@ -47,22 +47,22 @@ from fractions import Fraction
 from typing import Any
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
     verify_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
     CheckerDisagreementError,
     assert_dual_agreement,
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
     GaussianRational,
     _build_exact_hamiltonian,
     _ldlt_hermitian_psd,
     secondary_numeric_check,
     verify_spectral_optimality,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
     solve,
 )
 
@@ -1026,7 +1026,7 @@ class TestAdversarialMutationsAndDisagreements:
         # Verify CheckerDisagreementError when checkers disagree
         with pytest.MonkeyPatch.context() as mp:
             mp.setattr(
-                "omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator.verify_spectral_optimality",
+                "projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator.verify_spectral_optimality",
                 lambda c, r: (True, "MOCK_PASS"),
             )
             disagree_eval = evaluate_dual(case, forged_res)

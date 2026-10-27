@@ -2,23 +2,23 @@
 from __future__ import annotations
 import hashlib,json,os,subprocess,sys,time,uuid
 from pathlib import Path
-ROOT=Path.cwd();OUT=ROOT/'omega_engine_workflows_agents_skills/receipts/oewas007_20261010/planning_default_ic'
+ROOT=Path.cwd();OUT=ROOT/'workflows_agents_skills/receipts/oewas007_20261010/planning_default_ic'
 label=sys.argv[1];assert not (OUT/(label+'.json')).exists()
 uv='C:/Users/a343o/.local/bin/uv.exe';python='C:/Users/a343o/AppData/Roaming/uv/python/cpython-3.13.11-windows-x86_64-none/python.exe'
 prefix=[uv,'run','--offline','--no-project','--python',python,'--with','pytest==9.1.1','--with','pyyaml==6.0.3','--with','pydantic==2.13.5','python','-X','utf8']
-ppo='omega_engine_product_planning_office/'
+ppo='product_planning_office/'
 nav=json.loads((OUT/'command_navigation.json').read_bytes())
-docs=sorted({r['path'] for r in nav['changes']}|{ppo+'plans/decisions/adr_20261010_oewas_intelligence_migration.md',ppo+'plans/epics/oewas/epic_oe_oewas_007_american_ic_partition_and_typed_schema_plan.md',ppo+'plans/epics/oewas/epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oewoland_plan.md',ppo+'plans/epics/oewas/README.md','omega_engine_workflows_agents_skills/documentation/intelligence_migration_v1.md'})
+docs=sorted({r['path'] for r in nav['changes']}|{ppo+'plans/decisions/adr_20261010_oewas_intelligence_migration.md',ppo+'plans/epics/oewas/epic_oe_oewas_007_american_ic_partition_and_typed_schema_plan.md',ppo+'plans/epics/oewas/epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oeadversary_plan.md',ppo+'plans/epics/oewas/README.md','workflows_agents_skills/documentation/intelligence_migration_v1.md'})
 code=[ppo+'domain/contracts/historical_sources.py',ppo+'infrastructure/prior_art_sources.py',ppo+'use_cases/prior_art_epic_audit.py',ppo+'use_cases/epic_tdd_plan_audit.py',ppo+'use_cases/epic_manifest_audit.py',ppo+'tests/test_prior_art_historical_sources.py',ppo+'tests/test_prior_art_epic_audit.py',ppo+'tests/test_epic_tdd_plan_audit.py',ppo+'tests/test_epic_manifest_audit.py']
 manifest=ppo+'plans/epics/epic_manifest.json'
-paths=docs+code+[manifest]+[p.relative_to(ROOT).as_posix() for p in (ROOT/ppo/'receipts').glob('*successor.json')]+[ppo+'plans/epics/epic_relevance_5_prior_art.yaml','omega_engine_operating_system/adapters/intelligence_custody/ic_routing.py','omega_engine_operating_system/adapters/intelligence_custody/ic_migration.py','omega_engine_governance/domain/intelligence_community.py','omega_engine_governance/_types/ic_casefold_v15_1.json','_ic/odni/migrations/oewas007/receipt.json','_ic/odni/migrations/oewas007/inventory.json']
+paths=docs+code+[manifest]+[p.relative_to(ROOT).as_posix() for p in (ROOT/ppo/'receipts').glob('*successor.json')]+[ppo+'plans/epics/epic_relevance_5_prior_art.yaml','operating_system/adapters/intelligence_custody/ic_routing.py','operating_system/adapters/intelligence_custody/ic_migration.py','governance/domain/intelligence_community.py','governance/_types/ic_casefold_v15_1.json','_ic/odni/migrations/oewas007/receipt.json','_ic/odni/migrations/oewas007/inventory.json']
 paths+= [p.relative_to(ROOT).as_posix() for p in (ROOT/ppo/'plans/epics').rglob('epic_*.md')]
 def pins():return {rel:{'sha256':hashlib.sha256((ROOT/rel).read_bytes()).hexdigest(),'size_bytes':(ROOT/rel).stat().st_size} for rel in sorted(set(paths))}
-if label=='integrated_manifest':argv=prefix+['-m','omega_engine_product_planning_office.use_cases.epic_manifest_audit','--write']
+if label=='integrated_manifest':argv=prefix+['-m','product_planning_office.use_cases.epic_manifest_audit','--write']
 elif label in {'integrated_planning','integrated_historical'}:
  tests=([ppo+'tests/test_epic_tdd_plan_audit.py',ppo+'tests/test_prior_art_epic_audit.py',ppo+'tests/test_epic_manifest_audit.py'] if label=='integrated_planning' else [ppo+'tests/test_prior_art_historical_sources.py'])
  argv=prefix+['-m','pytest','-o','addopts=','-o','filterwarnings=',*tests,'--basetemp',str(Path(os.environ['TEMP'])/(label+'-'+uuid.uuid4().hex)),'-q']
-elif label=='integrated_cli':argv=prefix+['-m','omega_engine_product_planning_office.infrastructure.prior_art_sources']
+elif label=='integrated_cli':argv=prefix+['-m','product_planning_office.infrastructure.prior_art_sources']
 elif label=='integrated_versions':argv=prefix+['-c',"import sys,pytest,yaml,pydantic;print(sys.version);print('pytest='+pytest.__version__);print('pyyaml='+yaml.__version__);print('pydantic='+pydantic.__version__)"]
 elif label=='integrated_ruff':argv=[uv,'run','--offline','--no-project','--python',python,'--with','ruff','ruff','check','--select','F,I',*code[:4],code[5],code[6]]
 elif label=='integrated_markdownlint':argv=['powershell.exe','-NoProfile','-ExecutionPolicy','Bypass','-File','C:/Users/a343o/AppData/Roaming/npm/markdownlint.ps1','--config','.markdownlint.json',*docs]

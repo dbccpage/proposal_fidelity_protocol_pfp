@@ -25,32 +25,32 @@ _RESEARCH_DIR = os.path.abspath(os.path.join(_CURRENT_DIR, "..", ".."))
 if _RESEARCH_DIR not in sys.path:
     sys.path.insert(0, _RESEARCH_DIR)
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.grammar.entities import (
     EpistemicQuarantineLedger,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.errors import (
     LedgerIntegrityError,
     LedgerSerializationError,
     LedgerTruncationError,
     ScopeBoundaryViolationError,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     DownMapObstruction,
     HostFenceAudit,
     PontryaginKillFlags,
     ProtectedDistinction,
     QuarantinedShadowPacket,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.ports import (
+from pfp.domain.mssn_research.grammar.ports import (
     EpistemicQuarantineLedgerRepository,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
-from omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
+from pfp.domain.mssn_research.packets.value_objects import RefusalCode
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
     deserialize_ledger_from_jsonl,
     serialize_ledger_to_jsonl,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_repository import (
+from pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_repository import (
     EpistemicQuarantineRepository,
 )
 

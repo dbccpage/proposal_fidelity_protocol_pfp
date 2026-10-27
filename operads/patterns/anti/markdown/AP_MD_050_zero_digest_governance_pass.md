@@ -29,7 +29,7 @@ A bout summary records `result` `PASS` for `governance-symbol-game` while that r
 
 Historical summaries. This digest did not rerun the renderer, the null checker, or any governance skill. Neither run folder contained a `README.md`.
 
-`_ic/darpa/woland/runs/oewas007_full_inventory_control/summary.json`, novella timestamp `2026-10-11 03:28:27 UTC`, `receipt_id` `sha256:cbc3a8fc025c47777e045418575afaf1372834949458142ce6648dd23301a792`. The same row is in `_ic/darpa/woland/runs/oewas007_final_full_inventory_control/summary.json`, novella timestamp `2026-10-11 03:50:47 UTC`, `receipt_id` `sha256:92723f79cb4a1354b568b7c1f3aa46e53a287db4d63e18519e659b2a19122c54`.
+`_ic/darpa/adversary/runs/oewas007_full_inventory_control/summary.json`, novella timestamp `2026-10-11 03:28:27 UTC`, `receipt_id` `sha256:cbc3a8fc025c47777e045418575afaf1372834949458142ce6648dd23301a792`. The same row is in `_ic/darpa/adversary/runs/oewas007_final_full_inventory_control/summary.json`, novella timestamp `2026-10-11 03:50:47 UTC`, `receipt_id` `sha256:92723f79cb4a1354b568b7c1f3aa46e53a287db4d63e18519e659b2a19122c54`.
 
 Both `governance_bundle` and `evidence_receipts` contain:
 

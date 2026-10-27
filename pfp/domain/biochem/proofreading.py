@@ -11,7 +11,7 @@ from fractions import Fraction
 import re
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.biochem.errors import (
+from pfp.domain.biochem.errors import (
     DissociationError,
     ZeroFloatViolationError,
 )

@@ -6,7 +6,7 @@ import sqlite3
 from pathlib import Path
 from typing import Iterator, Mapping
 
-from omega_engine_prompt_civilization.domain.prompt_ecology.protocols import (
+from pciv.domain.prompt_ecology.protocols import (
     DefectWitnessV1,
     SourceRecordV1,
 )

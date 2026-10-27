@@ -13,7 +13,7 @@ and spend limit. A one-task demonstration establishes that procedure for that
 task. A universal interface is the design goal; universal effectiveness requires
 evidence across relevant tasks.
 
-The application owner is `omega_engine_pfp`. `pfp` executes a contiguous prefix
+The application owner is `pfp`. `pfp` executes a contiguous prefix
 of stages 1 through 8. Stage5 is the independent host check; the other stages
 dispatch model turns. A completed prefix before Stage5 has no mathematical
 acceptance. The example below uses the existing eight-stage implementation;
@@ -21,13 +21,13 @@ eight stages are not a requirement for every future PFP task. The fixed pilot
 grid and its generator have been retired.
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.pfp run-seed DEMO_07 `
+python -m pfp.entrypoints.cli.pfp run-seed DEMO_07 `
   --stages 8 --modes 2 --model <MODEL_ID> --timeout 180 `
   --max-provider-calls 7 --max-output-tokens 3000 `
   --max-estimated-cost-microusd 50000 --output C:/Temp/pfp-seed07-new
-python -m omega_engine_pfp.entrypoints.cli.pfp run-seed DEMO_07 `
+python -m pfp.entrypoints.cli.pfp run-seed DEMO_07 `
   --replay C:/Temp/pfp-seed07-new
-python -m omega_engine_pfp.entrypoints.cli.pfp check-seed DEMO_07 candidate.json
+python -m pfp.entrypoints.cli.pfp check-seed DEMO_07 candidate.json
 ```
 
 Start with this single example and collate its outcome, host decision, model
@@ -112,7 +112,7 @@ pipeline. Other executable modes require explicit JSON inputs via
 |1,7,8|Declared glyph roundtrip, finite permutation/braid checks, exact involution.|
 |4,5|Prompt-attached procedural anti-op controls; hash-bound, colour-checked instruction composition.|
 |9|Actual fixed-target Lean build, hidden-statement elaboration and native axiom audit.|
-|10,11|Typed cemetery screening with seed replay; existing finite Woland C011 checker.|
+|10,11|Typed cemetery screening with seed replay; existing finite Adversary C011 checker.|
 |12,13|Declared simplicial/connection checks; relational lossless/dependency/confluence checks.|
 |16,17|Finite perturbation/repair; provenance diagnostics and independent host witness replay.|
 |18,19,20|Exact supplied MUB triad, finite first-cut separation, bounded proposer/adversary witnesses.|
@@ -125,8 +125,8 @@ that produces its predicted refusal is a successful control, not an accepted
 candidate. No runtime concurrency or additional framework is introduced.
 
 Native replay seeds use the existing `genesis_replay` binary. Set
-`OMEGA_GENESIS_REPLAY_BINARY` for an explicit build location; set
-`OMEGA_SYMBOL_GAME_HOST` for the shared Symbol Game host. Lean requires its exact
+`CORE_GENESIS_REPLAY_BINARY` for an explicit build location; set
+`CORE_SYMBOL_GAME_HOST` for the shared Symbol Game host. Lean requires its exact
 submitted toolchain pin to be installed. Historical demo002 deliberately refuses
 when its original source bytes cannot be resolved.
 

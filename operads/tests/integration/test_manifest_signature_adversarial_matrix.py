@@ -1,4 +1,4 @@
-"""Landau Class 2: Adversarial Attack Matrix for HMAC-SHA256 Manifest Signatures.
+"""Examiner Class 2: Adversarial Attack Matrix for HMAC-SHA256 Manifest Signatures.
 
 Theoretical Minimum:
 1. INVARIANT: Every cryptographic manifest envelope must be non-malleable across all header facets
@@ -13,10 +13,10 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_operads.application.dtos.success_dtos import (
+from operads.application.dtos.success_dtos import (
     SignedManifestEnvelopeDTO,
 )
-from omega_engine_operads.infrastructure.providers.manifest_signature_provider import (
+from operads.infrastructure.providers.manifest_signature_provider import (
     ManifestSignatureProvider,
 )
 

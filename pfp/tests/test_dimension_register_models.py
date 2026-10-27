@@ -9,9 +9,9 @@ import unittest
 from pathlib import Path
 
 import yaml
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
+from pfp.infrastructure.model_loading import load_yaml_model
 
-from omega_engine_pfp.domain.pilots import (
+from pfp.domain.pilots import (
     DimensionEntry,
     DimensionRegister,
     RegistrySyncReport,
@@ -23,7 +23,7 @@ class TestDimensionRegisterModels(unittest.TestCase):
         self.repo_root = Path(__file__).resolve().parents[2]
         self.dim_yaml_path = (
             self.repo_root
-            / "omega_engine_woland"
+            / "adversary"
             / "tests"
             / "pilots"
             / "dimensions"
@@ -31,7 +31,7 @@ class TestDimensionRegisterModels(unittest.TestCase):
         )
         self.max_matrix_path = (
             self.repo_root
-            / "omega_engine_woland"
+            / "adversary"
             / "tests"
             / "pilots"
             / "matrix"

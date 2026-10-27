@@ -2,7 +2,7 @@
 
 One implementation, used by the packaged demo
 (`entrypoints/demo_4e_cogsci_autopoiesis.py`) and by
-the Symbol Game catalog runner (`omega_engine_pfp/infrastructure/demos/named.py`):
+the Symbol Game catalog runner (`pfp/infrastructure/demos/named.py`):
 
 - `screen_pharmacy_control`: the pharmacy matcher (native classes plus the
   Python persona check) on one control candidate. Signal 2 comes from the
@@ -26,7 +26,7 @@ from __future__ import annotations
 import json
 from typing import Any, Mapping
 
-from omega_engine_epistemic_immune_system.use_cases.demos.demo_4e_cogsci_autopoiesis.policy import (
+from eis.use_cases.demos.demo_4e_cogsci_autopoiesis.policy import (
     PHARMACY_SELF_FIXTURES,
     REPLY_EPITOPE,
     REPLY_PATTERN,
@@ -34,8 +34,8 @@ from omega_engine_epistemic_immune_system.use_cases.demos.demo_4e_cogsci_autopoi
     REPLY_SELF_FIXTURES,
     model_reply_defects,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import DetectorRule
-from omega_engine_epistemic_immune_system.use_cases.mssn_immune import screen
+from eis.domain.value_objects import DetectorRule
+from eis.use_cases.mssn_immune import screen
 
 from .mssn_pharmacy import DetectionContext, FailureClass
 from .mssn_ports import (

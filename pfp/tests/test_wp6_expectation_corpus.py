@@ -27,13 +27,13 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.glyph_calculus import Carrier
-from omega_engine_pfp.domain.presentation_pins import PresentationPins
-from omega_engine_pfp.use_cases.verify_glyph_reply import verify_glyph_reply
+from pfp.domain.glyph_calculus import Carrier
+from pfp.domain.presentation_pins import PresentationPins
+from pfp.use_cases.verify_glyph_reply import verify_glyph_reply
 
 _PINNED = (
     Path(__file__).resolve().parents[2]
-    / "omega_engine_governance"
+    / "governance"
     / "contracts"
     / "pinned"
 )
@@ -58,7 +58,7 @@ def host_pins() -> PresentationPins:
 
 def run(rows, *, carrier=None, ref=None, with_host_carrier=True):
     carrier = carrier or CARRIER
-    packet = {"schema": "omega.glyph_calculus.draft.v1", "carrier": carrier, "rows": rows}
+    packet = {"schema": "core.glyph_calculus.draft.v1", "carrier": carrier, "rows": rows}
     if ref:
         packet["presentation_ref"] = ref
     return verify_glyph_reply(
@@ -133,7 +133,7 @@ class TestCase6AWrongLandingValue:
         assert len(self.verdict().receipt.hallucinations) == 1
 
 
-class TestCase7LandauNegativeControl:
+class TestCase7ExaminerNegativeControl:
     """UNBLOCKED 2026-09-04: `c6` is now pinned in governance.
 
     Derived while it was still blocked, and the derivation recorded both
@@ -143,7 +143,7 @@ class TestCase7LandauNegativeControl:
         `PROVE period(c6) = 5` must be CONTRADICTED, which is the assertion
         that actually kills a size-capped checker.
 
-    Both are asserted below, unchanged from that text. Landau's g(5) = 6 -- on
+    Both are asserted below, unchanged from that text. Examiner's g(5) = 6 -- on
     five symbols the maximum order of a permutation is six, realised by a
     2-cycle beside a 3-cycle -- so a checker reporting the SIZE of the signature
     returns 5 and is wrong. `c5` cannot detect that, because for a single cycle
@@ -212,7 +212,7 @@ class TestCase8ScopeEscapeRestated:
         """
         source_roots = [
             Path(__file__).resolve().parents[1],
-            Path(__file__).resolve().parents[2] / "omega_engine" / "crates_rs",
+            Path(__file__).resolve().parents[2] / "engine" / "crates_rs",
         ]
         me = Path(__file__).resolve()
         for root in source_roots:

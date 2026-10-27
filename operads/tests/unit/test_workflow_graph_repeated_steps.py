@@ -11,11 +11,11 @@ repeat.
 
 from __future__ import annotations
 
-from omega_engine_operads.domain import workflow_graph
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain import workflow_graph
+from operads.domain.planar_substitution import (
     OperadOperation,
 )
-from omega_engine_operads.domain.workflow_graph import validate_workflow
+from operads.domain.workflow_graph import validate_workflow
 
 
 def _workflow(sources: list[str], target: str, pipeline: list[dict]) -> dict:

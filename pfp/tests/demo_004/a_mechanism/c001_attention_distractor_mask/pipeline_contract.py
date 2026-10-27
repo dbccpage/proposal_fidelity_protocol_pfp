@@ -22,7 +22,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-PIPELINE_SCHEMA = "omega.symbol-game.pipeline.v1"
+PIPELINE_SCHEMA = "core.symbol-game.pipeline.v1"
 PIPELINE_PATH = Path(__file__).resolve().parent / "pipeline.json"
 
 DIGEST_PIN_FIELDS: tuple[str, ...] = (

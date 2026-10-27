@@ -12,7 +12,7 @@ A hands-on workflow on a three-edge directed graph with exact rational claims (1
 
 - Separates minimising the residual of unchanged claims from admitting a consistent replacement.
 - Follows refusals and the restoration of a saved state.
-- A Landau-style quiz (32 questions in eight levels), study guide and executable capstone.
+- An examiner-style quiz (32 questions in eight levels), study guide and executable capstone.
 - No new theorem or model-performance result is claimed.
 
 ## Reading and running it

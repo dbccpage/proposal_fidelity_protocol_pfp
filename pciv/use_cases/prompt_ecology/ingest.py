@@ -3,7 +3,7 @@
 import json
 from dataclasses import dataclass
 
-from omega_engine_prompt_civilization.domain.prompt_ecology.protocols import (
+from pciv.domain.prompt_ecology.protocols import (
     DefectVerifier,
     MetabolismStore,
     TelemetrySource,

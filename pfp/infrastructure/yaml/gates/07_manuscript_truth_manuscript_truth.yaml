@@ -1,0 +1,27 @@
+gate_id: "PFP-07-MANUSCRIPT-TRUTH"
+name: "Manuscript Truth Constructive Mechanization (Manuscript Truth)"
+character: "Manuscript Truth"
+role: "Constructive Mechanization & Manuscript Truth"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "Manuscripts don't burn. But unmechanized mathematical claims evaporate like mist.
+   Every theorem must be accompanied by constructive inductive proof."
+objective: >
+  Enforce constructive mathematical mechanization. Reject floating unproved axioms and
+  unverified proof claims. Formulate claims as Lean 4 inductive types and exact algebraic checks.
+fences:
+  - "No unmechanized proof assertions: claims of 'proven' or 'guaranteed' require checked proof artifacts."
+  - "No floating axioms: Lean 4 proof kernels must not introduce arbitrary `sorry` or unchecked postulates."
+  - "Inductive boundary: Topological invariants must be verified via constructive induction on the cell complex."
+input_schema:
+  claim_statement: "string"
+  has_mechanized_proof: "bool"
+  proof_kernel: "optional string (e.g. lean4, rust_oracle)"
+expected_behavior: >
+  Audits mathematical claims in the candidate output. If claims of proof lack constructive artifacts,
+  strips the claim or marks as UNMECHANIZED_SPECULATION.
+narrowest_defensible_claim: >
+  Constructive formalization eliminates semantic hand-waving from topological boundary theorems.
+next_test_needed: >
+  Submit unmechanized assertion and verify demotion to speculative conjecture status.

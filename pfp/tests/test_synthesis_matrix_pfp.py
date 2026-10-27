@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure import synthesis_matrix as runner
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from pfp.infrastructure import synthesis_matrix as runner
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 MODEL = "vendor/model"
@@ -118,7 +118,7 @@ def test_original_c052_command_runs_outside_pytest_import_aliases():
     import subprocess
     import sys
     completed = subprocess.run([sys.executable, "-B", "-m",
-        "omega_engine_pfp.tests.pilots.c052_maxflow_mincut_certificates.run_c052_matrix",
+        "pfp.tests.pilots.c052_maxflow_mincut_certificates.run_c052_matrix",
         "--help"], capture_output=True, text=True, timeout=20)
     assert completed.returncode == 0, completed.stderr
     assert "--max-estimated-cost-microusd" in completed.stdout

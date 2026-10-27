@@ -14,15 +14,15 @@ import time
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.ports import MatcherBindingRefusal
-from omega_engine_epistemic_immune_system.domain.safe_pattern import (
+from eis.domain.ports import MatcherBindingRefusal
+from eis.domain.safe_pattern import (
     UnsafePatternRefusal,
     compile_safe_pattern,
 )
-from omega_engine_epistemic_immune_system.domain.thymus import ThymusGate
-from omega_engine_epistemic_immune_system.domain.value_objects import DetectorRule
-from omega_engine_epistemic_immune_system.infrastructure.mssn_domains import DOMAINS
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import (
+from eis.domain.thymus import ThymusGate
+from eis.domain.value_objects import DetectorRule
+from eis.infrastructure.mssn_domains import DOMAINS
+from eis.infrastructure.mssn_ports import (
     DEMO3_MATCHER_ID,
     FARM_CODES,
     FARM_MATCHER_ID,

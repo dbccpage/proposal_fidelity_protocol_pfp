@@ -1,4 +1,4 @@
-"""StructureBench relational contract evaluation over a Woland bout bundle.
+"""StructureBench relational contract evaluation over a Adversary bout bundle.
 
 `EPIC-OE-OEWAS-007` asks for a `StructureBenchEvaluator` "checking syntactic and
 structural AST invariants against formal contracts", under the invariant:
@@ -7,7 +7,7 @@ structural AST invariants against formal contracts", under the invariant:
     nodes; natural language consensus alone is inadmissible.
 
 The contracts themselves are specified in
-`omega_engine_woland/_design_docs/05_spec_structurebench_artifact_contracts_and_lossless_rendering.md`,
+`adversary/_design_docs/05_spec_structurebench_artifact_contracts_and_lossless_rendering.md`,
 which defines three tiers over the four canonical files a bout emits
 (`receipt.json`, `novella.md`, `ddc.jsonl`, `summary.json`). Run folders written
 before the tape copy was retired hold the tape as `dda_actions.jsonl`; the
@@ -34,7 +34,7 @@ The receipt then stores SHA-256 hex digests `novella_sha256`, `ddc_sha256`,
 and `summary_sha256` of those three files. Those fields are not BLAKE3. A legacy
 bundle records its tape as `dda_actions_sha256`; when such a bundle also holds
 a `ddc.jsonl` copy with `ddc_sha256`, C2 checks that digest and that the two
-tapes are byte-identical. `WolandBoutReceiptV1.lean4_proof_hash` is present on the bout
+tapes are byte-identical. `AdversaryBoutReceiptV1.lean4_proof_hash` is present on the bout
 receipt; `bout_service` sets it to `None`. For `PASS_TO_MASTER`, a present
 null or empty hash is `VIOLATED` (`lean4_proof_hash` is empty). A missing
 field stays `UNVERIFIABLE`.
@@ -313,7 +313,7 @@ class StructureBenchEvaluator:
             header = None
         self._single_ddc = (
             isinstance(header, dict)
-            and header.get("bundle_schema_version") == "omega.woland.reported-run-bundle.v2"
+            and header.get("bundle_schema_version") == "core.adversary.reported-run-bundle.v2"
         )
         legacy = not self._single_ddc and self._read_artifact(LEGACY_DDA_TAPE) is not None
         self.tape = LEGACY_DDA_TAPE if legacy else DDC_TAPE
@@ -849,7 +849,7 @@ def audit_gate_incidence(
     witness vector v with D v != 0 and Q D v = 0.
     """
     if host is None:
-        from omega_engine_pfp.ffi import get_default_host
+        from pfp.ffi import get_default_host
 
         host = get_default_host()
 

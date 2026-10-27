@@ -5,10 +5,10 @@ from __future__ import annotations
 from pathlib import PurePath
 from typing import Sequence
 
-from omega_engine_operads.application.python_development_office.rules.base import (
+from operads.application.python_development_office.rules.base import (
     ArchitectureRule,
 )
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.python_development_office import (
     AntipatternFinding,
     ArchitectureConfig,
     ModuleInfo,

@@ -17,7 +17,7 @@ import subprocess
 import sys
 import unittest
 
-from omega_engine_operads.domain.ddc_execution import (
+from operads.domain.ddc_execution import (
     ADMITTED_FINITE_COLOURS,
     ArityMismatchError,
     ArtifactOutput,
@@ -29,12 +29,12 @@ from omega_engine_operads.domain.ddc_execution import (
     PermissionDeniedError,
     UnknownMorphismError,
 )
-from omega_engine_operads.domain.ddc_execution.execution import ExecutionPlan
-from omega_engine_operads.domain.ddc_execution.signatures import (
+from operads.domain.ddc_execution.execution import ExecutionPlan
+from operads.domain.ddc_execution.signatures import (
     METASKILL_SIGNATURES,
 )
-from omega_engine_operads.frontend.cli.meta_operad_cli import main
-from omega_engine_operads.infrastructure.ddc_execution.runtime import (
+from operads.frontend.cli.meta_operad_cli import main
+from operads.infrastructure.ddc_execution.runtime import (
     build_meta_operad_engine,
     find_repo_root,
 )

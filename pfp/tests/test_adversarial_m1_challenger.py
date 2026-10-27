@@ -5,7 +5,7 @@ Written by Challenger (challenger_m1_1) to empirically verify:
 2. Q and ObstructionScore reject float comparisons and float inputs.
 3. Strict descent and zero-float invariants on discrete manifold retraction.
 
-Soviet Landau Test Structure:
+Examiner Test Structure:
 - Invariant: Exact rational typing, non-coercion, and type rejection.
 - Break: Attempted injection of floats into Q comparisons, ObstructionScore fields, and degenerate cycles.
 - Witness: Concrete exception codes ('RR-FLOAT') and type certificates.
@@ -19,10 +19,10 @@ from __future__ import annotations
 from fractions import Fraction
 import pytest
 
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.exact.errors import ExactError
-from omega_engine_pfp.domain.models import ObstructionScore
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.exact.q import Q
+from pfp.domain.exact.errors import ExactError
+from pfp.domain.models import ObstructionScore
+from pfp.domain.solvers import (
     AdmitDatum,
     HolonomyLoopClosed,
     HomologyBoundaryClosed,

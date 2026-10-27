@@ -11,10 +11,10 @@ from pathlib import Path
 
 import pytest
 
-import omega_engine_pfp.domain.cochain as cochain_domain
-import omega_engine_pfp.ffi as ffi
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal
-from omega_engine_pfp.infrastructure.finite_qm_cochain_judge import NativeCochainJudge
+import pfp.domain.cochain as cochain_domain
+import pfp.ffi as ffi
+from operations.domain.rop.result import Err, Ok, Refusal
+from pfp.infrastructure.finite_qm_cochain_judge import NativeCochainJudge
 
 
 class RecordingPort:
@@ -47,15 +47,15 @@ def test_domain_has_no_concrete_process_adapter_import() -> None:
     """Original architecture red uses existing API/source, with no new imports."""
     tree = ast.parse(Path(cochain_domain.__file__).read_text(encoding="utf-8"))
     modules = [node.module for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)]
-    assert "omega_engine_pfp.ffi" not in modules
+    assert "pfp.ffi" not in modules
     assert not any(module and "operating_system.adapters" in module for module in modules)
 
 
 def test_real_domain_import_does_not_load_concrete_host() -> None:
     script = (
-        "import sys;import omega_engine_pfp.domain.cochain;"
-        "assert 'omega_engine_pfp.ffi' not in sys.modules;"
-        "assert 'omega_engine_operating_system.adapters.rust_host.ffi' not in sys.modules;"
+        "import sys;import pfp.domain.cochain;"
+        "assert 'pfp.ffi' not in sys.modules;"
+        "assert 'operating_system.adapters.rust_host.ffi' not in sys.modules;"
         "print('DOMAIN_IMPORT_ONLY')"
     )
     result = subprocess.run(

@@ -256,7 +256,7 @@ class ArtifactVerifier:
 
         # G25: D2 embedding audit
         elif cid == "G25":
-            res["details"].append("Checked D2 embedding in omega_homology (confirmed 0 occurrences in source)")
+            res["details"].append("Checked D2 embedding in core_homology (confirmed 0 occurrences in source)")
 
         return res
 
@@ -341,7 +341,7 @@ def query_openrouter_api(
                 "role": "system",
                 "content": (
                     "You are a rigorous formal mathematical logician evaluating the relationship "
-                    "between 19L57G1 primitives and the Omega Engine. You write with strict claim "
+                    "between 19L57G1 primitives and the engine. You write with strict claim "
                     "discipline, zero hype, and enforce the author's binding refusal clause: never "
                     "claim identity, derivation, or independent convergence between external single-letter "
                     "grids and 19L57G1 primitives. Return only valid RFC 8259 JSON."

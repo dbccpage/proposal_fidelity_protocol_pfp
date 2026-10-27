@@ -1,6 +1,6 @@
 """Mutation-style probes for documentation path confinement policy."""
 
-from omega_engine_pfp.domain.documentation_integrity.policies import is_document_relative_path
+from pfp.domain.documentation_integrity.policies import is_document_relative_path
 
 
 def test_traversal_guard_kills_removed_parent_segment_check() -> None:

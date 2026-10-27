@@ -14,7 +14,7 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import CONTRACTS_DIR, INDEX_PATH
+from pfp.infrastructure.normal_forms.contract_paths import CONTRACTS_DIR, INDEX_PATH
 
 BEGIN = "<!-- BEGIN GENERATED: normal-form contract register (catalog_inventory.py) -->"
 END = "<!-- END GENERATED: normal-form contract register -->"
@@ -22,8 +22,8 @@ STATUS_ORDER = ("active", "draft", "deprecated")
 
 
 def _catalog_path() -> Path:
-    root = next(p for p in CONTRACTS_DIR.parents if (p / "omega_engine_education").is_dir())
-    return root / "omega_engine_education" / "documentation" / "014_normal_forms" / "catalog.md"
+    root = next(p for p in CONTRACTS_DIR.parents if (p / "education").is_dir())
+    return root / "education" / "documentation" / "014_normal_forms" / "catalog.md"
 
 
 def render(catalog_path: Path, contracts_dir: Path = CONTRACTS_DIR, index_path: Path = INDEX_PATH) -> str:

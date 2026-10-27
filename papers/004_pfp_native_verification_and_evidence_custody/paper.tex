@@ -192,11 +192,11 @@ Its bounded test cases are evidence about their exercised paths; a
 passing test suite would not prove every reachable program behavior.
 
 The scope is the
-\href{https://github.com/dbccpage/the_symbol_game/tree/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game}{Rust
+\href{https://github.com/dbccpage/the_symbol_game/tree/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game}{Rust
 \passthrough{\lstinline!omega\_symbol\_game!} crate}, its
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/protocol.rs}{protocol},
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/protocol.rs}{protocol},
 the Python
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/ffi.py}{native
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/symbol_game/ffi.py}{native
 seam wrapper}, and the named transport and regression sources below. The
 repository that holds those files is private. This deposit includes an
 immutable copy of the audited source at the code baseline,
@@ -268,7 +268,7 @@ Additive foundation & Rust library \passthrough{\lstinline!foundation!}
 \end{longtable}
 
 The
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/main.rs}{executable
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/main.rs}{executable
 source} also offers \passthrough{\lstinline!--describe!},
 \passthrough{\lstinline!--derive-carrier-manifest!}, and
 \passthrough{\lstinline!classify-board!}.
@@ -279,7 +279,7 @@ discovery artifacts, but advertising an action does not establish that
 every mathematical input or every external use is supported.
 
 The
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/invoke.rs}{dispatcher}
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/invoke.rs}{dispatcher}
 includes functional evaluation and replay, exact matrix operations,
 cochain checks, code-change actions, and other named adapters. A runtime
 action called \passthrough{\lstinline!prime\_admit!} must be interpreted
@@ -288,19 +288,19 @@ restricted host's refused admission result. Likewise, a finite
 conservative-extension witness in the foundation library does not wire a
 carrier-changing lift into the default host protocol.
 
-Python's \nolinkurl{omega_engine_symbol_game.ffi.RustSymbolGameHost}
+Python's \nolinkurl{symbol_game.ffi.RustSymbolGameHost}
 delegates process location and invocation to the operating-system
 adapter. The supported
-\passthrough{\lstinline!OMEGA\_SYMBOL\_GAME\_HOST!} environment override
+\passthrough{\lstinline!CORE\_SYMBOL\_GAME\_HOST!} environment override
 belongs to that seam. Convenience methods retain the full railway
 outcome or typed refusal. Equivalent names in Python and Rust are
 insufficient to establish functional parity: parity needs a declared
 common input domain, output relation, and differential evidence.
 
 A separate tutorial adapter,
-\nolinkurl{omega_engine_providers.adapters.native_functional.compute_graph_phi1},
-requires \nolinkurl{OMEGA_FUNCTIONAL_GRAPH_BIN} and
-\nolinkurl{OMEGA_FUNCTIONAL_GRAPH_SHA256}. It validates the executable
+\nolinkurl{providers.adapters.native_functional.compute_graph_phi1},
+requires \nolinkurl{CORE_FUNCTIONAL_GRAPH_BIN} and
+\nolinkurl{CORE_FUNCTIONAL_GRAPH_SHA256}. It validates the executable
 digest and exact graph inputs, then parses a narrowly shaped native
 result. This is a separate binary-selection contract. Configuring one
 environment variable family does not configure the other.
@@ -309,7 +309,7 @@ environment variable family does not configure the other.
 canonicalization}\label{packet-identity-and-canonicalization}
 
 The principal Python transport type is
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/entities/packet_envelope.py}{\passthrough{\lstinline!PacketEnvelopeV2!}}.
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/symbol_game/domain/entities/packet_envelope.py}{\passthrough{\lstinline!PacketEnvelopeV2!}}.
 Its identity includes the task and packet family, carrier, initial
 state, payload, constraints, protected boundaries, terminal target,
 evidence ceiling, oracle policy, allowed transforms, budget, framing,
@@ -337,16 +337,16 @@ fractions, and supported compound types \\
 \passthrough{\lstinline!PacketCodec!} helper & NFC normalization
 followed by tagged domain encoding \\
 Restricted host profile &
-\passthrough{\lstinline!omega-sorted-json-no-float-v1!} for its outer
+\passthrough{\lstinline!core-sorted-json-no-float-v1!} for its outer
 request structure \\
 \end{longtable}
 
 The
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/shared_kernel/canonical.py}{domain
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/symbol_game/domain/shared_kernel/canonical.py}{domain
 canonical module} explicitly encodes type information. For example, an
 integer and a string containing the same digits remain distinguishable.
 It validates canonical compound encodings on reconstruction. The
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/domain/packet_codec.py}{\passthrough{\lstinline!PacketCodec!}
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/symbol_game/domain/packet_codec.py}{\passthrough{\lstinline!PacketCodec!}
 helper} explicitly says its bytes are not RFC 8785. Its
 \passthrough{\lstinline!verify!} method checks payload digest and
 authority; it does not validate every field sealed into its
@@ -369,9 +369,9 @@ these steps, alone, authenticates who produced the record.
 execution}\label{restricted-host-execution}
 
 The
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/src/host.rs}{host
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/src/host.rs}{host
 implementation} admits the following narrow successful path. The request
-uses \nolinkurl{omega.oesos.rust-prime-host-request.v1}, carries exactly
+uses \nolinkurl{core.oesos.rust-prime-host-request.v1}, carries exactly
 one candidate, and binds the host registry and build-stamped source
 revision. The arithmetic domain is rational and the acceptance mode is
 \nolinkurl{must_equal_replayed_normal_form-v1}. This restricted request
@@ -412,7 +412,7 @@ that sequence.
 admission}\label{worked-example-problem-change-with-refused-admission}
 
 The canonical
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine/crates_rs/omega_symbol_game/tests/host_contract.rs}{host
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/engine/crates_rs/core_symbol_game/tests/host_contract.rs}{host
 integration fixture} uses vertices 0, 1, 2, 3, unit-weight oriented
 edges
 
@@ -522,7 +522,7 @@ The legacy Python \passthrough{\lstinline!run-turn!},
 CLI routes are currently required to return
 \passthrough{\lstinline!RUST\_FUNCTIONAL\_REQUIRED!} before creating
 output.
-\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_symbol_game/tests/test_functional_boundary.py}{Boundary
+\href{https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/symbol_game/tests/test_functional_boundary.py}{Boundary
 regressions} document that retirement. The supported offline catalog
 commands and native \passthrough{\lstinline!gate11-self!} path provide
 more precise entry points. In these engine paths, missing native
@@ -590,10 +590,10 @@ actual toolchain, and run only the relevant targets from the extracted
 root. The principal native commands are:
 
 \begin{lstlisting}
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test host_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test foundation_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test invoke_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test native_cli_intake
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test host_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test foundation_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test invoke_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test native_cli_intake
 \end{lstlisting}
 
 \passthrough{\lstinline!host\_contract!} checks the worked path and
@@ -631,7 +631,7 @@ For Python, collect and run
 \nolinkurl{test_exact_functional_port.py},
 \nolinkurl{test_functional_boundary.py}, and
 \nolinkurl{test_ffi_seam_isolation.py} under
-\nolinkurl{omega_engine_symbol_game/tests/}. The exact-functional suite
+\nolinkurl{symbol_game/tests/}. The exact-functional suite
 contains scripted refusal cases and native cases. Its native cases can
 skip when the executable is missing; a receipt must retain that
 distinction. A scripted host tests adapter handling, not native

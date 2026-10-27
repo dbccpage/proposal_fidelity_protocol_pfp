@@ -25,7 +25,7 @@ import pytest
 torch = pytest.importorskip("torch")
 np = pytest.importorskip("numpy")
 
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
     MechanismBudgetController,
     PositionIdsInvariantViolation,
     apply_distractor_key_mask,
@@ -36,14 +36,14 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
     verify_position_ids_invariant,
 )
 
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_signals import (
     SignalIndependenceRefusal,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
 )
-from omega_engine_woland.domain.providers.types import BudgetExceeded
+from adversary.domain.providers.types import BudgetExceeded
 
 # ==============================================================================
 # Dimension 1: Attention Mask Zeroing Attacks
@@ -311,8 +311,8 @@ class TestCharacterOffsetMappingAttacks:
     def test_multibyte_and_unicode_intervals(self):
         """Multi-byte Unicode characters (emojis, Cyrillic, Greek, CJK) in prompt text."""
         # Prompt containing multi-byte characters
-        prompt = "Claim: 🐉 - 🦊 = 10. Fluff note: Воланд любит шахматы и 🪆. End."
-        fluff_text = "Воланд любит шахматы и 🪆."
+        prompt = "Claim: 🐉 - 🦊 = 10. Fluff note: Adversary любит шахматы и 🪆. End."
+        fluff_text = "Adversary любит шахматы и 🪆."
         d_start = prompt.index(fluff_text)
         d_end = d_start + len(fluff_text)
         spans = [(d_start, d_end)]
@@ -330,7 +330,7 @@ class TestCharacterOffsetMappingAttacks:
         fluff = resolve_fluff_positions(prompt, spans, offset_mapping=offset_mapping)
         # Verify that all tokens inside fluff_text are captured
         fluff_words = [words[i] for i in fluff]
-        for fw in ["Воланд", "любит", "шахматы", "и", "🪆."]:
+        for fw in ["Adversary", "любит", "шахматы", "и", "🪆."]:
             assert fw in fluff_words, f"Expected '{fw}' in resolved fluff words: {fluff_words}"
 
         # Verify that claim symbols are NOT in fluff
@@ -583,7 +583,7 @@ class TestBudgetEnforcementAttacks:
 
     def test_charge_quote_successful_under_limit(self):
         """charge_quote succeeds and records spend when within limits."""
-        from omega_engine_woland.domain.providers.budget import PriceQuoteV1, pricing_observation
+        from adversary.domain.providers.budget import PriceQuoteV1, pricing_observation
 
         ctrl = MechanismBudgetController(hard_kill_ceiling_microusd=250_000)
         obs = pricing_observation("test-model", 1000, 2000)

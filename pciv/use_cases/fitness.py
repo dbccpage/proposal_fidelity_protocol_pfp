@@ -1,7 +1,7 @@
 """Prompt fitness, Pareto selection, and obligation verification for Prompt Civ.
 
 Enforces:
-- F-WOLAND-01: Act VII AUTHORIZED never grants success credit to prompt fitness.
+- F-ADVERSARY-01: Act VII AUTHORIZED never grants success credit to prompt fitness.
 - F-SELECT-01: Pareto front selection + lexicographic tiebreak with no composite scalar.
 - F-SELECT-03: A caller receipt or a self-sealed body is not obligation success.
 - F-RES-06: Validity or emptiness alone earns no success credit.
@@ -17,12 +17,12 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import TYPE_CHECKING, Any, Mapping, Sequence
 
-from omega_engine_operations.domain.rop.result import Err, Refusal, Result
-from omega_engine_prompt_civilization.domain.causal_witness import SealedCausalWitness
-from omega_engine_woland.domain.evidence import CandidateCheckV1, CheckerVerdict, sha256_ref
+from operations.domain.rop.result import Err, Refusal, Result
+from pciv.domain.causal_witness import SealedCausalWitness
+from adversary.domain.evidence import CandidateCheckV1, CheckerVerdict, sha256_ref
 
 if TYPE_CHECKING:
-    from omega_engine_woland.domain.ports import CandidateCheckerPort
+    from adversary.domain.ports import CandidateCheckerPort
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,7 +1,7 @@
 ---
 paths:
-  - "omega_engine_atlas/**"
-  - "omega_engine_research_papers/**"
+  - "atlas/**"
+  - "research_papers/**"
   - "**/papers/**"
   - "**/*.tex"
 ---

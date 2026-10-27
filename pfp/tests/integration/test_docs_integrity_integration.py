@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from omega_engine_pfp.documentation_integrity.inventory import (
+from pfp.documentation_integrity.inventory import (
     ClassificationContext,
     classify_source,
 )

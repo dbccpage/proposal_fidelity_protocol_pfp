@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from omega_engine_operads.frontend.presenters.autop_learning_presenter import (
+from operads.frontend.presenters.autop_learning_presenter import (
     AutoPLearningPresenter,
 )
 
@@ -15,7 +15,7 @@ def main(argv=None) -> int:
     parser.add_argument("--receipt", type=Path)
     parser.add_argument("--transcript", type=Path, action="append", default=[])
     parser.add_argument(
-        "--host", choices=["autop", "woland", "codex", "claude", "antigravity"], default="autop"
+        "--host", choices=["autop", "adversary", "codex", "claude", "antigravity"], default="autop"
     )
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--output", type=Path)

@@ -8,21 +8,21 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     ExactRationalMatrix,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.lexical import (
+from pfp.domain.mssn_research.grammar.lexical import (
     Alphabet,
     ProbabilityMass,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     ContentDigest,
     Rational,
     StageLevel,
     ValueParseCode,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.grammar.entities import (
     TowerGrammar,
 )
 
@@ -30,7 +30,7 @@ from omega_engine_pfp.domain.mssn_research.grammar.entities import (
 def test_domain_modules_are_cohesive_and_legacy_monolith_is_retired() -> None:
     grammar_root = Path(__file__).parents[2] / "domain" / "mssn_research" / "grammar"
     assert find_spec(
-        "omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.value_objects"
+        "pfp.infrastructure.adapters.mssn_research.contracts.grammar.value_objects"
     ) is None
     assert all(len(path.read_text(encoding="utf-8").splitlines()) < 1_000 for path in grammar_root.glob("*.py"))
 

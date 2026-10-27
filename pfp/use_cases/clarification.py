@@ -11,7 +11,7 @@ import math
 from dataclasses import dataclass
 from hashlib import sha256
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 
 @dataclass(frozen=True)

@@ -1,6 +1,6 @@
 """Presentation CLI for symgam through the canonical OEOS process seam.
 
-The symgam wire format stays distinct from omega_symbol_game runtime actions.
+The symgam wire format stays distinct from core_symbol_game runtime actions.
 AuthorityEffect: None.
 """
 
@@ -13,8 +13,8 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operations.domain.rop.result import Err, Refusal, Result
-from omega_engine_operating_system.adapters.rust_host import ffi
+from operations.domain.rop.result import Err, Refusal, Result
+from operating_system.adapters.rust_host import ffi
 
 
 def locate_symgam() -> Path:
@@ -35,7 +35,7 @@ def run_host(args: list[str], stdin: bytes | None = None) -> Result[Mapping[str,
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="omega_engine_pfp.entrypoints.cli.host_cli",
+        prog="pfp.entrypoints.cli.host_cli",
         description="Presentation driver for the native Symbol Game host (symgam).",
     )
     sub = parser.add_subparsers(dest="cmd", required=True)

@@ -17,7 +17,7 @@ families: [techne-code, solvers, search, exact-solvers]
 
 ## 1. Scope & Prime Directive
 
-This skill provides unified leadership and deep operational guidance across all mathematical solvers and search generators in the repository (`omega_solvers`, `omega_search`, and tower mathematical modules):
+This skill provides unified leadership and deep operational guidance across all mathematical solvers and search generators in the repository (`core_solvers`, `core_search`, and tower mathematical modules):
 
 1. **Strategic Leadership:** Evaluates problem dimensionality, convexity, sparsity, and discrete symmetries to select the optimal solver category (ADMM, Krylov, interior-point, exact simplex) and search strategy (MCTS, beam, Lefschetz thimbles).
 2. **Operational Implementation:** Enforces strict mathematical contracts in code, verifies precondition/postcondition assertion fences, classifies solver error typologies, and certifies exact rational duality-gap bounds ($|\Phi_{\text{primal}} - \Phi_{\text{dual}}| \le 10^{-7}$).

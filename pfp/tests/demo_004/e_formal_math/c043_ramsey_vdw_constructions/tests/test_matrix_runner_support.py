@@ -14,7 +14,7 @@ import urllib.error
 import urllib.request
 
 import pytest
-from omega_engine_pfp.infrastructure import formal_matrix as mrs
+from pfp.infrastructure import formal_matrix as mrs
 
 
 def test_missing_key_is_a_typed_refusal() -> None:
@@ -102,7 +102,7 @@ def test_summary_excludes_infra_errors_and_counts_abstentions() -> None:
 def test_run_folder_is_under_the_intelligence_root(
     monkeypatch: pytest.MonkeyPatch, tmp_path
 ) -> None:
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(tmp_path))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(tmp_path))
     folder = mrs.run_folder("c0xx", "abc")
     assert folder.is_dir()
     assert tmp_path.resolve() in folder.resolve().parents

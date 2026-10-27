@@ -6,14 +6,14 @@
 
 | Family | N | Members |
 | --- | --- | --- |
-| `anomalon` | 1 | anomalon-council-convener |
+| `sentinel` | 1 | sentinel-council-convener |
 | `anti-skill` | 1 | auto-anti-skill-search |
 | `anti-skills` | 2 | auto-anti-skill, techne-oewas-developer |
 | `antipatterns` | 1 | techne-code-principal-architect |
 | `architecture` | 5 | governance-clean-arch, techne-ast-cochain-exactness-enforcer, techne-code-principal-architect, techne-oeos-manager, techne-uncalled-module-detector |
 | `ast` | 2 | techne-ast-cochain-exactness-enforcer, techne-code-lossless-parser |
 | `atlas` | 1 | governance-wdp |
-| `audit` | 2 | lean4-axiom-audit, woland-hermetic-task-audit |
+| `audit` | 2 | lean4-axiom-audit, adversary-hermetic-task-audit |
 | `b01` | 1 | ow-bureau-mole-hunting |
 | `b02` | 1 | ow-bureau-interrogation |
 | `b03` | 1 | ow-bureau-mole-hunting |
@@ -29,23 +29,23 @@
 | `canary` | 1 | auto-anti-skill-search |
 | `cicd` | 1 | techne-cicd-gate-catalog-dual-home-auditor |
 | `circus` | 1 | ow-directorate-circus |
-| `clean-architecture` | 12 | governance-clean-arch, governance-pfp, techne-base-swarm-inward-purity-auditor, techne-code-normal-forms-developer, techne-code-principal-architect, techne-code-python-principal-developer, techne-code-soviet-builder, techne-code-soviet-inspector, techne-comment-slop-hunter-killer, techne-contract-docstring-import-boundary-auditor, techne-oeos-manager, techne-oewas-developer |
+| `clean-architecture` | 12 | governance-clean-arch, governance-pfp, techne-base-swarm-inward-purity-auditor, techne-code-normal-forms-developer, techne-code-principal-architect, techne-code-python-principal-developer, techne-code-builder, techne-code-inspector, techne-comment-slop-hunter-killer, techne-contract-docstring-import-boundary-auditor, techne-oeos-manager, techne-oewas-developer |
 | `clean_up` | 1 | ow-bureau-lamplighters |
 | `cochain` | 1 | techne-ast-cochain-exactness-enforcer |
 | `coda` | 1 | governance-wdp |
 | `coda-gtla-papers` | 1 | panep-math-and-physics-prof |
-| `coda-papers` | 2 | governance-research-paper-edit-publish, omega-old-man-red-team |
+| `coda-papers` | 2 | governance-research-paper-edit-publish, core-red-team |
 | `code` | 3 | silent-failure-hunter, techne-generated-artifact-custody-auditor, techne-test-silent-skip-detector |
 | `code-generation` | 2 | techne-code-principal-architect, techne-code-python-principal-developer |
-| `cognitive-architecture` | 2 | governance-intelligence-metabolism, woland |
+| `cognitive-architecture` | 2 | governance-intelligence-metabolism, adversary |
 | `comment-hygiene` | 1 | techne-comment-slop-hunter-killer |
 | `compiler` | 1 | techne-oewas-developer |
 | `containment` | 1 | thanatos-aegidion-network-security |
 | `contracts` | 1 | techne-contract-docstring-import-boundary-auditor |
-| `councils` | 2 | anomalon-council-convener, governance-councils |
+| `councils` | 2 | sentinel-council-convener, governance-councils |
 | `counter_espionage` | 1 | ow-bureau-mole-hunting |
-| `creativity` | 1 | woland |
-| `curious` | 1 | woland |
+| `creativity` | 1 | adversary |
+| `curious` | 1 | adversary |
 | `d01` | 1 | ow-directorate-epistemological |
 | `d02` | 1 | ow-directorate-circus |
 | `d03` | 1 | ow-directorate-epistemological |
@@ -58,12 +58,12 @@
 | `d10` | 1 | ow-directorate-circus |
 | `database` | 1 | techne-code-python-principal-developer |
 | `ddc` | 2 | ddc-code-repair, governance-wdp |
-| `ddd` | 4 | techne-code-principal-architect, techne-code-python-principal-developer, techne-code-soviet-builder, techne-code-soviet-inspector |
+| `ddd` | 4 | techne-code-principal-architect, techne-code-python-principal-developer, techne-code-builder, techne-code-inspector |
 | `defense` | 1 | blackrod |
-| `deliberation` | 1 | anomalon-council-convener |
+| `deliberation` | 1 | sentinel-council-convener |
 | `development` | 1 | ddc-code-repair |
-| `dialectic` | 2 | ow-directorate-epistemological, woland |
-| `dianoia` | 2 | auto-anti-skill-search, woland |
+| `dialectic` | 2 | ow-directorate-epistemological, adversary |
+| `dianoia` | 2 | auto-anti-skill-search, adversary |
 | `directorates` | 2 | ow-directorate-circus, ow-directorate-epistemological |
 | `documentation` | 2 | auto-docs, techne-comment-slop-hunter-killer |
 | `education` | 2 | governance-pedagogy, panep-relational-algebra-theory |
@@ -73,7 +73,7 @@
 | `evidence` | 1 | techne-mutation-evidence-custody |
 | `exact-math` | 2 | governance-exact-solvers, governance-pipeline-attestation |
 | `exact-solvers` | 1 | techne-code-math-search-solver-leader |
-| `falsification` | 7 | silent-failure-hunter, techne-code-soviet-builder, techne-code-soviet-inspector, techne-generated-artifact-custody-auditor, techne-stale-census-detector, techne-test-silent-skip-detector, techne-unfalsifiable-gate-auditor |
+| `falsification` | 7 | silent-failure-hunter, techne-code-builder, techne-code-inspector, techne-generated-artifact-custody-auditor, techne-stale-census-detector, techne-test-silent-skip-detector, techne-unfalsifiable-gate-auditor |
 | `feyerabend` | 1 | ow-bureau-gauge-breaks |
 | `ffi` | 1 | techne-code-python-principal-developer |
 | `fifth_column` | 1 | ow-bureau-mole-hunting |
@@ -82,7 +82,7 @@
 | `gate-catalog` | 1 | techne-cicd-gate-catalog-dual-home-auditor |
 | `gauge_break` | 1 | ow-bureau-gauge-breaks |
 | `git-release` | 1 | governance-git-release |
-| `governance` | 34 | anomalon-council-convener, auto-anti-pattern-lint, auto-learn, blackrod, goo-operational-pipeline-attestation-gate, governance-clean-arch, governance-councils, governance-exact-solvers, governance-git-release, governance-host-parity, governance-intelligence-metabolism, governance-lean4-estate, governance-literature-catalog, governance-pedagogy, governance-pfp, governance-pipeline-attestation, governance-rop-runtime, governance-test-isolation, governance-wdp, lean4-axiom-audit, mub6-manager, techne-cicd-gate-catalog-dual-home-auditor, techne-code-principal-architect, techne-code-soviet-inspector, techne-deep-paper-composition-hasher, techne-four-host-parity-verifier, techne-generated-artifact-custody-auditor, techne-mutation-evidence-custody, techne-paper-deposit-preflight-gate, techne-unfalsifiable-gate-auditor, thanatos-append-only-log-truncation-auditor, woland, woland-digests, woland-hermetic-task-audit |
+| `governance` | 34 | sentinel-council-convener, auto-anti-pattern-lint, auto-learn, blackrod, goo-operational-pipeline-attestation-gate, governance-clean-arch, governance-councils, governance-exact-solvers, governance-git-release, governance-host-parity, governance-intelligence-metabolism, governance-lean4-estate, governance-literature-catalog, governance-pedagogy, governance-pfp, governance-pipeline-attestation, governance-rop-runtime, governance-test-isolation, governance-wdp, lean4-axiom-audit, mub6-manager, techne-cicd-gate-catalog-dual-home-auditor, techne-code-principal-architect, techne-code-inspector, techne-deep-paper-composition-hasher, techne-four-host-parity-verifier, techne-generated-artifact-custody-auditor, techne-mutation-evidence-custody, techne-paper-deposit-preflight-gate, techne-unfalsifiable-gate-auditor, thanatos-append-only-log-truncation-auditor, adversary, adversary-digests, adversary-hermetic-task-audit |
 | `host-parity` | 1 | governance-host-parity |
 | `hosts` | 1 | techne-four-host-parity-verifier |
 | `immune` | 4 | episteme-allosteric-cooperativity, episteme-clonal-affinity-maturation, episteme-immunological-danger-gate, episteme-thymus-negative-selection |
@@ -94,21 +94,21 @@
 | `lint` | 1 | techne-contract-docstring-import-boundary-auditor |
 | `linting` | 1 | auto-anti-pattern-lint |
 | `literature-catalog` | 1 | governance-literature-catalog |
-| `logos` | 1 | woland |
+| `logos` | 1 | adversary |
 | `management` | 1 | techne-code-python-principal-developer |
 | `math` | 2 | mub6-manager, techne-deep-paper-composition-hasher |
 | `mathematical-solvers` | 1 | governance-wdp |
 | `mathematics` | 1 | techne-projector-endomorphism-purity-auditor |
 | `measurement` | 1 | techne-stale-census-detector |
 | `memory_retrieval` | 1 | techne-operadic-cemetery-retriever |
-| `meta` | 45 | auto-anti-skill-search, auto-code-anti-pattern-hunter, auto-docs, auto-improve-autoskill, auto-learn, auto-obstruction-hunter, auto-oe-autop, auto-review-agents, auto-review-skills, auto-skill, auto-suggest-new-skills, auto-symmetry-hunter, declared-vs-actual-gate, goo-figure-vector-arithmetic-integrity-gate, goo-lean4-diagnostic-alias-firewall, goo-pseudometric-separation-claim-gate, goo-quotient-universal-factor-uniqueness-gate, goo-simulated-trace-norm-inhabited-projection-gate, meta-atlas-state-to-state-verifier, meta-auto-paper-to-paper-verifier, meta-auto-state-to-receipt-verifier, meta-blackrod-contract-to-audit-verifier, meta-code-audit--code--contractive, meta-contract-audit--contract--contractive, meta-contract-code--audit--contractive, meta-dda-dag-emitter, meta-glossa-proof-to-proof-verifier, meta-goo-ledger-to-ledger-verifier, meta-goo-paper-to-paper-verifier, meta-goo-proof-to-audit-verifier, meta-kybernesis-paper-to-post-verifier, meta-law-contract-enforcer, meta-no-comments, meta-operad-verifier, meta-paper--audit--contractive, meta-paper--receipt--contractive, meta-proof-code--proof--contractive, meta-proof-to-paper-verifier, meta-residual-harmonic-optimizer, meta-state--receipt--contractive, meta-state--state--contractive, meta-techne-code-to-audit-verifier, meta-techne-code-to-code-verifier, techne-oewas-developer, woland-digests |
-| `mimesis` | 1 | woland |
+| `meta` | 45 | auto-anti-skill-search, auto-code-anti-pattern-hunter, auto-docs, auto-improve-autoskill, auto-learn, auto-obstruction-hunter, auto-oe-autop, auto-review-agents, auto-review-skills, auto-skill, auto-suggest-new-skills, auto-symmetry-hunter, declared-vs-actual-gate, goo-figure-vector-arithmetic-integrity-gate, goo-lean4-diagnostic-alias-firewall, goo-pseudometric-separation-claim-gate, goo-quotient-universal-factor-uniqueness-gate, goo-simulated-trace-norm-inhabited-projection-gate, meta-atlas-state-to-state-verifier, meta-auto-paper-to-paper-verifier, meta-auto-state-to-receipt-verifier, meta-blackrod-contract-to-audit-verifier, meta-code-audit--code--contractive, meta-contract-audit--contract--contractive, meta-contract-code--audit--contractive, meta-dda-dag-emitter, meta-glossa-proof-to-proof-verifier, meta-goo-ledger-to-ledger-verifier, meta-goo-paper-to-paper-verifier, meta-goo-proof-to-audit-verifier, meta-kybernesis-paper-to-post-verifier, meta-law-contract-enforcer, meta-no-comments, meta-operad-verifier, meta-paper--audit--contractive, meta-paper--receipt--contractive, meta-proof-code--proof--contractive, meta-proof-to-paper-verifier, meta-residual-harmonic-optimizer, meta-state--receipt--contractive, meta-state--state--contractive, meta-techne-code-to-audit-verifier, meta-techne-code-to-code-verifier, techne-oewas-developer, adversary-digests |
+| `mimesis` | 1 | adversary |
 | `mole_hunting` | 2 | ow-bureau-mole-hunting, ow-directorate-circus |
 | `mono-repo-hygiene` | 1 | techne-code-principal-architect |
 | `nocebo_placebo` | 1 | ow-bureau-gauge-breaks |
 | `normal-forms` | 4 | panep-relational-algebra-theory, techne-code-normal-forms-developer, techne-code-normal-forms-reviewer, techne-code-normal-forms-tester |
 | `obstruction` | 1 | auto-obstruction-hunter |
-| `oecog` | 16 | dianoia-visual-diagram-verifier, episteme-allosteric-cooperativity, episteme-clonal-affinity-maturation, episteme-dossier-basis-provenance, episteme-immunological-danger-gate, episteme-thymus-negative-selection, glossa-claim-hygiene-linter, governance-intelligence-metabolism, nous-clinical-formulation-sandbox, nous-deliberation-alliance-map, techne-operad-swarm-router, techne-operadic-cemetery-retriever, thanatos-countermeasure-binding-repair, thanatos-exploit-indicator-coverage, thanatos-skill-security-spector, woland |
+| `oecog` | 16 | dianoia-visual-diagram-verifier, episteme-allosteric-cooperativity, episteme-clonal-affinity-maturation, episteme-dossier-basis-provenance, episteme-immunological-danger-gate, episteme-thymus-negative-selection, glossa-claim-hygiene-linter, governance-intelligence-metabolism, nous-clinical-formulation-sandbox, nous-deliberation-alliance-map, techne-operad-swarm-router, techne-operadic-cemetery-retriever, thanatos-countermeasure-binding-repair, thanatos-exploit-indicator-coverage, thanatos-skill-security-spector, adversary |
 | `oeos` | 1 | techne-oeos-manager |
 | `ooutwire` | 6 | ow-bureau-gauge-breaks, ow-bureau-interrogation, ow-bureau-lamplighters, ow-bureau-mole-hunting, ow-directorate-circus, ow-directorate-epistemological |
 | `operad` | 25 | meta-atlas-state-to-state-verifier, meta-auto-paper-to-paper-verifier, meta-auto-state-to-receipt-verifier, meta-blackrod-contract-to-audit-verifier, meta-code-audit--code--contractive, meta-contract-audit--contract--contractive, meta-contract-code--audit--contractive, meta-dda-dag-emitter, meta-glossa-proof-to-proof-verifier, meta-goo-ledger-to-ledger-verifier, meta-goo-paper-to-paper-verifier, meta-goo-proof-to-audit-verifier, meta-kybernesis-paper-to-post-verifier, meta-law-contract-enforcer, meta-no-comments, meta-operad-verifier, meta-paper--audit--contractive, meta-paper--receipt--contractive, meta-proof-code--proof--contractive, meta-proof-to-paper-verifier, meta-residual-harmonic-optimizer, meta-state--receipt--contractive, meta-state--state--contractive, meta-techne-code-to-audit-verifier, meta-techne-code-to-code-verifier |
@@ -119,7 +119,7 @@
 | `packaging` | 2 | techne-four-host-parity-verifier, techne-paper-deposit-preflight-gate |
 | `panepistimion` | 2 | auto-obstruction-hunter, panep-relational-algebra-theory |
 | `paper-review` | 1 | techne-deep-paper-composition-hasher |
-| `parity` | 1 | techne-code-soviet-inspector |
+| `parity` | 1 | techne-code-inspector |
 | `parser` | 1 | techne-code-lossless-parser |
 | `pedagogy` | 1 | governance-pedagogy |
 | `pfp` | 1 | governance-pfp |
@@ -128,20 +128,20 @@
 | `planning` | 1 | techne-unfalsifiable-gate-auditor |
 | `prime-algos` | 1 | governance-wdp |
 | `procurators` | 1 | governance-councils |
-| `prompt-civilization` | 2 | auto-anti-skill, omega-prompt |
-| `prompt-typing` | 1 | omega-prompt |
+| `prompt-civilization` | 2 | auto-anti-skill, core-prompt |
+| `prompt-typing` | 1 | core-prompt |
 | `proof` | 1 | techne-code-search-solver-developer |
 | `psychological_operations` | 1 | ow-bureau-interrogation |
 | `purity` | 2 | techne-base-swarm-inward-purity-auditor, techne-projector-endomorphism-purity-auditor |
 | `python` | 4 | techne-code-normal-forms-developer, techne-code-python-anti-patterns, techne-code-python-principal-developer, techne-contract-docstring-import-boundary-auditor |
 | `quality` | 16 | auto-anti-pattern-lint, auto-code-anti-pattern-hunter, silent-failure-hunter, techne-code-lean4-anti-patterns, techne-code-normal-forms-reviewer, techne-code-normal-forms-tester, techne-code-python-anti-patterns, techne-code-rust-anti-patterns, techne-code-rust-code-reviewer, techne-code-sql-anti-patterns, techne-generated-artifact-custody-auditor, techne-mutation-evidence-custody, techne-stale-census-detector, techne-test-silent-skip-detector, techne-uncalled-module-detector, techne-unfalsifiable-gate-auditor |
-| `quality-enforcement` | 1 | techne-code-soviet-inspector |
+| `quality-enforcement` | 1 | techne-code-inspector |
 | `receipts` | 1 | thanatos-append-only-log-truncation-auditor |
 | `relational-algebra` | 4 | panep-relational-algebra-theory, techne-code-normal-forms-developer, techne-code-normal-forms-reviewer, techne-code-normal-forms-tester |
-| `research-governance` | 2 | governance-research-paper-edit-publish, omega-old-man-red-team |
+| `research-governance` | 2 | governance-research-paper-edit-publish, core-red-team |
 | `review` | 1 | techne-code-normal-forms-reviewer |
-| `rop` | 5 | silent-failure-hunter, techne-code-principal-architect, techne-code-python-principal-developer, techne-code-soviet-builder, techne-code-soviet-inspector |
-| `rop-monad` | 2 | governance-intelligence-metabolism, woland |
+| `rop` | 5 | silent-failure-hunter, techne-code-principal-architect, techne-code-python-principal-developer, techne-code-builder, techne-code-inspector |
+| `rop-monad` | 2 | governance-intelligence-metabolism, adversary |
 | `rop-runtime` | 1 | governance-rop-runtime |
 | `rust` | 3 | techne-code-rust-anti-patterns, techne-code-rust-code-reviewer, techne-oewas-developer |
 | `search` | 2 | techne-code-math-search-solver-leader, techne-code-search-solver-developer |
@@ -156,24 +156,24 @@
 | `storage` | 1 | techne-oeos-manager |
 | `surprise` | 1 | ow-bureau-gauge-breaks |
 | `surveillance` | 2 | ow-bureau-lamplighters, ow-directorate-circus |
-| `swarm` | 3 | blackrod, omega-old-man-red-team, techne-base-swarm-inward-purity-auditor |
+| `swarm` | 3 | blackrod, core-red-team, techne-base-swarm-inward-purity-auditor |
 | `symbol-game` | 1 | governance-pfp |
 | `symmetry` | 1 | techne-four-host-parity-verifier |
 | `systems` | 1 | techne-oeos-manager |
-| `techne` | 15 | auto-code-anti-pattern-hunter, auto-obstruction-hunter, governance-research-paper-edit-publish, mub6-manager, omega-old-man-red-team, techne-code-lean4-anti-patterns, techne-code-normal-forms-developer, techne-code-normal-forms-reviewer, techne-code-normal-forms-tester, techne-code-python-anti-patterns, techne-code-rust-anti-patterns, techne-code-rust-code-reviewer, techne-code-sql-anti-patterns, techne-comment-slop-hunter-killer, techne-paper-deposit-preflight-gate |
-| `techne-code` | 8 | techne-cicd-gate-catalog-dual-home-auditor, techne-code-lossless-parser, techne-code-math-search-solver-leader, techne-code-principal-architect, techne-code-python-principal-developer, techne-code-search-solver-developer, techne-code-soviet-builder, techne-code-soviet-inspector |
-| `testing` | 10 | governance-pfp, governance-test-isolation, techne-code-normal-forms-tester, techne-code-soviet-builder, techne-code-soviet-inspector, techne-generated-artifact-custody-auditor, techne-mutation-evidence-custody, techne-stale-census-detector, techne-test-silent-skip-detector, techne-uncalled-module-detector |
+| `techne` | 15 | auto-code-anti-pattern-hunter, auto-obstruction-hunter, governance-research-paper-edit-publish, mub6-manager, core-red-team, techne-code-lean4-anti-patterns, techne-code-normal-forms-developer, techne-code-normal-forms-reviewer, techne-code-normal-forms-tester, techne-code-python-anti-patterns, techne-code-rust-anti-patterns, techne-code-rust-code-reviewer, techne-code-sql-anti-patterns, techne-comment-slop-hunter-killer, techne-paper-deposit-preflight-gate |
+| `techne-code` | 8 | techne-cicd-gate-catalog-dual-home-auditor, techne-code-lossless-parser, techne-code-math-search-solver-leader, techne-code-principal-architect, techne-code-python-principal-developer, techne-code-search-solver-developer, techne-code-builder, techne-code-inspector |
+| `testing` | 10 | governance-pfp, governance-test-isolation, techne-code-normal-forms-tester, techne-code-builder, techne-code-inspector, techne-generated-artifact-custody-auditor, techne-mutation-evidence-custody, techne-stale-census-detector, techne-test-silent-skip-detector, techne-uncalled-module-detector |
 | `text_audit` | 1 | glossa-claim-hygiene-linter |
-| `thanatos` | 5 | auto-anti-skill-search, blackrod, omega-old-man-red-team, techne-code-normal-forms-reviewer, thanatos-aegidion-network-security |
-| `theoria` | 1 | woland |
+| `thanatos` | 5 | auto-anti-skill-search, blackrod, core-red-team, techne-code-normal-forms-reviewer, thanatos-aegidion-network-security |
+| `theoria` | 1 | adversary |
 | `theory` | 1 | panep-relational-algebra-theory |
 | `ttss` | 1 | ow-directorate-circus |
-| `verification` | 3 | mub6-manager, techne-deep-paper-composition-hasher, woland-hermetic-task-audit |
+| `verification` | 3 | mub6-manager, techne-deep-paper-composition-hasher, adversary-hermetic-task-audit |
 | `visual_verification` | 1 | dianoia-visual-diagram-verifier |
 | `wdp` | 1 | governance-wdp |
 | `wiretaps` | 1 | ow-bureau-lamplighters |
 | `wiring` | 1 | techne-uncalled-module-detector |
-| `woland` | 5 | auto-learn, governance-intelligence-metabolism, woland, woland-digests, woland-hermetic-task-audit |
+| `adversary` | 5 | auto-learn, governance-intelligence-metabolism, adversary, adversary-digests, adversary-hermetic-task-audit |
 
 ## Skills With No Family Declaration
 
@@ -222,8 +222,8 @@ to the sovereign header or accept that no rule will ever propagate to them.
 - `oikonomia-legibility-roi`
 - `oikonomia-product-manager`
 - `oikonomia-promote-ooutwire`
-- `omega-engine-product-manager`
-- `omega-presentation-compat-harness`
+- `product-manager`
+- `core-presentation-compat-harness`
 - `ooutwire`
 - `operad-quotient-verifier`
 - `panep-cs-prof`
@@ -271,24 +271,24 @@ to the sovereign header or accept that no rule will ever propagate to them.
 - `thanatos-nemesis`
 - `thanatos-public-claim-bs-firewall`
 - `theoria-rgb-public-math-post-gate`
-- `woland-assigned-outcome-rule`
-- `woland-check-sensitivity-pattern`
-- `woland-claim-audit`
-- `woland-fixture-transport-block-then-later-seat-blocked`
-- `woland-free-information-pattern`
-- `woland-input-coercion-antibody`
-- `woland-native-gate-unavailable-then-native-gates-fail`
-- `woland-parser-work-antibody`
-- `woland-parser-work-antipattern`
-- `woland-proof-premise-rule`
-- `woland-proof-scope-rule`
-- `woland-provider-http-400-then-native-gates-fail`
-- `woland-scope-falsifier`
-- `woland-scoped-reuse-pattern`
-- `woland-silent-coercion-antipattern`
-- `woland-stale-task-antibody`
-- `woland-strict-input-pattern`
-- `woland-typed-answer-rule`
+- `adversary-assigned-outcome-rule`
+- `adversary-check-sensitivity-pattern`
+- `adversary-claim-audit`
+- `adversary-fixture-transport-block-then-later-seat-blocked`
+- `adversary-free-information-pattern`
+- `adversary-input-coercion-antibody`
+- `adversary-native-gate-unavailable-then-native-gates-fail`
+- `adversary-parser-work-antibody`
+- `adversary-parser-work-antipattern`
+- `adversary-proof-premise-rule`
+- `adversary-proof-scope-rule`
+- `adversary-provider-http-400-then-native-gates-fail`
+- `adversary-scope-falsifier`
+- `adversary-scoped-reuse-pattern`
+- `adversary-silent-coercion-antipattern`
+- `adversary-stale-task-antibody`
+- `adversary-strict-input-pattern`
+- `adversary-typed-answer-rule`
 
 <!-- END GENERATED -->
 ## What This File Is

@@ -164,17 +164,17 @@ does not replace a historical deposit or archive.
 ## Sources and relation to the programme
 
 This draft builds on the [WDP
-manuscript](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
+manuscript](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
 [Paper 021's source-and-execution
-distinctions](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/paper.md),
+distinctions](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/paper.md),
 and the [corrected findings
-notices](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/README.md).
+notices](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/README.md).
 [Paper
-022](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/022_pfp_frontier_research/paper.md)
+022](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/022_pfp_frontier_research/paper.md)
 supplies a research design whose live-model and offline-strategy claims
 require their own source-bound scrutiny. These drafts do not adopt its
 empirical tables as new measurements. The [PFP collection
-guide](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/README.md)
+guide](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/README.md)
 provides the shared-system/typed-instance protocol. Genesis and MSS-N
 presentation stages do not license a new mathematical or physical
 carrier.

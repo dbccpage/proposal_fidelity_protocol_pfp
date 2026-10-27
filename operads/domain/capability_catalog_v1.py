@@ -16,9 +16,9 @@ from typing import Any, NoReturn
 
 from .operad.colours import ADMITTED_FINITE_COLOURS
 
-CATALOG_SCHEMA_V1 = "omega.oewas.capability_catalog.v1"
-CATALOG_DIGEST_DOMAIN_V1 = b"omega.oewas.capability_catalog.v1\0"
-AGENT_LICENSE_DIGEST_DOMAIN_V1 = b"omega.oewas.agent_license.v1\0"
+CATALOG_SCHEMA_V1 = "core.oewas.capability_catalog.v1"
+CATALOG_DIGEST_DOMAIN_V1 = b"core.oewas.capability_catalog.v1\0"
+AGENT_LICENSE_DIGEST_DOMAIN_V1 = b"core.oewas.agent_license.v1\0"
 AUTHORITY_EFFECT_NONE = "none"
 TRACKED_INVENTORY_V1 = "GIT_TRACKED_CANONICAL_ENTRYPOINTS"
 TRACKED_ENTRYPOINT_V1 = "TRACKED_CANONICAL"

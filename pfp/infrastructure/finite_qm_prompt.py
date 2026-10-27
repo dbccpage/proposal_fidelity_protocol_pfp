@@ -11,11 +11,11 @@ import re
 from hashlib import sha256
 from importlib.resources import files
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-from omega_engine_pfp.infrastructure.task_turn import PreparedTaskTurn
-from omega_engine_pfp.infrastructure.yaml_loading import strict_yaml_load
-from omega_engine_pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
-from omega_engine_pfp.use_cases.pfp_proposal import task_turn_validator
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+from pfp.infrastructure.task_turn import PreparedTaskTurn
+from pfp.infrastructure.yaml_loading import strict_yaml_load
+from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
+from pfp.use_cases.pfp_proposal import task_turn_validator
 
 ASSETS = "infrastructure/yaml/prompts/"
 PROFILE = ASSETS + "finite_qm/"
@@ -40,7 +40,7 @@ PRIVATE_KEYS = frozenset(
 
 def load_catalog() -> dict:
     return json.loads(
-        files("omega_engine_pfp")
+        files("pfp")
         .joinpath(ASSETS + "finite_qm_operad_catalog.json")
         .read_text(encoding="utf-8")
     )
@@ -50,7 +50,7 @@ def render_system_prompt(
     catalog: dict | None = None, *, selected_ids: tuple[str, ...] | None = None
 ) -> str:
     template = strict_yaml_load(
-        files("omega_engine_pfp")
+        files("pfp")
         .joinpath(PROFILE + "prompt_template.yaml")
         .read_text(encoding="utf-8")
     )
@@ -158,7 +158,7 @@ def prepare_finite_qm_turn(
             "answer_schema",
             "checker_id",
         }
-        or work_unit["schema_id"] != "omega.pfp.finite-qm-work-unit.v1"
+        or work_unit["schema_id"] != "core.pfp.finite-qm-work-unit.v1"
     ):
         raise ValueError("WORK_UNIT_SCHEMA")
     _public_exact(work_unit)
@@ -255,15 +255,15 @@ def prepare_finite_qm_turn(
     _witness_schema(schema)
     task_turn_validator(schema)
     template = strict_yaml_load(
-        files("omega_engine_pfp")
+        files("pfp")
         .joinpath(PROFILE + "prompt_template.yaml")
         .read_text(encoding="utf-8")
     )
     workflow = strict_yaml_load(
-        files("omega_engine_pfp").joinpath(PROFILE + "workflow.yaml").read_text(encoding="utf-8")
+        files("pfp").joinpath(PROFILE + "workflow.yaml").read_text(encoding="utf-8")
     )
     mode = strict_yaml_load(
-        files("omega_engine_pfp").joinpath(PROFILE + "mode.yaml").read_text(encoding="utf-8")
+        files("pfp").joinpath(PROFILE + "mode.yaml").read_text(encoding="utf-8")
     )
     if (
         template["workflow"] != "workflow.yaml"

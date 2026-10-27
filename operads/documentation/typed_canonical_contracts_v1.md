@@ -1,6 +1,6 @@
 # Typed canonical instruction contracts v1
 
-AuthorityEffect: None. Remaining work: [EPIC-OE-OEWAS-011 R1](../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_011_consolidated_residual_plan.md#r1-canonical-contracts-and-markdown-compatibility). The bounded pair is implemented and locally exercised; acceptance is limited to the pinned [integration verification receipt](../receipts/typed_contracts_20261010/verification.json) and [independent controls](../receipts/typed_contracts_20261010/independent/review.json). Full scope remains held.
+AuthorityEffect: None. Remaining work: [EPIC-OE-OEWAS-011 R1](../../product_planning_office/plans/epics/oewas/epic_oe_oewas_011_consolidated_residual_plan.md#r1-canonical-contracts-and-markdown-compatibility). The bounded pair is implemented and locally exercised; acceptance is limited to the pinned [integration verification receipt](../receipts/typed_contracts_20261010/verification.json) and [independent controls](../receipts/typed_contracts_20261010/independent/review.json). Full scope remains held.
 
 ## Frontmatter and declaration boundary
 
@@ -124,10 +124,10 @@ The first four entries reuse existing owners rather than migrating the estate:
 
 | Kind | Canonical entry | Existing owner |
 | --- | --- | --- |
-| Rule | [Complete typed answer](../catalog/contracts/v1/lessons/woland-typed-answer-rule.json) | `.agents/rules/engineering/rl_python_contracts_and_runtime_invariants.md` |
-| Helpful pattern | [Strict input refusal](../catalog/contracts/v1/lessons/woland-strict-input-pattern.json) | `HP_PY_013_strict_input_typed_refusal.md` |
-| Anti-pattern | [Silent input coercion](../catalog/contracts/v1/lessons/woland-silent-coercion-antipattern.json) | `AP_PY_013_silent_input_schema_coercion.md` |
-| Antibody | [Prompt-attached coercion review](../catalog/contracts/v1/lessons/woland-input-coercion-antibody.json) | `ab_silent_input_schema_coercion`, still candidate |
+| Rule | [Complete typed answer](../catalog/contracts/v1/lessons/adversary-typed-answer-rule.json) | `.agents/rules/engineering/rl_python_contracts_and_runtime_invariants.md` |
+| Helpful pattern | [Strict input refusal](../catalog/contracts/v1/lessons/adversary-strict-input-pattern.json) | `HP_PY_013_strict_input_typed_refusal.md` |
+| Anti-pattern | [Silent input coercion](../catalog/contracts/v1/lessons/adversary-silent-coercion-antipattern.json) | `AP_PY_013_silent_input_schema_coercion.md` |
+| Antibody | [Prompt-attached coercion review](../catalog/contracts/v1/lessons/adversary-input-coercion-antibody.json) | `ab_silent_input_schema_coercion`, still candidate |
 
 Rule contracts separate trigger, predicate and response. Helpful patterns state
 conditions, construction and an example; anti-patterns state failure, witness
@@ -149,8 +149,8 @@ admission and two-signal evaluator still own activation.
 Run the same commands from the repository root:
 
 ```text
-python -m omega_engine_operads.infrastructure.typed_contract_compiler --repo-root . --write
-python -m omega_engine_operads.infrastructure.typed_contract_compiler --repo-root . --check
+python -m operads.infrastructure.typed_contract_compiler --repo-root . --write
+python -m operads.infrastructure.typed_contract_compiler --repo-root . --check
 ```
 
 The compiler discovers the original pair plus the selected canonical lessons
@@ -162,7 +162,7 @@ automatically loaded host rule. Existing ambient rules and host-maintained files
 remain with their owners. The projector still refuses conflicting bytes; review
 and reconcile an old generated file explicitly before regenerating it.
 
-For example, invoke `/woland-input-coercion-antibody` in an IDE to read its bound
+For example, invoke `/adversary-input-coercion-antibody` in an IDE to read its bound
 review prompt and controls against the actual candidate. This is useful review
 guidance, not an activated detector. Use the generated strict-input pattern to
 carry its construction and exceptions into the next worker brief.
@@ -182,7 +182,7 @@ filesystem adapter obtains the matching operation from
 and catalog resources. It does not reparse generated prose as an operation-free
 Markdown document. Ordinary Markdown and V3 fences still use the lossless parser;
 older estate-source implementations retain their default Markdown path.
-Woland's signed route reader also selects `all_documents`, including digested
+Adversary's signed route reader also selects `all_documents`, including digested
 rules, patterns and prompt-attached candidate antibodies.
 
 A missing historical lesson source under
@@ -205,7 +205,7 @@ V3 source declarations may restrict an operation to `Retired`; they cannot grant
 themselves admission. An optional `replacement_operation_id` is meaningful only
 on a retired operation. Omitting it preserves existing operation content hashes.
 The projection carries source and operation pins plus retirement/replacement
-metadata. The existing signed Woland ingress replays that projection against
+metadata. The existing signed Adversary ingress replays that projection against
 current sources and includes its bytes in the candidate plan binding.
 
 Retired access refuses before provider work. A replacement must exist, remain
@@ -223,13 +223,13 @@ The continued digestion adds these source-bound entries to the same catalog:
 
 | Entry | Concrete lesson | Retained source |
 | --- | --- | --- |
-| [Assigned outcome rule](../catalog/contracts/v1/lessons/woland-assigned-outcome-rule.json) | One solve and 99 refusals is 1% assigned-task success; keep conditional rates separately labelled. | PFP integration evidence, D2 |
-| [Free information pattern](../catalog/contracts/v1/lessons/woland-free-information-pattern.json) | Check the admitted initial fiber before scheduling another query. | Calibration R1 mathematical finding, corrected in R2 |
-| [Parser work anti-pattern](../catalog/contracts/v1/lessons/woland-parser-work-antipattern.json) | A short exponent string can perform costly arithmetic before post-construction bounds. | Calibration R1 code finding and R2 correction |
-| [Parser work antibody](../catalog/contracts/v1/lessons/woland-parser-work-antibody.json) | Bind the exact-parser review prompt, harmful constructor ordering and a benign admitted-input control. | Calibration R2 code repair review |
-| [Proof scope rule](../catalog/contracts/v1/lessons/woland-proof-scope-rule.json) | Separate formal scope, quantitative margins and qualitative consequences. | Initially Calibration R2; refined from the Meron R4 scope correction below |
-| [Scoped reuse pattern](../catalog/contracts/v1/lessons/woland-scoped-reuse-pattern.json) | Recheck changed dependencies; retain unchanged evidence at its original scope and date. | Calibration R2 code review |
-| [Stale-task antibody](../catalog/contracts/v1/lessons/woland-stale-task-antibody.json) | A fixed `d=1` guard rejects a valid `d=2` solution; check the current task and exact carrier before reuse. | Recursive-reentry assignment, with fresh nine-element finite controls |
+| [Assigned outcome rule](../catalog/contracts/v1/lessons/adversary-assigned-outcome-rule.json) | One solve and 99 refusals is 1% assigned-task success; keep conditional rates separately labelled. | PFP integration evidence, D2 |
+| [Free information pattern](../catalog/contracts/v1/lessons/adversary-free-information-pattern.json) | Check the admitted initial fiber before scheduling another query. | Calibration R1 mathematical finding, corrected in R2 |
+| [Parser work anti-pattern](../catalog/contracts/v1/lessons/adversary-parser-work-antipattern.json) | A short exponent string can perform costly arithmetic before post-construction bounds. | Calibration R1 code finding and R2 correction |
+| [Parser work antibody](../catalog/contracts/v1/lessons/adversary-parser-work-antibody.json) | Bind the exact-parser review prompt, harmful constructor ordering and a benign admitted-input control. | Calibration R2 code repair review |
+| [Proof scope rule](../catalog/contracts/v1/lessons/adversary-proof-scope-rule.json) | Separate formal scope, quantitative margins and qualitative consequences. | Initially Calibration R2; refined from the Meron R4 scope correction below |
+| [Scoped reuse pattern](../catalog/contracts/v1/lessons/adversary-scoped-reuse-pattern.json) | Recheck changed dependencies; retain unchanged evidence at its original scope and date. | Calibration R2 code review |
+| [Stale-task antibody](../catalog/contracts/v1/lessons/adversary-stale-task-antibody.json) | A fixed `d=1` guard rejects a valid `d=2` solution; check the current task and exact carrier before reuse. | Recursive-reentry assignment, with fresh nine-element finite controls |
 
 These entries quote actual retained source bytes. Their historical tests and
 mathematical findings are not new execution results. In particular, the parser
@@ -267,8 +267,8 @@ historical navigation; it is not changed into a full-review claim.
 
 | Typed guidance | Finding and correction | Limit |
 | --- | --- | --- |
-| [Proof premise rule](../catalog/contracts/v1/lessons/woland-proof-premise-rule.json) | R2-OBJ-03 omitted `mu>=0` from the public bound; B1 carries it into the claim and input contract, and the R6 report confirms the restriction. | Later repair is source-reported. Excluded inputs do not refute a correctly restricted claim. |
-| [Check sensitivity pattern](../catalog/contracts/v1/lessons/woland-check-sensitivity-pattern.json) | R6-CX-01 changes K while retaining checked bond terms; require their semantic binding and a mutation through the actual consumer. | The full lift check already catches it. F1 is a proposed standalone-check repair, not completed work here. |
+| [Proof premise rule](../catalog/contracts/v1/lessons/adversary-proof-premise-rule.json) | R2-OBJ-03 omitted `mu>=0` from the public bound; B1 carries it into the claim and input contract, and the R6 report confirms the restriction. | Later repair is source-reported. Excluded inputs do not refute a correctly restricted claim. |
+| [Check sensitivity pattern](../catalog/contracts/v1/lessons/adversary-check-sensitivity-pattern.json) | R6-CX-01 changes K while retaining checked bond terms; require their semantic binding and a mutation through the actual consumer. | The full lift check already catches it. F1 is a proposed standalone-check repair, not completed work here. |
 
 R2 numerical attacks report observations far below loose bounds, finite
 truncation and some shared builders. Preserve those limitations instead of
@@ -316,8 +316,8 @@ historical defect is asserted to persist in current model code.
 
 These refinements amend three existing entries, preserve the thirteen guidance
 operands and three candidate prompt attachments, and regenerate the same fifteen
-IDE packages. The existing Woland and digestion owners carry the corrections.
-Their optional [staged prompt/scratchpad template](../../.agents/skills/woland-digests/references/review_to_structure.md#optional-staged-prompt-and-scratchpad)
+IDE packages. The existing Adversary and digestion owners carry the corrections.
+Their optional [staged prompt/scratchpad template](../../.agents/skills/adversary-digests/references/review_to_structure.md#optional-staged-prompt-and-scratchpad)
 uses current `TeamworkAction`/`TeamworkObservation` fields and temporary metadata;
 it adds no runtime schema, automatic metadata forwarding or performance claim.
 
@@ -341,9 +341,9 @@ outside this read; the whole corpus is not certified.
 The sections below retain the original pair's design and historical validation;
 the digested guidance extension above adds four instruction kinds to that compiler.
 
-Add two versioned canonical sources: [claim audit](../catalog/contracts/v1/woland_claim_audit.json) and [scope falsifier](../catalog/contracts/v1/woland_scope_falsifier.json), with [claim-audit instructions](../catalog/contracts/v1/instructions/woland_claim_audit.md), [falsifier instructions](../catalog/contracts/v1/instructions/woland_scope_falsifier.md) and the [fixture bank](../catalog/contracts/v1/scope_falsifier_fixtures.json). Their repository root is `omega_engine_operads/catalog/contracts/v1`. Compile them through [compile_typed_contracts(repo_root)](../infrastructure/typed_contract_compiler.py) into existing typed domain objects and generated IDE packages. These instruction-package contracts do not replace the canonical `omega.contract.v2` governance estate or the existing capability inventory.
+Add two versioned canonical sources: [claim audit](../catalog/contracts/v1/adversary_claim_audit.json) and [scope falsifier](../catalog/contracts/v1/adversary_scope_falsifier.json), with [claim-audit instructions](../catalog/contracts/v1/instructions/adversary_claim_audit.md), [falsifier instructions](../catalog/contracts/v1/instructions/adversary_scope_falsifier.md) and the [fixture bank](../catalog/contracts/v1/scope_falsifier_fixtures.json). Their repository root is `operads/catalog/contracts/v1`. Compile them through [compile_typed_contracts(repo_root)](../infrastructure/typed_contract_compiler.py) into existing typed domain objects and generated IDE packages. These instruction-package contracts do not replace the canonical `core.contract.v2` governance estate or the existing capability inventory.
 
-[CapabilityCatalogV1](../domain/capability_catalog_v1.py) remains the catalog type and canonical encode/decode boundary. [OperationV3](../domain/entities/operation_v3.py) remains the ordered-port operation type; [candidate-plan compilation](../application/woland_candidate_plan.py) remains the composition boundary. [AntiSkillSpecV2](../domain/anti_skills/anti_skill_v2.py) and [evaluate_antiskill_fixture_bank](../application/anti_skill/anti_skill_v2.py) provide the closed predicate and offline execution. The new strict wire model adapts to these types; it does not create a parallel registry, evaluator or admission authority.
+[CapabilityCatalogV1](../domain/capability_catalog_v1.py) remains the catalog type and canonical encode/decode boundary. [OperationV3](../domain/entities/operation_v3.py) remains the ordered-port operation type; [candidate-plan compilation](../application/adversary_candidate_plan.py) remains the composition boundary. [AntiSkillSpecV2](../domain/anti_skills/anti_skill_v2.py) and [evaluate_antiskill_fixture_bank](../application/anti_skill/anti_skill_v2.py) provide the closed predicate and offline execution. The new strict wire model adapts to these types; it does not create a parallel registry, evaluator or admission authority.
 
 The compiled pair's catalog is scoped to these two packages. Full estate discovery still belongs to the [tracked-inventory catalog compiler](../infrastructure/capability_catalog_compiler.py); a two-entry projection must not overwrite its full inventory. The existing estate compiler recognizes generated metadata, freshly compiles the pair and requires its resource paths in the tracked inventory; drift or untracked sources refuse. Existing HTTP/IDE Pydantic DTOs are transport/view models, not canonical semantic contracts.
 
@@ -351,22 +351,22 @@ The compiled pair's catalog is scoped to these two packages. Full estate discove
 
 | Package | Kind implemented here | Finite behavior | Authority ceiling |
 | --- | --- | --- | --- |
-| `woland-claim-audit` | skill | Declared ordered inputs, instruction body and finding output, composable through the existing candidate-plan port | Declaration-only, UNBOUND catalog executor and Unadmitted plan |
-| `woland-scope-falsifier` | anti_skill | Exactly ALL(single NOT_SUBSET_FIELDS(claim_scope, evidence_scope), no values) detects scope overclaim on valid typed subjects; finite positive/negative fixtures | PROPOSED detector, offline execution only, runtime enforcement false |
+| `adversary-claim-audit` | skill | Declared ordered inputs, instruction body and finding output, composable through the existing candidate-plan port | Declaration-only, UNBOUND catalog executor and Unadmitted plan |
+| `adversary-scope-falsifier` | anti_skill | Exactly ALL(single NOT_SUBSET_FIELDS(claim_scope, evidence_scope), no values) detects scope overclaim on valid typed subjects; finite positive/negative fixtures | PROPOSED detector, offline execution only, runtime enforcement false |
 
 The [strict Pydantic union](../contracts/typed_capabilities_v1.py) exports [typed_capability.schema.json](../catalog/contracts/v1/typed_capability.schema.json). Its `oewas.sorted-ascii-json.v1` profile uses sorted keys, compact separators, ASCII escaping, no NaN and exactly one trailing LF; input bytes must match. This is not RFC 8785. Schema/version, fields and types are closed. Duplicate constructed keys, including decoded escapes, must refuse before value selection. Relative body paths must stay inside the selected package source boundary; body content is bound by an independently recomputed digest. No source text may select an arbitrary executor, provider, approval or active detector registry. A compiled operand span identifies the JSON instruction ResourceRef object; the external body has its own byte hash. This is reference provenance, not a claim that body text occurs inside JSON. Compiler and wire source bytes are also included in the aggregate contracts binding.
 
-The [host projector](../../omega_engine_operations/use_cases/packaging/project_typed_contracts.py) generates `skills/<id>/SKILL.md` for the two IDs under `.agents`, `.claude`, `.codex` and `.grok`. Output includes standard name/description frontmatter, declared signature, source binding and instructions. Repeated generation must be deterministic; changed or host-owned content must refuse rather than be overwritten. Existing `woland` packages and other host-maintained files remain outside the generated path set. Preflight conflicts cause no writes. There is no cross-file transaction: an I/O error or concurrent change during creation may leave a partial projection, so callers must serialize directory ownership and verify all outputs. A changed generated file also refuses; automatic replacement/upgrades require a separate reviewed policy.
+The [host projector](../../operations/use_cases/packaging/project_typed_contracts.py) generates `skills/<id>/SKILL.md` for the two IDs under `.agents`, `.claude`, `.codex` and `.grok`. Output includes standard name/description frontmatter, declared signature, source binding and instructions. Repeated generation must be deterministic; changed or host-owned content must refuse rather than be overwritten. Existing `adversary` packages and other host-maintained files remain outside the generated path set. Preflight conflicts cause no writes. There is no cross-file transaction: an I/O error or concurrent change during creation may leave a partial projection, so callers must serialize directory ownership and verify all outputs. A changed generated file also refuses; automatic replacement/upgrades require a separate reviewed policy.
 
-A generated package is discoverable instruction text, not proof of host execution. The implemented [verify_typed_contract_admission helper](../application/typed_contract_audit.py) freshly audits and selects the typed plan, then reuses [signed Woland instruction admission](../application/woland_instruction_admission.py) with an independently supplied signature and exact plan/source/body bindings. Targeted tests exercise this instruction-custody path and subject/source/fixture/signature refusals; ephemeral test signatures do not supply production operator approval, detector activation or Woland dispatch. The compiler must not mint that signature or approval. The legacy Python anti-skill admission verifier is retired, and Rust `omega.eis.anti_skill.v2` is a different schema from the closed-predicate Python spec. Neither supplies missing detector activation. Fixture success never creates an antibody or production license. [audit_typed_contracts](../application/typed_contract_audit.py) freshly compiles sources, replays fixtures and evaluates the real subject; its receipt stays Unadmitted with runtime activation HOLD. A caller may supply an externally retained expected contracts digest for replay custody. CLEAN means only that the configured finite predicate did not match that typed subject.
+A generated package is discoverable instruction text, not proof of host execution. The implemented [verify_typed_contract_admission helper](../application/typed_contract_audit.py) freshly audits and selects the typed plan, then reuses [signed Adversary instruction admission](../application/adversary_instruction_admission.py) with an independently supplied signature and exact plan/source/body bindings. Targeted tests exercise this instruction-custody path and subject/source/fixture/signature refusals; ephemeral test signatures do not supply production operator approval, detector activation or Adversary dispatch. The compiler must not mint that signature or approval. The legacy Python anti-skill admission verifier is retired, and Rust `core.eis.anti_skill.v2` is a different schema from the closed-predicate Python spec. Neither supplies missing detector activation. Fixture success never creates an antibody or production license. [audit_typed_contracts](../application/typed_contract_audit.py) freshly compiles sources, replays fixtures and evaluates the real subject; its receipt stays Unadmitted with runtime activation HOLD. A caller may supply an externally retained expected contracts digest for replay custody. CLEAN means only that the configured finite predicate did not match that typed subject.
 
 The CLI normalizes its repository root to an absolute Path before projection; a separate real relative-root RED/GREEN control covers that boundary. The CLI exposes the following explicit modes; these commands are usage examples, not execution evidence:
 
 ```text
-python -m omega_engine_operads.infrastructure.typed_contract_compiler --repo-root . --show-schema
-python -m omega_engine_operads.infrastructure.typed_contract_compiler --repo-root . --write
-python -m omega_engine_operads.infrastructure.typed_contract_compiler --repo-root . --check
-python -m omega_engine_operads.infrastructure.typed_contract_compiler --repo-root . --audit-subject subject.json
+python -m operads.infrastructure.typed_contract_compiler --repo-root . --show-schema
+python -m operads.infrastructure.typed_contract_compiler --repo-root . --write
+python -m operads.infrastructure.typed_contract_compiler --repo-root . --check
+python -m operads.infrastructure.typed_contract_compiler --repo-root . --audit-subject subject.json
 ```
 
 ## Taxonomy and implementation boundary
@@ -396,7 +396,7 @@ Primary sources were read on 2026-10-10 for the following concept mapping. This 
 | [DSPy, arXiv v1](https://arxiv.org/abs/2310.03714v1) | Declarative modules and graph composition separate program structure from prompt text. | Use ordered signatures and separate instruction bodies. No optimizer, learned prompt selection or DSPy runtime is introduced. |
 | [Agent Skills specification](https://agentskills.io/specification) | Host package uses a directory with YAML-frontmatter `SKILL.md` and optional resources. | Generate host packaging from typed sources. Host compatibility/discovery is distinct from enforcement; experimental allowed-tools metadata is not execution authority. |
 
-Agent Skills is a packaging specification, not a research paper. The other sources describe different systems and scopes. Their reported benchmark results are not measurements of these Woland packages and are not adopted as performance claims.
+Agent Skills is a packaging specification, not a research paper. The other sources describe different systems and scopes. Their reported benchmark results are not measurements of these Adversary packages and are not adopted as performance claims.
 
 ## Finite experiment and negative controls
 
@@ -407,7 +407,7 @@ Freeze the two source contracts, instruction bytes, compiler/domain implementati
 | Strict ingress | Exact valid pair compiles; corrected malformed package can retry | Duplicate/escaped key, unknown kind/field, coercible wrong type, missing body, path escape | Exact refusal code/detail or typed output; no coercion |
 | Body and catalog binding | Independently hash body and round-trip existing catalog | Changed body, foreign source/digest, reordered ports | Binding refusal or expected digest/order difference |
 | Offline scope detector | Bounded claim and overclaim fixtures in distinct contexts | Equal scopes, empty-claim subject refusal, unrelated context and changed implementation/spec/fixture digest | Per-case expected versus actual match/disposition; exact fixture denominator |
-| Host packaging | Identical repeat and byte-identical active-host outputs | Tampered generated output, conflicting host-owned file and unrelated Woland sentinel | Determinism, typed conflict and unchanged protected bytes |
+| Host packaging | Identical repeat and byte-identical active-host outputs | Tampered generated output, conflicting host-owned file and unrelated Adversary sentinel | Determinism, typed conflict and unchanged protected bytes |
 | Optional signed consumption | Independently supplied signed admission at existing port | Wrong signer, source snapshot or ordered body digest | Existing verifier result; missing signature leaves this path held |
 
 The independent controls found and retained real catalog-resource and instruction-encoding RED failures before the bounded GREEN repairs. Keep observing a real public-port RED before each new minimal GREEN repair; already-GREEN controls document reuse. Then bypass a relevant production ingress/body/ownership guard, require the corresponding test to fail, restore exact bytes, and replay the named controls. Keep one-to-three test files per batch and at most three repair attempts. The epic contains exact candidate paths and commands; actual receipt must add versions, exit codes, raw output and source/test/mutation/restoration hashes.

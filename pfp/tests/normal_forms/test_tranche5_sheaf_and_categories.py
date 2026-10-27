@@ -448,9 +448,9 @@ class TestTranche5SheafAndCategories(unittest.TestCase):
         self.assertEqual(phase**order, 1.0)
 
     # -------------------------------------------------------------------------
-    # Test 69: Subobject Classifier Omega Truth Values
+    # Test 69: Subobject Classifier Core Truth Values
     # -------------------------------------------------------------------------
-    def test_subobject_classifier_omega_truth_values(self) -> None:
+    def test_subobject_classifier_core_truth_values(self) -> None:
         """Subobject classifier Omega={True, False} classifies subsets via characteristic map."""
         domain = [1, 2, 3, 4, 5]
         sub = {2, 4}

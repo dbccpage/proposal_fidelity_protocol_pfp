@@ -1,10 +1,10 @@
 ---
 paths:
-  - "omega_engine_education/documentation/**"
+  - "education/documentation/**"
   - "**/*genesis*/**"
   - "**/002_oesn/**"
   - "**/*mssn*/**"
-  - "omega_engine_pfp/domain/tower/**"
+  - "pfp/domain/tower/**"
 ---
 
 # Rule: Genesis Primitives & Relational Substrate

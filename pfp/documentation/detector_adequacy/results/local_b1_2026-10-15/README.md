@@ -6,7 +6,7 @@ were committed before the run, in pre-registration section 6.1 (`4e1d672f3`).
 
 | Field | Value |
 |---|---|
-| Command | `python3 -m omega_engine_pfp.use_cases.detector_adequacy.local_battery --lock-commit 447a44942… --n 300 --out omega_engine_pfp/documentation/detector_adequacy/results/local_b1_2026-10-15` |
+| Command | `python3 -m pfp.use_cases.detector_adequacy.local_battery --lock-commit 447a44942… --n 300 --out pfp/documentation/detector_adequacy/results/local_b1_2026-10-15` |
 | Seed and families | Same as the Stage A run, so each row pairs with the Stage A row for the same item |
 | Python | 3.13.16; exit status 0; about 36 s |
 | File | `local_summary.json` |

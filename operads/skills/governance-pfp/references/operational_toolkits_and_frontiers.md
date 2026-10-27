@@ -10,7 +10,7 @@ AuthorityEffect: None.
 ## 2. Prompt Contract & Linter
 
 - **Soundness Classes:** Partition prompts into deterministic contract classes (Syntactic, Semantic, Closed-Form).
-- **Landau Trap Avoidance:** Strict prohibition against unconstrained conversational preambles and sycophantic praise. Enforces direct RFC 8785 JSON or packet input.
+- **Examiner Trap Avoidance:** Strict prohibition against unconstrained conversational preambles and sycophantic praise. Enforces direct RFC 8785 JSON or packet input.
 
 ## 3. Receipt Replay & Terminal Ladder
 
@@ -43,4 +43,4 @@ Four-tier mutation testing model (M1–M4):
 When local cycle deadlocks occur ($\Phi_1 > 0$ under locked gauge), Act IV executes a 9-Dot Gauge Break:
 1. **Nocebo Plunge:** Relentlessly expose worst-case failure modes and unexamined carrier assumptions.
 2. **Placebo Rebound:** Invert polarity into high-agency constructive confidence, channeling failure analysis into an orthogonal solution.
-3. **Terminal Reality Gate:** Monotonic descent to exact certificates ($\Phi_1 = 0, \Gamma_2 = 0$) under Woland tribunal supervision.
+3. **Terminal Reality Gate:** Monotonic descent to exact certificates ($\Phi_1 = 0, \Gamma_2 = 0$) under Adversary tribunal supervision.

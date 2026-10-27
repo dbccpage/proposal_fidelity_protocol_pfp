@@ -10,19 +10,19 @@ from typing import Any, Optional
 
 import pytest
 
-from omega_engine_pfp.domain.ddc.dda import (
+from pfp.domain.ddc.dda import (
     DDALetter,
     DDATraceNode,
     LyapunovTracker,
 )
-from omega_engine_pfp.domain.ddc.visualize import (
+from pfp.domain.ddc.visualize import (
     LyapunovPlotRendererPort,
     export_lyapunov_descent_data,
     export_lyapunov_descent_plot,
     register_lyapunov_plot_renderer,
     render_lyapunov_descent_ascii,
 )
-from omega_engine_pfp.infrastructure.adapters.ddc_plot_adapter import (
+from pfp.infrastructure.adapters.ddc_plot_adapter import (
     render_lyapunov_descent_plot,
 )
 

@@ -1,0 +1,75 @@
+# Epic: Executed Thymus Screening and Provenance-Bound Two-Signal Activation
+
+**Epic ID:** `EPIC-OE-EIS-002`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+
+**Lifecycle scope:** LIVE — residual custody verification
+**Date:** October 2026
+**Target Crate:** `core_epistemic_immune_system`
+**Prior Art Grounding:** `LIB-016711`, `LIB-016885` (source references)
+
+## Current ports and claim boundaries
+
+[ThymusGate](../../../../eis/domain/thymus.py) screens an explicit healthy self-panel by executing a bound matcher. A non-regex matcher without an executable port refuses with THYMUS_MATCHER_UNBOUND; mismatched identity refuses rather than issuing a clean panel verdict. Panel cardinality is explicit and finite, not a universal healthy-code guarantee.
+
+[External admission evaluation](../../../../eis/domain/external_admission.py) checks observation identities and candidate/producer/source/fixture bindings. [assess_antibody](../../../../eis/use_cases/antibody_admission.py) takes the required distinct count from policy. Repeated copies do not create independence; no global threshold of three is inferred. Support eligibility remains distinct from external admission.
+
+[TwoSignalDangerGate](../../../../eis/domain/danger_gate.py) exposes both low-level evaluation and independent-signal evaluation. [activate_learned_guard](../../../../eis/use_cases/guard_activation.py) supplies the state and provenance boundary. Native [danger_gate.rs](../../../../engine/crates_rs/core_epistemic_immune_system/src/danger_gate.rs) enforces admitted status, matching and corroboration at its declared typed interface; its enum is not by itself proof that a host observer was authenticated.
+
+## Acceptance and residual obligations
+
+Separate four questions: does the executable detector hit the subject; does it survive the declared self-panel; does it have independent support under the named policy; and is activation externally admitted with a bound independent danger receipt? A passing answer to one cannot substitute for another.
+
+Use real positive and negative fixtures. Unadmitted/suspended state, malformed matcher, missing provenance, duplicate observations and subject transplants must fail without granting admission or activation. Recovery restores only the same finite decision for valid original bytes. Quantified false-positive reduction requires separate empirical evaluation.
+
+## Host-health truth table and unresolved port
+
+Current activate_learned_guard reads admission/suspension and invokes a DangerSensor; it does not accept a separately authenticated host-health receipt. Add a small upstream health gate only after specifying observer identity, health scope, expiry and source digest. Missing or unhealthy host status cannot default to healthy. This is a residual dependency, not a claim that the present four-conjunct port already enforces health.
+
+| Admitted active rule | Signal 1 match | Independent bound Signal 2 | Host health | Planned result |
+|---|---|---|---|---|
+| No or suspended | Any | Any | Any | Refuse activation |
+| Yes | No | Any | Healthy | No learned-guard activation |
+| Yes | Yes | Missing/correlated/transplanted | Healthy | Diagnostic/hold; no activation |
+| Yes | Yes | Valid | Unknown/unhealthy/expired | Host-context hold/refusal; no activation |
+| Yes | Yes | Valid | Bound healthy | Eligible for this finite activation decision only |
+
+**Additional ordered TDD slice:** proposed `eis/tests/unit/test_activation_host_health.py::test_host_health_unknown_transplant_and_recovery` starts RED when otherwise valid signals activate under missing/unhealthy health. Implement one verified-health adapter, then test wrong subject/observer/expired health and restore the original healthy receipt. Compare a literal truth table and actual native activation result; never set a test-only healthy boolean. The adapter is absent, so its mutation target becomes the actual default/expiry branch after implementation. The verified integration seam remains [activate_learned_guard](../../../../eis/use_cases/guard_activation.py).
+
+~~~powershell
+py -3.12 -m pytest eis/tests/unit/test_activation_host_health.py -q
+~~~
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** Thymus must execute the supplied matcher over a nonempty explicit self-panel, not accept a matcher label as evidence. Independent observation support is policy-owned (required_distinct), not universally three. Python evaluate_independent and the provenance-bearing activation use case are stricter boundaries than an unauthenticated signal enum.
+
+**Bounded behavior and public port:** Call ThymusGate.evaluate_rule with an explicit self-panel and executable matcher; assess_antibody with required_distinct and ledger; activate_learned_guard with GuardStatePort, subject digest and independent danger receipt. Read actual match outcome, support counts and typed activation refusal, with real finite fixtures.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Syntax Prefilter checks malformed input; Bare Metal Anchor/Techne implements the smallest production change; Defect Hunter and the Inspector challenge the independent oracle; Punchlist checks custody before Adversary records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | A detector matching a healthy self fixture must report an autoimmune violation with is_admitted=False; implement executed-matcher screening; a clean detector passes only this panel and unbound/mismatched matcher refuses. | Extend `eis/tests/unit/test_thymus_binds_executed_matcher.py::test_self_reactive_and_unbound_matcher_controls`; literal healthy text and a real matcher with known matched span. |
+| 2 | Two copies of the same observation must count once, and a transplanted producer/source digest must refuse; implement identity/binding validation; accept two distinct valid observations when policy explicitly requires two. | Extend `eis/tests/unit/test_external_admission.py::test_policy_threshold_and_duplicate_observation`; independently listed observation identities and exact configured support count. |
+| 3 | Pattern match alone, correlated danger, unadmitted or suspended state must not activate; implement the narrow provenance checks; accept admitted active state plus independently bound danger for the same subject. | Extend `eis/tests/unit/test_guard_activation.py::test_activation_requires_independent_bound_signals`; explicit state/digest fixtures and no side-effect on refusal. |
+| 4 | Alter the subject digest after a successful receipt and require refusal; restore original subject and recover the finite activation decision without promoting the rule. | Proposed `eis/tests/unit/test_activation_receipt_transplant.py::test_subject_transplant_and_recovery`; independently computed subject SHA-256 and unchanged admission ledger. |
+
+**Decisive mutation and theoretical minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Bypass matcher-ID binding in [thymus.py](../../../../eis/domain/thymus.py) or signal independence in [danger_gate.py](../../../../eis/domain/danger_gate.py); each relevant negative control must fail. Skip the state/digest gate in [guard_activation.py](../../../../eis/use_cases/guard_activation.py) to test real activation custody. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+py -3.12 -m pytest eis/tests/unit/test_thymus_binds_executed_matcher.py -q
+py -3.12 -m pytest eis/tests/unit/test_external_admission.py -q
+py -3.12 -m pytest eis/tests/unit/test_guard_activation.py -q
+py -3.12 -m pytest eis/tests/unit/test_activation_receipt_transplant.py -q
+~~~
+
+**Cross-epic sink ownership:** EIS owns detector/support/activation/regulation evidence; the external admission/trust decision remains outside learned candidates. Adversary can challenge and route findings but cannot admit them. Providers and PFP consume typed findings through explicit adapters, preserving EIS provenance and subject/rule digests. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Panel survival is finite tolerance evidence. Independent support retains CANDIDATE status until external admission; low-level Rust signal enums alone do not authenticate observer independence. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

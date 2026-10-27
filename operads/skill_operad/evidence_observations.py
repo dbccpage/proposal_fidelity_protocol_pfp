@@ -14,7 +14,7 @@ from dataclasses import dataclass
 import math
 from typing import Any, Mapping
 
-RECORDED_SCHEMA = "omega.operad.execution_trace.v1"
+RECORDED_SCHEMA = "core.operad.execution_trace.v1"
 
 
 class ResidualObservationError(ValueError):

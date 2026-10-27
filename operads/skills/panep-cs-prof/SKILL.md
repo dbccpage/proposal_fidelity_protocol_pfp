@@ -12,7 +12,7 @@ operad_residual: "unknown"
 
 ## authority_effect_ceiling: None
 
-The `panep-cs-prof` skill is the **Single Point of Academic Authority** for Computer Science, Machine Learning, Artificial Intelligence, Information Theory, Algorithmic Complexity, and the Proposal Fidelity Protocol (PFP / Symbol Games) across the Anomalon Estate.
+The `panep-cs-prof` skill is the **Single Point of Academic Authority** for Computer Science, Machine Learning, Artificial Intelligence, Information Theory, Algorithmic Complexity, and the Proposal Fidelity Protocol (PFP / Symbol Games) across the Sentinel Estate.
 
 ---
 
@@ -92,7 +92,7 @@ The **Proposal Fidelity Protocol (PFP)** orchestrates prose-free, high-density $
                                           ▼
                ┌────────────────────────────────────────────────────────┐
                │ 2. Formal Lean 4 Target Module                         │
-               │    Formal obligations under omega_engine/lean4/        │
+               │    Formal obligations under engine/lean4/        │
                └──────────────────────────┬─────────────────────────────┘
                                           │
                                           ▼
@@ -107,7 +107,7 @@ The **Proposal Fidelity Protocol (PFP)** orchestrates prose-free, high-density $
 - **SymSys-36:** Dense surface alphabet & codec inventory.
 - **CEC-$k$:** Obstruction-lift depth of certified presentations.
 - **Topological Rank:** Dimension indices ($N/L/C_2/F_1/M_1/H_1$) tracking topological complexity within rich CEC stages.
-- **Execution Engines:** Specification in `008_engine_runtime/pfp_trilingual_loop_spec.md`, runner in `omega_engine_py/omega_symbol_game/trilingual_loop.py`.
+- **Execution Engines:** Specification in `008_engine_runtime/pfp_trilingual_loop_spec.md`, runner in `engine_py/core_symbol_game/trilingual_loop.py`.
 
 ---
 
@@ -127,10 +127,10 @@ The **Proposal Fidelity Protocol (PFP)** orchestrates prose-free, high-density $
 
 ```powershell
 # Execute PFP Trilingual Loop tests
-python omega_engine_py/omega_symbol_game/tests/test_trilingual_loop.py
+python engine_py/core_symbol_game/tests/test_trilingual_loop.py
 
 # Execute Python development office architecture rules
-python -m pytest omega_engine_operads/tests/python_development_office/ -q
+python -m pytest operads/tests/python_development_office/ -q
 ```
 
 ### Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)

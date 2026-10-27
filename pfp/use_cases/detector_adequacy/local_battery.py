@@ -1,6 +1,6 @@
 """Exploratory run of the local-only detectors on the Stage A families (decision B1).
 
-    python -m omega_engine_pfp.use_cases.detector_adequacy.local_battery \\
+    python -m pfp.use_cases.detector_adequacy.local_battery \\
         --lock-commit <sha> --n 300 --out <dir>
 
 It uses the Stage A seed (derived from the same lock commit) and the same families, so a row
@@ -18,7 +18,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from omega_engine_pfp.use_cases.detector_adequacy import battery, detectors, local_detector, traces
+from pfp.use_cases.detector_adequacy import battery, detectors, local_detector, traces
 
 DETECTORS = ("D2_E1_disjoint_triangles", *local_detector.LOCAL_DETECTORS)
 
@@ -89,7 +89,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         "prereg": battery.PREREG_ID, "amendment": "6.1", "authority_effect": "None",
         "exploratory": True, "lock_commit": args.lock_commit, "seed": seed, "n_per_family": args.n,
         "local_detector_sha256": detectors.sha256_file(
-            root / "omega_engine_pfp/use_cases/detector_adequacy/local_detector.py"),
+            root / "pfp/use_cases/detector_adequacy/local_detector.py"),
         "table": summarise(rows),
     }
     out = Path(args.out)

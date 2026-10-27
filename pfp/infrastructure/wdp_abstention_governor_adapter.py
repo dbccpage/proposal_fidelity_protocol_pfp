@@ -11,24 +11,24 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from omega_engine_applications.wdp_products.reference.certified_progress import checker as cp_checker
-from omega_engine_applications.wdp_products.reference.certified_progress import model as cp_model
-from omega_engine_applications.wdp_products.reference.certified_progress import observation as cp_obs
-from omega_engine_applications.wdp_products.reference.certified_progress import producer as cp_producer
-from omega_engine_applications.wdp_products.reference.certified_progress import structural as cp_structural
-from omega_engine_applications.wdp_products.kernel.adapter import (
+from applications.wdp_products.reference.certified_progress import checker as cp_checker
+from applications.wdp_products.reference.certified_progress import model as cp_model
+from applications.wdp_products.reference.certified_progress import observation as cp_obs
+from applications.wdp_products.reference.certified_progress import producer as cp_producer
+from applications.wdp_products.reference.certified_progress import structural as cp_structural
+from applications.wdp_products.kernel.adapter import (
     WdpReceiptIssuer,
 )
-from omega_engine_applications.wdp_products.p1_abstention_governor.adapter import (
+from applications.wdp_products.p1_abstention_governor.adapter import (
     WdpAbstentionGovernor,
 )
-from omega_engine_applications.wdp_products.p1_abstention_governor.contracts import (
+from applications.wdp_products.p1_abstention_governor.contracts import (
     GovernorReport,
 )
 
 
 class WdpAbstentionGovernorAdapter:
-    """Binds `certified_progress` and `WdpAbstentionGovernor` to `omega_engine_pfp`."""
+    """Binds `certified_progress` and `WdpAbstentionGovernor` to `pfp`."""
 
     def __init__(self) -> None:
         self._governor = WdpAbstentionGovernor()

@@ -4,14 +4,14 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_operads.contracts.operad_realization_v1 import (
+from operations.domain.rop.result import Ok
+from operads.contracts.operad_realization_v1 import (
     ModelBindingError, realize_native_result,
 )
-from omega_engine_operads.skill_operad.resolver.native_runtime import native_validate, run_native
-from omega_engine_operads.skill_operad.resolver.resolver import digest
-from omega_engine_operads.tests.integration.test_operad_native_runtime import inventory
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import Wire
+from operads.skill_operad.resolver.native_runtime import native_validate, run_native
+from operads.skill_operad.resolver.resolver import digest
+from operads.tests.integration.test_operad_native_runtime import inventory
+from operads.skill_operad.skill_compiler.op_inventory import Wire
 
 
 def nested():
@@ -61,7 +61,7 @@ def test_tampered_native_model_refuses_before_any_effect(change):
 
 
 def test_identity_has_no_invocation_and_depth_three_realizations_are_finite():
-    from omega_engine_operads.tests.integration.test_operad_native_runtime import binary_trees
+    from operads.tests.integration.test_operad_native_runtime import binary_trees
     for wire in binary_trees(3):
         inv = inventory(wire)
         result = native_validate(inv, wire)
@@ -72,7 +72,7 @@ def test_identity_has_no_invocation_and_depth_three_realizations_are_finite():
 
 
 def test_model_binding_retains_full_tree_but_receipt_only_executed_prefix():
-    from omega_engine_operads.skill_operad.resolver.resolver import CheckedOccurrenceRejection
+    from operads.skill_operad.resolver.resolver import CheckedOccurrenceRejection
     inv, wire = nested()
     class Checker:
         def bind_native_model(self, model): self.model = model
@@ -84,7 +84,7 @@ def test_model_binding_retains_full_tree_but_receipt_only_executed_prefix():
     result = run_native(inv, wire, [1, 2, 3], {"pair": lambda a, b: [a, b]}, {}, occurrence_checker=checker)
     assert len(result.steps) == 1 and result.null_tree
     assert len(checker.model.to_json()["occurrences"]) == 2
-    assert result.to_json()["schema"] == "omega.oewas.run_receipt.v5"
+    assert result.to_json()["schema"] == "core.oewas.run_receipt.v5"
     assert result.to_json()["native_model"] == checker.model.to_json()
     assert result.to_json()["native_model"]["input_digest"] == digest([1, 2, 3])
     with pytest.raises(ModelBindingError):
@@ -96,14 +96,14 @@ def test_model_binding_retains_full_tree_but_receipt_only_executed_prefix():
 def test_unused_binding_retains_legacy_receipt_and_snapshot_profile():
     inv, wire = nested()
     result = run_native(inv, wire, [1, 2, 3], {"pair": lambda a, b: [a, b]}, {})
-    assert result.completed and result.to_json()["schema"] == "omega.oewas.run_receipt.v2"
+    assert result.completed and result.to_json()["schema"] == "core.oewas.run_receipt.v2"
     assert "native_model" not in result.to_json()
 
 
 def test_nullary_model_and_model_binder_failure_have_no_invented_execution():
-    from omega_engine_operads.skill_operad.skill_compiler.op_inventory import OpInventory, OpSpec, SkillDecomposition
+    from operads.skill_operad.skill_compiler.op_inventory import OpInventory, OpSpec, SkillDecomposition
     wire = Wire(op="constant")
-    inv = OpInventory(schema_version="omega.oewas.op_inventory.v3", skills=(
+    inv = OpInventory(schema_version="core.oewas.op_inventory.v3", skills=(
         SkillDecomposition(skill_id="constant", ops=(OpSpec(op_id="constant", summary="constant", output="Code"),), wiring=wire),))
     result = native_validate(inv, wire, input_order=())
     model = realize_native_result(inv, wire, result, input_order=()).to_json()

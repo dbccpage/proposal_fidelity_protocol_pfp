@@ -35,7 +35,7 @@ cargo test  -j 1
 
 ## Windows policy
 
-Do not compile `omega_engine` unless the user explicitly requests it. Prefer
+Do not compile `engine` unless the user explicitly requests it. Prefer
 syntax/type reasoning, source inspection, and CI handoff. If explicitly
 requested, run only:
 

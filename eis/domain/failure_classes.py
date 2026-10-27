@@ -17,7 +17,7 @@ class InnateFinding:
     rationale: str = ""
 
 
-from omega_engine_epistemic_immune_system.domain.definitions_loader import (
+from eis.domain.definitions_loader import (
     load_screening_vocabulary,
 )
 

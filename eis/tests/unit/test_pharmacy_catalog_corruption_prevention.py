@@ -14,14 +14,14 @@ import json
 from pathlib import Path
 import pytest
 
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.infrastructure.pharmacy_writer import (
     filesystem_byte_writer,
     filesystem_catalog_bytes,
 )
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import (
+from eis.domain.pharmacy_catalog import (
     PharmacyCatalogRepository,
 )
-from omega_engine_epistemic_immune_system.domain.pharmacy_models import (
+from eis.domain.pharmacy_models import (
     Antibody,
     PharmacyStatus,
 )

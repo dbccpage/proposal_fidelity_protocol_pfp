@@ -46,9 +46,9 @@ from __future__ import annotations
 from types import ModuleType
 from typing import Any, Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import Refusal
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module
+from operations.use_cases.level_engine.research_engine.errors import Refusal
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module
 
 CHALLENGE_ID = "register_squares"
 ANSWER_TYPE = "M"

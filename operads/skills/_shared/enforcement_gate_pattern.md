@@ -35,12 +35,12 @@ evidence are the same defect wearing different syntax.
 
 A gate reads a declaration and checks the code against it. Two working instances:
 
-- `omega_engine/crates_rs/tests/omega_contracts/rust_file_contract_gate.rs` --
+- `engine/crates_rs/tests/core_contracts/rust_file_contract_gate.rs` --
   `forbidden_substrings`, `required_substrings`, and `required_tests` checked
   against the bound source.
-- `omega_engine/crates_rs/tests/omega_contracts/math_contract_gate.rs` -- module
+- `engine/crates_rs/tests/core_contracts/math_contract_gate.rs` -- module
   resolution, declared symbols, and `rust_binding.required_tests` for
-  `omega.contract.v1`.
+  `core.contract.v1`.
 
 ## The four rules
 

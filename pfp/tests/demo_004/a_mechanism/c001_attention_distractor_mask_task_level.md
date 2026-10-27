@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 `bench/mechanism/local_attention_control.py` showed a real causal intervention on one prompt: masking distractor key positions across all heads and layers of `Qwen/Qwen2.5-0.5B-Instruct` moved last-layer distractor attention from 0.043819 to 0, and the preferred digit stayed `7`; masking the carrier positions changed it to `1`. Nobody has measured whether such a mask changes how often an exact host accepts the answer. ChatGPT's assessment called task-level measurement of these interventions the next thing to measure. This challenge measures it.
 
-Generation is hard because the model must find a consistent potential, or the one bad relation, in a system buried in irrelevant words, sentences and integers. Verification is cheap: the host decides consistency by exact potential propagation in O(|V| + |E|). The challenge stresses the Symbol Game's Layer-3 host verdict, the OEWAS (Omega Engine Workflows, Agents, Skills) local runtime seam, and the OEEIS (Omega Engine Epistemic Immune System) two-signal danger gate used to decide when to mask.
+Generation is hard because the model must find a consistent potential, or the one bad relation, in a system buried in irrelevant words, sentences and integers. Verification is cheap: the host decides consistency by exact potential propagation in O(|V| + |E|). The challenge stresses the Symbol Game's Layer-3 host verdict, the OEWAS (Engine Workflows, Agents, Skills) local runtime seam, and the OEEIS (Engine Epistemic Immune System) two-signal danger gate used to decide when to mask.
 
 A pass would show that, for this task family, model and configuration, a host-declared key mask changes verified accuracy. It would not show that attention explains the answer, that the effect carries over to hosted models (which expose no attention), or that masking helps when the host cannot label distractor spans.
 
@@ -59,7 +59,7 @@ Integers are canonical decimal strings. A certificate is complete when the host 
 - **Hidden base cases:** 200 (80 verdict, 80 repair, 40 audit with at least 20 false witnesses).
 - **Relabel controls:** 40 cases with renamed items, reordered relations and resampled distractors over the same system. Reported separately, never pooled.
 - **Poisoned but schema-valid:** 30 cases. False potentials that satisfy every relation but one; numeric distractors that restate a true claim with the sign flipped; distractor text that itself asserts "verdict: CONSISTENT" on a contradictory system.
-- **Exact checker:** a Rust port of the propagation verdict, cross-checked against `omega_functional::graph_phi1` on cases small enough for its spanning-forest enumeration (limit 100,000 forests).
+- **Exact checker:** a Rust port of the propagation verdict, cross-checked against `core_functional::graph_phi1` on cases small enough for its spanning-forest enumeration (limit 100,000 forests).
 - **Independent second checker:** the existing Python `Fraction` host, `bench/head_to_head/host.py`.
 - **Checker mutation suite:** a potential off by one at one item, an unclosed cycle, a cycle through an undeclared relation, a repair that edits two edges, `"1/1"` or `"0.5"` in an integer field, and a `REJECT` naming a satisfied relation. The checker must reject every one.
 
@@ -102,7 +102,7 @@ Per case the run records prompt bytes, input token IDs, distractor and carrier p
 
 ## 11. OEEIS, Attention, Logit and Scratch-Space Hooks
 
-- **Two-signal danger gate** (`TwoSignalDangerGate` in `omega_engine_symbol_game/domain/immune/danger_gate.py`). Signal 1 is the presence of host-labelled distractor spans. Signal 2 is damage: distractor attention mass above a threshold fixed on public cases, or a host refusal of the unmasked answer. F-gated masks only when both fire.
+- **Two-signal danger gate** (`TwoSignalDangerGate` in `symbol_game/domain/immune/danger_gate.py`). Signal 1 is the presence of host-labelled distractor spans. Signal 2 is damage: distractor attention mass above a threshold fixed on public cases, or a host refusal of the unmasked answer. F-gated masks only when both fire.
 - **Antimorphisms expected:** AM-2 analogues (a confident `CONSISTENT` on a contradictory system), AM-FSP-2 (accepting a false witness), and distractor capture (a distractor integer copied into a repair value).
 - **Layer 1:** key-position masks with fixed position IDs on every head and layer, as in the bench script, or on a layer subset chosen on public cases.
 - **Layer 2:** none in the primary comparison, so decoding stays matched. A secondary run may add the slot grammar of `bench/matrix/run_repair_matrix.py` to every arm equally.
@@ -126,8 +126,8 @@ operand audit_every_relation.v1 | kind: move | when: the case carries a claimed 
 
 - `bench/mechanism/local_attention_control.py` (mask construction, fixed position IDs, attention readout) and `bench/mechanism/local_carrier_control.py` (model pinning).
 - `bench/head_to_head/tasks.py` (generator, to be extended with labelled spans) and `bench/head_to_head/host.py` (second checker).
-- `omega_engine/crates_rs/omega_functional` (`graph_phi1`) for the Rust cross-check.
-- `omega_engine_symbol_game/domain/immune/danger_gate.py`.
+- `engine/crates_rs/core_functional` (`graph_phi1`) for the Rust cross-check.
+- `symbol_game/domain/immune/danger_gate.py`.
 - `research/mssn_sn_tower/demos/attention_sparse_output_boundary.md`, whose Layer 1/2/3 boundary this spec follows.
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: [U11](../../upgrades/u11_local_open_weights_mechanism_runtime.md), [U12](../../upgrades/u12_host_scratch_space_working_memory.md).

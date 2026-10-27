@@ -27,7 +27,7 @@ class TestExecutionReceipt:
     completed_at: datetime
     asserted_status: str
     mutation_score: float | None = None
-    schema: str = "omega.python_test_execution_receipt.v1"
+    schema: str = "core.python_test_execution_receipt.v1"
 
     def __post_init__(self) -> None:
         self._validate_identity()
@@ -36,7 +36,7 @@ class TestExecutionReceipt:
         self._validate_time_and_score()
 
     def _validate_identity(self) -> None:
-        if self.schema != "omega.python_test_execution_receipt.v1":
+        if self.schema != "core.python_test_execution_receipt.v1":
             raise ValueError(f"unsupported execution receipt schema: {self.schema!r}")
         strings = (self.receipt_id, self.tier, self.python_version)
         if any(not value.strip() for value in strings):

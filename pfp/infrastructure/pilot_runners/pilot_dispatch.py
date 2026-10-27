@@ -10,18 +10,18 @@ from typing import Callable, Dict, List
 
 from ...domain.stages.demos import CheckResult, DemoCatalog, DemoRunReceipt, DemoSpec
 from ...domain.kernel.ports import PfpDemoRunnerPort
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_seed_suite import run_demo_000
-from omega_engine_pfp.infrastructure.pilot_runners.gate_evaluation_suite import (
+from pfp.infrastructure.pilot_runners.mssn_seed_suite import run_demo_000
+from pfp.infrastructure.pilot_runners.gate_evaluation_suite import (
     run_demo_001,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.problem_declaration_suite import (
+from pfp.infrastructure.pilot_runners.problem_declaration_suite import (
     run_demo_002,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.mathematical_suite import run_demo_003
-from omega_engine_pfp.infrastructure.pilot_runners.challenge_host_control import (
+from pfp.infrastructure.pilot_runners.mathematical_suite import run_demo_003
+from pfp.infrastructure.pilot_runners.challenge_host_control import (
     run_demo_004,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.adversarial_gate_suite import (
+from pfp.infrastructure.pilot_runners.adversarial_gate_suite import (
     run_demo_sn_000,
 )
 

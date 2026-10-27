@@ -15,8 +15,8 @@ guards; if it fires, the run stops with the anti-op's refusal code.
 
 Usage::
 
-    python -m omega_engine_operads.skill_operad.resolver.resolver compose --inputs Paper,Code --goal Audit
-    python -m omega_engine_operads.skill_operad.resolver.resolver run \\
+    python -m operads.skill_operad.resolver.resolver compose --inputs Paper,Code --goal Audit
+    python -m operads.skill_operad.resolver.resolver run \\
         --skill techne-silent-failure-hunter --input 'Code=["path/to/file.py"]'
 
 AuthorityEffect: None. A receipt records what ran; it grants nothing.
@@ -35,11 +35,11 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operads.skill_operad.domain.planar import (
+from operads.skill_operad.domain.planar import (
     ArityMismatch,
     ColorMismatch,
 )
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import (
+from operads.skill_operad.skill_compiler.op_inventory import (
     INVENTORY_PATH,
     AntiOpSpec,
     OpInventory,
@@ -49,8 +49,8 @@ from omega_engine_operads.skill_operad.skill_compiler.op_inventory import (
     wire_term,
 )
 
-RECEIPT_SCHEMA = "omega.oewas.run_receipt.v2"
-INTERPRETER_VERSION = "omega.oewas.python-oracle.v2"
+RECEIPT_SCHEMA = "core.oewas.run_receipt.v2"
+INTERPRETER_VERSION = "core.oewas.python-oracle.v2"
 DEFAULT_MAX_OPS = 4
 
 Executor = Callable[..., object]
@@ -164,7 +164,7 @@ class InvocationSnapshot:
 
     def to_json(self) -> dict:
         self.__post_init__()
-        return {"schema": "omega.oewas.invocation-snapshot.v1", **asdict(self)}
+        return {"schema": "core.oewas.invocation-snapshot.v1", **asdict(self)}
 
     def digest(self) -> str:
         return digest(self.to_json())
@@ -214,7 +214,7 @@ class NullTree:
 
     def to_json(self) -> dict:
         self.__post_init__()
-        return {"schema": "omega.oewas.null-tree.v1", "root_inputs": list(self.root_inputs),
+        return {"schema": "core.oewas.null-tree.v1", "root_inputs": list(self.root_inputs),
             "root_output": self.root_output, "invocations": [item.to_json() for item in self.invocations],
             "rejected_occurrences": [asdict(item) for item in self.rejected_occurrences]}
 
@@ -239,7 +239,7 @@ class RunReceipt:
 
     def __post_init__(self):
         if self.model_binding_json is not None:
-            from omega_engine_operads.contracts.operad_realization_v1 import NativeModelBinding
+            from operads.contracts.operad_realization_v1 import NativeModelBinding
             NativeModelBinding(self.model_binding_json).verify_receipt(self)
         if self.null_tree is not None:
             if (type(self.null_tree) is not NullTree or self.refusal is None
@@ -266,9 +266,9 @@ class RunReceipt:
     def to_json(self) -> dict[str, object]:
         self.__post_init__()
         return {
-            "schema": "omega.oewas.run_receipt.v5" if self.model_binding_json is not None else (
-                "omega.oewas.run_receipt.v4" if self.null_tree is not None else (
-                    RECEIPT_SCHEMA if self.input_order is None else "omega.oewas.run_receipt.v3")),
+            "schema": "core.oewas.run_receipt.v5" if self.model_binding_json is not None else (
+                "core.oewas.run_receipt.v4" if self.null_tree is not None else (
+                    RECEIPT_SCHEMA if self.input_order is None else "core.oewas.run_receipt.v3")),
             **({} if self.model_binding_json is None else {"native_model": json.loads(self.model_binding_json)}),
             **({} if self.null_tree is None else {"null_tree": self.null_tree.to_json()}),
             **({} if self.input_order is None else {"input_order": list(self.input_order)}),
@@ -634,7 +634,7 @@ def run(
                 or any(type(i) is not int for i in input_order)
                 or sorted(input_order) != list(range(len(leaves)))):
             return RunReceipt(wire, (), refusal=Refusal("INVALID_INPUT_PERMUTATION", "expected external-to-planar bijection"), **binding)
-        binding.update(input_order=tuple(input_order), interpreter_version="omega.oewas.python-oracle.reindexed.v1")
+        binding.update(input_order=tuple(input_order), interpreter_version="core.oewas.python-oracle.reindexed.v1")
     refusal = _preflight(inventory, wire, values, executors, detectors)
     if refusal:
         return RunReceipt(wire=wire, steps=(), refusal=refusal, **binding)

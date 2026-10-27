@@ -43,7 +43,7 @@ is *only* the Symbol Game.
 **How it is built.** The course does not start from scratch. It sequences and expands
 the lesson folders named from the former notebooks 00 through 11 (see [`NOTEBOOK_PLAN.md`](NOTEBOOK_PLAN.md)),
 the `N0`–`N15` genesis/obstruction/Regge/Gödel series, `notebook_lib`, the paper `code/`
-verifiers (PO-032/033), the `bench/` mechanism + matrix + packets suites, and the Omega
+verifiers (PO-032/033), the `bench/` mechanism + matrix + packets suites, and the Core
 engine's `lggr_prime_seam` and `quantum` modules. Every lesson **anchors** to one of these;
 lessons are the teaching layer, the papers and code are the authoritative layer.
 
@@ -147,7 +147,7 @@ obstruction, exact certificates, the anti-morphism collapse, and building an age
 
 ### Module J — Sparsity, excision, and your own agent (46–50)
 46. **L1 sparsity vs dense CoT.** The 50-task benchmark — sparse answers, fewer unpriced rewrites. — *anchor:* `lesson_700_12_1_anatomy_conversational_fluff_bullshit_llms`, `l1_sparsity_bullshit_benchmark.py` [Pinned, receipt].
-47. **Bullshit excision.** Fluff excision and the unpriced-rewrite-density = 0 axiom. — *anchor:* `lesson_700_12_1_anatomy_conversational_fluff_bullshit_llms` (Woland Swarm axiom).
+47. **Bullshit excision.** Fluff excision and the unpriced-rewrite-density = 0 axiom. — *anchor:* `lesson_700_12_1_anatomy_conversational_fluff_bullshit_llms` (Adversary Swarm axiom).
 48. **The head-to-head result.** Host 100% vs a capable model collapsing; failure = over-flagging. — *anchor:* `bench/matrix`, Phase-1 [Pinned]. 🎬
 49. **Governed theorem proving.** Topology-50 receipt fields `governed_solved` 50 and `ungoverned_solved` 0. That count is not a proof. — *anchor:* `lesson_950_06_topology50_proof_search`, `Topology50.lean`.
 50. **Tier-II capstone.** Build a full Symbol Game agent wrapping a real model via the governor adapter. — *anchor:* `lesson_970_11_1_architecture_governed_agent`, `governor_adapter.py`, TAU_SG_V1.
@@ -201,7 +201,7 @@ swarms, and finish with Manim + the path to publication.
 82. **Continuation ≠ authorization.** A predicate a host consults; `PrimeContinuation` carries no authority token. — *anchor:* `prime_seam`, `AuthorityEffect: None`.
 
 ### Module O — Agentic swarms & governance 🛡 (83–90)
-83. **The Woland Swarm axiom.** Unpriced rewrite density = 0 across a swarm of agents. — *anchor:* `lesson_700_12_1_anatomy_conversational_fluff_bullshit_llms`.
+83. **The Adversary Swarm axiom.** Unpriced rewrite density = 0 across a swarm of agents. — *anchor:* `lesson_700_12_1_anatomy_conversational_fluff_bullshit_llms`.
 84. **Governing a swarm with the host.** Every inter-agent move receipted through the governor. — *anchor:* `governor_adapter.py`, TAU_SG_V1.
 85. **Typed inter-agent packets.** The sealed envelope as the swarm's lingua franca. — *anchor:* `packet_codec.py`, `TYPED_PACKETS.md`.
 86. **Fail-closed at swarm scale.** One bad move → DefectIncrease refused, no cascade. — *anchor:* `governor_end_to_end.py`.
@@ -233,7 +233,7 @@ swarms, and finish with Manim + the path to publication.
    stranger into a player; each lesson is a runnable notebook that emits a receipt.
 3. **Add the three Manim scenes** (Lessons 96–98) early as reusable assets — the cochain
    complex, the collapse, the meron — because they also serve the demo and the paper.
-4. **Tier II and III** reuse the paper `code/`, `bench/`, and Omega-engine modules already
+4. **Tier II and III** reuse the paper `code/`, `bench/`, and Core-engine modules already
    in the repo; the work is sequencing and honest exposition, not new mathematics.
 
 **Open questions for the author (adjust before Tier-I build):** lesson granularity

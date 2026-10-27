@@ -3,7 +3,7 @@
 //! `AuthorityEffect: None.`
 //!
 //! One file per primitive of the 19L57G1 estate, in dependency order, and
-//! the smallest Omega engine that can be assembled from them.  Nothing here
+//! the smallest Core engine that can be assembled from them.  Nothing here
 //! is the sealed derivation; everything here is a *reading* of it, written
 //! so that the reading can be run and checked instead of remembered.
 //!
@@ -61,7 +61,7 @@
 //! | coda-audit | export — deterministic serialisation and full replay | `export.rs` |
 //! | twelfth sort | boundary — one two-sided boundary, readings U and O | `boundary.rs` |
 //! | outside | the push from outside: supply, demand, choice, licence, fuel | `outside.rs` |
-//! | engine | omega — the fold with four holes | `omega.rs` |
+//! | engine | omega — the fold with four holes | `core.rs` |
 //! | study | PO-000 replicated — the projection-obstruction paper, exact and numerical rails, read through the primitives above | `alpha_projection_obstruction/` |
 //!
 //! ## What a green test suite certifies

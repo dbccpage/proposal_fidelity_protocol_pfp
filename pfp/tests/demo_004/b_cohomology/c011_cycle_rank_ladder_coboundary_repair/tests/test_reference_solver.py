@@ -5,7 +5,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.solver import (
     solve,
     solve_with_trace,
 )

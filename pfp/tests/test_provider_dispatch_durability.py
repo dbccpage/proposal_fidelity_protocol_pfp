@@ -29,12 +29,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_operating_system.adapters.security import (
+from operating_system.adapters.security import (
     FixtureOnlyAeadProtector,
 )
-from omega_engine_operating_system.infrastructure import EncryptedArtifactCas
-from omega_engine_operating_system.domain import EncryptedArtifactRefV1
-from omega_engine_governance.domain.ingress.limits import (
+from operating_system.infrastructure import EncryptedArtifactCas
+from operating_system.domain import EncryptedArtifactRefV1
+from governance.domain.ingress.limits import (
     MAX_PROVIDER_PROMPT_BYTES,
     MAX_PROVIDER_REPLY_BYTES,
     REFUSAL_PROVIDER_PROMPT_TOO_LARGE,
@@ -45,7 +45,7 @@ from omega_engine_governance.domain.ingress.limits import (
     bounded_reply_chunks,
     read_bounded,
 )
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     CandidateRequest,
     ModelNotAllowed,
     PromptInvalidUtf8,
@@ -54,7 +54,7 @@ from omega_engine_woland.domain.providers.types import (
     ProviderError,
     ReplyTooLarge,
 )
-from omega_engine_pfp.infrastructure.trace import (
+from pfp.infrastructure.trace import (
     DISPATCH_COMPLETE,
     DISPATCH_EVIDENCE_MALFORMED,
     DISPATCH_EVIDENCE_MISSING,
@@ -88,8 +88,8 @@ from omega_engine_pfp.infrastructure.trace import (
     scripted_price_table,
     verify_encrypted_response,
 )
-from omega_engine_pfp.infrastructure.trace import provider_dispatch as _dispatch
-from omega_engine_pfp.infrastructure.trace.traced_gateway import (
+from pfp.infrastructure.trace import provider_dispatch as _dispatch
+from pfp.infrastructure.trace.traced_gateway import (
     GATE_EXCEPTIONS,
     TracedGateway,
 )
@@ -633,10 +633,10 @@ def test_the_scripted_provider_is_not_a_real_vendor():
     `parse_openai_compat_response`, so the real parser runs without borrowing a
     real provider's name for a reply no provider sent.
     """
-    from omega_engine_woland.domain.providers.types import (
+    from adversary.domain.providers.types import (
         Provider,
     )
-    from omega_engine_pfp.infrastructure.trace import LIVE_PROVIDERS
+    from pfp.infrastructure.trace import LIVE_PROVIDERS
 
     assert SCRIPTED_PROVIDER is Provider.FIXTURE
     assert SCRIPTED_PROVIDER not in LIVE_PROVIDERS
@@ -784,7 +784,7 @@ def test_the_traced_gateway_does_not_swallow_a_post_intent_failure(tmp_path):
 
 
 def test_the_gate_exception_tuple_uses_one_canonical_identity_and_includes_size():
-    from omega_engine_woland.domain.providers import types as canonical
+    from adversary.domain.providers import types as canonical
 
     assert set(GATE_EXCEPTIONS) == {
         canonical.ModelNotAllowed,
@@ -1292,7 +1292,7 @@ def test_attempt_identity_does_not_depend_on_the_host(tmp_path, monkeypatch):
     first run wrote, and a recovery join that silently misses is indistinguishable
     from a dispatch that never happened.
     """
-    from omega_engine_pfp.infrastructure.trace import execution_trace as et
+    from pfp.infrastructure.trace import execution_trace as et
 
     real_scope = et.durability_scope
     ids, digests = [], []
@@ -1488,7 +1488,7 @@ def test_only_the_sanctioned_functions_construct_raw_gateways():
     """Trace confinement and accounted OpenRouter retain their distinct owners."""
     from pathlib import Path
 
-    from omega_engine_pfp.infrastructure.architecture_fitness import (
+    from pfp.infrastructure.architecture_fitness import (
         raw_gateway_constructors,
         sanctioned_gateway_factory_builds_one,
     )
@@ -1521,12 +1521,12 @@ def test_public_traced_gateway_native_http_receipt_and_settlement_survive_restar
     import threading
     import urllib.request
     from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-    from omega_engine_woland.domain.providers.budget import BudgetController
-    from omega_engine_woland.infrastructure.providers.budget_ledger import SqliteBudgetLedger
-    from omega_engine_woland.infrastructure.providers.generation_reconciler import GenerationReconciler
-    from omega_engine_woland.infrastructure.providers.openai_compat import OpenAiCompatTransport
-    from omega_engine_woland.infrastructure.providers.wire import decode_reply
-    from omega_engine_governance.domain.ingress.limits import MAX_PROVIDER_REPLY_BYTES
+    from adversary.domain.providers.budget import BudgetController
+    from adversary.infrastructure.providers.budget_ledger import SqliteBudgetLedger
+    from adversary.infrastructure.providers.generation_reconciler import GenerationReconciler
+    from adversary.infrastructure.providers.openai_compat import OpenAiCompatTransport
+    from adversary.infrastructure.providers.wire import decode_reply
+    from governance.domain.ingress.limits import MAX_PROVIDER_REPLY_BYTES
 
     requests = []
     model = "openai/gpt-4o-mini"
@@ -1886,9 +1886,9 @@ def test_the_undoctored_run_is_the_positive_control(tmp_path):
 
 def test_canonical_provider_boundaries_share_catchable_exception_identity():
     """A real allowlist rejection crosses the gateway as its domain exception."""
-    import omega_engine_woland.domain.providers.allowlist as allowlist_module
-    import omega_engine_woland.domain.providers.types as types_module
-    import omega_engine_woland.infrastructure.providers.gateway as gateway_module
+    import adversary.domain.providers.allowlist as allowlist_module
+    import adversary.domain.providers.types as types_module
+    import adversary.infrastructure.providers.gateway as gateway_module
 
     assert allowlist_module.ModelNotAllowed is ModelNotAllowed
     assert allowlist_module.Provider is Provider

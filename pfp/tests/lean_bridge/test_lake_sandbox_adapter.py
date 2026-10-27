@@ -9,14 +9,14 @@ from unittest.mock import patch, MagicMock
 import subprocess
 import pytest
 
-from omega_engine_pfp.domain.lean_bridge.models import (
+from pfp.domain.lean_bridge.models import (
     LeanVerificationRequest,
     LeanVerificationReceipt,
 )
-from omega_engine_pfp.infrastructure.adapters.lake_sandbox_adapter import (
+from pfp.infrastructure.adapters.lake_sandbox_adapter import (
     LakeSandboxAdapter,
 )
-from omega_engine_pfp.ffi import get_default_host
+from pfp.ffi import get_default_host
 
 
 def test_lean_scan_sources_comments_and_strings_ignored() -> None:
@@ -153,7 +153,7 @@ def test_lake_adapter_simulated_success(tmp_path: Path) -> None:
         return mock_proc
 
     with patch(
-        "omega_engine_pfp.infrastructure.adapters.lake_sandbox_adapter.subprocess.run",
+        "pfp.infrastructure.adapters.lake_sandbox_adapter.subprocess.run",
         side_effect=mock_subprocess_run,
     ):
         result = adapter.verify(req, pkg_dir)

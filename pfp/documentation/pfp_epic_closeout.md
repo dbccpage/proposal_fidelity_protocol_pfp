@@ -3,7 +3,7 @@
 AuthorityEffect: None. 2026-10-12. Initial base: merged remote main `0073e6100b`.
 Rebased without conflicts onto refreshed main `d1c3095974` before publication.
 
-PFP has one canonical Python owner, `omega_engine_pfp`. Woland consumes its
+PFP has one canonical Python owner, `pfp`. Adversary consumes its
 task/reply contracts; Providers and existing native ledgers retain transport and
 accounting. This change completes bounded finite consumers and native mediation,
 and consolidates the planning backlog. It does not certify every historical test,
@@ -14,14 +14,14 @@ mathematical program or possible PFP extension.
 | Original epic | Present behavior and limit |
 | --- | --- |
 | 000/001 | Minimal task/attempt/input-bound prompts and actual raw replies, answer isolation, typed refusals and independent checking. Ordinary prose stays UNVERIFIED. |
-| 002/003 | Canonical package/resources and shared Woland OpenRouter/current-IDE prepare/check/replay. Frozen prompt versions keep their original identities. No second service or application ledger. |
+| 002/003 | Canonical package/resources and shared Adversary OpenRouter/current-IDE prepare/check/replay. Frozen prompt versions keep their original identities. No second service or application ledger. |
 | 004 | Declined by OOUTWIRE. Its optional ideas are retained under successor selection gates, not counted as delivered. |
-| 005 | Existing bounded live/IDE/replay usage and honest cost collation; focused release repair removes a PFP-to-Woland dependency cycle without weakening the architecture assertion. The missing-model control now correctly expects refusal. |
+| 005 | Existing bounded live/IDE/replay usage and honest cost collation; focused release repair removes a PFP-to-Adversary dependency cycle without weakening the architecture assertion. The missing-model control now correctly expects refusal. |
 | 006 | `FiniteLevelEngineConsumer` binds actual candidate, protected obligation, challenge, checker/source, fixture and resource identities. Fixture calibration is separate from the candidate verdict and remains RESEARCH_FIXTURE_REPLAY. Versioned readers retain exact historical Git resolution and explicit unavailable states. |
 | 007 | `SourceBoundCodeChangeChecker` runs real native syntax/owned/protected-path gates with host-configured exact checker bytes, source snapshot and assumptions. Source/candidate/attempt transplant refuses; repairs keep the native run and continuing limits; issued evidence replays without native execution. Finite diagnostics do not prove patch applicability or program correctness. |
-| 008 | Native seats consume `omega_symbol_game_runtime::pfp_task_turn`; Python/skill roles use the existing shared task boundary. Native live dispatch retains raw bytes, pre-send holds, exact reported settlement and explicit unknown outcomes. Historical fixture profiles remain distinct. Duplicate legacy Python senders refuse before transport. |
+| 008 | Native seats consume `core_symbol_game_runtime::pfp_task_turn`; Python/skill roles use the existing shared task boundary. Native live dispatch retains raw bytes, pre-send holds, exact reported settlement and explicit unknown outcomes. Historical fixture profiles remain distinct. Duplicate legacy Python senders refuse before transport. |
 
-See the [single active PFP-010 consolidated residual plan](../../omega_engine_product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md).
+See the [single active PFP-010 consolidated residual plan](../../product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md).
 Predecessor 000-009 files are consolidated into `PFP-010` with pinned historical
 Git blobs; their old future-tense passages and counts are not current
 execution evidence.
@@ -30,7 +30,7 @@ execution evidence.
 
 - Dependency direction, finite additional-mode controls and truthful missing
   Ollama model handling: **72 passed** after reproducing both inherited failures.
-- Shared PFP task/Woland live-adapter controls: **50 passed**, using captured or
+- Shared PFP task/Adversary live-adapter controls: **50 passed**, using captured or
   scripted replies; these checks made no paid provider calls.
 - Source-bound checker plus existing code-change/session controls: **54 passed**
   in a three-file batch. The actual candidate/patch equality predicate was removed,
@@ -45,8 +45,8 @@ execution evidence.
   refuse before transport; retained private historical fixtures are not live
   entrypoints.
 - Native library controls: **593 passed** across the city, Providers, Symbol Game,
-  its runtime and Woland. Named integrations add **12 passed**: task-turn parity
-  (4), PFP gateway/accounting (7) and existing Woland host (1). These include
+  its runtime and Adversary. Named integrations add **12 passed**: task-turn parity
+  (4), PFP gateway/accounting (7) and existing Adversary host (1). These include
   malformed replies, ambiguous transport, exact settlement, restart budgets and
   replay refusal controls. They use scripted transport, not a native paid bout.
 - Finite Level Engine consumer and existing context/resource/versioned-reader
@@ -101,7 +101,7 @@ which is absent on merged main as well; that inherited assertion remains in 009.
 After the final main refresh, all 73 planning controls pass and the catalog
 compiler verifies current projections. The all-skill host-body parity test
 detects upstream paper-governance skill mirror drift; only the four selected
-Woland skill files are required byte-identical by this change. Unrelated host
+Adversary skill files are required byte-identical by this change. Unrelated host
 files are preserved. Installed-wheel and paid-bout observations above were
 executed on the initial base with the same PFP consumer and shared-turn sources.
 Modes 3/6/15, further local-source reconciliation, measured native backlog,
@@ -119,7 +119,7 @@ not obstruction-free implementation.
 The existing canonical CLI exposes the host-pinned patch checker:
 
 ```powershell
-pfp code-change-check-source-bound --packet packet.json --patch-bytes candidate.diff --source-root C:/reviewed/source --source-path src/x.py --checker-binary C:/trusted/omega_symbol_game.exe --checker-sha256 <trusted-release-sha256> --run-id review-001 --attempt-id attempt-0 --max-native-calls 3 --output new-check.json --replay-check
+pfp code-change-check-source-bound --packet packet.json --patch-bytes candidate.diff --source-root C:/reviewed/source --source-path src/x.py --checker-binary C:/trusted/core_symbol_game.exe --checker-sha256 <trusted-release-sha256> --run-id review-001 --attempt-id attempt-0 --max-native-calls 3 --output new-check.json --replay-check
 ```
 
 `packet.json` is the existing CodeChange `PacketEnvelopeV2`. The operator selects
@@ -139,14 +139,14 @@ implicitly install that judge. Missing pins/resources remain explicit refusals.
 
 ## Applied learning and repeatable use
 
-The concrete repair keeps PFP below Woland: finite additional-mode checks call
+The concrete repair keeps PFP below Adversary: finite additional-mode checks call
 the existing PFP certificate owner directly; cemetery checks replay the bound
 historical failure; declared examiner diversity never becomes authenticated
 independence. This is applied code, not another report queue.
 
-Use [the shared Python/skill procedure](pfp_task_turn.md#shared-woland-use).
+Use [the shared Python/skill procedure](pfp_task_turn.md#shared-adversary-use).
 The current IDE returns the actual raw envelope through `submit --raw-reply`.
-Trusted host observations remain separate. Finish the outer Woland run with
+Trusted host observations remain separate. Finish the outer Adversary run with
 existing AutoP/learn once; do not recursively digest the finish hook.
 
 Live outcomes, schema validity, finite checker acceptance, human review and
@@ -161,8 +161,8 @@ The four practical integration items are implemented:
 
 - Graph replay accepts the native-verified optional MAM projection and rejects
   tampering/extra files. Checkpoint JSON normalization fixes tuple/array drift.
-  Retinue assertions now count actual uniquely bound model turns.
-- Existing architecture fitness checks inventory supported Woland/PFP routes
+  Panel assertions now count actual uniquely bound model turns.
+- Existing architecture fitness checks inventory supported Adversary/PFP routes
   and detect raw/aliased senders, removed preparation/checking and native wrapper
   removal. The discovered pre-miner bypass now uses one explicit model through
   the accounted PFP port, serially, without invented costs or implicit fallback.
@@ -175,7 +175,7 @@ The four practical integration items are implemented:
   matching its existing `43c85a44af8ce4895580ea59bd09c2c92e000b743ef32293fec3ebac57dc8011`
   pin. Versioned prompt directories remain retired; historical v1.0.0 lookups
   without pinned Git objects explicitly refuse. The installed probe now checks
-  current Retinue intake/raw submission, rather than obsolete unbudgeted or
+  current Panel intake/raw submission, rather than obsolete unbudgeted or
   two-role behavior.
 
 Observed verification:
@@ -200,9 +200,9 @@ original-task checks and installed smoke use the fresh candidate above.
 Reproduce the changed checks with an explicit built host and writable TEMP/TMP:
 
 ```powershell
-cargo build --offline --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --bin omega_symbol_game -j 1 --target-dir .scratch/oewas012/native-target
-$env:OMEGA_SYMBOL_GAME_HOST = (Resolve-Path .scratch/oewas012/native-target/debug/omega_symbol_game.exe).Path
-python -B -m pytest omega_engine_pfp/tests/test_route_closure.py omega_engine_woland/tests/test_operad_pre_miner_harness.py omega_engine_woland/tests/test_graph_pfp_boundary.py omega_engine_woland/tests/geometry/test_graph_reporting.py omega_engine_woland/tests/test_pfp_teamwork_integration.py omega_engine_woland/tests/test_teamwork_openrouter.py omega_engine_woland/tests/test_teamwork_cli.py -q --override-ini addopts= -k 'not file_host_runs_full_roster_before_and_after_actual_candidate_application' --basetemp=.scratch/pfp-turn-closeout/tmp/focused
+cargo build --offline --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --bin core_symbol_game -j 1 --target-dir .scratch/oewas012/native-target
+$env:CORE_SYMBOL_GAME_HOST = (Resolve-Path .scratch/oewas012/native-target/debug/core_symbol_game.exe).Path
+python -B -m pytest pfp/tests/test_route_closure.py adversary/tests/test_operad_pre_miner_harness.py adversary/tests/test_graph_pfp_boundary.py adversary/tests/geometry/test_graph_reporting.py adversary/tests/test_pfp_teamwork_integration.py adversary/tests/test_teamwork_openrouter.py adversary/tests/test_teamwork_cli.py -q --override-ini addopts= -k 'not file_host_runs_full_roster_before_and_after_actual_candidate_application' --basetemp=.scratch/pfp-turn-closeout/tmp/focused
 ```
 
 The wheel was built with setuptools using an explicit clean build base:
@@ -215,14 +215,14 @@ Install without dependencies into a fresh external directory, change outside the
 checkout, then run the existing source probe with isolated Python:
 
 ```powershell
-python -I C:/path/to/checkout/omega_engine_pfp/tests/installed_package_probe.py C:/path/to/fresh-install C:/path/to/omega_symbol_game.exe
+python -I C:/path/to/checkout/pfp/tests/installed_package_probe.py C:/path/to/fresh-install C:/path/to/core_symbol_game.exe
 ```
 
 The source probe is a test driver; every imported production module must resolve
-inside the installed directory. It preserves the full Retinue, checks a partial
+inside the installed directory. It preserves the full Panel, checks a partial
 current-IDE handoff and explicit unaccounted-dispatch refusal, and keeps legacy
 challenge-start coverage labelled historical-v3. This is not a new model experiment.
-The current native/full-Retinue demonstration uses the shared backend separately.
+The current native/full-Panel demonstration uses the shared backend separately.
 No paid calls, new framework, concurrency implementation or pilot grid is included.
 Source checks are finite drift controls, not an arbitrary-code sandbox or an
 interceptor for hidden IDE transport. Neural hooks/comparisons in M4/M5 remain
@@ -243,8 +243,8 @@ first, then continue the same task and set the existing timeout on its pending
 recheck (not on an already claimed episode):
 
 ```powershell
-python -m omega_engine_woland.entrypoints.cli teamwork resume --state task.json --output continued.json --reason "Retry original check with suitable host timeout"
-python -m omega_engine_woland.entrypoints.cli teamwork recheck --state continued.json --timeout-seconds 300
+python -m adversary.entrypoints.cli teamwork resume --state task.json --output continued.json --reason "Retry original check with suitable host timeout"
+python -m adversary.entrypoints.cli teamwork recheck --state continued.json --timeout-seconds 300
 ```
 
 The continuation retains the parent digest, task/checker, episode counter and

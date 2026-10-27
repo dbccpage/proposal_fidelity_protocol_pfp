@@ -16,7 +16,7 @@ Systematically audits the 33 verification subdomains of the Python-to-Rust nativ
 
 ## Verification Checklist
 
-1. **Subdomain Verification:** Inspect `coverage.json` and LCOV reports across each verification cohort (immune, the city, woland, workflow, etc.).
+1. **Subdomain Verification:** Inspect `coverage.json` and LCOV reports across each verification cohort (immune, the city, adversary, workflow, etc.).
 2. **FFI Parity:** Ensure native Rust implementations match Python DTO shapes and fail-closed error contracts.
 3. **No Coverage Regressions:** Verify that ported Rust code achieves equal or superior branch coverage compared to baseline Python modules.
 4. **Log Cleanliness:** Verify zero compiler warnings, zero clippy violations, and clean test runs.

@@ -11,34 +11,34 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from omega_engine_operating_system.adapters.rust_host import ffi as native_host
-from omega_engine_operations.domain.rop.result import Err, Refusal, Result
-from omega_engine_pfp.domain.lean_bridge.models import STANDARD_LEAN_AXIOMS
+from operating_system.adapters.rust_host import ffi as native_host
+from operations.domain.rop.result import Err, Refusal, Result
+from pfp.domain.lean_bridge.models import STANDARD_LEAN_AXIOMS
 
 if TYPE_CHECKING:
-    from omega_engine_pfp.domain.cochain import (
+    from pfp.domain.cochain import (
         CochainDisposition,
         PrimeTriadContext,
         PromptCellComplex,
     )
-    from omega_engine_pfp.domain.ports.prompt_cochain_port import PromptCochainHost
+    from pfp.domain.ports.prompt_cochain_port import PromptCochainHost
 
 
-def find_omega_symbol_game_binary() -> Path:
+def find_core_symbol_game_binary() -> Path:
     """Locate the native executable, by asking the one seam that owns that job.
 
     This used to search four hardcoded `target/{debug,release}` paths of its
     own. That made it a second place deciding where the host lives, against
     `RULE_FFI_SEAM_ISOLATION_001` and the Parity Seam Isolation Invariant, and
     it drifted from the canonical seam in a way that mattered: it ignored
-    `OMEGA_SYMBOL_GAME_HOST`, which CLAUDE.md documents as the supported way to
+    `CORE_SYMBOL_GAME_HOST`, which CLAUDE.md documents as the supported way to
     point at a binary built elsewhere. Anyone relying on that variable would
     have been silently served a stale `target/debug` build, or none.
 
     Delegating restores one answer to "where is the host", and picks up the
     environment override and the refusal vocabulary for free.
     """
-    from omega_engine_operating_system.adapters.rust_host.ffi import (
+    from operating_system.adapters.rust_host.ffi import (
         locate_host_binary,
     )
 
@@ -62,7 +62,7 @@ class RustSymbolGameHost:
         if binary_path is not None:
             self._binary_path = Path(binary_path).resolve()
         else:
-            self._binary_path = find_omega_symbol_game_binary()
+            self._binary_path = find_core_symbol_game_binary()
         self._host = native_host.RustSymbolGameHost(
             binary=self._binary_path, timeout_seconds=30
         )
@@ -307,10 +307,10 @@ class RustSymbolGameHost:
         weights: Sequence[str] | None = None,
         budget: int | None = None,
     ) -> Result[Mapping[str, Any], Refusal]:
-        """Solve exact weighted L1 projection / gauge fixing over Q using omega_solvers.
+        """Solve exact weighted L1 projection / gauge fixing over Q using core_solvers.
 
         Returns minimizer alpha, residual z = target - B*alpha, dual witness y,
-        and optimal value Phi1, certified against omega_functional.
+        and optimal value Phi1, certified against core_functional.
         """
         payload: dict[str, Any] = {
             "matrix": {"rows": [list(r) for r in matrix_rows]},
@@ -325,7 +325,7 @@ class RustSymbolGameHost:
     def functional_evaluate(
         self, payload: Mapping[str, Any]
     ) -> Result[Mapping[str, Any], Refusal]:
-        """Phi1, Gamma2 and the diagnostic class, produced by omega_functional.
+        """Phi1, Gamma2 and the diagnostic class, produced by core_functional.
 
         Build ``payload`` with the OEOS ``theory_requests`` builders. The seam
         refuses an answer whose ``input_digest`` is not this payload's digest.
@@ -638,7 +638,7 @@ def evaluate_prompt_cochain_disposition(
 ) -> CochainDisposition:
     """Resolve the adapter default before the domain serializes or evaluates input."""
     target_host = host if host is not None else get_default_host()
-    from omega_engine_pfp.domain.cochain import (
+    from pfp.domain.cochain import (
         evaluate_prompt_cochain as evaluate_domain_cochain,
     )
 

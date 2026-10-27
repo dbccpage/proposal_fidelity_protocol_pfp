@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import json
 from typing import Protocol
 
-from omega_engine_operads.domain.autopoiesis.learning import digest
+from operads.domain.autopoiesis.learning import digest
 
 
 ALLOWED_FILES = frozenset({"prompt.txt", "workflow.json", "search_policy.py", "context_policy.py"})

@@ -8,9 +8,9 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/anti_skills/anti_skill_v2.py
-  - omega_engine_operads/domain/anti_skills/canonical.py
-  - omega_engine_education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/13_spec_polarized_operad_and_anti_skills.md
+  - operads/domain/anti_skills/anti_skill_v2.py
+  - operads/domain/anti_skills/canonical.py
+  - education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/13_spec_polarized_operad_and_anti_skills.md
   - .agents/anti_skills/
 last_verified: 2026-10-01
 ---
@@ -25,7 +25,7 @@ last_verified: 2026-10-01
 
 Standard software and agentic frameworks focus almost exclusively on **constructive capabilities** (how to generate code, write text, synthesize proofs). However, in recursive autonomous self-improvement systems, unconstrained generation inevitably leads to **epistemic cancer**: the accumulation of subtle hallucinations, circular proofs, and tautological tests.
 
-To maintain structural health, the biological immune system uses inhibitory signals and regulatory T-cells to suppress harmful or autoreactive cells. In the Anomalon Engine, this is modeled mathematically as a **Polarized Operad**:
+To maintain structural health, the biological immune system uses inhibitory signals and regulatory T-cells to suppress harmful or autoreactive cells. In the Sentinel Engine, this is modeled mathematically as a **Polarized Operad**:
 
 $$\boxed{(\mathcal{O}^+, \mathcal{O}^-)}$$
 
@@ -53,7 +53,7 @@ A **Polarized Operad** is a two-sorted operadic structure:
 
 ## 3. The `AntiSkillRecordV2` Domain Model
 
-The core anti-skill data structure is implemented in [`omega_engine_operads/domain/anti_skills/anti_skill_v2.py`](../../../../omega_engine_operads/domain/anti_skills/anti_skill_v2.py):
+The core anti-skill data structure is implemented in [`operads/domain/anti_skills/anti_skill_v2.py`](../../../../operads/domain/anti_skills/anti_skill_v2.py):
 
 ```python
 @dataclass(frozen=True)
@@ -145,7 +145,7 @@ The anti-skill explicitly inspects the AST for empty `except:` blocks or `except
 To run the unit tests verifying anti-skill records, somatic mutation, and exponential decay:
 
 ```powershell
-# Retired: OEWAS tests/unit/test_anti_skill_v2.py has no successor file under omega_engine_operads.
+# Retired: OEWAS tests/unit/test_anti_skill_v2.py has no successor file under operads.
 ```
 
 ### The Level 04 Governance Invariants

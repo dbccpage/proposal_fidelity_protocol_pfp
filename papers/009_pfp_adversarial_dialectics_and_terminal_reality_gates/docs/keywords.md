@@ -3,7 +3,7 @@
 - Adversarial dialectics
 - Terminal reality gates
 - Proposer-adversary trial
-- Seven-act Woland engine
+- Seven-act Adversary engine
 - Claim verification protocol
 - Non-prose evidence audit
 - Counter-claim testing

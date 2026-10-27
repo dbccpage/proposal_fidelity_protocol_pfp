@@ -2,20 +2,20 @@
 
 from pathlib import Path
 
-from omega_engine_education.scripts import verify_system_integration as inventory
+from education.scripts import verify_system_integration as inventory
 
 
 def test_inventory_keeps_relocated_sources_and_v1_history(tmp_path: Path, monkeypatch):
     monkeypatch.setattr(inventory, "ROOT", tmp_path)
-    monkeypatch.setattr(inventory, "DEST", tmp_path / "omega_engine_education/generated")
+    monkeypatch.setattr(inventory, "DEST", tmp_path / "education/generated")
     historical = inventory.HISTORICAL_LEVEL_ENGINE_ROOT + "bundles/old.json"
-    runtime = "omega_engine_pfp/infrastructure/tower_research/level_engine/runner.py"
+    runtime = "pfp/infrastructure/tower_research/level_engine/runner.py"
     inputs = {
         "research/example.md": "reading\n",
         runtime: "def classify(): return 'finite'\n",
         historical: "{}\n",
-        "omega_engine_operations/use_cases/level_engine/lean_build.py": "def build(): pass\n",
-        "omega_engine_governance/contracts/level_engine/v2/PINS.json": "{}\n",
+        "operations/use_cases/level_engine/lean_build.py": "def build(): pass\n",
+        "governance/contracts/level_engine/v2/PINS.json": "{}\n",
         "lean4/research_programs/level_engine/Certificate.lean": "import ExactRat\n",
     }
     for relative, content in inputs.items():
@@ -26,14 +26,14 @@ def test_inventory_keeps_relocated_sources_and_v1_history(tmp_path: Path, monkey
     result = inventory.make_inventory(manifest)
     records = {record["path"]: record for record in result["files"]}
     assert set(records) == set(inputs)
-    assert records[runtime]["owner"] == "omega_engine_pfp"
+    assert records[runtime]["owner"] == "pfp"
     assert records[runtime]["classification"] == "lab-backed"
     assert records[historical]["classification"] == "historical"
     assert {record["owner"] for record in records.values()} == {
         "research",
-        "omega_engine_pfp",
-        "omega_engine_operations",
-        "omega_engine_governance",
+        "pfp",
+        "operations",
+        "governance",
         "lean4",
     }
     assert result["schema"] == "mssn.education.research-inventory.v2"

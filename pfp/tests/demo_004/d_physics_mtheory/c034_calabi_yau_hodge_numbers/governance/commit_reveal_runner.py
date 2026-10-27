@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Three phases (SG-CP v1), all of which score the frozen reference solver against
 this package's own judge packet (a self-consistency check, not a model
-evaluation and not a Woland verdict):
+evaluation and not a Adversary verdict):
 
   * Phase 1 verifies every entry of judge_packet/manifest.json against the files
     on disk and records the manifest digest in commitments/c034_judge_commitment.json.
@@ -45,24 +45,24 @@ from pathlib import Path
 from typing import Any
 
 for _parent in Path(__file__).resolve().parents:
-    if (_parent / "omega_engine_projects").exists() and (
-        _parent / "omega_engine_providers"
+    if (_parent / "projects").exists() and (
+        _parent / "providers"
     ).exists():
         if str(_parent) not in sys.path:
             sys.path.insert(0, str(_parent))
         break
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.governance.woland_gate import (  # noqa: E402
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.governance.adversary_gate import (  # noqa: E402
     GATE_SCOPE,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_VERDICTS,
-    WolandGate,
+    AdversaryGate,
     determine_terminal_verdict,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.dual_evaluator import (  # noqa: E402
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.dual_evaluator import (  # noqa: E402
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.solver import (  # noqa: E402
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.solver import (  # noqa: E402
     solve,
 )
 
@@ -190,13 +190,13 @@ def reference_claim_hygiene(
         ),
         "does_not_support": (
             "Any statement about a model (none was evaluated), about checker soundness or independence, "
-            "or a Woland verdict."
+            "or a Adversary verdict."
         ),
         "narrowest_defensible_claim": (
             f"Reference self-consistency label {verdict} on the {total} judge case files that match the committed manifest."
         ),
         "next_test_needed": (
-            "Score a participant submission under a commitment made before the run and have the Woland swarm "
+            "Score a participant submission under a commitment made before the run and have the Adversary swarm "
             "evaluate the bound checker receipts."
         ),
     }
@@ -271,7 +271,7 @@ def phase3_reveal_and_score(
     challenge_dir: Path | None = None,
     base_dir: Path | None = None,
     task_key: str | None = None,
-    persist_woland: bool = True,
+    persist_adversary: bool = True,
 ) -> dict[str, Any]:
     """Phase 3: verify custody, score the frozen solver, label the run and persist it.
 
@@ -284,7 +284,7 @@ def phase3_reveal_and_score(
             challenge_dir=challenge_dir,
             base_dir=base_dir,
             task_key=task_key,
-            persist_woland=persist_woland,
+            persist_adversary=persist_adversary,
         )
     except BaseException as error:
         atomic_write_json(
@@ -309,7 +309,7 @@ def _phase3(
     challenge_dir: Path | None,
     base_dir: Path | None,
     task_key: str | None,
-    persist_woland: bool,
+    persist_adversary: bool,
 ) -> dict[str, Any]:
     challenge, judge, solver, commitments = _layout(challenge_dir)
     p1_file = commitments / f"{FILE_PREFIX}_judge_commitment.json"
@@ -420,9 +420,9 @@ def _phase3(
         "total_cases": total,
     }
 
-    woland_digests: dict[str, str] = {}
-    if persist_woland:
-        gate = WolandGate(task_key=task_key or CHALLENGE_ID, base_dir=base_dir)
+    adversary_digests: dict[str, str] = {}
+    if persist_adversary:
+        gate = AdversaryGate(task_key=task_key or CHALLENGE_ID, base_dir=base_dir)
         summary_data = {
             "agreements_count": agreed_count,
             "challenge_id": CHALLENGE_ID,
@@ -449,9 +449,9 @@ def _phase3(
             dda_actions=dda_actions,
             novella=novella_text,
         )
-        woland_digests = dict(gate.last_bundle_digests)
+        adversary_digests = dict(gate.last_bundle_digests)
 
-    scoring_receipt = {**receipt, "woland_digests": woland_digests}
+    scoring_receipt = {**receipt, "adversary_digests": adversary_digests}
     atomic_write_json(commitments / f"{FILE_PREFIX}_scoring_receipt.json", scoring_receipt)
     return scoring_receipt
 

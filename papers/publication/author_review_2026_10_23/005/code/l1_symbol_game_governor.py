@@ -1,5 +1,5 @@
 # Vendored copy, kept in this package so that it runs without the repository.
-# vendored-from-path: omega_engine_atlas/coda_atlas/omega_engine_pfp/004_pfp_three_layer_sovereignty_and_discrete_l1_projection/code/l1_symbol_game_governor.py
+# vendored-from-path: atlas/coda_atlas/pfp/004_pfp_three_layer_sovereignty_and_discrete_l1_projection/code/l1_symbol_game_governor.py
 # vendored-from-commit: 691a01ec3e0ee4f06b4d13b1b8f751edb67c5cee
 # vendored-from-sha256: 3148630b1dca362e9788fb0572a2f9bf506bbebdfc1e0ede70222a4ae02f5fd9
 # baseline-commit: 52cb5457f6c485ba548cfd292f6012a941ed22cf
@@ -10,7 +10,7 @@
 # Local changes: this comment block; the repository-root sys.path bootstrap and
 # its imports (sys, pathlib.Path) are removed; the native adapter is imported
 # from the vendored native_functional module instead of
-# omega_engine_providers.adapters.native_functional; import statements are put
+# providers.adapters.native_functional; import statements are put
 # in the order required by the package lint settings; and
 # L1SymbolGameGovernor.step_cut refuses, with status IncompleteProposal, a
 # relational CUT that omits a declared edge or gives a non-exact value, instead
@@ -18,7 +18,7 @@
 # applied identically to the Paper 004 package copy on 2026-09-28; its
 # docstring and the verdict status comment say so); and compute_phi1 no
 # longer catches every exception from the native call: it calls the native
-# adapter only when OMEGA_FUNCTIONAL_GRAPH_BIN is set and then lets every
+# adapter only when CORE_FUNCTIONAL_GRAPH_BIN is set and then lets every
 # refusal or error propagate, otherwise computes the minimum by exact
 # enumeration, and refuses floating-point or Boolean edge weights on both paths (applied
 # identically to the Paper 004 copy on 2026-09-28). No other executable
@@ -284,7 +284,7 @@ def compute_phi1(
 ) -> Tuple[Fraction, Dict[str, Fraction]]:
     """Quotient distance and a minimizing potential.
 
-    When OMEGA_FUNCTIONAL_GRAPH_BIN names a native executable, the native owner
+    When CORE_FUNCTIONAL_GRAPH_BIN names a native executable, the native owner
     decides and every native refusal or error propagates: a refusal is never
     replaced by a Python answer. Without that configuration the same minimum is
     computed by exact enumeration of spanning-forest potentials.
@@ -314,7 +314,7 @@ def compute_phi1(
 
     import os
 
-    if os.environ.get("OMEGA_FUNCTIONAL_GRAPH_BIN"):
+    if os.environ.get("CORE_FUNCTIONAL_GRAPH_BIN"):
         from native_functional import compute_graph_phi1
         return compute_graph_phi1(
             graph.vertices, [(e.u, e.v, e.weight) for e in graph.edges], normalized,

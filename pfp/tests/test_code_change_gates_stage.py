@@ -30,10 +30,10 @@ import hashlib
 
 import pytest
 
-from omega_engine_pfp.controllers.code_change_controller import (
+from pfp.controllers.code_change_controller import (
     CodeChangeController,
 )
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     CandidateArtifactV1,
     CanonicalizationError,
     CodeChangeRunRootV1,
@@ -43,11 +43,11 @@ from omega_engine_pfp.domain import (
     bind_patch_bytes,
     canonical_bytes,
 )
-from omega_engine_pfp.domain.aggregates.code_change_run_root import (
+from pfp.domain.aggregates.code_change_run_root import (
     GATE_DISPOSITIONS,
     REQUIRED_GATE_IDS,
 )
-from omega_engine_pfp.use_cases.code_change import (
+from pfp.use_cases.code_change import (
     GATE_CONTRACT,
     GATE_EVALUATOR_ID,
     GATE_OWNERSHIP,
@@ -210,7 +210,7 @@ def test_a_programming_defect_is_not_masked_as_a_refusal(controller, seeded, mon
     `CanonicalizationError`, which is what a caller would reasonably log and move
     on from.
     """
-    from omega_engine_pfp.use_cases import code_change as module
+    from pfp.use_cases import code_change as module
 
     def _defective(*args, **kwargs):
         raise AttributeError("patch_sha256 was renamed and this call site was missed")

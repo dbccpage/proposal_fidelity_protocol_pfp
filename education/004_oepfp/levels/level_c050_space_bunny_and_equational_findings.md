@@ -15,7 +15,7 @@
 > audit behind these notices is recorded in the collection's
 > `verification/residuals.md`, section 8.
 
-> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_woland/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c050_equational_theorem_proving/`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c050_equational_theorem_proving/). The retained `empirical_results/c050_space_bunny_matrix_report.json` matches the pass counts 6, 3 and 1 and the token totals 7,427, 7,854 and 5,984. No phase-3 scoring receipt is retained for this challenge, so the `PASS_TO_MASTER (64/64, 48/48)` line is not backed by a file at the pin.
+> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c050_equational_theorem_proving/`](../../../../pfp/tests/demo_004/e_formal_math/c050_equational_theorem_proving/). The retained `empirical_results/c050_space_bunny_matrix_report.json` matches the pass counts 6, 3 and 1 and the token totals 7,427, 7,854 and 5,984. No phase-3 scoring receipt is retained for this challenge, so the `PASS_TO_MASTER (64/64, 48/48)` line is not backed by a file at the pin.
 
 > **Correction notice (2026-09-28).** Paper 010 (version 2.0.0) re-derived the model
 > counts for C017 and C045 to C050 from the retained run records; where they differ
@@ -29,7 +29,7 @@
 - **Challenge ID:** `C050`
 - **Domain:** `e_formal_math` (Formal Mathematics, Equational Theorem Proving, Term Rewriting Systems)
 - **Mathematical Invariant:** Birkhoff equational completeness; formal step-by-step term rewrite replay ($s = u_0 \leftrightarrow u_1 \leftrightarrow \dots \leftrightarrow u_k = t$) verified at exact subterm position paths $p$ with instantiated axiom substitutions $\sigma(l) \leftrightarrow \sigma(r)$, and finite algebraic countermodels ($\mathcal{M} \models E$ and $\mathcal{M} \not\models s = t$ with domain size $D \le 8$).
-- **Woland Reality Gate Status:** `PASS_TO_MASTER` (Commit SHA-256: `1a2f881bb4a1409ff2eeab1ca928eaadc1deb43ab29aafbca39d782066c6cb98`, 64/64 base cases passed, 48/48 hostile mutations defended/killed).
+- **Adversary Reality Gate Status:** `PASS_TO_MASTER` (Commit SHA-256: `1a2f881bb4a1409ff2eeab1ca928eaadc1deb43ab29aafbca39d782066c6cb98`, 64/64 base cases passed, 48/48 hostile mutations defended/killed).
 
 ---
 

@@ -9,8 +9,8 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any, Dict, Union
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpStagePromptInput
-from omega_engine_pfp.use_cases.pfp_prompt import AssemblePfpStagePromptUseCase
+from pfp.domain.contracts.pfp_runtime import PfpStagePromptInput
+from pfp.use_cases.pfp_prompt import AssemblePfpStagePromptUseCase
 
 from ..domain.aggregates.pilot_aggregate import PilotAggregate
 from ..domain.kernel.ports import PfpStoragePort

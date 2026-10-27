@@ -1,8 +1,0 @@
-"""Rust host infrastructure adapters for omega_engine_operations.
-
-AuthorityEffect: None.
-"""
-
-from .witness_adapter import RustWitnessAdapter
-
-__all__ = ["RustWitnessAdapter"]

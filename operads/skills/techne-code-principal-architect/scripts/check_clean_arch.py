@@ -45,7 +45,7 @@ def get_bounded_context_roots(repo_root: Path) -> list[Path]:
     for item in repo_root.iterdir():
         if not item.is_dir():
             continue
-        if item.name.startswith("omega_engine") or item.name == "the_symbol_game":
+        if item.name.startswith("engine") or item.name == "the_symbol_game":
             if not item.name.endswith(".egg-info") and not item.name.startswith("."):
                 roots.append(item)
     return sorted(roots, key=lambda p: p.name)
@@ -74,8 +74,8 @@ def is_persistence_adapter(py_file: Path, text: str) -> bool:
 
 def check_single_root(repo_root: Path) -> list[str]:
     violations: list[str] = []
-    # Check that no nested applications/ directory exists inside omega_engine_operations
-    ops_dir = repo_root / "omega_engine_operations"
+    # Check that no nested applications/ directory exists inside operations
+    ops_dir = repo_root / "operations"
     if ops_dir.is_dir():
         nested_apps = list(ops_dir.glob("**/applications"))
         if nested_apps:

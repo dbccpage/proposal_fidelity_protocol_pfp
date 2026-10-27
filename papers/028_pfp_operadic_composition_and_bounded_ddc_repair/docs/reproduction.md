@@ -7,27 +7,27 @@ Historical source pins and prior paper replay receipts are not rewritten.
 
 The operative sources are:
 
-- `omega_engine_operads/contracts/ddc_code_repair_v1.py`: strict request,
+- `operads/contracts/ddc_code_repair_v1.py`: strict request,
   state and observation contracts, candidate identity and disposition.
-- `omega_engine_operads/infrastructure/ddc_code_repair.py`: source-bound
+- `operads/infrastructure/ddc_code_repair.py`: source-bound
   operation documents, typed workflow compilation and native lowering.
-- `omega_engine_woland/infrastructure/ddc_code_repair.py`: actual working-copy
+- `adversary/infrastructure/ddc_code_repair.py`: actual working-copy
   capture, fixed checks, patch execution and injected observations.
-- `omega_engine_woland/entrypoints/code_repair_cli.py`: composition of actual
+- `adversary/entrypoints/code_repair_cli.py`: composition of actual
   runtime adapters, not a paper-local substitute.
-- `omega_engine_woland/documentation/examples/code_repair.py`: toy source,
+- `adversary/documentation/examples/code_repair.py`: toy source,
   supplied patch, positive check and negative control.
-- `omega_engine_woland/tests/test_ddc_code_repair.py`: focused controls.
+- `adversary/tests/test_ddc_code_repair.py`: focused controls.
 
 Their byte lengths and SHA-256 digests are captured in
 [the source provenance record](source_provenance.json), after comparison with
-the named Git revision. OEEIS denotes the Omega Engine Epistemic Immune System.
+the named Git revision. OEEIS denotes the engine Epistemic Immune System.
 
 Run from the repository root with the already-built native host configured as
-`OMEGA_SYMBOL_GAME_HOST`. Use a new writable directory outside the source tree:
+`CORE_SYMBOL_GAME_HOST`. Use a new writable directory outside the source tree:
 
 ```text
-python -m omega_engine_woland.documentation.examples.code_repair --output-root <new-external-run-directory>
+python -m adversary.documentation.examples.code_repair --output-root <new-external-run-directory>
 ```
 
 The directory must not already exist. Inspect `run/receipt.json`, the retained
@@ -39,7 +39,7 @@ it ran. Actual observations are recorded separately after execution.
 Run the existing focused controls, one named file:
 
 ```text
-python -m pytest omega_engine_woland/tests/test_ddc_code_repair.py -o addopts= -q
+python -m pytest adversary/tests/test_ddc_code_repair.py -o addopts= -q
 ```
 
 On this Windows estate select Python with `py -3.12`, set an external writable

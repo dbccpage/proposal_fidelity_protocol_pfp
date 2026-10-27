@@ -4,8 +4,8 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.use_cases.clarification import check_clarification
+from operations.domain.rop.result import Err, Ok
+from pfp.use_cases.clarification import check_clarification
 
 SEED = "Define a potato as a homological object."
 FIELDS = ("object_model", "coefficient_domain", "requested_invariant")

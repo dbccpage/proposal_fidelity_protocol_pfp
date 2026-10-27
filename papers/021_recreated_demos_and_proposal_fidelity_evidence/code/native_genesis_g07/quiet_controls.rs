@@ -1,11 +1,11 @@
 //! Supplemental quiet-state replay using the already-built unchanged primitives.
 use std::collections::BTreeSet;
 use std::io::{self, Read};
-use omega_ooutwire_primitives::closure::closure_challenge_orbits;
-use omega_ooutwire_primitives::event::Event;
-use omega_ooutwire_primitives::mark::{Mark, Pair};
-use omega_ooutwire_primitives::replay::replay;
-use omega_ooutwire_primitives::token::Token;
+use core_ooutwire_primitives::closure::closure_challenge_orbits;
+use core_ooutwire_primitives::event::Event;
+use core_ooutwire_primitives::mark::{Mark, Pair};
+use core_ooutwire_primitives::replay::replay;
+use core_ooutwire_primitives::token::Token;
 use serde_json::{json, Value};
 
 fn n(value: &Value, key: &str) -> Result<usize, String> {

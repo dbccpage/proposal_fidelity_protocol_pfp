@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.python_development_office.quality_inventory import (
     ClassificationRule,
     FileQualityRecord,
     PythonQualityPolicy,
@@ -13,7 +13,7 @@ from omega_engine_operads.domain.python_development_office.quality_inventory imp
     QualityThresholds,
     TestTierRule,
 )
-from omega_engine_operads.domain.python_development_office.test_execution_receipt import (
+from operads.domain.python_development_office.test_execution_receipt import (
     TestExecutionReceipt,
 )
 
@@ -54,7 +54,7 @@ def policy(
     test_tiers: tuple[TestTierRule, ...] = (),
 ) -> PythonQualityPolicy:
     return PythonQualityPolicy(
-        schema="omega.python_quality_policy.v1",
+        schema="core.python_quality_policy.v1",
         version="test-v1",
         classifications=(
             ClassificationRule(

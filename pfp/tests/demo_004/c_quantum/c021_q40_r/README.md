@@ -26,7 +26,7 @@ The challenge separates outcomes into three strictly typed states:
 ## 2. Directory Layout
 
 ```
-omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/
+projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/
 ├── README.md                                 # This overview and verification guide
 ├── participant_packet/                       # Visible to participant models & solvers
 │   ├── TASK.md                               # Mathematical specification & JSON schemas
@@ -58,18 +58,18 @@ omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/
 ├── commitments/                              # Cryptographic commit-reveal records (SG-CP v1)
 │   ├── c021_q40_r_judge_commitment.json      # Phase 1: Judge manifest commitment
 │   ├── c021_q40_r_freeze_record.json         # Phase 2: Deliverable solver freeze record
-│   └── c021_q40_r_scoring_receipt.json       # Phase 3: Final scoring receipt & Woland seal
+│   └── c021_q40_r_scoring_receipt.json       # Phase 3: Final scoring receipt & Adversary seal
 ├── governance/                               # Governance, cost gate, and reality gate
 │   ├── __init__.py
 │   ├── budget_gate.py                        # BudgetController (< $0.05 target, <= $0.25 ceiling, <= 70B)
-│   ├── woland_gate.py                        # Woland reality gate, 4-file bundle, and dual-sink persistence
+│   ├── adversary_gate.py                        # Adversary reality gate, 4-file bundle, and dual-sink persistence
 │   └── commit_reveal_runner.py               # 3-Phase Commit-Reveal runner CLI
 └── tests/                                    # Scoped test suite
     ├── __init__.py
     ├── test_participant_packet.py            # Tests validating schema, examples, and runner
     ├── test_reference_solver.py              # Tests validating solver, math invariants, and DDC trace
     ├── test_dual_checkers.py                 # Tests validating dual checkers and case suite
-    └── test_governance_and_commit_reveal.py  # Tests validating budget gate, Woland gate, and commit-reveal
+    └── test_governance_and_commit_reveal.py  # Tests validating budget gate, Adversary gate, and commit-reveal
 ```
 
 ---
@@ -147,33 +147,33 @@ Closed refusal codes:
 
 ### Running the Participant Runner
 ```bash
-python omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/participant_packet/runner.py \
-  --cases omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/participant_packet/examples \
-  --output omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/participant_packet/answers.jsonl
+python projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/participant_packet/runner.py \
+  --cases projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/participant_packet/examples \
+  --output projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/participant_packet/answers.jsonl
 ```
 
 ### Running the Commit-Reveal Pipeline
 ```bash
-python -m omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner
+python -m projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner
 ```
 
 ### Running the Test Suites
 ```bash
 # Participant packet & reference solver tests
 python -m pytest \
-  omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_participant_packet.py \
-  omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_reference_solver.py \
+  projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_participant_packet.py \
+  projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_reference_solver.py \
   -q
 
 # Dual checkers & mutation tests
 python -m pytest \
-  omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_dual_checkers.py \
-  omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/judge_packet/mutation_suite/test_checker_mutations.py \
+  projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_dual_checkers.py \
+  projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/judge_packet/mutation_suite/test_checker_mutations.py \
   -q
 
 # Governance, cost gate, and commit-reveal tests
 python -m pytest \
-  omega_engine_projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_governance_and_commit_reveal.py \
+  projects/mssn_sn_symgam/challenges/c_quantum/c021_q40_r/tests/test_governance_and_commit_reveal.py \
   -q
 ```
 
@@ -181,7 +181,7 @@ python -m pytest \
 
 ## 5. Claim Hygiene
 
-1. **What it supports:** This package provides an exact, certificate-generating reference stabilizer solver, a sandboxed participant runner, 12 canonical public worked examples, an operator judge packet with 44 hidden cases (two cases that repeated public examples were removed on 2026-09-29), dual independent mathematical checkers, a 51-case mutation suite, a BudgetController cost gate (< $0.05 target, <= $0.25 ceiling, <= 70B parameter ceiling), and a cryptographic 3-phase Commit-Reveal pipeline under Woland's terminal reality gate.
+1. **What it supports:** This package provides an exact, certificate-generating reference stabilizer solver, a sandboxed participant runner, 12 canonical public worked examples, an operator judge packet with 44 hidden cases (two cases that repeated public examples were removed on 2026-09-29), dual independent mathematical checkers, a 51-case mutation suite, a BudgetController cost gate (< $0.05 target, <= $0.25 ceiling, <= 70B parameter ceiling), and a cryptographic 3-phase Commit-Reveal pipeline under Adversary's terminal reality gate.
 2. **What it does not support:** This package does not claim that arbitrary noncommuting quantum Hamiltonians can be solved with stabilizer techniques (they are strictly refused as `OUT_OF_SCOPE`), nor does it claim that third-party LLMs will unconditionally pass without empirical evaluation under SG-CP v1.
 3. **Narrowest defensible claim:** For any input conforming to the $n \le 8, M \le 24$ bound, the reference solver determines exact ground-state energy, degeneracy, and certificate decompositions in $< 50\text{ ms}$ using standard library rational arithmetic only, and satisfies 100% of the 44 hidden evaluation cases under dual independent checking with 0 defects.
 4. **Next test needed:** Milestone 4 full end-to-end integration and Tier 5 adversarial hardening with Challenger red-team agents.

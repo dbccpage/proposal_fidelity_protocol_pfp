@@ -11,7 +11,7 @@ maturity: draft
 claim_status: specified
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/symbol_game_proof_ledger.md  # not found at source pin c419cc6beb (2026-10-20)
+  - education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/_archive/records/source_inputs_2026_09_25/monograph_direct/symbol_game_proof_ledger.md  # not found at source pin c419cc6beb (2026-10-20)
 prerequisites:
   - ./meta_00_symbol_game_foundations.md
   - ./meta_01_symbol_game_historical_curriculum.md

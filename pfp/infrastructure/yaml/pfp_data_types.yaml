@@ -1007,7 +1007,7 @@ types:
     fields:
       schema_version:
         type: string
-        const: omega.symbol_game.cycle_balance.problem.v1
+        const: core.symbol_game.cycle_balance.problem.v1
       problem_id:
         type: string
       case_id:
@@ -1030,7 +1030,7 @@ types:
     fields:
       schema_version:
         type: string
-        const: omega.symbol_game.cycle_balance.candidate.v1
+        const: core.symbol_game.cycle_balance.candidate.v1
       candidate_id:
         type: string
       problem_digest:
@@ -1060,7 +1060,7 @@ types:
     fields:
       schema_version:
         type: string
-        const: omega.symbol_game.cycle_balance.verifier.v1
+        const: core.symbol_game.cycle_balance.verifier.v1
       verifier_id:
         type: string
       arithmetic_domain:
@@ -1078,7 +1078,7 @@ types:
     fields:
       schema_version:
         type: string
-        const: omega.symbol_game.cycle_balance.receipt.v1
+        const: core.symbol_game.cycle_balance.receipt.v1
       receipt_id:
         type: string
       authority_effect:
@@ -1176,11 +1176,11 @@ types:
 
   PfpFableLongHorizonTaskPacket:
     kind: record
-    doc: Long-horizon task packet envelope adhering to omega.symbol-game.packet-envelope.v2.
+    doc: Long-horizon task packet envelope adhering to core.symbol-game.packet-envelope.v2.
     fields:
       schema_version:
         type: string
-        doc: omega.symbol-game.packet-envelope.v2 or v1
+        doc: core.symbol-game.packet-envelope.v2 or v1
       task_id:
         type: string
       packet_id:
@@ -1417,9 +1417,9 @@ types:
   PfpNormalFormContractIdentity:
     kind: record
     cross_language: BOUND_TO_NATIVE
-    rust_binding: omega_contracts::normal_forms::NormalFormContractIdentity
-    python_binding: omega_engine_pfp.domain.types.normal_forms.PfpNormalFormContractIdentity
-    doc: Identity section of normal form contract. Bound to omega_contracts::normal_forms::NormalFormContractIdentity.
+    rust_binding: core_contracts::normal_forms::NormalFormContractIdentity
+    python_binding: pfp.domain.types.normal_forms.PfpNormalFormContractIdentity
+    doc: Identity section of normal form contract. Bound to core_contracts::normal_forms::NormalFormContractIdentity.
     fields:
       id:
         type: string
@@ -1441,9 +1441,9 @@ types:
   PfpNormalFormClassification:
     kind: record
     cross_language: BOUND_TO_NATIVE
-    rust_binding: omega_contracts::normal_forms::NormalFormClassification
-    python_binding: omega_engine_pfp.domain.types.normal_forms.PfpNormalFormClassification
-    doc: Classification section of normal form contract. Bound to omega_contracts::normal_forms::NormalFormClassification.
+    rust_binding: core_contracts::normal_forms::NormalFormClassification
+    python_binding: pfp.domain.types.normal_forms.PfpNormalFormClassification
+    doc: Classification section of normal form contract. Bound to core_contracts::normal_forms::NormalFormClassification.
     fields:
       hierarchy_level:
         type: string
@@ -1457,9 +1457,9 @@ types:
   PfpNormalFormContract:
     kind: record
     cross_language: BOUND_TO_NATIVE
-    rust_binding: omega_contracts::normal_forms::NormalFormContract
-    python_binding: omega_engine_pfp.domain.types.normal_forms.PfpNormalFormContract
-    doc: Simplex normal form contract adhering to normal_form_contract_schema.yaml. Bound to omega_contracts::normal_forms::NormalFormContract.
+    rust_binding: core_contracts::normal_forms::NormalFormContract
+    python_binding: pfp.domain.types.normal_forms.PfpNormalFormContract
+    doc: Simplex normal form contract adhering to normal_form_contract_schema.yaml. Bound to core_contracts::normal_forms::NormalFormContract.
     fields:
       schema_version:
         type: string
@@ -1541,7 +1541,7 @@ types:
     fields:
       schema_id:
         type: string
-        const: omega.pfp.rewriting.types.v1
+        const: core.pfp.rewriting.types.v1
       title:
         type: string
       authority_effect:
@@ -1918,8 +1918,8 @@ types:
   RopConsumerEnvelope:
     kind: record
     cross_language: BOUND_TO_NATIVE
-    rust_binding: omega_symbol_game_runtime::canonical::CanonicalValue
-    python_binding: omega_engine_pfp.domain.kernel.result.Result
+    rust_binding: core_symbol_game_runtime::canonical::CanonicalValue
+    python_binding: pfp.domain.kernel.result.Result
     doc: >
       [BOUND_TO_NATIVE] Railway-Oriented Programming Result<T, RefusalRecord> consumer envelope contract
       enforcing refusal state preservation across all pfp_consumers and prohibiting

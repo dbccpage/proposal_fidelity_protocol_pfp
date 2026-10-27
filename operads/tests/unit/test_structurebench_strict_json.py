@@ -9,7 +9,7 @@ import json
 
 import pytest
 
-from omega_engine_operads.structurebench import (
+from operads.structurebench import (
     ConstraintOutcome,
     StructureBenchEvaluator,
 )

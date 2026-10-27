@@ -36,9 +36,9 @@ BOILERPLATE = (
 _LINK = re.compile(r"\]\(([^)]+)\)")
 _HOST_PREFIXES = (".agents/", ".claude/", ".codex/", ".grok/", "_intelligence/", "_ic/")
 SKILL_OWNERS = {
-    "python": "omega_engine_operads/skills/techne-code-python-anti-patterns/SKILL.md",
-    "rust": "omega_engine_operads/skills/techne-code-rust-anti-patterns/SKILL.md",
-    "sql": "omega_engine_operads/skills/techne-code-sql-anti-patterns/SKILL.md",
+    "python": "operads/skills/techne-code-python-anti-patterns/SKILL.md",
+    "rust": "operads/skills/techne-code-rust-anti-patterns/SKILL.md",
+    "sql": "operads/skills/techne-code-sql-anti-patterns/SKILL.md",
 }
 RULE_EDIT_KINDS = frozenset({"cite_pattern", "insert_invariant"})
 
@@ -369,7 +369,7 @@ def _record_corpus_findings(corpus: GovernanceCorpus) -> list[Finding]:
     for doc in corpus.omc_records:
         findings.extend(_record_findings(doc, "omc_dags"))
     for doc in corpus.paper_reviews:
-        findings.extend(_record_findings(doc, "omega_paper_reviews"))
+        findings.extend(_record_findings(doc, "core_paper_reviews"))
     return findings
 
 
@@ -478,7 +478,7 @@ def _repair_finding(assessment: _RepairAssessment, patterns: Sequence[PatternDoc
     spec = assessment.spec
     corpus_name = "repairs"
     if assessment.target is None:
-        corpus_name = "rules" if spec.target_path.startswith("omega_engine_operads/rules/") else "skills"
+        corpus_name = "rules" if spec.target_path.startswith("operads/rules/") else "skills"
     return Finding(
         finding_id=f"{dispositions[assessment.state]}:{spec.repair_id}",
         disposition=dispositions[assessment.state],
@@ -584,7 +584,7 @@ def _owner_finding(
             disposition="missing_specialist",
             corpus="anti_pattern",
             source_paths=(pattern.relative_path,),
-            target_path="omega_engine_operads/skills/auto-code-anti-pattern-hunter/SKILL.md",
+            target_path="operads/skills/auto-code-anti-pattern-hunter/SKILL.md",
             target_section="Connected Specialist Skills",
             reason="this language has no specialist skill; the hunter link is a separate repair",
         )

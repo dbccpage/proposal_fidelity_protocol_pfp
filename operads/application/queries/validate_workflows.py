@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from dataclasses import asdict
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err, Ok, Result
 
 from ..dtos.api_error_dto import ApiErrorDTO
 from ..dtos.query_dtos import ValidateWorkflowsQuery

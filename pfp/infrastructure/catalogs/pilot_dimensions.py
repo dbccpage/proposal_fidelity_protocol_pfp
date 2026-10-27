@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
-from omega_engine_pfp.infrastructure.yaml_loading import strict_yaml_load
-from omega_engine_pfp.domain.stages.cartesian_matrix_types import (
+from pfp.infrastructure.yaml_loading import strict_yaml_load
+from pfp.domain.stages.cartesian_matrix_types import (
     DimensionDefinition,
     CartesianCoordinate,
     SamplingSlice,

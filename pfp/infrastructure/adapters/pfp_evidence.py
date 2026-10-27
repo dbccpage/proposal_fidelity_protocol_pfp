@@ -30,7 +30,7 @@ def write_once(path: Path, value):
 
 
 _INSTALL_PACKAGES = frozenset(
-    {"omega_engine_pfp", "omega_engine_woland", "omega_engine_education", "omega_engine_atlas"}
+    {"pfp", "adversary", "education", "atlas"}
 )
 
 

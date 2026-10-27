@@ -37,13 +37,13 @@ def test_operand_registry_loading_and_promotion_filter():
     repo_root = Path(__file__).resolve().parents[3]
     primary_path = repo_root / ".agents" / "skill_operads" / "operand_registry.json"
     legacy_path = (
-        repo_root / "omega_engine_operations" / "skill_operad" / "json" / "operand_registry.json"
+        repo_root / "operations" / "skill_operad" / "json" / "operand_registry.json"
     )
     registry_path = primary_path if primary_path.is_file() else legacy_path
     assert registry_path.is_file(), f"registry missing at {registry_path}"
 
     data = json.loads(registry_path.read_text(encoding="utf-8"))
-    assert data["schema_version"] == "omega.operad.operand_registry.v1"
+    assert data["schema_version"] == "core.operad.operand_registry.v1"
     assert data["authority_effect"] == "None"
 
     operands = data["operands"]

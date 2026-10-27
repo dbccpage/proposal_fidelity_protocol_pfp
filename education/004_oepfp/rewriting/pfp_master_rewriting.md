@@ -43,13 +43,13 @@ The Symbol Game rewriting universe operates across five mutually coherent, stric
 - **Level 1 (Genesis / 19L57G1):** Documented in [`rewriting_strategies_gen_wire.md`](../../001_oegen/rewriting/rewriting_strategies_gen_wire.md). Governs the distinction between external presentation `supply(t)` and internal admission `admit_datum(t)`, the regime monoid $\mathcal{S}_{\text{gen}} = (D, F, I, R)$, candidate delta streams $\Delta$, and the split between Reading L (language quotient) and Reading F (form multiplicity).
 - **Level 2 (S(n) Retractions):** Documented in [`rewriting_strategies_sn_wire.md`](../../002_oesn/rewriting/rewriting_strategies_sn_wire.md). Governs directed transition cuts $\langle x \to y \rangle$, section-retraction pairs $(u_n, r_n)$ satisfying the old-image law $r_n(u_n(x)) \rightsquigarrow x$, and deterministic refusal propagation $\mathrm{NON\_DESCENT}$ on unadmitted terms.
 - **Level 3 (MSS-N Wire Substrate):** Documented in [`rewriting_strategies_mssn_wire.md`](../../003_oemssn/rewriting/rewriting_strategies_mssn_wire.md). Governs the 38-glyph terminal alphabet $\Gamma_{38} = \{a..z\} \cup \{0..9\} \cup \{<, >\}$, dialect stratification (Tier S strict boundary, Tier H head-word, Tier D directive), polygraph 2-cells and 3-cell syzygies, and discrete matrix/vector systems.
-- **Level 4 (Proposal Fidelity Protocol PFP):** Governs $P \mapsto P^*$ single-prompt compilation under SPK-001, lineage preservation, typed response schemas ([`pfp.pilot-response.v1`](../../../../omega_engine_pfp/infrastructure/yaml/pilots/pilot_response_v1.schema.yaml)), fail-closed host gates, and antibody verification layers.
+- **Level 4 (Proposal Fidelity Protocol PFP):** Governs $P \mapsto P^*$ single-prompt compilation under SPK-001, lineage preservation, typed response schemas ([`pfp.pilot-response.v1`](../../../../pfp/infrastructure/yaml/pilots/pilot_response_v1.schema.yaml)), fail-closed host gates, and antibody verification layers.
 
 ---
 
 ## 2. Canonical Taxonomy of the 11 Surface Ingress Dialects
 
-The table below catalogs all eleven ingress dialects evaluated in the empirical benchmark harness [`omega_engine_woland/tests/pilots/pilot_0000000`](../../../../omega_engine_woland/tests/pilots/pilot_0000000), linking each surface formulation to its governing specification, semantic carrier, and empirical outcome:
+The table below catalogs all eleven ingress dialects evaluated in the empirical benchmark harness [`adversary/tests/pilots/pilot_0000000`](../../../../adversary/tests/pilots/pilot_0000000), linking each surface formulation to its governing specification, semantic carrier, and empirical outcome:
 
 | Case ID | Ingress Dialect Name | Boundary Format | Governing Strategy & Specification | Semantic Carrier | Empirical Gate Outcome ($P^*$) |
 |---|---|---|---|---|---|
@@ -107,7 +107,7 @@ All candidate proposals are verified against sovereign host gates implementing f
 - **`AB_INTERMEDIATE_WITNESS` (Active Gate Antibody):** Evaluates reasoning traces to verify that explicit intermediate bindings ($x=1, y=2$) were derived prior to composite scalar emission.
 
 ### 4.3 Candidate Mined Antibodies (`admitted: false`)
-Mined from the 22 scratchpad traces via [`cot_miner.py`](../../../../omega_engine_woland/tests/pilots/cot_miner.py):
+Mined from the 22 scratchpad traces via [`cot_miner.py`](../../../../adversary/tests/pilots/cot_miner.py):
 - `ab_cot_answer_channel` (5 traces): Scratchpad claims the response schema cannot hold scalar answers.
 - `ab_cot_license_conflict` (2 traces): Scratchpad derives valid substitution but refuses execution under template license rules.
 - `ab_cot_corpus_invention` (2 traces): Scratchpad hypothesizes external benchmark tasks (BigBench, ARC).
@@ -118,7 +118,7 @@ Mined from the 22 scratchpad traces via [`cot_miner.py`](../../../../omega_engin
 
 ## 5. Empirical Benchmark Verification Summary
 
-> **Recount from the retained test specs (2026-10-20, pin `c419cc6beb`).** `omega_engine_woland/tests/pilots/pilot_0000000/tests/` holds 62 test folders (`test_00` to `test_61`). Reading each `test_spec.yaml` (`actual_outcome.gate_status`, all `model_id: deepseek/deepseek-v4.1-flash` for tests 00-31):
+> **Recount from the retained test specs (2026-10-20, pin `c419cc6beb`).** `adversary/tests/pilots/pilot_0000000/tests/` holds 62 test folders (`test_00` to `test_61`). Reading each `test_spec.yaml` (`actual_outcome.gate_status`, all `model_id: deepseek/deepseek-v4.1-flash` for tests 00-31):
 >
 > | Tests | Arm | Outcome |
 > | --- | --- | --- |
@@ -169,7 +169,7 @@ In live trial execution of `pilot_0000000` using `deepseek/deepseek-v4.1-flash` 
 1. **What this document supports:**
    - Establishes the single, central golden specification connecting all Symbol Game rewriting strategies across Pre-Genesis, Genesis, S(n), MSS-N, and PFP.
    - Formulates the mathematical and syntactic definitions governing all 11 pilot ingress dialects.
-   - Formalizes the active antibody verification rule `AB_INTERMEDIATE_WITNESS` and links it to verified execution in [`fail_closed_gate.py`](../../../../omega_engine_pfp/domain/pilots/fail_closed_gate.py) and [`test_pilot_suite.py`](../../../../omega_engine_pfp/tests/test_pilot_suite.py).
+   - Formalizes the active antibody verification rule `AB_INTERMEDIATE_WITNESS` and links it to verified execution in [`fail_closed_gate.py`](../../../../pfp/domain/pilots/fail_closed_gate.py) and [`test_pilot_suite.py`](../../../../pfp/tests/test_pilot_suite.py).
 
 2. **What this document does not support:**
    - Does not claim that any single rewrite dialect is globally optimal for arbitrary machine learning models or task domains.

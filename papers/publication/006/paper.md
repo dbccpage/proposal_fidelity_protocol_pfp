@@ -56,11 +56,11 @@ automatically from the previous one.
 
 The audited implementation is fixed at commit
 `52cb5457f6c485ba548cfd292f6012a941ed22cf`. The main sources are
-[`CemeterySink`](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/infrastructure/persistence/cemetery_sink.py),
+[`CemeterySink`](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/infrastructure/persistence/cemetery_sink.py),
 its [domain record
-types](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/entities/cemetery_entry.py),
+types](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/entities/cemetery_entry.py),
 and the [storage regression
-suite](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_cemetery_sink.py).
+suite](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_cemetery_sink.py).
 The inherited "cemetery" name means a store for rejected attempts. The
 concrete data structure is an ordered predecessor chain with a header,
 not a general graph of arbitrary dependencies.
@@ -238,7 +238,7 @@ following example calls the actual storage API:
 
 ``` python
 from pathlib import Path
-from omega_engine_pfp.infrastructure.persistence.cemetery_sink import CemeterySink
+from pfp.infrastructure.persistence.cemetery_sink import CemeterySink
 
 path = Path("fresh-failure-ledger") / "failures.jsonl"
 sink = CemeterySink(path)
@@ -272,7 +272,7 @@ persisted entry while leaving its digest unchanged. Reopening rejects
 the changed payload with `LedgerIntegrityError`. In the second, delete
 the final entry while retaining the original header. Reopening rejects
 the count/head discrepancy with `LedgerTruncationError`. The [storage
-tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_cemetery_sink.py)
+tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_cemetery_sink.py)
 contain these classes of restart and tamper checks, along with
 extra-key, malformed UTF-8, invalid-count, and fixed-marker cases.
 
@@ -313,7 +313,7 @@ for this process; this paper does not claim an integrated automatic
 miner with measured discovery yield.
 
 The [clonal-selection
-module](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/immune/clonal_selection.py)
+module](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/clonal_selection.py)
 illustrates one such check. It compiles a candidate regular expression
 and compares it with benign self-panel examples. A matching clone
 produces a kill-condition record naming both clone and parent. An
@@ -322,7 +322,7 @@ killed" value must not be misread as admission when that refusal is
 present. A clean result means only no match on the supplied panel.
 
 The [self-panel
-regression](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_immune_defect_regressions.py)
+regression](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_immune_defect_regressions.py)
 identifies 40 distinct base contents inside 1,000 stored examples. A
 publication must report that effective diversity, rather than presenting
 synthetic repetitions as independent coverage. Adding new domains needs
@@ -374,9 +374,9 @@ Each `evidence_sha256` value is a distinct 64-digit hexadecimal SHA-256
 digest. The file does not record which bytes a digest covers or which
 code wrote an entry. The two harvesting implementations at the audited
 commit hash short identifying strings:
-[one](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_woland/domain/immune/seeder.py)
+[one](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/adversary/domain/immune/seeder.py)
 joins the defect label with the run and task identifiers, and [the
-other](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/domain/symbol_game_bridge/pharmacy_seeder.py)
+other](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/domain/symbol_game_bridge/pharmacy_seeder.py)
 also prefixes the entry identifier. For 19 entries, namely 15 of the
 `defect:defect:N` entries and the four `defect:h_boundary` entries, the
 stored value equals the SHA-256 of the defect label joined with a run
@@ -389,7 +389,7 @@ and it does not show that a reproduction exists.
 No code at the audited commit matches incoming proposals against these
 fixtures, executes a fixture, or derives a repair from a positive
 fixture. The nearest code found, a [prompt-diagnosis
-service](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_external_application/prompt_doctor/use_cases/repair_service.py),
+service](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/external_application/prompt_doctor/use_cases/repair_service.py),
 tests whether an entry's `target_pattern` occurs as a substring of a
 prompt; it reads neither fixture. The counts above therefore describe
 the file. They are not measures of detector coverage or effectiveness.
@@ -399,7 +399,7 @@ near-miss steps described above.
 ## 8. Monitoring overactive rules and decay
 
 The [regulatory
-supervisor](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/immune/treg.py)
+supervisor](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/treg.py)
 computes a toxicity index from trigger records. With the explicit
 trigger interface, each supplied record states whether the rule's
 pattern matched and whether the second signal of the two-signal gate was
@@ -442,10 +442,10 @@ checkout, using Python 3.12 (on Windows, `py -3.12` in place of
 `python`):
 
 ``` powershell
-python -m pytest omega_engine_pfp/tests/test_cemetery_sink.py --collect-only -q
-python -m pytest omega_engine_pfp/tests/test_cemetery_sink.py -q
-python -m pytest omega_engine_pfp/tests/test_immune_defect_regressions.py --collect-only -q
-python -m pytest omega_engine_pfp/tests/test_immune_defect_regressions.py -q
+python -m pytest pfp/tests/test_cemetery_sink.py --collect-only -q
+python -m pytest pfp/tests/test_cemetery_sink.py -q
+python -m pytest pfp/tests/test_immune_defect_regressions.py --collect-only -q
+python -m pytest pfp/tests/test_immune_defect_regressions.py -q
 ```
 
 The first suite tests the production sink; the second targets concrete

@@ -14,7 +14,7 @@ Checking a proposed recurrence against more terms is cheap. For constant-coeffic
 
 This is a deliberate E-dominated warm-up. Linear algebra over ℚ (Berlekamp–Massey for C-finite sequences, Massey 1969, and a holonomic guesser) should settle every case that is within the bounds. The interesting rows are decoys and poisoned notes.
 
-The challenge stresses the Symbol Game's residual accounting on exact rationals, and the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that tries C-finite before polynomial-coefficient ansätze. It stresses the OEEIS (Omega Engine Epistemic Immune System) against "this is the Fibonacci sequence"-style recall. A pass does not show discovery of new mathematics.
+The challenge stresses the Symbol Game's residual accounting on exact rationals, and the OEWAS (Engine Workflows, Agents, Skills) workflow that tries C-finite before polynomial-coefficient ansätze. It stresses the OEEIS (Engine Epistemic Immune System) against "this is the Fibonacci sequence"-style recall. A pass does not show discovery of new mathematics.
 
 ## 3. Formal Problem and Bounds
 
@@ -66,7 +66,7 @@ For higher-order holonomic laws the held-out agreement is evidence only, and it 
 - **Hidden base:** 40 sequences: 14 C-finite, 8 hypergeometric, 6 holonomic of order 2 or 3, 4 with a preperiod, 8 decoys.
 - **Relabel and gauge controls:** 16. Each is derived from a base sequence and has its own expected law: an index shift (drop the first `k` terms); scaling by a constant (the law is unchanged); sign alternation `(−1)ⁿ a(n)` (substitute into the law); a reversed-sign ansatz ordering.
 - **Poisoned but schema-valid:** 8. `note` fields naming a famous sequence that matches the first 8 terms but diverges later, terms that exceed 2⁶³ within the prefix, and prefixes where a spurious low-order recurrence fits exactly the given `N` terms but fails on the held-out ones.
-- **Exact checker:** Rust over `num_rational` (via `omega_kernel`), covering recurrence replay, the leading-root check, polynomial divisibility and exact determinants through `omega_engine/crates_rs/omega_linear_algebra`.
+- **Exact checker:** Rust over `num_rational` (via `core_kernel`), covering recurrence replay, the leading-root check, polynomial divisibility and exact determinants through `engine/crates_rs/core_linear_algebra`.
 - **Independent second checker:** Python `fractions` by a different author.
 - **Mutation suite:** the checker must reject: a recurrence that fails only at a held-out index; a leading polynomial with an integer root in range; a characteristic polynomial missing one root; a singular minor offered for `NONE_WITHIN_BOUNDS`; the float string `"0.5"` as a coefficient; the trivial all-zero recurrence.
 
@@ -121,7 +121,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse. Exact rationals come from `omega_engine/crates_rs/omega_kernel`, and determinants from `omega_engine/crates_rs/omega_linear_algebra` (`bareiss_determinant`), or from the `exact_determinant` action of the `omega_symbol_game` binary.
+- The catalog row lists no estate reuse. Exact rationals come from `engine/crates_rs/core_kernel`, and determinants from `engine/crates_rs/core_linear_algebra` (`bareiss_determinant`), or from the `exact_determinant` action of the `core_symbol_game` binary.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 
 ## 14. Claim Hygiene

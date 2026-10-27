@@ -4,10 +4,10 @@ import base64
 import hashlib
 import json
 
-from omega_engine_pfp.infrastructure.pilot_runners.empirical_gates import (
+from pfp.infrastructure.pilot_runners.empirical_gates import (
     summarize_injection_containment,
 )
-from omega_engine_pfp.tests.test_empirical_gate_collection import (
+from pfp.tests.test_empirical_gate_collection import (
     ATTACKS,
     CONTROLS,
     MODELS,

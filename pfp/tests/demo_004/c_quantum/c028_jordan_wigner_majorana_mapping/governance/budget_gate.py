@@ -14,20 +14,20 @@ from __future__ import annotations
 
 from typing import NoReturn
 
-from omega_engine_woland.domain.providers.budget import (
+from adversary.domain.providers.budget import (
     DEFAULT_MAX_OUTPUT_TOKENS,
     BudgetController,
     PriceQuoteV1,
     PriceTable,
     utc_now,
 )
-from omega_engine_woland.domain.providers.model_registry import (
+from adversary.domain.providers.model_registry import (
     OPEN_WEIGHT_CEILING_PARAMETERS,
     ModelNotAllowed,
     ModelRegistry,
     ModelSpecV1,
 )
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     BudgetExceeded,
     Provider,
 )
@@ -54,7 +54,7 @@ class BudgetCeilingExceededError(ValueError):
 
 
 class BudgetGateUnavailable(RuntimeError):
-    """A budget operation with no counterpart in omega_engine_providers; it fails closed."""
+    """A budget operation with no counterpart in providers; it fails closed."""
 
     def __init__(self, code: str, message: str) -> None:
         self.code = code
@@ -197,7 +197,7 @@ class C028BudgetGate:
         """
         raise BudgetGateUnavailable(
             BUDGET_GATE_UNAVAILABLE,
-            "post-call settlement is not provided by omega_engine_woland.domain.providers.budget.BudgetController; "
+            "post-call settlement is not provided by adversary.domain.providers.budget.BudgetController; "
             "the pre-call reservation stands",
         )
 

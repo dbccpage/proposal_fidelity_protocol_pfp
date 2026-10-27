@@ -8,13 +8,13 @@ from itertools import chain, combinations, product
 
 import pytest
 
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import (
+from operations.use_cases.level_engine.research_engine.canon import (
     dumps,
     git_blob_id,
     loads,
     sha256_tag,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import (
+from operations.use_cases.level_engine.research_engine.encoding import (
     Encoding,
     certify_hosting,
     decode,
@@ -22,7 +22,7 @@ from omega_engine_operations.use_cases.level_engine.research_engine.encoding imp
     encode,
     value_of,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import (
+from operations.use_cases.level_engine.research_engine.errors import (
     EmbargoRefusal,
     ExactError,
     IntakeRefusal,
@@ -30,8 +30,8 @@ from omega_engine_operations.use_cases.level_engine.research_engine.errors impor
     NonDescent,
     Refusal,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import Q
-from omega_engine_operations.use_cases.level_engine.research_engine.guards import (
+from operations.use_cases.level_engine.research_engine.exact.q import Q
+from operations.use_cases.level_engine.research_engine.guards import (
     EMBARGO_LIST,
     ResourceBound,
     check_delta_size,
@@ -39,13 +39,13 @@ from omega_engine_operations.use_cases.level_engine.research_engine.guards impor
     refuse,
     request,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.regimek import (
+from operations.use_cases.level_engine.research_engine.regimek import (
     BASE,
     Stage,
     admit_response,
     host,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed import (
+from operations.use_cases.level_engine.research_engine.sealed import (
     AdmitDatum,
     AdmitForm,
     AdmitRuleAll,
@@ -54,7 +54,7 @@ from omega_engine_operations.use_cases.level_engine.research_engine.sealed impor
     replay,
     vendored,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import (
+from operations.use_cases.level_engine.research_engine.structure import (
     FiniteStructure,
     RelSym,
     from_json,
@@ -159,7 +159,7 @@ def test_float_in_a_fixture_is_refused() -> None:
 def test_the_carrier_cap_is_eighteen() -> None:
     """Round P6: the smallest cap that hosts the six-vertex closed surface
     with its ten triangles, one test cochain and one self-map."""
-    from omega_engine_operations.use_cases.level_engine.research_engine.structure import MAX_CARRIER
+    from operations.use_cases.level_engine.research_engine.structure import MAX_CARRIER
 
     assert MAX_CARRIER == 18
     fs = from_json({**EDGE, "sorts": [["node", 18]]})
@@ -253,7 +253,7 @@ def test_a_text_is_never_a_float_nor_beside_another_value() -> None:
 
 
 def test_the_textbook_signature_check() -> None:
-    from omega_engine_operations.use_cases.level_engine.research_engine.exact.digest import (
+    from operations.use_cases.level_engine.research_engine.exact.digest import (
         as_number,
         sha256,
         signature_verifies,
@@ -270,7 +270,7 @@ def test_the_textbook_signature_check() -> None:
 
 
 def test_the_declared_canonical_digest() -> None:
-    from omega_engine_operations.use_cases.level_engine.research_engine.exact.digest import (
+    from operations.use_cases.level_engine.research_engine.exact.digest import (
         canonical_json,
         digest_of,
         sha256,

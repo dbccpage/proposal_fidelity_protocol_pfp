@@ -10,7 +10,7 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_operads.domain.workflow_graph import DangerSignalPolicy
+from operads.domain.workflow_graph import DangerSignalPolicy
 
 
 def wire(value):
@@ -52,7 +52,7 @@ def main():
             code = "DANGER_POLICY_TYPE_ERROR" if type(exc) is TypeError else "DANGER_POLICY_VALUE_ERROR"
             expected = {"error": {"code": code, "message": f"{code}: {exc}"}}
         rows.append({"input": {key: wire(value) for key, value in kwargs.items()}, "expected": expected})
-    path = Path(__file__).resolve().parents[2] / "omega_engine/crates_rs/tests/omega_operads/fixtures/python_danger_policy_v1.json"
+    path = Path(__file__).resolve().parents[2] / "engine/crates_rs/tests/core_operads/fixtures/python_danger_policy_v1.json"
     path.write_text(json.dumps({"vectors": rows}, indent=2) + "\n", encoding="utf-8")
     print(f"Frozen {len(rows)} exact danger policy vectors before native implementation.")
 

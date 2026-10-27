@@ -6,19 +6,19 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
-from omega_engine_pfp.domain.pfp_ingress import (
+from pfp.domain.pfp_ingress import (
     MAX_JSON_DEPTH as MAX_JSON_DEPTH,
 )
-from omega_engine_pfp.domain.pfp_ingress import (
+from pfp.domain.pfp_ingress import (
     MAX_REPLY_BYTES as MAX_REPLY_BYTES,
 )
-from omega_engine_pfp.domain.pfp_ingress import (
+from pfp.domain.pfp_ingress import (
     is_integer,
 )
-from omega_engine_pfp.domain.pfp_ingress import (
+from pfp.domain.pfp_ingress import (
     strict_json as strict_json,
 )
-from omega_engine_pfp.domain.pfp_ingress import (
+from pfp.domain.pfp_ingress import (
     unique_pairs as unique_pairs,
 )
 

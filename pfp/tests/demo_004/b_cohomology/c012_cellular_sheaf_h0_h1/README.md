@@ -29,9 +29,9 @@ For each target cochain $b \in C^1$, the solver returns:
 ## 2. Directory Layout
 
 ```
-omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/
+projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/
 ├── README.md                                 # Overview, mathematical invariants, and verification guide
-├── TEST_READY.md                             # Test readiness report and Lev Landau falsification matrix
+├── TEST_READY.md                             # Test readiness report and Examiner falsification matrix
 ├── participant_packet/                       # Visible to participant models & solvers
 │   ├── TASK.md                               # Mathematical specification & JSON wire schemas
 │   ├── runner.py                             # Sandboxed execution runner -> answers.jsonl
@@ -49,7 +49,7 @@ omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf
 │   └── mutation_suite/                       # 41 Corrupted certificate mutations
 ├── governance/                               # Process & policy enforcement
 │   ├── budget_gate.py                        # Pre-call financial ceiling enforcement
-│   ├── woland_gate.py                        # Reality arbiter generating StructureBench quad bundles
+│   ├── adversary_gate.py                        # Reality arbiter generating StructureBench quad bundles
 │   └── commit_reveal_runner.py               # 3-Phase Commit-Reveal verification harness
 └── tests/                                    # Scoped test battery
     ├── test_participant_packet.py
@@ -67,13 +67,13 @@ In strict adherence to the Strict Test Execution Directive, tests must be execut
 
 ```bash
 # Run reference solver and participant packet tests
-py -3.12 -m pytest omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_reference_solver.py omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_participant_packet.py -v
+py -3.12 -m pytest projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_reference_solver.py projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_participant_packet.py -v
 
 # Run dual checkers and mutation test suite
-py -3.12 -m pytest omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_dual_checkers.py omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/judge_packet/mutation_suite/test_checker_mutations.py -v
+py -3.12 -m pytest projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_dual_checkers.py projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/judge_packet/mutation_suite/test_checker_mutations.py -v
 
 # Run governance and full e2e integration
-py -3.12 -m pytest omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_governance_and_commit_reveal.py omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_e2e_challenge.py -v
+py -3.12 -m pytest projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_governance_and_commit_reveal.py projects/mssn_sn_symgam/challenges/b_cohomology/c012_cellular_sheaf_h0_h1/tests/test_e2e_challenge.py -v
 ```
 
 ---

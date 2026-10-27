@@ -26,7 +26,7 @@ A terminal obstruction lists one Windows path-depth error, then a canned require
 
 ## Witness
 
-Historical receipt. This digest did not rerun preflight, the republication gate, pytest, ruff, notebooks, or Lean. Source: `_ic/inr/omega_paper_reviews/pfp_loop_final_20260929_013741/010_the_symbol_game_multi_scale_epistemic_immunity_and_hierarchical_holonomy_decimation/run_all_receipt.json`, review `SWARM_REV_20260929_014727`, overall status `NEEDS_REVISION`.
+Historical receipt. This digest did not rerun preflight, the republication gate, pytest, ruff, notebooks, or Lean. Source: `_ic/inr/core_paper_reviews/pfp_loop_final_20260929_013741/010_the_symbol_game_multi_scale_epistemic_immunity_and_hierarchical_holonomy_decimation/run_all_receipt.json`, review `SWARM_REV_20260929_014727`, overall status `NEEDS_REVISION`.
 
 Stage `preflight_and_envelope_purity` error:
 

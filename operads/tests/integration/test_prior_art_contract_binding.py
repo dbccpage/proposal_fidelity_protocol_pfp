@@ -1,4 +1,4 @@
-"""Retained Woland source, independent contextual interface and real admission.
+"""Retained Adversary source, independent contextual interface and real admission.
 
 These finite controls do not interpret PICARD or certify a paper's semantics.
 The ephemeral SSH key is a local fixture, never an installed governance key.
@@ -12,17 +12,17 @@ import subprocess
 
 import pytest
 
-from omega_engine_operads.application.woland_candidate_plan import (
+from operads.application.adversary_candidate_plan import (
     PlanRefusal,
 )
-from omega_engine_operads.application.woland_instruction_admission import (
+from operads.application.adversary_instruction_admission import (
     InstructionAdmissionRefusal,
     verify_signed_instruction_admission,
 )
-from omega_engine_operads.application.woland_task_selection import (
+from operads.application.adversary_task_selection import (
     select_candidate_plan,
 )
-from omega_engine_operads.documentation.examples.prior_art_contract_binding import (
+from operads.documentation.examples.prior_art_contract_binding import (
     prepare_context,
     sign_fixture_manifest,
 )
@@ -119,11 +119,11 @@ def test_signed_admission_rejects_a_fresh_foreign_source_or_candidate(context, s
 
 
 def test_example_runs_without_changing_retained_source(tmp_path):
-    module = "omega_engine_operads.documentation.examples.prior_art_contract_binding"
+    module = "operads.documentation.examples.prior_art_contract_binding"
     import sys
 
     source = ROOT / (
-        "omega_engine_operads/catalog/contracts/v1/woland_claim_audit.json"
+        "operads/catalog/contracts/v1/adversary_claim_audit.json"
     )
     before = source.read_bytes()
     result = subprocess.run(

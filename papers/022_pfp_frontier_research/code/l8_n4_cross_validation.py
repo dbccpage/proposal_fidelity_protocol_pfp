@@ -46,7 +46,7 @@ def _find_repo_root(start: Path) -> Path:
 
 
 REPO_ROOT = _find_repo_root(CURRENT_DIR)
-MS_MAJORANA_CODE = REPO_ROOT / "omega_engine_projects" / "ms_majorana" / "code"
+MS_MAJORANA_CODE = REPO_ROOT / "projects" / "ms_majorana" / "code"
 
 if str(MS_MAJORANA_CODE) not in sys.path:
     sys.path.insert(0, str(MS_MAJORANA_CODE))

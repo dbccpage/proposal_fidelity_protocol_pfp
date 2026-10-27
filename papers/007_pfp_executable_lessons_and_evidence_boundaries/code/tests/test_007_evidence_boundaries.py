@@ -32,7 +32,7 @@ def test_legacy_status_grade_counts_non_assertions_without_execution() -> None:
 
 
 def test_study_guide_worksheet_runs_exactly_as_printed() -> None:
-    text = (PACKAGE / "_lev_landau_theoretical_minimum_quiz/study_guide.md").read_text()
+    text = (PACKAGE / "_lev_examiner_theoretical_minimum_quiz/study_guide.md").read_text()
     blocks = re.findall(r"```python\n(.*?)```", text, flags=re.S)
     assert len(blocks) == 1
     exec(compile(blocks[0], "study_guide.md#exact-worksheet", "exec"), {})

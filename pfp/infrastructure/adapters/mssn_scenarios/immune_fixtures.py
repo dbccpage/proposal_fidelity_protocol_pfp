@@ -6,7 +6,7 @@ Contains exactly 24 fixtures:
 """
 
 from typing import Any
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     DetectionContext,
     Disposition,
     FailureClass,
@@ -198,7 +198,7 @@ NEGATIVE_FIXTURES: list[dict[str, Any]] = [
         "context": DetectionContext(
             host_replay_receipt=HostReplayReceipt(
                 receipt_id="host-rep-01",
-                host_signer="omega-host",
+                host_signer="core-host",
                 target_digest=_REPLAY_DIGEST,
                 replay_passed=True,
             ),

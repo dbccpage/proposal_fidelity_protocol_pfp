@@ -1,4 +1,4 @@
-# Woland teamwork prompt — OEWAS-002
+# Adversary teamwork prompt — OEWAS-002
 
 AuthorityEffect: None.
 
@@ -21,9 +21,9 @@ Working directory: managed `oewas-typed-contracts/the_symbol_game` worktree.
 
 ## Roles and review
 
-Woland/root integrates and routes evidence. Koroviev/planning_review challenges
-scope and mathematical claims. Azazello/runtime_review inspects native boundaries
-and implementation reuse. Hella/tdd_review owns independent slot-law controls.
+Adversary/root integrates and routes evidence. Defect Hunter/planning_review challenges
+scope and mathematical claims. Scope Guard/runtime_review inspects native boundaries
+and implementation reuse. Syntax Prefilter/tdd_review owns independent slot-law controls.
 Each agent retains concrete dissent and the next deciding test.
 
 ## Acceptance

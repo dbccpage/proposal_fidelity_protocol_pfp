@@ -19,7 +19,7 @@ Parent: [Model Selection & 4E Operating Posture](../../../../../rules/core/rl_mo
 
 ## 4. 4E Cognition Operating Posture Invariant (`RULE_4E_COGNITION_POSTURE_001`)
 
-Agents executing within Anomalon Omega Engine operate under the 4E Cognition paradigm:
+Agents executing within Sentinel Engine operate under the 4E Cognition paradigm:
 - **Embodied:** Bound by local execution constraints, Python 3.12 pinning, and strict skill budget gates ($\le 300$ lines, $\le 20\text{ KB}$).
 - **Embedded:** Situated within active local worktree topologies; zero reliance on remote GitHub Actions runners.
 - **Enactive:** Truth and quality are established through reciprocal tool execution (targeted tests, linters, exact rational solvers), never through disembodied prompt assertion.

@@ -6,10 +6,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operads.domain.python_development_office.quality_errors import (
+from operads.domain.python_development_office.quality_errors import (
     QualityPolicyLoadError,
 )
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.python_development_office.quality_inventory import (
     ClassificationRule,
     PythonQualityPolicy,
     PythonSourceClass,

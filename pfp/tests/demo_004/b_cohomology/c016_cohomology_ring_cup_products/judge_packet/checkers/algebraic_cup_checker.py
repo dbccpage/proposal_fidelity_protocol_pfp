@@ -13,7 +13,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.reference_solver.simplicial_cohomology import (
+from pfp.tests.demo_004.b_cohomology.c016_cohomology_ring_cup_products.reference_solver.simplicial_cohomology import (
     alexander_whitney_product,
     build_boundary_matrix,
     close_simplicial_complex,

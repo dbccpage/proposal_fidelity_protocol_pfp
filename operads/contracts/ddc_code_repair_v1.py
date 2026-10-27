@@ -91,7 +91,7 @@ class CheckObservationV1(_Wire):
     stderr: str
     stdout_sha256: str
     stderr_sha256: str
-    environment_profile: Literal["woland.ddc-local-checks.v1"] = "woland.ddc-local-checks.v1"
+    environment_profile: Literal["adversary.ddc-local-checks.v1"] = "adversary.ddc-local-checks.v1"
     stdout_truncated: bool = False
     stderr_truncated: bool = False
 

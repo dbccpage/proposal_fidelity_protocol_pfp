@@ -24,16 +24,16 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.entities.cemetery_entry import CemeteryEntry, TailReceipt
-from omega_engine_pfp.domain.exceptions import (
+from pfp.domain.entities.cemetery_entry import CemeteryEntry, TailReceipt
+from pfp.domain.exceptions import (
     CanonicalizationError,
     LedgerIntegrityError,
     LedgerTruncationError,
 )
-from omega_engine_pfp.domain.ports.ports import CemeterySinkPort
+from pfp.domain.ports.ports import CemeterySinkPort
 
-HEADER_SCHEMA = "omega.symbol-game.cemetery-sink.v1"
-RECEIPT_SCHEMA = "omega.symbol-game.cemetery-receipt.v1"
+HEADER_SCHEMA = "core.symbol-game.cemetery-sink.v1"
+RECEIPT_SCHEMA = "core.symbol-game.cemetery-receipt.v1"
 GENESIS_DIGEST = "genesis"
 FLOAT_TAG = "$float_hex"
 

@@ -266,9 +266,9 @@ Each transition triggers:
 
 **Enforcement:** IF Commitment was not submitted before work began, STOP and submit it before proceeding. IF Outcome is missing at DONE transition, REVERT to IN_PROGRESS. See Step 6 for full gate logic.
 
-### Step 10: Techne Code Soviet Inspector During Implementation (MANDATORY)
+### Step 10: Techne Code Inspector During Implementation (MANDATORY)
 
-**CRITICAL:** Run the Techne Code Soviet Inspector **after writing tests for each story**, not just at pre-DONE gate time. Catching weak assertions early avoids rework.
+**CRITICAL:** Run the Techne Code Inspector **after writing tests for each story**, not just at pre-DONE gate time. Catching weak assertions early avoids rework.
 
 **When to invoke:**
 
@@ -277,7 +277,7 @@ FOR each story:
   1. Write implementation code
   1.5 PRE-STUB all referenced Rust child modules (create empty files) to prevent Cargo errors
   2. Write tests
-  3. RUN SOVIET INSPECTOR on new test files   ← HERE (early catch)
+  3. RUN STRICT INSPECTOR on new test files   ← HERE (early catch)
   4. Fix any violations immediately
   5. Continue to pre-DONE gate (Step 11)      ← Final confirmation
 
@@ -287,7 +287,7 @@ FOR each story:
 
 ``` ext
 
-# Invoke the /techne-code-soviet-inspector skill on the story's new test files
+# Invoke the /techne-code-inspector skill on the story's new test files
 
 # (e.g. tests/test_<story_feature>.py, or all new tests/test_*.py).
 
@@ -297,13 +297,13 @@ FOR each story:
 
 **Source:** Sprint 102-0 STORY-102-0-003 — dead gate reference cleanup (tooling absent).
 
-**Why during implementation (not just pre-DONE):** Sprint 107 review noted "re-audit at execution time" but the Techne Code Soviet Inspector was never formally run during execution. The pre-DONE gate (Step 11) is a final safety net, but catching issues during implementation is cheaper.
+**Why during implementation (not just pre-DONE):** Sprint 107 review noted "re-audit at execution time" but the Techne Code Inspector was never formally run during execution. The pre-DONE gate (Step 11) is a final safety net, but catching issues during implementation is cheaper.
 
 **Source:** Sprint 107 Retrospective Action Item #3
 
-### Step 11: Pre-DONE Quality Gate (MANDATORY - PER STORY - SOVIET INSPECTOR)
+### Step 11: Pre-DONE Quality Gate (MANDATORY - PER STORY - STRICT INSPECTOR)
 
-**CRITICAL:** BEFORE marking ANY story as DONE, run the Techne Code Soviet Inspector on that story's test files.
+**CRITICAL:** BEFORE marking ANY story as DONE, run the Techne Code Inspector on that story's test files.
 
 ```python
 
@@ -317,13 +317,13 @@ for story in stories_to_mark_done:
         story.blocker = "No test files specified in story"
         continue
 
-    # Invoke the /techne-code-soviet-inspector skill on the story's tests and use its verdict.
-    result = invoke_techne_code_soviet_inspector_skill(test_files)  # /techne-code-soviet-inspector
+    # Invoke the /techne-code-inspector skill on the story's tests and use its verdict.
+    result = invoke_techne_code_inspector_skill(test_files)  # /techne-code-inspector
 
     if result.verdict == "VETO":  # weak/missing/fake tests
         story.status = "BLOCKED"
         story.blocker = f"Test quality VETO: {result.violations}"
-        OUTPUT: f"STORY {story.id} BLOCKED by /techne-code-soviet-inspector"
+        OUTPUT: f"STORY {story.id} BLOCKED by /techne-code-inspector"
         OUTPUT: result.violations
         # DO NOT mark as DONE
 
@@ -335,10 +335,10 @@ for story in stories_to_mark_done:
 
 **Source:** Sprint 102-0 STORY-102-0-003 — dead gate reference cleanup (tooling absent).
 
-#### Omega Truth Verification (Part of Pre-DONE Gate)
+#### Core Truth Verification (Part of Pre-DONE Gate)
 
-REMOVED (Sprint 102-0, STORY-102-0-003): the OmegaAssigner engine does not exist
-in this repo. Omega-truth verification is deferred until a real implementation
+REMOVED (Sprint 102-0, STORY-102-0-003): the CoreAssigner engine does not exist
+in this repo. Core-truth verification is deferred until a real implementation
 exists. There is no live call here.
 
 **Source:** Sprint 102-0 STORY-102-0-003 — dead gate reference cleanup (tooling absent).
@@ -347,7 +347,7 @@ exists. There is no live call here.
 
 ``` ext
 
-# Invoke the /techne-code-soviet-inspector skill on the story's test files
+# Invoke the /techne-code-inspector skill on the story's test files
 
 # (single file, or several files for a feature plus its integration tests).
 
@@ -369,14 +369,14 @@ exists. There is no live call here.
 **DONE Requirements (ALL must pass):**
 
 - [ ] Test file(s) exist for the story
-- [ ] Techne Code Soviet Inspector returns exit code 0 (PASS)
+- [ ] Techne Code Inspector returns exit code 0 (PASS)
 - [ ] All acceptance criteria have corresponding assertions
 - [ ] No weak assertion patterns detected
 - [ ] **Witness Artifact:** Evidence path under `coda_project_planning/sprints/{N}/evidence/` exists (log, screenshot hash, or test report). No path = No credit; do not mark DONE without it.
 
 **No story closes with weak tests or without an evidence path. Period.**
 
-**Source:** Sprint Workflow Quality Enforcement (Techne Code Soviet Inspector Model)
+**Source:** Sprint Workflow Quality Enforcement (Techne Code Inspector Model)
 
 ### Step 12: Quality Enforcement (Blackrod)
 
@@ -405,18 +405,18 @@ If weak assertions found, story is BLOCKED until fixed.
 
 **Test-Tier Presence Gate (MANDATORY for code stories):**
 
-A DONE story must have added the test tiers it declared in `quality_gates.md` (see `_shared/sprint_gates.md` → **Test-Tier Coverage**): a **unit** test for any new module, an **integration** test for cross-crate behavior, and ≥1 **e2e** path where the story adds end-to-end behavior (`cargo test -j 1 --test '*_e2e'` / `pytest -m e2e`). A behavior-adding story missing its declared tier is BLOCKED (alongside the `/techne-code-soviet-inspector` weak-test veto).
+A DONE story must have added the test tiers it declared in `quality_gates.md` (see `_shared/sprint_gates.md` → **Test-Tier Coverage**): a **unit** test for any new module, an **integration** test for cross-crate behavior, and ≥1 **e2e** path where the story adds end-to-end behavior (`cargo test -j 1 --test '*_e2e'` / `pytest -m e2e`). A behavior-adding story missing its declared tier is BLOCKED (alongside the `/techne-code-inspector` weak-test veto).
 
-**PyO3 Register Verification Gate (CONDITIONAL — only when a PyO3 `omega_core` bridge is present):**
+**PyO3 Register Verification Gate (CONDITIONAL — only when a PyO3 `core_core` bridge is present):**
 
-> **Status (2026-06-19):** the PyO3 `omega_core` bridge is currently **dormant** — `omega_engine/src/lib.rs` is a stub with no `#[pymodule]`. This gate is **N/A** unless a story actually (re)introduces a PyO3 `#[pyfunction]`/`#[pyclass]` AND the bridge entry exists.
+> **Status (2026-06-19):** the PyO3 `core_core` bridge is currently **dormant** — `engine/src/lib.rs` is a stub with no `#[pymodule]`. This gate is **N/A** unless a story actually (re)introduces a PyO3 `#[pyfunction]`/`#[pyclass]` AND the bridge entry exists.
 
-For any story that adds a `#[pyfunction]` or `#[pyclass]` to omega_engine (bridge present), verify the register call exists in `omega_engine/src/lib.rs` before marking DONE:
+For any story that adds a `#[pyfunction]` or `#[pyclass]` to engine (bridge present), verify the register call exists in `engine/src/lib.rs` before marking DONE:
 
 ```bash
 
 # Verify register call exists for the new module
-grep -n "register" omega_engine/src/lib.rs | grep "<module_name>"
+grep -n "register" engine/src/lib.rs | grep "<module_name>"
 
 ``` ext
 
@@ -424,7 +424,7 @@ grep -n "register" omega_engine/src/lib.rs | grep "<module_name>"
 
 ``` ext
 IF story adds #[pyfunction] or #[pyclass] to a Rust module:
-  VERIFY: A register call for that module exists in the omega_core module register fn (omega_engine/src/lib.rs)
+  VERIFY: A register call for that module exists in the core_core module register fn (engine/src/lib.rs)
   IF register call NOT found:
     STOP: "BLOCKED: Story adds pyo3 function but register call missing from lib.rs"
     DO NOT mark as DONE until register call is added and cargo check passes
@@ -627,7 +627,7 @@ Status: DONE
 Date: 2026-03-24
 
 Files modified:
-  1. omega_engine/omega_engine/cot_trace_generator.py (360 -> ~1013 lines)
+  1. engine/engine/cot_trace_generator.py (360 -> ~1013 lines)
      - Added ATP_SCAFFOLDS dict (6 domain-specific reasoning scaffolds)
      - Added LEVEL_A_HINTS dict (6 terse operational fallbacks)
      [... detailed change list ...]

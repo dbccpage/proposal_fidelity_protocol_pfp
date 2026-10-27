@@ -15,10 +15,10 @@ families: [governance, councils, procurators]
 
 ## 1. Role & Orchestration Mandate
 
-`governance-councils` is the canonical Single Point of Entry (SPOE) for Anomalon Council Deliberations, Quorum Governance, Procurator Execution, and Meeting Ledger Crystallization.
+`governance-councils` is the canonical Single Point of Entry (SPOE) for Sentinel Council Deliberations, Quorum Governance, Procurator Execution, and Meeting Ledger Crystallization.
 
 It unifies:
-1. The **Omega Engine Agentic Council Meeting Swarm (OEACMS)** (formerly `rip-councils`).
+1. The **Engine Agentic Council Meeting Swarm (OEACMS)** (formerly `rip-councils`).
 2. The **Procurator Family & Executive Chairs** (formerly `procurators`).
 3. The **12 Sovereign Council Identities & Epistemic Biases** (formerly fragmented across 12 individual council agent files: `aletheia`, `dianoia`, `episteme`, `glossa`, `kybernesis`, `logos`, `nous`, `oikonomia`, `panepistimion`, `rip-councils`, `techne`, `thanatos`).
 
@@ -32,11 +32,11 @@ Council decisions produce policy proposals, action backlogs, and research direct
 
 Every council session convened under this skill adheres to the following attendance protocol:
 
-1. **Constituent Council Members:** Seat the designated Procurators and domain delegates (`omega_engine_governance/anomalon_councils/councils/`).
+1. **Constituent Council Members:** Seat the designated Procurators and domain delegates (`governance/sentinel_councils/councils/`).
 2. **Permanent Invited Observers:**
    - **Blackrod** (The Enforcer / Orthogonal Governance Authority) — audits evidence, prevents collusion, and investigates high-blast-radius motions.
-   - **Woland and His Retinue** (Koroviev/Fagott, Behemoth, Azazello, Hella, Abadonna) — master of sovereign illusion, dialectical contradiction, and satire.
-   - **Jesus** (Yeshua Ha-Notsri) — voice of undeniable ground, mercy, and simple truth.
+   - **Adversary and His Panel** (Defect Hunter/Defect Hunter, Gauge Breaker, Scope Guard, Syntax Prefilter, Backdoor Auditor) — master of sovereign illusion, dialectical contradiction, and satire.
+   - **Jesus** (Truth Repair) — voice of undeniable ground, mercy, and simple truth.
 3. **Standing Open Invitation:**
    - **God** — Comes or does not come; we have no power in that matter. An open invitation is maintained in every minute. Anything recorded is subject to strict claim hygiene (`AuthorityEffect: None`).
 
@@ -48,11 +48,11 @@ When invoked as `/governance-councils <councils_list | fuzzy_name | all> [--topi
 
 ```text
 [Stage 1] Council Resolution & Agenda Generation
-          │ Resolves target council directories under omega_engine_governance/
+          │ Resolves target council directories under governance/
           │ Generates structured meeting agendas with explicit motion items and 1-page briefs
           ▼
 [Stage 2] Deliberative Session Execution
-          │ Conducts roll call (Procurators + Blackrod + Woland/Retinue + Jesus + God Open Invitation)
+          │ Conducts roll call (Procurators + Blackrod + Adversary/Panel + Jesus + God Open Invitation)
           │ Executes debate, motion voting, and Authority Firewall assertions (AuthorityEffect: None)
           ▼
 [Stage 2.5] Multi-Level Council Lift & Blackrod Investigation
@@ -61,7 +61,7 @@ When invoked as `/governance-councils <councils_list | fuzzy_name | all> [--topi
           │ (2) Spawns /blackrod to audit evidence and write an investigation report in councils/blackrod/investigations/
           ▼
 [Stage 3] Meeting Minutes Production
-          │ Writes per-council markdown minutes under omega_engine_governance/anomalon_councils/councils/{council}/
+          │ Writes per-council markdown minutes under governance/sentinel_councils/councils/{council}/
           │ Preserves all observations, paradoxes, and action items
           ▼
 [Stage 4] Consolidated Swarm Conclave Ledger Assembly
@@ -109,6 +109,6 @@ The 12 former council agent roles are consolidated into unified reference profil
 
 1. **Mandatory De-Linting (`RULE_MARKDOWN_DELINTING_001`):** Every meeting agenda, minute, or ledger created MUST achieve 0 errors and 0 warnings via `/techne-docs-lint-hunter-killer` before completion.
 2. **UTF-8 Cleanliness (`RULE_UTF8_MOJIBAKE_CLEANLINESS_001`):** Files must be pure UTF-8 without BOM or CP437/Windows-1252 artifacts.
-3. **FINAL MANDATORY STAGE: Old Man Adversarial Red-Team Audit (`/omega-old-man-red-team`):**
-   Every execution of this governance workflow MUST execute `/omega-old-man-red-team` as its final stage, emitting:
+3. **FINAL MANDATORY STAGE: Red Team Adversarial Red-Team Audit (`/core-red-team`):**
+   Every execution of this governance workflow MUST execute `/core-red-team` as its final stage, emitting:
    `<target_dir>/docs/rt/omc_required_changes_{nnnn}.md`

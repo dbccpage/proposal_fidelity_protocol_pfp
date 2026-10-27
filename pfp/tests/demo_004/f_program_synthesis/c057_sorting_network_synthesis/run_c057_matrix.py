@@ -5,10 +5,10 @@ with both judge checkers. This script makes live provider calls; run it only
 with an explicit authorization of provider, budget and data handling, and
 with ``--output-dir`` naming a new directory. Shared behaviour (explicit
 configuration, opaque case tokens, full raw responses, INFRA_ERROR and
-CHECKER_DEFECT outcomes) lives in ``omega_engine_pfp/infrastructure/synthesis_matrix.py``.
+CHECKER_DEFECT outcomes) lives in ``pfp/infrastructure/synthesis_matrix.py``.
 
 Run from the repository root as a module, for example
-``py -3.12 -m omega_engine_pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.run_c057_matrix --output-dir <new directory> --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048``.
+``py -3.12 -m pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.run_c057_matrix --output-dir <new directory> --model meta-llama/llama-3.1-8b-instruct --case-limit 1 --max-provider-calls 1 --max-estimated-cost-microusd 10000 --max-output-tokens 2048``.
 
 Correction, 2026-09-29: the earlier prompt gave the optimal n = 4 network as
 its worked example, stated the proven bounds used by the infeasible cases
@@ -21,17 +21,17 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-_repo_root = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir() and (p / "omega_engine_woland").is_dir())
+_repo_root = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir() and (p / "adversary").is_dir())
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.judge_packet.exact_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.judge_packet.exact_checker import (
     check,
 )
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.judge_packet.independent_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c057_sorting_network_synthesis.judge_packet.independent_checker import (
     independent_check,
 )
-from omega_engine_pfp.infrastructure.synthesis_matrix import (
+from pfp.infrastructure.synthesis_matrix import (
     MatrixSpec,
     main,
 )

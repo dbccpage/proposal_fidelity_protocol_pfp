@@ -1,7 +1,7 @@
 # 06. Symbols in Higher Dimensions & Homotopy Type Theory
 
 **AuthorityEffect:** `None`  
-**Estate:** `omega_engine_education/documentation/004_oepfp/math/`  
+**Estate:** `education/documentation/004_oepfp/math/`  
 **Parent Document:** [`oesos_layers_index.md`](oesos_layers_index.md)  
 **Status:** Advanced Mathematical Lens  
 

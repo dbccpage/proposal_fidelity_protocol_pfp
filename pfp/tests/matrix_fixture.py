@@ -8,9 +8,9 @@ import json
 from hashlib import sha256
 from types import SimpleNamespace
 
-from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway, DurableRunGateway
-from omega_engine_woland.domain.providers.types import Provider
-from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway, DurableRunGateway
+from adversary.domain.providers.types import Provider
+from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
 
 def make_solver_gateway(tmp_path, solver, cases=(), *, model, max_output_tokens,
@@ -55,11 +55,11 @@ def make_solver_gateway(tmp_path, solver, cases=(), *, model, max_output_tokens,
         return raw
 
     if hard_budget:
-        from omega_engine_woland.domain.providers.allowlist import ModelAllowlist
-        from omega_engine_woland.domain.providers.budget import (
+        from adversary.domain.providers.allowlist import ModelAllowlist
+        from adversary.domain.providers.budget import (
             BudgetController, GatewayPolicy, PriceTable, fixture_pricing_observation,
         )
-        from omega_engine_woland.infrastructure.providers.gateway import OearsLlmGateway
+        from adversary.infrastructure.providers.gateway import OearsLlmGateway
 
         class SyntheticLiability:
             provenance = "synthetic-matrix-fixture"

@@ -13,7 +13,7 @@ AuthorityEffect: None.
 | Scene | Timestamp | Visual Cue / On-Screen Action | Voiceover Script | Epistemic Target |
 | :--- | :--- | :--- | :--- | :--- |
 | **01** | `0:00 - 0:30` | Visual schematic representing lesson_700_12_1_anatomy_conversational_fluff_bullshit_llms. | "Welcome to this session on Lesson 700.12 -- 1. The Anatomy of Conversational Fluff ("Bullshit") in LLMs. Today we examine discrete structural invariants and formal carrier boundaries." | `[Declared]` |
-| **02** | `0:30 - 1:00` | Code editor showing interactive workbench notebook. | "Unconstrained language models generate substantial extraneous tokens: ### The Woland Swarm Operational Axiom" | `[Executed]` |
+| **02** | `0:30 - 1:00` | Code editor showing interactive workbench notebook. | "Unconstrained language models generate substantial extraneous tokens: ### The Adversary Swarm Operational Axiom" | `[Executed]` |
 | **03** | `1:00 - 1:30` | Terminal output showing adversarial failure test. | "When boundary constraints are violated, the host fails closed: Boundary defects or ungrounded proposals fail closed." | `[Tested]` |
 | **04** | `1:30 - 2:00` | Summary checklist with verified execution receipts. | "Run the companion laboratory notebook to verify all positive obligations and adversarial falsifiers." | `[Pinned]` |
 

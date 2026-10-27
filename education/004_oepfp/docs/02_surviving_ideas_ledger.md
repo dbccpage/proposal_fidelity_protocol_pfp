@@ -1,7 +1,7 @@
 # 02. Surviving Ideas Ledger: PFP & CEC
 
 **AuthorityEffect:** `None`  
-**Estate:** `omega_engine_education/documentation/004_oepfp/docs/` (historically `ow/omega_engine_pfp_v0.2/04_pfp_cec/`, which no longer exists)  
+**Estate:** `education/documentation/004_oepfp/docs/` (historically `ow/pfp_v0.2/04_pfp_cec/`, which no longer exists)  
 **Parent Document:** [`README.md`](README.md)  
 **Status:** Canonical Filtration Ledger  
 
@@ -10,10 +10,10 @@
 > | Entry | Claim in the ledger | What source shows at the pin |
 > | --- | --- | --- |
 > | A-1 | SymSys-36 surface codec | No code names SymSys-36. The current minimal wire alphabet in [01](01_digest_and_canonical_serialization.md) has 38 glyphs (`a-z`, `0-9`, `<`, `>`). The round-trip parser test is still a next test. |
-> | B-1 | "Directly implemented in sovereign Rust solvers" | A finite cochain carrier exists: `PromptCellComplex` and `to_exact_complex` in [cochain.rs](../../../../omega_engine/crates_rs/omega_symbol_game_runtime/src/cochain.rs) (lines 44-176), over exact `BigRational`. No contraction benchmark was found. |
+> | B-1 | "Directly implemented in sovereign Rust solvers" | A finite cochain carrier exists: `PromptCellComplex` and `to_exact_complex` in [cochain.rs](../../../../engine/crates_rs/core_symbol_game_runtime/src/cochain.rs) (lines 44-176), over exact `BigRational`. No contraction benchmark was found. |
 > | B-2 | 10,000-complex property test | Not found; still a next test. |
 > | B-3 | Admitted as `GTFOC-CHECK-01` | The identifier appears only in this ledger and in a skill reference index (`panep-math-and-physics-prof/references/spine_index.md`); no checker carries it. |
-> | C-1 | Four-field kernel `packet_id`, `contract_digest`, `task_digest`, `payload` | The current [packet_envelope_v2.schema.yaml](../../../../omega_engine_pfp/infrastructure/yaml/schemas/packet_envelope_v2.schema.yaml) requires 18 fields and has no `contract_digest` or `task_digest`. Read C-1 as a historical design, not the current schema. |
+> | C-1 | Four-field kernel `packet_id`, `contract_digest`, `task_digest`, `payload` | The current [packet_envelope_v2.schema.yaml](../../../../pfp/infrastructure/yaml/schemas/packet_envelope_v2.schema.yaml) requires 18 fields and has no `contract_digest` or `task_digest`. Read C-1 as a historical design, not the current schema. |
 > | D-2 | 2-colored operad toy fixture in Lean 4 | Not checked in this pass. |
 
 ---
@@ -69,7 +69,7 @@ Below is the structured ledger of research ideas across five core technical zone
 * **Core Idea:** Mapping symbolic discrepancies to 1-cochains, repairs to 0-coboundaries, and integrability defects to 2-cochains.
 * **Evaluation:** Clears all criteria. Directly implemented in sovereign Rust solvers.
 * **Disposition:** Admitted as core mathematical foundation.
-* **Next Test:** Exact rational matrix contraction benchmarks in `omega_symbol_game_runtime`.
+* **Next Test:** Exact rational matrix contraction benchmarks in `core_symbol_game_runtime`.
 
 #### Entry B-2: `LP Duality for L1 Residual Minimization`
 * **Classification:** `ADMIT (Research Programme)`
@@ -83,7 +83,7 @@ Below is the structured ledger of research ideas across five core technical zone
 * **Core Idea:** Gluing local agent observations across overlapping contexts using Čech 1-cohomology.
 * **Evaluation:** Provides rigorous multi-agent consensus without heuristic voting.
 * **Disposition:** Admitted as `GTFOC-CHECK-01`.
-* **Next Test:** Multi-agent patch reconciliation fixture in `omega_engine_operations`.
+* **Next Test:** Multi-agent patch reconciliation fixture in `operations`.
 
 ---
 

@@ -19,9 +19,9 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.exact_checker import verify_exact  # noqa: E402
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.independent_checker import verify_independent  # noqa: E402
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import lean_version  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.exact_checker import verify_exact  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.independent_checker import verify_independent  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.lean_compiler import lean_version  # noqa: E402
 
 REFUSAL_OUTCOMES = frozenset({"ABSTAINED", "WARRANTED_REFUSAL", "UNWARRANTED_REFUSAL"})
 

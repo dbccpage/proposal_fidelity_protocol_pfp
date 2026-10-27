@@ -10,11 +10,11 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     current_context,
 )
-from omega_engine_pfp.infrastructure.tower_evidence.level_engine import EvidenceRefusal
-from omega_engine_pfp.infrastructure.tower_research.level_engine.finite_consumer import (
+from pfp.infrastructure.tower_evidence.level_engine import EvidenceRefusal
+from pfp.infrastructure.tower_research.level_engine.finite_consumer import (
     FiniteLevelEngineConsumer,
 )
 
@@ -204,7 +204,7 @@ def test_same_path_vendor_mutation_refuses_even_if_hidden_from_git_status(tmp_pa
 
 
 def test_stale_process_cannot_mint_a_new_matching_checker_binding(monkeypatch):
-    from omega_engine_pfp.infrastructure.tower_research.level_engine import finite_consumer
+    from pfp.infrastructure.tower_research.level_engine import finite_consumer
 
     sources = finite_consumer._checker_sources()
     sources["engine/level.py"] += b"\n# changed checker\n"
@@ -230,7 +230,7 @@ def test_actual_governance_resource_change_refuses(tmp_path):
 
 
 def test_historical_bytes_never_fall_back_to_active_or_working_bytes(tmp_path):
-    from omega_engine_pfp.infrastructure.tower_evidence.level_engine import (
+    from pfp.infrastructure.tower_evidence.level_engine import (
         LevelEngineEvidenceResolver,
     )
 
@@ -267,7 +267,7 @@ def test_historical_bytes_never_fall_back_to_active_or_working_bytes(tmp_path):
 
 
 def test_new_reach_certificate_issuance_stays_unavailable():
-    from omega_engine_operations.use_cases.level_engine.reach_replay import regenerate_ledger
+    from operations.use_cases.level_engine.reach_replay import regenerate_ledger
 
     with pytest.raises(ValueError, match="REACH_V2_GENERATION_UNAVAILABLE"):
         regenerate_ledger()
@@ -329,8 +329,8 @@ def test_actual_missing_fixture_and_missing_vendor_refuse(tmp_path):
 
 @pytest.mark.parametrize("terminal", ["MISSING_COMPONENTS", "FIXTURE_EXPECTATIONS_MISMATCHED"])
 def test_runner_unavailability_cannot_be_candidate_success(monkeypatch, terminal):
-    from omega_engine_pfp.domain.tower.level_engine import LevelEngineOutcome
-    from omega_engine_pfp.infrastructure.tower_research.level_engine.runner import (
+    from pfp.domain.tower.level_engine import LevelEngineOutcome
+    from pfp.infrastructure.tower_research.level_engine.runner import (
         ResearchLevelEngineRunner,
     )
 
@@ -350,9 +350,9 @@ def test_runner_unavailability_cannot_be_candidate_success(monkeypatch, terminal
 def test_prepared_actual_pfp_reply_consumes_real_finite_checker(fid, expected_status):
     import base64
 
-    from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-    from omega_engine_pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
-    from omega_engine_pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
+    from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+    from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
+    from pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
 
     raw, protected = candidate(fid)
     task = PfpTaskPrompt("edge-task", "Submit a bounded arc relation satisfying the host obligation.",

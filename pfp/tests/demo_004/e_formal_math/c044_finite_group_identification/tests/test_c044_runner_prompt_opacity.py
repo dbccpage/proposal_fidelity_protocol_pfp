@@ -10,13 +10,13 @@ from __future__ import annotations
 import importlib
 import inspect
 
-from omega_engine_pfp.infrastructure.formal_matrix import (
+from pfp.infrastructure.formal_matrix import (
     map_back,
     opaque_token,
 )
 
 RUNNER = importlib.import_module(
-    "omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.run_c044_matrix"
+    "pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.run_c044_matrix"
 )
 CASES = RUNNER.load_cases()
 HIDDEN_KEYS = ("note",)

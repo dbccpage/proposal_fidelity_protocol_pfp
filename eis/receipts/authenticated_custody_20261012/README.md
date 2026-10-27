@@ -20,7 +20,7 @@ no independent reviewer or paid provider call is claimed.
   bind the full candidate/source/fixture request. Expired observations remain
   in history but do not count; fresh signed evidence restores eligibility.
   Eligible candidates remain unadmitted.
-- Woland consolidated SAGA4: native reconciliation now refuses unreadable
+- Adversary consolidated SAGA4: native reconciliation now refuses unreadable
   journal lines before writing, matching Python. Actual damaged bytes survive;
   explicit repair allows idempotent CRASHED_UNKNOWN closure.
 
@@ -41,9 +41,9 @@ evidence. These certify neither the full epic suites nor unrestricted research.
 | --- | --- |
 | New authenticated admission, host health and finite-observation controls, three pytest files | 40 passed |
 | Existing EIS admission/activation controls, three pytest files | 84 passed |
-| Woland journal, teamwork and digestion controls, three pytest files | 53 passed |
+| Adversary journal, teamwork and digestion controls, three pytest files | 53 passed |
 | Native authenticated custody, admission support and activation-port parity | 8 passed |
-| Native Woland journal acceptance and parity | 5 passed; one subprocess helper is marked ignored at top level and is explicitly executed by its parent crash test |
+| Native Adversary journal acceptance and parity | 5 passed; one subprocess helper is marked ignored at top level and is explicitly executed by its parent crash test |
 | Existing epic manifest, traversal and non-regular-file controls | 55 passed |
 | Remove health requirement; remove full-request binding; remove native signature verification | All three mutations were detected; exact sources restored and controls passed |
 
@@ -63,12 +63,12 @@ Example focused reproduction, after building the native host and installing
 the project's development dependencies:
 
 ```bash
-cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_epistemic_immune_system -j 1 --test authenticated_custody --test admission_support --test activation_use_case_parity
-cargo test --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_woland -j 1 --test journal_acceptance --test journal_parity
-python -m pytest -q omega_engine_epistemic_immune_system/tests/integration/test_authenticated_admission.py omega_engine_epistemic_immune_system/tests/unit/test_activation_host_health.py omega_engine_epistemic_immune_system/tests/test_prior_art_negative_selection_fixtures.py
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_epistemic_immune_system -j 1 --test authenticated_custody --test admission_support --test activation_use_case_parity
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_adversary -j 1 --test journal_acceptance --test journal_parity
+python -m pytest -q eis/tests/integration/test_authenticated_admission.py eis/tests/unit/test_activation_host_health.py eis/tests/test_prior_art_negative_selection_fixtures.py
 ```
 
-Set `OMEGA_SYMBOL_GAME_HOST` to the rebuilt `omega_symbol_game` executable for
+Set `CORE_SYMBOL_GAME_HOST` to the rebuilt `core_symbol_game` executable for
 Python reproduction. No GitHub Actions were used or changed.
 
 ## Full epic disposition
@@ -82,10 +82,10 @@ successor keep executed slices separate from their prospective full test plans.
 | EIS002 | Signed health delivered; actual observer deployment and generalized tolerance remain external/empirical obligations. |
 | EIS003 | Signed custody and reinstatement delivered; operator key enrollment, durable pin storage, key rollover and automated regulation/learning composition remain separate. |
 | EIS004 | Finite production-bound experiment delivered; broad source-theorem adoption and empirical independence remain research. |
-| Woland prior-art001 | Existing finite gate predicates/application retained; source assumptions and trusted measurement collection remain open. |
-| Woland002 | Existing shared coordinator and bounded text-file executor retained; paid OpenRouter demonstration, generalized remote tools and dynamic routing remain unclaimed. |
-| Woland003 | Existing D1–D5 delivery and fresh original-task recheck retained; broad autonomous/generalization claims remain open. |
-| Woland consolidated | Native corrupt-journal refusal repaired; multi-worker coordination, seamless checkpoint resume and mathematical saga claims remain deferred. |
+| Adversary prior-art001 | Existing finite gate predicates/application retained; source assumptions and trusted measurement collection remain open. |
+| Adversary002 | Existing shared coordinator and bounded text-file executor retained; paid OpenRouter demonstration, generalized remote tools and dynamic routing remain unclaimed. |
+| Adversary003 | Existing D1–D5 delivery and fresh original-task recheck retained; broad autonomous/generalization claims remain open. |
+| Adversary consolidated | Native corrupt-journal refusal repaired; multi-worker coordination, seamless checkpoint resume and mathematical saga claims remain deferred. |
 
 A caller must supply real trust configuration and retain ledger pins outside
 the database. A hash chain alone cannot establish a human authorization,

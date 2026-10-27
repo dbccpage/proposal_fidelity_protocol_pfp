@@ -10,8 +10,8 @@ import subprocess
 import sys
 from pathlib import Path, PurePosixPath
 
-from omega_engine_operations.use_cases.packaging.sync_cross_host_skills import HOST_SKILL_ROOTS
-from omega_engine_operads.domain.autopoiesis.learning import (
+from operations.use_cases.packaging.sync_cross_host_skills import HOST_SKILL_ROOTS
+from operads.domain.autopoiesis.learning import (
     LearningBlocked,
     artifact_text_digest,
 )
@@ -79,11 +79,11 @@ class GitLearningWorkspace:
             "--name-only",
             self.proposal_base,
             "--",
-            "omega_engine_operads/rules",
-            "omega_engine_operads/skills",
-            "omega_engine_operads/workflows",
-            "omega_engine_operads/agents",
-            "omega_engine_operads/domain/autopoiesis/profiles",
+            "operads/rules",
+            "operads/skills",
+            "operads/workflows",
+            "operads/agents",
+            "operads/domain/autopoiesis/profiles",
         ).splitlines()
         paths = [
             p
@@ -128,7 +128,7 @@ class GitLearningWorkspace:
             if not any(fnmatch.fnmatchcase(change.path, p) for p in suite.allowed_paths):
                 raise ValueError(f"candidate changes an unevaluated path: {change.path}")
             if change.path.startswith((
-                ".github/", "omega_engine_operads/registry/workflows/", ".agents/registry/workflows/"
+                ".github/", "operads/registry/workflows/", ".agents/registry/workflows/"
             )):
                 raise ValueError("candidate cannot add remote CI or executable host catalogs")
             if change.path not in self.catalog_paths and command(
@@ -170,8 +170,8 @@ class GitLearningWorkspace:
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(change.content.encode("utf-8"))
             changed.append(change.path)
-            if change.path.startswith(("omega_engine_operads/skills/", "omega_engine_operads/rules/", "omega_engine_operads/agents/")):
-                source_prefix = "omega_engine_operads/"
+            if change.path.startswith(("operads/skills/", "operads/rules/", "operads/agents/")):
+                source_prefix = "operads/"
                 suffix = change.path[len(source_prefix) :]
                 for host_skills in HOST_SKILL_ROOTS:
                     host = host_skills.split("/")[0]
@@ -185,7 +185,7 @@ class GitLearningWorkspace:
                     changed.append(f"{host}/{suffix}")
         if not changed:
             raise LearningBlocked("CANDIDATE_HAS_NO_CHANGE")
-        registry = path / "omega_engine_operads/registry/autop_artifacts.json"
+        registry = path / "operads/registry/autop_artifacts.json"
         entries = json.loads(registry.read_text(encoding="utf-8")) if registry.exists() else []
         entries = [e for e in entries if e["artifact_id"] != candidate.artifact_id]
         entries.append(
@@ -206,7 +206,7 @@ class GitLearningWorkspace:
             json.dumps(sorted(entries, key=lambda e: e["artifact_id"]), indent=2) + "\n",
             encoding="utf-8",
         )
-        changed.append("omega_engine_operads/registry/autop_artifacts.json")
+        changed.append("operads/registry/autop_artifacts.json")
         for host_skills in HOST_SKILL_ROOTS:
             relative = host_skills.split("/")[0] + "/registry/autop_artifacts.json"
             if not command(path, "git", "ls-files", "--", host_skills):
@@ -218,13 +218,13 @@ class GitLearningWorkspace:
                 encoding="utf-8",
             )
             changed.append(relative)
-        packages = sorted({p.split("/")[2] for p in changed if p.startswith("omega_engine_operads/skills/")})
+        packages = sorted({p.split("/")[2] for p in changed if p.startswith("operads/skills/")})
         if packages:
             command(
                 path,
                 sys.executable,
                 "-m",
-                "omega_engine_operations.controllers.skill_mirror_cli",
+                "operations.controllers.skill_mirror_cli",
                 "--root",
                 str(path),
                 "--skills",
@@ -233,7 +233,7 @@ class GitLearningWorkspace:
             command(
                 path,
                 sys.executable,
-                "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py",
+                "operations/use_cases/packaging/sync_cross_host_skills.py",
                 "--check",
                 "--skills",
                 ",".join(packages),
@@ -241,7 +241,7 @@ class GitLearningWorkspace:
             command(
                 path,
                 sys.executable,
-                "omega_engine_operads/skill_operad/skill_compiler/budget_gate.py",
+                "operads/skill_operad/skill_compiler/budget_gate.py",
                 "--skills",
                 ",".join(packages),
             )
@@ -344,7 +344,7 @@ class GitHubLearningPublisher:
             # our own evidence-bound candidate branch, never an unrelated ref.
             command(root, "git", "fetch", "origin", f"refs/heads/{branch}")
             registry = json.loads(
-                command(root, "git", "show", "FETCH_HEAD:omega_engine_operads/registry/autop_artifacts.json")
+                command(root, "git", "show", "FETCH_HEAD:operads/registry/autop_artifacts.json")
             )
             if not any(
                 e.get("lesson_id") == candidate.lesson_id

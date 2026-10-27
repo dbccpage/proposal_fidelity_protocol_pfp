@@ -35,14 +35,14 @@ Use at the concrete boundaries identified by
 
 ## Actual implementation bindings
 
-- `omega_sandbox/src/windows.rs`: suspended launch/assignment/resume and capture.
-- `omega_sandbox/tests/windows_capture.rs`: delayed overflow, pipe timeout,
+- `core_sandbox/src/windows.rs`: suspended launch/assignment/resume and capture.
+- `core_sandbox/tests/windows_capture.rs`: delayed overflow, pipe timeout,
   bounded descendant output, ordinary output and nonzero exit controls.
-- `omega_quantum_physics/src/phase_estimation.rs`: supported roots, signed
+- `core_quantum_physics/src/phase_estimation.rs`: supported roots, signed
   extrema and periodicity against exact exponent reduction.
 - `auto_p/bin/autop_check.rs`: serialized report insertion-order independence.
 
-Paths are relative to `omega_engine/crates_rs/`. Inspect test bodies and run the
+Paths are relative to `engine/crates_rs/`. Inspect test bodies and run the
 smallest relevant filters against current candidate bytes. Existing test names
 or a previous PASS are not proof of a new change. Use the primary shared Cargo
 cache, `-j 1` and sequential targeted checks; no full canonical CI is implied.

@@ -14,7 +14,7 @@ from pathlib import Path
 THEME = (
     Path(
         importlib.import_module(
-            "omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.runner"
+            "projects.mssn_sn_symgam.challenges.b_cohomology.runner"
         ).__file__
     )
     .resolve()

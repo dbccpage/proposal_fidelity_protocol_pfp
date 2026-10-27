@@ -23,7 +23,7 @@ class WASRolePlanDTO(WASDTO):
     model_config = ConfigDict(extra="ignore", populate_by_name=True)
 
     schema_uri: str = Field(
-        alias="schema", default="anomalon.agent-system.a01.role-plan.v1"
+        alias="schema", default="sentinel.agent-system.a01.role-plan.v1"
     )
     proposal_only: Optional[bool] = None
     admitted: Optional[bool] = None
@@ -43,7 +43,7 @@ class WASLifecyclePlanDTO(WASDTO):
     model_config = ConfigDict(extra="ignore", populate_by_name=True)
 
     schema_uri: str = Field(
-        alias="schema", default="anomalon.agent-system.a01.lifecycle-plan.v1"
+        alias="schema", default="sentinel.agent-system.a01.lifecycle-plan.v1"
     )
     proposal_only: Optional[bool] = None
     admitted: Optional[bool] = None
@@ -67,8 +67,8 @@ class WASProviderSpec(WASDTO):
 
 
 class WASProviderObservationDTO(WASDTO):
-    schema_uri: Literal["anomalon.agent-system.a01.provider-observation.v1"] = Field(
-        alias="schema", default="anomalon.agent-system.a01.provider-observation.v1"
+    schema_uri: Literal["sentinel.agent-system.a01.provider-observation.v1"] = Field(
+        alias="schema", default="sentinel.agent-system.a01.provider-observation.v1"
     )
     proposal_only: Literal[False] = False
     admitted: Literal[True] = True

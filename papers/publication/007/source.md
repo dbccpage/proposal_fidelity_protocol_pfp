@@ -21,7 +21,7 @@ For a first encounter, assume familiarity with integer arithmetic and introduce 
 
 A complete lesson should let a reader reconstruct the original case, identify the changed input, predict an outcome with a reason, inspect the checker, and state one conclusion that the example leaves open. The notebook can record the reference computation. A record of the learner's understanding requires the learner's own response and an explicit assessment procedure.
 
-This distinction addresses concrete defects documented by the existing [curriculum review](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/curriculum_125_review.md): reused generic arithmetic, constant assertions, self-comparisons, and matching LP objectives without feasibility checks. The review describes detected patterns; it does not establish that every older lesson is wrong.
+This distinction addresses concrete defects documented by the existing [curriculum review](../../../../education/the_symbol_game/lessons/system_integration/curriculum_125_review.md): reused generic arithmetic, constant assertions, self-comparisons, and matching LP objectives without feasibility checks. The review describes detected patterns; it does not establish that every older lesson is wrong.
 
 ## 2. A repeatable design sequence
 
@@ -55,11 +55,11 @@ df=(\tfrac13,\tfrac13,-\tfrac23).
 
 Subtract these differences from the original edge table \(h=(1/3,1/3,1/3)\). The residual is \(h-df=(0,0,1)\). Its location has changed, but its cycle sum is still one.
 
-Here is an adapted arithmetic core from the [cycle-repair lesson](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb), using the repository's discrete cochain implementation. It omits the notebook's retired `l1_norm()` call; Section 5 explains why the unchanged full notebook cannot currently complete:
+Here is an adapted arithmetic core from the [cycle-repair lesson](../../../../education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb), using the repository's discrete cochain implementation. It omits the notebook's retired `l1_norm()` call; Section 5 explains why the unchanged full notebook cannot currently complete:
 
 ```python
 from fractions import Fraction as Q
-from omega_engine_pfp.domain.ddc import (
+from pfp.domain.ddc import (
     Edge, SimplicialComplex, Cochain0, Cochain1, d0,
 )
 
@@ -111,46 +111,46 @@ The package's [companion notebook](jupyter_notebooks/007_moving_a_discrepancy.ip
 
 ## 4. The actual 20-notebook route
 
-The [integration README](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/README.md) defines the current deep route. Its five directory labels organize progression; they are not measured age thresholds. Begin with the first two groups and use later groups when their prerequisites are available.
+The [integration README](../../../../education/the_symbol_game/lessons/system_integration/README.md) defines the current deep route. Its five directory labels organize progression; they are not measured age thresholds. Begin with the first two groups and use later groups when their prerequisites are available.
 
-Every path below is a present notebook under `omega_engine_education/the_symbol_game/lessons/system_integration/`. The linked table is a reading map, not a claim of fresh execution.
+Every path below is a present notebook under `education/the_symbol_game/lessons/system_integration/`. The linked table is a reading map, not a claim of fresh execution.
 
 | Group | Notebook | Main distinction |
 | --- | --- | --- |
-| Beginners | [01_marks_and_packets.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/000_beginners/01_marks_and_packets.ipynb) | Parseable syntax versus assigned meaning |
-| Beginners | [02_lifts_and_non_descent.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/000_beginners/02_lifts_and_non_descent.ipynb) | Preserved old object versus a new object without an old representative |
-| Beginners | [03_edges_and_parallel_cells.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/000_beginners/03_edges_and_parallel_cells.ipynb) | Matching boundaries versus valid syntax alone |
-| Beginners | [04_costs_and_ties.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/000_beginners/04_costs_and_ties.ipynb) | Declared cost choice versus an unavoidable winner |
-| Novices | [01_codecs_and_tamper_evidence.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/01_codecs_and_tamper_evidence.ipynb) | Representation preservation versus changed content |
-| Novices | [02_token_frontier.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/02_token_frontier.ipynb) | Retained token mass versus answer correctness |
-| Novices | [03_typed_agent_composition.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/03_typed_agent_composition.ipynb) | Compatible types versus permission to act |
-| Novices | [04_cycle_repair.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb) | Residual concentration versus changed cycle sum |
-| Intermediates | [01_nilpotence_and_missing_boundaries.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/200_intermediates/01_nilpotence_and_missing_boundaries.ipynb) | Complete cell boundaries versus the chain-law calculation |
-| Intermediates | [02_exact_lp_certificates.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/200_intermediates/02_exact_lp_certificates.ipynb) | Feasible matching witnesses versus equal objective labels |
-| Intermediates | [03_quantifier_order.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/200_intermediates/03_quantifier_order.ipynb) | Choosing before versus after a challenge |
-| Intermediates | [04_frustrated_spin_triangle.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/200_intermediates/04_frustrated_spin_triangle.ipynb) | Finite parity obstruction versus a general physics claim |
-| Advanced | [01_four_simplex_volume.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/300_advanced/01_four_simplex_volume.ipynb) | Computed determinant versus a supplied expected constant |
-| Advanced | [02_pairing_and_degree_four_certificate.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/300_advanced/02_pairing_and_degree_four_certificate.ipynb) | Declared pairing versus constructed manifold topology |
-| Advanced | [03_survivor_birth_and_death.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/300_advanced/03_survivor_birth_and_death.ipynb) | Survivor identities versus counts alone |
-| Advanced | [04_transfer_trace_and_shadow.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/300_advanced/04_transfer_trace_and_shadow.ipynb) | Finite return counts versus broader spectral meaning |
-| Researchers | [01_coverage_and_licensed_depth.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/400_researchers/01_coverage_and_licensed_depth.ipynb) | Catalog coverage versus accepted lift evidence |
-| Researchers | [02_immune_boundary_and_negative_selection.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/400_researchers/02_immune_boundary_and_negative_selection.ipynb) | Bounded detection versus repair authority |
-| Researchers | [03_governed_prompt_evolution.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/400_researchers/03_governed_prompt_evolution.ipynb) | Selection on supplied finite outcomes versus learned model performance |
-| Researchers | [04_source_bound_research_audit.ipynb](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/400_researchers/04_source_bound_research_audit.ipynb) | Source navigation versus executed evidence |
+| Beginners | [01_marks_and_packets.ipynb](../../../../education/the_symbol_game/lessons/system_integration/000_beginners/01_marks_and_packets.ipynb) | Parseable syntax versus assigned meaning |
+| Beginners | [02_lifts_and_non_descent.ipynb](../../../../education/the_symbol_game/lessons/system_integration/000_beginners/02_lifts_and_non_descent.ipynb) | Preserved old object versus a new object without an old representative |
+| Beginners | [03_edges_and_parallel_cells.ipynb](../../../../education/the_symbol_game/lessons/system_integration/000_beginners/03_edges_and_parallel_cells.ipynb) | Matching boundaries versus valid syntax alone |
+| Beginners | [04_costs_and_ties.ipynb](../../../../education/the_symbol_game/lessons/system_integration/000_beginners/04_costs_and_ties.ipynb) | Declared cost choice versus an unavoidable winner |
+| Novices | [01_codecs_and_tamper_evidence.ipynb](../../../../education/the_symbol_game/lessons/system_integration/100_novices/01_codecs_and_tamper_evidence.ipynb) | Representation preservation versus changed content |
+| Novices | [02_token_frontier.ipynb](../../../../education/the_symbol_game/lessons/system_integration/100_novices/02_token_frontier.ipynb) | Retained token mass versus answer correctness |
+| Novices | [03_typed_agent_composition.ipynb](../../../../education/the_symbol_game/lessons/system_integration/100_novices/03_typed_agent_composition.ipynb) | Compatible types versus permission to act |
+| Novices | [04_cycle_repair.ipynb](../../../../education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb) | Residual concentration versus changed cycle sum |
+| Intermediates | [01_nilpotence_and_missing_boundaries.ipynb](../../../../education/the_symbol_game/lessons/system_integration/200_intermediates/01_nilpotence_and_missing_boundaries.ipynb) | Complete cell boundaries versus the chain-law calculation |
+| Intermediates | [02_exact_lp_certificates.ipynb](../../../../education/the_symbol_game/lessons/system_integration/200_intermediates/02_exact_lp_certificates.ipynb) | Feasible matching witnesses versus equal objective labels |
+| Intermediates | [03_quantifier_order.ipynb](../../../../education/the_symbol_game/lessons/system_integration/200_intermediates/03_quantifier_order.ipynb) | Choosing before versus after a challenge |
+| Intermediates | [04_frustrated_spin_triangle.ipynb](../../../../education/the_symbol_game/lessons/system_integration/200_intermediates/04_frustrated_spin_triangle.ipynb) | Finite parity obstruction versus a general physics claim |
+| Advanced | [01_four_simplex_volume.ipynb](../../../../education/the_symbol_game/lessons/system_integration/300_advanced/01_four_simplex_volume.ipynb) | Computed determinant versus a supplied expected constant |
+| Advanced | [02_pairing_and_degree_four_certificate.ipynb](../../../../education/the_symbol_game/lessons/system_integration/300_advanced/02_pairing_and_degree_four_certificate.ipynb) | Declared pairing versus constructed manifold topology |
+| Advanced | [03_survivor_birth_and_death.ipynb](../../../../education/the_symbol_game/lessons/system_integration/300_advanced/03_survivor_birth_and_death.ipynb) | Survivor identities versus counts alone |
+| Advanced | [04_transfer_trace_and_shadow.ipynb](../../../../education/the_symbol_game/lessons/system_integration/300_advanced/04_transfer_trace_and_shadow.ipynb) | Finite return counts versus broader spectral meaning |
+| Researchers | [01_coverage_and_licensed_depth.ipynb](../../../../education/the_symbol_game/lessons/system_integration/400_researchers/01_coverage_and_licensed_depth.ipynb) | Catalog coverage versus accepted lift evidence |
+| Researchers | [02_immune_boundary_and_negative_selection.ipynb](../../../../education/the_symbol_game/lessons/system_integration/400_researchers/02_immune_boundary_and_negative_selection.ipynb) | Bounded detection versus repair authority |
+| Researchers | [03_governed_prompt_evolution.ipynb](../../../../education/the_symbol_game/lessons/system_integration/400_researchers/03_governed_prompt_evolution.ipynb) | Selection on supplied finite outcomes versus learned model performance |
+| Researchers | [04_source_bound_research_audit.ipynb](../../../../education/the_symbol_game/lessons/system_integration/400_researchers/04_source_bound_research_audit.ipynb) | Source navigation versus executed evidence |
 
-The retained [125-lesson syllabus](../../../../omega_engine_education/the_symbol_game/lessons/curriculum_125_master.md) supplies a broader topic ordering. The integration README explicitly avoids treating it as a second front door or treating 20 examples as implementation of all 125 topics.
+The retained [125-lesson syllabus](../../../../education/the_symbol_game/lessons/curriculum_125_master.md) supplies a broader topic ordering. The integration README explicitly avoids treating it as a second front door or treating 20 examples as implementation of all 125 topics.
 
 ## 5. Replay honestly after a source move
 
-Execution evidence belongs to exact notebook and implementation bytes. The saved [headless receipt](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/headless_receipt.json) reports 20 passing notebooks dated 2026-09-25. Its recorded paths use the former `omega_engine_education/notebooks/` tree. The [manifest](../../../../omega_engine_education/the_symbol_game/lessons/system_integration/lesson_manifest.json) also retains 20 paths under that absent location at this baseline. These are historical records, not a current 20/20 claim.
+Execution evidence belongs to exact notebook and implementation bytes. The saved [headless receipt](../../../../education/the_symbol_game/lessons/system_integration/headless_receipt.json) reports 20 passing notebooks dated 2026-09-25. Its recorded paths use the former `education/notebooks/` tree. The [manifest](../../../../education/the_symbol_game/lessons/system_integration/lesson_manifest.json) also retains 20 paths under that absent location at this baseline. These are historical records, not a current 20/20 claim.
 
-The [verifier](../../../../omega_engine_education/scripts/verify_system_integration.py) executes ordinary Python cells, with a fresh CPython process per notebook in its aggregate mode. It does not run an IPython kernel or test rendered widgets. It checks notebook structure, selected exact-arithmetic restrictions, source hashes, and runtime assertions. A cell-count rule cannot independently establish that every cell has the instructional role its heading claims.
+The [verifier](../../../../education/scripts/verify_system_integration.py) executes ordinary Python cells, with a fresh CPython process per notebook in its aggregate mode. It does not run an IPython kernel or test rendered widgets. It checks notebook structure, selected exact-arithmetic restrictions, source hashes, and runtime assertions. A cell-count rule cannot independently establish that every cell has the instructional role its heading claims.
 
-The cycle notebook has an additional, concrete blocker: it calls `residual.l1_norm()`, while the pinned [cochain implementation](../../../../omega_engine_pfp/domain/ddc/cochains.py) unconditionally raises `FunctionalBoundaryUnavailable` for that method. An explicit-path diagnostic bypasses the stale aggregate manifest but is expected to stop at this retired API if earlier source checks succeed:
+The cycle notebook has an additional, concrete blocker: it calls `residual.l1_norm()`, while the pinned [cochain implementation](../../../../pfp/domain/ddc/cochains.py) unconditionally raises `FunctionalBoundaryUnavailable` for that method. An explicit-path diagnostic bypasses the stale aggregate manifest but is expected to stop at this retired API if earlier source checks succeed:
 
 ```powershell
-python -m pip install -r omega_engine_education/the_symbol_game/lessons/system_integration/requirements.txt
-python -B omega_engine_education/scripts/verify_system_integration.py --child omega_engine_education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb --output "$env:TEMP/pfp-cycle-lesson.json"
+python -m pip install -r education/the_symbol_game/lessons/system_integration/requirements.txt
+python -B education/scripts/verify_system_integration.py --child education/the_symbol_game/lessons/system_integration/100_novices/04_cycle_repair.ipynb --output "$env:TEMP/pfp-cycle-lesson.json"
 ```
 
 Use Python 3.12 or newer as the route specifies. The child command validates declared source paths and writes its selected receipt to the requested output path. Report the observed failure; do not relabel it a pass because the mathematics is sound. Section 3's adapted arithmetic core is the available example to check separately. No fresh execution outcome is reported here.
@@ -169,7 +169,7 @@ Likewise, the package's [legacy pedagogical test module](code/tests/test_007_ped
 
 ## 7. What an educational study would add
 
-The [pedagogy audit](../../../../omega_engine_education/pedagogy/teaching_and_learning_findings.md) explicitly reports no learner corpus connecting participants with notebook assertions. Its synthesized research narrative failed citation validation, so it is used here as a repository audit pointer rather than as a validated literature synthesis.
+The [pedagogy audit](../../../../education/pedagogy/teaching_and_learning_findings.md) explicitly reports no learner corpus connecting participants with notebook assertions. Its synthesized research narrative failed citation validation, so it is used here as a repository audit pointer rather than as a validated literature synthesis.
 
 A future study could compare lesson formats on predefined graph and certificate tasks. It would need participant recruitment and consent, baseline knowledge, recorded first predictions, consistent feedback, independent assessment, and a delayed transfer task. Timing, exclusions, missing responses, and analysis decisions would need specification before examining results. The comparison should test an instructional choice rather than reward familiarity with local vocabulary.
 

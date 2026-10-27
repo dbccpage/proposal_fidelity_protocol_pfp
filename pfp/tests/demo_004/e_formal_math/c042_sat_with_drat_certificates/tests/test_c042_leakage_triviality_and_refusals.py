@@ -17,12 +17,12 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.drat_checker import get_canonical_cnf, trivial_refutation_reason
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
-from omega_engine_pfp.infrastructure.formal_matrix import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.drat_checker import get_canonical_cnf, trivial_refutation_reason
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
+from pfp.infrastructure.formal_matrix import (
     ArmAntibodyStore,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver import symbol_game_routing as routing
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver import symbol_game_routing as routing
 
 EXAMPLES = sorted(
     (Path(__file__).resolve().parent.parent / "participant_packet" / "examples").glob("*.json")

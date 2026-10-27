@@ -2,12 +2,12 @@
 
 **AuthorityEffect:** None.
 
-> **Historical, not re-executed.** These commands come from the archive snapshot. Paths such as `omega_engine/products/symbol_game` and the `symsys-pipeline` binary may be stale. The live implementation is under `crates/omega_symbol_game` and `omega_engine_py/omega_symbol_game/`. No command below was run for this page.
+> **Historical, not re-executed.** These commands come from the archive snapshot. Paths such as `engine/products/symbol_game` and the `symsys-pipeline` binary may be stale. The live implementation is under `crates/core_symbol_game` and `engine_py/core_symbol_game/`. No command below was run for this page.
 
 ## Build
 
 ```bash
-cd omega_engine/products/symbol_game
+cd engine/products/symbol_game
 cargo build --all-targets --all-features
 ```
 

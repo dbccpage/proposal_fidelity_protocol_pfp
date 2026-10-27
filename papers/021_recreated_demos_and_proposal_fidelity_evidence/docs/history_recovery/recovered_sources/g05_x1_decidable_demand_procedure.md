@@ -17,7 +17,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The well-formed contexts of a regime are finitely many. The form is bounded by the form list, the slot count by the form's arity, and each slot by the data count, so an enumeration exists. Building it and proving it complete would make the Python rectangle and the Lean statements the same object. STATUS prices X-1 as one moderate rung, mostly the completeness induction over the slot list.
 
-Generating the proof is hard: it is a structural induction on `List (Option Nat)` against a conjunction of well-formedness conditions, with no classical shortcut. Checking it is left to the kernel. The task stresses the Symbol Game's decomposition into lemmas, OEWAS (Omega Engine Workflows, Agents, Skills) Lean workflows, and OEEIS (Omega Engine Epistemic Immune System) policing of `Classical` decidability.
+Generating the proof is hard: it is a structural induction on `List (Option Nat)` against a conjunction of well-formedness conditions, with no classical shortcut. Checking it is left to the kernel. The task stresses the Symbol Game's decomposition into lemmas, OEWAS (Engine Workflows, Agents, Skills) Lean workflows, and OEEIS (Engine Epistemic Immune System) policing of `Classical` decidability.
 
 ## 3. Formal Problem and Bounds
 
@@ -58,7 +58,7 @@ The packet also contains `runner.py` and `accounting.json`.
 
 **Held-out regimes.** Depth-5 prefixes from each base, regimes with an arity-3 form, and two held-out stakes. Each is run with `decide` and compared against the second checker.
 
-**Second checker.** `omega_engine/crates_rs/omega_ooutwire_primitives` (`context.rs`, `separability.rs`) enumerates contexts independently.
+**Second checker.** `engine/crates_rs/core_ooutwire_primitives` (`context.rs`, `separability.rs`) enumerates contexts independently.
 
 **Mutation suite.** The judge must reject each of the following: an enumeration that omits the last slot position; `by classical`; `Decidable` obtained through `Nonempty` and choice; completeness stated only for `r.data > 0`; an `axiom` line.
 
@@ -111,7 +111,7 @@ The catalog row requires none. These are recommended:
 
 **19L57G1, read-only.** At HEAD: `19L57G1:research/second_index/` (`lean/SecondIndex/*.lean`, `index.py`, `test_reconstruction.py`, `verify_pins.py`) and `19L57G1:research/second/SEED.md`; at `3100c4e`: `19L57G1:lean4/Derivation/Basic.lean`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_ooutwire_primitives` (`context.rs`) and `omega_engine_pfp/domain/biochem/proofreading.py`.
+**the_symbol_game.** `engine/crates_rs/core_ooutwire_primitives` (`context.rs`) and `pfp/domain/biochem/proofreading.py`.
 
 **Upgrades.**
 

@@ -9,8 +9,8 @@ import time
 from typing import Any, Dict, List
 
 from ...domain.stages.demos import CheckResult, DemoRunReceipt, DemoSpec
-from omega_engine_pfp.infrastructure.pilot_runners.gate_checks import evaluate_round_1
-from omega_engine_pfp.infrastructure.pilot_runners.gate_checks import evaluate_round_2
+from pfp.infrastructure.pilot_runners.gate_checks import evaluate_round_1
+from pfp.infrastructure.pilot_runners.gate_checks import evaluate_round_2
 
 
 def run_demo_001(spec: DemoSpec) -> DemoRunReceipt:

@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure import challenge_execution as execution
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import digest, load_case
+from pfp.infrastructure import challenge_execution as execution
+from adversary.tests.pilots.challenge_suite.catalog import digest, load_case
 
 
 def test_isolated_child_invokes_canonical_pfp_owner(monkeypatch):
@@ -22,7 +22,7 @@ def test_isolated_child_invokes_canonical_pfp_owner(monkeypatch):
     request = {"kind": "NO_LLM", "row": {"challenge": "C005"}}
     assert execution.isolated(request) == {"status": "FIXTURE_VERIFIED"}
     assert calls[0][0] == [execution.sys.executable, "-m",
-                           "omega_engine_pfp.infrastructure.challenge_execution"]
+                           "pfp.infrastructure.challenge_execution"]
     assert json.loads(calls[0][1]["input"]) == request
 
 
@@ -33,7 +33,7 @@ CHALLENGES = {
 
 
 def source_row(challenge_id, name):
-    source = execution.ROOT / "omega_engine_pfp/tests/demo_004/c_quantum" / (
+    source = execution.ROOT / "pfp/tests/demo_004/c_quantum" / (
         CHALLENGES[challenge_id] + "/judge_packet/cases/" + name
     )
     return dict(

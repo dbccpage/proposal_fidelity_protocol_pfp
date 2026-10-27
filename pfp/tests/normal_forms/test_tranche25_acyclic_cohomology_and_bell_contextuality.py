@@ -2,8 +2,8 @@
 
 Aligned Contracts / Systems:
 - nf.cohomology.acnf
-- omega_functional
-- omega_solvers
+- core_functional
+- core_solvers
 
 AuthorityEffect: None.
 """

@@ -24,18 +24,18 @@ Git settings and drive substitution; it does not install Python or dependencies.
 > The host disposes.
 
 The product-boundary contract on disk is `status: mathematical_wip`:
-[`symbol_game.contract.yaml`](omega_engine_governance/contracts/contracts_pfp/symbol_game.contract.yaml).
+[`symbol_game.contract.yaml`](governance/contracts/contracts_pfp/symbol_game.contract.yaml).
 
 ## Start here
 
 | Door | Where |
 | --- | --- |
 | Five-minute standard-library walkthrough | [`quickstart.py`](quickstart.py) |
-| How to play | [`004_oepfp/_how_to_play`](omega_engine_education/documentation/004_oepfp/_how_to_play/README.md) |
-| First paper: S(n), MSS-N, and basic packets | [`000_pfp_introduction`](omega_engine_atlas/coda_atlas/F004_papers/015_pfp/000_pfp_introduction/README.md) |
-| PFP curriculum | [`004_oepfp/curriculum`](omega_engine_education/documentation/004_oepfp/curriculum/README.md) |
+| How to play | [`004_oepfp/_how_to_play`](education/documentation/004_oepfp/_how_to_play/README.md) |
+| First paper: S(n), MSS-N, and basic packets | [`000_pfp_introduction`](atlas/coda_atlas/F004_papers/015_pfp/000_pfp_introduction/README.md) |
+| PFP curriculum | [`004_oepfp/curriculum`](education/documentation/004_oepfp/curriculum/README.md) |
 | Lean 4 index | [`lean4/readme.md`](lean4/readme.md) |
-| Plans | [`omega_engine_product_planning_office/plans`](omega_engine_product_planning_office/plans) |
+| Plans | [`product_planning_office/plans`](product_planning_office/plans) |
 | Licence | [`LICENSING.md`](LICENSING.md) |
 
 `quickstart.py` uses only the Python standard library (`fractions`, `hashlib`).
@@ -43,7 +43,7 @@ The how-to-play notebooks use `educational_governor.py` in that same folder.
 That governor is a local teaching model. It is not the native host.
 
 The package note is
-[`omega_engine_pfp/README.md`](omega_engine_pfp/README.md).
+[`pfp/README.md`](pfp/README.md).
 It is not the newcomer entry. Use the doors above.
 
 ## The scoring rule
@@ -63,7 +63,7 @@ an empirical question.
 
 Formal developments live under [`lean4/`](lean4/) and under the paper packages
 in
-[`015_pfp`](omega_engine_atlas/coda_atlas/F004_papers/015_pfp/README.md).
+[`015_pfp`](atlas/coda_atlas/F004_papers/015_pfp/README.md).
 
 ## Run a bounded session
 
@@ -71,7 +71,7 @@ From the repository root, after `py -3.12 -m pip install -e ".[web]"`:
 
 ```powershell
 py -3.12 quickstart.py --test
-symbol-game search-gauge --input-file omega_engine_pfp/fixtures/gauge_odd_triangle_input.yaml
+symbol-game search-gauge --input-file pfp/fixtures/gauge_odd_triangle_input.yaml
 symbol-game serve --port 8765
 symbol-game demo list
 ```
@@ -80,7 +80,7 @@ symbol-game demo list
 `serve` starts the local FastAPI workbench. The optional `web` extra installs
 FastAPI and uvicorn. `symbol-game demo list` prints the installed offline
 MSS-N catalog. The same console entry point is
-`omega_engine_pfp.entrypoints.cli.symbol_game`. A second script,
+`pfp.entrypoints.cli.symbol_game`. A second script,
 `level-engine`, is registered in `pyproject.toml`.
 
 `pixi.toml` records tasks for pytest, `cargo check`, and `lake-build-core`
@@ -92,7 +92,7 @@ path error.
 Python test, lint and format tasks now require one to three explicit
 repository-relative `.py` files; test tasks also accept pytest node IDs
 on those files. Select the `dev` environment, for example
-`pixi run -e dev test omega_engine_pfp/tests/protocol/test_genesis_levels_cross_references.py`.
+`pixi run -e dev test pfp/tests/protocol/test_genesis_levels_cross_references.py`.
 Generic `check` performs scoped lint; Cargo and Lean builds remain separate,
 explicit tasks.
 
@@ -100,23 +100,23 @@ explicit tasks.
 
 `main` has no top-level `research/` directory, no top-level `engine/`
 directory, and no top-level `knowledge/` directory. The MUB6 knowledge notes
-are `omega_engine_atlas/coda_atlas/F004_papers/010_mub6/artifacts/knowledge/`.
+are `atlas/coda_atlas/F004_papers/010_mub6/artifacts/knowledge/`.
 The live homes are below.
 
 ### Symbol Game and native math
 
 | Path | Role |
 | --- | --- |
-| `omega_engine_pfp/` | Python Symbol Game package, fixtures, stages, and the `symbol-game` CLI |
-| `omega_engine/crates_rs/` | Rust workspace: symbol-game runtime, solvers, homology, functional calculus, certifiers, and related crates |
+| `pfp/` | Python Symbol Game package, fixtures, stages, and the `symbol-game` CLI |
+| `engine/crates_rs/` | Rust workspace: symbol-game runtime, solvers, homology, functional calculus, certifiers, and related crates |
 | `lean4/` | Lean 4 library for the tower, packets, and level developments |
-| `omega_engine_woland/infrastructure/providers/` | Model-provider adapters |
-| `omega_engine_education/documentation/004_oepfp/` | Proposal Fidelity Protocol and Symbol Game documentation and how-to-play |
+| `adversary/infrastructure/providers/` | Model-provider adapters |
+| `education/documentation/004_oepfp/` | Proposal Fidelity Protocol and Symbol Game documentation and how-to-play |
 
 ### Education strands
 
 Each row is a directory under
-`omega_engine_education/documentation/`. The title is the strand README heading.
+`education/documentation/`. The title is the strand README heading.
 
 | Strand | Subject |
 | --- | --- |
@@ -128,56 +128,56 @@ Each row is a directory under
 | `005_oegenong` | Strand index under that folder name |
 | `006_oewdp` | Witnessed Difference Programme |
 | `007_oelggr` | Local Green, Global Red |
-| `008_oeop` | Omega Engine Operads (formerly workflows, agents, and skills) |
+| `008_oeop` | Engine Operads (formerly workflows, agents, and skills) |
 | `009_oeeis` | Epistemic immune system |
 | `010_oepciv` | Prompt civilization |
-| `011_oewoland` | Woland swarm design index |
+| `011_oeadversary` | Adversary swarm design index |
 | `012_oecogops` | Cognitive operations |
 | `013_oegov` | Governance curriculum |
 | `018_oeos` | Operating system |
 | `019_oeops` | Operations, CI, and the skill operad |
-| `099_project_anomalon` | Project Anomalon |
+| `099_project_sentinel` | Project Sentinel |
 | `014_normal_forms` | Normal forms |
 
-`omega_engine_education/` holds the documentation, teaching scripts and
-`education_app/`. The runnable PFP package is `omega_engine_pfp/`; its offline
+`education/` holds the documentation, teaching scripts and
+`education_app/`. The runnable PFP package is `pfp/`; its offline
 examples and tests are under that owner. Genesis, S(n), and MSS-N are separate
 strands. Do not treat their numbering as one pipeline.
-The retired education strand directory is already gone. The live stage is `omega_engine_woland/stage`.
+The retired education strand directory is already gone. The live stage is `adversary/stage`.
 
 ### Atlas, papers, and plans
 
 | Path | Role |
 | --- | --- |
-| `omega_engine_atlas/coda_atlas/` | CODA atlas. Floors on disk include `F000_finite`, `F001_quantum`, `F002_continuum`, `F003_omega_engine`, and `F004_papers` |
-| `omega_engine_research_papers/` | Paper preflight, edition, and review tooling |
-| `omega_engine_library/` | CODA library ingest and search |
-| `omega_engine_product_planning_office/` | Planning office. Epic plans are under `plans/` |
+| `atlas/coda_atlas/` | CODA atlas. Floors on disk include `F000_finite`, `F001_quantum`, `F002_continuum`, `F003_engine`, and `F004_papers` |
+| `research_papers/` | Paper preflight, edition, and review tooling |
+| `library/` | CODA library ingest and search |
+| `product_planning_office/` | Planning office. Epic plans are under `plans/` |
 
 Paper prose for the Symbol Game is under
-[`015_pfp`](omega_engine_atlas/coda_atlas/F004_papers/015_pfp/README.md).
-`omega_engine_research_papers` is the tooling package for editing and checking
+[`015_pfp`](atlas/coda_atlas/F004_papers/015_pfp/README.md).
+`research_papers` is the tooling package for editing and checking
 papers. It is not a second copy of that curriculum.
 
 ### Engine packages
 
 | Path | Role |
 | --- | --- |
-| `omega_engine_woland/` | Woland swarm package |
-| `omega_engine_governance/` | Councils, contracts, and governance workflows |
-| `omega_engine_operations/` | Operations coordination, evidence, and CLIs |
-| `omega_engine_operating_system/` | Operating-system package |
-| `omega_engine_woland/stage/` | Woland stage, the generic swarm runtime |
-| `omega_engine_epistemic_immune_system/` | Epistemic immune system |
-| `omega_engine_cognitive_operations/` | Cognitive operations |
-| `omega_engine_prompt_civilization/` | Prompt civilization |
-| `omega_engine_operads/` | Workflow, agent, and skill package |
-| `omega_engine_applications/` | Application front ends, including WDP products |
-| `omega_engine_atlas/coda_atlas/F004_papers/006_finite_qm/` | Finite QM paper package |
-| `omega_engine_atlas/coda_atlas/F004_papers/010_mub6/` | MUB6 paper package; knowledge notes are `artifacts/knowledge/` |
+| `adversary/` | Adversary swarm package |
+| `governance/` | Councils, contracts, and governance workflows |
+| `operations/` | Operations coordination, evidence, and CLIs |
+| `operating_system/` | Operating-system package |
+| `adversary/stage/` | Adversary stage, the generic swarm runtime |
+| `eis/` | Epistemic immune system |
+| `cognitive_operations/` | Cognitive operations |
+| `pciv/` | Prompt civilization |
+| `operads/` | Workflow, agent, and skill package |
+| `applications/` | Application front ends, including WDP products |
+| `atlas/coda_atlas/F004_papers/006_finite_qm/` | Finite QM paper package |
+| `atlas/coda_atlas/F004_papers/010_mub6/` | MUB6 paper package; knowledge notes are `artifacts/knowledge/` |
 | `lean4/research_programs/mub6/` | Lean 4 MUB6 development |
-| `omega_simplex_autop/` | Simplex autop grammar and examples |
-| `omega_simplex_cache/` | SmplCache diagnostic engine |
+| `core_simplex_autop/` | Simplex autop grammar and examples |
+| `core_simplex_cache/` | SmplCache diagnostic engine |
 | `web_dashboard/` | Dashboard templates |
 
 ### Tests, records, and custody
@@ -187,7 +187,7 @@ papers. It is not a second copy of that curriculum.
 | `tests/`, `tests_e2e/` | Python tests at the repository root |
 | `scripts/`, `tools/` | Maintenance scripts |
 | `manifests/`, `artifacts/`, `runs/` | Root manifests, artifact receipts, and run records |
-| `omega_engine_product_planning_office/receipts/` | Planning-office receipts |
+| `product_planning_office/receipts/` | Planning-office receipts |
 | `_ic/` | Intelligence-community custody trees (`odni`, `nsa`, `nro`, and the other agency folders on disk) |
 | `_ooutwire/` | Ooutwire textbook and product backlog |
 | `TEST_INFRA.md`, `TEST_READY.md` | Test-infrastructure note and a dated e2e manifest |
@@ -208,14 +208,14 @@ These commands are the entry points. This README does not record their latest
 result.
 
 ```powershell
-py -3.12 -m pytest omega_engine_pfp/tests -q
-cargo check --manifest-path omega_engine/crates_rs/Cargo.toml
+py -3.12 -m pytest pfp/tests -q
+cargo check --manifest-path engine/crates_rs/Cargo.toml
 lake --dir lean4 build
 ```
 
 Run a named test file when you are changing one module. The operations
 republication checklist is
-`py -3.12 -m omega_engine_operations.use_cases.cicd.republication_checklist_gate`.
+`py -3.12 -m operations.use_cases.cicd.republication_checklist_gate`.
 
 ## Licence
 

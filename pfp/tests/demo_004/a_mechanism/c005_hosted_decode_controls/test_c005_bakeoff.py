@@ -21,13 +21,13 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges import run_150_tests_suite as suite150
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c005_hosted_decode_controls import (
+from projects.mssn_sn_symgam.challenges import run_150_tests_suite as suite150
+from projects.mssn_sn_symgam.challenges.a_mechanism.c005_hosted_decode_controls import (
     benchmark_3arm_scratchpad,
     benchmark_arm4_hybrid,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c005_hosted_decode_controls import (
-    run_woland_bakeoff as bakeoff,
+from projects.mssn_sn_symgam.challenges.a_mechanism.c005_hosted_decode_controls import (
+    run_adversary_bakeoff as bakeoff,
 )
 
 from .budget_controller import BudgetController, BudgetExceededError
@@ -229,7 +229,7 @@ def _assert_not_adjudicated(payload: dict) -> None:
     assert payload["verdict_status"] == "NOT_ADJUDICATED"
     assert (
         payload["verdict_note"]
-        == "No verdict is issued here; the Woland swarm is the only final evaluator."
+        == "No verdict is issued here; the Adversary swarm is the only final evaluator."
     )
 
 
@@ -244,10 +244,10 @@ def test_bakeoff_bundle_is_not_adjudicated_and_written_to_the_intelligence_root_
     monkeypatch.chdir(work)
     store = tmp_path / "store"
 
-    result = bakeoff.execute_c005_woland_bout(use_mock=True, intelligence_repo_root=store)
+    result = bakeoff.execute_c005_adversary_bout(use_mock=True, intelligence_repo_root=store)
     _assert_not_adjudicated(result)
     dest = Path(result["destination_dir"])
-    assert dest.parent == store / "_intelligence" / "_woland" / "runs"
+    assert dest.parent == store / "_intelligence" / "_adversary" / "runs"
     assert dest.name.startswith("c005_mechanism_bakeoff_")
     assert not (work / "_intelligence").exists()
 
@@ -321,7 +321,7 @@ def test_benchmark_receipts_are_not_adjudicated_and_never_overwrite(tmp_path):
         intelligence_repo_root=tmp_path,
         run_stamp="STAMP",
     )
-    assert dest == tmp_path / "_intelligence" / "_woland" / "runs" / "c005_fixture_bench_STAMP"
+    assert dest == tmp_path / "_intelligence" / "_adversary" / "runs" / "c005_fixture_bench_STAMP"
     receipt = json.loads((dest / "receipt.json").read_text(encoding="utf-8"))
     _assert_not_adjudicated(receipt)
     _assert_not_adjudicated(json.loads((dest / "summary.json").read_text(encoding="utf-8")))
@@ -370,7 +370,7 @@ def test_run150_track01_fallback_rows_are_not_run(tmp_path):
 
 def test_run150_track01_reads_stored_receipts_from_the_intelligence_root(tmp_path):
     """A stored receipt under the intelligence root (not the working directory) is read and kept."""
-    stored = tmp_path / "_intelligence" / "_woland" / "runs" / "c005_test_001_llama405b_json_schema"
+    stored = tmp_path / "_intelligence" / "_adversary" / "runs" / "c005_test_001_llama405b_json_schema"
     stored.mkdir(parents=True)
     (stored / "empirical_evaluation_report.json").write_text(
         json.dumps(
@@ -417,7 +417,7 @@ def test_run150_suite_receipt_is_not_adjudicated(tmp_path, monkeypatch):
         == report["total_tests"]
     )
     assert "all 150" not in report["claim_hygiene"]["supports"]
-    runs = list((store / "_intelligence" / "_woland" / "runs").iterdir())
+    runs = list((store / "_intelligence" / "_adversary" / "runs").iterdir())
     assert len(runs) == 1 and runs[0].name.startswith("c005_150_tests_full_suite_")
     receipt = json.loads((runs[0] / "receipt.json").read_text(encoding="utf-8"))
     _assert_not_adjudicated(receipt)

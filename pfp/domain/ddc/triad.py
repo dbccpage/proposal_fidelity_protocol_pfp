@@ -1,7 +1,7 @@
 """Legacy Python DDC triad types with a fail-closed functional boundary.
 
 The canonical Phi1, Gamma2, and Xi calculations are owned by
-``omega_engine/crates_rs/omega_functional/src``. The former Python LP,
+``engine/crates_rs/core_functional/src``. The former Python LP,
 spanning-forest, closure-norm, and lexicographic-edge implementations have
 been retired. In particular, the old Python Xi formula did not match the
 conditional density-distance Xi in the Rust functional crate.
@@ -23,7 +23,7 @@ from .cochains import Cochain0, Cochain1
 from .complex import SimplicialComplex
 
 
-FUNCTIONAL_OWNER = "omega_engine/crates_rs/omega_functional/src"
+FUNCTIONAL_OWNER = "engine/crates_rs/core_functional/src"
 
 
 class FunctionalBoundaryUnavailable(RuntimeError):

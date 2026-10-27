@@ -1,22 +1,22 @@
-"""Tests for promoted controllers in omega_engine_pfp."""
+"""Tests for promoted controllers in pfp."""
 
 from __future__ import annotations
 
-from omega_engine_pfp.controllers import (
+from pfp.controllers import (
     CodeChangeController,
     PromptController,
     TurnController,
 )
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     CodeChangeRunRootV1,
     LlmTurnRunRootV1,
     PromptArtifactV1,
 )
-from omega_engine_pfp.infrastructure import (
+from pfp.infrastructure import (
     MemoryPromptRepository,
     MemoryTurnRepository,
 )
-from omega_engine_pfp.use_cases import CodeChangeSession
+from pfp.use_cases import CodeChangeSession
 
 
 def test_turn_controller_lifecycle() -> None:
@@ -48,13 +48,13 @@ def test_code_change_controller_lifecycle() -> None:
         task_id="code_task_001",
         objective="Fix typo in domain logic",
         base_revision="main@HEAD",
-        owned_paths=("omega_engine_pfp/domain",),
+        owned_paths=("pfp/domain",),
         protected_paths=(".canon",),
     )
     assert isinstance(session, CodeChangeSession)
     assert session.task_id == "code_task_001"
 
-    target = "omega_engine_pfp/domain/x.py"
+    target = "pfp/domain/x.py"
     session, bound = ctrl.submit_patch(
         session=session,
         producer_id="model-worker",

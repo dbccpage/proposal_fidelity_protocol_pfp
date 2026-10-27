@@ -23,9 +23,9 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 from urllib.parse import unquote, urlsplit
 
-REFERENCE_DIRECTORY = Path("omega_engine_pfp/fixtures/operad_specification")
-MONOGRAPH = Path("omega_engine_pfp/documentation/oepfp_v1_1_rc_specification.md")
-SPECIFICATION_SOURCE = Path("omega_engine_pfp/domain/operad/specification.py")
+REFERENCE_DIRECTORY = Path("pfp/fixtures/operad_specification")
+MONOGRAPH = Path("pfp/documentation/oepfp_v1_1_rc_specification.md")
+SPECIFICATION_SOURCE = Path("pfp/domain/operad/specification.py")
 SCOPE = (
     "strict reference metadata; JSON/YAML and generated schema parity; seven artifact byte "
     "hashes; embedded Python/YAML parity; monograph local file/line links and math delimiters; "
@@ -105,7 +105,7 @@ def repository_file(root: Path, relative: str) -> Path:
 def reference_metadata(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     import jsonschema
 
-    from omega_engine_pfp.domain.operad import specification
+    from pfp.domain.operad import specification
 
     require(
         Path(specification.__file__).resolve() == (root / SPECIFICATION_SOURCE).resolve(),

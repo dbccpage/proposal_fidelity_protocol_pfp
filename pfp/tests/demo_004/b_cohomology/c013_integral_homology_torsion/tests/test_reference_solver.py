@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c013_integral_homology_torsion.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c013_integral_homology_torsion.reference_solver.solver import (
     solve,
     solve_with_trace,
 )

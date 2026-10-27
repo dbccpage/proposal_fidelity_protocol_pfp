@@ -83,11 +83,11 @@ Auto-skill functions under the unified 3-team adversarial synthesis:
 | Historical precedents (dated specimens) | Search [references/historical_learnings.md](references/historical_learnings.md) — *do not load wholesale* |
 | Shared constraints & compressive laws | [../_shared/constraints.md](../_shared/constraints.md) |
 | Family registry & membership | [../_shared/family_registry.md](../_shared/family_registry.md) |
-| Skill compiler (episode → resolve → promote) | [omega_engine_operads/skill_operad/skill_compiler/README.md](../../../omega_engine_operads/skill_operad/skill_compiler/README.md) |
+| Skill compiler (episode → resolve → promote) | [operads/skill_operad/skill_compiler/README.md](../../../operads/skill_operad/skill_compiler/README.md) |
 | Historical PR / conversation-DAG mining | [../_shared/historical_pr_immunity_campaign.md](../_shared/historical_pr_immunity_campaign.md) |
 | Cross-skill drift & symmetry break | Escalate to `/auto-symmetry-hunter` |
 | Discipline audit & overclaim weakening | Escalate to `/auto-improve-autoskill` |
-| New proposed skill package | Admitted automatically into garden across 4 hosts; recorded in `omega_engine_operads/skills/ooutwire/proposed_skills_register.md` |
+| New proposed skill package | Admitted automatically into garden across 4 hosts; recorded in `operads/skills/ooutwire/proposed_skills_register.md` |
 
 ---
 
@@ -125,7 +125,7 @@ Auto-skill functions under the unified 3-team adversarial synthesis:
    - Forget presentation-level tokens; quotient candidate deltas by structural isomorphism.
    - Enforce strict token-blindness across Lean 4 proof kernels and Python carriers.
 5. **Episode Encoding & Disposition Routing**:
-   - Encode candidate delta into structured episode JSON (`omega.skill_compiler.episode.input.v1`).
+   - Encode candidate delta into structured episode JSON (`core.skill_compiler.episode.input.v1`).
    - Route disposition: `NOISE` (discard), `CODE_GATE` / `SHARED_CONTRACT` (patch contract), `EXISTING_OP` (compressive edit), `NEW_SKILL` (ooutwire proposal only).
 6. **Genesis DAG Replay & Bound Enforcement**:
    - Replay execution trace from genesis node.

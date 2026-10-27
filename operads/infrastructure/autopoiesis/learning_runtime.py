@@ -1,4 +1,4 @@
-"""Composition for explicit host imports and Woland completion notifications."""
+"""Composition for explicit host imports and Adversary completion notifications."""
 
 from __future__ import annotations
 
@@ -8,16 +8,16 @@ from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 
-from omega_engine_operads.application.autopoiesis.learning import LearningService
-from omega_engine_operads.domain.autopoiesis.learning import (
+from operads.application.autopoiesis.learning import LearningService
+from operads.domain.autopoiesis.learning import (
     CallerContext,
     artifact_text_digest,
 )
-from omega_engine_operads.infrastructure.autopoiesis.intake import capture_episode
-from omega_engine_operads.infrastructure.skill_garden.transcript_harvester import (
+from operads.infrastructure.autopoiesis.intake import capture_episode
+from operads.infrastructure.skill_garden.transcript_harvester import (
     iter_skill_invocations,
 )
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     append_usage_events,
     garden_roster,
     make_usage_event,
@@ -49,7 +49,7 @@ class EvidenceTurnExecutor:
     def __call__(self, request):
         from dataclasses import asdict
 
-        from omega_engine_operads.domain.autopoiesis.learning import canonical
+        from operads.domain.autopoiesis.learning import canonical
 
         material = {"request": asdict(request), "origin": "autop"}
         material["request"]["context_bytes"] = request.context_bytes.hex()
@@ -116,7 +116,7 @@ class LearningCompletion:
         except Exception as exc:
             # A failed intake still gets an immutable receipt, but never an
             # invented source episode. It must not alter the parent verdict.
-            from omega_engine_operads.domain.autopoiesis.learning import (
+            from operads.domain.autopoiesis.learning import (
                 LearningBlocked,
                 digest,
             )
@@ -146,7 +146,7 @@ class LearningCompletion:
         folder = Path(run_directory)
         parent_receipt = folder / "receipt.json"
         if not parent_receipt.is_file():
-            self.import_paths((parent_receipt,), host="woland", outcome=outcome, origin=origin)
+            self.import_paths((parent_receipt,), host="adversary", outcome=outcome, origin=origin)
             return
         if parent_receipt.is_file():
             raw = parent_receipt.read_bytes()
@@ -178,14 +178,14 @@ class LearningCompletion:
             )
             if (folder / name).is_file() and (folder / name).stat().st_size
         )
-        self.import_paths(paths, host="woland", outcome=outcome, origin=origin)
+        self.import_paths(paths, host="adversary", outcome=outcome, origin=origin)
 
     def prepare(self, objective: str, run_id: str) -> str:
         """Retrieve only merged, locally identical artifacts for the next run."""
         if self.context is None:
             return ""
         self.context.require_available()
-        registry = "omega_engine_operads/registry/autop_artifacts.json"
+        registry = "operads/registry/autop_artifacts.json"
         # Absence on the fetched deployment ref means no deployed artifacts,
         # even if a candidate worktree contains an experimental registry.
         present = command(
@@ -224,7 +224,7 @@ class LearningCompletion:
                 self.repository, executor, self.context, deployed_ref="origin/main"
             ).run(entry["kind"], artifact, objective)
             for invoked in result.invoked:
-                kind = "SKILL" if invoked.startswith("omega_engine_operads/skills/") else entry["kind"]
+                kind = "SKILL" if invoked.startswith("operads/skills/") else entry["kind"]
                 self.observe_use(
                     artifact_id=invoked,
                     kind=kind,
@@ -279,7 +279,7 @@ class LearningCompletion:
                         make_usage_event(
                             skill_id=skill,
                             invoked_at=datetime.now(timezone.utc),
-                            host="woland",
+                            host="adversary",
                             channel="autop_runtime",
                             session_id=run_id,
                             caller=artifact_id,
@@ -298,7 +298,7 @@ def build_learning_completion(
 ) -> LearningCompletion:
     config = json.loads(config_path.read_text(encoding="utf-8")) if config_path is not None else {}
     store = LearningStore(store_root or repository / "runs" / "autop_learning")
-    from omega_engine_operads.domain.autopoiesis.learning import canonical
+    from operads.domain.autopoiesis.learning import canonical
 
     configuration_bytes = canonical(
         {

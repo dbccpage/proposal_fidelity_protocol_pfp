@@ -12,9 +12,9 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 ## 2. Why This Task
 
-Demo 6 (`research/mssn_sn_tower/demos/demo_6/6_demo.md`) moved the Symbol Game's certificates from degree 1 to degree 2 on two small complexes: a hollow tetrahedron (b₂ = 1) and two tetrahedra fused along a septum (b₂ = 2). A target 2-cochain B with nonzero flux through a closed cavity cannot be written as d₁A for any 1-cochain A, because ⟨d₁A, Z⟩ = ⟨A, ∂Z⟩ = 0 for every 2-cycle Z. The degree-2 obstruction Φ₂ was certified by LP duality with the Rust `omega_functional` `Phi2Functional`. This challenge scales that from 2 cavities to 32 and from 7 faces to thousands, where shared septa, nested shells and integer torsion make the witness hard to find and easy to check.
+Demo 6 (`research/mssn_sn_tower/demos/demo_6/6_demo.md`) moved the Symbol Game's certificates from degree 1 to degree 2 on two small complexes: a hollow tetrahedron (b₂ = 1) and two tetrahedra fused along a septum (b₂ = 2). A target 2-cochain B with nonzero flux through a closed cavity cannot be written as d₁A for any 1-cochain A, because ⟨d₁A, Z⟩ = ⟨A, ∂Z⟩ = 0 for every 2-cycle Z. The degree-2 obstruction Φ₂ was certified by LP duality with the Rust `core_functional` `Phi2Functional`. This challenge scales that from 2 cavities to 32 and from 7 faces to thousands, where shared septa, nested shells and integer torsion make the witness hard to find and easy to check.
 
-The challenge stresses the Symbol Game's degree-2 host, OEWAS (Omega Engine Workflows, Agents, Skills) decomposition by cavities (U13), and the OEEIS (Omega Engine Epistemic Immune System) refusal path. A pass shows the game can produce a certified degree-2 extension-or-obstruction solver. It does not give "flux" or "cavity" any physical meaning.
+The challenge stresses the Symbol Game's degree-2 host, OEWAS (Engine Workflows, Agents, Skills) decomposition by cavities (U13), and the OEEIS (Engine Epistemic Immune System) refusal path. A pass shows the game can produce a certified degree-2 extension-or-obstruction solver. It does not give "flux" or "cavity" any physical meaning.
 
 ## 3. Formal Problem and Bounds
 
@@ -56,15 +56,15 @@ Omitted entries are zero. The first example is the Demo 6 hollow tetrahedron; th
 - **Hidden base cases:** 40, with b₂ spread from 1 to 32 and eight in mode Z.
 - **Relabel and gauge controls:** 16. Face and edge relabelling; reversing a face (negates B_f and the cycle entry); adding d₁C to B for a random 1-cochain C (verdict and Φ₂ unchanged; A shifts by C).
 - **Poisoned but schema-valid:** 12. Demo 6's near-miss types at scale (a 2-chain leaking through a septum; a dual scaled beyond the weights; a suboptimal dual with nonzero gap; float strings); targets with zero flux through the outer shell but nonzero flux through individual cavities, which a solver testing only total flux calls extendable; mode-Z cases whose rational extension exists.
-- **Exact checker:** `omega_functional::phi2` (`Phi2Functional::verify_exact_certificate`, binary `verify_phi2`) for Φ₂ certificates, plus direct `BigInt` checks of d₁A = B, ∂₂Z = 0 and the modular condition.
-- **Independent second checker:** Demo 6's Python checker pattern (`research/mssn_sn_tower/demos/demo_6/dossier_1_hollow_tetrahedron_b2_1/checker.py`), generalized and rewritten separately, plus an SNF of ∂₂ via `omega_linear_algebra::smith_normal_form_checked` to confirm torsion in mode Z.
+- **Exact checker:** `core_functional::phi2` (`Phi2Functional::verify_exact_certificate`, binary `verify_phi2`) for Φ₂ certificates, plus direct `BigInt` checks of d₁A = B, ∂₂Z = 0 and the modular condition.
+- **Independent second checker:** Demo 6's Python checker pattern (`research/mssn_sn_tower/demos/demo_6/dossier_1_hollow_tetrahedron_b2_1/checker.py`), generalized and rewritten separately, plus an SNF of ∂₂ via `core_linear_algebra::smith_normal_form_checked` to confirm torsion in mode Z.
 - **Checker mutation suite:** Demo 6's four near-miss refusals (`REFUSED_FLOAT_DETECTED`, `REFUSED_DUAL_NOT_CLOSED_2_CYCLE`, `REFUSED_DUAL_NORM_EXCEEDS_WEIGHT`, `REFUSED_DUALITY_GAP_NONZERO`), plus an `EXTENDS` answer with one face off, a mode-Z chain that is a cycle only over Q, and a modulus of 1.
 
 ## 7. Arms and Baselines
 
 - **A: Symbol Game.** U05 synthesis with U13 decomposition by cavities (shells and septa as subproblems, integrated through the shared faces).
 - **B: Ordinary iterative.** **C: Representation ablation.** **D: Repeated sampling**, cost-matched.
-- **E: No-model baseline.** Exact linear solve for A, a kernel basis of ∂₂ for Z, `omega_solvers::solve_weighted_l1_projection` applied to d₁ for Φ₂, and SNF for mode Z, wrapped as `solve`. Expected to solve every case.
+- **E: No-model baseline.** Exact linear solve for A, a kernel basis of ∂₂ for Z, `core_solvers::solve_weighted_l1_projection` applied to d₁ for Φ₂, and SNF for mode Z, wrapped as `solve`. Expected to solve every case.
 
 Arm F does not apply.
 
@@ -109,8 +109,8 @@ operand integral_torsion_mod_m.v1 | kind: guard | when: mode Z and a rational ex
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine_projects/mssn_sn_symgam/demos/demo_6` (packaged demo) and `research/mssn_sn_tower/demos/demo_6/` (dossiers, checkers, near-miss witnesses).
-- `omega_engine/crates_rs/omega_functional` (`phi2.rs`, `bin/verify_phi2.rs`), `omega_engine/crates_rs/omega_solvers` (`exact_weighted_l1_lp.rs`), `omega_engine/crates_rs/omega_linear_algebra` (`smith_normal_form.rs`).
+- `projects/mssn_sn_symgam/demos/demo_6` (packaged demo) and `research/mssn_sn_tower/demos/demo_6/` (dossiers, checkers, near-miss witnesses).
+- `engine/crates_rs/core_functional` (`phi2.rs`, `bin/verify_phi2.rs`), `engine/crates_rs/core_solvers` (`exact_weighted_l1_lp.rs`), `engine/crates_rs/core_linear_algebra` (`smith_normal_form.rs`).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrade: [U13](../../upgrades/u13_cohomological_task_decomposition.md).
 

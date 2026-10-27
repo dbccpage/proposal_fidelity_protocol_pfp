@@ -1,6 +1,6 @@
 # Finite ordered planar slot-law evidence
 
-AuthorityEffect: None. This independent Hella review owns the new `test_planar_slot_laws.py` and this receipt directory only. The existing nested kernel already uses the correct `i + j` offset, so the initial 23-case GREEN is reuse evidence, not a repaired production defect.
+AuthorityEffect: None. This independent Syntax Prefilter review owns the new `test_planar_slot_laws.py` and this receipt directory only. The existing nested kernel already uses the correct `i + j` offset, so the initial 23-case GREEN is reuse evidence, not a repaired production defect.
 
 The 23 finite cases bind literal ordered boundaries for nested nonzero slots (i=1/2, j=0/1), same-colour wrong-slot falsifiers, disjoint-slot reindexing after nullary/unary/ternary left insertion, disjoint same-colour positional alternatives, identities, nullary operations, and exact invalid-slot refusals. Same-colour alternatives preserve target and colour multiset while changing sequence, so set/multiset comparison cannot replace ordered equality. Identity laws inspect signatures because composite provenance names legitimately differ.
 

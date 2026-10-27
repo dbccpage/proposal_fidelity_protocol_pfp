@@ -42,7 +42,7 @@ except (ImportError, ValueError):
             find_spanning_tree_and_cycles,
         )
     except (ImportError, ValueError):
-        from omega_engine_pfp.tests.demo_004.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.graph_cohomology import (
+        from pfp.tests.demo_004.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.graph_cohomology import (
             Edge,
             Graph,
             extract_components,

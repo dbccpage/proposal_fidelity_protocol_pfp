@@ -40,9 +40,9 @@ def independent_hilbert(u: int, w: int, p: int) -> int:
     if p == 2:
         eps_u = ((u0 - 1) // 2) % 2
         eps_w = ((w0 - 1) // 2) % 2
-        omega_u = ((u0 * u0 - 1) // 8) % 2
-        omega_w = ((w0 * w0 - 1) // 8) % 2
-        exp = (eps_u * eps_w + alpha * omega_w + beta * omega_u) % 2
+        core_u = ((u0 * u0 - 1) // 8) % 2
+        core_w = ((w0 * w0 - 1) // 8) % 2
+        exp = (eps_u * eps_w + alpha * core_w + beta * core_u) % 2
         return -1 if exp == 1 else 1
 
     exp_sign = (alpha * beta * ((p - 1) // 2)) % 2

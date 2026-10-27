@@ -24,8 +24,8 @@ try:
         Ok,
         Result,
     )
-    from omega_engine_operads.domain.operad.operad import AgentSlice, ColouredOperad
-    from omega_engine_operads.domain.operad.operation import OperationId, OperationSignature
+    from operads.domain.operad.operad import AgentSlice, ColouredOperad
+    from operads.domain.operad.operation import OperationId, OperationSignature
     from domain.ports import OperadRepositoryPort
     from application.dto.operad_dto import ValidationReportDTO
 except (ImportError, ValueError):
@@ -39,12 +39,12 @@ except (ImportError, ValueError):
         Ok,
         Result,
     )
-    from omega_engine_operads.domain.operad.operad import AgentSlice, ColouredOperad
-    from omega_engine_operads.domain.operad.operation import OperationId, OperationSignature
+    from operads.domain.operad.operad import AgentSlice, ColouredOperad
+    from operads.domain.operad.operation import OperationId, OperationSignature
     from ...domain.ports import OperadRepositoryPort
     from ..dto.operad_dto import ValidationReportDTO
 
-from omega_engine_operads.domain.operad.errors import DomainError, SliceViolationError
+from operads.domain.operad.errors import DomainError, SliceViolationError
 
 
 def load_entry_skills(skills_root: Path) -> Set[str]:

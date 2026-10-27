@@ -18,25 +18,25 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operating_system.adapters.oeos_host import OeosHostAdapter
-from omega_engine_operating_system.adapters.prompt_civ.adversarial_session_probe import (
+from operating_system.adapters.oeos_host import OeosHostAdapter
+from operating_system.adapters.prompt_civ.adversarial_session_probe import (
     AdversarialSessionProbeReceiptV1,
     AdversarialSessionProbeV1,
     admission_beside_host,
     validate_carrier_word,
 )
-from omega_engine_prompt_civilization.infrastructure.probes.adversarial_session_probe import (
+from pciv.infrastructure.probes.adversarial_session_probe import (
     admission_beside_host as civilization_admission_beside_host,
 )
-from omega_engine_operating_system.adapters.prompt_civ.event_log import (
+from operating_system.adapters.prompt_civ.event_log import (
     DurableEventLogV1,
     EventIdentityConflictError,
     PromptCivEventV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.rank import (
+from operating_system.adapters.prompt_civ.rank import (
     RankCertificateVerifierV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.record import (
+from operating_system.adapters.prompt_civ.record import (
     ProtectedSpanV1,
 )
 

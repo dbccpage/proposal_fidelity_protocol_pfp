@@ -13,11 +13,11 @@ inspection* (reading a retained script), and *replay* (the collection's
 checkers from the cited commits on answers that need no mathematics; its
 output is recorded in the collection's
 `verification/formal_math_baselines.json`). Paths under
-`omega_engine_projects/` are relative to the repository root; the C017
+`projects/` are relative to the repository root; the C017
 folder is
-`omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c017_nonabelian_lattice_holonomy/`
+`projects/mssn_sn_symgam/challenges/b_cohomology/c017_nonabelian_lattice_holonomy/`
 and the formal-mathematics folder is
-`omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/`. Claims
+`projects/mssn_sn_symgam/challenges/e_formal_math/`. Claims
 withdrawn from the first release are listed in `paper_change_log.md`,
 not here.
 
@@ -33,7 +33,7 @@ not here.
                  stages were                                     repository finds the benchmark and effect statements only in
                  simple functions                                copies of the first-release paper. Engine components with
                  (a radius-one                                   similar names (an allosteric gate and a kinetic proofreader
-                 neighbourhood                                   under `omega_engine_pfp/domain/`) are separate code,
+                 neighbourhood                                   under `pfp/domain/`) are separate code,
                  split, a                                        and no run of them against model answers is recorded
                  list-membership
                  test, two
@@ -353,7 +353,7 @@ PFP10-34       The C043 and C044 model run   4.3            Source         `run_
   -------------- ----------------------------- -------------- -------------- ----------------------------------------------------------------------------
   PFP10-35       `stealth/space-bunny-alpha`   3.1, 5         Scope          Model identifier in the retained reports; no provider, size or training
                  is a new free stealth model                  statement      record exists;
-                 offered on OpenRouter as of                                 `omega_engine_projects/mssn_sn_symgam/challenges/01_challenge_protocol.md`
+                 offered on OpenRouter as of                                 `projects/mssn_sn_symgam/challenges/01_challenge_protocol.md`
                  2026-09-28; the provider does                               §2
                  not disclose its identity,
                  size or training; its results

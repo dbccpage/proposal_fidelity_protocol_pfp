@@ -1,6 +1,6 @@
 # OEOP operad type registry, family 4 of 6: signature families, polarity and routes.
 # AuthorityEffect: None.
-schema_version: omega.oeop.operad-types.v1
+schema_version: core.oeop.operad-types.v1
 family: signature_families
 authority_effect: None
 types:
@@ -60,13 +60,13 @@ types:
       only. GATE morphisms have no sub-operad there, so whether gates belong in the triad is an
       open design question.
     sources:
-      - python: omega_engine_pfp.domain.operad.polarity:Polarity
+      - python: pfp.domain.operad.polarity:Polarity
         values: [CONSTRUCTIVE, INTERROGATIVE, CORRECTIVE, GATE]
   - id: polarity_pair_provenance
     description: How a declared constructive and adversarial skill pair was established.
     canonical: {status: SETTLED, closed: true, values: [declared, inferred]}
     sources:
-      - data: omega_engine_operads/skill_operad/yaml/polarity_pairs.yaml
+      - data: operads/skill_operad/yaml/polarity_pairs.yaml
         select: pairs.*.provenance
         mode: distinct
         values: [declared, inferred]
@@ -79,12 +79,12 @@ types:
                canonical_value_validation, append_only_log_integrity, pipeline_exit_code, formal_lean,
                skill_budget, knowledge_parity_gate, skill_name_verify, rule_gate]
     sources:
-      - data: omega_engine_operads/skill_operad/yaml/routes.yaml
+      - data: operads/skill_operad/yaml/routes.yaml
         select: shared_contracts.*.id
         role: part
         values: [historical_pr_immunity, oe010_dda, six_host_parity, coda_gtla_paper, test_quality,
                  canonical_value_validation, append_only_log_integrity, pipeline_exit_code, formal_lean]
-      - data: omega_engine_operads/skill_operad/yaml/routes.yaml
+      - data: operads/skill_operad/yaml/routes.yaml
         select: code_gates.*.id
         role: part
         values: [skill_budget, knowledge_parity_gate, skill_name_verify, rule_gate]

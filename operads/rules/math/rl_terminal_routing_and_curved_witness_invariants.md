@@ -1,9 +1,9 @@
 ---
 paths:
-  - "omega_engine/**"
-  - "omega_engine_pfp/**"
-  - "omega_engine_governance/**"
-  - "omega_engine_atlas/**/code/**"
+  - "engine/**"
+  - "pfp/**"
+  - "governance/**"
+  - "atlas/**/code/**"
   - "**/*.lean"
   - "**/exact/**"
   - "**/solvers/**"

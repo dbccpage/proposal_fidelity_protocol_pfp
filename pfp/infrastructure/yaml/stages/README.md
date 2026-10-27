@@ -42,20 +42,20 @@ graph LR
 | Stage | Requires | Executor | Seat |
 |---|---|---|---|
 | 1 | none | host | none |
-| 2 | 1 | model | `seat_begemot` |
-| 3 | 1, 2 | model | `seat_koroviev` |
-| 4 | 2, 3 | model | `seat_begemot` |
-| 5 | 2, 4 | host | `seat_woland` |
-| 6 | 2, 4, 5 | model | `seat_margarita` |
+| 2 | 1 | model | `seat_gauge_breaker` |
+| 3 | 1, 2 | model | `seat_defect_hunter` |
+| 4 | 2, 3 | model | `seat_gauge_breaker` |
+| 5 | 2, 4 | host | `seat_adversary` |
+| 6 | 2, 4, 5 | model | `seat_primal_dual` |
 | 7 | 4, 5, 6 | host | none |
-| 8 | 5, 7 | host | `seat_the_master` |
+| 8 | 5, 7 | host | `seat_manuscript_truth` |
 | 9 | 1, 5, 7 | host | none |
 | 10 | 9 | host | none |
 | 11 | 9 | model | none |
 
 `domain/stages/stages.py` checks each list: sorted, distinct, earlier stages only, and containing the stages the code reads (`MINIMUM_STAGE_INPUTS`). A run is either stages 1 through N, or a subset passed as `stages=` to `ExecuteStagePipelineUseCase.run_pipeline` that starts at stage 1 and contains everything its members require. Both the Python runner and the native staged runner accept any such subset. No later stage requires stages 8, 10 or 11, so each may be left out. A model stage's prompt still shows every earlier stage that ran.
 
-The seat of a stage names the core-retinue seat whose turn it is; it does not change what the stage checks. Stage 1 admits the seed declaration on the host; a seed without a declaration gets one model repair turn, and the receipt then carries `DECLARATION_FROM_MODEL_REPAIR`. Stage 7 replays every stage 6 witness on the host; an obstruction found there does not stop the run, so selection rejects the candidate and the receipt names `OPEN_OBSTRUCTION`. Stage 9 derives the terminal from host facts only, using the `obligation_rules` in [`stage_9_receipt.yaml`](stage_9_receipt.yaml). Stage 10 maps that terminal to a routing terminal through [`terminal_routing.json`](terminal_routing.json) and records `authorized_by: null`. Stage 11 runs only when the receipt is not `VERIFIED`; otherwise it is recorded as skipped.
+The seat of a stage names the core-panel seat whose turn it is; it does not change what the stage checks. Stage 1 admits the seed declaration on the host; a seed without a declaration gets one model repair turn, and the receipt then carries `DECLARATION_FROM_MODEL_REPAIR`. Stage 7 replays every stage 6 witness on the host; an obstruction found there does not stop the run, so selection rejects the candidate and the receipt names `OPEN_OBSTRUCTION`. Stage 9 derives the terminal from host facts only, using the `obligation_rules` in [`stage_9_receipt.yaml`](stage_9_receipt.yaml). Stage 10 maps that terminal to a routing terminal through [`terminal_routing.json`](terminal_routing.json) and records `authorized_by: null`. Stage 11 runs only when the receipt is not `VERIFIED`; otherwise it is recorded as skipped.
 
 | Stage | Contract File | Focus | Outcome |
 |---|---|---|---|
@@ -95,4 +95,4 @@ These 11 operational pipeline stages must not be conflated with the 5 epistemic 
 
 ## Typed Contracts
 
-[`stage_types.yaml`](stage_types.yaml) is the source of the stage type rules and [`stage_models.yaml`](stage_models.yaml) is the JSON Schema form of them. The generator named in the `stage_models.yaml` header is no longer in the repository, so change both files together. The Pydantic models are in `omega_engine_pfp/domain/stages/stages.py`. `omega_engine_pfp/tests/types/test_stages_types.py` checks the eleven stage files and `controller.yaml` against `stage_types.yaml`, and `omega_engine_pfp/tests/test_stage_dependency_graph.py` checks the graph and subset runs.
+[`stage_types.yaml`](stage_types.yaml) is the source of the stage type rules and [`stage_models.yaml`](stage_models.yaml) is the JSON Schema form of them. The generator named in the `stage_models.yaml` header is no longer in the repository, so change both files together. The Pydantic models are in `pfp/domain/stages/stages.py`. `pfp/tests/types/test_stages_types.py` checks the eleven stage files and `controller.yaml` against `stage_types.yaml`, and `pfp/tests/test_stage_dependency_graph.py` checks the graph and subset runs.

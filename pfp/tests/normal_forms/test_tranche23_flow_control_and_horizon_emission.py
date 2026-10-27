@@ -2,8 +2,8 @@
 
 Aligned Contracts / Systems:
 - nf.flow.control
-- omega_engine_operations
-- omega_engine_pfp
+- operations
+- pfp
 
 AuthorityEffect: None.
 """

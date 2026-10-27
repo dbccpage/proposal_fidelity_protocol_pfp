@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any, Callable, Sequence
 
-from omega_engine_pfp.domain.curriculum.models import (
+from pfp.domain.curriculum.models import (
     JudgeChangedError,
     LadderResult,
     LevelSummary,

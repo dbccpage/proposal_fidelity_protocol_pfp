@@ -16,7 +16,7 @@ Proposal Fidelity Protocol separates a candidate from the checks performed on
 it and from permission to use it. This implementation study describes the
 current operadic organization of that separation and one executable,
 provider-free code-repair example. Capability definitions and typed composition
-belong to Omega Engine Operads (OEOP); execution belongs to Woland; immune
+belong to Engine Operads (OEOP); execution belongs to Adversary; immune
 observations belong to OEEIS; evolution and lineage belong to Prompt
 Civilization. A supplied patch passes through six source-bound operations on
 an isolated working copy. The example repairs one branch while preserving one
@@ -54,7 +54,7 @@ constrains connections; it does not prove semantic correctness of a callback.
 | Owner | Responsibility | Boundary |
 | --- | --- | --- |
 | OEOP | Capability sources, typed declarations and composition | Discovery and successful compilation do not admit execution. |
-| Woland | Execution, working copies, checks and retained run evidence | Local check commands are trusted configuration, not an operating-system sandbox. |
+| Adversary | Execution, working copies, checks and retained run evidence | Local check commands are trusted configuration, not an operating-system sandbox. |
 | OEEIS | Immune definitions, screening and activation decisions | A missing measurement is not clearance or activation. |
 | Prompt Civilization | Evolution records, genealogy and outcome lineage | A lineage record is not a proof or a release authorization. |
 
@@ -161,7 +161,7 @@ authorized, require their own raw responses, checker bindings and cost records.
 
 The research entrypoint extends the supplied-patch example into an explicit outer
 proposal and inner evaluation loop. OEOP owns versioned experimental contracts
-and the existing typed C/R/E/I/M/T route. Woland coordinates proposals, public
+and the existing typed C/R/E/I/M/T route. Adversary coordinates proposals, public
 feedback, private grading, fresh confirmation and experimental incumbent changes.
 PFP owns model admission, direct Anthropic transport and accounting. OEEIS owns
 scoped diagnostic memory candidates; Prompt Civilization owns protected host

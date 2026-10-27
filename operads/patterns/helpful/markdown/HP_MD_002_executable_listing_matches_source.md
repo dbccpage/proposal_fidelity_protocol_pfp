@@ -33,7 +33,7 @@ The healthy listing is whatever single tokens the accessible file contains. It i
 
 `end Residual Closure Layer`
 
-`OmegaCore.Residual Closure Layer.residual_not_auth`
+`CoreCore.Residual Closure Layer.residual_not_auth`
 
 No substitute namespace is supplied here. The 2026-10-08 review says to restore identifiers from the source and not to guess one.
 

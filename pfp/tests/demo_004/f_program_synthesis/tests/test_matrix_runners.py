@@ -19,7 +19,7 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.infrastructure import synthesis_matrix as mrs
+from pfp.infrastructure import synthesis_matrix as mrs
 
 CHALLENGES = Path(__file__).resolve().parents[2]
 RUNNERS = [
@@ -51,7 +51,7 @@ def _load(relative: str):
     source = (CHALLENGES / relative).read_text(encoding="utf-8")
     present = [token for token in FORBIDDEN_SOURCE if token in source]
     assert not present, f"{relative} still contains {present}"
-    module = "omega_engine_projects.mssn_sn_symgam.challenges." + relative[:-3].replace("/", ".")
+    module = "projects.mssn_sn_symgam.challenges." + relative[:-3].replace("/", ".")
     return importlib.import_module(module)
 
 

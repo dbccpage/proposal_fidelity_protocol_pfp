@@ -18,14 +18,14 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.frontend.presenters.skill_cull import render_manifest
-from omega_engine_operads.infrastructure.skill_garden import cull_candidates as cull
-from omega_engine_operads.infrastructure.skill_garden import usage_ledger as ledger
+from operads.frontend.presenters.skill_cull import render_manifest
+from operads.infrastructure.skill_garden import cull_candidates as cull
+from operads.infrastructure.skill_garden import usage_ledger as ledger
 
 NOW = datetime(2026, 10, 1, tzinfo=timezone.utc)
 
 BASE_POLICY = {
-    "schema": "omega.skill_garden.cull_policy.v1",
+    "schema": "core.skill_garden.cull_policy.v1",
     "authority_effect": "None",
     "approved_by": "a-human",
     "approved_at": "2026-09-01",

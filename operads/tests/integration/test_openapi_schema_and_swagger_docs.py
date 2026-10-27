@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 from fastapi.testclient import TestClient
 
-from omega_engine_operads.frontend.api.app import create_app
+from operads.frontend.api.app import create_app
 
 
 class TestOpenApiSchemaAndSwaggerDocs(unittest.TestCase):

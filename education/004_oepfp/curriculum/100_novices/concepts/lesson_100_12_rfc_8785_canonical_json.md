@@ -35,7 +35,7 @@ If the page is long, read one section and run the matching notebook cells. Leave
 **[Declared] Core concept:** An explicitly selected encoder determines the bytes
 that are compared or hashed. Key sorting alone does not identify a wire standard.
 
-This lesson calls `omega_engine_pfp.domain.prompts.packets.canonical_json_bytes`.
+This lesson calls `pfp.domain.prompts.packets.canonical_json_bytes`.
 Its implementation uses Python `json.dumps` with sorted keys, compact separators
 and `ensure_ascii=False`, then UTF-8 encoding. It is not the tagged production
 packet sealer. Passing this lesson does not establish that these formats agree.
@@ -82,7 +82,7 @@ two key/value pairs. Then change `a` to `3` and check that the bytes differ.
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.prompts.packets import canonical_json_bytes
+from pfp.domain.prompts.packets import canonical_json_bytes
 
 first = {"b": 2, "a": 1}
 second = {"a": 1, "b": 2}
@@ -97,7 +97,7 @@ assert canonical_json_bytes({"a": 3, "b": 2}) != canonical_json_bytes(first)
 | :--- | :--- |
 | **Curriculum Anchor** | `RFC 8785` |
 | **Authority Effect** | `None` |
-| **Encoding owner** | `omega_engine_pfp.domain.prompts.packets.canonical_json_bytes` |
+| **Encoding owner** | `pfp.domain.prompts.packets.canonical_json_bytes` |
 | **Number policy** | Python defaults; no zero-float enforcement is claimed. |
 
 **[Open] Next check:** Independently test the specific encoder and declared input

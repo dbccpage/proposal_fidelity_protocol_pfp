@@ -20,13 +20,13 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from omega_engine_pfp.controllers.turn_driver_controller import (
+from pfp.controllers.turn_driver_controller import (
     DriverMovePacket,
     EngineTurnStateV1,
     PromptPolicyV1,
     TurnDriverController,
 )
-from omega_engine_pfp.domain.immune import (
+from pfp.domain.immune import (
     AllostericQuorumGate,
     ComplementCascade,
     DangerDecision,
@@ -43,7 +43,7 @@ from omega_engine_pfp.domain.immune import (
     ThymusGate,
     TwoSignalDangerGate,
 )
-from omega_engine_pfp.domain.immune.turn_loop_wiring import (
+from pfp.domain.immune.turn_loop_wiring import (
     ImmuneTurnVerdict,
     TurnLoopImmuneCoordinator,
 )

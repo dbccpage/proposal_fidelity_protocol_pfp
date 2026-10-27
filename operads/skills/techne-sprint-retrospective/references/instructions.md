@@ -36,7 +36,7 @@ Scrum Master presents:
 - [ ] Note any work done between sprints that affected this sprint
 - [ ] If verification sprint pattern occurred, flag for process discussion
 
-### Step 4: Techne Code Soviet Inspector Retrospective Report (MANDATORY)
+### Step 4: Techne Code Inspector Retrospective Report (MANDATORY)
 
 During the metrics presentation, include test-quality enforcement statistics for the sprint.
 
@@ -52,12 +52,12 @@ git log --oneline --grep="weak assertion" -- tests/
 
 # Run final inspector check on all tests:
 
-# invoke the /techne-code-soviet-inspector skill on tests/ (its VETO is the test-quality block).
+# invoke the /techne-code-inspector skill on tests/ (its VETO is the test-quality block).
 
 ``` ext
 
 **Source:** Sprint 102-0 STORY-102-0-003 — dead gate reference cleanup (tooling absent): the
-nonexistent `scripts/test_quality_inspector.py` is repointed to the real `/techne-code-soviet-inspector` skill.
+nonexistent `scripts/test_quality_inspector.py` is repointed to the real `/techne-code-inspector` skill.
 
 **Present in Retrospective:**
 
@@ -73,7 +73,7 @@ nonexistent `scripts/test_quality_inspector.py` is repointed to the real `/techn
 
 ```markdown
 
-## Techne Code Soviet Inspector Report
+## Techne Code Inspector Report
 
 ### Test Quality Enforcement Metrics
 
@@ -99,9 +99,9 @@ nonexistent `scripts/test_quality_inspector.py` is repointed to the real `/techn
 
 ``` ext
 
-**Why mandatory:** Without tracking enforcement metrics, we cannot measure whether the Techne Code Soviet Inspector is effective or needs tuning.
+**Why mandatory:** Without tracking enforcement metrics, we cannot measure whether the Techne Code Inspector is effective or needs tuning.
 
-**Source:** Sprint Workflow Quality Enforcement (Techne Code Soviet Inspector Model)
+**Source:** Sprint Workflow Quality Enforcement (Techne Code Inspector Model)
 
 ### Step 5: Architect Lightning Rounds (1 min each)
 
@@ -334,7 +334,7 @@ If either `techne-documentation-manager` or `blackrod` discovers signature forge
 1. **Activate Nemesis:** Immediately invoke `/thanatos-nemesis` for emergency quarantine.
 2. **Notify VP of Engineering:** Notify `techne-vp` during `/sprint-vp-briefing`.
 3. **Notify Senior VP of Engineering:** Notify `techne-svp` via executive report from `/sprint-svp-briefing`.
-4. **Log Investigation:** Create investigation report in `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{breach_id}.md`.
+4. **Log Investigation:** Create investigation report in `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{breach_id}.md`.
 
 ### Step 10: Document
 
@@ -393,7 +393,7 @@ Create `coda_project_planning/sprints/{N}/retrospective.md` (Meta-Learning table
 ### Step 10.5: CrystallizationWatchdog Final Sweep (REMOVED — tooling absent)
 
 > **REMOVED (Sprint 102-0, STORY-102-0-003):** the `CrystallizationWatchdog` engine
-> (`omega_engine.engines.crystallization_watchdog`) does not exist in this repo. There is no live
+> (`engine.engines.crystallization_watchdog`) does not exist in this repo. There is no live
 > call in this step. The crystallization sweep is deferred until a real implementation exists.
 
 **Source:** Sprint 102-0 STORY-102-0-003 — dead gate reference cleanup (tooling absent).
@@ -403,13 +403,13 @@ Create `coda_project_planning/sprints/{N}/retrospective.md` (Meta-Learning table
 **CRITICAL:** The retrospective MUST NOT close until this step, Step 12, Step 13 (recording hashes in `retrospective.md`), and Step 14 (Submit Outcome) are complete.
 
 1. Run `/autoskill`.
-2. Apply approved proposals; if any commit is made to omega_engine/.omega_skills/ (e.g. chore(autoskill):), note the commit hash.
+2. Apply approved proposals; if any commit is made to engine/.core_skills/ (e.g. chore(autoskill):), note the commit hash.
 3. **Autoskill Hash** = that commit hash, or `none` if no skill commit was made.
 
-### Step 11.5: Omega Doctrine Refresh (Sprint-Close)
+### Step 11.5: Core Doctrine Refresh (Sprint-Close)
 
-Fire the two omega-doctrine update channels defined in `autoskill` ext
-(`## Omega Doctrine Wiring`) and governed by
+Fire the two core-doctrine update channels defined in `autoskill` ext
+(`## Core Doctrine Wiring`) and governed by
 `.claude/skills/_shared/meta_skill_governance.md`:
 
 1. **Channel 1 (always):** regenerate the Wizard manifest from source-of-truth

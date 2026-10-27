@@ -2,14 +2,14 @@
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.guard_activation import ActivationRefusal
-from omega_engine_epistemic_immune_system.infrastructure.authenticated_custody import (
+from eis.domain.guard_activation import ActivationRefusal
+from eis.infrastructure.authenticated_custody import (
     AuthenticatedEisLedger,
     NativeAttestationVerifier,
     SignedHostHealth,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import HostPayloadDangerSensor
-from omega_engine_epistemic_immune_system.tests.auth_support import (
+from eis.infrastructure.mssn_ports import HostPayloadDangerSensor
+from eis.tests.auth_support import (
     NOW,
     RULE,
     binding,
@@ -17,14 +17,14 @@ from omega_engine_epistemic_immune_system.tests.auth_support import (
     policy,
     signed,
 )
-from omega_engine_epistemic_immune_system.tests.unit.test_immune_admission_use_cases import (
+from eis.tests.unit.test_immune_admission_use_cases import (
     CONTENT,
     PROFILE,
     GuardState,
     hit_for,
 )
-from omega_engine_epistemic_immune_system.use_cases.guard_activation import activate_learned_guard
-from omega_engine_operads.infrastructure.storage.receipt_ledger import (
+from eis.use_cases.guard_activation import activate_learned_guard
+from operads.infrastructure.storage.receipt_ledger import (
     GENESIS_DIGEST,
     ReceiptLedger,
 )

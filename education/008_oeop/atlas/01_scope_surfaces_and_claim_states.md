@@ -6,7 +6,7 @@ The audit froze two Git path sets at
 `c86134f8c05c2b530607e3ec0c882c63d230d3f6`:
 
 ```text
-omega_engine_workflows_agents_skills/**  166 paths
+workflows_agents_skills/**  166 paths
 .agents/operad/**                          65 paths
                                          ---------
                                          231 paths
@@ -22,7 +22,7 @@ bytecode, and adjacent packages are outside this evidence set.
 | --- | --- | --- |
 | OEWAS V3 | Documents, operations, catalogs, lifecycle facets, handlers, ports, adapters | Production cutover, complete execution, or global authority |
 | OEWAS local operad | Ten colours, planar profiles, partial substitution, units, witnesses | Symmetric action, equivariance, or behavioral equivalence |
-| OEWAS legacy/migration | V1/V2 snapshots, Woland projection, successor-byte manifest | Semantic preservation or successor admission |
+| OEWAS legacy/migration | V1/V2 snapshots, Adversary projection, successor-byte manifest | Semantic preservation or successor admission |
 | `.agents/operad` | Reference registry, compatibility API, dispatch, residual diagnostics, compiler | Execution, promotion authority, or contractivity certification |
 
 The contexts share vocabulary but not one canonical aggregate or persistence

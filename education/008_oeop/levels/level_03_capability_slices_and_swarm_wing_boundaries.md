@@ -8,8 +8,8 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/operad/operad.py
-  - omega_engine_operations/skill_operad/json/agent_capability_slices.json
+  - operads/domain/operad/operad.py
+  - operations/skill_operad/json/agent_capability_slices.json
   - .agents/agents/
   - .agents/AGENTS.md
 last_verified: 2026-10-01
@@ -28,13 +28,13 @@ In monolithic multi-agent systems, agents are frequently granted universal read/
 - Prompt injection vulnerabilities (an untrusted external proposal triggering production deployment tools).
 - Lack of auditability (inability to determine which agent had the authority to mint an evidence receipt).
 
-To enforce strict **least privilege**, the Anomalon Engine partitions the 10-Coloured Operad $\mathcal{O}$ into **Capability Slices**. Every agent persona is bounded to a typed sub-operad: it can only invoke licensed skills that consume and produce its authorized colours.
+To enforce strict **least privilege**, the Sentinel Engine partitions the 10-Coloured Operad $\mathcal{O}$ into **Capability Slices**. Every agent persona is bounded to a typed sub-operad: it can only invoke licensed skills that consume and produce its authorized colours.
 
 ---
 
 ## 2. The `AgentSlice` Domain Model
 
-The capability slice is defined in [`omega_engine_operads/domain/operad/operad.py`](../../../../omega_engine_operads/domain/operad/operad.py#L32-L40):
+The capability slice is defined in [`operads/domain/operad/operad.py`](../../../../operads/domain/operad/operad.py#L32-L40):
 
 ```python
 @dataclass
@@ -157,13 +157,13 @@ graph LR
 - **Representative Agents & Skills:**
   - `thanatos-human-promotion-firewall`: Blocks any automated script from granting production authority.
   - `blackrod`: Orthogonal governance enforcer with defect escalation powers.
-  - `omega-old-man-red-team`: Read-only department elder executing unsparing fireproof code/math audits.
+  - `core-red-team`: Read-only department elder executing unsparing fireproof code/math audits.
 
 ---
 
 ## 4. Manifest Structure: `agent_capability_slices.json`
 
-The global capability registry lives in [`omega_engine_operations/skill_operad/json/agent_capability_slices.json`](../../../../omega_engine_operations/skill_operad/json/agent_capability_slices.json):
+The global capability registry lives in [`operations/skill_operad/json/agent_capability_slices.json`](../../../../operations/skill_operad/json/agent_capability_slices.json):
 
 ```json
 {
@@ -188,7 +188,7 @@ The global capability registry lives in [`omega_engine_operations/skill_operad/j
       ],
       "licensed_skills": [
         "rip-code",
-        "techne-code-soviet-inspector",
+        "techne-code-inspector",
         "techne-test-silent-skip-detector"
       ]
     }
@@ -205,7 +205,7 @@ If an agent whose `sub_operad` is `["Audit", "Code"]` attempts to run a skill ta
 To verify agent slices and permission checks:
 
 ```powershell
-# Retired: OEWAS tests/unit/test_operad_capability_slices.py has no successor file under omega_engine_operads.
+# Retired: OEWAS tests/unit/test_operad_capability_slices.py has no successor file under operads.
 ```
 
 ### The Level 03 Governance Invariants

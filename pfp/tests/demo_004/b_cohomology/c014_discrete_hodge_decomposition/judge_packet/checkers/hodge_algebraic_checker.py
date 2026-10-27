@@ -22,7 +22,7 @@ from collections.abc import Mapping
 from fractions import Fraction
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.b_cohomology.c014_discrete_hodge_decomposition.judge_packet.checkers.case_model import (
+from pfp.tests.demo_004.b_cohomology.c014_discrete_hodge_decomposition.judge_packet.checkers.case_model import (
     CaseParseError,
     admissible_refusals,
     check_refusal,

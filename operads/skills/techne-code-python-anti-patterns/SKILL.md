@@ -17,7 +17,7 @@ Specialist skill for detecting, isolating, and remediating Python anti-patterns 
 
 ## Operational Scope
 
-Operates directly against Python modules in `omega_engine/`, `omega_engine_operations/`, and companion scripts. Consults the canonical catalog at `omega_engine_operads/patterns/anti/python/`.
+Operates directly against Python modules in `engine/`, `operations/`, and companion scripts. Consults the canonical catalog at `operads/patterns/anti/python/`.
 
 ### Canonical Anti-Patterns & Dual Healthy Patterns
 
@@ -53,13 +53,13 @@ The canonical automated auditor is available at [`scripts/python_anti_pattern_au
 
 ```bash
 # Audit a specific module or package
-py -3.12 omega_engine_operads/skills/techne-code-python-anti-patterns/scripts/python_anti_pattern_auditor.py --path omega_engine_operations/
+py -3.12 operads/skills/techne-code-python-anti-patterns/scripts/python_anti_pattern_auditor.py --path operations/
 
 # Fail-closed CI check returning non-zero exit code on BLOCKER/MAJOR anti-patterns
-py -3.12 omega_engine_operads/skills/techne-code-python-anti-patterns/scripts/python_anti_pattern_auditor.py --path . --check
+py -3.12 operads/skills/techne-code-python-anti-patterns/scripts/python_anti_pattern_auditor.py --path . --check
 
 # Generate Markdown report
-py -3.12 omega_engine_operads/skills/techne-code-python-anti-patterns/scripts/python_anti_pattern_auditor.py --path omega_engine/ --report-out reports/python_anti_pattern_report.md
+py -3.12 operads/skills/techne-code-python-anti-patterns/scripts/python_anti_pattern_auditor.py --path engine/ --report-out reports/python_anti_pattern_report.md
 ```
 
 ## Integration with Pattern Hunter

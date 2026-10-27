@@ -1,18 +1,18 @@
-"""Unit tests for omega_engine_education normal forms clean architecture modules.
+"""Unit tests for education normal forms clean architecture modules.
 
 AuthorityEffect: None.
 """
 
 import unittest
 
-from omega_engine_pfp.domain.normal_forms.examples import (
+from pfp.domain.normal_forms.examples import (
     order_line,
     order_line_fails_second_normal_form,
     street_journal_title,
     street_journal_title_passes_third_and_fails_boyce_codd,
     street_journal_title_split,
 )
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     RelationalSchema,
     check_2nf,
@@ -21,7 +21,7 @@ from omega_engine_pfp.domain.normal_forms.relational import (
     compute_attribute_closure,
     find_candidate_keys,
 )
-from omega_engine_pfp.infrastructure.normal_forms import (
+from pfp.infrastructure.normal_forms import (
     STANDARD_PATH,
     NormalFormsDbContext,
     NormalFormsEvaluator,

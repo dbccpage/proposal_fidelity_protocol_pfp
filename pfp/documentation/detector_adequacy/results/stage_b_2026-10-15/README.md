@@ -25,7 +25,7 @@ The upper end of the interval is below 0.05, so the decision is DROPPED.
 - Spent $0.9979 of the $2 cap. The worst case planned before the run was $1.30. The guard
   refused no call, and there were no transport errors.
 - Jeremy ran it on his PC from `64228dbb3` (origin/main) with
-  `py -3.12 -m omega_engine_pfp.use_cases.detector_adequacy.stage_b run --lock-commit f9423531c --out ...`.
+  `py -3.12 -m pfp.use_cases.detector_adequacy.stage_b run --lock-commit f9423531c --out ...`.
   The outputs were committed unchanged as `51997c0d2`.
 
 | file | sha256 |
@@ -85,15 +85,15 @@ These are proposals, not decisions:
    1,400 well-formed items.
 3. Print progress and save partial results during the run. This run printed nothing for
    about 40 minutes.
-4. `witness_replay.py` loads the Woland dossier checker
-   (`omega_engine_woland/tests/pilots/replay_runners/dossier_capsules/checking.py`) by file
-   path. The import guard does not see that load, but it is still a dependency on Woland test
+4. `witness_replay.py` loads the Adversary dossier checker
+   (`adversary/tests/pilots/replay_runners/dossier_capsules/checking.py`) by file
+   path. The import guard does not see that load, but it is still a dependency on Adversary test
    code. It is pinned in both locks, so it can only move in a new lock.
 
 ## Reproduce the summary
 
 ```
-py -3.12 -m omega_engine_pfp.use_cases.detector_adequacy.stage_b run --lock-commit f9423531c --out <new folder> --env-file <path to .env>
+py -3.12 -m pfp.use_cases.detector_adequacy.stage_b run --lock-commit f9423531c --out <new folder> --env-file <path to .env>
 ```
 
 This makes new paid calls. Haiku 5.5 does not accept `temperature`, so its answers are not
@@ -102,5 +102,5 @@ the committed traces, and this was checked on 2026-10-15: decision, ΔAUC, inter
 out-of-fold ΔAUC and failure count all match `summary.json`.
 
 ```
-py -3.12 -m omega_engine_pfp.use_cases.detector_adequacy.stage_b analyse --run-dir omega_engine_pfp/documentation/detector_adequacy/results/stage_b_2026-10-15 --lock-commit f9423531c
+py -3.12 -m pfp.use_cases.detector_adequacy.stage_b analyse --run-dir pfp/documentation/detector_adequacy/results/stage_b_2026-10-15 --lock-commit f9423531c
 ```

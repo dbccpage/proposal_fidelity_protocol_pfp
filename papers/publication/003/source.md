@@ -159,10 +159,10 @@ prompts. The [harvest file][harvest],
 `research/mssn_sn_tower/demos/antimorphism_farm/harvest/antimorphism_harvest.jsonl`,
 has 112 rows. In 102 of them the response is text written in advance by the
 authors, copied from the scripted fields of the [prompt specifications][probe-specs]
-in `omega_engine_epistemic_immune_system/infrastructure/mssn_domains.py`. The
+in `eis/infrastructure/mssn_domains.py`. The
 other 10 rows are responses from one model, `qwen/qwen-2.5-7b-instruct`. A
 separate, prompt-specific [rule set][harvest-rules] in
-`omega_engine_epistemic_immune_system/infrastructure/mssn_classifier.py`
+`eis/infrastructure/mssn_classifier.py`
 labelled the rows with these identifiers, and no independent checker reviewed
 the labels. The harvest therefore does not measure how often models make these
 errors. It is also not evidence about the package detectors, which reuse the
@@ -506,16 +506,16 @@ commit; they are not runnable from this deposit. Collect the focused tests
 before execution:
 
 ```powershell
-python -m pytest omega_engine_pfp/tests/mssn_sn_demos/test_demo_3.py --collect-only -q
-python -m pytest omega_engine_pfp/tests/mssn_sn_demos/test_demo_3.py -q
-python -m pytest omega_engine_pfp/tests/test_immune_defect_regressions.py -q
+python -m pytest pfp/tests/mssn_sn_demos/test_demo_3.py --collect-only -q
+python -m pytest pfp/tests/mssn_sn_demos/test_demo_3.py -q
+python -m pytest pfp/tests/test_immune_defect_regressions.py -q
 ```
 
 The [Demo 3 tests][demo-tests] include the refusal, rollback, fuel, and matrix
 receipt checks described in Sections 4 and 5. The two-signal conjunction example
 is the test `test_invariant_two_signal_danger_gate_conjunction_logic` in
-`omega_engine_pfp/tests/mssn_sn_demos/test_demo_immune_soviet.py`.
-The catalog integrity suite is `omega_engine_pfp/tests/test_mssn_catalog.py`.
+`pfp/tests/mssn_sn_demos/test_demo_immune_strict.py`.
+The catalog integrity suite is `pfp/tests/test_mssn_catalog.py`.
 Its offline fixture blocks sockets and distinguishes reproducible fixtures from
 live receipts whose verification is integrity-only. Use a fresh writable
 temporary directory; record the interpreter, collection status, command exit,
@@ -577,7 +577,7 @@ not to the code baseline of the rest of the paper.
 Write $m$ for the number of Signal 1 matches and $s$ for the Signal 2 record,
 which counts as present when its defect count is positive. The table of
 Section 3, as implemented in the repository gate
-(`omega_engine_epistemic_immune_system/domain/danger_gate.py`), gives
+(`eis/domain/danger_gate.py`), gives
 `TOLERATED` when neither signal is present and `DIAGNOSTIC_ONLY` when only
 Signal 1 is. When only Signal 2 is present it gives `DEFENSIVE_LOCKDOWN` for a
 high or critical defect and `DIAGNOSTIC_ONLY` otherwise. When both are present
@@ -625,7 +625,7 @@ table of Section 4.1 collapses in the same way
 ### A.3 Lemma B: the Hill-type "quorum" is a sum threshold
 
 The repository also has a gate described as a cooperative quorum
-(`omega_engine_epistemic_immune_system/domain/allostery.py`). It adds the
+(`eis/domain/allostery.py`). It adds the
 strictly positive sensor signals into $\theta = \sum_i s_i$, computes the Hill
 ratio $H(\theta) = \theta^n / (K^n + \theta^n)$ with $H(0) = 0$, and activates
 when $H(\theta) \geq t$.
@@ -695,7 +695,7 @@ is admitted and fires on a member of the panel.
 
 ### A.5 The repository audited against the lemmas
 
-The findings below refer to `omega_engine_epistemic_immune_system/` at the
+The findings below refer to `eis/` at the
 audited commit.
 
 *Lemma A.* The packaged demonstration
@@ -750,7 +750,7 @@ applies to it whenever that record is computed from the matches.
 Section 3 asks that a detector be admitted only with a reproduced defect,
 valid near misses, a frozen predicate and bound digests. One component of the
 repository states that record as types: anti-skill V2, in
-`omega_engine_workflows_agents_skills/domain/anti_skill/anti_skill_v2.py` and
+`workflows_agents_skills/domain/anti_skill/anti_skill_v2.py` and
 `application/anti_skill/anti_skill_v2.py` of the same package.
 
 - *A closed predicate language.* A detector is an expression of at most 16
@@ -778,7 +778,7 @@ decisions exist in a registry scoped to one engine profile (claim ledger row
 P3-26 gives the paths). The Python admission
 verifier and the loader that would activate that registry are retired and
 return a typed refusal
-(`omega_engine_workflows_agents_skills/application/anti_skill_admission/verifier.py`,
+(`workflows_agents_skills/application/anti_skill_admission/verifier.py`,
 lines 25 to 45), no Rust code reads the registry, and the registry that the
 prompt reviewer loads is empty.
 No detector is therefore admitted and active through this record. It shows that
@@ -827,12 +827,12 @@ baseline. The proposed experiment manifest is a separate design artifact.
 [majorana-trs]: https://doi.org/10.1103/PhysRevLett.117.267002
 [majorana-positivity]: https://doi.org/10.1103/PhysRevLett.116.250601
 [harvest]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/research/mssn_sn_tower/demos/antimorphism_farm/harvest/antimorphism_harvest.jsonl
-[probe-specs]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_epistemic_immune_system/infrastructure/mssn_domains.py
-[harvest-rules]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_epistemic_immune_system/infrastructure/mssn_classifier.py
-[danger-gate]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/immune/danger_gate.py
-[immune-regressions]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_immune_defect_regressions.py
-[immune-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/mssn_sn_demos/test_demo_immune_soviet.py
-[demo-domain]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/mssn_sn_demos/demo_3/host.py
-[demo-host]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/use_cases/mssn_sn_demos/demo_3/host.py
-[demo-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/mssn_sn_demos/test_demo_3.py
+[probe-specs]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/eis/infrastructure/mssn_domains.py
+[harvest-rules]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/eis/infrastructure/mssn_classifier.py
+[danger-gate]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/danger_gate.py
+[immune-regressions]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_immune_defect_regressions.py
+[immune-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/mssn_sn_demos/test_demo_immune_strict.py
+[demo-domain]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/mssn_sn_demos/demo_3/host.py
+[demo-host]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/use_cases/mssn_sn_demos/demo_3/host.py
+[demo-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/mssn_sn_demos/test_demo_3.py
 [manifest]: demos/demo_3/experiment_manifest.yaml

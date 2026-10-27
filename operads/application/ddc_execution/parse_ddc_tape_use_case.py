@@ -1,15 +1,15 @@
 """Parse DDC tape receipts and delegate optional custody to injected ports."""
 
-from omega_engine_operads.domain.ddc_execution.errors import OperadDomainError
-from omega_engine_operads.domain.ddc_execution.protocols import (
+from operads.domain.ddc_execution.errors import OperadDomainError
+from operads.domain.ddc_execution.protocols import (
     DdcReceiptStoragePort,
     DdcTapeParserPort,
 )
-from omega_engine_operads.domain.ddc_execution.tape import (
+from operads.domain.ddc_execution.tape import (
     ParseDdcTapeRequest,
     ParseDdcTapeResponse,
 )
-from omega_engine_operads.domain.operad.errors import Err, Ok, Result
+from operads.domain.operad.errors import Err, Ok, Result
 
 
 class ParseDdcTapeUseCase:

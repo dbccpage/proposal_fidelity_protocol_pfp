@@ -14,7 +14,7 @@ PROJECT_ROOT = str(next(p for p in Path(__file__).resolve().parents if (p / "pyp
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c049_finite_category_universal_constructions.reference_solver import (
     solve,
 )
 

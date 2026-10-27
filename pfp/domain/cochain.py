@@ -14,7 +14,7 @@ from fractions import Fraction
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from omega_engine_pfp.domain.ports.prompt_cochain_port import PromptCochainHost
+    from pfp.domain.ports.prompt_cochain_port import PromptCochainHost
 
 
 def _decode_u32_bigint_limbs(sign_val: Any, digits: Sequence[Any]) -> int:

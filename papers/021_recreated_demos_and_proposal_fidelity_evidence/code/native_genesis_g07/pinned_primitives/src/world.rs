@@ -21,7 +21,7 @@
 //! * **notes** are represented and inert (`support.rs`).
 //!
 //! With supported bounds and well-formed carriers, guard failure leaves the world
-//! unchanged and returns a `Verdict::Refused(reason)`.  The Omega engine
+//! unchanged and returns a `Verdict::Refused(reason)`.  The Core engine
 //! records the verdict; nothing is absorbed silently.
 
 use crate::admission::step;
@@ -95,7 +95,7 @@ pub enum Verdict {
 
 impl World {
     /// The Lean genesis: nothing admitted, budget 0, licence granted, no
-    /// notes.  The Omega engine always records its own funding and licence
+    /// notes.  The Core engine always records its own funding and licence
     /// events, so the default never decides anything off the record.
     pub fn genesis() -> World {
         World { regime: Regime::genesis(), budget: Budget(0), license: License(true), refusals: Vec::new(), notes: Vec::new() }

@@ -26,7 +26,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_operads.domain.prompt_hierarchy import (
+from operads.domain.prompt_hierarchy import (
     AntibodyBinding,
     AntiOpBinding,
     OperadPromptBinding,
@@ -36,7 +36,7 @@ from omega_engine_operads.domain.prompt_hierarchy import (
     evaluate_prompt_gates,
     load_prompt_node_from_binding_dict,
 )
-from omega_engine_operads.infrastructure.prompt_hierarchy.genesis_relational_derivation import (
+from operads.infrastructure.prompt_hierarchy.genesis_relational_derivation import (
     COUPLED_BIPARTITE_BINDING_FILENAMES,
     TRIPARTITE_BINDING_FILENAMES,
     load_coupled_native_rust_and_lean4_witnesses,
@@ -45,7 +45,7 @@ from omega_engine_operads.infrastructure.prompt_hierarchy.genesis_relational_der
     run_genesis_relational_derivation_workflow,
     run_tripartite_relational_derivation_workflow,
 )
-from omega_engine_operads.infrastructure.parser.prompt_hierarchy_loader import (
+from operads.infrastructure.parser.prompt_hierarchy_loader import (
     load_prompt_node_from_pfp_yaml,
 )
 
@@ -77,7 +77,7 @@ def test_qm_dfm_antibody_candidates_have_deciding_controls_and_native_bindings(f
     assert source.read_bytes() == projection.read_bytes()
 
     spec = yaml.safe_load(source.read_text(encoding="utf-8"))
-    assert spec["schema_version"] == "omega.immune.antibody-spec.v1"
+    assert spec["schema_version"] == "core.immune.antibody-spec.v1"
     assert spec["pharmacy_status"] == "candidate"
     assert spec["authority_effect"] == "None"
     assert (
@@ -102,7 +102,7 @@ def test_qm_dfm_antibody_candidates_have_deciding_controls_and_native_bindings(f
 def test_pfp_research_04_sidecar_collects_three_new_antibodies() -> None:
     fixture = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -348,7 +348,7 @@ def test_collect_derivation_map_operads_composes_stages_and_eliminates_dof() -> 
 def test_goals_4_to_9_qm_226_to_231_sidecars_and_derivation_map_operad() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -494,7 +494,7 @@ def test_goals_4_to_9_qm_226_to_231_sidecars_and_derivation_map_operad() -> None
 def test_predeclared_relational_operad_locks_load_before_candidate_generation() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -519,7 +519,7 @@ def test_predeclared_relational_operad_locks_load_before_candidate_generation() 
 def test_genesis_relational_derivation_workflow_passes_with_zero_residual_dof() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -543,7 +543,7 @@ def test_genesis_relational_derivation_workflow_passes_with_zero_residual_dof() 
 def test_genesis_relational_derivation_refuses_all_four_adversarial_cheat_modes() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -607,7 +607,7 @@ def test_genesis_relational_derivation_refuses_all_four_adversarial_cheat_modes(
 def test_coupled_bipartite_d2xd3_and_d3xd3_workflow_passes_with_zero_residual_dof() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -662,7 +662,7 @@ def test_coupled_bipartite_d2xd3_and_d3xd3_workflow_passes_with_zero_residual_do
 def test_coupled_bipartite_workflow_refuses_adversarial_cheat_modes() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -731,7 +731,7 @@ def test_coupled_bipartite_workflow_refuses_adversarial_cheat_modes() -> None:
 def test_tripartite_d3_cubed_workflow_passes_with_zero_residual_dof() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -781,7 +781,7 @@ def test_tripartite_d3_cubed_workflow_passes_with_zero_residual_dof() -> None:
 def test_tripartite_d3_cubed_workflow_refuses_adversarial_cheat_modes() -> None:
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"
@@ -837,16 +837,16 @@ def test_stage5_to_7_code_and_proof_witness_slots_bind_to_rust_and_lean4_modules
     binding = load_coupled_native_rust_and_lean4_witnesses(REPO)
     assert (
         binding.rust_module_relpath
-        == "omega_engine/crates_rs/omega_symbol_game/src/coupled_relational_operad.rs"
+        == "engine/crates_rs/core_symbol_game/src/coupled_relational_operad.rs"
     )
     assert (
         binding.rust_test_relpath
-        == "omega_engine/crates_rs/tests/omega_symbol_game/coupled_relational_operad.rs"
+        == "engine/crates_rs/tests/core_symbol_game/coupled_relational_operad.rs"
     )
     assert binding.rust_runtime_action == "coupled_relational_operad_verify"
     assert (
         binding.rust_receipt_schema
-        == "omega.symbol_game.coupled_relational_operad_receipt.v1"
+        == "core.symbol_game.coupled_relational_operad_receipt.v1"
     )
     assert (
         binding.lean4_module_relpath
@@ -874,7 +874,7 @@ def test_stage5_to_7_code_and_proof_witness_slots_bind_to_rust_and_lean4_modules
 
     fixtures_dir = (
         REPO
-        / "omega_engine_operads"
+        / "operads"
         / "tests"
         / "fixtures"
         / "prompt_hierarchy"

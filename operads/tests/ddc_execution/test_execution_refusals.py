@@ -7,23 +7,23 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.domain.ddc_execution.entities import OperadMorphism
-from omega_engine_operads.domain.ddc_execution.execution import (
+from operads.domain.ddc_execution.entities import OperadMorphism
+from operads.domain.ddc_execution.execution import (
     EvaluationOutcome,
     ExecutionPlan,
 )
-from omega_engine_operads.domain.ddc_execution.value_objects import (
+from operads.domain.ddc_execution.value_objects import (
     ArtifactOutput,
     ExecutionRunRecord,
 )
-from omega_engine_operads.domain.operad.errors import Ok
-from omega_engine_operads.infrastructure.ddc_execution import (
+from operads.domain.operad.errors import Ok
+from operads.infrastructure.ddc_execution import (
     trace_storage as trace_storage_module,
 )
-from omega_engine_operads.infrastructure.ddc_execution.runtime import (
+from operads.infrastructure.ddc_execution.runtime import (
     build_meta_operad_engine,
 )
-from omega_engine_operads.infrastructure.ddc_execution.trace_storage import (
+from operads.infrastructure.ddc_execution.trace_storage import (
     FileTraceStorage,
 )
 
@@ -32,7 +32,7 @@ SKILL = "meta-dda-dag-emitter"
 
 @pytest.fixture
 def configured_root(tmp_path: Path) -> Path:
-    directory = tmp_path / "omega_engine_operads/skill_operad/json"
+    directory = tmp_path / "operads/skill_operad/json"
     directory.mkdir(parents=True)
     (directory / "operad_signature.json").write_text(
         json.dumps(
@@ -103,7 +103,7 @@ def test_unbound_and_unknown_operations_cannot_mint_pass(configured_root: Path) 
 def test_capability_custody_refuses_before_evaluation(configured_root: Path, damage: str) -> None:
     path = (
         configured_root
-        / "omega_engine_operads/skill_operad/json/agent_capability_slices.json"
+        / "operads/skill_operad/json/agent_capability_slices.json"
     )
     if damage == "missing":
         path.unlink()
@@ -124,7 +124,7 @@ def test_trace_custody_refuses_before_evaluation(configured_root: Path, damage: 
         trace = configured_root / ".agents/skills" / SKILL / "evidence_trace.json"
         trace.parent.mkdir(parents=True)
         data = {
-            "schema": "omega.operad.evidence_trace.v1",
+            "schema": "core.operad.evidence_trace.v1",
             "skill_name": SKILL,
             "signature": "(Receipt) -> Diagram",
             "authority_effect": "None",
@@ -152,7 +152,7 @@ def test_trace_custody_refuses_before_evaluation(configured_root: Path, damage: 
 
 def _ledger(root: Path, hosts: tuple[str, ...]) -> bytes:
     payload = {
-        "schema": "omega.operad.evidence_trace.v1",
+        "schema": "core.operad.evidence_trace.v1",
         "skill_name": SKILL,
         "signature": "(Receipt) -> Diagram",
         "authority_effect": "None",
@@ -269,7 +269,7 @@ def test_zero_residual_change_does_not_count_as_contraction(configured_root: Pat
 def test_actual_meta_skill_runner_reports_not_executable_from_current_registry():
     import subprocess
     import sys
-    from omega_engine_operads.infrastructure.ddc_execution.runtime import find_repo_root
+    from operads.infrastructure.ddc_execution.runtime import find_repo_root
     root=find_repo_root()
     script=root/".agents/skills/meta-goo-proof-to-audit-verifier/scripts/execute.py"
     result=subprocess.run([sys.executable,str(script)],cwd=root,capture_output=True,text=True,timeout=30)
@@ -279,7 +279,7 @@ def test_actual_meta_skill_runner_reports_not_executable_from_current_registry()
 
 
 def test_empty_agent_registry_is_not_execution_authority(configured_root):
-    path=configured_root/"omega_engine_operads/skill_operad/json/agent_capability_slices.json"
+    path=configured_root/"operads/skill_operad/json/agent_capability_slices.json"
     path.write_text('{"agents": {}}',encoding="utf8")
     engine=build_meta_operad_engine(configured_root)
     unavailable=engine.execute_morphism(SKILL,[])

@@ -11,14 +11,14 @@ tower_level: null
 primitive: repair
 aliases: ["paper:sn-packets:lift-trigger-not-license"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "s_n_packets_and_the_symbol_game.md §9 'Theorem 10: Lift Trigger Is Not Lift License'"
-  - ".planning/omega_symbol_game_slevel_product_plan.md §S(n) / MSS-N"
+  - ".planning/core_symbol_game_slevel_product_plan.md §S(n) / MSS-N"
 uses: ["ENC-0104", "ENC-0887"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_trigger_not_license.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_trigger_not_license.lean"
   - "PaperER007.zero_budget_blocks_every_licensed_lift"
   - "PaperER007.concrete_zero_budget_trigger_is_populated"
   - "PaperER007.concrete_zero_budget_trigger_has_no_licensed_target"
@@ -37,7 +37,7 @@ no budget drop cannot be a licensed lift.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
 
 The Lean theorem names are:
 

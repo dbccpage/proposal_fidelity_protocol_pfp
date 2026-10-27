@@ -14,7 +14,7 @@ operad_residual: "unknown"
 
 ## 1. Prime Directive
 
-> **⚔️ THANATOS MANDATE:** Zero tolerated hype verbs, zero un-gated overclaims, zero misleading figure scales, zero hidden assumptions, zero LLM slop, zero profanity, zero Bulgakov character leaks, zero fake/hallucinated citations, zero internal IP/nomenclature leaks, and zero unverified prose claims.
+> **⚔️ THANATOS MANDATE:** Zero tolerated hype verbs, zero un-gated overclaims, zero misleading figure scales, zero hidden assumptions, zero LLM slop, zero profanity, zero the novelist character leaks, zero fake/hallucinated citations, zero internal IP/nomenclature leaks, and zero unverified prose claims.
 
 If DIME attempts to make research sound more universal, more ground-breaking, leaks internal system nomenclature, or includes fake references, Thanatos Anti-DIME **refuses sycophancy and executes a hard blocking veto** until patched.
 
@@ -41,9 +41,9 @@ When invoked during `/rip-papers` (after `/dianoia-dime`), Thanatos Anti-DIME ex
 4. **Gate 4: Falsification Integrity Check:** Verifies that Jupyter Notebook "Falsification Sandboxes" actually execute and correctly report failures when parameters violate mathematical hypotheses.
 5. **Gate 5: Claim Map Verification:** Cross-checks `docs/claim_code_map.yaml` against actual test functions and Lean 4 files to ensure zero phantom line loci or fake test bindings.
 6. **Gate 6: Scope Fence Enforcement:** Mandates explicit non-claim boxes and `AuthorityEffect: None` headers on all public export packages.
-7. **Gate 7: Internal IP, Bulgakov Character, Profanity & Citation Integrity Audit (OOUTWIRE Directive):**
-   - **Internal IP & Governance Leak Sweep:** Scans all public preprints, essays, quick-start cards, figures, and notebooks for leaked internal names (`Thanatos`, `Woland`, `Blackrod`, `Retinue`, `Dianoia`, `Panepistimion`, `Procurator`, `Anomalon`, `OEAOHS`, `ODASDS`, internal council handles, or internal file paths).
-   - **Bulgakov Character Leak Sweep:** Scans for and excises all character names from Mikhail Bulgakov's *The Master and Margarita* (`Woland`, `Koroviev`, `Fagott`, `Behemoth`, `Azazello`, `Hella`, `Abadonna`, `Pontius Pilate`, `Yeshua`, `Ha-Notsri`, `Master`, `Margarita`, `Stravinsky`, `Berlioz`, `Bezdomny`). Internal council persona roleplay MUST NEVER leak into public academic publications!
+7. **Gate 7: Internal IP, the novelist Character, Profanity & Citation Integrity Audit (OOUTWIRE Directive):**
+   - **Internal IP & Governance Leak Sweep:** Scans all public preprints, essays, quick-start cards, figures, and notebooks for leaked internal names (`Thanatos`, `Adversary`, `Blackrod`, `Panel`, `Dianoia`, `Panepistimion`, `Procurator`, `Sentinel`, `OEAOHS`, `ODASDS`, internal council handles, or internal file paths).
+   - **the novelist Character Leak Sweep:** Scans for and excises all character names from the source novel (`Adversary`, `Defect Hunter`, `Defect Hunter`, `Gauge Breaker`, `Scope Guard`, `Syntax Prefilter`, `Backdoor Auditor`, `Integrity Auditor`, `Truth Repair`, `Truth Repair`, `Master`, `Primal Dual`, `Quarantine`, `the overconfident editor`, `Scar Chronicler`). Internal council persona roleplay MUST NEVER leak into public academic publications!
    - **Profanity & Vulgarity Sweep:** Searches for and excises all profanity, vulgarity, or unprofessional language across all public-facing files.
    - **Reference Line-Number & Citation Alignment Triple-Check:** Triple-checks all entries in `docs/references.md` against the monograph paper (`<paper>.md`). Guarantees that line numbers, section loci (§), in-text citation markers, and context quotes match 100% with zero drift or phantom line numbers.
    - **Hallucinated & Fake Author / Citation Sweep:** Scans all references and citations to ensure zero fake LLM hallucinations, cartoon/pop-culture names (`Daffy Duck`, `Mickey Mouse`, `Donald Duck`, `Bugs Bunny`, etc.), or un-vetted fake paper titles. We cannot misuse or fabricate academic references!

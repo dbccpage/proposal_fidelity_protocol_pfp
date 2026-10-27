@@ -81,7 +81,7 @@ __all__ = [
 ]
 
 
-_PFP_EXPORTS = {'Entity': ('omega_engine_pfp.domain.entities.base', 'Entity'), 'CandidateEntity': ('omega_engine_pfp.domain.entities.cycle_balance', 'CandidateEntity'), 'ProblemEntity': ('omega_engine_pfp.domain.entities.cycle_balance', 'ProblemEntity'), 'ReceiptEntity': ('omega_engine_pfp.domain.entities.cycle_balance', 'ReceiptEntity'), 'VerifierEntity': ('omega_engine_pfp.domain.entities.cycle_balance', 'VerifierEntity')}
+_PFP_EXPORTS = {'Entity': ('pfp.domain.entities.base', 'Entity'), 'CandidateEntity': ('pfp.domain.entities.cycle_balance', 'CandidateEntity'), 'ProblemEntity': ('pfp.domain.entities.cycle_balance', 'ProblemEntity'), 'ReceiptEntity': ('pfp.domain.entities.cycle_balance', 'ReceiptEntity'), 'VerifierEntity': ('pfp.domain.entities.cycle_balance', 'VerifierEntity')}
 __all__ = list(dict.fromkeys([*__all__, *_PFP_EXPORTS]))
 
 def __getattr__(name: str):

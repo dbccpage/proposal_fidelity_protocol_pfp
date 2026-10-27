@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 `bench/matrix/run_repair_matrix.py` ran a 0.5B model on planted-defect directed k-cycles for k = 3, 4, 5, N = 10 per cell. Free decoding was 0% host-parseable (the model wrote prose). A token-carrier mask was parseable at k = 3 and failed at k = 4 and 5, where the model emitted one unseparated digit run. A slot grammar forcing exactly k integers was 100% parseable at every k. Reached-zero was 0 in every decoding arm: the 0.5B model could not find the repair however it was constrained. The carrier mask also produced `555555` for `3+4` in `bench/mechanism/local_carrier_control.py`: token membership is not correctness.
 
-What is not known is how this picture changes with model size. At some size the model should find repairs; the question is whether a grammar then still adds anything, or starts to cost accuracy, as format restrictions have been reported to do on reasoning tasks (Tam et al. 2024). The challenge stresses the Symbol Game host, the OEWAS (Omega Engine Workflows, Agents, Skills) local runtime, and the Layer-2 controls in `omega_engine_symbol_game/domain/carrier_decoding.py`. The OEEIS (Omega Engine Epistemic Immune System) is not under test. A pass maps parseability and correctness per control and size. It does not show that any control makes a model reason.
+What is not known is how this picture changes with model size. At some size the model should find repairs; the question is whether a grammar then still adds anything, or starts to cost accuracy, as format restrictions have been reported to do on reasoning tasks (Tam et al. 2024). The challenge stresses the Symbol Game host, the OEWAS (Engine Workflows, Agents, Skills) local runtime, and the Layer-2 controls in `symbol_game/domain/carrier_decoding.py`. The OEEIS (Engine Epistemic Immune System) is not under test. A pass maps parseability and correctness per control and size. It does not show that any control makes a model reason.
 
 ## 3. Formal Problem and Bounds
 
@@ -111,7 +111,7 @@ operand free_span_then_slot.v1 | kind: control | when: the answer needs reasonin
 
 - `bench/matrix/run_repair_matrix.py` (cycle generator, conditions, slot filler) and its results in `bench/matrix/README.md`.
 - `bench/mechanism/local_carrier_control.py` (−∞ carrier mask, pinning) and its `555555` receipt.
-- `omega_engine_symbol_game/domain/carrier_decoding.py` (`ConstraintMode`, `carrier_gbnf`, `verify_emission`).
+- `symbol_game/domain/carrier_decoding.py` (`ConstraintMode`, `carrier_gbnf`, `verify_emission`).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrade: [U11](../../upgrades/u11_local_open_weights_mechanism_runtime.md).
 

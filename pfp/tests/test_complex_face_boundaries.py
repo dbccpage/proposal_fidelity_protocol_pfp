@@ -3,7 +3,7 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.domain.ddc import (
+from pfp.domain.ddc import (
     Cochain0, Edge, Face, SimplicialComplex, audit_nilpotency_all_basis, d0, d1,
 )
 

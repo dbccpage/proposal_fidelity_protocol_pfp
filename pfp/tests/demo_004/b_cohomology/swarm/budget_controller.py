@@ -1,4 +1,4 @@
-"""Budget Controller for the Woland Cohomology Swarm.
+"""Budget Controller for the Adversary Cohomology Swarm.
 
 Enforces execution cost constraints:
 - Hard ceiling: <= $0.25 per execution.
@@ -76,7 +76,7 @@ class CostLedger:
 
 
 class BudgetController:
-    """Oversees and limits execution expenditure for the Woland Swarm."""
+    """Oversees and limits execution expenditure for the Adversary Swarm."""
 
     HARD_CEILING_USD = Decimal("0.25")
     TARGET_CEILING_USD = Decimal("0.05")
@@ -127,11 +127,11 @@ class BudgetController:
         return self.ledger.total_billed_cost_usd
 
     def to_accounting_dict(
-        self, provider: str = "local_rust_seam", model_id: str = "omega_solvers_v1"
+        self, provider: str = "local_rust_seam", model_id: str = "core_solvers_v1"
     ) -> dict[str, Any]:
         """Format accounting data matching C011 and U06 provenance standards."""
         return {
-            "schema_version": "omega.accounting.v1",
+            "schema_version": "core.accounting.v1",
             "provider": provider,
             "model_id": model_id,
             "hard_ceiling_usd": str(self.hard_ceiling),
@@ -154,7 +154,7 @@ class BudgetController:
         }
 
     def write_accounting_json(
-        self, path: Any, provider: str = "local_rust_seam", model_id: str = "omega_solvers_v1"
+        self, path: Any, provider: str = "local_rust_seam", model_id: str = "core_solvers_v1"
     ) -> Any:
         import json
         from pathlib import Path

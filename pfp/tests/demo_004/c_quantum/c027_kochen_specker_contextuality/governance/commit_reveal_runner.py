@@ -3,7 +3,7 @@
 
 Three phases (SG-CP v1), all of which score the frozen reference solver against
 this package's own judge packet (a self-consistency check, not a model
-evaluation and not a Woland verdict):
+evaluation and not a Adversary verdict):
 
   * Phase 1 records the digest of judge_packet/manifest.json in
     commitments/c027_ks_judge_commitment.json.
@@ -40,8 +40,8 @@ from typing import Any
 
 _file_path = Path(__file__).resolve()
 for _parent in _file_path.parents:
-    if (_parent / "omega_engine_projects").exists() and (
-        _parent / "omega_engine_providers"
+    if (_parent / "projects").exists() and (
+        _parent / "providers"
     ).exists():
         _root_str = str(_parent)
         if _root_str not in sys.path:
@@ -52,12 +52,12 @@ _pkg_root = _file_path.parent.parent
 
 try:
     from .budget_gate import C027BudgetGate
-    from .woland_gate import GATE_SCOPE, WolandRealityGate
+    from .adversary_gate import GATE_SCOPE, AdversaryRealityGate
 except ImportError:
     if str(_pkg_root) not in sys.path:
         sys.path.insert(0, str(_pkg_root))
     from governance.budget_gate import C027BudgetGate
-    from governance.woland_gate import GATE_SCOPE, WolandRealityGate
+    from governance.adversary_gate import GATE_SCOPE, AdversaryRealityGate
 
 try:
     from ..judge_packet.checkers.dual_evaluator import evaluate_dual
@@ -191,7 +191,7 @@ class CommitRevealRunner:
             self.commitments_dir / f"{FILE_PREFIX}_scoring_failure_receipt.json"
         )
         self.budget_gate = C027BudgetGate()
-        self.woland_gate = WolandRealityGate(base_repo_root=intelligence_repo_root)
+        self.adversary_gate = AdversaryRealityGate(base_repo_root=intelligence_repo_root)
 
     def phase_1_judge_commitment(self) -> dict[str, Any]:
         """Phase 1: Commit the LF-normalised judge manifest digest."""
@@ -364,7 +364,7 @@ class CommitRevealRunner:
         cost_usd = Fraction(self.budget_gate.spent_microusd, 1_000_000)
         ceiling_usd = Fraction(self.budget_gate.limit_microusd, 1_000_000)
 
-        verdict = self.woland_gate.evaluate_verdict(
+        verdict = self.adversary_gate.evaluate_verdict(
             cases_evaluated=cases_evaluated,
             cases_passed=cases_passed,
             mutations_killed=mutations_killed,
@@ -386,7 +386,7 @@ class CommitRevealRunner:
             "spent_microusd": self.budget_gate.spent_microusd,
         }
 
-        run_folder = self.woland_gate.persist_run(
+        run_folder = self.adversary_gate.persist_run(
             task_key=task_key,
             verdict=verdict,
             cases_evaluated=cases_evaluated,

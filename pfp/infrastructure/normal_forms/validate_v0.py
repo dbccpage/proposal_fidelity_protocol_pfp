@@ -8,24 +8,24 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import (
+from pfp.infrastructure.normal_forms.contract_model import (
     CANONICAL_TERMINALS_DEFAULT,
 )
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import Finding
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import as_text
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import check_index_status
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import check_schema_ref
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import (
+from pfp.infrastructure.normal_forms.contract_model import Finding
+from pfp.infrastructure.normal_forms.contract_model import as_text
+from pfp.infrastructure.normal_forms.contract_model import check_index_status
+from pfp.infrastructure.normal_forms.contract_model import check_schema_ref
+from pfp.infrastructure.normal_forms.contract_model import (
     check_verified_claim,
 )
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import declared_routes
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import document_label
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import lookup
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import quadrilateral_of
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import (
+from pfp.infrastructure.normal_forms.contract_model import declared_routes
+from pfp.infrastructure.normal_forms.contract_model import document_label
+from pfp.infrastructure.normal_forms.contract_model import lookup
+from pfp.infrastructure.normal_forms.contract_model import quadrilateral_of
+from pfp.infrastructure.normal_forms.contract_model import (
     reject_unknown_fields,
 )
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import route_image
+from pfp.infrastructure.normal_forms.contract_model import route_image
 
 
 def validate_contract_v0(

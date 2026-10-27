@@ -21,9 +21,9 @@ from typing import Any, Dict
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
-from omega_engine_pfp.infrastructure.normal_forms.evaluator import NormalFormsEvaluator
-from omega_engine_pfp.infrastructure.normal_forms.sn_dispatch import (
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from pfp.infrastructure.normal_forms.evaluator import NormalFormsEvaluator
+from pfp.infrastructure.normal_forms.sn_dispatch import (
     evaluate_sn_state_transition,
 )
 
@@ -37,20 +37,20 @@ def _find_repo_root(p: Path = Path(__file__).resolve()) -> Path:
 
 REPO_ROOT = _find_repo_root()
 _SN_DIR_CANDIDATES = [
-    REPO_ROOT / "omega_engine_education" / "documentation" / "002_s_n" / "normal_forms",
-    REPO_ROOT / "omega_engine_education" / "documentation" / "0_s_n" / "normal_forms",
+    REPO_ROOT / "education" / "documentation" / "002_s_n" / "normal_forms",
+    REPO_ROOT / "education" / "documentation" / "0_s_n" / "normal_forms",
 ]
 SN_CONTRACTS_DIR = next((d for d in _SN_DIR_CANDIDATES if d.is_dir()), _SN_DIR_CANDIDATES[0])
 
 _GOV_CANDIDATES = [
     REPO_ROOT
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "014_normal_forms"
     / "contracts_normal_forms",
-    REPO_ROOT / "omega_engine_governance" / "contracts" / "contracts_normal_forms",
+    REPO_ROOT / "governance" / "contracts" / "contracts_normal_forms",
     REPO_ROOT
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "13_normal_forms"
     / "contracts_normal_forms",

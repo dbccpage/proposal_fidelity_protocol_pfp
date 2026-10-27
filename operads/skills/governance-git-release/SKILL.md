@@ -29,5 +29,5 @@ AuthorityEffect: None.
 Run the release and staging checker:
 
 ```bash
-python omega_engine_operads/skills/governance-git-release/scripts/check_git_release.py
+python operads/skills/governance-git-release/scripts/check_git_release.py
 ```

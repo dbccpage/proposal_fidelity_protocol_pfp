@@ -9,7 +9,7 @@ Stages III–V of the contact-and-passage run.
 
 The run protocol declares a contact package
 
-    contact/omega_primdiff/
+    contact/core_primdiff/
       CONTACT_MANIFEST.json
       lean4/
       prose/
@@ -54,8 +54,8 @@ above is the pre-contact record, written at the blind-native-base
 and its declarations (`contactStatus`, `NativeKernel`,
 `nativeKernelWitness`, `native_kernel_initial`) are sealed.  This run
 executed the collision: the supplied single-file development arrived
-under `contact/omega_primdiff/` (manifest binding:
-`contact/omega_primdiff/CONTACT_MANIFEST.json`; supplied Lean file
+under `contact/core_primdiff/` (manifest binding:
+`contact/core_primdiff/CONTACT_MANIFEST.json`; supplied Lean file
 sha256
 `d9cdb350a53c513e3e211e72f17262be6ba85d7da6159f910388c7137e814a89`;
 prose stage: PROSE_INPUT_ABSENT) and was processed Lean-only under
@@ -103,7 +103,7 @@ theorem native_kernel_initial : PrimitiveCats.Initial
 
 The declarations above are the sealed pre-contact record.  The
 declarations below record the executed collision.  Recorded facts of
-the run: manifest at `contact/omega_primdiff/CONTACT_MANIFEST.json`;
+the run: manifest at `contact/core_primdiff/CONTACT_MANIFEST.json`;
 supplied Lean file sha256
 `d9cdb350a53c513e3e211e72f17262be6ba85d7da6159f910388c7137e814a89`;
 prose stage PROSE_INPUT_ABSENT.  The evidence for the verdict is the

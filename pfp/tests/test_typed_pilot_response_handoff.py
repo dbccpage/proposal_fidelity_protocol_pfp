@@ -5,17 +5,17 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.domain.types.pilot_response import PilotResponse
-from omega_engine_pfp.domain.types.pilot_spec import PilotSpec
-from omega_engine_pfp.domain.types.seed_prompts import SeedPrompt
-from omega_engine_pfp.domain.value_objects.identifiers import CheckerIdVO, PilotId, RequestId
-from omega_engine_pfp.tests.types.test_pilot_yaml_roundtrip import (
+from pfp.domain.kernel.result import RefusalCode
+from pfp.domain.types.pilot_response import PilotResponse
+from pfp.domain.types.pilot_spec import PilotSpec
+from pfp.domain.types.seed_prompts import SeedPrompt
+from pfp.domain.value_objects.identifiers import CheckerIdVO, PilotId, RequestId
+from pfp.tests.types.test_pilot_yaml_roundtrip import (
     RESPONSE_YAML,
     SEED_YAML,
     SPEC_YAML,
 )
-from omega_engine_pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
+from pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
 
 
 def _inputs(raw='{"answer": 2}', *, expected=2, checker="PFP-01-EXACT-LINALG"):

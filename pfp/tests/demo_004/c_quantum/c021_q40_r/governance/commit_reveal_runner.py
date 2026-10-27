@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Three phases (SG-CP v1), all of which score the frozen reference solver against
 this package's own judge packet (a self-consistency check, not a model
-evaluation and not a Woland verdict):
+evaluation and not a Adversary verdict):
 
   * Phase 1 records the digest of judge_packet/manifest.json in
     commitments/c021_q40_r_judge_commitment.json.
@@ -41,32 +41,32 @@ from typing import Any
 # Ensure repository root is in sys.path for direct CLI script execution
 _file_path = Path(__file__).resolve()
 for _parent in _file_path.parents:
-    if (_parent / "omega_engine_projects").exists() and (
-        _parent / "omega_engine_providers"
+    if (_parent / "projects").exists() and (
+        _parent / "providers"
     ).exists():
         _root_str = str(_parent)
         if _root_str not in sys.path:
             sys.path.insert(0, _root_str)
         break
 
-from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (  # noqa: E402
+from operating_system.adapters.intelligence_custody.intelligence_root import (  # noqa: E402
     resolve_intelligence_repo_root,
 )
 
 try:
     from .budget_gate import BudgetGate
-    from .woland_gate import GATE_SCOPE, WolandGate
+    from .adversary_gate import GATE_SCOPE, AdversaryGate
 except (ImportError, ValueError):
     try:
         from budget_gate import BudgetGate
-        from woland_gate import GATE_SCOPE, WolandGate
+        from adversary_gate import GATE_SCOPE, AdversaryGate
     except (ImportError, ValueError):
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
             BudgetGate,
         )
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.woland_gate import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.adversary_gate import (
             GATE_SCOPE,
-            WolandGate,
+            AdversaryGate,
         )
 
 try:
@@ -75,7 +75,7 @@ except (ImportError, ValueError):
     try:
         from judge_packet.checkers.dual_evaluator import evaluate_dual
     except (ImportError, ValueError):
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
             evaluate_dual,
         )
 
@@ -85,7 +85,7 @@ except (ImportError, ValueError):
     try:
         from reference_solver.solver import solve
     except (ImportError, ValueError):
-        from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
+        from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
             solve,
         )
 
@@ -212,13 +212,13 @@ def reference_claim_hygiene(
         ),
         "does_not_support": (
             "Any statement about a model (none was evaluated), about checker soundness or independence, "
-            "or a Woland verdict."
+            "or a Adversary verdict."
         ),
         "narrowest_defensible_claim": (
             f"Reference self-consistency label {verdict} on the {total} judge case files that match the committed manifest."
         ),
         "next_test_needed": (
-            "Score a participant submission under a commitment made before the run and have the Woland swarm "
+            "Score a participant submission under a commitment made before the run and have the Adversary swarm "
             "evaluate the bound checker receipts."
         ),
     }
@@ -253,7 +253,7 @@ class CommitRevealRunner:
         )
         self.intelligence_repo_root: Path | None = intelligence_repo_root
         self.budget_gate: BudgetGate = BudgetGate()
-        self.woland_gate: WolandGate = WolandGate(base_repo_root=intelligence_repo_root)
+        self.adversary_gate: AdversaryGate = AdversaryGate(base_repo_root=intelligence_repo_root)
         self.authority_effect: str = "None"
 
     def run_phase1_judge_commitment(self) -> dict[str, Any]:
@@ -278,7 +278,7 @@ class CommitRevealRunner:
             "mutation_count": manifest_data.get("mutation_count"),
             "phase": "PHASE_1_OPERATOR_JUDGE_COMMITMENT",
             "protocol": "SG-CP-v1",
-            "schema": "omega.symbol-game.judge-commitment.v1",
+            "schema": "core.symbol-game.judge-commitment.v1",
             "total_judge_files": len(file_list),
         }
 
@@ -322,7 +322,7 @@ class CommitRevealRunner:
             "judge_commitment_sha256": sha256_of_file(self.judge_commit_file),
             "phase": "PHASE_2_SOLVER_FREEZE_RECORD",
             "protocol": "SG-CP-v1",
-            "schema": "omega.symbol-game.freeze-record.v1",
+            "schema": "core.symbol-game.freeze-record.v1",
             "solver_files": solver_files_info,
         }
 
@@ -458,14 +458,14 @@ class CommitRevealRunner:
         budget_accounting = self.budget_gate.to_accounting_dict()
         timestamp_slug = datetime.now(timezone.utc).strftime("%m%d%Y_%H%M%S")
         effective_run_id = run_id if run_id is not None else f"{timestamp_slug}_{task_key}"
-        provisional_verdict = self.woland_gate.determine_terminal_verdict(
+        provisional_verdict = self.adversary_gate.determine_terminal_verdict(
             case_results, defect_count=defects
         )
         claim_hygiene = reference_claim_hygiene(
             provisional_verdict, total_cases, passed_cases, agreements
         )
 
-        verdict, path_woland, path_sg, digests = self.woland_gate.evaluate_and_persist(
+        verdict, path_adversary, path_sg, digests = self.adversary_gate.evaluate_and_persist(
             task_key=task_key,
             run_id=effective_run_id,
             case_results=case_results,
@@ -498,9 +498,9 @@ class CommitRevealRunner:
             "judge_manifest_entries_verified": len(verified_paths),
             "phase": "PHASE_3_REVEAL_AND_SCORING",
             "protocol": "SG-CP-v1",
-            "schema": "omega.symbol-game.scoring-receipt.v1",
+            "schema": "core.symbol-game.scoring-receipt.v1",
             "scoring_timestamp_utc": utc_now(),
-            "woland_reality_gate": {
+            "adversary_reality_gate": {
                 "dda_actions_sha256": digests["dda_actions_sha256"],
                 "dda_head_sha256": digests["dda_head_sha256"],
                 "gate_scope": GATE_SCOPE,
@@ -511,7 +511,7 @@ class CommitRevealRunner:
                 "symbol_game_run_folder": str(path_sg),
                 "task_key": task_key,
                 "terminal_verdict": verdict,
-                "woland_run_folder": str(path_woland),
+                "adversary_run_folder": str(path_adversary),
             },
         }
 
@@ -569,10 +569,10 @@ def main() -> int:
 
     runner = CommitRevealRunner()
     task_key = args.task_key
-    # If using default task_key and it already exists in woland runs, add timestamp suffix
+    # If using default task_key and it already exists in adversary runs, add timestamp suffix
     if task_key == "c021_q40_r_scoring_run":
         repo_root = runner.intelligence_repo_root or resolve_intelligence_repo_root()
-        if (repo_root / "_ic/darpa/woland" / "runs" / task_key).exists():
+        if (repo_root / "_ic/darpa/adversary" / "runs" / task_key).exists():
             timestamp_slug = datetime.now(timezone.utc).strftime("%m%d%Y_%H%M%S")
             task_key = f"{task_key}_{timestamp_slug}"
 
@@ -584,13 +584,13 @@ def main() -> int:
         print(f"Phase 2 complete: {res['freeze_digest']}")
     elif args.phase == "3":
         res = runner.run_phase3_reveal_and_score(task_key=task_key)
-        print(f"Phase 3 complete: label={res['woland_reality_gate']['terminal_verdict']}")
+        print(f"Phase 3 complete: label={res['adversary_reality_gate']['terminal_verdict']}")
     else:
         res = runner.run_all(task_key=task_key)
         receipt = res["phase3_scoring_receipt"]
         summary = receipt["evaluation_summary"]
         print(
-            f"Commit-reveal pipeline complete: label={receipt['woland_reality_gate']['terminal_verdict']}, "
+            f"Commit-reveal pipeline complete: label={receipt['adversary_reality_gate']['terminal_verdict']}, "
             f"{summary['passed_cases']}/{summary['total_cases']} cases passed."
         )
 

@@ -22,7 +22,7 @@ operad_residual: "unknown"
 
 ## 2. The 60-Second Falsification Protocol
 
-When invoked over a paper directory (e.g., `/paper-reader omega_engine/research/published/004_projection_obstruction/000_projection_obstruction`), execute the 4-phase evaluation:
+When invoked over a paper directory (e.g., `/paper-reader engine/research/published/004_projection_obstruction/000_projection_obstruction`), execute the 4-phase evaluation:
 
 ### Phase 1: 3-Second Visual & Thesis Hook (Target: <3s)
 

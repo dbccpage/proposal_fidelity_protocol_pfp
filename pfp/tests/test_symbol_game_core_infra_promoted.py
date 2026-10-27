@@ -1,4 +1,4 @@
-"""Tests for promoted core and infrastructure layers in omega_engine_pfp."""
+"""Tests for promoted core and infrastructure layers in pfp."""
 
 from __future__ import annotations
 
@@ -6,9 +6,9 @@ import tempfile
 
 import pytest
 
-from omega_engine_pfp.domain.aggregates.prompt_artifact import ObjectiveTypedV1
-from omega_engine_pfp.domain.exceptions import CanonicalizationError
-from omega_engine_pfp.domain.validation.validation import (
+from pfp.domain.aggregates.prompt_artifact import ObjectiveTypedV1
+from pfp.domain.exceptions import CanonicalizationError
+from pfp.domain.validation.validation import (
     _require_digest,
     _require_exact_dict,
     _require_fields,
@@ -18,15 +18,15 @@ from omega_engine_pfp.domain.validation.validation import (
     normalize_utf8_lf,
     raw_content_sha256,
 )
-from omega_engine_pfp.infrastructure.adapters.cec_bridge_adapter import CecBridgeAdapter
-from omega_engine_pfp.infrastructure.adapters.obstruction_adapter import (
+from pfp.infrastructure.adapters.cec_bridge_adapter import CecBridgeAdapter
+from pfp.infrastructure.adapters.obstruction_adapter import (
     ObstructionLedgerAdapter,
 )
-from omega_engine_pfp.infrastructure.adapters.oesos_evidence_adapter import (
+from pfp.infrastructure.adapters.oesos_evidence_adapter import (
     OesosEvidenceAdapter,
 )
-from omega_engine_pfp.infrastructure.persistence.file_context import SymbolGameDbContext
-from omega_engine_pfp.infrastructure.persistence.repositories import (
+from pfp.infrastructure.persistence.file_context import SymbolGameDbContext
+from pfp.infrastructure.persistence.repositories import (
     FilePromptRepository,
     MemoryPromptRepository,
 )
@@ -65,7 +65,7 @@ def test_core_validation_primitives() -> None:
 
 def test_infrastructure_in_memory_and_file_repositories() -> None:
     """Test in-memory and file persistence in root infrastructure layer."""
-    from omega_engine_pfp.use_cases.prompt_artifact import compile_prompt_artifact
+    from pfp.use_cases.prompt_artifact import compile_prompt_artifact
 
     art = compile_prompt_artifact(
         regime_kind="prose-regime",

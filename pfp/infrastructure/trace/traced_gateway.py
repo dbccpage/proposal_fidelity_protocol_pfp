@@ -42,7 +42,7 @@ from __future__ import annotations
 
 from typing import Any, Optional, Tuple
 
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     BudgetExceeded,
     CandidateRequest,
     ModelNotAllowed,

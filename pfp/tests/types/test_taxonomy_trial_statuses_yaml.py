@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 Verifies:
-1. TrialStatusEnum members are loaded directly from YAML (omega_engine_pfp/infrastructure/yaml/taxonomy/trial_statuses.yaml).
+1. TrialStatusEnum members are loaded directly from YAML (pfp/infrastructure/yaml/taxonomy/trial_statuses.yaml).
 2. TrialStatusEnum instances are strings and Enums simultaneously.
 3. TrialStatusRegistry properly indexes all lifecycle states from YAML.
 4. The taxonomy directory has been moved from yaml_data/taxonomy to yaml/taxonomy.
@@ -15,7 +15,7 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.taxonomy.trial_statuses import (
+from pfp.infrastructure.taxonomy.trial_statuses import (
     TrialStatusDefinition,
     TrialStatusEnum,
     TrialStatusRegistry,

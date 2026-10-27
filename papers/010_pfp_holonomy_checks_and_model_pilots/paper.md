@@ -271,7 +271,7 @@ is a new free "stealth" model offered on OpenRouter as of 2026-09-28; the
 provider does not disclose its identity, size or training. Results with it are
 exploratory. They fall outside the challenge protocol, SG-CP v1, whose §2 admits
 only open-weight models of at most 70B parameters
-(`omega_engine_projects/mssn_sn_symgam/challenges/01_challenge_protocol.md`), and
+(`projects/mssn_sn_symgam/challenges/01_challenge_protocol.md`), and
 they may not be reproducible once the stealth period ends. The reports record
 costs computed by the harness from configured per-token prices, not provider
 bills, so we do not report costs.
@@ -378,7 +378,7 @@ or establish the soundness of either implementation beyond the checked scope.
 All paths are relative to the repository root.
 
 - Challenge specification:
-  `omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c017_nonabelian_lattice_holonomy.md`.
+  `projects/mssn_sn_symgam/challenges/b_cohomology/c017_nonabelian_lattice_holonomy.md`.
 - Arms 1 and 2: `.../c017_nonabelian_lattice_holonomy/results/immune_transfer_report.json`,
   added in commit `7e639a0be573f6affc4d84a2aacb5573da92bc79`; runner
   `eval_epistemic_immune_transfer.py` at that commit.
@@ -596,7 +596,7 @@ credentials file, and it writes its report into the repository's run store.
 ### 4.4 Data sources for Section 4
 
 All paths are relative to
-`omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/`.
+`projects/mssn_sn_symgam/challenges/e_formal_math/`.
 
 - C045 run report: `c045_knot_polynomials_from_pd/empirical_results/c045_space_bunny_matrix_report.json`,
   commit `ea2b55d841bdbe283f2f6ac77abe8a1677cbf0f8`.
@@ -612,9 +612,9 @@ All paths are relative to
   `run_c045_matrix.py` to `run_c050_matrix.py` in the challenge folders.
 - The replay behind Table 4 and Section 4.2 (paths relative to the repository
   root): the collection's script
-  `omega_engine_atlas/coda_atlas/omega_engine_pfp/tools/replay_formal_math_baselines.py`
+  `atlas/coda_atlas/pfp/tools/replay_formal_math_baselines.py`
   and its record
-  `omega_engine_atlas/coda_atlas/omega_engine_pfp/verification/formal_math_baselines.json`.
+  `atlas/coda_atlas/pfp/verification/formal_math_baselines.json`.
   It reads the runners and checkers from commits `ea2b55d841bdbe283f2f6ac77abe8a1677cbf0f8`
   (the C045 runner) and `46bd1dec156260f073b77caa07d8a453f8efad30` (C046 to C050).
   The C045 checkers are read from commit `c568c20062697b54ddb8729e2476d4cfdb5c4982`,

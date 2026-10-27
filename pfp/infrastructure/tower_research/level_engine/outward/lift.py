@@ -9,12 +9,12 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import dumps, sha256_tag
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import req_json
-from omega_engine_operations.use_cases.level_engine.research_engine.ladder_cert import LadderResult, StepResult, load_pinned
-from omega_engine_operations.use_cases.level_engine.research_engine.regimek import RegimeK
-from omega_engine_operations.use_cases.level_engine.research_engine.search import delta_json
-from omega_engine_operations.use_cases.level_engine.research_engine.stage import ConditionResult, StageProposal, licensed
+from operations.use_cases.level_engine.research_engine.canon import dumps, sha256_tag
+from operations.use_cases.level_engine.research_engine.kinds import req_json
+from operations.use_cases.level_engine.research_engine.ladder_cert import LadderResult, StepResult, load_pinned
+from operations.use_cases.level_engine.research_engine.regimek import RegimeK
+from operations.use_cases.level_engine.research_engine.search import delta_json
+from operations.use_cases.level_engine.research_engine.stage import ConditionResult, StageProposal, licensed
 
 
 def to_lift_certificate(sc: StageProposal, s: RegimeK, results: Sequence[ConditionResult]) -> dict[str, object]:

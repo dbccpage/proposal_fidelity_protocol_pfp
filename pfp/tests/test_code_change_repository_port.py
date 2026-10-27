@@ -33,15 +33,15 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.controllers.code_change_controller import (
+from pfp.controllers.code_change_controller import (
     CodeChangeController,
 )
-from omega_engine_pfp.domain.aggregates.code_change_run_root import (
+from pfp.domain.aggregates.code_change_run_root import (
     CodeChangePatchArtifactV1,
     CodeChangeRunRootV1,
     GateReceiptV1,
 )
-from omega_engine_pfp.domain.ports import ICodeChangeRepository
+from pfp.domain.ports import ICodeChangeRepository
 
 OWNED = "src/x.py"
 PROTECTED = "README.md"
@@ -208,8 +208,8 @@ def test_a_refused_evaluation_persists_no_evaluation_artifacts(controller, repo)
     per-receipt save loop, which is not atomic. Atomic batch publication is a
     separate durability concern and is not addressed here.
     """
-    from omega_engine_pfp.domain import CanonicalizationError
-    from omega_engine_pfp.use_cases.code_change import BoundCandidate
+    from pfp.domain import CanonicalizationError
+    from pfp.use_cases.code_change import BoundCandidate
 
     session = controller.create_proposal(
         task_id="task-persist",

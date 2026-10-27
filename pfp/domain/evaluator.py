@@ -1,6 +1,6 @@
 """ProposalEvaluator domain entity for scoring residual reductions and enforcing kill conditions.
 
-Conforms to urn:omega:governance:evaluator:v1.0.0.
+Conforms to urn:core:governance:evaluator:v1.0.0.
 Operates strictly via zero-float exact rational arithmetic (fractions.Fraction).
 AuthorityEffect: None.
 """

@@ -14,7 +14,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-SOURCE = "omega_engine/crates_rs/omega_mub/src/bin/mub6_conj2_verifier.rs"
+SOURCE = "engine/crates_rs/core_mub/src/bin/mub6_conj2_verifier.rs"
 SOURCE_SHA256 = "208041dfea0b11c8ab460a355446513d9261b06fe492380d90b56e5d07820bbe"
 OLD_DESTINATION = (
     'let out_dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("artifacts");'
@@ -82,7 +82,7 @@ def adapted_source(original: bytes) -> bytes:
 
 def native_sources(repo: Path) -> dict:
     regular(repo, directory=True)
-    command = ["git", "ls-files", "-z", "--", "omega_engine/crates_rs"]
+    command = ["git", "ls-files", "-z", "--", "engine/crates_rs"]
     run = subprocess.run(command, cwd=repo, capture_output=True, check=True)
     names = run.stdout.decode("utf-8").rstrip("\0").split("\0")
     if not names or names == [""]:
@@ -97,7 +97,7 @@ def native_sources(repo: Path) -> dict:
         ["git", "rev-parse", "HEAD"], cwd=repo, capture_output=True, check=True, text=True
     ).stdout.strip()
     clean = subprocess.run(
-        ["git", "diff", "--quiet", "HEAD", "--", "omega_engine/crates_rs"], cwd=repo, check=False
+        ["git", "diff", "--quiet", "HEAD", "--", "engine/crates_rs"], cwd=repo, check=False
     )
     if clean.returncode != 0:
         raise ReplayFailure("NATIVE_TRACKED_SOURCE_DRIFT")
@@ -112,7 +112,7 @@ def validate_report(raw: bytes, retained: bytes) -> dict:
     expected = strict_json(retained)
     if report != expected:
         raise ReplayFailure("RETAINED_CATALOG_RESULT_MISMATCH")
-    if report.get("schema") != "omega.mub6.conj2-verification.v3":
+    if report.get("schema") != "core.mub6.conj2-verification.v3":
         raise ReplayFailure("REPORT_SCHEMA_MISMATCH")
     for key, expected_value in (
         ("total_triples_tested", 7),
@@ -175,7 +175,7 @@ def replay(repo: Path, binary: Path, binary_sha256: str, output: Path, timeout: 
     for path in control_paths:
         regular(path)
         controls_before.append({"path": str(path), "sha256": sha(path.read_bytes())})
-    retained_path = repo / "omega_engine/crates_rs/omega_mub/artifacts/mub6_conj2_verification.json"
+    retained_path = repo / "engine/crates_rs/core_mub/artifacts/mub6_conj2_verification.json"
     regular(retained_path)
     retained = retained_path.read_bytes()
     before = native_sources(repo)

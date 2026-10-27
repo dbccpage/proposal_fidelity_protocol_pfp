@@ -7,12 +7,12 @@ from uuid import uuid4
 
 import pytest
 
-from omega_engine_pfp.entrypoints.cli.symbol_game import main
-from omega_engine_pfp.functional_boundary import RustFunctionalRequired
+from pfp.entrypoints.cli.symbol_game import main
+from pfp.functional_boundary import RustFunctionalRequired
 
 
 # gate11-self, gate11-ingest and gate11-project left this list when they began
-# taking every Phi1/Gamma2 from omega_functional through the native port
+# taking every Phi1/Gamma2 from core_functional through the native port
 # (tests/test_exact_functional_port.py). These three still have no Rust-backed
 # producer and must keep refusing.
 @pytest.mark.parametrize("command", ["run-turn", "run-bout", "run"])
@@ -26,13 +26,13 @@ def test_legacy_cli_refuses_before_writing(command: str, capsys) -> None:
 
 
 def test_python_metric_producers_refuse_before_inputs_are_used() -> None:
-    from omega_engine_pfp.domain.bridge.real_evaluators import (
+    from pfp.domain.bridge.real_evaluators import (
         LPDualityCalculator,
         MeronClusterCalculator,
     )
-    from omega_engine_pfp.domain.entities.cochain_projector import CochainProjector
-    from omega_engine_pfp.use_cases.problem_runner import ProblemRunnerUseCase
-    from omega_engine_pfp.use_cases.symbol_game_runner import SymbolGameRunnerUseCase
+    from pfp.domain.entities.cochain_projector import CochainProjector
+    from pfp.use_cases.problem_runner import ProblemRunnerUseCase
+    from pfp.use_cases.symbol_game_runner import SymbolGameRunnerUseCase
 
     producers = (
         lambda: LPDualityCalculator.evaluate_lp(
@@ -44,12 +44,12 @@ def test_python_metric_producers_refuse_before_inputs_are_used() -> None:
         lambda: SymbolGameRunnerUseCase.run_problem(None, "test"),
     )
     for produce in producers:
-        with pytest.raises(RustFunctionalRequired, match="omega_engine/crates_rs/omega_functional/src"):
+        with pytest.raises(RustFunctionalRequired, match="engine/crates_rs/core_functional/src"):
             produce()
 
 
 def test_empty_trace_refuses_before_touching_emitters():
-    from omega_engine_pfp.domain.bridge.symbol_game_emitter import UnifiedNarrativeScriptEmitter
+    from pfp.domain.bridge.symbol_game_emitter import UnifiedNarrativeScriptEmitter
 
     with pytest.raises(RustFunctionalRequired):
         UnifiedNarrativeScriptEmitter.emit_uns_trace(
@@ -58,7 +58,7 @@ def test_empty_trace_refuses_before_touching_emitters():
 
 
 def test_other_legacy_scores_refuse_and_structural_checks_remain_available():
-    from omega_engine_pfp.domain.bridge.real_evaluators import (
+    from pfp.domain.bridge.real_evaluators import (
         AdjunctionSheafDefectCalculator, CochainTriadCalculator,
         KagomeMultiThimbleCalculator, LPConstraint,
         MajoranaThimbleLiftCalculator, MeronClusterCalculator,

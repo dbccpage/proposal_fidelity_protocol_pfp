@@ -3,7 +3,7 @@
 AuthorityEffect: None.
 """
 
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.prompts.prompt_compiler import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.prompts.prompt_compiler import (
     CompiledFiniteQmPrompt,
     compile_coupled_slice_prompt,
     compile_dag_work_unit_prompt,

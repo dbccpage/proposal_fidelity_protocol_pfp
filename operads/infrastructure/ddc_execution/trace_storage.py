@@ -7,12 +7,12 @@ import tempfile
 from dataclasses import asdict
 from pathlib import Path
 
-from omega_engine_operads.domain.ddc_execution.constants import (
+from operads.domain.ddc_execution.constants import (
     EVIDENCE_TRACE_SCHEMA,
     REQUIRED_CONTRACTIVE_RUNS,
 )
-from omega_engine_operads.domain.ddc_execution.errors import TraceLedgerStorageError
-from omega_engine_operads.domain.ddc_execution.value_objects import (
+from operads.domain.ddc_execution.errors import TraceLedgerStorageError
+from operads.domain.ddc_execution.value_objects import (
     ArtifactOutput,
     EvidenceTraceReport,
     ExecutionRunRecord,

@@ -35,21 +35,21 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any, Protocol, cast
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     ContextRefusal,
     current_context,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import dumps
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import Refusal
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.canon import dumps
+from operations.use_cases.level_engine.research_engine.errors import Refusal
+from operations.use_cases.level_engine.research_engine.level import LevelResult
 
 from . import bundles as B
 
 ROOT = current_context().runtime_root
 REPO = B.REPO
-ENGINE_REL = "omega_engine_pfp/infrastructure/tower_research/level_engine"
-from omega_engine_pfp.infrastructure.tower_research.reach.resources import reach_root
-from omega_engine_pfp.infrastructure.tower_research.reach.resources import (
+ENGINE_REL = "pfp/infrastructure/tower_research/level_engine"
+from pfp.infrastructure.tower_research.reach.resources import reach_root
+from pfp.infrastructure.tower_research.reach.resources import (
     registry as resource_registry,
 )
 
@@ -280,7 +280,7 @@ def adapter_path(level: int, tag: str | None = None) -> Path:
 
 
 def positive_rel(level: int, tag: str | None = None) -> str:
-    return "omega_engine_pfp/infrastructure/tower_evidence/level_engine/v2/bindings/generated/reach/" + f"{tag or f'L{level:03d}'}.positive.json"
+    return "pfp/infrastructure/tower_evidence/level_engine/v2/bindings/generated/reach/" + f"{tag or f'L{level:03d}'}.positive.json"
 
 
 def complete(st: Mapping[str, Any], result: LevelResult, inputs: Sequence[tuple[str, str, object]],
@@ -391,7 +391,7 @@ def lean_block(read: Callable[[str], bytes | None], names: Sequence[str]) -> dic
         return None
     receipt = reach("receipt")
     canonical = reach("canonical")
-    report_rel = "omega_engine_pfp/infrastructure/tower_evidence/level_engine/v2/bindings/generated/reach/axioms.reach.txt"
+    report_rel = "pfp/infrastructure/tower_evidence/level_engine/v2/bindings/generated/reach/axioms.reach.txt"
     report = read(report_rel)
     if report is None:
         return None

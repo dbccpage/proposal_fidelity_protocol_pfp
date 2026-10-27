@@ -50,7 +50,7 @@ import blake3
 #: so the first entry's chaining is checked by the same rule as every other.
 GENESIS_DIGEST = "0" * 64
 
-LEDGER_SCHEMA_VERSION = "omega.oewas.receipt_ledger.v1"
+LEDGER_SCHEMA_VERSION = "core.oewas.receipt_ledger.v1"
 
 
 class LedgerError(RuntimeError):

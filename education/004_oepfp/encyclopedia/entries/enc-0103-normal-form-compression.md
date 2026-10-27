@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IX.3"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IX.1 'Theorem IX.3'"
+  - "canonical_core_math_spine.md v1.5.2 §IX.1 'Theorem IX.3'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -68,7 +68,7 @@ table.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IX.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IX.1
   (statement copied verbatim; no *Proof.* block in the source). Original header line
   (wraps across three source lines, joined here with single spaces):
   `**Theorem IX.3 (Normal-Form Compression).** [PROVED-CONDITIONAL — assumes the operator rewrite system is terminating and confluent with per-class collapse for $C,I$; these assumptions are **undischarged** (obligation IX-REWRITE; see §IV.5 note)] Every`

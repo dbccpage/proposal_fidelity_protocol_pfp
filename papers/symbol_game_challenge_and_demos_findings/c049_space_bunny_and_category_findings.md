@@ -40,7 +40,7 @@ Challenge **C049 (`c049_finite_category_universal_constructions`)** evaluates ca
 We developed, verified, and sealed the reference solver package under SG-CP v1:
 - **Reference Solver:** Pure Python implementation (`category.py`, `limits.py`, `colimits.py`, `solver.py`) using categorical duality ($C^{\mathrm{op}}$) to evaluate limits and colimits via universal arrow factorizations, alongside naturality and triangle identity verification for adjunctions.
 - **Judge Packet:** 64 hidden evaluation cases (40 base cases across limits, colimits, and adjunctions; 16 relabel and duality controls; 8 poisoned cases) and 48 hostile mutated certificates.
-- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.450s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c049_eval_1790625868` (SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`).
+- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.450s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c049_eval_1790625868` (SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`).
 
 ---
 

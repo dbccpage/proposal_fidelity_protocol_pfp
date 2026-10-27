@@ -11,7 +11,7 @@ unchanged; only its location moved.
 ``` ext
 User: /sprint-retrospective 055
 
-Omega: I'll run the Sprint 055 retrospective.
+Core: I'll run the Sprint 055 retrospective.
 
 **Pre-Retrospective Gate:**
   Checking prerequisite documents...
@@ -30,7 +30,7 @@ Omega: I'll run the Sprint 055 retrospective.
   - Quality gates: 100% pass rate
   - Blockers: 0
 
-**Step 4:** Techne Code Soviet Inspector Report:
+**Step 4:** Techne Code Inspector Report:
   | Metric | Value |
   | VETO events | 0 |
   | Violations fixed | 2 |

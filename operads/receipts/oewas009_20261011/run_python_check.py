@@ -54,19 +54,19 @@ command += [
 env = os.environ.copy()
 env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
 env["PYTHONPATH"] = str(root)
-env["OMEGA_SYMBOL_GAME_HOST"] = str(
-    root / "omega_engine/crates_rs/target/debug/omega_symbol_game.exe"
+env["CORE_SYMBOL_GAME_HOST"] = str(
+    root / "engine/crates_rs/target/debug/core_symbol_game.exe"
 )
 tracked = (
-    "omega_engine_operations/use_cases/cicd/pr_fast_gate.py",
-    "omega_engine_woland/runtime.py",
-    "omega_engine_woland/infrastructure/estates/oewas_native_anti_skill.py",
-    "omega_engine_woland/infrastructure/estates/oeeis_immune.py",
-    "omega_engine_woland/use_cases/anti_skill_predispatch.py",
-    "omega_engine_woland/use_cases/base_swarm/woland_swarm.py",
-    "omega_engine/crates_rs/omega_symbol_game/src/anti_skill_host.rs",
-    "omega_engine/crates_rs/omega_symbol_game/src/protocol.rs",
-    "omega_engine/crates_rs/target/debug/omega_symbol_game.exe",
+    "operations/use_cases/cicd/pr_fast_gate.py",
+    "adversary/runtime.py",
+    "adversary/infrastructure/estates/oewas_native_anti_skill.py",
+    "adversary/infrastructure/estates/oeeis_immune.py",
+    "adversary/use_cases/anti_skill_predispatch.py",
+    "adversary/use_cases/base_swarm/adversary_swarm.py",
+    "engine/crates_rs/core_symbol_game/src/anti_skill_host.rs",
+    "engine/crates_rs/core_symbol_game/src/protocol.rs",
+    "engine/crates_rs/target/debug/core_symbol_game.exe",
 )
 
 

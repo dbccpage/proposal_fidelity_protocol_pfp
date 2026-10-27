@@ -6,7 +6,7 @@ import copy
 
 import pytest
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
 
 
 def _request(raw=b'{"persona":"worker","note":"step"}'):

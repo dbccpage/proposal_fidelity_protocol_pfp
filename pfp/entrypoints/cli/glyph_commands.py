@@ -42,10 +42,10 @@ _REFUSING_EXIT = 2
 #: The fields a carrier pin file may declare. Same rule as the packet: an
 #: unrecognised field is refused rather than ignored.
 _PIN_FIELDS = ("schema", "authority_effect", "doctrine", "carrier")
-_PIN_SCHEMA = "omega.glyph_carrier_pin.v1"
+_PIN_SCHEMA = "core.glyph_carrier_pin.v1"
 
 _PRESENTATION_PIN_FIELDS = ("schema", "authority_effect", "doctrine", "pins")
-_PRESENTATION_PIN_SCHEMA = "omega.symbol_game.presentation_pins.v1"
+_PRESENTATION_PIN_SCHEMA = "core.symbol_game.presentation_pins.v1"
 
 
 def _load_host_presentations(path: Path) -> tuple[PresentationPins | None, str | None]:

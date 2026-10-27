@@ -1,4 +1,4 @@
-# OEWAS-009 Woland swarm implementation
+# OEWAS-009 Adversary swarm implementation
 
 Status: authorized implementation, after OEWAS-007 merge.
 Base: c1964010689b0d396ec6392325bd2fe0b26d97d4.
@@ -8,19 +8,19 @@ AuthorityEffect: None.
 
 ## Requirements and acceptance
 
-1. Reuse existing typed OEWAS registry/profile, Woland decision and OEEIS candidate ports; canonical `_ic` storage remains the default.
+1. Reuse existing typed OEWAS registry/profile, Adversary decision and OEEIS candidate ports; canonical `_ic` storage remains the default.
 2. Expose the existing sovereign native anti-skill verifier/detector through a bounded host action, and bind its registry/profile/implementation evidence to the exact subject and stage. Wrong-task, stale, malformed or disconnected evidence cannot become CLEAR.
 3. Real composed non-fixture boundaries must refuse before provider dispatch when ingress is unbound. PRE_DISPATCH and PRE_SEAL retain the same registry/profile binding. Detector clearance never grants instruction or human admission.
 4. Real immune candidate write/readback must preserve run/task correlation in `_ic`; candidate guidance stays inactive. Storage failure remains a typed residual without rewriting the bout verdict.
 5. Observe real behavior RED before minimal GREEN; reuse already-GREEN behavior honestly. Kill selected production guard mutations and restore exact bytes. Run one-to-three test files per batch, Rust one job, no paid provider calls.
-6. Update the epic and planning custody through their existing generators/successors; persist the Woland skill report and open a separate PR. Retain unrelated work and historical migration bytes.
+6. Update the epic and planning custody through their existing generators/successors; persist the Adversary skill report and open a separate PR. Retain unrelated work and historical migration bytes.
 
-## Retinue
+## Panel
 
-Woland: Python native adapter, composition and correlation; final adjudication.
-Azazello: Rust host exposure and native controls, one coordinated build.
-Hella: real OEEIS candidate custody/readback and storage-failure controls; independent composition review.
-Koroviev: epic/source inventory, skeptical acceptance review, planning successors and manifest.
+Adversary: Python native adapter, composition and correlation; final adjudication.
+Scope Guard: Rust host exposure and native controls, one coordinated build.
+Syntax Prefilter: real OEEIS candidate custody/readback and storage-failure controls; independent composition review.
+Defect Hunter: epic/source inventory, skeptical acceptance review, planning successors and manifest.
 
 ## Evidence ceiling
 

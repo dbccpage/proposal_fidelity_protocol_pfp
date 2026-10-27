@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.infrastructure import pilot_runner as owner
+from pfp.infrastructure import pilot_runner as owner
 
-MANIFEST_REL = "omega_engine_woland/tests/pilots/matrix/mssn_expected/manifest.v1.json"
+MANIFEST_REL = "adversary/tests/pilots/matrix/mssn_expected/manifest.v1.json"
 
 
 def write_json(path, value):

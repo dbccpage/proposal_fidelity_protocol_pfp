@@ -13,7 +13,7 @@
 - **Challenge ID:** `C050`
 - **Domain:** `e_formal_math` (Formal Mathematics, Equational Theorem Proving, Term Rewriting Systems)
 - **Mathematical Invariant:** Birkhoff equational completeness; formal step-by-step term rewrite replay ($s = u_0 \leftrightarrow u_1 \leftrightarrow \dots \leftrightarrow u_k = t$) verified at exact subterm position paths $p$ with instantiated axiom substitutions $\sigma(l) \leftrightarrow \sigma(r)$, and finite algebraic countermodels ($\mathcal{M} \models E$ and $\mathcal{M} \not\models s = t$ with domain size $D \le 8$).
-- **Woland Reality Gate Status:** `PASS_TO_MASTER` (Commit SHA-256: `1a2f881bb4a1409ff2eeab1ca928eaadc1deb43ab29aafbca39d782066c6cb98`, 64/64 base cases passed, 48/48 hostile mutations defended/killed).
+- **Adversary Reality Gate Status:** `PASS_TO_MASTER` (Commit SHA-256: `1a2f881bb4a1409ff2eeab1ca928eaadc1deb43ab29aafbca39d782066c6cb98`, 64/64 base cases passed, 48/48 hostile mutations defended/killed).
 
 ---
 

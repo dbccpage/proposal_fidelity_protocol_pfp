@@ -1,9 +1,9 @@
 ---
 paths:
-  - "omega_engine_epistemic_immune_system/**"
-  - "omega_engine_woland/stage/**"
-  - "omega_engine_prompt_civilization/**"
-  - "omega_engine_operads/**"
+  - "eis/**"
+  - "adversary/stage/**"
+  - "pciv/**"
+  - "operads/**"
   - "_ic/**"
   - "**/*antibod*"
 ---

@@ -8,7 +8,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_pfp.functional_boundary import require_rust_functional
+from pfp.functional_boundary import require_rust_functional
 
 
 def run_symbolic_dialogue(*_args: object, **_kwargs: object) -> None:

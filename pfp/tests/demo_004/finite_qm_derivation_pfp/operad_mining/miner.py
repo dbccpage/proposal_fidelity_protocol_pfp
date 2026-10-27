@@ -120,7 +120,7 @@ DAG_PROMPT_35_SPECS: dict[str, dict[str, Any]] = {
         "countermodel_expected_int": 35,
         "paper_refs": [
             "papers/derivations/10_finite_qm_core/TFQ-0007_finite_quantum_mechanics_core_on_an_admitted_carrier.md",
-            "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_omega_engine_runtime.md",
+            "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_engine_runtime.md",
         ],
     },
     "FQ-GAP-CUSTODY-AND-RECEIPTS": {
@@ -138,7 +138,7 @@ DAG_PROMPT_35_SPECS: dict[str, dict[str, Any]] = {
         "countermodel_rhs": "31",
         "countermodel_expected_int": 31,
         "paper_refs": [
-            "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_omega_engine_runtime.md",
+            "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_engine_runtime.md",
             "papers/derivations/23_engine_custody/TFQ-0211_three_languages_must_name_one_finite_statement.md",
         ],
     },
@@ -687,7 +687,7 @@ DAG_PROMPT_35_SPECS: dict[str, dict[str, Any]] = {
     },
 }
 
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.remaining_142_specs import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.remaining_142_specs import (
     STAGE_RANK,
     build_remaining_142_specs,
 )
@@ -819,7 +819,7 @@ def initialize_unfilled_dag_prompt_yaml(
     spec = DAG_ALL_177_SPECS[node_id]
 
     doc: dict[str, Any] = {
-        "schema_id": "omega.pfp.finite_qm.dag_prompt.v1",
+        "schema_id": "core.pfp.finite_qm.dag_prompt.v1",
         "packet_type": "PromptPacketV0_1",
         "policy_id": "SPK-001",
         "stage_controller_version": "pfp-staged.0.3",
@@ -854,10 +854,10 @@ def initialize_unfilled_dag_prompt_yaml(
         "stages_plan": [
             {"stage": 1, "name": "admit", "executor": "host", "gate": "Verify YAML schema & 4 operad mining slots"},
             {"stage": "1a_1b", "name": "p_star_cochain_syndrome", "executor": "model_and_host", "gate": "G1_COCHAIN_EXACT_SEQUENCE_D1D0 + G2_P_STAR_TREE_CHORD_SYNDROME_DECODE"},
-            {"stage": 2, "name": "ideation", "executor": "model", "seat": "seat_begemot", "gate": "Candidate finite shadow + countermodel ideation"},
-            {"stage": 3, "name": "audit", "executor": "model", "seat": "seat_koroviev", "gate": "Congruence Ideal I & Annihilator Decoy O^- audit"},
-            {"stage": 4, "name": "l2_extraction", "executor": "model", "seat": "seat_begemot", "gate": "G0_STRICT_TYPED_JSON_SCHEMA"},
-            {"stage": 5, "name": "evaluation", "executor": "host", "seat": "seat_woland", "gate": "Sovereign exact integer/rational + Lean4/Rust anchor verification (< 2 ms)"},
+            {"stage": 2, "name": "ideation", "executor": "model", "seat": "seat_gauge_breaker", "gate": "Candidate finite shadow + countermodel ideation"},
+            {"stage": 3, "name": "audit", "executor": "model", "seat": "seat_defect_hunter", "gate": "Congruence Ideal I & Annihilator Decoy O^- audit"},
+            {"stage": 4, "name": "l2_extraction", "executor": "model", "seat": "seat_gauge_breaker", "gate": "G0_STRICT_TYPED_JSON_SCHEMA"},
+            {"stage": 5, "name": "evaluation", "executor": "host", "seat": "seat_adversary", "gate": "Sovereign exact integer/rational + Lean4/Rust anchor verification (< 2 ms)"},
             {"stage": 9, "name": "receipt", "executor": "host", "gate": "Emit cryptographic receipt to evidence/receipts/pfp_dag_prompts/ and update papers/"},
         ],
         "operad_slots": {
@@ -987,7 +987,7 @@ def mine_operads_for_dag_prompt_node(
     rust_anchor = (
         rust_refs[-1]
         if rust_refs
-        else "omega_engine/crates_rs/omega_symbol_game/src/derivation_dag_witnesses.rs::build_derivation_dag_master_witness_receipt"
+        else "engine/crates_rs/core_symbol_game/src/derivation_dag_witnesses.rs::build_derivation_dag_master_witness_receipt"
     )
     imported_list = list(node.get("imported_structure", []))
     unpaid_import_count = len(imported_list)

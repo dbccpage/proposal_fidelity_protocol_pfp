@@ -11,7 +11,7 @@ import json
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     CandidateArtifactV1,
     DemandItemV1,
     ObjectiveTypedV1,
@@ -23,7 +23,7 @@ from omega_engine_pfp.domain import (
     evaluate_llm_turn_candidate,
     render_prompt_body,
 )
-from omega_engine_pfp.fixtures.gate11_residual_dual import (
+from pfp.fixtures.gate11_residual_dual import (
     parse_gate11_symbolic_reply,
 )
 
@@ -46,7 +46,7 @@ class SymbolGameApiRouter:
             200,
             {
                 "status": "healthy",
-                "service": "omega.symbol_game.ui.api.v1",
+                "service": "core.symbol_game.ui.api.v1",
                 "authority_effect": "None",
                 "operations": [
                     "POST /api/prompt/compile",
@@ -82,7 +82,7 @@ class SymbolGameApiRouter:
             kill_conditions = tuple(
                 sorted(set(payload.get("kill_conditions", ["F-01_inherited_meaning"])))
             )
-            from omega_engine_pfp.domain import DEFAULT_REQUIRED_REPLY_FIELDS
+            from pfp.domain import DEFAULT_REQUIRED_REPLY_FIELDS
 
             required_reply_fields = tuple(
                 sorted(set(payload.get("required_reply_fields", DEFAULT_REQUIRED_REPLY_FIELDS)))
@@ -203,7 +203,7 @@ class SymbolGameApiRouter:
     def score_proposal(payload: Mapping[str, Any]) -> ApiResponse:
         try:
             reply_markdown = payload.get("reply_markdown", "")
-            from omega_engine_pfp.infrastructure.adapters.exact_rust_adapter import (
+            from pfp.infrastructure.adapters.exact_rust_adapter import (
                 RustExactEngineAdapter,
             )
 

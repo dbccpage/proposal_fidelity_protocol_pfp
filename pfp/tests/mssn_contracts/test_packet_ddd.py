@@ -15,23 +15,23 @@ RESEARCH_DIR = Path(__file__).resolve().parent.parent.parent
 if str(RESEARCH_DIR) not in sys.path:
     sys.path.insert(0, str(RESEARCH_DIR))
 
-from omega_engine_pfp.domain.mssn_research.packets.entities import App, Atom, Diff, Packet
-from omega_engine_pfp.domain.mssn_research.packets.invariants import (
+from pfp.domain.mssn_research.packets.entities import App, Atom, Diff, Packet
+from pfp.domain.mssn_research.packets.invariants import (
     check_delimiter_balance,
     check_gram_matrix_positive_definiteness,
     check_opcode_stage_floor,
     check_refusal_code_bounds,
     check_simplex_distinctness,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import (
+from pfp.domain.mssn_research.packets.value_objects import (
     Opcode,
     RefusalCode,
     RuntimeProofStatus,
     ValidationDisposition,
     WireBytes,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     AuthorityEffect,
     ContentDigest,
     Rational,

@@ -1,4 +1,4 @@
-"""Omega Engine Operads (OEOP).
+"""Engine Operads (OEOP).
 
 Shared capability definitions, compilation, and host projections.
 Existing serialized OEWAS schema identifiers remain supported.

@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
     independent_check,
 )
 

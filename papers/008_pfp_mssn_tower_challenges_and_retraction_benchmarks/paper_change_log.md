@@ -24,7 +24,7 @@ Recorded canonical Zenodo record <https://zenodo.org/records/23115542> (DOI: `10
 - Distinguished 39 selected Lean theorems from 576 local environment
   declarations and the 52 external payloads. Retained source hashes match;
   fresh local Lean startup is blocked and is not recorded as a kernel pass.
-- Reworked the Landau companion into 16 questions with worked calculations,
+- Reworked the Examiner companion into 16 questions with worked calculations,
   scope limits, source-backed exercises and a self-study rubric. No learner
   outcome study is asserted.
 - Expanded offline coverage from 24 to 52 tests, including all 125 bounded
@@ -75,7 +75,7 @@ Each item gives the earlier text, its replacement, and the evidence path.
   C006 to C010. Evidence: `docs/challenge_census.md`, tree of commit
   `a623568e`.
 - C011 mutations: 32 → 40 mutation files, all rejected in a re-run. Evidence:
-  `omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/`.
+  `projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/`.
 - C021 tests: "38 passed end-to-end tests" → withdrawn (that was the number of
   test functions in `challenges/e2e_tests/`, not run here); 40 mutation files
   rejected in a re-run. Evidence: the C021 `judge_packet/mutation_suite/`.
@@ -91,7 +91,7 @@ Each item gives the earlier text, its replacement, and the evidence path.
   `empirical_neural_mcnemar_evaluation.py`.
 - C005 Arm 2: "37/50 (74.0%)" → 36/50 in the three-arm run and 38/50 in the
   hybrid run. Evidence:
-  `omega_engine_atlas/coda_atlas/omega_engine_pfp/c005_structured_decoding_controls_empirical_results.md`.
+  `atlas/coda_atlas/pfp/c005_structured_decoding_controls_empirical_results.md`.
 - C005 p-value: "p = 0.035" → exact two-sided p = 145499/4194304 ≈ 0.0347 for
   b = 6, c = 17, with the other three tables' exact p-values added. Evidence:
   the same report; computed from b and c.

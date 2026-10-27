@@ -20,7 +20,7 @@ from pathlib import Path
 def find_repo_root() -> Path:
     current = Path(__file__).resolve()
     for parent in current.parents:
-        if (parent / ".agents").is_dir() and (parent / "omega_engine").is_dir():
+        if (parent / ".agents").is_dir() and (parent / "engine").is_dir():
             return parent
     raise RuntimeError(f"Could not locate repo root from {current}")
 
@@ -28,23 +28,23 @@ def find_repo_root() -> Path:
 def test_continuation_conjuncts_nine(repo_root: Path) -> list[str]:
     candidates = [
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "prime_algos"
         / "prime_algorithm_2.rs",
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "ddc"
         / "prime_algos_2.rs",
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "ddc"
         / "oeprmalg2.rs",
@@ -80,7 +80,7 @@ def test_continuation_conjuncts_nine(repo_root: Path) -> list[str]:
 def test_algos_doc_specifies_nine(repo_root: Path) -> None:
     candidate_paths = [
         repo_root
-        / "omega_engine_atlas"
+        / "atlas"
         / "coda_atlas"
         / "F004_papers" / "001_finite_obstruction_calculus"
         / "000_witnessed_difference_programme" / "docs" / "source_archive"
@@ -89,7 +89,7 @@ def test_algos_doc_specifies_nine(repo_root: Path) -> None:
         / "residual_aware_can_continue.md",
         repo_root
         / "research"
-        / "omega_engine_prime_algos"
+        / "prime_algos"
         / "docs"
         / "residual_aware_can_continue.md",
     ]
@@ -119,23 +119,23 @@ def test_algos_doc_specifies_nine(repo_root: Path) -> None:
 def test_oeprmalg0_admission_exists(repo_root: Path) -> None:
     candidates = [
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "prime_algos"
         / "prime_algorithm_0_admission.rs",
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "ddc"
         / "prime_algos_0_admission.rs",
         repo_root
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_wdp"
+        / "core_wdp"
         / "src"
         / "ddc"
         / "oeprmalg0_admission.rs",

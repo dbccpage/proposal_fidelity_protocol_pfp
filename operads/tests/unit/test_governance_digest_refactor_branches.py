@@ -4,16 +4,16 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_operads.application.governance_digest.digest_corpus import (
+from operads.application.governance_digest.digest_corpus import (
     RUNS_CORPUS,
     digest_corpus,
 )
-from omega_engine_operads.application.governance_digest.textops import (
+from operads.application.governance_digest.textops import (
     apply_edits,
     measure,
     sha256_text,
 )
-from omega_engine_operads.domain.governance_digest.records import (
+from operads.domain.governance_digest.records import (
     REQUIRED_FRONTMATTER,
     EditLocator,
     GovernanceCorpus,

@@ -6,13 +6,13 @@ import json
 import unittest
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.judge_packet.checkers.combinatorial_primal_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.judge_packet.checkers.combinatorial_primal_checker import (
     verify_combinatorial_primal_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.judge_packet.checkers.homology_dual_potential_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.judge_packet.checkers.homology_dual_potential_checker import (
     verify_homology_dual_potential_certificate,
 )
 

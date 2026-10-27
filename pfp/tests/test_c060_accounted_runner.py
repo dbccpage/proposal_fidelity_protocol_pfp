@@ -14,12 +14,12 @@ import urllib.request
 
 import pytest
 
-from omega_engine_pfp.infrastructure import synthesis_matrix
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from pfp.infrastructure import synthesis_matrix
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 ROOT = Path(__file__).resolve().parents[2]
-PACKAGE = "omega_engine_pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis"
+PACKAGE = "pfp.tests.demo_004.f_program_synthesis.c060_self_verifying_checker_synthesis"
 SOURCE = ROOT / (PACKAGE.replace(".", "/") + "/run_c060_matrix.py")
 MODEL = "meta-llama/llama-3.1-8b-instruct"
 

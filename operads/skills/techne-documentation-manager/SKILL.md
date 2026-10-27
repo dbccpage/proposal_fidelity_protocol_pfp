@@ -37,18 +37,18 @@ operad_residual: "unknown"
 4. **Claim Ledger Hygiene:** Ensure every paper `{stem}.md` has a corresponding `{stem}_claim_ledger.md` and `{stem}_change_log.md`, maintaining 100% claim-ID bijection.
 5. **Pedagogical Content Management:** Coordinate `lib-pedagogy-improvement` and `lib-education-engine` for curriculum and handout quality.
 6. **Epic/Saga/Sprint Hierarchy & Forgery Nemesis Escalation:**
-   - Audit `omega_engine/omega_engine_product_planning_office/plans/epics/plans_signoff.md` on every governance pass and during `rip-sprints` execution.
+   - Audit `engine/product_planning_office/plans/epics/plans_signoff.md` on every governance pass and during `rip-sprints` execution.
    - Enforce that `SIGNED_COMPLETED_AUTHORITY` is strictly `BLACKROD, OOUTWIRE` for `COMPLETED` status.
    - **Forgery Detection & Blackrod Nemesis Escalation Cascade:** If `/techne-documentation-manager` discovers a forged sign-off or unauthorized signature:
-     - Immediately activate the **Blackrod Nemesis Workflow** via `/thanatos-nemesis` (`omega_engine_operads/skills/thanatos-nemesis/SKILL.md`).
+     - Immediately activate the **Blackrod Nemesis Workflow** via `/thanatos-nemesis` (`operads/skills/thanatos-nemesis/SKILL.md`).
      - Notify **`techne-vp`** during `/sprint-vp-briefing`.
      - Notify **`techne-svp`** via report in `/sprint-svp-briefing`.
-     - Notify **`blackrod`** and log an investigation document in `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{breach_id}.md`.
+     - Notify **`blackrod`** and log an investigation document in `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_{breach_id}.md`.
 7. **Lower Snake-Case Naming Law Enforcement (`RULE_NAMING_CONVENTION_001`):**
    - Enforce that all created or modified files and directories use lowercase letters and `snake_case` only (except `README.md` and third-party files).
 8. **Markdown De-Linting & Linter Defect Investigation Protocol (`RULE_MARKDOWN_DELINTING_001`):**
    - Ensure every `.md` file created or modified is thoroughly de-linted with zero errors and zero warnings.
-   - Whenever `/techne-documentation-manager` or `/techne-docs-lint-hunter-killer` encounters any markdown linter error or warning during audit, immediately log a formal investigation report under `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_lint_defect_{id}.md` so Blackrod can remediate the workflow.
+   - Whenever `/techne-documentation-manager` or `/techne-docs-lint-hunter-killer` encounters any markdown linter error or warning during audit, immediately log a formal investigation report under `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_lint_defect_{id}.md` so Blackrod can remediate the workflow.
 9. **Mojibake & Encoding Corruption Screening (`RULE_UTF8_MOJIBAKE_CLEANLINESS_001`):**
    - Continuously screen all SKILL.md files, frontmatter descriptions, and estate documentation for broken CP437/Windows-1252 Mojibake corruption (e.g. `Φ`, `—`, `λ`, `Φ₁`, `Γ₂`, `→`, `·`).
    - Automatically repair and convert Mojibake sequences to clean standard UTF-8 characters ($\Phi$, $\lambda$, —, →, ·) or ASCII equivalents.

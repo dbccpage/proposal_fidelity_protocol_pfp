@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.skill_operad.skill_compiler.eval_runner import run_bank
+from operads.skill_operad.skill_compiler.eval_runner import run_bank
 
 
 def _scaffold_mini_eval_repo(tmp: Path) -> Path:
@@ -42,7 +42,7 @@ class EvalBankRunnerUnitTests(unittest.TestCase):
             root = _scaffold_mini_eval_repo(Path(td))
             cases_dir = (
                 root
-                / "omega_engine_operads"
+                / "operads"
                 / "skill_operad"
                 / "skill_compiler"
                 / "eval_bank"
@@ -50,7 +50,7 @@ class EvalBankRunnerUnitTests(unittest.TestCase):
             cases_dir.mkdir(parents=True)
 
             synthetic_bank = {
-                "schema": "omega.skill_compiler.eval_bank.v1",
+                "schema": "core.skill_compiler.eval_bank.v1",
                 "cases": [
                     {
                         "id": "case_pass_001",
@@ -91,7 +91,7 @@ class EvalBankLiveIntegrationTests(unittest.TestCase):
         self.assertTrue(path.is_file(), f"Missing live cases file: {path}")
 
         data = json.loads(path.read_text(encoding="utf-8"))
-        self.assertEqual(data.get("schema"), "omega.skill_compiler.eval_bank.v1")
+        self.assertEqual(data.get("schema"), "core.skill_compiler.eval_bank.v1")
         cases = data.get("cases") or []
         self.assertIsInstance(cases, list)
 

@@ -5,11 +5,11 @@ import json
 
 import pytest
 
-from omega_engine_pfp.domain.aggregates.research_run_root import (
+from pfp.domain.aggregates.research_run_root import (
     ResearchRunRootError,
     semantic_dda_from_trace,
 )
-from omega_engine_operads.skill_operad.ddc_trace_logger import TraceLogger
+from operads.skill_operad.ddc_trace_logger import TraceLogger
 
 
 def trace(tmp_path):
@@ -47,7 +47,7 @@ def test_legacy_profile_remains_supported(tmp_path):
     path = trace(tmp_path)
     records = [json.loads(line) for line in path.read_text().splitlines()]
     for index, r in enumerate(records, 1):
-        r["schema_version"] = "omega.dda.trace.v2"
+        r["schema_version"] = "core.dda.trace.v2"
         r["dda_dialect"] = r.pop("ddc_dialect")
         r["step_id"] = f"DDA_STEP_{index:03d}"
     write_records(path, records)
@@ -72,7 +72,7 @@ def test_tampered_or_incoherent_current_trace_is_refused(tmp_path, mutation):
         path.write_text("".join(json.dumps(r) + "\n" for r in records), encoding="utf-8")
     else:
         if mutation == "mixed_profile":
-            records[1]["schema_version"] = "omega.dda.trace.v2"
+            records[1]["schema_version"] = "core.dda.trace.v2"
             records[1]["dda_dialect"] = records[1].pop("ddc_dialect")
             records[1]["step_id"] = "DDA_STEP_002"
         elif mutation == "alias":
@@ -91,7 +91,7 @@ def test_tampered_or_incoherent_current_trace_is_refused(tmp_path, mutation):
 
 @pytest.mark.parametrize("letter", ["C.E", "CE", "C E", "C.E.R", "E.C"])
 def test_each_record_contains_one_operation_with_its_own_obligations(tmp_path, letter):
-    from omega_engine_pfp.domain.aggregates.research_run_root import semantic_dda_from_records
+    from pfp.domain.aggregates.research_run_root import semantic_dda_from_records
 
     path = trace(tmp_path)
     records = [json.loads(line) for line in path.read_text().splitlines()]

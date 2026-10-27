@@ -24,9 +24,9 @@ from __future__ import annotations
 
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, Fixture
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, Fixture
 
 CHALLENGE_ID = "merge_tables"
 ANSWER_TYPE = "D"

@@ -1,7 +1,7 @@
 """Canonical content identifiers for OEEIS receipts.
 
 `canonical_id` is byte-identical to `canonical_id` in
-`omega_engine_operads/domain/anti_skill/canonical.py` (itself
+`operads/domain/anti_skill/canonical.py` (itself
 carried over from the retired Python higher-operad kernel), so guard-activation
 and danger receipts moved here from the ms_majorana test support folder keep
 the identifiers they had. The two copies converge when anti-skill V2 admission

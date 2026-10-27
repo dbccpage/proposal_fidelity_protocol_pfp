@@ -1,6 +1,6 @@
 //! Supplement to G04: the universal fixed-stake claim, on original L histories.
 //! All regime/profile/renaming calculations use the existing native archive.
-use omega_ooutwire_primitives::{admission::step, event::Event, mark::{Mark,Pair},
+use core_ooutwire_primitives::{admission::step, event::Event, mark::{Mark,Pair},
     profile::profiles, reading::READING_L, regime::Regime,
     renaming::{Bijection,serialize}, replay::replay, token::Token};
 use serde_json::{json,Value};

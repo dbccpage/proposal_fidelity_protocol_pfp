@@ -10,9 +10,9 @@ Parent: [Intelligence Community Agency Boundaries](../../../../../rules/architec
 
 ## Mandate
 
-The Intelligence Community directory (`_ic/`) represents the single centralized clearing house for all durable intelligence, run receipts, event streams, and epistemic telemetry across the Omega Engine.
+The Intelligence Community directory (`_ic/`) represents the single centralized clearing house for all durable intelligence, run receipts, event streams, and epistemic telemetry across the engine.
 
-Its top-level directory structure is strictly partitioned into the canonical 23 agencies modeled after the American Intelligence Community canon (`omega_engine_governance/_types/intelligence_community.yaml` v2.0.0):
+Its top-level directory structure is strictly partitioned into the canonical 23 agencies modeled after the American Intelligence Community canon (`governance/_types/intelligence_community.yaml` v2.0.0):
 
 ### Tier 1 — Executive Clearinghouse
 1. `odni`: Office of the Director of National Intelligence (executive narrative streams, unified trace, cross-discipline packets, briefings).
@@ -40,11 +40,11 @@ Its top-level directory structure is strictly partitioned into the canonical 23 
 19. `af`: Department of the Air Force (wide-area reconnaissance sweeps, latency profiling, coverage gap detection).
 20. `marines`: Marine Corps Intelligence (expeditionary first-in reconnaissance, edge deployment, expedition packaging).
 21. `cdc`: Centers for Disease Control and Prevention (epistemic immune system, antibody catalogs, pathological tracking).
-22. `darpa`: Defense Advanced Research Projects Agency (experimental game engines, symbol games, Woland bouts).
+22. `darpa`: Defense Advanced Research Projects Agency (experimental game engines, symbol games, Adversary bouts).
 23. `nara`: National Archives and Records Administration (permanent record custody, historical telemetry `_archive/`, raw `harvest/`).
 
 ## Invariants
 
 1. **No Ad-Hoc Silos:** Creating directories at the root of `_ic/` other than the canonical 23 agencies is strictly prohibited and fails domain validation (`IntelligenceCommunity`).
 2. **No Duplicate Collection:** Multiple agencies must not collect or persist duplicate telemetry; data must be collected once by the authoritative agency and cross-referenced.
-3. **Typed Configuration:** The canonical agency definitions must be loaded from `omega_engine_governance/_types/intelligence_community.yaml` and validated by `IntelligenceCommunity`.
+3. **Typed Configuration:** The canonical agency definitions must be loaded from `governance/_types/intelligence_community.yaml` and validated by `IntelligenceCommunity`.

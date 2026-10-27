@@ -19,7 +19,7 @@ from typing import Any
 import pytest
 import yaml
 
-from omega_engine_pfp.domain.canonical import (
+from pfp.domain.canonical import (
     MAX_SAFE_INTEGER,
     JcsError,
     canonicalize_json_str,
@@ -28,7 +28,7 @@ from omega_engine_pfp.domain.canonical import (
     rfc8785_canonical_json,
     rfc8785_digest_sha256,
 )
-from omega_engine_pfp.domain.cochain import (
+from pfp.domain.cochain import (
     ClosedNonExactClass,
     CochainRefusal,
     PrimeTriadContext,
@@ -37,7 +37,7 @@ from omega_engine_pfp.domain.cochain import (
     _parse_bigint,
     _parse_fraction,
 )
-from omega_engine_pfp.domain.operad import (
+from pfp.domain.operad import (
     AnnihilatorDecoy,
     CongruenceIdeal,
     LeafTextSpan,
@@ -46,11 +46,11 @@ from omega_engine_pfp.domain.operad import (
     PromptColour,
     PromptOperator,
 )
-from omega_engine_pfp.ffi import (
+from pfp.ffi import (
     evaluate_prompt_cochain_disposition as evaluate_prompt_cochain,
 )
-from omega_engine_pfp.ffi import get_default_host
-from omega_engine_pfp.infrastructure.yaml_loading import (
+from pfp.ffi import get_default_host
+from pfp.infrastructure.yaml_loading import (
     StrictYamlError,
     strict_yaml_load,
 )

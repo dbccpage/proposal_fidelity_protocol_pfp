@@ -17,7 +17,7 @@ Recorded canonical Zenodo record <https://zenodo.org/records/23114681> (DOI: `10
   clarify trigger denominators and empty samples; state decay assumptions.
 - Include the unchanged, digest-bound historical catalog as data so its census
   can be recomputed from the deposit alone. Loading it executes no detector.
-- Expand the Landau companion to 24 problems across levels 0-7, with worked
+- Expand the Examiner companion to 24 problems across levels 0-7, with worked
   prerequisites, a separate instructor key, a 96-point rubric, and an exact
   standard-library worksheet. Remove the shared external worksheet dependency.
 - Pin pytest to the documented 8.3.5, align current documentation headers,

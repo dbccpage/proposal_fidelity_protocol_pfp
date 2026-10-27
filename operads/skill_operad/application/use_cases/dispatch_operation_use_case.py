@@ -11,13 +11,13 @@ from typing import List, Optional, Tuple
 try:
     from domain.colours import Colour
     from domain.errors import DomainError, Err, Ok, Result
-    from omega_engine_operads.domain.operad.operad import ColouredOperad
+    from operads.domain.operad.operad import ColouredOperad
     from domain.ports import OperadRepositoryPort
     from application.dto.operad_dto import DispatchResultDTO
 except (ImportError, ValueError):
     from ...domain.colours import Colour
     from ...domain.errors import DomainError, Err, Ok, Result
-    from omega_engine_operads.domain.operad.operad import ColouredOperad
+    from operads.domain.operad.operad import ColouredOperad
     from ...domain.ports import OperadRepositoryPort
     from ..dto.operad_dto import DispatchResultDTO
 

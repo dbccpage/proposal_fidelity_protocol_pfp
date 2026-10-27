@@ -1,13 +1,13 @@
 """Targeted tests for higher-dimensional simplicial boundary matrix verification (d_{k-1} ∘ d_k = 0).
 
-Verifies sovereign delegation to omega_homology via ExactHomologyPort and RustExactEngineAdapter.
+Verifies sovereign delegation to core_homology via ExactHomologyPort and RustExactEngineAdapter.
 Governing Invariant: Zero Python Math Re-invention.
 AuthorityEffect: None.
 """
 
 import pytest
 
-from omega_engine_pfp.domain.solvers.kinds import (
+from pfp.domain.solvers.kinds import (
     ConstOracle,
     Regime,
     RegimeOracle,
@@ -18,7 +18,7 @@ from omega_engine_pfp.domain.solvers.kinds import (
     req_json,
     satisfies,
 )
-from omega_engine_pfp.infrastructure.adapters.exact_rust_adapter import (
+from pfp.infrastructure.adapters.exact_rust_adapter import (
     ExactError,
     RustExactEngineAdapter,
 )
@@ -162,7 +162,7 @@ def test_rejects_duplicate_vertices_in_simplex(adapter: RustExactEngineAdapter):
 
 def test_simplicial_boundary_law_satisfied_requirement():
     """Verify SimplicialBoundaryLawSatisfied behaves as a first-class requirement kind."""
-    from omega_engine_pfp import initialize_exact_ports
+    from pfp import initialize_exact_ports
 
     initialize_exact_ports()
     tetrahedron = ((0, 1, 2, 3),)

@@ -76,7 +76,7 @@ Starting in **Lesson 11**, the curriculum transitions into **discrete chains, co
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.tower import grammar
+from pfp.domain.tower import grammar
 
 diff = grammar.parse("<>")
 atom0 = grammar.parse("<0>")

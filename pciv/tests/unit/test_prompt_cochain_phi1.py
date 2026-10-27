@@ -12,14 +12,14 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_prompt_civilization.profile.cochain_profile import (
+from pciv.profile.cochain_profile import (
     CHECKER_NAME,
     PROMPT_COCHAIN_COMPLEX_PROFILE,
     ComplexConditionFailed,
     HigherDifferentialUnavailable,
     verify_cochain_complex,
 )
-from omega_engine_prompt_civilization.use_cases.lamarckian_loop import (
+from pciv.use_cases.lamarckian_loop import (
     LamarckianLoopService,
     UnmeasuredCurvatureRefusal,
 )
@@ -142,11 +142,11 @@ def _install_ast_stubs(*, defect_descriptions: tuple[str, ...]) -> list[str]:
         installed.append(name)
         return created
 
-    package("omega_engine_pfp")
-    package("omega_engine_pfp.domain")
-    package("omega_engine_pfp.domain.ast_cochain")
+    package("pfp")
+    package("pfp.domain")
+    package("pfp.domain.ast_cochain")
 
-    parser_mod = module("omega_engine_pfp.domain.ast_cochain.ast_source_parser")
+    parser_mod = module("pfp.domain.ast_cochain.ast_source_parser")
 
     class PythonSourceParser:
         def parse(self, sources: dict[str, str]) -> dict[str, str]:
@@ -154,7 +154,7 @@ def _install_ast_stubs(*, defect_descriptions: tuple[str, ...]) -> list[str]:
 
     parser_mod.PythonSourceParser = PythonSourceParser
 
-    builder_mod = module("omega_engine_pfp.domain.ast_cochain.ast_dependency_complex")
+    builder_mod = module("pfp.domain.ast_cochain.ast_dependency_complex")
     builder_mod.DEFAULT_LAYER_RANKS = {"domain": 1}
 
     class DependencyComplexBuilder:
@@ -171,14 +171,14 @@ def _install_ast_stubs(*, defect_descriptions: tuple[str, ...]) -> list[str]:
 
     builder_mod.DependencyComplexBuilder = DependencyComplexBuilder
 
-    boundary = module("omega_engine_pfp.functional_boundary")
+    boundary = module("pfp.functional_boundary")
 
     class RustFunctionalRequired(Exception):
         pass
 
     boundary.RustFunctionalRequired = RustFunctionalRequired
 
-    metrics = module("omega_engine_pfp.domain.ast_cochain.ast_metrics_evaluator")
+    metrics = module("pfp.domain.ast_cochain.ast_metrics_evaluator")
 
     class ASTMetricsEvaluator:
         def evaluate(self, complex_: object) -> object:

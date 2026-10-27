@@ -6,7 +6,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_operads.infrastructure.python_development_office.config import (
+from operads.infrastructure.python_development_office.config import (
     is_suppressed,
     load_config,
     parse_suppressions,

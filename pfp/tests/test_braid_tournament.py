@@ -7,11 +7,11 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 def owner():
-    return importlib.import_module("omega_engine_pfp.infrastructure.braid_tournament")
+    return importlib.import_module("pfp.infrastructure.braid_tournament")
 
 
 def live(module, tmp_path, gateway, **kwargs):

@@ -15,10 +15,10 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 400 (Prompt Civ Foundations)  
 **Level Source:** Level 00 ([`level_00_substrate_and_packaging.md`](../../levels/level_00_substrate_and_packaging.md))  
-**Rust Seam:** [`omega_prompt_civilization::record`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/record.rs)
+**Rust Seam:** [`core_prompt_civilization::record`](../../../../engine/crates_rs/core_prompt_civilization/src/record.rs)
 
 ## 1. Pedagogical Objective
-Distinguish between canonical governed prompt material (`PromptGenomeV1`) and execution instances (`ExecutionOccurrenceV1`), enforcing identity hash integrity under `omega-sorted-json-no-float-v1`.
+Distinguish between canonical governed prompt material (`PromptGenomeV1`) and execution instances (`ExecutionOccurrenceV1`), enforcing identity hash integrity under `core-sorted-json-no-float-v1`.
 
 ## 2. Key Concepts
 1. **Governed Material vs Occurrence:** Executing an unchanged prompt string 1,000 times generates 1,000 occurrences but exactly **one** immutable genome.

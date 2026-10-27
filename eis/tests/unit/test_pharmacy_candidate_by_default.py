@@ -20,33 +20,33 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_models import (
+from eis.domain.pharmacy_models import (
     Antibody,
     PharmacyStatus,
 )
-from omega_engine_epistemic_immune_system.domain.pharmacy_seeder import PharmacySeeder
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.domain.pharmacy_seeder import PharmacySeeder
+from eis.infrastructure.pharmacy_writer import (
     filesystem_byte_writer,
     filesystem_catalog_bytes,
 )
-from omega_engine_woland.stage.infrastructure.pharmacy_writer import (
+from adversary.stage.infrastructure.pharmacy_writer import (
     filesystem_catalog_text,
     filesystem_text_writer,
 )
-from omega_engine_epistemic_immune_system.domain.pharmacy_templates import classify_failure
-from omega_engine_epistemic_immune_system.domain.retired_antibodies import (
+from eis.domain.pharmacy_templates import classify_failure
+from eis.domain.retired_antibodies import (
     RETIRED_ANTIBODIES,
     RETIRED_ANTIBODY_IDS,
     is_retired,
     retirement_reason,
 )
-from omega_engine_woland.stage.domain.immune.models import (
+from adversary.stage.domain.immune.models import (
     Antibody as SwarmAntibody,
 )
-from omega_engine_woland.stage.domain.immune.models import (
+from adversary.stage.domain.immune.models import (
     PharmacyStatus as SwarmPharmacyStatus,
 )
-from omega_engine_woland.stage.domain.immune.seeder import PharmacySeeder as SwarmSeeder
+from adversary.stage.domain.immune.seeder import PharmacySeeder as SwarmSeeder
 
 # The three phantoms, and the defect strings that produce them. Reconstructed
 # from the id formula and verified against the stored `target_pattern` of each
@@ -58,7 +58,7 @@ PHANTOM_DEFECTS = tuple(record.defect for record in RETIRED_ANTIBODIES.values())
 # the register, so it is the negative control: farming must still work here, or
 # the retirement tests below would pass vacuously.
 CLEAN_SIBLING_DEFECT = (
-    "defect:syntax_error:omega_engine_operations.use_cases.councils.social_graph"
+    "defect:syntax_error:operations.use_cases.councils.social_graph"
 )
 
 

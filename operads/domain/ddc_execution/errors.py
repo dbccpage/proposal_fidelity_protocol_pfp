@@ -6,7 +6,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_operads.domain.operad.errors import DomainError
+from operads.domain.operad.errors import DomainError
 
 
 class OperadDomainError(DomainError, ValueError):

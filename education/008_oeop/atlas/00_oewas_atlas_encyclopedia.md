@@ -1,6 +1,6 @@
 # OEWAS Atlas and Encyclopedia
 
-This atlas is the canonical, evidence-bounded guide to the Omega Engine Workflow
+This atlas is the canonical, evidence-bounded guide to the engine Workflow
 Agents Skills (OEWAS) package and the reference operad surface in
 `.agents/operad`.
 
@@ -65,7 +65,7 @@ proof.
  3. [15 Lookup: Archive & AutoP Capability Inventory](15_lookup_archive_and_autop_inventory.md)
  4. [16 Guide: OEWAS Test Suite Execution and Verification Harness](16_guide_oewas_test_suite_execution.md)
  5. [17 Notes: OEWAS Integration Plan and Multi-System Topology](17_notes_oewas_integration_plan_and_system_topology.md)
- 6. [18 Specification: Woland 7-Act Dialectic Workflow State Machine](18_spec_woland_7act_dialectic_workflow.md)
+ 6. [18 Specification: Adversary 7-Act Dialectic Workflow State Machine](18_spec_adversary_7act_dialectic_workflow.md)
  7. [19 Specification: Deep Module Skill Consolidation & Anti-Fragmentation](19_spec_skill_consolidation_and_deep_modules.md)
  8. [20 Specification: OEWAS v3 Production Architecture Blueprint](20_spec_oewas_v3_production_engine.md)
  9. [21 Specification: Debate-Grounded Autopoiesis and StructureBench Contracts](21_spec_debate_grounded_autopoiesis_and_structurebench_contracts.md)
@@ -86,4 +86,4 @@ authority; generators and agents do not acquire it by emitting a schema-conformi
 artifact. Research references motivate tests and designs but do not validate this
 repository.
 
-17. [29 Guide: Woland operations and the bounded management ladder](29_guide_woland_operad_management_ladder.md)
+17. [29 Guide: Adversary operations and the bounded management ladder](29_guide_adversary_operad_management_ladder.md)

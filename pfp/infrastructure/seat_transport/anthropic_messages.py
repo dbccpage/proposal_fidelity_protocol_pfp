@@ -1,7 +1,7 @@
 """The Anthropic Messages transport (Rust ``anthropic_messages`` host action) for research runs.
 
 The provider call, the worst-case quote, the cost ceiling and raw-reply custody all run in
-Rust (``omega_providers::anthropic``). A ceiling of 0 is refused before the key is read or
+Rust (``core_providers::anthropic``). A ceiling of 0 is refused before the key is read or
 a socket is opened. The key comes only from ``ANTHROPIC_API_KEY`` in the environment the
 host process was launched with. Prices come from dated observations the caller supplies.
 
@@ -13,12 +13,12 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import Any
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 from .transport import SYMBOL_GAME_PROTOCOL_V2
 
-_LOCUS = "omega_engine_pfp.infrastructure.seat_transport.anthropic_messages"
+_LOCUS = "pfp.infrastructure.seat_transport.anthropic_messages"
 ANTHROPIC_MAX_REPLY_BYTES = 16 * 1024 * 1024
 
 

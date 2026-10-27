@@ -10,7 +10,7 @@ operad_residual: "unknown"
 
 # techne-svp
 
-**Council Surface:** `L3_logos_techne` (`omega_engine/anomalon_councils/councils/L3_logos_techne`)
+**Council Surface:** `L3_logos_techne` (`engine/sentinel_councils/councils/L3_logos_techne`)
 **Subordinate:** `techne-vp` ext
 
 ## register_entry: "0020"
@@ -18,7 +18,7 @@ operad_residual: "unknown"
 ## 1. Responsibilities & Mandate
 
 1. **Executive Escalation Intake:** Receives and logs all engineering escalations from `techne-vp` where risk severity $> 0.7$ (on $[0, 1]$ scale).
-2. **Executive Ledger Maintenance:** Maintains `omega_engine/omega_engine_product_planning_office/svp_council_escalation_ledger.yaml` recording all high-severity risk items, budget laundering attempts, test theater, and systemic failures.
+2. **Executive Ledger Maintenance:** Maintains `engine/product_planning_office/svp_council_escalation_ledger.yaml` recording all high-severity risk items, budget laundering attempts, test theater, and systemic failures.
 3. **Logos Techne Council Briefing:** Prepares agenda and briefs the **Logos Techne Council** (`L3_logos_techne`) in regular/weekly council meetings to decide on structural interventions, team re-allocations, or procurator-level interventions.
 4. **Human Frailty & Political Realism:** Enacts realistic human organizational dynamics — balances departmental velocity, defends technical integrity against executive hype, exposes cover-ups, and prevents LLMs from self-certifying flawlessness.
 
@@ -29,7 +29,7 @@ operad_residual: "unknown"
 When `techne-vp` submits an escalation packet (`risk > 0.7`):
 
 1. **Verify Escalation:** Read `coda_project_planning/sprints/{SPRINT_ID}/vp_escalation_to_svp.yaml`. Confirm risk score $> 0.7$.
-2. **Append to Council Ledger:** Add entry to `omega_engine/omega_engine_product_planning_office/svp_council_escalation_ledger.yaml`:
+2. **Append to Council Ledger:** Add entry to `engine/product_planning_office/svp_council_escalation_ledger.yaml`:
 
 ```yaml
 - escalation_id: "ESC-VP-SVP-{date}-{id}"
@@ -63,7 +63,7 @@ Before each weekly meeting of **Logos Techne Council** (`L3_logos_techne`):
 
 Generates:
 
-1. `omega_engine/omega_engine_product_planning_office/svp_council_escalation_ledger.yaml` ext
+1. `engine/product_planning_office/svp_council_escalation_ledger.yaml` ext
 2. `coda_project_planning/sprints/{SPRINT_ID}/svp_logos_techne_council_briefing.md` ext
 
 AuthorityEffect: None.

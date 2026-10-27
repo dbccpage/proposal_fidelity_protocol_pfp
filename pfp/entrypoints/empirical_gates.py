@@ -13,7 +13,7 @@ import sys
 import uuid
 from pathlib import Path
 
-from omega_engine_pfp.domain.pfp_ingress import strict_json
+from pfp.domain.pfp_ingress import strict_json
 
 
 def _canonical(value):
@@ -91,7 +91,7 @@ def _plan(args, data):
                     and args.suite == 'rewrites' else args.max_cases if args.suite == 'rewrites' else 0,
                 authority_effect='None')
     if args.provider == 'anthropic':
-        from omega_engine_pfp.infrastructure.estimated_gateway import anthropic_price
+        from pfp.infrastructure.estimated_gateway import anthropic_price
 
         if args.suite == 'rewrites' or args.pricing_snapshot is None:
             raise ValueError('ANTHROPIC_PRICING_SNAPSHOT_REQUIRED')
@@ -122,7 +122,7 @@ def _summary(collection):
 
 
 def _run(args, data, plan):
-    from omega_engine_pfp.infrastructure.adapters.pfp_derivation import write_current
+    from pfp.infrastructure.adapters.pfp_derivation import write_current
 
     _fresh(args.output)
     if args.native_witness_output:
@@ -133,8 +133,8 @@ def _run(args, data, plan):
             raise ValueError('EXPLICIT_WITNESS_MODEL_REQUIRED')
     run_id = 'empirical:' + uuid.uuid4().hex
     if args.suite == 'rewrites':
-        from omega_engine_pfp.domain.rewriting.rewrites import RewriteRequest
-        from omega_engine_pfp.infrastructure.adapters.egglog_prompt_rewriter import (
+        from pfp.domain.rewriting.rewrites import RewriteRequest
+        from pfp.infrastructure.adapters.egglog_prompt_rewriter import (
             declared_preservation_cases, run_preservation_suite,
         )
         requests = (declared_preservation_cases() if data is None else
@@ -146,8 +146,8 @@ def _run(args, data, plan):
                 or args.max_estimated_cost_microusd is None
                 or not 0 < args.max_estimated_cost_microusd <= ceiling):
             raise ValueError('EXPLICIT_PROVIDER_ALLOWANCE_REQUIRED')
-        from omega_engine_pfp.infrastructure.pilot_matrix import make_pilot_gateways
-        from omega_engine_pfp.infrastructure.pilot_runners.empirical_gates import (
+        from pfp.infrastructure.pilot_matrix import make_pilot_gateways
+        from pfp.infrastructure.pilot_runners.empirical_gates import (
             collect_injection_containment, collect_token_amortization,
         )
         accounting = args.output.with_suffix('.accounting.sqlite3')
@@ -155,7 +155,7 @@ def _run(args, data, plan):
         objective = hashlib.sha256(_canonical(dict(plan=plan, inputs=data)).encode()).hexdigest()
         provider_options = {}
         if args.provider == 'anthropic':
-            from omega_engine_woland.domain.providers.types import Provider
+            from adversary.domain.providers.types import Provider
 
             provider_options = dict(provider=Provider.ANTHROPIC,
                                     pricing_snapshot=plan['pricing_snapshot'])
@@ -185,7 +185,7 @@ def _run(args, data, plan):
             raise ValueError('INCOMPLETE_OBSERVATIONS_NO_NATIVE_WITNESS')
         args.native_witness_output.parent.mkdir(parents=True, exist_ok=True)
         write_current(args.native_witness_output, dict(
-            schema_version='woland.native-gate-witnesses.v1', gates={gate_id: payload}, history_edges=[]))
+            schema_version='adversary.native-gate-witnesses.v1', gates={gate_id: payload}, history_edges=[]))
     return report
 
 
@@ -193,17 +193,17 @@ def _replay(args):
     report = _read(args.replay, limit=64 * 1024 * 1024)
     suite, data, plan = report['suite'], report['inputs'], report['plan']
     if suite == 'rewrites':
-        from omega_engine_pfp.infrastructure.adapters.egglog_prompt_rewriter import replay_preservation_suite
+        from pfp.infrastructure.adapters.egglog_prompt_rewriter import replay_preservation_suite
 
         summary = replay_preservation_suite(report['collection']['observations'])
         return dict(suite=suite, replay=True, summary=_summary(summary), provider_calls=0, authority_effect='None')
-    from omega_engine_pfp.infrastructure.pilot_runners.empirical_gates import (
+    from pfp.infrastructure.pilot_runners.empirical_gates import (
         summarize_injection_containment, summarize_token_amortization,
     )
     rows = report['collection']['rows']
     provider_options = {}
     if plan.get('provider') == 'anthropic':
-        from omega_engine_woland.domain.providers.types import Provider
+        from adversary.domain.providers.types import Provider
 
         provider_options = dict(provider=Provider.ANTHROPIC,
                                 pricing_snapshot=plan['pricing_snapshot'])

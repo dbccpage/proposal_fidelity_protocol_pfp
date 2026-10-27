@@ -1,6 +1,6 @@
 """Real native topology + existing exact typed compiler, with no provider calls.
 
-Requires an installed omega_symbol_game host or OMEGA_SYMBOL_GAME_HOST. A missing
+Requires an installed core_symbol_game host or CORE_SYMBOL_GAME_HOST. A missing
 native prerequisite is an observed refusal/failure, never a skipped positive arm.
 """
 
@@ -14,27 +14,27 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.commands.compile_catalog import (
+from operads.application.commands.compile_catalog import (
     operation_content_digest,
 )
-from omega_engine_operads.application.queries.validate_workflows import (
+from operads.application.queries.validate_workflows import (
     ValidateWorkflowsHandler,
 )
-from omega_engine_operads.application.typed_workflow_compiler import (
+from operads.application.typed_workflow_compiler import (
     WorkflowCompileRefusal,
     compile_typed_workflow,
 )
-from omega_engine_operads.application.woland_candidate_plan import PlanRefusal
-from omega_engine_operads.contracts.typed_workflow_v1 import (
+from operads.application.adversary_candidate_plan import PlanRefusal
+from operads.contracts.typed_workflow_v1 import (
     canonical_workflow_bytes,
 )
-from omega_engine_operads.domain.entities.typed_workflow import WorkflowBindingV1
-from omega_engine_operads.domain.value_objects.content_digest import ContentDigest
-from omega_engine_operads.domain.value_objects.identifier import SchemaRef
-from omega_engine_operads.infrastructure.typed_contract_compiler import (
+from operads.domain.entities.typed_workflow import WorkflowBindingV1
+from operads.domain.value_objects.content_digest import ContentDigest
+from operads.domain.value_objects.identifier import SchemaRef
+from operads.infrastructure.typed_contract_compiler import (
     compile_typed_contracts,
 )
-from omega_engine_operads.infrastructure.typed_workflow_compiler import (
+from operads.infrastructure.typed_workflow_compiler import (
     example_workflow,
     main,
 )
@@ -60,7 +60,7 @@ def test_current_skill_and_antiskill_compile_through_real_native_graph() -> None
 
 
 def test_native_graph_returns_the_literal_full_typed_interface():
-    from omega_engine_operads.application.woland_candidate_plan import port_contract
+    from operads.application.adversary_candidate_plan import port_contract
 
     result = compile_typed_workflow(
         compile_typed_contracts(ROOT).documents,
@@ -127,7 +127,7 @@ def _direct_typed_payload():
 
 
 def _direct_graph(payload):
-    from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+    from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
 
     crossed = RustSymbolGameHost().invoke_runtime("workflow_graph", payload)
     assert crossed.is_ok, crossed
@@ -150,11 +150,11 @@ def test_direct_native_typed_port_consumes_pins_and_full_interface():
 
 @pytest.mark.parametrize("include_null", [False, True])
 def test_actual_handler_refuses_missing_or_null_typed_native_reply(monkeypatch, include_null):
-    from omega_engine_operations.domain.rop.result import Ok
-    from omega_engine_operads.application.dtos.query_dtos import (
+    from operations.domain.rop.result import Ok
+    from operads.application.dtos.query_dtos import (
         ValidateWorkflowsQuery,
     )
-    from omega_engine_operads.application.queries import validate_workflows as owner
+    from operads.application.queries import validate_workflows as owner
 
     wire = {
         "is_valid": True,
@@ -329,7 +329,7 @@ def test_same_colour_foreign_contract_cannot_pass_after_native_topology(
     index = next(
         i
         for i, doc in enumerate(documents)
-        if str(doc.operations[0].operation_id) == "woland-claim-audit"
+        if str(doc.operations[0].operation_id) == "adversary-claim-audit"
     )
     doc = documents[index]
     operation = doc.operations[0]
@@ -383,6 +383,6 @@ def test_cli_checks_real_workflow_and_keeps_authority_ceiling(tmp_path, capsys) 
 def test_cli_missing_native_host_is_a_refusal(tmp_path, capsys, monkeypatch) -> None:
     path = tmp_path / "workflow.json"
     path.write_bytes(canonical_workflow_bytes(example_workflow(ROOT)))
-    monkeypatch.setenv("OMEGA_SYMBOL_GAME_HOST", str(tmp_path / "absent.exe"))
+    monkeypatch.setenv("CORE_SYMBOL_GAME_HOST", str(tmp_path / "absent.exe"))
     assert main(["--repo-root", str(ROOT), "--workflow", str(path)]) == 1
     assert "TYPED_WORKFLOW_REFUSED" in capsys.readouterr().err

@@ -6,7 +6,7 @@ This directory tracks code anti-patterns and healthy patterns as operations with
 
 ## 1. Operad Architecture & Pattern Duality
 
-In the Omega Engine operad architecture, code analysis, defect detection, and refactoring are represented as morphisms between typed colors:
+In the engine operad architecture, code analysis, defect detection, and refactoring are represented as morphisms between typed colors:
 
 - **Colors:**
   - `Code`: Source code syntax, AST, and module trees.

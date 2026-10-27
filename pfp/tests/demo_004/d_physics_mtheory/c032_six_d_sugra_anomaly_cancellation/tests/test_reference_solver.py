@@ -7,10 +7,10 @@ from __future__ import annotations
 
 from fractions import Fraction
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.reference_solver.solver import (
     solve_with_trace,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.reference_solver.sugra_6d import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.reference_solver.sugra_6d import (
     compute_exact_inertia,
     get_group_dim,
     get_rep_dim,

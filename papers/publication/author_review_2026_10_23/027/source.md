@@ -78,7 +78,7 @@ protocol, a local logit mask, or an external model provider. A separately
 supplied decoder maps well-formed messages to $W$ and refuses malformed
 messages. The host replays the decoded witness against the original task $P$.
 
-In the Omega Engine PFP runtime, this separation is organized into three
+In the engine PFP runtime, this separation is organized into three
 non-collapsing layers:
 
 1. **Layer 1 (Compositional Prompt Operad):** Typed prompt assembly and
@@ -1188,7 +1188,7 @@ $b_1 \in \{3, 4, 5, 6, 7, 8\}$ (`10` boards per cycle rank across `K4`, `K3,3`,
 ### 6.10 Trial 12 (`B-COH-S1`): Multi-stage `P*` cohomology certificate verification across `C011`–`C020`
 
 To test Theorem 12 across all ten cohomology challenges (`C011`–`C020`), we
-extended `check_certificate` in `omega_engine_pfp/domain/cohomology/` to
+extended `check_certificate` in `pfp/domain/cohomology/` to
 independently verify all `328` JSON benchmark cases (`278/278` `SOLVED`, `36/36`
 `OUT_OF_SCOPE`, `14/14` `UNKNOWN` rejected) and executed the paired multi-stage
 `P*` campaign (`b_cohomology_p_star_receipt.json`):
@@ -1336,12 +1336,12 @@ executes twelve deterministic verification suites with zero model calls:
 
 ## 8. Sources and relation to the programme
 
-This draft builds on the [WDP manuscript](../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
+This draft builds on the [WDP manuscript](../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
 [Paper 021 (source and execution audit)](../021_recreated_demos_and_proposal_fidelity_evidence/paper.md),
 [Corrected challenge findings](../symbol_game_challenge_and_demos_findings/README.md),
 [Paper 022 (frontier research)](../022_pfp_frontier_research/paper.md),
 the [Categorical Operad Prompt Architecture](../../../prompts/categorical_operad_prompt_architecture.md),
-and the [bounded C001/C004/C005/C006/`b_cohomology` mechanism sessions](../../../../../omega_engine_education/documentation/004_oepfp/docs/19_bounded_mechanism_sessions.md).
+and the [bounded C001/C004/C005/C006/`b_cohomology` mechanism sessions](../../../../../education/documentation/004_oepfp/docs/19_bounded_mechanism_sessions.md).
 The [two-level teaching packet](prompts/example.yaml) is retained as an
 unexecuted structural example. Genesis and MSS-N presentation stages do not
 license a new mathematical or physical carrier.

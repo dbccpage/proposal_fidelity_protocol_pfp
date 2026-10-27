@@ -32,7 +32,7 @@ class PfpStoragePort(Protocol):
         ...
 
     def load_terminal_routing(self) -> Dict[str, str]:
-        """PFP terminal value to `omega_types::routing::RoutingTerminal` name."""
+        """PFP terminal value to `core_types::routing::RoutingTerminal` name."""
         ...
 
     def load_modes_manifest(self) -> ModesManifest:
@@ -84,7 +84,7 @@ class PfpDemoRunnerPort(Protocol):
 
 
 class PfpGateEvaluatorPort(Protocol):
-    """Protocol for evaluating Woland Tribunal gates on candidate states."""
+    """Protocol for evaluating Adversary Tribunal gates on candidate states."""
 
     def evaluate_gate(self, gate_spec: GateSpec, candidate_state: Dict[str, Any]) -> GateVerdict:
         ...

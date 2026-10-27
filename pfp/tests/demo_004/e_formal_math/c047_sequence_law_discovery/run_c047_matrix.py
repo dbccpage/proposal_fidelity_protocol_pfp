@@ -7,17 +7,17 @@ import sys
 from functools import partial
 from pathlib import Path
 
-_repo_root = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir() and (p / "omega_engine_woland").is_dir())
+_repo_root = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir() and (p / "adversary").is_dir())
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.exact_checker import (  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.exact_checker import (  # noqa: E402
     check_solution,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (  # noqa: E402
     independent_check,
 )
-from omega_engine_pfp.infrastructure.formal_matrix import (  # noqa: E402
+from pfp.infrastructure.formal_matrix import (  # noqa: E402
     run_model_matrix,
     run_model_matrix_cli,
 )

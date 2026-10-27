@@ -40,7 +40,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     CandidateArtifactV1,
     CanonicalizationError,
     InvariantViolationError,
@@ -56,13 +56,13 @@ from omega_engine_pfp.domain import (
     thaw,
     verify_llm_turn_run_root_shape,
 )
-from omega_engine_pfp.domain.aggregates.llm_turn_run_root import (
+from pfp.domain.aggregates.llm_turn_run_root import (
     _assert_candidate_binds_content,
 )
-from omega_engine_pfp.infrastructure.persistence.repositories import (
+from pfp.infrastructure.persistence.repositories import (
     MemoryTurnRepository,
 )
-from omega_engine_pfp.use_cases.llm_turn import (
+from pfp.use_cases.llm_turn import (
     CONTENT_ENCODING,
     CreateTurnUseCase,
     EvaluateCandidateUseCase,

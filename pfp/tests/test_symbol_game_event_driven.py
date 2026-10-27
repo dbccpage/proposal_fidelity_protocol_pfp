@@ -1,18 +1,18 @@
-"""Unit tests for Event-Driven Architecture in omega_engine_pfp."""
+"""Unit tests for Event-Driven Architecture in pfp."""
 
 from __future__ import annotations
 
-from omega_engine_pfp.domain.events import (
+from pfp.domain.events import (
     DomainEvent,
     ProposalEvaluatedEvent,
     RunRootCreatedEvent,
     TurnExecutedEvent,
 )
-from omega_engine_pfp.infrastructure.events import (
+from pfp.infrastructure.events import (
     InMemoryEventBus,
     TransactionalOutbox,
 )
-from omega_engine_pfp.controllers.symbol_game_engine import SymbolGameEngine
+from pfp.controllers.symbol_game_engine import SymbolGameEngine
 
 
 def test_in_memory_event_bus() -> None:

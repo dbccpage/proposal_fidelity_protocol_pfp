@@ -17,7 +17,7 @@ def definitions_dir() -> Path:
         if (parent / ".agents").is_dir() or (parent / ".git").is_dir():
             repo = parent
             break
-    canonical = repo / "omega_engine_epistemic_immune_system" / "antibodies" / "definitions"
+    canonical = repo / "eis" / "antibodies" / "definitions"
     return canonical
 
 

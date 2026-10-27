@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 A Kochen–Specker (KS) set is a finite set of rays that admits no {0, 1} colouring in which every complete orthogonal basis drawn from the set has exactly one ray coloured 1 and no two orthogonal rays are both coloured 1. Known examples include Peres's 33 rays in dimension 3 (Peres 1991) and the 18 rays in dimension 4 of Cabello, Estebaranz and García-Alcaine (1996). The 18-ray set has a short parity proof: its 9 bases each contain exactly one ray coloured 1, giving an odd total, yet every ray lies in exactly two bases, giving an even total.
 
-Both answers have cheap certificates: a colouring checked constraint by constraint, or an UNSAT proof or parity argument. Producing them needs exact orthogonality (no rounding) and correct context enumeration. The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) composition of exact geometry with a SAT tool, and OEEIS (Omega Engine Epistemic Immune System) screening of rays that are orthogonal only to within a tolerance.
+Both answers have cheap certificates: a colouring checked constraint by constraint, or an UNSAT proof or parity argument. Producing them needs exact orthogonality (no rounding) and correct context enumeration. The task stresses OEWAS (Engine Workflows, Agents, Skills) composition of exact geometry with a SAT tool, and OEEIS (Engine Epistemic Immune System) screening of rays that are orthogonal only to within a tolerance.
 
 ## 3. Formal Problem and Bounds
 
@@ -56,7 +56,7 @@ Certificate kinds for `colourable: false`: `parity` (a list of an odd number of 
 - **Relabel and gauge controls:** 8 controls: ray permutation; a signed coordinate permutation applied to every vector; a rational orthogonal matrix applied to every vector, with denominators then cleared; rescaling each vector by a nonzero integer. Colourability is invariant under all four.
 - **Poisoned-but-schema-valid cases:** 6 cases: a near-KS set where one "orthogonal" pair has a tiny nonzero dot product in Z[√2], such as (√2 − 1)⁸ ≈ 0.0009 (so a context disappears and the set may become colourable; the second checker decides); a duplicate ray entered as 2v; a parity-looking list of contexts in which one context is not orthogonal.
 - **Exact checker (Rust):** builds the orthogonality graph over Q(√2), enumerates contexts, checks colourings, parity certificates, and LRAT proofs with a pinned checker.
-- **Independent second checker:** a separately written backtracking colourer with unit propagation, and, for parity certificates, the Z₂ cochain obstruction in `omega_quantum_physics::contextuality_obstruction` (contextuality over H¹ with Z₂ coefficients).
+- **Independent second checker:** a separately written backtracking colourer with unit propagation, and, for parity certificates, the Z₂ cochain obstruction in `core_quantum_physics::contextuality_obstruction` (contextuality over H¹ with Z₂ coefficients).
 - **Mutation suite:** a colouring with two orthogonal ones, a context with no one, a parity list with a non-context, an LRAT proof for a different subset, a merged-ray error, a claimed critical set with a missing deletion colouring.
 
 ## 7. Arms and Baselines
@@ -98,9 +98,9 @@ Operands expected: (1) merge parallel rays before anything else; (2) parity proo
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_solvers/src/solver_cadical_unsat_core.rs` (CaDiCaL; LRAT emission may need adding).
-- `omega_engine/crates_rs/omega_quantum_physics/src/contextuality_obstruction.rs` (the Cabello 18-ray scenario in 9 contexts and its Z₂ cohomology class; reused by the second checker).
-- `omega_engine/crates_rs/omega_number_theory/src/cyclotomic.rs` (`Cyc8`, which contains √2) for exact orthogonality; `gleason.rs` and `contextuality_thresholds.rs` for context.
+- `engine/crates_rs/core_solvers/src/solver_cadical_unsat_core.rs` (CaDiCaL; LRAT emission may need adding).
+- `engine/crates_rs/core_quantum_physics/src/contextuality_obstruction.rs` (the Cabello 18-ray scenario in 9 contexts and its Z₂ cohomology class; reused by the second checker).
+- `engine/crates_rs/core_number_theory/src/cyclotomic.rs` (`Cyc8`, which contains √2) for exact orthogonality; `gleason.rs` and `contextuality_thresholds.rs` for context.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

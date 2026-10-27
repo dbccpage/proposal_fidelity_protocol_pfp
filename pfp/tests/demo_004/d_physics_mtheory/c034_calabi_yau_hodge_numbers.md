@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 A four-dimensional reflexive polytope Δ determines a family of Calabi–Yau threefold hypersurfaces in a toric variety, and Batyrev (1994) gave their Hodge numbers in terms of lattice-point counts on the faces of Δ and its polar dual Δ*. Kreuzer and Skarke (2000) classified all 473,800,776 reflexive polytopes in four dimensions. The computation is exact and finite: face lattices, lattice points and interior lattice points. It is also easy to get subtly wrong. The correction term over codimension-two faces is often zero, so a solver that drops it passes most cases and fails the rest.
 
-The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) decomposition into convex geometry, point counting and a closing formula. It stresses OEEIS (Omega Engine Epistemic Immune System) screening of Hodge pairs that are plausible, and even mirror-consistent, but wrong.
+The task stresses OEWAS (Engine Workflows, Agents, Skills) decomposition into convex geometry, point counting and a closing formula. It stresses OEEIS (Engine Epistemic Immune System) screening of Hodge pairs that are plausible, and even mirror-consistent, but wrong.
 
 ## 3. Formal Problem and Bounds
 
@@ -104,8 +104,8 @@ Operands expected: (1) reflexivity via facet lattice distance 1; (2) the codimen
 ## 13. Estate Reuse and Prerequisites
 
 - No lattice-polytope module exists in the estate. The facet enumeration, point counting and face lattice are new Rust work.
-- `omega_engine/crates_rs/omega_linear_algebra` (`smith_normal_form.rs`, `determinant.rs`) for GL(4, Z) checks and lattice indices; `omega_engine/crates_rs/omega_kernel` for exact rationals.
-- `omega_engine/crates_rs/omega_homology` is not needed for the formulas, but can cross-check the Euler characteristic of the boundary complex (a 3-sphere, χ = 0).
+- `engine/crates_rs/core_linear_algebra` (`smith_normal_form.rs`, `determinant.rs`) for GL(4, Z) checks and lattice indices; `engine/crates_rs/core_kernel` for exact rationals.
+- `engine/crates_rs/core_homology` is not needed for the formulas, but can cross-check the Euler characteristic of the boundary complex (a 3-sphere, χ = 0).
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

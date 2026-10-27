@@ -50,6 +50,6 @@ def finalize_run_summary(
 
 ## Evidence & Verification
 
-Observed in `_ic/woland/runs/` digestion:
+Observed in `_ic/adversary/runs/` digestion:
 - 47 runs correctly preserved `OPEN_RESIDUAL` when `checker_receipt` was `null`, accurately identifying pending host acceptance.
 - 3 legacy runs recorded `PASS_TO_MASTER` despite having `checker_receipt: null`. Applying this pattern ensures future automated digestion immediately detects and prevents ungrounded pass claims.

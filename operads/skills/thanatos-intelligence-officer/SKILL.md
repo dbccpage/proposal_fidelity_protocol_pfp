@@ -26,16 +26,16 @@ operad_residual: "unknown"
 2. **Execution Command:**
 
    ```powershell
-   # retired: omega_engine_university/ is the pre-split root, absent here
-   python omega_engine_university/published_code/ingest.py
+   # retired: university/ is the pre-split root, absent here
+   python university/published_code/ingest.py
    ```
 
 3. **Post-Ingestion Index Refresh:**
    - After processing data into `_intelligence/oe_processed_info`, update multi-estate search indexes:
 
    ```powershell
-   # retired: omega_engine_university/ is the pre-split root, absent here
-   python omega_engine_university/published_code/build_published_fts_semantic_index.py
+   # retired: university/ is the pre-split root, absent here
+   python university/published_code/build_published_fts_semantic_index.py
    ```
 
 ---

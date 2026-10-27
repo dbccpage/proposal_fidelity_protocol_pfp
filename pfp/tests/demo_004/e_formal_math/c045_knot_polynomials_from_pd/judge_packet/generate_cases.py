@@ -18,7 +18,7 @@ _repo_root = next(p for p in Path(__file__).resolve().parents if (p / "pyproject
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.knots_catalog import (
+from pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.reference_solver.knots_catalog import (
     CANONICAL_KNOTS,
 )
 

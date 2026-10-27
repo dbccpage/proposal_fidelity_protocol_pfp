@@ -9,13 +9,13 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.treg import (
+from eis.domain.treg import (
     AuthorityLevel,
     AutoimmuneToxicityReport,
     RegulatoryAntibody,
     TregSupervisor,
 )
-from omega_engine_pfp.domain.immune.treg import (
+from pfp.domain.immune.treg import (
     TregSupervisor as SymbolGameTregSupervisor,
 )
 

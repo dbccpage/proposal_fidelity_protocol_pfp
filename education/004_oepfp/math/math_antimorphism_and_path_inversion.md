@@ -128,7 +128,7 @@ Let $\operatorname{id}: \mathcal{X} \to \mathcal{X}$ be the identity map $\opera
 $$\sigma(\operatorname{id}(x)) = \sigma(x) \ne -\sigma(x)$$
 Therefore, the identity map cannot satisfy both condition 2 ($\Xi(x) \ne x$) and condition 3 ($\sigma(\Xi(x)) = -\sigma(x)$). In fact condition 3 alone excludes it, and condition 3 implies condition 2: if $\Xi(x) = x$ then $\sigma(x) = -\sigma(x)$, so $\sigma(x) = 0$.
 
-*Trace Evidence:* In `demo2_r1_stoquastic_1790206807.jsonl` (Turn 6; at the source pin this file is under `omega_engine_atlas/coda_atlas/F004_papers/015_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/`), a model proposed $\Xi = \operatorname{id}$ claiming it satisfied both fixed-point-free pairing and sign reversal. The historical unhardened runner falsely recorded `ExactCancellation`. Under hardened host discipline, this proposal is strictly refused with code `REFUSED_AM_FSP_2_WITNESS_INVALID`.
+*Trace Evidence:* In `demo2_r1_stoquastic_1790206807.jsonl` (Turn 6; at the source pin this file is under `atlas/coda_atlas/F004_papers/015_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/results/`), a model proposed $\Xi = \operatorname{id}$ claiming it satisfied both fixed-point-free pairing and sign reversal. The historical unhardened runner falsely recorded `ExactCancellation`. Under hardened host discipline, this proposal is strictly refused with code `REFUSED_AM_FSP_2_WITNESS_INVALID`.
 
 ---
 

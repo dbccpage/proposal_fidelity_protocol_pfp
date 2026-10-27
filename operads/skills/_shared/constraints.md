@@ -110,9 +110,9 @@ unexpected top-level directory is a stop signal.
 **Text**: A rename is a repoint, never a re-create. After renaming a module or
 crate, redirect every import; never leave the old tree beside the new one. A
 crate `X` may not coexist with `X_theory`, and no two modules under
-`omega_engine/crates` may share a normalized body. Every mathematics crate
+`engine/crates` may share a normalized body. Every mathematics crate
 carries the `_theory` suffix; a bare-named math crate is the stale copy.
-**Gate**: `python omega_engine_operations/domain/module_shadow_scan.py --repo-root .`
+**Gate**: `python operations/domain/module_shadow_scan.py --repo-root .`
 **Applies to**: Any skill that renames, moves, or prefixes modules.
 
 ### IDENTIFIER_SAFE_MODULE_NAMES
@@ -124,7 +124,7 @@ hyphen — makes it unimportable *by construction*: `from pkg.lambda.x import y`
 is a `SyntaxError` the parser raises before any import resolves, so no import
 repair can reach it. Check the name with `str.isidentifier()` and
 `keyword.iskeyword()` before renaming, not after.
-**Gate**: `python omega_engine_operations/domain/module_shadow_scan.py --repo-root .`
+**Gate**: `python operations/domain/module_shadow_scan.py --repo-root .`
 (`NON_IDENTIFIER_MODULE`)
 **Applies to**: Any skill that renames, moves, or prefixes modules or packages.
 
@@ -146,7 +146,7 @@ four hosts. Edit canon in `.agents/skills/`, run
 Never commit a canon edit alone: the next parity check inherits the drift, and
 the host that reads the stale copy behaves differently from the one that reads
 canon.
-**Check**: `python omega_engine_operations/use_cases/sync_cross_host_skills.py --check`
+**Check**: `python operations/use_cases/sync_cross_host_skills.py --check`
 **Applies to**: Every skill that writes under `.agents/skills/`.
 
 ### VERIFY_PEER_CLAIMS
@@ -261,7 +261,7 @@ exists to catch.
 ### ZERO_HALLUCINATION
 
 **Text**: Every claim must have a traceable causal path. No assertions without evidence.
-**Applies to**: omega-hunter, aletheia, any truth-verification skill.
+**Applies to**: core-hunter, aletheia, any truth-verification skill.
 
 ### ROOT_CAUSE_FIRST
 
@@ -275,17 +275,17 @@ exists to catch.
 ### CATEGORY_THEORETIC
 
 **Text**: All reasoning must map to categorical constructs (functors, natural transformations, adjunctions).
-**Applies to**: omega-hunter, rules-hunter, any skill operating at Tier 9+.
+**Applies to**: core-hunter, rules-hunter, any skill operating at Tier 9+.
 
 ### RULIAD_AWARE
 
 **Text**: Operate at the limit of computational possibility space. Consider all reachable states.
-**Applies to**: omega-hunter, theoretical analysis skills.
+**Applies to**: core-hunter, theoretical analysis skills.
 
 ### DIAMOND_HARDNESS
 
 **Text**: Output must meet Tier 0 verification standards (Diamond Hardness 8-10).
-**Applies to**: omega-hunter, green, any skill producing crystallized artifacts.
+**Applies to**: core-hunter, green, any skill producing crystallized artifacts.
 
 ---
 
@@ -303,7 +303,7 @@ exists to catch.
 
 ---
 
-## Hard Anomalon Gates
+## Hard Sentinel Gates
 
 ### RULE_PRIME_0_0
 
@@ -414,7 +414,7 @@ PARALLEL_EXECUTION, AGGREGATE_RESULTS, APPROVAL_REQUIRED
 
 ``` ext
 
-### Categorical/Omega Skills
+### Categorical/Core Skills
 
 ``` ext
 CATEGORY_THEORETIC, RULIAD_AWARE, ZERO_HALLUCINATION, DIAMOND_HARDNESS
@@ -428,10 +428,10 @@ ROOT_CAUSE_FIRST, EVIDENCE_BASED, MAINTAIN_TESTS
 
 ``` ext
 
-### Retinue Character Skills
+### Panel Character Skills
 
 ``` ext
-(None required - execution-only wrappers that invoke woland_cli)
+(None required - execution-only wrappers that invoke adversary_cli)
 
 ``` ext
 
@@ -441,7 +441,7 @@ ROOT_CAUSE_FIRST, EVIDENCE_BASED, MAINTAIN_TESTS
 
 ### CANONICAL_PATHS
 
-**Text**: Sprint artifacts live under `coda_project_planning/sprints/{NNN}/`. Agent definitions live under `.agents/agents/`. Skills live under `.agents/skills/`. The `sdlc/`, `.anomalon/`, `.claude/`, and `omega_engine/docs/sprints/` directories are deprecated.
+**Text**: Sprint artifacts live under `coda_project_planning/sprints/{NNN}/`. Agent definitions live under `.agents/agents/`. Skills live under `.agents/skills/`. The `sdlc/`, `.sentinel/`, `.claude/`, and `engine/docs/sprints/` directories are deprecated.
 **Applies to**: All sprint-workflow skills, any skill referencing filesystem paths.
 
 **Source:** Sprint 112 path update. Updated 2026-08-05 to reflect `.agents/` and `coda_project_planning/sprints/` canonical locations.

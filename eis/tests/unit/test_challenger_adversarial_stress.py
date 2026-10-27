@@ -53,7 +53,7 @@ from __future__ import annotations
 from fractions import Fraction
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.danger_gate import (
+from eis.domain.danger_gate import (
     DangerDecision,
     DangerSeverity,
     GuardDisposition,
@@ -63,30 +63,30 @@ from omega_engine_epistemic_immune_system.domain.danger_gate import (
     TwoSignalCollapseError,
     TwoSignalDangerGate,
 )
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_signals import (
     SignalIndependenceRefusal,
     assert_signals_independent,
     signal1_digest,
 )
-from omega_engine_epistemic_immune_system.domain.allostery import (
+from eis.domain.allostery import (
     AllostericConsensusGate,
     AllostericDecision,
     DEFAULT_PARAMETERS,
     minimal_quorum,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     AllosteryRefusal,
     DetectorRule,
     HillParameters,
 )
-from omega_engine_epistemic_immune_system.domain.provisional_promotion import (
+from eis.domain.provisional_promotion import (
     ObservationSupportPolicyV1,
     PromotionResult,
     ProvisionalPromotionEngineV1,
     RawObservationV1,
     SupportResult,
 )
-from omega_engine_epistemic_immune_system.domain.clonal_selection import (
+from eis.domain.clonal_selection import (
     ClonalSelectionEngine,
     ClonalSelectorV1,
     GuardInstance,

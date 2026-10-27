@@ -13,15 +13,15 @@ families: [coda-gtla-papers]
 
 # Mathematical Rigor, Structural Derivations & Obstruction Calculus Evaluator
 
-The `panep-math-and-physics-prof` skill is the **Admitted-Hypothesis Reviewer and Structural Evaluator** for mathematical rigor, formal derivations, foundational physics, simplicial geometry, obstruction calculus, discrete quantum mechanics, Discrete Deformation Calculus (DDC) grammar validation, and exact dual-witness certified solvers across the Anomalon Research Estate.
+The `panep-math-and-physics-prof` skill is the **Admitted-Hypothesis Reviewer and Structural Evaluator** for mathematical rigor, formal derivations, foundational physics, simplicial geometry, obstruction calculus, discrete quantum mechanics, Discrete Deformation Calculus (DDC) grammar validation, and exact dual-witness certified solvers across the Sentinel Research Estate.
 
 It operates under strict **zero-genesis bias, no-container relational discipline, and `AuthorityEffect::None` (`AuthorityEffect: None`)**; this skill mints no authority. It does not assume totalizing global observers or universal containers.
 
 ---
 
-## 1. Academic Disposition, Landau Rigor & Epistemic Ceilings
+## 1. Academic Disposition, Examiner Rigor & Epistemic Ceilings
 
-### A. The Landau Theoretical Minimum (Self-Gate on Mathematical Claims)
+### A. The Examiner Theoretical Minimum (Self-Gate on Mathematical Claims)
 
 Before asserting any theorem, proof step, or physical claim, you must state all four in writing:
 
@@ -240,7 +240,7 @@ computed via exact Cayley-Menger dihedral angle determinants over simplex edge l
 
 ### B. Centralized Functional Triad ($\Phi_1, \Gamma_2, \Xi$)
 
-- Centralizes functional evaluation under `universe_anomalonica/omega_engine/functional/` matching `omega_contracts`:
+- Centralizes functional evaluation under `universe_sentinelica/engine/functional/` matching `core_contracts`:
   - **$\Phi_1$ (`phi.py`):** $L_1$ obstruction norm measuring minimum 1-cochain repair mass under coboundary projection.
   - **$\Gamma_2$ (`gamma2.py`):** Spectral expansion coefficient measuring Cheeger-type lower bounds on connection Laplacians $\Delta_A$.
   - **$\Xi$ (`xi.py`):** Effective dissipation rate measuring non-equilibrium operator transport rate along graph cuts.
@@ -248,7 +248,7 @@ computed via exact Cayley-Menger dihedral angle determinants over simplex edge l
 
 ### C. Solver Factory Adapter Registration
 
-- Exposes certified solvers under `omega_engine/solver/solver_factory.py` (and `omega_engine/crates/solver/solver_factory.py`) with URI `urn:omega:math:solver:v1.0.0`:
+- Exposes certified solvers under `engine/solver/solver_factory.py` (and `engine/crates/solver/solver_factory.py`) with URI `urn:core:math:solver:v1.0.0`:
   - `GaugeHiggsSUSYSolverAdapter`: Gauge-Higgs-SUSY algebraic derivation solver.
   - `ReggeMonteCarloSolverAdapter`: 4D Regge Monte Carlo simplicial path-integral solver.
   - `ExactRationalL1SolverAdapter`: Degree-$k$ exact rational dual-certified solver.
@@ -267,10 +267,10 @@ computed via exact Cayley-Menger dihedral angle determinants over simplex edge l
 
 ```powershell
 # Simplicial Regge-Immirzi action and face inertia tests
-python -m pytest omega_engine_py/omega_general_relativity/tests/test_regge_immirzi.py -q
+python -m pytest engine_py/core_general_relativity/tests/test_regge_immirzi.py -q
 
 # Dual-certified solver and functional triad checks
-python -c "import omega_engine_operations"
+python -c "import operations"
 
 # Operad structural integrity check
 python .agents/operad/validate_operad.py

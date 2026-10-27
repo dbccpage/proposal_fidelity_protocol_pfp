@@ -127,7 +127,7 @@ def test_declaring_every_host_passes(tree: Path):
 def test_a_mirror_claim_wrapped_across_lines_is_read_whole(tree: Path):
     """A declaration is a sentence, and sentences wrap.
 
-    Wrapping `omega-engine-product-manager`'s host line to satisfy the 80
+    Wrapping `product-manager`'s host line to satisfy the 80
     column lint moved two of the six roots onto a continuation line that does
     not contain the word "mirror". A line-scoped reader saw four hosts and
     refused a skill that had just named all six.

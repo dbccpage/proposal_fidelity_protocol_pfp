@@ -1,4 +1,4 @@
-"""Landau Class 1 & Class 2: SQL Constraint Rejection Matrix & Monotonic Epoch Invariants.
+"""Examiner Class 1 & Class 2: SQL Constraint Rejection Matrix & Monotonic Epoch Invariants.
 
 Theoretical Minimum:
 1. INVARIANT: Attempting to insert duplicate catalog_id, event_id, or outbox message_id must violate
@@ -13,16 +13,16 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import unittest
 
-from omega_engine_operads.domain.entities import (
+from operads.domain.entities import (
     EstateCatalogV3,
     OperationV3,
     PortSpecV3,
 )
-from omega_engine_operads.domain.events import (
+from operads.domain.events import (
     CatalogCompiledV3,
     EstateCapturedV3,
 )
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     AdmissionFacet,
     AuthorityEffect,
     ColourId,
@@ -37,7 +37,7 @@ from omega_engine_operads.domain.value_objects import (
     SkillLifecycleV3,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import (
+from operads.infrastructure.storage.sqlite_unit_of_work import (
     SqliteUnitOfWork,
 )
 

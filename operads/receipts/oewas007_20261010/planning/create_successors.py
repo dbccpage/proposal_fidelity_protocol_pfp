@@ -6,16 +6,16 @@ import json
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 BASE = "4d207641277ef3d3af16e11aafb411ada1ee10ed"
-RECEIPTS = "omega_engine_product_planning_office/receipts/"
-EVIDENCE = "omega_engine_workflows_agents_skills/receipts/oewas007_20261010/"
-EPICS = "omega_engine_product_planning_office/plans/epics/"
+RECEIPTS = "product_planning_office/receipts/"
+EVIDENCE = "workflows_agents_skills/receipts/oewas007_20261010/"
+EPICS = "product_planning_office/plans/epics/"
 BOUNDED = {
     EPICS + "oewas/epic_oe_oewas_007_american_ic_partition_and_typed_schema_plan.md": [
         "Full scope stays RESEARCH_HOLD: opt-in tooling is not the operator's live estate activation.",
         "All-writer quiescence/checkpoint evidence, complete producer/native parity and historical reader coverage remain independently owned obligations.",
         "No retirement/deletion, power-loss proof, hostile-writer isolation, cryptographic admission or estate-wide zero-duplicate-ingestion claim.",
     ],
-    EPICS + "oewas/epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oewoland_plan.md": [
+    EPICS + "oewas/epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oeadversary_plan.md": [
         "Full scope stays RESEARCH_HOLD: selected storage routing/readback is bounded; trusted native positive admission remains unavailable.",
         "Complete producer/native parity, live operator activation and PRE_DISPATCH/PRE_SEAL admission correlation need separate evidence.",
         "Containment and finite writer/reader controls cannot grant CLEAR/admission or prove estate-wide quiescence.",
@@ -95,8 +95,8 @@ if __name__ == "__main__":
         create("prior_art_epic_map_20261010_oegov_successor.json", "prior_art_epic_map_20261010_oewas007_successor.json", "prior_epic_inventory"),
     ]
     replacements = {
-        "omega_engine_product_planning_office/use_cases/epic_tdd_plan_audit.py": ("epic_obstruction_walk_20261010_oegov_successor.json", "epic_obstruction_walk_20261010_oewas007_successor.json"),
-        "omega_engine_product_planning_office/use_cases/prior_art_epic_audit.py": ("prior_art_epic_map_20261010_oegov_successor.json", "prior_art_epic_map_20261010_oewas007_successor.json"),
+        "product_planning_office/use_cases/epic_tdd_plan_audit.py": ("epic_obstruction_walk_20261010_oegov_successor.json", "epic_obstruction_walk_20261010_oewas007_successor.json"),
+        "product_planning_office/use_cases/prior_art_epic_audit.py": ("prior_art_epic_map_20261010_oegov_successor.json", "prior_art_epic_map_20261010_oewas007_successor.json"),
     }
     for rel, (old, new) in replacements.items():
         path = ROOT / rel

@@ -1,10 +1,10 @@
 """Regressions for false certification in the C021 Python wrappers."""
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum import runner
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.swarm import (
+from projects.mssn_sn_symgam.challenges.c_quantum import runner
+from projects.mssn_sn_symgam.challenges.c_quantum.swarm import (
     q40_solver,
-    woland_overseer,
+    adversary_overseer,
 )
 
 
@@ -92,12 +92,12 @@ def test_runner_distinguishes_refusals_and_empty_input(case):
 
 
 @pytest.mark.parametrize("adversarial_zero_claim", [False, True])
-def test_unbound_woland_execution_refuses_without_artifacts(case, tmp_path, adversarial_zero_claim):
+def test_unbound_adversary_execution_refuses_without_artifacts(case, tmp_path, adversarial_zero_claim):
     class ForbiddenHost:
         def invoke(self, *_):
             pytest.fail("An unbound challenge must not bypass the city")
 
-    overseer = woland_overseer.WolandQuantumOverseer(tmp_path, host=ForbiddenHost())
+    overseer = adversary_overseer.AdversaryQuantumOverseer(tmp_path, host=ForbiddenHost())
     result = overseer.execute_challenge(
         "C021",
         case,
@@ -105,7 +105,7 @@ def test_unbound_woland_execution_refuses_without_artifacts(case, tmp_path, adve
         adversarial_zero_claim=adversarial_zero_claim,
     )
     assert result.verdict == "REFUSE"
-    assert result.refusal_code == "WOLAND_EXECUTION_UNAVAILABLE"
+    assert result.refusal_code == "ADVERSARY_EXECUTION_UNAVAILABLE"
     assert result.certificate.status == "UNKNOWN"
     assert not result.certificate.algebraic_verified
     assert not result.certificate.dense_verified

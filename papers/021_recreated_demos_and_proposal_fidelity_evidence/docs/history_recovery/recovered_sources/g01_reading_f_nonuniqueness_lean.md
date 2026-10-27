@@ -19,7 +19,7 @@ Reading L has Lean evidence for non-uniqueness under `mu1`: `deltaK_valid` and `
 
 Generating the proofs is hard. Non-isomorphism over the Type-valued `Iso` structure needs invariant arguments, such as arity at a fixed form index, and they must be written in core Lean without Mathlib. Checking them is cheap: the kernel, the axiom audit and a statement pin do it.
 
-The task stresses strict descent on open goals, OEWAS (Omega Engine Workflows, Agents, Skills) Lean workflows, and OEEIS (Omega Engine Epistemic Immune System) refusal of weakened statements. A pass would show that a small-model pipeline can close a named gap between a bounded computation and a theorem. It says nothing about choosing between reading L and reading F.
+The task stresses strict descent on open goals, OEWAS (Engine Workflows, Agents, Skills) Lean workflows, and OEEIS (Engine Epistemic Immune System) refusal of weakened statements. A pass would show that a small-model pipeline can close a named gap between a bounded computation and a theorem. It says nothing about choosing between reading L and reading F.
 
 ## 3. Formal Problem and Bounds
 
@@ -63,7 +63,7 @@ The operator runs the judge; the solving system does not.
 - **Gates.** `python ci/run_gates.py` at HEAD `b55fc96a` covers the twelve gate families, including the forbidden-token scan and `ci/check_declaration_axioms.py`. This runner does not exist at `3100c4e`. The tree's own verifier also runs.
 - **Statement pin.** For each target, the judge compiles `example : <frozen type> := <submitted name>`, so a weakened statement fails.
 - **Held-out statements (eight).** F-5 over a relabelled `R2F`; family members against the link-to and link-from classes; F-K at fixed `k` by `decide`; and three poisoned statements: a valid genesis-datum mark, `mu2` non-uniqueness in F, and an `Iso` between an F result and an L result offered as a reading identification.
-- **Second checker.** `omega_engine/crates_rs/omega_ooutwire_primitives` (`minima.rs`, `canonical.rs`) recomputes the class keys.
+- **Second checker.** `engine/crates_rs/core_ooutwire_primitives` (`minima.rs`, `canonical.rs`) recomputes the class keys.
 - **Mutation suite.** The gates must reject `sorry` in a comment, `native_decide` (which adds `Lean.ofReduceBool`), `Classical.em`, `import Mathlib`, an extra `False` hypothesis, an `axiom` line and `partial def`.
 
 ## 7. Arms and Baselines
@@ -101,7 +101,7 @@ A Lean-specialised open prover is also allowed if the registry (U06) records it 
 
 The catalog row requires none of these. They are recommended.
 
-- **Thymus.** `ThymusGate` and `SelfPanel` in `omega_engine_pfp/domain/immune/thymus.py` screen candidate detectors, such as "weakened statement" or "classical escape". The self panel is the sealed, audited proofs `deltaK_valid`, `markK_pairwise_noniso` and `mu2_unique`. A detector that fires on them is discarded.
+- **Thymus.** `ThymusGate` and `SelfPanel` in `pfp/domain/immune/thymus.py` screen candidate detectors, such as "weakened statement" or "classical escape". The self panel is the sealed, audited proofs `deltaK_valid`, `markK_pairwise_noniso` and `mu2_unique`. A detector that fires on them is discarded.
 - **Danger gate.** `TwoSignalDangerGate` quarantines a candidate only when both signals are present. Signal 1 is a forbidden-epitope match. Signal 2 is a report outside the whitelist or a statement-pin failure.
 - **Antimorphisms.** Two are expected: a skipped assertion ("by symmetry with L") and an idempotent tactic loop.
 - **Layer-2 token bans.** `domain/carrier_decoding.py` provides them. They steer generation; they verify nothing.
@@ -118,7 +118,7 @@ The catalog row requires none of these. They are recommended.
 
 **19L57G1, read-only.** At `3100c4e`: `19L57G1:lean4/Derivation/Basic.lean`, `19L57G1:lean4/Derivation/Minimality.lean`, `19L57G1:code/derivation/candidates.py` and `19L57G1:artifacts/challenges.json`; at HEAD: `19L57G1:lean4/Derivation/MinimalityF.lean` and `19L57G1:research/alpha_engine/lean/`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_ooutwire_primitives` as the second checker, and `omega_engine_pfp/domain/immune/`.
+**the_symbol_game.** `engine/crates_rs/core_ooutwire_primitives` as the second checker, and `pfp/domain/immune/`.
 
 **Upgrades.**
 

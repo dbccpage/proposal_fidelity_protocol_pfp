@@ -9,8 +9,8 @@ from dataclasses import asdict, dataclass, field
 from ..exceptions import CanonicalizationError
 from ..validation import _require_digest, _require_stable_id
 
-CHECK_SCHEMA = "omega.pfp.source-bound-code-change-check.v1"
-RESULT_SCHEMA = "omega.pfp.source-bound-code-change-result.v1"
+CHECK_SCHEMA = "core.pfp.source-bound-code-change-check.v1"
+RESULT_SCHEMA = "core.pfp.source-bound-code-change-result.v1"
 CHECKER_ID = "native-code-change-gates-v1"
 
 # Source statements motivate the local experiment. They do not prove it sound.

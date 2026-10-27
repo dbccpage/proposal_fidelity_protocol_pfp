@@ -12,13 +12,13 @@ from typing import Any, Iterator
 from fastapi import FastAPI, Header, HTTPException, Query
 from fastapi.responses import FileResponse, StreamingResponse
 
-from omega_engine_pfp.domain.finite_gauge import RunConfig
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.input_yaml import (
+from pfp.domain.finite_gauge import RunConfig
+from pfp.infrastructure.adapters.finite_gauge.input_yaml import (
     parse_input_yaml,
 )
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.run_store import RunStore
-from omega_engine_pfp.infrastructure.composition.finite_gauge import build_run_store
-from omega_engine_pfp.use_cases.finite_gauge_workbench import FiniteGaugeRun, fixtures
+from pfp.infrastructure.adapters.finite_gauge.run_store import RunStore
+from pfp.infrastructure.composition.finite_gauge import build_run_store
+from pfp.use_cases.finite_gauge_workbench import FiniteGaugeRun, fixtures
 
 _WEB_DIR = Path(__file__).resolve().parent
 
@@ -121,7 +121,7 @@ class WorkbenchApi:
 def create_app(store: RunStore | None = None) -> FastAPI:
     api = WorkbenchApi(store or build_run_store())
     app = FastAPI(
-        title="Omega Symbol Game Workbench",
+        title="Core Symbol Game Workbench",
         description="Live finite signed-graph gauge controls. AuthorityEffect: None.",
         version="0.1.0",
     )

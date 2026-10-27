@@ -25,7 +25,7 @@ def find_repo_root(start: Optional[Path] = None) -> Path:
     curr = (start or Path.cwd()).resolve()
     for _ in range(10):
         if (curr / ".git").exists() and (
-            (curr / "omega_engine").is_dir() or (curr / ".agents").is_dir()
+            (curr / "engine").is_dir() or (curr / ".agents").is_dir()
         ):
             return curr
         if curr.parent == curr:
@@ -367,7 +367,7 @@ def repair_file(
     if check_diff:
         lint_script = (
             repo_root
-            / "omega_engine_operads"
+            / "operads"
             / "skills"
             / "auto-anti-pattern-lint"
             / "scripts"
@@ -502,7 +502,7 @@ def discover_suggestions_from_repo(repo_root: Path) -> List[Dict[str, Any]]:
     # Fallback: run anti_pattern_lint on git changed files
     lint_script = (
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "skills"
         / "auto-anti-pattern-lint"
         / "scripts"
@@ -545,7 +545,7 @@ def discover_suggestions_for_files(repo_root: Path, files: List[str]) -> List[Di
     """Audit specified files directly to extract remediation suggestions."""
     lint_script = (
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "skills"
         / "auto-anti-pattern-lint"
         / "scripts"

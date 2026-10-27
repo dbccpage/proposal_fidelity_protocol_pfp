@@ -11,7 +11,7 @@ from typing import Literal
 
 from pydantic import Field, StrictInt, model_validator
 
-from omega_engine_pfp.domain.prompt_representations.common import (
+from pfp.domain.prompt_representations.common import (
     BaseRepresentationRecord, Digest, MAX_PROMPT_BYTES, MAX_SEGMENTS,
     canonical_json_bytes, sha256_digest,
 )

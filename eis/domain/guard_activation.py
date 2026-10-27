@@ -1,7 +1,7 @@
 """Learned-guard activation on two independent signals (`EPIC-OE-IMMUNE-002`).
 
 Moved on 2026-09-29 from
-`omega_engine_projects/ms_majorana/code/tests/support/prompt_civilization/domain/negative_selection_v1.py`,
+`projects/ms_majorana/code/tests/support/prompt_civilization/domain/negative_selection_v1.py`,
 where it was the only implementation of the epic's activation law and was
 reachable only from a test support folder.
 
@@ -45,8 +45,8 @@ from .danger_signals import HOST_DANGER_SIGNAL_KINDS
 from .ports import GuardActivationPolicyPort
 
 AUTHORITY_EFFECT_NONE = "None"
-DANGER_SIGNAL_SCHEMA_V1 = "omega.antiskill.danger-signal-receipt.v1"
-GUARD_ACTIVATION_SCHEMA_V1 = "omega.antiskill.guard-activation-receipt.v1"
+DANGER_SIGNAL_SCHEMA_V1 = "core.antiskill.danger-signal-receipt.v1"
+GUARD_ACTIVATION_SCHEMA_V1 = "core.antiskill.guard-activation-receipt.v1"
 
 # `IMMUNE-002-W3`: the closed registry of host-observable danger signals, shared
 # with the screening path.

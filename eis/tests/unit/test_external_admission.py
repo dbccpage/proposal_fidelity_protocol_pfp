@@ -20,14 +20,14 @@ this refuses a pharmacy that reads one defect ten times.
 `is_promotable` requires it as a keyword argument with no default.
 
 Moved on 2026-09-29 with the implementation, from
-`omega_engine_projects/ms_majorana/code/tests/unit/test_external_admission.py`.
+`projects/ms_majorana/code/tests/unit/test_external_admission.py`.
 """
 
 from __future__ import annotations
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.external_admission import (
+from eis.domain.external_admission import (
     PHARMACY_STATUS_CANDIDATE,
     REQUIRED_BINDINGS,
     AdmissionError,
@@ -81,7 +81,7 @@ def test_the_farming_path_has_no_status_argument():
     """
     import inspect
 
-    from omega_engine_epistemic_immune_system.domain import (
+    from eis.domain import (
         external_admission as external_admission_v1,
     )
 
@@ -145,7 +145,7 @@ def test_the_threshold_has_no_default():
     """`N` is an open obligation; the caller must state it."""
     import inspect
 
-    from omega_engine_epistemic_immune_system.domain import (
+    from eis.domain import (
         external_admission as external_admission_v1,
     )
 

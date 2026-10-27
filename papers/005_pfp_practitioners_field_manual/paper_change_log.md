@@ -17,7 +17,7 @@ Version 0.1.0 remains the initial preprint candidate designation.
 - Fixed EDGE_MATCH verification of absent or malformed edges against default zeros.
 - Fixed partial state mutation when configured native projection raises after replacement scoring; the old claims are restored before the exception propagates.
 - Recorded these local patches in the vendored header and custody-test exclusions; added behavioral regression tests rather than asserting unchanged vendored bytes.
-- Expanded the Landau quiz from five to 32 questions in Levels 0-7, with worked solutions, an exact lower-bound witness, refusal cases, a local rubric, and an executable capstone. The budget/UNKNOWN exercise is explicitly a policy example, not an implemented governor state.
+- Expanded the Examiner quiz from five to 32 questions in Levels 0-7, with worked solutions, an exact lower-bound witness, refusal cases, a local rubric, and an executable capstone. The budget/UNKNOWN exercise is explicitly a policy example, not an implemented governor state.
 - Removed an unused pytest-asyncio setting that warned in this synchronous suite without the undeclared plugin.
 - Preserved earlier execution records; added a fresh review and scoped execution record. Historical Windows native passes are not current evidence. This review records native execution as unavailable.
 - Regenerated the LaTeX, inspected PDF, checksums, and deterministic ZIP after source corrections.
@@ -66,7 +66,7 @@ Manuscript and documents:
 Package:
 
 - Added `code/native_functional.py` (vendored from
-  `omega_engine_providers/adapters/native_functional.py` at the baseline) and
+  `providers/adapters/native_functional.py` at the baseline) and
   `code/l1_symbol_game_governor.py` (vendored from the Paper 004 package at
   commit `691a01ec3e0ee4f06b4d13b1b8f751edb67c5cee`, later than the baseline),
   each with its source path, commit, SHA-256, and local changes in a header.
@@ -80,7 +80,7 @@ Package:
   `code/tests/test_play_demo.py`; the native-skip reason now says how to
   configure the pins.
 - Ran the native-requesting tests against a pinned `solve_graph_phi1` built from
-  the unchanged `omega_functional` source: 75 passed, none skipped (previously
+  the unchanged `core_functional` source: 75 passed, none skipped (previously
   all 30 native-requesting tests had been skipped).
 - The streaming harness now refuses float and Boolean claim values instead of
   converting them with `Fraction(value)`. New tests:
@@ -88,7 +88,7 @@ Package:
 - Removed the governor's blanket native fallback in `compute_phi1`. It called the
   native calculator and, if that call raised for any reason, substituted an exact
   Python enumeration, including for native input and search-bound refusals. It
-  now calls the native calculator only when `OMEGA_FUNCTIONAL_GRAPH_BIN` is set
+  now calls the native calculator only when `CORE_FUNCTIONAL_GRAPH_BIN` is set
   and lets every native refusal or error propagate; otherwise it uses the exact
   enumeration. Both paths refuse floating-point or Boolean edge weights. New tests:
   `code/tests/test_native_refusal_propagation.py`.

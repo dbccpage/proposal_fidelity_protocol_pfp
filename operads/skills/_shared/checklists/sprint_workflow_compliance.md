@@ -25,13 +25,13 @@ This checklist ensures every sprint (primary and cleanup) follows the complete w
 
 | Artifact | Path | Status |
 |----------|------|--------|
-| Sprint folder | `omega_engine/research/product_planning_office/plans/omega_engine/research/product_planning_office/plans/sprints/{N}/` | Required |
-| Planning documents dir | `omega_engine/research/product_planning_office/plans/sprints/{N}/0_planning_documents/` | Required |
-| Issues dir | `omega_engine/research/product_planning_office/plans/sprints/{N}/1_issues/` | Required |
-| Sprint plan | `omega_engine/research/product_planning_office/plans/sprints/{N}/sprint_{N}_plan.md` | Required |
-| Kickoff document | `omega_engine/research/product_planning_office/plans/sprints/{N}/kickoff.md` | Required |
-| Quality gates | `omega_engine/research/product_planning_office/plans/sprints/{N}/quality_gates.md` | Required |
-| Backlog | `omega_engine/research/product_planning_office/plans/sprints/{N}/backlog.md` | Optional (ooutwire input) |
+| Sprint folder | `engine/research/product_planning_office/plans/engine/research/product_planning_office/plans/sprints/{N}/` | Required |
+| Planning documents dir | `engine/research/product_planning_office/plans/sprints/{N}/0_planning_documents/` | Required |
+| Issues dir | `engine/research/product_planning_office/plans/sprints/{N}/1_issues/` | Required |
+| Sprint plan | `engine/research/product_planning_office/plans/sprints/{N}/sprint_{N}_plan.md` | Required |
+| Kickoff document | `engine/research/product_planning_office/plans/sprints/{N}/kickoff.md` | Required |
+| Quality gates | `engine/research/product_planning_office/plans/sprints/{N}/quality_gates.md` | Required |
+| Backlog | `engine/research/product_planning_office/plans/sprints/{N}/backlog.md` | Optional (ooutwire input) |
 
 ### Pre-Flight Checks
 
@@ -56,7 +56,7 @@ This checklist ensures every sprint (primary and cleanup) follows the complete w
 
 | Artifact | Path | Status |
 |----------|------|--------|
-| Review document | `omega_engine/research/product_planning_office/plans/sprints/{N}/review.md` | Required |
+| Review document | `engine/research/product_planning_office/plans/sprints/{N}/review.md` | Required |
 
 ### Review Checklist
 
@@ -78,7 +78,7 @@ This checklist ensures every sprint (primary and cleanup) follows the complete w
 ```bash
 
 # This check is MANDATORY before any story work begins
-test -f omega_engine/research/product_planning_office/plans/sprints/{N}/review.md && grep -q "APPROVED" omega_engine/research/product_planning_office/plans/sprints/{N}/review.md
+test -f engine/research/product_planning_office/plans/sprints/{N}/review.md && grep -q "APPROVED" engine/research/product_planning_office/plans/sprints/{N}/review.md
 
 ``` ext
 
@@ -130,8 +130,8 @@ If a story is marked DONE without evidence:
 
 | Artifact | Path | Status |
 |----------|------|--------|
-| Retrospective | `omega_engine/research/product_planning_office/plans/sprints/{N}/retrospective.md` | Required |
-| Completion doc | `omega_engine/research/product_planning_office/plans/sprints/{N}/completion.md` | Required |
+| Retrospective | `engine/research/product_planning_office/plans/sprints/{N}/retrospective.md` | Required |
+| Completion doc | `engine/research/product_planning_office/plans/sprints/{N}/completion.md` | Required |
 
 ### Retrospective Checklist
 
@@ -144,7 +144,7 @@ If a story is marked DONE without evidence:
 ### Mandatory Steps
 
 1. **Create cleanup sprint if action items exist** (Step 6.5)
-   - Create `omega_engine/research/product_planning_office/plans/sprints/{N}-0/` directory
+   - Create `engine/research/product_planning_office/plans/sprints/{N}-0/` directory
    - Write sprint plan with stories for each action item
    - Direct user to run full workflow on cleanup sprint
 
@@ -205,7 +205,7 @@ Sprint compliance can be verified via:
 
 # Check all required artifacts exist
 for phase in "sprint_*_plan.md" "kickoff.md" "quality_gates.md" "review.md" "retrospective.md"; do
-  test -f "omega_engine/research/product_planning_office/plans/sprints/{N}/$phase" && echo "PASS: $phase" || echo "FAIL: $phase"
+  test -f "engine/research/product_planning_office/plans/sprints/{N}/$phase" && echo "PASS: $phase" || echo "FAIL: $phase"
 done
 
 ``` ext

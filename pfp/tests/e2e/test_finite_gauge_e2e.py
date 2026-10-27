@@ -2,7 +2,7 @@
 
 import json
 
-from omega_engine_pfp.entrypoints.cli.symbol_game import main
+from pfp.entrypoints.cli.symbol_game import main
 
 
 def test_search_gauge_cli_emits_terminal_receipt(capsys) -> None:

@@ -17,7 +17,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The mathematics is elementary. Once the designated pair is fixed, each of the other `n − 2` occurrences can fall on either side. The gap is formal: core Lean has no `Finset.card_powerset`, the census is defined by filtering lists, and `native_decide` is excluded. So the challenge measures whether small models can close a formal gap under a strict axiom policy. It is not a test of discovery.
 
-It stresses the Symbol Game's lift from `decide` instances to induction, OEWAS (Omega Engine Workflows, Agents, Skills) Lean workflows, and OEEIS (Omega Engine Epistemic Immune System) screening for axiom escapes. A pass gives the census no meaning beyond its definition.
+It stresses the Symbol Game's lift from `decide` instances to induction, OEWAS (Engine Workflows, Agents, Skills) Lean workflows, and OEEIS (Engine Epistemic Immune System) screening for axiom escapes. A pass gives the census no meaning beyond its definition.
 
 ## 3. Formal Problem and Bounds
 
@@ -126,7 +126,7 @@ The catalog row requires none. These are recommended:
 
 **19L57G1, read-only.** At `3100c4e`: `19L57G1:lean4/Derivation/HigherStructure.lean`, `19L57G1:code/derivation/higher_structure.py` and `19L57G1:artifacts/primitive_completion_receipt.json`; at HEAD: `19L57G1:ci/run_gates.py` and `19L57G1:research/_scaffold/`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_kernel` for exact integers in the second checker, and `omega_engine_pfp/domain/immune/`.
+**the_symbol_game.** `engine/crates_rs/core_kernel` for exact integers in the second checker, and `pfp/domain/immune/`.
 
 **Upgrades.**
 

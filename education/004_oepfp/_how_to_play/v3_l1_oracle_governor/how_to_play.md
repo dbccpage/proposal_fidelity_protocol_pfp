@@ -6,7 +6,7 @@
 **Machine source (not this file):** `3_symbol_game_l1_oracle_blueprint.md` in this folder  
 **Live governor code in this recovery tree:** **not shipped.** `core_engine_README.md` names `l1_symbol_game_governor.py`; that file is absent from the tower ingest.
 
-This is a player guide. It is not a proof, not a certificate, and not Omega authority. A finished run is a host-replayed trace plus typed refusals. Treat a completed run as a proof and you have already lost the game.
+This is a player guide. It is not a proof, not a certificate, and not Core authority. A finished run is a host-replayed trace plus typed refusals. Treat a completed run as a proof and you have already lost the game.
 
 Do not merge this file with v1 (`lp<…>` packets) or v2 (SPK-002 YAML stages). They disagree on the board.
 
@@ -33,7 +33,7 @@ Useful design rule, quoted as a play constraint:
 |---|---|---|---|
 | Public board | One ad-hoc `lp<…>` packet plus local/global check | Five public YAML stages (SPK-002); eight stages internal | Dual-space state machine. Moves: `ASSERT`, `CUT`, `VERIFY`, `RETRACT` |
 | Theory-spine pointer | `symbol_game_math_spine.md` (historical) | Paper 043 | Tower blueprint `CODA-TOWER-M3-R3-SG-L1-BLUEPRINT` and the fermion-sign S(N) governor note |
-| What runs | Dump cargo `omega_engine/products/symbol_game` (do not claim live) | dest crate `omega_symbol_game` | Specified host governor. Named Python **not in this ingest** |
+| What runs | Dump cargo `engine/products/symbol_game` (do not claim live) | dest crate `core_symbol_game` | Specified host governor. Named Python **not in this ingest** |
 | Defect | Zero duality gap over Q | Packet-iteration terminals (Certificate, Refusal, Repair, OracleNeeded, Continue) | Integer $L_1$ defect cochain $\|\Phi_1\|_{L_1}$; weak/strict descent; no new defects |
 
 If a document still says “type `lp<max<3x+2y>…>`” it is v1. If it says “emit one YAML artifact per SPK-002 stage” it is v2. If it says “propose `ASSERT`/`CUT`/`VERIFY` against a host that owns $\Phi_1$” it is this file.

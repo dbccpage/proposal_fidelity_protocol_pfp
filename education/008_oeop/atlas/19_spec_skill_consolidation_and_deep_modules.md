@@ -1,8 +1,8 @@
 # Specification: Skill Consolidation, Deep Modules & Goo Decomposition
 
 **Document ID:** `oewas_spec_skill_consolidation_and_deep_modules`  
-**Location:** this chapter. Its former source copy `_docs/07_spec_skill_consolidation_and_deep_modules.md` in the retired OEWAS package has no successor under `omega_engine_operads`.  
-**Governing Domain:** `omega_engine_operads` / `.agents/skills/`  
+**Location:** this chapter. Its former source copy `_docs/07_spec_skill_consolidation_and_deep_modules.md` in the retired OEWAS package has no successor under `operads`.  
+**Governing Domain:** `operads` / `.agents/skills/`  
 **Base Framework:** Deep Module Architecture & Operad $\mathcal{O}_{\text{WAS}}$  
 **Status:** Normative Consolidation Specification  
 **AuthorityEffect:** `None`  
@@ -72,13 +72,13 @@ The following 8 composite entrypoints are retained as deep modules, refactored i
 | Composite Skill | Domain / Scope | Deep Capability Additions |
 | :--- | :--- | :--- |
 | **`goo-atomic-trace-ledger-concurrency-guard`** | Concurrency & Storage | Multi-threaded SQLite-WAL transaction isolation, CAS atomic leases, and event sequencing. |
-| **`goo-bulgakov-dramatic-cochain-synthesizer`** | Dialectic Swarms | 7-Act Master & Margarita dialectic state machine and 9-dot gauge break transformations. |
+| **`goo-novelist-dramatic-cochain-synthesizer`** | Dialectic Swarms | 7-Act Master & Primal Dual dialectic state machine and 9-dot gauge break transformations. |
 | **`goo-canonical-ast-normalization-engine`** | AST & Documents | Lossless CommonMark byte-for-byte reconstruction with gap-free contiguity. |
 | **`goo-cross-host-parity-gate-repair`** | Cross-Host Sync | Four-host parity verification (VS Code, Claude Code, Cursor, Antigravity). |
 | **`goo-lake-cold-cache-honest-defer`** | Lean 4 Build | Borrowed `LEAN_PATH` cold-cache compilation and Lakefile dependency resolution. |
 | **`goo-lean4-strict-mechanization-guard`** | Formal Proof | Sorry/admit detection, axiom inventory audit, and Lean 4 type checking. |
 | **`goo-strict-test-execution-discipline-enforcer`** | Testing Policy | Single-file small batch test execution enforcement (blocking whole-suite sweeps). |
-| **`goo-symbol-game-shared-kernel-ddd-synchronizer`** | Symbol Game | Shared kernel Value Object sync between `omega_engine` and `omega_engine_pfp`. |
+| **`goo-symbol-game-shared-kernel-ddd-synchronizer`** | Symbol Game | Shared kernel Value Object sync between `engine` and `pfp`. |
 
 ---
 
@@ -142,7 +142,7 @@ goo-yaml-contract-dual-home-sync
 
 # Archived Candidates (Knowledge absorbed into parent skills):
 goo-claim-queue-one-row-operator
-  -> omega-math-pipeline::claim_next_work_item
+  -> core-math-pipeline::claim_next_work_item
 goo-intel-recycle-ingestion-harness
   -> lib-verification-loop::ingest_provenanced_intelligence_record
 goo-intermediate-lieb-robinson-bound-verifier
@@ -186,4 +186,4 @@ A consolidation migration is complete only when all of the following conditions 
 
 ---
 
-*Preserved under the Clean Architecture and Governance Directives of the Anomalon Omega Engine.*
+*Preserved under the Clean Architecture and Governance Directives of the Sentinel Engine.*

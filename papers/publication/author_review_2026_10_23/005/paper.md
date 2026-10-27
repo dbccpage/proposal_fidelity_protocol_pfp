@@ -20,7 +20,7 @@ claims from admitting a consistent replacement, and follows both
 refusals and restoration of a saved state. The companion provides an
 exact Python enumeration route and a separately configured native route,
 with explicit input, verification, and evidence boundaries. The
-Landau-style examination and study guide extend the session through
+Examiner-style examination and study guide extend the session through
 counterexamples and an executable capstone. The contribution is a scoped
 practitioner workflow; no new theorem or measured model-performance
 result is claimed.
@@ -42,10 +42,10 @@ check can establish less than its surrounding prose suggests.
 
 The first session uses a scripted proposer. No model account, API key,
 or live conversation is needed. You should finish able to explain both
-an accepted move and the limits of its acceptance. The companion [Landau
-quiz](_lev_landau_theoretical_minimum_quiz/quiz.md) has 32 questions in
+an accepted move and the limits of its acceptance. The companion [Examiner
+quiz](_lev_examiner_theoretical_minimum_quiz/quiz.md) has 32 questions in
 eight levels; its [study guide and instructor
-key](_lev_landau_theoretical_minimum_quiz/study_guide.md) supplies
+key](_lev_examiner_theoretical_minimum_quiz/study_guide.md) supplies
 worked answers, refusal cases, and a capstone replay.
 
 ## 1. Declare the instance before solving it
@@ -171,15 +171,15 @@ baseline, confirm its revision with `git rev-parse HEAD`, then build
 `solve_graph_phi1` with that checkout's Rust workspace:
 
 ``` powershell
-cargo build --locked -j 1 --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_functional --bin solve_graph_phi1
+cargo build --locked -j 1 --manifest-path engine/crates_rs/Cargo.toml -p core_functional --bin solve_graph_phi1
 ```
 
 The following Windows PowerShell setup, run from the repository root,
 assumes the reviewed executable already exists at the shown path:
 
 ``` powershell
-$env:OMEGA_FUNCTIONAL_GRAPH_BIN = (Resolve-Path omega_engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
-$env:OMEGA_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:OMEGA_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
+$env:CORE_FUNCTIONAL_GRAPH_BIN = (Resolve-Path engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
+$env:CORE_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:CORE_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
 ```
 
 Use the actual output path if Cargo has a custom target directory. Other
@@ -197,7 +197,7 @@ python code/play_demo.py
 ```
 
 The repository's [functional-boundary
-notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/FUNCTIONAL_BOUNDARY.md)
+notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/FUNCTIONAL_BOUNDARY.md)
 describe the native setup at the baseline. The transport implementation
 is [native_functional.py](code/native_functional.py). A missing
 executable, missing or mismatched digest, native refusal, or malformed
@@ -245,7 +245,7 @@ returns its selected `calculation_path` (`native` or
 calculator selection; it is not a source-to-binary attestation or a
 native receipt.
 
-When `OMEGA_FUNCTIONAL_GRAPH_BIN` is set, the governor asks that native
+When `CORE_FUNCTIONAL_GRAPH_BIN` is set, the governor asks that native
 calculator, and any refusal or error it returns stops the step; no
 Python value is substituted. When it is not set, the governor computes
 the quotient minimum by exact Python enumeration of spanning-tree
@@ -410,8 +410,8 @@ python -m pytest code/tests/test_manual_contracts.py -q
 The [fixture](code/tests/conftest.py) consumes only two explicitly
 supplied pins:
 
-- Executable path: `OMEGA_FUNCTIONAL_GRAPH_BIN`.
-- Executable digest: `OMEGA_FUNCTIONAL_GRAPH_SHA256`.
+- Executable path: `CORE_FUNCTIONAL_GRAPH_BIN`.
+- Executable digest: `CORE_FUNCTIONAL_GRAPH_SHA256`.
 
 It discovers no checkout, builds no program, and creates no pin. Missing
 configuration skips, with that reason, every test that requests native
@@ -480,10 +480,10 @@ The minimization and lower-bound reasoning connect to linear-programming
 duality; see Boyd and Vandenberghe, [Convex
 Optimization](https://doi.org/10.1017/CBO9780511804441), Chapter 5. The
 series' [graph mathematics
-paper](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper.md)
+paper](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/001_pfp_discrete_cochain_retraction_and_toy_involutions/paper.md)
 develops the finite theory; [Paper 004](../004/paper.pdf) explains
 native verification and evidence custody. The [curriculum-design
-guide](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md)
+guide](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/007_pfp_executable_lessons_and_evidence_boundaries/paper.md)
 turns examples into lessons, and the [review protocol](../009/paper.pdf)
 explains how to audit a claimed result.
 

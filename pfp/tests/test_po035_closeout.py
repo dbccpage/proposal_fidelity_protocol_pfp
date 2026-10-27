@@ -6,16 +6,16 @@ import json
 import pytest
 import yaml
 
-from omega_engine_woland.tests.pilots.relational_spacetime import typed_signals as adaptive
-from omega_engine_woland.tests.pilots.relational_spacetime import final_prompts as closeout
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import STAGES
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import TEMPLATE
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import digest
+from adversary.tests.pilots.relational_spacetime import typed_signals as adaptive
+from adversary.tests.pilots.relational_spacetime import final_prompts as closeout
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
+from adversary.tests.pilots.relational_spacetime.tasks import STAGES
+from adversary.tests.pilots.relational_spacetime.tasks import TEMPLATE
+from pfp.infrastructure.adapters.pfp_evidence import digest
 
 
 def test_delivered_contexts_replay_and_exclude_contradicted_advice(monkeypatch):
-    from omega_engine_pfp.infrastructure.adapters import pfp_derivation
+    from pfp.infrastructure.adapters import pfp_derivation
 
     monkeypatch.setattr(
         pfp_derivation,

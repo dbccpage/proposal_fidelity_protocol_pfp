@@ -9,12 +9,12 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
 
-from omega_engine_governance.domain.ingress.http_boundary import (
+from governance.domain.ingress.http_boundary import (
     HttpBoundaryRefusal,
     read_request_body,
     require_local_request,
 )
-from omega_engine_governance.domain.ingress.limits import (
+from governance.domain.ingress.limits import (
     MAX_ADMITTED_TEXT_BYTES,
     REFUSAL_CONTENT_ENCODING_UNSUPPORTED,
     REFUSAL_TEXT_INVALID_UTF8,

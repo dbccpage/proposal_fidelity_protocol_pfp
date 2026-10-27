@@ -14,8 +14,8 @@ from quickstart import (
 
 
 def test_quickstart_requires_native_pin(monkeypatch):
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_SHA256", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_SHA256", raising=False)
     graph, claims = build_default_meeting_conflict().to_graph_and_cochain()
     with pytest.raises(NativeFunctionalUnavailable):
         compute_discrete_l1_projection(graph, claims)

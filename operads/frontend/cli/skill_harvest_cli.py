@@ -6,10 +6,10 @@ import argparse
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.infrastructure.skill_garden.transcript_harvester import (
+from operads.infrastructure.skill_garden.transcript_harvester import (
     harvest,
 )
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     repo_root_from,
     summarize,
 )

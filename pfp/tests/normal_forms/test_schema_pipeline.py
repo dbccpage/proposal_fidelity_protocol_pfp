@@ -4,29 +4,29 @@ import sqlite3
 
 import pytest
 
-from omega_engine_pfp.infrastructure.normal_forms.schema_pipeline import ROOT
-from omega_engine_pfp.infrastructure.normal_forms.schema_pipeline import SCHEMA_FILES
-from omega_engine_pfp.infrastructure.normal_forms.schema_pipeline import (
+from pfp.infrastructure.normal_forms.schema_pipeline import ROOT
+from pfp.infrastructure.normal_forms.schema_pipeline import SCHEMA_FILES
+from pfp.infrastructure.normal_forms.schema_pipeline import (
     SchemaContractError,
 )
-from omega_engine_pfp.infrastructure.normal_forms.schema_pipeline import (
+from pfp.infrastructure.normal_forms.schema_pipeline import (
     assert_exhaustive_candidates,
 )
-from omega_engine_pfp.infrastructure.normal_forms.schema_pipeline import audit_all_schemas
-from omega_engine_pfp.infrastructure.normal_forms.schema_pipeline import (
+from pfp.infrastructure.normal_forms.schema_pipeline import audit_all_schemas
+from pfp.infrastructure.normal_forms.schema_pipeline import (
     install_totality_fences,
 )
-from omega_engine_pfp.infrastructure.normal_forms.schema_pipeline import table_contract
+from pfp.infrastructure.normal_forms.schema_pipeline import table_contract
 
 
 @pytest.mark.parametrize("owner", ["governance", "education"])
 def test_runtime_evaluators_load_the_current_schema_and_enforce_totality(owner):
     if owner == "governance":
-        from omega_engine_pfp.infrastructure.normal_forms.nf_evaluator import (
+        from pfp.infrastructure.normal_forms.nf_evaluator import (
             NormalFormsEvaluator,
         )
     else:
-        from omega_engine_pfp.infrastructure.normal_forms.evaluator import (
+        from pfp.infrastructure.normal_forms.evaluator import (
             NormalFormsEvaluator,
         )
     evaluator = NormalFormsEvaluator()
@@ -78,7 +78,7 @@ def test_declared_education_dependencies_drive_the_actual_normalization_stages()
     with sqlite3.connect(":memory:") as conn:
         conn.executescript(
             (
-                ROOT / "omega_engine_pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql"
+                ROOT / "pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql"
             ).read_text()
         )
         conn.executemany(
@@ -195,7 +195,7 @@ def test_sql_coverage_checks_exact_carrier_and_input_binding():
     with sqlite3.connect(":memory:") as conn:
         conn.executescript(
             (
-                ROOT / "omega_engine_pfp/infrastructure/yaml/normal_forms/exhaustive_candidates.sql"
+                ROOT / "pfp/infrastructure/yaml/normal_forms/exhaustive_candidates.sql"
             ).read_text()
         )
         conn.execute("INSERT INTO nf_candidate_problems VALUES ('p', 'carrier', 2, 'None')")
@@ -234,7 +234,7 @@ def test_cdc_conditional_nulls_and_boolean_flags_are_sql_fenced():
     with sqlite3.connect(":memory:") as conn:
         conn.executescript(
             (
-                ROOT / "omega_engine_pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql"
+                ROOT / "pfp/infrastructure/yaml/normal_forms/normal_forms_schema.sql"
             ).read_text()
         )
         conn.execute(
@@ -266,13 +266,13 @@ def test_legacy_cdc_variant_fields_and_binary_flag_are_fenced():
 
 
 def test_failed_storage_initialization_cannot_be_bypassed_on_retry(tmp_path):
-    from omega_engine_governance.infrastructure.storage.sqlite_governance_unit_of_work import (
+    from governance.infrastructure.storage.sqlite_governance_unit_of_work import (
         SqliteGovernanceUnitOfWork,
     )
 
     path = tmp_path / "legacy.db"
     ddl = (
-        ROOT / "omega_engine_governance/infrastructure/storage/governance_schema.sql"
+        ROOT / "governance/infrastructure/storage/governance_schema.sql"
     ).read_text()
     with sqlite3.connect(path) as conn:
         conn.executescript(

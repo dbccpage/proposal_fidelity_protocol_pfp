@@ -38,7 +38,7 @@ established by the generator. Passing this arithmetic cannot discharge the
 original DAG theorem or an unpaid import, even if its metadata says PROVED_LEAN.
 
 The separate top-level
-[`pilot_031_050_master_review_and_operad_findings.md`](../../../../../omega_engine_atlas/coda_atlas/prompts/pilot_031_050_master_review_and_operad_findings.md)
+[`pilot_031_050_master_review_and_operad_findings.md`](../../../../../atlas/coda_atlas/prompts/pilot_031_050_master_review_and_operad_findings.md)
 opens with a withdrawal for Pilots 036–050: the evaluators emitted fixed PASS
 metrics without the claimed computations, and those pilot directories were
 removed. Its operad names remain historical discovery leads, visibly tagged in

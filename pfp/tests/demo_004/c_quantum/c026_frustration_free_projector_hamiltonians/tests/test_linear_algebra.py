@@ -1,10 +1,10 @@
 # AuthorityEffect: None.
 """Tests for exact Gaussian rational linear algebra in C026."""
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.gaussian_rational import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.gaussian_rational import (
     GaussianRat,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.linear_algebra import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.linear_algebra import (
     compute_left_inverse,
     compute_rref_and_kernel,
     invert_matrix,

@@ -8,14 +8,14 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/operad/colours.py
-  - omega_engine_operads/domain/operad/operation.py
-  - omega_engine_operads/domain/operad/operad.py
+  - operads/domain/operad/colours.py
+  - operads/domain/operad/operation.py
+  - operads/domain/operad/operad.py
   - .agents/operad/operad_signature.json
 last_verified: 2026-10-01
 ---
 
-> **HISTORICAL.** `source_paths` above cites `.agents/operad/operad_signature.json`. That path is absent. The live signature is `omega_engine_operads/skill_operad/json/operad_signature.json`. See [chapter 23](../atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
+> **HISTORICAL.** `source_paths` above cites `.agents/operad/operad_signature.json`. That path is absent. The live signature is `operads/skill_operad/json/operad_signature.json`. See [chapter 23](../atlas/23_plan_oewas_consolidation_oeeis_and_demo_integration.md).
 
 # OEWAS Level 00: Coloured Operad Architecture — Finite Colours, Signatures & Units
 
@@ -33,7 +33,7 @@ In standard agentic frameworks, multi-agent communication is treated as unstruct
 4. **Authority Laundering:** A downstream agent treats an unverified proposal as an admitted fact simply because an upstream LLM formatted it nicely.
 5. **Autoimmune Cascades:** Agents endlessly critique and revise each other's outputs without contracting the underlying residual error.
 
-In the Anomalon Engine, all multi-agent interactions are governed by a **Symmetric Coloured Operad** (or multicategory) $(\mathcal{O}, \circ)$. An operad formalizes operations with multiple typed inputs and a single typed output, equipped with associative partial composition $\circ_i$ and identity units.
+In the Sentinel Engine, all multi-agent interactions are governed by a **Symmetric Coloured Operad** (or multicategory) $(\mathcal{O}, \circ)$. An operad formalizes operations with multiple typed inputs and a single typed output, equipped with associative partial composition $\circ_i$ and identity units.
 
 ---
 
@@ -43,7 +43,7 @@ Every input, intermediate output, and terminal artifact in the workspace is assi
 
 $$\boxed{\mathcal{C}_{10} = \left\{ \text{State},\, \text{Proof},\, \text{Paper},\, \text{Code},\, \text{Contract},\, \text{Receipt},\, \text{Ledger},\, \text{Diagram},\, \text{Audit},\, \text{Post} \right\}}$$
 
-The domain value object is defined in [`colours.py`](../../../../omega_engine_operads/domain/operad/colours.py#L24-L35):
+The domain value object is defined in [`colours.py`](../../../../operads/domain/operad/colours.py#L24-L35):
 
 ```python
 ADMITTED_FINITE_COLOURS: tuple[str, ...] = (
@@ -72,7 +72,7 @@ ADMITTED_FINITE_COLOURS: tuple[str, ...] = (
 | **`Receipt`** | Cryptographic evidence bundles, hash chains, test records | CI audit receipts, SHA256 checksum manifests, Merkle tapes | `oeops-evidence-receipt-harness` |
 | **`Ledger`** | Append-only event ledgers, difference tables, claim queues | EADC ledgers, claim tracking registers (`.json`, `.tsv`) | `meta-goo-ledger-to-ledger-verifier` |
 | **`Diagram`** | Visual geometry, structural graphs, architectural figures | Mermaid diagrams, SVG assets, KaTeX layouts | `dianoia-visual-diagram-verifier` |
-| **`Audit`** | Defect classifications, adversarial findings, triage reports | Structured critique logs, claim hygiene audits | `omega-old-man-red-team` |
+| **`Audit`** | Defect classifications, adversarial findings, triage reports | Structured critique logs, claim hygiene audits | `core-red-team` |
 | **`Post`** | External public communications, forum drafts | Forum summaries, Zulip posts, public release announcements | `mimesis-external-forum-voice` |
 
 > [!IMPORTANT]
@@ -98,11 +98,11 @@ Formally, a **Coloured Operad** $\mathcal{O}$ over the set of colours $\mathcal{
 
 ## 4. Code Implementation Walkthrough
 
-The core domain value objects live in [`omega_engine_operads/domain/operad/`](../../../../omega_engine_operads/domain/operad/):
+The core domain value objects live in [`operads/domain/operad/`](../../../../operads/domain/operad/):
 
 ### 4.1 Value Objects: `Colour` and `ColourSignature`
 
-In [`colours.py`](../../../../omega_engine_operads/domain/operad/colours.py#L38-L92):
+In [`colours.py`](../../../../operads/domain/operad/colours.py#L38-L92):
 
 ```python
 @dataclass(frozen=True)
@@ -143,7 +143,7 @@ Arity is strictly a derived property. It is impossible for an `OperationSignatur
 
 ### 4.3 Identity Operations: `OperationId.unit_for`
 
-In [`operation.py`](../../../../omega_engine_operads/domain/operad/operation.py#L29-L33):
+In [`operation.py`](../../../../operads/domain/operad/operation.py#L29-L33):
 
 ```python
 @classmethod
@@ -152,7 +152,7 @@ def unit_for(cls, colour: Colour | str) -> OperationId:
     return cls(f"id_{c_name}")
 ```
 
-And in [`operad.py`](../../../../omega_engine_operads/domain/operad/operad.py#L70-L78):
+And in [`operad.py`](../../../../operads/domain/operad/operad.py#L70-L78):
 
 ```python
 def ensure_units(self) -> list[str]:
@@ -199,12 +199,12 @@ class OperationSignature:
 
 ## 6. Concrete Example: The Adversarial Review Signature
 
-Consider the primary red-team peer review skill `omega-old-man-red-team`:
+Consider the primary red-team peer review skill `core-red-team`:
 
 ```json
 {
-  "skill_id": "omega-old-man-red-team",
-  "name": "Omega Old Man Red Team Audit",
+  "skill_id": "core-red-team",
+  "name": "Core Red Team Red Team Audit",
   "arity": 3,
   "source_colours": [
     "Paper",
@@ -231,7 +231,7 @@ It synthesizes them into an adversarial diagnostic record (`Audit`), which can t
 To verify the colour system and operadic units locally:
 
 ```powershell
-py -3.12 -m pytest omega_engine_operads/tests/unit/test_operad_colour_vocabulary.py
+py -3.12 -m pytest operads/tests/unit/test_operad_colour_vocabulary.py
 ```
 
 ### The Level 00 Governance Invariants

@@ -1,6 +1,6 @@
 # How to Play The Symbol Game: Master Educational Syllabus & Player Manual
 
-Current execution (2026-10-12): [practical PFP and discovery](13_practical_pfp_and_discovery.md). Use the consolidated `omega_engine_pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
+Current execution (2026-10-12): [practical PFP and discovery](13_practical_pfp_and_discovery.md). Use the consolidated `pfp` commands there; historical profiles below do not imply current runtime support. The fixed pilot grid is retired; each new run should answer a concrete use or discovery question.
 
 
 > **Lead Council:** `L3_nous_panepistimion` & `L3_logos_techne`  
@@ -8,7 +8,7 @@ Current execution (2026-10-12): [practical PFP and discovery](13_practical_pfp_a
 > evaluators, engineers, and researchers. The beginner lesson track
 > [`000_beginners`](../curriculum/000_beginners/) states ages 5 to 500. This line is not that track.
 > **AuthorityEffect:** `None`. Host execution receipts certify local protocol state, not universal truth.  
-> **Location:** `omega_engine_education/documentation/004_oepfp/_how_to_play/` (companion to [`omega_engine_education/curriculum/004_oepfp/`](../curriculum/))
+> **Location:** `education/documentation/004_oepfp/_how_to_play/` (companion to [`education/curriculum/004_oepfp/`](../curriculum/))
 
 ---
 
@@ -16,7 +16,7 @@ Current execution (2026-10-12): [practical PFP and discovery](13_practical_pfp_a
 
 The Symbol Game separates a proposal from its check. Declare your marks,
 goal, and checking rule; submit a packet; inspect a scoped receipt.
-Read [Paper 000](../papers/omega_engine_symbol_game/000_pfp_introduction/README.md)
+Read [Paper 000](../papers/symbol_game/000_pfp_introduction/README.md)
 for an introduction using S(n), MSS-N, and basic packets.
 
 Choose from [ten useful ways to play](06_ten_useful_ways_to_play.md) or explore the master matrix in [the modalities atlas](07_all_ways_to_play_the_symbol_game.md).
@@ -66,7 +66,7 @@ which accompanies the [ten-route guide](06_ten_useful_ways_to_play.md).
 | **[02. Rules of the Board](02_the_rules_of_the_board.md)** | Mathematical Governance | The 5-tuple state $S$, bit-level carrier firewall, move preconditions, and Lyapunov descent invariants. |
 | **[03. Developer Handbook](03_developer_and_player_handbook.md)** | Practical Integration | Prompting models, defeating the AM-4 stationary loop with chord decoupling, and local Python integration. |
 | **[04. Visual Cheat Sheet](04_visual_reference_and_cheat_sheet.md)** | Quick Reference | Master system flowcharts, refusal code dictionary, graph topologies ($K_3, K_4$), and 4-file receipts. |
-| **[05. Landau's Theoretical Minimum](05_landau_theoretical_minimum_exam.md)** | Comprehensive Qualification Exam | The 3-tier, 13-problem qualification exam testing novice intuition, intermediate cochains, and professional researcher defense before the Apartment 50 tribunal. |
+| **[05. Examiner's Theoretical Minimum](05_examiner_theoretical_minimum_exam.md)** | Comprehensive Qualification Exam | The 3-tier, 13-problem qualification exam testing novice intuition, intermediate cochains, and professional researcher defense before the Apartment 50 tribunal. |
 | **[06. Ten Useful Ways to Play](06_ten_useful_ways_to_play.md)** | Pedagogical Onboarding | 10 accessible, code-accompanied learning paths for students and engineers. |
 | **[07. The Complete Modalities Atlas](07_all_ways_to_play_the_symbol_game.md)** | Master Research & Play Spectrum | Complete taxonomy of canonical ways to play PFP across papers 000–011, live demos, and multi-agent swarms. |
 | **[08. Theory Spine & Authority Boundary](08_theory_spine_and_authority_boundary.md)** | Protocol Spine | Boxed canonical spine, total verifier, packet fidelity, and explicit authority ceilings. |
@@ -74,7 +74,7 @@ which accompanies the [ten-route guide](06_ten_useful_ways_to_play.md).
 | **[10. The Eight-Stage Pipeline](10_eight_stage_pipeline.md)** | Architecture Lifecycle | 8 public operational stages, host evaluation boundary, and stages/controller correspondence. |
 | **[11. Run Modes & Legacy CLI](11_run_modes_and_legacy_cli.md)** | Historical References | Proof pipeline, operator tower, and historical symsys-pipeline CLI reference. |
 | **[12. Output Layout & Troubleshooting](12_output_layout_and_troubleshooting.md)** | Operations & P* | Run artifact layout, manifest fields, diagnostic triage, and deterministic seed-to-P* assembly. |
-| **[Landau Exam Test Suite](test_landau_theoretical_minimum.py)** | Automated Exam Verifier | 15 programmatic tests executing exact rational solutions, zero duality gap certificates, Regge Cayley-Menger determinants, and 48-mutation rejection. |
+| **[Examiner Exam Test Suite](test_examiner_theoretical_minimum.py)** | Automated Exam Verifier | 15 programmatic tests executing exact rational solutions, zero duality gap certificates, Regge Cayley-Menger determinants, and 48-mutation rejection. |
 | **[Python Test Suite](test_how_to_play_scenarios.py)** | Executable Scenarios | 7 automated unit test scenarios verifying move rules, rollback on defect increase, and receipt issuance. |
 | **[Interactive Board Engine](interactive_board.py)** | Visual UI Module | Reactive HTML board cards, dynamic SVG triangle graphs, and `ipywidgets` player workbench. |
 
@@ -133,19 +133,19 @@ You can verify the gameplay rules, host referee engine, and interactive Jupyter 
 
 ```bash
 # 1. Run the discrete host governor unit test scenarios (7 scenarios)
-py -3.12 -m pytest omega_engine_education/documentation/004_oepfp/_how_to_play/test_how_to_play_scenarios.py -v
+py -3.12 -m pytest education/documentation/004_oepfp/_how_to_play/test_how_to_play_scenarios.py -v
 
-# 2. Run Landau's Theoretical Minimum qualification exam fixture (15 tests across 3 tiers)
-py -3.12 -m pytest omega_engine_education/documentation/004_oepfp/_how_to_play/test_landau_theoretical_minimum.py -v
+# 2. Run Examiner's Theoretical Minimum qualification exam fixture (15 tests across 3 tiers)
+py -3.12 -m pytest education/documentation/004_oepfp/_how_to_play/test_examiner_theoretical_minimum.py -v
 
 # 3. Run the complete curriculum and exam E2E verification battery (61 tests)
-py -3.12 -m pytest omega_engine_education/education_app/tests/test_e2e_curriculum_and_exam.py -v
+py -3.12 -m pytest education/education_app/tests/test_e2e_curriculum_and_exam.py -v
 ```
 
 Historical expected output (not a fresh execution receipt):
 ```text
 test_how_to_play_scenarios.py: 7 passed in 0.65s
-test_landau_theoretical_minimum.py: 15 passed in 0.82s
+test_examiner_theoretical_minimum.py: 15 passed in 0.82s
 test_e2e_curriculum_and_exam.py: 61 passed in 1.40s
 ```
 

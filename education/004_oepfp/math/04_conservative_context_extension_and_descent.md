@@ -1,7 +1,7 @@
 # 04. Conservative Context Extension & Descent Calculus
 
 **AuthorityEffect:** `None`  
-**Estate:** `omega_engine_education/documentation/004_oepfp/math/`  
+**Estate:** `education/documentation/004_oepfp/math/`  
 **Parent Document:** [`oesos_layers_index.md`](oesos_layers_index.md)  
 **Status:** Canonical Foundation  
 **Layers Covered:** L5 (Context Extension), L6 (Descent, Forgetting & Invariants)  
@@ -16,12 +16,12 @@ When a state $x \in X_C$ is certified structurally exhausted ($\operatorname{Exh
 graph TD
     subgraph "Context C (Depth n)"
         X_C["State Space X_C"]
-        Obs["Obstruction &Omega;_C &ne; &empty;<br/>(Exhaustion Certified E)"]
+        Obs["Obstruction &Core;_C &ne; &empty;<br/>(Exhaustion Certified E)"]
     end
 
     subgraph "Context C' (Depth n+1)"
         X_Cp["Enlarged Space X_C'"]
-        Resolved["Obstruction Discharged<br/>&Omega;_C'(x') = &empty;"]
+        Resolved["Obstruction Discharged<br/>&Core;_C'(x') = &empty;"]
     end
 
     X_C -- "Embedding &iota; (conservative lift)" --> X_Cp

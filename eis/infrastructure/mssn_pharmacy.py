@@ -2,7 +2,7 @@
 
 The screening path (`mssn_ports.PharmacyMatcher`) does not use this module's
 `detect`: it runs the eleven native classes of
-`omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs` through the
+`engine/crates_rs/core_prompt_civilization/src/pharmacy.rs` through the
 Symbol Game host (`native_pharmacy.NativePharmacy`) plus the Python-only
 persona check. This module is kept because its value objects
 (`FailureClass`, `DetectionContext`, `HostReplayReceipt`, ...) are the shared
@@ -35,7 +35,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Optional
 
-from omega_engine_epistemic_immune_system.domain.host_checks import (
+from eis.domain.host_checks import (
     persona_authority_leak_loci,
 )
 
@@ -201,7 +201,7 @@ class DetectorReport:
         )
 
 
-from omega_engine_epistemic_immune_system.domain.definitions_loader import (
+from eis.domain.definitions_loader import (
     load_screening_vocabulary,
 )
 

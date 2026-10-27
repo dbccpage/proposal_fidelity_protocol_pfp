@@ -2,8 +2,8 @@
 
 Aligned Contracts / Systems:
 - nf.physics.cdt
-- omega_engine_woland
-- omega_engine_woland.stage
+- adversary
+- adversary.stage
 
 AuthorityEffect: None.
 """

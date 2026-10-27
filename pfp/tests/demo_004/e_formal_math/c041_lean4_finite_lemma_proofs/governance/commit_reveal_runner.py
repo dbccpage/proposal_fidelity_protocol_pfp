@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Three phases (SG-CP v1), all of which score the frozen reference solver against
 this package's own judge packet (a self-consistency check, not a model
-evaluation and not a Woland verdict):
+evaluation and not a Adversary verdict):
 
   * Phase 1 verifies every entry of judge_packet/manifest.json against the files
     on disk, checks the declared case and mutation counts against the listed
@@ -53,8 +53,8 @@ from typing import Any
 
 _file_path = Path(__file__).resolve()
 for _parent in _file_path.parents:
-    if (_parent / "omega_engine_pfp").exists() and (
-        _parent / "omega_engine_providers"
+    if (_parent / "pfp").exists() and (
+        _parent / "providers"
     ).exists():
         _root_str = str(_parent)
         if _root_str not in sys.path:
@@ -66,14 +66,14 @@ _repo_root = next((p for p in Path(__file__).resolve().parents if (p / "pyprojec
 if _repo_root is not None and str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.budget_gate import C041BudgetGate
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.woland_gate import (
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.budget_gate import C041BudgetGate
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.governance.adversary_gate import (
     GATE_SCOPE,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
-    WolandRealityGate,
+    AdversaryRealityGate,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.solver import solve
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.reference_solver.solver import solve
 
 CHALLENGE_ID = "c041_lean4_finite_lemma_proofs"
 FILE_PREFIX = "c041_l41"
@@ -263,7 +263,7 @@ class CommitRevealRunner:
         *,
         intelligence_root: Path | None = None,
         budget_gate: C041BudgetGate | None = None,
-        woland_gate: WolandRealityGate | None = None,
+        adversary_gate: AdversaryRealityGate | None = None,
     ) -> None:
         self.pkg_dir = pkg_dir if pkg_dir is not None else _pkg_root
         self.commitments_dir = self.pkg_dir / "commitments"
@@ -275,8 +275,8 @@ class CommitRevealRunner:
         self.phase3_file = self.commitments_dir / f"{FILE_PREFIX}_scoring_receipt.json"
         self.failure_file = self.commitments_dir / f"{FILE_PREFIX}_scoring_failure_receipt.json"
         self.budget_gate = budget_gate if budget_gate is not None else C041BudgetGate()
-        self.woland_gate = (
-            woland_gate if woland_gate is not None else WolandRealityGate(intelligence_root)
+        self.adversary_gate = (
+            adversary_gate if adversary_gate is not None else AdversaryRealityGate(intelligence_root)
         )
         self.authority_effect = "None"
 
@@ -492,7 +492,7 @@ class CommitRevealRunner:
 
         # 5. Label the run and persist the bundle.
         budget_summary = self.budget_gate.get_summary()
-        receipt = self.woland_gate.evaluate(
+        receipt = self.adversary_gate.evaluate(
             task_key=task_key,
             case_outcomes=case_outcomes,
             budget_summary=budget_summary,

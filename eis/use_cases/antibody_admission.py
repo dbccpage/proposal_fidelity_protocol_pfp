@@ -12,11 +12,11 @@ from __future__ import annotations
 from dataclasses import asdict
 from typing import Any, Mapping, Protocol
 
-from omega_engine_epistemic_immune_system.domain.external_admission import (
+from eis.domain.external_admission import (
     AdmissionError,
     AntibodyObservationV1,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_domain import native_admission
+from eis.infrastructure.native_domain import native_admission
 
 
 class ObservationLedgerPort(Protocol):

@@ -14,7 +14,7 @@
 **AuthorityEffect:** None.  
 **Date:** September 28, 2026.  
 **Domain:** `f_program_synthesis` (Wave 3).  
-**Protocol:** SG-CP v1 with Woland Terminal Reality Gate commit-reveal protocol.  
+**Protocol:** SG-CP v1 with Adversary Terminal Reality Gate commit-reveal protocol.  
 **Evaluator Run ID:** `c058_eval_1790650102`.  
 **Solver Digest:** `463d42cd1342f169c15cc734bfac1c090163132b149b5cfe106e396a18505997`.  
 **Tested Models:**  
@@ -28,7 +28,7 @@
 
 Challenge C058 evaluates the synthesis of exact straight-line superoptimizers that compress straight-line bit-vector programs over widths $w \in \{8, 16, 32, 64\}$ to equivalent programs of length at most `target_len`. Arithmetic operations are evaluated modulo $2^w$, shift amounts modulo $w$, and arithmetic right shift (`ashr`) sign-extends negative values. Candidates are verified by exhaustive enumeration (for $w \le 8$) and stratified boundary/random stress tests (for $w \ge 16$).
 
-The challenge was sealed under the Woland Terminal Reality Gate:
+The challenge was sealed under the Adversary Terminal Reality Gate:
 - **Solver Commitment SHA-256:** `463d42cd1342f169c15cc734bfac1c090163132b149b5cfe106e396a18505997`
 - **Hidden Test Cases:** **64 / 64 passed (100.0%)** (32 base cases covering width 8 and 32 XOR identities, bit manipulation, constant shifts, double neg/not, dead code elimination, and irreducible UNKNOWN instances; 16 relabel/gauge controls; 16 poisoned cases).
 - **Hostile Mutation Kill Rate:** **48 / 48 killed (100.0%)** by dual checkers (`exact_checker.py` and `independent_checker.py`).

@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_operating_system/adapters/prompt_civ/event_log.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - operating_system/adapters/prompt_civ/event_log.py
 ---
 
 # Prompt Civ Level 09: Durable Event Log & Persistence: Replay & Recovery
 
 **AuthorityEffect:** None.  
 **Level:** Level 09 (Durable Event Ledger, Content-Addressed Storage & Replay)  
-**Python Persistence Seam:** [`omega_engine_operating_system.adapters.prompt_civ.event_log`](../../../../omega_engine_operating_system/adapters/prompt_civ/event_log.py)  
+**Python Persistence Seam:** [`operating_system.adapters.prompt_civ.event_log`](../../../../operating_system/adapters/prompt_civ/event_log.py)  
 **Primary Artifacts:** `event_log.jsonl`, `cas/packets/`  
 **Core Falsifiers:** `F-EVT-01`, `F-EVT-02`, `F-EVT-03`, `F-EVT-04`, `F-EVT-05`, `F-TX-01`
 
@@ -71,7 +71,7 @@ Level 09 establishes the **Authoritative Event/Transaction Boundary**:
 
 1. **Producer-Minted Event Identity (`F-EVT-01`):**
    The `event_id` is minted deterministically by the producer prior to transmission:
-   $$\text{event\_id} = \operatorname{UUIDv5}(\text{NS\_OMEGA\_PROMPT\_CIV}, \operatorname{canonical}(\text{producer\_id}, \text{event\_kind}, \text{run\_id}, \text{occurrence\_id}, \text{subject}, \text{ordinal}))$$
+   $$\text{event\_id} = \operatorname{UUIDv5}(\text{NS\_CORE\_PROMPT\_CIV}, \operatorname{canonical}(\text{producer\_id}, \text{event\_kind}, \text{run\_id}, \text{occurrence\_id}, \text{subject}, \text{ordinal}))$$
    - `semantic_subject` specifies what the event governs (e.g. `(antibody_id, rule_digest)` for acquisitions).
    - `producer_ordinal` cleanly separates repeated same-subject events within a single occurrence.
 2. **Payload Conflict Detection (`F-EVT-02`):**
@@ -94,7 +94,7 @@ Level 09 establishes the **Authoritative Event/Transaction Boundary**:
 ## 3. Python Persistence Seam
 
 ```python
-# omega_engine_operating_system.adapters.prompt_civ.event_log
+# operating_system.adapters.prompt_civ.event_log
 class DurableEventLogV1:
     """Append-only, hash-chained durable event ledger."""
     

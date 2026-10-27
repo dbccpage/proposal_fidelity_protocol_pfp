@@ -5,23 +5,23 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure import numbered_prompts as prompts
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import digest
-from omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
-from omega_engine_woland.tests.pilots.relational_spacetime import trial_prompts
+from pfp.infrastructure import numbered_prompts as prompts
+from pfp.infrastructure.adapters.pfp_evidence import digest
+from pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
+from adversary.tests.pilots.relational_spacetime import trial_prompts
 
 
 def test_current_renderer_has_one_canonical_owner_and_real_consumers():
-    from omega_engine_woland.tests.pilots.relational_spacetime import compact_checks, compact_trials
+    from adversary.tests.pilots.relational_spacetime import compact_checks, compact_trials
 
-    assert prompts.__name__ == "omega_engine_pfp.infrastructure.numbered_prompts"
+    assert prompts.__name__ == "pfp.infrastructure.numbered_prompts"
     assert not (
-        prompts.ROOT / "omega_engine_education/pilots/relational_spacetime/compact_prompts.py"
+        prompts.ROOT / "education/pilots/relational_spacetime/compact_prompts.py"
     ).exists()
     assert compact_trials.build_prompt is prompts.build_prompt
     assert compact_checks.response_schema is prompts.response_schema
     prompt = compact_trials.render("pilot_0000199", 1, {})
-    assert prompt["construction_path"] == "omega_engine_pfp/infrastructure/numbered_prompts.py"
+    assert prompt["construction_path"] == "pfp/infrastructure/numbered_prompts.py"
 
 
 @pytest.mark.parametrize("pilot", ["pilot_0000199", "pilot_0000201"])
@@ -108,6 +108,6 @@ def test_relocation_profile_changes_source_custody_without_changing_role_contrac
                 stage["template"] = stage["template"].replace("-v1.0.4", "-v1.0.3")
         assert old == new
     for name in ("tasks.py", "trial_prompts.py"):
-        path = "omega_engine_woland/tests/pilots/relational_spacetime/" + name
+        path = "adversary/tests/pilots/relational_spacetime/" + name
         assert current["file_sha256"][path] == digest((prompts.ROOT / path).read_bytes())
-    assert not any(path.startswith("omega_engine_education/pilots/") for path in current["file_sha256"])
+    assert not any(path.startswith("education/pilots/") for path in current["file_sha256"])

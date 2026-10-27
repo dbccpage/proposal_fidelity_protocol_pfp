@@ -1,7 +1,7 @@
 """Filesystem binding of ``RunArtifactSinkPort`` to an explicit output root.
 
-The root is required. For Woland runs it is the directory returned by
-``omega_engine_operating_system.adapters.intelligence_custody.intelligence_root.resolve_intelligence_repo_root``,
+The root is required. For Adversary runs it is the directory returned by
+``operating_system.adapters.intelligence_custody.intelligence_root.resolve_intelligence_repo_root``,
 so run folders land in the durable ``_ic/`` store rather than in a
 worktree; tests pass a temporary directory.
 
@@ -14,13 +14,13 @@ import stat
 from collections.abc import Sequence
 from pathlib import Path
 
-from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+from operating_system.adapters.intelligence_custody.ic_routing import (
     IcMigrationRefusal,
     read_activation,
     relative_parts,
     safe_path,
 )
-from omega_engine_pfp.domain.ports.run_artifact_port import RunArtifactSinkPort
+from pfp.domain.ports.run_artifact_port import RunArtifactSinkPort
 
 
 class OutputRootRequired(ValueError):

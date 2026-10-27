@@ -2,9 +2,9 @@
 
 AuthorityEffect: None. Revised 2026-10-18 after the initial registry dump was
 rejected. The deliverables are now the actual
-[prompt_template.yaml](../../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml),
-[workflow.yaml](../../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
-and [mode.yaml](../../../../../omega_engine_pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml).
+[prompt_template.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/prompt_template.yaml),
+[workflow.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/workflow.yaml)
+and [mode.yaml](../../../../../pfp/infrastructure/yaml/prompts/finite_qm/mode.yaml).
 
 The renderer uses the new prompt and stage instructions. Six workflow stages
 connect mining, derivation, host verification, repair, challenge and recording.

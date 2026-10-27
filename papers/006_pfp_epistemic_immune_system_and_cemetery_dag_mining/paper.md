@@ -263,7 +263,7 @@ example calls the actual storage API:
 
 ```python
 from pathlib import Path
-from omega_engine_pfp.infrastructure.persistence import cemetery_sink
+from pfp.infrastructure.persistence import cemetery_sink
 
 CemeterySink = cemetery_sink.CemeterySink
 
@@ -463,10 +463,10 @@ Collect and run the focused suites from the root of a full repository checkout,
 using Python 3.12 (on Windows, `py -3.12` in place of `python`):
 
 ```powershell
-python -m pytest omega_engine_pfp/tests/test_cemetery_sink.py --collect-only -q
-python -m pytest omega_engine_pfp/tests/test_cemetery_sink.py -q
-python -m pytest omega_engine_pfp/tests/test_immune_defect_regressions.py --collect-only -q
-python -m pytest omega_engine_pfp/tests/test_immune_defect_regressions.py -q
+python -m pytest pfp/tests/test_cemetery_sink.py --collect-only -q
+python -m pytest pfp/tests/test_cemetery_sink.py -q
+python -m pytest pfp/tests/test_immune_defect_regressions.py --collect-only -q
+python -m pytest pfp/tests/test_immune_defect_regressions.py -q
 ```
 
 The first suite tests the production sink; the second targets concrete rule
@@ -605,13 +605,13 @@ execution or integrity anchors.
 [ct]: https://www.rfc-editor.org/rfc/rfc9162.html
 [reflexion]: https://arxiv.org/abs/2303.11366v4
 [jcs]: https://www.rfc-editor.org/rfc/rfc8785.html
-[sink]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/infrastructure/persistence/cemetery_sink.py
-[entries]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/entities/cemetery_entry.py
-[sink-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_cemetery_sink.py
-[clonal]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/immune/clonal_selection.py
-[immune-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_immune_defect_regressions.py
-[treg]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/immune/treg.py
+[sink]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/infrastructure/persistence/cemetery_sink.py
+[entries]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/entities/cemetery_entry.py
+[sink-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_cemetery_sink.py
+[clonal]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/clonal_selection.py
+[immune-tests]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_immune_defect_regressions.py
+[treg]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/treg.py
 [catalog]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/_intelligence/_antibodies/pharmacy_catalog.json
-[seeder]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_operations/domain/symbol_game_bridge/pharmacy_seeder.py
-[seeder-run]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_woland/domain/immune/seeder.py
-[prompt-doctor]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_external_application/prompt_doctor/use_cases/repair_service.py
+[seeder]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/operations/domain/symbol_game_bridge/pharmacy_seeder.py
+[seeder-run]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/adversary/domain/immune/seeder.py
+[prompt-doctor]: https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/external_application/prompt_doctor/use_cases/repair_service.py

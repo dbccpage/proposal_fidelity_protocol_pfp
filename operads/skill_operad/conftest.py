@@ -24,7 +24,7 @@ mirrors stay without a conftest so the ambiguity cannot reappear unnoticed.
 `sys.path.append`, not `insert(0,)`: this directory contains `domain/`,
 `application/`, and `infrastructure/`, names generic enough to shadow something
 else's top-level import if given priority. The repository has been bitten by
-exactly this before -- `omega_engine_library/code/` shadowing the stdlib `code`
+exactly this before -- `library/code/` shadowing the stdlib `code`
 module -- and the house rule that came out of it is to never let a convenience
 path win a name race.
 

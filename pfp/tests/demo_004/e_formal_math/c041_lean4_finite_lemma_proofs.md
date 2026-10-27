@@ -12,7 +12,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 The Lean kernel checks a proof in seconds, and `#print axioms` states exactly which axioms a proof uses. Finding a proof is harder than it looks for decidable statements: `decide` closes small instances but fails on large bounded quantifiers once kernel reduction runs out of heartbeats or recursion depth, and `native_decide` is excluded because it adds the axiom `Lean.ofReduceBool`, which is outside the whitelist. The solver must split ranges, prove a general lemma and instantiate it, or find a witness for a refutation.
 
-The challenge stresses the Symbol Game as a proof-search host: Lean error messages and remaining goals become typed obstructions, strict descent is measured on them, and every failed script goes to the cemetery. It stresses OEWAS (Omega Engine Workflows, Agents, Skills) through the agent that sequences proof sub-turns, and the OEEIS (Omega Engine Epistemic Immune System) through axiom-smuggling detection.
+The challenge stresses the Symbol Game as a proof-search host: Lean error messages and remaining goals become typed obstructions, strict descent is measured on them, and every failed script goes to the cemetery. It stresses OEWAS (Engine Workflows, Agents, Skills) through the agent that sequences proof sub-turns, and the OEEIS (Engine Epistemic Immune System) through axiom-smuggling detection.
 
 A pass shows that this pipeline, with this model, proved these statements inside core Lean 4 at the pinned toolchain. It does not show general Lean competence, mathematical novelty, or truth outside the Calculus of Inductive Constructions: a compiling theorem certifies formal validity within that system only.
 
@@ -92,13 +92,13 @@ The catalog declares no OEEIS hook for C041. The following are observed, not gat
 - **Two-signal danger gate** (`TwoSignalDangerGate`). Signal 1 is a forbidden identifier in a candidate; Signal 2 is an axiom-closure violation from `#print axioms`. Quarantine needs both.
 - **Staged acceptance.** Staged acceptance in the style of `HopfieldNinioProofreader` runs kernel, then axioms, then clean-type equality, before a proof is recorded as admitted.
 - **Expected antimorphisms:** AM-3 ASSERT_SKIP (`sorry`, or `SOLVED` with an empty proof), AM-4 IDEMPOTENT_CUT_LOOP (resubmitting an unchanged failing script) and AM-FSP-2 (a refutation of the wrong negation).
-- **Layer 2:** a ban list over forbidden identifiers via `logit_bias_ban` in `omega_engine_symbol_game/domain/carrier_decoding.py`, which is unwired. On hosted APIs a finite bias is steering, not an exact mask, so the checker stays the authority.
+- **Layer 2:** a ban list over forbidden identifiers via `logit_bias_ban` in `symbol_game/domain/carrier_decoding.py`, which is unwired. On hosted APIs a finite bias is steering, not an exact mask, so the checker stays the authority.
 - **Layer 1:** not applicable.
 - **Scratch space:** the host holds the current goal state as scratch memory, so repair turns see goals rather than transcript history.
 
 ## 12. Run Folder, DDC Trace and Operand Mining
 
-Expected Discrete Deformation Calculus (DDC) pattern: `C` (statement, prelude and toolchain facts exposed), `I` (proof draft), `R` (errors and open goals as residual), then `D` steps while the goal count falls. `Λ` introduces an auxiliary lemma or a range split when `decide` hits a limit. `E` means goals are closed and axioms are clean. `T` terminates. `M` records a refusal or an exhausted case budget. The measure is the `ObstructionScore` from `omega_engine_symbol_game/domain/models.py`: Φ₁ is open goals plus error messages, `active_count` is forbidden constructs plus axiom violations, and Γ₂ is unused and must stay 0.
+Expected Discrete Deformation Calculus (DDC) pattern: `C` (statement, prelude and toolchain facts exposed), `I` (proof draft), `R` (errors and open goals as residual), then `D` steps while the goal count falls. `Λ` introduces an auxiliary lemma or a range split when `decide` hits a limit. `E` means goals are closed and axioms are clean. `T` terminates. `M` records a refusal or an exhausted case budget. The measure is the `ObstructionScore` from `symbol_game/domain/models.py`: Φ₁ is open goals plus error messages, `active_count` is forbidden constructs plus axiom violations, and Γ₂ is unused and must stay 0.
 
 Operands to mine:
 
@@ -111,7 +111,7 @@ Operands to mine:
 
 - `lean4/lean-toolchain`, `lean4/lakefile.lean` and `lean4/lake-manifest.json`. The package lists no dependencies, so it is core only and gives the pinned environment.
 - The existing `#print axioms` audit practice, for example `lean4/Demo3ProtocolInvariants.lean`.
-- `omega_engine_symbol_game/domain/carrier_decoding.py` and `omega_engine_symbol_game/domain/sandbox/models.py`.
+- `symbol_game/domain/carrier_decoding.py` and `symbol_game/domain/sandbox/models.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), plus the row extra [U17](../../upgrades/u17_lean_verifier_backend.md).
 
 ## 14. Claim Hygiene

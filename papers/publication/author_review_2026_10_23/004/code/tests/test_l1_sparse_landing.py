@@ -59,7 +59,7 @@ def test_asymmetric_weights_landing_is_unique():
     assert cert.support == [0]                 # lightest edge only
     assert cert.sparsity == 1 == cert.cycle_rank  # saturates the sparsity bound
     assert cert.sparsity_bound_ok is True
-    # Dual witness is a circulation in the cycle space with g_0 = omega_0 * sign(r*_0) = 1.
+    # Dual witness is a circulation in the cycle space with g_0 = core_0 * sign(r*_0) = 1.
     assert cert.dual_witness is not None
     assert cert.dual_witness[0] == Fraction(1)
 

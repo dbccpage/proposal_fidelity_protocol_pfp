@@ -1,7 +1,7 @@
 # Normal Forms Test Roadmap and Planned Test Inventory
 
 **AuthorityEffect:** `None`  
-**Domain Directory:** [`omega_engine_pfp/infrastructure/yaml/normal_forms/`](.)
+**Domain Directory:** [`pfp/infrastructure/yaml/normal_forms/`](.)
 **Previous Path:** `research/mssn_sn_tower/normal_forms/docs/planned-tests.md` (sign-off receipts keep that path as the path at review time)  
 **Execution Environment:** Python 3.14.2, Lean 4.34.0, SQLite 3 (ANSI SQL), Pytest 9.1.1  
 
@@ -11,9 +11,9 @@
 
 The normal forms subsystem formalizes database schema constraints, change-data-capture (CDC) boundary quotients, cross-domain transport morphisms, and discrete topological physics models within the MSS-N Tower architecture.
 
-To date, 515 tests across 26 tranches (covering 1NF–5NF, BCNF, BQNF streaming, sealed loss ledgers, observer freshness posets, discrete Hodge decompositions, ZFNF rational duality, Wheeler-DeWitt quantum geometrodynamics, Causal Dynamical Triangulations, lattice fermions, SUSY Witten index, relativistic causal posets, event horizon flow control, FSP state machines, Bell contextuality, higher-dimensional simplicial coboundary operators $\delta^2$ and $\delta^3$, and the unified 7-Act BoutService retraction DAG) have been verified with 100% passing test gates and aligned JSON receipts in both [`omega_engine_governance/tests/normal_forms/`](../tests/normal_forms) and [`research/mssn_sn_tower/code/python/tests/normal_forms/`](../../research/mssn_sn_tower/code/python/tests/normal_forms).
+To date, 515 tests across 26 tranches (covering 1NF–5NF, BCNF, BQNF streaming, sealed loss ledgers, observer freshness posets, discrete Hodge decompositions, ZFNF rational duality, Wheeler-DeWitt quantum geometrodynamics, Causal Dynamical Triangulations, lattice fermions, SUSY Witten index, relativistic causal posets, event horizon flow control, FSP state machines, Bell contextuality, higher-dimensional simplicial coboundary operators $\delta^2$ and $\delta^3$, and the unified 7-Act BoutService retraction DAG) have been verified with 100% passing test gates and aligned JSON receipts in both [`governance/tests/normal_forms/`](../tests/normal_forms) and [`research/mssn_sn_tower/code/python/tests/normal_forms/`](../../research/mssn_sn_tower/code/python/tests/normal_forms).
 
-This document catalogs Tests 1–515, implemented across 26 tranches and covered by local execution receipts. Tests 516–615, planned in Tranches 27–31 and not yet implemented, are in [`planned-tests-516-615.md`](planned-tests-516-615.md). The live contract index is [`omega_engine_education/documentation/13_normal_forms/contracts_normal_forms/index.yaml`](../../omega_engine_education/documentation/13_normal_forms/contracts_normal_forms/index.yaml).
+This document catalogs Tests 1–515, implemented across 26 tranches and covered by local execution receipts. Tests 516–615, planned in Tranches 27–31 and not yet implemented, are in [`planned-tests-516-615.md`](planned-tests-516-615.md). The live contract index is [`education/documentation/13_normal_forms/contracts_normal_forms/index.yaml`](../../education/documentation/13_normal_forms/contracts_normal_forms/index.yaml).
 
 ---
 
@@ -112,7 +112,7 @@ Aligned Contracts: `nf.cochain.dhnf`, `nf.cohomology.acnf`, `nf.coda.eqnf`
 | 66 | `test_discrete_vector_bundle_connection_curvature` | Bundles | Evaluates discrete affine connections on relational bundle projections; calculates curvature 2-forms over closed schema cycles. |
 | 67 | `test_holonomy_loop_product_identity_on_acyclic_schemas` | Holonomy | Asserts that path-ordered holonomy products around loops in acyclic schema graphs contract to the exact identity. |
 | 68 | `test_holonomy_flux_quantization_around_defect_cycles` | Holonomy | Evaluates holonomy eigenvalues around non-contractible schema loops; asserts flux quantization over finite categorical groups. |
-| 69 | `test_subobject_classifier_omega_truth_values` | Topos | Evaluates the subobject classifier $\Omega$ in the topos of relational database schemas; checks characteristic morphism classifications. |
+| 69 | `test_subobject_classifier_core_truth_values` | Topos | Evaluates the subobject classifier $\Omega$ in the topos of relational database schemas; checks characteristic morphism classifications. |
 | 70 | `test_sheaf_morphism_exactness_kernel_cokernel` | Sheaves | Evaluates morphisms of database sheaves; computes explicit kernels, cokernels, and image presheaves. |
 | 71 | `test_homotopy_colimit_schema_integration` | Homotopy | Constructs homotopy colimits ($\text{hocolim}$) of divergent database versions; detects topological obstructions to automated synchronization. |
 | 72 | `test_persistent_homology_barcode_decomposition` | TDA | Computes persistent homology barcodes for point-cloud embeddings of high-dimensional database transaction vectors. |
@@ -355,15 +355,15 @@ Aligned Contracts: `nf.representation.dbcnf`, `nf.representation.gnf`, `nf.repre
 ## 12. Tranche 13: End-to-End Adversarial, Falsification & Rust Crate Parity Gates (Tests 236–250)
 
 Target Module: `research/mssn_sn_tower/code/python/tests/normal_forms/test_tranche13_adversarial_and_rust_parity.py`  
-Aligned System: `omega_engine/crates_rs/`, `research/mssn_sn_tower/normal_forms/contracts/`
+Aligned System: `engine/crates_rs/`, `research/mssn_sn_tower/normal_forms/contracts/`
 
 | # | Test Identifier | Category | Target Invariant & Scope |
 |---|---|---|---|
-| 236 | `test_rust_bareiss_determinant_parity_exact` | Rust Parity | Compares Python exact rational determinants with native Rust `omega_linear_algebra` Bareiss determinant solver. |
+| 236 | `test_rust_bareiss_determinant_parity_exact` | Rust Parity | Compares Python exact rational determinants with native Rust `core_linear_algebra` Bareiss determinant solver. |
 | 237 | `test_rust_smith_normal_form_parity_exact` | Rust Parity | Asserts exact parity between Python and Rust Smith Normal Form integer matrix invariants. |
-| 238 | `test_rust_simplicial_boundary_d1_d0_parity` | Rust Parity | Verifies that Rust `omega_homology` boundary matrices evaluate $d \circ d = 0$ with identical matrix rank. |
+| 238 | `test_rust_simplicial_boundary_d1_d0_parity` | Rust Parity | Verifies that Rust `core_homology` boundary matrices evaluate $d \circ d = 0$ with identical matrix rank. |
 | 239 | `test_rust_discrete_holonomy_product_parity` | Rust Parity | Asserts bit-level agreement on quaternion path-ordered holonomy products between Python and Rust. |
-| 240 | `test_rust_defect_functional_phi1_gamma2_parity` | Rust Parity | Validates that $\Phi_1$ and $\Gamma_2$ defect calculations agree identically with Rust `omega_functional`. |
+| 240 | `test_rust_defect_functional_phi1_gamma2_parity` | Rust Parity | Validates that $\Phi_1$ and $\Gamma_2$ defect calculations agree identically with Rust `core_functional`. |
 | 241 | `test_adversarial_float_injection_firewall` | Anti-Cheat | Injects IEEE 754 float values into contract fields; asserts immediate hard failure across all evaluators. |
 | 242 | `test_adversarial_unearned_verified_label_stripping` | Anti-Cheat | Feeds synthetic contracts carrying `"verified": true` without witnesses; asserts that parser strips unearned labels. |
 | 243 | `test_adversarial_yaml_bom_rejection` | Cleanliness | Injects UTF-8 BOM (`\xef\xbb\xbf`) into contract files; verifies rejection by byte-level parser. |
@@ -405,7 +405,7 @@ Aligned Contracts: `nf.coda.tsnf`, `nf.cochain.dhnf`, `nf.cohomology.acnf`, `nf.
 ## 14. Tranche 15: Exact Homological Boundary & Sovereign Rust Crate Seams (Tests 266–290)
 
 Target Module: `research/mssn_sn_tower/code/python/tests/normal_forms/test_tranche15_exact_homology_and_rust_seams.py`  
-Aligned Contracts / Systems: `nf.coda.tsnf`, `nf.cochain.dhnf`, `omega_homology`, `omega_linear_algebra`, `omega_holonomy`, `omega_functional`, `RustSymbolGameHost`
+Aligned Contracts / Systems: `nf.coda.tsnf`, `nf.cochain.dhnf`, `core_homology`, `core_linear_algebra`, `core_holonomy`, `core_functional`, `RustSymbolGameHost`
 
 | # | Test Identifier | Category | Target Invariant & Scope |
 |---|---|---|---|
@@ -427,9 +427,9 @@ Aligned Contracts / Systems: `nf.coda.tsnf`, `nf.cochain.dhnf`, `omega_homology`
 | 281 | `test_discrete_connection_laplacian_nullspace_harmonics` | Holonomy | Evaluates discrete connection Laplacian $\Delta_\nabla = d_\nabla^\dagger d_\nabla + d_\nabla d_\nabla^\dagger$; asserts that harmonic forms $\ker(\Delta_\nabla)$ correspond to flat gauge bundles. |
 | 282 | `test_path_ordered_holonomy_product_quaternion_unimodularity` | Holonomy | Verifies that path-ordered holonomy products using unit quaternions strictly preserve unit norm $\|q\| = 1$ over $10^3$ successive link hops. |
 | 283 | `test_discrete_curvature_two_form_exact_plaquette_holonomy` | Holonomy | Evaluates curvature 2-form on simplicial plaquettes; asserts $F_{\mu\nu} = 0$ on flat simplicial embeddings. |
-| 284 | `test_sovereign_functional_phi1_gauge_defect_evaluation` | Functional | Evaluates $\Phi_1$ defect functional via `omega_functional`; asserts strict non-negativity $\Phi_1 \ge 0$ and zero value on closed 1-cocycles. |
+| 284 | `test_sovereign_functional_phi1_gauge_defect_evaluation` | Functional | Evaluates $\Phi_1$ defect functional via `core_functional`; asserts strict non-negativity $\Phi_1 \ge 0$ and zero value on closed 1-cocycles. |
 | 285 | `test_sovereign_functional_gamma2_dual_witness_certification` | Functional | Computes $\Gamma_2$ defect obstruction mass; verifies that dual certificate satisfies complementary slackness with zero duality gap. |
-| 286 | `test_wire_exact_rational_unit_denominator_canonical_form` | Wire Transport | Verifies that integer rationals are serialized without slashes (e.g. `"1"`, `"-4"`) to preserve strict canonical parsing under `omega_kernel::parse_exact`. |
+| 286 | `test_wire_exact_rational_unit_denominator_canonical_form` | Wire Transport | Verifies that integer rationals are serialized without slashes (e.g. `"1"`, `"-4"`) to preserve strict canonical parsing under `core_kernel::parse_exact`. |
 | 287 | `test_exact_rust_adapter_anti_sham_purity` | Architecture | Verifies that `RustExactEngineAdapter` invokes native Rust FFI methods directly without wrapping back around to call Python domain math. |
 | 288 | `test_sovereign_crate_ffi_seam_isolation` | Architecture | Asserts that FFI symbols and foreign function bindings are completely isolated within `ffi.py` with zero scattered C-types in domain modules. |
 | 289 | `test_higher_simplicial_boundary_negative_control_matrix` | Negative Control | Adversarial tests verifying rejection of negative simplex indices, non-strictly-increasing face indices, and empty boundary matrices. |
@@ -475,7 +475,7 @@ Aligned Contracts / Systems: `research/mssn_sn_tower/code/python/`, `reach`, `gr
 ## 16. Tranche 17: Regge-Bianchi Identity & Higher Coboundaries (Tests 316–335)
 
 Target Module: `research/mssn_sn_tower/code/python/tests/normal_forms/test_tranche17_regge_bianchi_and_higher_coboundaries.py`  
-Aligned Contracts / Systems: `omega_homology`, `d2_simplicial`, `d3_simplicial`, `delta2_cochain`, `delta3_cochain`, `4d_regge_spacetime`, `bianchi_identity`, `bout_service`
+Aligned Contracts / Systems: `core_homology`, `d2_simplicial`, `d3_simplicial`, `delta2_cochain`, `delta3_cochain`, `4d_regge_spacetime`, `bianchi_identity`, `bout_service`
 
 | # | Test Identifier | Category | Target Invariant & Scope |
 |---|---|---|---|
@@ -491,7 +491,7 @@ Aligned Contracts / Systems: `omega_homology`, `d2_simplicial`, `d3_simplicial`,
 | 325 | `test_4d_regge_spacetime_network_five_simplex_construction` | Regge Spacetime | Constructs canonical 4D Regge simplicial spacetime network containing 5 nodes, 10 edges, 10 faces, 5 tetrahedra, and 1 4-simplex. |
 | 326 | `test_4d_regge_spacetime_deficits_exact_rational_evaluation` | Regge Spacetime | Evaluates exact rational Regge spacetime deficits $\xi_3$ and $\xi_4$ under non-trivial cochain configurations. |
 | 327 | `test_discrete_contracted_bianchi_identity_delta_squared_zero` | Bianchi Identity | Simulates discrete contracted Bianchi identity: asserts that curvature defects satisfy exact conservation laws. |
-| 328 | `test_rust_ffi_seam_boundary_operator_delegation` | FFI Seam | Verifies clean delegation through `RustSymbolGameHost` to sovereign Rust crate `omega_homology`. |
+| 328 | `test_rust_ffi_seam_boundary_operator_delegation` | FFI Seam | Verifies clean delegation through `RustSymbolGameHost` to sovereign Rust crate `core_homology`. |
 | 329 | `test_higher_coboundary_gauge_invariance` | Gauge Invariance | Asserts that $\delta^2$ and $\delta^3$ defects remain strictly invariant under 0-form gauge shifts $A \mapsto A + \delta^0 \lambda$. |
 | 330 | `test_spacetime_deficit_carrier_honesty_validation` | Carrier Honesty | Validates that carrier dictionaries reject unreferenced cells and maintain 1:1 simplicial orientation honesty. |
 | 331 | `test_primal_dual_l1_gauge_solver_4simplex_retraction` | Exact Solvers | Executes exact rational primal-dual $L_1$ gauge retraction over 4-simplex complexes; achieves strict monotonic descent. |
@@ -784,7 +784,7 @@ Tests 1–515 execute locally under these invariants. Tests 516–615 become sub
 
 1. **No Remote CI Reliance:** Execution runs strictly via local pytest commands and `lake build`.
 2. **Sequential Batching:** Targeted test files are run individually or in small batches ($\le 3$ files), preventing local environment resource exhaustion.
-3. **Receipt Emission:** Every completed test suite emits an RFC 8785 canonical JSON verification receipt. Completed suites to date landed receipts under `research/mssn_sn_tower/code/python/tests/normal_forms/` and `omega_engine_governance/tests/normal_forms/`, each carrying `AuthorityEffect: None`.
+3. **Receipt Emission:** Every completed test suite emits an RFC 8785 canonical JSON verification receipt. Completed suites to date landed receipts under `research/mssn_sn_tower/code/python/tests/normal_forms/` and `governance/tests/normal_forms/`, each carrying `AuthorityEffect: None`.
 4. **Lake Elaboration Integrity:** Mechanized Lean 4 theorems must elaborate with 0 `sorry` statements and 0 warnings during `lake build NormalFormsCore`.
 5. **Planned Inventory:** Tranches 27–31 (Tests 516–615) are plan rows. They are outside the passing gate until a module and a receipt exist.
 

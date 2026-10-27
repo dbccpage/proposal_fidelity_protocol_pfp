@@ -16,7 +16,7 @@ import unittest
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_pfp.infrastructure.normal_form_loading import (
+from pfp.infrastructure.normal_form_loading import (
     audit_specs_directory,
     validate_contract_file,
 )
@@ -25,9 +25,9 @@ repo_root = next((p for p in Path(__file__).resolve().parents if (p / '.git').ex
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from omega_engine_pfp.domain.normal_forms.contract_validation import validate_contract_dict
-from omega_engine_pfp.domain.normal_forms.quantum_forms import verify_bssnf, verify_micnf
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.contract_validation import validate_contract_dict
+from pfp.domain.normal_forms.quantum_forms import verify_bssnf, verify_micnf
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     RelationalSchema,
     check_1nf,
@@ -38,7 +38,7 @@ from omega_engine_pfp.domain.normal_forms.relational import (
     check_lossless_decomposition,
     compute_attribute_closure,
 )
-from omega_engine_pfp.domain.normal_forms.tower_forms import (
+from pfp.domain.normal_forms.tower_forms import (
     canonicalize_dbcnf,
     check_tbnf,
     is_dbcnf,

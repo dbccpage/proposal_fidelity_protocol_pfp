@@ -4,7 +4,7 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
+from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
 
 
 def test_n02_missing_reports_are_not_filled_by_the_host():
@@ -42,7 +42,7 @@ def test_registered_seed_requires_a_structured_answer(seed):
 
 
 def test_every_seed_has_an_explicit_check_or_unavailable_obligation():
-    from omega_engine_pfp.infrastructure.pilot_runner import load_seed_catalog
+    from pfp.infrastructure.pilot_runner import load_seed_catalog
 
     for spec in load_seed_catalog().demos:
         result = evaluate_seed_response(spec.id, {})

@@ -55,14 +55,14 @@ class ExactRationalSolver(PfpSolverPort):
         return Result.ok(True)
 
     def compute_gamma2(self, d1: BoundaryMatrix, omega: Cochain) -> Result[Fraction, DomainError]:
-        if len(omega.values) != d1.cols:
+        if len(core.values) != d1.cols:
             return Result.err(
                 DomainError(
                     RefusalCode.MAP_UNDEFINED,
-                    f"Cochain length {len(omega.values)} != d1 cols {d1.cols}",
+                    f"Cochain length {len(core.values)} != d1 cols {d1.cols}",
                 )
             )
-        coboundary = d1.multiply_vector(omega.values)
+        coboundary = d1.multiply_vector(core.values)
         gamma2 = sum(abs(v) for v in coboundary)
         return Result.ok(gamma2)
 
@@ -75,17 +75,17 @@ class ExactRationalSolver(PfpSolverPort):
         connected component constants. In the standard discrete simplex/sub-manifold,
         we find the exact rational minimizer.
         """
-        if len(omega.values) != d0.rows:
+        if len(core.values) != d0.rows:
             return Result.err(
                 DomainError(
                     RefusalCode.MAP_UNDEFINED,
-                    f"Cochain length {len(omega.values)} != d0 rows {d0.rows}",
+                    f"Cochain length {len(core.values)} != d0 rows {d0.rows}",
                 )
             )
 
         # First check if omega is exact: omega = d0 * alpha with residual 0
         # Solve d0 * alpha = omega via Gaussian elimination over Fraction
-        alpha_exact = self._solve_linear_system(d0, omega.values)
+        alpha_exact = self._solve_linear_system(d0, core.values)
         if alpha_exact is not None:
             return Result.ok((Fraction(0), alpha_exact))
 
@@ -101,16 +101,16 @@ class ExactRationalSolver(PfpSolverPort):
                     "Exact L1 reference enumeration exceeds 100000 active sets",
                 )
             )
-        best_phi = omega.l1_norm()
+        best_phi = core.l1_norm()
         best_alpha = tuple(Fraction(0) for _ in range(d0.cols))
         for indices in itertools.combinations(range(d0.rows), rank):
             active = BoundaryMatrix(rank, d0.cols, tuple(d0.data[i] for i in indices))
             if self._rank(active) != rank:
                 continue
-            alpha = self._solve_linear_system(active, tuple(omega.values[i] for i in indices))
+            alpha = self._solve_linear_system(active, tuple(core.values[i] for i in indices))
             if alpha is None:
                 continue
-            residual = sum(abs(w - v) for w, v in zip(omega.values, d0.multiply_vector(alpha)))
+            residual = sum(abs(w - v) for w, v in zip(core.values, d0.multiply_vector(alpha)))
             if residual < best_phi:
                 best_phi, best_alpha = residual, alpha
         return Result.ok((best_phi, best_alpha))
@@ -141,11 +141,11 @@ class ExactRationalSolver(PfpSolverPort):
                 require_rational(value)
         except TypeError as exc:
             return Result.err(DomainError(RefusalCode.POLICY_VIOLATION, str(exc)))
-        if d0.rows != len(omega.values) or len(dual_vector) != len(omega.values):
+        if d0.rows != len(core.values) or len(dual_vector) != len(core.values):
             return Result.err(
                 DomainError(
                     RefusalCode.DUALITY_GAP_NONZERO,
-                    f"Dual vector length {len(dual_vector)} != omega length {len(omega.values)}",
+                    f"Dual vector length {len(dual_vector)} != omega length {len(core.values)}",
                 )
             )
 
@@ -167,7 +167,7 @@ class ExactRationalSolver(PfpSolverPort):
                         "Dual is not a circulation: d0^T y != 0",
                     )
                 )
-        dual_val = sum(y * w for y, w in zip(dual_vector, omega.values))
+        dual_val = sum(y * w for y, w in zip(dual_vector, core.values))
         gap = phi1 - dual_val
         if gap != 0:
             return Result.err(
@@ -238,16 +238,16 @@ class ExactRationalSolver(PfpSolverPort):
         - exact, harmonic, coexact are mutually orthogonal in standard Q inner product
         - exact + harmonic + coexact == omega
         """
-        if len(omega.values) != d0.rows or len(omega.values) != d1.cols:
+        if len(core.values) != d0.rows or len(core.values) != d1.cols:
             return Result.err(
                 DomainError(
                     RefusalCode.MAP_UNDEFINED,
-                    f"Dimension mismatch: omega len {len(omega.values)} vs d0 rows {d0.rows}, d1 cols {d1.cols}",
+                    f"Dimension mismatch: omega len {len(core.values)} vs d0 rows {d0.rows}, d1 cols {d1.cols}",
                 )
             )
 
         # 1. Coexact component: solve (d1 @ d1^T) * psi = d1 * omega
-        d1_omega = d1.multiply_vector(omega.values)
+        d1_core = d1.multiply_vector(core.values)
         m1_data = [
             [sum(d1.data[r1][c] * d1.data[r2][c] for c in range(d1.cols)) for r2 in range(d1.rows)]
             for r1 in range(d1.rows)
@@ -257,7 +257,7 @@ class ExactRationalSolver(PfpSolverPort):
             len(m1_data[0]),
             tuple(tuple(Fraction(x) for x in r) for r in m1_data),
         )
-        psi = self._solve_linear_system(m1_mat, d1_omega)
+        psi = self._solve_linear_system(m1_mat, d1_core)
         if psi is None:
             return Result.err(
                 DomainError(
@@ -269,8 +269,8 @@ class ExactRationalSolver(PfpSolverPort):
         coexact = tuple(sum(d1.data[f][e] * psi[f] for f in range(d1.rows)) for e in range(d1.cols))
 
         # 2. Exact component: solve (d0^T @ d0) * phi = d0^T * omega
-        d0_t_omega = [
-            sum(d0.data[e][v] * omega.values[e] for e in range(d0.rows)) for v in range(d0.cols)
+        d0_t_core = [
+            sum(d0.data[e][v] * core.values[e] for e in range(d0.rows)) for v in range(d0.cols)
         ]
         l0_data = [
             [sum(d0.data[e][u] * d0.data[e][v] for e in range(d0.rows)) for v in range(d0.cols)]
@@ -281,7 +281,7 @@ class ExactRationalSolver(PfpSolverPort):
             len(l0_data[0]),
             tuple(tuple(Fraction(x) for x in r) for r in l0_data),
         )
-        phi = self._solve_linear_system(l0_mat, d0_t_omega)
+        phi = self._solve_linear_system(l0_mat, d0_t_core)
         if phi is None:
             return Result.err(
                 DomainError(
@@ -293,7 +293,7 @@ class ExactRationalSolver(PfpSolverPort):
         exact = d0.multiply_vector(phi)
 
         # 3. Harmonic component = omega - exact - coexact
-        harmonic = tuple(omega.values[e] - exact[e] - coexact[e] for e in range(len(omega.values)))
+        harmonic = tuple(core.values[e] - exact[e] - coexact[e] for e in range(len(core.values)))
 
         # 4. Verification of Hodge orthogonality and nilpotency conditions
         d1_exact = d1.multiply_vector(exact)
@@ -313,9 +313,9 @@ class ExactRationalSolver(PfpSolverPort):
                 )
             )
 
-        dot_exact_harm = sum(exact[e] * harmonic[e] for e in range(len(omega.values)))
-        dot_exact_coex = sum(exact[e] * coexact[e] for e in range(len(omega.values)))
-        dot_harm_coex = sum(harmonic[e] * coexact[e] for e in range(len(omega.values)))
+        dot_exact_harm = sum(exact[e] * harmonic[e] for e in range(len(core.values)))
+        dot_exact_coex = sum(exact[e] * coexact[e] for e in range(len(core.values)))
+        dot_harm_coex = sum(harmonic[e] * coexact[e] for e in range(len(core.values)))
         if dot_exact_harm != 0 or dot_exact_coex != 0 or dot_harm_coex != 0:
             return Result.err(
                 DomainError(

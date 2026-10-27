@@ -11,7 +11,7 @@ import importlib
 import json
 from pathlib import Path
 
-RUNNER = importlib.import_module("omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.runner")
+RUNNER = importlib.import_module("projects.mssn_sn_symgam.challenges.c_quantum.runner")
 THEME = Path(RUNNER.__file__).resolve().parent
 
 

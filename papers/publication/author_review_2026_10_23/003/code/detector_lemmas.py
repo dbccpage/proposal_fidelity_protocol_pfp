@@ -8,7 +8,7 @@ exhaustively on small finite domains.
 
 - Lemma A: if Signal 2 is computed from Signal 1, the two-signal decision table
   collapses. ``gate`` is a copy of the decision table of the audited repository
-  gate (``omega_engine_epistemic_immune_system/domain/danger_gate.py`` at commit
+  gate (``eis/domain/danger_gate.py`` at commit
   ``30609de2c3928238715375a9bac608256fa381d8``).
 - Lemma B: the Hill-style "quorum" ``H(sum of positive signals) >= t`` is a sum
   threshold. ``hill_activates`` evaluates the Hill ratio exactly for an integer

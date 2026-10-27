@@ -21,4 +21,4 @@ C032 evaluates 6D $\mathcal{N}=(1,0)$ supergravity spectra against the 5 necessa
 - 46 Hostile Corrupted Mutations (`mutation_suite/mutations/`)
 - Dual Checkers: Checker 1 (Exact Algebraic Weight Certifier) & Checker 2 (Independent Matrix Certifier)
 - Commit-Reveal State Machine: `PASS_TO_MASTER`
-- Woland Reverse Write Order Quad Bundle (`novella.md` $\to$ `dda_actions.jsonl` $\to$ `summary.json` $\to$ `receipt.json`)
+- Adversary Reverse Write Order Quad Bundle (`novella.md` $\to$ `dda_actions.jsonl` $\to$ `summary.json` $\to$ `receipt.json`)

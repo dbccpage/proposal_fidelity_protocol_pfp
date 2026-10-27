@@ -9,11 +9,11 @@ import pytest
 import yaml
 from pydantic import ValidationError
 
-import omega_engine_pfp.domain.normal_forms.nf_domain_index as nf
-from omega_engine_pfp.infrastructure.normal_form_loading import (
+import pfp.domain.normal_forms.nf_domain_index as nf
+from pfp.infrastructure.normal_form_loading import (
     check_contract_file,
 )
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import NORMAL_FORMS_DIR
 
 NF = NORMAL_FORMS_DIR
 

@@ -186,7 +186,7 @@ def audit_target(target_path: Path) -> Tuple[List[Dict[str, Any]], int]:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="sql_anti_pattern_auditor",
-        description="SQL & Persistence Anti-Pattern Auditor for Omega Engine",
+        description="SQL & Persistence Anti-Pattern Auditor for Engine",
     )
     parser.add_argument(
         "--path",

@@ -27,7 +27,7 @@ certificate or a source of permission.
 Useful entry points, relative to the repository root:
 
 - Python: `code/mub_verify/` (research verifiers); the retired tests are in `tests/mub_verify_python_tests_2026-09-25.zip`.
-- Rust: `omega_engine/crates_rs/omega_mub/` in the larger Cargo workspace.
+- Rust: `engine/crates_rs/core_mub/` in the larger Cargo workspace.
 - Abstract interfaces: `lean4/gluing/`.
 - Concrete complex Hilbert definitions and reflection:
   `lean4/012_mutually_unbiased_bases/MUB/`.
@@ -69,7 +69,7 @@ Reproduce a substantive defect with a small counterexample, fix the responsible
 boundary, and run the affected checks. Keep transcripts, build output, and
 temporary probes under ignored `scratch/`.
 
-Use an available Python 3.11+ interpreter. The Python test suite was retired on 2026-09-25 and archived in `tests/mub_verify_python_tests_2026-09-25.zip`; the exact algebra is exercised by the Rust `omega_mub` tests (`cargo test -j 1 -p omega_mub` from `omega_engine/crates_rs`).
+Use an available Python 3.11+ interpreter. The Python test suite was retired on 2026-09-25 and archived in `tests/mub_verify_python_tests_2026-09-25.zip`; the exact algebra is exercised by the Rust `core_mub` tests (`cargo test -j 1 -p core_mub` from `engine/crates_rs`).
 The former command was
 `python -m pytest tests/mub_verify -n 8 --basetemp=scratch/pytest_tmp`.
 If that directory is occupied or inaccessible, use a fresh path under
@@ -78,7 +78,7 @@ basetemp. Keep pytest's cache in that run directory if the shared cache is locke
 
 Run `lake build` from each affected package using its pinned `lean-toolchain`,
 and inspect `#print axioms` for the changed results. Target Rust tests narrowly,
-for example `cargo test -p omega_mub --lib <module>::tests --offline`; a short
+for example `cargo test -p core_mub --lib <module>::tests --offline`; a short
 substring can unintentionally select a long `deep_run` test. Do not describe
 unrun tests, cached builds, or metadata declarations as fresh proof replay.
 

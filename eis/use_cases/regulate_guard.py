@@ -8,10 +8,10 @@ from dataclasses import dataclass
 from hashlib import sha256
 from typing import Protocol
 
-from omega_engine_operads.domain.operad.treg import (
+from operads.domain.operad.treg import (
     CheckedFalsePositive, OperadTregSupervisor,
 )
-from omega_engine_epistemic_immune_system.domain.guard_activation import DetectorHitRefV1
+from eis.domain.guard_activation import DetectorHitRefV1
 from .guard_activation import GuardStatePort, subject_digest
 
 

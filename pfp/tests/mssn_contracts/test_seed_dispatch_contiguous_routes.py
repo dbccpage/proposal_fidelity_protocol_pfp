@@ -4,9 +4,9 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_pfp.infrastructure.pilot_runners import seed_advanced_checks as advanced
-from omega_engine_pfp.infrastructure.pilot_runners import seed_checks as checks
-from omega_engine_pfp.infrastructure.pilot_runners import seed_core_checks as core
+from pfp.infrastructure.pilot_runners import seed_advanced_checks as advanced
+from pfp.infrastructure.pilot_runners import seed_checks as checks
+from pfp.infrastructure.pilot_runners import seed_core_checks as core
 
 
 class RouteStop(RuntimeError):

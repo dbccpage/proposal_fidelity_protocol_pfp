@@ -52,8 +52,8 @@
 ## Reproduced operad and resolver defects (201dc8d, 2026-10-15)
 
 Each item below was reproduced on `origin/main` at `201dc8d` with a probe script or a test run.
-Paths are relative to `omega_engine_workflows_agents_skills/skill_operad/`. These are historical findings, not a current completion register. The current native/runtime repairs and remaining evidence limits are in [chapter 27](27_spec_op_resolver.md) and [chapter 29](29_guide_woland_operad_management_ladder.md). The original repair plan is workstream I1 of
-[EPIC-OE-OEWAS-012](../../../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_012_woland_operad_binding_and_management_ladder_pilot_plan.md).
+Paths are relative to `workflows_agents_skills/skill_operad/`. These are historical findings, not a current completion register. The current native/runtime repairs and remaining evidence limits are in [chapter 27](27_spec_op_resolver.md) and [chapter 29](29_guide_adversary_operad_management_ladder.md). The original repair plan is workstream I1 of
+[EPIC-OE-OEWAS-012](../../../../product_planning_office/plans/epics/oewas/epic_oe_oewas_012_adversary_operad_binding_and_management_ladder_pilot_plan.md).
 
 Resolver ([chapter 27](27_spec_op_resolver.md)):
 
@@ -94,7 +94,7 @@ Other operad implementations:
     `validate_units` (`:446-454`) reads them back. The unit line printed by `validate_operad.py` is
     therefore not evidence for the unit laws.
 13. `quotient_operad.py:20,22` uses bare imports. Importing
-    `omega_engine_workflows_agents_skills.skill_operad.quotient_operad` raises
+    `workflows_agents_skills.skill_operad.quotient_operad` raises
     `ModuleNotFoundError: No module named 'evidence_observations'`.
 
 Registry data and tests:
@@ -104,7 +104,7 @@ Registry data and tests:
     checks associativity, units or equivariance on values.
 15. The primary `.agents/skill_operads/composition_matrix.json` has a composition whose outer op
     `rip-papers` is not an op or a skill, and lists two synthesized meta-skills
-    (`meta-intelligence-transmutation-engine`, `meta-woland-hermetic-evidence-verifier`) with no
+    (`meta-intelligence-transmutation-engine`, `meta-adversary-hermetic-evidence-verifier`) with no
     skill directory and no signature op.
 16. `validate_operad.py` exits 1 with 26 residual-honesty errors (13 signature rows, 13 SKILL.md
     frontmatter fields claiming `contractive` without a certificate).

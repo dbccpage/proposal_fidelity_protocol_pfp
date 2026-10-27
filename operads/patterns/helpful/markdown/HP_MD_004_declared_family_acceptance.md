@@ -29,7 +29,7 @@ Acceptance is a statement about one declared finite family and one evidence reco
 
 - Fixing $F$ and $e$ as parameters, rather than as explicit arguments, is the same construction.
 - A declared singleton is a legitimate input to that classifier. It does not show that competitors were removed by new evidence, and it does not show that the family exhausts alternatives.
-- The selector replay and NO-GO verdict in `_ic/inr/omega_paper_reviews/2026-10-08_representation_abundance_publication_review/review.md` are historical. This pattern does not claim that the current manuscript still omits the family or still uses an existential authority formula.
+- The selector replay and NO-GO verdict in `_ic/inr/core_paper_reviews/2026-10-08_representation_abundance_publication_review/review.md` are historical. This pattern does not claim that the current manuscript still omits the family or still uses an existential authority formula.
 - Typing the classifier needs no new physics theorem. This pattern does not supply one.
 
 ## Dual Anti-Pattern

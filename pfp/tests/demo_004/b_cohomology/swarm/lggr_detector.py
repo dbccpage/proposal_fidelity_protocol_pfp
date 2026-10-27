@@ -16,7 +16,7 @@ class LggrVerdict:
     cycle_rank: int | None = None
     native_gluing_defect: str | None = None
     ddc_rune: str | None = None
-    diagnosis: str = "WOLAND_EXECUTION_UNAVAILABLE"
+    diagnosis: str = "ADVERSARY_EXECUTION_UNAVAILABLE"
     status: str = "UNKNOWN"
 
     def to_dict(self) -> dict[str, Any]:

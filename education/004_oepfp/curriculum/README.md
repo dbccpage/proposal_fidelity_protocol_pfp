@@ -48,10 +48,10 @@ are imported by existing package entry points; Jupyter is optional for this
 plain-Python sequence. From the repository root:
 
 ```powershell
-python -m pip install -r omega_engine_education/curriculum/3_the_symbol_game_proposal_fidelity_protocol_pfp/requirements.txt
-python -B omega_engine_education/scripts/build_system_integration.py
-python -B omega_engine_education/scripts/verify_system_integration.py
-python -B -m unittest omega_engine_education.tests.test_system_integration omega_engine_operads.tests.unit.test_retired_anti_skill_boundary -v
+python -m pip install -r education/curriculum/3_the_symbol_game_proposal_fidelity_protocol_pfp/requirements.txt
+python -B education/scripts/build_system_integration.py
+python -B education/scripts/verify_system_integration.py
+python -B -m unittest education.tests.test_system_integration operads.tests.unit.test_retired_anti_skill_boundary -v
 ```
 
 The builder writes only this sequence and its manifest. The verifier starts a

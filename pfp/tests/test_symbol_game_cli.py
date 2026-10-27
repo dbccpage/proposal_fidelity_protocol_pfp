@@ -1,21 +1,21 @@
-"""Tests for Symbol Game CLI and omega-symgam-workflow entrypoint."""
+"""Tests for Symbol Game CLI and core-symgam-workflow entrypoint."""
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-from omega_engine_pfp.entrypoints.cli.symbol_game import main
+from pfp.entrypoints.cli.symbol_game import main
 import pytest
 
-from omega_engine_operating_system.adapters.security import (
+from operating_system.adapters.security import (
     FixtureOnlyAeadProtector,
 )
-from omega_engine_operating_system.infrastructure import EncryptedArtifactCas
-from omega_engine_pfp.entrypoints.cli.code_change_commands import (
+from operating_system.infrastructure import EncryptedArtifactCas
+from pfp.entrypoints.cli.code_change_commands import (
     FIXTURE_CAS_KEY,
 )
-from omega_engine_pfp.infrastructure.trace import (
+from pfp.infrastructure.trace import (
     DISPATCH_COMPLETE,
     EVENT_DISPATCH_INTENT_DURABLE,
     EVENT_RESPONSE_DURABLE,
@@ -136,7 +136,7 @@ def test_cli_code_change_run_fixture_seals_a_trace_and_writes_a_run_root(
     assert read_status(out / "trace.jsonl") == STATUS_BOUNDED_RUN_COMPLETE
 
     run_root = json.loads((out / "run_root.json").read_text(encoding="utf-8"))
-    assert run_root["schema_version"] == "omega.symbol-game.code-change-run-root.v1"
+    assert run_root["schema_version"] == "core.symbol-game.code-change-run-root.v1"
     assert run_root["authority_effect"] == "None"
 
     # The patch went through the provider seam, not around it. Both barriers

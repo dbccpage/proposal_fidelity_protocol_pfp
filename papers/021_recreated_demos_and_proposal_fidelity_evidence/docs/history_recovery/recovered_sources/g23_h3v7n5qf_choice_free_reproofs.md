@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 H3V7N5QF's Lean uses Mathlib, and its axiom reports include `Classical.choice`, so none of its proofs can move into 19L57G1, whose policy admits only `propext` and `Quot.sound`. Four items are proved on paper and checked by computation but are not in Lean at all. Proving them choice-free both closes those Lean gaps and produces results in a form 19L57G1's policy could accept.
 
-Generation is hard: `Finset`-based states must be re-modelled with core data, dependent elimination on inductive step relations is where the repository's own first attempt stopped, and a faithfulness bridge is needed so the core theorems concern the same objects. Verification is cheap: `lake build`, the axiom audit, and a statement-identity check. The task stresses Lean decomposition in the Symbol Game, OEWAS (Omega Engine Workflows, Agents, Skills) statement discipline, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against proving a convenient variant instead of the stated item.
+Generation is hard: `Finset`-based states must be re-modelled with core data, dependent elimination on inductive step relations is where the repository's own first attempt stopped, and a faithfulness bridge is needed so the core theorems concern the same objects. Verification is cheap: `lake build`, the axiom audit, and a statement-identity check. The task stresses Lean decomposition in the Symbol Game, OEWAS (Engine Workflows, Agents, Skills) statement discipline, and the OEEIS (Engine Epistemic Immune System) danger gate against proving a convenient variant instead of the stated item.
 
 ## 3. Formal Problem and Bounds
 
@@ -95,7 +95,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [lean4](../../../../lean4/) (the estate's Lean root, for toolchain and axiom-audit conventions); [omega_kernel](../../../../omega_engine/crates_rs/omega_kernel/).
+- the_symbol_game: [lean4](../../../../lean4/) (the estate's Lean root, for toolchain and axiom-audit conventions); [core_kernel](../../../../engine/crates_rs/core_kernel/).
 - H3V7N5QF (`1681998`): `H3V7N5QF:lean4/Tenth/`, `H3V7N5QF:lean4/Ninth/Step.lean`, `H3V7N5QF:lean4/H3V7N5QF/`, `H3V7N5QF:lean4/Sixteenth/`, `H3V7N5QF:code/lean_report.py`, `H3V7N5QF:ci/`.
 - 19L57G1 (`b55fc96a`), policy only: `19L57G1:ci/check_declaration_axioms.py` and the forbidden-token scan, run by the operator, not copied.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), [U17](../../upgrades/u17_lean_verifier_backend.md) (core Lean, plus Mathlib for the bridge).

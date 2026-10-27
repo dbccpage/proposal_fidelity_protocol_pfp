@@ -1,6 +1,6 @@
 ---
 paths:
-  - "omega_engine_education/**"
+  - "education/**"
 ---
 
 # Rule: Education Documentation Naming

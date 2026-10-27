@@ -19,11 +19,11 @@ This rule codifies the Nine-Layer CODA Stack identities, foundational difference
 > 1. **Autonomous Difference Primitives:**
 >    - Difference representations across Rust crates and Python engines operate autonomously under Discrete Deformation Calculus (DDC) and exact simplicial cochains ($\Phi_1, \Gamma_2$). They do not depend on external derivations or `19L57G1`.
 >    - Strict irreflexivity (`irrefl_witness_ne`) forbids 1-point self-loops (`r () ()`).
->    - The oriented 2-element structure $D_2$ is an external conceptual analogy to the canonical 1-simplex $\Delta^1$, not a source code dependency or embedding in `omega_homology`.
+>    - The oriented 2-element structure $D_2$ is an external conceptual analogy to the canonical 1-simplex $\Delta^1$, not a source code dependency or embedding in `core_homology`.
 >    - Representation collisions are not obstructions unless they violate a declared protected property $P$ (`FidelityObstruction P r c`). Projections that lose distinctions must emit an explicit `LossLedger` $L_{\text{adapter}}$.
 >    - Systems must not spawn horizontal crate silos to escape the $n(n-1)/2$ saturation bound; they must ascend vertically through lawful DDC structural lifts ($\Lambda$).
 > 2. **Canonical CODA Layer 5 Identity:**
->    - Layer 5 of the Nine-Layer CODA Stack is strictly **Q: The Continuum** (*Continuum Representations via Completion and Enclosure* per `research/omega_engine_coda/papers/q/coda_q.md`).
+>    - Layer 5 of the Nine-Layer CODA Stack is strictly **Q: The Continuum** (*Continuum Representations via Completion and Enclosure* per `research/coda/papers/q/coda_q.md`).
 >    - Calling Layer 5 "Quantum Enclosure" is prohibited. Layer 5 governs convex interval enclosures $[lo, hi]$ where $|x - \text{mid}| \le \text{width}/2$ and Cauchy completions.
 > 3. **Discrete Deformation Calculus (DDC) Trace Discipline:**
 >    - State transitions on obstructions must use the 8-letter operational alphabet $\mathcal{A}_{\mathrm{DDC}} = \{E, R, C, I, \Lambda, D, M, T\}$, logging deterministic step receipts.
@@ -35,7 +35,7 @@ This rule codifies the Nine-Layer CODA Stack identities, foundational difference
 > **Primary Authority & Prohibited Acronym Hallucinations:**
 >
 > 1. **Primary Ground Truth Custody:**
->    The single authoritative ground truth for all CODA theoretical components, layer acronyms, subtitles, and scopes resides exclusively in the primary research monographs under `research/omega_engine_coda/papers/`:
+>    The single authoritative ground truth for all CODA theoretical components, layer acronyms, subtitles, and scopes resides exclusively in the primary research monographs under `research/coda/papers/`:
 >    - `papers/coda/`: **CODA** = **Calculus of Obstruction, Descent, and Authority** (CODA-19).
 >    - `papers/coda_gtla/`: **GTLA** = **General Theory of Layered Authority** *(Layered Authority Architecture for CODA; Master Normal Form)*. Subtitle: *"A leftover class is not standing"*.
 >    - `papers/foc/`: **FOC** = **Finite Obstruction Calculus**. Subtitle: *"Exact quotient diagnostics, dual witnesses, two-stage coherence, and transport"*.
@@ -45,7 +45,7 @@ This rule codifies the Nine-Layer CODA Stack identities, foundational difference
 >    - `papers/cs/`: **CS** = **Continuum Shadow**. Subtitle: *"Continuum Re-Presentations that Descend to the Finite Calculus"*.
 >    - `papers/cs_q/`: **CS_Q** = **Continuum Shadow to Continuum Bridge**. Subtitle: *"Image factors, decoder bounds, and missing-value obstructions"*.
 >    - `papers/q/`: **Q** = **The Continuum**. Subtitle: *"Continuum Representations via Completion and Enclosure"*.
->    - `papers/a/`: **A** = **Anomalon**. Subtitle: *"The Anomalon as a Typed Leftover"*.
+>    - `papers/a/`: **A** = **Sentinel**. Subtitle: *"The Sentinel as a Typed Leftover"*.
 > 2. **Strictly Prohibited Hallucinated Expansions:**
 >    Agents, tools, and code generators are strictly prohibited from generating, suggesting, or committing the following hallucinated expansions:
 >    - `CODA` -> *Constructive Obstruction and Defect Architecture* (BANNED; must be *Calculus of Obstruction, Descent, and Authority*).
@@ -53,7 +53,7 @@ This rule codifies the Nine-Layer CODA Stack identities, foundational difference
 >    - `FDA` -> *Formal Derivation & Authority* (BANNED; must be *Finite Descent Authority*).
 >    - `MUR` -> *Transport & Loss* or *Morphisms, Universality & Retraction* (BANNED; must be *Meta & Universal Re-Presentation*).
 >    - `OR` -> *Observation & Refusal* (BANNED; must be *Omniversal Re-Presentation*).
->    - `A` -> *Residue & Leftover* (BANNED; must be *Anomalon* / *The Anomalon as a Typed Leftover*).
+>    - `A` -> *Residue & Leftover* (BANNED; must be *Sentinel* / *The Sentinel as a Typed Leftover*).
 >    - `Q` -> *Quantum Enclosure* (BANNED; must be *The Continuum*).
 > 3. **Dual Perspective Architecture:**
 >    Documentation and implementations must distinguish between:
@@ -78,7 +78,7 @@ This rule codifies the Nine-Layer CODA Stack identities, foundational difference
 > **Normal Forms Engine & Chase Algebra:**
 >
 > 1. **Canonical Package Location**: Normal form engines, evaluators, and schemas reside in `research/mssn_sn_tower/code/python/normal_forms/`. Tests reside in `research/mssn_sn_tower/code/python/tests/normal_forms/`.
-> 2. **Canonical Packet Imports**: Modules within `normal_forms/` import packet syntax directly from `omega_engine_pfp.domain.tower.parser`; normal-form engines and tests remain in the research locations above.
+> 2. **Canonical Packet Imports**: Modules within `normal_forms/` import packet syntax directly from `pfp.domain.tower.parser`; normal-form engines and tests remain in the research locations above.
 > 3. **Chase Confluence Discipline**: Equivalence partition comparisons must invoke the chase evaluator with `early_exit=False` to ensure full fixpoint stabilization under permuted dependency sequences.
 > 4. **LossLedger Cryptographic Custody**: Cross-domain quotient projections must validate entry counts and SHA-256 canonical digests, rejecting mutated or truncated payloads with `LossLedgerTampered`.
 

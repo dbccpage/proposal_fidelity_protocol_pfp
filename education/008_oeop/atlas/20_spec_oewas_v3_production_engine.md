@@ -3,9 +3,9 @@
 # Specification: OEWAS V3 Production Architecture & Operadic Engine
 
 **Document ID:** `oewas_spec_oewas_v3_production_engine`  
-**Location:** this chapter. Its former source copy `_docs/08_spec_oewas_v3_production_engine.md` in the retired OEWAS package has no successor under `omega_engine_operads`.  
-**Governing Domain:** `omega_engine_operads`  
-**Host & Adapters:** `omega_engine_operating_system`  
+**Location:** this chapter. Its former source copy `_docs/08_spec_oewas_v3_production_engine.md` in the retired OEWAS package has no successor under `operads`.  
+**Governing Domain:** `operads`  
+**Host & Adapters:** `operating_system`  
 **Status:** Normative Production Architecture Specification  
 **AuthorityEffect:** `None`  
 
@@ -20,14 +20,14 @@
 - [5. Concurrency, SQLite-WAL & Transactional Outbox](#5-concurrency-sqlite-wal--transactional-outbox)
 - [6. Multi-Agent DAG Scheduling (Kahn's Algorithm)](#6-multi-agent-dag-scheduling-kahns-algorithm)
 - [7. API, CLI & Manifest Cryptographic Signing](#7-api-cli--manifest-cryptographic-signing)
-- [8. Mechanical Acceptance Laws & Lev Landau Falsification](#8-mechanical-acceptance-laws--lev-landau-falsification)
+- [8. Mechanical Acceptance Laws & Examiner Falsification](#8-mechanical-acceptance-laws--lev-examiner-falsification)
 - [9. Claim Discipline Summary](#9-claim-discipline-summary)
 
 ---
 
 ## 1. Executive Summary & 4-Layer Clean Architecture
 
-The **OEWAS (Omega Engine Workflows, Agents, and Skills) V3** subsystem formalizes agent operations, skill catalogs, and multi-agent workflows as mathematical terms in a finite **Colored Multicategory (Operad) $\mathcal{O}_{\text{WAS}}$**.
+The **OEWAS (Engine Workflows, Agents, and Skills) V3** subsystem formalizes agent operations, skill catalogs, and multi-agent workflows as mathematical terms in a finite **Colored Multicategory (Operad) $\mathcal{O}_{\text{WAS}}$**.
 
 The implementation strictly enforces Clean Architecture and the inward dependency rule across 4 layers:
 
@@ -102,7 +102,7 @@ OEWAS operates within a 3-Ring execution containment model:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-- **Ring 0 (Base Kernel):** Pure, deterministic mathematics (`crates_rs/omega_solvers`, `crates_rs/omega_functional`). Zero host side effects, zero I/O.
+- **Ring 0 (Base Kernel):** Pure, deterministic mathematics (`crates_rs/core_solvers`, `crates_rs/core_functional`). Zero host side effects, zero I/O.
 - **Ring 1 (Operad Engine):** In-memory colored operad evaluation, DAG compilation, and validation.
 - **Ring 2 (OEOS Host):** Side-effecting execution, capability sandboxing, filesystem CAS, and durable persistence.
 
@@ -208,9 +208,9 @@ Validation uses constant-time string comparison (`hmac.compare_digest`) to preve
 
 ---
 
-## 8. Mechanical Acceptance Laws & Lev Landau Falsification
+## 8. Mechanical Acceptance Laws & Examiner Falsification
 
-An OEWAS V3 deployment is valid only when all 6 Lev Landau falsification suites pass:
+An OEWAS V3 deployment is valid only when all 6 Examiner falsification suites pass:
 
 1. **AST Dependency Cleanliness:** Architecture linters assert that `domain/` and `use_cases/` contain zero imports of `infrastructure/`, `controllers/`, or external frameworks.
 2. **Lossless Roundtrip Guarantee:** Every `.md` file in `.agents/` roundtrips through the CommonMark parser byte-for-byte with zero drift.
@@ -233,10 +233,10 @@ An OEWAS V3 deployment is valid only when all 6 Lev Landau falsification suites 
 3. **Narrowest defensible claim:**
    - Defines a finite, nonsymmetric, typed operad execution engine and clean architecture runtime for multi-agent skill coordination.
 4. **Next test needed:**
-   - Run the full OEWAS unit test suite (`python -m pytest omega_engine_operads/tests/`).
+   - Run the full OEWAS unit test suite (`python -m pytest operads/tests/`).
 5. **Kill condition:**
    - A use-case handler performing direct disk I/O without going through a Domain Port.
 
 ---
 
-*Preserved under the Clean Architecture and Governance Directives of the Anomalon Omega Engine.*
+*Preserved under the Clean Architecture and Governance Directives of the Sentinel Engine.*

@@ -2,7 +2,7 @@
 
 **Challenge:** C060: Checker Synthesis Scored by Mutation Kill Rate  
 **Domain:** `f_program_synthesis` (Domain F — Final Challenge)  
-**Tier:** T2 | **Protocol:** SG-CP v1 (Woland Terminal Reality Gate & Dual Checkers)  
+**Tier:** T2 | **Protocol:** SG-CP v1 (Adversary Terminal Reality Gate & Dual Checkers)  
 **Date:** September 2026  
 **Reality Gate Run ID:** `c060_eval_1790653492`  
 **Solver SHA-256 Digest:** `a0a0daf0c0391ae9bd5d892412809b57ff1cbbe12ac21706c27b1f156a7a1095`  
@@ -17,11 +17,11 @@ The verification harness enforces a dual scoring metric:
 1. **Zero Autoimmunity:** Emits `ACCEPT` on all mathematically valid primal-dual certificates without false rejections.
 2. **100% Mutation Kill Rate:** Detects and rejects all hostile certificate and schema mutations, emitting canonical typed rejection codes without crashing, raising unhandled exceptions, or drifting into floating-point imprecision.
 
-Under the Woland Terminal Reality Gate commit-reveal protocol:
+Under the Adversary Terminal Reality Gate commit-reveal protocol:
 - **Solver Commitment:** Committed SHA-256 digest `a0a0daf0c0391ae9bd5d892412809b57ff1cbbe12ac21706c27b1f156a7a1095` before revealing the judge packet.
 - **Hidden Test Evaluation:** **64 / 64 (100.0%)** hidden evaluation cases passed across dual checkers (Exact Checker vs. Clean-Room Independent Mathematical Evaluator).
 - **Mutation Stress Testing:** **48 / 48 (100.0%)** hostile checker mutants killed by the test suite with **0 escapes**.
-- **Woland Gate Verdict:** `PASS_TO_MASTER`.
+- **Adversary Gate Verdict:** `PASS_TO_MASTER`.
 
 In the empirical benchmark sweep across 10 diverse certificate verification problem instances:
 - **Space Bunny Alpha:** **10 / 10 passed (100.0%)**

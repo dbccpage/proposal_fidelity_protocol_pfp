@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.7"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.2 'Corollary IV.7'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.2 'Corollary IV.7'"
 uses: ["ENC-0084"]
 lean_status: NOT-STARTED
 lean_refs: []
@@ -88,7 +88,7 @@ both hypotheses above and is not mechanized. This is the twin of
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.2
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.2
   (statement copied verbatim; no proof present in source). Original header
   line:
   `**Corollary IV.7 (Intent Soundness).** [PROVED] $F(s, P) = 1 \;\wedge\; V_\Gamma(P) = 1 \;\wedge\; \mathrm{Sound}(V_\Gamma) \;\Rightarrow\; \mathrm{True}_{\mathrm{Intent}(s)}(P)$.`

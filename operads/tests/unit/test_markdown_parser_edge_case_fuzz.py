@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_operads.domain.errors.domain_errors import DomainInvariantError
-from omega_engine_operads.domain.value_objects.identifier import SkillId
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import (
+from operads.domain.errors.domain_errors import DomainInvariantError
+from operads.domain.value_objects.identifier import SkillId
+from operads.infrastructure.parser.markdown_parser_adapter import (
     LosslessMarkdownParserAdapter,
 )
 

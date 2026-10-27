@@ -1,18 +1,18 @@
-"""StructureBench reads Woland's payload-nested DDA steps and never counts a
+"""StructureBench reads Adversary's payload-nested DDA steps and never counts a
 vacuous or unreached constraint as decided.
 
 Two defects:
 
 * C3 read ``phi_1`` / ``gamma_2`` only at the top level of the terminal
-  ``dda_actions.jsonl`` line. The Woland emitter
-  (``omega_engine_woland/use_cases/persistence.py``) writes each step as
+  ``dda_actions.jsonl`` line. The Adversary emitter
+  (``adversary/use_cases/persistence.py``) writes each step as
   ``{"parent_sha256", "payload": {...}, "record_sha256", "sequence"}`` with
   those fields under ``payload``, so a genuine PASS_TO_MASTER bout could never
   be decided.
 * Constraints that were not evaluated -- a non-PASS verdict, no actions, absent
   files or keys -- were reported ``SATISFIED`` and counted as decided.
 
-The fixtures below write bundles in the emitter's shape by hand; no Woland code
+The fixtures below write bundles in the emitter's shape by hand; no Adversary code
 runs.
 
 AuthorityEffect: None.
@@ -25,7 +25,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operads.structurebench import (
+from operads.structurebench import (
     CONSTRAINT_IDS,
     ConstraintOutcome,
     ConstraintResult,
@@ -123,7 +123,7 @@ def _outcome(report: StructureBenchReport, constraint_id: str) -> ConstraintResu
 # -- C3 reads the payload -------------------------------------------------
 
 
-def test_a_woland_shaped_pass_to_master_bundle_is_decided_and_clean(tmp_path: Path) -> None:
+def test_a_adversary_shaped_pass_to_master_bundle_is_decided_and_clean(tmp_path: Path) -> None:
     """Counterexample: phi_1 and gamma_2 under `payload` were reported unreachable."""
     report = StructureBenchEvaluator(_write_bundle(tmp_path / "b")).evaluate()
 

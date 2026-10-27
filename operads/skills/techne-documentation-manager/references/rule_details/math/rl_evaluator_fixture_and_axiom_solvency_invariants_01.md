@@ -43,7 +43,7 @@ This rule codifies external tip pinning for hash chains, candidate fixture isola
 >    - In formal proof kernels (Lean 4, Coq, Isabelle), axiom packages and typeclasses must never quantify universally ($\forall x : T$) over raw, open data records where invalid, unvalidated, or ungrounded states are representable.
 >    - Quantifiers asserting completeness, termination, or safety invariants must be restricted to verified subtype records (e.g. `ValidatedClaimPacket := { p : ClaimPacket // p.Terminalized }`), ensuring that ungrounded data cannot falsify the package.
 > 2. **Constructive Inhabitant Requirement (Axiom Package Solvency):**
->    - Every declared axiom typeclass (e.g. `class AnomalonAxiomSet`) must exhibit at least one constructive, verifiable default instance (e.g. `def defaultAnomalonAxioms : AnomalonAxiomSet`) in the formal library.
+>    - Every declared axiom typeclass (e.g. `class SentinelAxiomSet`) must exhibit at least one constructive, verifiable default instance (e.g. `def defaultSentinelAxioms : SentinelAxiomSet`) in the formal library.
 >    - An axiom set without an exhibited constructive inhabitant is an uninstantiable specification and must never be cited as an established formal foundation.
 > 3. **Policy Invariant Scoping (By Construction):**
 >    - Theorems or lemmas in formal files that hold tautologically by virtue of definition (e.g. `HasAuthority := DescendsToReal0 ∧ Authoritative` implying `DescendsToReal0`) must be explicitly doc-commented and cited as `[POLICY INVARIANT — by construction]`.

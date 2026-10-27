@@ -13,10 +13,10 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_woland.infrastructure.providers.adapters import native_functional as nf
-from omega_engine_pfp.infrastructure.demos.execution import run, verify
+from adversary.infrastructure.providers.adapters import native_functional as nf
+from pfp.infrastructure.demos.execution import run, verify
 
-SCENARIO = "demo_woland_tribunal"
+SCENARIO = "demo_adversary_tribunal"
 
 
 def _refusal(reason: str) -> nf.NativeFunctionalRefusal:
@@ -53,7 +53,7 @@ def test_native_refusal_writes_a_typed_refusal_receipt_with_its_reason(
 
 
 def test_missing_native_pin_still_refuses_as_unavailable(monkeypatch, tmp_path) -> None:
-    for name in ("OMEGA_FUNCTIONAL_GRAPH_BIN", "OMEGA_FUNCTIONAL_GRAPH_SHA256"):
+    for name in ("CORE_FUNCTIONAL_GRAPH_BIN", "CORE_FUNCTIONAL_GRAPH_SHA256"):
         monkeypatch.delenv(name, raising=False)
     receipt = run(SCENARIO, tmp_path / SCENARIO)
     assert receipt["result"]["code"] == "FUNCTIONAL_BOUNDARY_UNAVAILABLE"

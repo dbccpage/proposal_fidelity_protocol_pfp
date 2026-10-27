@@ -1,6 +1,6 @@
 //! G04 transport/enumeration adapter. Regime, admission, profiles, and renaming
-//! are computed by the existing pinned omega_ooutwire_primitives archive.
-use omega_ooutwire_primitives::{
+//! are computed by the existing pinned core_ooutwire_primitives archive.
+use core_ooutwire_primitives::{
     admission::step, event::Event, mark::{Mark, Pair}, profile::profiles,
     reading::{READING_F, READING_L}, regime::Regime,
     renaming::{Bijection, Key, permutations, serialize}, replay::replay, token::Token,

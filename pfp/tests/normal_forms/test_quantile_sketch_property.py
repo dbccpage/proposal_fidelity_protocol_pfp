@@ -19,11 +19,11 @@ import random
 import unittest
 from typing import List
 
-from omega_engine_pfp.domain.normal_forms.quantum_forms import (
+from pfp.domain.normal_forms.quantum_forms import (
     QuantileSketchCochain,
     verify_quantile_sketch_repair,
 )
-from omega_engine_pfp.infrastructure.normal_forms.evaluator import NormalFormsEvaluator
+from pfp.infrastructure.normal_forms.evaluator import NormalFormsEvaluator
 
 
 class TestQuantileSketchCochainProperties(unittest.TestCase):

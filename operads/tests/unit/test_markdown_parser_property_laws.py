@@ -1,4 +1,4 @@
-"""Landau Class 1: Lossless Markdown Parser Property and Conservation Laws.
+"""Examiner Class 1: Lossless Markdown Parser Property and Conservation Laws.
 
 Theoretical Minimum:
 1. INVARIANT: For any markdown document, parsed leaf node byte spans must form a strict partition of the
@@ -13,8 +13,8 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_operads.domain.value_objects import SkillId
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import (
+from operads.domain.value_objects import SkillId
+from operads.infrastructure.parser.markdown_parser_adapter import (
     LosslessMarkdownParserAdapter,
 )
 

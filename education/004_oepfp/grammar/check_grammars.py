@@ -173,11 +173,11 @@ def check_runtime(cases, grammars):
     )
     # Use the existing parser and its own golden corpus, not a second implementation.
     for parent in HERE.parents:
-        if (parent / "omega_engine_pfp").is_dir():
+        if (parent / "pfp").is_dir():
             sys.path.insert(0, str(parent))
             break
-    from omega_engine_pfp.domain.tower import golden_corpus
-    from omega_engine_pfp.domain.tower import grammar as historical
+    from pfp.domain.tower import golden_corpus
+    from pfp.domain.tower import grammar as historical
 
     def cycle_parse(text):
         suite = cycle.MssnCycleRepairTranscoder.wire_to_four_object(text)

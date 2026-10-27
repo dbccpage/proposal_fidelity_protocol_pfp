@@ -27,7 +27,7 @@ Research-programme graph prose attributes a named theorem or certified guarantee
 
 ## Witness
 
-Historical source, not a fresh graph inspection or a fresh DAG test: `C:\Users\a343o\source\repos\the_symbol_game\_ic\inr\omega_paper_reviews\po033_po034_po000_wdp_2026-10-11\review.md` (scoped review dated 2026-10-11, source baseline `cd6205a80`).
+Historical source, not a fresh graph inspection or a fresh DAG test: `C:\Users\a343o\source\repos\the_symbol_game\_ic\inr\core_paper_reviews\po033_po034_po000_wdp_2026-10-11\review.md` (scoped review dated 2026-10-11, source baseline `cd6205a80`).
 
 > The graph no longer attributes a Lyapunov theorem or certified adaptive tolerance guarantee to PO-033, or an operadic quantum/cochain dynamics bridge to PO-034.
 >

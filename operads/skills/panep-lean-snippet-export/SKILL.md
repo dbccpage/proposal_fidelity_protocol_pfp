@@ -21,7 +21,7 @@ When preparing Zulip follow-up code or packaging a public Lean object.
 
 ## Default showcase (PO-000)
 
-Path: `omega_engine/lean4/research_programs/004_projection_obstruction/000_projection_obstruction/po000_l001_projection_transfer.lean`
+Path: `engine/lean4/research_programs/004_projection_obstruction/000_projection_obstruction/po000_l001_projection_transfer.lean`
 
 1. First reply: abstract `C` + `transfer` only.  
 2. Second reply if asked: product `tensor_subadd` + `transfer_product_KPi_three` with hyps.  

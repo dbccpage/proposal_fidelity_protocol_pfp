@@ -5,7 +5,7 @@ Three of its five criteria are architectural rules over Python source and are
 enforced here. The other two describe a PyO3 extension that does not exist, and
 that is pinned below, so the deferral fails loudly rather than rotting.
 
-This gate used to live in `omega_engine_projects/ms_majorana/code/tests/unit/`,
+This gate used to live in `projects/ms_majorana/code/tests/unit/`,
 where it could not be collected: a stale shadow copy of this package was on
 `sys.path` there. It now lives beside the package it measures.
 
@@ -23,8 +23,8 @@ import pathlib
 
 import pytest
 
-import omega_engine_pfp
-from omega_engine_pfp.infrastructure.architecture_fitness import (
+import pfp
+from pfp.infrastructure.architecture_fitness import (
     BASELINE_SCHEMA,
     EXEC_CALLER_ALLOWLIST,
     SEAM_IMPORT_ALLOWLIST,
@@ -55,7 +55,7 @@ def _repository_root() -> pathlib.Path:
     the old gate found *a* baseline by walking up, and a copy of the package on
     `sys.path` made it measure something other than the code under test.
     """
-    package = pathlib.Path(omega_engine_pfp.__file__).resolve().parent
+    package = pathlib.Path(pfp.__file__).resolve().parent
     here = pathlib.Path(__file__).resolve()
     assert here.is_relative_to(package), (
         f"the gate at {here} measures a different package than the one imported "
@@ -67,7 +67,7 @@ def _repository_root() -> pathlib.Path:
 REPO_ROOT = _repository_root()
 BASELINE_PATH = (
     REPO_ROOT
-    / "omega_engine_pfp"
+    / "pfp"
     / "infrastructure"
     / "architecture_baseline.json"
 )
@@ -85,28 +85,28 @@ def test_seam_import_sites_are_ffi_plus_the_explicit_allowlist():
 
 def test_every_allowlisted_seam_importer_states_a_reason():
     for module, reason in SEAM_IMPORT_ALLOWLIST.items():
-        assert module.startswith("omega_engine_pfp/")
+        assert module.startswith("pfp/")
         assert "/tests/" not in module
         assert isinstance(reason, str) and len(reason) > 20, module
 
 
 def test_a_new_seam_importer_fails_the_allowlist():
     grown = seam_importers(REPO_ROOT) + (
-        "omega_engine_pfp/use_cases/newcomer.py",
+        "pfp/use_cases/newcomer.py",
     )
     problems = seam_violations(grown)
     assert any("newcomer.py" in p and "outside the allowlist" in p for p in problems)
 
 
 def test_a_cleaned_seam_importer_must_leave_the_allowlist():
-    allowlist = {"omega_engine_pfp/use_cases/gone.py": "a reason long enough"}
-    problems = seam_violations(("omega_engine_pfp/ffi.py",), allowlist)
+    allowlist = {"pfp/use_cases/gone.py": "a reason long enough"}
+    problems = seam_violations(("pfp/ffi.py",), allowlist)
     assert any("gone.py" in p and "remove its allowlist entry" in p for p in problems)
 
 
 @pytest.mark.parametrize("module", [
-    "omega_engine_pfp/infrastructure/code_change_checker.py",
-    "omega_engine_pfp/infrastructure/normal_forms/qm_classical.py",
+    "pfp/infrastructure/code_change_checker.py",
+    "pfp/infrastructure/normal_forms/qm_classical.py",
 ])
 def test_reviewed_native_adapters_remain_exact_shrink_only_entries(module):
     importers = seam_importers(REPO_ROOT)
@@ -129,18 +129,18 @@ def test_reviewed_native_adapters_remain_exact_shrink_only_entries(module):
 def test_the_seam_module_is_the_one_that_reaches_it():
     # Not merely "one importer" -- the *right* one. A count-only assertion
     # would pass if the seam moved into a random module.
-    assert "omega_engine_pfp/ffi.py" in seam_importers(REPO_ROOT)
-    problems = seam_violations(("omega_engine_pfp/infrastructure/x.py",), {})
+    assert "pfp/ffi.py" in seam_importers(REPO_ROOT)
+    problems = seam_violations(("pfp/infrastructure/x.py",), {})
     assert any("no longer reaches the native host" in p for p in problems)
 
 
 def test_the_seam_delegates_host_location_rather_than_duplicating_it():
     # `RULE_FFI_SEAM_ISOLATION_001`: one module decides where the host lives.
-    source = (REPO_ROOT / "omega_engine_pfp" / "ffi.py").read_text(
+    source = (REPO_ROOT / "pfp" / "ffi.py").read_text(
         encoding="utf-8"
     )
     assert "locate_host_binary" in source
-    assert "omega_engine_operating_system" in source
+    assert "operating_system" in source
 
 
 # --------------------------------------------------------------------------
@@ -175,7 +175,7 @@ def test_no_domain_module_imports_a_process_or_the_extension():
     for offence in domain_offences(REPO_ROOT):
         for name in offence.imports:
             assert name not in {"subprocess", "multiprocessing", "socket"}
-            assert "omega_symbol_game_runtime" not in name
+            assert "core_symbol_game_runtime" not in name
 
 
 def test_most_of_the_domain_layer_is_already_clean():
@@ -195,7 +195,7 @@ def test_most_of_the_domain_layer_is_already_clean():
 def test_a_doc_comment_naming_a_module_is_not_an_import():
     # A text scan reports two domain modules as native importers; both merely
     # describe in prose what they mirror. This is why the analyzer parses.
-    source = '"""Mirrors omega_symbol_game_runtime::rational."""\nimport json\n'
+    source = '"""Mirrors core_symbol_game_runtime::rational."""\nimport json\n'
     assert imported_names(source) == ("json",)
 
 
@@ -218,7 +218,7 @@ def test_a_submodule_import_is_attributed_to_its_root(tmp_path):
     the analyzer's. A mutation removing the split from the analyzer survived it.
     This drives the real scan instead.
     """
-    domain = tmp_path / "omega_engine_pfp" / "domain"
+    domain = tmp_path / "pfp" / "domain"
     domain.mkdir(parents=True)
     (domain / "deep.py").write_text("import os.path\n", encoding="utf-8")
     (offence,) = domain_offences(tmp_path)
@@ -228,7 +228,7 @@ def test_a_submodule_import_is_attributed_to_its_root(tmp_path):
 
 def test_a_plain_stdlib_import_is_not_forbidden(tmp_path):
     # The other side: the scan must not simply report everything.
-    domain = tmp_path / "omega_engine_pfp" / "domain"
+    domain = tmp_path / "pfp" / "domain"
     domain.mkdir(parents=True)
     (domain / "clean.py").write_text(
         "import json\nfrom dataclasses import dataclass\n", encoding="utf-8"
@@ -338,7 +338,7 @@ def test_the_rendered_baseline_warns_that_regenerating_it_defeats_it():
 
 
 def test_an_empty_domain_layer_is_refused_rather_than_reported_clean(tmp_path):
-    (tmp_path / "omega_engine_pfp" / "domain").mkdir(parents=True)
+    (tmp_path / "pfp" / "domain").mkdir(parents=True)
     with pytest.raises(FitnessError) as excinfo:
         domain_offences(tmp_path)
     assert excinfo.value.code == "DOMAIN_EMPTY"
@@ -376,7 +376,7 @@ def test_the_stages_marker_holds_constants_and_no_implementation():
     whether there is an **implementation** to deprecate, so this asserts the
     marker defines no callable.
     """
-    marker = REPO_ROOT / "omega_engine_pfp" / "packet_schemas" / "__init__.py"
+    marker = REPO_ROOT / "pfp" / "packet_schemas" / "__init__.py"
     tree = ast.parse(marker.read_text(encoding="utf-8"))
     callables = [
         node
@@ -394,18 +394,18 @@ def test_the_stage_predicate_would_detect_an_implementation(tmp_path):
 
     Sprint 019's rule: an absence assertion needs its query demonstrated.
     """
-    stages = tmp_path / "omega_engine_pfp" / "packet_schemas"
+    stages = tmp_path / "pfp" / "packet_schemas"
     stages.mkdir(parents=True)
     (stages / "__init__.py").write_text("X = 1\n", encoding="utf-8")
     (stages / "legacy_runner.py").write_text(
         "def run(packet):\n    return packet\n", encoding="utf-8"
     )
     found = stage_runtime_modules(tmp_path)
-    assert found == ("omega_engine_pfp/packet_schemas/legacy_runner.py",)
+    assert found == ("pfp/packet_schemas/legacy_runner.py",)
 
 
 def test_the_stage_predicate_ignores_constants(tmp_path):
-    stages = tmp_path / "omega_engine_pfp" / "packet_schemas"
+    stages = tmp_path / "pfp" / "packet_schemas"
     stages.mkdir(parents=True)
     (stages / "__init__.py").write_text(
         "from pathlib import Path\nROOT = Path('.')\n", encoding="utf-8"
@@ -426,9 +426,9 @@ def test_the_runtime_crate_declares_no_python_extension():
     """
     manifest = (
         REPO_ROOT
-        / "omega_engine"
+        / "engine"
         / "crates_rs"
-        / "omega_symbol_game_runtime"
+        / "core_symbol_game_runtime"
         / "Cargo.toml"
     ).read_text(encoding="utf-8")
     assert "cdylib" not in manifest
@@ -454,10 +454,10 @@ def test_the_existing_seam_is_a_subprocess_not_an_extension():
     # What the estate has today, so the deferral describes a real gap rather
     # than a missing feature nobody uses.
     source = (
-        REPO_ROOT / "omega_engine_operating_system/adapters/rust_host/ffi.py"
+        REPO_ROOT / "operating_system/adapters/rust_host/ffi.py"
     ).read_text(encoding="utf-8")
     assert "subprocess.run(" in source
-    assert "import omega_symbol_game_runtime" not in source
+    assert "import core_symbol_game_runtime" not in source
 
 
 def test_the_seam_converts_native_failures_to_a_typed_error():
@@ -468,11 +468,11 @@ def test_the_seam_converts_native_failures_to_a_typed_error():
     letting them escape.
     """
     source = (
-        REPO_ROOT / "omega_engine_operating_system/adapters/rust_host/ffi.py"
+        REPO_ROOT / "operating_system/adapters/rust_host/ffi.py"
     ).read_text(encoding="utf-8")
     for handled in ("HOST_TIMEOUT", "HOST_OUTPUT_NOT_JSON", "HOST_NONZERO_EXIT"):
         assert handled in source, f"the seam does not handle {handled}"
-    adapter = (REPO_ROOT / "omega_engine_pfp/ffi.py").read_text(
+    adapter = (REPO_ROOT / "pfp/ffi.py").read_text(
         encoding="utf-8"
     )
     assert "return self._host.invoke_runtime(action, payload)" in adapter
@@ -515,14 +515,14 @@ def test_exec_eval_callers_are_within_allowlist():
 
 def test_every_allowlisted_exec_caller_states_a_reason():
     for module, reason in EXEC_CALLER_ALLOWLIST.items():
-        assert module.startswith("omega_engine_pfp/")
+        assert module.startswith("pfp/")
         assert "/tests/" not in module
         assert isinstance(reason, str) and len(reason) > 20, module
 
 
 def test_a_new_exec_caller_fails_the_allowlist():
     grown = exec_callers(REPO_ROOT) + (
-        "omega_engine_pfp/use_cases/newcomer.py",
+        "pfp/use_cases/newcomer.py",
     )
     problems = exec_violations(grown)
     assert any("newcomer.py" in p and "outside the allowlist" in p for p in problems)
@@ -531,23 +531,23 @@ def test_a_new_exec_caller_fails_the_allowlist():
 
 def test_module_form_ffi_import_cannot_hide_from_seam_inventory():
     names = imported_names(
-        "from omega_engine_operating_system.adapters.rust_host import ffi as native\n"
+        "from operating_system.adapters.rust_host import ffi as native\n"
     )
-    assert "omega_engine_operating_system.adapters.rust_host.ffi" in names
+    assert "operating_system.adapters.rust_host.ffi" in names
 
 
-_TRACE_FACTORY = "omega_engine_pfp/infrastructure/trace/gateway_factories.py"
-_ACCOUNTED_FACTORY = "omega_engine_pfp/infrastructure/estimated_gateway.py"
+_TRACE_FACTORY = "pfp/infrastructure/trace/gateway_factories.py"
+_ACCOUNTED_FACTORY = "pfp/infrastructure/estimated_gateway.py"
 
 
 def _gateway_estate(tmp_path):
     sources = {
         _TRACE_FACTORY: (
-            "from omega_engine_woland.infrastructure.providers.gateway import OearsLlmGateway as Raw\n"
+            "from adversary.infrastructure.providers.gateway import OearsLlmGateway as Raw\n"
             "def _confined_gateway():\n    return Raw()\n"
         ),
         _ACCOUNTED_FACTORY: (
-            "from omega_engine_woland.infrastructure.providers.gateway import OearsLlmGateway as Raw, unbudgeted_gateway as unlimited\n"
+            "from adversary.infrastructure.providers.gateway import OearsLlmGateway as Raw, unbudgeted_gateway as unlimited\n"
             "def create_accounted_openrouter_gateway(unbounded=False):\n"
             "    if unbounded:\n        return unlimited()\n    return Raw.builtin()\n"
             "def checks_type(value):\n    return isinstance(value, Raw)\n"
@@ -569,20 +569,20 @@ def test_guard_recognizes_both_existing_composition_functions(tmp_path):
 @pytest.mark.parametrize(
     "source",
     [
-        "from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway as build\nbuild()\n",
-        "from omega_engine_woland.infrastructure.providers import gateway as g\ng.OearsLlmGateway.builtin()\n",
-        "import omega_engine_woland.infrastructure.providers.gateway as g\ng.unbudgeted_gateway()\n",
-        "from omega_engine_woland.infrastructure.providers.gateway import *\n",
-        "from omega_engine_woland.infrastructure.providers import gateway as g\n",
-        "from omega_engine_woland.infrastructure.providers import gateway as g\n",
+        "from adversary.infrastructure.providers.gateway import unbudgeted_gateway as build\nbuild()\n",
+        "from adversary.infrastructure.providers import gateway as g\ng.OearsLlmGateway.builtin()\n",
+        "import adversary.infrastructure.providers.gateway as g\ng.unbudgeted_gateway()\n",
+        "from adversary.infrastructure.providers.gateway import *\n",
+        "from adversary.infrastructure.providers import gateway as g\n",
+        "from adversary.infrastructure.providers import gateway as g\n",
     ],
 )
 def test_raw_provider_imports_outside_composition_are_refused(tmp_path, source):
     _gateway_estate(tmp_path)
-    path = tmp_path / "omega_engine_pfp/use_cases/bypass.py"
+    path = tmp_path / "pfp/use_cases/bypass.py"
     path.parent.mkdir(parents=True)
     path.write_text(source, encoding="utf-8")
-    assert raw_gateway_constructors(tmp_path) == ("omega_engine_pfp/use_cases/bypass.py",)
+    assert raw_gateway_constructors(tmp_path) == ("pfp/use_cases/bypass.py",)
 
 
 @pytest.mark.parametrize(
@@ -622,7 +622,7 @@ def test_each_existing_construction_path_has_a_positive_control(tmp_path, relati
 
 def test_gateway_prose_and_type_mention_without_import_are_not_construction(tmp_path):
     _gateway_estate(tmp_path)
-    (tmp_path / "omega_engine_pfp/notes.py").write_text(
+    (tmp_path / "pfp/notes.py").write_text(
         '"""OearsLlmGateway.builtin() and unbudgeted_gateway() are guarded."""\nvalue = 1\n',
         encoding="utf-8",
     )

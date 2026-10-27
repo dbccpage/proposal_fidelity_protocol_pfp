@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.6.1", "spine:CT-7", "paper:999:CT-7"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.6 'Theorem IV.6.1'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.6 'Theorem IV.6.1'"
   - "proof_obligations.md v1.3.5 §17.7 'Theorem (Threshold evaluator, structural bound)' (variant)"
 uses: []
 lean_status: NOT-STARTED
@@ -79,7 +79,7 @@ only.) Verifier adjudication 2026-06-09: status set to SKETCH (see Notes).
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.6
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.6
   (statement copied verbatim; no proof present in source). Original header
   line:
   `**Theorem IV.6.1 (CT-7: G3 Decomposition & Structural Bound).** [PROVED]`

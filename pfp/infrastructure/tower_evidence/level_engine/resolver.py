@@ -8,8 +8,8 @@ import subprocess
 from importlib import resources
 from pathlib import Path, PurePosixPath
 
-from omega_engine_pfp.domain.exceptions import SecurityPathViolationError
-from omega_engine_pfp.domain.shared_kernel.path import validate_path_security
+from pfp.domain.exceptions import SecurityPathViolationError
+from pfp.domain.shared_kernel.path import validate_path_security
 
 
 class EvidenceRefusal(ValueError):

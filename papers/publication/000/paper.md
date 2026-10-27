@@ -605,14 +605,14 @@ advanced lift.
 ## A practical reading and notebook path
 
 Start with the [Paper 000
-workbook](https://github.com/dbccpage/the_symbol_game/blob/3f3399766108adc4c4e7615dce2573a57be57dd6/omega_engine_atlas/coda_atlas/omega_engine_pfp/000_pfp_introduction/jupyter_notebooks/000_from_marks_to_returned_packets.ipynb).
+workbook](https://github.com/dbccpage/the_symbol_game/blob/3f3399766108adc4c4e7615dce2573a57be57dd6/atlas/coda_atlas/pfp/000_pfp_introduction/jupyter_notebooks/000_from_marks_to_returned_packets.ipynb).
 It executes the eight examples above, prints actual typed prompt,
 candidate, and return packets, and asks you to predict changed-input
 outcomes. Run it from the package root or its notebook directory. All
 inputs are local and all checks have a finite teaching scope.
 
-The Landau companion provides a learner guide, an examination, and a
-separate worked key in `_lev_landau_theoretical_minimum_quiz/`. Its core
+The Examiner companion provides a learner guide, an examination, and a
+separate worked key in `_lev_examiner_theoretical_minimum_quiz/`. Its core
 questions follow the eight examples. Four optional final challenges
 supply additional finite definitions and do not license a Genesis or MSS
 transition.
@@ -662,11 +662,11 @@ identify the cited bytes. This deposit does not re-audit those unbundled
 documents.
 
 - Carroll, J. H. [*S(n) core stages
-  S(0)--S(6)*](https://github.com/dbccpage/the_symbol_game/tree/3f3399766108adc4c4e7615dce2573a57be57dd6/omega_engine_education/documentation/0_s_n/core),
+  S(0)--S(6)*](https://github.com/dbccpage/the_symbol_game/tree/3f3399766108adc4c4e7615dce2573a57be57dd6/education/documentation/0_s_n/core),
   `dbccpage/the_symbol_game` at the source baseline above. Definitions
   of supply, retention, separation, and extension.
 - Carroll, J. H. [*Minimal Symbol System
-  N*](https://github.com/dbccpage/the_symbol_game/tree/3f3399766108adc4c4e7615dce2573a57be57dd6/omega_engine_education/documentation/1_minimal_symbol_system_n_mssn),
+  N*](https://github.com/dbccpage/the_symbol_game/tree/3f3399766108adc4c4e7615dce2573a57be57dd6/education/documentation/1_minimal_symbol_system_n_mssn),
   the same repository and baseline. Externally designed atlas and
   separation of indices and licensed lifts.
 - Carroll, J. H. *S(n) curriculum*, `000_sn_core`, lessons on ground,
@@ -676,11 +676,11 @@ documents.
   representations and explicitly distinguished historical registers,
   under the atlas linked above.
 - Carroll, J. H. [*Genesis primitives: audited educational
-  models*](https://github.com/dbccpage/the_symbol_game/blob/3f3399766108adc4c4e7615dce2573a57be57dd6/omega_engine_education/documentation/2_genesis/primitives/README.md),
+  models*](https://github.com/dbccpage/the_symbol_game/blob/3f3399766108adc4c4e7615dce2573a57be57dd6/education/documentation/2_genesis/primitives/README.md),
   correction of 2026-10-01, and the [*985_genesis_primitives*
-  curriculum](https://github.com/dbccpage/the_symbol_game/tree/3f3399766108adc4c4e7615dce2573a57be57dd6/omega_engine_education/documentation/2_genesis/curriculum/985_genesis_primitives).
+  curriculum](https://github.com/dbccpage/the_symbol_game/tree/3f3399766108adc4c4e7615dce2573a57be57dd6/education/documentation/2_genesis/curriculum/985_genesis_primitives).
   The [adversarial
-  audit](https://github.com/dbccpage/the_symbol_game/blob/3f3399766108adc4c4e7615dce2573a57be57dd6/omega_engine_education/documentation/2_genesis/adversarial_verification/README.md)
+  audit](https://github.com/dbccpage/the_symbol_game/blob/3f3399766108adc4c4e7615dce2573a57be57dd6/education/documentation/2_genesis/adversarial_verification/README.md)
   supersedes blanket extraction and physical-emergence claims in earlier
   lesson prose.
 - Carroll, J. H. *Proposal Fidelity Protocol paper collection*, Papers

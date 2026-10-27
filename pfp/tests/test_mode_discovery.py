@@ -8,15 +8,15 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.modes import ModeContract, ModesManifest
-from omega_engine_pfp.entrypoints.cli.symbol_game import main
-from omega_engine_pfp.infrastructure.adapters.mode_discovery import (
+from pfp.domain.modes import ModeContract, ModesManifest
+from pfp.entrypoints.cli.symbol_game import main
+from pfp.infrastructure.adapters.mode_discovery import (
     discover_modes_manifest,
     find_modes_dir,
     load_all_mode_contracts,
     validate_mode_catalog_closure,
 )
-from omega_engine_pfp.use_cases.modes import (
+from pfp.use_cases.modes import (
     GetModeUseCase,
     ListModesUseCase,
     ValidateModesUseCase,
@@ -39,7 +39,7 @@ def test_explicit_root_does_not_fall_back_to_the_installed_catalog(tmp_path, mon
 
 def test_explicit_root_discovers_the_packaged_layout(tmp_path, monkeypatch):
     monkeypatch.delenv("SYMBOL_GAME_MODES_DIR", raising=False)
-    directory = tmp_path / "omega_engine_pfp" / "infrastructure" / "yaml" / "modes"
+    directory = tmp_path / "pfp" / "infrastructure" / "yaml" / "modes"
     directory.mkdir(parents=True)
     (directory / "modes_manifest.yaml").write_text("modes: []\n", encoding="utf-8")
     assert find_modes_dir(tmp_path) == directory

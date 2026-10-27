@@ -29,7 +29,7 @@ A custody receipt or review treats agreement between a submitted package list an
 
 Historical. The current custody checker was not opened, and the cited reproduction was not rerun.
 
-Source: `C:\Users\a343o\source\repos\the_symbol_game\_ic\inr\omega_paper_reviews\2026-10-06_glm_d\independent_review.md`
+Source: `C:\Users\a343o\source\repos\the_symbol_game\_ic\inr\core_paper_reviews\2026-10-06_glm_d\independent_review.md`
 
 > A copied native build receipt omitted all 13 files under the local kernel package, including its manifest. `NativeCustody` accepted the copy. Its inventory loop used the submitted manifest list as the list of packages to inspect, so removing a whole package removed it from both sides of the inventory comparison. This is a source-custody defect, not a counterexample to the finite mathematics.
 

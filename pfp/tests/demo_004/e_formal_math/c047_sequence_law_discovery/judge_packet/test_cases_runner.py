@@ -4,19 +4,19 @@ import sys
 import time
 
 sys.path.insert(0, ".")
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.exact_checker import (
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.exact_checker import (
     check_solution,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.judge_packet.independent_checker import (
     independent_check,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c047_sequence_law_discovery.reference_solver import (
     solve,
 )
 
 case_files = sorted(
     glob.glob(
-        "omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math/c047_sequence_law_discovery/judge_packet/cases/*.json"
+        "projects/mssn_sn_symgam/challenges/e_formal_math/c047_sequence_law_discovery/judge_packet/cases/*.json"
     )
 )
 print(f"Total cases: {len(case_files)}", flush=True)

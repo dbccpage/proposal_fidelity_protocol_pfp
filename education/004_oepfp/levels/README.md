@@ -7,10 +7,10 @@ maturity: instructional
 claim_status: specified
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
+  - education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
+  - education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
+  - education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
+  - education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
 last_verified: 2026-10-22
 verification_scope: 2026-10-22 recheck at 305b9690f9 of the catalogue voice, the C4 arithmetic this page points at, and git grep of the evaluator names in the stratified level sample; the 2026-10-20 ledger sync was not rerun; no level evaluator was executed
 ---
@@ -62,14 +62,14 @@ This block is a recording plan for the catalogue, not a rendered clip. Authority
 
 ## Status rechecked at `305b9690f9` (2026-10-22)
 
-The 2026-10-20 notes below still describe the catalogue. This pass did not regenerate the ledger. It reopened [`CodaTerminal`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs): the eight names are unchanged, and `CertifiedReceipt` and `Halted` are still absent. `git grep` in `omega_engine`, `omega_engine_pfp` and `lean4` found none of these sample names: `SubstrateModule`, `RigidityModule`, `CochainResidualModule`, `ReggeMetricModule`, `SpectralDiagnosticModule`, `CategoryLimitsModule`, `SheafDescentContract`, `MarkovKernelModule`, `StochasticMatrixContract`, `QuantumFoundationsModule`, `ProjectiveMeasurementContract`, `StabilizerCodeModule`, `StabilizerCodeContract`, `ReggeGeometryModule`, `ReggeGravityContract`, `EnclosureAnalysisModule`, `AlgebraicRootContract`, `FiniteElementCochainModule`, `MeshConvergenceContract`, `RelationalDataModule`, `RelationalQueryContract`, `SecurityGovernanceModule`, `SemanticLossContract`, `AuthorityModule`, `ReleaseManifestContract`. The all-134 name sweep from 2026-10-20 was not repeated. The C4 public input is unchanged, and the leftover 3 above was recomputed from it.
+The 2026-10-20 notes below still describe the catalogue. This pass did not regenerate the ledger. It reopened [`CodaTerminal`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs): the eight names are unchanged, and `CertifiedReceipt` and `Halted` are still absent. `git grep` in `engine`, `pfp` and `lean4` found none of these sample names: `SubstrateModule`, `RigidityModule`, `CochainResidualModule`, `ReggeMetricModule`, `SpectralDiagnosticModule`, `CategoryLimitsModule`, `SheafDescentContract`, `MarkovKernelModule`, `StochasticMatrixContract`, `QuantumFoundationsModule`, `ProjectiveMeasurementContract`, `StabilizerCodeModule`, `StabilizerCodeContract`, `ReggeGeometryModule`, `ReggeGravityContract`, `EnclosureAnalysisModule`, `AlgebraicRootContract`, `FiniteElementCochainModule`, `MeshConvergenceContract`, `RelationalDataModule`, `RelationalQueryContract`, `SecurityGovernanceModule`, `SemanticLossContract`, `AuthorityModule`, `ReleaseManifestContract`. The all-134 name sweep from 2026-10-20 was not repeated. The C4 public input is unchanged, and the leftover 3 above was recomputed from it.
 
 ---
 
 ## Status at source pin `c419cc6beb` (2026-10-20)
 
 - **No level referee is implemented.** None of the 134 evaluator module or contract names in the level frontmatter occurs in any `*.rs`, `*.py`, `*.lean`, `*.yaml` or `*.json` file outside this documentation. Each numbered file now carries a "Source status" line saying so, its frontmatter status fields were lowered from `verified`/`production`/`passing` to `specified`/`instructional`/`not_run`, and its "native Rust referee" and "RFC 8785" wording was corrected.
-- **Terminal names.** The eight statuses match `CodaTerminal` in [`omega_state/src/coda_gtla_protocol.rs`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs). Levels 60 to 79 also list `CertifiedReceipt` and `Halted`, which are not members; each of those files has a correction note.
+- **Terminal names.** The eight statuses match `CodaTerminal` in [`core_state/src/coda_gtla_protocol.rs`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs). Levels 60 to 79 also list `CertifiedReceipt` and `Halted`, which are not members; each of those files has a correction note.
 - **Worked checks.** Each numbered level gained a dated "Worked check", "Correction" or "Reproducibility gap" note next to its test vectors. Several stated dispositions were wrong for the data shown (for example Level 02, whose "valid" cochain certifies $\Phi_1 = 1$, not an exact repair). Many vectors carry only flags or placeholder digests and cannot be replayed from the packet alone.
 - **Ledger columns.** The table in Section 3 was regenerated from each file's frontmatter on 2026-10-20; before that, 48 rows disagreed with their files on module, error code, domain or title.
 
@@ -79,7 +79,7 @@ The Symbol Game curriculum describes an arena in which untrusted candidates meet
 
 1. **Game Board 5-Tuple:** $\mathcal{S} = (\mathcal{C}, \mathcal{R}_{\text{active}}, \mathcal{D}_{\text{evaluator}}, \mathcal{H}_{\text{trace}}, \mathcal{I}_{\text{invariants}})$.
 2. **Proposer & Referee Dynamics:** Fuel quotas, allowable moves (`ASSERT`, `CUT`, `VERIFY`, `RETRACT`), and syntax firewall.
-3. **omega-canonical-v1 Packet Envelope:** Immutable boundary slots, candidate payloads, and witness terms across the canonical 6-slot envelope. The sealer is NFC, the `omega-canonical-v1` marker, and a bare SHA-256 digest. RFC 8785 is the name of `jcs.rs`, not this sealer.
+3. **core-canonical-v1 Packet Envelope:** Immutable boundary slots, candidate payloads, and witness terms across the canonical 6-slot envelope. The sealer is NFC, the `core-canonical-v1` marker, and a bare SHA-256 digest. RFC 8785 is the name of `jcs.rs`, not this sealer.
 4. **Typed Objective Evaluators:** Modular evaluator selection (`CochainResidualModule`, `RigidityModule`, `ConvexOptimizationModule`, `ReggeMetricModule`, `AdjunctionModule`, `ObserverReplayModule`, `ReleaseLedgerModule`, etc.) mapping exact domain invariants. Cochain evaluators apply only to levels that declare a cochain complex.
 5. **Exact/Certified Arithmetic Law:** Verification carriers use explicitly declared exact or certified representations—e.g. integers, rationals, finite fields, algebraic extensions, algebraic-number encodings, or validated interval enclosures. Uncertified binary floating-point values may not serve as authoritative proof witnesses.
 6. **Canonical 8-Status Terminal Taxonomy:** Complete disposition enum (`ExactRepair`, `StabilizedSurvivor`, `OpenObstruction`, `OracleNeeded`, `LiftLicenseNeeded`, `Refused`, `Invalid`, `InfrastructureFailure`) with explicit error routing and mechanically derived reachability.
@@ -233,7 +233,7 @@ The folder holds 128 files: 101 numbered levels, these 26 files and this README.
    - A 101-level curriculum specification and game catalogue for the Symbol Game and Proposal Fidelity Protocol (PFP).
    - A uniform 6-section protocol specification across the mathematical, physical, computational and agentic domains.
    - Declared evaluator boundaries that require an implementation and task-specific evidence before dispatch can be claimed.
-   - Packet and terminal specifications whose executable coverage must be checked separately. PacketCodec uses NFC, tagged `omega-canonical-v1` and bare SHA-256; it is not RFC 8785.
+   - Packet and terminal specifications whose executable coverage must be checked separately. PacketCodec uses NFC, tagged `core-canonical-v1` and bare SHA-256; it is not RFC 8785.
 2. **What this does not support:**
    - Does not assert that every trans-base stage possesses an active production Rust solver deployment today.
    - Does not promote local candidate replay receipts into external operational authority or global truth.

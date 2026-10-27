@@ -5,16 +5,16 @@ import hashlib
 import json
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
-PREFIX = "omega_engine_product_planning_office/receipts/"
-EVIDENCE = "omega_engine_workflows_agents_skills/receipts/oewas007_20261010/"
-EPICS = "omega_engine_product_planning_office/plans/epics/oewas/"
+PREFIX = "product_planning_office/receipts/"
+EVIDENCE = "workflows_agents_skills/receipts/oewas007_20261010/"
+EPICS = "product_planning_office/plans/epics/oewas/"
 CHANGED = {
     EPICS + "epic_oe_oewas_007_american_ic_partition_and_typed_schema_plan.md": [
         "Canonical _ic defaults and repository DEV-data cutover are authorized current scope, not held behind opt-in activation.",
         "Full scope remains RESEARCH_HOLD for arbitrary future-estate automation, broader recovery and research obligations; exact actual cutover is bound by its independent ledger.",
         "No native detector admission, malicious-writer isolation, power-loss durability or estate-wide zero-duplicate-ingestion theorem.",
     ],
-    EPICS + "epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oewoland_plan.md": [
+    EPICS + "epic_oe_oewas_009_cross_engine_ingress_parity_oewas_oeeis_oeadversary_plan.md": [
         "Canonical storage defaults and DEV relocation/portable historical readback are bounded implemented scope; trusted native positive admission remains held.",
         "Full scope remains RESEARCH_HOLD for three-engine admission correlation and remaining complete producer/native/recovery obligations.",
         "Containment and finite writer/readback tests grant no CLEAR, actor license or automatic detector admission.",
@@ -89,8 +89,8 @@ if __name__ == "__main__":
         create("prior_art_epic_map_20261010_oewas007_successor.json", "prior_art_epic_map_20261010_oewas007_default_ic_successor.json", "prior_epic_inventory"),
     ]
     for rel, old, new in [
-        ("omega_engine_product_planning_office/use_cases/epic_tdd_plan_audit.py", "epic_obstruction_walk_20261010_oewas007_successor.json", "epic_obstruction_walk_20261010_oewas007_default_ic_successor.json"),
-        ("omega_engine_product_planning_office/use_cases/prior_art_epic_audit.py", "prior_art_epic_map_20261010_oewas007_successor.json", "prior_art_epic_map_20261010_oewas007_default_ic_successor.json"),
+        ("product_planning_office/use_cases/epic_tdd_plan_audit.py", "epic_obstruction_walk_20261010_oewas007_successor.json", "epic_obstruction_walk_20261010_oewas007_default_ic_successor.json"),
+        ("product_planning_office/use_cases/prior_art_epic_audit.py", "prior_art_epic_map_20261010_oewas007_successor.json", "prior_art_epic_map_20261010_oewas007_default_ic_successor.json"),
     ]:
         path = ROOT / rel
         raw = path.read_bytes()

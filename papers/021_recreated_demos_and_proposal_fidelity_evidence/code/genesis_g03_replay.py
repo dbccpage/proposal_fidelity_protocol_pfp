@@ -185,7 +185,7 @@ def build(rustc: Path, primitive: Path, json_library: Path, executable: Path) ->
                            *(primitive.parent.glob("libzmij*.rlib"))})
     before = {str(path): sha(path.read_bytes()) for path in dependencies}
     argv = [str(rustc), "--edition", "2021", "--crate-name", "paper011_native_genesis_g03", str(NATIVE / "transport.rs"),
-            "-L", "dependency=" + str(primitive.parent), "--extern", "omega_ooutwire_primitives=" + str(primitive),
+            "-L", "dependency=" + str(primitive.parent), "--extern", "core_ooutwire_primitives=" + str(primitive),
             "--extern", "serde_json=" + str(json_library), "-o", str(executable)]
     start = time.perf_counter()
     process = subprocess.run(argv, cwd=PAPER, capture_output=True, check=False, timeout=60)

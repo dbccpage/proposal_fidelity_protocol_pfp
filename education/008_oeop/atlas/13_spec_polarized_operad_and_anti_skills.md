@@ -3,13 +3,13 @@
 **Date:** 2026-08-20  
 **Status:** Canonical Design Specification (`mathematical_wip`)  
 **AuthorityEffect:** None  
-**Governing Layers:** `omega_engine/crates/operad_theory/`, `omega_engine_woland/domain/immune/`, `omega_engine/crates/prompt_civilization/`, `omega_engine_pfp/`
+**Governing Layers:** `engine/crates/operad_theory/`, `adversary/domain/immune/`, `engine/crates/prompt_civilization/`, `pfp/`
 
 ---
 
 ## 1. Executive Summary & Epistemic Posture
 
-This document formalizes the **Polarized Coloured Operad** $(\mathcal{O}^+, \mathcal{O}^-)$ and the **Epistemic Anti-Skill Engine**. It establishes the mathematical, architectural, and historical bridge between the early trace-mining immune loops of Prompt Civilization (Omega Engine v0.0.0/v0.0.1) and the modern 5-tier Operad Theory tower.
+This document formalizes the **Polarized Coloured Operad** $(\mathcal{O}^+, \mathcal{O}^-)$ and the **Epistemic Anti-Skill Engine**. It establishes the mathematical, architectural, and historical bridge between the early trace-mining immune loops of Prompt Civilization (Engine v0.0.0/v0.0.1) and the modern 5-tier Operad Theory tower.
 
 ### The Fundamental Categorical Thesis
 
@@ -43,7 +43,7 @@ An **anti-skill is not the inverse of a skill** ($f^{-1}$ does not generally exi
 
 ## 2. Historical Lineage & Grounding (Prompt Civilization v0)
 
-The polarized operad architecture is a formal reconstruction of the empirical evolutionary system implemented in the Omega Engine v0.0.1 archive:
+The polarized operad architecture is a formal reconstruction of the empirical evolutionary system implemented in the engine v0.0.1 archive:
 
 ### Historical Artifacts & Implemented Mechanisms
 
@@ -194,7 +194,7 @@ Decomposing top-level claims into required lemmas, lemmas into axiom hypotheses,
 
 ## 7. The 10 Prime Laws of Epistemic Anti-Skills
 
-All admitted anti-skills in `.agents/anti_skills/admitted/` and `omega_engine_woland/domain/immune/` must satisfy these 10 algebraic laws:
+All admitted anti-skills in `.agents/anti_skills/admitted/` and `adversary/domain/immune/` must satisfy these 10 algebraic laws:
 
 1. **Subject & Protected Field Preservation**:
    The input subject AST and all declared protected fields must be returned strictly identical.
@@ -228,7 +228,7 @@ In multi-agent bounded execution, turn packets declare both constructive skills 
 
 ```json
 {
-  "schema": "omega.symbol-game.typed-packet.v2",
+  "schema": "core.symbol-game.typed-packet.v2",
   "authority_effect": "None",
   "subject": {
     "artifact_id": "art_2026_claim_042",

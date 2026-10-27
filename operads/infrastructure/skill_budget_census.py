@@ -1,7 +1,7 @@
 """Census of SKILL.md sizes against constants assigned by the live budget gate.
 
 The gate is
-`omega_engine_operads/skill_operad/skill_compiler/budget_gate.py`
+`operads/skill_operad/skill_compiler/budget_gate.py`
 (`GATE_SOURCE`). This module parses that file. It does not restate the ceilings.
 The census does not read a gate from `.agents/operad`.
 
@@ -37,17 +37,17 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Mapping
 
-BASELINE_SCHEMA = "omega.oewas.budget_baseline.v1"
+BASELINE_SCHEMA = "core.oewas.budget_baseline.v1"
 
 # Relative to the repository root. The canon host; the other three are mirrors.
 GATE_SOURCE = Path(
-    "omega_engine_operads/skill_operad/skill_compiler/budget_gate.py"
+    "operads/skill_operad/skill_compiler/budget_gate.py"
 )
-SKILL_ROOT = Path("omega_engine_operads/skills")
+SKILL_ROOT = Path("operads/skills")
 EVAL_BANK = Path(
-    "omega_engine_operads/skill_operad/skill_compiler/eval_bank/cases.json"
+    "operads/skill_operad/skill_compiler/eval_bank/cases.json"
 )
-EVAL_BANK_SCHEMA = "omega.skill_compiler.eval_bank.v1"
+EVAL_BANK_SCHEMA = "core.skill_compiler.eval_bank.v1"
 
 _GOVERNED_NAMES = ("DEFAULT_GOVERNED", "SEED_GOVERNED")
 _LIMIT_NAMES = ("DEFAULT_MAX_LINES", "DEFAULT_MAX_BYTES")

@@ -3,7 +3,7 @@
 
 from fractions import Fraction
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.quad_field import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.quad_field import (
     QuadRat,
     format_fraction,
     parse_fraction,

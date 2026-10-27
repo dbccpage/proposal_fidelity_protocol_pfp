@@ -12,7 +12,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 The Hungarian method (Kuhn 1955) is textbook, and its certificate is the whole point. Potentials `u` and `v` with `u_i + v_j ≤ c_ij` on allowed entries, summing to the assignment's cost, prove optimality by LP duality. If some rows cannot be matched, a Hall violator proves it: a row set `S` with fewer allowed columns than rows.
 
-Models often write a solver that finds the right permutation but cannot produce valid potentials, and that is exactly what the checker catches. This is a T1 warm-up for the synthesis loop, like C052. It stresses the Symbol Game's typed residuals (which dual inequality failed, and by how much), the OEWAS (Omega Engine Workflows, Agents, Skills) sampling-and-selection step, and the OEEIS (Omega Engine Epistemic Immune System) on "optimal" claims without duals. A pass shows certified synthesis. It does not show a fast solver.
+Models often write a solver that finds the right permutation but cannot produce valid potentials, and that is exactly what the checker catches. This is a T1 warm-up for the synthesis loop, like C052. It stresses the Symbol Game's typed residuals (which dual inequality failed, and by how much), the OEWAS (Engine Workflows, Agents, Skills) sampling-and-selection step, and the OEEIS (Engine Epistemic Immune System) on "optimal" claims without duals. A pass shows certified synthesis. It does not show a fast solver.
 
 ## 3. Formal Problem and Bounds
 
@@ -64,7 +64,7 @@ For `NO_PERFECT_ASSIGNMENT`, the checker computes `N(S)` itself. For maximizatio
 - **Hidden base:** 32 matrices: random, low-rank (many ties), sparse allowed patterns, 6 infeasible, and 4 maximization.
 - **Relabel and gauge controls:** 12. Each must keep its optimal value, shifted as appropriate: row and column permutations; transposition; adding a constant to one row, which shifts the optimum by that constant and leaves the set of optimal permutations unchanged; adding a constant to all entries.
 - **Poisoned but schema-valid:** 8. `note` fields giving a wrong optimum, a Hall violator hidden among rows with many allowed entries, a matrix whose only feasible permutation is expensive, and `null` in every entry of one column.
-- **Exact checker:** Rust with `i128`, next to `omega_engine/crates_rs/omega_solvers`.
+- **Exact checker:** Rust with `i128`, next to `engine/crates_rs/core_solvers`.
 - **Independent second checker:** Python integers, by a different author.
 - **Mutation suite:** the checker must reject all of the following, and must never raise: one potential increased by 1 so that a dual inequality breaks; a sum mismatch; a non-permutation `σ` (a repeated column); `σ` using a forbidden entry; a Hall set that actually satisfies Hall's condition; float strings; Booleans.
 
@@ -72,7 +72,7 @@ For `NO_PERFECT_ASSIGNMENT`, the checker computes `N(S)` itself. For maximizatio
 
 Arms A to D follow the protocol.
 
-**Arm E** is the estate's exact network simplex in `omega_engine/crates_rs/omega_solvers` (`i128` flows and potentials) on the transportation formulation. Its node potentials give `u` and `v` directly, and infeasibility is converted into a Hall set by the operator's deterministic post-processing.
+**Arm E** is the estate's exact network simplex in `engine/crates_rs/core_solvers` (`i128` flows and potentials) on the transportation formulation. Its node potentials give `u` and `v` directly, and infeasibility is converted into a Hall set by the operator's deterministic post-processing.
 
 A floating-point `linear_sum_assignment` is not an admissible E, because costs above `2⁵³` break it. E should pass everything, so a tie with E is expected. Arm F is not in the catalog row.
 
@@ -120,7 +120,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse. `omega_engine/crates_rs/omega_solvers` (network simplex with `i128` potentials) is the natural E and checker home.
+- The catalog row lists no estate reuse. `engine/crates_rs/core_solvers` (network simplex with `i128` potentials) is the natural E and checker home.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), plus the row extra [U10](../../upgrades/u10_synthesis_loop_v2.md).
 
 ## 14. Claim Hygiene

@@ -5,17 +5,17 @@ AuthorityEffect: None.
 
 Milestone M1 Deprecation Notice (gemini_001.md §2.2 G1-OPS.4):
 Direct DDC runtime law checking and tape verification in operations are deprecated
-in favor of the DDC module omega_wdp::ddc (op_verification.rs, parser.rs)
+in favor of the DDC module core_wdp::ddc (op_verification.rs, parser.rs)
 and workflow operad parsers (DdcOperadParser).
 
 Canonical Destinations:
-- Rust Crate: omega_engine/crates_rs/omega_wdp/src/ddc/
+- Rust Crate: engine/crates_rs/core_wdp/src/ddc/
   - src/op_verification.rs (The 8 candidate runtime laws verification)
   - src/dda_alphabet.rs (DdaOp and 8-rune alphabet)
   - src/dda_trace.rs (Merkle row hash chaining)
   - src/parser.rs (DdcTapeParser)
-- Workflows Parser: omega_engine_operads.skill_operad.ddc_operad_parser.DdcOperadParser
-- CLI Binary: omega_ddc_parse
+- Workflows Parser: operads.skill_operad.ddc_operad_parser.DdcOperadParser
+- CLI Binary: core_ddc_parse
 """
 
 from __future__ import annotations
@@ -34,16 +34,16 @@ DDC_SHIM_DEPRECATED_REFUSAL = Refusal(
     code="DDC_OPERATIONS_SHIM_DEPRECATED",
     message=(
         "Direct DDC runtime law checking in operations is deprecated; "
-        "delegate to omega_wdp::ddc or DdcOperadParser."
+        "delegate to core_wdp::ddc or DdcOperadParser."
     ),
-    locus="omega_engine_operads.domain.ddc_execution.ddc_step",
+    locus="operads.domain.ddc_execution.ddc_step",
 )
 
 
 def emit_ddc_shim_deprecation_warning(subject: str) -> None:
     warnings.warn(
-        f"{subject} in omega_engine_operads.domain.ddc_execution.ddc_step is deprecated. "
-        "Delegate DDC parsing and runtime laws to omega_wdp::ddc.",
+        f"{subject} in operads.domain.ddc_execution.ddc_step is deprecated. "
+        "Delegate DDC parsing and runtime laws to core_wdp::ddc.",
         category=DeprecationWarning,
         stacklevel=3,
     )

@@ -13,7 +13,7 @@ families: [ooutwire, mole_hunting, smiley, counter_espionage, fifth_column, bure
 **Status:** `ADMITTED`  
 **Classification:** `TOP SECRET // SCI // AP: PROGRAM INDIGO // OPERATION POKROV`  
 **AuthorityEffect:** `None`  
-**Governing Context:** [`omega_engine_cognitive_operations/ooutwire`](../../../omega_engine_cognitive_operations/ooutwire)  
+**Governing Context:** [`cognitive_operations/ooutwire`](../../../cognitive_operations/ooutwire)  
 
 ---
 
@@ -25,7 +25,7 @@ Led by **George Smiley**, the **Mole-Hunting Bureau** inspects PR diffs, archite
 
 ## 2. Integrated Execution Bureaus
 
-This skill absorbs and coordinates the specialized execution bureaus defined in [`omega_engine_cognitive_operations/ooutwire/bureaus/`](../../../omega_engine_cognitive_operations/ooutwire/bureaus):
+This skill absorbs and coordinates the specialized execution bureaus defined in [`cognitive_operations/ooutwire/bureaus/`](../../../cognitive_operations/ooutwire/bureaus):
 
 1. **Bureau 04 / Core (`04_bureau_mole_hunting.yaml`)**:
    - Memory palace triangulation: compares present assertions against historical git ledgers.

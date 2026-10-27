@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.groups import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.groups import (
     make_s3,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
     solve,
 )
 

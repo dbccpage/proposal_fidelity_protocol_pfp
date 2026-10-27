@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from pfp_types_test_support import load_module, pfp_root  # noqa: E402
 
-from omega_engine_pfp.infrastructure import type_register as tr
+from pfp.infrastructure import type_register as tr
 ROOT = Path(__file__).resolve().parents[2]
 REGISTER = ROOT / "type_register/type_register.yaml"
 

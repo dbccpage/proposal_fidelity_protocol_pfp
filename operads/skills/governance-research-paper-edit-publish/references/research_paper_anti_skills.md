@@ -1,8 +1,8 @@
 # Research Paper Anti-Pattern Catalog & Enforcing Python Rules
 
 **AuthorityEffect:** None.  
-**Implementation:** `omega_engine_research_papers.domain.rules`  
-**Automated Execution:** `py -3.12 -m omega_engine_research_papers.use_cases.paper_review.cli gates --paper-path <path>`
+**Implementation:** `research_papers.domain.rules`  
+**Automated Execution:** `py -3.12 -m research_papers.use_cases.paper_review.cli gates --paper-path <path>`
 
 This catalog indexes legacy paper review anti-patterns and maps them directly to their active, fully-typed enforcing Python classes.
 

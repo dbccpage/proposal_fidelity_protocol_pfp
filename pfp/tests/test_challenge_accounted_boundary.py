@@ -6,13 +6,13 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.infrastructure import challenge_live as live
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from operations.domain.rop.result import Ok
+from pfp.infrastructure import challenge_live as live
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 def inputs():
-    source = live.ROOT / "omega_engine_woland/tests/pilots/evidence/demo004_pfp_learning/live/c050_dev_typed_witness_v3"
+    source = live.ROOT / "adversary/tests/pilots/evidence/demo004_pfp_learning/live/c050_dev_typed_witness_v3"
     config = json.loads((source / "config.json").read_bytes())
     wire = json.loads((source / "stage_1/provider_response.json").read_bytes())
     return config["row"], json.loads(wire["choices"][0]["message"]["content"])
@@ -62,7 +62,7 @@ def test_original_judges_and_trusted_second_stage_then_zero_send_replay(tmp_path
     assert "response_format" not in json.loads((tmp_path / "new/stage_1/request.json").read_bytes())
     assert records[0]["result"]["status"] == "PROVIDER_COMPLETED"
     assert records[1]["result"]["status"] == "HOST_ACCEPTED"
-    from omega_engine_pfp.use_cases.pfp_proposal import REPAIR_RULES
+    from pfp.use_cases.pfp_proposal import REPAIR_RULES
     second = json.loads(provider.calls[1].user)
     assert REPAIR_RULES[records[0]["result"]["failure_class"]] in second["input"]["prompt"]
     assert live.replay_live(tmp_path / "new") == 2
@@ -97,7 +97,7 @@ def test_inner_spk_failure_keeps_original_envelope_feedback(tmp_path):
     records = execute(row, tmp_path / "new", gateway)
     assert len(records) == len(provider.calls) == 2
     assert records[0]["result"]["failure_class"] == "ENVELOPE"
-    from omega_engine_pfp.use_cases.pfp_proposal import REPAIR_RULES
+    from pfp.use_cases.pfp_proposal import REPAIR_RULES
     assert REPAIR_RULES["ENVELOPE"] in json.loads(provider.calls[1].user)["input"]["prompt"]
     assert records[1]["result"]["status"] == "HOST_ACCEPTED"
 

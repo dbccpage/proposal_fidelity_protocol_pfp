@@ -33,9 +33,9 @@ The challenge separates outcomes into strictly typed states:
 ## 2. Directory Layout
 
 ```
-omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/
+projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/
 ├── README.md                                 # This overview and verification guide
-├── TEST_READY.md                             # Test readiness report and Lev Landau falsification matrix
+├── TEST_READY.md                             # Test readiness report and Examiner falsification matrix
 ├── participant_packet/                       # Visible to participant models & solvers
 │   ├── TASK.md                               # Mathematical specification & JSON schemas
 │   ├── runner.py                             # Sandboxed execution runner -> answers.jsonl
@@ -74,18 +74,18 @@ omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_lad
 ├── commitments/                              # Cryptographic commit-reveal records (SG-CP v1)
 │   ├── c011_judge_commitment.json            # Phase 1: Judge manifest commitment
 │   ├── c011_freeze_record.json               # Phase 2: Deliverable solver freeze record
-│   └── c011_scoring_receipt.json             # Phase 3: Final scoring receipt & Woland seal
+│   └── c011_scoring_receipt.json             # Phase 3: Final scoring receipt & Adversary seal
 ├── governance/                               # Governance, cost gate, and reality gate
 │   ├── __init__.py
 │   ├── budget_gate.py                        # BudgetController (< $0.05 target, <= $0.50 ceiling, <= 70B)
-│   ├── woland_gate.py                        # Woland reality gate, 4-file bundle, and dual-sink persistence
+│   ├── adversary_gate.py                        # Adversary reality gate, 4-file bundle, and dual-sink persistence
 │   └── commit_reveal_runner.py               # 3-Phase Commit-Reveal runner CLI
 └── tests/                                    # Scoped test suite
     ├── __init__.py
     ├── test_participant_packet.py            # Tests validating schema, examples, and runner
     ├── test_reference_solver.py              # Tests validating solver, math invariants, and DDC trace
     ├── test_dual_checkers.py                 # Tests validating dual checkers and case suite
-    ├── test_governance_and_commit_reveal.py  # Tests validating budget gate, Woland gate, and commit-reveal
+    ├── test_governance_and_commit_reveal.py  # Tests validating budget gate, Adversary gate, and commit-reveal
     └── test_e2e_challenge.py                 # Comprehensive 4-tier E2E test suite (Features F1-F20)
 ```
 
@@ -171,14 +171,14 @@ All numbers are represented as canonical exact rational strings (`"0"`, `"5"`, `
 
 ### Running the Participant Runner
 ```bash
-python omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/participant_packet/runner.py \
-  --cases omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/participant_packet/examples \
-  --output omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/participant_packet/answers.jsonl
+python projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/participant_packet/runner.py \
+  --cases projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/participant_packet/examples \
+  --output projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/participant_packet/answers.jsonl
 ```
 
 ### Running the Commit-Reveal Pipeline
 ```bash
-python -m omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.governance.commit_reveal_runner
+python -m projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.governance.commit_reveal_runner
 ```
 
 ### Running Targeted Test Suites
@@ -187,24 +187,24 @@ In accordance with repository governance rules, **never execute whole-suite swee
 ```bash
 # 1. Participant packet & reference solver tests
 python -m pytest \
-  omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_participant_packet.py \
-  omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_reference_solver.py \
+  projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_participant_packet.py \
+  projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_reference_solver.py \
   -q
 
 # 2. Dual checkers & mutation tests
 python -m pytest \
-  omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_dual_checkers.py \
-  omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/test_checker_mutations.py \
+  projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_dual_checkers.py \
+  projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/judge_packet/mutation_suite/test_checker_mutations.py \
   -q
 
 # 3. Governance, budget gate, and commit-reveal tests
 python -m pytest \
-  omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_governance_and_commit_reveal.py \
+  projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_governance_and_commit_reveal.py \
   -q
 
 # 4. E2E comprehensive 4-tier challenge test
 python -m pytest \
-  omega_engine_projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_e2e_challenge.py \
+  projects/mssn_sn_symgam/challenges/b_cohomology/c011_cycle_rank_ladder_coboundary_repair/tests/test_e2e_challenge.py \
   -q
 ```
 

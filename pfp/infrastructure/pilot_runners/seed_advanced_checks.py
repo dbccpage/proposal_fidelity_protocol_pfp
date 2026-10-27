@@ -541,7 +541,7 @@ def _sparse(values: list) -> list:
 
 
 def _bits(values: Any, length: int) -> list[int]:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     if type(values) is not list or len(values) != length or any(type(value) is not int or value not in (0, 1) for value in values):
         raise SeedCheckFailure("REQUIRED_EXACT_BINARY_VECTOR")
     return values
@@ -593,7 +593,7 @@ def _tensor_top_differential(records: list[dict], degree: int, terms: list) -> l
 
 
 def _tensor_transport(records: list[dict], dimensions: list[int], potential_terms: list | None = None) -> dict:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     degree = len(dimensions) - 1
     dimension, previous = dimensions[-1], dimensions[-2]
     terms = [[0, 1]] if potential_terms is None else potential_terms
@@ -828,7 +828,7 @@ def _computed(number: int) -> dict:
 def advanced_expected(number: int) -> dict:
     """Recompute the deciding finite data, never fabricate a tool verdict."""
     from copy import deepcopy
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
 
     if number == 20:
         raise SeedCheckFailure("LEAN_SOURCE_WITNESS_REQUIRED")
@@ -838,9 +838,9 @@ def advanced_expected(number: int) -> dict:
 
 
 def advanced_check(number: int, payload: dict) -> dict:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import compare
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import wire
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import compare
+    from pfp.infrastructure.pilot_runners.seed_checks import wire
 
     if number == 20:
         return _lean_check(payload)
@@ -868,8 +868,8 @@ def advanced_check(number: int, payload: dict) -> dict:
 
 
 def _check_cross_polytope_coefficients(payload: dict) -> None:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import rational
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import rational
     for certificate in payload["dimensions"]:
         n = certificate["dimension"]
         boundary = {}
@@ -885,7 +885,7 @@ def _check_cross_polytope_coefficients(payload: dict) -> None:
 
 
 def _check_bilinear_forms(payload: dict) -> None:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     for data in payload["dimensions"]:
         r, alpha, words = data["r"], data["alpha_matrix"], data["generator_words"]
         for i in range(2 * r):
@@ -906,7 +906,7 @@ def _check_bilinear_forms(payload: dict) -> None:
 
 
 def _check_composite_factors(payload: dict) -> None:
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     pairings = []
     for record in payload["topological"]["factor_certificates"]:
         top_cycle = _bits(record["top_cycle"], record["dimensions"][-1])
@@ -934,7 +934,7 @@ def _lean_check(payload: dict) -> dict:
     import re
     import tempfile
 
-    from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
+    from pfp.infrastructure.pilot_runners.seed_checks import SeedCheckFailure
     from ...domain.lean_bridge.models import LeanVerificationRequest
     from ..adapters.lake_sandbox_adapter import LakeSandboxAdapter
 

@@ -2,10 +2,10 @@
 
 **AuthorityEffect:** `None`  
 **Governing Standard:** Proposal Fidelity Protocol (PFP)  
-**Empirical Evidence Base:** [`../../pilots/pilot_output/results.md`](../../pilots/pilot_output/results.md) & [`../../../../omega_engine_atlas/coda_atlas/prompts/pilot_031_050_master_review_and_operad_findings.md`](../../../../omega_engine_atlas/coda_atlas/prompts/pilot_031_050_master_review_and_operad_findings.md)  
-**Test Suite Register:** [`omega_engine_pfp/tests/test_prompt_representations.py`](../../../../tests/test_prompt_representations.py)  
+**Empirical Evidence Base:** [`../../pilots/pilot_output/results.md`](../../pilots/pilot_output/results.md) & [`../../../../atlas/coda_atlas/prompts/pilot_031_050_master_review_and_operad_findings.md`](../../../../atlas/coda_atlas/prompts/pilot_031_050_master_review_and_operad_findings.md)  
+**Test Suite Register:** [`pfp/tests/test_prompt_representations.py`](../../../../tests/test_prompt_representations.py)  
 
-This directory contains authoritative YAML specifications (`template_repr_<slug>.yaml`) for each of the eight prompt wire representations supported in the PFP and Symbol Game ecosystem, paired with sovereign typed Pydantic models in `omega_engine_pfp/domain/prompt_representations/`.
+This directory contains authoritative YAML specifications (`template_repr_<slug>.yaml`) for each of the eight prompt wire representations supported in the PFP and Symbol Game ecosystem, paired with sovereign typed Pydantic models in `pfp/domain/prompt_representations/`.
 
 ---
 

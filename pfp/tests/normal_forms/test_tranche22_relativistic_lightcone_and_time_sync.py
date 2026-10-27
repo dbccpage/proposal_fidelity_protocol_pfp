@@ -2,8 +2,8 @@
 
 Aligned Contracts / Systems:
 - nf.physics.relativity
-- omega_engine_woland.stage
-- omega_engine_woland
+- adversary.stage
+- adversary
 
 AuthorityEffect: None.
 """
@@ -161,11 +161,11 @@ class TestTranche22RelativisticLightconeAndTimeSync(unittest.TestCase):
 
     # Test 431
     def test_penrose_diagram_null_infinity_conformal_compactification(self) -> None:
-        """Verify conformal factor Omega > 0 in physical interior, Omega = 0 at boundary."""
-        Omega_interior = Fraction(1, 2)
-        Omega_boundary = Fraction(0, 1)
-        self.assertGreater(Omega_interior, Fraction(0, 1))
-        self.assertEqual(Omega_boundary, Fraction(0, 1))
+        """Verify conformal factor Core > 0 in physical interior, Core = 0 at boundary."""
+        Core_interior = Fraction(1, 2)
+        Core_boundary = Fraction(0, 1)
+        self.assertGreater(Core_interior, Fraction(0, 1))
+        self.assertEqual(Core_boundary, Fraction(0, 1))
 
     # Test 432
     def test_kruskal_szekeres_black_hole_analytic_extension(self) -> None:

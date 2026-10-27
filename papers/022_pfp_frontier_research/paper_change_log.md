@@ -16,7 +16,7 @@
 - Initial release candidate for Paper 020: "PFP XX: Multi-Agent Evaluation Tournaments and Adaptive Noise Mitigation in the Symbol Game".
 - Author: Jeremy H. Carroll.
 - Established multi-agent braid tournament framework evaluating OpenRouter models (LLaMA 3.1 8B, LLaMA 3.3 70B, GLM 5.3) and deterministic reference baselines.
-- Integrated `MultiQubitNoisyBraidReferee` from `omega_engine_projects/ms_majorana`.
+- Integrated `MultiQubitNoisyBraidReferee` from `projects/ms_majorana`.
 - Added exact rational noise defect calculation under Zero-Float Law.
 - Authored `code/adaptive_braid_tournament_demo.py` and `scripts/run_tournament.py`.
 - Authored test suite `code/tests/test_adaptive_braid_tournament_demo.py` achieving 96% coverage.

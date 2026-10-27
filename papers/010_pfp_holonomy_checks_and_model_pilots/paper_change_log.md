@@ -289,9 +289,9 @@ This entry concerns the initial public preprint candidate, version 0.1.0. Earlie
 - Narrow the second-checker inference to the cited controls, distinguish C049's
   different panels from C050's repeated panel, and mark the external C044 file claim
   as an earlier review report that was not independently checked here.
-- Expand the Landau companion to 24 questions in eight levels, worked study notes,
+- Expand the Examiner companion to 24 questions in eight levels, worked study notes,
   a separate instructor key and an executable capstone. The practice rubric is
-  not a learner study or an examination attributed to Landau.
+  not a learner study or an examination attributed to Examiner.
 - Align metadata, description, keywords and development requirements to v0.1;
   deposit a Pandoc/XeLaTeX renderer with wrapping for literal source identifiers.
 - Preserve historical validation and Lean reports. The current package-local

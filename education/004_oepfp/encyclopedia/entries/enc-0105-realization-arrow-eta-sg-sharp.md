@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:X.1"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §X.1 'Definition X.1'"
+  - "canonical_core_math_spine.md v1.5.2 §X.1 'Definition X.1'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -25,10 +25,10 @@ The Symbol-Game realization arrow is the Kleisli
 arrow of the refusal monad $M(X)=X+\mathbb{F}$
 
 $$
-\eta_{SG}^\sharp : \mathsf{RawLLMOutput} \longrightarrow \mathsf{TypedOmegaPacket}+\mathbb{F},
+\eta_{SG}^\sharp : \mathsf{RawLLMOutput} \longrightarrow \mathsf{TypedCorePacket}+\mathbb{F},
 $$
 
-which produces a typed Omega packet (or a typed refusal) from raw output. Under the
+which produces a typed Core packet (or a typed refusal) from raw output. Under the
 canonical pipeline $\Pi_S^\sharp$ (Def I.4) it is the **realize stage** $\eta^\sharp$
 (`Realize in carrier representation`); the glyph $\eta$ here is the realize-stage name, NOT
 the refusal-monad unit.
@@ -57,7 +57,7 @@ no functoriality).
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §X.1
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §X.1
   (statement, including the source's honest-status paragraph, copied verbatim).
   Original header line:
   `**Definition X.1 ($\eta_{SG}^\sharp$).** The Symbol-Game realization arrow is the Kleisli`

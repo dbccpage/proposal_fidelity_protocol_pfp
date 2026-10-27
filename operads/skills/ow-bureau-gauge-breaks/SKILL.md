@@ -13,7 +13,7 @@ families: [ooutwire, gauge_break, feyerabend, surprise, nocebo_placebo, bureaus,
 **Status:** `ADMITTED`  
 **Classification:** `TOP SECRET // SCI // AP: PROGRAM INDIGO // OPERATION POKROV`  
 **AuthorityEffect:** `None`  
-**Governing Context:** [`omega_engine_cognitive_operations/ooutwire`](../../../omega_engine_cognitive_operations/ooutwire)  
+**Governing Context:** [`cognitive_operations/ooutwire`](../../../cognitive_operations/ooutwire)  
 
 ---
 
@@ -25,7 +25,7 @@ Led by **Paul Feyerabend**, the **Dialectical Gauge-Break Bureau** intervenes wh
 
 ## 2. Integrated Execution Bureaus
 
-This skill absorbs and coordinates the specialized execution bureaus defined in [`omega_engine_cognitive_operations/ooutwire/bureaus/`](../../../omega_engine_cognitive_operations/ooutwire/bureaus):
+This skill absorbs and coordinates the specialized execution bureaus defined in [`cognitive_operations/ooutwire/bureaus/`](../../../cognitive_operations/ooutwire/bureaus):
 
 1. **Bureau 03 / Core (`03_bureau_dialectical_gauge_breaks.yaml`)**:
    - Act IV 9-dot gauge breaks: unfreezes rigid carrier representations into higher-dimensional manifolds.

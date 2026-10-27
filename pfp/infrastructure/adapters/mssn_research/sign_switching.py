@@ -104,7 +104,7 @@ def _matrix_payload(h: Matrix) -> list[list[str]]:
 
 
 def _native(operation: str, h: Matrix, **witness: object) -> dict:
-    from omega_engine_pfp.ffi import get_default_host
+    from pfp.ffi import get_default_host
 
     payload = {"operation": operation, "matrix": _matrix_payload(h), **witness}
     try:

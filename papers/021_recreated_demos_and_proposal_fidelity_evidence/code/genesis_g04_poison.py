@@ -53,7 +53,7 @@ def build_native(g04, identity: str) -> dict:
     executable = destination / "g04_fixed_stake_poison.exe"
     argv = [str(g04.RUSTC), "--edition", "2021", "--crate-name", "paper011_g04_fixed_stake_poison",
         str(g04.PACKAGE / "fixed_stake_poison.rs"), "-L", "dependency=" + str(g04.DEPS),
-        "--extern", "omega_ooutwire_primitives=" + str(g04.DEPS / "libomega_ooutwire_primitives-7419c0b1b3d813be.rlib"),
+        "--extern", "core_ooutwire_primitives=" + str(g04.DEPS / "libcore_ooutwire_primitives-7419c0b1b3d813be.rlib"),
         "--extern", "serde_json=" + str(g04.DEPS / "libserde_json-1a3e70913255bad6.rlib"), "-o", str(executable)]
     process = subprocess.run(argv, capture_output=True, check=False, timeout=300, cwd=g04.PACKAGE)
     after = dependencies(g04)

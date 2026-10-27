@@ -6,7 +6,7 @@ from typing import Any
 
 import yaml
 
-from omega_engine_pfp.domain.finite_gauge import RunConfig
+from pfp.domain.finite_gauge import RunConfig
 
 
 class StrictFiniteGaugeLoader(yaml.SafeLoader):

@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 
-from omega_engine_pfp.domain.demos import DemoRefusal
+from pfp.domain.demos import DemoRefusal
 
 
 def canonical(value: object) -> bytes:

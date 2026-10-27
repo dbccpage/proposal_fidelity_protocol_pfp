@@ -9,8 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Sequence, Tuple
 
-from omega_engine_pfp.domain.value_objects.topology import ByteSpanVO
-from omega_engine_pfp.domain.value_objects.taxonomy import SpanRoleVO
+from pfp.domain.value_objects.topology import ByteSpanVO
+from pfp.domain.value_objects.taxonomy import SpanRoleVO
 from .base import AggregateRoot
 
 

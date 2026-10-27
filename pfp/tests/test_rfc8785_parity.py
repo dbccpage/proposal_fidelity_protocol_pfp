@@ -1,4 +1,4 @@
-"""Test suite for RFC 8785 JSON Canonicalization Scheme (JCS) and omega-canonical-v1 wire parity.
+"""Test suite for RFC 8785 JSON Canonicalization Scheme (JCS) and core-canonical-v1 wire parity.
 
 Verifies:
 1. UTF-16 code unit property key sorting (RFC 8785 §3.2.3).
@@ -8,7 +8,7 @@ Verifies:
 5. Refusal of integers exceeding 2^53 - 1 (MAX_SAFE_INTEGER).
 6. Refusal of non-finite numbers (NaN, Infinity).
 7. SHA-256 digest computation over canonical bytes.
-8. Byte-exact cross-language wire parity with Rust omega_symbol_game_runtime.
+8. Byte-exact cross-language wire parity with Rust core_symbol_game_runtime.
 
 AuthorityEffect: None.
 """
@@ -21,7 +21,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.canonical import (
+from pfp.domain.canonical import (
     MAX_SAFE_INTEGER,
     JcsError,
     canonical_bytes,
@@ -119,7 +119,7 @@ def test_scientific_exponent_thresholds():
 
 
 def test_number_array_parity_with_rust_vector():
-    """Array vector matching tests/omega_symbol_game_runtime/jcs_vectors.rs line 68."""
+    """Array vector matching tests/core_symbol_game_runtime/jcs_vectors.rs line 68."""
     raw = "[1.0, -0.0, 1e21, 0.000001, 1e-7]"
     assert canonicalize_json_str(raw) == "[1,0,1e+21,0.000001,1e-7]"
     assert rfc8785_canonical_json([1.0, -0.0, 1e21, 0.000001, 1e-7]) == "[1,0,1e+21,0.000001,1e-7]"
@@ -218,11 +218,11 @@ def test_sha256_digest_parity():
 
 
 # ---------------------------------------------------------------------------
-# 6. Golden Canonical Vectors (omega-canonical-v1) Parity
+# 6. Golden Canonical Vectors (core-canonical-v1) Parity
 # ---------------------------------------------------------------------------
 
-def test_golden_canonical_vectors_omega_v1():
-    """Verify that omega-canonical-v1 golden vectors match Python domain digest."""
+def test_golden_canonical_vectors_core_v1():
+    """Verify that core-canonical-v1 golden vectors match Python domain digest."""
     path = Path(__file__).resolve().parent / "golden_canonical_vectors.json"
     if not path.is_file():
         pytest.skip("golden_canonical_vectors.json not found")

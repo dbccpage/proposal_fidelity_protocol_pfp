@@ -17,7 +17,7 @@ import re
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.judge_packet import (
+from pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.judge_packet import (
     exact_checker,
     independent_checker,
 )
@@ -114,7 +114,7 @@ def test_trivial_responders_fail_on_every_in_scope_case(name, checker):
 
 
 def test_reference_solver_passes_and_every_hostile_mutation_fails_both_checkers():
-    from omega_engine_pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver import (
+    from pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver import (
         solve,
     )
 
@@ -135,10 +135,10 @@ def test_reference_solver_passes_and_every_hostile_mutation_fails_both_checkers(
 
 def test_both_parsers_agree_with_the_reference_grammar_on_random_strings():
     """Scope decisions must not change: same accepted strings, same languages."""
-    from omega_engine_pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver.dfa_engine import (
+    from pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver.dfa_engine import (
         compile_minimal_dfa,
     )
-    from omega_engine_pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver.regex_parser import (
+    from pfp.tests.demo_004.f_program_synthesis.c056_dfa_minimization_equivalence.reference_solver.regex_parser import (
         parse_regex,
     )
 
@@ -175,7 +175,7 @@ def test_runner_prompt_defines_empty_set_and_empty_word():
     import importlib
 
     runner = importlib.import_module(
-        "omega_engine_pfp.tests.demo_004.f_program_synthesis."
+        "pfp.tests.demo_004.f_program_synthesis."
         "c056_dfa_minimization_equivalence.run_c056_matrix"
     )
     prompt = runner.SYSTEM_PROMPT

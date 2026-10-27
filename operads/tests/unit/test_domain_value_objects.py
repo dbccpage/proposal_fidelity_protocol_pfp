@@ -2,7 +2,7 @@
 
 import unittest
 
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     AUTHORITY_RANK,
     AdmissionFacet,
     AuthorityEffect,

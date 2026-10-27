@@ -6,30 +6,30 @@ from dataclasses import dataclass
 from importlib.resources import files
 from pathlib import Path
 
-from omega_engine_pfp.domain.demos import DemoRefusal, Scenario
+from pfp.domain.demos import DemoRefusal, Scenario
 
 from .canonical import canonical, digest, load
 
-PACKAGE = "omega_engine_pfp.infrastructure.adapters.mssn_research"
+PACKAGE = "pfp.infrastructure.adapters.mssn_research"
 
 # The retained catalog describes the original layout. Current execution reads
 # explicit successor owners; historical receipts still need their pinned code.
 _CURRENT_IMPLEMENTATION_OWNERS = {
-    ("omega_engine_providers", "adapters/native_functional.py"):
-        ("omega_engine_woland", "infrastructure/providers/adapters/native_functional.py"),
-    ("omega_engine_providers", "infrastructure/openai_compat.py"):
-        ("omega_engine_woland", "infrastructure/providers/openai_compat.py"),
+    ("providers", "adapters/native_functional.py"):
+        ("adversary", "infrastructure/providers/adapters/native_functional.py"),
+    ("providers", "infrastructure/openai_compat.py"):
+        ("adversary", "infrastructure/providers/openai_compat.py"),
 }
 # Retained MSSN module entries can have several current defining sources.
 # This table names those sources explicitly; missing successor bytes are fatal.
 _CURRENT_MSSN_SOURCE_PROJECTION = {
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/grammar/entities.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/grammar/entities.py"): (
         "domain/mssn_research/grammar/entities.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/grammar/errors.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/grammar/errors.py"): (
         "domain/mssn_research/grammar/errors.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/grammar/invariants.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/grammar/invariants.py"): (
         "domain/mssn_research/grammar/authority_policies.py",
         "domain/mssn_research/grammar/foundational_policies.py",
         "domain/mssn_research/grammar/lift_policies.py",
@@ -37,12 +37,12 @@ _CURRENT_MSSN_SOURCE_PROJECTION = {
         "domain/mssn_research/grammar/rewriting_policies.py",
         "domain/mssn_research/grammar/spectral_policies.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/grammar/repository.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/grammar/repository.py"): (
         "domain/mssn_research/grammar/ports.py",
         "infrastructure/adapters/mssn_research/contracts/grammar/ledger_codec.py",
         "infrastructure/adapters/mssn_research/contracts/grammar/ledger_repository.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/grammar/value_objects.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/grammar/value_objects.py"): (
         "domain/mssn_research/grammar/authority.py",
         "domain/mssn_research/grammar/exact_structures.py",
         "domain/mssn_research/grammar/lexical.py",
@@ -50,26 +50,26 @@ _CURRENT_MSSN_SOURCE_PROJECTION = {
         "domain/mssn_research/grammar/rewriting.py",
         "domain/mssn_research/grammar/spectral_geometry.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/packets/entities.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/packets/entities.py"): (
         "domain/mssn_research/packets/entities.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/packets/errors.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/packets/errors.py"): (
         "domain/mssn_research/packets/errors.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/packets/invariants.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/packets/invariants.py"): (
         "domain/mssn_research/packets/invariants.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/packets/value_objects.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/packets/value_objects.py"): (
         "domain/mssn_research/packets/parser.py",
         "domain/mssn_research/packets/value_objects.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/shared_kernel/__init__.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/shared_kernel/__init__.py"): (
         "domain/mssn_research/shared_kernel/__init__.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/shared_kernel/result.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/shared_kernel/result.py"): (
         "domain/mssn_research/shared_kernel/result.py",
     ),
-    ("omega_engine_pfp", "infrastructure/adapters/mssn_research/contracts/shared_kernel/value_objects.py"): (
+    ("pfp", "infrastructure/adapters/mssn_research/contracts/shared_kernel/value_objects.py"): (
         "domain/mssn_research/shared_kernel/value_objects.py",
     ),
 }
@@ -131,7 +131,7 @@ def implementation_digest():
             for owner, current in sources:
                 found[owner + "/" + current] = digest(files(owner).joinpath(current).read_bytes())
     for path in (*_PFP_TURN_SOURCES, *_CURRENT_MSSN_PACKAGE_SOURCES):
-        found["omega_engine_pfp/" + path] = digest(files("omega_engine_pfp").joinpath(path).read_bytes())
+        found["pfp/" + path] = digest(files("pfp").joinpath(path).read_bytes())
 
     return digest(canonical(found))
 
@@ -155,7 +155,7 @@ class RegistryClosureReport:
 def resolve_repo_root() -> Path:
     current = Path(__file__).resolve()
     for parent in current.parents:
-        if (parent / "omega_engine_education").is_dir() and (parent / "omega_engine_pfp").is_dir():
+        if (parent / "education").is_dir() and (parent / "pfp").is_dir():
             return parent
     return current.parents[4]
 
@@ -167,11 +167,11 @@ def registry_closure(repo_root: Path | None = None, strict: bool = False) -> Reg
     schema_ver = data.get("schema", "")
 
     # 1. Demo directories on disk vs front_end entries in catalog
-    demos_dir = root / "omega_engine_education" / "documentation" / "3_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "demos"
+    demos_dir = root / "education" / "documentation" / "3_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "demos"
     if not demos_dir.is_dir():
-        demos_dir = root / "omega_engine_education" / "documentation" / "030_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "demos"
+        demos_dir = root / "education" / "documentation" / "030_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "demos"
     if not demos_dir.is_dir():
-        demos_dir = root / "omega_engine_education" / "curriculum" / "the_symbol_game" / "demos"
+        demos_dir = root / "education" / "curriculum" / "the_symbol_game" / "demos"
     disk_demo_dirs = set()
     if demos_dir.is_dir():
         disk_demo_dirs = {
@@ -189,11 +189,11 @@ def registry_closure(repo_root: Path | None = None, strict: bool = False) -> Reg
     extra_front_ends = tuple(sorted(front_ends - disk_demo_dirs))
 
     # 2. Registered challenges in catalog.json vs packet_built entries in catalog.yaml
-    catalog_yaml_path = root / "omega_engine_education" / "documentation" / "3_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "challenges" / "catalog.yaml"
+    catalog_yaml_path = root / "education" / "documentation" / "3_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "challenges" / "catalog.yaml"
     if not catalog_yaml_path.is_file():
-        catalog_yaml_path = root / "omega_engine_education" / "documentation" / "030_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "challenges" / "catalog.yaml"
+        catalog_yaml_path = root / "education" / "documentation" / "030_the_symbol_game_proposal_fidelity_protocol_pfp" / "demos" / "challenges" / "catalog.yaml"
     if not catalog_yaml_path.is_file():
-        catalog_yaml_path = root / "omega_engine_education" / "curriculum" / "the_symbol_game" / "challenges" / "catalog.yaml"
+        catalog_yaml_path = root / "education" / "curriculum" / "the_symbol_game" / "challenges" / "catalog.yaml"
     packet_built_challenges = set()
     if catalog_yaml_path.is_file():
         try:
@@ -236,7 +236,7 @@ def registry_closure(repo_root: Path | None = None, strict: bool = False) -> Reg
     missing_tests_tuple = tuple(sorted(missing_tests))
 
     is_closed = (
-        schema_ver == "omega.mssn.catalog.v2"
+        schema_ver == "core.mssn.catalog.v2"
         and not missing_dirs
         and not extra_front_ends
         and not missing_challenges

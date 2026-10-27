@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.participant_packet.runner import (
     run_benchmark,
 )
 

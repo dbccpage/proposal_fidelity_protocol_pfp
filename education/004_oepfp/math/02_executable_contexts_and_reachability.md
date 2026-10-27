@@ -1,7 +1,7 @@
 # 02. Executable Contexts & Reachability Closure
 
 **AuthorityEffect:** `None`  
-**Estate:** `omega_engine_education/documentation/004_oepfp/math/`  
+**Estate:** `education/documentation/004_oepfp/math/`  
 **Parent Document:** [`oesos_layers_index.md`](oesos_layers_index.md)  
 **Status:** Canonical Foundation  
 **Layers Covered:** L1 (Representation & Context), L2 (Same-Context Transformations)  
@@ -59,7 +59,7 @@ graph LR
     r1 --> x1["State x_1"]
     x1 --> r2["Move r_2 &in; R_C"]
     r2 --> x2["State x_2"]
-    x2 --> Accept["Accepted State y<br/>&Omega;_C(y) = &empty;"]
+    x2 --> Accept["Accepted State y<br/>&Core;_C(y) = &empty;"]
 ```
 
 ### 2.1 Reachability Closure

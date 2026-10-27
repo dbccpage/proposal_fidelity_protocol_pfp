@@ -1,6 +1,6 @@
 """Qualify the inert Rust capture candidate, not its runtime admission.
 
-AuthorityEffect: None. Native regression execution belongs to omega_sandbox.
+AuthorityEffect: None. Native regression execution belongs to core_sandbox.
 """
 
 from __future__ import annotations
@@ -10,7 +10,7 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_epistemic_immune_system.domain import (
+from eis.domain import (
     ConstraintType,
     PharmacyStatus,
     RuntimeAction,
@@ -29,7 +29,7 @@ def _spec() -> dict:
 
 def test_rust_capture_candidate_retains_inert_status_and_projection() -> None:
     spec = _spec()
-    assert spec["schema_version"] == "omega.immune.antibody-spec.v1"
+    assert spec["schema_version"] == "core.immune.antibody-spec.v1"
     assert spec["antibody_id"] == "ab_rust_capture_completion_loss"
     assert spec["constraint_type"] == ConstraintType.RESTRAIN.value
     assert spec["action"] == RuntimeAction.REPAIR.value

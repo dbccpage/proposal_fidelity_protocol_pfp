@@ -26,7 +26,7 @@ A comment-slop skill or taxonomy says extracted comments are written under `.age
 
 ## Witness
 
-Historical. No `--fix` run was repeated. The opened skill `.agents/skills/techne-comment-slop-hunter-killer/SKILL.md` still says stripped comments are written to `.agents/documentation/slop_audit/<relative_path>.md`. The opened router `omega_engine_operations/use_cases/packaging/comment_slop_router.py` still assigns `doc_dest = repo_root / "_ic/nro/documentation"` and writes `doc_dest / "slop_audit" / rel_path.with_suffix(".md")`. The historical card `_ic/nro/documentation/slop_audit/omega_engine/crates_rs/omega_symbol_game_runtime/src/jcs.md` records line 94 as `Step 6: k digits followed by (n - k) zeros`. That sentence is not in the current `jcs.rs`. `.agents/documentation` is not a directory.
+Historical. No `--fix` run was repeated. The opened skill `.agents/skills/techne-comment-slop-hunter-killer/SKILL.md` still says stripped comments are written to `.agents/documentation/slop_audit/<relative_path>.md`. The opened router `operations/use_cases/packaging/comment_slop_router.py` still assigns `doc_dest = repo_root / "_ic/nro/documentation"` and writes `doc_dest / "slop_audit" / rel_path.with_suffix(".md")`. The historical card `_ic/nro/documentation/slop_audit/engine/crates_rs/core_symbol_game_runtime/src/jcs.md` records line 94 as `Step 6: k digits followed by (n - k) zeros`. That sentence is not in the current `jcs.rs`. `.agents/documentation` is not a directory.
 
 ## Hazard & Failure Mode
 

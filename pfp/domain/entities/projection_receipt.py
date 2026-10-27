@@ -10,11 +10,11 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import TYPE_CHECKING, Any
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest
-from omega_engine_pfp.functional_boundary import require_rust_functional
+from pfp.domain.shared_kernel.canonical import domain_digest
+from pfp.functional_boundary import require_rust_functional
 
 if TYPE_CHECKING:
-    from omega_engine_pfp.domain.entities.candidate_artifact import CandidateArtifactV1
+    from pfp.domain.entities.candidate_artifact import CandidateArtifactV1
 
 
 class TerminalStatus(str, Enum):
@@ -111,7 +111,7 @@ class ProjectionReceipt:
 
     @property
     def control_digest(self) -> str:
-        return domain_digest("omega.oesos.projection-control.v1", self)
+        return domain_digest("core.oesos.projection-control.v1", self)
 
 
 @dataclass(frozen=True, slots=True)
@@ -135,7 +135,7 @@ class SolverManifest:
 
     @property
     def manifest_id(self) -> str:
-        return domain_digest("omega.oesos.solver-manifest.v1", self)
+        return domain_digest("core.oesos.solver-manifest.v1", self)
 
 
 @dataclass(frozen=True, slots=True)

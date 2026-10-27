@@ -83,7 +83,7 @@ def test_enums_match_readme_pipeline() -> None:
 
 
 def test_rule_table_is_a_dependency_graph_with_the_declared_host_stages() -> None:
-    from omega_engine_pfp.domain.stages.stages import HOST_STAGES, SEAT_BY_STAGE, requires_problem
+    from pfp.domain.stages.stages import HOST_STAGES, SEAT_BY_STAGE, requires_problem
 
     rules = _rules()
     assert sorted(rules) == list(range(1, 12))
@@ -144,7 +144,7 @@ def test_stage_five_is_host_executed_with_input_contract() -> None:
         lambda d: d.pop("response_schema"),
         lambda d: d.update(extra_field=1),
         lambda d: d.update(stage=12),
-        lambda d: d.update(seat="seat_woland"),
+        lambda d: d.update(seat="seat_adversary"),
     ],
 )
 def test_stage_negative_controls(mutate) -> None:
@@ -165,7 +165,7 @@ def test_host_stage_with_response_schema_rejected() -> None:
 def test_receipt_obligation_rules_name_refusal_map_keys() -> None:
     import json
 
-    from omega_engine_pfp.domain.stages.stages import OBLIGATION_CODES
+    from pfp.domain.stages.stages import OBLIGATION_CODES
 
     doc = load_yaml("stages/stage_9_receipt.yaml")
     mapping = json.loads((pfp_root() / "packet_schemas" / "kill_condition_refusal_map_v1.json").read_text(
@@ -177,7 +177,7 @@ def test_receipt_obligation_rules_name_refusal_map_keys() -> None:
     assert _check_stage(broken, _rules()) != []
     from pydantic import ValidationError
 
-    from omega_engine_pfp.domain.stages.stages import StageFile
+    from pfp.domain.stages.stages import StageFile
 
     other = load_yaml("stages/stage_8_selection.yaml")
     StageFile.model_validate(other)
@@ -185,14 +185,14 @@ def test_receipt_obligation_rules_name_refusal_map_keys() -> None:
         StageFile.model_validate({**other, "obligation_rules": doc["obligation_rules"]})
 
 
-def test_seats_are_core_retinue_seats() -> None:
+def test_seats_are_core_panel_seats() -> None:
     import json
 
-    from omega_engine_pfp.domain.stages.stages import SEAT_BY_STAGE
+    from pfp.domain.stages.stages import SEAT_BY_STAGE
 
-    layout = pfp_root().parent / "omega_engine" / "crates_rs" / "omega_woland" / "src" / "council_layout_v1.json"
+    layout = pfp_root().parent / "engine" / "crates_rs" / "core_adversary" / "src" / "council_layout_v1.json"
     core = json.loads(layout.read_text(encoding="utf-8"))["core_required"]
-    # The layout lists every seat; the default (core) retinue is these five of them.
+    # The layout lists every seat; the default (core) panel is these five of them.
     seats = set(SEAT_BY_STAGE.values())
-    assert seats == {"seat_begemot", "seat_koroviev", "seat_woland", "seat_margarita", "seat_the_master"}
+    assert seats == {"seat_gauge_breaker", "seat_defect_hunter", "seat_adversary", "seat_primal_dual", "seat_manuscript_truth"}
     assert seats <= {row[0] for row in core}

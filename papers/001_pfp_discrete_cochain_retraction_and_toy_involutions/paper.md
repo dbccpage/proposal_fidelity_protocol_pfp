@@ -266,7 +266,7 @@ The package contains two exact implementations of the graph problem and three
 small Lean files. Their scopes differ.
 
 The native solver is
-[graph_phi1.rs](../../../../../../omega_engine/crates_rs/omega_solvers/src/graph_phi1.rs).
+[graph_phi1.rs](../../../../../../engine/crates_rs/core_solvers/src/graph_phi1.rs).
 It parses exact rationals written as integers or fractions, and it rejects
 decimal strings, duplicate vertices, unknown endpoints, self-edges, and
 nonpositive weights. It enumerates spanning-forest potentials and compares
@@ -454,11 +454,11 @@ scope.
 - Carroll, Jeremy H. (2026a). *PFP II: Signed Certificates, Resumable Search,
   and a Restricted Path-Pairing Obstruction*. Version 1.1.0, author-review
   preprint, Paper 002 in this series. Repository path
-  `omega_engine_atlas/coda_atlas/omega_engine_pfp/002_pfp_signed_presentations_and_search_frontier`.
+  `atlas/coda_atlas/pfp/002_pfp_signed_presentations_and_search_frontier`.
 - Carroll, Jeremy H. (2026b). *PFP III: Admitting Failure Detectors and Testing
   Their Effects*. Version 1.1.0, author-review preprint, Paper 003 in this
   series. Repository path
-  `omega_engine_atlas/coda_atlas/omega_engine_pfp/003_pfp_host_admitted_failure_detectors`.
+  `atlas/coda_atlas/pfp/003_pfp_host_admitted_failure_detectors`.
 - Necula, George C. (1997). “Proof-carrying code.”
   *Proceedings of the 24th ACM SIGPLAN-SIGACT Symposium on Principles of
   Programming Languages (POPL '97)*, pp. 106–119. ACM Press.

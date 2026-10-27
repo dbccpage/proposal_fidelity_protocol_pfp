@@ -6,22 +6,22 @@ from dataclasses import replace
 from datetime import timedelta
 from pathlib import Path
 
-from omega_engine_operads.application.python_development_office.quality_inventory import (
+from operads.application.python_development_office.quality_inventory import (
     PythonQualityInventoryGate,
     QualityInventoryDependencies,
 )
-from omega_engine_operads.application.python_development_office.test_receipt_verification import (
+from operads.application.python_development_office.test_receipt_verification import (
     ReceiptVerificationRequest,
     verify_test_execution_receipts,
 )
-from omega_engine_operads.domain.operad.errors import Ok
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.operad.errors import Ok
+from operads.domain.python_development_office.quality_inventory import (
     TestTierRule as TierRule,
 )
-from omega_engine_operads.infrastructure.python_development_office.quality_adapters import (
+from operads.infrastructure.python_development_office.quality_adapters import (
     FileSystemPythonInventoryRepository,
 )
-from omega_engine_operads.tests.python_development_office.quality_test_support import (
+from operads.tests.python_development_office.quality_test_support import (
     FixedUtcClock,
     StubComplexityAnalyzer,
     StubExecutionReceiptRepository,
@@ -184,18 +184,18 @@ def test_stale_receipt_is_blocking() -> None:
 def test_owned_production_files_meet_ast_metric_thresholds() -> None:
     root = Path(__file__).resolve().parents[3]
     paths = (
-        "omega_engine_operads/domain/python_development_office/quality_errors.py",
-        "omega_engine_operads/domain/python_development_office/quality_inventory.py",
-        "omega_engine_operads/domain/python_development_office/quality_ports.py",
-        "omega_engine_operads/domain/python_development_office/test_execution_receipt.py",
-        "omega_engine_operads/application/python_development_office/quality_inventory.py",
-        "omega_engine_operads/application/python_development_office/test_receipt_verification.py",
-        "omega_engine_operads/infrastructure/python_development_office/quality_policy.py",
-        "omega_engine_operads/infrastructure/python_development_office/quality_adapters.py",
-        "omega_engine_operads/infrastructure/python_development_office/test_execution_receipts.py",
-        "omega_engine_operads/infrastructure/python_development_office/output/quality_json_output.py",
-        "omega_engine_operads/controllers/python_development_office_controller.py",
-        "omega_engine_operads/frontend/cli/python_dev_cli.py",
+        "operads/domain/python_development_office/quality_errors.py",
+        "operads/domain/python_development_office/quality_inventory.py",
+        "operads/domain/python_development_office/quality_ports.py",
+        "operads/domain/python_development_office/test_execution_receipt.py",
+        "operads/application/python_development_office/quality_inventory.py",
+        "operads/application/python_development_office/test_receipt_verification.py",
+        "operads/infrastructure/python_development_office/quality_policy.py",
+        "operads/infrastructure/python_development_office/quality_adapters.py",
+        "operads/infrastructure/python_development_office/test_execution_receipts.py",
+        "operads/infrastructure/python_development_office/output/quality_json_output.py",
+        "operads/controllers/python_development_office_controller.py",
+        "operads/frontend/cli/python_dev_cli.py",
     )
     gate = PythonQualityInventoryGate(
         QualityInventoryDependencies(

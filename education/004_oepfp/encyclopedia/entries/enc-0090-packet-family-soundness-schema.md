@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.11"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.4 'Theorem IV.11'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.4 'Theorem IV.11'"
   - "symbol_game_math_spine.md math_spines_v002 §1.5 'Theorem: Packet-Family Soundness Schema'"
   - "proof_obligations.md v1.3.5 §13 'Theorem (schema; unconditional given (D),(L),(E))' (section 'PO-PFVS — Packet-Family Verifier Soundness Schema (SG-VAL-001 schema half)')"
 uses: []
@@ -78,7 +78,7 @@ For a packet family $F$ with verifier $V_F$ decomposing as $V_F(x,P) = 1 \iff \b
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.4
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.4
   (statement and proof copied verbatim; the instantiation table and GTLA
   compliance paragraph are recorded under Notes). Original header line:
   `**Theorem IV.11 (Packet-Family Soundness Schema).** [PROVED] For a packet family $F$ with verifier $V_F$ decomposing as $V_F(x,P) = 1 \iff \bigwedge_{i=1}^n C_i(x,P) = 1$, if each $C_i$ has a proved local soundness lemma $C_i(x,P) = 1 \Rightarrow \varphi_i(x,P)$ and $\bigwedge_i \varphi_i \Rightarrow S_F(x,P)$, then $V_F$ is sound for $S_F$.`

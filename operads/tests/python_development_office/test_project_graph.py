@@ -6,13 +6,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.application.python_development_office.project import (
+from operads.application.python_development_office.project import (
     ProjectScanner,
 )
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.python_development_office import (
     ArchitectureConfig,
 )
-from omega_engine_operads.infrastructure.python_development_office.source_repository import (
+from operads.infrastructure.python_development_office.source_repository import (
     FileSystemSourceRepository,
 )
 

@@ -84,7 +84,7 @@ def main():
     with open(sig_path, "r", encoding="utf-8") as f:
         sig = json.load(f)
 
-    operad = ColouredOperad("AnomalonSkillOperad")
+    operad = ColouredOperad("SentinelSkillOperad")
 
     for col in sig["colours"].keys():
         operad.add_colour(col)
@@ -118,12 +118,12 @@ def main():
     if (Path(base_dir).parent / "skills").is_dir():
         skills_root = Path(base_dir).parent / "skills"
     else:
-        skills_root = repo_root / "omega_engine_operads" / "skills"
+        skills_root = repo_root / "operads" / "skills"
 
     if (Path(base_dir).parent / "registry").is_dir():
         registry_root = Path(base_dir).parent / "registry"
     else:
-        registry_root = repo_root / "omega_engine_operads" / "registry"
+        registry_root = repo_root / "operads" / "registry"
 
     entry_skills = load_entry_skills(skills_root)
     grading_errs, terminal_entry_ops = validate_composition_grading(
@@ -201,7 +201,7 @@ def main():
         load_ledgers_from_trace(trace_path, SQ)
         print(f"[OK] Loaded diagnostic residual observations from {trace_path}.")
 
-    meta = SQ.build_meta_operad("AnomalonSymmetricMetaOperad")
+    meta = SQ.build_meta_operad("SentinelSymmetricMetaOperad")
     meta_errs = meta.validate_all()
     if meta_errs:
         for err in meta_errs:

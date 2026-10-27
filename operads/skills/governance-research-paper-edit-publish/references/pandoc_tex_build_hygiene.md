@@ -2,7 +2,7 @@
 
 **AuthorityEffect:** None.
 **Rule:** `RULE_PANDOC_TEX_BUILD_HYGIENE_001` in `rules/papers/rl_research_paper_template_and_harmonization_discipline.md`.
-**Checks:** `omega_engine_research_papers/domain/rules/pandoc_build_rules.py`.
+**Checks:** `research_papers/domain/rules/pandoc_build_rules.py`.
 
 Open this leaf when a Markdown → pandoc → TeX/PDF build fails, when a package
 build script declares its own pandoc reader, or when a rebuilt PDF is missing
@@ -35,8 +35,8 @@ suggested line for each known glyph.
 ## Commands
 
 ```bash
-py -3.12 -m omega_engine_research_papers.use_cases.paper_review.cli gates --paper-path <pkg> --format markdown
-py -3.12 -m omega_engine_research_papers.use_cases.paper_edition.cli rebuild --paper-path <pkg> --verbose
+py -3.12 -m research_papers.use_cases.paper_review.cli gates --paper-path <pkg> --format markdown
+py -3.12 -m research_papers.use_cases.paper_edition.cli rebuild --paper-path <pkg> --verbose
 ```
 
 ## Anti-patterns

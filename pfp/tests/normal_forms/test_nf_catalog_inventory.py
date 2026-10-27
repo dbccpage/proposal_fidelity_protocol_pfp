@@ -1,6 +1,6 @@
 """The education catalogue's contract register is generated from the contracts and cannot drift."""
 
-from omega_engine_pfp.infrastructure.normal_forms import catalog_inventory as inventory
+from pfp.infrastructure.normal_forms import catalog_inventory as inventory
 
 
 def test_the_catalogue_register_matches_the_contracts():

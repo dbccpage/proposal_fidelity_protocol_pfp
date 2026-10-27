@@ -11,14 +11,14 @@ maturity: experimental
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp/infrastructure/numbered_prompts.py
-  - omega_engine_woland/tests/pilots/relational_spacetime/compact_checks.py
-  - omega_engine_woland/tests/pilots/relational_spacetime/compact_trials.py
-  - omega_engine_pfp/infrastructure/yaml/prompts/templates/template_role_registry.yaml
-  - omega_engine_pfp/infrastructure/adapters/pfp_frozen_replay.py
-  - omega_engine_pfp/infrastructure/yaml/taxonomy/task_families.yaml
-  - omega_engine_woland/tests/pilots/evidence/po035_simplified_20261012
-  - omega_engine_woland/tests/pilots/evidence/po035_experiments_20261012
+  - pfp/infrastructure/numbered_prompts.py
+  - adversary/tests/pilots/relational_spacetime/compact_checks.py
+  - adversary/tests/pilots/relational_spacetime/compact_trials.py
+  - pfp/infrastructure/yaml/prompts/templates/template_role_registry.yaml
+  - pfp/infrastructure/adapters/pfp_frozen_replay.py
+  - pfp/infrastructure/yaml/taxonomy/task_families.yaml
+  - adversary/tests/pilots/evidence/po035_simplified_20261012
+  - adversary/tests/pilots/evidence/po035_experiments_20261012
 last_verified: 2026-10-20
 verification_scope: paths, registry version and refusal codes checked against source at c419cc6beb; PO035 results are historical and were not replayed
 ---
@@ -33,7 +33,7 @@ specific ways a plausible prompt can fail.
 
 ## Discoveries from the bounded trials
 
-The [compact rerun](../../../../omega_engine_woland/tests/pilots/evidence/po035_simplified_20261012/README.md)
+The [compact rerun](../../../../adversary/tests/pilots/evidence/po035_simplified_20261012/README.md)
 covered pilots 199–203: five runs, three calls per run, 56450 reported tokens and
 $0 reported provider cost. All calls and host stages shared each pilot's $0.05,
 120000-token and 180-second ceilings. All 15 replies ended normally, with no
@@ -57,7 +57,7 @@ all six finite witness values correct, but a malformed contract and an incomplet
 refinement theorem. Useful arithmetic in an invalid packet is retained as partial
 evidence, never converted into an accepted result.
 
-The [preceding experiment](../../../../omega_engine_woland/tests/pilots/evidence/po035_experiments_20261012/README.md)
+The [preceding experiment](../../../../adversary/tests/pilots/evidence/po035_experiments_20261012/README.md)
 ran five scratchpad, five temperature and five logit-bias cases: 40 calls,
 198952 tokens and $0.017035 reported cost, all within their per-run caps. Eight of
 ten larger public workpads were truncated. Only five of thirty final packets were
@@ -105,10 +105,10 @@ in this rerun passed ingress, so they are not live-model success receipts.
 
 The former `prompts/versioned/` directory and its README are no longer on disk at the
 2026-10-20 pin. The current owner is the unversioned
-[template role registry](../../../../omega_engine_pfp/infrastructure/yaml/prompts/templates/template_role_registry.yaml)
+[template role registry](../../../../pfp/infrastructure/yaml/prompts/templates/template_role_registry.yaml)
 (`version: 1.0.4`, profile `RELATIONAL_SPACETIME_EXPERIMENTAL_CANDIDATE`), which names
 `template_pfp_t0001.yaml` to `template_pfp_t0003.yaml` and `template_pfp_r0001.yaml`; the
-[prompts README](../../../../omega_engine_pfp/infrastructure/yaml/prompts/README.md) says
+[prompts README](../../../../pfp/infrastructure/yaml/prompts/README.md) says
 historical versions are kept in Git history rather than version directories. The table below names the frozen experiment's
 original v1.0.0 identities; versions 1.0.1, 1.0.2 and 1.0.3 remain separate profiles:
 
@@ -130,7 +130,7 @@ registry version rather than rewriting the old one.
 For offline inspection of the actual registered input:
 
 ```python
-from omega_engine_pfp.infrastructure.numbered_prompts import build_prompt
+from pfp.infrastructure.numbered_prompts import build_prompt
 
 prompt = build_prompt("pilot_0000199", 1, run_id="documentation_example")
 print(prompt["user_prompt"])
@@ -146,7 +146,7 @@ the old Education PFP application directory no longer exists. At the 2026-10-20 
 those v1.0.0 resources are no longer in the working tree either:
 `read_frozen_prompt_source` reads packaged data when present and otherwise the Git
 object at commit `56e1e552c5`, and returns `FROZEN_SOURCE_UNAVAILABLE` when neither
-exists ([pfp_frozen_replay.py](../../../../omega_engine_pfp/infrastructure/adapters/pfp_frozen_replay.py)
+exists ([pfp_frozen_replay.py](../../../../pfp/infrastructure/adapters/pfp_frozen_replay.py)
 lines 53-75). Copies also remain inside the evidence bundles under `frozen_sources/`
 and `source_snapshot/`. Original paths in
 retained receipts and snapshots remain historical identities. Explicit readback
@@ -160,7 +160,7 @@ registry/role/recipe identities and the separate
 `po035_simplified_v1_0_3_20261012` run namespace. Instructions, schemas, original
 seeds, scope and limits are unchanged; no new model result is claimed.
 
-> **Status at `201dc8d` (2026-10-15).** `omega_engine_pfp/infrastructure/numbered_prompts.py`
+> **Status at `201dc8d` (2026-10-15).** `pfp/infrastructure/numbered_prompts.py`
 > now selects v1.0.4 (`PFP-R0001-v1.0.4`, run namespace
 > `po035_simplified_v1_0_4_20261013`), while the versioned prompts README still
 > names v1.0.3. See the [pilot status](../README.md#pilot-status-at-201dc8d-2026-10-15).
@@ -207,15 +207,15 @@ bedrock tokens or promote experimental types into grammar rules.
 From the repository root:
 
 ```powershell
-.venv/Scripts/python.exe -m omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay --bundle omega_engine_woland/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
-.venv/Scripts/python.exe -m omega_engine_woland.tests.pilots.evidence.po035_simplified_20261012.verify_manifest
+.venv/Scripts/python.exe -m pfp.infrastructure.adapters.pfp_frozen_replay --bundle adversary/tests/pilots/evidence/pfp_ownership_migration_20261012 --profile compact-three-stage
+.venv/Scripts/python.exe -m adversary.tests.pilots.evidence.po035_simplified_20261012.verify_manifest
 ```
 
 Replay uses the 32 dispatch-pinned source files plus three separately retained
 eager-import dependencies captured at closeout with clean Git-base provenance.
 It preserves old prompt versions even after the registry grows. It verifies the
 15 retained calls without contacting a provider; it does not promise identical
-future hosted text. The [evidence report](../../../../omega_engine_woland/tests/pilots/evidence/po035_simplified_20261012/README.md)
+future hosted text. The [evidence report](../../../../adversary/tests/pilots/evidence/po035_simplified_20261012/README.md)
 links raw replies, receipts, reviews, replay and the full manifest.
 
 First test the exact-output-contract correction on five single-shot packets under

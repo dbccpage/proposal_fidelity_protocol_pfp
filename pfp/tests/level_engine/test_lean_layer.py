@@ -7,10 +7,10 @@ from pathlib import Path
 
 import pytest
 
-import omega_engine_operations.use_cases.level_engine.research_engine.components as C
-from omega_engine_operations.use_cases.level_engine import lean_audit, lean_gen
-from omega_engine_operations.use_cases.level_engine.research_engine.level import run_level
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward import bundles as B
+import operations.use_cases.level_engine.research_engine.components as C
+from operations.use_cases.level_engine import lean_audit, lean_gen
+from operations.use_cases.level_engine.research_engine.level import run_level
+from pfp.infrastructure.tower_research.level_engine.outward import bundles as B
 
 
 def test_generated_sources_are_current() -> None:
@@ -45,7 +45,7 @@ def test_a_missing_or_classical_report_withdraws_the_component(tmp_path: Path) -
 
 
 def test_a_missing_certificate_is_named(monkeypatch: pytest.MonkeyPatch) -> None:
-    import omega_engine_operations.use_cases.level_engine.research_engine.level as L
+    import operations.use_cases.level_engine.research_engine.level as L
     report = dict(C.lean_report())
     del report["DistanceForm.own_neg_form_positive"]
     monkeypatch.setattr(L, "lean_report", lambda: report)

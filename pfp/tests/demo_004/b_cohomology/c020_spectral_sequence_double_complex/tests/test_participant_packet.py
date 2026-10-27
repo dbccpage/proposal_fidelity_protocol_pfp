@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.participant_packet.runner import (
     run_public_examples,
 )
 

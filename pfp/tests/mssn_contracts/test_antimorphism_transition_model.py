@@ -21,14 +21,14 @@ _RESEARCH_DIR = os.path.abspath(os.path.join(_CURRENT_DIR, "..", ".."))
 if _RESEARCH_DIR not in sys.path:
     sys.path.insert(0, _RESEARCH_DIR)
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.grammar.entities import (
     AntimorphismTransitionModel,
     DownMapQuarantineRequest,
     EpistemicQuarantineLedger,
     QuarantinedObstruction,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.errors import ScopeBoundaryViolationError
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.errors import ScopeBoundaryViolationError
+from pfp.domain.mssn_research.grammar.exact_structures import (
     DownMapObstruction,
     EdgeInvolution,
     PontryaginKillFlags,
@@ -36,11 +36,11 @@ from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
     QuarantinedShadowPacket,
     ReversalMap,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.foundational_policies import (
+from pfp.domain.mssn_research.grammar.foundational_policies import (
     check_permanent_quarantine_isolation,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.domain.mssn_research.packets.value_objects import RefusalCode
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
 
 
 class TestAntimorphismTransitionModel(unittest.TestCase):

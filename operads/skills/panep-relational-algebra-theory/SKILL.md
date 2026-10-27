@@ -21,7 +21,7 @@ families: [education, relational-algebra, normal-forms, panepistimion, theory]
 
 ## 1. Pedagogical Mandate & Council Governance
 
-The `panep-relational-algebra-theory` skill provides formal mathematical grounding for relational database theory, dependency systems, and normalization within the Omega Engine and MSS-N tower. It coordinates with:
+The `panep-relational-algebra-theory` skill provides formal mathematical grounding for relational database theory, dependency systems, and normalization within the engine and MSS-N tower. It coordinates with:
 
 - `panep-cs-prof`: Formal grammars, automata, query complexity, and query equivalence.
 - `techne-code-normal-forms-developer`: Implementation of relational evaluators, dependency engines, and decomposition algorithms.

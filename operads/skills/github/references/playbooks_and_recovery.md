@@ -9,9 +9,9 @@
    - Exception: Sprint-driven changes via formal sprint process
    - **Cross-host skill identity (mandatory for new/changed skills):** author under `.claude/skills/<name>/`, then mirror:
      `python scripts/sync_cross_host_skills.py --skills <name>`
-     Targets: `.claude/skills`, `.codex/skills`, `.agents/skills` (Antigravity). Verify with `--check`. Runtime code lives in `omega_engine_py/` (not triplicated under hosts; not Rust PROD via `.agents`).
+     Targets: `.claude/skills`, `.codex/skills`, `.agents/skills` (Antigravity). Verify with `--check`. Runtime code lives in `engine_py/` (not triplicated under hosts; not Rust PROD via `.agents`).
 3. **Retrospective Gate (HARD BLOCK for sprint commits)**:
-   - If the commit message contains `sprint-{NNN}` and there's a sprint directory `omega_engine/research/product_planning_office/plans/sprints/{NNN}/`:
+   - If the commit message contains `sprint-{NNN}` and there's a sprint directory `engine/research/product_planning_office/plans/sprints/{NNN}/`:
      - Check that `retrospective.md` exists in that sprint directory
      - If missing: **BLOCK commit** with message: "BLOCKED: retrospective.md missing for sprint-{NNN}. Complete retrospective before committing."
      - Bypass: `--skip-retro-gate` flag (emergency use only, must document reason)
@@ -22,7 +22,7 @@
      - Requires explicit confirmation to proceed
    - If on a non-sprint branch (feature/, fix/, etc.): no check needed
 
-## Techne Code Soviet Inspector Gate (BLOCKING)
+## Techne Code Inspector Gate (BLOCKING)
 
 ```python
 
@@ -33,13 +33,13 @@ if staged_test_files:
     result = run_test_quality_inspector(staged_test_files)
 
     if result.exit_code == 1:  # VETO
-        OUTPUT: "COMMIT BLOCKED by Techne Code Soviet Inspector"
+        OUTPUT: "COMMIT BLOCKED by Techne Code Inspector"
         OUTPUT: result.violations
         STOP: "Fix test quality issues before committing"
         # DO NOT create commit
 
     elif result.exit_code == 0:  # PASS
-        OUTPUT: "Techne Code Soviet Inspector: PASS"
+        OUTPUT: "Techne Code Inspector: PASS"
         PROCEED: "Create commit"
 else:
     # No test files staged - proceed normally
@@ -47,7 +47,7 @@ else:
 
 ``` ext
 
-**Source:** Sprint Workflow Quality Enforcement (Techne Code Soviet Inspector Model)
+**Source:** Sprint Workflow Quality Enforcement (Techne Code Inspector Model)
 
 ### Autoskill Check for Skill Changes
 
@@ -87,7 +87,7 @@ git add -p <file>  # Use with caution
 <optional body explaining what and why>
 
 <footer>
-Co-Authored-By: Omega Engine <noreply@anomalon.io>
+Co-Authored-By: Engine <noreply@sentinel.io>
 
 ``` ext
 
@@ -103,7 +103,7 @@ git commit -m "$(cat <<'EOF'
 
 <body>
 
-Co-Authored-By: Omega Engine <noreply@anomalon.io>
+Co-Authored-By: Engine <noreply@sentinel.io>
 EOF
 )"
 
@@ -261,7 +261,7 @@ git branch --show-current
 
 ### Multi-Instance Isolation & Ephemeral Worktree Sandbox (absorbed from goo-worktree-sandbox-manager)
 
-**CRITICAL:** When multiple Omega Engine instances run simultaneously or experimental trials are conducted:
+**CRITICAL:** When multiple Engine instances run simultaneously or experimental trials are conducted:
 
 - **Worktree-First Isolation:** Prevents dirty worktree contamination, foreign work sweeps, and scheduler race conditions during parallel agent execution by creating, inspecting, and pruning isolated git worktrees (`.worktrees/trial-<id>`).
 - **Never Dirty `main` Worktree:** Multi-step experimental trials (paper repairs, benchmark runs, subagent explorations) run inside `.worktrees/sandbox-<name>`.
@@ -328,15 +328,15 @@ git branch --show-current
   same session, run without scoping first, hit 880 conflicted files and had to be
   aborted.)
 - **Official archive trees (autoskill 2026-07-24 Symbol Game session; densified 2026-07-25):**
-  `omega_engine/.omega_engine_official_archive/the_symbol_game/` must remain the **full
+  `engine/.official_archive/the_symbol_game/` must remain the **full
   unzipped** tree on `main`. The sibling `the_symbol_game.zip` is **supplemental** cold
   storage, not a license to delete the tree. Mine useful files into published papers first;
   never “zip-only” `main` without an explicit operator license. If a feature branch deleted
   the tree, restore from `origin/main` before merge.
-  **Research tool park (paper-repair r4):** `git mv` of `research/omega_sweeper` and
-  `research/omega_sweeper_fast` into `.omega_engine_official_archive/` is **archive park**,
+  **Research tool park (paper-repair r4):** `git mv` of `research/core_sweeper` and
+  `research/core_sweeper_fast` into `.official_archive/` is **archive park**,
   not T4 product-rail replace and not bare delete. Prefer `git mv` with explicit paths; do
-  not treat archive relocate as license to delete `omega_rip_papers` / product crates.
+  not treat archive relocate as license to delete `core_rip_papers` / product crates.
 
 ---
 
@@ -354,7 +354,7 @@ gh pr create --title "Title" --body "$(cat <<'EOF'
 - [ ] Tests pass
 - [ ] Manual verification
 
-Co-Authored-By: Omega Engine <noreply@anomalon.io>
+Co-Authored-By: Engine <noreply@sentinel.io>
 EOF
 )"
 
@@ -393,7 +393,7 @@ gh pr review <number> --request-changes --body "Issues found"
 ### Merge PR
 
 **Pre-merge sprint retro gate (MANDATORY, BLOCKING — runnable):** before merging a `sprint-{NNN}` PR, run the
-check; a sprint PR MUST NOT merge without `omega_engine/research/product_planning_office/plans/sprints/{NNN}/retrospective.md`. This is the merge-side counterpart to
+check; a sprint PR MUST NOT merge without `engine/research/product_planning_office/plans/sprints/{NNN}/retrospective.md`. This is the merge-side counterpart to
 the pre-commit retro gate (§1) and closes the bypass that let PR #306 merge Sprint 121 with **no** retrospective.
 
 ```bash

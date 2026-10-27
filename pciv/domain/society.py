@@ -1,7 +1,7 @@
 """Prompt Society and Civilization normative data models (NF-01).
 
 Conforms to normative specification:
-`urn:omega:nf:prompt_civilization:society_and_civilization:v1.0.0`
+`urn:core:nf:prompt_civilization:society_and_civilization:v1.0.0`
 
 AuthorityEffect: None.
 Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).

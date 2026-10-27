@@ -26,7 +26,7 @@ test harness.
 4. Run the automated 50-Mistake Python Anti-Pattern Scanner on modified files:
 
    ```bash
-   <configured-python> omega_engine_operads/skills/techne-code-python-code-reviewer/scripts/python_antipattern_scanner.py <target-paths>
+   <configured-python> operads/skills/techne-code-python-code-reviewer/scripts/python_antipattern_scanner.py <target-paths>
    ```
 
 5. Check mathematical claims against the computation actually performed: carrier,

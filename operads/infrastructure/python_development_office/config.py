@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from omega_engine_operads.domain.python_development_office.architecture_config import (
+from operads.domain.python_development_office.architecture_config import (
     ArchitectureConfig,
     DependencyException,
 )

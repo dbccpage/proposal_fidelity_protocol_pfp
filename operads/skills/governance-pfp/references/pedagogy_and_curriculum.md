@@ -35,7 +35,7 @@ Uninterrupted attention decays exponentially online ($t_{1/2} \approx 4.0\text{ 
 
 ## 4. Beginner Curriculum Structure (Lessons 01–25)
 
-Living in `omega_engine_education/the_symbol_game/lessons/000_beginners/`:
+Living in `education/the_symbol_game/lessons/000_beginners/`:
 
 - **Module 1 (01–05): The Mark & The Void** (Slate `<>`, Boundaries, Law of Crossing, Atoms, Self-delimiting words).
 - **Module 2 (06–10): Words & First Structures** (Application `op<...>`, Binary alphabet, Tree branches, Deterministic parsing, Inactive words).
@@ -49,24 +49,24 @@ Living in `omega_engine_education/the_symbol_game/lessons/000_beginners/`:
 2. Executable unit test cells (`assert ...`) enabling headless automated grading.
 3. Every lesson notebook must execute from start to finish via `pytest` without human intervention.
 
-## 6. Paper Companion Examination Architecture (Landau Theoretical Minimum)
+## 6. Paper Companion Examination Architecture (Examiner Theoretical Minimum)
 
-Each research paper under `omega_engine_education/documentation/004_oepfp/papers/omega_engine_symbol_game/` (`000` to `010`) maintains a dedicated companion folder `_lev_landau_theoretical_minimum_quiz/` implementing the Landau Theoretical Minimum examination pattern.
+Each research paper under `education/documentation/004_oepfp/papers/symbol_game/` (`000` to `010`) maintains a dedicated companion folder `_lev_examiner_theoretical_minimum_quiz/` implementing the Examiner Theoretical Minimum examination pattern.
 
 ### Two-Deliverable Publication Standard
 Every paper quiz companion is composed of two independent Markdown documents compiled to separate PDFs:
 
 1. **The Sadovaya Apartment 50 Preface (`00_preface_at_apartment_50.md` / `preface.pdf`):**
-   - Dramatic narrative staging of the examinee confronting the Woland Retinue and Professor Lev Davidovich Landau ("Dau") at the city, Sadovaya 302-bis, Apartment 50.
+   - Dramatic narrative staging of the examinee confronting the Adversary Panel and Professor Examiner at the city, Sadovaya 302-bis, Apartment 50.
    - The dialogue, tribunal warnings, and "Seven Mortal Sins" are tailored to the specific mathematical and architectural domain of that paper (e.g., cycle obstructions, signed presentations, failure detectors, or holonomy lattice checks).
    - Compiled and shipped as **PDF #1**.
 
 2. **The Progressive Minimum Quiz (`quiz.md` / `quiz.pdf`):**
-   - A progressive challenge sequence adhering strictly to the naked symbol alphabet $\Sigma_{\text{Landau}} = \{0-9, a-z, <, >\}$ and exact rational arithmetic $\mathbb{Q}$.
+   - A progressive challenge sequence adhering strictly to the naked symbol alphabet $\Sigma_{\text{Examiner}} = \{0-9, a-z, <, >\}$ and exact rational arithmetic $\mathbb{Q}$.
    - **Progression Gradient:** Begins at page 1 with foundational primitives (elementary marks, primitive distinction, basic incidence) and escalates monotonically to rigorous adversarial reality gates on page 3 (frustrated cycle obstructions, high-dimensional simplex rigidity, or non-trivial dual certificates).
    - Compiled and shipped as **PDF #2**.
 
 ### Central Education Hub vs. Paper Locality
-- Central repository of study materials, problem banks (Exams 01–VI, prompts VII–XI), and Python verifiers live under `omega_engine_education/documentation/_lev_landau_theoretical_minimum_quiz/` (including `study_guide/` and `_study_guide/`).
-- Individual paper packages under `omega_engine_symbol_game/` contain self-contained, paper-scoped instances designed for readers of that specific monograph.
+- Central repository of study materials, problem banks (Exams 01–VI, prompts VII–XI), and Python verifiers live under `education/documentation/_lev_examiner_theoretical_minimum_quiz/` (including `study_guide/` and `_study_guide/`).
+- Individual paper packages under `symbol_game/` contain self-contained, paper-scoped instances designed for readers of that specific monograph.
 

@@ -6,7 +6,7 @@ This is the original task used by Education's `naked_prompt_launder.py` scene:
 integer rank-difference constraints, clean or poisoned graph generation, exact
 potential propagation, and direct/CoT verdict prompts. It is not a new challenge
 or a model-performance certificate. Transport and recording belong to
-`omega_engine_pfp.infrastructure.consistency_teaching`; video display remains in
+`pfp.infrastructure.consistency_teaching`; video display remains in
 Education.
 
 The original files remain in Git at
@@ -28,4 +28,4 @@ prose remains `UNKNOWN`. A PFP-valid wrong answer is still wrong under this host
 Recovering the task and testing synthetic replies does not reproduce an old
 provider response, prove a universal LLM failure, or measure PFP improvement.
 
-See [current recording and offline rendering](../../../../../omega_engine_education/documentation/004_oepfp/docs/17_runtime_ownership_and_replay.md#consistency-teaching-scene-through-pfp).
+See [current recording and offline rendering](../../../../../education/documentation/004_oepfp/docs/17_runtime_ownership_and_replay.md#consistency-teaching-scene-through-pfp).

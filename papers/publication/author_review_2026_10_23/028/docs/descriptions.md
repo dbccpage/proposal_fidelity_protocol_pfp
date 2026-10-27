@@ -17,7 +17,7 @@ assignment-gluing results remain separate from the effectful runtime example.
 
 ## Formal Verification and Computational Artifacts
 
-The shared OEOP and Woland runtime supplies the executable example. OEEIS
+The shared OEOP and Adversary runtime supplies the executable example. OEEIS
 supplies an immune observation; Prompt Civilization records genealogy.
 No new Lean proof or model experiment is claimed.
 

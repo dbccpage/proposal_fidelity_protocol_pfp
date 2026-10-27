@@ -12,13 +12,13 @@ tower_level: null
 primitive: repair
 aliases: ["paper:sn-packets:augmentation-must-separate-collision", "paper:sn-packets:metadata-only-not-repair"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "s_n_packets_and_the_symbol_game.md §11 'Theorem 20: Augmentation Must Separate the Collision'"
 uses: ["ENC-0897", "ENC-0898", "ENC-0900"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_factorization.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_factorization.lean"
   - "PaperER007.shadow_augmentation_must_separate_collision"
 extracted: 2026-06-13
 migration: VERIFIED
@@ -36,7 +36,7 @@ target for every world.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
 
 The Lean theorem names are:
 

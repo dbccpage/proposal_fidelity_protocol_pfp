@@ -142,7 +142,7 @@ from the later 600 and 700 through 990 shelves.
 - **Lesson 400.20**: [The R-B-G Proof Program](400_researchers/concepts/lesson_400_20_the_r_b_g_proof_program.md) — *Unifying Relational Grammar, Boundary Cohomology, and Geometry*
 - **Lesson 400.21**: [The LGGR Paradox](400_researchers/concepts/lesson_400_21_the_lggr_paradox.md) — *Local Green does not certify Global Red: failure of local certificates*
 - **Lesson 400.22**: [Detector Adequacy and Asymmetric Verdict](400_researchers/concepts/lesson_400_22_detector_adequacy_and_asymmetric_verdict.md) — *Why RED is sound but GREEN is unsound without detector adequacy*
-- **Lesson 400.23**: [The Woland Swarm Axiom](400_researchers/concepts/lesson_400_23_the_woland_swarm_axiom.md) — *Enforcing zero unpriced rewrite density across multi-agent swarms*
+- **Lesson 400.23**: [The Adversary Swarm Axiom](400_researchers/concepts/lesson_400_23_the_adversary_swarm_axiom.md) — *Enforcing zero unpriced rewrite density across multi-agent swarms*
 - **Lesson 400.24**: [Dialectical 9-Dot Gauge Breaks](400_researchers/concepts/lesson_400_24_dialectical_9_dot_gauge_breaks.md) — *Shattering locked carrier framings via orthogonal surprise injections*
 - **Lesson 400.25**: [Professional Capstone](400_researchers/concepts/lesson_400_25_professional_capstone.md) — *Orchestrating a 10-agent adversarial swarm with local CI receipts*
 

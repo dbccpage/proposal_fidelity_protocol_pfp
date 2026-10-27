@@ -1,10 +1,10 @@
 ---
 paths:
   - "**/*prime*/**"
-  - "omega_engine/crates_rs/omega_wdp/**"
-  - "omega_engine/crates_rs/omega_types/**"
-  - "omega_engine_woland/**"
-  - "omega_engine_pfp/**"
+  - "engine/crates_rs/core_wdp/**"
+  - "engine/crates_rs/core_types/**"
+  - "adversary/**"
+  - "pfp/**"
 ---
 
 # Rule: Prime Algorithms & Dialectical Discipline

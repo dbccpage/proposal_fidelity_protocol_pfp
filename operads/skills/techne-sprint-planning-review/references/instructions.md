@@ -172,20 +172,20 @@ Product Owner validates:
 
 **Decision Points:**
 
-- APPROVED: Proceed to Techne Code Soviet Inspector audit
+- APPROVED: Proceed to Techne Code Inspector audit
 - CHANGES REQUESTED: Return to `/sprint-planning` with feedback
 - BLOCKED: Escalate to ooutwire
 
-### Step 7: Techne Code Soviet Inspector Audit (MANDATORY - BLOCKING)
+### Step 7: Techne Code Inspector Audit (MANDATORY - BLOCKING)
 
 **CRITICAL:** BEFORE Blackrod quality review, audit test quality on ALL test files.
 
-**Mechanism:** Invoke the real `/techne-code-soviet-inspector` skill on the sprint's test files. The Inspector is the live test-quality enforcement authority in this repo; there is no standalone script. Treat its VETO (BLOCKED) verdict as a HARD BLOCK of the sprint review.
+**Mechanism:** Invoke the real `/techne-code-inspector` skill on the sprint's test files. The Inspector is the live test-quality enforcement authority in this repo; there is no standalone script. Treat its VETO (BLOCKED) verdict as a HARD BLOCK of the sprint review.
 
 ``` ext
 
-# Invoke the Techne Code Soviet Inspector skill on all test files
-/techne-code-soviet-inspector tests/
+# Invoke the Techne Code Inspector skill on all test files
+/techne-code-inspector tests/
 
 ``` ext
 
@@ -195,17 +195,17 @@ Product Owner validates:
 
 ``` ext
 
-# Audit test quality via the /techne-code-soviet-inspector skill
-inspector_verdict = /techne-code-soviet-inspector tests/
+# Audit test quality via the /techne-code-inspector skill
+inspector_verdict = /techne-code-inspector tests/
 
 IF inspector_verdict == VETO (BLOCKED):
     review_status = "BLOCKED"
-    OUTPUT: "SPRINT REVIEW BLOCKED by /techne-code-soviet-inspector"
+    OUTPUT: "SPRINT REVIEW BLOCKED by /techne-code-inspector"
     OUTPUT: inspector findings  # List of all violations
     STOP: "Do not proceed to Step 8"
 
 IF inspector_verdict == PASS:
-    OUTPUT: "Techne Code Soviet Inspector: PASS - Test quality verified"
+    OUTPUT: "Techne Code Inspector: PASS - Test quality verified"
     PROCEED: "Continue to Step 8 (Blackrod Quality Review)"
 
 ``` ext
@@ -224,9 +224,9 @@ IF inspector_verdict == PASS:
 **Output Format:**
 
 ``` ext
-SPRINT REVIEW: Step 7 - Techne Code Soviet Inspector Audit
+SPRINT REVIEW: Step 7 - Techne Code Inspector Audit
 
-Running: /techne-code-soviet-inspector tests/
+Running: /techne-code-inspector tests/
 
 Result: [PASS/VETO]
 Files scanned: N
@@ -243,11 +243,11 @@ APPROVED: Test quality verified. Proceeding to Blackrod review.
 
 ``` ext
 
-**Source:** Sprint Workflow Quality Enforcement (Techne Code Soviet Inspector Model)
+**Source:** Sprint Workflow Quality Enforcement (Techne Code Inspector Model)
 
-### Step 7.5: Omega Truth Assignment Review
+### Step 7.5: Core Truth Assignment Review
 
-REMOVED (Sprint 102-0, STORY-102-0-003): the OmegaAssigner engine does not exist in this repo. Omega-truth review is deferred until a real implementation exists. There is no live call in this step.
+REMOVED (Sprint 102-0, STORY-102-0-003): the CoreAssigner engine does not exist in this repo. Core-truth review is deferred until a real implementation exists. There is no live call in this step.
 
 **Source:** Sprint 102-0 STORY-102-0-003 — dead gate reference cleanup (tooling absent).
 
@@ -255,9 +255,9 @@ REMOVED (Sprint 102-0, STORY-102-0-003): the OmegaAssigner engine does not exist
 
 Apply the modernized gates from `_shared/sprint_gates.md` → **Current-System Gates (2026-06 modernization)**:
 
-- **Governance-Strict (scoped, HARD):** if any story expands authority / mutates doctrine / relaxes a boundary / promotes a residual, require its 10-field `GovernanceRecord` and a passing `check_governance_strict` (role-power separation; no self-cert); `PontiusPilate::judge` adjudicates the contract↔code binding. Otherwise confirm the `[ ] No authority change` attestation in `quality_gates.md`.
-- **Contracts (scoped, HARD):** if any story touches `omega_contracts` / `anomalon_councils` / authority crates, require the v1 corpus gate green (`cargo test -j 1 -p omega_contracts -p anomalon_councils`). Otherwise confirm `[ ] No contract change`.
-- **Test-Tier (HARD):** confirm each code story declares unit / integration / e2e in the `quality_gates.md` Test-Tier table; a behavior-adding story missing its required tier is a VETO (alongside the Step 7 Techne Code Soviet Inspector veto).
+- **Governance-Strict (scoped, HARD):** if any story expands authority / mutates doctrine / relaxes a boundary / promotes a residual, require its 10-field `GovernanceRecord` and a passing `check_governance_strict` (role-power separation; no self-cert); `PontiusIntegrityAuditor::judge` adjudicates the contract↔code binding. Otherwise confirm the `[ ] No authority change` attestation in `quality_gates.md`.
+- **Contracts (scoped, HARD):** if any story touches `core_contracts` / `sentinel_councils` / authority crates, require the v1 corpus gate green (`cargo test -j 1 -p core_contracts -p sentinel_councils`). Otherwise confirm `[ ] No contract change`.
+- **Test-Tier (HARD):** confirm each code story declares unit / integration / e2e in the `quality_gates.md` Test-Tier table; a behavior-adding story missing its required tier is a VETO (alongside the Step 7 Techne Code Inspector veto).
 
 ### Step 8: Blackrod Quality Review
 

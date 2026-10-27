@@ -6,18 +6,18 @@ from dataclasses import FrozenInstanceError, replace
 
 import pytest
 
-from omega_engine_pfp.domain.aggregates.code_change_attestation import (
+from pfp.domain.aggregates.code_change_attestation import (
     ASSUMPTIONS_SHA256,
     SOURCE_ASSUMPTIONS,
 )
-from omega_engine_pfp.domain.exceptions import CanonicalizationError
-from omega_engine_pfp.ffi import RustSymbolGameHost, find_omega_symbol_game_binary
-from omega_engine_pfp.infrastructure import code_change_checker
-from omega_engine_pfp.infrastructure.code_change_checker import (
+from pfp.domain.exceptions import CanonicalizationError
+from pfp.ffi import RustSymbolGameHost, find_core_symbol_game_binary
+from pfp.infrastructure import code_change_checker
+from pfp.infrastructure.code_change_checker import (
     NativeCheckerTrust,
     SourceBoundCodeChangeChecker,
 )
-from omega_engine_pfp.use_cases.code_change import (
+from pfp.use_cases.code_change import (
     CreateCodeChangeProposalUseCase,
     SubmitPatchCandidateUseCase,
 )
@@ -25,7 +25,7 @@ from omega_engine_pfp.use_cases.code_change import (
 
 @pytest.fixture(scope="module")
 def trust():
-    binary = find_omega_symbol_game_binary()
+    binary = find_core_symbol_game_binary()
     return NativeCheckerTrust(
         binary_path=binary,
         binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),

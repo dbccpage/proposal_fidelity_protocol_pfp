@@ -27,12 +27,12 @@ External test oracles (such as `DiffTestOracle`) evaluating candidate diffs, mut
    - **Theorem Existence Pre-condition:** Querying axiom dependencies of a theorem must first verify the theorem's existence in the compiled or parsed module; querying a nonexistent theorem must return `THEOREM_NOT_FOUND` and never return synthetic standard axioms (`propext`, `Quot.sound`).
 9. **CI/CD Auditor Census & Standby Gate Invariant (`RULE_CICD_AUDITOR_CENSUS_AND_STANDBY_GATE_001`):**
    - **Advisory Default Execution:** Any evaluation gate, auditor, or verifier declared as optional, experimental, or "left off for now" must execute by default in `STANDBY_OFF` mode, returning exit code 0 with advisory reporting so existing commit and CI workflows are not blocked unless `--enforce` is explicitly passed.
-   - **Auditor Census Parity:** Any script created under `omega_engine_operations/use_cases/` or `domain/` containing an auditor marker in its name (`gate`, `audit`, `verify`, `census`, `evaluator`) and an executable `main()` entrypoint must be explicitly registered in `omega_engine_operations.use_cases.verification.stopping_point.AUDITORS`.
+   - **Auditor Census Parity:** Any script created under `operations/use_cases/` or `domain/` containing an auditor marker in its name (`gate`, `audit`, `verify`, `census`, `evaluator`) and an executable `main()` entrypoint must be explicitly registered in `operations.use_cases.verification.stopping_point.AUDITORS`.
    - **Honest Register Status:** The auditor's registered status must strictly match CI reality:
      - `UNWIRED`: The module is not executed in active CI workflows (must state a clear rationale string).
      - `ADVISORY`: The module runs in CI under `continue-on-error: true`.
      - `WIRED`: The module runs blocking in CI and is observed to exit 0.
-   - **Reconciliation Parity:** Running `py -3.12 -m omega_engine_operations.use_cases.verification.stopping_point --reconcile` must exit 0 with zero register drift findings before landing any gate change.
+   - **Reconciliation Parity:** Running `py -3.12 -m operations.use_cases.verification.stopping_point --reconcile` must exit 0 with zero register drift findings before landing any gate change.
 10. **Cross-Language Static Quality & Complexity Parity (`RULE_CROSS_LANGUAGE_COMPLEXITY_AND_INTEGRITY_001`):**
     - **Language-Specific Quality Metrics:** Code evaluation rubrics must evaluate each language using its sovereign native verification primitives rather than forcing imperative heuristics onto declarative or functional code:
       - *Python:* Evaluated via AST token analysis, `mypy` strictness, and `lizard`/`radon` cyclomatic complexity ($\text{CCN} \le 10$).

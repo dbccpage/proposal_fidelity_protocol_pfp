@@ -11,9 +11,9 @@ maturity: canonical
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp/infrastructure/yaml/prompts
-  - omega_engine_pfp/infrastructure/yaml/prompts/schemas/template_schema_models.yaml
-  - omega_engine_pfp/domain/prompt_representations
+  - pfp/infrastructure/yaml/prompts
+  - pfp/infrastructure/yaml/prompts/schemas/template_schema_models.yaml
+  - pfp/domain/prompt_representations
 last_verified: 2026-10-20
 verification_scope: module paths and symbol names checked against tracked source and Git history; YAML inventory listed; no test run
 ---
@@ -31,12 +31,12 @@ this page's packet contracts or the existing numbered stage machine.
 **Document Status:** Adopted Canonical Specification & Architectural Monograph  
 **Sibling Monograph:** [`06_prompt_packet_stage_synthesis.md`](06_prompt_packet_stage_synthesis.md)  
 **Implementation Modules (historical; not present at the 2026-10-20 pin):**
-- Builder `p_star_builder.py`, runtime `runtime.py`, expansion tree `tree.py`, adapters `adapters.py` and migration `migration.py`. The paths given here earlier, under `omega_engine_pfp/infrastructure/prompt_templates/` and `omega_engine_pfp/domain/prompt_templates/`, have no commit in Git history. Modules with these names lived under `omega_engine_education/pfp/python/` and were deleted on 2026-10-10 in commit `e6537cc3cf` ("Retire PFP detritus..."), together with `tests/test_p_star_builder.py`.
-- Current code: a word search of tracked Python and Rust finds no definition of `build_p_star`, `expand_prompt`, `ExpansionReceipt`, `assert_cardinality_law`, `render_response_schema`, `active_prompt_nodes` or `UNRESOLVED_CHILD_PACKET`. `PromptPacketV0_1`, `SubpromptSlot` and the `expand_prompt` contract survive as YAML schema text in [template_schema_models.yaml](../../../../omega_engine_pfp/infrastructure/yaml/prompts/schemas/template_schema_models.yaml) and `template_schema_types.yaml`; `max_depth: 5` is in `template_schema_containment.yaml`.
+- Builder `p_star_builder.py`, runtime `runtime.py`, expansion tree `tree.py`, adapters `adapters.py` and migration `migration.py`. The paths given here earlier, under `pfp/infrastructure/prompt_templates/` and `pfp/domain/prompt_templates/`, have no commit in Git history. Modules with these names lived under `education/pfp/python/` and were deleted on 2026-10-10 in commit `e6537cc3cf` ("Retire PFP detritus..."), together with `tests/test_p_star_builder.py`.
+- Current code: a word search of tracked Python and Rust finds no definition of `build_p_star`, `expand_prompt`, `ExpansionReceipt`, `assert_cardinality_law`, `render_response_schema`, `active_prompt_nodes` or `UNRESOLVED_CHILD_PACKET`. `PromptPacketV0_1`, `SubpromptSlot` and the `expand_prompt` contract survive as YAML schema text in [template_schema_models.yaml](../../../../pfp/infrastructure/yaml/prompts/schemas/template_schema_models.yaml) and `template_schema_types.yaml`; `max_depth: 5` is in `template_schema_containment.yaml`.
 - So this page specifies the containment law and its YAML contracts; at the pin no executable checker enforces the law. Sections 2 to 6, 9 and 10 below describe that retired implementation.
-- Prompt Templates: [`../../../../omega_engine_pfp/infrastructure/yaml/prompts/templates/`](../../../../omega_engine_pfp/infrastructure/yaml/prompts/templates/)
-- Schemas: [`../../../../omega_engine_pfp/infrastructure/yaml/prompts/schemas/`](../../../../omega_engine_pfp/infrastructure/yaml/prompts/schemas/)
-- Representations: [`../../../../omega_engine_pfp/infrastructure/yaml/prompts/reprs/`](../../../../omega_engine_pfp/infrastructure/yaml/prompts/reprs/)
+- Prompt Templates: [`../../../../pfp/infrastructure/yaml/prompts/templates/`](../../../../pfp/infrastructure/yaml/prompts/templates/)
+- Schemas: [`../../../../pfp/infrastructure/yaml/prompts/schemas/`](../../../../pfp/infrastructure/yaml/prompts/schemas/)
+- Representations: [`../../../../pfp/infrastructure/yaml/prompts/reprs/`](../../../../pfp/infrastructure/yaml/prompts/reprs/)
 
 ---
 
@@ -67,7 +67,7 @@ $$P \mapsto P^* \to \{p_i\}_{i=1}^k$$
 
 As established in [`06_prompt_packet_stage_synthesis.md`](06_prompt_packet_stage_synthesis.md), prompt packets (`PromptPacketV0_1`) are **envelopes around untrusted prompt text and instructions**. They are distinct objects from host packets:
 - **Prompt Packet:** Carries task instructions, decomposition slots, system policies, and untrusted stimuli. Its generation carries `AuthorityEffect: None`.
-- **Host Packet:** A cryptographic RFC 8785 canonical JSON envelope (`omega.symbol-game.packet-envelope.v2`) submitted to sovereign Rust execution engines and verifiers.
+- **Host Packet:** A cryptographic RFC 8785 canonical JSON envelope (`core.symbol-game.packet-envelope.v2`) submitted to sovereign Rust execution engines and verifiers.
 
 ---
 
@@ -266,7 +266,7 @@ Responses failing this schema were rejected by `validate_response()` in the reti
 
 Following PR #1056 and PR #1058, all prompt YAML assets adhere to the unversioned naming rule `template_<slug>.yaml` with $\text{len}(\text{slug}) \le 20$. Version history is maintained in Git rather than on-disk version directories.
 
-### 8.1 Runtime Templates (`omega_engine_pfp/infrastructure/yaml/prompts/templates/`)
+### 8.1 Runtime Templates (`pfp/infrastructure/yaml/prompts/templates/`)
 
 | File | Slug (Length) | Contract Role & Scope |
 |---|---|---|
@@ -283,7 +283,7 @@ Following PR #1056 and PR #1058, all prompt YAML assets adhere to the unversione
 | `template_pfp_r0001.yaml` | `pfp_r0001` (9) | Recipe configuration template (`PFP-R0001`). |
 | `template_role_registry.yaml` | `role_registry` (13) | Canonical role registry mapping prompt roles, recipes, and cryptographic bindings. |
 
-### 8.2 Formal Schemas (`omega_engine_pfp/infrastructure/yaml/prompts/schemas/`)
+### 8.2 Formal Schemas (`pfp/infrastructure/yaml/prompts/schemas/`)
 
 | File | Slug (Length) | Contract Role & Scope |
 |---|---|---|
@@ -292,7 +292,7 @@ Following PR #1056 and PR #1058, all prompt YAML assets adhere to the unversione
 | `template_schema_models.yaml` | `schema_models` (13) | Formal schema specifications for prompt templates and expansion nodes. |
 | `template_schema_types.yaml` | `schema_types` (12) | Shared type primitives for prompt roles, splitters, and mutation kinds. |
 
-### 8.3 Representation Forms (`omega_engine_pfp/infrastructure/yaml/prompts/reprs/`)
+### 8.3 Representation Forms (`pfp/infrastructure/yaml/prompts/reprs/`)
 
 | File | Slug (Length) | Representation Paradigm |
 |---|---|---|
@@ -314,7 +314,7 @@ Following PR #1056 and PR #1058, all prompt YAML assets adhere to the unversione
 The builder was implemented in `p_star_builder.py` (retired 2026-10-10, commit `e6537cc3cf`; the import path below does not resolve at the 2026-10-20 pin):
 
 ```python
-from omega_engine_pfp.infrastructure.prompt_templates import SubpromptSpec, build_p_star
+from pfp.infrastructure.prompt_templates import SubpromptSpec, build_p_star
 
 # 1. Define untrusted input seed P
 seed_text = "Audit the 8 foundational derivation steps of SymSys."
@@ -351,16 +351,16 @@ These commands do not run at the 2026-10-20 pin; the modules are retired. They a
 
 ```bash
 # Validate template typing against generated schema
-python -m omega_engine_pfp.infrastructure.prompt_templates.runtime validate-template template_typed_contract.yaml
+python -m pfp.infrastructure.prompt_templates.runtime validate-template template_typed_contract.yaml
 
 # Evaluate expansion tree and verify containment cardinality
-python -m omega_engine_pfp.infrastructure.prompt_templates.runtime expand examples/declared_sections.yaml
+python -m pfp.infrastructure.prompt_templates.runtime expand examples/declared_sections.yaml
 
 # Evaluate expansion tree with child packets
-python -m omega_engine_pfp.infrastructure.prompt_templates.runtime expand examples/nested_root.yaml --packets examples/child_packets.yaml
+python -m pfp.infrastructure.prompt_templates.runtime expand examples/nested_root.yaml --packets examples/child_packets.yaml
 
 # Migrate legacy template while preserving origin hashes
-python -m omega_engine_pfp.infrastructure.prompt_templates.migration legacy_template.yaml migrated.yaml \
+python -m pfp.infrastructure.prompt_templates.migration legacy_template.yaml migrated.yaml \
     --prompt-file seed.txt \
     --prompt-id declared-packet-id \
     --author Orchestrator \
@@ -389,4 +389,4 @@ In strict accordance with repository Claim Hygiene directives:
 3. **Narrowest defensible claim:**
    - (Historical, before 2026-10-10.) The `p_star_builder` and runtime implementation constructed prompt trees conforming to the declared `PromptPacketV0_1` schema, link decomposition lineage to $P^*$, and satisfy the containment cardinality law for evaluated trees.
 4. **Next test needed:**
-   - Connect `build_p_star` with live OpenRouter runners in `omega_engine_pfp/infrastructure/pilot_runner.py` to evaluate model response compliance under `SPK-001` across multi-stage decompositions.
+   - Connect `build_p_star` with live OpenRouter runners in `pfp/infrastructure/pilot_runner.py` to evaluate model response compliance under `SPK-001` across multi-stage decompositions.

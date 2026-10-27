@@ -20,7 +20,7 @@ operad_residual: "unknown"
    - `packet-registry integrity` (14 mappings resolve clean)
    - `claim_id_bijection.py` (001_coda claim ID bijection passes 100%)
 2. **Lean 4 Sorry-Scan:**
-   - Run `lean_gate_audit` sorry-scan across `omega_engine/lean4/`.
+   - Run `lean_gate_audit` sorry-scan across `engine/lean4/`.
 3. **Crate & Build Integrity:**
    - Verify touched crates build clean with zero warnings under `clippy -D warnings`.
 

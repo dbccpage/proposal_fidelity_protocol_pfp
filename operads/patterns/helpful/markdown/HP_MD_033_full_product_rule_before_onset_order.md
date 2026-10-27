@@ -32,7 +32,7 @@ The witness is the 2026-10-06 brief `_ic/darpa/research/briefs/projection_obstru
 
 `AP_MD_003` still owns the sentence that calls the ambient traceless space the product tangent space. It does not state this product-rule summand. `AP_MD_005` still owns a quotient, evaluation, or cohomology name at the wrong degree. `AP_MD_029` still owns an intersection with no common ambient set. `AP_MD_051` still owns a printed rational that is not the value of the formula beside it. `AP_MD_022` still owns axiom-free lines quoted in place of a failed `.olean` create.
 
-`/woland-proof-scope-rule` still owns a finite check or kernel sentence promoted past its scope, including arithmetic Lean lemmas presented as the analytic theorem and a controller disposition presented as semantic verification. `/woland-proof-premise-rule` still owns a changed hypothesis, such as interaction support larger than two sites, advertised as no new premise.
+`/adversary-proof-scope-rule` still owns a finite check or kernel sentence promoted past its scope, including arithmetic Lean lemmas presented as the analytic theorem and a controller disposition presented as semantic verification. `/adversary-proof-premise-rule` still owns a changed hypothesis, such as interaction support larger than two sites, advertised as no new premise.
 
 A derivative that equals one summand because the other summands are proved zero is not this defect. A raw commutator written in place of `(I-P)` of that commutator is not this defect. Cancellation between a Hamiltonian normal and a dissipative normal is not this defect. Cross-order cancellation inside an already complete Taylor polynomial is the bound's own warning, not this defect.
 

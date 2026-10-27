@@ -75,7 +75,7 @@ In differential geometry and gauge field theory:
 
 ### 3.2 Quantum Observer Geometries & L1/L2 State Reduction
 
-In discrete quantum foundations (Anomalon PO-000 / PO-006):
+In discrete quantum foundations (Sentinel PO-000 / PO-006):
 
 - **State-Effect Pairings:** A local observer $e$ has state space $R_e$, linear observation map $q_e: R_e \to V_e$, and state-effect pairing $\langle E, \rho \rangle$.
 - **$L_1$ vs $L_2$ Distinction:** Primal probability mass distributions reside in $L_1$. $L_2$ Hilbert spaces $\psi_v = \sqrt{\rho_v} e^{i\theta_v}$ are observer-dependent coordinate representations.

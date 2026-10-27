@@ -78,7 +78,7 @@ class PacketCodec:
         envelope_data: dict[str, Any] = {
             "schema_version": cls.SCHEMA_VERSION,
             "packet_family": packet_family,
-            "payload_schema": payload_schema or f"omega.symbol-game.{packet_family}.v1",
+            "payload_schema": payload_schema or f"core.symbol-game.{packet_family}.v1",
             "payload_sha256": payload_sha256,
             "payload": copy.deepcopy(payload),
             "authority_effect": "None",

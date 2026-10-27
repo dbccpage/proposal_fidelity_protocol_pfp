@@ -42,8 +42,8 @@ Enact human responsibility and organizational truth without LLM self-certificati
 1. **Intake & Structural Pre-Gate (HARD BLOCK):**
    - Assert that `1_sprint_impl_documents/` exists and is fully populated (`completion.md`, `devops_review.md`, `retrospective.md`, `vp_briefing.md`).
    - Hard-reject any sprint that bypassed implementation document verification.
-   - Inspect `omega_engine/omega_engine_product_planning_office/plans/sprints/{SPRINT_ID}/vp_escalation_to_svp.yaml` (if present).
-   - Inspect `omega_engine/omega_engine_product_planning_office/plans/sprints/{SPRINT_ID}/blackrod_action_report.md`.
+   - Inspect `engine/product_planning_office/plans/sprints/{SPRINT_ID}/vp_escalation_to_svp.yaml` (if present).
+   - Inspect `engine/product_planning_office/plans/sprints/{SPRINT_ID}/blackrod_action_report.md`.
    - Read `vp_engineering_report.md` / `sprint_{NNN}_vp_briefing.md`.
 
 2. **Severity Audit ($[0, 1]$ scale):**
@@ -51,10 +51,10 @@ Enact human responsibility and organizational truth without LLM self-certificati
    - Flag any attempts to hide, cover up, or smooth over technical debt or broken quality gates.
 
 3. **Ledger Update:**
-   - Append escalated items to `omega_engine/omega_engine_product_planning_office/svp_council_escalation_ledger.yaml`.
+   - Append escalated items to `engine/product_planning_office/svp_council_escalation_ledger.yaml`.
 
 4. **Council Briefing Generation:**
-   - Create `omega_engine/omega_engine_product_planning_office/plans/sprints/{SPRINT_ID}/svp_logos_techne_council_briefing.md`.
+   - Create `engine/product_planning_office/plans/sprints/{SPRINT_ID}/svp_logos_techne_council_briefing.md`.
    - Formulate concrete executive motions for procurators of **Logos Techne Council** (`L3_logos_techne`).
 
 ---
@@ -62,8 +62,8 @@ Enact human responsibility and organizational truth without LLM self-certificati
 ## Output Artifacts
 
 ```text
-omega_engine/omega_engine_product_planning_office/plans/sprints/{SPRINT_ID}/svp_logos_techne_council_briefing.md
-omega_engine/omega_engine_product_planning_office/svp_council_escalation_ledger.yaml
+engine/product_planning_office/plans/sprints/{SPRINT_ID}/svp_logos_techne_council_briefing.md
+engine/product_planning_office/svp_council_escalation_ledger.yaml
 
 ```
 

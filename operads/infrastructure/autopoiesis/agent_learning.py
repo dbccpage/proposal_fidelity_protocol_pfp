@@ -10,11 +10,11 @@ from uuid import uuid4
 
 import yaml
 
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-from omega_engine_woland.domain.providers.types import BudgetExceeded, ProviderConfigError
-from omega_engine_woland.stage.application.scheduler import advance_bout, stage_scheduler
-from omega_engine_woland.stage.domain import (
+from pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
+from pfp.infrastructure.task_turn import prepare_task_turn
+from adversary.domain.providers.types import BudgetExceeded, ProviderConfigError
+from adversary.stage.application.scheduler import advance_bout, stage_scheduler
+from adversary.stage.domain import (
     AgentResultV1,
     LicensedWorkflowPlanV1,
     NodeAssignmentV1,
@@ -28,7 +28,7 @@ from omega_engine_woland.stage.domain import (
     SwarmProfileV1,
     WorkPacketV1,
 )
-from omega_engine_operads.domain.autopoiesis.learning import (
+from operads.domain.autopoiesis.learning import (
     EvaluationCase,
     EvaluationObservation,
     FileChange,
@@ -73,7 +73,7 @@ def compile_workflow_graph(wire: dict) -> SceneGraphV1:
             )
         ),
         authority_effect=wire.get("authority_effect", "None"),
-        schema_version=wire.get("schema_version", "omega.oeas.scene-graph.v1"),
+        schema_version=wire.get("schema_version", "core.oeas.scene-graph.v1"),
     )
 
 
@@ -154,9 +154,9 @@ class SeatLearningProposer:
             "motivating_case, source_hashes, trigger_terms. Every trigger phrase must match the later task before retrieval. "
             "artifact_id is the canonical repository-relative artifact file path. "
             "New agents use model: inherit, tools: [], licensed_skills and licensed_colours. "
-            "Workflow JSON uses name, graph (omega.oeas.scene-graph.v1; omit graph_id so the host derives it), seats mapping seat ids to "
+            "Workflow JSON uses name, graph (core.oeas.scene-graph.v1; omit graph_id so the host derives it), seats mapping seat ids to "
             "{agent,trust_domain,independent_from}, max_steps. Put profiles in "
-            "omega_engine_operads/domain/autopoiesis/profiles/. "
+            "operads/domain/autopoiesis/profiles/. "
             "Answer only the JSON object in a json fence.\n"
             + canonical(
                 {
@@ -195,11 +195,11 @@ class SeatLearningProposer:
                         },
                         "seats": {
                             "checker": {
-                                "agent": "omega_engine_operads/agents/example-checker.md",
+                                "agent": "operads/agents/example-checker.md",
                                 "trust_domain": "CHECKER",
                             },
                             "reporter": {
-                                "agent": "omega_engine_operads/agents/example-reporter.md",
+                                "agent": "operads/agents/example-reporter.md",
                                 "trust_domain": "REPORTER",
                                 "independent_from": ["checker"],
                             },
@@ -300,7 +300,7 @@ class ArtifactRuntime:
             raise ValueError("agent requires a bounded skill and colour licence")
         instructions = parts[2]
         for skill in skills:
-            skill_path = f"omega_engine_operads/skills/{skill}/SKILL.md"
+            skill_path = f"operads/skills/{skill}/SKILL.md"
             instructions += "\n" + self._read(skill_path)
             self.invoked.append(skill_path)
         return self._turn(artifact, instructions, prompt, seat=path.stem.replace("-", "_"))
