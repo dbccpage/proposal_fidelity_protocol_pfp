@@ -15,6 +15,7 @@
   - [Rewriting and packetization](Operads-Rewriting-and-Packetization.md)
   - [Typed workflows](Operads-Typed-Workflows.md) · [Skills](Operads-Skills-and-Catalog.md)
   - [Bounded repair](Operads-Bounded-Repair.md) · [Local to global](Operads-Local-to-Global.md)
+  - [Type inventory](Operads-Type-Inventory.md)
 - [Epistemic Immune System](EIS.md)
   - [Two-signal gate](EIS-Two-Signal-Gate.md) · [Antibodies](EIS-Antibody-Lifecycle.md)
   - [Regulation and custody](EIS-Regulation-and-Custody.md)

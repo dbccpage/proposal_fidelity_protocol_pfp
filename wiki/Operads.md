@@ -37,6 +37,7 @@ as `PipelineStage` in
 | [Skills, op inventory and the resolver](Operads-Skills-and-Catalog.md) | See how skill documents compile into operations, how they are refined into small ops and guarded by anti-ops, and how the resolver composes a plan |
 | [Bounded repair (C, R, E, I, M, T)](Operads-Bounded-Repair.md) | Walk through the six-operation code-repair example of Paper 028 |
 | [Local checks, global compatibility](Operads-Local-to-Global.md) | Understand why parts that fit and pass locally can still fail together (Paper 025), and what typed composition does not prove |
+| [Operad type inventory](Operads-Type-Inventory.md) | Look up every kind of operad thing the code defines (colours, DDC letters, skills and anti-skills, rules, helpful and anti-patterns, antibodies, agents, operands and spans), with counts, locations, duplicates and what does not exist |
 
 ## Three ideas to hold on to
 
