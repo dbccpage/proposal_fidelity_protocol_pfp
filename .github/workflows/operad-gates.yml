@@ -1,0 +1,28 @@
+name: operad-gates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "operads/**"
+      - ".github/workflows/operad-gates.yml"
+  pull_request:
+    paths:
+      - "operads/**"
+      - ".github/workflows/operad-gates.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyyaml pytest
+      # Rules: every ENFORCED or PARTIAL invariant must name a check that exists.
+      - run: python -m operads.skill_operad.skill_compiler.rule_gate --repo-root .
+      - run: python -m pytest -q operads/skill_operad/skill_compiler/tests/test_rule_gate.py

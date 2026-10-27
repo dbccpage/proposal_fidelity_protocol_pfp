@@ -1,8 +1,7 @@
 ---
 paths:
-  - "education/documentation/**"
+  - "ops/education/documentation/**"
   - "**/*genesis*/**"
-  - "**/002_oesn/**"
   - "**/*mssn*/**"
   - "pfp/domain/tower/**"
 ---

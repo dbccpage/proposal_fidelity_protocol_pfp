@@ -1,11 +1,7 @@
 ---
 paths:
-  - ".agents/**"
-  - ".claude/**"
-  - ".codex/**"
-  - ".grok/**"
   - "governance/**"
-  - "product_planning_office/**"
+  - "ops/product_planning_office/**"
   - "**/plans/**"
 ---
 

@@ -1,6 +1,6 @@
 ---
 paths:
-  - "atlas/**"
+  - "education/**/atlas/**"
 ---
 
 # Rule: Atlas Consolidation & EADC Addressing

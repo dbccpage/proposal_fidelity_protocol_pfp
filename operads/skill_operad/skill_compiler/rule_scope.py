@@ -216,17 +216,18 @@ def check_load_scope(repo_root: Path, texts: dict[str, str], registry: dict) -> 
 def write_frontmatter(repo_root: Path, registry: dict) -> list[str]:
     """Rewrite the ``paths`` frontmatter of every registered rule in every host from the register.
 
-    Other frontmatter keys are kept; only ``paths`` is replaced. Bytes are read and written
-    as they are, so a CRLF file is neither translated nor reported as unchanged by mistake.
+    Other frontmatter keys are kept; only ``paths`` is replaced. CRLF from a Windows checkout
+    is read as LF, so the frontmatter is found and the file is written as committed.
     """
     written: list[str] = []
-    for host in registry["host_roots"]:
+    estates = ["operads"] if (repo_root / "operads").is_dir() else []
+    for host in estates + list(registry["host_roots"]):
         rules_dir = repo_root / host / registry["rules_root"]
         for entry in registry["rules"]:
             path = rules_dir / entry["path"]
             if not path.is_file():
                 continue
-            original = path.read_bytes().decode("utf-8")
+            original = path.read_bytes().decode("utf-8").replace("\r\n", "\n")
             try:
                 data, body = parse_frontmatter(original)
             except (ValueError, yaml.YAMLError) as exc:

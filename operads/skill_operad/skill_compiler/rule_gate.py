@@ -43,6 +43,11 @@ SKIPPED_LINK_PREFIXES = ("http://", "https://", "mailto:", "#")
 RuleTree = dict[str, bytes]
 
 
+def _lf(raw: bytes) -> bytes:
+    """Bytes as committed: a Windows checkout with core.autocrlf adds CR before LF."""
+    return raw.replace(b"\r\n", b"\n")
+
+
 class RegistryError(ValueError):
     """The register itself is malformed; no rule check can be trusted."""
 
@@ -102,7 +107,6 @@ def load_registry(path: Path) -> dict:
         ("external_sources", list),
     ):
         _require(type(data.get(key)) is kind, f"register field {key!r} must be {kind.__name__}")
-    _require(len(data["host_roots"]) >= 1, "register needs at least one host root")
     for key in ("host_roots", "register_documents", "taxonomy"):
         _require(all(type(item) is str for item in data[key]), f"{key} entries must be strings")
     paths: list[str] = []
@@ -141,7 +145,7 @@ def read_rule_tree(root: Path) -> RuleTree:
     if not root.is_dir():
         return {}
     return {
-        path.relative_to(root).as_posix(): path.read_bytes()
+        path.relative_to(root).as_posix(): _lf(path.read_bytes())
         for path in sorted(root.rglob("*.md"))
         if path.is_file()
     }
@@ -432,7 +436,7 @@ def check_register_documents(repo_root: Path, registry: dict) -> list[Finding]:
         if not path.is_file():
             findings.append(Finding("R8_REGISTER_MISSING", document, "register document missing"))
             continue
-        payloads[document] = path.read_bytes()
+        payloads[document] = _lf(path.read_bytes())
     if len(set(payloads.values())) > 1:
         findings.append(
             Finding("R8_REGISTER_DRIFT", ", ".join(documents), "register documents are not byte-identical")
@@ -474,6 +478,8 @@ def run_gate(repo_root: Path, registry_path: Path = DEFAULT_REGISTRY) -> GateRep
     hosts = registry["host_roots"]
     owned_estate = (repo_root / "operads").is_dir()
     source = repo_root / "operads" / registry["rules_root"]
+    if not owned_estate and not hosts:
+        raise RegistryError("register needs a host root when the repository has no operads/ estate")
     rules_dir = source if owned_estate else repo_root / hosts[0] / registry["rules_root"]
     canon = read_rule_tree(rules_dir)
     compared_hosts = hosts if owned_estate else hosts[1:]
@@ -503,9 +509,11 @@ def run_gate(repo_root: Path, registry_path: Path = DEFAULT_REGISTRY) -> GateRep
 def repo_root_from(start: Path | None = None) -> Path:
     here = (start or Path.cwd()).resolve()
     for candidate in (here, *here.parents):
-        if (candidate / ".git").exists() and (candidate / ".agents").is_dir():
+        if (candidate / ".git").exists() and any(
+            (candidate / estate).is_dir() for estate in ("operads", ".agents")
+        ):
             return candidate
-    raise RegistryError(f"no repository root with .git and .agents above {here}")
+    raise RegistryError(f"no repository root with .git and operads/ or .agents above {here}")
 
 
 def main(argv: list[str] | None = None) -> int:

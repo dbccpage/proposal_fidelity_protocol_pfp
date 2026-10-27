@@ -1,11 +1,7 @@
 ---
 paths:
-  - ".agents/**"
-  - ".claude/**"
-  - ".codex/**"
-  - ".grok/**"
   - "operads/**"
-  - "operations/**/cicd/**"
+  - "ops/operations/**/cicd/**"
   - "pfp/**"
 ---
 

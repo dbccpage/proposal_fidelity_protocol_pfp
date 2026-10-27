@@ -1,10 +1,10 @@
 ---
 paths:
   - "eis/**"
-  - "adversary/stage/**"
+  - "ops/adversary/**"
   - "pciv/**"
   - "operads/**"
-  - "_ic/**"
+  - "ops/_ic/**"
   - "**/*antibod*"
 ---
 
