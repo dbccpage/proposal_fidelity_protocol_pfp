@@ -90,11 +90,15 @@ to zero contradicts these identities.
 
 1. Keep the original work unit, response bytes and check result. Record the type
    of failure: schema, binding, mathematical witness, or missing infrastructure.
-2. If repair is allowed, prepare a new attempt with the permitted failure code.
-3. Send a **complete** replacement (potential, dual, `phi1`, `gamma2`) with the
-   new task and attempt fields. Never send only the changed coordinate.
-4. Check the replacement through the declared owner. Preparing a prompt is not a
-   check; its status is `NOT_RUN`.
+2. If repair is allowed, prepare a new attempt at stage `P3_REPAIR` with the
+   permitted failure code, for example `--stage P3_REPAIR --failure-code G3_WITNESS`.
+3. Copy `task_id`, `attempt_id` and `input_sha256` from **that** new preparation,
+   not the earlier one. Send a **complete** replacement (potential, dual, `phi1`,
+   `gamma2`) with those three fields. Never send only the changed coordinate.
+4. Check the replacement with the same attempt, stage and failure-code arguments
+   used to prepare it. Preparing a prompt is not a check; its status is `NOT_RUN`.
+   The [workflow walkthrough](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/blob/main/education/004_oepfp/docs/23_finite_qm_workflow_walkthrough.md)
+   has the exact commands.
 5. Respect the two-candidate limit and record what remains open.
 
 ## Practice

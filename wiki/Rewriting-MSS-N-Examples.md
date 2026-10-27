@@ -51,7 +51,7 @@ The cycle `z = <ab> + <bc> + <ca>` on vertices `a, b, c`:
    `H1` is not zero: an active obstruction.
 4. **Repair.** Inject the face `<<2><a><b><c>>`:
    ```text
-   <<inject><face><<2><a><b><c>>>>
+   <<inject><face><<2><a><b><c>>>
    ```
 5. **R9 on the face.** `∂2` gives `<bc> − <ac> + <ab>`. Since `<ac> = −<ca>`, this
    is exactly `z`.
@@ -80,10 +80,13 @@ graph with edges a->b and b->c."*
    ```
 3. **Path rule.** `<<e><x><y>><<e><y><z>> → <<path><x><y><z>>` gives
    `<<path><a><b><c>>`.
-4. **R10.** Length 1 + 1 = 2.
+4. **Declare the metric, then R10.** The metric was left unresolved in step 1,
+   so it must be declared before any length is computed. Declaring hop count
+   (each edge costs 1) gives 1 + 1 = 2. Without that declaration, R3 applies and
+   the request is refused.
 5. **R12.** Seal it:
    ```text
-   <<cert><<result><<path><a><b><c>><<len><2>>>><<status><verified>>>
+   <<cert><<result><<path><a><b><c>><<len><2>>><<status><verified>>>
    ```
 
 ## Mistakes to refuse

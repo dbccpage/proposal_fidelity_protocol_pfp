@@ -49,14 +49,20 @@ On a finite complex, a defect `x` (an edge cochain) has:
 - **Γ₂**, the size of its face (closure) defect `d1*x`.
 
 The monograph's full signature is `(Φ₁, Γ₂, R_cl)`, and its dual certificates
-bound Φ₁ from below. The first two numbers already decide which rewrite is
-lawful:
+bound Φ₁ from below. These numbers decide whether exact repair is possible. The
+other operations have their own gates:
 
-| Type | Condition | Lawful rewrite |
-| --- | --- | --- |
-| Exact | Φ₁ = 0 and Γ₂ = 0 | Subtract a potential (**E**) |
-| Closed residual | Γ₂ = 0, Φ₁ > 0 | Keep and record the residual (**R**); it cannot be repaired away on this carrier |
-| Face defect present | Γ₂ ≠ 0 | Neither E nor R; expose more context (**C**), lift with a licence (**Λ**), or refuse (**M**) |
+| Operation | Gate |
+| --- | --- |
+| Exact repair (**E**) | Φ₁ = 0, Γ₂ = 0 and an adequate detector |
+| Residual projection (**R**) | Records the residual; must leave the carrier, Φ₁ and Γ₂ unchanged |
+| Context exposure (**C**) | Scope may grow but not be laundered |
+| Structural lift (**Λ**) | A licence from the lift gate |
+| Scale descent (**D**) | A declared loss ledger |
+| Typed refusal (**M**) | A recognised reason code; state unchanged |
+
+When Γ₂ = 0 and Φ₁ > 0 the defect is a closed residual. It cannot be repaired
+away on this carrier, so **E** is refused and **R** records it.
 
 ## What a WDP rewrite must keep separate
 

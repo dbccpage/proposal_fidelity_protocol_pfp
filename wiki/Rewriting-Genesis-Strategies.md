@@ -51,7 +51,10 @@ This cut is the bridge to the directed cuts of [S(n)](Rewriting-Sn.md).
 
 When `admit_datum(t)` repeats an existing datum, the regime header decides:
 under *deduplication* nothing changes; under *occurrence* a fresh copy is added.
-The policy must be declared and may not switch silently.
+The policy must be declared and may not switch silently. The snapshot wire
+`regime<data:…,forms:…,insts:…,rules:…>` has no field for it, and the source does
+not define header syntax for the policy. That is an open gap: until it is
+defined, state the policy alongside the snapshot.
 
 ## G8: Requirement audit
 

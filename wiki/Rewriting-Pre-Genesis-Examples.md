@@ -16,7 +16,7 @@ A prompt supplies `<>` and asks for one step.
 Receipt:
 
 ```text
-<<cert><<token><>>><<status><quiescent>><<steps><0>>>>
+<<cert><<token><>><<status><quiescent>><<steps><0>>>
 ```
 
 **The point.** The correct answer is zero steps. Any "next token" would be an
@@ -33,13 +33,13 @@ Task: route `<a>` left and `<ab>` right. No observations are available yet.
 3. The classes split, and the routing follows.
 
 ```text
-<<partition><<left><a>><<right><ab>>><<obs><len1>>>
+<<partition><<left><a>><<right><ab>><<obs><len1>>>
 ```
 
 Receipt:
 
 ```text
-<<cert><<status><separated>><<predicate><len1>><<canonical_lift><false>>>>
+<<cert><<status><separated>><<predicate><len1>><<canonical_lift><false>>>
 ```
 
 **The point.** `canonical_lift` is false. "Contains b" or payload parity would
@@ -55,13 +55,16 @@ Prompt: *"Two initial states: alpha has no mark, beta has mark a."*
 3. Check it against the grammar: it conforms.
 
 ```text
-<<regime><tokens><<ground><>><<occupied><a>>><<codebook><s0><s1>>>
+<<regime><tokens><<ground><>><<occupied><a>><<codebook><s0><s1>>>
 ```
 
 **The point.** The prose stays in the codebook. Only the four-glyph wire enters
 the regime.
 
 ## Mistakes to refuse
+
+The strategies emit lowercase packet tags such as `errlexicalglyph`. The table
+below uses the evaluator's error codes for the same failures.
 
 | Mistake | What goes wrong | Error |
 | --- | --- | --- |

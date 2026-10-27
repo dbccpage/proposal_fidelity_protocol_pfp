@@ -4,7 +4,8 @@ Part of [Rewriting](Rewriting.md). See also: [Overview](Rewriting-PFP.md) · [Re
 
 A small pilot posed one task, a 2×2 linear system with answer `x + y = 3`, in
 eleven different surface **dialects**. Each dialect is a rewrite of the same
-question into a different layer's notation. The host checker then judged each
+question into a different surface form. Six use MSS-N notation, four use the
+notation of another layer, and `seed` is plain prose. The host checker then judged each
 answer.
 
 ## The eleven dialects

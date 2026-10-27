@@ -7,9 +7,9 @@ and the form it produces.
 
 | ID | Name | Layer | Input | Output |
 | --- | --- | --- | --- | --- |
-| PG1 | Ground quiescence | Ground | `<>` | `<>` (halt) |
-| PG2 | Lexical firewall | Lexical | Any string | Inscription in Σ_pre, or refusal |
-| PG3 | Non-nesting | Syntax | Nested containers | Flat token, or refusal |
+| PG1 | Ground quiescence | Ground | `<>` | Halt; no step recorded |
+| PG2 | Lexical firewall | Lexical | A candidate token | Inscription in Σ_pre, or refusal |
+| PG3 | Non-nesting | Syntax | Nested containers | Refusal |
 | PG4 | Observational quotienting | Epistemic | A pair of inscriptions | Their equivalence class |
 | PG5 | Forced separation lift | Epistemic | An equivalent pair a task must split | A declared separating observation |
 | PG6 | Convention disambiguation | Epistemic | "Is this a new state?" | Both answers, by convention |
@@ -19,16 +19,19 @@ and the form it produces.
 ## PG1: Ground quiescence
 
 ```text
-<>  →  <>        (halt; no rule applies)
+<>  ⊢  halt        (no rule applies; this is not a rewrite step)
 ```
+
+Nothing is appended to the history, so the step count stays 0.
 
 With an empty rule set, no next token may be produced. The error this guards
 against is a spontaneous step (`ERR_SPONTANEOUS_STEP`).
 
 ## PG2: Lexical firewall
 
-A string containing any character outside `{<, >, a, b}` is refused, and the
-offending character is named:
+A token containing any character outside `{<, >, a, b}` is refused, and the
+offending character is named. Regime notation (`{`, `}` and `,`) is read by a
+separate regime parser, not by this check.
 
 ```text
 w  →  <<refusal><errlexicalglyph><c>>
@@ -39,7 +42,8 @@ No guessing what an unknown glyph "meant".
 ## PG3: Non-nesting
 
 ```text
-<u<v>w>  →  <<refusal><errnestedboundary>>
+<u<v>w>  →  <<refusal><errnestedboundary>>        (u, v, w stand for payloads)
+<<a>>    →  <<refusal><errnestedboundary>>
 ```
 
 Depth is always 1.

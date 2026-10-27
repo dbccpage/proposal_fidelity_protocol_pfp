@@ -54,9 +54,11 @@ C¹  =  im(d0)  ⊕  im(d1ᵀ)  ⊕  H¹
 ```
 
 On one cycle of length `k`, the harmonic part is the mean circulation
-`c_H = (1/k) Σ x(e_j)`. The residual register has `b₁ = |E| − |V| + c`
-coordinates, one per independent cycle. All are zero exactly when the defect is
-exact.
+`c_H = (1/k) Σ x(e_j)`. On a **graph** (no filled faces), the residual register
+has `b₁ = |E| − |V| + c` coordinates, one per independent cycle, and all are
+zero exactly when the defect is exact. With filled faces this count is not the
+dimension of `H¹` (a filled triangle has `b₁ = 1` but `H¹ = 0`), and the
+co-exact part must be accounted for separately.
 
 **Refused if** the carrier, Φ₁ or Γ₂ changes. A secondary tie-break metric may be
 used only when Φ₁ and Γ₂ are already equal between candidates. It can never

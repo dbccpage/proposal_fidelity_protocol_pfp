@@ -30,7 +30,9 @@ whitespace exists. That is enough to write:
 
 A **packet** is the ground `<>`, an atom `<w>` (a non-empty word of letters and
 digits), or a composite `<p1 p2 … pk>` of packets. Every packet is balanced and
-has no whitespace. Addresses into a packet are sequences of child indices, and
+has no whitespace. The repository's current boundary parser
+(`parse_boundary` in `pfp/domain/rewriting/rewrites.py`) is stricter than this
+specification: it rejects the empty packet `<>`. Addresses into a packet are sequences of child indices, and
 `t[s]_p` means "put `s` at address `p` in `t`".
 
 ## Three dialects

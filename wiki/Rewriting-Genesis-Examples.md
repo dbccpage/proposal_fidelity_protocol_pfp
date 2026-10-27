@@ -16,8 +16,12 @@ Part of [Rewriting](Rewriting.md). See also: [Overview](Rewriting-Genesis.md) ·
 Receipt:
 
 ```text
-<<cert><regime<data:2,forms:1,insts:1,rules:0>><<tokens><<a>><b>><<cut><a->b>>>>
+<<cert><regime<data:2,forms:1,insts:1,rules:0>><<tokens><a><b>><<cut><a->b>>>
 ```
+
+In the source trace, `admit_form(2)` declares arity 2, and `admit_inst(1,…)`
+refers to the first admitted form. The source does not fix this indexing
+convention, so read the numbers as written there.
 
 **The point.** Step 1 changed nothing. Every later change came from a named
 admission.
@@ -66,7 +70,9 @@ delta<NewDatum;NewDatum;NewForm(1);NewForm(2);NewInst(1,[1,2]);NewInst(2,[3,1]);
 ```
 
 Two data stand for the unknowns, two instances carry the coefficients, and one
-rule closes the system. Without explicit permission to do arithmetic, the
+rule is meant to close the system. As written, the delta does not carry the
+right-hand sides 5 and 1, and the source does not say how one rule closes both
+forms. The pilot scored the reported scalar `x + y`, whose correct value is 3. Without explicit permission to do arithmetic, the
 model's reasoning wandered through many guesses. The host checker marked the
 answer as wrong. See [Dialects and pilot](Rewriting-PFP-Dialects.md) for the
 full pilot record.

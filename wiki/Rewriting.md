@@ -5,8 +5,9 @@ PFP every rewrite has to answer the same question: *which question does the
 change preserve, and who checks that it did?* A rewrite that changes the
 problem is not a repair, and a clearer prompt is not a proof.
 
-This section follows rewriting through six layers. Each layer has an overview,
-its strategies or laws, and worked examples.
+This section follows rewriting through five layers, Pre-Genesis to PFP, plus
+WDP, the mathematical foundation they rest on. Each has an overview, its
+strategies or laws, and worked examples.
 
 | Layer | What it adds | Pages |
 | --- | --- | --- |
@@ -42,8 +43,10 @@ obligations.
    a guess. Refusal leaves the state unchanged.
 5. **Keep the history.** Seeing only the last step can hide the true state, so
    every step goes on an append-only record.
-6. **No authority.** Every receipt carries `AuthorityEffect: None`. Checking a
-   result is separate from permission to act on it.
+6. **No authority.** Every receipt is non-authoritative (`AuthorityEffect: None`,
+   written `authority_effect` in JSON receipts; the short packet receipts on
+   these pages leave the field implicit). Checking a result is separate from
+   permission to act on it.
 
 ## Sources
 
