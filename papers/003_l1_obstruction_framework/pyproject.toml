@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "l1-obstruction-framework"
+version = "5.5.3"
+description = "Finite ℓ¹ Coboundary Obstructions: Primal–Dual Certificates, Operator-Valued Extensions, and Spectral Comparisons"
+readme = "l1_obstruction_framework.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.0.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "code"}
+
+[tool.pytest.ini_options]
+testpaths = ["code/tests"]
+pythonpath = ["code", "."]
+addopts = "-p no:debugging -p no:cacheprovider"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+cache-dir = "~/.cache/ruff"
+
+[tool.mypy]
+mypy_path = ["code"]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "numpy.*"
+ignore_missing_imports = true
