@@ -27,14 +27,15 @@ are deserved is for review, by reading the cited evidence.
 
 [`policy.json`](policy.json) lists the populations: every Python, C#, Rust and
 Lean 4 source in `pfp_lab/`, `governance/`, `csharp/` and the imported trees
-(`pfp/`, `eis/`, `operads/`, `pciv/`, `ops/`, `papers/`, `education/`, `wiki/`,
+(`pfp/`, `eis/`, `operads/`, `pciv/`, `ops/`, `papers/`, `education/`, `wiki/`, `demos/`,
 `code/`), discovered with `git ls-files --cached --others --exclude-standard`.
 Runtime sources must reach L4D. Test sources are in the `test` support category
 (L2D or better, still complete and byte-bound); Jeremy approved that category on
 2026-10-26.
 
 The imported trees joined on 2026-10-27 with a [`baseline.json`](baseline.json)
-of their exact bytes (5,778 files). A listed file is grandfathered only while
+of their exact bytes, and `demos/` joined the same way after PR #15 (5,958
+files in all). A listed file is grandfathered only while
 its bytes are unchanged: edit it and it needs a completed score at its floor.
 `.gitattributes` keeps these sources LF on every checkout so the hashes hold on
 any platform. The screen of what scoring them would find is in
