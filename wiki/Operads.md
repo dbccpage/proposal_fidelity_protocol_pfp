@@ -30,6 +30,7 @@ as `PipelineStage` in
 
 | Page | Read it to... |
 | --- | --- |
+| [Operads versus agents, skills and rules](Operads-Versus-Agents-Skills-Rules.md) | Start here if you know AGENTS.md, Agent Skills, subagents, MCP tools and hooks: what operads add to them, how each operad kind maps to them, and where operads do not yet do better |
 | [Operad primer](Operads-Primer.md) | Learn coloured operads from scratch: colours, operations, partial composition, units and the two associativity laws, with worked examples from the code |
 | [Prompts as operad trees](Operads-Prompt-Trees.md) | See how a prompt becomes a tree of typed text spans, why one bad leaf collapses the whole tree to `NullTree`, and how constructive, interrogative and repair operations are kept apart |
 | [Rewriting and packetization](Operads-Rewriting-and-Packetization.md) | Follow a prompt from tree to rewrite to sealed packet, and see where the host checks each step |
