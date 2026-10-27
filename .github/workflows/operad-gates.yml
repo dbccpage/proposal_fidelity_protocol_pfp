@@ -31,6 +31,7 @@ jobs:
       - run: python -m operads.infrastructure.capability_catalog_compiler --check --repo-root .
         env:
           PYTHONPATH: ops:.
-      - run: python -m pytest -q operads/tests/unit/test_executor_bindings.py operads/tests/unit/test_role_agents.py
+      - run: python -m operads.infrastructure.anti_skill_catalog_compiler --check
+      - run: python -m pytest -q operads/tests/unit/test_executor_bindings.py operads/tests/unit/test_role_agents.py operads/tests/unit/test_anti_skill_catalog.py
         env:
           PYTHONPATH: ops:.

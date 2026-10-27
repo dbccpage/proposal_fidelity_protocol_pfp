@@ -190,9 +190,9 @@ TYPES: dict[str, dict[str, object]] = {
         "closed": True,
         "values": OPERAD_COLOUR,
         "decision": "The ten colours are defined once, as OperadColour in this crate, and every Python and Rust colour list reads them. The kernel type core_operad_theory::OperadColour still accepts any non-empty name. Proposed: make its constructor refuse names outside these ten, so the kernel rejects the same colours as everything else.",
-        "note": None,
+        "note": "The pattern estate (operads/patterns) types anti-patterns Code -> Witness. A witness is a finding, so the anti-skill catalogue reads Witness as Audit.",
         "letters_of": None,
-        "legacy_map": {},
+        "legacy_map": {"Witness": "Audit"},
     },
     "operad_subcolour": {
         "family": "colours_and_wires",
