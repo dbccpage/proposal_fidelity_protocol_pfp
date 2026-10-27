@@ -4,7 +4,7 @@ description: "Blocking test-quality inspector for Python, Rust and SQL. Architec
 operad_source_colours: ["Code"]
 operad_target_colour: "Audit"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 families: [techne-code, quality-enforcement, parity, falsification, testing, clean-architecture, ddd, rop, governance]
 ---
 

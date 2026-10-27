@@ -5,7 +5,7 @@ operad_source_colours:
   - Code
 operad_target_colour: Audit
 operad_arity: 1
-operad_residual: diagnostic
+operad_residual: neutral
 ---
 
 # Techne Silent Failure Hunter

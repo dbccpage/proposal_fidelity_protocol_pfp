@@ -5,7 +5,7 @@ status: canonical
 operad_source_colours: ["State"]
 operad_target_colour: "Contract"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 families: [prompt-civilization, prompt-typing]
 ---
 

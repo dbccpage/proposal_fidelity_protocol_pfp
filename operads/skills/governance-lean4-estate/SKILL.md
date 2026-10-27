@@ -4,7 +4,7 @@ description: "Consolidated Lean 4 Lake elaboration, axiom honesty, and anti-toy 
 operad_source_colours: ["Proof", "Code"]
 operad_target_colour: "Audit"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 families: [governance, lean4]
 ---
 

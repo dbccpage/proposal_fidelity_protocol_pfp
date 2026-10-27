@@ -5,7 +5,7 @@ description: "Audit receipts adversarially for semantic lies, un-recomputed bind
 operad_source_colours: ["State", "Audit"]
 operad_target_colour: "Receipt"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 ---
 
 # adversarial-receipt-audit

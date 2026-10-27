@@ -4,7 +4,7 @@ description: "Use for Python development in engine_py. Clean Architecture, DDD, 
 operad_source_colours: ["Code"]
 operad_target_colour: "Code"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 families: [techne-code, python, database, ffi, clean-architecture, ddd, rop, code-generation, management]
 ---
 

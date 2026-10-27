@@ -5,7 +5,7 @@ invocation: entry
 operad_source_colours: ["Code", "State"]
 operad_target_colour: "Receipt"
 operad_arity: 2
-operad_residual: "unknown"
+operad_residual: neutral
 families: [meta, techne, quality]
 ---
 

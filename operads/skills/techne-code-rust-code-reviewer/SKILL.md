@@ -4,7 +4,7 @@ description: "Review Rust APIs, safety boundaries and deterministic outputs with
 operad_source_colours: ["Code"]
 operad_target_colour: "Audit"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 families: [techne, quality, rust]
 ---
 

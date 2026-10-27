@@ -4,7 +4,7 @@ description: "Clean Architecture gate. Enforces inward dependency discipline, pu
 operad_source_colours: ["Code"]
 operad_target_colour: "Audit"
 operad_arity: 1
-operad_residual: "unknown"
+operad_residual: neutral
 families: [governance, clean-architecture, architecture]
 ---
 
