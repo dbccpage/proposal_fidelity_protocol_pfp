@@ -53,40 +53,130 @@
     "score_token": "L2C",
     "is_complete": true,
     "grade_ceiling": "A",
-    "evaluation_timestamp": "2026-10-26T23:15:24Z",
+    "evaluation_timestamp": "2026-10-27T00:21:44Z",
     "evidence": [
       {
         "path": "governance/evidence/pytest-all.run.json",
-        "sha256": "ac13dda4ddfee46632288a8f83f92901001d71edf7e59feb89991ea0138d967c",
+        "sha256": "649f083f26e55fd3dbb817e3f6a742a30ffbaf4ef9513fd142511d7be0c2a1fc",
         "note": ""
       },
       {
         "path": "governance/evidence/mypy-strict.run.json",
-        "sha256": "c93f2a9f889e37a842371166ac68a95832dad30ef2661beeb970449fa1ee7837",
+        "sha256": "956d4446cd1cb721a955e92a0e1f3424ce8347d64a4971ff56d2195980756157",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-check.run.json",
-        "sha256": "82618ca866c9824afeeb2137c68566d65ac91444ccc8ee4d5b5ca93dd568f27b",
+        "sha256": "4af5aa5122915d963b7be10f8ba5eb0ef244771f756ee7e0284b058532c67811",
         "note": ""
       },
       {
         "path": "governance/evidence/ruff-format.run.json",
-        "sha256": "9075870f4bdd11f4340650fd09620abbb8197a28788ececcaf8f9f30d63f1243",
+        "sha256": "8d3ad6b31ce9a00a8944a28075704a8dfc7beb1bf4b8fe04e00109bd282b88d8",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.run.json",
-        "sha256": "cdbcb7937d8a7ccef4546ec2463569f0565045755f2c8f7597ff17a81cd3299a",
+        "sha256": "35ab6edefe2f35348c79c3d3a20310d4c33029ae2ba5697ca3812d4faf150a70",
         "note": ""
       },
       {
         "path": "governance/evidence/metrics.json",
-        "sha256": "5da0f13ed26026ae00782a794bb92732d206d79bee52d181ae804a1dbd22cd12",
+        "sha256": "986c809f1e3b28e042f4b08e891bcb6b8ecd1518fdbd742adc4ddab9749726b1",
         "note": ""
       }
     ],
     "mutation_accounting": null
   },
-  "history": []
+  "history": [
+    {
+      "recorded_at": "2026-10-27T00:21:50.844539Z",
+      "contract": {
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/tests/test_baseline.py",
+          "language": "Python",
+          "sha256": "e9b4bfa9a1be32f6645ca9b5427a45b01fa7d9a15ba421989cb7d597b9f0e766"
+        },
+        "contract_urn": "urn:pfp-governance:tests:baseline:v1",
+        "symbols": [
+          "baseline",
+          "run",
+          "test_baseline_adds_only_with_a_reason",
+          "test_baseline_only_shrinks_without_allow_add",
+          "test_rust_and_lean_artifacts_are_admitted"
+        ],
+        "owned_invariants": [
+          "The tests pass against the current sources."
+        ],
+        "boundaries": [
+          "Test code; support category 'test' (L2D floor, pending maintainer approval)."
+        ]
+      },
+      "score": {
+        "schema_version": "2.0.0",
+        "AuthorityEffect": "None",
+        "artifact": {
+          "path": "governance/tools/tests/test_baseline.py",
+          "language": "Python",
+          "sha256": "e9b4bfa9a1be32f6645ca9b5427a45b01fa7d9a15ba421989cb7d597b9f0e766"
+        },
+        "profile": "Non-Numeric",
+        "level": "L2",
+        "level_basis": "The baseline command and the Rust and Lean 4 languages.",
+        "gates": {
+          "G1": "C",
+          "G2": "C",
+          "G3": "C",
+          "G4": "C",
+          "G5": "A"
+        },
+        "basis": {
+          "G1": "Header declares AuthorityEffect: None and a unique contract URN; the module docstring states what is tested.",
+          "G2": "Expected values have an independent basis (Paper 005 guide numbers, hand-worked defects, the unmodified oracle, the rubric's calibration example) rather than being recomputed by the code under test.",
+          "G3": "Tests clean up temporary files and processes; no test depends on network access.",
+          "G4": "The suite passes, and its sensitivity is measured by the mutation campaigns of the modules it covers.",
+          "G5": "Test functions measured like runtime code. Metrics: worst function: cyclomatic 2, cognitive 1, nesting 1; metrics ceiling A+."
+        },
+        "composite_grade": "C",
+        "score_token": "L2C",
+        "is_complete": true,
+        "grade_ceiling": "A",
+        "evaluation_timestamp": "2026-10-26T23:15:24Z",
+        "evidence": [
+          {
+            "path": "governance/evidence/pytest-all.run.json",
+            "sha256": "ac13dda4ddfee46632288a8f83f92901001d71edf7e59feb89991ea0138d967c",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/mypy-strict.run.json",
+            "sha256": "c93f2a9f889e37a842371166ac68a95832dad30ef2661beeb970449fa1ee7837",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-check.run.json",
+            "sha256": "82618ca866c9824afeeb2137c68566d65ac91444ccc8ee4d5b5ca93dd568f27b",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/ruff-format.run.json",
+            "sha256": "9075870f4bdd11f4340650fd09620abbb8197a28788ececcaf8f9f30d63f1243",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.run.json",
+            "sha256": "cdbcb7937d8a7ccef4546ec2463569f0565045755f2c8f7597ff17a81cd3299a",
+            "note": ""
+          },
+          {
+            "path": "governance/evidence/metrics.json",
+            "sha256": "5da0f13ed26026ae00782a794bb92732d206d79bee52d181ae804a1dbd22cd12",
+            "note": ""
+          }
+        ],
+        "mutation_accounting": null
+      }
+    }
+  ]
 }
