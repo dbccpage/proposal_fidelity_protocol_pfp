@@ -1,0 +1,675 @@
+paper_identity:
+  paper_id: "PO-001"
+  title: "From Covering-Edge Descent Complexes to Functorial Presheaves and Coherence Defects"
+  canonical_version: "v2.0"
+  paper_file: "covering_edge_descent.md"
+  authority_effect: "None"
+  lean_sources_directory: "lean4/"
+
+  review_date: "2026-10-02"
+  lean_replay_status: "NOT_REPLAYED_IN_THIS_REVIEW"
+
+claims:
+  - claim_id: "PO001-C01"
+    slug: "definition_functorial_banach_presheaf"
+    record_kind: "mathematical_definition"
+    claim_kind: "definition"
+    title: "Definition 2.1: Functorial Banach Presheaf"
+    statement: "A functorial Banach presheaf on a finite poset P is a functor F: P^op -> Ban with identity and chain-composition laws."
+    claim_status: "DEFINITION"
+    proof_status: "DEFINITIONAL"
+    mechanization_status: "NOT_APPLICABLE"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "STRUCTURAL"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§2.1"
+      heading: "Definition 2.1"
+
+  - claim_id: "PO001-C02"
+    slug: "strict_completion_from_covering_edges"
+    record_kind: "mathematical_claim"
+    claim_kind: "proposition"
+    title: "Proposition 2.1a: Strict Completion from Covering Edges"
+    statement: "Covering-edge contractive maps with path-independent saturated-chain composites extend uniquely to a functorial Banach presheaf."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§2.1"
+      heading: "Proposition 2.1a"
+    evidence:
+      lean_theorems:
+        - "Paper001a.strict_completion_from_covering_edges"
+        - "Paper001a.strict_completion_unique_from_chain"
+        - "Paper001a.StrictCompletion.chain_law"
+      python_tests:
+        - "code/tests/test_path_a_completion.py::test_path_a_commuting_diamond"
+
+  - claim_id: "PO001-C03"
+    slug: "diamond_path_independence"
+    record_kind: "mathematical_claim"
+    claim_kind: "lemma"
+    title: "Lemma 2.2: Diamond Path-Independence"
+    statement: "In a strict presheaf, composite restrictions around an elementary diamond commute."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§2.2"
+      heading: "Lemma 2.2"
+    evidence:
+      lean_theorems:
+        - "Paper001a.diamond_path_independence_of_common_completion"
+        - "Paper001a.StrictCompletion.diamond_from_chain_law"
+      python_tests:
+        - "code/tests/test_path_a_completion.py::test_path_a_commuting_diamond"
+
+  - claim_id: "PO001-C04"
+    slug: "categorical_interface_unlock"
+    record_kind: "mathematical_claim"
+    claim_kind: "proposition"
+    title: "Proposition 2.3: Categorical Interface Unlock"
+    statement: "Strict presheaf completion unlocks the 1-categorical presheaf and Grothendieck category-of-elements interface."
+    claim_status: "STANDARD_CONDITIONAL"
+    proof_status: "STANDARD_THEORY"
+    mechanization_status: "NOT_APPLICABLE"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "STRUCTURAL"
+      blocker_if_invalid: false
+    authority_effect: "None"
+    paper_pointer:
+      section: "§2.3"
+      heading: "Proposition 2.3"
+
+  - claim_id: "PO001-C05"
+    slug: "definition_composition_curvature"
+    record_kind: "mathematical_definition"
+    claim_kind: "definition"
+    title: "Definition 3.1: Composition Curvature Operator"
+    statement: "For a <= b <= c, curvature operator is K_{c,b,a} = r_{b,a} * r_{c,b} - r_{c,a}."
+    claim_status: "DEFINITION"
+    proof_status: "DEFINITIONAL"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.1"
+      heading: "Definition 3.1"
+    evidence:
+      lean_theorems:
+        - "Paper001a.TripleRestriction.curvature"
+      python_tests:
+        - "code/tests/test_curvature_cochain.py::test_theorem_3_2_linear_chain"
+
+  - claim_id: "PO001-C06"
+    slug: "coboundary_curvature_identity_d1_d0"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 3.2: Coboundary-Curvature Identity d1 d0 = K"
+    statement: "(d_1 (d_0 s))(a,b,c) = K_{c,b,a}(s(c)) identically for every section s."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.2"
+      heading: "Theorem 3.2"
+    evidence:
+      lean_theorems:
+        - "Paper001a.TripleRestriction.d1_d0_eq_curvature"
+      python_tests:
+        - "code/tests/test_curvature_cochain.py::test_theorem_3_2_linear_chain"
+        - "code/tests/test_po001_core.py::test_po001_full_pipeline_verification"
+
+  - claim_id: "PO001-C07"
+    slug: "flat_locus_equivalence"
+    record_kind: "mathematical_claim"
+    claim_kind: "corollary"
+    title: "Corollary 3.3: Flat Locus Equivalence"
+    statement: "K = 0 everywhere is equivalent to d1 d0 = 0 on all sections and to chain composability."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.2"
+      heading: "Corollary 3.3"
+    evidence:
+      lean_theorems:
+        - "Paper001a.TripleRestriction.flat_iff_chainComposable"
+        - "Paper001a.TripleRestriction.d1_d0_zero_iff_flat"
+        - "Paper001a.TripleRestriction.nonzero_curvature_not_chainComposable"
+      python_tests:
+        - "code/tests/test_curvature_cochain.py::test_flat_locus_equivalence"
+
+  - claim_id: "PO001-C08"
+    slug: "scalar_diamond_witness"
+    record_kind: "mathematical_claim"
+    claim_kind: "example"
+    title: "Scalar Diamond Curvature Witness"
+    statement: "On scalar fibers with maps alpha, beta, mu, curvature evaluates to (beta * alpha - mu) * v."
+    claim_status: "PROVEN_EXAMPLE"
+    proof_status: "EXACT_CALCULATION"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "EXAMPLE"
+    release_criticality:
+      level: "SUPPORTING"
+      blocker_if_invalid: false
+    authority_effect: "None"
+    paper_pointer:
+      section: "§2.2"
+      heading: "Scalar Diamond Witness"
+    evidence:
+      lean_theorems:
+        - "Paper001a.scalar_diamond_curvature"
+
+  - claim_id: "PO001-C09"
+    slug: "degree_3_curvature_boundary"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 3.4: Finite d2 K Boundary Formula"
+    statement: "(d_2 K(s))(a,b,c,d) = K_{c,b,a}(r_{d,c} s(d)) - K_{c,b,a}(s(c)), vanishing if lower triple is flat or top link is compatible."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.3"
+      heading: "Theorem 3.4"
+    evidence:
+      lean_theorems:
+        - "Paper001a.QuadRestriction.d2_curvature_eq_lower_curvature_difference"
+        - "Paper001a.QuadRestriction.d2_curvature_zero_of_lower_flat"
+        - "Paper001a.QuadRestriction.d2_curvature_zero_of_edge_compatible"
+      python_tests:
+        - "code/tests/test_curvature_cochain.py::test_theorem_3_4_degree_3_boundary"
+
+  - claim_id: "PO001-C10"
+    slug: "primitive_difference_lggr_boundary"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 3.5: Payload-Curvature LGGR Boundary"
+    statement: "Payload quotient factors local payload observations but fails to factor curvature when payload-identical packets differ in curvature."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.4"
+      heading: "Theorem 3.5"
+    evidence:
+      lean_theorems:
+        - "Paper001a.payload_classifier_factors"
+        - "Paper001a.curvature_not_factor_through_payload_quotient"
+        - "Paper001a.payload_green_curvature_red"
+        - "Paper001a.curvature_factors_when_preserved"
+      python_tests:
+        - "code/tests/test_payload_quotient.py::test_payload_quotient_factors_payload"
+        - "code/tests/test_payload_quotient.py::test_certify_local_green_global_red"
+
+  - claim_id: "PO001-C11"
+    slug: "unconditional_operator_cocycle_identity"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 3.6: Unconditional Operator Cocycle Identity"
+    statement: "For any finite poset P and arbitrary restriction maps, the operator coboundary delta_2(K) vanishes identically on every quadruple without requiring section edge-compatibility."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "LEAN_SOURCE_PRESENT_NOT_REPLAYED"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.5"
+      heading: "Theorem 3.6"
+    evidence:
+      lean_theorems:
+        - "Paper001a.QuadRestrictionOp.delta2_operator_curvature_identically_zero"
+      lean_scope: "One AddCommGroup carrier A and one quadruple of endomaps A -> A; the finite varying-fiber matrix generality is tested in Python, not fully mechanized in Lean."
+      python_tests:
+        - "code/tests/test_cohomology_quotient.py::test_operator_cocycle_identity_diamond"
+        - "code/tests/test_cohomology_quotient.py::test_operator_cocycle_identity_linear_chain"
+
+  - claim_id: "PO001-C12"
+    slug: "generic_h2_quotient_obstruction"
+    record_kind: "mathematical_claim"
+    claim_kind: "counterexample"
+    title: "Theorem 3.7: Generic H^2 Quotient Obstruction"
+    statement: "On a non-flat scalar chain delta_2(delta_1(T)) = 6, so im(delta_1) is not generally contained in ker(delta_2); a generic H^2 quotient is not established."
+    claim_status: "PROVEN_EXAMPLE"
+    proof_status: "EXACT_CALCULATION"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "NONFLAT_COUNTEREXAMPLE"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.5"
+      heading: "Theorem 3.7"
+    evidence:
+      python_tests:
+        - "code/tests/test_cohomology_quotient.py::test_nonflat_delta2_delta1_has_curvature_residual"
+        - "code/tests/test_cohomology_quotient.py::test_exact_solver_searches_later_columns_for_a_pivot"
+
+  - claim_id: "PO001-C13"
+    slug: "curvature_cochain_interpretation"
+    record_kind: "interpretation"
+    claim_kind: "interpretive"
+    title: "Curvature Cochain Interpretation"
+    statement: "K is interpreted as a local coherence defect and signed obstruction to functoriality; no generic H^2 promotion is claimed."
+    claim_status: "INTERPRETIVE"
+    proof_status: "DISCURSIVE"
+    mechanization_status: "NOT_APPLICABLE"
+    applicability: "INTERPRETATION"
+    release_criticality:
+      level: "FENCE"
+      blocker_if_invalid: false
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.1, §5, §3.5"
+      heading: "Interpretation"
+
+  - claim_id: "PO001-C14"
+    slug: "scope_fences"
+    record_kind: "scope_fence"
+    claim_kind: "negative_claim"
+    title: "Scope Fences"
+    statement: "No physical necessity, infinite-time persistence, global cross-observer norm, unconditioned HCT authority, generic non-flat H^2 quotient, or higher cohomology H^p (p >= 3)."
+    claim_status: "SCOPE_FENCE"
+    proof_status: "AXIOMATIC_NEGATIVE"
+    mechanization_status: "NOT_APPLICABLE"
+    applicability: "NEGATIVE"
+    release_criticality:
+      level: "SAFETY_GATE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§6"
+      heading: "Scope and Open Obligations"
+
+  - claim_id: "PO001-C15"
+    slug: "open_h2_promotion"
+    record_kind: "open_obligation"
+    claim_kind: "open_problem"
+    title: "Open H^2 Promotion"
+    statement: "Promoting K to a generic H^2 class requires a flat-complex hypothesis or a curved-cohomology construction and a separate gauge-rectification theorem."
+    claim_status: "OPEN"
+    proof_status: "OPEN"
+    mechanization_status: "NOT_MECHANIZED"
+    applicability: "GENERIC_NONFLAT_SYSTEM"
+    release_criticality:
+      level: "FRONTIER"
+      blocker_if_invalid: false
+    authority_effect: "None"
+    paper_pointer:
+      section: "§3.5, §6"
+      heading: "Open Obligation"
+    evidence:
+      lean_theorems:
+        - "Paper001a.QuadRestrictionOp.delta2_operator_curvature_identically_zero"
+      python_tests:
+        - "code/tests/test_cohomology_quotient.py::test_nonflat_delta2_delta1_has_curvature_residual"
+
+  - claim_id: PO001-C16
+    slug: curved_differential_derivation_identity
+    record_kind: mathematical_claim
+    claim_kind: theorem
+    title: 'Theorem 4.1: Curved Differential Derivation Identity'
+    statement: 'The degree-1/degree-2 identity extends in §4.1a to the declared all-degree strict-chain algebra: associative product, b^2=0, both
+      graded Leibniz laws, D^2=[K,-], DK=0 and full degree-zero detection of flatness. Section 4.1c supplies a faithful varying endpoint-Hom block
+      realization; §4.2a constructs a separately specified observed lax functor.'
+    claim_status: CONDITIONAL
+    proof_status: PROSE_PROOF
+    mechanization_status: FINITE_PYTHON_FIXTURES
+    applicability: UNIVERSAL_FINITE_POSET
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    authority_effect: None
+    paper_pointer:
+      section: §4.1
+      heading: Theorem 4.1
+    evidence:
+      python_tests:
+      - code/tests/test_curved_bicomplex.py::test_nonflat_diamond_matrix_2x2_fibers
+      - code/tests/test_operator_incidence_dga.py::test_all_degree_identity_and_internal_nilpotence
+      - code/tests/test_operator_incidence_dga.py::test_associativity_unit_and_both_graded_leibniz_laws
+      - code/tests/test_operator_incidence_dga.py::test_vertex_selectors_recover_each_curvature_component
+      - code/tests/test_operator_incidence_dga.py::test_exact_graded_lie_bridge_and_odd_connection_sign
+      - code/tests/test_observed_transport.py::test_heterogeneous_corner_cup_deletion_and_selector_are_faithful
+      supplementary_lean:
+        module: lean4/AllDegreeCurvature.lean
+        declarations:
+        - Paper001AllDegree.ParityDGA.covariant_square
+        - Paper001AllDegree.ParityDGA.bianchi
+        - Paper001AllDegree.ParityDGA.covariant_leibniz
+        scope: Graded parity algebra under explicit DGA laws; supplementary profile checked, original pinned package not replayed. Poset deletion
+          construction and graded Jacobi are not formalized.
+      replay_receipt: code/operator_incidence_verification.json
+      concrete_lean:
+        module: lean4/ConcreteIncidence.lean
+        declarations:
+        - Paper001Concrete.poset_b_nilpotent
+        - Paper001Concrete.poset_leibniz
+        - Paper001Concrete.poset_d_square
+        - Paper001Concrete.covariant_square_zero
+        scope: Concrete strict-poset cochains over a common noncommutative ring; intrinsic positive-degree operations, with separate degree-zero
+          endpoint square. Varying endpoint-Hom block embedding and graded Jacobi remain outside this focused Lean replay.
+      current_replay_receipt: code/loss_incidence_angles_verification.json
+      heterogeneous_lean:
+        module: lean4/HeterogeneousIncidence.lean
+        declarations:
+        - Paper001Heterogeneous.embed_poset_cup
+        - Paper001Heterogeneous.poset_b_nilpotent
+        - Paper001Heterogeneous.poset_d_square
+        - Paper001Heterogeneous.vertex_selector_detector
+        scope: Actual varying modules, corner embedding and strict-poset transport; graded Jacobi is written/native, not Lean.
+      five_derivations_receipt: code/five_derivations_verification.json
+  - claim_id: PO001-C17
+    slug: lax_2_presheaf_pentagon_coherence
+    record_kind: mathematical_claim
+    claim_kind: theorem
+    title: 'Theorem 4.2: Four-Term Operator Comparison'
+    statement: Associativity gives r_ba K_dcb + K_dba = K_dca + K_cba r_dc. This is not a construction of compositor 2-cells or a lax 2-presheaf.
+      Section 4.2a adds an observed locally thin 2-category with kernel-preserving 1-cells, invisible comparison 2-cells, units, interchange and
+      pentagon; arbitrary visible defects are refused.
+    claim_status: CONDITIONAL
+    proof_status: PROSE_PROOF
+    mechanization_status: FINITE_PYTHON_FIXTURES
+    applicability: UNIVERSAL_FINITE_POSET
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    authority_effect: None
+    paper_pointer:
+      section: §4.2
+      heading: Theorem 4.2
+    evidence:
+      python_tests:
+      - code/tests/test_cohomology_quotient.py::test_operator_cocycle_identity_linear_chain
+      - code/tests/test_observed_transport.py::test_typed_2cells_mixed_horizontal_term_interchange_and_visible_refusals
+      - code/tests/test_observed_transport.py::test_observer_sensitive_lax_compositors_units_and_full_pentagon
+      current_replay_receipt: code/five_derivations_verification.json
+      lean_scope: TransportIdentities.lean checks ring comparison and interchange kernels, not the entire typed 2-category.
+  - claim_id: "PO001-C18"
+    slug: "coda_primal_dual_zero_gap_certification"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 4.3: Exact Primal-Dual Distance-to-Image Certification"
+    statement: "For a rational cochain Z and the declared rational matrix D of delta_1, min_t ||Z-Dt||_1 equals max_lambda lambda^T Z subject to D^T lambda=0 and ||lambda||_infinity<=1. An equal-objective feasible pair certifies this finite LP, not a generic H^2 class."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.3"
+      heading: "Theorem 4.3"
+    evidence:
+      python_tests:
+        - "code/tests/test_coda_dual_witness.py::test_obstructed_cochain_positive_phi1_zero_gap"
+
+  - claim_id: "PO001-C19"
+    slug: "master_normal_form_factorization"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 4.4: Cover-Preserving Additive Normal Form"
+    statement: "If and only if all saturated cover-path products agree, a unique flat cover extension exists. Its additive normal form retains both mixed terms. §4.4a separately classifies the declared vertexwise GL action: an orbit meets the flat locus iff already flat. Neither norm optimality nor this action supplies arbitrary physical rectification."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "FINITE_POSET_WITH_PATH_INDEPENDENT_COVERS"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.4"
+      heading: "Theorem 4.4"
+    evidence:
+      python_tests:
+        - "code/tests/test_review_boundaries.py::test_master_normal_form_decomposition_on_commuting_covers"
+        - "code/tests/test_review_boundaries.py::test_master_normal_form_requires_commuting_cover_paths"
+        - "code/tests/test_review_boundaries.py::test_normal_form_curvature_keeps_mixed_terms_on_longer_triples"
+        - "code/tests/test_gauge_rectification.py::test_unique_flat_cover_extension_and_path_obstruction"
+        - "code/tests/test_gauge_rectification.py::test_vertex_gauge_intertwines_all_operations_and_retains_nonzero_curvature"
+        - "code/tests/test_gauge_rectification.py::test_cover_replacement_is_distinct_from_gauge_rectification"
+        - "code/tests/test_gauge_rectification.py::test_l1_minimizers_do_not_define_a_canonical_gauge"
+      supplementary_lean:
+        module: "lean4/AllDegreeCurvature.lean"
+        declarations: ["Paper001AllDegree.ParityDGA.invertible_endpoints_preserve_zero"]
+        scope: "Invertible endpoint factors preserve zero; no formalization of arbitrary-poset path completion or physical gauge availability."
+      replay_receipt: "code/operator_incidence_verification.json"
+
+  - claim_id: "PO001-C20"
+    slug: "prime_triad_bounded_curvature_routing"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 4.5: Prime Triad Bounded-Curvature Routing Law"
+    statement: "The finite routing model halts when its declared budget is exceeded and records a hashed tombstone. Hashing is not authentication or a completeness proof."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "DECLARED_FINITE_ROUTING_MODEL"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.5"
+      heading: "Theorem 4.5"
+    evidence:
+      python_tests:
+        - "code/tests/test_prime_triad_router.py::test_prime_002_curved_system_halts_when_budget_exceeded"
+
+  - claim_id: "PO001-C21"
+    slug: "ddc_operational_commutator"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 4.6: DDC Operational Commutator on Poset Lattices"
+    statement: "8-letter DDC rune alphabet diamond operational commutator [[Lambda, D]] evaluates identically to diamond holonomy defect K_{b1} - K_{b2}."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "UNIVERSAL_FINITE_POSET"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.6"
+      heading: "Theorem 4.6"
+    evidence:
+      python_tests:
+        - "code/tests/test_ddc_and_downmap_mutations.py::test_ddc_diamond_commutator_flat_vs_curved"
+
+  - claim_id: PO001-C22
+    slug: distinction_collapse_loss_ledger_bound
+    record_kind: mathematical_claim
+    claim_kind: model_consequence
+    title: 'Statement 4.7: Declared Cost-Two Ledger Charge'
+    statement: The model assigns charge 2m to m collapsed active protected records. Its legacy induced_curvature_norm field stores this charge;
+      an independently measured operator-norm lower bound is not derived. Section 4.7a refutes a positive operator-curvature floor even for a positive
+      normalized contractive projection. Section 4.7b establishes sharp floors under independently measured direct-collapse and composed-path separation
+      premises. Sections 4.7c-d derive the minimal finite linear question report, unique kernel-preserving descent, and the actual weighted telescoping
+      path bound; prices and native operational admission are separate.
+    claim_status: MODEL_CONSEQUENCE
+    proof_status: IMPLEMENTATION_AND_DECLARED_CONVENTION
+    mechanization_status: FINITE_PYTHON_FIXTURES
+    applicability: DECLARED_COST_TWO_LEDGER
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    authority_effect: None
+    paper_pointer:
+      section: §4.7
+      heading: Statement 4.7
+    evidence:
+      python_tests:
+      - code/tests/test_ddc_and_downmap_mutations.py::test_symbol_game_downmap_distinction_collapse_and_loss_ledger
+      - code/tests/test_loss_curvature.py::test_stochastic_flat_projection_erases_protected_question
+      - code/tests/test_loss_curvature.py::test_sharp_bound_is_scale_sensitive
+      - code/tests/test_observed_transport.py::test_minimal_question_report_unique_descent_and_functorial_composition
+      - code/tests/test_observed_transport.py::test_path_bound_is_sharp_and_unweighted_local_budget_is_insufficient
+      - code/tests/test_observed_transport.py::test_noncommuting_heterogeneous_paths_and_malformed_profiles
+      concrete_lean:
+        module: lean4/FlatLossAndCurvature.lean
+        scope: Exact idempotence, zero curvature, protected-question loss, positivity and normalization of the supplied 3x3 projection; general
+          norm inequalities are written proofs.
+      current_replay_receipt: code/five_derivations_verification.json
+  - claim_id: "PO001-C23"
+    slug: "simplicial_regge_bianchi_equivalence"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 4.8: Simplicial Face-Poset Operator Cocycle"
+    statement: "Theorem 3.6 gives delta_2 K=0 on face-poset four-chains with declared linear restrictions. No Regge deficit-angle or geometric Bianchi equivalence is derived."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "SIMPLICIAL_COMPLEX"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.8"
+      heading: "Theorem 4.8"
+    evidence:
+      python_tests:
+        - "code/tests/test_regge_face_poset.py::test_regge_bianchi_identity_across_dimensions"
+
+  - claim_id: "PO001-C24"
+    slug: "sheaf_contextuality_cech_curvature_equivalence"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 4.9: Bell Global Probability Gluing Criterion"
+    statement: "Gamma_context(e)=min_{p in Delta_16} ||e-M_glue p||_1 vanishes iff a nonnegative normalized global probability extension exists. Bell marginal maps are flat even for a PR box, whose separate stacked-context L1 distance is 2."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "MEASUREMENT_SCENARIO"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.9"
+      heading: "Theorem 4.9"
+    evidence:
+      python_tests:
+        - "code/tests/test_quantum_sheaf_contextuality.py::test_pr_box_maximal_contextuality"
+        - "code/tests/test_review_boundaries.py::test_flat_bell_restrictions_do_not_imply_global_probability_extension"
+
+  - claim_id: PO001-C25
+    slug: rational_interval_enclosure
+    record_kind: mathematical_claim
+    claim_kind: example
+    title: 'Example 4.10: Rational Enclosure of an Algebraic Number'
+    statement: Exact squaring encloses 2(sqrt(2)-1) strictly between 828/1000 and 829/1000 with width 1/1000. This is an algebraic example, not
+      arbitrary transcendental-input certification. Sections 4.10a-b prove rational containment, precision and conditional zero-exclusion for specified
+      metric dihedral/deficit inputs, with typed resource refusals; no arbitrary-real zero decision is asserted. Section 4.10c derives metric normal
+      transport for rational cosines/sines, oriented gluing, basepoint gauge conjugation and explicit K=W-I observation; identity holonomy does
+      not recover an unwrapped deficit.
+    claim_status: PROVEN_EXAMPLE
+    proof_status: EXACT_CALCULATION
+    mechanization_status: FINITE_PYTHON_FIXTURES
+    applicability: SPECIFIED_ALGEBRAIC_EXPRESSION
+    release_criticality:
+      level: CORE
+      blocker_if_invalid: true
+    authority_effect: None
+    paper_pointer:
+      section: §4.10
+      heading: Statement 4.10
+    evidence:
+      python_tests:
+      - code/tests/test_review_boundaries.py::test_algebraic_contextuality_rational_enclosure
+      - code/tests/test_certified_geometry.py::test_regular_and_obtuse_geometric_angles_are_metric_bound
+      - code/tests/test_certified_geometry.py::test_closed_metric_star_has_verified_deficit_sign
+      - code/tests/test_certified_geometry.py::test_flat_zero_is_retained_without_a_fabricated_separation_promise
+      - code/tests/test_observed_transport.py::test_metric_to_angle_gluing_gauge_basepoint_and_winding_countermodel
+      - code/tests/test_observed_transport.py::test_additive_operator_bianchi_does_not_force_metric_loop_identity
+      scope: Written containment/stopping proofs and independent exact finite controls; transcendental estimates are not formalized in Lean.
+      metric_transport_owner: omega_general_relativity::metric_hinge_transport
+      five_derivations_receipt: code/five_derivations_verification.json
+  - claim_id: "PO001-C26"
+    slug: "exact_non_abelian_4d_simplicial_gauge_holonomy"
+    record_kind: "mathematical_claim"
+    claim_kind: "theorem"
+    title: "Theorem 4.11: Exact Non-Abelian 4D Simplicial Gauge Holonomy"
+    statement: "Exact cyclotomic field Q(zeta_8) representations certify Wilson loop holonomies, SU(2) and SO(4) non-abelian curvature defects, and trace gauge invariance on 4D simplicial complexes without floating-point error."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "FOUR_DIMENSIONAL_SIMPLICIAL_COMPLEX"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.11"
+      heading: "Theorem 4.11"
+    evidence:
+      python_tests:
+        - "code/tests/test_cyclotomic_gauge_4d.py::test_gauge_transformation_covariance_and_trace_invariance"
+
+  - claim_id: "PO001-C27"
+    slug: "discrete_non_abelian_bianchi_identity_4d_simplices"
+    record_kind: "mathematical_claim"
+    claim_kind: "corollary"
+    title: "Corollary 4.11a: Ordered Tetrahedral Product Identity"
+    statement: "Consistent unitary links with the declared orientation/order give the multiplicative tetrahedral product identity and its five-identity boundary consequence. Selected mutations are detected in noncommuting fixtures; mutation sensitivity is not an unrestricted property."
+    claim_status: "CONDITIONAL"
+    proof_status: "PROSE_PROOF"
+    mechanization_status: "FINITE_PYTHON_FIXTURES"
+    applicability: "FOUR_DIMENSIONAL_SIMPLICIAL_COMPLEX"
+    release_criticality:
+      level: "CORE"
+      blocker_if_invalid: true
+    authority_effect: "None"
+    paper_pointer:
+      section: "§4.11"
+      heading: "Corollary 4.11a"
+    evidence:
+      python_tests:
+        - "code/tests/test_cyclotomic_gauge_4d.py::test_four_simplex_discrete_bianchi_across_all_five_tetrahedra"
+

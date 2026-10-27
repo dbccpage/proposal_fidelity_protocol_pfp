@@ -1,0 +1,142 @@
+paper_id: 001_finite_obstruction_calculus/002_l1_native_cohomology
+series: 001_finite_obstruction_calculus
+version: v6.5.2
+historical_anchor: sealed-derivation-v1 (3100c4e)
+claims:
+- id: L1C-T1
+  statement: For every finite directed graph with positive edge weights, the weighted L1 quotient infimum
+    Phi_1 is attained.
+  claim_type: '[PROVEN, FINITE CONVEX OPTIMIZATION]'
+  lean4_file: lean4/l1c_t01_attainment.lean
+  lean4_decl: l1c_t01_coercivity_bound
+  lean4_scope: finite_model_3_vertex_coercivity_core
+  python_file: code/l1_cohomology.py
+  python_component: ExactTwoPhaseSimplexSolver.solve_standard_lp
+  python_test: code/tests/test_l1_cohomology.py::test_simplex_solver_standard_lp
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: finite_model_3_vertex_coercivity_core
+- id: L1C-T2
+  statement: Integer three-edge weighted-norm axioms and residual-addition compatibility; no minimized
+    quotient norm is defined in Lean.
+  claim_type: '[PROVEN, FINITE NORM]'
+  lean4_file: lean4/l1c_t02_quotient_norm.lean
+  lean4_decl: l1_quotient_subadditive
+  lean4_scope: integer_three_edge_ambient_norm_and_residual_addition
+  python_file: code/l1_cohomology.py
+  python_component: DirectedGraph.validate_topology_and_weights
+  python_test: code/tests/test_l1_cohomology.py::test_directed_graph_fault_injection_zero_weight_refusal
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: integer_three_edge_ambient_norm_and_residual_addition
+- id: L1C-T3
+  statement: Exact linear-programming dual expresses Phi_1 as the maximum circulation pairing subject
+    to coordinate capacity bounds.
+  claim_type: '[PROVEN, STRONG LP DUALITY]'
+  lean4_file: lean4/l1c_t03_weak_duality.lean
+  lean4_decl: l1c_t03_weak_duality
+  lean4_scope: cycle3_weak_duality_core
+  python_file: code/l1_cohomology.py
+  python_component: L1QuotientSolver.solve
+  python_test: code/tests/test_l1_cohomology.py::test_l1c_single_cycle_exact_formula
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: cycle3_weak_duality_core
+- id: L1C-C1
+  statement: Vanishing circulation pairings characterize exact cochains on a general graph.
+  claim_type: '[CLASSICAL PROPOSITION, PROOF SUPPLIED]'
+  lean4_file: lean4/l1c_t03_weak_duality.lean
+  lean4_decl: circulation_annihilates_coboundary
+  lean4_scope: cycle3_annihilation_core_supports_prose_corollary
+  python_file: code/l1_cohomology.py
+  python_component: DirectedGraph.inner_product
+  python_test: code/tests/test_l1_cohomology.py::test_l1c_exact_cochain_gives_exact_repair
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: cycle3_annihilation_core_supports_prose_corollary
+- id: L1C-T4
+  statement: Primal residual and dual circulation satisfying complementary slackness certify mutual optimality
+    with zero duality gap.
+  claim_type: '[PROVEN, COMPLEMENTARY SLACKNESS]'
+  lean4_file: lean4/l1c_t04_complementary_slackness.lean
+  lean4_decl: l1c_t04_zero_duality_gap
+  lean4_scope: cycle3_complementary_slackness_core
+  python_file: code/l1_cohomology.py
+  python_component: L1CertificateReceipt
+  python_test: code/tests/test_l1_cohomology.py::test_l1c_single_cycle_exact_formula
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: cycle3_complementary_slackness_core
+- id: L1C-TG
+  statement: Conditional finite integer-list certificate optimality for arbitrary finite dimension; no
+    certificate-existence or Python-verification theorem.
+  claim_type: '[PROVEN, DISCRETE CERTIFICATE OPTIMALITY]'
+  lean4_file: lean4/l1c_general_certificate.lean
+  lean4_decl: general_finite_certificate_optimality
+  lean4_scope: general_finite_list_certificate
+  python_file: code/l1_cohomology.py
+  python_component: check_certificate_receipt
+  python_test: code/tests/test_l1_cohomology.py::test_l1_solver_primal_feasibility_check_and_receipt_validator
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: general_finite_list_certificate
+- id: L1C-T5
+  statement: Every quotient class has an optimal representative supported on at most the cycle rank beta.
+  claim_type: '[PROVEN, BASIC FEASIBLE SOLUTION]'
+  lean4_file: lean4/l1c_t05_cycle_invariant.lean
+  lean4_decl: sparse_representative_attainment
+  lean4_scope: cycle3_sparse_representative_witness
+  python_file: code/l1_cohomology.py
+  python_component: L1QuotientSolver.solve
+  python_test: code/tests/test_l1_cohomology.py::test_l1c_cycle_rank_support_bound_on_grid
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: cycle3_sparse_representative_witness
+- id: L1C-T6
+  statement: Integral graph data admit an integral optimum via total unimodularity of the incidence matrix.
+  claim_type: '[CLASSICAL PROPOSITION, PROOF SUPPLIED]'
+  lean4_file: null
+  lean4_decl: null
+  python_file: code/l1_cohomology.py
+  python_component: L1QuotientSolver.solve
+  python_test: code/tests/test_l1_cohomology.py::test_l1c_total_unimodularity_integer_attainment
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: Not mechanized at generality of prose statement
+- id: L1C-T7
+  statement: Simplicial coboundary satisfies discrete Bianchi nilpotency d1 o d0 = 0 and circulation pairing
+    gauge invariance.
+  claim_type: '[PROVEN, DISCRETE PHYSICS / BIANCHI IDENTITY]'
+  lean4_file: lean4/l1c_t07_bianchi_nilpotency.lean
+  lean4_decl: triangle_bianchi_nilpotency
+  lean4_scope: triangle_plaquette_cycle5_witnesses
+  python_file: code/l1_cohomology.py
+  python_component: Simplicial2Complex.discrete_bianchi_identity
+  python_test: code/tests/test_l1_cohomology.py::test_discrete_physics_bianchi_identity
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: triangle_plaquette_cycle5_witnesses
+- id: L1C-T8
+  statement: Quantum phase cocycles establish gauge-elimination on exact shifts, sharp capacity-normalized
+    lower bound, and trace-norm bounds on off-diagonal coherence.
+  claim_type: '[CLASSICAL PROPOSITION, PROOF SUPPLIED]'
+  lean4_file: null
+  lean4_decl: null
+  python_file: code/l1_cohomology.py
+  python_component: QuantumDensityMatrix.off_diagonal_l1_coherence
+  python_test: code/tests/test_l1_cohomology.py::test_theorem_8_weighted_loop_bound_correction
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: Not mechanized at generality of prose statement
+- id: L1C-NC1
+  statement: Nonzero quotient classes are typed as ClosedResidual; no claim of stabilized survivor or
+    terminal stabilization.
+  claim_type: '[SCOPE FENCE]'
+  lean4_file: null
+  lean4_decl: null
+  python_file: code/l1_cohomology.py
+  python_component: L1CertificateReceipt.diagnostic_type
+  python_test: code/tests/test_l1_cohomology.py::test_l1c_single_cycle_exact_formula
+  mathematical_status: Proof supplied in manuscript; stated finite Lean lemmas separately mechanized
+  contribution_status: Classical background and certificate presentation; specified finite mechanization
+  formalization_status: Not mechanized at generality of prose statement
