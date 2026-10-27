@@ -63,4 +63,6 @@ the change. Fitness scores license inspection only, never promotion.
 graph shows that pieces fit together; it is not evidence that the composed
 workflow runs correctly.
 
-Each has its own page: [EIS](EIS.md), [PCIV](PCIV.md) and [Operads](Operads.md).
+Each has its own section: [EIS](EIS.md), [PCIV](PCIV.md) and [Operads](Operads.md).
+[Rewriting and packetization](Operads-Rewriting-and-Packetization.md) shows how
+operads, rewriting and packets fit together.
