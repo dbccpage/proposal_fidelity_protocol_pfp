@@ -23,6 +23,7 @@ older papers and code.
 | Understand the code | [pfp package](PFP-Package.md), [Operads](Operads.md), [Epistemic Immune System](EIS.md), [Prompt Civilization](PCIV.md) |
 | See how proposals are rewritten, layer by layer | [Rewriting](Rewriting.md): Pre-Genesis, Genesis, S(n), MSS-N, PFP and WDP |
 | Try ideas in a small interactive tool | [PFP Lab](PFP-Lab.md) |
+| See how language models were steered, and replicate it here | [Steering examples](Steering.md) |
 | Find your way around the code | [Repository layout](Repository-Layout.md) |
 | Contribute, or check licensing | [Contributing](Contributing.md) |
 
