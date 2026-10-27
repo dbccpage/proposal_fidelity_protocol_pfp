@@ -12,7 +12,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 An equational proof written as a chain of axiom applications is trivially checkable. Each step names an axiom, a direction, a position and a substitution, and the checker confirms one subterm replacement. A finite countermodel is checked by exhaustive evaluation. Finding such proofs is research-grade. Short-looking group-theory consequences, such as deriving the right inverse from left axioms, already need non-obvious intermediate terms, and the search space grows quickly with term depth.
 
-This is the T4 member of the family. It stresses the Symbol Game's long-horizon descent, where many turns reduce the distance between the two sides only indirectly. It stresses the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that alternates lemma proposal with proof search. It stresses the OEEIS (Omega Engine Epistemic Immune System) against "proofs" that skip steps. A pass shows checkable proofs of these problems. It says nothing about any open problem, and none is included.
+This is the T4 member of the family. It stresses the Symbol Game's long-horizon descent, where many turns reduce the distance between the two sides only indirectly. It stresses the OEWAS (Engine Workflows, Agents, Skills) workflow that alternates lemma proposal with proof search. It stresses the OEEIS (Engine Epistemic Immune System) against "proofs" that skip steps. A pass shows checkable proofs of these problems. It says nothing about any open problem, and none is included.
 
 ## 3. Formal Problem and Bounds
 
@@ -67,7 +67,7 @@ A `PROOF` is complete when every step replays exactly, the chain starts at `s` a
   - goals true in all small models but false in a model of size 7 or 8;
   - axiom sets that make the theory trivial, where every goal holds (reported separately);
   - `subst` maps binding variables absent from the axiom.
-- **Exact checker:** Rust step replayer built on the term machinery in `omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/`, plus an exhaustive model evaluator.
+- **Exact checker:** Rust step replayer built on the term machinery in `engine/crates_rs/core_symbol_game_runtime/src/rewriting/`, plus an exhaustive model evaluator.
 - **Independent second checker:** a Python replayer and evaluator by a different author.
 - **Mutation suite:** the checker must reject: a step at the wrong position; a substitution that fails to match; a skipped step where two rewrites are merged; a lemma that cites itself (a cycle); a countermodel violating one axiom at a single assignment; a countermodel whose goal actually holds; Boolean table entries.
 
@@ -129,7 +129,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse. Term positions and replay can build on `omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/`.
+- The catalog row lists no estate reuse. Term positions and replay can build on `engine/crates_rs/core_symbol_game_runtime/src/rewriting/`.
 - Completed systems from [C046](c046_knuth_bendix_completion.md) can supply normal-form lemmas.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U12](../../upgrades/u12_host_scratch_space_working_memory.md) is recommended for the lemma store.
 

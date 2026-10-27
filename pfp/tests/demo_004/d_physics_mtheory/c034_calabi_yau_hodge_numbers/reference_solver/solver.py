@@ -10,10 +10,10 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.calabi_yau import (
+from pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.calabi_yau import (
     solve_calabi_yau_polytope,
 )
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.ddc_tracer import (
+from pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.ddc_tracer import (
     DDCTracer,
 )
 

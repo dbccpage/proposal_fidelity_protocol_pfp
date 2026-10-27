@@ -44,8 +44,8 @@ from functools import lru_cache
 from types import ModuleType
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result, tree_json, tree_module
 
 CHALLENGE_ID = "chord_square_rim"
 ANSWER_TYPE = "M"

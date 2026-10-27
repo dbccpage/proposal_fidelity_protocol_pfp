@@ -68,7 +68,7 @@ operad_residual: "unknown"
 Whenever `techne-database-architect` encounters database connection failures, unindexed sequential scans (>10,000 rows), or schema corruption:
 
 1. Automatically create a formal investigation report under:
-   `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_db_architect_{defect_id}.md`
+   `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_db_architect_{defect_id}.md`
 2. Include error traces, query execution plans (`EXPLAIN ANALYZE`), root cause analysis, and remediation plan for Blackrod review.
 
 ---

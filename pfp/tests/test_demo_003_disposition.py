@@ -4,16 +4,16 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.controllers.pfp_controller import PfpController
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.domain.stages.demos import DemoRunReceipt
-from omega_engine_pfp.infrastructure.demos.execution import run, verify
-from omega_engine_pfp.infrastructure.pilot_runners.pilot_dispatch import (
+from pfp.controllers.pfp_controller import PfpController
+from pfp.domain.kernel.result import RefusalCode
+from pfp.domain.stages.demos import DemoRunReceipt
+from pfp.infrastructure.demos.execution import run, verify
+from pfp.infrastructure.pilot_runners.pilot_dispatch import (
     UnifiedPfpDemoRunner,
 )
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.tests.test_pilot_use_cases import _make_sample_pilot
-from omega_engine_pfp.use_cases.run_demo import RunDemoUseCase
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.tests.test_pilot_use_cases import _make_sample_pilot
+from pfp.use_cases.run_demo import RunDemoUseCase
 
 
 def test_public_demo_003_retains_original_unexecuted_obligations():

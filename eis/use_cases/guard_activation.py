@@ -13,15 +13,15 @@ import hashlib
 from dataclasses import asdict
 from typing import Protocol
 
-from omega_engine_epistemic_immune_system.domain.guard_activation import (
+from eis.domain.guard_activation import (
     ActivationRefusal,
     DangerSignalReceiptV1,
     DetectorHitRefV1,
     GuardActivationReceiptV1,
 )
-from omega_engine_epistemic_immune_system.domain.ports import DangerSensor
-from omega_engine_epistemic_immune_system.domain.value_objects import Signal2Danger
-from omega_engine_epistemic_immune_system.infrastructure.native_domain import native_activation
+from eis.domain.ports import DangerSensor
+from eis.domain.value_objects import Signal2Danger
+from eis.infrastructure.native_domain import native_activation
 
 
 class GuardStatePort(Protocol):

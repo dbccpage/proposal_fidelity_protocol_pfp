@@ -9,8 +9,8 @@ def test_non_core_catalog_family_reaches_domain_value_object():
         [
             sys.executable,
             "-c",
-            "from omega_engine_pfp.domain.value_objects.taxonomy import TaskFamilyVO; "
-            "import omega_engine_pfp.infrastructure.taxonomy; "
+            "from pfp.domain.value_objects.taxonomy import TaskFamilyVO; "
+            "import pfp.infrastructure.taxonomy; "
             "assert TaskFamilyVO('causal_refinement_derivation').value == 'causal_refinement_derivation'",
         ],
         capture_output=True,

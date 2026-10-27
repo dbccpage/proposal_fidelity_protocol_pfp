@@ -12,7 +12,7 @@ from pathlib import Path
 def check_no_placeholder_hashes(repo_root: Path) -> list[str]:
     violations = []
     zero_hash = "0" * 64
-    atlas_dir = repo_root / "omega_engine_atlas" / "coda_atlas"
+    atlas_dir = repo_root / "atlas" / "coda_atlas"
     if not atlas_dir.is_dir():
         violations.append(f"Expected atlas directory not found: {atlas_dir}")
         return violations

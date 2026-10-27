@@ -16,12 +16,12 @@ from typing import Any
 import pytest
 import yaml
 
-from omega_engine_pfp.domain.value_objects.taxonomy import (
+from pfp.domain.value_objects.taxonomy import (
     TaskFamilyVO,
     get_valid_task_families,
     register_task_family_token,
 )
-from omega_engine_pfp.infrastructure.pilot_runner import (
+from pfp.infrastructure.pilot_runner import (
     AnswerPayload,
     PfpPilotRunner,
     SuppliedReply,
@@ -30,15 +30,15 @@ from omega_engine_pfp.infrastructure.pilot_runner import (
     grade,
     materialize_results,
 )
-from omega_engine_pfp.domain.stages.cartesian_matrix_types import CartesianCoordinate
-from omega_engine_pfp.infrastructure.catalogs.pilot_dimensions import CartesianMatrixSpace
-from omega_engine_pfp.domain.task_families.task_family_types import DomainCategory
-from omega_engine_pfp.domain.task_families.task_family_types import EvaluationStrategy
-from omega_engine_pfp.domain.task_families.task_family_types import InputModality
-from omega_engine_pfp.domain.types.pilot_spec import PilotCoordinates
-from omega_engine_pfp.domain.task_families.task_family_types import SolutionModality
-from omega_engine_pfp.domain.task_families.task_family_types import TaskFamilyDefinition
-from omega_engine_pfp.infrastructure.catalogs.task_families import TaskFamilyRegistry
+from pfp.domain.stages.cartesian_matrix_types import CartesianCoordinate
+from pfp.infrastructure.catalogs.pilot_dimensions import CartesianMatrixSpace
+from pfp.domain.task_families.task_family_types import DomainCategory
+from pfp.domain.task_families.task_family_types import EvaluationStrategy
+from pfp.domain.task_families.task_family_types import InputModality
+from pfp.domain.types.pilot_spec import PilotCoordinates
+from pfp.domain.task_families.task_family_types import SolutionModality
+from pfp.domain.task_families.task_family_types import TaskFamilyDefinition
+from pfp.infrastructure.catalogs.task_families import TaskFamilyRegistry
 
 
 # =============================================================================

@@ -24,10 +24,10 @@ from copy import deepcopy
 from fractions import Fraction
 
 here = Path.cwd().resolve()
-lesson = here if (here / 'educational_governor.py').is_file() else here / 'omega_engine_education/documentation/004_oepfp/_how_to_play'
+lesson = here if (here / 'educational_governor.py').is_file() else here / 'education/documentation/004_oepfp/_how_to_play'
 repo = next(p for p in [lesson, *lesson.parents] if (p / '.git').exists())
 sys.path.insert(0, str(lesson))
-sys.path.insert(0, str(repo / 'omega_engine_education/documentation/004_oepfp/papers/omega_engine_symbol_game/000_pfp_introduction/code'))
+sys.path.insert(0, str(repo / 'education/documentation/004_oepfp/papers/symbol_game/000_pfp_introduction/code'))
 from basic_packets import check, example
 from educational_governor import EducationalHostGovernor
 

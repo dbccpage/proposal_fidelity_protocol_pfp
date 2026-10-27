@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate the Omega Mathematics Encyclopedia indexes and validate entries.
+"""Regenerate the Core Mathematics Encyclopedia indexes and validate entries.
 
 Deterministic regeneration (not accretion), sibling of regen_spine_index.py:
   1. Validate every entry under encyclopedia/entries/**  (V1-V8; exit 1 on failure)
@@ -31,14 +31,14 @@ def _find_repo_root() -> Path:
     """
     here = Path(__file__).resolve()
     for candidate in here.parents:
-        if (candidate / "omega_engine" / "research" / "encyclopedia").is_dir():
+        if (candidate / "engine" / "research" / "encyclopedia").is_dir():
             return candidate
     # Preserve the historical behaviour so the error message stays familiar.
     return here.parents[3]
 
 
 REPO_ROOT = _find_repo_root()
-RESEARCH_DIR = REPO_ROOT / "omega_engine" / "research"
+RESEARCH_DIR = REPO_ROOT / "engine" / "research"
 ENC_DIR = RESEARCH_DIR / "encyclopedia"
 ENTRIES_DIR = ENC_DIR / "entries"
 INDEXES_DIR = ENC_DIR / "indexes"
@@ -788,7 +788,7 @@ def emit_indexes(entries: list[dict]) -> None:
 def _find_spine_file() -> Path:
     matches = sorted(
         m
-        for m in RESEARCH_DIR.glob("**/canonical_omega_math_spine.md")
+        for m in RESEARCH_DIR.glob("**/canonical_core_math_spine.md")
         if ".archive" not in m.parts
     )
     for m in matches:
@@ -802,15 +802,15 @@ def _find_spine_file() -> Path:
     # (steps 1-2, which produce the paper_<NNN>.md views) do not depend on it.
     # Fall back to an archived copy so regen does not hard-fail. The spine landed
     # in .0_intel/_archive/_math_spines/ (the path the archive actually uses); the
-    # .omega_engine_official_archive/ location is kept as a second candidate but
+    # .official_archive/ location is kept as a second candidate but
     # has never existed on disk, which is why this function returned
     # missing_spine.md and main() exited 2 before reaching validation.
     for archived in (
-        REPO_ROOT / ".0_intel" / "_archive" / "_math_spines" / "canonical_omega_math_spine.md",
+        REPO_ROOT / ".0_intel" / "_archive" / "_math_spines" / "canonical_core_math_spine.md",
         REPO_ROOT
-        / "omega_engine"
-        / ".omega_engine_official_archive"
-        / "canonical_omega_math_spine.md",
+        / "engine"
+        / ".official_archive"
+        / "canonical_core_math_spine.md",
     ):
         if archived.exists():
             return archived
@@ -860,10 +860,10 @@ def _is_gtmur_math_spine(path: Path) -> bool:
 
 _GTMUR_SPINE_SECTION_MAP = [
     (
-        "## 1. Role in the Omega Tower",
+        "## 1. Role in the Core Tower",
         "Definition",
         "CODA-MUR-role",
-        "Role in the Omega Tower",
+        "Role in the Core Tower",
         "DEFINED",
     ),
     ("## 2. Regime Object", "Definition", "GTMUR-D01", "Regime Record Definition", "DEFINED"),
@@ -1087,7 +1087,7 @@ def _manifest_source(path: Path) -> str:
 
 def _canonical_manifest_source(source: str) -> str:
     source = source.strip().strip("`").replace("\\", "/")
-    for prefix in ("omega_engine/research/", "research/"):
+    for prefix in ("engine/research/", "research/"):
         if source.startswith(prefix):
             return source[len(prefix) :]
     return source

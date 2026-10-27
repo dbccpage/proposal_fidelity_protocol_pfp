@@ -1,7 +1,7 @@
 """Run challenge cases through the shared port and independent checker.
 
 This harness reports certificate checks only. It does not execute a the city bout,
-claim a retinue verdict, or estimate tokens and label them as billed usage.
+claim a panel verdict, or estimate tokens and label them as billed usage.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from .judge.certificate_checker import check_cohomology_certificate
-from omega_engine_pfp.domain.cohomology.solver import detect_challenge
+from pfp.domain.cohomology.solver import detect_challenge
 
 from .solve import solve
 from .swarm.budget_controller import BudgetController
@@ -61,7 +61,7 @@ def run_cases(
         output_accounting.write_text(
             json.dumps(
                 {
-                    "schema_version": "omega.accounting.v1",
+                    "schema_version": "core.accounting.v1",
                     "measurement_status": "UNAVAILABLE",
                     "total_billed_cost_usd": None,
                     "records": [],

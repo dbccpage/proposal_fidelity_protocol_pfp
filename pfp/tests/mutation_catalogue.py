@@ -31,7 +31,7 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_operations.use_cases.verification.mutation_harness import Mutant
+from operations.use_cases.verification.mutation_harness import Mutant
 
 __all__ = ["DEFAULT_RUNNER", "DEFAULT_TESTS", "EXCLUDE_FROM_RUNS", "MUTANTS"]
 
@@ -41,7 +41,7 @@ __all__ = ["DEFAULT_RUNNER", "DEFAULT_TESTS", "EXCLUDE_FROM_RUNS", "MUTANTS"]
 #: mutation. A genuinely surviving mutant would then be reported as killed by
 #: the harness's own bookkeeping. A harness must not be a witness in its own
 #: experiment.
-EXCLUDE_FROM_RUNS = ("omega_engine_pfp/tests/test_mutation_catalogue.py",)
+EXCLUDE_FROM_RUNS = ("pfp/tests/test_mutation_catalogue.py",)
 
 DEFAULT_RUNNER = "pytest"
 
@@ -55,145 +55,145 @@ DEFAULT_RUNNER = "pytest"
 #: witness the harness's own experiment. It remains named in EXCLUDE_FROM_RUNS
 #: above as the machine-readable reason for that omission.
 DEFAULT_TESTS = (
-    'omega_engine_pfp/tests/test_adversarial_challenger_1_rust_exact_ffi.py',
-    'omega_engine_pfp/tests/test_adversarial_m1_challenger.py',
-    'omega_engine_pfp/tests/test_adversarial_m5_challenger_2.py',
-    'omega_engine_pfp/tests/test_architecture_fitness.py',
-    'omega_engine_pfp/tests/test_arms_harness.py',
-    'omega_engine_pfp/tests/test_bridge_fault_isolation.py',
-    'omega_engine_pfp/tests/test_calculus_receipt.py',
-    'omega_engine_pfp/tests/test_canonical_claims.py',
-    'omega_engine_pfp/tests/test_canonical_stage_execution.py',
-    'omega_engine_pfp/tests/test_carrier_decoding.py',
-    'omega_engine_pfp/tests/test_cec_bridge_unavailable.py',
-    'omega_engine_pfp/tests/test_cemetery_sink.py',
-    'omega_engine_pfp/tests/test_certified_ladder_evaluator.py',
-    'omega_engine_pfp/tests/test_challenge_cli.py',
-    'omega_engine_pfp/tests/test_challenge_learning.py',
-    'omega_engine_pfp/tests/test_cochain_gradient_simplicial_k6.py',
-    'omega_engine_pfp/tests/test_code_change_gates_stage.py',
-    'omega_engine_pfp/tests/test_code_change_repository_port.py',
-    'omega_engine_pfp/tests/test_code_change_session_integrity.py',
-    'omega_engine_pfp/tests/test_code_change_submit_stage.py',
-    'omega_engine_pfp/tests/test_cohomology_certificate_fail_closed.py',
-    'omega_engine_pfp/tests/test_complex_face_boundaries.py',
-    'omega_engine_pfp/tests/test_cot_miner.py',
-    'omega_engine_pfp/tests/test_cycle_balance_ddd.py',
-    'omega_engine_pfp/tests/test_ddc_functional_boundary.py',
-    'omega_engine_pfp/tests/test_ddc_visualization_adapter.py',
-    'omega_engine_pfp/tests/test_decode_controls.py',
-    'omega_engine_pfp/tests/test_demo_004_execution.py',
-    'omega_engine_pfp/tests/test_demo_3_live_receipt.py',
-    'omega_engine_pfp/tests/test_demo_live_receipt.py',
-    'omega_engine_pfp/tests/test_demo_registry_closure.py',
-    'omega_engine_pfp/tests/test_diff_parser_multifile.py',
-    'omega_engine_pfp/tests/test_dimension_register_models.py',
-    'omega_engine_pfp/tests/test_discrete_channel_token_witnesses.py',
-    'omega_engine_pfp/tests/test_dispatch_crash_durability.py',
-    'omega_engine_pfp/tests/test_documentation_strategy_doors.py',
-    'omega_engine_pfp/tests/test_documented_numbers_are_current.py',
-    'omega_engine_pfp/tests/test_domain_layer_purity.py',
-    'omega_engine_pfp/tests/test_domain_value_objects.py',
-    'omega_engine_pfp/tests/test_exact.py',
-    'omega_engine_pfp/tests/test_exact_functional_port.py',
-    'omega_engine_pfp/tests/test_execution_trace.py',
-    'omega_engine_pfp/tests/test_extensional_task_ingress.py',
-    'omega_engine_pfp/tests/test_fail_closed_negative_mutations.py',
-    'omega_engine_pfp/tests/test_ffi_ddc_payload.py',
-    'omega_engine_pfp/tests/test_ffi_seam_isolation.py',
-    'omega_engine_pfp/tests/test_file_run_recorder.py',
-    'omega_engine_pfp/tests/test_finite_gauge_workbench.py',
-    'omega_engine_pfp/tests/test_functional_boundary.py',
-    'omega_engine_pfp/tests/test_glyph_calculus.py',
-    'omega_engine_pfp/tests/test_host_cli_seam.py',
-    'omega_engine_pfp/tests/test_immune_defect_regressions.py',
-    'omega_engine_pfp/tests/test_import_purity_and_candidate_identity.py',
-    'omega_engine_pfp/tests/test_kinds_search.py',
-    'omega_engine_pfp/tests/test_llm_turn_submission.py',
-    'omega_engine_pfp/tests/test_local_process_sandbox.py',
-    'omega_engine_pfp/tests/test_migration_fitness.py',
-    'omega_engine_pfp/tests/test_mode_discovery.py',
-    'omega_engine_pfp/tests/test_mode_trials.py',
-    'omega_engine_pfp/tests/test_model_loading.py',
-    'omega_engine_pfp/tests/test_mssn_catalog.py',
-    'omega_engine_pfp/tests/test_named_native_refusals.py',
-    'omega_engine_pfp/tests/test_native_scoring_migration.py',
-    'omega_engine_pfp/tests/test_openrouter_seat_gateway.py',
-    'omega_engine_pfp/tests/test_openrouter_seat_gateway_adversarial.py',
-    'omega_engine_pfp/tests/test_openrouter_turn_executor.py',
-    'omega_engine_pfp/tests/test_p0_baseline.py',
-    'omega_engine_pfp/tests/test_p0_evidence_integrity.py',
-    'omega_engine_pfp/tests/test_packet_contracts.py',
-    'omega_engine_pfp/tests/test_pfp_aggregates.py',
-    'omega_engine_pfp/tests/test_pfp_clean_arch.py',
-    'omega_engine_pfp/tests/test_pfp_consolidation.py',
-    'omega_engine_pfp/tests/test_pfp_domain_models.py',
-    'omega_engine_pfp/tests/test_pfp_mode_additional_checks.py',
-    'omega_engine_pfp/tests/test_pfp_mode_checks.py',
-    'omega_engine_pfp/tests/test_pfp_package.py',
-    'omega_engine_pfp/tests/test_pfp_pipeline_provider.py',
-    'omega_engine_pfp/tests/test_pfp_relocation_paths.py',
-    'omega_engine_pfp/tests/test_pfp_rop_results.py',
-    'omega_engine_pfp/tests/test_pfp_runtime.py',
-    'omega_engine_pfp/tests/test_pfp_runtime_migration.py',
-    'omega_engine_pfp/tests/test_pfp_seed_cli.py',
-    'omega_engine_pfp/tests/test_pfp_types_package.py',
-    'omega_engine_pfp/tests/test_pfp_use_cases.py',
-    'omega_engine_pfp/tests/test_pfp_value_objects.py',
-    'omega_engine_pfp/tests/test_pilot_catalog_execution.py',
-    'omega_engine_pfp/tests/test_pilot_models.py',
-    'omega_engine_pfp/tests/test_pilot_relocation_alias.py',
-    'omega_engine_pfp/tests/test_pilot_runner.py',
-    'omega_engine_pfp/tests/test_pilot_scoured_types.py',
-    'omega_engine_pfp/tests/test_pilot_suite.py',
-    'omega_engine_pfp/tests/test_pilot_use_cases.py',
-    'omega_engine_pfp/tests/test_po035_adaptive.py',
-    'omega_engine_pfp/tests/test_po035_closeout.py',
-    'omega_engine_pfp/tests/test_po035_derivation_runtime.py',
-    'omega_engine_pfp/tests/test_po035_stage_replay.py',
-    'omega_engine_pfp/tests/test_presentation_pins.py',
-    'omega_engine_pfp/tests/test_prompt_representations.py',
-    'omega_engine_pfp/tests/test_provider_dispatch_durability.py',
-    'omega_engine_pfp/tests/test_research_replay_authority.py',
-    'omega_engine_pfp/tests/test_research_use_case_imports.py',
-    'omega_engine_pfp/tests/test_residue_parity.py',
-    'omega_engine_pfp/tests/test_retraction_fail_closed.py',
-    'omega_engine_pfp/tests/test_retraction_turn_loop.py',
-    'omega_engine_pfp/tests/test_row_rederivation.py',
-    'omega_engine_pfp/tests/test_sbe_quantum_bridge.py',
-    'omega_engine_pfp/tests/test_schema_validator.py',
-    'omega_engine_pfp/tests/test_seed_advanced_checks.py',
-    'omega_engine_pfp/tests/test_seed_core_checks.py',
-    'omega_engine_pfp/tests/test_seed_exact_checks.py',
-    'omega_engine_pfp/tests/test_sign_switching_native_transport.py',
-    'omega_engine_pfp/tests/test_simplicial_boundary_matrix.py',
-    'omega_engine_pfp/tests/test_swarm_developer.py',
-    'omega_engine_pfp/tests/test_swarm_reply_control_native.py',
-    'omega_engine_pfp/tests/test_symbol_game.py',
-    'omega_engine_pfp/tests/test_symbol_game_clean_architecture_domain_coverage.py',
-    'omega_engine_pfp/tests/test_symbol_game_cli.py',
-    'omega_engine_pfp/tests/test_symbol_game_controllers_promoted.py',
-    'omega_engine_pfp/tests/test_symbol_game_core_infra_promoted.py',
-    'omega_engine_pfp/tests/test_symbol_game_deepening.py',
-    'omega_engine_pfp/tests/test_symbol_game_domain_promoted.py',
-    'omega_engine_pfp/tests/test_symbol_game_e2e_multi_act_bout.py',
-    'omega_engine_pfp/tests/test_symbol_game_event_driven.py',
-    'omega_engine_pfp/tests/test_symbol_game_ffi.py',
-    'omega_engine_pfp/tests/test_symbol_game_master_mutation_battery.py',
-    'omega_engine_pfp/tests/test_symbol_game_pr_workflow.py',
-    'omega_engine_pfp/tests/test_symbol_game_release_gate.py',
-    'omega_engine_pfp/tests/test_symbol_game_rop_result.py',
-    'omega_engine_pfp/tests/test_three_layer_sovereignty.py',
-    'omega_engine_pfp/tests/test_traced_code_change.py',
-    'omega_engine_pfp/tests/test_turn_driver_controller.py',
-    'omega_engine_pfp/tests/test_unbound_solver_ports.py',
-    'omega_engine_pfp/tests/test_uns_emitter_custody.py',
-    'omega_engine_pfp/tests/test_verify_glyph_reply.py',
-    'omega_engine_pfp/tests/test_wp6_expectation_corpus.py',
+    'pfp/tests/test_adversarial_challenger_1_rust_exact_ffi.py',
+    'pfp/tests/test_adversarial_m1_challenger.py',
+    'pfp/tests/test_adversarial_m5_challenger_2.py',
+    'pfp/tests/test_architecture_fitness.py',
+    'pfp/tests/test_arms_harness.py',
+    'pfp/tests/test_bridge_fault_isolation.py',
+    'pfp/tests/test_calculus_receipt.py',
+    'pfp/tests/test_canonical_claims.py',
+    'pfp/tests/test_canonical_stage_execution.py',
+    'pfp/tests/test_carrier_decoding.py',
+    'pfp/tests/test_cec_bridge_unavailable.py',
+    'pfp/tests/test_cemetery_sink.py',
+    'pfp/tests/test_certified_ladder_evaluator.py',
+    'pfp/tests/test_challenge_cli.py',
+    'pfp/tests/test_challenge_learning.py',
+    'pfp/tests/test_cochain_gradient_simplicial_k6.py',
+    'pfp/tests/test_code_change_gates_stage.py',
+    'pfp/tests/test_code_change_repository_port.py',
+    'pfp/tests/test_code_change_session_integrity.py',
+    'pfp/tests/test_code_change_submit_stage.py',
+    'pfp/tests/test_cohomology_certificate_fail_closed.py',
+    'pfp/tests/test_complex_face_boundaries.py',
+    'pfp/tests/test_cot_miner.py',
+    'pfp/tests/test_cycle_balance_ddd.py',
+    'pfp/tests/test_ddc_functional_boundary.py',
+    'pfp/tests/test_ddc_visualization_adapter.py',
+    'pfp/tests/test_decode_controls.py',
+    'pfp/tests/test_demo_004_execution.py',
+    'pfp/tests/test_demo_3_live_receipt.py',
+    'pfp/tests/test_demo_live_receipt.py',
+    'pfp/tests/test_demo_registry_closure.py',
+    'pfp/tests/test_diff_parser_multifile.py',
+    'pfp/tests/test_dimension_register_models.py',
+    'pfp/tests/test_discrete_channel_token_witnesses.py',
+    'pfp/tests/test_dispatch_crash_durability.py',
+    'pfp/tests/test_documentation_strategy_doors.py',
+    'pfp/tests/test_documented_numbers_are_current.py',
+    'pfp/tests/test_domain_layer_purity.py',
+    'pfp/tests/test_domain_value_objects.py',
+    'pfp/tests/test_exact.py',
+    'pfp/tests/test_exact_functional_port.py',
+    'pfp/tests/test_execution_trace.py',
+    'pfp/tests/test_extensional_task_ingress.py',
+    'pfp/tests/test_fail_closed_negative_mutations.py',
+    'pfp/tests/test_ffi_ddc_payload.py',
+    'pfp/tests/test_ffi_seam_isolation.py',
+    'pfp/tests/test_file_run_recorder.py',
+    'pfp/tests/test_finite_gauge_workbench.py',
+    'pfp/tests/test_functional_boundary.py',
+    'pfp/tests/test_glyph_calculus.py',
+    'pfp/tests/test_host_cli_seam.py',
+    'pfp/tests/test_immune_defect_regressions.py',
+    'pfp/tests/test_import_purity_and_candidate_identity.py',
+    'pfp/tests/test_kinds_search.py',
+    'pfp/tests/test_llm_turn_submission.py',
+    'pfp/tests/test_local_process_sandbox.py',
+    'pfp/tests/test_migration_fitness.py',
+    'pfp/tests/test_mode_discovery.py',
+    'pfp/tests/test_mode_trials.py',
+    'pfp/tests/test_model_loading.py',
+    'pfp/tests/test_mssn_catalog.py',
+    'pfp/tests/test_named_native_refusals.py',
+    'pfp/tests/test_native_scoring_migration.py',
+    'pfp/tests/test_openrouter_seat_gateway.py',
+    'pfp/tests/test_openrouter_seat_gateway_adversarial.py',
+    'pfp/tests/test_openrouter_turn_executor.py',
+    'pfp/tests/test_p0_baseline.py',
+    'pfp/tests/test_p0_evidence_integrity.py',
+    'pfp/tests/test_packet_contracts.py',
+    'pfp/tests/test_pfp_aggregates.py',
+    'pfp/tests/test_pfp_clean_arch.py',
+    'pfp/tests/test_pfp_consolidation.py',
+    'pfp/tests/test_pfp_domain_models.py',
+    'pfp/tests/test_pfp_mode_additional_checks.py',
+    'pfp/tests/test_pfp_mode_checks.py',
+    'pfp/tests/test_pfp_package.py',
+    'pfp/tests/test_pfp_pipeline_provider.py',
+    'pfp/tests/test_pfp_relocation_paths.py',
+    'pfp/tests/test_pfp_rop_results.py',
+    'pfp/tests/test_pfp_runtime.py',
+    'pfp/tests/test_pfp_runtime_migration.py',
+    'pfp/tests/test_pfp_seed_cli.py',
+    'pfp/tests/test_pfp_types_package.py',
+    'pfp/tests/test_pfp_use_cases.py',
+    'pfp/tests/test_pfp_value_objects.py',
+    'pfp/tests/test_pilot_catalog_execution.py',
+    'pfp/tests/test_pilot_models.py',
+    'pfp/tests/test_pilot_relocation_alias.py',
+    'pfp/tests/test_pilot_runner.py',
+    'pfp/tests/test_pilot_scoured_types.py',
+    'pfp/tests/test_pilot_suite.py',
+    'pfp/tests/test_pilot_use_cases.py',
+    'pfp/tests/test_po035_adaptive.py',
+    'pfp/tests/test_po035_closeout.py',
+    'pfp/tests/test_po035_derivation_runtime.py',
+    'pfp/tests/test_po035_stage_replay.py',
+    'pfp/tests/test_presentation_pins.py',
+    'pfp/tests/test_prompt_representations.py',
+    'pfp/tests/test_provider_dispatch_durability.py',
+    'pfp/tests/test_research_replay_authority.py',
+    'pfp/tests/test_research_use_case_imports.py',
+    'pfp/tests/test_residue_parity.py',
+    'pfp/tests/test_retraction_fail_closed.py',
+    'pfp/tests/test_retraction_turn_loop.py',
+    'pfp/tests/test_row_rederivation.py',
+    'pfp/tests/test_sbe_quantum_bridge.py',
+    'pfp/tests/test_schema_validator.py',
+    'pfp/tests/test_seed_advanced_checks.py',
+    'pfp/tests/test_seed_core_checks.py',
+    'pfp/tests/test_seed_exact_checks.py',
+    'pfp/tests/test_sign_switching_native_transport.py',
+    'pfp/tests/test_simplicial_boundary_matrix.py',
+    'pfp/tests/test_swarm_developer.py',
+    'pfp/tests/test_swarm_reply_control_native.py',
+    'pfp/tests/test_symbol_game.py',
+    'pfp/tests/test_symbol_game_clean_architecture_domain_coverage.py',
+    'pfp/tests/test_symbol_game_cli.py',
+    'pfp/tests/test_symbol_game_controllers_promoted.py',
+    'pfp/tests/test_symbol_game_core_infra_promoted.py',
+    'pfp/tests/test_symbol_game_deepening.py',
+    'pfp/tests/test_symbol_game_domain_promoted.py',
+    'pfp/tests/test_symbol_game_e2e_multi_act_bout.py',
+    'pfp/tests/test_symbol_game_event_driven.py',
+    'pfp/tests/test_symbol_game_ffi.py',
+    'pfp/tests/test_symbol_game_master_mutation_battery.py',
+    'pfp/tests/test_symbol_game_pr_workflow.py',
+    'pfp/tests/test_symbol_game_release_gate.py',
+    'pfp/tests/test_symbol_game_rop_result.py',
+    'pfp/tests/test_three_layer_sovereignty.py',
+    'pfp/tests/test_traced_code_change.py',
+    'pfp/tests/test_turn_driver_controller.py',
+    'pfp/tests/test_unbound_solver_ports.py',
+    'pfp/tests/test_uns_emitter_custody.py',
+    'pfp/tests/test_verify_glyph_reply.py',
+    'pfp/tests/test_wp6_expectation_corpus.py',
 )
 
 #: The Rust workspace root. `cargo` cannot be invoked from the repository root.
-_CRATES = "omega_engine/crates_rs"
+_CRATES = "engine/crates_rs"
 
 #: Inherit the ambient toolchain; the repository build policy forbids pinning
 #: a channel in the command. Keep one package, serial compilation, and lib tests.
@@ -202,7 +202,7 @@ _RUNTIME_LIB = (
     "-j",
     "1",
     "-p",
-    "omega_symbol_game_runtime",
+    "core_symbol_game_runtime",
     "--lib",
 )
 
@@ -218,7 +218,7 @@ MUTANTS: list[Mutant] = [
             "payload, silently downgrading a pinned presentation to "
             "SELF_CONSISTENT_ONLY"
         ),
-        target="omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/peak.rs",
+        target="engine/crates_rs/core_symbol_game_runtime/src/rewriting/peak.rs",
         anchor="    rules.sort_unstable();\n",
         applied="    // MUTANT M01: the sort that makes the digest name the system\n",
         runner="cargo",
@@ -231,7 +231,7 @@ MUTANTS: list[Mutant] = [
             "Every peak verdict would report SELF_CONSISTENT_ONLY, including "
             "NeedsEvidence -- claiming consistency for a run that decided nothing"
         ),
-        target="omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/peak.rs",
+        target="engine/crates_rs/core_symbol_game_runtime/src/rewriting/peak.rs",
         anchor=(
             "        if self.decides() && matches!(self.authority, "
             "PresentationAuthority::ProducerDeclared) {"
@@ -250,7 +250,7 @@ MUTANTS: list[Mutant] = [
             "A join decided under rules the producer supplied would read as "
             "JOINED -- the defect the whole pinning mechanism exists to close"
         ),
-        target="omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/peak.rs",
+        target="engine/crates_rs/core_symbol_game_runtime/src/rewriting/peak.rs",
         anchor=(
             "        if self.decides() && matches!(self.authority, "
             "PresentationAuthority::ProducerDeclared) {\n"
@@ -272,7 +272,7 @@ MUTANTS: list[Mutant] = [
             "caller-supplied canonical_digest, making a model-authored receipt "
             "hash constructible -- which the type's own doc calls impossible"
         ),
-        target="omega_engine/crates_rs/omega_symbol_game_runtime/src/packets.rs",
+        target="engine/crates_rs/core_symbol_game_runtime/src/packets.rs",
         anchor="#[derive(Debug, Clone, PartialEq, Eq, Serialize)]\npub struct RoundRecord {",
         applied=(
             "#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]\n"
@@ -291,7 +291,7 @@ MUTANTS: list[Mutant] = [
             "A packet that declared its own carrier could reach PASS, so a "
             "producer wanting a clean receipt need only widen its carrier"
         ),
-        target="omega_engine_pfp/domain/calculus_receipt.py",
+        target="pfp/domain/calculus_receipt.py",
         anchor=(
             "        if self.carrier_authored_by is CarrierAuthority.PRODUCER:\n"
             "            # Every row re-derived against an allowlist the packet wrote. The\n"
@@ -308,7 +308,7 @@ MUTANTS: list[Mutant] = [
             "No run could ever reach PASS, so a host that really did pin its "
             "carrier would be silently capped at SELF_CONSISTENT_ONLY"
         ),
-        target="omega_engine_pfp/domain/calculus_receipt.py",
+        target="pfp/domain/calculus_receipt.py",
         anchor=(
             "        if self.carrier_authored_by is CarrierAuthority.PRODUCER:\n"
             "            # Every row re-derived against an allowlist the packet wrote. The\n"
@@ -325,7 +325,7 @@ MUTANTS: list[Mutant] = [
             "A run with unchecked rows would report SELF_CONSISTENT_ONLY, "
             "claiming consistency over rows the host never looked at"
         ),
-        target="omega_engine_pfp/domain/calculus_receipt.py",
+        target="pfp/domain/calculus_receipt.py",
         anchor="        if any(row.outcome is RowOutcome.UNCHECKABLE for row in self.rows):",
         applied=(
             "        if self.carrier_authored_by is CarrierAuthority.PRODUCER:\n"
@@ -339,7 +339,7 @@ MUTANTS: list[Mutant] = [
             "Carrier authorship would default UP, handing every caller that "
             "brought no carrier of its own a PASS it did not earn"
         ),
-        target="omega_engine_pfp/use_cases/verify_glyph_reply.py",
+        target="pfp/use_cases/verify_glyph_reply.py",
         anchor="    authored_by = CarrierAuthority.PRODUCER\n",
         applied="    authored_by = CarrierAuthority.HOST\n",
     ),
@@ -349,7 +349,7 @@ MUTANTS: list[Mutant] = [
             "A packet declaring any carrier would be accepted as host-authored "
             "without the digests ever being compared"
         ),
-        target="omega_engine_pfp/use_cases/verify_glyph_reply.py",
+        target="pfp/use_cases/verify_glyph_reply.py",
         anchor="        if declared != pinned:\n",
         applied="        if False:\n",
     ),
@@ -363,7 +363,7 @@ MUTANTS: list[Mutant] = [
             "different and larger set; 'prove x' would lint clean and then be "
             "rejected by ReceiptRow, raising out of the use case"
         ),
-        target="omega_engine_pfp/domain/glyph_calculus.py",
+        target="pfp/domain/glyph_calculus.py",
         anchor="    if token not in CLOSED_OPS:\n",
         applied="    if token.upper() not in CLOSED_OPS:\n",
     ),
@@ -376,7 +376,7 @@ MUTANTS: list[Mutant] = [
             "mod would use the C-family truncating remainder, so -17 mod 5 = -2 "
             "and this host would disagree with its own cyclic-group semantics"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor="    host_value = lhs % modulus\n",
         applied="    host_value = abs(lhs) % modulus * (1 if lhs >= 0 else -1)\n",
     ),
@@ -386,7 +386,7 @@ MUTANTS: list[Mutant] = [
             "A ZeroDivisionError would escape the use case on `17 mod 0`; a "
             "crash is not a terminal"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor="    if modulus <= 0:\n",
         applied="    if False:\n",
     ),
@@ -396,7 +396,7 @@ MUTANTS: list[Mutant] = [
             "A negative modulus would be treated as a cyclic group order, and "
             "Python's sign-following % would answer a question nobody asked"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor="    if modulus <= 0:\n",
         applied="    if modulus == 0:\n",
     ),
@@ -406,7 +406,7 @@ MUTANTS: list[Mutant] = [
             "`17 MOD 5 = 99` would be filed as UNCHECKABLE, letting a false "
             "claim escape the hallucination count on a capitalisation"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         # Anchored on the modular pattern's own closing line. Bare
         # `re.IGNORECASE,` matched three regexes once `period` and `successor`
         # landed, and `test_mutation_catalogue` failed on the ambiguity the
@@ -421,7 +421,7 @@ MUTANTS: list[Mutant] = [
             "`REDUCE 17 mod 5 = 2 and pigs fly` would re-derive clean, and the "
             "trailing claim would ride out on the arithmetic"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor=r'\s*=\s*(?P<claimed>[+-]?\d+)$"',
         applied=r'\s*=\s*(?P<claimed>[+-]?\d+)"',
     ),
@@ -432,7 +432,7 @@ MUTANTS: list[Mutant] = [
             "hallucination count would stay structurally zero and read as a "
             "clean bill of health"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor=(
             "    return Derivation(\n"
             "        RowOutcome.CONTRADICTED,\n"
@@ -451,7 +451,7 @@ MUTANTS: list[Mutant] = [
             "contradiction, inflating the count with the host's own admission "
             "policy"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor=(
             "            RowOutcome.REFUSED,\n"
             "            refusal_code=REFUSAL_STATEMENT_ILL_FORMED,\n"
@@ -468,7 +468,7 @@ MUTANTS: list[Mutant] = [
             "statement's form, so what the host can compute would depend on "
             "what the producer called it"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor="    body = statement_body(sentence)\n",
         applied=(
             "    body = statement_body(sentence) "
@@ -486,7 +486,7 @@ MUTANTS: list[Mutant] = [
             "asked about c7 -- guessing the SUBJECT of the sentence it claims "
             "to have verified"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor="    presentation = context.pins.resolve(name)\n",
         applied=(
             "    presentation = context.pins.resolve(name) or (\n"
@@ -503,7 +503,7 @@ MUTANTS: list[Mutant] = [
             "of the permutation -- right for c5, and wrong for any presentation "
             "with two orbits"
         ),
-        target="omega_engine_pfp/domain/presentation_pins.py",
+        target="pfp/domain/presentation_pins.py",
         anchor="        return order\n",
         applied="        return len(self.signature)\n",
     ),
@@ -523,7 +523,7 @@ MUTANTS: list[Mutant] = [
             "starts failing as declared-equivalent-but-killed and says so"
         ),
         expectation="equivalent",
-        target="omega_engine_pfp/domain/presentation_pins.py",
+        target="pfp/domain/presentation_pins.py",
         anchor="        if set(mapping) != symbols:\n            return None\n",
         applied="        if False:\n            return None\n",
     ),
@@ -534,7 +534,7 @@ MUTANTS: list[Mutant] = [
             "host would answer about a symbol the row did not name -- a carrier "
             "may legitimately declare `alpha` and `Alpha` as two members"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor="        if member.symbol == token:\n",
         applied="        if member.symbol.lower() == token.lower():\n",
     ),
@@ -545,7 +545,7 @@ MUTANTS: list[Mutant] = [
             "on a cp1252 console into a UnicodeEncodeError -- a crash instead of "
             "a finding"
         ),
-        target="omega_engine_pfp/domain/row_rederivation.py",
+        target="pfp/domain/row_rederivation.py",
         anchor="            return member.symbol\n",
         applied="            return glyph\n",
     ),

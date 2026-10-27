@@ -11,7 +11,7 @@
 //! construction*: it reads a run verdict and a scope and names a status.  It
 //! never changes state.
 //!
-//! The author's Omega engine has five stopping points.  Two are named in the
+//! The author's Core engine has five stopping points.  Two are named in the
 //! conversation: **exact** and **budget unknown** ("I give you a budget and
 //! you've overran it").  The mapping used here:
 //!

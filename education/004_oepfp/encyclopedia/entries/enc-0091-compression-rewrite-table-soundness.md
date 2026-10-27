@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.12"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.5 'Theorem IV.12'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.5 'Theorem IV.12'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -60,7 +60,7 @@ assembling them is recorded.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.5
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.5
   (statement copied verbatim; the §IV.5 blanket conditionality sentence and
   the IX-REWRITE blockquote are quoted under Notes). Original header line:
   `**Theorem IV.12 (Compression Rewrite Table Soundness).** [PROVED] Every admitted rewrite preserves declared semantics $\llbracket - \rrbracket$. Un-witnessed rules are refused, not silently applied.`

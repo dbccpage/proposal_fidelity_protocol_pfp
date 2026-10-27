@@ -123,8 +123,8 @@ def native_dependencies() -> dict:
              *Path(target).glob("*.rlib"), *Path(target).glob("*.lib"),
              *RUSTC.parent.glob("*.dll"), PACKAGE / "second_checker.rs",
              Path(__file__).resolve(), PYTHON_EXE,
-             *(REPOSITORY / "omega_engine/crates_rs/omega_ooutwire_primitives/src").rglob("*.rs"),
-             REPOSITORY / "omega_engine/crates_rs/omega_ooutwire_primitives/Cargo.toml"]
+             *(REPOSITORY / "engine/crates_rs/core_ooutwire_primitives/src").rglob("*.rs"),
+             REPOSITORY / "engine/crates_rs/core_ooutwire_primitives/Cargo.toml"]
     return file_map(paths)
 
 
@@ -132,12 +132,12 @@ def build_native(identity: str) -> dict:
     destination = AREA / identity
     destination.mkdir(parents=True, exist_ok=False)
     before = native_dependencies()
-    primitive = DEPS / "libomega_ooutwire_primitives-7419c0b1b3d813be.rlib"
+    primitive = DEPS / "libcore_ooutwire_primitives-7419c0b1b3d813be.rlib"
     serde = DEPS / "libserde_json-1a3e70913255bad6.rlib"
     executable = destination / "g01_second_checker.exe"
     argv = [str(RUSTC), "--edition", "2021", "--crate-name", "paper011_genesis_g01",
             str(PACKAGE / "second_checker.rs"), "-L", "dependency=" + str(DEPS),
-            "--extern", "omega_ooutwire_primitives=" + str(primitive),
+            "--extern", "core_ooutwire_primitives=" + str(primitive),
             "--extern", "serde_json=" + str(serde), "-o", str(executable)]
     result = subprocess.run(argv, cwd=PACKAGE, capture_output=True, check=False, timeout=300)
     after = native_dependencies()

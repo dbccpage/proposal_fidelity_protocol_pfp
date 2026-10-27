@@ -43,7 +43,7 @@ not interchangeable denominators for a success percentage.
 ## Preserved implementation and proof results
 
 No companion crate was admitted with this register. The 2026-10-03 closeout
-named `omega_engine/crates_rs/omega_paper011_results` and a public
+named `engine/crates_rs/core_paper011_results` and a public
 `guarded_cut_census` function for distinct in-range pairs, with n at least two
 and at most twelve, returning `1 << (n - 2)`. That crate is not in this tree.
 The G02 record on this shelf is [the G02 record](history_recovery/g02/README.md).

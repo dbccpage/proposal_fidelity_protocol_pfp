@@ -9,12 +9,12 @@ import time
 from pathlib import Path
 from uuid import uuid4
 
-from omega_engine_pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gateway
-from omega_engine_pfp.infrastructure.pilot_matrix import complete_pilot_turn, validate_pilot_gateways
-from omega_engine_pfp.infrastructure.synthesis_matrix import prepare_output_dir
-from omega_engine_pfp.tests.demo_004.a_mechanism.consistency_teaching import conditions, tasks
-from omega_engine_pfp.tests.demo_004.a_mechanism.consistency_teaching.host import host_verdict
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
+from pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gateway
+from pfp.infrastructure.pilot_matrix import complete_pilot_turn, validate_pilot_gateways
+from pfp.infrastructure.synthesis_matrix import prepare_output_dir
+from pfp.tests.demo_004.a_mechanism.consistency_teaching import conditions, tasks
+from pfp.tests.demo_004.a_mechanism.consistency_teaching.host import host_verdict
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
 
 DEFAULT_MODEL = "openai/gpt-4o-mini"
 TEACHING_ITEMS = 3

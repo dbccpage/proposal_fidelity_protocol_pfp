@@ -1,7 +1,7 @@
 """Synthetic challenge packages for the harness tests.
 
 Each builder writes a miniature repository under a temporary root with the
-same layout as ``omega_engine_pfp/tests/demo_004``. The task
+same layout as ``pfp/tests/demo_004``. The task
 in every fake package: given integers ``a`` and ``b``, return their sum,
 or UNKNOWN when ``b`` is negative (the fake notion of an infeasible case).
 """
@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 THEME = "z_fake"
-CHALLENGES = Path("omega_engine_pfp") / "tests" / "demo_004"
+CHALLENGES = Path("pfp") / "tests" / "demo_004"
 
 SOLVER = """
 def solve(case):
@@ -81,7 +81,7 @@ def independent_check(case, answer):
 """
 
 INDEPENDENT_ANSWER_KEY = """
-from omega_engine_pfp.tests.demo_004.z_fake.{pkg}.reference_solver.solver import solve as ref_solve
+from pfp.tests.demo_004.z_fake.{pkg}.reference_solver.solver import solve as ref_solve
 
 
 def independent_check(case, answer):
@@ -136,8 +136,8 @@ def _write(path: Path, text: str) -> None:
 
 def repo(root: Path) -> Path:
     for part_root in (
-        root / "omega_engine_pfp",
-        root / "omega_engine_pfp" / "tests",
+        root / "pfp",
+        root / "pfp" / "tests",
         root / CHALLENGES,
         root / CHALLENGES / THEME,
     ):
@@ -149,7 +149,7 @@ def light_package(
     root: Path, name: str, exact: str, independent: str, *, examples: bool = True
 ) -> Path:
     pkg = root / CHALLENGES / THEME / name
-    prefix = f"omega_engine_pfp.tests.demo_004.{THEME}.{name}"
+    prefix = f"pfp.tests.demo_004.{THEME}.{name}"
     _write(pkg / "__init__.py", "")
     _write(pkg / "reference_solver" / "__init__.py", "from .solver import solve\n")
     _write(pkg / "reference_solver" / "solver.py", SOLVER)

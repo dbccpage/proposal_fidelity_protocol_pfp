@@ -4,12 +4,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.domain.guard_activation import (
+from eis.domain.guard_activation import (
     ActivationRefusal,
     DetectorHitRefV1,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import Signal2Danger
-from omega_engine_epistemic_immune_system.use_cases.guard_activation import (
+from eis.domain.value_objects import Signal2Danger
+from eis.use_cases.guard_activation import (
     activate_learned_guard,
     subject_digest,
 )
@@ -70,7 +70,7 @@ def main():
         value = {**case, "signal": None if signal is None else {"danger_type": signal.danger_type,
             "observer_id": signal.observer_id, "evidence_digest": signal.evidence_digest}}
         rows.append({"input": value, "expected": expected, "calls": calls})
-    path = Path(__file__).resolve().parents[2] / "omega_engine/crates_rs/tests/omega_epistemic_immune_system/fixtures/python_guard_use_case_v1.json"
+    path = Path(__file__).resolve().parents[2] / "engine/crates_rs/tests/core_epistemic_immune_system/fixtures/python_guard_use_case_v1.json"
     path.write_text(json.dumps({"vectors": rows}, ensure_ascii=False, indent=2) + "\n",encoding="utf-8")
     print(f"Frozen {len(rows)} guard use-case vectors before native implementation.")
 

@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay import inside, replay_bundle
+from pfp.infrastructure.adapters.pfp_frozen_replay import inside, replay_bundle
 
 
 def bundle_fixture(root, source):
@@ -48,22 +48,22 @@ def test_snapshot_byte_tamper_refuses_before_execution(tmp_path):
 def test_moved_evidence_is_reconstructed_at_its_original_snapshot_path(tmp_path):
     source = b'''import json
 from pathlib import Path
-print(json.dumps({"retained": Path("omega_engine_education/pilots/evidence/probe/raw.bin").read_bytes().hex()}))
+print(json.dumps({"retained": Path("education/pilots/evidence/probe/raw.bin").read_bytes().hex()}))
 '''
     bundle, _ = bundle_fixture(tmp_path, source)
-    current = tmp_path / "omega_engine_woland/tests/pilots/evidence/probe"
+    current = tmp_path / "adversary/tests/pilots/evidence/probe"
     current.mkdir(parents=True)
     raw = b"original retained provider bytes\x00\xff"
     (current / "raw.bin").write_bytes(raw)
     manifest_path = bundle / "frozen_runtime.json"
     manifest = json.loads(manifest_path.read_bytes())
-    manifest["evidence_paths"] = ["omega_engine_education/pilots/evidence/probe"]
+    manifest["evidence_paths"] = ["education/pilots/evidence/probe"]
     manifest_bytes = json.dumps(manifest).encode()
     manifest_path.write_bytes(manifest_bytes)
     assert replay_bundle(tmp_path, bundle, "probe") == {"retained": raw.hex()}
     assert manifest_path.read_bytes() == manifest_bytes
     assert (current / "raw.bin").read_bytes() == raw
-    assert not (tmp_path / "omega_engine_education").exists()
+    assert not (tmp_path / "education").exists()
     assert not list((tmp_path / "scratch/pfp-frozen-replay").iterdir())
 
 

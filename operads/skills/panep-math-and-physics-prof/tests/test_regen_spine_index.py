@@ -150,7 +150,7 @@ def test_spine_anchors_strip_hashes_and_indent_by_level(tmp_path):
 
 
 def test_nested_coda_ground_up_is_discovered_without_blank_support_rows(tmp_path):
-    pub = tmp_path / "omega_engine" / "research" / "published"
+    pub = tmp_path / "engine" / "research" / "published"
     tower = pub / "001_coda" / "coda_fda"
     ground = pub / "001_coda" / "gtoc" / "001_gtoc_time"
     controls = pub / "001_coda" / "gtoc"
@@ -173,7 +173,7 @@ def test_nested_coda_ground_up_is_discovered_without_blank_support_rows(tmp_path
     assert {(r.qualify_paper_id(pid, rel), rel) for pid, _, rel in rows} == {
         (
             "gg001",
-            "omega_engine/research/published/001_coda/gtoc/001_gtoc_time/001_gtoc_time.md",
+            "engine/research/published/001_coda/gtoc/001_gtoc_time/001_gtoc_time.md",
         ),
     }
     assert all(pid for pid, _, _ in rows)
@@ -197,7 +197,7 @@ def test_gtoc_rows_follow_relocated_coda_estate(tmp_path):
 
 
 def test_programme_overview_does_not_duplicate_local_paper_zero(tmp_path):
-    pub = tmp_path / "omega_engine" / "research" / "published"
+    pub = tmp_path / "engine" / "research" / "published"
     programme = pub / "000_witnessed_difference"
     paper = programme / "000_wd0_5"
     paper.mkdir(parents=True)
@@ -209,7 +209,7 @@ def test_programme_overview_does_not_duplicate_local_paper_zero(tmp_path):
     assert [(r.qualify_paper_id(pid, rel), rel) for pid, _, rel in rows] == [
         (
             "wd000",
-            "omega_engine/research/published/000_witnessed_difference/000_wd0_5/000_wd0_5.md",
+            "engine/research/published/000_witnessed_difference/000_wd0_5/000_wd0_5.md",
         )
     ]
 

@@ -1,4 +1,4 @@
-"""Parity corpus: the Python pharmacy against the native `omega_prompt_civilization` pharmacy.
+"""Parity corpus: the Python pharmacy against the native `core_prompt_civilization` pharmacy.
 
 `PharmacyMatcher` runs twelve native classes through the Symbol Game host and
 supplements native persona-field checks with the Python persona-text check.
@@ -9,8 +9,8 @@ supplements native persona-field checks with the Python persona-text check.
 2. each of the five documented behavioural differences, pinned so that a change
    on either side is noticed.
 
-The native host must be built (`cargo build -j 1 -p omega_symbol_game`, or
-`OMEGA_SYMBOL_GAME_HOST` pointing at the binary); otherwise these tests skip
+The native host must be built (`cargo build -j 1 -p core_symbol_game`, or
+`CORE_SYMBOL_GAME_HOST` pointing at the binary); otherwise these tests skip
 with the host refusal code, like the other native-port tests in the repository.
 """
 
@@ -21,22 +21,22 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.value_objects import DetectorRule
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.domain.value_objects import DetectorRule
+from eis.infrastructure.mssn_pharmacy import (
     DetectionContext,
     FailureClass,
     detect,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import (
+from eis.infrastructure.mssn_ports import (
     PERSONA_AUTHORITY_LEAK,
     PHARMACY_MATCHER_ID,
     PharmacyMatcher,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import (
+from eis.infrastructure.native_pharmacy import (
     NATIVE_CLASS_CODES,
     NativePharmacy,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
+from pfp.infrastructure.adapters.mssn_scenarios.immune_fixtures import (
     NEGATIVE_FIXTURES,
     POSITIVE_FIXTURES,
 )
@@ -46,7 +46,7 @@ SHARED = frozenset(NATIVE_CLASS_CODES.values()) - {PERSONA_AUTHORITY_LEAK}
 
 @pytest.fixture(scope="module")
 def native() -> NativePharmacy:
-    from omega_engine_operating_system.adapters.rust_host.ffi import locate_host_binary
+    from operating_system.adapters.rust_host.ffi import locate_host_binary
 
     located = locate_host_binary()
     if located.is_err:

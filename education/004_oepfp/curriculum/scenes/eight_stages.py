@@ -1,9 +1,9 @@
 """Track A video 6 — eight packet and receipt schemas, including the code-change proposal.
 
 ``STAGE_FILES`` is a packet-schema index (indexes 0–7) over
-``omega_engine_pfp/packet_schemas/``. It is not a pipeline and not the
+``pfp/packet_schemas/``. It is not a pipeline and not the
 11-stage public ladder. That ladder stays ``stage_1`` through ``stage_11``
-in ``omega_engine_pfp/infrastructure/yaml/stages/``. The envelope carries one
+in ``pfp/infrastructure/yaml/stages/``. The envelope carries one
 payload family (an LLM turn or a code-change proposal), so the eight files
 are not a sequence. Index 5 is the code-change proposal; additionalProperties
 is false; the schema ``$comment`` forbids model-authored
@@ -28,7 +28,7 @@ def _find_repo_root(p: Path = Path(__file__).resolve()) -> Path:
 
 _ROOT = _find_repo_root()
 _SCENES = Path(__file__).resolve().parent
-_PACKET_SCHEMAS = _ROOT / "omega_engine_pfp" / "packet_schemas"
+_PACKET_SCHEMAS = _ROOT / "pfp" / "packet_schemas"
 
 # Packet-schema index, not the 11-stage public ladder.
 STAGE_FILES = [
@@ -53,7 +53,7 @@ def _schema(name: str) -> dict:
 def stage5_minimal() -> dict:
     digest = "a" * 64
     return {
-        "schema_version": "omega.symbol-game.code-change-proposal.v1",
+        "schema_version": "core.symbol-game.code-change-proposal.v1",
         "family": "code_change_proposal",
         "objective": "land a typed refusal on a planted contradiction",
         "source_revision": "track-a",

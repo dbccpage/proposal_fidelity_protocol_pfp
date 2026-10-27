@@ -7,8 +7,8 @@ import json
 
 import pytest
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-from omega_engine_pfp.use_cases.pfp_prompt import AssemblePfpPromptUseCase, task_contract
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+from pfp.use_cases.pfp_prompt import AssemblePfpPromptUseCase, task_contract
 
 DISCRIMINATORS = ("code", "verdict", "status", "kind", "refusal_code")
 

@@ -291,7 +291,7 @@ class PromptGenomeV1:
             [asdict(span) for span in self.protected_spans],
         ]
         raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")
-        identity = "genome_" + hashlib.sha256(b"omega-prompt-genome-v1:" + raw).hexdigest()
+        identity = "genome_" + hashlib.sha256(b"core-prompt-genome-v1:" + raw).hexdigest()
         if self.prompt_id and self.prompt_id != identity:
             raise ValueError("GENOME_IDENTITY_MISMATCH")
         object.__setattr__(self, "prompt_id", identity)
@@ -409,7 +409,7 @@ def hard_domain_eligible(placement: DomainPlacementV1, required_domain: str) -> 
 
 
 # =============================================================================
-# LINEAGE, CEMETERY & RE-ENTRY VALUE OBJECTS (the city / Woland Parity)
+# LINEAGE, CEMETERY & RE-ENTRY VALUE OBJECTS (the city / Adversary Parity)
 # =============================================================================
 
 @dataclass(frozen=True, slots=True)
@@ -442,7 +442,7 @@ class CemeteryHeadstoneV1:
     @property
     def headstone_id(self) -> str:
         return semantic_id(
-            "omega.oeas.headstone.v1",
+            "core.oeas.headstone.v1",
             {
                 "run_key": self.run_key,
                 "scene_id": self.scene_id,
@@ -582,7 +582,7 @@ class GenealogyEntryV1:
     @property
     def lineage_id(self) -> str:
         return semantic_id(
-            "omega.oeas.genealogy.v1",
+            "core.oeas.genealogy.v1",
             {
                 "parent_run_key": self.parent_run_key,
                 "child_run_key": self.child_run_key,

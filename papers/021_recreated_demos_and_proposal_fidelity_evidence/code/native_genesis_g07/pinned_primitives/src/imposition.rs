@@ -7,7 +7,7 @@
 //! response (`response.rs` checks all of `reqs`, not only the newest).  It is
 //! also *external*: the sealed derivation never derived a demand from inside
 //! the object language — that is `OB-1`, the standing obstruction, and it is
-//! why the Omega engine takes its demands from `outside.rs` and nowhere else.
+//! why the Core engine takes its demands from `outside.rs` and nowhere else.
 //!
 //! A requirement is not yet an *active obstruction*.  Recording `(i, j)` says
 //! the pair must become separable; an obstruction is that record **plus** the

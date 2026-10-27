@@ -423,7 +423,7 @@ class TraceLogger:
             delta = float(after) - float(residual_before)
 
         record: dict[str, Any] = {
-            "schema_version": "omega.ddc.trace.v2",
+            "schema_version": "core.ddc.trace.v2",
             "ddc_dialect": self.dialect,
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
             "runner_id": self.runner_id,

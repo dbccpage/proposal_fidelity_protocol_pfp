@@ -5,11 +5,11 @@ from fractions import Fraction
 import pytest
 import sympy as sp
 
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
-from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import _native
-from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import wire
-from omega_engine_pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema
-from omega_engine_pfp.infrastructure.pilot_runners.seed_core_checks import core_expected
+from pfp.infrastructure.pilot_runners.mssn_checks import evaluate_seed_response
+from pfp.infrastructure.pilot_runners.seed_checks import _native
+from pfp.infrastructure.pilot_runners.seed_checks import wire
+from pfp.infrastructure.pilot_runners.seed_checks import seed_candidate_schema
+from pfp.infrastructure.pilot_runners.seed_core_checks import core_expected
 
 
 @pytest.mark.parametrize("number,field",[(3,"raw_source"),(11,"transported_basis_maps"),(16,"critical_overlaps")])
@@ -80,7 +80,7 @@ def test_schema_exposes_types_without_reference_answer_constants():
 ])
 def test_missing_source_bytes_are_unavailable_instead_of_a_negative_oracle(monkeypatch, seed, reason):
     from pathlib import Path
-    from omega_engine_pfp.infrastructure.providers import SeedHostVerifier
+    from pfp.infrastructure.providers import SeedHostVerifier
 
     def missing_source(path):
         raise FileNotFoundError(path)

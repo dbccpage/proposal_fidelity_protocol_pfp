@@ -7,32 +7,32 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_epistemic_immune_system.use_cases.demos.antimorphism_farm.contract import (
+from eis.use_cases.demos.antimorphism_farm.contract import (
     PINNED_SCOPE,
     QuarantineRecord,
     refusal_evidence_body,
 )
-from omega_engine_epistemic_immune_system.use_cases.demos.antimorphism_farm.run import (
+from eis.use_cases.demos.antimorphism_farm.run import (
     _preferred_native_port,
     assemble_run,
     run_antimorphism_farm,
     verify_receipt,
 )
 try:
-    from omega_engine_projects.mssn_sn_symgam.demos.demos_runner import (
+    from projects.mssn_sn_symgam.demos.demos_runner import (
         run_antimorphism_farm_cli as main,
         write_run_antimorphism_farm as write_run,
     )
 except (ImportError, ModuleNotFoundError):
     main = None
     write_run = None
-from omega_engine_pfp.domain.demos import DemoRefusal
-from omega_engine_pfp.infrastructure.demos.canonical import canonical, digest, load
+from pfp.domain.demos import DemoRefusal
+from pfp.infrastructure.demos.canonical import canonical, digest, load
 
 ROOT = Path(__file__).resolve().parents[3]
 PACKAGED = (
     ROOT
-    / "omega_engine_pfp"
+    / "pfp"
     / "infrastructure"
     / "adapters"
     / "mssn_research"
@@ -137,14 +137,14 @@ def test_sources_do_not_call_or_import_python_copies() -> None:
     import inspect
     paths = [
         ROOT.joinpath(
-            "omega_engine_epistemic_immune_system",
+            "eis",
             "use_cases",
             "demos",
             "antimorphism_farm",
             "contract.py",
         ),
         ROOT.joinpath(
-            "omega_engine_epistemic_immune_system",
+            "eis",
             "use_cases",
             "demos",
             "antimorphism_farm",
@@ -173,9 +173,9 @@ def test_sources_do_not_call_or_import_python_copies() -> None:
 
 
 def test_python_copies_are_not_invoked(monkeypatch: pytest.MonkeyPatch) -> None:
-    import omega_engine_epistemic_immune_system.infrastructure.mssn_classifier as classifier
-    import omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy as pharmacy
-    import omega_engine_epistemic_immune_system.use_cases.mssn_immune as immune
+    import eis.infrastructure.mssn_classifier as classifier
+    import eis.infrastructure.mssn_pharmacy as pharmacy
+    import eis.use_cases.mssn_immune as immune
 
     def forbidden(*_args: object, **_kwargs: object) -> None:
         raise AssertionError("python copy invoked")
@@ -201,7 +201,7 @@ def test_front_end_writes_refusal_and_verify_rejects_checked(tmp_path: Path) -> 
     assert fixture_bytes and trace and transcript
     assert len(quarantine) == 1
     receipt = load(receipt_path.read_bytes())
-    assert receipt["schema"] == "omega.symbol-game.demo-receipt.v1"
+    assert receipt["schema"] == "core.symbol-game.demo-receipt.v1"
     assert receipt["AuthorityEffect"] == "None"
     assert receipt["result"]["status"] == "TYPED_REFUSAL"
     assert receipt["result"]["code"] == "NO_NATIVE_PORT"
@@ -239,7 +239,7 @@ def test_front_end_refuses_checked_bundle_and_research_output(
 ) -> None:
     if write_run is None:
         pytest.skip("Legacy demos_runner CLI is retired after pilot estate decoupling")
-    import omega_engine_projects.mssn_sn_symgam.demos.demos_runner as front
+    import projects.mssn_sn_symgam.demos.demos_runner as front
 
     def checked(_fixture: object) -> object:
         return type("Bundle", (), {"result": {"status": "CHECKED", "code": "NO_NATIVE_PORT"}})()
@@ -263,7 +263,7 @@ def test_front_end_refuses_checked_bundle_and_research_output(
 def test_research_demo_remains() -> None:
     path = ROOT / "research" / "mssn_sn_tower" / "demos" / "antimorphism_farm" / "immune_bench.py"
     if not path.is_file():
-        path = ROOT / "omega_engine_epistemic_immune_system" / "infrastructure" / "immune_bench.py"
+        path = ROOT / "eis" / "infrastructure" / "immune_bench.py"
     text = path.read_text(encoding="utf-8")
     assert "class AntimorphismImmuneBench" in text
     bundle = assemble_run(_fixture(False))

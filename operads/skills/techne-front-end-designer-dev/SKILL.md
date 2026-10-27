@@ -99,11 +99,11 @@ When building interactive data graphics or visual canvas interfaces:
 When repairing or standardizing presentation services and Web API endpoints:
 
 1. **Rust Presentation Crate Compatibility (`compat.rs`):**
-   - Maintain zero-dependency internal submodules (`compat::self_review`, `compat::sweep_kernel`, `compat::proofer`) inside `omega_api/src/compat.rs`.
+   - Maintain zero-dependency internal submodules (`compat::self_review`, `compat::sweep_kernel`, `compat::proofer`) inside `core_api/src/compat.rs`.
    - Re-export `SurfaceRecorder`, `SurfaceManifest`, `Decision`, `TerminalRecord`, and `terminalize_row`.
-   - Ensure `omega_layer_presentation/omega_api` is registered in `omega_engine/Cargo.toml`.
+   - Ensure `core_layer_presentation/core_api` is registered in `engine/Cargo.toml`.
 2. **Python FastAPI Path & Defect Sanitization (`app.py`):**
-   - Ensure `sys.path` dynamically resolves `repo_root`, `omega_engine_dir`, `omega_engine_py_dir`, and `presentation_root`.
+   - Ensure `sys.path` dynamically resolves `repo_root`, `dir`, `engine_py_dir`, and `presentation_root`.
    - Replace synthetic magic numbers in defect simulation endpoints (`/api/epk/simulate`) with explicit linear composition laws.
 
 ---

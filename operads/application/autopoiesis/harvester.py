@@ -1,6 +1,6 @@
 """Autopoietic Harvester Use Case.
 
-Implements the core engine that enables the Omega Engine to "eat its own output":
+Implements the core engine that enables the engine to "eat its own output":
 - Ingests ephemeral teamwork directories and antibody files into immutable CAS storage.
 - Mines recurring workflows into candidate skill proposals.
 - Mines discovered failure modes into formal antibody definitions.
@@ -15,14 +15,14 @@ import hashlib
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from omega_engine_operads.domain.autopoiesis.entities import (
+from operads.domain.autopoiesis.entities import (
     HarvestReceipt,
     HarvestRecord,
     HarvestSnapshot,
     MinedAntibody,
     MinedSkillProposal,
 )
-from omega_engine_operads.domain.autopoiesis.ports import (
+from operads.domain.autopoiesis.ports import (
     ArtifactLocation,
     HarvestSourcePort,
     HarvestVaultPort,

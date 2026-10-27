@@ -20,7 +20,7 @@ AuthorityEffect: None.
 """
 
 from __future__ import annotations
-from omega_engine_pfp.infrastructure.normal_form_loading import validate_contract_file
+from pfp.infrastructure.normal_form_loading import validate_contract_file
 
 import unittest
 from pathlib import Path
@@ -28,8 +28,8 @@ from pathlib import Path
 import yaml
 
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import CANONICAL_TERMINALS_DEFAULT
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import load_yaml
+from pfp.infrastructure.normal_forms.contract_model import CANONICAL_TERMINALS_DEFAULT
+from pfp.infrastructure.normal_forms.contract_model import load_yaml
 
 
 def _get_contracts_dir() -> Path:

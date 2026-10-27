@@ -12,7 +12,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.solver import (
     solve,
 )
 

@@ -9,10 +9,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_woland.tests.pilots import live_evaluator as live
-from omega_engine_pfp.domain.types import EvaluationStatus, PilotSpec, PStarPrompt
-from omega_engine_pfp.infrastructure import pilot_evidence as evidence
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
+from adversary.tests.pilots import live_evaluator as live
+from pfp.domain.types import EvaluationStatus, PilotSpec, PStarPrompt
+from pfp.infrastructure import pilot_evidence as evidence
+from pfp.infrastructure.model_loading import load_yaml_model
 
 LINALG = "PFP-01-EXACT-LINALG"
 REFUSAL = "LEGACY_LIVE_REQUIRES_CANONICAL_PFP"
@@ -22,7 +22,7 @@ ROOT = next(parent for parent in Path(__file__).resolve().parents if (parent / "
 def pilot_copy(tmp_path):
     pilot = tmp_path / "pilot_0000000"
     pilot.mkdir()
-    source = ROOT / "omega_engine_woland/tests/pilots/results" / pilot.name
+    source = ROOT / "adversary/tests/pilots/results" / pilot.name
     for name in ("spec.yaml", "seed.yaml", "p_star.yaml"):
         shutil.copyfile(source / name, pilot / name)
     return pilot
@@ -64,7 +64,7 @@ def test_public_legacy_dispatch_refuses_before_network(monkeypatch):
 
 
 def test_new_pilot_observation_refuses_before_credentials_or_attempt_write(tmp_path, monkeypatch):
-    from omega_engine_woland.infrastructure.providers import credential_source
+    from adversary.infrastructure.providers import credential_source
 
     pilot = pilot_copy(tmp_path)
     before = {path.name: path.read_bytes() for path in pilot.iterdir()}

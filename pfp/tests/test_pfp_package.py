@@ -1,4 +1,4 @@
-"""Unit tests for the autonomous omega_engine_pfp package.
+"""Unit tests for the autonomous pfp package.
 
 Validates:
 1. Clean Architecture boundary enforcement across domain, use_cases, infrastructure,
@@ -14,11 +14,11 @@ from __future__ import annotations
 import unittest
 from typing import Any, Dict
 
-from omega_engine_pfp.controllers.pfp_controller import PfpController
-from omega_engine_pfp.domain.prompts.prompts import PromptPacket
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.entrypoints.cli.pfp import build_parser
-from omega_engine_pfp.domain.rewriting.rewrites import Boundary, RewriteRequest, Segment
+from pfp.controllers.pfp_controller import PfpController
+from pfp.domain.prompts.prompts import PromptPacket
+from pfp.domain.kernel.result import RefusalCode
+from pfp.entrypoints.cli.pfp import build_parser
+from pfp.domain.rewriting.rewrites import Boundary, RewriteRequest, Segment
 
 
 class TestPfpPackage(unittest.TestCase):
@@ -42,7 +42,7 @@ class TestPfpPackage(unittest.TestCase):
         self.assertTrue(len(packet.user_sha256) > 0)
 
     def test_02_evaluate_gates(self) -> None:
-        """Evaluates 13 Woland tribunal gates with clean attestations."""
+        """Evaluates 13 Adversary tribunal gates with clean attestations."""
         clean_attestations = {
             "text": "simplicial carrier with exact boundary",
             "is_admitted": True,
@@ -97,7 +97,7 @@ class TestPfpPackage(unittest.TestCase):
 
     def test_06_rewrite_prompt(self) -> None:
         """Applies rewriting bindings to a prompt template."""
-        from omega_engine_pfp.domain.rewriting.rewrites import Binding
+        from pfp.domain.rewriting.rewrites import Binding
         req = RewriteRequest(
             request_id="req_001",
             raw_prompt="Compute 2 + 2",

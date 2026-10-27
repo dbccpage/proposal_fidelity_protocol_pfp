@@ -7,10 +7,10 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask import (
     attention_hook as hook,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask import (
     empirical_neural_mcnemar_evaluation as runner,
 )
 

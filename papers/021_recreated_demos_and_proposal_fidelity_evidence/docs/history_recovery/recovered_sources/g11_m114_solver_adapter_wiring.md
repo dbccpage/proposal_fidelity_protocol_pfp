@@ -17,7 +17,7 @@ At HEAD `b55fc96a`, `19L57G1:research/m114_solver_adapter/README.md` names its n
 
 `declared_constraint_pruned` takes a predicate or `pruned_keys`, and `declared_cost_budgeted` takes exact costs. Nothing yet certifies why a key is pruned. The adapter emits exact certificates in `Fraction`: `PrimalReceipt`, a feasible witness; `DualReceipt`, a vector of Farkas multipliers; `IntegerInfeasibilityReceipt`; the typed refusal `FUEL_EXHAUSTED`, which leaves the problem unmutated.
 
-The glue code is modest. What matters is the refusal semantics: a refusal must never prune. The challenge stresses Symbol Game repair on typed refusals, OEWAS (Omega Engine Workflows, Agents, Skills) code synthesis, and OEEIS (Omega Engine Epistemic Immune System) rejection of forged certificates.
+The glue code is modest. What matters is the refusal semantics: a refusal must never prune. The challenge stresses Symbol Game repair on typed refusals, OEWAS (Engine Workflows, Agents, Skills) code synthesis, and OEEIS (Engine Epistemic Immune System) rejection of forged certificates.
 
 ## 3. Formal Problem and Bounds
 
@@ -58,7 +58,7 @@ The packet also includes `runner.py` and `accounting.json`.
 
 **Poisoned but schema-valid cases:** A key absent from the sealed quotient, which must raise `FabricatedClassError`; a certificate issued for another key's problem; a negative cost.
 
-**Second checker.** Operator-written. It uses Rust `omega_solvers` (exact weighted L1 LP) to re-derive feasibility, and checks Farkas multipliers with exact rationals from `omega_kernel`.
+**Second checker.** Operator-written. It uses Rust `core_solvers` (exact weighted L1 LP) to re-derive feasibility, and checks Farkas multipliers with exact rationals from `core_kernel`.
 
 **Gates.** `python ci/run_gates.py` and both trees' `verify.py`, at HEAD.
 
@@ -112,7 +112,7 @@ The catalog row requires none of these. They are recommended:
 
 **19L57G1, read-only, at HEAD:** `19L57G1:research/m114_solver_adapter/` (`solver_adapter.py`, `lean/SolverAdapter.lean`, `README.md`, `CLAIMS.md`); `19L57G1:research/alpha_engine/` (`search_policy.py`, `driver_a.py`); `19L57G1:research/x302_operational_reasoning/CLAIMS.md`.
 
-**the_symbol_game:** `omega_engine/crates_rs/omega_solvers`; `omega_engine/crates_rs/omega_kernel`; `omega_engine_pfp/domain/biochem/proofreading.py`.
+**the_symbol_game:** `engine/crates_rs/core_solvers`; `engine/crates_rs/core_kernel`; `pfp/domain/biochem/proofreading.py`.
 
 **Upgrades.**
 

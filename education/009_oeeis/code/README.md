@@ -24,5 +24,5 @@ This package contains diagnostic, verification, and simulation engines for the E
 Execute targeted tests using Python 3.12:
 
 ```bash
-py -3.12 -m pytest omega_engine_education/documentation/009_oeeis/code/tests/test_eis_levels.py -v
+py -3.12 -m pytest education/documentation/009_oeeis/code/tests/test_eis_levels.py -v
 ```

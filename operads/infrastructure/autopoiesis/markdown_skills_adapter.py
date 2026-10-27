@@ -1,7 +1,7 @@
 """Markdown proposed skills register adapter.
 
 Manages recording newly mined skill proposals into:
-  omega_engine_operads/skills/ooutwire/proposed_skills_register.md
+  operads/skills/ooutwire/proposed_skills_register.md
 
 AuthorityEffect: None.
 """
@@ -12,8 +12,8 @@ import re
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.domain.autopoiesis.entities import MinedSkillProposal
-from omega_engine_operads.domain.autopoiesis.ports import SkillsRegisterPort
+from operads.domain.autopoiesis.entities import MinedSkillProposal
+from operads.domain.autopoiesis.ports import SkillsRegisterPort
 
 _ENTRY_RE = re.compile(r"### Entry (\d+):\s*`([^`]+)`")
 

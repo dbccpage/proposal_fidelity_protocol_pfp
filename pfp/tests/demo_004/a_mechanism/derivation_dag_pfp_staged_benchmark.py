@@ -29,21 +29,21 @@ benchmark (`DAG-QM-S1`) across 3 multi-node Finite-QM derivation slices (`dag_qm
    Feeds the `P*`-materialized Coloured Operad container into the Fable 5.5 upgraded
    11-stage `pfp-staged.0.3` pipeline (`ExecuteStagePipelineUseCase`):
    - Stage 1 (`admit`, `host`, 0 model calls): admits the seed `declaration` (`declaration_source="seed"`).
-   - Stage 2 (`ideation`, `model`, `seat_begemot`, 1 model call): proposes 5-7 candidates
+   - Stage 2 (`ideation`, `model`, `seat_gauge_breaker`, 1 model call): proposes 5-7 candidates
      (`construction`, `refutation`, `weakening`), with >= 1 refutation/weakening and >= 2
      `check_without_llm: true`.
-   - Stage 3 (`audit`, `model`, `seat_koroviev`, 1 model call): audits Stage 2 candidates
+   - Stage 3 (`audit`, `model`, `seat_defect_hunter`, 1 model call): audits Stage 2 candidates
      and routes the constructive derivation candidate to `"extract"`.
-   - Stage 4 (`l2_extraction`, `model`, `seat_begemot`, 1 model call): extracts the
+   - Stage 4 (`l2_extraction`, `model`, `seat_gauge_breaker`, 1 model call): extracts the
      complete 8-node derivation certificate into `candidate_schema`.
-   - Stage 5 (`evaluation`, `host`, `seat_woland`, 0 model calls): `DerivationDagHostVerifier.verify`
+   - Stage 5 (`evaluation`, `host`, `seat_adversary`, 0 model calls): `DerivationDagHostVerifier.verify`
      independently checks all 8 exact mathematical and DAG-status invariants.
-   - Stage 6 (`adversarial`, `model`, `seat_margarita`, 1 model call): proposes concrete
+   - Stage 6 (`adversarial`, `model`, `seat_primal_dual`, 1 model call): proposes concrete
      mutated negative-control challenge witnesses (`expected_accept: false`).
    - Stage 7 (`challenge_replay`, `host`, 0 model calls): `DerivationDagHostVerifier.verify_challenges`
      independently replays Stage 6 challenges on the host, verifying `ReplayOutcome.CONTROL`,
      `checked_count >= 1`, and `obstruction_indices == []`.
-   - Stage 8 (`selection`, `host`, `seat_the_master`, 0 model calls): selects the single
+   - Stage 8 (`selection`, `host`, `seat_manuscript_truth`, 0 model calls): selects the single
      surviving candidate (`disposition="SELECT"`).
    - Stage 9 (`receipt`, `host`, 0 model calls): computes `terminal="VERIFIED"`,
      `remaining_obligations=[]`, `diagnostic_only=False` from host facts only.
@@ -73,14 +73,14 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
-from omega_engine_pfp.domain.carrier_decoding import parse_integer_slots
-from omega_engine_pfp.domain.kernel.ports import (
+from pfp.domain.carrier_decoding import parse_integer_slots
+from pfp.domain.kernel.ports import (
     PfpDemoCatalogPort,
     PfpHostVerifierPort,
     PfpLlmProviderPort,
 )
-from omega_engine_pfp.domain.kernel.result import TerminalStatus
-from omega_engine_pfp.domain.operad import (
+from pfp.domain.kernel.result import TerminalStatus
+from pfp.domain.operad import (
     AnnihilatorDecoy,
     ColouredOperadPrompt,
     CongruenceIdeal,
@@ -90,20 +90,20 @@ from omega_engine_pfp.domain.operad import (
     PromptColour,
     PromptOperator,
 )
-from omega_engine_pfp.domain.prompts.prompts import PromptPacket
-from omega_engine_pfp.domain.stages.stages import (
+from pfp.domain.prompts.prompts import PromptPacket
+from pfp.domain.stages.stages import (
     ChallengeReplay,
     Stage5Response,
     WitnessReplay,
     replay_outcome,
 )
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from pfp.infrastructure.pilot_matrix import (
     complete_pilot_turn,
     make_pilot_gateways,
 )
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
-from omega_engine_woland.domain.providers.types import (
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
+from adversary.domain.providers.types import (
     CandidateRequest,
     ChatMessage,
     DecodingParamsV1,
@@ -116,7 +116,7 @@ EXTERNAL_DAG_PATH = Path(
 )
 IN_REPO_DAG_PATH = (
     REPO_ROOT
-    / "omega_engine_atlas"
+    / "atlas"
     / "coda_atlas"
     / "F004_papers"
     / "003_quantum_foundations"
@@ -128,7 +128,7 @@ DEFAULT_RECEIPT_PATH = (
 )
 DEFAULT_BUDGET_CAP_MICROUSD = 50_000
 PROTOCOL_SHA256 = sha256(
-    b"omega.pfp.derivation_dag_pfp_staged_benchmark.v1"
+    b"core.pfp.derivation_dag_pfp_staged_benchmark.v1"
 ).hexdigest()
 
 TARGET_DAG_NODE_IDS: tuple[str, ...] = (
@@ -953,7 +953,7 @@ def build_grafted_operad_prompt(
         },
     )
     operad_prompt = ColouredOperadPrompt(
-        schema_id="omega.coda.categorical-operad-prompt.v2",
+        schema_id="core.coda.categorical-operad-prompt.v2",
         family_name="pfp_derivation_dag_finite_qm_v1",
         prompt_id=f"COPP_DAG_QM_{spec.slice_id.upper()}",
         colours=(
@@ -1327,10 +1327,10 @@ class _AccountedTurnDispatcher:
         max_output_tokens: int = 3000,
         timeout: float = 90.0,
     ) -> None:
-        from omega_engine_operations.domain.rop.result import Err
-        from omega_engine_pfp.infrastructure.adapters.pfp_campaign import snapshot_pricing
-        from omega_engine_woland.domain.providers.types import ProviderConfigError
-        from omega_engine_woland.infrastructure.providers.openrouter_transport import (
+        from operations.domain.rop.result import Err
+        from pfp.infrastructure.adapters.pfp_campaign import snapshot_pricing
+        from adversary.domain.providers.types import ProviderConfigError
+        from adversary.infrastructure.providers.openrouter_transport import (
             resolve_openrouter_key,
         )
 
@@ -1361,10 +1361,10 @@ class _AccountedTurnDispatcher:
         task_id: str,
         attempt_id: str,
     ) -> dict[str, Any]:
-        from omega_engine_operations.domain.rop.result import Err
-        from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-        from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
-        from omega_engine_woland.infrastructure.providers.openai_compat import (
+        from operations.domain.rop.result import Err
+        from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+        from adversary.infrastructure.providers.gateway import unbudgeted_gateway
+        from adversary.infrastructure.providers.openai_compat import (
             OpenAiCompatTransport,
         )
 
@@ -2313,7 +2313,7 @@ def _build_receipt_payload(
     live_campaigns: dict[str, Any],
 ) -> dict[str, Any]:
     return {
-        "schema": "omega.pfp.derivation_dag_pfp_staged_receipt.v1",
+        "schema": "core.pfp.derivation_dag_pfp_staged_receipt.v1",
         "trial_id": "DAG-QM-S1",
         "protocol_sha256": PROTOCOL_SHA256,
         "authority_effect": "None",

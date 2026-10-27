@@ -9,10 +9,10 @@ ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pyproject.toml"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.exact_checker import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.judge_packet.exact_checker import (
     verify_candidate,
 )
-from omega_engine_pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.reference_solver import (
+from pfp.tests.demo_004.f_program_synthesis.c058_straight_line_superoptimization.reference_solver import (
     solve,
 )
 

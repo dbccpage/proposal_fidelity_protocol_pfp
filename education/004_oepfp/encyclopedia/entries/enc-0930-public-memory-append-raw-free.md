@@ -13,11 +13,11 @@ primitive: null
 aliases: ["paper:sn-packets:public-memory-append-raw-free", "paper:sn-packets:redacted-public-memory-ledger"]
 sources:
   - "s_n_packets_and_the_symbol_game.md §9 'Theorem 11.1: Public Prompt Memory Append Preserves Raw-Free Ledgers'"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
 uses: ["ENC-0892"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -44,7 +44,7 @@ cannot be treated as preserving the public raw-free invariant.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
 
 The Lean theorem names are:
 

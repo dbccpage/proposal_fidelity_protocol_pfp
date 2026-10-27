@@ -25,7 +25,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.diff_parser import parse_unified_diff
+from pfp.domain.diff_parser import parse_unified_diff
 
 HUNK = "@@ -1 +1 @@\n-old\n+new\n"
 

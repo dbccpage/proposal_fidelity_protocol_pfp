@@ -82,7 +82,7 @@ class PfpActiveObstruction(PfpBaseModel):
 
 
 class PfpCycleBalanceProblem(PfpBaseModel):
-    schema_version: Literal["omega.symbol_game.cycle_balance.problem.v1"] = "omega.symbol_game.cycle_balance.problem.v1"
+    schema_version: Literal["core.symbol_game.cycle_balance.problem.v1"] = "core.symbol_game.cycle_balance.problem.v1"
     problem_id: str = Field(min_length=1)
     case_id: str = Field(min_length=1)
     authority_effect: AuthorityEffect = AuthorityEffect.NONE
@@ -93,7 +93,7 @@ class PfpCycleBalanceProblem(PfpBaseModel):
 
 
 class PfpCycleBalanceCandidate(PfpBaseModel):
-    schema_version: Literal["omega.symbol_game.cycle_balance.candidate.v1"] = "omega.symbol_game.cycle_balance.candidate.v1"
+    schema_version: Literal["core.symbol_game.cycle_balance.candidate.v1"] = "core.symbol_game.cycle_balance.candidate.v1"
     candidate_id: str = Field(min_length=1)
     problem_digest: str = Field(pattern=r"^[0-9a-f]{64}$")
     authority_effect: AuthorityEffect = AuthorityEffect.NONE
@@ -107,7 +107,7 @@ class PfpCycleBalanceCandidate(PfpBaseModel):
 
 
 class PfpCycleBalanceVerifier(PfpBaseModel):
-    schema_version: Literal["omega.symbol_game.cycle_balance.verifier.v1"] = "omega.symbol_game.cycle_balance.verifier.v1"
+    schema_version: Literal["core.symbol_game.cycle_balance.verifier.v1"] = "core.symbol_game.cycle_balance.verifier.v1"
     verifier_id: str = Field(min_length=1)
     arithmetic_domain: PfpArithmeticDomain = PfpArithmeticDomain.EXACT_INTEGER
     problem_digest: str = Field(pattern=r"^[0-9a-f]{64}$")
@@ -116,7 +116,7 @@ class PfpCycleBalanceVerifier(PfpBaseModel):
 
 
 class PfpCycleBalanceReceipt(PfpBaseModel):
-    schema_version: Literal["omega.symbol_game.cycle_balance.receipt.v1"] = "omega.symbol_game.cycle_balance.receipt.v1"
+    schema_version: Literal["core.symbol_game.cycle_balance.receipt.v1"] = "core.symbol_game.cycle_balance.receipt.v1"
     receipt_id: str = Field(min_length=1)
     authority_effect: AuthorityEffect = AuthorityEffect.NONE
     problem_digest: str = Field(pattern=r"^[0-9a-f]{64}$")

@@ -19,7 +19,7 @@ repo_root = _find_root()
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from omega_engine_operations.use_cases.packaging.comment_slop_router import main  # noqa: E402
+from operations.use_cases.packaging.comment_slop_router import main  # noqa: E402
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

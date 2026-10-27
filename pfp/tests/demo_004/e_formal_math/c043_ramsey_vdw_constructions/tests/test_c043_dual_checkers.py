@@ -4,10 +4,10 @@
 import json
 from pathlib import Path
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.solver import (
     solve,
 )
 

@@ -1,4 +1,4 @@
-schema_version: "omega.immune.antibody-spec.v1"
+schema_version: "core.immune.antibody-spec.v1"
 antibody_id: "ab_rust_capture_completion_loss"
 canonical_name: "Rust Capture Completion Loss"
 failure_class: "sandbox:missing_capture_promoted_to_success"
@@ -39,8 +39,8 @@ benign_control_fixture: |
   let captured = Ok((Vec::<u8>::new(), false));
   preserve_successful_empty_capture(captured)
 
-implementation_binding: "omega_engine/crates_rs/omega_sandbox/src/windows.rs"
-native_test_binding: "omega_engine/crates_rs/tests/omega_sandbox/windows_capture.rs"
+implementation_binding: "engine/crates_rs/core_sandbox/src/windows.rs"
+native_test_binding: "engine/crates_rs/tests/core_sandbox/windows_capture.rs"
 harmful_control_tests:
   - "delayed_descendant_overflow_is_not_success"
   - "inherited_pipe_timeout_is_not_success"
@@ -48,7 +48,7 @@ benign_control_tests:
   - "benign_output_and_nonzero_exit_are_preserved"
   - "delayed_bounded_descendant_output_is_captured"
 additional_failure_control:
-  source: "omega_engine/crates_rs/omega_sandbox/src/windows.rs"
+  source: "engine/crates_rs/core_sandbox/src/windows.rs"
   test: "read_output_errors_are_not_success"
 detection_mechanisms:
   regex_triggers:

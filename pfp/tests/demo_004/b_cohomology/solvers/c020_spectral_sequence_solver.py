@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.cohomology.solver import solve
+from pfp.domain.cohomology.solver import solve
 
 
 def solve_c020(case: Mapping[str, Any], host: Any = None) -> dict[str, Any]:

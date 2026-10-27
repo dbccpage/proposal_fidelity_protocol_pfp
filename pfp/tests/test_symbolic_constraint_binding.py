@@ -10,11 +10,11 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.prompt_representations.common import (
+from pfp.domain.prompt_representations.common import (
     SYMBOLIC_TO_ROLE,
     sha256_digest,
 )
-from omega_engine_pfp.domain.prompt_representations.symbolic_prompt_representation import (
+from pfp.domain.prompt_representations.symbolic_prompt_representation import (
     WIRE_PAIR_REGEX,
     SymbolicPromptRepresentation,
 )

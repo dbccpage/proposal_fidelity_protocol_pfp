@@ -14,11 +14,11 @@ from __future__ import annotations
 
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import load_path
-from omega_engine_operations.use_cases.level_engine.research_engine.components import ROOT
-from omega_engine_operations.use_cases.level_engine.research_engine.level import FixtureVerdict, LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed import EMPTY, Supply, replay, sealed_observe
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed_evidence import lean_citation
+from operations.use_cases.level_engine.research_engine.canon import load_path
+from operations.use_cases.level_engine.research_engine.components import ROOT
+from operations.use_cases.level_engine.research_engine.level import FixtureVerdict, LevelResult
+from operations.use_cases.level_engine.research_engine.sealed import EMPTY, Supply, replay, sealed_observe
+from operations.use_cases.level_engine.research_engine.sealed_evidence import lean_citation
 from derivation.engine import GENESIS_F, GENESIS_L
 
 CHALLENGE_ID = "bare_inscription"

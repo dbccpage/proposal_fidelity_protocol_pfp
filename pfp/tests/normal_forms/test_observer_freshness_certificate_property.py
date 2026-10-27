@@ -23,9 +23,9 @@ import unittest
 from pathlib import Path
 
 _EDU_ROOT = next(
-    p / "omega_engine_education"
+    p / "education"
     for p in Path(__file__).resolve().parents
-    if (p / "omega_engine_education/documentation/014_normal_forms").is_dir()
+    if (p / "education/documentation/014_normal_forms").is_dir()
 )
 _CANDIDATE_DIRS = [
     _EDU_ROOT / "documentation" / "014_normal_forms" / "demos",

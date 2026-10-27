@@ -5,7 +5,7 @@ Unit tests for dual checkers and consensus evaluator.
 
 import unittest
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.judge_packet.checkers.dual_evaluator import evaluate_dual
 
 
 class TestDualCheckers(unittest.TestCase):

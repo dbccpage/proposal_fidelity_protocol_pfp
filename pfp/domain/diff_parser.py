@@ -7,7 +7,7 @@ import shlex
 from typing import Any, NamedTuple, cast
 
 from .exceptions import SecurityPathViolationError
-from omega_engine_pfp.domain.shared_kernel.path import validate_path_security
+from pfp.domain.shared_kernel.path import validate_path_security
 
 _HUNK_HEADER = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@(?: .*)?$")
 _RENAME_FROM = re.compile(r"^rename from (?P<path>.+)$")

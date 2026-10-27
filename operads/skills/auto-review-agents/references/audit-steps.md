@@ -44,7 +44,7 @@ Part of the organizational hierarchy:
 
 - `*-council` agents - Council coordination
 - `procurator-*` agents - Council leadership
-- `anomalon` - Root agent
+- `sentinel` - Root agent
 
 ### Faculty / Domain Expert Agents (EVALUATE, do not bulk archive)
 
@@ -52,7 +52,7 @@ Academic and domain-specialty agents may be unused in daily SDLC but valuable fo
 
 - domain verification
 - council review
-- Woland adversarial checks
+- Adversary adversarial checks
 - Aletheia fact checks
 - ERC evidence review
 - SADC architecture review where math affects implementation

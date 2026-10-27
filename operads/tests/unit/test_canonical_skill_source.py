@@ -8,23 +8,23 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.domain.value_objects.identifier import EstateRef
-from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+from operads.domain.value_objects.identifier import EstateRef
+from operads.infrastructure.capability_catalog_compiler import (
     CatalogCompileRefusal,
     compile_capability_catalog,
     write_host_projections,
 )
-from omega_engine_operads.infrastructure.fs.fs_estate_source_adapter import FsEstateSourceAdapter
-from omega_engine_operations.use_cases.packaging.project_typed_contracts import (
+from operads.infrastructure.fs.fs_estate_source_adapter import FsEstateSourceAdapter
+from operations.use_cases.packaging.project_typed_contracts import (
     HostProjectionRefusal,
     project_typed_packages,
 )
-from omega_engine_operations.use_cases.packaging.sync_cross_host_skills import (
+from operations.use_cases.packaging.sync_cross_host_skills import (
     HOST_SKILL_ROOTS,
     FourHostSkillMirror,
 )
 
-SOURCE = "omega_engine_operads/skills/demo/SKILL.md"
+SOURCE = "operads/skills/demo/SKILL.md"
 HOST = ".agents/skills/demo/SKILL.md"
 
 
@@ -39,8 +39,8 @@ def _helper(relative):
 
 def test_common_guidance_and_version_views_match_owned_sources():
     root = Path(__file__).resolve().parents[3]
-    guide = (root / "omega_engine_operads/documentation/host_instructions.md").read_bytes()
-    version = (root / "omega_engine_operads/manifests/host_discovery_version.txt").read_bytes()
+    guide = (root / "operads/documentation/host_instructions.md").read_bytes()
+    version = (root / "operads/manifests/host_discovery_version.txt").read_bytes()
     assert version.strip() == b"0.0.0-a00"
     assert (root / "GEMINI.md").read_bytes() == guide
     for host in (".agents", ".claude", ".codex", ".grok"):
@@ -49,30 +49,30 @@ def test_common_guidance_and_version_views_match_owned_sources():
 
 
 def test_pattern_helper_reads_owned_pattern_not_changed_host(tmp_path):
-    helper = _helper("omega_engine_operads/skills/auto-anti-pattern-lint/scripts/anti_pattern_lint.py")
-    put(tmp_path, "omega_engine_operads/patterns/helpful/python/HP_DEMO.md", b"## Resolution\nCanonical remedy\n")
+    helper = _helper("operads/skills/auto-anti-pattern-lint/scripts/anti_pattern_lint.py")
+    put(tmp_path, "operads/patterns/helpful/python/HP_DEMO.md", b"## Resolution\nCanonical remedy\n")
     put(tmp_path, ".agents/patterns/helpful/python/HP_DEMO.md", b"## Resolution\nHost edit\n")
     result = helper._load_healthy_pattern("HP_DEMO", tmp_path, "python")
     assert result["resolution"] == "Canonical remedy"
-    assert result["dual_pattern_path"].startswith("omega_engine_operads/")
+    assert result["dual_pattern_path"].startswith("operads/")
 
 
 def test_declared_checker_detects_source_drift_even_when_all_hosts_agree(tmp_path):
-    helper = _helper("omega_engine_operads/skills/declared-vs-actual-gate/scripts/check_declared_programs.py")
-    put(tmp_path, "omega_engine_operads/skills/demo/SKILL.md", document("Canonical"))
+    helper = _helper("operads/skills/declared-vs-actual-gate/scripts/check_declared_programs.py")
+    put(tmp_path, "operads/skills/demo/SKILL.md", document("Canonical"))
     for host in (".agents", ".claude", ".codex", ".grok"):
         put(tmp_path, f"{host}/skills/demo/SKILL.md", document("Same host edit"))
     result = helper.check_parity(tmp_path, helper.host_roots(tmp_path))
-    assert result["canonical"] == "omega_engine_operads"
+    assert result["canonical"] == "operads"
     assert result["verdict"] == "BLOCKED"
     assert len(result["rows"]) == 4
 
 
 def test_inventory_and_route_lookup_use_only_the_owned_signature(tmp_path):
-    from omega_engine_operads.skill_operad.skill_compiler.op_inventory import _coarse_ops
-    from omega_engine_operads.skill_operad.skill_compiler.resolve import _operad_skill_ids
+    from operads.skill_operad.skill_compiler.op_inventory import _coarse_ops
+    from operads.skill_operad.skill_compiler.resolve import _operad_skill_ids
 
-    canonical = "omega_engine_operads/skill_operad/json/operad_signature.json"
+    canonical = "operads/skill_operad/json/operad_signature.json"
     host = ".agents/skill_operads/operad_signature.json"
     put(tmp_path, canonical, json.dumps({"operations": [{"skill_id": "source-op"}]}).encode())
     put(tmp_path, host, json.dumps({"operations": [{"skill_id": "host-edit"}]}).encode())
@@ -82,10 +82,10 @@ def test_inventory_and_route_lookup_use_only_the_owned_signature(tmp_path):
 
 
 def test_missing_owned_signature_does_not_fall_back_to_host(tmp_path):
-    from omega_engine_operads.skill_operad.skill_compiler.op_inventory import _coarse_ops
-    from omega_engine_operads.skill_operad.skill_compiler.resolve import _operad_skill_ids
+    from operads.skill_operad.skill_compiler.op_inventory import _coarse_ops
+    from operads.skill_operad.skill_compiler.resolve import _operad_skill_ids
 
-    (tmp_path / "omega_engine_operads/skill_operad/json").mkdir(parents=True)
+    (tmp_path / "operads/skill_operad/json").mkdir(parents=True)
     put(tmp_path, ".agents/skill_operads/operad_signature.json", b'{"operations":[{"skill_id":"host-edit"}]}')
     with pytest.raises(FileNotFoundError):
         _coarse_ops(tmp_path)
@@ -131,7 +131,7 @@ def test_filesystem_consumer_reads_canonical_bytes_not_host_copy(tmp_path):
     original = document("Canonical instructions")
     put(tmp_path, SOURCE, original)
     put(tmp_path, HOST, original)
-    (tmp_path / "omega_engine_operads/skill_operad/json").mkdir(parents=True)
+    (tmp_path / "operads/skill_operad/json").mkdir(parents=True)
     catalog = compile_capability_catalog(tmp_path, tracked_paths=tuple(sorted((SOURCE, HOST))))
     write_host_projections(tmp_path, catalog)
     put(tmp_path, HOST, document("Changed generated host copy"))
@@ -152,8 +152,8 @@ def mirror_fixture(root):
 
 def test_packaging_receipt_includes_canonical_source_and_each_host(tmp_path):
     receipt = mirror_fixture(tmp_path).receipt(["demo"])
-    assert receipt.source_host == "omega_engine_operads/skills"
-    assert set(receipt.hosts) == {"omega_engine_operads/skills", *HOST_SKILL_ROOTS}
+    assert receipt.source_host == "operads/skills"
+    assert set(receipt.hosts) == {"operads/skills", *HOST_SKILL_ROOTS}
     assert receipt.all_agree()
 
 
@@ -164,7 +164,7 @@ def test_equal_hosts_do_not_hide_a_changed_canonical_source(tmp_path):
 
 
 def test_typed_projection_includes_source_and_detects_a_conflicting_source(tmp_path):
-    (tmp_path / "omega_engine_operads/skills").mkdir(parents=True)
+    (tmp_path / "operads/skills").mkdir(parents=True)
     for host in HOST_SKILL_ROOTS:
         (tmp_path / host).mkdir(parents=True)
     packages = (("demo", document("Compiled instructions")),)

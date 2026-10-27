@@ -24,12 +24,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.linalg import first_nonpositive_minor, leading_minors
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import Q, fmt_q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.linalg import first_nonpositive_minor, leading_minors
+from operations.use_cases.level_engine.research_engine.exact.q import Q, fmt_q
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 
 CHALLENGE_ID = "distance_form"
 ANSWER_TYPE = "M"

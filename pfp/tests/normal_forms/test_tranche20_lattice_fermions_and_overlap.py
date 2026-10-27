@@ -2,8 +2,8 @@
 
 Aligned Contracts / Systems:
 - nf.physics.fermions
-- omega_linear_algebra
-- omega_functional
+- core_linear_algebra
+- core_functional
 
 AuthorityEffect: None.
 """

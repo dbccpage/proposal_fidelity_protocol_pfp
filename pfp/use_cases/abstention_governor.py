@@ -3,7 +3,7 @@
 Zero infrastructure imports; depends strictly on domain ports and Result monad.
 Binds the 4-label termination partition (TERMINATED, OUT_OF_FUEL, IMPOSSIBLE,
 INVALID_REQUEST) and optional coarsest-congruence quotient compression
-(REV-SMRM-P1-QUOTIENT) to omega_engine_pfp.
+(REV-SMRM-P1-QUOTIENT) to pfp.
 
 AuthorityEffect: None.
 """

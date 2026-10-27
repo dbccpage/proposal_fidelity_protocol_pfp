@@ -19,7 +19,7 @@
 //!    closed-system baseline.
 //!
 //! A collapsed pair is not an obstruction by itself.  *This policy is what
-//! makes it one.*  The Omega engine (`omega.rs`) accepts a demand from the
+//! makes it one.*  The Core engine (`core.rs`) accepts a demand from the
 //! outside or from this policy, and records which — because the difference
 //! between "the world asked" and "the policy reissued" is the difference OB-1
 //! is about.

@@ -12,7 +12,7 @@ operad_residual: "unknown"
 
 **Council:** `L3_logos_techne`  
 **AuthorityEffect:** `None`  
-**Discipline:** Soviet Builder / Claim Discipline  
+**Discipline:** Builder / Claim Discipline  
 
 ---
 
@@ -20,16 +20,16 @@ operad_residual: "unknown"
 
 The finite quantum mechanics architecture enforces a strict demarcation between exact algebraic carriers and production numerical diagnostics:
 
-1. **Exact Algebraic Core (`omega_quantum_physics`)**:
+1. **Exact Algebraic Core (`core_quantum_physics`)**:
    - Operates strictly over `num_rational::BigRational`, $\mathbb{Z}_2$, cyclotomic rings $\mathbb{Q}(\zeta_{24})$, and exact integer radicals.
    - Preserves exact null relations, projector idempotence $\Pi^2 = \Pi$, and trace obstruction $\operatorname{Tr}([Q, P]) = 0$ with zero floating-point error.
    - Includes Campaign C750 solver (`c750_b01_solver.rs`) and Campaign C1000 relativistic causal posets, no-signalling proofs, and contextuality obstructions.
 
-2. **Domain Face (`omega_quantum_physics`)**:
+2. **Domain Face (`core_quantum_physics`)**:
    - Provides domain abstractions (`HilbertSpace`, diagonal `DensityMatrix`, `KrausOperators`, `QuantumChannel`).
    - Hosts derivation target faces: `born_gleason.rs`, `composition_tomography.rs`, `hermitian_spectral.rs`, and `instruments.rs`.
 
-3. **Production Numerical Engines (`omega_engines::quantum`)**:
+3. **Production Numerical Engines (`engines::quantum`)**:
    - Evaluates continuous observables on validated `linear_algebra::linear_algebra::density::DensityMatrix` carriers:
      - Von Neumann entropy: `von_neumann_entropy_observable(dm)`
      - Purity: `purity_observable(dm)`
@@ -38,7 +38,7 @@ The finite quantum mechanics architecture enforces a strict demarcation between 
      - Bures distance and angle: `bures_distance_observable(dm1, dm2)`, `bures_angle_observable(dm1, dm2)`
      - Supertrace: `supertrace_observable(dm, grading)`
 
-4. **The Diagnostic Bridge Seam (`omega_quantum_physics::engine_bridge`)**:
+4. **The Diagnostic Bridge Seam (`core_quantum_physics::engine_bridge`)**:
    - Bridges exact representations to production numerical density matrices across a strictly one-way diagnostic membrane.
    - Governed by `ENGINE_BRIDGE_FENCE`: Floating-point engine observables are diagnostic computational lenses and do not alter the exact algebraic proofs of finite quantum mechanics.
 
@@ -48,9 +48,9 @@ The finite quantum mechanics architecture enforces a strict demarcation between 
 
 ### A. Converting Exact Cyclotomic Matrices
 ```rust
-use omega_quantum_physics::engine_bridge::cyc24_matrix_to_prod_density;
-use omega_number_theory::cyclotomic::Cyc24;
-use omega_quantum_physics::weyl::ExactMatrix;
+use core_quantum_physics::engine_bridge::cyc24_matrix_to_prod_density;
+use core_number_theory::cyclotomic::Cyc24;
+use core_quantum_physics::weyl::ExactMatrix;
 
 // Project exact Cyc24 state (e.g. from d=3 MUB tomography or d=4 Bell state)
 let exact_bell: ExactMatrix<Cyc24> = tomography::state_bell_d4();
@@ -59,9 +59,9 @@ let prod_dm = cyc24_matrix_to_prod_density(&exact_bell, None)?;
 
 ### B. Converting Exact Rational Matrices
 ```rust
-use omega_quantum_physics::engine_bridge::rational_matrix_to_prod_density;
-use omega_number_theory::rational::Rational;
-use omega_quantum_physics::weyl::ExactMatrix;
+use core_quantum_physics::engine_bridge::rational_matrix_to_prod_density;
+use core_number_theory::rational::Rational;
+use core_quantum_physics::weyl::ExactMatrix;
 
 // Project exact rational state (e.g. maximally mixed or stabilizer state)
 let prod_dm = rational_matrix_to_prod_density(&exact_mat, None)?;
@@ -69,8 +69,8 @@ let prod_dm = rational_matrix_to_prod_density(&exact_mat, None)?;
 
 ### C. Converting Domain Diagonal Density Matrices
 ```rust
-use omega_quantum_physics::engine_bridge::domain_diagonal_to_prod_density;
-use omega_quantum_physics::density_matrix::DensityMatrix as DomainDensityMatrix;
+use core_quantum_physics::engine_bridge::domain_diagonal_to_prod_density;
+use core_quantum_physics::density_matrix::DensityMatrix as DomainDensityMatrix;
 
 // Bridge domain face diagonal density matrix
 let prod_dm = domain_diagonal_to_prod_density(&domain_dm, None)?;
@@ -83,7 +83,7 @@ let prod_dm = domain_diagonal_to_prod_density(&domain_dm, None)?;
 To evaluate and cross-verify an exact discrete quantum state against engine observables:
 
 ```rust
-use omega_quantum_physics::engine_bridge::{
+use core_quantum_physics::engine_bridge::{
     evaluate_state_observables, verify_exact_state_with_engine,
     evaluate_state_fidelity, evaluate_bures_geometry
 };
@@ -119,7 +119,7 @@ The bridge also links foundational derivation targets:
 ## 5. Invariants & Guardrails
 
 1. **Strict Zero-Float Ingress**:
-   Algebraic solvers and decision algorithms in `omega_quantum_physics` must reject floats with typed errors (`ZeroFloatFirewall`). Floats are only instantiated during conversion inside `engine_bridge.rs` for production engine evaluation.
+   Algebraic solvers and decision algorithms in `core_quantum_physics` must reject floats with typed errors (`ZeroFloatFirewall`). Floats are only instantiated during conversion inside `engine_bridge.rs` for production engine evaluation.
 
 2. **Validation Envelope**:
    Every production `DensityMatrix` emitted by the bridge must satisfy:

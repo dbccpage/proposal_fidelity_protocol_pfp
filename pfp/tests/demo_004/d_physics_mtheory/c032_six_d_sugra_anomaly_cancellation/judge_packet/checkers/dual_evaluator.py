@@ -10,10 +10,10 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_matrix_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_matrix_checker import (
     verify_sugra_matrix_certificate,
 )
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_weight_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.judge_packet.checkers.sugra_weight_checker import (
     verify_sugra_weight_certificate,
 )
 

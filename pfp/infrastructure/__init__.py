@@ -41,7 +41,7 @@ _EXPORTS.update(
     {
         "UnifiedPfpDemoRunner": ".pilot_runners.pilot_dispatch",
         "ExactRationalSolver": ".exact_math",
-        "WolandTribunalGateEvaluator": ".gate_evaluators",
+        "AdversaryTribunalGateEvaluator": ".gate_evaluators",
         "FourObjectPacketSuite": ".mssn_transcoder",
         "MssnTranscoderError": ".mssn_transcoder",
         "digest": ".mssn_transcoder",

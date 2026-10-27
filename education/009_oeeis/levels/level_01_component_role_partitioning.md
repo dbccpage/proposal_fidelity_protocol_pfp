@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/value_objects.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/value_objects.py
 ---
 
 # EIS Level 01: Component Role Partitioning: Decoupling the 7 Immune Roles
 
 **AuthorityEffect:** None.  
 **Level:** Level 01 (Structural Role Partitioning & Autoimmune Prevention)  
-**Python Value Objects Seam:** [`omega_engine_epistemic_immune_system.domain.value_objects`](../../../../omega_engine_epistemic_immune_system/domain/value_objects.py)  
+**Python Value Objects Seam:** [`eis.domain.value_objects`](../../../../eis/domain/value_objects.py)  
 **Primary Types:** `AntiSkillSpecV2`, `FixtureBankV1`, `EvaluationReceiptV1`, `HumanDecisionV1`  
 **Core Falsifiers:** `F-IMMUNE-01`, `F-PROMPT-02`
 
@@ -62,10 +62,10 @@ Level 01 establishes the **Seven Separated Immune Roles Law**:
 ## 2. Invariants & Mathematical Packaging
 
 1. **Role Partitioning Invariants:**
-   1. **`Spec`:** Declarative rule pattern ([`AntiSkillSpecV2`](../../../../omega_engine_epistemic_immune_system/domain/value_objects.py)). Must be initialized with `status = "PROPOSED"` and `runtime_enforcement = False`. Any other initialization raises `ValueError` (`F-PROMPT-02`).
+   1. **`Spec`:** Declarative rule pattern ([`AntiSkillSpecV2`](../../../../eis/domain/value_objects.py)). Must be initialized with `status = "PROPOSED"` and `runtime_enforcement = False`. Any other initialization raises `ValueError` (`F-PROMPT-02`).
    2. **`FixtureBank`:** Declared test fixtures defining expected detector behavior (`must_match` defect and `must_not_match` near-miss).
    3. **`EvaluationReceipt`:** Immutable report recording test execution against the `FixtureBank`.
-   4. **`ExternalDecision`:** External human ratification event ([`HumanAntiSkillAdmissionDecisionV1`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py)) recording `HumanAdmitted`, `Suspended`, or `Revoked`.
+   4. **`ExternalDecision`:** External human ratification event ([`HumanAntiSkillAdmissionDecisionV1`](../../../../eis/domain/external_admission.py)) recording `HumanAdmitted`, `Suspended`, or `Revoked`.
    5. **`Registry`:** Content-addressed formulary storage. Insertion requires an `ExternalDecision`.
    6. **`ActivationProfile`:** Explicit operational scope binding a detector to specific swarms, carriers, or task domains.
    7. **`Hit`:** Read-only runtime match event recording that a detector matched candidate bytes, containing no repair logic.
@@ -84,7 +84,7 @@ Level 01 establishes the **Seven Separated Immune Roles Law**:
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_epistemic_immune_system.domain.value_objects
+# eis.domain.value_objects
 @dataclass(frozen=True)
 class AntiSkillSpecV2:
     rule_id: str
@@ -125,4 +125,4 @@ class FixtureBankV1:
 3. **The narrowest defensible claim:**
    - Type assertions and frozen dataclass invariants guarantee that detector specifications cannot self-activate or self-admit without passing through external decision records.
 4. **The next test needed:**
-   - AST boundary test asserting that no module in `omega_engine_epistemic_immune_system` imports or executes code modification tools.
+   - AST boundary test asserting that no module in `eis` imports or executes code modification tools.

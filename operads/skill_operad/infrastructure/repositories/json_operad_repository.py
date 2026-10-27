@@ -12,13 +12,13 @@ from typing import Any, Dict, List, Optional
 try:
     from domain.colours import ColourSignature
     from domain.evidence import DiagnosticObservation
-    from omega_engine_operads.domain.operad.operad import ColouredOperad
-    from omega_engine_operads.domain.operad.operation import OperationId, OperationSignature
+    from operads.domain.operad.operad import ColouredOperad
+    from operads.domain.operad.operation import OperationId, OperationSignature
 except (ImportError, ValueError):
     from ...domain.colours import ColourSignature
     from ...domain.evidence import DiagnosticObservation
-    from omega_engine_operads.domain.operad.operad import ColouredOperad
-    from omega_engine_operads.domain.operad.operation import OperationId, OperationSignature
+    from operads.domain.operad.operad import ColouredOperad
+    from operads.domain.operad.operation import OperationId, OperationSignature
 
 
 class JsonOperadRepository:

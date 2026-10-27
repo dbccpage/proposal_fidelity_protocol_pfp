@@ -15,7 +15,7 @@ from collections.abc import Mapping
 from fractions import Fraction
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.reference_solver.sugra_6d import (
+from pfp.tests.demo_004.d_physics_mtheory.c032_six_d_sugra_anomaly_cancellation.reference_solver.sugra_6d import (
     GROUPS_WITHOUT_QUARTIC,
     compute_exact_inertia,
     get_group_dim,

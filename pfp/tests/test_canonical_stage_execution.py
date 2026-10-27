@@ -5,11 +5,11 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.domain.stages.stages import Stage5Response
-from omega_engine_pfp.infrastructure.providers import OfflineDeterministicPfpProvider
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
+from pfp.domain.kernel.result import RefusalCode
+from pfp.domain.stages.stages import Stage5Response
+from pfp.infrastructure.providers import OfflineDeterministicPfpProvider
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
 
 
 class ObservingProvider(OfflineDeterministicPfpProvider):
@@ -74,7 +74,7 @@ def test_mode_02_seals_source_and_tampering_does_not_reuse_the_same_envelope():
     assert result.is_ok, result.error
     user = json.loads(provider.packets[1].user)
     envelope = user["mode_artifacts"]["2"]
-    from omega_engine_pfp.domain.prompts.packets import PacketEnvelope
+    from pfp.domain.prompts.packets import PacketEnvelope
     PacketEnvelope.model_validate(envelope)
     mutated = deepcopy(envelope)
     mutated["task_data"]["raw_seed"] = "<a>"
@@ -108,7 +108,7 @@ def test_requested_stage_prefix_executes_exactly_that_prefix(count):
 
 
 def test_mode14_executes_a_typed_negative_control_before_dispatch():
-    from omega_engine_pfp.infrastructure.providers import SeedHostVerifier
+    from pfp.infrastructure.providers import SeedHostVerifier
     class Catalog:
         def get_demo(self, demo_id): return object() if demo_id=="DEMO-N02" else None
     provider=ObservingProvider()
@@ -128,7 +128,7 @@ def test_mode14_executes_a_typed_negative_control_before_dispatch():
 
 
 def test_public_seed_verifier_consumes_the_extracted_candidate_and_checks_mutations():
-    from omega_engine_pfp.infrastructure.providers import SeedHostVerifier
+    from pfp.infrastructure.providers import SeedHostVerifier
     verifier=SeedHostVerifier()
     witness={"pair_decoded":["a","b"],"edge_decoded":{"source":"a","target":"b"},
              "reports":[0,0],"tagged_reports":[[0,0],[0,1]],"endpoint_support":["a","b"],"occurrence_counts":[1,2,3]}

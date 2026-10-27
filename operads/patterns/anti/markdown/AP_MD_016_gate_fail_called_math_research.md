@@ -27,7 +27,7 @@ A one-round review receipt uses one terminal sentence for every blocked package.
 
 ## Witness
 
-Historical receipts. This digest did not rerun gates. Source folder `_ic/inr/omega_paper_reviews/pfp_loop_20260928_234130/`.
+Historical receipts. This digest did not rerun gates. Source folder `_ic/inr/core_paper_reviews/pfp_loop_20260928_234130/`.
 
 `002_the_symbol_game_signed_presentations_and_search_frontier/run_all_receipt.json` (`SWARM_REV_20260928_234210`) has `rounds_executed` 1. Stages 0, 1, 3, 4, and 5 are `PASS`. Stage 2 is `NOT_APPLICABLE`. Stage 5 still records `visual_inspection` `NOT_VERIFIED`; that limit is not this pattern. The only failing stage is packaging. Its error is `verify_deposit.py` exit 1: recorded file missing `.env`, hash mismatch on `jupyter_notebooks/signed_exchange_and_frontier.ipynb`, and excluded file listed in the manifest `.env`. The obstruction sentence is:
 

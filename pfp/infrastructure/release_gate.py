@@ -43,9 +43,9 @@ ALL_LAYERS: tuple[str, ...] = (
     LAYER_LEAN_CONCORDANCE,
 )
 
-GOLDEN_CORPUS_PATH = "omega_engine_pfp/tests/golden_canonical_vectors.json"
+GOLDEN_CORPUS_PATH = "pfp/tests/golden_canonical_vectors.json"
 PARITY_SCRIPT_PATH = (
-    "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py"
+    "operations/use_cases/packaging/sync_cross_host_skills.py"
 )
 LEAN_ROOT = "lean4"
 LAKE_MANIFESTS = ("lakefile.lean", "lakefile.toml")
@@ -175,7 +175,7 @@ def replay_vector(vector: dict[str, Any]) -> list[str]:
     recorded Rust artifact exactly.  Each problem names the vector and, for the
     byte comparison, the offset at which the two disagree.
     """
-    from omega_engine_pfp.domain.shared_kernel.canonical import (
+    from pfp.domain.shared_kernel.canonical import (
         canonical_bytes,
         canonical_json,
         canonical_wire,
@@ -251,11 +251,11 @@ def verify_wire_parity(
 
 def verify_epic_manifest(repo_root: Path) -> LayerFinding:
     """Layer 2 -- the epic manifest audit passes against the real repository."""
-    from omega_engine_product_planning_office.domain.manifest_models import (
+    from product_planning_office.domain.manifest_models import (
         EXPECTED_EPIC_COUNT,
         EpicManifestError,
     )
-    from omega_engine_product_planning_office.use_cases.epic_manifest_audit import (
+    from product_planning_office.use_cases.epic_manifest_audit import (
         audit_epic_manifest,
     )
 

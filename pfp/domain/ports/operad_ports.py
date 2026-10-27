@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Protocol, runtime_checkable
 
-from omega_engine_pfp.domain.operad.graft import PlanarGraft
+from pfp.domain.operad.graft import PlanarGraft
 
 
 @runtime_checkable

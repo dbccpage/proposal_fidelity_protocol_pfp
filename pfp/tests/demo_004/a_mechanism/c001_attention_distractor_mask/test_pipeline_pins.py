@@ -13,7 +13,7 @@ import copy
 import hashlib
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.pipeline_contract import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.pipeline_contract import (
     SENTINEL_DIGESTS,
     PinFinding,
     PipelinePinError,

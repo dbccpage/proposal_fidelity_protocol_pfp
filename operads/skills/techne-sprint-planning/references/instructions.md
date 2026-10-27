@@ -64,7 +64,7 @@ Read the workflow-specific prompt from `.agents/skills/sprint-planning/SKILL.md`
 
 ### Step 4: Create Sprint Folder & Mandatory Subdirectories
 
-Ensure sprint folder and mandatory subdirectories (derived from `000_sprint_template`) are created by `omega-engine-product-manager`:
+Ensure sprint folder and mandatory subdirectories (derived from `000_sprint_template`) are created by `product-manager`:
 
 ```bash
 mkdir -p coda_project_planning/sprints/{sprint_number}/0_planning_documents
@@ -72,7 +72,7 @@ mkdir -p coda_project_planning/sprints/{sprint_number}/1_sprint_impl_documents
 
 ```text
 
-*(Note: omega-engine-product-manager also creates parent Epic plan documents (`epic_{slug}_plan.md`) and Saga plan documents (`saga_{slug}_plan.md`) at will when asked to structure project plans. Creation & modification rights for plans and sagas are strictly limited to `OOUTWIRE`, `BLACKROD`, and `omega-engine-product-manager`.)* ext
+*(Note: product-manager also creates parent Epic plan documents (`epic_{slug}_plan.md`) and Saga plan documents (`saga_{slug}_plan.md`) at will when asked to structure project plans. Creation & modification rights for plans and sagas are strictly limited to `OOUTWIRE`, `BLACKROD`, and `product-manager`.)* ext
 
 ### Step 5: Submit Commitment (activation)
 
@@ -114,7 +114,7 @@ In planning mode:
 
 ### Step 7: Produce Parsed Plan (Single Pipeline)
 
-Execute the workflow defined in `.anomalon/prompts/workflows/sprint_planning.md`: **Backlog Item → Parsed Plan**. No ghost participants (no product_owner, rust-principal-developer, sprint_architect, scrum_master, tester, devops step-agents). Blackrod (orchestrator) produces the three hard-coded artifacts: `sprint_{N}_plan.md`, `kickoff.md`, `quality_gates.md` in `coda_project_planning/sprints/{N}/`.
+Execute the workflow defined in `.sentinel/prompts/workflows/sprint_planning.md`: **Backlog Item → Parsed Plan**. No ghost participants (no product_owner, rust-principal-developer, sprint_architect, scrum_master, tester, devops step-agents). Blackrod (orchestrator) produces the three hard-coded artifacts: `sprint_{N}_plan.md`, `kickoff.md`, `quality_gates.md` in `coda_project_planning/sprints/{N}/`.
 
 ### Step 8: Pre-Sprint Code Audit (Scoped to Defined Stories)
 
@@ -125,7 +125,7 @@ Audit the codebase for pre-existing work that may affect **the defined stories**
 ```bash
 
 # Check for existing implementations related to DEFINED sprint stories
-Grep(pattern="<story_keyword>", path="omega_engine/")
+Grep(pattern="<story_keyword>", path="engine/")
 
 # Check for TODO/FIXME markers in affected areas
 Grep(pattern="TODO|FIXME", path="backend/")
@@ -144,7 +144,7 @@ git log --oneline -20 --all | grep -i "<story_keyword>"
 
 **Scoping rule:** Only audit paths and keywords relevant to the stories defined in Steps 6-7. Do NOT run broad codebase scans before the sprint goal is known.
 
-**Duplicate-claim rule (MANDATORY for "unify/remove/consolidate duplicate X" stories):** before estimating, grep the **whole workspace** for `X` — a "local duplicate" is often a cross-crate shared vocabulary, and naive unification breaks dependents. **Source:** Sprint 120 — STORY-002 ("unify duplicate `AuthorityEffect`") was scoped from one file; the name was actually shared across `omega_certifiers`/`anomalon_councils`/`omega_contracts` with distinct advisory semantics, forcing a re-scope. **If the grep finds >2 definitions or differing variants, scope an ADR/decision story (classify each pair SAME vs DISTINCT) FIRST — do not write a unify story.** **Source:** Sprint 120-0 — the grep found **6** distinct `AuthorityEffect` enums; an ADR-first scope decided "consolidate 3 identical fact-labels, keep firewall/contract/measurement distinct," preventing conflation at 3× the scale. **Cross-crate-ref false-positive guard:** a grep hit for `crate_A_type` inside `crate_B` is a real cross-crate reference ONLY if `crate_B` depends on `crate_A` (check its `Cargo.toml`) AND uses *that* type — a same-named *local* type in a non-dependent crate is a false positive. Verify the dependency edge before scoping it as work. **Source:** Sprint 120-0-0 — `evidence.rs:512` looked like an `omega_measurement` ref but was `omega_contracts`' own same-named `MeasurementEnvelope`; "fixing" it would have broken contracts.
+**Duplicate-claim rule (MANDATORY for "unify/remove/consolidate duplicate X" stories):** before estimating, grep the **whole workspace** for `X` — a "local duplicate" is often a cross-crate shared vocabulary, and naive unification breaks dependents. **Source:** Sprint 120 — STORY-002 ("unify duplicate `AuthorityEffect`") was scoped from one file; the name was actually shared across `core_certifiers`/`sentinel_councils`/`core_contracts` with distinct advisory semantics, forcing a re-scope. **If the grep finds >2 definitions or differing variants, scope an ADR/decision story (classify each pair SAME vs DISTINCT) FIRST — do not write a unify story.** **Source:** Sprint 120-0 — the grep found **6** distinct `AuthorityEffect` enums; an ADR-first scope decided "consolidate 3 identical fact-labels, keep firewall/contract/measurement distinct," preventing conflation at 3× the scale. **Cross-crate-ref false-positive guard:** a grep hit for `crate_A_type` inside `crate_B` is a real cross-crate reference ONLY if `crate_B` depends on `crate_A` (check its `Cargo.toml`) AND uses *that* type — a same-named *local* type in a non-dependent crate is a false positive. Verify the dependency edge before scoping it as work. **Source:** Sprint 120-0-0 — `evidence.rs:512` looked like an `core_measurement` ref but was `core_contracts`' own same-named `MeasurementEnvelope`; "fixing" it would have broken contracts.
 
 **Doc archival/move ref-scope rule (MANDATORY for "archive/move/retire/rename canonical doc X" stories):** a "no live refs" AC must grep **all file types** (`**/*`, not just code), then classify each hit **live-authoritative** (companion catalogs, `controlling_spine:`/`companion_document:` frontmatter, code doc-comments → repoint) vs **frozen-history** (completed `coda_project_planning/sprints/*`, `completion.md` → EXEMPT and document, never rewrite). Redefine the gate to "0 live refs in code consumers + companion catalogs," not "0 grep hits." **Source:** Sprint 121 — discovery scoped v1-spine refs to `.py/.rs/.toml` (found 1); the real set was ~18, mostly markdown, and rewriting frozen evidence would have falsified the record.
 
@@ -178,7 +178,7 @@ The per-story commands below populate **§2 of `discovery.md`** (one pasted resu
 | Check | Command (Windows) | Command (Unix) | Story Types |
 |-------|-------------------|----------------|-------------|
 | Test file exists | `test -f tests/test_<feature>.py && echo EXISTS` | Same | Test coverage stories |
-| Content file exists | `test -f anomalon/.../section.md && echo EXISTS` | Same | Content/lesson stories |
+| Content file exists | `test -f sentinel/.../section.md && echo EXISTS` | Same | Content/lesson stories |
 | API endpoint exists | `grep -r "def <endpoint>" backend/api/` | Same | API stories |
 | Component exists | `test -f frontend/src/components/<Name>.tsx && echo EXISTS` | Same | Frontend stories |
 | Migration exists | `ls backend/alembic/versions/*<keyword>*` | Same | Schema stories |
@@ -191,13 +191,13 @@ The per-story commands below populate **§2 of `discovery.md`** (one pasted resu
 test -f tests/test_<feature>.py && echo "TEST EXISTS - mark story pre-complete"
 
 # For content/lesson stories
-ls anomalon/triangles_distinction_to_everything/lesson_*/en/<section>*.md 2>/dev/null && echo "CONTENT EXISTS"
+ls sentinel/triangles_distinction_to_everything/lesson_*/en/<section>*.md 2>/dev/null && echo "CONTENT EXISTS"
 
 # For API endpoint stories
 grep -rn "def <function_name>" backend/api/ && echo "ENDPOINT EXISTS"
 
 # For skill update stories
-test -f omega_engine/.omega_skills/<skill>/SKILL.md && echo "SKILL EXISTS"
+test -f engine/.core_skills/<skill>/SKILL.md && echo "SKILL EXISTS"
 
 # Count existing tests for a module
 grep -c "def test_" tests/test_<module>.py 2>/dev/null || echo "0 tests"
@@ -238,9 +238,9 @@ Use WebFetch/WebSearch to gather insights scoped to the stories defined in Steps
 
 **Source:** Sprint 069 - user preference for thorough planning with external research
 
-### Step 10: Test Quality Review of Stories (MANDATORY - SOVIET INSPECTOR)
+### Step 10: Test Quality Review of Stories (MANDATORY - STRICT INSPECTOR)
 
-**CRITICAL:** Before finalizing stories, invoke `techne-code-soviet-inspector` to validate test requirements.
+**CRITICAL:** Before finalizing stories, invoke `techne-code-inspector` to validate test requirements.
 
 For EACH story that adds/modifies code:
 
@@ -266,7 +266,7 @@ for story in stories:
 
 ``` ext
 IF any story lacks proper test requirements:
-  OUTPUT: "SPRINT PLANNING BLOCKED by Techne Code Soviet Inspector"
+  OUTPUT: "SPRINT PLANNING BLOCKED by Techne Code Inspector"
   OUTPUT: "Story {STORY-ID} missing test requirements. Cannot proceed."
   STOP: Do not finalize sprint plan until fixed
 
@@ -288,7 +288,7 @@ IF any story lacks proper test requirements:
 
 ``` ext
 
-**Source:** Sprint Workflow Quality Enforcement (Techne Code Soviet Inspector Model)
+**Source:** Sprint Workflow Quality Enforcement (Techne Code Inspector Model)
 
 ### Step 11: Create Artifacts (MANDATORY — Templates + Gate)
 

@@ -14,7 +14,7 @@ families: [ooutwire, intelligence, circus, mole_hunting, surveillance, ttss, dir
 **Classification:** `TOP SECRET // SCI // AP: PROGRAM INDIGO // OPERATION POKROV`  
 **Handling Caveat:** `EYES ONLY: OOUTWIRE, MEEKERS`  
 **AuthorityEffect:** `None`  
-**Governing Context:** [`omega_engine_cognitive_operations/ooutwire`](../../../omega_engine_cognitive_operations/ooutwire)  
+**Governing Context:** [`cognitive_operations/ooutwire`](../../../cognitive_operations/ooutwire)  
 
 ---
 
@@ -26,7 +26,7 @@ The **Circus Directorate** manages internal counter-intelligence, tradecraft hid
 
 ## 2. Integrated Directorates & Operatives
 
-This skill coordinates the TTSS operative roster and operational directorates defined in [`omega_engine_cognitive_operations/ooutwire/directorates/`](../../../omega_engine_cognitive_operations/ooutwire/directorates):
+This skill coordinates the TTSS operative roster and operational directorates defined in [`cognitive_operations/ooutwire/directorates/`](../../../cognitive_operations/ooutwire/directorates):
 
 1. **TTSS Roster (`02_directorate_circus.yaml`)**:
    - George Smiley ("Beggarman"): Master counter-espionage; memory palace triangulation.

@@ -1,0 +1,28 @@
+gate_id: "PFP-14-CONTEXT-TRANSPORT"
+name: "Context Transport Fast-Path Context Transport (Preservation Guardian)"
+character: "Context Transport"
+role: "Fast-Path Context Transport & Escalation Operator"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "Soaring above bureaucratic inertia. Swift delivery without loss.
+   Context across boundaries must preserve topological invariants."
+objective: >
+  Transport execution context, state snapshots, and emergency escalations across
+  subsystem boundaries without semantic attenuation or dropped coordinates.
+fences:
+  - "Lossless Context Handoff: State snapshots must retain exact 1-cochain digests across process boundaries."
+  - "No Truncation: Hand-offs must not drop unclosed obligations or active obstruction records."
+  - "Checksum Verification: Ingress payloads must verify checksum parity against origin before allocation."
+input_schema:
+  snapshot_id: "string"
+  payload_checksum: "string"
+  retained_coordinates: "list[string]"
+  dropped_coordinates: "list[string]"
+expected_behavior: >
+  Audits context handoff packets. If dropped coordinates are non-empty or checksums mismatch,
+  halts with RefusalCode.CONTEXT_TRANSPORT_CORRUPTED.
+narrowest_defensible_claim: >
+  Verifying snapshot digests during context handoff detects data loss before downstream stage evaluation.
+next_test_needed: >
+  Simulate truncated state handoff and verify immediate context transport refusal.

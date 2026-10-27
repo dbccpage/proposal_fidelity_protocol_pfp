@@ -11,14 +11,14 @@ evidence_grades:
   Lean: false
   gated: true
 authority_effect: "None"
-canonical_source: omega_engine_education/documentation/014_normal_forms/contracts_normal_forms/
+canonical_source: education/documentation/014_normal_forms/contracts_normal_forms/
 last_verified: 2026-10-05
 ---
 
 # Normal Forms & Canonical Form Contracts — Prompt Civilization & Lamarckian Evolution
 
 **AuthorityEffect:** None.\
-**Canonical Source:** [`omega_engine_education/documentation/014_normal_forms/contracts_normal_forms/`](../../014_normal_forms/contracts_normal_forms)
+**Canonical Source:** [`education/documentation/014_normal_forms/contracts_normal_forms/`](../../014_normal_forms/contracts_normal_forms)
 
 ---
 

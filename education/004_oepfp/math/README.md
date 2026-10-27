@@ -11,7 +11,7 @@ maturity: canonical
 claim_status: reference-index
 authority_effect: "None"
 source_paths:
-- omega_engine_education/documentation/004_oepfp/math/README.md
+- education/documentation/004_oepfp/math/README.md
 prerequisites: []
 verification: scoped Markdown and local-link checks; see architecture review 65; 2026-10-22 recheck at 305b9690f9 of the C4 arithmetic, chapter 08 zeta identity, and the obligation-status counts; the 2026-10-20 file index was not rebuilt
 aliases: []
@@ -150,10 +150,10 @@ This folder holds 33 files. Two numbered series share the prefixes `01_` to `09_
 | 02 | [`02_executable_contexts_and_reachability.md`](./02_executable_contexts_and_reachability.md) | L1 and L2 contexts, reachability |
 | 03 | [`03_quotient_obstruction_and_homology.md`](./03_quotient_obstruction_and_homology.md) | L3 and L4 quotient obstruction |
 | 04 | [`04_conservative_context_extension_and_descent.md`](./04_conservative_context_extension_and_descent.md) | L5 and L6 extension, descent |
-| 05 | [`05_landau_theorems_and_invariant_register.md`](./05_landau_theorems_and_invariant_register.md) | Register of 29 extracted theorems |
+| 05 | [`05_examiner_theorems_and_invariant_register.md`](./05_examiner_theorems_and_invariant_register.md) | Register of 29 extracted theorems |
 | 06 | [`06_higher_dimensions_and_hott_typing.md`](./06_higher_dimensions_and_hott_typing.md) | Higher cells, HoTT lens |
 | 07 | [`07_mathematical_obligations_register.yaml`](./07_mathematical_obligations_register.yaml) | Machine-readable obligations register |
-| 08 | [`08_omega_engine_dynamics_and_adjunction_boundaries.md`](./08_omega_engine_dynamics_and_adjunction_boundaries.md) | Exploratory adjunction dynamics (conjecture grade) |
+| 08 | [`08_dynamics_and_adjunction_boundaries.md`](./08_dynamics_and_adjunction_boundaries.md) | Exploratory adjunction dynamics (conjecture grade) |
 | 09 | [`09_staged_mathematical_scope_and_owner_boundaries.md`](./09_staged_mathematical_scope_and_owner_boundaries.md) | Staged demonstrations and code owners |
 | — | [`oesos_layers_index.md`](./oesos_layers_index.md) | Index of Series B |
 

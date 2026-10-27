@@ -9,7 +9,7 @@ mathematical witness, level activation, fidelity judgment or execution permissio
 | Profile | Canonical EBNF / start | Implementation and scope |
 |---|---|---|
 | `mss-boundary-v1` | [`../python/domain/boundary.ebnf`](../python/domain/boundary.ebnf) / `packet` | [`parse_boundary`](../python/domain/rewrite.py): ground, atom or packet-only composite. The checker reads the existing receipt-bound EBNF directly. |
-| `historical-packet-v1` | [`historical_packet.ebnf`](historical_packet.ebnf) / `packet` | Existing [tower parser](../../../omega_engine_pfp/domain/tower/grammar.py): ground, atom or `op<…>` application. Opcode/arity/activation checks follow parsing. |
+| `historical-packet-v1` | [`historical_packet.ebnf`](historical_packet.ebnf) / `packet` | Existing [tower parser](../../../pfp/domain/tower/grammar.py): ground, atom or `op<…>` application. Opcode/arity/activation checks follow parsing. |
 | `pkt00-k0-v1` | [`cycle_repair.ebnf`](cycle_repair.ebnf) / `cycle_repair` | Rendered K0 candidates from the [cycle transcoder](../python/infrastructure/mssn_transcoder.py). Fixed incidence, dimensions, field order and claim literals; runtime also checks edge uniqueness, integer range and diagnostic overflow. |
 | `quiz-packet-v1` | [`quiz_packet.ebnf`](quiz_packet.ebnf) / `quiz_message` | Teaching `ask`, `ans`, `ref` packets. Tested syntax specification; the legacy quiz helper is not a conforming parser. |
 | `glyph-graph-v1` | [`glyph_graph.ebnf`](glyph_graph.ebnf) / `glyph_graph` | Quiz 11/13 single-glyph vertices and edges. Tested syntax specification; graph filling and mathematical checks are separate. |
@@ -63,8 +63,8 @@ depth 32 (root depth 0). Other profiles do not inherit those limits.
 From the repository root, Python 3.12 or later:
 
 ```sh
-python ow/omega_engine_pfp_v0.2/grammar/check_grammars.py
-python ow/omega_engine_pfp_v0.2/grammar/check_grammars.py --runtime
+python ow/pfp_v0.2/grammar/check_grammars.py
+python ow/pfp_v0.2/grammar/check_grammars.py --runtime
 ```
 
 The default run needs only the standard library. `--runtime` also needs Pydantic 2
@@ -97,5 +97,5 @@ parser, pinned boundary grammar or receipt digest definition changes in this
 refactor. Broader atlas semantics and old teaching-helper findings remain outside
 these syntax contracts. The dated quiz review was removed with `5_quizzes_and_puzzles`. Recover it from git history. Plan acceptance `P07` requires each removed artifact to become its own pilot.
 
-The [MSS-N research paper](../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_pre_genesis_to_mssn/paper.md)
+The [MSS-N research paper](../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_pre_genesis_to_mssn/paper.md)
 explains how to choose and interpret these formats.

@@ -5,7 +5,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Sequence
 
-from omega_engine_pfp.domain.mssn_research.grammar.rewriting import (
+from pfp.domain.mssn_research.grammar.rewriting import (
     BQNFRoute,
     BQNFViewCochain,
     DDAEventRecord,
@@ -14,8 +14,8 @@ from omega_engine_pfp.domain.mssn_research.grammar.rewriting import (
     RewriteStep,
     RuntimeKernel,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     Rational,
 )
 
@@ -123,7 +123,7 @@ def check_dda_event_proof(event: DDAEventRecord) -> Result[bool, GrammarDomainEr
 def check_runtime_kernel_irredundance(kernel: RuntimeKernel) -> Result[bool, GrammarDomainError]:
     """Invariant 15 (Level 12): Four-Field Kernel Irredundancy.
 
-    Verifies that all 4 fields (B, C, x, Omega) are populated and non-degenerate.
+    Verifies that all 4 fields (B, C, x, Core) are populated and non-degenerate.
     """
     if kernel.budget <= 0:
         return Refusal(DDAEventVerificationError(
@@ -192,16 +192,16 @@ def check_bqnf_route_repair(cochain: BQNFViewCochain, route: BQNFRoute) -> Resul
                 message=f"d0 columns ({d0.cols}) != alpha length ({len(alpha)})"
             ))
         # Compute d_0 * alpha
-        computed_omega: list[Rational] = []
+        computed_core: list[Rational] = []
         for r in range(d0.rows):
             acc = Fraction(0)
             for c in range(d0.cols):
                 d_rc = d0.get(r, c)
                 a_c = alpha[c]
                 acc += Fraction(d_rc.numerator, d_rc.denominator) * Fraction(a_c.numerator, a_c.denominator)
-            computed_omega.append(Rational(acc.numerator, acc.denominator))
+            computed_core.append(Rational(acc.numerator, acc.denominator))
 
-        if tuple(computed_omega) != cochain.omega:
+        if tuple(computed_core) != cochain.omega:
             return Refusal(BQNFRoutingError(
                 code=RefusalCode.HOST_VERIFICATION_REQUIRED,
                 message="Repair failed; omega != d_0 * alpha"

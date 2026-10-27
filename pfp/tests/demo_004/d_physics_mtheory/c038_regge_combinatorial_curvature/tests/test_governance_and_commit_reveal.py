@@ -18,15 +18,15 @@ from fractions import Fraction
 from pathlib import Path
 from unittest import mock
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance import (
-    woland_gate as woland_gate_module,
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance import (
+    adversary_gate as adversary_gate_module,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance.budget_gate import (
     BudgetCeilingExceededError,
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance.commit_reveal_runner import (
     ManifestCustodyError,
     lf_normalized_bytes,
     phase1_commit_judge,
@@ -35,10 +35,10 @@ from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regg
     verify_commitments,
     verify_manifest_entries,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c038_regge_combinatorial_curvature.governance.adversary_gate import (
     CANONICAL_OUTPUT_FILES,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
 CHALLENGE_DIR = Path(__file__).resolve().parent.parent
@@ -71,10 +71,10 @@ def _temp_package(base: Path) -> Path:
     return root
 
 
-class _Frozen(woland_gate_module.datetime):
+class _Frozen(adversary_gate_module.datetime):
     @classmethod
     def now(cls, tz=None):
-        return cls(2026, 9, 29, 12, 0, 0, tzinfo=woland_gate_module.timezone.utc)
+        return cls(2026, 9, 29, 12, 0, 0, tzinfo=adversary_gate_module.timezone.utc)
 
 
 class TestGovernanceAndCommitReveal(unittest.TestCase):
@@ -125,13 +125,13 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
         self.assertEqual(audit["ceiling_usd"], 0.50)
         self.assertEqual(audit["target_usd"], 0.05)
 
-    def test_woland_gate_quad_persistence(self) -> None:
-        """Asserts WolandGate writes all 4 bundle files and a report of the measured values.
+    def test_adversary_gate_quad_persistence(self) -> None:
+        """Asserts AdversaryGate writes all 4 bundle files and a report of the measured values.
 
         Counterexample: the report used to be a fixed seven-act narrative ("Act I: Patriarch's
         Ponds" ... "Act VII") that printed 46 cases and 'Divergences: 0' whatever it was given."""
         with tempfile.TemporaryDirectory() as tmp_dir:
-            gate = WolandGate(task_key="c038_regge_combinatorial_curvature", base_dir=Path(tmp_dir))
+            gate = AdversaryGate(task_key="c038_regge_combinatorial_curvature", base_dir=Path(tmp_dir))
             novella = gate.generate_novella(CONSISTENT, {"total_cases": 46, "agreements_count": 46})
 
             receipt = {"challenge_id": "c038_regge_combinatorial_curvature", "verdict": CONSISTENT}
@@ -145,7 +145,7 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
                 novella=novella,
             )
 
-            for run_dir in (targets["woland_run_dir"], targets["symgam_run_dir"]):
+            for run_dir in (targets["adversary_run_dir"], targets["symgam_run_dir"]):
                 self.assertTrue(run_dir.is_dir())
                 self.assertIn(Path(tmp_dir), run_dir.parents)
                 for fname in CANONICAL_OUTPUT_FILES:
@@ -162,10 +162,10 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
             self.assertIn("| Judge cases scored | not reported |", unreported)
             self.assertNotIn("Divergences", unreported)
 
-    def test_woland_gate_labels_come_from_exact_counts(self) -> None:
+    def test_adversary_gate_labels_come_from_exact_counts(self) -> None:
         """Counterexamples: an empty suite, one checker disagreement and a float Phi_1 must not be consistent,
         and a PASS_TO_MASTER label must be refused."""
-        gate = WolandGate(base_dir=Path("unused"))
+        gate = AdversaryGate(base_dir=Path("unused"))
         self.assertEqual(gate.determine_terminal_verdict(0, 0, 0), INCONSISTENT)
         self.assertEqual(gate.determine_terminal_verdict(46, 46, 45), INCONSISTENT)
         self.assertEqual(gate.determine_terminal_verdict(46, 46, 46), CONSISTENT)
@@ -174,18 +174,18 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
         with self.assertRaises(ValueError):
             gate.generate_novella("PASS_TO_MASTER", {})
 
-    def test_woland_gate_never_replaces_a_run_folder(self) -> None:
+    def test_adversary_gate_never_replaces_a_run_folder(self) -> None:
         """Counterexample: every run wrote into the same runs/<task_key> folder and overwrote the previous bundle."""
         with (
             tempfile.TemporaryDirectory() as tmp_dir,
-            mock.patch.object(woland_gate_module, "datetime", _Frozen),
+            mock.patch.object(adversary_gate_module, "datetime", _Frozen),
         ):
-            gate = WolandGate(task_key="c038_collision", base_dir=Path(tmp_dir))
+            gate = AdversaryGate(task_key="c038_collision", base_dir=Path(tmp_dir))
             first = gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="first")
             with self.assertRaises(RunFolderExistsError):
                 gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="second")
             self.assertEqual(
-                (first["woland_run_dir"] / "novella.md").read_text(encoding="utf-8"), "first"
+                (first["adversary_run_dir"] / "novella.md").read_text(encoding="utf-8"), "first"
             )
 
     def test_commit_reveal_workflow(self) -> None:

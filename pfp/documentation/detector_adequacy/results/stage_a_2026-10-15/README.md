@@ -7,7 +7,7 @@ anyone has adopted.
 
 | Field | Value |
 |---|---|
-| Command | `python3 -m omega_engine_pfp.use_cases.detector_adequacy.battery --lock-commit 447a44942… --n 300 --out omega_engine_pfp/documentation/detector_adequacy/results/stage_a_2026-10-15` |
+| Command | `python3 -m pfp.use_cases.detector_adequacy.battery --lock-commit 447a44942… --n 300 --out pfp/documentation/detector_adequacy/results/stage_a_2026-10-15` |
 | Lock commit | `447a44942` (full sha in `stage_a_summary.json`) |
 | Held-out families | `heldout.py`, added in `041a0f005` after the lock; sha256 `030272b59055…` (full value in the summary) |
 | Seed | `16345353868606535682`, derived from the lock commit |
@@ -73,9 +73,9 @@ the defects it reports. D2 itself refuses H6, because its strict extractor stops
 length mismatch.
 
 *Note, 2026-10-15, after Stage B:* the battery no longer emits this section, so the
-production package does not import Woland. The finding is now checked by
+production package does not import Adversary. The finding is now checked by
 `test_lggr_adapter_certifies_adequacy_while_flagging_length_mismatch` in
-`omega_engine_pfp/tests/test_detector_adequacy_battery.py` (8 traces per family).
+`pfp/tests/test_detector_adequacy_battery.py` (8 traces per family).
 
 ## What this result does and does not support
 

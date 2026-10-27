@@ -36,10 +36,10 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.linalg import rank
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q, parse_q
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result
+from operations.use_cases.level_engine.research_engine.exact.linalg import rank
+from operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q, parse_q
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result
 from derivation.boundary_cancellation import bd_n, facets
 
 CHALLENGE_ID = "route_replay"

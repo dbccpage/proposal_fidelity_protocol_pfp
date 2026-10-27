@@ -16,9 +16,9 @@ This rule codifies canonical model provider adapter locations, anti-shim legacy 
 
 > **Canonical Provider Adapters Location:**
 >
-> 1. All model and LLM provider adapters (e.g., Mock LLM, Ollama Local, Gemini Live, Local ONNX) must reside strictly within `omega_engine_woland/infrastructure/providers/adapters/`.
-> 2. The legacy `engine/adapters/` and `omega_engine_providers/` locations are permanently deleted and must never be reintroduced or imported.
-> 3. Consumers and test suites across the repository must import from `omega_engine_woland.infrastructure.providers.adapters` (and domain types from `omega_engine_woland.domain.providers`), with `pytest.ini` configured to run `omega_engine_woland/tests/providers`.
+> 1. All model and LLM provider adapters (e.g., Mock LLM, Ollama Local, Gemini Live, Local ONNX) must reside strictly within `adversary/infrastructure/providers/adapters/`.
+> 2. The legacy `engine/adapters/` and `providers/` locations are permanently deleted and must never be reintroduced or imported.
+> 3. Consumers and test suites across the repository must import from `adversary.infrastructure.providers.adapters` (and domain types from `adversary.domain.providers`), with `pytest.ini` configured to run `adversary/tests/providers`.
 
 ---
 
@@ -26,11 +26,11 @@ This rule codifies canonical model provider adapter locations, anti-shim legacy 
 
 > **Anti-Shim Subsystem Consolidation Protocol:**
 >
-> 1. **Canonical Package Authority Audit**: When resolving duplicate, overlapping, or legacy code trees (e.g. `engine/` vs `omega_engine_pfp/`), verify canonical package declarations in `pyproject.toml` or `Cargo.toml`.
+> 1. **Canonical Package Authority Audit**: When resolving duplicate, overlapping, or legacy code trees (e.g. `engine/` vs `pfp/`), verify canonical package declarations in `pyproject.toml` or `Cargo.toml`.
 > 2. **Set-Theoretic Divergence Check**: Determine whether the candidate legacy tree is a strict subset or divergent branch of the canonical package.
 > 3. **Anti-Shim Rejection of Mutual Merging**: If the legacy tree relies on deprecated compatibility shims, re-export facades, or obsolete imports, never execute a mutual two-way merge. The canonical modern package must absorb any verified unique assets, and the legacy tree must be cleanly deleted via `git rm -r`.
 > 4. **Configuration & Harness Purge**: Upon legacy tree removal, immediately update test runners (`pytest.ini` exclusions/ignores), benchmarks, notebook scenes, and documentation to remove references to the retired path.
-> 5. **Cross-Subsystem Re-routing Closure**: When retiring a shared library or adapter package (such as `omega_engine_providers/`), all importing modules across client estates (`omega_engine_pfp`, `omega_engine_education`, `omega_engine_prompt_civilization`, etc.) must be re-routed to the successor package before removing the legacy folder, ensuring zero runtime `ModuleNotFoundError` regressions and confirming that fresh-process imports of the retired root fail-closed (`RETIRED_ROOT_REFUSED`).
+> 5. **Cross-Subsystem Re-routing Closure**: When retiring a shared library or adapter package (such as `providers/`), all importing modules across client estates (`pfp`, `education`, `pciv`, etc.) must be re-routed to the successor package before removing the legacy folder, ensuring zero runtime `ModuleNotFoundError` regressions and confirming that fresh-process imports of the retired root fail-closed (`RETIRED_ROOT_REFUSED`).
 
 ---
 
@@ -66,5 +66,5 @@ This rule codifies canonical model provider adapter locations, anti-shim legacy 
 
 > **Dual-Language Adapter & Test Isolation Directive:**
 >
-> 1. **Lockstep Python & Rust Default Redirection:** When default persistence roots or telemetry custody paths are redirected (e.g. defaulting to `_ic/nara/permanent_records/`), the redirection must be implemented in both Python adapters (`JsonlBoutJournal.for_repository`, `FileGenealogyAdapter.for_repository`, `DurableIntelligenceCollector.for_repository`) and compiled Rust kernel crates (`omega_symbol_game::woland_custody` namespace mapping and `woland_host` journal discovery) in lockstep.
+> 1. **Lockstep Python & Rust Default Redirection:** When default persistence roots or telemetry custody paths are redirected (e.g. defaulting to `_ic/nara/permanent_records/`), the redirection must be implemented in both Python adapters (`JsonlBoutJournal.for_repository`, `FileGenealogyAdapter.for_repository`, `DurableIntelligenceCollector.for_repository`) and compiled Rust kernel crates (`core_symbol_game::adversary_custody` namespace mapping and `adversary_host` journal discovery) in lockstep.
 > 2. **Strict Test Isolation Preservation:** Default path redirection must only take effect when caller-supplied `output_dir` is `None`. Test harnesses passing explicit temporary paths (`tmp_path`) must take absolute precedence to ensure hermetic test execution without side effects in repository permanent records.

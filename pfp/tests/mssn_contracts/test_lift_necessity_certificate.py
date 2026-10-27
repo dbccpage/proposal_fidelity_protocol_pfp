@@ -20,17 +20,17 @@ ROOT = HERE.parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from omega_engine_pfp.domain.mssn_research.grammar.errors import LiftNecessityError
-from omega_engine_pfp.domain.mssn_research.grammar.lift_policies import (
+from pfp.domain.mssn_research.grammar.errors import LiftNecessityError
+from pfp.domain.mssn_research.grammar.lift_policies import (
     check_lift_necessity_certificate,
     execute_bounded_lift_necessity_search,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import (
+from pfp.domain.mssn_research.grammar.spectral_geometry import (
     LiftGoal,
     LiftNecessityCertificate,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, StageLevel
+from pfp.domain.mssn_research.packets.value_objects import RefusalCode
+from pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, StageLevel
 
 
 class TestLiftNecessityCertificate(unittest.TestCase):

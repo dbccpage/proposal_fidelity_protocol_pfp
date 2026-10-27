@@ -22,7 +22,7 @@ from typing import Any, Mapping
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import (
+from pfp.infrastructure.normal_forms.contract_paths import (
     CONTRACTS_DIR,
     INDEX_PATH,
     SCHEMA_V1_PATH,

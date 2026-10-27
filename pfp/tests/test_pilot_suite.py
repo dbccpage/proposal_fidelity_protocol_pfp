@@ -17,12 +17,12 @@ try:
 except ImportError:
     HAS_JSONSCHEMA = False
 
-from omega_engine_pfp.use_cases.evaluate_pilot_suite import (
+from pfp.use_cases.evaluate_pilot_suite import (
     EvaluatePilotSuiteUseCase,
 )
-from omega_engine_pfp.tests.pilot_custody_support import is_historical_dossier
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
-from omega_engine_pfp.infrastructure.providers import OpenRouterLiveProvider
+from pfp.tests.pilot_custody_support import is_historical_dossier
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
+from pfp.infrastructure.providers import OpenRouterLiveProvider
 
 
 def accounted_suite(gateway):
@@ -113,7 +113,7 @@ def test_accounted_suite_malformed_binding_never_reaches_judge(
 ):
     gateway, provider = make_gateway(tmp_path, raw_content=raw)
     monkeypatch.setattr(
-        "omega_engine_pfp.use_cases.evaluate_pilot_suite.evaluate_candidate",
+        "pfp.use_cases.evaluate_pilot_suite.evaluate_candidate",
         lambda *args: pytest.fail("unbound reply reached original judge"),
     )
     result = (
@@ -136,7 +136,7 @@ def test_accounted_suite_malformed_binding_never_reaches_judge(
 
 
 def test_accounted_suite_raw_provider_refuses_before_output(accounted_pilot, tmp_path):
-    from omega_engine_pfp.infrastructure.providers import OpenRouterLiveProvider
+    from pfp.infrastructure.providers import OpenRouterLiveProvider
 
     result = EvaluatePilotSuiteUseCase(
         OpenRouterLiveProvider(api_key="fixture-key", default_model="vendor/model")
@@ -160,7 +160,7 @@ def test_accounted_suite_dry_fixture_and_no_overwrite(accounted_pilot, tmp_path)
 
 
 def test_accounted_suite_duplicate_json_keys_are_not_sanitized_into_acceptance():
-    from omega_engine_pfp.use_cases.evaluate_pilot_suite import sanitize_raw_reply
+    from pfp.use_cases.evaluate_pilot_suite import sanitize_raw_reply
 
     assert sanitize_raw_reply('{"answer":0,"answer":3}')[1] is False
 
@@ -230,7 +230,7 @@ def test_accounted_suite_unmatched_case_ratios_unavailable_and_micro_cost(
 @pytest.mark.parametrize("extra", [None, "malformed", "duplicate"])
 def test_accounted_suite_ratios_require_only_complete_unique_pairs(accounted_pilot, tmp_path, extra):
     from dataclasses import replace
-    from omega_engine_operations.domain.rop.result import Ok
+    from operations.domain.rop.result import Ok
 
     gateway, provider = make_gateway(tmp_path, answer={"answer": 3})
     specs = suite_specs(accounted_pilot)[:2 if extra is None else 3]
@@ -261,7 +261,7 @@ def test_accounted_suite_ratios_require_only_complete_unique_pairs(accounted_pil
 
 
 def test_accounted_suite_cli_dry_result_and_explicit_live_model(accounted_pilot, tmp_path, capsys):
-    from omega_engine_pfp.entrypoints.cli.pfp import main
+    from pfp.entrypoints.cli.pfp import main
 
     assert (
         main(
@@ -311,7 +311,7 @@ def test_accounted_suite_windows_alias_refuses_before_send(accounted_pilot, tmp_
 def test_accounted_suite_pending_settlement_keeps_answer_and_stops(
     accounted_pilot, tmp_path, monkeypatch
 ):
-    from omega_engine_pfp.infrastructure import pilot_matrix
+    from pfp.infrastructure import pilot_matrix
 
     complete = pilot_matrix.complete_pilot_turn
 
@@ -350,7 +350,7 @@ def pilots_yaml_dir(repo_root: Path) -> Path:
 
 @pytest.fixture(scope="module")
 def pilot_0000000_dir(repo_root: Path) -> Path:
-    return repo_root / "omega_engine_woland" / "tests" / "pilots" / "pilot_0000000"
+    return repo_root / "adversary" / "tests" / "pilots" / "pilot_0000000"
 
 
 def test_pilot_types_catalog_loads(pilots_yaml_dir: Path) -> None:
@@ -495,8 +495,8 @@ def test_evaluate_pilot_suite_use_case_collects_prompts(pilot_0000000_dir: Path)
 
 
 def test_ab_intermediate_witness_verification(pilot_0000000_dir: Path) -> None:
-    from omega_engine_pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
-    from omega_engine_pfp.domain.types.base import EvaluationStatus
+    from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
+    from pfp.domain.types.base import EvaluationStatus
 
     results_dir = pilot_0000000_dir / "results"
     tests_dir = pilot_0000000_dir / "tests"
@@ -547,9 +547,9 @@ def test_ab_intermediate_witness_verification(pilot_0000000_dir: Path) -> None:
 
 def test_pilot_0000001_structure_and_gate(pilot_0000000_dir: Path) -> None:
     """Verify pilot_0000001 directory structure, template organization, and PFP-02-GRAPH-FACTS gate."""
-    from omega_engine_pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
-    from omega_engine_pfp.domain.types.base import EvaluationStatus
-    from omega_engine_pfp.domain.types.prompt_templates import PromptTemplate, PStarPrompt
+    from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
+    from pfp.domain.types.base import EvaluationStatus
+    from pfp.domain.types.prompt_templates import PromptTemplate, PStarPrompt
 
     p1_dir = pilot_0000000_dir.parent / "pilot_0000001"
     assert (p1_dir / "seed.yaml").is_file()
@@ -626,9 +626,9 @@ def test_pilot_0000001_structure_and_gate(pilot_0000000_dir: Path) -> None:
 
 def test_observer_visibility_gate_requires_the_declared_certificate(repo_root: Path) -> None:
     """A partial tally or a bare 6 must not pass the three-patch certificate."""
-    from omega_engine_pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
+    from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
 
-    seed_path = repo_root / "omega_engine_woland" / "tests" / "pilots" / "pilot_0000051" / "seed.yaml"
+    seed_path = repo_root / "adversary" / "tests" / "pilots" / "pilot_0000051" / "seed.yaml"
     expected = yaml.safe_load(seed_path.read_text(encoding="utf-8"))["expected_outcome"]["answer"]
     honest = FailClosedRefusalGate.evaluate_candidate_payload(
         checker_id="PFP-03-OBSERVER-VISIBILITY",

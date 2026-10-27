@@ -8,13 +8,13 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import PurePosixPath
 
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.python_development_office.quality_inventory import (
     FileQualityRecord,
     QualityFinding,
     TestTierEvidence,
     TestTierRule,
 )
-from omega_engine_operads.domain.python_development_office.test_execution_receipt import (
+from operads.domain.python_development_office.test_execution_receipt import (
     TestExecutionReceipt,
 )
 

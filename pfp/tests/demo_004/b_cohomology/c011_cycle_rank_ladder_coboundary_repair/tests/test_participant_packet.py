@@ -11,7 +11,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.solver import (
     solve,
 )
 

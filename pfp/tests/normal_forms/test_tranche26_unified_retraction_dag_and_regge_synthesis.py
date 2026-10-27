@@ -1,10 +1,10 @@
 """Tranche 26: Unified Cross-Domain Retraction DAG & 4D Spacetime Deficit Synthesis (Tests 496-515).
 
 Aligned Contracts / Systems:
-- omega_engine_woland
-- omega_engine_pfp
-- omega_engine_woland.stage
-- omega_homology
+- adversary
+- pfp
+- adversary.stage
+- core_homology
 - RustSymbolGameHost
 
 AuthorityEffect: None.
@@ -18,25 +18,25 @@ import unittest
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_pfp.ffi import RustSymbolGameHost, get_default_host
-from omega_engine_woland.domain.evidence import (
+from pfp.ffi import RustSymbolGameHost, get_default_host
+from adversary.domain.evidence import (
     CandidateCheckV1,
     CheckerVerdict,
     MeasurementStatus,
     ObstructionMeasurementV1,
     sha256_ref,
 )
-from omega_engine_woland.domain.network import Network
-from omega_engine_woland.infrastructure.cochain_adapter import DefaultCochainScoringAdapter
-from omega_engine_woland.infrastructure.native import DefaultNativeOperationPort
-from omega_engine_woland.runtime import build_woland_runtime
-from omega_engine_woland.stage.domain import (
+from adversary.domain.network import Network
+from adversary.infrastructure.cochain_adapter import DefaultCochainScoringAdapter
+from adversary.infrastructure.native import DefaultNativeOperationPort
+from adversary.runtime import build_adversary_runtime
+from adversary.stage.domain import (
     AUTHORITY_EFFECT_NONE,
     CandidateProposalV1,
     WorkPacketV1,
 )
-from omega_engine_woland.use_cases.act_helpers import execute_act7_authorization_gate
-from omega_engine_woland.use_cases.bout_service import execute_7act_woland_bout
+from adversary.use_cases.act_helpers import execute_act7_authorization_gate
+from adversary.use_cases.bout_service import execute_7act_adversary_bout
 
 # Act VII reads typed evidence (2026-09-29 honest-gate change): an exact
 # measurement and a challenge-checker verdict bound to the candidate bytes and
@@ -160,15 +160,15 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_path = Path(tmp_dir)
-            rt = build_woland_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
+            rt = build_adversary_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
             pkt = _make_packet("test_4d_regge_bout")
-            res = execute_7act_woland_bout(
+            res = execute_7act_adversary_bout(
                 rt.profile,
                 rt,
                 pkt,
                 cochain_adapter=self.adapter,
                 carrier_context=_regge_carrier(),
-                output_dir=out_path / "_intelligence" / "_woland",
+                output_dir=out_path / "_intelligence" / "_adversary",
                 native_support=DefaultNativeOperationPort(),
             )
             self.assertTrue(res.is_ok)
@@ -187,7 +187,7 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
         self.assertTrue(deficits["regge_converged"])
 
     # Test 498
-    def test_act2_retinue_debate_higher_simplicial_defect_identification(self) -> None:
+    def test_act2_panel_debate_higher_simplicial_defect_identification(self) -> None:
         """Verify Act II identifies obstructions and extracts higher simplicial defects."""
         h = {e: Fraction(0, 1) for e in self.net.edges}
         h[(0, 1)] = Fraction(1, 1)
@@ -247,7 +247,7 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
     def test_act7_terminal_reality_gate_exact_regge_deficit_receipt(self) -> None:
         """Verify Act VII emits REGGE_SPACETIME_DEFICIT_RECEIPT on non-convergence."""
         cand = CandidateProposalV1(
-            producer_agent_id="seat_koroviev",
+            producer_agent_id="seat_defect_hunter",
             work_packet_id="sha256:0000000000000000000000000000000000000000000000000000000000000000",
             artifact_refs=(
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000",
@@ -314,19 +314,19 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_path = Path(tmp_dir)
-            rt = build_woland_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
+            rt = build_adversary_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
             pkt = _make_packet("task_4file_test")
-            res = execute_7act_woland_bout(
+            res = execute_7act_adversary_bout(
                 rt.profile,
                 rt,
                 pkt,
                 cochain_adapter=self.adapter,
                 carrier_context=_regge_carrier(),
-                output_dir=out_path / "_intelligence" / "_woland",
+                output_dir=out_path / "_intelligence" / "_adversary",
                 native_support=DefaultNativeOperationPort(),
             )
             self.assertTrue(res.is_ok)
-            run_dir = out_path / "_intelligence" / "_woland" / "runs" / "task_4file_test"
+            run_dir = out_path / "_intelligence" / "_adversary" / "runs" / "task_4file_test"
             self.assertTrue((run_dir / "receipt.json").is_file())
             self.assertTrue((run_dir / "novella.md").is_file())
             self.assertTrue((run_dir / "dda_actions.jsonl").is_file())
@@ -339,20 +339,20 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_path = Path(tmp_dir)
-            rt = build_woland_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
+            rt = build_adversary_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
             pkt = _make_packet("task_novella_test")
-            res = execute_7act_woland_bout(
+            res = execute_7act_adversary_bout(
                 rt.profile,
                 rt,
                 pkt,
                 cochain_adapter=self.adapter,
                 carrier_context=_regge_carrier(),
-                output_dir=out_path / "_intelligence" / "_woland",
+                output_dir=out_path / "_intelligence" / "_adversary",
                 native_support=DefaultNativeOperationPort(),
             )
             self.assertTrue(res.is_ok)
             novella_file = (
-                out_path / "_intelligence" / "_woland" / "runs" / "task_novella_test" / "novella.md"
+                out_path / "_intelligence" / "_adversary" / "runs" / "task_novella_test" / "novella.md"
             )
             content = novella_file.read_text(encoding="utf-8")
             self.assertIn("## Act I:", content)
@@ -365,15 +365,15 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_path = Path(tmp_dir)
-            rt = build_woland_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
+            rt = build_adversary_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
             pkt = _make_packet("task_receipt_test")
-            res = execute_7act_woland_bout(
+            res = execute_7act_adversary_bout(
                 rt.profile,
                 rt,
                 pkt,
                 cochain_adapter=self.adapter,
                 carrier_context=_regge_carrier(),
-                output_dir=out_path / "_intelligence" / "_woland",
+                output_dir=out_path / "_intelligence" / "_adversary",
                 native_support=DefaultNativeOperationPort(),
             )
             self.assertTrue(res.is_ok)
@@ -387,22 +387,22 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_path = Path(tmp_dir)
-            rt = build_woland_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
+            rt = build_adversary_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
             pkt = _make_packet("task_dda_test")
-            res = execute_7act_woland_bout(
+            res = execute_7act_adversary_bout(
                 rt.profile,
                 rt,
                 pkt,
                 cochain_adapter=self.adapter,
                 carrier_context=_regge_carrier(),
-                output_dir=out_path / "_intelligence" / "_woland",
+                output_dir=out_path / "_intelligence" / "_adversary",
                 native_support=DefaultNativeOperationPort(),
             )
             self.assertTrue(res.is_ok)
             dda_file = (
                 out_path
                 / "_intelligence"
-                / "_woland"
+                / "_adversary"
                 / "runs"
                 / "task_dda_test"
                 / "dda_actions.jsonl"
@@ -421,22 +421,22 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_path = Path(tmp_dir)
-            rt = build_woland_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
+            rt = build_adversary_runtime(output_dir=out_path / "_intelligence", fixture_mode=True)
             pkt = _make_packet("task_summary_test")
-            res = execute_7act_woland_bout(
+            res = execute_7act_adversary_bout(
                 rt.profile,
                 rt,
                 pkt,
                 cochain_adapter=self.adapter,
                 carrier_context=_regge_carrier(),
-                output_dir=out_path / "_intelligence" / "_woland",
+                output_dir=out_path / "_intelligence" / "_adversary",
                 native_support=DefaultNativeOperationPort(),
             )
             self.assertTrue(res.is_ok)
             summary_file = (
                 out_path
                 / "_intelligence"
-                / "_woland"
+                / "_adversary"
                 / "runs"
                 / "task_summary_test"
                 / "summary.json"
@@ -452,13 +452,13 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             out_path = Path(tmp_dir)
-            rt1 = build_woland_runtime(output_dir=out_path / "run1", fixture_mode=True)
-            rt2 = build_woland_runtime(output_dir=out_path / "run2", fixture_mode=True)
+            rt1 = build_adversary_runtime(output_dir=out_path / "run1", fixture_mode=True)
+            rt2 = build_adversary_runtime(output_dir=out_path / "run2", fixture_mode=True)
             pkt = _make_packet("task_replay_test")
-            res1 = execute_7act_woland_bout(
+            res1 = execute_7act_adversary_bout(
                 rt1.profile, rt1, pkt, cochain_adapter=self.adapter, output_dir=out_path / "run1"
             , native_support=DefaultNativeOperationPort())
-            res2 = execute_7act_woland_bout(
+            res2 = execute_7act_adversary_bout(
                 rt2.profile, rt2, pkt, cochain_adapter=self.adapter, output_dir=out_path / "run2"
             , native_support=DefaultNativeOperationPort())
             self.assertTrue(res1.is_ok)
@@ -469,7 +469,7 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
     def test_adversarial_zero_claim_with_high_xi3_trips_stackelberg_firewall(self) -> None:
         """Assert adversarial zero-claim with non-zero delta2_defect is strictly refused."""
         cand = CandidateProposalV1(
-            producer_agent_id="seat_koroviev",
+            producer_agent_id="seat_defect_hunter",
             work_packet_id="sha256:0000000000000000000000000000000000000000000000000000000000000000",
             artifact_refs=(
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000",
@@ -501,7 +501,7 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
     def test_adversarial_zero_claim_with_high_xi4_trips_stackelberg_firewall(self) -> None:
         """Assert adversarial zero-claim with non-zero delta3_defect is strictly refused."""
         cand = CandidateProposalV1(
-            producer_agent_id="seat_koroviev",
+            producer_agent_id="seat_defect_hunter",
             work_packet_id="sha256:0000000000000000000000000000000000000000000000000000000000000000",
             artifact_refs=(
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000",
@@ -540,7 +540,7 @@ class TestTranche26UnifiedRetractionDagAndReggeSynthesis(unittest.TestCase):
     def test_zero_data_loss_unauthorized_proposals_committed_to_cemetery(self) -> None:
         """Verify zero data loss: refused proposals retain nonclaims and evidence_refs in DAG."""
         cand = CandidateProposalV1(
-            producer_agent_id="seat_begemot",
+            producer_agent_id="seat_gauge_breaker",
             work_packet_id="sha256:0000000000000000000000000000000000000000000000000000000000000000",
             artifact_refs=(
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000",

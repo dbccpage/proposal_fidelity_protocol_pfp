@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 For a U(1) gauge theory with n left-handed Weyl fermions of integer charges qᵢ, the cubic gauge anomaly and the mixed gauge-gravitational anomaly cancel exactly when Σ qᵢ³ = 0 and Σ qᵢ = 0. A general solution of these two Diophantine equations was given by Costa, Dobrescu and Fox (2019); Allanach, Gripaios and Tooby-Smith (2019) gave a geometric treatment. Checking a proposed assignment takes two sums. Enumerating all of them within a bound, without missing or duplicating any up to symmetry, is where answers go wrong.
 
-The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) search with exact integer residuals, and OEEIS (Omega Engine Epistemic Immune System) screening of vector-like solutions presented as chiral, and of counts that double-count symmetric copies.
+The task stresses OEWAS (Engine Workflows, Agents, Skills) search with exact integer residuals, and OEEIS (Engine Epistemic Immune System) screening of vector-like solutions presented as chiral, and of counts that double-count symmetric copies.
 
 ## 3. Formal Problem and Bounds
 
@@ -104,8 +104,8 @@ Operands expected: (1) the cube-sum factorization that rules out n ≤ 4; (2) th
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_kernel` (exact integers and rationals, digests).
-- `omega_engine/crates_rs/omega_search` (beam search, constraint satisfaction) for arm A's completion search.
+- `engine/crates_rs/core_kernel` (exact integers and rationals, digests).
+- `engine/crates_rs/core_search` (beam search, constraint satisfaction) for arm A's completion search.
 - No anomaly-equation module exists in the estate; both enumerators are new Rust work.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 

@@ -16,8 +16,8 @@ This rule codifies documentation estate subdirectory isolation, curriculum stora
 
 > **Package Cleanliness & `_docs/` Isolation:**
 >
-> 1. **Zero Loose Documentation in Package Roots:** Operational packages and bounded contexts (e.g. under `omega_engine_operations/`) must never leave standalone markdown specification, ownership, or mapping documents loose in the package root.
-> 2. **Canonical `_docs/` Subdirectory:** All module documentation, semantics maps, architecture guides, and ownership ledgers must reside in a dedicated `_docs/` subdirectory (e.g., `omega_engine_operations/skill_operad/_docs/`).
+> 1. **Zero Loose Documentation in Package Roots:** Operational packages and bounded contexts (e.g. under `operations/`) must never leave standalone markdown specification, ownership, or mapping documents loose in the package root.
+> 2. **Canonical `_docs/` Subdirectory:** All module documentation, semantics maps, architecture guides, and ownership ledgers must reside in a dedicated `_docs/` subdirectory (e.g., `operations/skill_operad/_docs/`).
 
 ---
 
@@ -26,7 +26,7 @@ This rule codifies documentation estate subdirectory isolation, curriculum stora
 > **Documentation Path Fallback & Storage Port Invariants:**
 >
 > 1. **Zero-Padded Documentation Directories:** When resolving subdirectories under `documentation/`, verifiers, notebook runners, and test suites MUST account for canonical 3-digit zero-padded folder names (e.g., `001_oegen`, `002_oesn`, `003_oemssn`, `004_oepfp`, `014_normal_forms`) with fallback to unpadded numbers for legacy fixture/notebook compatibility.
-> 2. **Curriculum Storage Port Encapsulation:** Lesson template generation logic belongs in `omega_engine_education/education_app/use_cases/curriculum/compiler.py`, and file system persistence MUST route through `CurriculumStoragePort` (`CurriculumFileSystemStorageAdapter`), keeping CLI generator scripts thin triggers.
+> 2. **Curriculum Storage Port Encapsulation:** Lesson template generation logic belongs in `education/education_app/use_cases/curriculum/compiler.py`, and file system persistence MUST route through `CurriculumStoragePort` (`CurriculumFileSystemStorageAdapter`), keeping CLI generator scripts thin triggers.
 
 ---
 
@@ -34,7 +34,7 @@ This rule codifies documentation estate subdirectory isolation, curriculum stora
 
 > **Bounded Documentation Updates & Prohibitions on Speculative Lesson Synthesis:**
 >
-> 1. **Index & Hub Alignment:** When linking or documenting exploratory research projects (under `omega_engine_projects/`) in educational hubs (e.g. `210_engine_projects_and_monographs/`), agents must update the project catalogue in `README.md` without speculatively mutating high-level system topology diagrams or master indices unless explicitly instructed.
+> 1. **Index & Hub Alignment:** When linking or documenting exploratory research projects (under `projects/`) in educational hubs (e.g. `210_engine_projects_and_monographs/`), agents must update the project catalogue in `README.md` without speculatively mutating high-level system topology diagrams or master indices unless explicitly instructed.
 > 2. **No Speculative Curriculum Generation:** Agents must never invent or generate ad-hoc pedagogical curriculum lessons (`concepts/lesson_*.md`) or syllabus extensions unless specifically requested by the user. Formal curriculum generation must route through `CurriculumStoragePort` and compiler.
 > 3. **Clean Windows Execution Standard:** When performing file maintenance via scripts on Windows, agents must use dedicated temporary scripts or explicit string literals avoiding unescaped backslash interpolation in `py -3.12 -c`.
 
@@ -44,7 +44,7 @@ This rule codifies documentation estate subdirectory isolation, curriculum stora
 
 > **Canonical Submodule Directory Structure:**
 >
-> Numbered documentation modules in `omega_engine_education/documentation/` (such as `001_oegen`, `002_oesn`, `003_oemssn`, `004_oepfp`, `014_normal_forms`, etc.) must adhere to the four canonical documentation pillars and supporting operational assets:
+> Numbered documentation modules in `education/documentation/` (such as `001_oegen`, `002_oesn`, `003_oemssn`, `004_oepfp`, `014_normal_forms`, etc.) must adhere to the four canonical documentation pillars and supporting operational assets:
 >
 > **The Four Educational Pillars:**
 > 1. `grammar/`: Formal EBNF grammars (`*.ebnf`), dialect specifications, and syntax reference guides.

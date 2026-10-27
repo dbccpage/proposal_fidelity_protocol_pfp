@@ -6,11 +6,11 @@ import argparse
 import sys
 from pathlib import Path
 
-from omega_engine_pfp.domain.documentation_integrity.models import (
+from pfp.domain.documentation_integrity.models import (
     DocumentationCommand,
     IntegrityRequest,
 )
-from omega_engine_pfp.use_cases.documentation_integrity import DocumentationIntegrityService
+from pfp.use_cases.documentation_integrity import DocumentationIntegrityService
 
 from .domain import SCRIPT_PATH, find_repo_root
 from .runtime import ConsoleOutput, HostDocumentationGateway, LocalFileSystem, SystemClock

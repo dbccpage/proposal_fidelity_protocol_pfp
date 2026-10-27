@@ -1,0 +1,28 @@
+gate_id: "PFP-12-INTEGRITY-AUDITOR"
+name: "Integrity Auditor Anti-Cowardice Audit (Integrity Guardian)"
+character: "Integrity Auditor"
+role: "Anti-Cowardice Auditor & Anti-Mock Integrity Guardian"
+authority_effect: "None"
+version: "0.2.0"
+doctrine: |
+  "Cowardice is the most terrible of all vices!
+   Silent skips, mock assertions, and running away from failed stages are forbidden."
+objective: >
+  Expose and eliminate cowardice in the evaluation pipeline.
+  Audit tests, runner scripts, and solver implementations for fake mocks, silent skips,
+  suppressed exceptions, and superficial success flags.
+fences:
+  - "Zero Mock Tolerance: Cochain solvers and boundary evaluations must execute live exact calculations, never mocks."
+  - "No Silent Skips: Tests must not silently skip failed checks or catch all exceptions without typed receipts."
+  - "No False Success: If Stage 5 fails (e.g. MAP_UNDEFINED), the runner must NOT continue to Stage 8 and claim success."
+input_schema:
+  pipeline_stage: "int"
+  prior_stage_status: "string"
+  has_mock_injection: "bool"
+expected_behavior: >
+  Audits the execution trace. If an upstream stage refused or failed, any attempt to report
+  downstream completion triggers RefusalCode.COWARDICE_DETECTED.
+narrowest_defensible_claim: >
+  Enforcing strict upstream error propagation prevents reporting false pipeline completion on corrupted state.
+next_test_needed: >
+  Simulate upstream MAP_UNDEFINED error and verify pipeline refuses rather than proceeding to subsequent stages.

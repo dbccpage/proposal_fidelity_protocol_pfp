@@ -33,8 +33,8 @@ import re
 from typing import Any, Mapping
 
 
-TRACE_SCHEMA_VERSION_V1 = "omega.symbol-game.execution-trace.v1"
-TRACE_SCHEMA_VERSION_V2 = "omega.symbol-game.execution-trace.v2"
+TRACE_SCHEMA_VERSION_V1 = "core.symbol-game.execution-trace.v1"
+TRACE_SCHEMA_VERSION_V2 = "core.symbol-game.execution-trace.v2"
 # New writers always use V2. V1 exists only as an explicitly selected reader.
 TRACE_SCHEMA_VERSION = TRACE_SCHEMA_VERSION_V2
 SUPPORTED_TRACE_SCHEMA_VERSIONS = frozenset(
@@ -170,7 +170,7 @@ def _artifact_ref_violations(field: str, value: Any) -> list[str]:
     if set(value) != _ARTIFACT_REF_FIELDS:
         return [f"field {field!r} encrypted artifact reference fields differ"]
     problems: list[str] = []
-    if value.get("schema") != "omega.oeos.encrypted-artifact-ref.v1":
+    if value.get("schema") != "core.oeos.encrypted-artifact-ref.v1":
         problems.append(f"field {field!r} encrypted artifact schema differs")
     if value.get("authority_effect") != "None":
         problems.append(f"field {field!r} encrypted artifact grants authority")

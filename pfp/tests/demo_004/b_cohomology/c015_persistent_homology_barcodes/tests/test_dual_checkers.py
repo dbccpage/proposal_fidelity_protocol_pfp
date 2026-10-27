@@ -5,16 +5,16 @@ from __future__ import annotations
 import json
 import pathlib
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.judge_packet.checkers.f2_algebraic_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.judge_packet.checkers.f2_algebraic_checker import (
     check_algebraic_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.judge_packet.checkers.independent_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.judge_packet.checkers.independent_checker import (
     check_independent_persistence,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c015_persistent_homology_barcodes.reference_solver.solver import (
     solve,
 )
 

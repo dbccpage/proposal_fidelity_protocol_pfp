@@ -8,12 +8,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping, Sequence, Tuple
 
-from omega_engine_pfp.domain.operad.errors import (
+from pfp.domain.operad.errors import (
     OperadRoleViolationError,
     ProhibitedEvaluationError,
     ProhibitedRepairError,
 )
-from omega_engine_pfp.domain.operad.polarity import Polarity
+from pfp.domain.operad.polarity import Polarity
 
 
 @dataclass(frozen=True)

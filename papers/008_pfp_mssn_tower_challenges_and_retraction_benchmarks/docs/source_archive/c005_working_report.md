@@ -383,7 +383,7 @@ benchmark construction.
 
 ## 7. Sealed Artifact Registry
 
-All artifacts are persisted under `_intelligence/_woland/runs/` with SHA-256
+All artifacts are persisted under `_intelligence/_adversary/runs/` with SHA-256
 content-addressed hashes.
 
 | Run Key | Artifacts | Report SHA-256 (prefix) |
@@ -444,10 +444,10 @@ All benchmarks can be reproduced from the repository root:
 
 ```powershell
 # 3-Arm Benchmark (Arm 1 vs. Arm 2 vs. Arm 3)
-python omega_engine_projects/mssn_sn_symgam/challenges/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py
+python projects/mssn_sn_symgam/challenges/a_mechanism/c005_hosted_decode_controls/benchmark_3arm_scratchpad.py
 
 # Arm 4 Hybrid Benchmark (Arm 2 vs. Arm 4)
-python omega_engine_projects/mssn_sn_symgam/challenges/a_mechanism/c005_hosted_decode_controls/benchmark_arm4_hybrid.py
+python projects/mssn_sn_symgam/challenges/a_mechanism/c005_hosted_decode_controls/benchmark_arm4_hybrid.py
 ```
 
 Requires: `OPENROUTER_API_KEY` in `.env`, Python 3.10+, `openai`, `python-dotenv`.

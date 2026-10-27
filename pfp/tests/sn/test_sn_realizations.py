@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.sn_tower.sn_realizations import (
+from pfp.domain.sn_tower.sn_realizations import (
     AdjunctionCochain,
     AutopoieticAudit,
     DaggerArrow,

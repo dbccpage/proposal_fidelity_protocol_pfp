@@ -21,26 +21,26 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 THREAT_MODEL = (
-    REPO_ROOT / "omega_engine_education" / "documentation" / "the_symbol_game" / "adversary" / "threat_model.md"
-    if (REPO_ROOT / "omega_engine_education" / "documentation" / "the_symbol_game" / "adversary" / "threat_model.md").exists()
-    else REPO_ROOT / "omega_engine_pfp" / "documentation" / "adversary" / "threat_model.md"
-    if (REPO_ROOT / "omega_engine_pfp" / "documentation" / "adversary" / "threat_model.md").exists()
-    else REPO_ROOT / "omega_engine_pfp" / "documentation" / "THREAT_MODEL.md"
+    REPO_ROOT / "education" / "documentation" / "the_symbol_game" / "adversary" / "threat_model.md"
+    if (REPO_ROOT / "education" / "documentation" / "the_symbol_game" / "adversary" / "threat_model.md").exists()
+    else REPO_ROOT / "pfp" / "documentation" / "adversary" / "threat_model.md"
+    if (REPO_ROOT / "pfp" / "documentation" / "adversary" / "threat_model.md").exists()
+    else REPO_ROOT / "pfp" / "documentation" / "THREAT_MODEL.md"
 )
-_GOV_CONTRACTS = REPO_ROOT / "omega_engine_governance" / "contracts"
+_GOV_CONTRACTS = REPO_ROOT / "governance" / "contracts"
 CONTRACTS = (
     _GOV_CONTRACTS / "contracts_pfp"
     if (_GOV_CONTRACTS / "contracts_pfp").is_dir()
     else _GOV_CONTRACTS / "contracts_packets" / "symbol_game"
 )
 CRATES = (
-    REPO_ROOT / "omega_engine" / "crates_rs"
-    if (REPO_ROOT / "omega_engine" / "crates_rs").exists()
-    else REPO_ROOT / "engine" / "omega_engine" / "crates_rs"
+    REPO_ROOT / "engine" / "crates_rs"
+    if (REPO_ROOT / "engine" / "crates_rs").exists()
+    else REPO_ROOT / "engine" / "engine" / "crates_rs"
 )
 RUST_SOURCES = (
-    CRATES / "omega_symbol_game_runtime" / "src",
-    CRATES / "omega_symbol_game" / "src",
+    CRATES / "core_symbol_game_runtime" / "src",
+    CRATES / "core_symbol_game" / "src",
 )
 
 _SERDE_TYPE = re.compile(

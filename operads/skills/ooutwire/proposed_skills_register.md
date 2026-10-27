@@ -18,24 +18,24 @@ version: v3.6.0
 | `ADMITTED packages` | 306 |
 | `PENDING_ADMISSION` | 0 |
 
-### Run 2026-10-08 (Woland Intelligence Digestion)
+### Run 2026-10-08 (Adversary Intelligence Digestion)
 
 #### Entry 0306: `techne-paper-deposit-preflight-gate`
 
-* **Proposed By:** Woland Intelligence Digestion run 2026-10-08 (Mining of 74 paper reviews, 1,748 failure obstructions)
+* **Proposed By:** Adversary Intelligence Digestion run 2026-10-08 (Mining of 74 paper reviews, 1,748 failure obstructions)
 * **Confidence:** HIGH
 * **Target Folder:** `.agents/skills/techne-paper-deposit-preflight-gate/`
 * **Signal:** Paper review swarms repeatedly fail on basic preflight packaging defects: missing `rebuild_release.py` / `verify_deposit.py`, LaTeX/PDF hash and rendering desynchronization, MAX_PATH overflow (>250 chars) on Windows hosts, and missing dual witness certificates.
-* **Evidence:** Digestion of 74 paper reviews into `paper_reviews_digest.jsonl`, 335 candidate antibodies farmed in `.agents/antibodies/`, 4 anti-skill candidates in `.agents/antiskills/ooutwire/evidence_mined_candidates.json`, and verified execution over active preprints in `omega_engine_atlas/coda_atlas/F004_papers/`.
-* **Implementation Status:** `RETIRED & MERGED INTO PYTHON ENGINE` 2026-10-08. Merged directly into `omega_engine_research_papers` (`use_cases/deposit_preflight.py`, `domain/rules/packaging_rules.py`, `latex_pdf_rules.py`) with full test coverage. Invoked via `py -3.12 -m omega_engine_research_papers preflight`. Text skill folders removed across all hosts.
+* **Evidence:** Digestion of 74 paper reviews into `paper_reviews_digest.jsonl`, 335 candidate antibodies farmed in `.agents/antibodies/`, 4 anti-skill candidates in `.agents/antiskills/ooutwire/evidence_mined_candidates.json`, and verified execution over active preprints in `atlas/coda_atlas/F004_papers/`.
+* **Implementation Status:** `RETIRED & MERGED INTO PYTHON ENGINE` 2026-10-08. Merged directly into `research_papers` (`use_cases/deposit_preflight.py`, `domain/rules/packaging_rules.py`, `latex_pdf_rules.py`) with full test coverage. Invoked via `py -3.12 -m research_papers preflight`. Text skill folders removed across all hosts.
 
 #### Retirement Notice: `governance-research-paper-edit-publish`
 * **Status:** `RETIRED & CONSOLIDATED` 2026-10-08.
-* **Replacement:** Consolidated into `omega_engine_research_papers.use_cases.paper_edition` and unified CLI `py -3.12 -m omega_engine_research_papers edition <scaffold|align|rebuild|verify|republication-gate|publish>`. Prose skill directory removed across all hosts.
+* **Replacement:** Consolidated into `research_papers.use_cases.paper_edition` and unified CLI `py -3.12 -m research_papers edition <scaffold|align|rebuild|verify|republication-gate|publish>`. Prose skill directory removed across all hosts.
 
 #### Retirement Notice: `rip-papers`
 * **Status:** `RETIRED & DELETED` 2026-10-08.
-* **Replacement:** Superseded by deterministic Python gate suites in `omega_engine_research_papers.use_cases.paper_review.cli`. Prompt-guessing agent markdown files and skill directories removed across all hosts.
+* **Replacement:** Superseded by deterministic Python gate suites in `research_papers.use_cases.paper_review.cli`. Prompt-guessing agent markdown files and skill directories removed across all hosts.
 
 ### Entry 0307: `techne-adversarial-refusal-bypass-auditor`
 * **Title:** Adversarial Refusal Bypass Auditor

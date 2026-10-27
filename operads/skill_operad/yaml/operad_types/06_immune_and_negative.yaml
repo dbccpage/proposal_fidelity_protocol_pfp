@@ -1,6 +1,6 @@
 # OEOP operad type registry, family 6 of 6: immune and negative types (OEEIS and anti-skills).
 # AuthorityEffect: None.
-schema_version: omega.oeop.operad-types.v1
+schema_version: core.oeop.operad-types.v1
 family: immune_and_negative
 authority_effect: None
 types:
@@ -8,13 +8,13 @@ types:
     description: How an antibody constrains a candidate.
     canonical: {status: SETTLED, closed: true, values: [ProjectOut, Restrain, Enforce]}
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.pharmacy_models:ConstraintType
+      - python: eis.domain.pharmacy_models:ConstraintType
         values: [ProjectOut, Restrain, Enforce]
   - id: operatorizability
     description: Whether a failure can be repaired by an operator.
     canonical: {status: SETTLED, closed: true, values: [repairable, fatal]}
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.pharmacy_models:Operatorizability
+      - python: eis.domain.pharmacy_models:Operatorizability
         values: [repairable, fatal]
   - id: runtime_action
     description: What an antibody does when it fires.
@@ -24,13 +24,13 @@ types:
       values: [repair, abort, refuse]
       decision: >-
         RuntimeAction allows only repair and abort, but antibody YAML files also use refuse.
-        A refusal is its own routing terminal (Refusal in omega_types::routing), distinct from
+        A refusal is its own routing terminal (Refusal in core_types::routing), distinct from
         aborting the run. Proposed: add REFUSE = "refuse" to RuntimeAction rather than rewrite
         the antibody files.
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.pharmacy_models:RuntimeAction
+      - python: eis.domain.pharmacy_models:RuntimeAction
         values: [repair, abort]
-      - data: omega_engine_epistemic_immune_system/antibodies/anti_*.yaml
+      - data: eis/antibodies/anti_*.yaml
         select: action
         mode: distinct
         role: uses
@@ -39,15 +39,15 @@ types:
     description: Antibody severity.
     canonical: {status: SETTLED, closed: true, values: [P0, P1, P2, P3]}
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.pharmacy_models:Severity
+      - python: eis.domain.pharmacy_models:Severity
         values: [P0, P1, P2, P3]
   - id: antibody_pharmacy_status
     description: Pharmacy status of an antibody; farming writes candidate only, admission is a separate act.
     canonical: {status: SETTLED, closed: true, values: [candidate, admitted, rejected, retired]}
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.pharmacy_models:PharmacyStatus
+      - python: eis.domain.pharmacy_models:PharmacyStatus
         values: [candidate, admitted, rejected, retired]
-      - python: omega_engine_operads.contracts.typed_capabilities_v1:AntibodyWireV1.model_fields[pharmacy_status]
+      - python: operads.contracts.typed_capabilities_v1:AntibodyWireV1.model_fields[pharmacy_status]
         role: uses
         values: [candidate]
   - id: anti_skill_status
@@ -57,7 +57,7 @@ types:
       This is a separate lifecycle from antibody_pharmacy_status, so the two sets are not one
       vocabulary declared twice.
     sources:
-      - rust_enum: omega_engine/crates_rs/omega_epistemic_immune_system/src/anti_skill.rs#AntiSkillStatus
+      - rust_enum: engine/crates_rs/core_epistemic_immune_system/src/anti_skill.rs#AntiSkillStatus
         values: [Proposed, Candidate, Admitted, Suspended, Retired]
   - id: pharmacy_failure_class
     description: Failure classes of the MSS-N pharmacy.
@@ -68,7 +68,7 @@ types:
                THEOREM_NAME_LAUNDERING, OPTIMALITY_HALLUCINATION, COMPLEXITY_HALLUCINATION, BRANCH_DROP_EXHAUSTION,
                PERSONA_AUTHORITY_LEAK, PRIVATE_COT_DEPENDENCY, VERSION_DUPLICATION, DETECT_REPAIR_COUPLING]
     sources:
-      - python: omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy:FailureClass
+      - python: eis.infrastructure.mssn_pharmacy:FailureClass
         field: name
         values: [SELF_CERTIFICATION, FAKE_RECEIPT, CONCLUSION_PRELOAD, SCHEMA_SEMANTIC_LAUNDERING,
                  THEOREM_NAME_LAUNDERING, OPTIMALITY_HALLUCINATION, COMPLEXITY_HALLUCINATION, BRANCH_DROP_EXHAUSTION,
@@ -82,7 +82,7 @@ types:
                SelfContradiction, DualityGapNonZero, BoundaryLeakage, UnboundPortAssumption, CounterfeitExactness,
                SycophanticAgreement, StructuralNonFit, StaleCensusReference]
     sources:
-      - rust_enum: omega_engine/crates_rs/omega_epistemic_immune_system/src/anti_skill.rs#FailureClass
+      - rust_enum: engine/crates_rs/core_epistemic_immune_system/src/anti_skill.rs#FailureClass
         values: [SemanticHallucination, ApproximateContradiction, ToyPromotion, UnmechanizedProofClaim,
                  SelfContradiction, DualityGapNonZero, BoundaryLeakage, UnboundPortAssumption, CounterfeitExactness,
                  SycophanticAgreement, StructuralNonFit, StaleCensusReference]
@@ -90,10 +90,10 @@ types:
     description: What a fired anti-skill or pharmacy check does with the candidate.
     canonical: {status: SETTLED, closed: true, values: [FINDING, HOLD, REFUSE]}
     sources:
-      - python: omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy:Disposition
+      - python: eis.infrastructure.mssn_pharmacy:Disposition
         field: name
         values: [FINDING, HOLD, REFUSE]
-      - python: omega_engine_operads.domain.anti_skills.anti_skill_v2:HIT_DISPOSITIONS
+      - python: operads.domain.anti_skills.anti_skill_v2:HIT_DISPOSITIONS
         values: [FINDING, HOLD, REFUSE]
   - id: guard_disposition
     description: Danger-gate guard outcome.
@@ -102,29 +102,29 @@ types:
       closed: true
       values: [NO_ACTIVATION, FINDING, HOLD, REFUSE, DEFENSIVE_LOCKDOWN, TWO_SIGNAL_COLLAPSE]
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.danger_gate:GuardDisposition
+      - python: eis.domain.danger_gate:GuardDisposition
         values: [NO_ACTIVATION, FINDING, HOLD, REFUSE, DEFENSIVE_LOCKDOWN, TWO_SIGNAL_COLLAPSE]
   - id: danger_decision
     description: Danger-gate decision.
     canonical: {status: SETTLED, closed: true, values: [TOLERATED, DIAGNOSTIC_ONLY, DEFENSIVE_LOCKDOWN, QUARANTINED]}
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.value_objects:DangerDecision
+      - python: eis.domain.value_objects:DangerDecision
         values: [TOLERATED, DIAGNOSTIC_ONLY, DEFENSIVE_LOCKDOWN, QUARANTINED]
   - id: authority_level
     description: Authority level in regulatory T-cell supervision.
     canonical: {status: SETTLED, closed: true, values: [BLOCKING_GATE, DIAGNOSTIC_ONLY]}
     sources:
-      - python: omega_engine_epistemic_immune_system.domain.treg:AuthorityLevel
+      - python: eis.domain.treg:AuthorityLevel
         values: [BLOCKING_GATE, DIAGNOSTIC_ONLY]
   - id: anti_skill_claim_mode
     description: Claim mode an anti-skill subject declares.
     canonical: {status: SETTLED, closed: true, values: [PROPOSAL, BOUNDED, UNRESTRICTED, SELF_CERTIFIED]}
     sources:
-      - python: omega_engine_operads.domain.anti_skills.anti_skill_v2:CLAIM_MODES
+      - python: operads.domain.anti_skills.anti_skill_v2:CLAIM_MODES
         values: [BOUNDED, PROPOSAL, SELF_CERTIFIED, UNRESTRICTED]
   - id: anti_skill_predicate_mode
     description: How an anti-skill predicate combines its atoms.
     canonical: {status: SETTLED, closed: true, values: [ALL, ANY]}
     sources:
-      - python: omega_engine_operads.domain.anti_skills.anti_skill_v2:PREDICATE_MODES
+      - python: operads.domain.anti_skills.anti_skill_v2:PREDICATE_MODES
         values: [ALL, ANY]

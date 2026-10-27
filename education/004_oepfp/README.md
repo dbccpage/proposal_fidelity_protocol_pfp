@@ -8,10 +8,10 @@ maturity: canonical-navigation
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp
-  - omega_engine_operads/contracts/typed_capabilities_v1.py
-  - omega_engine/crates_rs/omega_symbol_game
-  - omega_engine/crates_rs/omega_symbol_game_runtime
+  - pfp
+  - operads/contracts/typed_capabilities_v1.py
+  - engine/crates_rs/core_symbol_game
+  - engine/crates_rs/core_symbol_game_runtime
 source_revision: 45ba3a7dc032631d6697904cb73e20762b56353c
 last_verified: 2026-10-12
 ---
@@ -34,8 +34,8 @@ dimension registers offer choices, not a requirement to run every combination.
 | --- | --- |
 | Use the finite-QM derivation prompt, stages and mode | [Finite-QM PFP workflow](docs/22_unified_pfp_v4_operad_workflow_and_hacks.md); actual prompt template, six stages, six LLM techniques and native certificate checks |
 | Run a checked example, use an IDE-authored witness, or replay a live capture | [Practical PFP and discovery](_how_to_play/13_practical_pfp_and_discovery.md) |
-| Run ordinary Woland work through PFP in Python or the current IDE | [Shared task turns](../../../omega_engine_pfp/documentation/pfp_task_turn.md#shared-woland-use); checked prose remains explicitly unverified |
-| Attempt an original challenge with Woland and its original judges | [Woland challenge play](docs/18_woland_original_challenge_play.md); IDE/OpenRouter commands, actual results and open experiment requirements |
+| Run ordinary Adversary work through PFP in Python or the current IDE | [Shared task turns](../../../pfp/documentation/pfp_task_turn.md#shared-adversary-use); checked prose remains explicitly unverified |
+| Attempt an original challenge with Adversary and its original judges | [Adversary challenge play](docs/18_original_challenge_play.md); IDE/OpenRouter commands, actual results and open experiment requirements |
 | Play a full bounded cochain-repair session | [Mechanism sessions](docs/19_bounded_mechanism_sessions.md); C006 moves, admission, replay and C004 slot decoding |
 | Examine bounded graph rewrites and optional Julia/DSPy demos | [ACSets and DPO experiments](docs/20_acsets_dpo_and_optional_backends.md); 25 prompt and 25 cochain controls, with no new default dependencies |
 | Understand the new interfaces, mode availability and lessons | [Current types and learnings](docs/16_current_types_and_learnings.md) |
@@ -45,11 +45,11 @@ dimension registers offer choices, not a requirement to run every combination.
 | Explore other play profiles | [Modalities atlas](_how_to_play/07_all_ways_to_play_the_symbol_game.md); research profiles are not a runtime capability guarantee |
 | Inspect PO035 failures and experimental prompt roles | [Numbered prompt roles and PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md) |
 | Find current runtime owners and replay historical trials | [Runtime ownership and historical replay](docs/17_runtime_ownership_and_replay.md) |
-| Verify installed integration, strict IDE handoffs and durable run budgets | [Migration execution plan](../../../omega_engine_pfp/documentation/pfp_migration_and_integration_plan.md); hard live liability remains a separate qualification |
+| Verify installed integration, strict IDE handoffs and durable run budgets | [Migration execution plan](../../../pfp/documentation/pfp_migration_and_integration_plan.md); hard live liability remains a separate qualification |
 
-The active Python application is `omega_engine_pfp`, with `pfp`, `symbol-game`
-and `level-engine` entrypoints. Its [application guide](../../../omega_engine_pfp/documentation/pfp_seed_execution.md)
-and [collated bounded results](../../../omega_engine_pfp/documentation/pfp_consolidation_plan.md#bounded-implementation-handoff--2026-10-12)
+The active Python application is `pfp`, with `pfp`, `symbol-game`
+and `level-engine` entrypoints. Its [application guide](../../../pfp/documentation/pfp_seed_execution.md)
+and [collated bounded results](../../../pfp/documentation/pfp_consolidation_plan.md#bounded-implementation-handoff--2026-10-12)
 provide implementation detail and observed limits. The recorded live DEMO_07
 run and zero-call replay are finite evidence about that run, not evidence that
 PFP works on every task.
@@ -60,8 +60,8 @@ This section records what the pilot estate holds at commit `201dc8d`. It is
 dated and is not revalidated by later edits.
 
 **Where the pilots are.** 204 pilot folders, `pilot_0000000` to
-`pilot_0000203`, are under [`omega_engine_woland/tests/pilots/`](../../../omega_engine_woland/tests/pilots/README.md).
-The live matrix is [`matrix/max_pilot_matrix.yaml`](../../../omega_engine_woland/tests/pilots/matrix/max_pilot_matrix.yaml)
+`pilot_0000203`, are under [`adversary/tests/pilots/`](../../../adversary/tests/pilots/README.md).
+The live matrix is [`matrix/max_pilot_matrix.yaml`](../../../adversary/tests/pilots/matrix/max_pilot_matrix.yaml)
 (75 entries). Its entries have no execution-state field, although the pilots
 README says the matrix records execution state. The `pilot_matrix.yaml` file
 and `PM-` ids added in PR #544 are no longer in the tree; no page in this folder
@@ -74,15 +74,15 @@ pointed to them.
 | All pilot test folders with a real reply | 378 replies | 13 `ACCEPTED` | per-test `response.yaml` |
 | Dossier replay on a free Nemotron model | 300 | 0 accepted | same |
 | `deepseek-v4.1-flash` replies | 50 | 13 accepted | same |
-| PFP-PILOT-001, four representations | 64 | validation rate raw 0.938, structured 0.75, relational 0.75, symbolic 0.812; one call per cell | [`max_pilot_matrix.yaml:2337-2358`](../../../omega_engine_woland/tests/pilots/matrix/max_pilot_matrix.yaml) |
-| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../omega_engine_woland/tests/pilots/evidence/po035_simplified_20261012/README.md) |
-| Claude gate runs, 2026-10-14 | 74 | Haiku 5.5 was 8 of 8 PFP-valid; 22 failures were Markdown-fenced replies; the SQLite form gave no advantage | [`empirical_observations_20261014.md`](../../../omega_engine_pfp/documentation/empirical_observations_20261014.md) |
+| PFP-PILOT-001, four representations | 64 | validation rate raw 0.938, structured 0.75, relational 0.75, symbolic 0.812; one call per cell | [`max_pilot_matrix.yaml:2337-2358`](../../../adversary/tests/pilots/matrix/max_pilot_matrix.yaml) |
+| PO035 | 40 | 0 accepted; a compact rerun (15 calls) had 0 schema-valid replies | [PO035 play](docs/16_numbered_prompt_roles_and_po035_play.md), [compact rerun](../../../adversary/tests/pilots/evidence/po035_simplified_20261012/README.md) |
+| Claude gate runs, 2026-10-14 | 74 | Haiku 5.5 was 8 of 8 PFP-valid; 22 failures were Markdown-fenced replies; the SQLite form gave no advantage | [`empirical_observations_20261014.md`](../../../pfp/documentation/empirical_observations_20261014.md) |
 
 With one call per cell, the PFP-PILOT-001 rates do not separate the four
 representations.
 
 **Known defects that affect these numbers.** In
-`omega_engine_pfp/infrastructure/model_backends.py`, the budget check at `:206`
+`pfp/infrastructure/model_backends.py`, the budget check at `:206`
 always raises `BudgetExceeded`, missing token counts default to 0 at `:283`,
 `choices` is read without a guard at `:285`, and no seed is sent (`:222`). In
 `openrouter_seat_gateway.py:243-248` a transport error after send is booked at
@@ -95,11 +95,11 @@ accepts `{"answer":3,"status":"REFUSED"}`. Prompt lineage is typed in
 `golden_prompts/`, `examples/` and `originals/`, which do not exist.
 
 **Certified ladder.** The H0–H13 design at
-[`certified_ladder/design.md`](../../../omega_engine_woland/tests/pilots/certified_ladder/design.md) was registered
+[`certified_ladder/design.md`](../../../adversary/tests/pilots/certified_ladder/design.md) was registered
 on 2026-10-11. Only its gate controls have run
-([`p0_gate_controls_receipt.json`](../../../omega_engine_woland/tests/pilots/certified_ladder/receipts/p0_gate_controls_receipt.json)).
+([`p0_gate_controls_receipt.json`](../../../adversary/tests/pilots/certified_ladder/receipts/p0_gate_controls_receipt.json)).
 
-**Next.** [EPIC-OE-OEWAS-012](../../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_012_woland_operad_binding_and_management_ladder_pilot_plan.md) proposes a management ladder M0–M6 with two
+**Next.** [EPIC-OE-OEWAS-012](../../../product_planning_office/plans/epics/oewas/epic_oe_oewas_012_adversary_operad_binding_and_management_ladder_pilot_plan.md) proposes a management ladder M0–M6 with two
 new arms: A5, a typed operad tree of turns, and A6, repair and reuse. It runs in
 stages P0–P4. P0 makes no provider call. Every paid stage waits for Jeremy's
 written approval; the first paid stage is capped at $0.10 (decision D4, decided
@@ -108,19 +108,19 @@ evidence.
 
 ### Coda-atlas prompt pilots at `6023941`
 
-[`omega_engine_atlas/coda_atlas/prompts`](../../../omega_engine_atlas/coda_atlas/prompts/)
+[`atlas/coda_atlas/prompts`](../../../atlas/coda_atlas/prompts/)
 holds two pilots that compare an English prompt with an "operad" prompt. Neither
 supports its findings.
 
 - **pilot_001** (three tasks, two arms, one run each, model recorded only as
   "DeepSeek"). Its evaluator
-  ([`evaluator.py:45-66`](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py))
+  ([`evaluator.py:45-66`](../../../atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py))
   scores by regular expressions for words such as "decoy", "witness" and
   "antibody". The operad prompt asks for those words, so the 2.33 versus 5/5
   scores grade the prompt's wording, not the answer.
 - **pilot_002** (R7, A4 and A10 in two arms, plus three single-arm items, one
   run each, no model recorded). Its evaluator
-  ([`evaluator.py:77-90`](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py))
+  ([`evaluator.py:77-90`](../../../atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py))
   hard-codes `score=5.0`. Its PASS checks look for strings the prompts already
   contain.
 - **Two certificates it reports as PASS are wrong.**
@@ -133,7 +133,7 @@ supports its findings.
     completions state. So `‖W_strict‖₁ = 83` and `δ_crit = 6/83` in item 04 are
     wrong. The "exact match with the Rust solver" is circular: the Rust test
     asserts the same −7 on the same synthetic Gramian.
-- The tasks rely on `omega_mub` material that the 2026-10-15 review found
+- The tasks rely on `core_mub` material that the 2026-10-15 review found
   unsound: the Karlsson family, the "H6" label and literal collar constants.
 - No raw provider replies, model ids, costs or receipts are stored. The
   completions read as authored text rather than returned replies; this is
@@ -142,11 +142,11 @@ supports its findings.
   are notes, not test cases.
 
 A replacement, registered as pilot_003 and now in
-`omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/`, is the first paid cut of stage P2: 36 exact
-linear-algebra items from Woland's `c054_exact_linear_systems` oracle, three
+`atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/`, is the first paid cut of stage P2: 36 exact
+linear-algebra items from Adversary's `c054_exact_linear_systems` oracle, three
 arms (English, operad, and English padded to the operad prompt's length), blind
 grading, raw receipts, and a worst case of about $0.07, under the $0.10 cap.
-The full review is in the 2026-10-15 OEWAS and Woland report, appendix
+The full review is in the 2026-10-15 OEWAS and Adversary report, appendix
 `appendix_prompts.md`.
 
 Result (2026-10-15, run_002, `claude-haiku-5-5`, 108 of 108 calls): PASS 35
@@ -168,7 +168,7 @@ where the format asks for strings. The pilot README records the details.
 | Mathematical specifications | [Math](math/) |
 | Grammar and rewriting | [Grammar](grammar/README.md) and [rewriting](rewriting/README.md) |
 | Engineering reference | [Reference manuals](docs/README.md), [native host](docs/08_native_rust_host_architecture.md) and [runtime actions](docs/09_runtime_actions_and_governor.md) |
-| Research and pilot material | [Retained task/seed estate](../../../omega_engine_woland/tests/pilots/README.md) and the [pilot status below](#pilot-status-at-201dc8d-2026-10-15) |
+| Research and pilot material | [Retained task/seed estate](../../../adversary/tests/pilots/README.md) and the [pilot status below](#pilot-status-at-201dc8d-2026-10-15) |
 
 ## Reading the evidence
 

@@ -1,7 +1,7 @@
 """Offline regressions for F01-F03. AuthorityEffect: None."""
 
 from __future__ import annotations
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
+from pfp.infrastructure.model_loading import load_yaml_model
 
 import inspect
 import json
@@ -13,22 +13,22 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.domain.types import EvaluationStatus
-from omega_engine_pfp.domain.types import PilotSpec
-from omega_engine_pfp.domain.types import PStarPrompt
-from omega_engine_pfp.domain.pilots.checker_registry import (
+from pfp.domain.types import EvaluationStatus
+from pfp.domain.types import PilotSpec
+from pfp.domain.types import PStarPrompt
+from pfp.domain.pilots.checker_registry import (
     checker_definition,
     evaluate_candidate,
     strict_json,
 )
-from omega_engine_pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
-from omega_engine_pfp.infrastructure import pilot_evidence as evidence
-from omega_engine_pfp.infrastructure.pilot_runner import grade, materialize_results
-from omega_engine_woland.tests.pilots import live_evaluator as live
-from omega_engine_woland.tests.pilots.offline_evaluator import ExactLinalgEvaluator
+from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
+from pfp.infrastructure import pilot_evidence as evidence
+from pfp.infrastructure.pilot_runner import grade, materialize_results
+from adversary.tests.pilots import live_evaluator as live
+from adversary.tests.pilots.offline_evaluator import ExactLinalgEvaluator
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / ".git").exists())
-RESULTS = ROOT / "omega_engine_woland" / "tests" / "pilots" / "results"
+RESULTS = ROOT / "adversary" / "tests" / "pilots" / "results"
 LINALG = "PFP-01-EXACT-LINALG"
 
 
@@ -37,7 +37,7 @@ def no_network(monkeypatch):
     def blocked(*args, **kwargs):
         raise AssertionError("Network access forbidden in P0 regressions")
     monkeypatch.setattr(socket.socket, "connect", blocked)
-    monkeypatch.setenv("OMEGA_CREDENTIAL_DISCOVERY", "off")
+    monkeypatch.setenv("CORE_CREDENTIAL_DISCOVERY", "off")
 
 
 def copy_pilot(tmp_path: Path, *, observed: bool = True) -> Path:

@@ -1,7 +1,7 @@
 # Constraint Section Audit Report
 
 **Date**: 2026-02-13
-**Scope**: 34 skill files in `omega_engine/.omega_skills/` ext
+**Scope**: 34 skill files in `engine/.core_skills/` ext
 **Auditor**: auto-symmetry-hunter (read-only audit)
 **Audit Status**: READ_ONLY_FINDING
 **Certification Status**: NOT CERTIFIED (Requires Blackrod/auto-review-skills approval)
@@ -54,8 +54,8 @@ All three canonical elements present: `See:` link, `Required:` list, `Summary:` 
 | # | Skill | File | Required Constraints |
 |---|-------|------|---------------------|
 | 1 | alembic-migration | `SKILL.md` | APPROVAL_REQUIRED, NO_DELETE |
-| 2 | omega-engine-patterns | `SKILL.md` | MAINTAIN_TESTS, PRESERVE_STRUCTURE, NO_HARDCODED_SECRETS |
-| 3 | omega-engine-testing | `SKILL.md` | MAINTAIN_TESTS, EVIDENCE_BASED |
+| 2 | patterns | `SKILL.md` | MAINTAIN_TESTS, PRESERVE_STRUCTURE, NO_HARDCODED_SECRETS |
+| 3 | testing | `SKILL.md` | MAINTAIN_TESTS, EVIDENCE_BASED |
 | 4 | async-patterns | `SKILL.md` | APPROVAL_REQUIRED |
 | 5 | blackrod | `SKILL.md` | APPROVAL_REQUIRED |
 | 6 | cartographer | `skill.md` | SELF_REFERENCE, EVIDENCE_BASED, APPROVAL_REQUIRED, ROI_FOCUSED, PRESERVE_VARIATION, MIN_SPECIMENS, READ_ONLY_DEFAULT |
@@ -108,16 +108,16 @@ Frequency of each constraint ID across all 34 skill files:
 | Constraint ID | Count | Skills Using It |
 |---------------|-------|-----------------|
 | APPROVAL_REQUIRED | 20 | alembic-migration, async-patterns, blackrod, cartographer, ci-cd, lib-education-engine, auto-improve-autoskill, lint, lib-pedagogy-improvement, postgresql, procurators, pydantic-models, react, redesign-golden-agent, auto-review-agents, auto-review-skills, sprint-execution, sprint-planning, sprint-review, auto-symmetry-hunter |
-| EVIDENCE_BASED | 13 | omega-engine-testing, cartographer, code-review, auto-improve-autoskill, lib-pedagogy-improvement, procurators, auto-review-agents, auto-review-skills, sprint-planning, sprint-retrospective, sprint-review, student-learning, auto-symmetry-hunter, systematic-debugging, lib-verification-loop |
-| MAINTAIN_TESTS | 6 | omega-engine-patterns, omega-engine-testing, debug, run-tests, systematic-debugging, lib-verification-loop, write-unit-tests |
+| EVIDENCE_BASED | 13 | testing, cartographer, code-review, auto-improve-autoskill, lib-pedagogy-improvement, procurators, auto-review-agents, auto-review-skills, sprint-planning, sprint-retrospective, sprint-review, student-learning, auto-symmetry-hunter, systematic-debugging, lib-verification-loop |
+| MAINTAIN_TESTS | 6 | patterns, testing, debug, run-tests, systematic-debugging, lib-verification-loop, write-unit-tests |
 | SELF_REFERENCE | 4 | cartographer, auto-improve-autoskill, sprint-retrospective, auto-symmetry-hunter |
 | NO_DELETE | 2 | alembic-migration, redesign-golden-agent |
 | PRESERVE_VARIATION | 3 | cartographer, code-review, auto-symmetry-hunter |
 | SECURITY_FIRST | 2 | debug, fastapi |
-| NO_HARDCODED_SECRETS | 2 | omega-engine-patterns, fastapi |
+| NO_HARDCODED_SECRETS | 2 | patterns, fastapi |
 | ROI_FOCUSED | 2 | cartographer, auto-improve-autoskill |
 | MIN_SPECIMENS | 2 | cartographer, auto-symmetry-hunter |
-| PRESERVE_STRUCTURE | 1 | omega-engine-patterns |
+| PRESERVE_STRUCTURE | 1 | patterns |
 | NO_FORCE_PUSH | 1 | github |
 | DESCRIPTIVE_COMMITS | 1 | github |
 | NO_AMEND_PUSHED | 1 | github |

@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 Reference: TEST_INFRA.md Tier 1 Specification.
-Soviet Lev Landau Falsification Methodology:
+Examiner Falsification Methodology:
 Every test explicitly documents Invariant, Break, Witness, and Mutation.
 Claim Hygiene: Uses bounded, defensible phrasing; zero forbidden hype words.
 """
@@ -19,25 +19,25 @@ from typing import Any
 import pytest
 
 # Domain Exact Rational Kernel
-from omega_engine_pfp.domain.exact.q import Q, ONE, ZERO, parse_q, fmt_q
-from omega_engine_pfp.domain.exact.errors import ExactError
+from pfp.domain.exact.q import Q, ONE, ZERO, parse_q, fmt_q
+from pfp.domain.exact.errors import ExactError
 
 # Domain Packet Codec & Sealing
-from omega_engine_pfp.domain.packet_codec import (
+from pfp.domain.packet_codec import (
     PacketCodec,
     canonical_json_bytes,
     compute_sha256,
 )
 
 # Presentation Pins
-from omega_engine_pfp.domain.presentation_pins import (
+from pfp.domain.presentation_pins import (
     PresentationPins,
     PinnedPresentation,
     PinnedRule,
 )
 
 # Carrier Constrained Decoding
-from omega_engine_pfp.domain.carrier_decoding import (
+from pfp.domain.carrier_decoding import (
     DecodingReceipt,
     ConstraintMode,
     provider_capability,
@@ -46,10 +46,10 @@ from omega_engine_pfp.domain.carrier_decoding import (
     logit_bias_ban,
     OPENAI_BAN_BIAS,
 )
-from omega_engine_pfp.domain.glyph_calculus import Carrier, CarrierMember, Finding
+from pfp.domain.glyph_calculus import Carrier, CarrierMember, Finding
 
 # Tower Grammar, Parser, and Wire
-from omega_engine_pfp.domain.tower.parser import (
+from pfp.domain.tower.parser import (
     parse_packet,
     serialize_packet,
     validate_packet_semantics,
@@ -69,7 +69,7 @@ from omega_engine_pfp.domain.tower.parser import (
     GAMMA_38,
     SIGMA_36,
 )
-from omega_engine_pfp.domain.tower.wire import (
+from pfp.domain.tower.wire import (
     parse_wire,
     emit_wire,
     parse_compact,
@@ -85,7 +85,7 @@ from omega_engine_pfp.domain.tower.wire import (
 )
 
 # Demos & Descent
-from omega_engine_pfp.domain.demos import (
+from pfp.domain.demos import (
     exact_functional,
     strict_descent,
     refuse_model_functionals,
@@ -94,7 +94,7 @@ from omega_engine_pfp.domain.demos import (
 )
 
 # Epistemic Immune System & Pharmacy
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     FailureClass,
     Disposition,
     DetectionContext,
@@ -102,21 +102,21 @@ from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
     HostReplayReceipt,
     detect,
 )
-from omega_engine_epistemic_immune_system.domain.allostery import (
+from eis.domain.allostery import (
     AllostericConsensusGate,
     AllostericDecision,
     HillParameters,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import AllosteryRefusal
-from omega_engine_epistemic_immune_system.domain.danger_gate import TwoSignalDangerGate
-from omega_engine_epistemic_immune_system.domain.thymus import (
+from eis.domain.value_objects import AllosteryRefusal
+from eis.domain.danger_gate import TwoSignalDangerGate
+from eis.domain.thymus import (
     ThymusGate,
     ThymusSelectionResult,
 )
-from omega_engine_epistemic_immune_system.domain.clonal_selection import (
+from eis.domain.clonal_selection import (
     ClonalSelectionEngine,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
     Signal1Match,
@@ -126,34 +126,34 @@ from omega_engine_epistemic_immune_system.domain.value_objects import (
 )
 
 # Cemetery & Quarantine Persistence
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.grammar.entities import (
     EpistemicQuarantineLedger,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
+from pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_codec import (
     serialize_ledger_to_jsonl,
     deserialize_ledger_from_jsonl,
     packet_to_dict,
 )
-from omega_engine_pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_repository import (
+from pfp.infrastructure.adapters.mssn_research.contracts.grammar.ledger_repository import (
     EpistemicQuarantineRepository,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import (
+from pfp.domain.mssn_research.grammar.exact_structures import (
     QuarantinedShadowPacket,
     PontryaginKillFlags,
     HostFenceAudit,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     StageLevel,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.errors import (
     LedgerTruncationError,
     LedgerIntegrityError,
     RefusalCode,
 )
 
 # Boundary Functional & Problem Runner
-from omega_engine_pfp.use_cases.problem_runner import ProblemRunnerUseCase
-from omega_engine_pfp.functional_boundary import (
+from pfp.use_cases.problem_runner import ProblemRunnerUseCase
+from pfp.functional_boundary import (
     RustFunctionalRequired,
     require_rust_functional,
 )
@@ -669,7 +669,7 @@ class TestTopologicalAndGrammarValidationTier1:
         - Witness: ValidationError raised with 'Deficit arithmetic violation'.
         - Mutation: Altering arithmetic equality allows fictitious zero-curvature claims.
         """
-        from omega_engine_pfp.domain.tower.parser import validate_level5_regge
+        from pfp.domain.tower.parser import validate_level5_regge
 
         # full = 8, sum = 6, deficit = 2 (in binary: <1000>, <110>, <10>)
         valid_deficit = parse_packet("op<<1010><10><1><1000><110><10>>")
@@ -809,8 +809,8 @@ class TestGovernanceAndArchitecturalBoundariesTier1:
         - Witness: Packet envelope valid under stage 0 schema produces kill refusal on kill condition.
         - Mutation: Returning 'no kill' whenever schema validator passes causes security bypass.
         """
-        stage0_path = Path("omega_engine_pfp/packet_schemas/packet_envelope_v2.schema.json")
-        refusal_map_path = Path("omega_engine_pfp/packet_schemas/kill_condition_refusal_map_v1.json")
+        stage0_path = Path("pfp/packet_schemas/packet_envelope_v2.schema.json")
+        refusal_map_path = Path("pfp/packet_schemas/kill_condition_refusal_map_v1.json")
 
         assert stage0_path.exists()
         assert refusal_map_path.exists()
@@ -835,7 +835,7 @@ class TestGovernanceAndArchitecturalBoundariesTier1:
         assert is_valid, msg
 
         # But in domain scoring, the kill trigger must be caught and named
-        from omega_engine_pfp.use_cases.scoring import CandidateProposal, score_discrete_proposal
+        from pfp.use_cases.scoring import CandidateProposal, score_discrete_proposal
         proposal = CandidateProposal(
             proposal_id="PROP-01",
             repaired_obstruction_ids=(),
@@ -856,7 +856,7 @@ class TestGovernanceAndArchitecturalBoundariesTier1:
         - Witness: compute_sha256(file.read_bytes()) == entry["sha256"].
         - Mutation: Comparing filename instead of byte hash misses content tampering.
         """
-        regimes_dir = Path("omega_engine_pfp/regimes")
+        regimes_dir = Path("pfp/regimes")
         manifest_path = regimes_dir / "regime_manifest.json"
         assert manifest_path.exists()
 
@@ -879,10 +879,10 @@ class TestGovernanceAndArchitecturalBoundariesTier1:
 
         - Invariant: FFI adapter isolates host invocation through OEOS seam; zero direct process spawning.
         - Break: Module imports subprocess or parses raw outcome['result'] without envelope check.
-        - Witness: Code scan of omega_engine_pfp/ffi.py passes structural constraints.
+        - Witness: Code scan of pfp/ffi.py passes structural constraints.
         - Mutation: Adding 'import subprocess' or direct dictionary indexing causes test failure.
         """
-        ffi_path = Path("omega_engine_pfp/ffi.py")
+        ffi_path = Path("pfp/ffi.py")
         assert ffi_path.exists()
         source = ffi_path.read_text(encoding="utf-8")
 
@@ -917,12 +917,12 @@ class TestGovernanceAndArchitecturalBoundariesTier1:
         - Mutation: Adding outward import violates Clean Architecture layer boundary.
         """
         import ast
-        domain_root = Path("omega_engine_pfp/domain")
+        domain_root = Path("pfp/domain")
         forbidden_prefixes = (
-            "omega_engine_pfp.use_cases",
-            "omega_engine_pfp.infrastructure",
-            "omega_engine_pfp.controllers",
-            "omega_engine_pfp.entrypoints",
+            "pfp.use_cases",
+            "pfp.infrastructure",
+            "pfp.controllers",
+            "pfp.entrypoints",
         )
 
         for py_file in domain_root.rglob("*.py"):
@@ -956,7 +956,7 @@ class TestPolarizedOperadTier1:
         - Witness: ProhibitedRepairError, ProhibitedEvaluationError, IllTypedCompositionError.
         - Mutation: Allowing O^- to emit patches without raising turns test red.
         """
-        from omega_engine_pfp.domain.operad import (
+        from pfp.domain.operad import (
             ConstructiveMorphism,
             GraftSite,
             IllTypedCompositionError,

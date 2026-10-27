@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/forge.rs
 ---
 
 # Prompt Civ Level 07: Ecological Reserves & Population: Largest-Remainder Allocation
 
 **AuthorityEffect:** None.  
 **Level:** Level 07 (Working Population Caps & Diversity Preservation)  
-**Rust Forge Seam:** [`omega_prompt_civilization::forge`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs)  
+**Rust Forge Seam:** [`core_prompt_civilization::forge`](../../../engine/crates_rs/core_prompt_civilization/src/forge.rs)  
 **Primary Policy:** `PopulationPolicyV1`  
 **Core Falsifiers:** `F-BIO-05`
 
@@ -97,7 +97,7 @@ Level 07 establishes the **Ecological Reserve Architecture**:
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::forge
+// core_prompt_civilization::forge
 pub struct PopulationPolicyV1 {
     pub total_cap: usize,
     pub front_fraction: num_rational::BigRational,      // 3/5

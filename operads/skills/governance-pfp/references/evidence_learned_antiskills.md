@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 
-This document records the empirical anti-skills, defect patterns, and operational verification gaps mined from production mutation runs (`symbol_game_mutation_20260903.md`), Soviet QA gate receipts (`software_qa_receipt_m5.md`), and W1 hardware gating measurements (`w1_gating_measurements_20260805.md`, `w1_signature_capability_20260806.md`).
+This document records the empirical anti-skills, defect patterns, and operational verification gaps mined from production mutation runs (`symbol_game_mutation_20260903.md`), Strict QA gate receipts (`software_qa_receipt_m5.md`), and W1 hardware gating measurements (`w1_gating_measurements_20260805.md`, `w1_signature_capability_20260806.md`).
 
 ---
 
@@ -128,7 +128,7 @@ Mined from the comprehensive audit review of 338 registered entries and 1,260 pi
 
 ### Anti-Skill 18: Reusable Orchestration Scattering (`REUSABLE_ORCHESTRATION_SCATTERING`, F06)
 - **Defect Pattern:** 23 repeated AST helper groups (atomic writes, digest calculations, budget gates) are duplicated across pilot directories, and 18 pilot files make direct raw HTTP calls.
-- **Operational Defense:** Consolidate reusable transport, persistence, and budget accounting into `omega_engine_pfp/infrastructure/helpers/` while strictly keeping independent mathematical judges separate.
+- **Operational Defense:** Consolidate reusable transport, persistence, and budget accounting into `pfp/infrastructure/helpers/` while strictly keeping independent mathematical judges separate.
 
 ### Anti-Skill 19: Missing Replay Route Discovery (`MISSING_REPLAY_ROUTE_DISCOVERY`, F07)
 - **Defect Pattern:** Catalog files (`no_llm_catalog.yaml`, `llm_catalog.yaml`) are missing, and CLI entrypoint imports resolve non-existent pre-relocation documentation paths.

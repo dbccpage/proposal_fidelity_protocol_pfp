@@ -15,10 +15,10 @@ from typing import Any, Mapping, Sequence
 
 import pytest
 
-from omega_engine_pfp.domain.bridge.sbe import SBEAnalyzer
-from omega_engine_pfp.domain.models import StepVerdict, SymbolGameEnvelope
-from omega_engine_pfp.domain.ports import exact_ports
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.bridge.sbe import SBEAnalyzer
+from pfp.domain.models import StepVerdict, SymbolGameEnvelope
+from pfp.domain.ports import exact_ports
+from pfp.domain.solvers import (
     BASE,
     AdmitDatum,
     Delta,
@@ -31,8 +31,8 @@ from omega_engine_pfp.domain.solvers import (
     kinds,
     run_retraction_loop,
 )
-from omega_engine_pfp.domain.solvers.errors import SolverRefusal
-from omega_engine_pfp.use_cases.symbol_turn_service import SymbolGameExecutionService
+from pfp.domain.solvers.errors import SolverRefusal
+from pfp.use_cases.symbol_turn_service import SymbolGameExecutionService
 
 
 @dataclass(frozen=True)

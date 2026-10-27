@@ -36,7 +36,7 @@ Challenge **C044 (`c044_finite_group_identification`)** challenges autonomous so
 We developed, verified, and sealed the complete reference package under SG-CP v1:
 - **Reference Solver:** Exact algebraic group closure, Latin square and associativity validation, invariant computation (orders, center, derived subgroup, abelianization invariant factors, conjugacy classes, solutions to $x^k = e$), and structured basis backtracking isomorphism search.
 - **Judge Packet:** 64 hidden cases (40 base, 16 relabelled gauge controls, 8 poisoned cases) and 48 hostile mutated certificates.
-- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c044_eval_1790622696`.
+- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c044_eval_1790622696`.
 - **Empirical Matrix:** Benchmarked **Space Bunny Alpha** (`stealth/space-bunny-alpha`), **LLaMA 3.3 70B Instruct**, and **LLaMA 3.1 8B Instruct** across a 10-instance calibrated panel.
 
 ---

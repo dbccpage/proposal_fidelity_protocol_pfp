@@ -11,7 +11,7 @@ from dataclasses import field
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     canonical_unwire,
     canonical_wire,
@@ -20,9 +20,9 @@ from omega_engine_pfp.domain.shared_kernel.canonical import (
 )
 
 
-PACKET_SCHEMA = "omega.symbol-game.packet-envelope.v2"
-CANDIDATE_SCHEMA = "omega.symbol-game.candidate-artifact.v1"
-EVALUATION_SCHEMA = "omega.oesos.evaluation-receipt.v1"
+PACKET_SCHEMA = "core.symbol-game.packet-envelope.v2"
+CANDIDATE_SCHEMA = "core.symbol-game.candidate-artifact.v1"
+EVALUATION_SCHEMA = "core.oesos.evaluation-receipt.v1"
 LAB_TERMINAL_STATUSES = {
     "LabExactCandidate",
     "LabClosedResidualCandidate",
@@ -180,7 +180,7 @@ class PacketEnvelopeV2:
     @property
     def packet_id(self) -> str:
         return domain_digest(
-            "omega.symbol-game.packet-envelope.v2", self.identity_fields()
+            "core.symbol-game.packet-envelope.v2", self.identity_fields()
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -309,7 +309,7 @@ class EvaluationReceiptV1:
 
     @property
     def receipt_id(self) -> str:
-        return domain_digest("omega.oesos.evaluation-receipt.v1", self)
+        return domain_digest("core.oesos.evaluation-receipt.v1", self)
 
     def transport_valid(self) -> bool:
         if (

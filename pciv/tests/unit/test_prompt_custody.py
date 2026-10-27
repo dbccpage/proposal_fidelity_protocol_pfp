@@ -6,19 +6,19 @@ from dataclasses import replace
 
 import pytest
 
-from omega_engine_operating_system.adapters.prompt_civ.cas import ContentAddressedStorageV1
-from omega_engine_operating_system.adapters.prompt_civ.custody import (
+from operating_system.adapters.prompt_civ.cas import ContentAddressedStorageV1
+from operating_system.adapters.prompt_civ.custody import (
     PromptCustodyLedgerV1,
     PromptReviewReceiptV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.forge import (
+from operating_system.adapters.prompt_civ.forge import (
     MutationOperatorCandidateV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.operator_custody import (
+from operating_system.adapters.prompt_civ.operator_custody import (
     MutationOperatorAdmissionV1,
     MutationOperatorRegistryV1,
 )
-from omega_engine_operating_system.adapters.prompt_civ.record import (
+from operating_system.adapters.prompt_civ.record import (
     CustodyTier,
     PromptGenomeV1,
     ProtectedSpanV1,

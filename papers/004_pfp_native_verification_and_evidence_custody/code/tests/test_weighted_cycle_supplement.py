@@ -58,8 +58,8 @@ def test_missing_native_pins_fall_back_to_python_enumeration(monkeypatch):
     This pins the documented current behaviour of the package copy; it is not a
     native result.
     """
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_SHA256", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_SHA256", raising=False)
     value, gauge = compute_phi1(_triangle((1, 2, 3)), _claims((1, 1, 1)))
     assert value == Fraction(3)
     assert set(gauge) == {"x", "y", "z"}

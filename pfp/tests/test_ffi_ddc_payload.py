@@ -1,7 +1,7 @@
 """The DDC tape wrapper sends the request shape the native host declares.
 
 Counterexample from the study: ``ddc_verify_tape`` sent ``{"tape": [...]}``,
-while ``DdcVerifyTapeRequestV1`` (``crates_rs/omega_symbol_game/src/ddc.rs``)
+while ``DdcVerifyTapeRequestV1`` (``crates_rs/core_symbol_game/src/ddc.rs``)
 requires ``initial_state`` and ``steps`` and denies unknown fields, so every
 call through the wrapper was refused by the host.
 AuthorityEffect: None.
@@ -14,16 +14,16 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.ffi import RustSymbolGameHost, get_default_host
+from operations.domain.rop.result import Ok
+from pfp.ffi import RustSymbolGameHost, get_default_host
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = (
     ROOT
-    / "omega_engine_governance/contracts/contracts_pfp"
+    / "governance/contracts/contracts_pfp"
     / "host_ddc_verify_tape.contract.yaml"
 )
-DEMOS = ROOT / "omega_engine/crates_rs/tests/omega_symbol_game/fixtures/ddc_paper_demos.json"
+DEMOS = ROOT / "engine/crates_rs/tests/core_symbol_game/fixtures/ddc_paper_demos.json"
 
 
 class _RecordingSeam:

@@ -23,7 +23,7 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.taxonomy import (
+from pfp.infrastructure.taxonomy import (
     ArithmeticDomainEnum,
     CheckerContractEnum,
     CheckerEnum,

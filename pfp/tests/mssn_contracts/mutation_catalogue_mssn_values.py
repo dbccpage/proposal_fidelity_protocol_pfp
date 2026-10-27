@@ -1,10 +1,10 @@
 """Replayable decision mutants for the MSSN grammar bounded context."""
 
-from omega_engine_operations.use_cases.verification.mutation_harness import Mutant
+from operations.use_cases.verification.mutation_harness import Mutant
 
-_TARGET = "omega_engine_pfp/domain/mssn_research"
+_TARGET = "pfp/domain/mssn_research"
 _WITNESS = (
-    "omega_engine_pfp/tests/mssn_contracts/test_mssn_domain_value_objects.py",
+    "pfp/tests/mssn_contracts/test_mssn_domain_value_objects.py",
 )
 
 DEFAULT_TESTS = _WITNESS
@@ -32,7 +32,7 @@ MUTANTS = (
         target=f"{_TARGET}/grammar/entities.py",
         anchor="if len(candidates) > vocabulary_size:",
         applied="if len(candidates) < vocabulary_size:",
-        tests=("omega_engine_pfp/tests/mssn_contracts/test_grammar_ddd.py",),
+        tests=("pfp/tests/mssn_contracts/test_grammar_ddd.py",),
     ),
     Mutant(
         mutant_id="MSSN_GRAMMAR_004",
@@ -42,16 +42,16 @@ MUTANTS = (
                 "and packet.receipt is None:"),
         applied=("if packet.proposal.requested_status == HorizonStatus.CERTIFIED_GREEN "
                  "and packet.receipt is not None:"),
-        tests=("omega_engine_pfp/tests/mssn_contracts/test_levels_15_to_21_grammar_ddd.py",),
+        tests=("pfp/tests/mssn_contracts/test_levels_15_to_21_grammar_ddd.py",),
     ),
     Mutant(
         mutant_id="MSSN_CODEC_005",
         intent="A ledger whose declared and actual entry counts agree would be refused.",
-        target=("omega_engine_pfp/infrastructure/adapters/mssn_research/contracts/grammar/"
+        target=("pfp/infrastructure/adapters/mssn_research/contracts/grammar/"
                 "ledger_codec.py"),
         anchor="if actual < declared:",
         applied="if actual <= declared:",
-        tests=("omega_engine_pfp/tests/mssn_contracts/test_epistemic_quarantine_repository.py",),
+        tests=("pfp/tests/mssn_contracts/test_epistemic_quarantine_repository.py",),
     ),
     Mutant(
         mutant_id="MSSN_LIFT_006",
@@ -59,6 +59,6 @@ MUTANTS = (
         target=f"{_TARGET}/grammar/lift_policies.py",
         anchor="if type(cert) is not LiftNecessityCertificate:",
         applied="if type(cert) is LiftNecessityCertificate:",
-        tests=("omega_engine_pfp/tests/mssn_contracts/test_lift_necessity_certificate.py",),
+        tests=("pfp/tests/mssn_contracts/test_lift_necessity_certificate.py",),
     ),
 )

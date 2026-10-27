@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, TypeVar
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 from ...domain.anti_skills.anti_skill_v2 import (
     AntiSkillActivationProfileV1,

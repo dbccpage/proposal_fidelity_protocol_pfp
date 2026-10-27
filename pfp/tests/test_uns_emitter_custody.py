@@ -6,7 +6,7 @@ Counterexamples from the study (``domain/bridge/symbol_game_emitter.py`` and
 * an empty evidence digest was replaced by ``sha256(f"{task_id}:{count}")``,
   a value that binds nothing the run produced;
 * a run with no dialogue was given the invented line
-  "Woland: The reduction is verified.";
+  "Adversary: The reduction is verified.";
 * with no root given, the emitter created ``_intelligence/symbol_game/runs``
   under ``Path(__file__).parents[3]``, the checkout the code lives in;
 * the domain opened and wrote files itself.
@@ -22,16 +22,16 @@ from pathlib import Path
 
 import pytest
 
-import omega_engine_pfp
-from omega_engine_pfp.domain.bridge.sbe import SBEAnalyzer
-from omega_engine_pfp.domain.bridge.symbol_game_emitter import (
+import pfp
+from pfp.domain.bridge.sbe import SBEAnalyzer
+from pfp.domain.bridge.symbol_game_emitter import (
     UnifiedNarrativeScriptEmitter,
 )
-from omega_engine_pfp.domain.bridge.symbol_game_models import SymbolGameStepResult
-from omega_engine_pfp.domain.bridge.symbol_game_packets import SymbolGamePacketCompiler
-from omega_engine_pfp.domain.models import ObstructionScore
+from pfp.domain.bridge.symbol_game_models import SymbolGameStepResult
+from pfp.domain.bridge.symbol_game_packets import SymbolGamePacketCompiler
+from pfp.domain.models import ObstructionScore
 
-PACKAGE = Path(omega_engine_pfp.__file__).resolve().parent
+PACKAGE = Path(pfp.__file__).resolve().parent
 DIGEST = "ab" * 32
 
 
@@ -121,8 +121,8 @@ def test_silent_run_keeps_its_silence_and_its_digest() -> None:
     )
     assert sbe.ensembles and all(ensemble == [] for ensemble in sbe.ensembles)
     everything = "\n".join(sink.files.values())
-    assert "Woland: The reduction is verified." not in everything
-    assert "Koroviev" not in everything
+    assert "Adversary: The reduction is verified." not in everything
+    assert "Defect Hunter" not in everything
     assert DIGEST in sink.files["_ic/odni/unified_oe_trace.jsonl"]
     assert uns.startswith("memory://_ic/darpa/symbol_game/runs/")
     assert packets.startswith("memory://_ic/darpa/symbol_game/runs/")
@@ -162,7 +162,7 @@ def test_runner_evidence_is_not_built_from_the_task_id_and_a_count() -> None:
 
 
 def test_filesystem_sink_requires_an_explicit_root_and_stays_inside_it(tmp_path: Path) -> None:
-    from omega_engine_pfp.infrastructure.persistence.run_artifact_sink import (
+    from pfp.infrastructure.persistence.run_artifact_sink import (
         FilesystemRunArtifactSink,
         OutputRootRequired,
     )
@@ -183,7 +183,7 @@ def test_filesystem_sink_requires_an_explicit_root_and_stays_inside_it(tmp_path:
 
 @pytest.mark.parametrize("operation", ["put", "append"])
 def test_filesystem_sink_refuses_legacy_active_writes(tmp_path: Path, operation: str) -> None:
-    from omega_engine_pfp.infrastructure.persistence.run_artifact_sink import (
+    from pfp.infrastructure.persistence.run_artifact_sink import (
         FilesystemRunArtifactSink,
     )
 
@@ -197,7 +197,7 @@ def test_filesystem_sink_refuses_legacy_active_writes(tmp_path: Path, operation:
 
 
 def test_filesystem_sink_can_read_retained_legacy_bytes_without_rewriting(tmp_path: Path) -> None:
-    from omega_engine_pfp.infrastructure.persistence.run_artifact_sink import (
+    from pfp.infrastructure.persistence.run_artifact_sink import (
         FilesystemRunArtifactSink,
     )
 
@@ -216,10 +216,10 @@ def test_filesystem_sink_checks_activation_each_write_then_recovers(
     tmp_path: Path,
     operation: str,
 ) -> None:
-    from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+    from operating_system.adapters.intelligence_custody.ic_routing import (
         IcMigrationRefusal,
     )
-    from omega_engine_pfp.infrastructure.persistence.run_artifact_sink import (
+    from pfp.infrastructure.persistence.run_artifact_sink import (
         FilesystemRunArtifactSink,
     )
 
@@ -256,10 +256,10 @@ def test_filesystem_sink_refuses_ic_hardlink_write_then_recovers(
     tmp_path: Path,
     operation: str,
 ) -> None:
-    from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+    from operating_system.adapters.intelligence_custody.ic_routing import (
         IcMigrationRefusal,
     )
-    from omega_engine_pfp.infrastructure.persistence.run_artifact_sink import (
+    from pfp.infrastructure.persistence.run_artifact_sink import (
         FilesystemRunArtifactSink,
     )
 
@@ -310,7 +310,7 @@ def test_filesystem_sink_explicit_exports_preserve_existing_hardlink_policy(
     tmp_path: Path,
     operation: str,
 ) -> None:
-    from omega_engine_pfp.infrastructure.persistence.run_artifact_sink import (
+    from pfp.infrastructure.persistence.run_artifact_sink import (
         FilesystemRunArtifactSink,
     )
 
@@ -351,10 +351,10 @@ def test_filesystem_sink_refuses_windows_path_aliases_before_writes_and_recovers
     operation: str,
     relative: str,
 ) -> None:
-    from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+    from operating_system.adapters.intelligence_custody.ic_routing import (
         IcMigrationRefusal,
     )
-    from omega_engine_pfp.infrastructure.persistence.run_artifact_sink import (
+    from pfp.infrastructure.persistence.run_artifact_sink import (
         FilesystemRunArtifactSink,
     )
 

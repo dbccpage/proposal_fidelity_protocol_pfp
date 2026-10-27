@@ -21,9 +21,9 @@ The human promotes or refuses.
 
 No skill, agent, paper, claim ledger, Lean build, Rust test, certificate, adversarial acceptance, release check, or successful replay may independently create an authority-bearing result.
 
-Every model-produced **receipt, gate output, or internal workflow attestation** carries the no-authority firewall field — the firewall reading, `omega_types::authority::AuthorityEffect::None` (`omega_engine/crates/omega_types/src/authority.rs:233`). Public manuscripts and publication metadata follow §0a and do not spell this field. The only exception in internal workflow outputs is a typed refusal, represented as `Outcome::Refused(RefusalSource)` (`authority.rs:349,304`) — never as a bare `TypedRefusal` (no such variant exists).
+Every model-produced **receipt, gate output, or internal workflow attestation** carries the no-authority firewall field — the firewall reading, `core_types::authority::AuthorityEffect::None` (`engine/crates/core_types/src/authority.rs:233`). Public manuscripts and publication metadata follow §0a and do not spell this field. The only exception in internal workflow outputs is a typed refusal, represented as `Outcome::Refused(RefusalSource)` (`authority.rs:349,304`) — never as a bare `TypedRefusal` (no such variant exists).
 
-Authority is minted **only** by `CertifiedAuthority::certify` / `certify_checked_packet` (`authority.rs:181`) after the full transition below. A valid local authority transition is the conductor receipt chain (`omega_engine/omega_conductor/protocol/`):
+Authority is minted **only** by `CertifiedAuthority::certify` / `certify_checked_packet` (`authority.rs:181`) after the full transition below. A valid local authority transition is the conductor receipt chain (`engine/core_conductor/protocol/`):
 
 ``` ext
 agent_proposal (producer)              [authority_effect = "None"]
@@ -58,10 +58,10 @@ Each stage names the canonical repo type it binds to. Do not mint a second const
 
 | # | Stage | Binds to |
 |---|---|---|
-| 1 | **Declare the carrier** | ODP Carrier field + `CochainPrimitiveDifference` (`omega_homological`); a title/filename is NOT a carrier |
-| 2 | **Declare Primitive Difference** (the observed δ, distinct from repair map d₀) | `PrimitiveDifferenceJudgment` (`omega_atlas_reconciliation/src/primitive_difference.rs:11`) |
+| 1 | **Declare the carrier** | ODP Carrier field + `CochainPrimitiveDifference` (`core_homological`); a title/filename is NOT a carrier |
+| 2 | **Declare Primitive Difference** (the observed δ, distinct from repair map d₀) | `PrimitiveDifferenceJudgment` (`core_atlas_reconciliation/src/primitive_difference.rs:11`) |
 | 3 | **Declare `ZeroRel`** (what counts as no remaining discrepancy) | ODP `ZeroRel`; `PrimitiveDifference::zero_related` |
-| 4 | **Type the cochain realization** — exactly one of `Exact` / `Structural` / `Unresolved` | ODP C0/C1/C2, d₀/d₁, `FiniteCochainComplex` (`OmegaCore`); d₁∘d₀ witnessed for `Exact` |
+| 4 | **Type the cochain realization** — exactly one of `Exact` / `Structural` / `Unresolved` | ODP C0/C1/C2, d₀/d₁, `FiniteCochainComplex` (`CoreCore`); d₁∘d₀ witnessed for `Exact` |
 | 5 | **Compute `Q1`** (residual mod admissible local repair) | ODP Q¹ = C¹/im(d₀), `QuotientSpace` |
 | 6 | **Separate `Phi1` from `Gamma2`** | ODP Φ₁ (quotient mass) vs Γ₂ (closure-failure mass); `lib-verification-loop` Phase 8 gate |
 | 7 | **Declare the observer** (frozen at admission) | ODP observer/norm/terminalizer; firewall `OBSERVER_PASSIVITY` |
@@ -102,7 +102,7 @@ Bound to the **stable Rust types** (this is the authoritative binding; the condu
 
 | Surface terminal | Stable Rust binding | Notes |
 |---|---|---|
-| `ExactRepair` | `ObstructionStatus::ExactRepair` (`omega_functional/src/trichotomy.rs:16`) | core trichotomy |
+| `ExactRepair` | `ObstructionStatus::ExactRepair` (`core_functional/src/trichotomy.rs:16`) | core trichotomy |
 | `StabilizedSurvivor` | `ObstructionStatus::StabilizedSurvivor` | ODP §5 spelling `ClosedSurvivor` (R8) |
 | `OpenObstruction` | `ObstructionStatus::OpenObstruction` | ODP §5 spelling `OpenResidual`/`ActiveClosureFailure` (R8) |
 | `OracleNeeded` | `RefusalSource::OracleNeeded` (`authority.rs:304`) / atlas `LicensedLift` sibling | oracle ≠ operation (ODP §A3) |
@@ -111,7 +111,7 @@ Bound to the **stable Rust types** (this is the authoritative binding; the condu
 | `Invalid` | `gate_receipt.gate_verdict` `Fail`/`Refuse` (`gate_receipt.schema.json`) | no core Rust enum variant (R5) |
 | `InfrastructureFailure` | `gate_receipt.gate_verdict::InfrastructureFailure` | environmental; not a math result |
 
-Broadest Rust enum for cross-checking is `omega_atlas_reconciliation::row::TerminalStatus` (`row.rs:90`). **Diagnostic classes (§2) map INTO this set; they are not members of it.**
+Broadest Rust enum for cross-checking is `core_atlas_reconciliation::row::TerminalStatus` (`row.rs:90`). **Diagnostic classes (§2) map INTO this set; they are not members of it.**
 
 ---
 
@@ -121,7 +121,7 @@ Broadest Rust enum for cross-checking is `omega_atlas_reconciliation::row::Termi
 |---|---|---|---|---|
 | **Producer** | `paper-improver` (+ `math-prover`) | the paper + its ledgers | proposes; internal no-authority receipt | may propose a terminal, cannot seal |
 | **Independent evaluator** | `paper-adversary` (+ `math-adversary`) | **READ-ONLY by default** (residual C1 fix) | recomputes audit on frozen carrier; internal no-authority receipt | acceptance carries no authority |
-| **Math-dev (paper-scoped)** | `omega-math-dev` (rip-papers mode only) | ENC entries + proof ledgers (owned surface); **not** unbounded queue | prepares claim/ENC/Lean candidates; internal no-authority receipt | no authority; may SKIP when no Lean surface |
+| **Math-dev (paper-scoped)** | `core-math-dev` (rip-papers mode only) | ENC entries + proof ledgers (owned surface); **not** unbounded queue | prepares claim/ENC/Lean candidates; internal no-authority receipt | no authority; may SKIP when no Lean surface |
 | **Lean producer** | `paper-lean4-improver` | `lean4/research_programs/*.lean` + lakefile roots; ledger `lean_refs` only | produces Lean + build receipts; internal no-authority receipt | may not self-ACCEPT; no MECHANIZED mint |
 | **Lean independent evaluator** | `paper-lean4-adversary` | **READ-ONLY** (receipts only) | recomputes Lean audit; internal no-authority receipt | ACCEPT carries no authority |
 | **Authority witness** | `paper-proof-signoff` | receipts only; paper-local ledger + `docs/lean_claim_map.md`; encyclopedia not required | inspects receipts + Lean/Rust/citation | emits attestation-shape or `RepairRequired`/`OpenObstruction`/`RefusalRecommended`/`OracleRequired`; **never** `AuthorizedLocalResult` |
@@ -133,9 +133,9 @@ Broadest Rust enum for cross-checking is `omega_atlas_reconciliation::row::Termi
 
 **Adversarial-process integrity:** separation of identity is necessary but not sufficient — an evaluator that is never contradicted is a rubber stamp. Where a process runs adversarial rounds, track the **concession rate** (findings accepted ÷ findings opened). A round at ≥ 0.9 with zero rebuttals is `CAPITULATION_SUSPECTED` and must be discharged by an independent re-derivation of the blocking findings before it closes. Both directions are failures: a producer that concedes everything is not being audited, and an evaluator whose findings are never ruled invalid is not being checked. (Live case: a 5-round dialogue closing 22 accepted of 22 opened, 2026-07-27.) Applies to `/paper-redteam-dialogue`, `/paper-adversary`, `/math-adversary`.
 
-**ENC write-owner (residual C2 fix):** `entries/**` are hand-authored source owned by `/omega-math-dev`. Paper skills are **read + `regen_encyclopedia.py`-verify only** on the encyclopedia. `indexes/**`, `registry.md`, and `indexes/ledgers/paper_*.md` are **generated — never hand-edit** (banner enforced). `paper-release` no longer edits ENC entries "in lockstep"; on a last-minute theorem-altering edit it routes `ClaimLedgerRepair` + `LeanObligation` and blocks.
+**ENC write-owner (residual C2 fix):** `entries/**` are hand-authored source owned by `/core-math-dev`. Paper skills are **read + `regen_encyclopedia.py`-verify only** on the encyclopedia. `indexes/**`, `registry.md`, and `indexes/ledgers/paper_*.md` are **generated — never hand-edit** (banner enforced). `paper-release` no longer edits ENC entries "in lockstep"; on a last-minute theorem-altering edit it routes `ClaimLedgerRepair` + `LeanObligation` and blocks.
 
-**Paper-local override:** For a paper folder that already carries its prose, production `code/`, `code/tests/`, nested `lean4/`, companion claim ledger, and `docs/lean_claim_map.md`, **that folder is the evidence bundle**. Do **not** require `omega_engine/research/encyclopedia`, ENC indexes, `paper_<NNN>.md` ledger views, or `regen_encyclopedia.py`. Missing encyclopedia is **not** a BLOCK. The ENC write-owner / ledger-ENC parity rows apply only when an encyclopedia is declared as part of that paper's evidence bundle. Stage skills win over this contract wherever they state the paper-local rule.
+**Paper-local override:** For a paper folder that already carries its prose, production `code/`, `code/tests/`, nested `lean4/`, companion claim ledger, and `docs/lean_claim_map.md`, **that folder is the evidence bundle**. Do **not** require `engine/research/encyclopedia`, ENC indexes, `paper_<NNN>.md` ledger views, or `regen_encyclopedia.py`. Missing encyclopedia is **not** a BLOCK. The ENC write-owner / ledger-ENC parity rows apply only when an encyclopedia is declared as part of that paper's evidence bundle. Stage skills win over this contract wherever they state the paper-local rule.
 
 ---
 
@@ -178,9 +178,9 @@ Broadest Rust enum for cross-checking is `omega_atlas_reconciliation::row::Termi
 - **Body ↔ ledger claim tags:** residual sections that own a ledger row must name claim <PREFIX-Cn> in the section header/lead; paper claim tables must list residual rows present in the ledger (no residual-only orphans).
 - **Changelog honesty:** never state that a ledger row was enriched/retyped unless the table text actually changed; prefer fix-the-row over changelog theater.
 
-## 5b. Omega Engine Primitives / mechanism inventory
+## 5b. Engine Primitives / mechanism inventory
 
-For internal hygiene papers and support documents that need operator/carrier context, keep an Omega Engine Primitives or mechanism-inventory table in support docs or an appendix. Final public papers are not required to carry this box near the top; do not put it before the abstract when it makes the paper harder to read. If the inventory is included in a public paper, keep it compact, reader-facing, and free of house receipt vocabulary.
+For internal hygiene papers and support documents that need operator/carrier context, keep an Engine Primitives or mechanism-inventory table in support docs or an appendix. Final public papers are not required to carry this box near the top; do not put it before the abstract when it makes the paper harder to read. If the inventory is included in a public paper, keep it compact, reader-facing, and free of house receipt vocabulary.
 
 | Slot | Required content |
 |---|---|
@@ -194,7 +194,7 @@ For internal hygiene papers and support documents that need operator/carrier con
 | **Residuals** | residual packaging that **distinguishes Phi1 from Gamma2** |
 | **Witnesses** | witness role / receipt carrier (distinct from observer when used) |
 | **Observers / profiles** | declared embedded profile locus (not view-from-nowhere) |
-| **Anomalons** | anomalon packaging or typed absence |
+| **Sentinels** | sentinel packaging or typed absence |
 | **CompletionLaw** | named law or `N/A` / `OPEN` / `OracleNeeded` |
 | **Terminal / route** | proposed terminal or typed route |
 | **Evidence scope** | optional reader-facing statement of what receipts/tests/proofs cover; omit if a concise scope note already says it |
@@ -203,20 +203,20 @@ For internal hygiene papers and support documents that need operator/carrier con
 
 Missing slots are `MISSING_CARRIER` / `MISSING_PRIMITIVE_DIFFERENCE` / `OBSERVER_UNTYPED` / `MISSING_PRIMITIVE_SLOT` candidates — not automatic GlobalGreen. Run `/governance-wdp` (mandatory under `/lib-master-librarian` paper audit) when inventory is present but prose still smuggles hosts or cosmic observers. Lean and encyclopedia companion gates are owned by `/lib-master-librarian`.
 
-This inventory is the support-level handle for treating the Omega stack as a **replayable algorithmic carrier** (flip declared slots, re-solve, read residuals) rather than narrative doctrine. It does **not** mint authority or select physical QM. Never include an `AuthorityEffect` row or string on public paper surfaces.
+This inventory is the support-level handle for treating the Core stack as a **replayable algorithmic carrier** (flip declared slots, re-solve, read residuals) rather than narrative doctrine. It does **not** mint authority or select physical QM. Never include an `AuthorityEffect` row or string on public paper surfaces.
 
-**Publish-facing link policy (deterministic `coda-check-paper`):** publish Markdown must not contain local/repo links (`file:`, `sandbox:`, relative paths, Windows/Unix absolutes, raw `.agents/` / `.claude/` / `.codex/` / `.grok/` / `omega_engine/` paths). Allowed: `https:`, DOI/Zenodo, same-document `#anchors`. Claim ledgers, proof spines, receipts, and ZIP manifests may retain canonical internal paths.
+**Publish-facing link policy (deterministic `coda-check-paper`):** publish Markdown must not contain local/repo links (`file:`, `sandbox:`, relative paths, Windows/Unix absolutes, raw `.agents/` / `.claude/` / `.codex/` / `.grok/` / `engine/` paths). Allowed: `https:`, DOI/Zenodo, same-document `#anchors`. Claim ledgers, proof spines, receipts, and ZIP manifests may retain canonical internal paths.
 
 **Publish-facing dialect policy:** public Markdown, notebooks, PDF/TEX/TXT exports, and Zenodo/MO copy must not contain house receipt strings (`AuthorityEffect`, `Authority Effect`, `authority_effect`, GlobalGreen-style labels, role receipts) except inside clearly labeled machine-schema appendices. Keep the main paper in ordinary mathematical prose.
 
 ## 5c. Research-system layout (`research_layout`)
 
-Canonical law for every paper under `omega_engine/research/published/` (not only `001_coda`). **Do not re-host the full checklist in stage skills** — cite this section + run the gate.
+Canonical law for every paper under `engine/research/published/` (not only `001_coda`). **Do not re-host the full checklist in stage skills** — cite this section + run the gate.
 
 ```text
-Gate: python -m omega_pipelines coda-check-paper --paper <path> [--repo-root .]
+Gate: python -m core_pipelines coda-check-paper --paper <path> [--repo-root .]
 Narrative home: /lib-master-librarian research-system layout invariants
-Claim-ID diagnostic (optional companion): python omega_engine_py/tools/claim_id_bijection.py --paper <path>
+Claim-ID diagnostic (optional companion): python engine_py/tools/claim_id_bijection.py --paper <path>
 
 ``` ext
 
@@ -250,8 +250,8 @@ Estate papers (esp. `008_engine_runtime` and compressed extracts under `100_math
 | Class | Example | Claim surface | Bijection / release |
 |---|---|---|---|
 | **Chapter / stem paper** | FOC chapter, goals engineering spec | `{stem}_claim_ledger.md` owns IDs | claim-ID bijection is a hygiene gate |
-| **Thin canonical extract** | `100_…/008_the_omega_engine_skill_everywhere.md` | extract ledger only; F3/P0 **interfaces + OPEN obligations** | may be Stage-2 unit; PROD LIVE still BLOCKED until PL receipts |
-| **Archive omnibus** | `008_omega_engine_master.md` | **`NON_CLAIM_SURFACE`** — concatenated historical ledgers only | body↔ledger bijection on the omnibus unit is **not** a release gate; expected REPAIRABLE/BLOCKED |
+| **Thin canonical extract** | `100_…/008_the_skill_everywhere.md` | extract ledger only; F3/P0 **interfaces + OPEN obligations** | may be Stage-2 unit; PROD LIVE still BLOCKED until PL receipts |
+| **Archive omnibus** | `008_engine_master.md` | **`NON_CLAIM_SURFACE`** — concatenated historical ledgers only | body↔ledger bijection on the omnibus unit is **not** a release gate; expected REPAIRABLE/BLOCKED |
 
 **Hard rules:**
 
@@ -265,7 +265,7 @@ Estate papers (esp. `008_engine_runtime` and compressed extracts under `100_math
 
 ## Appendix A — PaperCompliancePacket (ODP profile)
 
-A `PaperCompliancePacket` is a paper-carrier **profile of the ODP** (`omega_engine/crates/omega_contracts/src/contract_canonical_definitions/core/09_packets/omega_obstruction_packet_standard.md`). A paper release **is** a promotion event (ODP §6: *"No Omega artifact may be promoted unless it declares its obstruction packet"*). Fields:
+A `PaperCompliancePacket` is a paper-carrier **profile of the ODP** (`engine/crates/core_contracts/src/contract_canonical_definitions/core/09_packets/core_obstruction_packet_standard.md`). A paper release **is** a promotion event (ODP §6: *"No Core artifact may be promoted unless it declares its obstruction packet"*). Fields:
 
 ``` ext
 paper identity · version + artifact hash · base Git revision · carrier manifest ·
@@ -281,7 +281,7 @@ terminal proposal · internal authority-effect receipt field (= None)
 
 One common shape reusing the conductor receipt trio (do NOT introduce new Rust types):
 
-- **Producer** → `agent_proposal.schema.json` (`omega.agent_proposal.v1`, `authority_effect="None"`).
+- **Producer** → `agent_proposal.schema.json` (`core.agent_proposal.v1`, `authority_effect="None"`).
 - **Independent evaluator** → `i3_review_receipt.schema.json` (`independence_class="I3_CROSS_MODEL"`, findings `{severity P0-P3, category, blocking}`, `authority_effect="None"`).
 - **Deterministic gate** → `gate_receipt.schema.json` (`gate_verdict ∈ {Pass,Fail,Refuse,Inconclusive,InfrastructureFailure}`, host-recomputed hashes).
 - **Authority witness / terminal** → `terminal_receipt.schema.json` (`coda_gtla_terminal`, `authority_effect ∈ {None,Refused}`).
@@ -311,11 +311,11 @@ Stable machine codes; each maps to an existing repo construct (no new enums — 
 
 ## Appendix D — Known residuals (surfaced, not silently reconciled)
 
-R1 `AuthorityEffect` overloaded (firewall vs contract-taxonomy enum) — this contract uses the **firewall** reading. R2 no single Rust terminal enum — §3 reconciliation. R3 `TypedRefusal`→`Refused(RefusalSource)`. R4 `LiftLicenseNeeded` 3 spellings. R5 `Invalid`/`InfrastructureFailure` only in doc+`gate_verdict`. R6 promotion/receipt names design-only → conductor schemas (**being canonicalized by the concurrent conductor-doc workstream**). R7 operator-manifest gaps (`observer`/`witnesses`/`operator id` absent from `omega.agent_work.v1`) → paper-operator profile, Appendix E. R8 ODP §5 vs trichotomy spellings. R9 §8 spec expects "S6 research-blocked" but Paper 000 records `OPEN/CONJECTURE-CONDITIONAL` — fixture keys on the paper's real status. R10 proof-ledger path drift (skills point at `research/proof_ledger_*`; real path `research/encyclopedia/proof_ledgers/`).
+R1 `AuthorityEffect` overloaded (firewall vs contract-taxonomy enum) — this contract uses the **firewall** reading. R2 no single Rust terminal enum — §3 reconciliation. R3 `TypedRefusal`→`Refused(RefusalSource)`. R4 `LiftLicenseNeeded` 3 spellings. R5 `Invalid`/`InfrastructureFailure` only in doc+`gate_verdict`. R6 promotion/receipt names design-only → conductor schemas (**being canonicalized by the concurrent conductor-doc workstream**). R7 operator-manifest gaps (`observer`/`witnesses`/`operator id` absent from `core.agent_work.v1`) → paper-operator profile, Appendix E. R8 ODP §5 vs trichotomy spellings. R9 §8 spec expects "S6 research-blocked" but Paper 000 records `OPEN/CONJECTURE-CONDITIONAL` — fixture keys on the paper's real status. R10 proof-ledger path drift (skills point at `research/proof_ledger_*`; real path `research/encyclopedia/proof_ledgers/`).
 
 ## Appendix E — Operators → gauges (vendor-neutral)
 
-Operators are the reusable transformations; skills are gauge front-ends. Each operator manifest is a **paper profile of `work_packet.schema.json` (`omega.agent_work.v1`)** adding `observer`, `witnesses`, `inputs/outputs`, `operator_id` (R7). Operator IDs: `paper.intake.compile · paper.carrier.declare · paper.claim_ledger.extract · paper.claim_ledger.reconcile · paper.coda_gtla.audit · paper.improve · paper.adversary.audit · paper.math_dev.scoped · paper.lean.produce · paper.lean.adversary.audit · paper.formal_binding.audit · paper.lean.verify · paper.rust.verify · paper.citation.audit · paper.scope_fence.audit · paper.release.signoff · paper.release.preflight · paper.bundle.build`. Adapter map: `paper-improver→paper.improve`; `paper-adversary→paper.adversary.audit`; `omega-math-dev` (rip-papers mode)→`paper.math_dev.scoped`; `paper-lean4-improver→paper.lean.produce`; `paper-lean4-adversary→paper.lean.adversary.audit`; `paper-proof-signoff→paper.formal_binding.audit + paper.lean.verify`; `paper-release→paper.release.preflight`; `paper-build→paper.bundle.build`; `rip-papers→` orchestrates.
+Operators are the reusable transformations; skills are gauge front-ends. Each operator manifest is a **paper profile of `work_packet.schema.json` (`core.agent_work.v1`)** adding `observer`, `witnesses`, `inputs/outputs`, `operator_id` (R7). Operator IDs: `paper.intake.compile · paper.carrier.declare · paper.claim_ledger.extract · paper.claim_ledger.reconcile · paper.coda_gtla.audit · paper.improve · paper.adversary.audit · paper.math_dev.scoped · paper.lean.produce · paper.lean.adversary.audit · paper.formal_binding.audit · paper.lean.verify · paper.rust.verify · paper.citation.audit · paper.scope_fence.audit · paper.release.signoff · paper.release.preflight · paper.bundle.build`. Adapter map: `paper-improver→paper.improve`; `paper-adversary→paper.adversary.audit`; `core-math-dev` (rip-papers mode)→`paper.math_dev.scoped`; `paper-lean4-improver→paper.lean.produce`; `paper-lean4-adversary→paper.lean.adversary.audit`; `paper-proof-signoff→paper.formal_binding.audit + paper.lean.verify`; `paper-release→paper.release.preflight`; `paper-build→paper.bundle.build`; `rip-papers→` orchestrates.
 
 ---
 

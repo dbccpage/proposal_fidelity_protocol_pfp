@@ -16,28 +16,28 @@ import hashlib
 import json
 from typing import Any
 
-from omega_engine_pfp.domain.mssn_research.grammar.rewriting import (
+from pfp.domain.mssn_research.grammar.rewriting import (
     PeakClaim,
     PolygraphPacket,
     RewriteStep,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     ContentDigest,
     StageLevel,
 )
 
 # Setup research package imports
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.grammar.entities import (
     TowerGrammar,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.errors import (
     PolygraphConfluenceError,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.rewriting_policies import (
+from pfp.domain.mssn_research.grammar.rewriting_policies import (
     check_peak_claim_confluence,
     check_step_continuity,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import (
+from pfp.domain.mssn_research.packets.value_objects import (
     RefusalCode,
 )
 

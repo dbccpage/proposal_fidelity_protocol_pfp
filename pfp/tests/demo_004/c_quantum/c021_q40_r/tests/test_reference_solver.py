@@ -9,14 +9,14 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.ddc_tracer import (
     VALID_DDC_LETTERS,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.pauli import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.pauli import (
     _SINGLE_PAULI_MUL,
     PauliString,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
     solve,
     solve_with_trace,
 )

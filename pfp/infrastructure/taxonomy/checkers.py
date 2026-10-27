@@ -10,7 +10,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from omega_engine_pfp.infrastructure.yaml_loading import strict_yaml_load
+from pfp.infrastructure.yaml_loading import strict_yaml_load
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -144,7 +144,7 @@ class CheckerContractRegistry:
         if task_family in self._family_to_checker:
             return self._family_to_checker[task_family]
         try:
-            from omega_engine_pfp.infrastructure.catalogs.task_families import (
+            from pfp.infrastructure.catalogs.task_families import (
                 TaskFamilyRegistry,
             )
 

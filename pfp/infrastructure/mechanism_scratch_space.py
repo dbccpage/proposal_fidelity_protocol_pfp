@@ -14,8 +14,8 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest
-from omega_engine_pfp.infrastructure.task_turn import PreparedTaskTurn, prepare_task_turn
+from pfp.domain.shared_kernel.canonical import domain_digest
+from pfp.infrastructure.task_turn import PreparedTaskTurn, prepare_task_turn
 
 
 def _integer(value: int) -> int:

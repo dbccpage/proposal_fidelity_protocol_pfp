@@ -2,13 +2,13 @@
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_search import (
+from eis.domain.pharmacy_search import (
     PharmacyQuery,
     rule_content_sha256,
 )
-from omega_engine_epistemic_immune_system.use_cases.pharmacy_search import PharmacySearchIndex
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import PharmacyCatalogRepository
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.use_cases.pharmacy_search import PharmacySearchIndex
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.infrastructure.pharmacy_writer import (
     filesystem_byte_writer,
     filesystem_catalog_bytes,
     release_publication_marker,

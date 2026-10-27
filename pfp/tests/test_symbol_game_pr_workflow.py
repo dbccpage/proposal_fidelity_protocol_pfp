@@ -8,9 +8,9 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[2]
 WORKFLOW_PATH = REPO_ROOT / ".github" / "workflows" / "symbol-game-pr.yml"
 CONTAINMENT_SOURCES = (
-    "omega_engine_operads/controllers/router.py",
-    "omega_engine_operads/controllers/wire_dtos.py",
-    "omega_engine_operads/frontend/api/app.py",
+    "operads/controllers/router.py",
+    "operads/controllers/wire_dtos.py",
+    "operads/frontend/api/app.py",
 )
 
 
@@ -72,41 +72,41 @@ def _assert_native_order(steps: list[dict]) -> None:
         < suite_index
     )
     assert steps[census_index]["run"] == (
-        "python omega_engine_operations/use_cases/verification/"
+        "python operations/use_cases/verification/"
         "symbol_game_attack_surface.py --check "
-        "omega_engine_operations/evidence/"
+        "operations/evidence/"
         "symbol_game_attack_surface_20260903.jsonl"
     )
     assert steps[census_tests_index]["run"] == (
         "python -m pytest -q -n 8 --import-mode=importlib "
         '--basetemp "${{ runner.temp }}/symgam-census" '
-        "omega_engine_operations/tests/unit/test_symbol_game_attack_surface.py"
+        "operations/tests/unit/test_symbol_game_attack_surface.py"
     )
     assert steps[freshness_index]["run"] == (
-        "python -m omega_engine_operations.use_cases.verification.evidence_freshness"
+        "python -m operations.use_cases.verification.evidence_freshness"
     )
     assert steps[stopping_index]["run"] == (
-        "python -m omega_engine_operations.use_cases.verification.stopping_point"
+        "python -m operations.use_cases.verification.stopping_point"
     )
     assert steps[defense_index]["run"] == (
         "python -m pytest -q -n 8 --import-mode=importlib "
         '--basetemp "${{ runner.temp }}/symgam-defense" '
-        "omega_engine_operations/tests/unit/test_fail_closed_audit.py "
-        "omega_engine_operations/tests/unit/test_stopping_point_register.py "
-        "omega_engine_operations/tests/unit/test_evidence_freshness.py"
+        "operations/tests/unit/test_fail_closed_audit.py "
+        "operations/tests/unit/test_stopping_point_register.py "
+        "operations/tests/unit/test_evidence_freshness.py"
     )
-    assert steps[build_index]["working-directory"] == "omega_engine/crates_rs"
+    assert steps[build_index]["working-directory"] == "engine/crates_rs"
     assert steps[local_http_index]["run"] == (
         "python -m pytest -q -n 8 --import-mode=importlib "
         '--basetemp "${{ runner.temp }}/symgam-local-http" '
-        "omega_engine_operations/tests/unit/test_http_local_containment.py "
-        "omega_engine_operads/tests/contract/test_http_request_boundary.py"
+        "operations/tests/unit/test_http_local_containment.py "
+        "operads/tests/contract/test_http_request_boundary.py"
     )
-    assert steps[build_index]["run"] == "cargo build -j 1 -p omega_symbol_game"
-    assert steps[rust_index]["working-directory"] == "omega_engine/crates_rs"
-    assert steps[rust_index]["run"] == ("cargo test -j 1 -p omega_symbol_game_runtime")
-    assert steps[host_index]["working-directory"] == "omega_engine/crates_rs"
-    assert steps[host_index]["run"] == "cargo test -j 1 -p omega_symbol_game"
+    assert steps[build_index]["run"] == "cargo build -j 1 -p core_symbol_game"
+    assert steps[rust_index]["working-directory"] == "engine/crates_rs"
+    assert steps[rust_index]["run"] == ("cargo test -j 1 -p core_symbol_game_runtime")
+    assert steps[host_index]["working-directory"] == "engine/crates_rs"
+    assert steps[host_index]["run"] == "cargo test -j 1 -p core_symbol_game"
     suite = steps[suite_index]
     assert suite["shell"] == "pwsh"
     for guard in (
@@ -117,9 +117,9 @@ def _assert_native_order(steps: list[dict]) -> None:
         "$campaignIndex += 3",
         "[Math]::Min($campaignIndex + 2, $campaignFiles.Count - 1)",
         "TEST_SOURCE_CHANGED",
-        "omega_engine/_tests_unit/test_code_change_proposal_packets.py",
-        "omega_engine/_tests_unit/test_llm_turn_packets.py",
-        "python -m omega_engine_operations.use_cases.verification.windows_python_campaign_batch",
+        "engine/_tests_unit/test_code_change_proposal_packets.py",
+        "engine/_tests_unit/test_llm_turn_packets.py",
+        "python -m operations.use_cases.verification.windows_python_campaign_batch",
         '--basetemp "${{ runner.temp }}/symgam-tests-$campaignIndex" @campaignBatch',
         "if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }",
     ):
@@ -130,7 +130,7 @@ def _assert_native_order(steps: list[dict]) -> None:
     )
     assert source_guard in lines, "SOURCE_COMPARISON_CHANGED"
     runner = (
-        "python -m omega_engine_operations.use_cases.verification."
+        "python -m operations.use_cases.verification."
         "windows_python_campaign_batch --root . "
         '--report-dir "${{ runner.temp }}/symgam-evidence-$campaignIndex" '
         '--basetemp "${{ runner.temp }}/symgam-tests-$campaignIndex" @campaignBatch'
@@ -244,7 +244,7 @@ def _assert_containment_source_trigger(workflow: dict, source_path: str) -> None
     )
     assert "if" not in job and "if" not in step
     assert (
-        "omega_engine_operads/tests/contract/test_http_request_boundary.py"
+        "operads/tests/contract/test_http_request_boundary.py"
         in step["run"].split()
     )
 

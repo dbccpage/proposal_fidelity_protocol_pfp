@@ -16,19 +16,19 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers import (
     independent_checker,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.exact_checker import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.exact_checker import (
     check_exact,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.independent_checker import (
     check_independent,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
     solve,
 )
 
@@ -102,7 +102,7 @@ def test_checker_one_soundness_uses_its_own_completion() -> None:
     """Checker 1 must not reach the reference completion or checker 2 (import boundary)."""
     import inspect
 
-    from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers import (
+    from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers import (
         exact_checker,
         judge_completion,
     )
@@ -117,7 +117,7 @@ def test_checker_one_soundness_uses_its_own_completion() -> None:
 
 @pytest.mark.parametrize("case_id", sorted(UNSOUND))
 def test_judge_completion_decides_the_four_unsound_sets(case_id: str) -> None:
-    from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.judge_completion import (
+    from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.judge_completion import (
         follows_from,
     )
 

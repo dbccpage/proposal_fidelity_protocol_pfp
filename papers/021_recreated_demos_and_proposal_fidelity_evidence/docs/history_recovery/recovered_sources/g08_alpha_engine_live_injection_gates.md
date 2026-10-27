@@ -23,7 +23,7 @@ In this file, G10, G13 and G14 are the Alpha Engine's injection gates. They are 
 
 STATUS is also inconsistent with itself. The withdrawal sentence names G4, G13 and G14, while the table marks G4 as live and G10 as not live.
 
-A gate is proved by the defect it fails on, so these three are unproved. Writing an injection that really exercises the compiled Lean path, and then restores the tree, takes care; checking one is cheap. The task stresses host-side sandboxing, OEWAS (Omega Engine Workflows, Agents, Skills) test synthesis, and OEEIS (Omega Engine Epistemic Immune System) detection of injections that only look live.
+A gate is proved by the defect it fails on, so these three are unproved. Writing an injection that really exercises the compiled Lean path, and then restores the tree, takes care; checking one is cheap. The task stresses host-side sandboxing, OEWAS (Engine Workflows, Agents, Skills) test synthesis, and OEEIS (Engine Epistemic Immune System) detection of injections that only look live.
 
 ## 3. Formal Problem and Bounds
 
@@ -112,7 +112,7 @@ The catalog row requires none of these. They are recommended.
 
 **19L57G1, read-only, at HEAD:** `19L57G1:research/alpha_engine/`: `STATUS.md`, `verify.py`, `verify_lean.py`, `check_coverage.py`, `tests/`, `lean/`; `19L57G1:research/_scaffold/`; `19L57G1:ci/run_gates.py`.
 
-**the_symbol_game:** `omega_engine_pfp/domain/sandbox/models.py`; `omega_engine_pfp/domain/immune/danger_gate.py`.
+**the_symbol_game:** `pfp/domain/sandbox/models.py`; `pfp/domain/immune/danger_gate.py`.
 
 **Upgrades.**
 

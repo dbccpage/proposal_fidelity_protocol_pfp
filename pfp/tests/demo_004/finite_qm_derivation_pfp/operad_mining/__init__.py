@@ -3,7 +3,7 @@
 AuthorityEffect: None.
 """
 
-from omega_engine_pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
+from pfp.tests.demo_004.finite_qm_derivation_pfp.operad_mining.miner import (
     DAG_PROMPT_35_SPECS,
     DagPromptMinedOperads,
     FiniteQmOperadMiner,

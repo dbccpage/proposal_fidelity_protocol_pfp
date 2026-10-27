@@ -48,11 +48,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
 
-USAGE_SCHEMA = "omega.skill_garden.usage_event.v1"
+USAGE_SCHEMA = "core.skill_garden.usage_event.v1"
 CLASSIFICATION = "RecordedResidualObservation"
 
 DEFAULT_REL_USAGE_DIR = Path("runs") / "skill_usage"
-SKILLS_REL = Path("omega_engine_operads") / "skills"
+SKILLS_REL = Path("operads") / "skills"
 
 #: Fields bound into `entry_id`. Deliberately excludes `observed_at`, so
 #: re-harvesting the same transcript twice is idempotent rather than duplicating.
@@ -77,7 +77,7 @@ def repo_root_from(start: Path | None = None) -> Path:
     """Walk upward for the repository root.
 
     Keyed on `.git` plus `.agents`, both of which exist. The sibling helper in
-    `check_skill_usage.py` keys on `omega_engine_py/`, which does not, so its
+    `check_skill_usage.py` keys on `engine_py/`, which does not, so its
     loop never matches and it silently scans whatever the cwd happens to be.
     """
     here = (start or Path.cwd()).resolve()

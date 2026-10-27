@@ -12,9 +12,9 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 ## 2. Why This Task
 
-Homology over Q forgets torsion. The real projective plane has rational Betti numbers (1, 0, 0), like a point, yet H_1(RP²; Z) = Z/2. Over F₂ the same space has Betti numbers (1, 1, 1). A solver that eliminates over the wrong ring gets a confident, wrong answer. The honest certificate is a Smith normal form: unimodular integer matrices U and V with U·∂·V = D diagonal and d₁ | d₂ | … | d_r. It is cheap to check (multiply and compare) and hard to produce without integer blow-up. `omega_engine/crates_rs/omega_homology/src/smith_normal_form.rs` states the same point: rank over Q discards torsion.
+Homology over Q forgets torsion. The real projective plane has rational Betti numbers (1, 0, 0), like a point, yet H_1(RP²; Z) = Z/2. Over F₂ the same space has Betti numbers (1, 1, 1). A solver that eliminates over the wrong ring gets a confident, wrong answer. The honest certificate is a Smith normal form: unimodular integer matrices U and V with U·∂·V = D diagonal and d₁ | d₂ | … | d_r. It is cheap to check (multiply and compare) and hard to produce without integer blow-up. `engine/crates_rs/core_homology/src/smith_normal_form.rs` states the same point: rank over Q discards torsion.
 
-The challenge stresses the Symbol Game's exact host, OEWAS (Omega Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Omega Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified integral-homology solver. It says nothing about which spaces the complexes "are" beyond their homology.
+The challenge stresses the Symbol Game's exact host, OEWAS (Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified integral-homology solver. It says nothing about which spaces the complexes "are" beyond their homology.
 
 ## 3. Formal Problem and Bounds
 
@@ -62,8 +62,8 @@ For each boundary map ∂_n the certificate gives integer matrices U, U⁻¹, V,
 - **Hidden base cases:** 40, covering every family above, several p values, and dimension 3.
 - **Relabel controls:** 16. Vertex relabelling (changes orientations and signs; homology unchanged) and one barycentric subdivision per family (much larger complex; homology unchanged).
 - **Poisoned but schema-valid:** 12. RP² and Klein-bottle triangulations, where F₂ elimination gives wrong answers; a Moore space with p = 6 (torsion Z/6, which a solver might split as Z/2 ⊕ Z/3; both describe the same group, so the checker compares the invariant-factor form); a complex with a maximal simplex listed twice.
-- **Exact checker:** `omega_linear_algebra::smith_normal_form_checked` recomputes each D, and a direct BigInt product checks U·∂·V = D and the inverse identities. `omega_homology::smith_normal_form::torsion_coefficients` covers only degrees 0 to 2 of three-term complexes; lens spaces need the per-matrix route, which works in any degree.
-- **Independent second checker:** a separately written Python integer elimination, cross-checked against `omega_homology::exact_betti` for the 2-dimensional cases.
+- **Exact checker:** `core_linear_algebra::smith_normal_form_checked` recomputes each D, and a direct BigInt product checks U·∂·V = D and the inverse identities. `core_homology::smith_normal_form::torsion_coefficients` covers only degrees 0 to 2 of three-term complexes; lens spaces need the per-matrix route, which works in any degree.
+- **Independent second checker:** a separately written Python integer elimination, cross-checked against `core_homology::exact_betti` for the 2-dimensional cases.
 - **Checker mutation suite:** a U that is not unimodular (U·U⁻¹ ≠ I in one entry); a correct D with a wrong divisibility order; D with a torsion 2 replaced by 1; an off-by-one sign in ∂; torsion reported for the top degree of a 2-complex.
 
 ## 7. Arms and Baselines
@@ -114,8 +114,8 @@ operand unit_pivot_first.v1 | kind: move | when: reducing an integer matrix | do
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_linear_algebra` (`smith_normal_form.rs`, `smith_normal_form_checked` with U, V).
-- `omega_engine/crates_rs/omega_homology` (`smith_normal_form.rs`, `exact_betti.rs`, `simplicial.rs`, `chain_complex.rs`).
+- `engine/crates_rs/core_linear_algebra` (`smith_normal_form.rs`, `smith_normal_form_checked` with U, V).
+- `engine/crates_rs/core_homology` (`smith_normal_form.rs`, `exact_betti.rs`, `simplicial.rs`, `chain_complex.rs`).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: none in the catalog. Checker work: a small driver that applies `smith_normal_form_checked` to every boundary map of a 3-complex.
 

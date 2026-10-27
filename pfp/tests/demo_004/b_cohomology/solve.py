@@ -1,6 +1,6 @@
 """Thin challenge entrypoint using the shared cohomology solver port.
 
-A mathematical certificate is not the city execution or Woland authorization.
+A mathematical certificate is not the city execution or Adversary authorization.
 Unavailable native operations remain explicit refusals.
 """
 
@@ -10,8 +10,8 @@ import json
 import sys
 from typing import Mapping
 
-from omega_engine_pfp.domain.cohomology.certificate_checker import check_certificate
-from omega_engine_pfp.domain.cohomology.solver import solve
+from pfp.domain.cohomology.certificate_checker import check_certificate
+from pfp.domain.cohomology.solver import solve
 
 
 def main() -> int:

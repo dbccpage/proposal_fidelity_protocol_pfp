@@ -9,8 +9,8 @@ import json
 import time
 
 from ...domain.stages.demos import CheckResult, DemoRunReceipt, DemoSpec
-from omega_engine_pfp.infrastructure.challenge_execution import isolated
-from omega_engine_pfp.infrastructure.challenge_live import choose_case
+from pfp.infrastructure.challenge_execution import isolated
+from pfp.infrastructure.challenge_live import choose_case
 
 
 def run_demo_004(spec: DemoSpec) -> DemoRunReceipt:

@@ -11,21 +11,21 @@ import json
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.external_admission import (
+from eis.domain.external_admission import (
     AdmissionError,
     AntibodyObservationV1,
 )
-from omega_engine_epistemic_immune_system.domain.guard_activation import (
+from eis.domain.guard_activation import (
     ActivationRefusal,
     DetectorHitRefV1,
 )
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import (
+from eis.infrastructure.mssn_ports import (
     HostPayloadDangerSensor,
     NullDangerSensor,
 )
-from omega_engine_epistemic_immune_system.tests.auth_support import health
-from omega_engine_epistemic_immune_system.use_cases.antibody_admission import assess_antibody
-from omega_engine_epistemic_immune_system.use_cases.guard_activation import (
+from eis.tests.auth_support import health
+from eis.use_cases.antibody_admission import assess_antibody
+from eis.use_cases.guard_activation import (
     activate_learned_guard,
     subject_digest,
 )

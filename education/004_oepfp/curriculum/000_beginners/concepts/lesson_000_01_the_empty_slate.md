@@ -69,7 +69,7 @@ We call this token a **Diff** (the primitive difference). It represents a formal
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.tower import grammar
+from pfp.domain.tower import grammar
 
 # 1. Parsing empty string raises GrammarError
 try:

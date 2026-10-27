@@ -41,12 +41,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.linalg import det, first_nonpositive_minor, leading_minors
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.linalg import det, first_nonpositive_minor, leading_minors
+from operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 
 CHALLENGE_ID = "loop_products"
 ANSWER_TYPE = "M"
@@ -245,7 +245,7 @@ LEAN_CALLS = {"gram_positive": "gramPositive lengths_{f}", "turns_rotate": "turn
 def lean_render(fixtures: Sequence[Fixture], verdicts: Sequence[FixtureVerdict]) -> str:
     """One cell with its turns and loops per evaluated fixture; the kernel
     re-decides each value clause."""
-    from omega_engine_operations.use_cases.level_engine.research_engine import lean_text as T
+    from operations.use_cases.level_engine.research_engine import lean_text as T
 
     by = {f.fid: f for f in fixtures}
     lines = T.header(LEAN_MODULE, "The value clauses of `loop_products`, decided by the kernel", LEAN_DEFS)

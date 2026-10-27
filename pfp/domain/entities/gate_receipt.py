@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from typing import Mapping
 
 from ..exceptions import InvariantViolationError
-from omega_engine_pfp.domain.shared_kernel import (
+from pfp.domain.shared_kernel import (
     AuthorityEffect,
     Disposition,
     GateId,

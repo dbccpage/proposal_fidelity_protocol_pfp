@@ -10,7 +10,7 @@ structural findings, shared-computation groups, and replacement routes; it is
 not a refreshable current-state receipt.
 
 The pre-relocation generator and its 200/300/400 source table were retired.
-They targeted the removed `omega_engine_education/the_symbol_game/lessons`
+They targeted the removed `education/the_symbol_game/lessons`
 tree, while the canonical notebooks now live in this directory and have
 continued to evolve. Replaying those stale sources would overwrite newer
 integrated laboratory cells. Current review therefore reads these checked-in

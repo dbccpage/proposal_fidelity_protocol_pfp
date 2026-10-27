@@ -4,15 +4,15 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.governance.budget_gate import (
     BUDGET_CEILING_USD,
     verify_budget,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.governance.commit_reveal_runner import (
     run_provisional_evaluation,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.governance.woland_gate import (
-    evaluate_woland_gate,
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.governance.adversary_gate import (
+    evaluate_adversary_gate,
 )
 
 GOV_DIR = Path(__file__).resolve().parent.parent / "governance"
@@ -44,7 +44,7 @@ def test_budget_gate_fail_missing_provider_cost():
     assert "billed_cost_usd" in msg
 
 
-def test_woland_gate_pass():
+def test_adversary_gate_pass():
     summary = {
         "passed_cases": 54,
         "total_cases": 54,
@@ -52,11 +52,11 @@ def test_woland_gate_pass():
         "mutations_killed": 40,
         "budget_passed": True,
     }
-    verdict = evaluate_woland_gate(summary)
+    verdict = evaluate_adversary_gate(summary)
     assert verdict["verdict"] == "REFERENCE_SELF_CONSISTENT"
 
 
-def test_woland_gate_refuses_float_kill_rate_without_counts_and_empty_suites():
+def test_adversary_gate_refuses_float_kill_rate_without_counts_and_empty_suites():
     """Counterexamples: a float ``mutation_kill_rate`` of 1.0 with no counts, and 0 of 0 mutations."""
     legacy = {
         "passed_cases": 54,
@@ -64,12 +64,12 @@ def test_woland_gate_refuses_float_kill_rate_without_counts_and_empty_suites():
         "mutation_kill_rate": 1.0,
         "budget_passed": True,
     }
-    assert evaluate_woland_gate(legacy)["verdict"] == "REFERENCE_SELF_INCONSISTENT"
+    assert evaluate_adversary_gate(legacy)["verdict"] == "REFERENCE_SELF_INCONSISTENT"
     empty = {**legacy, "mutations_total": 0, "mutations_killed": 0}
-    assert evaluate_woland_gate(empty)["verdict"] == "REFERENCE_SELF_INCONSISTENT"
+    assert evaluate_adversary_gate(empty)["verdict"] == "REFERENCE_SELF_INCONSISTENT"
 
 
-def test_woland_gate_refusal_incomplete():
+def test_adversary_gate_refusal_incomplete():
     summary = {
         "passed_cases": 53,
         "total_cases": 54,
@@ -77,7 +77,7 @@ def test_woland_gate_refusal_incomplete():
         "mutations_killed": 40,
         "budget_passed": True,
     }
-    verdict = evaluate_woland_gate(summary)
+    verdict = evaluate_adversary_gate(summary)
     assert verdict["verdict"] == "REFERENCE_SELF_INCONSISTENT"
 
 

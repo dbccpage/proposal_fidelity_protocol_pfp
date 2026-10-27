@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from enum import Enum
 
-from omega_engine_pfp.domain.shared_kernel import RegimeKind, ResidualColour
+from pfp.domain.shared_kernel import RegimeKind, ResidualColour
 
 
 class PromptArtifactWireKey(str, Enum):

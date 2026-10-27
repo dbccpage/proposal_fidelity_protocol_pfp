@@ -1,7 +1,7 @@
 # AuthorityEffect: None.
 """Unit tests for finite field and Galois ring arithmetic."""
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.finite_field import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.finite_field import (
     FiniteFieldGF9,
     GaloisRingGR4,
 )

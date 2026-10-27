@@ -21,12 +21,12 @@ Recording a terminal verdict of `PASS_TO_MASTER` or `work_status: completed` in 
 ## Harmful Impact
 
 - **False Verification Signaling:** Downstream agents reading `summary.json` or `terminal_verdict` may infer that a mathematical proof, gate check, or formal derivation has been mechanically verified, when in reality only literary dialogue or persona roleplay took place.
-- **Null Checker Totality:** Audits across 50 run packages in `_ic/woland/runs/` showed that 100% of run receipts had `checker_receipt: null`, yet three derivation batches claimed `PASS_TO_MASTER` purely from Apartment 50 novella prose.
+- **Null Checker Totality:** Audits across 50 run packages in `_ic/adversary/runs/` showed that 100% of run receipts had `checker_receipt: null`, yet three derivation batches claimed `PASS_TO_MASTER` purely from Apartment 50 novella prose.
 - **Masked Technical Debt:** Unexecuted verification steps fail to register as open obligations, hiding unverified derivations from follow-up sprint planning.
 
 ## Concrete Witness
 
-In `_ic/woland/runs/woland_top10_batch2_20261013/summary.json`:
+In `_ic/adversary/runs/adversary_top10_batch2_20261013/summary.json`:
 ```json
 {
   "terminal_verdict": "PASS_TO_MASTER",
@@ -35,7 +35,7 @@ In `_ic/woland/runs/woland_top10_batch2_20261013/summary.json`:
   "checker_receipt": null
 }
 ```
-The corresponding `novella.md` contains 400 lines of dramatic dialogue between Woland, Koroviev, and The Master praising the derivation, while zero executable Rust, Lean, or Python checks were run or bound.
+The corresponding `novella.md` contains 400 lines of dramatic dialogue between Adversary, Defect Hunter, and Manuscript Truth praising the derivation, while zero executable Rust, Lean, or Python checks were run or bound.
 
 ## Corrective Approach
 

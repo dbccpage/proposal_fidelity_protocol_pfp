@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import asdict
 from typing import Tuple
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err, Ok, Result
 
 from ...application.ports.strict_operad_port import StrictOperadPort
 from ...domain.entities.operation_v3 import OperationV3

@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters import pfp_derivation as derivation
-from omega_engine_pfp.infrastructure.adapters import pfp_experiment as experiment
-from omega_engine_pfp.use_cases.pfp_derivation_loops import DerivationLimits, run_derivation_loops
+from pfp.infrastructure.adapters import pfp_derivation as derivation
+from pfp.infrastructure.adapters import pfp_experiment as experiment
+from pfp.use_cases.pfp_derivation_loops import DerivationLimits, run_derivation_loops
 
 
 def prompt_builder(pilot, loop, context):

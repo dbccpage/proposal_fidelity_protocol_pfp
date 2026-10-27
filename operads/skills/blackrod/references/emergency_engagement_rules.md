@@ -15,7 +15,7 @@ Threats attempting to disrupt or compromise the swarm are classified into five e
 | **T1** | Minor Divergence | Lint divergence, minor assertion mismatch, benign typo. | Local Builder (`Techne`) | Local repair; rerun targeted unit tests under `py -3.12`. |
 | **T2** | Contract Flaw | Schema deviation, uncontracted payload key, boundary drift. | Architect (`Logos`) | Candidate refusal; schema alignment. |
 | **T3** | Boundary Violation | Inward dependency rule violation in `domain/`, mock leakage. | Clean Arch (`Techne`) | Immediate rollback; port decoupling. |
-| **T4** | False-Green Trap | Local agent claims passing while global defect metric $I(s) > 0$. | Woland Swarm | Joint-kernel audit; frame-breaking dialectical inspection. |
+| **T4** | False-Green Trap | Local agent claims passing while global defect metric $I(s) > 0$. | Adversary Swarm | Joint-kernel audit; frame-breaking dialectical inspection. |
 | **T5** | Swarm Under Attack | Adversarial injection, socket egress, AST tampering, rogue agents. | **Blackrod Swarm + Nemesis** | **Curious Council requests; Blackrod executes; Nemesis neutralizes.** |
 | **T$\Omega$**| Sovereign Override | Systemic compromise, uncontained divergence, human intervention. | **The Architect ("ooutwire")** | **Absolute human override; immediate halt; infrastructure teardown.** |
 
@@ -68,7 +68,7 @@ Before Nemesis is deployed for tactical remediation, the four locks defined in S
 1. **Perimeter Freeze:** Blackrod immediately isolates the affected workspace tree and freezes git refs.
 2. **JSOC Sandbox Deployment:** Nemesis instantiates an ephemeral, unnetworked container sandbox.
 3. **Rogue Node Excision:** The compromised process or mutated artifact is detached from the topological graph.
-4. **Threat Extraction & Antibody Minting:** Nemesis parses the attack payload, extracts its structural defect pattern, and creates a permanent immune antibody in `omega_engine_epistemic_immune_system`.
+4. **Threat Extraction & Antibody Minting:** Nemesis parses the attack payload, extracts its structural defect pattern, and creates a permanent immune antibody in `eis`.
 5. **Abort Levers:** If execution approaches healthy nodes or risks collateral data loss, Blackrod triggers the abort code, immediately killing the sandbox.
 
 ---

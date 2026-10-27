@@ -15,12 +15,12 @@ the internal revision of 2026-09-28.
   source at `52cb5457f6c485ba548cfd292f6012a941ed22cf` are included in the
   package. Raw Cargo standard output was not retained.
 - The README now states the implemented governor rule: an unset
-  `OMEGA_FUNCTIONAL_GRAPH_BIN` uses Python enumeration, and a configured native
+  `CORE_FUNCTIONAL_GRAPH_BIN` uses Python enumeration, and a configured native
   error or refusal propagates. `verify_deposit.py` checks the manifest and
   census. `tools/rebuild_release.py --check` checks the archive.
 - The deposit description and claim-ledger title use 0.1.0 / 2026-10-02.
   Version 2.8.0 stays in the historical entries.
-- The Landau companion is a student guide, an 18-question quiz, and a separate
+- The Examiner companion is a student guide, an 18-question quiz, and a separate
   instructor key. It is a teaching draft, not a measured learning study.
 - The unused pytest `asyncio_default_fixture_loop_scope` setting was removed.
   pytest-asyncio is not a dependency.
@@ -95,7 +95,7 @@ Package changes:
 - Added `code/tests/test_weighted_cycle_supplement.py` for the supplement's
   table and the governor's no-pin path, and removed apparatus names from a few
   code comments.
-- Ran the four native `omega_symbol_game` test targets on 2026-09-28 EDT
+- Ran the four native `core_symbol_game` test targets on 2026-09-28 EDT
   (2026-09-29 UTC) against the crate, which is unchanged since the pinned base:
   12, 11, 32 and 9 tests passed. The report is copied under
   `docs/historical_native_run/`. The package
@@ -104,7 +104,7 @@ Package changes:
 - Removed the governor's blanket native fallback in `compute_phi1`. It called the
   native calculator and, if that call raised for any reason, substituted an exact
   Python enumeration, including for native input and search-bound refusals. It
-  now calls the native calculator only when `OMEGA_FUNCTIONAL_GRAPH_BIN` is set
+  now calls the native calculator only when `CORE_FUNCTIONAL_GRAPH_BIN` is set
   and lets every native refusal or error propagate; otherwise it uses the exact
   enumeration. Both paths refuse floating-point or Boolean edge weights. New tests:
   `code/tests/test_native_refusal_propagation.py`.
@@ -134,14 +134,14 @@ Withdrawn or narrowed:
 - Separated the restricted native replay host, runtime dispatch, the graph-functional adapter, and the two packet codecs.
 - Added a four-vertex schema-to-replay-to-refusal example. Its native outcomes are source-derived expectations, not newly executed results.
 - Rewrote the claim ledger, README, and supplement. The supplement retains a complete bounded weighted-cycle argument rather than a claim of general sheaf gluing or host correctness.
-- Corrected the Cargo workspace path to `omega_engine/crates_rs/Cargo.toml`. No new native build or test result is claimed.
+- Corrected the Cargo workspace path to `engine/crates_rs/Cargo.toml`. No new native build or test result is claimed.
 
 ## Earlier versions of the former manuscript
 
 Before 2026-09-27 this package held a broader manuscript, then numbered Paper 032.
 The verbatim change log of those versions is preserved in the repository at
 commit `0a25c582fe347dca1aa9f79a6b34a109b8f15db9`, file
-`omega_engine_atlas/coda_atlas/omega_engine_pfp/004_pfp_three_layer_sovereignty_and_discrete_l1_projection/paper_change_log.md`.
+`atlas/coda_atlas/pfp/004_pfp_three_layer_sovereignty_and_discrete_l1_projection/paper_change_log.md`.
 It records claims as they were made; retaining it does not certify them. The
 manuscript claims listed there are withdrawn.
 

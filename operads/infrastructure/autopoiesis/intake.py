@@ -7,9 +7,9 @@ import json
 import stat
 from pathlib import Path
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_operads.domain.autopoiesis.learning import (
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err
+from operads.domain.autopoiesis.learning import (
     EvidenceSource,
     LearningBlocked,
     LearningEpisodeV1,
@@ -58,7 +58,7 @@ def capture_episode(
 ) -> LearningEpisodeV1:
     if not paths:
         raise LearningBlocked("SOURCE_EVIDENCE_MISSING")
-    if host not in {"woland", "codex", "claude", "antigravity", "autop"}:
+    if host not in {"adversary", "codex", "claude", "antigravity", "autop"}:
         raise ValueError("unsupported source host")
     if not revision:
         raise LearningBlocked("REPOSITORY_REVISION_MISSING")
@@ -90,7 +90,7 @@ def capture_episode(
             value = {}
         if isinstance(value, dict):
             if (
-                str(value.get("schema", "")).startswith("omega.autop.")
+                str(value.get("schema", "")).startswith("core.autop.")
                 or value.get("origin") == "autop"
             ):
                 origin = "autop"

@@ -6,10 +6,10 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_operads.domain.prompt_hierarchy.models import (
+from operads.domain.prompt_hierarchy.models import (
     AntiOpBinding, AntibodyBinding, PromptTreeNode,
 )
-from omega_engine_operads.domain.prompt_hierarchy.parser import (
+from operads.domain.prompt_hierarchy.parser import (
     load_prompt_node_from_binding_dict, parse_prompt_uri,
 )
 

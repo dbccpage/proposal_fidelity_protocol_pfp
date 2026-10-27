@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Protocol
 
-from omega_engine_operations.domain.rop.result import Refusal, Result
+from operations.domain.rop.result import Refusal, Result
 
 
 class MetabolismKernelPort(Protocol):

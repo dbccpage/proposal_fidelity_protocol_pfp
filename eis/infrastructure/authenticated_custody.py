@@ -14,7 +14,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operads.infrastructure.storage.receipt_ledger import (
+from operads.infrastructure.storage.receipt_ledger import (
     GENESIS_DIGEST,
     ChainStatus,
     ReceiptLedger,

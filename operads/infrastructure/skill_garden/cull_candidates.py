@@ -7,31 +7,31 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_operads.application.skill_garden.cull import nominate
-from omega_engine_operads.domain.skill_garden.cull import (
+from operations.domain.rop.result import Err
+from operads.application.skill_garden.cull import nominate
+from operads.domain.skill_garden.cull import (
     CullPolicy,
     CullPolicyError,
     CullReport,
     GardenSnapshot,
     SkillObservation,
 )
-from omega_engine_operads.infrastructure.skill_garden.native_cull import (
+from operads.infrastructure.skill_garden.native_cull import (
     NativeCullPolicyAdapter,
 )
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     garden_roster,
     last_used_index,
     ledger_span,
 )
 
 POLICY_REL = (
-    Path("omega_engine_operads")
+    Path("operads")
     / "infrastructure"
     / "skill_garden"
     / "cull_policy.json"
 )
-SKILLS_REL = Path("omega_engine_operads") / "skills"
+SKILLS_REL = Path("operads") / "skills"
 _EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 
 
@@ -121,7 +121,7 @@ def _parity_is_green(repo_root: Path) -> bool:
         completed = subprocess.run(
             [
                 "python",
-                "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py",
+                "operations/use_cases/packaging/sync_cross_host_skills.py",
                 "--check",
             ],
             cwd=str(repo_root),

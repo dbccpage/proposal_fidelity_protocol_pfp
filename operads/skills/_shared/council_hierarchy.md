@@ -4,7 +4,7 @@ authority_effect: None
 status: live
 owner: kybernesis-council
 ---
-# Council Hierarchy - Anomalon Swarm Governance Layer
+# Council Hierarchy - Sentinel Swarm Governance Layer
 
 The 1→2→N recursive governance structure ("An engine of curiosity, healing, and topological preservation").
 
@@ -47,13 +47,13 @@ The 1→2→N recursive governance structure ("An engine of curiosity, healing, 
 
 ## Council Roster
 
-### Level 0: The Anomalon
+### Level 0: The Sentinel
 
-- **Λ_Ω (The Anomalon) (oooutwire)** - The root entity. Sovereign context.
+- **Λ_Ω (The Sentinel) (oooutwire)** - The root entity. Sovereign context.
 
 ### Level 1: Root Council
 
-- **Curious Council (procurator-cc)** - First distinction, anomaly detection. Routes to Logos (Structure) or Nous (Humanity). Uses the Triad (Chair, Koroviev-General, Quiet Oracle).
+- **Curious Council (procurator-cc)** - First distinction, anomaly detection. Routes to Logos (Structure) or Nous (Humanity). Uses the Triad (Chair, Defect Hunter-General, Quiet Oracle).
 
 ### Level 2: Executive Councils
 

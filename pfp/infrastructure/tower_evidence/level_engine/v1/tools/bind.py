@@ -281,7 +281,7 @@ def target(level: int) -> dict[str, object]:
         sys.path.append(str(SYMBOL_GAME))
     import importlib
 
-    loader = importlib.import_module("omega_engine_symbol_game.infrastructure.adapters.mssn_research.loader")
+    loader = importlib.import_module("symbol_game.infrastructure.adapters.mssn_research.loader")
     packaged = loader.entry(level)
     loader.checker(level)
     if packaged["source_path"] != e["path"] or "sha256:" + packaged["sha256"] != e["sha256"]:

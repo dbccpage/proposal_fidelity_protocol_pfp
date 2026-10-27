@@ -12,15 +12,15 @@ import hashlib
 import json
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_woland.infrastructure.native import DefaultNativeOperationPort
-from omega_engine_woland.use_cases.persistence import persist_bout_run_folder
-from omega_engine_operads.structurebench import (
+from operations.domain.rop.result import Ok
+from adversary.infrastructure.native import DefaultNativeOperationPort
+from adversary.use_cases.persistence import persist_bout_run_folder
+from operads.structurebench import (
     ConstraintOutcome,
     StructureBenchEvaluator,
 )
-from omega_engine_operads.structurebench import evaluator as evaluator_module
-from omega_engine_operads.tests.unit.test_structurebench_no_vacuous_decisions import (
+from operads.structurebench import evaluator as evaluator_module
+from operads.tests.unit.test_structurebench_no_vacuous_decisions import (
     _write_bundle,
 )
 
@@ -118,20 +118,20 @@ def test_persist_writes_sorted_sha256_receipt_after_the_other_files(tmp_path: Pa
 
 
 def test_bout_service_still_sets_a_null_proof_hash() -> None:
-    source = (REPO / "omega_engine_woland" / "use_cases" / "bout_service.py").read_text(
+    source = (REPO / "adversary" / "use_cases" / "bout_service.py").read_text(
         encoding="utf-8"
     )
     assert "lean4_proof_hash=None" in source
 
 
 def test_debate_arbitration_and_corpus_discovery_stay_absent() -> None:
-    package = REPO / "omega_engine_operads"
+    package = REPO / "operads"
     assert (package / "debate").exists() is False
     defined: set[str] = set()
     for path in (
         package / "structurebench" / "evaluator.py",
-        REPO / "omega_engine_woland" / "use_cases" / "persistence.py",
-        REPO / "omega_engine_woland" / "use_cases" / "bout_service.py",
+        REPO / "adversary" / "use_cases" / "persistence.py",
+        REPO / "adversary" / "use_cases" / "bout_service.py",
     ):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         defined.update(node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef))

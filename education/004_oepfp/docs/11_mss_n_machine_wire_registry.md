@@ -10,14 +10,14 @@ maturity: canonical
 claim_status: partially-implemented
 authority_effect: "None"
 source_paths:
-- omega_engine_pfp/domain/tower/parser.py
+- pfp/domain/tower/parser.py
 source_revision: c419cc6beb
 prerequisites: []
-verification: py -3.12 -m omega_engine_pfp.scripts.docs_integrity validate
+verification: py -3.12 -m pfp.scripts.docs_integrity validate
 aliases: []
 related: []
 last_verified: 2026-10-20
-verification_scope: opcode dispatch read from omega_engine_pfp/domain/tower/parser.py; no test run
+verification_scope: opcode dispatch read from pfp/domain/tower/parser.py; no test run
 ---
 
 
@@ -27,7 +27,7 @@ verification_scope: opcode dispatch read from omega_engine_pfp/domain/tower/pars
 **AuthorityEffect:** `None` (Defines wire syntax and parser admission table)  
 **Alphabet:** $\Gamma_{38} = \mathtt{[a\text{-}z0\text{-}9<>]}$
 
-> **Implementation status (2026-10-20, pin `c419cc6beb`).** The former source `the_symbol_game/reference/registry.md` is not present, and the earlier `claim_status: verified` had no cited check. The executable counterpart is `validate_packet_semantics` in [parser.py](../../../../omega_engine_pfp/domain/tower/parser.py) (line 650, docstring "Levels 0-8"). It dispatches semantic checks for 18 of the 42 constructors in section 2: `0`, `1`, `10`, `11`, `100`, `101`, `110`, `111`, `1010`, `1011` (arity only), `1100` (arity only), `1101`, `1110`, `1111`, `10000`, `10001`, `10010`, `11010`. Every other opcode, including `1001` `GluingRecord` and everything from `10011` upward except `11010`, parses syntactically and is not rejected; only its children are checked recursively. Read section 2 as a specification register, with the 18 listed opcodes implemented.
+> **Implementation status (2026-10-20, pin `c419cc6beb`).** The former source `the_symbol_game/reference/registry.md` is not present, and the earlier `claim_status: verified` had no cited check. The executable counterpart is `validate_packet_semantics` in [parser.py](../../../../pfp/domain/tower/parser.py) (line 650, docstring "Levels 0-8"). It dispatches semantic checks for 18 of the 42 constructors in section 2: `0`, `1`, `10`, `11`, `100`, `101`, `110`, `111`, `1010`, `1011` (arity only), `1100` (arity only), `1101`, `1110`, `1111`, `10000`, `10001`, `10010`, `11010`. Every other opcode, including `1001` `GluingRecord` and everything from `10011` upward except `11010`, parses syntactically and is not rejected; only its children are checked recursively. Read section 2 as a specification register, with the 18 listed opcodes implemented.
 
 ---
 

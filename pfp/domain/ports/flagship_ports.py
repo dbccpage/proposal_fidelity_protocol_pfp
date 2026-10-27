@@ -11,7 +11,7 @@ from typing import Any, Mapping, Protocol, Sequence, Tuple, runtime_checkable
 
 from ..dual_witness.models import ExactDualWitnessCertificate
 from ..sandbox.models import ProcessBoundaryConfig, SeamExecutionResult
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Result
+from pfp.domain.mssn_research.shared_kernel.result import Result
 
 
 @runtime_checkable

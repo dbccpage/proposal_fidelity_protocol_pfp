@@ -1,6 +1,6 @@
 # Proposal Fidelity Protocol paper collection
 
-The [WDP Paper Trio](../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/WDP_PAPER_TRIO.md) places the foundations in Papers 000–002. Existing deposits here retain their identities and release records.
+The [WDP Paper Trio](../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/WDP_PAPER_TRIO.md) places the foundations in Papers 000–002. Existing deposits here retain their identities and release records.
 
 Proposal Fidelity Protocol (PFP), historically called **The Symbol Game**,
 separates candidate proposals, checks of declared properties, and decisions
@@ -25,7 +25,7 @@ implementation study on shelf 028 has the same author-review, non-deposit status
 
 The operator selected Windows verification, removed Linux testing from scope, and kept the paid campaign deferred. The offline report records NOT_RUN, zero provider calls and zero API spend; no improvement or transfer result is claimed. Existing theorem sources, historical archives and deposited identities remain unchanged.
 
-The [offline follow-up](../../../../omega_engine_woland/documentation/harness_evolution/offline_followup.md)
+The [offline follow-up](../../../../adversary/documentation/harness_evolution/offline_followup.md)
 distinguishes frozen campaign replay from current-main checks. Paper 029's
 [reproduction guide](029_pfp_evidence_bound_harness_evolution/docs/reproduction.md)
 provides the archive-bound replay and author-review verification commands. The
@@ -37,7 +37,7 @@ renderings include the reproduction clarification.
 The current implementation continuation is
 [Paper 028: Operadic PFP](028_pfp_operadic_composition_and_bounded_ddc_repair/paper.md)
 (2026-10-21, author-review draft). It covers OEOP capability sources and typed
-composition, Woland execution, OEEIS screening, Prompt Civilization lineage,
+composition, Adversary execution, OEEIS screening, Prompt Civilization lineage,
 and a real provider-free C/R/E/I/M/T code-repair example. Papers
 [023](023_pfp_task_bound_claims_and_hallucination_control/paper.md) and
 [025](025_pfp_local_to_global_agent_composition/paper.md) are revised to connect
@@ -64,7 +64,7 @@ their identities. The new author-review renderings are not external deposits.
 The ten advanced packages include research and methods papers, guides, and a
 review protocol. Paper 000 supplies the beginner entry. The meron-cluster
 benchmark remains outside this collection folder:
-[the lexically filtered meron-cluster benchmark](../../../../../omega_engine_projects/fsp/meron_sign_problem/README.md).
+[the lexically filtered meron-cluster benchmark](../../../../../projects/fsp/meron_sign_problem/README.md).
 Catalog reservation 011 still names that benchmark. It is not shelf 011 below.
 
 ## Author-review drafts — retained and current
@@ -130,7 +130,7 @@ three corrections and one new paper.
   refuses every case passes all ten. Its pilot counts are therefore not measures
   of unaided performance.
 - Paper 009, version 1.2.0, adds an appendix that applies the review protocol to
-  the terminal gate of the repository's Woland engine, with four falsifiers
+  the terminal gate of the repository's Adversary engine, with four falsifiers
   replayed on the audited code.
 - Paper 003, version 1.2.0, adds an appendix with three exact lemmas on
   two-signal gates, quorum thresholds and negative selection, an exhaustive

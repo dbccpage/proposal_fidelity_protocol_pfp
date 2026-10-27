@@ -2,8 +2,8 @@
 
 import pytest
 
-from omega_engine_pfp.domain.cohomology.certificate_checker import check_certificate
-from omega_engine_pfp.domain.cohomology.validation import parse_c011_case, scope_violation
+from pfp.domain.cohomology.certificate_checker import check_certificate
+from pfp.domain.cohomology.validation import parse_c011_case, scope_violation
 
 
 def triangle():

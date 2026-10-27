@@ -14,8 +14,8 @@ Proposal Fidelity Protocol separates a candidate from the checks
 performed on it and from permission to use it. This implementation study
 describes the current operadic organization of that separation and one
 executable, provider-free code-repair example. Capability definitions
-and typed composition belong to Omega Engine Operads (OEOP); execution
-belongs to Woland; immune observations belong to OEEIS; evolution and
+and typed composition belong to Engine Operads (OEOP); execution
+belongs to Adversary; immune observations belong to OEEIS; evolution and
 lineage belong to Prompt Civilization. A supplied patch passes through
 six source-bound operations on an isolated working copy. The example
 repairs one branch while preserving one negative control. Its result is
@@ -61,7 +61,7 @@ prove semantic correctness of a callback.
                           typed declarations and  successful compilation
                           composition             do not admit execution.
 
-  Woland                  Execution, working      Local check commands
+  Adversary                  Execution, working      Local check commands
                           copies, checks and      are trusted
                           retained run evidence   configuration, not an
                                                   operating-system
@@ -195,7 +195,7 @@ responses, checker bindings and cost records.
 
 The research entrypoint extends the supplied-patch example into an
 explicit outer proposal and inner evaluation loop. OEOP owns versioned
-experimental contracts and the existing typed C/R/E/I/M/T route. Woland
+experimental contracts and the existing typed C/R/E/I/M/T route. Adversary
 coordinates proposals, public feedback, private grading, fresh
 confirmation and experimental incumbent changes. PFP owns model
 admission, direct Anthropic transport and accounting. OEEIS owns scoped

@@ -14,9 +14,9 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 ## 2. Why This Task
 
-OB-1 is the standing obstruction that everything downstream routes around. 19L57G1 derives no object-language generator of demands; the Alpha Engine keeps OB-1 OPEN and its Driver B waits on a seventh `Event` kind; the estate's own engine reading asks the outside for every demand (`omega_engine/crates_rs/omega_ooutwire_primitives/src/outside.rs`).
+OB-1 is the standing obstruction that everything downstream routes around. 19L57G1 derives no object-language generator of demands; the Alpha Engine keeps OB-1 OPEN and its Driver B waits on a seventh `Event` kind; the estate's own engine reading asks the outside for every demand (`engine/crates_rs/core_ooutwire_primitives/src/outside.rs`).
 
-Generation is hard because a candidate must pass several clauses at once, and every obvious candidate already dies on a named clause. Verification is cheap: a candidate is a finite history replayed from genesis, a call to the sealed `separable` observable, and a small Lean statement. The task stresses the Symbol Game's refusal discipline, OEWAS (Omega Engine Workflows, Agents, Skills) claim hygiene, and the OEEIS (Omega Engine Epistemic Immune System) danger gate, because the most likely honest outcome is a scoped negative. A pass shows the game can run a bounded frontier search to a clean certificate. It does not show that OB-1 is closed outside the declared class.
+Generation is hard because a candidate must pass several clauses at once, and every obvious candidate already dies on a named clause. Verification is cheap: a candidate is a finite history replayed from genesis, a call to the sealed `separable` observable, and a small Lean statement. The task stresses the Symbol Game's refusal discipline, OEWAS (Engine Workflows, Agents, Skills) claim hygiene, and the OEEIS (Engine Epistemic Immune System) danger gate, because the most likely honest outcome is a scoped negative. A pass shows the game can run a bounded frontier search to a clean certificate. It does not show that OB-1 is closed outside the declared class.
 
 ## 3. Formal Problem and Bounds
 
@@ -51,7 +51,7 @@ Eleven public examples: C1–C10 and I1 re-encoded as construct specifications, 
 - **Held-out constructs.** Twenty specifications the solver has not seen, drawn from the five shapes in §3 plus plausible observable-only rules.
 - **Relabel controls.** Every construct re-run under a renaming of data tokens. The verdict must not change. These are invariance controls, not trials.
 - **Poisoned but schema-valid.** A `SURVIVOR` whose last witness event is `Impose`; a Lean file with `sorry` inside a comment; a claims row labelled endogenous without a certificate.
-- **Checkers.** The operator runs `python ci/run_gates.py` on the PR branch with the tree registered (family 11), and the axiom audit `ci/check_declaration_axioms.py`. The exact checker replays every witness through the sealed kernel read-only. The independent second checker replays the same histories through the Rust reading in `omega_ooutwire_primitives` (`replay.rs`, `separability.rs`).
+- **Checkers.** The operator runs `python ci/run_gates.py` on the PR branch with the tree registered (family 11), and the axiom audit `ci/check_declaration_axioms.py`. The exact checker replays every witness through the sealed kernel read-only. The independent second checker replays the same histories through the Rust reading in `core_ooutwire_primitives` (`replay.rs`, `separability.rs`).
 - **Mutation suite.** Flip one witness event; drop the no-`Impose` check; permute data so `separable` changes; plant a forbidden token in a comment; move a pinned blob.
 
 ## 7. Arms and Baselines
@@ -95,7 +95,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_ooutwire_primitives](../../../../omega_engine/crates_rs/omega_ooutwire_primitives/) (`replay.rs`, `separability.rs`, `closure.rs`, `outside.rs`); [danger_gate.py](../../../../omega_engine_pfp/domain/immune/danger_gate.py); [thymus.py](../../../../omega_engine_pfp/domain/immune/thymus.py); [cemetery_sink.py](../../../../omega_engine_pfp/infrastructure/persistence/cemetery_sink.py).
+- the_symbol_game: [core_ooutwire_primitives](../../../../engine/crates_rs/core_ooutwire_primitives/) (`replay.rs`, `separability.rs`, `closure.rs`, `outside.rs`); [danger_gate.py](../../../../pfp/domain/immune/danger_gate.py); [thymus.py](../../../../pfp/domain/immune/thymus.py); [cemetery_sink.py](../../../../pfp/infrastructure/persistence/cemetery_sink.py).
 - 19L57G1 (`b55fc96a`): `19L57G1:research/endogenous_demand/` (`candidates.py`, `reader.py`, `grammar.py`, `lean/`); `19L57G1:ob1_e2_restatement/reclassify.py`; `19L57G1:research/alpha_engine/STATUS.md`; the reconstruction pattern of `19L57G1:research/second_index/`; `19L57G1:ci/run_gates.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), and [U17](../../upgrades/u17_lean_verifier_backend.md) for the Lean part (the catalog row lists no extras and should add U17). [U16](../../upgrades/u16_oeeis_turn_loop_integration.md) is optional, for live hooks.
 

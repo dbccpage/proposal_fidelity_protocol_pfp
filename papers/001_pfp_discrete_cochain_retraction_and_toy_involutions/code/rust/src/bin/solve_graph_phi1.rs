@@ -1,6 +1,6 @@
 //! JSON line adapter for the canonical finite graph Phi1 evaluator.
 
-use omega_solvers::graph_phi1::{solve_graph_phi1, GraphPhi1Request};
+use core_solvers::graph_phi1::{solve_graph_phi1, GraphPhi1Request};
 use serde_json::json;
 use std::io::{self, Read};
 

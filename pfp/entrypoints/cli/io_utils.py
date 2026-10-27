@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain import loads_strict_json
+from pfp.domain import loads_strict_json
 
 
 def _read_json(path: Path | None) -> Any:

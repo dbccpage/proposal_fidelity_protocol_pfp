@@ -1,6 +1,6 @@
 """Single Point of Entry (SPOE) Composite Swarm Developer CLI.
 
-Coordinates teamwork-preview (Mode B), woland cognition, omega-old-man-red-team,
+Coordinates teamwork-preview (Mode B), adversary cognition, core-red-team,
 and deterministic host verification under mandatory governance-pfp invariants.
 
 Exit codes:
@@ -24,11 +24,11 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import intelligence_path
-from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (
+from operating_system.adapters.intelligence_custody.ic_routing import intelligence_path
+from operating_system.adapters.intelligence_custody.intelligence_root import (
     try_resolve_intelligence_repo_root,
 )
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 FORBIDDEN_HYPE_WORDS = [
     "proves",
@@ -84,7 +84,7 @@ def compute_file_sha256(path: Path) -> str:
 
 def verify_governance_skill(repo_root: Path) -> Result[str, Refusal]:
     """Verify that governance-pfp exists and compute its SHA-256 digest."""
-    gov_path = repo_root / "omega_engine_operads" / "skills" / "governance-pfp" / "SKILL.md"
+    gov_path = repo_root / "operads" / "skills" / "governance-pfp" / "SKILL.md"
     if not gov_path.is_file():
         return Err(
             Refusal(
@@ -98,7 +98,7 @@ def verify_governance_skill(repo_root: Path) -> Result[str, Refusal]:
 def execute_pre_clean_harvest(repo_root: Path) -> Result[str, Refusal]:
     """Execute pre-clean harvest gate to seal ephemeral state into CAS vault."""
     try:
-        from omega_engine_operads.frontend.cli.harvest_cli import run_harvest_cli
+        from operads.frontend.cli.harvest_cli import run_harvest_cli
 
         ret = run_harvest_cli(["pre-clean-teamwork"])
         if ret != 0:
@@ -377,8 +377,8 @@ def trigger_autop_repair(
 ) -> Result[Path, Refusal]:
     """Trigger the auto-oe-autop meta-pipeline with failure receipt data."""
     candidate_scripts = [
-        repo_root / "omega_engine_operads" / "skills" / "auto-oe-autop" / "scripts" / "orchestrate_autop.py",
-        Path(__file__).resolve().parents[3] / "omega_engine_operads" / "skills" / "auto-oe-autop" / "scripts" / "orchestrate_autop.py",
+        repo_root / "operads" / "skills" / "auto-oe-autop" / "scripts" / "orchestrate_autop.py",
+        Path(__file__).resolve().parents[3] / "operads" / "skills" / "auto-oe-autop" / "scripts" / "orchestrate_autop.py",
     ]
     autop_script = next((s for s in candidate_scripts if s.is_file()), None)
     if autop_script is None:
@@ -410,7 +410,7 @@ def trigger_autop_repair(
     intake_payload = {
         "authority_effect": "None",
         "contract_id": task_id,
-        "audit_id": f"WOLAND-REPAIR-{task_id}-R{round_num}",
+        "audit_id": f"ADVERSARY-REPAIR-{task_id}-R{round_num}",
         "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "errors": errors,
         "decisive_blockers": blockers,
@@ -494,17 +494,17 @@ def emit_structurebench_quad_bundle(
         f"**Timestamp:** `{timestamp}`  \n"
         f"**Objective:** {contract.get('task_objective', 'N/A')}  \n"
         f"**Terminal Status:** `{terminal_status}`  \n"
-        f"**Woland Disposition:** `{disposition}`  \n\n"
+        f"**Adversary Disposition:** `{disposition}`  \n\n"
         f"## Scene 1: Task Contract Ingestion\n"
         f"Loaded and verified contract `{contract.get('contract_id')}`.\n"
         f"Allowed paths: {contract.get('allowed_paths', [])}\n\n"
         f"## Scene 2: Deterministic Verification\n"
         f"Executed {len(verifier_receipts)} verifier routes.\n\n"
-        f"## Scene 3: Old Man Fireproof Audit\n"
+        f"## Scene 3: Red Team Fireproof Audit\n"
         f"Audited candidate against profile `{contract.get('audit_profile', 'software')}`. "
         f"Findings count: {len(audit_findings)}.\n\n"
         f"## Scene 4: Reality Gate Verdict\n"
-        f"Woland evaluated evidence and emitted `{disposition}`.\n"
+        f"Adversary evaluated evidence and emitted `{disposition}`.\n"
     )
     if autop_list:
         novella_content += (
@@ -519,7 +519,7 @@ def emit_structurebench_quad_bundle(
         {"action": "INGEST_CONTRACT", "letter": "I", "step": 1, "task_id": task_id, "timestamp": timestamp},
         {"action": "DISPATCH_HOST_TESTS", "letter": "E", "step": 2, "task_id": task_id, "timestamp": timestamp},
         {"action": "OLD_MAN_AUDIT", "letter": "C", "step": 3, "task_id": task_id, "timestamp": timestamp},
-        {"action": "WOLAND_TERMINAL_GATE", "letter": "T", "step": 4, "task_id": task_id, "timestamp": timestamp},
+        {"action": "ADVERSARY_TERMINAL_GATE", "letter": "T", "step": 4, "task_id": task_id, "timestamp": timestamp},
     ]
     with dda_path.open("w", encoding="utf-8") as f:
         for a in actions:
@@ -576,15 +576,15 @@ def emit_structurebench_quad_bundle(
         },
         "executor_stack": [
             "teamwork-preview",
-            "woland",
-            "omega-old-man-red-team",
+            "adversary",
+            "core-red-team",
             "deterministic-host",
             "human-principal",
         ],
         "governance_terminal": terminal_status,
         "local_dispositions": {
-            "old_man": "BLOCKER" if any(f.get("blocking") for f in audit_findings) else "GO",
-            "woland": disposition,
+            "red_team": "BLOCKER" if any(f.get("blocking") for f in audit_findings) else "GO",
+            "adversary": disposition,
         },
         "run_id": output_dir.name,
         "timestamp": timestamp,
@@ -679,7 +679,7 @@ def cmd_fireproof_audit(args: argparse.Namespace) -> int:
                 f.write(json.dumps(item, sort_keys=True) + "\n")
         print(f"Report written to {report_out}")
 
-    print(f"Old Man Audit completed: {len(findings)} findings (has_blocking={has_blocking}).")
+    print(f"Red Team Audit completed: {len(findings)} findings (has_blocking={has_blocking}).")
     if has_blocking:
         sys.stderr.write("REFUSED: Blocking audit findings encountered.\n")
         return 2
@@ -783,7 +783,7 @@ def cmd_run_swarm(args: argparse.Namespace) -> int:
         if _round_num >= max_rounds or not getattr(args, "auto_repair", False):
             break
 
-    # Step 5: Woland terminal disposition
+    # Step 5: Adversary terminal disposition
     if not tests_passed:
         disposition = "REFUSE"
         terminal_status = "Refused"
@@ -835,7 +835,7 @@ def build_parser() -> argparse.ArgumentParser:
     """Build CLI argument parser for swarm_developer."""
     parser = argparse.ArgumentParser(
         prog="swarm_developer",
-        description="SPOE Composite Swarm Developer CLI for Omega Engine",
+        description="SPOE Composite Swarm Developer CLI for Engine",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

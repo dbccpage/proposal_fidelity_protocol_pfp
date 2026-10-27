@@ -6,7 +6,7 @@ Scans the repository and research estate across 10 levels of abstraction:
   - Level 0: Character / Sentence (Formatting & Naming Obstructions)
   - Level 1: Paragraph / Linter Block (Claim ID Bijection & Syntax Integrity)
   - Level 2 & 3: Section / Docstring & Monograph 13-Section Skeleton Integrity
-  - Level 4 & 5: Code Module & Contract Layer Firewalls (omega_contracts / omega_contract_core)
+  - Level 4 & 5: Code Module & Contract Layer Firewalls (core_contracts / core_contract_core)
   - Level 8 & 9: Mathematical Spine & Projection Obstruction (PO-000 to PO-009)
 """
 
@@ -22,7 +22,7 @@ def main():
 
     candidates_published = [
         os.path.join(repo_root, "research", "mssn_sn_tower", "papers"),
-        os.path.join(repo_root, "omega_engine", "research", "published"),
+        os.path.join(repo_root, "engine", "research", "published"),
     ]
     published_dir = next(
         (d for d in candidates_published if os.path.exists(d)), candidates_published[0]
@@ -79,10 +79,10 @@ def main():
 
     # Level 4 & 5: Code Module & Contract Layer Firewalls
     print("\n[Level 4/5 Scan: Contract Firewalls & Schema Integrity]")
-    print("Auditing omega_contracts and omega_contract_core...")
+    print("Auditing core_contracts and core_contract_core...")
     candidates_contracts = [
-        os.path.join(repo_root, "omega_engine", "crates_rs", "omega_contracts"),
-        os.path.join(repo_root, "omega_engine", "crates", "omega_contracts"),
+        os.path.join(repo_root, "engine", "crates_rs", "core_contracts"),
+        os.path.join(repo_root, "engine", "crates", "core_contracts"),
     ]
     contracts_dir = next(
         (d for d in candidates_contracts if os.path.exists(d)), candidates_contracts[0]

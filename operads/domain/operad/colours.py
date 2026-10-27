@@ -2,7 +2,7 @@
 Colour and ColourSignature Domain Value Objects.
 ================================================
 
-Canonical finite colours for the Anomalon operadic categories:
+Canonical finite colours for the Sentinel operadic categories:
 State, Proof, Paper, Code, Contract, Receipt, Ledger, Diagram, Audit, Post.
 
 This tuple is the single admitted colour vocabulary and must stay identical to

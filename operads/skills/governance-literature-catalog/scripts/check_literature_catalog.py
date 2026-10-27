@@ -13,7 +13,7 @@ import yaml
 
 def check_spine_structure(repo_root: Path) -> list[str]:
     violations = []
-    atlas = repo_root / "omega_engine_atlas" / "coda_atlas"
+    atlas = repo_root / "atlas" / "coda_atlas"
     if not atlas.is_dir():
         violations.append(f"coda_atlas directory not found: {atlas}")
         return violations

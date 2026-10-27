@@ -19,7 +19,7 @@ from typing import Any
 
 import yaml
 
-from omega_engine_epistemic_immune_system.domain import (
+from eis.domain import (
     ANTIBODY_TEMPLATES,
     ConstraintType,
     PharmacyStatus,
@@ -27,11 +27,11 @@ from omega_engine_epistemic_immune_system.domain import (
     Severity,
     classify_failure,
 )
-from omega_engine_epistemic_immune_system.domain.thymus import (
+from eis.domain.thymus import (
     CandidateDetector,
     ThymusGate,
 )
-from omega_engine_operations.infrastructure.intelligence_digestion import (
+from operations.infrastructure.intelligence_digestion import (
     NativeIntelligenceLifecycle,
 )
 
@@ -55,7 +55,7 @@ class TestCandidateAntibodyQualification:
     def test_spec_schema_and_typing(self) -> None:
         spec = _load_yaml_spec("anti_limit_honesty_unhedged_claim.yaml")
 
-        assert spec["schema_version"] == "omega.immune.antibody-spec.v1"
+        assert spec["schema_version"] == "core.immune.antibody-spec.v1"
         assert spec["antibody_id"] == "ab_limit_honesty_unhedged_claim"
         assert spec["failure_class"] == "limit_honesty_violation"
         assert spec["constraint_type"] == ConstraintType.RESTRAIN.value
@@ -117,7 +117,7 @@ class TestCandidateAntibodyQualification:
     def test_formal_boundary_checks_discharge_determination(self) -> None:
         """Determines whether formal boundary checks can discharge its open obligation.
 
-        In the sovereign Rust omega_intelligence kernel:
+        In the sovereign Rust core_intelligence kernel:
         1. An antibody in CANDIDATE status transferred from a run finding is an open
            obligation. Without a verified closure receipt, the finding transitions to
            state=ABSORBED, and remains listed in transferred_open_finding_ids.
@@ -129,7 +129,7 @@ class TestCandidateAntibodyQualification:
         # 1. Manifest sealing
         sealed = lifecycle.seal_manifest(
             {
-                "producer_id": "omega_research_papers",
+                "producer_id": "core_research_papers",
                 "source_class": "omc_dag_report",
                 "source_locator": "_intelligence/omc_dags/omc_report_test.jsonl",
                 "entries": [
@@ -150,12 +150,12 @@ class TestCandidateAntibodyQualification:
             "manifest_sha256": sealed["manifest_sha256"],
             "sealed": True,
             "producer_lease_active": False,
-            "review_scope": "omega.qualification.limit_honesty.v1",
+            "review_scope": "core.qualification.limit_honesty.v1",
         }
         extraction_info = {
             "complete": True,
-            "extractor_version": "omega.qualification.extractor.v1",
-            "checker_version": "omega.qualification.checker.v1",
+            "extractor_version": "core.qualification.extractor.v1",
+            "checker_version": "core.qualification.checker.v1",
             "coverage_gaps": [],
             "parse_residuals": [],
         }

@@ -8,20 +8,20 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.operad.errors import (
+from pfp.domain.operad.errors import (
     ArityMismatchError,
     IllTypedCompositionError,
     OperadError,
     OperadRoleViolationError,
     SliceViolationError,
 )
-from omega_engine_pfp.domain.operad.graft import GraftSite, PlanarGraft
-from omega_engine_pfp.domain.operad.morphisms import (
+from pfp.domain.operad.graft import GraftSite, PlanarGraft
+from pfp.domain.operad.morphisms import (
     ConstructiveMorphism,
     InterrogativeMorphism,
     RepairMorphism,
 )
-from omega_engine_pfp.domain.operad.polarity import Polarity
+from pfp.domain.operad.polarity import Polarity
 
 
 @dataclass

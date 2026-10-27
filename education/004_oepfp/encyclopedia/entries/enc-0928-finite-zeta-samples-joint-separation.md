@@ -16,7 +16,7 @@ sources:
 uses: ["ENC-0889", "ENC-0926", "ENC-0927"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -42,7 +42,7 @@ finite zeta sample but different source-level targets, no decoder from
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_tower_zeta.lean`.
 
 The Lean theorem names are:
 

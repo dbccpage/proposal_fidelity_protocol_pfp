@@ -15,31 +15,31 @@ import shutil
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.budget_gate import (
     HARD_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     BudgetCeilingExceededError,
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.commit_reveal_runner import (
     CommitRevealRunner,
     ManifestCustodyError,
     lf_normalized_bytes,
     verify_manifest_entries,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.adversary_gate import (
     FAILURE_RECEIPT_NAME,
     RUN_FOLDER_EXISTS,
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
     persist_single_bundle,
 )
 
-from omega_engine_woland.domain.providers.types import BudgetExceeded, Provider
+from adversary.domain.providers.types import BudgetExceeded, Provider
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
@@ -101,9 +101,9 @@ def test_budget_gate_fallback_and_model_admittance():
     assert spec.total_parameters <= 70_000_000_000
 
 
-def test_woland_gate_verdict_and_bundle_persistence(tmp_path: Path):
+def test_adversary_gate_verdict_and_bundle_persistence(tmp_path: Path):
     """Validates the reference self-consistency label and the 4-file bundle persistence under tmp_path."""
-    gate = WolandGate(base_repo_root=tmp_path)
+    gate = AdversaryGate(base_repo_root=tmp_path)
 
     # 1. Label determination
     verdict_pass = gate.determine_terminal_verdict([{"verdict": "PASS", "agreement": True}])
@@ -129,7 +129,7 @@ def test_woland_gate_verdict_and_bundle_persistence(tmp_path: Path):
         "next_test_needed": "C032.",
     }
 
-    verdict, p_woland, p_sg, digests = gate.evaluate_and_persist(
+    verdict, p_adversary, p_sg, digests = gate.evaluate_and_persist(
         task_key=task_key,
         run_id=run_id,
         case_results=[{"verdict": "PASS", "agreement": True}],
@@ -137,11 +137,11 @@ def test_woland_gate_verdict_and_bundle_persistence(tmp_path: Path):
     )
 
     assert verdict == TERMINAL_REFERENCE_SELF_CONSISTENT
-    assert p_woland.is_dir()
+    assert p_adversary.is_dir()
     assert p_sg.is_dir()
 
     # Check 4-file bundle contents in both sinks
-    for run_dir in (p_woland, p_sg):
+    for run_dir in (p_adversary, p_sg):
         assert tmp_path in run_dir.parents
         assert (run_dir / "novella.md").is_file()
         assert (run_dir / "dda_actions.jsonl").is_file()
@@ -152,7 +152,7 @@ def test_woland_gate_verdict_and_bundle_persistence(tmp_path: Path):
         assert "| Phi_1 (exact) | not measured |" in report
         receipt = json.loads((run_dir / "receipt.json").read_text(encoding="utf-8"))
         assert receipt["gate_scope"] == "REFERENCE_SOLVER_SELF_CHECK"
-        assert "retinue_verdict" not in receipt
+        assert "panel_verdict" not in receipt
 
     # Check RUN_FOLDER_EXISTS collision protection
     with pytest.raises(RunFolderExistsError) as info:
@@ -165,10 +165,10 @@ def test_woland_gate_verdict_and_bundle_persistence(tmp_path: Path):
     assert info.value.code == RUN_FOLDER_EXISTS
 
 
-def test_woland_gate_counts_and_exact_defects():
+def test_adversary_gate_counts_and_exact_defects():
     """Counterexamples: 1 of 2 cases passing with no defects was labelled OPEN_RESIDUAL by the
     count-based verdict, an empty suite must not be consistent, and a float Phi_1 of 0.0 was accepted."""
-    gate = WolandGate(base_repo_root=Path("unused"))
+    gate = AdversaryGate(base_repo_root=Path("unused"))
     assert gate.decide_terminal_verdict(2, 1, 0) == TERMINAL_REFUSE
     assert gate.decide_terminal_verdict(0, 0, 0) == TERMINAL_REFUSE
     assert gate.decide_terminal_verdict(2, 2, 0) == TERMINAL_REFERENCE_SELF_CONSISTENT
@@ -180,7 +180,7 @@ def test_woland_gate_counts_and_exact_defects():
 def test_failed_bundle_write_keeps_a_failure_receipt(tmp_path: Path):
     """Counterexample: a failed bundle write rmtree'd its staging directory inside _intelligence,
     leaving no trace. The staged files and a failure receipt must be kept in the run folder."""
-    target = tmp_path / "_intelligence" / "_woland" / "runs" / "c031_failed"
+    target = tmp_path / "_intelligence" / "_adversary" / "runs" / "c031_failed"
     with pytest.raises(TypeError):
         persist_single_bundle(target, "report", [{"not_json": object()}], {}, {})
     assert (target / FAILURE_RECEIPT_NAME).is_file()

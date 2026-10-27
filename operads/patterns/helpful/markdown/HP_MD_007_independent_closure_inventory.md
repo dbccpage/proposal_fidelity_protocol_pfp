@@ -33,7 +33,7 @@ The witness in [AP_MD_007_self_compared_package_list](../../anti/markdown/AP_MD_
 
 `/declared-vs-actual-gate` already derives skill host roots from the filesystem and refuses a declared mirror list that is a strict subset. This pattern does not replace that gate and does not decide skill-mirror parity.
 
-`/woland-check-sensitivity-pattern` still requires naming the consumer. Another check may already hash a path outside the submitted list; identify it instead of calling the whole pipeline unsound. One omission does not prove every missing file is caught.
+`/adversary-check-sensitivity-pattern` still requires naming the consumer. Another check may already hash a path outside the submitted list; identify it instead of calling the whole pipeline unsound. One omission does not prove every missing file is caught.
 
 A certificate changed after parse, and a null root that selects certificate construction, are different defects. An independent package enumeration does not repair them. Finite controls do not prove a universal closure theorem, and they do not verify native or original program source.
 

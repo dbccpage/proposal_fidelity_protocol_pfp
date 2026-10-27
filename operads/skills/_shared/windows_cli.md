@@ -53,7 +53,7 @@ python -m alembic: No module named alembic.__main__
 
 # CORRECT - explicit paths
 
-git add .agents/ omega_engine/
+git add .agents/ engine/
 
 # RISKY - may fail with device files (frontend/nul)
 

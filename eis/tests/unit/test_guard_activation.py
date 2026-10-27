@@ -23,7 +23,7 @@ Every refusal is paired with a permitted case. A gate that refuses everything
 satisfies every refusal test and proves nothing about what it admits.
 
 Moved on 2026-09-29 with the implementation, from
-`omega_engine_projects/ms_majorana/code/tests/unit/test_dual_signal_activation.py`.
+`projects/ms_majorana/code/tests/unit/test_dual_signal_activation.py`.
 The hit and profile are real OEWAS anti-skill V2 objects; the OEEIS domain
 reads them through `DetectorHitRefV1` and the profile digest. The danger
 registry gained MALFORMED_PAYLOAD, shared with the screening path.
@@ -33,7 +33,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.guard_activation import (
+from eis.domain.guard_activation import (
     ACTIVATION_DISPOSITIONS,
     DANGER_SIGNAL_KINDS,
     FORBIDDEN_DANGER_PRODUCERS,
@@ -44,7 +44,7 @@ from omega_engine_epistemic_immune_system.domain.guard_activation import (
     GuardActivationReceiptV1,
     evaluate_activation,
 )
-from omega_engine_operads.domain.anti_skills.anti_skill_v2 import (
+from operads.domain.anti_skills.anti_skill_v2 import (
     AntiSkillActivationProfileV1,
     AntiSkillHitV1,
 )
@@ -391,7 +391,7 @@ def test_a_profile_that_is_not_a_digest_is_refused():
 
 def test_receipt_ids_are_unchanged_by_the_move():
     """The canonical id is byte-identical to OEWAS anti-skill canonical_id."""
-    from omega_engine_operads.domain.anti_skills.canonical import canonical_id
+    from operads.domain.anti_skills.canonical import canonical_id
 
     danger = make_danger()
     payload = {key: value for key, value in danger.to_dict().items() if key != "receipt_id"}

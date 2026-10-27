@@ -7,7 +7,7 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.domain.cochain import _parse_bigint, _parse_fraction
+from pfp.domain.cochain import _parse_bigint, _parse_fraction
 
 
 @pytest.mark.parametrize(

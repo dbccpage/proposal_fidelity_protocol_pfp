@@ -129,7 +129,7 @@ class ActiveObstruction(QuartetBaseModel):
 class CycleBalanceProblem(QuartetBaseModel):
     """Object 1: problem / carrier contract."""
 
-    schema_version: Literal["omega.symbol_game.cycle_balance.problem.v1"]
+    schema_version: Literal["core.symbol_game.cycle_balance.problem.v1"]
     problem_id: NonEmptyStr
     case_id: NonEmptyStr
     authority_effect: Literal["None"]
@@ -221,7 +221,7 @@ class CycleBalanceProblem(QuartetBaseModel):
 class CycleBalanceCandidate(QuartetBaseModel):
     """Object 2: untrusted candidate proposal; never self-certifying."""
 
-    schema_version: Literal["omega.symbol_game.cycle_balance.candidate.v1"]
+    schema_version: Literal["core.symbol_game.cycle_balance.candidate.v1"]
     candidate_id: NonEmptyStr
     problem_digest: Sha256Hex
     authority_effect: Literal["None"]
@@ -264,7 +264,7 @@ class CycleBalanceCandidate(QuartetBaseModel):
 class CycleBalanceVerifier(QuartetBaseModel):
     """Object 3: deterministic host verifier contract."""
 
-    schema_version: Literal["omega.symbol_game.cycle_balance.verifier.v1"]
+    schema_version: Literal["core.symbol_game.cycle_balance.verifier.v1"]
     verifier_id: NonEmptyStr
     arithmetic_domain: ArithmeticDomain
     problem_digest: Sha256Hex
@@ -316,7 +316,7 @@ class ClaimHygiene(QuartetBaseModel):
 class CycleBalanceReceipt(QuartetBaseModel):
     """Object 4: receipt envelope. An UNVERIFIED skeleton carries no verdict fields."""
 
-    schema_version: Literal["omega.symbol_game.cycle_balance.receipt.v1"]
+    schema_version: Literal["core.symbol_game.cycle_balance.receipt.v1"]
     receipt_id: NonEmptyStr
     authority_effect: Literal["None"]
     problem_digest: Sha256Hex

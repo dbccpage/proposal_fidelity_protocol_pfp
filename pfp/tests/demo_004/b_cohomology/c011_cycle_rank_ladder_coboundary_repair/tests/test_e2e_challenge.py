@@ -3,7 +3,7 @@
 Opaque-box, requirement-driven test suite structured across Tiers 1-4:
 - Tier 1: Feature Coverage (Diamond, K4, trees, parallel edges, exact cochains)
 - Tier 2: Boundary Values & Corner Cases (Cycle rank b1=0..16, |V| up to 60, 10^20 claims, 8 closed refusals)
-- Tier 3: Cross-Seam Integration (CommitRevealRunner, BudgetGate, WolandGate, DDCTracer)
+- Tier 3: Cross-Seam Integration (CommitRevealRunner, BudgetGate, AdversaryGate, DDCTracer)
 - Tier 4: Real-World Scenarios & Falsification (All 46 judge cases, 100% agreement, 100% mutation kill rate)
 
 AuthorityEffect: None.
@@ -17,20 +17,20 @@ import tempfile
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.governance.adversary_gate import (
     TERMINAL_REFERENCE_SELF_CONSISTENT,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.judge_packet.checkers.dual_evaluator import (
     assert_dual_agreement,
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.ddc_tracer import (
     VALID_DDC_LETTERS,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c011_cycle_rank_ladder_coboundary_repair.reference_solver.solver import (
     solve,
     solve_with_trace,
 )
@@ -248,7 +248,7 @@ def test_tier3_commit_reveal_runner_and_governance():
         assert res["phase3"]["all_passed"] is True
         assert res["phase3"]["agreements_count"] == res["phase3"]["case_count"] == 46
         assert (
-            Path(tmp_dir) / "store" / "_intelligence" / "_woland" / "runs" / "e2e_c011_bout"
+            Path(tmp_dir) / "store" / "_intelligence" / "_adversary" / "runs" / "e2e_c011_bout"
         ).is_dir()
 
 

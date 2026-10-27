@@ -1,0 +1,68 @@
+# Epic: Exact Regulatory Policy and Authenticated External Admission Backlog
+
+**Epic ID:** `EPIC-OE-EIS-003`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+
+**Lifecycle scope:** LIVE — residual exact-port and admission work
+**Date:** October 2026
+**Target Crates:** `core_epistemic_immune_system`, `core_policy`
+**Prior Art Grounding:** `LIB-016911`, `LIB-016785` (source references)
+
+## Current implementation and actual obstruction
+
+Python [treg.py](../../../../eis/domain/treg.py) uses exact Fraction toxicity calculations. Native [regulation.rs](../../../../engine/crates_rs/core_epistemic_immune_system/src/regulation.rs) uses an f64 false discovery proportion FP/(TP+FP) and a default 10% threshold after its minimum sample count. Their denominator/policy differ. Do not describe exact rational native regulation as already implemented or conflate the two policies.
+
+Legacy [Formulary](../../../../engine/crates_rs/core_epistemic_immune_system/src/formulary.rs) records AdmissionReceiptV1 metadata and changes admitted state through an external call. It does not establish cryptographic signer authentication or verify a rule-byte digest at lookup. A receipt digest string is not an authenticated human signature.
+
+Clonal/affinity learning, exact [allostery](../../../../eis/domain/allostery.py), observational support, admission and activation are separate mechanisms. Improved fixture performance keeps a learned candidate below the external admission boundary.
+
+## Ordered residual work
+
+1. Pin each regulatory policy's numerator, denominator, exact threshold, strictness, sample minimum and overflow semantics. Migrate one native policy to exact integer comparisons with boundary fixtures; keep the Python policy distinct unless an explicit translation is approved.
+2. Verify suspension blocks the actual activation port and preserves append-only telemetry. Reinstatement requires an explicit externally authorized decision and new bound evidence.
+3. Specify the external-decision trust root, signer authentication, canonical bytes, replay identity and rule/source digest before adding an authenticated admission adapter. Preserve the legacy metadata API's literal ceiling in the meantime.
+4. Test learning and regulator composition on a finite fixture bank; broaden only when each production mutation and recovery witness is independently checked.
+
+No agent may self-admit a learned rule. Exact arithmetic alone does not authenticate a human decision; a signed decision alone does not establish detector soundness. This plan neither issues such a decision nor changes authority.
+
+## Metric naming, denominator and signer trust dependencies
+
+The native field is named max_allowed_false_positive_rate, but telemetry supplies TP and FP only. Its formula FP/(TP+FP) measures false discovery proportion (the empirical quantity used to estimate FDR), not FPR=FP/(FP+TN). True negatives are unavailable, so no FPR claim is supported. Preserve current policy semantics under an exact-port change; changing to FPR requires a separately versioned telemetry/policy contract carrying TN.
+
+Add one proposed `regulation_exact_boundaries.rs::fdr_is_not_fpr` test before the boundary refactor: TP=9, FP=1, TN=0 gives false discovery proportion 1/10 but FPR=1; changing TN to 9 changes FPR to 1/10 while leaving the implemented proportion unchanged. Compare independently derived integer fractions and refuse any request to compute FPR without TN. Mutation of the denominator in the existing regulation.rs is the verified source target; a test expectation edit is not a mutation.
+
+Human admission additionally requires a pinned trust root, authenticated signer/key identity, canonical decision bytes, exact rule/source digest, decision scope, expiry/revocation and replay policy. These are unresolved contract dependencies of the proposed adapter. The fixture signature in slice 4 establishes only verification under the pinned test key; it cannot establish a real person authorization or convert legacy Formulary receipt metadata into cryptographic admission.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** Python domain/treg.py uses exact Fraction arithmetic with its own toxicity denominator/policy. Native regulation.rs currently uses f64 FP/(TP+FP), a false discovery proportion with a default 0.10 threshold and minimum sample count; exact native migration is residual work. Legacy Formulary admission stores caller-supplied human receipt metadata and does not cryptographically authenticate a signer at get().
+
+**Bounded behavior and public port:** Call Python evaluate_toxicity/synthesize_treg for its explicitly named policy, native TregSupervisor.review for the distinct native policy, and Formulary register/admit/get for legacy state behavior. First pin denominator, threshold, minimum samples and strictness; then propose an exact native ratio type and a separately authenticated external-decision adapter rather than silently changing policy.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Syntax Prefilter checks malformed input; Bare Metal Anchor/Techne implements the smallest production change; Defect Hunter and the Inspector challenge the independent oracle; Punchlist checks custody before Adversary records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | Native counts at 1/10, just below and just above the configured threshold must expose the intended strict boundary; implement integer cross-multiplication with checked/widened totals; preserve min-sample refusal and zero denominator. | Proposed `engine/crates_rs/core_epistemic_immune_system/tests/regulation_exact_boundaries.rs::exact_threshold_controls`; hand-derived integer fractions, including u64 total overflow, and exact expected status. |
+| 2 | Python Signal1-only toxicity denominator must remain distinct from native false discovery proportion; implement only explicit policy translation or typed refusal; recover expected Fraction outcome without claiming parity of unequal policies. | Proposed `eis/tests/unit/test_treg_policy_boundaries.py::test_denominator_policies_are_not_silently_merged`; literal Fraction values and policy IDs. |
+| 3 | Suspended detector must refuse activation; explicitly authorized reinstatement must preserve history and require fresh bound evidence, not erase telemetry. | Extend `eis/tests/unit/test_guard_activation.py::test_suspension_and_authorized_recovery`; real state port and append-only decision history. |
+| 4 | A forged signer, wrong rule digest or replayed external decision must not admit through the proposed authenticated adapter; implement one verified-decision port after trust-root/key and canonical-byte contracts are agreed; a real fixture signature for exact bytes is the positive control. | Proposed `eis/tests/integration/test_authenticated_admission.py::test_signature_digest_transplant_and_recovery`; independent signature verifier, pinned fixture key and unchanged candidate state on refusal. No signature contract currently exists at legacy Formulary.get(). |
+
+**Decisive mutation and theoretical minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Change the strict ratio comparison or minimum-sample branch in [regulation.rs](../../../../engine/crates_rs/core_epistemic_immune_system/src/regulation.rs); boundary witnesses must fail. Remove suspension checking in [guard_activation.py](../../../../eis/use_cases/guard_activation.py). Signature mutation is blocked until the actual authenticated adapter exists; [formulary.rs](../../../../engine/crates_rs/core_epistemic_immune_system/src/formulary.rs) is a verified legacy metadata seam, not an invented verifier. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_epistemic_immune_system -j 1 --test regulation_exact_boundaries
+py -3.12 -m pytest eis/tests/unit/test_treg_policy_boundaries.py -q
+py -3.12 -m pytest eis/tests/unit/test_guard_activation.py -q
+py -3.12 -m pytest eis/tests/integration/test_authenticated_admission.py -q
+~~~
+
+**Cross-epic sink ownership:** EIS owns detector/support/activation/regulation evidence; the external admission/trust decision remains outside learned candidates. Adversary can challenge and route findings but cannot admit them. Providers and PFP consume typed findings through explicit adapters, preserving EIS provenance and subject/rule digests. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Native exact arithmetic, authenticated human decisions and safe reinstatement remain separate reviewable changes. No metadata receipt, detector affinity score or candidate learning loop grants authority. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

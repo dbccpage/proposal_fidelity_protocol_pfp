@@ -28,7 +28,7 @@ The Twenty Modes ────┼── Cluster III: Group & Cochain Structure (M
 | **08** | Discrete Cochain Involutions | Group & Cochain Structure | [`contract.yaml`](mode_08_discrete_cochain_involutions/contract.yaml) |
 | **09** | Lean 4 Proof Kernel Elaboration | Foundational Mechanization | [`contract.yaml`](mode_09_lean4_proof_kernel_elaboration/contract.yaml) |
 | **10** | Cemetery DAG Mining (Playing the Dead) | Dialectical & Adversarial | [`contract.yaml`](mode_10_cemetery_dag_mining/contract.yaml) |
-| **11** | Woland Adversarial Tribunal | Dialectical & Adversarial | [`contract.yaml`](mode_11_woland_adversarial_tribunal/contract.yaml) · [`collision_tribunal_spec.md`](mode_11_woland_adversarial_tribunal/collision_tribunal_spec.md) |
+| **11** | Adversary Adversarial Tribunal | Dialectical & Adversarial | [`contract.yaml`](mode_11_adversarial_tribunal/contract.yaml) · [`collision_tribunal_spec.md`](mode_11_adversarial_tribunal/collision_tribunal_spec.md) |
 | **12** | Simplicial Carrier Representation | Group & Cochain Structure | [`contract.yaml`](mode_12_simplicial_triangulation_and_regge/contract.yaml) · [`carrier_support_spec.md`](mode_12_simplicial_triangulation_and_regge/carrier_support_spec.md) |
 | **13** | Normal Form Confluent Chase (0NF $\to$ 6NF) | Group & Cochain Structure | [`contract.yaml`](mode_13_normal_form_confluent_chase/contract.yaml) · [`relational_chase_and_saturation.md`](mode_13_normal_form_confluent_chase/relational_chase_and_saturation.md) |
 | **14** | Fail-Closed Typed Refusal | Dialectical & Adversarial | [`contract.yaml`](mode_14_fail_closed_typed_refusal/contract.yaml) · [`typed_refusal_evidence.md`](mode_14_fail_closed_typed_refusal/typed_refusal_evidence.md) |

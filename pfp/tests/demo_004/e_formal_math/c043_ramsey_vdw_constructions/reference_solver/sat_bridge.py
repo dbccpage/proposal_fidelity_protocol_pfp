@@ -6,10 +6,10 @@ Pure Python standard library implementation.
 from itertools import combinations
 from typing import Dict, List, Optional, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.sat_solver import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.sat_solver import (
     CDCLSolver,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
     edge_index,
 )
 

@@ -10,8 +10,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.entrypoints.cli.finite_qm_prompt import main, verify_source_pins
-from omega_engine_pfp.infrastructure.finite_qm_prompt import (
+from pfp.entrypoints.cli.finite_qm_prompt import main, verify_source_pins
+from pfp.infrastructure.finite_qm_prompt import (
     SLOTS,
     load_catalog,
     prepare_finite_qm_turn,
@@ -19,7 +19,7 @@ from omega_engine_pfp.infrastructure.finite_qm_prompt import (
 )
 
 ROOT = Path(__file__).resolve().parents[3]
-UNIT = ROOT / "omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json"
+UNIT = ROOT / "pfp/fixtures/finite_qm_workflow/c4_work_unit.json"
 
 
 @pytest.fixture
@@ -60,7 +60,7 @@ def test_system_prompt_requests_derivation_and_does_not_serialize_the_catalog():
     assert len(system.encode("utf-8")) < 20_000
     saved = (
         ROOT
-        / "omega_engine_education/documentation/004_oepfp/_how_to_play/v4_operad_container_and_p_star_loop/finite_qm_pfp_system_prompt.md"
+        / "education/documentation/004_oepfp/_how_to_play/v4_operad_container_and_p_star_loop/finite_qm_pfp_system_prompt.md"
     )
     assert saved.read_text(encoding="utf-8") == system
 
@@ -105,9 +105,9 @@ def test_compatibility_flag_cannot_restore_the_registry_dump(unit):
 
 
 def test_workflow_has_linked_stages_one_mode_and_attached_llm_techniques():
-    from omega_engine_pfp.infrastructure.yaml_loading import strict_yaml_load
+    from pfp.infrastructure.yaml_loading import strict_yaml_load
 
-    profile = ROOT / "omega_engine_pfp/infrastructure/yaml/prompts/finite_qm"
+    profile = ROOT / "pfp/infrastructure/yaml/prompts/finite_qm"
     template, workflow, mode = [
         strict_yaml_load((profile / name).read_text(encoding="utf-8"))
         for name in ("prompt_template.yaml", "workflow.yaml", "mode.yaml")
@@ -264,8 +264,8 @@ def test_recorded_bytes_replay_and_one_byte_tamper(unit):
 
 
 def test_native_certificate_positive_and_decisive_mutations(unit):
-    from omega_engine_pfp.ffi import RustSymbolGameHost
-    from omega_engine_pfp.infrastructure.finite_qm_cochain_judge import (
+    from pfp.ffi import RustSymbolGameHost
+    from pfp.infrastructure.finite_qm_cochain_judge import (
         CHECKER_ID,
         NativeCochainJudge,
     )

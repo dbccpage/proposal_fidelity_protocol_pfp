@@ -1,7 +1,7 @@
 # PFP Pilot Audit Findings, Vulnerability Vectors & Remediation Standards
 
 **AuthorityEffect:** None.  
-**Governing Context:** `omega_engine_pfp`, `omega_engine_operations`
+**Governing Context:** `pfp`, `operations`
 **Reference Commit:** `df84a59644c2a6837756273ccedd7b1233525407` (Audit Date: October 10, 2026)
 
 ---
@@ -54,6 +54,6 @@ A comprehensive census and forensic audit was conducted across the active pilot 
    - Replay mode must re-execute checkers on raw bytes; tampered bytes trigger `RECEIPT_DIGEST_MISMATCH`.
    - Excise synthetic pass generators; require genuine evaluator receipts for all tracks.
 5. **Workstream 5: Architecture Deduplication & Missing Catalog Recovery**
-   - Consolidate repeated AST utility functions into `omega_engine_pfp/infrastructure/helpers/`.
+   - Consolidate repeated AST utility functions into `pfp/infrastructure/helpers/`.
    - Generate and register canonical `no_llm_catalog.yaml` and `llm_catalog.yaml`.
    - Demarcate `PERMUTATION_EVALUATION` from `INDEPENDENT_MODEL_TRIAL`.

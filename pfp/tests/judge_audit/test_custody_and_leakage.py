@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_woland.tests.pilots.judge_packet_audit import canonical, custody, leakage
+from adversary.tests.pilots.judge_packet_audit import canonical, custody, leakage
 
 
 def test_lf_crlf_classification() -> None:

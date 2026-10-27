@@ -11,13 +11,13 @@ import builtins
 import types
 from importlib.resources import files
 
-from omega_engine_pfp.domain.demos import DemoRefusal
-from omega_engine_pfp.infrastructure.demos.canonical import digest, load
+from pfp.domain.demos import DemoRefusal
+from pfp.infrastructure.demos.canonical import digest, load
 
 from .checkers.assemble import assemble_checker_source, preamble_bytes
 from .pins import PREAMBLE_SHA256, REGISTRY_SHA256
 
-PACKAGE = "omega_engine_pfp.infrastructure.adapters.mssn_research"
+PACKAGE = "pfp.infrastructure.adapters.mssn_research"
 
 
 def resource(path: str) -> bytes:

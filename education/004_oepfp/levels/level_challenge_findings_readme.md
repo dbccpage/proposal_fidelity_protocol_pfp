@@ -12,11 +12,11 @@
 > behind these notices is recorded in the collection's `verification/residuals.md`,
 > section 8.
 
-> **Source check (2026-10-20, pin `c419cc6beb`).** The files indexed here, and this readme, are copies of the notes in [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/) with a `level_` prefix; the C043 note and the three hub files differ from their twins only in paths. Links to `omega_engine_projects/` were repointed: challenge packages now live under [`omega_engine_pfp/tests/demo_004/`](../../../../omega_engine_pfp/tests/demo_004/), and the FSP and MUB(6) estates under `omega_engine_atlas/coda_atlas/F004_papers/008_fsp/` and `010_mub6/`. The collection's `verification/residuals.md`, the `_intelligence/` run folders and packages for C051 to C055 and C059 are not found at the pin. Phase-3 scoring receipts are retained only for C043 and C044 (reference solver only); model matrix records are retained for C045 to C050, C056 and C058.
+> **Source check (2026-10-20, pin `c419cc6beb`).** The files indexed here, and this readme, are copies of the notes in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/) with a `level_` prefix; the C043 note and the three hub files differ from their twins only in paths. Links to `projects/` were repointed: challenge packages now live under [`pfp/tests/demo_004/`](../../../../pfp/tests/demo_004/), and the FSP and MUB(6) estates under `atlas/coda_atlas/F004_papers/008_fsp/` and `010_mub6/`. The collection's `verification/residuals.md`, the `_intelligence/` run folders and packages for C051 to C055 and C059 are not found at the pin. Phase-3 scoring receipts are retained only for C043 and C044 (reference solver only); model matrix records are retained for C045 to C050, C056 and C058.
 
 > **Correction notice (2026-09-28).** Many figures in this document were corrected or
 > withdrawn when Papers 003, 006, 008, 009 and 010 of this collection, and the
-> meron-cluster benchmark paper in `omega_engine_atlas/coda_atlas/F004_papers/008_fsp/000_meron_sign_problem`,
+> meron-cluster benchmark paper in `atlas/coda_atlas/F004_papers/008_fsp/000_meron_sign_problem`,
 > were revised against the retained evidence. For example, no 28-probe study exists;
 > the failure catalog holds 61 entries, of which 5 are marked active and none is applied
 > by code; the paired-bout "10/10" counted a field that is true in every record; and
@@ -25,9 +25,9 @@
 > authoritative. The text below is kept unchanged as a historical working record.
 
 > **AuthorityEffect:** None · Empirical Findings & Challenge Demonstrations Hub  
-> **Location:** [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/)  
-> **Parent Estate:** [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/)  
-> **Related Source:** [`omega_engine_pfp/tests/demo_004/`](../../../../omega_engine_pfp/tests/demo_004/)
+> **Location:** [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/)  
+> **Parent Estate:** [`atlas/coda_atlas/F004_papers/015_pfp/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/)  
+> **Related Source:** [`pfp/tests/demo_004/`](../../../../pfp/tests/demo_004/)
 
 ---
 

@@ -12,11 +12,11 @@ authority_effect: None
 
 ## Intent
 
-Enforces the canonical 23-agency partition under `_ic/` declared by `AgencyCode` in `omega_engine_governance/domain/intelligence_community.py`, verifying that no unauthorized silos exist and that telemetry outputs route strictly through typed agency bindings.
+Enforces the canonical 23-agency partition under `_ic/` declared by `AgencyCode` in `governance/domain/intelligence_community.py`, verifying that no unauthorized silos exist and that telemetry outputs route strictly through typed agency bindings.
 
 ## Verification Checklist
 
-1. **Agency Completeness:** Ensure every `AgencyCode` value exists as a top-level folder under `_ic/` and that the enum matches `omega_engine_governance/domain/intelligence_community.py`.
+1. **Agency Completeness:** Ensure every `AgencyCode` value exists as a top-level folder under `_ic/` and that the enum matches `governance/domain/intelligence_community.py`.
 2. **Silo Prohibition:** Verify that zero ad-hoc top-level folders exist under `_ic/`.
 3. **Archive Integrity:** Verify that historical archives reside at `_ic/nara/_archive` and convenience aliases match canonical manifests.
-4. **Receipt Validation:** Audit outputs of producers (`Woland`, `SymbolGame`, `DurableIntelligenceCollector`) for valid agency targets.
+4. **Receipt Validation:** Audit outputs of producers (`Adversary`, `SymbolGame`, `DurableIntelligenceCollector`) for valid agency targets.

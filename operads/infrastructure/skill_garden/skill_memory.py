@@ -47,13 +47,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, NamedTuple
 
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     garden_roster,
     ledger_span,
     load_usage_events,
 )
 
-SKILLS_REL = Path("omega_engine_operads") / "skills"
+SKILLS_REL = Path("operads") / "skills"
 MEMORY_NAME = "MEMORY.md"
 COHORT_REL = Path("runs") / "skill_memory" / "cohort.json"
 
@@ -203,7 +203,7 @@ def record_cohort(repo_root: Path, selection: Selection) -> Path:
     path = repo_root / COHORT_REL
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "schema": "omega.skill_garden.memory_cohort.v1",
+        "schema": "core.skill_garden.memory_cohort.v1",
         "authority_effect": "None",
         "recorded_at": datetime.now(timezone.utc).isoformat(),
         "why": (

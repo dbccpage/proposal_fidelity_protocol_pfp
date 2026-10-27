@@ -28,7 +28,7 @@ AuthorityEffect: None.
 8. **Parallel Multi-Worker Collection Protection (`--dist=loadfile`)**: When executing multi-worker test suites (`pytest -n 8`) across directories importing heavy mathematical/scientific dependencies (e.g. `scipy`, `numpy`, `sympy`), simultaneous file collection across parallel workers on Windows can cause path resolution memory exhaustion (`MemoryError`) or worker collection discrepancies. Use `--dist=loadfile` with external `--basetemp` to group tests by file during distribution, avoiding worker collection contention while maintaining 8-CPU execution parallelism.
 9. **Declarative Normal Form YAML Contract Syntax Hygiene**: Mathematical conditions and predicates containing single or double vertical bars (e.g. absolute values `|x|`, determinants `|det(M)|`, or norms `||A - B||`) in declarative YAML contracts (`nf.*.yaml`) must be wrapped in explicit double quotes (`"|...| <= tol"`). An unquoted leading `|` triggers PyYAML `ScannerError` by falsely parsing as a multiline block scalar indicator.
 10. **SQL Audit View Verdict String Bijection**: The verdict strings emitted by relational audit views (`ViewCdt*Audit`) in `regge_wdw_schema.sql` via `CASE WHEN ... THEN 'VERDICT'` must maintain strict 1:1 bijective correspondence with the contract terminal routes declared in `nf.*.yaml` and the pytest assertion literals.
-11. **Native Rust Engine Tests Exclusivity (`RULE_OMEGA_ENGINE_TESTS_RUST_EXCLUSIVE_001`)**: `omega_engine/tests` is strictly dedicated to native Rust tests and fixtures. It is strictly forbidden to create or locate Python test files, fixtures, or module packages (`test_*.py`, `__init__.py`, `conftest.py`) in `omega_engine/tests`. All Python test suites across the repository reside in their respective operational contexts (e.g., `omega_engine_operations/tests/`, `research/papers/.../code/tests/`, `bench/.../tests/`).
+11. **Native Rust Engine Tests Exclusivity (`RULE_TESTS_RUST_EXCLUSIVE_001`)**: `engine/tests` is strictly dedicated to native Rust tests and fixtures. It is strictly forbidden to create or locate Python test files, fixtures, or module packages (`test_*.py`, `__init__.py`, `conftest.py`) in `engine/tests`. All Python test suites across the repository reside in their respective operational contexts (e.g., `operations/tests/`, `research/papers/.../code/tests/`, `bench/.../tests/`).
 12. **Windows Python 3.12 Pinning & Subprocess Interpreter Resolution (`py -3.12`)**: On Windows development workstations where ambient `python` defaults to Python 3.14 without binary wheels or Visual Studio Python 3.9 without installed packages, all test runners, compiler scripts, and review swarms must explicitly invoke `py -3.12` (or use `sys.executable` in active virtual environments). Subprocess runners must never invoke raw `python` without verifying interpreter path and dependencies, preventing false execution failures.
 
 ## Verification Requirements
@@ -36,7 +36,7 @@ AuthorityEffect: None.
 Run the test environment isolation checker:
 
 ```bash
-python omega_engine_operads/skills/governance-test-isolation/scripts/check_test_isolation.py
+python operads/skills/governance-test-isolation/scripts/check_test_isolation.py
 ```
 
 ## Large fixtures and historical accounting

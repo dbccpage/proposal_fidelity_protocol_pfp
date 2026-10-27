@@ -15,7 +15,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from omega_engine_pfp.entrypoints.cli.io_utils import _read_json, _write_json
+from pfp.entrypoints.cli.io_utils import _read_json, _write_json
 
 
 def _sha256(data: bytes) -> str:

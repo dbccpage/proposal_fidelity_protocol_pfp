@@ -280,7 +280,7 @@ class LggrBoundaryConflicts(Scene):
         ).next_to(red_law, DOWN, buff=0.25)
 
         formal_lemma = Text(
-            "Theorem: localGreenGlobalRed_pair_obstruction_of_witness\n(OmegaCore / PrimitiveDifference.lean)",
+            "Theorem: localGreenGlobalRed_pair_obstruction_of_witness\n(CoreCore / PrimitiveDifference.lean)",
             font_size=13,
             color=COLOR_TEAL,
         ).next_to(green_law, DOWN, buff=0.25)

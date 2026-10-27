@@ -14,7 +14,7 @@ from ..domain.capability_catalog_v1 import ResourceRefV1
 
 PROFILE = "oewas.sorted-ascii-json.v1"
 SCHEMA = "oewas.typed-capability.v1"
-ROOT = "omega_engine_operads/catalog/contracts/v1"
+ROOT = "operads/catalog/contracts/v1"
 Identifier = Annotated[str, Field(pattern=r"^[a-z][a-z0-9-]{0,63}$")]
 Colour = Literal[
     "Audit", "Code", "Contract", "Diagram", "Ledger", "Paper", "Post", "Proof", "Receipt", "State"
@@ -128,7 +128,7 @@ class CapabilityWireV1(StrictWire):
 
 class SkillWireV1(CapabilityWireV1):
     kind: Literal["skill"]
-    binding: Literal["woland.claim_audit.v1"]
+    binding: Literal["adversary.claim_audit.v1"]
     guard: Identifier
 
 
@@ -157,7 +157,7 @@ class DigestedLessonWireV1(StrictWire):
 
 
 class DigestedGuidanceWireV1(CapabilityWireV1):
-    binding: Literal["woland.digested_guidance.v1"]
+    binding: Literal["adversary.digested_guidance.v1"]
     lesson: DigestedLessonWireV1
 
 

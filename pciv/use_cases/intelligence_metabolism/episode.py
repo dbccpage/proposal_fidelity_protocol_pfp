@@ -5,11 +5,11 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any, Sequence
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_prompt_civilization.domain.intelligence_metabolism.models import (
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pciv.domain.intelligence_metabolism.models import (
     ObstructionEpisodeV1,
 )
-from omega_engine_prompt_civilization.domain.intelligence_metabolism.ports import (
+from pciv.domain.intelligence_metabolism.ports import (
     MetabolismKernelPort,
 )
 

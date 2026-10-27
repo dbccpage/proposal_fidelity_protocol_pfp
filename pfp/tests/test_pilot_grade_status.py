@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from omega_engine_pfp.infrastructure.pilot_runner import get_ground_truth, grade
+from pfp.infrastructure.pilot_runner import get_ground_truth, grade
 
 
 def test_answerable_refusal_cannot_be_accepted():

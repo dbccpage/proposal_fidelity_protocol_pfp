@@ -7,12 +7,12 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.infrastructure.normal_forms.qm_classical import evaluate, verify
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err, Ok
+from pfp.infrastructure.normal_forms.qm_classical import evaluate, verify
 
 ROOT = Path(__file__).resolve().parents[3]
-FIXTURES = ROOT / "omega_engine/crates_rs/tests/omega_symbol_game/data/qm_classical.json"
+FIXTURES = ROOT / "engine/crates_rs/tests/core_symbol_game/data/qm_classical.json"
 
 
 def examples():

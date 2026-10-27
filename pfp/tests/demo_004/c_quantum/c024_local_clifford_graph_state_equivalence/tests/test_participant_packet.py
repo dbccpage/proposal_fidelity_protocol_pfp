@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c024_local_clifford_graph_state_equivalence.participant_packet.runner import (
     load_cases,
     run_benchmark,
 )

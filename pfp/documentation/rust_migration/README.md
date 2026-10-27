@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 
-The native executable now serves MCP directly: `omega_symbol_game --mcp`.
+The native executable now serves MCP directly: `core_symbol_game --mcp`.
 Python is unnecessary for this transport and its native action execution.
 This change also moves exact cochain scoring, ranking, signed transport, and
 the production Q40 solve/check path and swarm reply controls to native owners.
@@ -18,7 +18,7 @@ from the complete typed state, effective normalized policy and rendered-body
 digest/count. Policy set order and duplicates normalize; empty kill/reply lists
 use the existing defaults. Raw state text remains identity-bearing, while each
 rendered text fragment normalizes CRLF/bare CR before joining LF separators.
-The identity domain is `omega.symbol-game.turn-driver.prompt-identity.v1`.
+The identity domain is `core.symbol-game.turn-driver.prompt-identity.v1`.
 
 Malformed policies and unknown state/policy fields refuse. CLI `invoke` also
 rejects duplicate JSON keys before decoding. CLI and MCP retain parsed payload
@@ -29,7 +29,7 @@ native outcome in refusal details. Labels are limited to 256 UTF-8 bytes and
 64 raw entries per policy list; declared `max_tokens` is in `1..=1,048,576`.
 This binds configuration and does not enforce provider billing or generation.
 
-The source review and targeted checks (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/native_driver_prompt_binding_20261013/README.md`; digestion `_ic/woland/native_driver_prompt_binding_20261013_digestion.md`)
+The source review and targeted checks (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/native_driver_prompt_binding_20261013/README.md`; digestion `_ic/adversary/native_driver_prompt_binding_20261013_digestion.md`)
 retain earlier pins and the completed 126-row reconciliation at its original Git
 snapshot. Native Rust callers now supply the explicit regime pin to
 `compile_prompt_artifact` and handle `Result` from `driver::next_prompt`.
@@ -42,10 +42,10 @@ verification, mathematical step acceptance or the complete turn lifecycle.
 The native `prompt_artifact` action owns canonical compilation, structured body
 rendering, wire admission and the existing reply-field presence check. Its
 `compile`, `render`, `validate` and `validate_reply` operations use
-`omega_symbol_game_runtime::prompt_artifact`. Canonical artifacts carry every
+`core_symbol_game_runtime::prompt_artifact`. Canonical artifacts carry every
 Python field, including `family` and obstruction `prior_report_digests`.
-Layer A uses the published tagged `omega-canonical-v1` payload and
-length-delimited `omega.symbol-game.prompt-artifact-payload.v1` digest. Layer B
+Layer A uses the published tagged `core-canonical-v1` payload and
+length-delimited `core.symbol-game.prompt-artifact-payload.v1` digest. Layer B
 binds the exact body bytes and byte count. Regime IDs hash normalized regime
 bytes; arbitrary byte inputs and `normalize_body=false` remain supported.
 
@@ -77,14 +77,14 @@ repairing typed-ID sorting/join failures. Constructor checks reject nonboolean
 dual flags and invalid reply labels before emitting wire. Rendering uses the
 residual value `Open` rather than enum implementation text. Stored artifacts,
 prompt versions and historical receipts are unchanged. The
-[parity evidence](../../../_ic/woland/python_prompt_artifact_parity_20261013/README.md)
+[parity evidence](../../../_ic/adversary/python_prompt_artifact_parity_20261013/README.md)
 records exact sources, independent review and targeted checks.
 
 ## Optional agent SDK integration
 
 Google's framework is the Agent Development Kit (ADK). Its
 [runner-wide plugins](https://adk.dev/plugins/) provide model/tool lifecycle
-hooks. An optional Woland adapter is worth a bounded evaluation when a concrete
+hooks. An optional Adversary adapter is worth a bounded evaluation when a concrete
 session, tool-integration or deployment need justifies it. No SDK dependency is
 added by this migration.
 
@@ -105,7 +105,7 @@ commitments in the 14,390-path map. For 124 rows, the previous digest matches
 an exact CRLF projection of the current LF Git bytes; this relation does not
 establish that a historical CRLF Git blob exists. Two evidence-reader rows
 match genuine historical mixed-line-ending Git blobs. The
-reconciliation receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/rust_map_reconciliation_20261013/README.md`; digestion `_ic/woland/rust_map_reconciliation_20261013_digestion.md`)
+reconciliation receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/rust_map_reconciliation_20261013/README.md`; digestion `_ic/adversary/rust_map_reconciliation_20261013_digestion.md`)
 preserves every previous row and distinguishes those byte relations from an
 intentional resolver repair: Windows device names, trailing-dot/space aliases
 and embedded NUL now receive typed path refusals before resource or Git I/O.
@@ -119,8 +119,8 @@ current accounting and the tested resolver behavior; native migration remains
 open. Earlier slice inventories and refusals below retain their historical scope.
 
 The Education application and pilot directories are now retired. Remaining
-pilots live under `omega_engine_woland/tests/pilots`; PFP remains the application
-owner. The relocation inventory (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/pilot_owner_migration_20261013/README.md`; digestion `_ic/woland/pilot_owner_migration_20261013_digestion.md`)
+pilots live under `adversary/tests/pilots`; PFP remains the application
+owner. The relocation inventory (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/pilot_owner_migration_20261013/README.md`; digestion `_ic/adversary/pilot_owner_migration_20261013_digestion.md`)
 binds all 6,798 original pilot files to the fixed pre-move revision and records
 current import/documentation edits separately. Prompt profile `1.0.4` pins the
 new defining source locations without changing published `1.0.0`–`1.0.3` bytes.
@@ -165,7 +165,7 @@ adds 719 paths, bringing current coverage to 6,252. The supplemental inventory
 records 65 Python syntax/import inspections, 639 JSON parses and 15 Markdown
 text inventories. Git records 706 identical relocations, eight edited relocations
 and five new test harnesses. That initial inventory was structural only and
-found `omega_engine_projects` references in 22 Python files. The subsequent
+found `projects` references in 22 Python files. The subsequent
 C051-C055 repair updates active imports, script root discovery and current
 command examples. Focused loading and public-example checks cover these entry
 points; they do not certify live models, original protocols or native parity.
@@ -191,7 +191,7 @@ It retains original direct-call semantics and records deliberate CLI selections
 in the existing run record. Two focused controls bring coverage to 6,258 paths.
 The original helper introduction hashes above stay immutable; the current map
 hash describes this later canonical implementation. See the
-[usage examples](../../../omega_engine_education/documentation/004_oepfp/docs/18_woland_original_challenge_play.md)
+[usage examples](../../../education/documentation/004_oepfp/docs/18_original_challenge_play.md)
 for selected commands and the distinction from original full-profile protocols.
 
 C041/C042 experiment consumers now reuse the same accounted PFP gateway across
@@ -238,7 +238,7 @@ for the current tree. Current source hashes bind the reviewed current bytes;
 baseline hashes retain their distinct original meaning.
 
 The former symbol manifest contained invented targets such as
-`omega_symbol_game_runtime::__init__::__getattr__`. Its replacement
+`core_symbol_game_runtime::__init__::__getattr__`. Its replacement
 [migration_manifest.json](../../migration_manifest.json) points to this
 file-based map and explicitly leaves unsupported migration claims open.
 
@@ -249,7 +249,7 @@ unrelated or historical artifacts to satisfy this gate.
 The coverage gate detects unstaged tracked modifications and staged additions:
 
 ```bash
-python -m omega_engine_pfp.infrastructure.migration_fitness
+python -m pfp.infrastructure.migration_fitness
 ```
 
 The gate verifies complete Git coverage, immutable reviewed source bytes,
@@ -259,7 +259,7 @@ does not establish mathematical or wire parity.
 Recover the preceding map without modifying this checkout:
 
 ```bash
-git show e09492620a7219b76be114c10c0c2729c6283700:omega_engine_pfp/documentation/rust_migration/file_map.json
+git show e09492620a7219b76be114c10c0c2729c6283700:pfp/documentation/rust_migration/file_map.json
 ```
 
 Its digest is recorded in `current_review.previous_map`. A missing Git object
@@ -268,10 +268,10 @@ does not authorize substituting the current map or rewriting historical claims.
 ## Build and run the standalone native server
 
 ```bash
-cargo build --locked -j 1 --manifest-path omega_engine/crates_rs/Cargo.toml \
-  -p omega_symbol_game --bin omega_symbol_game
-omega_engine/crates_rs/target/debug/omega_symbol_game --describe-runtime
-omega_engine/crates_rs/target/debug/omega_symbol_game --mcp
+cargo build --locked -j 1 --manifest-path engine/crates_rs/Cargo.toml \
+  -p core_symbol_game --bin core_symbol_game
+engine/crates_rs/target/debug/core_symbol_game --describe-runtime
+engine/crates_rs/target/debug/core_symbol_game --mcp
 ```
 
 For a distributable optimized executable, use the same build command with
@@ -286,7 +286,7 @@ Configure a plugin or MCP client with the absolute path to the built binary:
 {
   "mcpServers": {
     "symbol-game": {
-      "command": "/absolute/path/to/omega_symbol_game",
+      "command": "/absolute/path/to/core_symbol_game",
       "args": ["--mcp"]
     }
   }
@@ -298,7 +298,7 @@ notifications, ping, tools/list, and tools/call. It negotiates supported MCP
 versions 2025-06-18, 2025-03-26, and 2024-11-05. Tool names derive from the native
 action registry. The filesystem actions `run_folder_seal` and
 `run_folder_verify` retain their CLI contracts and are excluded from MCP.
-Runtime tools accept `{"payload": ...}`; `omega_prime_host` accepts
+Runtime tools accept `{"payload": ...}`; `core_prime_host` accepts
 `{"request": ...}`. Native outcomes are retained in structuredContent and
 text content, with isError reflecting native dispatch refusal. Native solver
 or checker verdicts remain in the complete result, including UNKNOWN/FAIL
@@ -318,13 +318,13 @@ Their scores or accepted declared metrics do not grant exact certification.
 
 | Stage | Native owner | Required work and retirement condition |
 | --- | --- | --- |
-| Exact kernels and wire operations | `omega_linear_algebra`, `omega_homology`, `omega_holonomy`, `omega_functional`, `omega_solvers`, `omega_symbol_game` | Use direct native actions. Retire Python algorithms only after positive, refusal, exact-rational and tampering controls run through the native seam. Scoring, signed transport and Q40 are implemented here. |
-| Unified service transport | `omega_symbol_game::mcp` and `invoke` | Implemented stdio MCP. Keep Python CLI/API as presentation over explicit ports. The distinct symgam classifier contract uses the canonical OEOS transport without binary fallback. |
-| Prompt/turn semantics | `omega_symbol_game_runtime::prompt_artifact`, `prompt_turn`, `driver`, `frontier`, `turn_records` | Canonical Python artifact compilation, rendering and strict wire/body admission now have a native owner. Migrate the separate legacy driver context profile and remaining turn lifecycle. Replay actual mathematics before terminal routing; declared-metric step bookkeeping cannot replace the exact evaluator. |
-| Code-change lifecycle | `omega_symbol_game_runtime::code_change`, `diff_parser` | Preserve task and rolling run-root anchors, admission and gate receipt formats. Port persistent session and publication lifecycle; test outsider paths, protections, drift and stale anchors before deleting Python orchestration. |
-| Replay, events and repositories | `omega_replay`, `omega_trace`, `omega_symbol_game_runtime::event_outbox` | Reconcile Unicode slug semantics, JSONL chain profiles, event transaction and crash behavior. Preserve external receipt anchors and all historical source bytes. |
-| Provider execution and custody | `omega_trace`, `omega_policy`, `omega_sandbox`; provider adapters remain in their own bounded context | Native equivalent of both durable dispatch barriers, budget reservation, authenticated artifact custody and explicit transport policy is missing. Complete crash/replay controls before retiring the Python provider gateway. No paid calls were needed for this migration. |
-| Evidence/research and installed demos | `omega_symbol_game_runtime::research_evidence`, `omega_symbol_game::epics`, relevant foundation crates | Intake bookkeeping is distinct from independent source-pin, Lean audit and reach-checker replay. Embed or explicitly package pinned demo resources and preserve scenario IDs/receipt schemas. Unconfigured research/CEC evaluation now refuses. |
+| Exact kernels and wire operations | `core_linear_algebra`, `core_homology`, `core_holonomy`, `core_functional`, `core_solvers`, `core_symbol_game` | Use direct native actions. Retire Python algorithms only after positive, refusal, exact-rational and tampering controls run through the native seam. Scoring, signed transport and Q40 are implemented here. |
+| Unified service transport | `core_symbol_game::mcp` and `invoke` | Implemented stdio MCP. Keep Python CLI/API as presentation over explicit ports. The distinct symgam classifier contract uses the canonical OEOS transport without binary fallback. |
+| Prompt/turn semantics | `core_symbol_game_runtime::prompt_artifact`, `prompt_turn`, `driver`, `frontier`, `turn_records` | Canonical Python artifact compilation, rendering and strict wire/body admission now have a native owner. Migrate the separate legacy driver context profile and remaining turn lifecycle. Replay actual mathematics before terminal routing; declared-metric step bookkeeping cannot replace the exact evaluator. |
+| Code-change lifecycle | `core_symbol_game_runtime::code_change`, `diff_parser` | Preserve task and rolling run-root anchors, admission and gate receipt formats. Port persistent session and publication lifecycle; test outsider paths, protections, drift and stale anchors before deleting Python orchestration. |
+| Replay, events and repositories | `core_replay`, `core_trace`, `core_symbol_game_runtime::event_outbox` | Reconcile Unicode slug semantics, JSONL chain profiles, event transaction and crash behavior. Preserve external receipt anchors and all historical source bytes. |
+| Provider execution and custody | `core_trace`, `core_policy`, `core_sandbox`; provider adapters remain in their own bounded context | Native equivalent of both durable dispatch barriers, budget reservation, authenticated artifact custody and explicit transport policy is missing. Complete crash/replay controls before retiring the Python provider gateway. No paid calls were needed for this migration. |
+| Evidence/research and installed demos | `core_symbol_game_runtime::research_evidence`, `core_symbol_game::epics`, relevant foundation crates | Intake bookkeeping is distinct from independent source-pin, Lean audit and reach-checker replay. Embed or explicitly package pinned demo resources and preserve scenario IDs/receipt schemas. Unconfigured research/CEC evaluation now refuses. |
 | Web/API presentation | Native host plus an explicit service adapter | Port HTTP/SSE sessions and cancellation after lifecycle ownership is native. Preserve thin Python presentation until the replacement passes functional routing and state tests. No full native web service is claimed. |
 
 Historical quantum source and its prior rich-reference test are retained

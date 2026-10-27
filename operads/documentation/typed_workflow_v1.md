@@ -1,12 +1,12 @@
 # Typed workflow occurrences v1
 
-AuthorityEffect: None. [EPIC-OE-OEWAS-011 R2](../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_011_consolidated_residual_plan.md#r2-typed-workflow-and-native-composition) records the bounded Python/native contract and its remaining research boundaries. The [earlier integration verification receipt](../receipts/oewas_002_20261010/verification.json) remains limited to its original sources, commands and finite controls; it supplies no runtime approval for subsequent changes.
+AuthorityEffect: None. [EPIC-OE-OEWAS-011 R2](../../product_planning_office/plans/epics/oewas/epic_oe_oewas_011_consolidated_residual_plan.md#r2-typed-workflow-and-native-composition) records the bounded Python/native contract and its remaining research boundaries. The [earlier integration verification receipt](../receipts/oewas_002_20261010/verification.json) remains limited to its original sources, commands and finite controls; it supplies no runtime approval for subsequent changes.
 
 ## Existing architecture and additive contract
 
-[OperationV3](../domain/entities/operation_v3.py) and catalog-bound `SkillDocumentV3` sources remain authoritative operation declarations. [compile_candidate_plan](../application/woland_candidate_plan.py) owns exact port matching, ordered instruction compilation, source binding and existing caller ceilings. [ValidateWorkflowsHandler](../application/queries/validate_workflows.py) already delegates explicit generic node/edge topology to [native graph.rs](../../omega_engine/crates_rs/omega_operads/src/graph.rs). The typed workflow adapter connects these public ports; it does not create another catalog, substitution engine, graph algorithm or execution service.
+[OperationV3](../domain/entities/operation_v3.py) and catalog-bound `SkillDocumentV3` sources remain authoritative operation declarations. [compile_candidate_plan](../application/adversary_candidate_plan.py) owns exact port matching, ordered instruction compilation, source binding and existing caller ceilings. [ValidateWorkflowsHandler](../application/queries/validate_workflows.py) already delegates explicit generic node/edge topology to [native graph.rs](../../engine/crates_rs/core_operads/src/graph.rs). The typed workflow adapter connects these public ports; it does not create another catalog, substitution engine, graph algorithm or execution service.
 
-The strict [wire model](../contracts/typed_workflow_v1.py) adapts to the [TypedWorkflowV1 domain entity](../domain/entities/typed_workflow.py). Its version is `oewas.typed-workflow.v1`; authority is None. Encoding reuses `oewas.sorted-ascii-json.v1`: sorted keys, compact separators, ASCII escaping, no NaN and one trailing LF. This Python JSON profile is not RFC 8785. Ingress is semantically strict: reject duplicate decoded keys, unknown fields and coercible wrong types. Valid JSON whitespace and key-order variations are accepted and normalized to canonical output; the workflow digest binds the canonical semantic declaration, not the original formatting. This instruction/workflow wire does not replace governance `omega.contract.v2` contracts.
+The strict [wire model](../contracts/typed_workflow_v1.py) adapts to the [TypedWorkflowV1 domain entity](../domain/entities/typed_workflow.py). Its version is `oewas.typed-workflow.v1`; authority is None. Encoding reuses `oewas.sorted-ascii-json.v1`: sorted keys, compact separators, ASCII escaping, no NaN and one trailing LF. This Python JSON profile is not RFC 8785. Ingress is semantically strict: reject duplicate decoded keys, unknown fields and coercible wrong types. Valid JSON whitespace and key-order variations are accepted and normalized to canonical output; the workflow digest binds the canonical semantic declaration, not the original formatting. This instruction/workflow wire does not replace governance `core.contract.v2` contracts.
 
 | Field | Meaning and invariant |
 | --- | --- |
@@ -43,9 +43,9 @@ Use the manually enumerated ordered typed boundary as the oracle. Compare the fi
 The application entry is [compile_typed_workflow](../application/typed_workflow_compiler.py). The [CLI](../infrastructure/typed_workflow_compiler.py) provides these invocations; actual results and final source pins belong in the verification receipt:
 
 ```text
-python -m omega_engine_operads.infrastructure.typed_workflow_compiler --repo-root . --emit-example
-python -m omega_engine_operads.infrastructure.typed_workflow_compiler --repo-root . --workflow workflow.json --allow-effect read_subject --allow-effect emit_finding
-python -m omega_engine_operads.infrastructure.typed_workflow_compiler --repo-root . --show-schema
+python -m operads.infrastructure.typed_workflow_compiler --repo-root . --emit-example
+python -m operads.infrastructure.typed_workflow_compiler --repo-root . --workflow workflow.json --allow-effect read_subject --allow-effect emit_finding
+python -m operads.infrastructure.typed_workflow_compiler --repo-root . --show-schema
 ```
 
 `--emit-example` creates a new current-source-pinned declaration and writes it to stdout. It never rewrites an existing workflow to make stale pins pass. The current example binds falsifier Contract→Audit into audit original slot 0 of (Audit, Contract)→Receipt; free entries are exactly `[(falsifier, 0), (audit, 1)]`, yielding two ordered Contract ports. Compilation order is falsifier then audit; no instruction is executed.

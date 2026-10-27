@@ -76,12 +76,12 @@ Each pilot’s detailed findings below cite its actual evaluator, completion and
 
 Six DeepSeek-labelled Markdown completions exist; findings report English 2/5 versus operad 5/5 on the first task. These are lexical structural scores, not exact solution or operad-law verification.
 
-Plan identity: `- **Pilot ID:** `pilot_001_subgap_r7_monolithic_baseline`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L184)).
+Plan identity: `- **Pilot ID:** `pilot_001_subgap_r7_monolithic_baseline`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L184)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py`.
 
-- The evaluator awards colour/arity/grafting/ideal/decoy indicators by regex matches only; terms can satisfy a score without a typed AST, substitution witness, or operad-law proof. ([evaluator.py:47](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py#L47); [evaluator.py:51](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py#L51); [evaluator.py:59](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py#L59))
-- Completion header identifies model ambiguously as DeepSeek-R1 / DeepSeek-V3; no provider response id/token ledger is present in this directory. ([01_rational_linear_baseline_english_deepseek.md:4](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_001/completions/01_rational_linear_baseline_english_deepseek.md#L4))
+- The evaluator awards colour/arity/grafting/ideal/decoy indicators by regex matches only; terms can satisfy a score without a typed AST, substitution witness, or operad-law proof. ([evaluator.py:47](../../../atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py#L47); [evaluator.py:51](../../../atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py#L51); [evaluator.py:59](../../../atlas/coda_atlas/prompts/pilots/pilot_001/evaluator.py#L59))
+- Completion header identifies model ambiguously as DeepSeek-R1 / DeepSeek-V3; no provider response id/token ledger is present in this directory. ([01_rational_linear_baseline_english_deepseek.md:4](../../../atlas/coda_atlas/prompts/pilots/pilot_001/completions/01_rational_linear_baseline_english_deepseek.md#L4))
 
 Candidate canonical crosswalk: AB-015 — Lexical-score acceptance must not be promoted into mathematical coverage or correctness.; AB-011 — Completion/model provenance needs replayable custody rather than filename attribution..
 
@@ -89,13 +89,13 @@ Candidate canonical crosswalk: AB-015 — Lexical-score acceptance must not be p
 
 Nine monolithic/accelerated completion Markdown records and bridge/environment tests exist. Findings claim compression and high scores; evaluator hardcodes mined operad/antibody scores to 5.0 and judges candidate text using receipt substrings.
 
-Plan identity: `- **Pilot ID:** `pilot_002_mub6_operad_acceleration`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L203)).
+Plan identity: `- **Pilot ID:** `pilot_002_mub6_operad_acceleration`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L203)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py`.
 
-- Operad/antibody scores are supplied literals rather than derived from completion content. ([evaluator.py:84](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py#L84))
-- Schema/exactness acceptance relies on strings such as status PASS, schema_version and arithmetic words; it does not execute the claimed certificate. ([evaluator.py:240](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py#L240); [evaluator.py:246](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py#L246))
-- The affine-gap completion applies nuclear trace duality to the entrywise maximum norm without the dimension factor; its claimed 517/100 margin is not established by that inequality. ([04_target_a4_affine_gap_propagation.md:33](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_002/completions/04_target_a4_affine_gap_propagation.md#L33))
+- Operad/antibody scores are supplied literals rather than derived from completion content. ([evaluator.py:84](../../../atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py#L84))
+- Schema/exactness acceptance relies on strings such as status PASS, schema_version and arithmetic words; it does not execute the claimed certificate. ([evaluator.py:240](../../../atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py#L240); [evaluator.py:246](../../../atlas/coda_atlas/prompts/pilots/pilot_002/evaluator.py#L246))
+- The affine-gap completion applies nuclear trace duality to the entrywise maximum norm without the dimension factor; its claimed 517/100 margin is not established by that inequality. ([04_target_a4_affine_gap_propagation.md:33](../../../atlas/coda_atlas/prompts/pilots/pilot_002/completions/04_target_a4_affine_gap_propagation.md#L33))
 
 Candidate canonical crosswalk: AB-015 — Hardcoded scores and receipt words do not establish accepted-solution coverage.; AB-001 — Local/synthetic MUB reductions must retain their actual quantified scope..
 
@@ -103,16 +103,16 @@ Candidate canonical crosswalk: AB-015 — Hardcoded scores and receipt words do 
 
 Two distinct registered pilot003 identities coexist: the numbered continuous norm pilot and renamed C054 exact-system layout experiment. Numbered pilot has six Sonnet/Haiku-labelled text completions, no standalone JSON run receipt, and prose claims inconsistent critical radii.
 
-Plan identity: `- **Pilot ID:** `pilot_003_continuous_affine_norm_perturbation`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L222)).
+Plan identity: `- **Pilot ID:** `pilot_003_continuous_affine_norm_perturbation`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L222)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py`, `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/pilot_c054_layouts.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py`, `atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/pilot_c054_layouts.py`.
 
-- The numbered evaluator assigns unperturbed_gap=-sdp_margin and estimates generic slope/curvature without accepting a concrete G0/W/certificate or verifying their trace. Its I/dim witness would give Tr(WG)=1 for a 24-column Gram matrix with unit diagonal, so it cannot witness the claimed negative trace. ([evaluator.py:178](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L178); [evaluator.py:230](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L230); [evaluator.py:244](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L244))
-- Findings derive radius1/840 then call1/786 conservative, while evaluator defaults give slope3/16, M2=9/64 and radius2/1572=1/786. These are different assumed bounds; the model/fixed-input provenance is not reconciled. ([pilot_findings.md:106](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_003/pilot_findings.md#L106); [evaluator.py:247](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L247))
-- The 24x norm inequality is a reusable valid bound, but its presence and exact arithmetic do not validate an actual MUB-family neighborhood certificate. ([evaluator.py:239](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L239))
-- Pilot numbering collision: C054 remains registered003 in frozen commitment; treating folder c054 as numbered054 would both double-count003 and invent054 evidence. ([README.md:5](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/README.md#L5); [commitment.json:52](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/frozen/commitment.json#L52))
-- The recorded dualchecker panel detects only formatting failures here: two operad answers use integer coefficients, and one5x5 item truncates at2000tokens in all arms; there is no arithmetic superiority conclusion. ([README.md:89](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/README.md#L89); [README.md:92](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/README.md#L92))
-- grade() binds raw hashes but reads current case definitions and checkers without validating a committed source/case digest, leaving historical-to-current evaluator provenance incomplete. ([pilot_c054_layouts.py:475](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/pilot_c054_layouts.py#L475); [pilot_c054_layouts.py:482](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/pilot_c054_layouts.py#L482))
+- The numbered evaluator assigns unperturbed_gap=-sdp_margin and estimates generic slope/curvature without accepting a concrete G0/W/certificate or verifying their trace. Its I/dim witness would give Tr(WG)=1 for a 24-column Gram matrix with unit diagonal, so it cannot witness the claimed negative trace. ([evaluator.py:178](../../../atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L178); [evaluator.py:230](../../../atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L230); [evaluator.py:244](../../../atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L244))
+- Findings derive radius1/840 then call1/786 conservative, while evaluator defaults give slope3/16, M2=9/64 and radius2/1572=1/786. These are different assumed bounds; the model/fixed-input provenance is not reconciled. ([pilot_findings.md:106](../../../atlas/coda_atlas/prompts/pilots/pilot_003/pilot_findings.md#L106); [evaluator.py:247](../../../atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L247))
+- The 24x norm inequality is a reusable valid bound, but its presence and exact arithmetic do not validate an actual MUB-family neighborhood certificate. ([evaluator.py:239](../../../atlas/coda_atlas/prompts/pilots/pilot_003/evaluator.py#L239))
+- Pilot numbering collision: C054 remains registered003 in frozen commitment; treating folder c054 as numbered054 would both double-count003 and invent054 evidence. ([README.md:5](../../../atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/README.md#L5); [commitment.json:52](../../../atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/frozen/commitment.json#L52))
+- The recorded dualchecker panel detects only formatting failures here: two operad answers use integer coefficients, and one5x5 item truncates at2000tokens in all arms; there is no arithmetic superiority conclusion. ([README.md:89](../../../atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/README.md#L89); [README.md:92](../../../atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/README.md#L92))
+- grade() binds raw hashes but reads current case definitions and checkers without validating a committed source/case digest, leaving historical-to-current evaluator provenance incomplete. ([pilot_c054_layouts.py:475](../../../atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/pilot_c054_layouts.py#L475); [pilot_c054_layouts.py:482](../../../atlas/coda_atlas/prompts/pilots/pilot_c054_layouts/pilot_c054_layouts.py#L482))
 
 Candidate canonical crosswalk: AB-012 — Arithmetic interval precision or a computed scalar radius is distinct from verifying the model remainder assumptions.; AB-001 — Do not extend a conditional/local perturbation calculation into global nonextension.; AB-008 — Preserve frozen identity/hash manifests atomically through relocation.; AB-011 — Retain aborted attempt and bind evaluator/case sources to run custody..
 
@@ -134,13 +134,13 @@ Recorded usage: 78450 input, 55130 output, 44069 thinking tokens. `spent_usd=0` 
 
 Stored receipt PASS reports64 boxes,2 interior,22 exterior,34 boundary,6 cusp-collar boxes. Six completion files include three named-model records and three live arms; recorded verdicts reject Haiku/Qwen and accept Sonnet/live arms.
 
-Plan identity: `- **Pilot ID:** `pilot_004_szollosi_deltoid_cusp_collar_partition`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L242)).
+Plan identity: `- **Pilot ID:** `pilot_004_szollosi_deltoid_cusp_collar_partition`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L242)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py`.
 
-- The declared rational cusp coordinates(-3/2,±21/8) are approximate points, not exact cusps of the polynomial: direct substitution gives81/4096. True nonreal cusps have y=±3sqrt(3)/2. Point-in-box tests at approximants do not by themselves certify true cusp coverage. ([evaluator.py:136](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py#L136); [evaluator.py:140](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py#L140))
-- Accepted Sonnet completion states144 certified boxes while the independent canned receipt reports64; model text is screened lexically, not bound to the computed partition. ([claude_3_5_sonnet_completion.txt:14](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_004/completions/claude_3_5_sonnet_completion.txt#L14); [pilot_004_receipt.json:7](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_004/completions/pilot_004_receipt.json#L7))
-- Evaluator overall status is an unconditional PASS literal, separate from completion rejection flags. ([evaluator.py:301](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py#L301))
+- The declared rational cusp coordinates(-3/2,±21/8) are approximate points, not exact cusps of the polynomial: direct substitution gives81/4096. True nonreal cusps have y=±3sqrt(3)/2. Point-in-box tests at approximants do not by themselves certify true cusp coverage. ([evaluator.py:136](../../../atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py#L136); [evaluator.py:140](../../../atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py#L140))
+- Accepted Sonnet completion states144 certified boxes while the independent canned receipt reports64; model text is screened lexically, not bound to the computed partition. ([claude_3_5_sonnet_completion.txt:14](../../../atlas/coda_atlas/prompts/pilots/pilot_004/completions/claude_3_5_sonnet_completion.txt#L14); [pilot_004_receipt.json:7](../../../atlas/coda_atlas/prompts/pilots/pilot_004/completions/pilot_004_receipt.json#L7))
+- Evaluator overall status is an unconditional PASS literal, separate from completion rejection flags. ([evaluator.py:301](../../../atlas/coda_atlas/prompts/pilots/pilot_004/evaluator.py#L301))
 
 Candidate canonical crosswalk: AB-012 — A rational approximant or sample enclosure must not be substituted for a proved geometric coverage claim.; AB-011 — Require the accepted completion to bind its exact partition witness and source hashes..
 
@@ -148,12 +148,12 @@ Candidate canonical crosswalk: AB-012 — A rational approximant or sample enclo
 
 Stored receipt PASS/cocycle_defect_vanishes true/charts_glued3. Six named/live completion texts are classified by keyword antibodies. The numerical fixture builds one composite transition from the other two.
 
-Plan identity: `- **Pilot ID:** `pilot_005_composite_multichart_cocycle_gluing`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L261)).
+Plan identity: `- **Pilot ID:** `pilot_005_composite_multichart_cocycle_gluing`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L261)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_005/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_005/evaluator.py`.
 
-- The fixture defines phi13 from phi12 and phi23; vanishing coboundary is built into the example. It does not validate independent overlap maps between actual MUB charts or prove their coverage. ([evaluator.py:115](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_005/evaluator.py#L115); [evaluator.py:72](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_005/evaluator.py#L72))
-- Accepted Sonnet asserts a certified triple overlap among Tao, Szollosi and Karlsson charts without a chart-carrier or overlap witness consumed by the evaluator. ([claude_3_5_sonnet_completion.txt:15](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_005/completions/claude_3_5_sonnet_completion.txt#L15))
+- The fixture defines phi13 from phi12 and phi23; vanishing coboundary is built into the example. It does not validate independent overlap maps between actual MUB charts or prove their coverage. ([evaluator.py:115](../../../atlas/coda_atlas/prompts/pilots/pilot_005/evaluator.py#L115); [evaluator.py:72](../../../atlas/coda_atlas/prompts/pilots/pilot_005/evaluator.py#L72))
+- Accepted Sonnet asserts a certified triple overlap among Tao, Szollosi and Karlsson charts without a chart-carrier or overlap witness consumed by the evaluator. ([claude_3_5_sonnet_completion.txt:15](../../../atlas/coda_atlas/prompts/pilots/pilot_005/completions/claude_3_5_sonnet_completion.txt#L15))
 
 Candidate canonical crosswalk: AB-014 — Require explicit carrier/overlap adapters before identifying independent charts.; AB-015 — A constructed-consistent example does not establish all-instance atlas coverage..
 
@@ -161,12 +161,12 @@ Candidate canonical crosswalk: AB-014 — Require explicit carrier/overlap adapt
 
 Stored receipt PASS/exact norm15/harmonic0/curvature0 on one exact fixture. Accepted Sonnet completion says exact norm14. The claimed general Hodge projection routine reconstructs potentials along a tree.
 
-Plan identity: `- **Pilot ID:** `pilot_006_hodge_helmholtz_cochain_decomposition`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L283)).
+Plan identity: `- **Pilot ID:** `pilot_006_hodge_helmholtz_cochain_decomposition`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L283)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_006/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_006/evaluator.py`.
 
-- discrete_hodge_decomposition interpolates three edges to get potentials rather than solving the Poisson normal equation; the residual need not be orthogonal to im(d0). For delta=(1,0,0,0,0), its residual(0,0,1,0,1) has d0^T residual=(2,0,-1,-1). This is a source-derived counterexample, not an executed test. ([evaluator.py:60](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_006/evaluator.py#L60); [evaluator.py:76](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_006/evaluator.py#L76))
-- Accepted completion norm14 disagrees with recorded computed norm15, yet lexical auditing reports pass. ([claude_3_5_sonnet_completion.txt:11](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_006/completions/claude_3_5_sonnet_completion.txt#L11); [pilot_006_receipt.json:7](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_006/completions/pilot_006_receipt.json#L7))
+- discrete_hodge_decomposition interpolates three edges to get potentials rather than solving the Poisson normal equation; the residual need not be orthogonal to im(d0). For delta=(1,0,0,0,0), its residual(0,0,1,0,1) has d0^T residual=(2,0,-1,-1). This is a source-derived counterexample, not an executed test. ([evaluator.py:60](../../../atlas/coda_atlas/prompts/pilots/pilot_006/evaluator.py#L60); [evaluator.py:76](../../../atlas/coda_atlas/prompts/pilots/pilot_006/evaluator.py#L76))
+- Accepted completion norm14 disagrees with recorded computed norm15, yet lexical auditing reports pass. ([claude_3_5_sonnet_completion.txt:11](../../../atlas/coda_atlas/prompts/pilots/pilot_006/completions/claude_3_5_sonnet_completion.txt#L11); [pilot_006_receipt.json:7](../../../atlas/coda_atlas/prompts/pilots/pilot_006/completions/pilot_006_receipt.json#L7))
 
 Candidate canonical crosswalk: AB-003 — Joint projection/intersection structure must be checked rather than inferred from separately assigned components.; AB-019 — Related exact-certificate principle: verify feasibility/annihilation equations; this pilot is degree1, not the canonical AB019 higher-degree setting..
 
@@ -174,11 +174,11 @@ Candidate canonical crosswalk: AB-003 — Joint projection/intersection structur
 
 Stored receipt PASS reports energy8→12→0 and am4_loop_eliminated. Source chooses those states directly; no search or legal chord transition replay occurs.
 
-Plan identity: `- **Pilot ID:** `pilot_007_k4_clique_energy_barrier_and_am4_annihilation`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L304)).
+Plan identity: `- **Pilot ID:** `pilot_007_k4_clique_energy_barrier_and_am4_annihilation`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L304)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py`.
 
-- Greedy simulation immediately returns the input history; coupled simulation appends the all-twos and all-zero tuples. It does not enumerate legal moves or verify face-flux preservation. ([evaluator.py:39](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py#L39); [evaluator.py:52](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py#L52); [evaluator.py:55](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py#L55))
+- Greedy simulation immediately returns the input history; coupled simulation appends the all-twos and all-zero tuples. It does not enumerate legal moves or verify face-flux preservation. ([evaluator.py:39](../../../atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py#L39); [evaluator.py:52](../../../atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py#L52); [evaluator.py:55](../../../atlas/coda_atlas/prompts/pilots/pilot_007/evaluator.py#L55))
 
 Candidate canonical crosswalk: AB-011 — Require guarded, seeded/replayable legal actions instead of a claimed path history.; AB-015 — A hardcoded finite path is not evidence of solver coverage or an energy-barrier theorem.; AB-013 — Strict descent and finite arrival need explicit operation/fuel/discrete-grid premises..
 
@@ -186,12 +186,12 @@ Candidate canonical crosswalk: AB-011 — Require guarded, seeded/replayable leg
 
 Stored receipt PASS records budget100→90, cost10 and admitted count1 from fixed actions. Live arm1 has out_tok0 yet passedtrue; arm2 is rejected and compressed arm3 accepted by lexical screening.
 
-Plan identity: `- **Pilot ID:** `pilot_008_priced_referential_binding_protocol`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L322)).
+Plan identity: `- **Pilot ID:** `pilot_008_priced_referential_binding_protocol`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L322)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_008/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_008/evaluator.py`.
 
-- Recorded live metrics mark a zero-output seed arm passedtrue: empty or refused response can vacuously avoid all forbidden patterns. ([live_benchmark_metrics.json:4](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_008/completions/live_benchmark_metrics.json#L4); [live_benchmark_metrics.json:8](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_008/completions/live_benchmark_metrics.json#L8))
-- Budget state-machine fixture and model completion text are separate inputs; a lexical pass does not verify the model-proposed transaction or consumed budget. ([evaluator.py:109](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_008/evaluator.py#L109); [evaluator.py:135](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_008/evaluator.py#L135))
+- Recorded live metrics mark a zero-output seed arm passedtrue: empty or refused response can vacuously avoid all forbidden patterns. ([live_benchmark_metrics.json:4](../../../atlas/coda_atlas/prompts/pilots/pilot_008/completions/live_benchmark_metrics.json#L4); [live_benchmark_metrics.json:8](../../../atlas/coda_atlas/prompts/pilots/pilot_008/completions/live_benchmark_metrics.json#L8))
+- Budget state-machine fixture and model completion text are separate inputs; a lexical pass does not verify the model-proposed transaction or consumed budget. ([evaluator.py:109](../../../atlas/coda_atlas/prompts/pilots/pilot_008/evaluator.py#L109); [evaluator.py:135](../../../atlas/coda_atlas/prompts/pilots/pilot_008/evaluator.py#L135))
 
 Candidate canonical crosswalk: AB-015 — Vacuous absence of rejected phrases does not establish nonempty accepted-answer coverage.; AB-011 — Bind proposed actions to a guarded transaction replay and custody receipt..
 
@@ -199,11 +199,11 @@ Candidate canonical crosswalk: AB-015 — Vacuous absence of rejected phrases do
 
 Stored receipt PASS/isomorphism_verifiedtrue and UNDERDETERMINED_BOUNDARY_REFUSAL for fixed syntactic traces without boundary observation.
 
-Plan identity: `- **Pilot ID:** `pilot_009_export_indistinguishability_boundary`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L343)).
+Plan identity: `- **Pilot ID:** `pilot_009_export_indistinguishability_boundary`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L343)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_009/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_009/evaluator.py`.
 
-- A small syntactic relabeling fixture and regex classifier do not certify general semantic grounding or impossibility over arbitrary observation channels; trace/interface binding must be explicit. ([evaluator.py:45](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_009/evaluator.py#L45); [evaluator.py:109](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_009/evaluator.py#L109))
+- A small syntactic relabeling fixture and regex classifier do not certify general semantic grounding or impossibility over arbitrary observation channels; trace/interface binding must be explicit. ([evaluator.py:45](../../../atlas/coda_atlas/prompts/pilots/pilot_009/evaluator.py#L45); [evaluator.py:109](../../../atlas/coda_atlas/prompts/pilots/pilot_009/evaluator.py#L109))
 
 Candidate canonical crosswalk: AB-014 — Keep observation carriers and reference adapters explicit.; AB-006 — Static indistinguishability does not settle action-preserving dynamic observation..
 
@@ -211,12 +211,12 @@ Candidate canonical crosswalk: AB-014 — Keep observation carriers and referenc
 
 Stored receipt PASS reports exact charge0 for vacuum, paired dipole and transfer; live metrics reject seed+monolithic decimal-containing responses and accept compressed arm.
 
-Plan identity: `- **Pilot ID:** `pilot_010_zero_genesis_erasure_and_conservation_fences`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L361)).
+Plan identity: `- **Pilot ID:** `pilot_010_zero_genesis_erasure_and_conservation_fences`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L361)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py`.
 
-- The fixture tests only selected fixed charge-preserving operations; assertions enforce some checks only without Python optimization, and the overall PASS is a literal independent of model arithmetic. ([evaluator.py:90](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py#L90); [evaluator.py:119](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py#L119))
-- Regex decimal/authority screening can reject accurate discussion or accept empty/incorrect token-free text; it is not a native charge-invariance checker for candidate transitions. ([evaluator.py:69](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py#L69))
+- The fixture tests only selected fixed charge-preserving operations; assertions enforce some checks only without Python optimization, and the overall PASS is a literal independent of model arithmetic. ([evaluator.py:90](../../../atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py#L90); [evaluator.py:119](../../../atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py#L119))
+- Regex decimal/authority screening can reject accurate discussion or accept empty/incorrect token-free text; it is not a native charge-invariance checker for candidate transitions. ([evaluator.py:69](../../../atlas/coda_atlas/prompts/pilots/pilot_010/evaluator.py#L69))
 
 Candidate canonical crosswalk: AB-011 — Replay each proposed charge rewrite with legal-action guards and source binding.; AB-015 — Require witness-bearing candidate coverage rather than absence of forbidden strings..
 
@@ -224,12 +224,12 @@ Candidate canonical crosswalk: AB-011 — Replay each proposed charge rewrite wi
 
 One Sonnet-labelled completion; stored PASS/core_fence_intacttrue, false_refusal_clearedtrue. Shared summary records291 input/600 output tokens and5.42s without per-call provider ledger.
 
-Plan identity: `- **Pilot ID:** `pilot_011_jerne_idiotypic_network_anti_antibodies`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L384)).
+Plan identity: `- **Pilot ID:** `pilot_011_jerne_idiotypic_network_anti_antibodies`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L384)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py`.
 
-- Gate accepts presence of literal1/24 and1/6 plus a suppression/jet word; it never computes the truncated polynomial or checks the alleged suppressor operation. ([evaluator.py:10](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py#L10); [evaluator.py:14](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py#L14))
-- The source has_firewall flag is recorded but excluded from passed; the result does not establish preservation of the core fence under all accepted completions. ([evaluator.py:14](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py#L14))
+- Gate accepts presence of literal1/24 and1/6 plus a suppression/jet word; it never computes the truncated polynomial or checks the alleged suppressor operation. ([evaluator.py:10](../../../atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py#L10); [evaluator.py:14](../../../atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py#L14))
+- The source has_firewall flag is recorded but excluded from passed; the result does not establish preservation of the core fence under all accepted completions. ([evaluator.py:14](../../../atlas/coda_atlas/prompts/pilots/pilot_011/evaluator.py#L14))
 
 Candidate canonical crosswalk: AB-015 — Lexical acceptance does not show nonempty semantic correctness coverage.; AB-011 — Require original completion/provider records and exact replayable operation receipts..
 
@@ -237,12 +237,12 @@ Candidate canonical crosswalk: AB-015 — Lexical acceptance does not show nonem
 
 One Sonnet-labelled completion; stored PASS despite has_firewallfalse. Receipt hardcodes turns_quenched3 and cost_saved_usd0.045; summary records301 input/600 output tokens and6.14s.
 
-Plan identity: `- **Pilot ID:** `pilot_012_treg_homeostatic_debate_quenching`` ([source](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L403)).
+Plan identity: `- **Pilot ID:** `pilot_012_treg_homeostatic_debate_quenching`` ([source](../../../atlas/coda_atlas/prompts/pilots/pilots_003_030_master_plan.md#L403)).
 
-Evaluator(s): `omega_engine_atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py`.
+Evaluator(s): `atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py`.
 
-- PASS requires quench-related words and786, not a debate trajectory or measured Lyapunov drop; has_firewall is excluded and storedfalse. ([evaluator.py:11](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L11); [evaluator.py:14](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L14); [pilot_012_receipt.json:3](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_012/completions/pilot_012_receipt.json#L3))
-- turns_quenched=3 and cost_saved_usd0.045 are constants rather than derived from a turn ledger or billable usage; do not present them as observed savings. ([evaluator.py:23](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L23); [evaluator.py:25](../../../omega_engine_atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L25))
+- PASS requires quench-related words and786, not a debate trajectory or measured Lyapunov drop; has_firewall is excluded and storedfalse. ([evaluator.py:11](../../../atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L11); [evaluator.py:14](../../../atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L14); [pilot_012_receipt.json:3](../../../atlas/coda_atlas/prompts/pilots/pilot_012/completions/pilot_012_receipt.json#L3))
+- turns_quenched=3 and cost_saved_usd0.045 are constants rather than derived from a turn ledger or billable usage; do not present them as observed savings. ([evaluator.py:23](../../../atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L23); [evaluator.py:25](../../../atlas/coda_atlas/prompts/pilots/pilot_012/evaluator.py#L25))
 
 Candidate canonical crosswalk: AB-013 — Finite quenching requires a discrete/drop/fuel argument and actual turn trajectory.; AB-011 — Replayable turn/provider/cost custody is missing from this receipt..
 
@@ -261,9 +261,9 @@ No current execution verdicts are claimed. Existing PASS fields, test-count stat
 
 ## Cross-estate identity reconciliation
 
-Track004 documents204 Woland pilot folders and a75-row matrix. Those counts describe a separate namespace. Every requested outer ID has a same-number long Woland directory, but the task/checker/disposition records often differ sharply from the short coda ID. The JSON records each matched name, declared task family, checker, phase, core-file hashes and static source counts. No Woland presence is substituted for missing coda evidence.
+Track004 documents204 Adversary pilot folders and a75-row matrix. Those counts describe a separate namespace. Every requested outer ID has a same-number long Adversary directory, but the task/checker/disposition records often differ sharply from the short coda ID. The JSON records each matched name, declared task family, checker, phase, core-file hashes and static source counts. No Adversary presence is substituted for missing coda evidence.
 
-| Requested coda ID | Long Woland directory | Declared task / phase | Other numeric collision | Identity status |
+| Requested coda ID | Long Adversary directory | Declared task / phase | Other numeric collision | Identity status |
 |---|---|---|---|---|
 | pilot_001 | pilot_0000001 | graph_facts/phase_0_bedrock |  | Numeric token only; unlinked to coda ID |
 | pilot_002 | pilot_0000002 | graph_repair/phase_0_bedrock |  | Numeric token only; unlinked to coda ID |
@@ -323,10 +323,10 @@ Track004 documents204 Woland pilot folders and a75-row matrix. Those counts desc
 
 Concrete counterexamples to numeric merging:
 
-- Coda001 concerns operad-miner/English completions; Woland0000001 declares graph_facts and a zero-provider-call mode trial.
-- Coda003 concerns affine norm perturbation; Woland0000003 is the refusal slot. The **other coda registered003**, renamedpilot_c054_layouts, explicitly uses the **catalogC054** linear-system panel; it is neither Woland0000003 nor coda054.
-- Woland0000051 is a projection-obstruction campaign relocated from its former0000003 slot; that source-documented Woland migration is not a link to coda003 or coda051.
-- Woland0000054 declares planned degree4 finite certificates, while catalogC054 is exact linear systems and coda054 is missing.
-- Woland0000075 is planned catalogC031 anomaly cancellation with no model reply; its directory cannot provide empirical support for missing coda075.
+- Coda001 concerns operad-miner/English completions; Adversary0000001 declares graph_facts and a zero-provider-call mode trial.
+- Coda003 concerns affine norm perturbation; Adversary0000003 is the refusal slot. The **other coda registered003**, renamedpilot_c054_layouts, explicitly uses the **catalogC054** linear-system panel; it is neither Adversary0000003 nor coda054.
+- Adversary0000051 is a projection-obstruction campaign relocated from its former0000003 slot; that source-documented Adversary migration is not a link to coda003 or coda051.
+- Adversary0000054 declares planned degree4 finite certificates, while catalogC054 is exact linear systems and coda054 is missing.
+- Adversary0000075 is planned catalogC031 anomaly cancellation with no model reply; its directory cannot provide empirical support for missing coda075.
 
-The broader Woland audit owns replay and exhaustive test/result analysis. This appendix resolves identity and observed disposition statements only. All cross-estate comparisons remain static and current-source-bound.
+The broader Adversary audit owns replay and exhaustive test/result analysis. This appendix resolves identity and observed disposition statements only. All cross-estate comparisons remain static and current-source-bound.

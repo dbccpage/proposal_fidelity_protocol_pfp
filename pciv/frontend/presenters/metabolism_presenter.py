@@ -8,23 +8,23 @@ import sys
 from hashlib import sha256
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Err, Refusal
-from omega_engine_prompt_civilization.domain.intelligence_metabolism.models import (
+from operations.domain.rop.result import Err, Refusal
+from pciv.domain.intelligence_metabolism.models import (
     ObstructionEpisodeV1,
 )
-from omega_engine_prompt_civilization.infrastructure.intelligence_metabolism.miner import (
+from pciv.infrastructure.intelligence_metabolism.miner import (
     IntelligenceMiner,
 )
-from omega_engine_prompt_civilization.infrastructure.intelligence_metabolism.native import (
+from pciv.infrastructure.intelligence_metabolism.native import (
     NativeMetabolismKernel,
 )
-from omega_engine_prompt_civilization.use_cases.intelligence_metabolism.digest import (
+from pciv.use_cases.intelligence_metabolism.digest import (
     DailyDigestGenerator,
 )
-from omega_engine_prompt_civilization.use_cases.intelligence_metabolism.episode import (
+from pciv.use_cases.intelligence_metabolism.episode import (
     EpisodeSegmenter,
 )
-from omega_engine_prompt_civilization.use_cases.intelligence_metabolism.motifs import MotifMiner
+from pciv.use_cases.intelligence_metabolism.motifs import MotifMiner
 
 
 def resolve_repo_root(path_str: str | None) -> Path:
@@ -32,7 +32,7 @@ def resolve_repo_root(path_str: str | None) -> Path:
         return Path(path_str).resolve()
     curr = Path.cwd().resolve()
     for parent in [curr, *curr.parents]:
-        if (parent / ".git").exists() or (parent / "omega_engine_prompt_civilization").exists():
+        if (parent / ".git").exists() or (parent / "pciv").exists():
             return parent
     return curr
 

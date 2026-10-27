@@ -33,7 +33,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 
 # Ensure runtime/python is on sys.path for pytest
 # Import consolidated evaluator traits from Level 11-21 test harness
-from omega_engine_pfp.tests.evaluators.test_levels_11_21_evaluator_traits import (
+from pfp.tests.evaluators.test_levels_11_21_evaluator_traits import (
     AlternationSupervisor,
     ArsRewritingEngine,
     ArsRule,

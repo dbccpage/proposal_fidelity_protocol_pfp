@@ -3,10 +3,10 @@
 Aligned Contracts / Systems:
 - nf.coda.tsnf
 - nf.cochain.dhnf
-- omega_homology
-- omega_linear_algebra
-- omega_holonomy
-- omega_functional
+- core_homology
+- core_linear_algebra
+- core_holonomy
+- core_functional
 - RustSymbolGameHost
 
 AuthorityEffect: None.
@@ -19,11 +19,11 @@ import unittest
 from fractions import Fraction
 from typing import Sequence
 
-from omega_engine_pfp.domain.normal_forms.topology import (
+from pfp.domain.normal_forms.topology import (
     compute_smith_normal_form,
     verify_tsnf,
 )
-from omega_engine_pfp.ffi import get_default_host
+from pfp.ffi import get_default_host
 
 # =============================================================================
 # Exact Algebraic & Simplicial Helper Utilities
@@ -372,7 +372,7 @@ class TestTranche15ExactHomologyAndRustSeams(unittest.TestCase):
 
     # Test 284
     def test_sovereign_functional_phi1_gauge_defect_evaluation(self) -> None:
-        """Test 284: Evaluates Phi1 defect functional via omega_functional; asserts non-negativity and cocycle zero."""
+        """Test 284: Evaluates Phi1 defect functional via core_functional; asserts non-negativity and cocycle zero."""
         if self.host is not None:
             res = self.host.exact_solve_l1_primal_dual(
                 [["-1", "1", "0"], ["0", "-1", "1"], ["-1", "0", "1"]],
@@ -404,7 +404,7 @@ class TestTranche15ExactHomologyAndRustSeams(unittest.TestCase):
     # Test 286
     def test_wire_exact_rational_unit_denominator_canonical_form(self) -> None:
         """Test 286: Verifies integer rationals serialized without slashes (e.g. '1', '-4') for canonical parsing."""
-        from omega_engine_woland.infrastructure.cochain_adapter import to_canonical_rational_str
+        from adversary.infrastructure.cochain_adapter import to_canonical_rational_str
 
         self.assertEqual(to_canonical_rational_str(1), "1")
         self.assertEqual(to_canonical_rational_str(-4), "-4")
@@ -423,7 +423,7 @@ class TestTranche15ExactHomologyAndRustSeams(unittest.TestCase):
     # Test 288
     def test_sovereign_crate_ffi_seam_isolation(self) -> None:
         """Test 288: Asserts FFI symbols and foreign function bindings are completely isolated within ffi.py."""
-        from omega_engine_pfp import ffi
+        from pfp import ffi
 
         self.assertTrue(hasattr(ffi, "RustSymbolGameHost"))
         self.assertTrue(hasattr(ffi, "get_default_host"))

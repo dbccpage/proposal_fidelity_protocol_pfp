@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field, field_validator
 
-from omega_engine_governance.domain.ingress.limits import (
+from governance.domain.ingress.limits import (
     MAX_ADMITTED_TEXT_BYTES,
     REFUSAL_TEXT_TOO_LARGE,
     check_text_bytes,

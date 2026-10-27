@@ -10,9 +10,9 @@ positive examples and twelve controls. Those counts are not a live study and
 are not newly reproduced here.
 
 The taxonomy implementation is
-`omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs`.
+`engine/crates_rs/core_prompt_civilization/src/pharmacy.rs`.
 Related Python fixture coverage is in
-`omega_engine_pfp/tests/mssn_sn_demos/test_demo_immune_soviet.py`.
+`pfp/tests/mssn_sn_demos/test_demo_immune_strict.py`.
 Agreement on class names or expected dispositions does not establish full
 Rust/Python behavioral parity.
 

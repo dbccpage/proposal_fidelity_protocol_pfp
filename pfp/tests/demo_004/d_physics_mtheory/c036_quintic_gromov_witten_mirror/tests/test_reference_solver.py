@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import time
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c036_quintic_gromov_witten_mirror.reference_solver.solver import (
     get_last_tracer,
     solve,
 )

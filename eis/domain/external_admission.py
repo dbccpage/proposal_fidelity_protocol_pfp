@@ -1,7 +1,7 @@
 """External admission: candidate by default, and repetition is not evidence.
 
 Moved on 2026-09-29 from
-`omega_engine_projects/ms_majorana/code/tests/support/prompt_civilization/domain/external_admission_v1.py`,
+`projects/ms_majorana/code/tests/support/prompt_civilization/domain/external_admission_v1.py`,
 where it was the only implementation of these criteria and was reachable only
 from a test support folder. On the move, digest fields were tightened to
 lowercase hexadecimal (`sha256:` followed by 64 hex digits); the old check
@@ -53,8 +53,8 @@ PHARMACY_STATUSES = frozenset(
     {PHARMACY_STATUS_CANDIDATE, PHARMACY_STATUS_ADMITTED, PHARMACY_STATUS_RETIRED}
 )
 
-ADMISSION_REQUEST_SCHEMA_V1 = "omega.pharmacy.external-admission-request.v1"
-OBSERVATION_SCHEMA_V1 = "omega.pharmacy.antibody-observation.v1"
+ADMISSION_REQUEST_SCHEMA_V1 = "core.pharmacy.external-admission-request.v1"
+OBSERVATION_SCHEMA_V1 = "core.pharmacy.antibody-observation.v1"
 
 # The five bindings the atlas requires. Named as a set so "refuses when any is
 # absent" can be checked against the list rather than against five ifs that

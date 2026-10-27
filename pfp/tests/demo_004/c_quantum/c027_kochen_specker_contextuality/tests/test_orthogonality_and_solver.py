@@ -1,14 +1,14 @@
 # AuthorityEffect: None.
 """Tests for orthogonality graph, context enumeration, and contextuality solver in C027."""
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.orthogonality import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.orthogonality import (
     compute_orthogonality_graph,
     enumerate_contexts,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.quad_field import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.quad_field import (
     QuadRat,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c027_kochen_specker_contextuality.reference_solver.solver import (
     solve,
 )
 

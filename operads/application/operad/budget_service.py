@@ -13,7 +13,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from omega_engine_operads.domain.operad import (
+from operads.domain.operad import (
     EvidenceObservation,
     EvidenceReceipt,
     EvidenceType,

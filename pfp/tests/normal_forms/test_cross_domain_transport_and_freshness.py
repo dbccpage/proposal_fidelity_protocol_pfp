@@ -10,7 +10,7 @@ import hashlib
 import json
 import unittest
 
-from omega_engine_pfp.domain.normal_forms.reconciliation import (
+from pfp.domain.normal_forms.reconciliation import (
     classify_defect_cocycle,
     evaluate_freshness,
     evaluate_reconciliation,

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.shared_kernel.canonical import (
     _serde_json_text,
     canonical_json,
 )
@@ -14,19 +14,19 @@ _SEPARATOR_PACKET_ID = "11aa1b89aa513177c1aaa81cca3aedeb5e4ae9dcfdbf4c043e7e58b6
 
 
 def test_packet_id_uses_raw_line_and_paragraph_separators() -> None:
-    raw_text = '["omega-canonical-v1","string","\u2028\u2029"]'
+    raw_text = '["core-canonical-v1","string","\u2028\u2029"]'
     assert canonical_json("\u2028\u2029") == raw_text
     assert "\\u2028" not in raw_text and "\\u2029" not in raw_text
     assert (
-        _serde_json_text('["omega-canonical-v1","string","\\u2028\\u2029"]')
+        _serde_json_text('["core-canonical-v1","string","\\u2028\\u2029"]')
         == raw_text
     )
     assert (
-        _serde_json_text('["omega-canonical-v1","string","\\\\u2028\\\\u2029"]')
-        == '["omega-canonical-v1","string","\\\\u2028\\\\u2029"]'
+        _serde_json_text('["core-canonical-v1","string","\\\\u2028\\\\u2029"]')
+        == '["core-canonical-v1","string","\\\\u2028\\\\u2029"]'
     )
-    assert canonical_json("\\u2028") == '["omega-canonical-v1","string","\\\\u2028"]'
-    assert canonical_json("\u0000") == '["omega-canonical-v1","string","\\u0000"]'
+    assert canonical_json("\\u2028") == '["core-canonical-v1","string","\\\\u2028"]'
+    assert canonical_json("\u0000") == '["core-canonical-v1","string","\\u0000"]'
 
     packet = PacketEnvelopeV2(
         task_id="separator-task",

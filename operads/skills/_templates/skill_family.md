@@ -84,11 +84,11 @@ Forbidden:
 
 ---
 
-## Anomalon Governance Skill Family
+## Sentinel Governance Skill Family
 
 ## Family Identifier
 
-**ID**: anomalon-governance
+**ID**: sentinel-governance
 **Purpose**: Enforce evidence, non-self-certification, promotion gates, and audit discipline across skills, agents, and sprint artifacts.
 
 ## Member Skills
@@ -96,8 +96,8 @@ Forbidden:
 | Skill | Role in Family | Position |
 | --- | --- | --- |
 | blackrod | Final gatekeeper / credit decision | Last |
-| woland | Adversarial contradiction finder | Any |
-| techne-code-soviet-inspector | Test-quality veto | Before credit |
+| adversary | Adversarial contradiction finder | Any |
+| techne-code-inspector | Test-quality veto | Before credit |
 | vp-engineering-sprint-audit | Sprint evidence auditor | Before Blackrod |
 | svp-sadc-council-review | Architecture council authority | Council-only |
 | auto-review-skills | Skill ecosystem auditor | Periodic / triggered |

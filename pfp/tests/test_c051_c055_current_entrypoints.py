@@ -16,7 +16,7 @@ CHALLENGES = (
     "c054_exact_linear_systems",
     "c055_assignment_with_potentials",
 )
-PILOTS = ROOT / "omega_engine_woland/tests/pilots"
+PILOTS = ROOT / "adversary/tests/pilots"
 
 
 def outside(tmp_path, arguments, *, module=False):
@@ -93,7 +93,7 @@ def test_matrix_help_keeps_both_entry_styles_without_dispatch(tmp_path, module):
     folder = CHALLENGES[2]
     name = "run_" + folder[:4] + "_matrix"
     arguments = (
-        ["-m", "omega_engine_woland.tests.pilots." + folder + "." + name]
+        ["-m", "adversary.tests.pilots." + folder + "." + name]
         if module
         else [str(PILOTS / folder / (name + ".py"))]
     )
@@ -105,27 +105,27 @@ def test_matrix_help_keeps_both_entry_styles_without_dispatch(tmp_path, module):
 
 @pytest.mark.parametrize("challenge_id", ("C051", "C052", "C053", "C054", "C055", "C059"))
 def test_catalog_rows_reach_current_pilots_without_rewriting_identity(challenge_id):
-    from omega_engine_pfp.infrastructure.challenge_live import choose_case
-    from omega_engine_woland.infrastructure import challenge_play
-    from omega_engine_woland.tests.pilots.challenge_suite import catalog
+    from pfp.infrastructure.challenge_live import choose_case
+    from adversary.infrastructure import challenge_play
+    from adversary.tests.pilots.challenge_suite import catalog
 
     row = choose_case(challenge_id, "development", 0)
     before = dict(row)
     state = challenge_play.start(row)
     assert row == before
-    assert row["source"].startswith("omega_engine_education/pilots/demo_004/")
+    assert row["source"].startswith("education/pilots/demo_004/")
     assert catalog.load_case(row)
-    assert any(p.startswith("omega_engine_woland/tests/pilots/") for p in state["sources"])
+    assert any(p.startswith("adversary/tests/pilots/") for p in state["sources"])
     assert not any("/tests/" in p.split("/pilots/", 1)[-1] for p in state["sources"])
     assert challenge_play.report(state)["pfp_turn"]
 
 
 def test_relocated_case_still_requires_original_bytes(monkeypatch, tmp_path):
-    from omega_engine_pfp.infrastructure.challenge_live import choose_case
-    from omega_engine_woland.tests.pilots.challenge_suite import catalog
+    from pfp.infrastructure.challenge_live import choose_case
+    from adversary.tests.pilots.challenge_suite import catalog
 
     row = choose_case("C054", "development", 0)
-    destination = tmp_path / "omega_engine_woland/tests/pilots" / row["source"].split("f_program_synthesis/", 1)[1]
+    destination = tmp_path / "adversary/tests/pilots" / row["source"].split("f_program_synthesis/", 1)[1]
     destination.parent.mkdir(parents=True)
     destination.write_bytes(b'{"altered":true}')
     monkeypatch.setattr(catalog, "ROOT", tmp_path)

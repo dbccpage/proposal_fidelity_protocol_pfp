@@ -18,16 +18,16 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.ddc_execution.parse_ddc_tape_use_case import (
+from operads.application.ddc_execution.parse_ddc_tape_use_case import (
     ParseDdcTapeRequest,
 )
-from omega_engine_operads.domain.ddc_execution.ddc_step import (
+from operads.domain.ddc_execution.ddc_step import (
     DdcRecord,
     verify_ddc_candidate_laws,
     verify_merkle_chain,
 )
-from omega_engine_operads.frontend.cli.ddc_operad_cli import main as cli_main
-from omega_engine_operads.infrastructure.ddc_execution.ddc_tape import (
+from operads.frontend.cli.ddc_operad_cli import main as cli_main
+from operads.infrastructure.ddc_execution.ddc_tape import (
     FileDdcReceiptStorage,
     build_parse_ddc_tape_use_case,
 )
@@ -176,7 +176,7 @@ def test_default_ddc_receipt_uses_resolved_repository_not_cwd(
     root.mkdir()
     cwd = tmp_path / "other-working-directory"
     cwd.mkdir()
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(root))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(root))
     monkeypatch.chdir(cwd)
     result = build_parse_ddc_tape_use_case().execute(ParseDdcTapeRequest(
         source=str(_custody_input(tmp_path)), persist_evidence=True,
@@ -197,7 +197,7 @@ def test_explicit_ddc_export_remains_independent_of_bad_ic_activation(
     marker = root / "_ic/odni/migration/activation.json"
     marker.parent.mkdir(parents=True)
     marker.write_bytes(b"{}")
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(root))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(root))
     export = tmp_path / "export/receipt.json"
     result = build_parse_ddc_tape_use_case().execute(ParseDdcTapeRequest(
         source=str(_custody_input(tmp_path)), output_receipt_path=str(export),
@@ -213,7 +213,7 @@ def test_default_ddc_obstructed_root_is_typed_without_touching_cwd(
 ) -> None:
     root = tmp_path / "not-a-directory"
     root.write_bytes(b"retain obstruction")
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(root))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(root))
     cwd = tmp_path / "other-working-directory"
     cwd.mkdir()
     monkeypatch.chdir(cwd)
@@ -234,7 +234,7 @@ def test_default_ddc_receipt_refuses_bad_activation_without_writes_then_recovers
     root.mkdir()
     cwd = tmp_path / "other-working-directory"
     cwd.mkdir()
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(root))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(root))
     monkeypatch.chdir(cwd)
     source = _custody_input(tmp_path)
     use_case = build_parse_ddc_tape_use_case()
@@ -268,7 +268,7 @@ def test_ddc_all_candidate_laws_violations_and_edge_cases() -> None:
     """Cover all runtime law violations, negative branches, and deprecation triggers in ddc_step."""
     import warnings
 
-    from omega_engine_operads.domain.ddc_execution.ddc_step import (
+    from operads.domain.ddc_execution.ddc_step import (
         DDC_SHIM_DEPRECATED_REFUSAL,
     )
 

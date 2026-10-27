@@ -15,15 +15,15 @@ from collections import Counter
 from copy import deepcopy
 from pathlib import Path
 
-from omega_engine_pfp.use_cases.pfp_proposal import CheckProposalUseCase, repair_feedback
+from pfp.use_cases.pfp_proposal import CheckProposalUseCase, repair_feedback
 
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import ROOT
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import canonical
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import digest
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import load_case
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import load_plan
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import relocated
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import selected_rows
+from adversary.tests.pilots.challenge_suite.catalog import ROOT
+from adversary.tests.pilots.challenge_suite.catalog import canonical
+from adversary.tests.pilots.challenge_suite.catalog import digest
+from adversary.tests.pilots.challenge_suite.catalog import load_case
+from adversary.tests.pilots.challenge_suite.catalog import load_plan
+from adversary.tests.pilots.challenge_suite.catalog import relocated
+from adversary.tests.pilots.challenge_suite.catalog import selected_rows
 
 # Separate entrypoints, not a common stored-answer comparator. C042's SAT/DRAT
 # paths are complementary, so its one dispatcher is explicitly a single judge.
@@ -82,11 +82,11 @@ JUDGES = {
 
 
 def c005_gate(case, answer):
-    from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import (
+    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import (
         verify_consistency_certificate,
         verify_cycle_repair,
     )
-    from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
         validate_json_schema,
     )
 
@@ -120,7 +120,7 @@ def source_bindings(challenge):
         if "__pycache__" not in p.parts and "tests" not in p.relative_to(challenge).parts
     )
     if challenge.name.startswith("c029_"):
-        from omega_engine_pfp.domain.quantum import c029_coset
+        from pfp.domain.quantum import c029_coset
 
         files.append(Path(c029_coset.__file__).resolve())
     return {p.relative_to(ROOT).as_posix(): digest(p.read_bytes()) for p in files}
@@ -129,7 +129,7 @@ def source_bindings(challenge):
 def judges_for(challenge):
     n = int(challenge.name[1:4])
     if n == 1:
-        from omega_engine_woland.tests.pilots.challenge_suite.c001 import CHECKER_ID, check_answer
+        from adversary.tests.pilots.challenge_suite.c001 import CHECKER_ID, check_answer
         return [(CHECKER_ID, check_answer)]
     if n == 5:
         return [("c005:task_predicate", c005_gate)]
@@ -146,7 +146,7 @@ def judges_for(challenge):
             (entry, getattr(importlib.import_module(package + suffix + "." + module), function))
         )
     if n == 29:
-        from omega_engine_pfp.domain.quantum.c029_coset import (
+        from pfp.domain.quantum.c029_coset import (
             CHECKER_ID,
             verify_independent_coset,
         )
@@ -227,8 +227,8 @@ def worker(request):
                 failure_class="VERIFICATION_UNAVAILABLE", feedback=None)
             return checked
         if row["challenge"] == "C021" and result.failure_class != "ENVELOPE":
-            from omega_engine_pfp.ffi import get_default_host
-            from omega_engine_pfp.infrastructure.adapters.pfp_proposals import (
+            from pfp.ffi import get_default_host
+            from pfp.infrastructure.adapters.pfp_proposals import (
                 SymbolGameProposalAdapter,
             )
 
@@ -268,7 +268,7 @@ def worker(request):
 def isolated(request, timeout=20):
     try:
         process = subprocess.run(
-            [sys.executable, "-m", "omega_engine_pfp.infrastructure.challenge_execution"],
+            [sys.executable, "-m", "pfp.infrastructure.challenge_execution"],
             input=canonical(request),
             capture_output=True,
             cwd=ROOT,

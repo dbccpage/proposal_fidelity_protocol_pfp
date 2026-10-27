@@ -12,7 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
-from omega_engine_operations.use_cases.packaging.sync_cross_host_skills import (  # noqa: E402
+from operations.use_cases.packaging.sync_cross_host_skills import (  # noqa: E402
     HOST_SKILL_ROOTS,
 )
 
@@ -43,7 +43,7 @@ def check_host_seat_presence_and_parity(repo_root: Path) -> list[str]:
             violations.append(f"Host seat is not tracked: {host}")
 
     # 2. Check byte parity for shared governance manifests across active hosts
-    canon_root = repo_root / "omega_engine_operads"
+    canon_root = repo_root / "operads"
     manifests_to_check = [
         Path("skills/_shared/family_registry.md"),
         Path("registry/capabilities.yaml"),

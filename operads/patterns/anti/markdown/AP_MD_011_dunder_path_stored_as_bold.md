@@ -27,7 +27,7 @@ A markdown finding prints one filesystem path twice. The quoted copy stores `__i
 
 ## Witness
 
-Historical gate markdown. This digest did not rerun the gate and did not reopen the deposit. Source: `_ic/inr/omega_paper_reviews/2026-10-06_wdp_r1/gates.md`, dated 2026-10-06, overall status FAIL, 20 / 26 rules passed.
+Historical gate markdown. This digest did not rerun the gate and did not reopen the deposit. Source: `_ic/inr/core_paper_reviews/2026-10-06_wdp_r1/gates.md`, dated 2026-10-06, overall status FAIL, 20 / 26 rules passed.
 
 > Unmanifested file present in deposit: 'code/relational_coincidence/**init**.py' (`code/relational_coincidence/__init__.py`)
 

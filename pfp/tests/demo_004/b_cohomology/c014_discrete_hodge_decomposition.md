@@ -12,9 +12,9 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 ## 2. Why This Task
 
-Every edge flow on a 2-complex splits uniquely into a gradient part (from vertex potentials), a curl part (from face potentials) and a harmonic part, which is orthogonal to both; the harmonic space has dimension b₁ over Q (Eckmann 1944; see Lim 2020 for a modern account). This is the L2 counterpart of the L1 repair in [C011](c011_cycle_rank_ladder_coboundary_repair.md) and the structure behind the harmonic residuals the Symbol Game reports. In the estate it exists only as float diagnostics: `omega_engine/crates_rs/omega_solvers/src/solver_hodge_primal_dual_decomp.rs` is labelled "FLOAT DIAGNOSTICS ONLY" and must not certify. An exact version needs rational linear solves and careful sign conventions, which is hard to get right; checking it is a few exact matrix-vector products.
+Every edge flow on a 2-complex splits uniquely into a gradient part (from vertex potentials), a curl part (from face potentials) and a harmonic part, which is orthogonal to both; the harmonic space has dimension b₁ over Q (Eckmann 1944; see Lim 2020 for a modern account). This is the L2 counterpart of the L1 repair in [C011](c011_cycle_rank_ladder_coboundary_repair.md) and the structure behind the harmonic residuals the Symbol Game reports. In the estate it exists only as float diagnostics: `engine/crates_rs/core_solvers/src/solver_hodge_primal_dual_decomp.rs` is labelled "FLOAT DIAGNOSTICS ONLY" and must not certify. An exact version needs rational linear solves and careful sign conventions, which is hard to get right; checking it is a few exact matrix-vector products.
 
-The challenge stresses the Symbol Game's exact host, OEWAS (Omega Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Omega Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified exact Hodge solver. It does not give the parts any physical meaning.
+The challenge stresses the Symbol Game's exact host, OEWAS (Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified exact Hodge solver. It does not give the parts any physical meaning.
 
 ## 3. Formal Problem and Bounds
 
@@ -51,7 +51,7 @@ The example values are schematic. Omitted entries are zero; rationals are canoni
 - **Hidden base cases:** 40.
 - **Relabel and gauge controls:** 16. Vertex and edge relabelling; reversing an edge (negates that coordinate of f, of the parts and of δ rows); reversing a face (negates ψ at that face); adding a locally constant function to φ (the parts do not change).
 - **Poisoned but schema-valid:** 12. Complexes where the unweighted and weighted decompositions differ, so a solver ignoring W₁ fails; flows whose harmonic part is small relative to f (exact arithmetic must not lose it); complexes with a face whose boundary uses an edge twice with opposite signs.
-- **Exact checker:** new, small Rust code over `BigRational` using `omega_linear_algebra` for products and ranks. It checks the identity, δ₁h = 0, δ₀ᵀW₁h = 0, and b₁. No exact Hodge checker exists in the estate today, and `omega_engine/crates_rs/omega_solvers/src/hodge_certificate_checker.rs` checks an L1 certificate in `f64`, so neither is usable as is.
+- **Exact checker:** new, small Rust code over `BigRational` using `core_linear_algebra` for products and ranks. It checks the identity, δ₁h = 0, δ₀ᵀW₁h = 0, and b₁. No exact Hodge checker exists in the estate today, and `engine/crates_rs/core_solvers/src/hodge_certificate_checker.rs` checks an L1 certificate in `f64`, so neither is usable as is.
 - **Independent second checker:** a separately written Python `Fraction` implementation that recomputes g, c and h by solving the two normal equations and compares parts, not potentials.
 - **Checker mutation suite:** an h with δ₁h ≠ 0 in one face; an h orthogonal only under unit weights; a φ that shifts part of the flow into c; `harmonic_dim` off by one; a dependent harmonic basis; a float `0.3333`.
 
@@ -103,8 +103,8 @@ operand harmonic_dimension_is_b1.v1 | kind: guard | when: reporting harmonic_dim
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_solvers` (`solver_hodge_primal_dual_decomp.rs`, float diagnostics, for contrast only).
-- `omega_engine/crates_rs/omega_linear_algebra` (`image_kernel.rs`, `exact_ldlt.rs` for the normal equations) and `omega_engine/crates_rs/omega_homology` (`exact_betti.rs` for b₁).
+- `engine/crates_rs/core_solvers` (`solver_hodge_primal_dual_decomp.rs`, float diagnostics, for contrast only).
+- `engine/crates_rs/core_linear_algebra` (`image_kernel.rs`, `exact_ldlt.rs` for the normal equations) and `engine/crates_rs/core_homology` (`exact_betti.rs` for b₁).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: none in the catalog. Checker work: the exact Hodge checker described in §6.
 

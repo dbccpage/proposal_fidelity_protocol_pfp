@@ -23,7 +23,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any, Callable, Dict, List, Tuple
 
-from omega_engine_pfp.use_cases.detector_adequacy import detectors as d
+from pfp.use_cases.detector_adequacy import detectors as d
 
 Relation = Callable[[Dict[str, Any], d.Steps, Dict[str, Any]], Fraction]
 
@@ -118,7 +118,7 @@ def run_local(name: str, trace: Dict[str, Any]) -> d.Verdict:
                          str(verdict.diagnostics.get("error", verdict.status)))
     dual = verdict.dual_witness or {}
     named: Dict[str, Fraction] = {}
-    for e, w in omega.items():
+    for e, w in core.items():
         if w != 0 and dual.get(e, Fraction(0)) != 0:
             named[owner[e]] = named.get(owner[e], Fraction(0)) + w
     return d.Verdict(name, d.RED, verdict.status, verdict.phi_1, certified, tuple(sorted(named.items())), None)

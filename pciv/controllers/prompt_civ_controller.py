@@ -7,8 +7,8 @@ from dataclasses import asdict, replace
 from fractions import Fraction
 from typing import Any
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err
 
 from ..domain.elenchus import ElenchusResult, SocraticElenchusBureau
 from ..domain.models import (

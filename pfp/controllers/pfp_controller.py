@@ -24,15 +24,15 @@ from ..domain.kernel.ports import (
 from ..domain.prompts.prompts import PromptPacket
 from ..domain.kernel.result import DomainError, Result
 from ..domain.rewriting.rewrites import RewriteReceipt, RewriteRequest
-from omega_engine_pfp.infrastructure.pilot_runners.pilot_dispatch import (
+from pfp.infrastructure.pilot_runners.pilot_dispatch import (
     UnifiedPfpDemoRunner,
 )
 from ..infrastructure.exact_math import ExactRationalSolver
-from ..infrastructure.gate_evaluators import WolandTribunalGateEvaluator
+from ..infrastructure.gate_evaluators import AdversaryTribunalGateEvaluator
 from ..infrastructure.providers import OfflineDeterministicPfpProvider, OpenRouterLiveProvider
 from ..infrastructure.storage import PfpFileSystemStorageAdapter
 from ..use_cases.assemble_prompt import AssemblePromptUseCase
-from ..use_cases.evaluate_gates import EvaluateWolandGatesUseCase
+from ..use_cases.evaluate_gates import EvaluateAdversaryGatesUseCase
 from ..use_cases.evaluate_pilot_suite import EvaluatePilotSuiteUseCase
 from ..use_cases.execute_stage_pipeline import (
     ExecuteStagePipelineUseCase,
@@ -60,7 +60,7 @@ class PfpController:
     ) -> None:
         self.storage = storage or PfpFileSystemStorageAdapter()
         self.provider = provider or OfflineDeterministicPfpProvider()
-        self.gate_evaluator = gate_evaluator or WolandTribunalGateEvaluator()
+        self.gate_evaluator = gate_evaluator or AdversaryTribunalGateEvaluator()
         self.solver = solver or ExactRationalSolver()
         self.demo_runner = demo_runner or UnifiedPfpDemoRunner()
 
@@ -72,7 +72,7 @@ class PfpController:
             solver=self.solver,
             catalog=catalog,
         )
-        self.gate_use_case = EvaluateWolandGatesUseCase(gate_evaluator=self.gate_evaluator)
+        self.gate_use_case = EvaluateAdversaryGatesUseCase(gate_evaluator=self.gate_evaluator)
         self.demo_use_case = RunDemoUseCase(
             catalog=catalog,
             runner=self.demo_runner,

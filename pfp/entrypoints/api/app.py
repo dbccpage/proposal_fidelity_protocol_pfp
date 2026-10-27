@@ -1,6 +1,6 @@
 """Lightweight HTTP server host for Symbol Game API router.
 
-Can run as `python -m omega_engine_pfp.entrypoints.api.app --port 8080`.
+Can run as `python -m pfp.entrypoints.api.app --port 8080`.
 AuthorityEffect: None (const).
 """
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Protocol, Sequence
 
-from omega_engine_operads.domain.python_development_office.test_execution_receipt import (
+from operads.domain.python_development_office.test_execution_receipt import (
     TestExecutionReceipt,
 )
 

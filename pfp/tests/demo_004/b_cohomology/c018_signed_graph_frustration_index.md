@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 A signed graph is balanced when every cycle has an even number of negative edges; equivalently, when some switching (flipping the signs of all edges at a set of vertices) makes every edge positive (Harary 1953). The frustration index l(Σ) is the minimum number of edges whose deletion leaves a balanced graph, which equals the minimum number of negative edges over all switchings. It is the Z/2 analogue of [C011](c011_cycle_rank_ladder_coboundary_repair.md): the signs form a 1-cochain σ over Z/2, switchings are coboundaries δs, and l(Σ) is the minimum Hamming weight of σ + δs over s, the lightest representative of the class of σ in H¹(G; Z/2).
 
-Unlike C011, optimality is NP-hard: an all-negative signed graph has l = |E| − maxcut(G), so computing l decides maximum cut (Karp 1972). An upper bound is easy to certify (show the switching). A matching lower bound is not, and a solver that cannot certify one must say `UNKNOWN`. That is the point of the challenge: it rewards honest refusals as much as solutions. It stresses the Symbol Game's exact host and refusal path, OEWAS (Omega Engine Workflows, Agents, Skills) decomposition by blocks (U13), and the OEEIS (Omega Engine Epistemic Immune System) discipline that an uncertified optimum is not reported as one. A pass shows certified optima where certifiable and honest bounds elsewhere. It does not show a polynomial algorithm.
+Unlike C011, optimality is NP-hard: an all-negative signed graph has l = |E| − maxcut(G), so computing l decides maximum cut (Karp 1972). An upper bound is easy to certify (show the switching). A matching lower bound is not, and a solver that cannot certify one must say `UNKNOWN`. That is the point of the challenge: it rewards honest refusals as much as solutions. It stresses the Symbol Game's exact host and refusal path, OEWAS (Engine Workflows, Agents, Skills) decomposition by blocks (U13), and the OEEIS (Engine Epistemic Immune System) discipline that an uncertified optimum is not reported as one. A pass shows certified optima where certifiable and honest bounds elsewhere. It does not show a polynomial algorithm.
 
 ## 3. Formal Problem and Bounds
 
@@ -57,7 +57,7 @@ Omitted switching entries are +1. The examples are abbreviated. A `SOLVED` certi
 - **Hidden base cases:** 40, including 8 whose optimum is uncertified.
 - **Relabel and gauge controls:** 16. Vertex renaming and random switchings of the input (l is invariant; the certificate's switching changes).
 - **Poisoned but schema-valid:** 12. Graphs where greedy local switching stalls above the optimum; graphs where the packing bound is not tight; instances with a plausible but wrong "optimal" value in their comment field.
-- **Exact checker:** new Rust code: switched-sign counts, cycle validity and edge-disjointness, exhaustive replay for small graphs, and block decomposition, reusing `omega_solvers` for SAT. Whether `solver_cadical_unsat_core.rs` can emit DRAT or LRAT proofs is checked at packet-build time; if not, proofs are produced and checked with an external solver and proof checker (for example drat-trim) run by the operator.
+- **Exact checker:** new Rust code: switched-sign counts, cycle validity and edge-disjointness, exhaustive replay for small graphs, and block decomposition, reusing `core_solvers` for SAT. Whether `solver_cadical_unsat_core.rs` can emit DRAT or LRAT proofs is checked at packet-build time; if not, proofs are produced and checked with an external solver and proof checker (for example drat-trim) run by the operator.
 - **Independent second checker:** a separately written Python checker, plus an integer-programming solve at packet-build time to set each case's certified bounds.
 - **Checker mutation suite:** a deleted set that differs from the switched negatives by one edge; a packing with two cycles sharing an edge; a "negative" cycle with an even number of negative edges; `SOLVED` with a lower bound one below l; an `UNKNOWN` with a lower bound above the true value.
 
@@ -109,8 +109,8 @@ operand unknown_with_bounds.v1 | kind: guard | when: upper and lower bounds diff
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_solvers` (`solver_cadical_unsat_core.rs`, SAT via CaDiCaL) and `omega_engine/crates_rs/omega_homology` (`finite_directed_graph.rs`).
-- `omega_engine/crates_rs/omega_symbol_game` (`classify_gauge_board`, which classifies an F₂ cochain against given F₂ matrices d0 and d1; the balance test is whether σ, written additively, lies in the image of d0).
+- `engine/crates_rs/core_solvers` (`solver_cadical_unsat_core.rs`, SAT via CaDiCaL) and `engine/crates_rs/core_homology` (`finite_directed_graph.rs`).
+- `engine/crates_rs/core_symbol_game` (`classify_gauge_board`, which classifies an F₂ cochain against given F₂ matrices d0 and d1; the balance test is whether σ, written additively, lies in the image of d0).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrade: [U13](../../upgrades/u13_cohomological_task_decomposition.md). Checker work: the Rust checker in §6 and a proof-checking path for UNSAT certificates.
 

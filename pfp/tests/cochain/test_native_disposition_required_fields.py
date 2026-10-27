@@ -6,9 +6,9 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.domain import cochain
-from omega_engine_pfp.infrastructure.finite_qm_cochain_judge import NativeCochainJudge
+from operations.domain.rop.result import Ok
+from pfp.domain import cochain
+from pfp.infrastructure.finite_qm_cochain_judge import NativeCochainJudge
 
 REPLIES = {
     "ExactCoboundary": {

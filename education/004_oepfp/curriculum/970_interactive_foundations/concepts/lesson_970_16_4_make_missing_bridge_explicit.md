@@ -25,7 +25,7 @@ A changed Alpha source, forged output, absent mapping, and wrong
 observation must refuse at the adapter. A self-edge must be refused by
 the *host*. Explain
 why `Phi_1=0` on this single-edge board says nothing about a three-cycle
-obstruction or the production Omega Engine.
+obstruction or the production Engine.
 
 > **Claim-typing legend**
 > - **[Pinned]**: taken from a file this repository already has.
@@ -34,7 +34,7 @@ obstruction or the production Omega Engine.
 > - **[Open]**: something this sitting does not decide.
 ## Anchors
 
-- Former notebook: `13_alpha_to_omega_execution`
+- Former notebook: `13_alpha_to_core_execution`
 - The code checks one finite example. It is not a general proof.
 
 ## Exercise

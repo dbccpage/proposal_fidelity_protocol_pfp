@@ -6,25 +6,25 @@ import importlib
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from omega_engine_operads.application.python_development_office.rules.base import ArchitectureRule, AstRule, BaseRule, RuleContext
-    from omega_engine_operads.application.python_development_office.rules.clean_arch import CleanArchitectureDependencyRule
-    from omega_engine_operads.application.python_development_office.rules.ddd import DomainMustNotImportFrameworkRule
-    from omega_engine_operads.application.python_development_office.rules.mvc import ThinControllerRule
-    from omega_engine_operads.application.python_development_office.rules.python_pitfalls import ALL_PITFALL_RULES
-    from omega_engine_operads.application.python_development_office.rules.registry import RuleRegistry
+    from operads.application.python_development_office.rules.base import ArchitectureRule, AstRule, BaseRule, RuleContext
+    from operads.application.python_development_office.rules.clean_arch import CleanArchitectureDependencyRule
+    from operads.application.python_development_office.rules.ddd import DomainMustNotImportFrameworkRule
+    from operads.application.python_development_office.rules.mvc import ThinControllerRule
+    from operads.application.python_development_office.rules.python_pitfalls import ALL_PITFALL_RULES
+    from operads.application.python_development_office.rules.registry import RuleRegistry
 
 __all__ = ('ArchitectureRule', 'AstRule', 'BaseRule', 'RuleContext', 'CleanArchitectureDependencyRule', 'DomainMustNotImportFrameworkRule', 'ThinControllerRule', 'ALL_PITFALL_RULES', 'RuleRegistry')
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
-    'ArchitectureRule': ('omega_engine_operads.application.python_development_office.rules.base', 'ArchitectureRule'),
-    'AstRule': ('omega_engine_operads.application.python_development_office.rules.base', 'AstRule'),
-    'BaseRule': ('omega_engine_operads.application.python_development_office.rules.base', 'BaseRule'),
-    'RuleContext': ('omega_engine_operads.application.python_development_office.rules.base', 'RuleContext'),
-    'CleanArchitectureDependencyRule': ('omega_engine_operads.application.python_development_office.rules.clean_arch', 'CleanArchitectureDependencyRule'),
-    'DomainMustNotImportFrameworkRule': ('omega_engine_operads.application.python_development_office.rules.ddd', 'DomainMustNotImportFrameworkRule'),
-    'ThinControllerRule': ('omega_engine_operads.application.python_development_office.rules.mvc', 'ThinControllerRule'),
-    'ALL_PITFALL_RULES': ('omega_engine_operads.application.python_development_office.rules.python_pitfalls', 'ALL_PITFALL_RULES'),
-    'RuleRegistry': ('omega_engine_operads.application.python_development_office.rules.registry', 'RuleRegistry'),
+    'ArchitectureRule': ('operads.application.python_development_office.rules.base', 'ArchitectureRule'),
+    'AstRule': ('operads.application.python_development_office.rules.base', 'AstRule'),
+    'BaseRule': ('operads.application.python_development_office.rules.base', 'BaseRule'),
+    'RuleContext': ('operads.application.python_development_office.rules.base', 'RuleContext'),
+    'CleanArchitectureDependencyRule': ('operads.application.python_development_office.rules.clean_arch', 'CleanArchitectureDependencyRule'),
+    'DomainMustNotImportFrameworkRule': ('operads.application.python_development_office.rules.ddd', 'DomainMustNotImportFrameworkRule'),
+    'ThinControllerRule': ('operads.application.python_development_office.rules.mvc', 'ThinControllerRule'),
+    'ALL_PITFALL_RULES': ('operads.application.python_development_office.rules.python_pitfalls', 'ALL_PITFALL_RULES'),
+    'RuleRegistry': ('operads.application.python_development_office.rules.registry', 'RuleRegistry'),
 }
 
 

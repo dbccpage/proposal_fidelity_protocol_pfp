@@ -35,17 +35,17 @@ from __future__ import annotations
 from collections.abc import Mapping
 from pathlib import Path
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     current_context,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import load_path
-from omega_engine_operations.use_cases.level_engine.research_engine.errors import Refusal
-from omega_engine_operations.use_cases.level_engine.research_engine.guards import EMBARGO_KINDS
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed_evidence import (
+from operations.use_cases.level_engine.research_engine.canon import load_path
+from operations.use_cases.level_engine.research_engine.errors import Refusal
+from operations.use_cases.level_engine.research_engine.guards import EMBARGO_KINDS
+from operations.use_cases.level_engine.research_engine.sealed_evidence import (
     axiom_report,
     lean_citation,
 )
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed_evidence import (
+from operations.use_cases.level_engine.research_engine.sealed_evidence import (
     source as sealed_source,
 )
 

@@ -1,6 +1,6 @@
 # Canonical Paper Directory Layout Specification
 
-**Canonical Source:** `omega_engine_atlas/coda_atlas/_kits/paper_template/`  
+**Canonical Source:** `atlas/coda_atlas/_kits/paper_template/`  
 **Governing Standard:** Consolidated Paper Invariants & Clean Architecture Discipline  
 **AuthorityEffect:** None.  
 

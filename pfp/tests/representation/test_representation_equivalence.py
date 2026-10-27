@@ -10,11 +10,11 @@ from __future__ import annotations
 import json
 import pytest
 
-from omega_engine_pfp.domain.representation.models import TurnView
-from omega_engine_pfp.infrastructure.adapters.representation.glyph_packet_representation import (
+from pfp.domain.representation.models import TurnView
+from pfp.infrastructure.adapters.representation.glyph_packet_representation import (
     GlyphPacketRepresentation,
 )
-from omega_engine_pfp.infrastructure.adapters.representation.plain_text_representation import (
+from pfp.infrastructure.adapters.representation.plain_text_representation import (
     PlainTextRepresentation,
 )
 

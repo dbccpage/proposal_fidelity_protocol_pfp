@@ -35,7 +35,7 @@ The goal of the multi-agent tournament is to evaluate whether language models or
 
 ## 2. Host Verification Gate
 
-The verification gate is implemented by `MultiQubitNoisyBraidReferee` under `omega_engine_projects/ms_majorana/code/majorana_multiqubit_noise.py`. The gate checks:
+The verification gate is implemented by `MultiQubitNoisyBraidReferee` under `projects/ms_majorana/code/majorana_multiqubit_noise.py`. The gate checks:
 
 1. **Parameter Well-Formedness**: Number of qubits $N \ge 1$, mode dimension $4N$.
 2. **Matrix Orthogonality and Group Invariance**: $U^T U = I$, $U \in SO(4N)$.

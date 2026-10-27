@@ -4,7 +4,7 @@
 
 ## Canon path
 
-`omega_engine/crates/symbol_game/_docs/_the_symbol_game_history/`
+`engine/crates/symbol_game/_docs/_the_symbol_game_history/`
 
 | File                                | Stage                                       |
 | ----------------------------------- | ------------------------------------------- |

@@ -6,7 +6,7 @@ import dataclasses
 import json
 from pathlib import Path
 
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain.planar_substitution import (
     OPERAD_COLOURS,
     OperadOperation,
     SubstitutionError,
@@ -115,7 +115,7 @@ def main():
     )
     path = (
         Path(__file__).resolve().parents[2]
-        / "omega_engine/crates_rs/tests/omega_operads/fixtures/python_planar_v1.json"
+        / "engine/crates_rs/tests/core_operads/fixtures/python_planar_v1.json"
     )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(

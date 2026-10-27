@@ -7,14 +7,14 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from operations.domain.rop.result import Ok
+from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+from pfp.infrastructure.pilot_matrix import (
     complete_pilot_turn,
     validate_pilot_gateways,
 )
-from omega_engine_woland.domain.providers.attempt import AdmittedRequest, CompletionOutcome
-from omega_engine_woland.domain.providers.types import CandidateRequest, CandidateResponse, Provider
+from adversary.domain.providers.attempt import AdmittedRequest, CompletionOutcome
+from adversary.domain.providers.types import CandidateRequest, CandidateResponse, Provider
 
 
 def make_gateway(tmp_path, *, model="vendor/model", cost=0.000001, answer=None,
@@ -153,7 +153,7 @@ def test_same_pfp_action_cannot_dispatch_twice_even_with_remaining_allowance(tmp
 
 @pytest.mark.parametrize("raw", [b"provider invalid JSON", b'{"choices":[],"usage":{}}'])
 def test_provider_decode_and_parse_failures_retain_exact_returned_wire(tmp_path, raw):
-    from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+    from adversary.infrastructure.providers.gateway import unbudgeted_gateway
     calls = []
     def transport(*args):
         calls.append(args)
@@ -179,11 +179,11 @@ def test_provider_decode_and_parse_failures_retain_exact_returned_wire(tmp_path,
 def test_declared_c005_schema_survives_binding_and_rejects_wrong_answer(tmp_path, kind, answer):
     from copy import deepcopy
 
-    from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
         CONSISTENCY_JSON_SCHEMA,
         CYCLE_REPAIR_JSON_SCHEMA,
     )
-    from omega_engine_woland.domain.providers.types import DecodingParamsV1
+    from adversary.domain.providers.types import DecodingParamsV1
 
     declared = deepcopy(CONSISTENCY_JSON_SCHEMA if kind == "consistency" else CYCLE_REPAIR_JSON_SCHEMA)
     request = CandidateRequest("Solve the original task.", "public input",
@@ -210,7 +210,7 @@ def test_declared_c005_schema_survives_binding_and_rejects_wrong_answer(tmp_path
 
 
 def test_missing_declared_schema_refuses_without_generic_fallback(tmp_path):
-    from omega_engine_woland.domain.providers.types import DecodingParamsV1
+    from adversary.domain.providers.types import DecodingParamsV1
     gateway, provider = make_gateway(tmp_path)
     request = CandidateRequest("Solve", "public input", decoding=DecodingParamsV1(
         response_format={"type": "json_schema", "json_schema": {"name": "missing"}}))
@@ -221,7 +221,7 @@ def test_missing_declared_schema_refuses_without_generic_fallback(tmp_path):
 
 
 def test_logit_bias_remains_only_declared_provider_control(tmp_path):
-    from omega_engine_woland.domain.providers.types import DecodingParamsV1
+    from adversary.domain.providers.types import DecodingParamsV1
     gateway, provider = make_gateway(tmp_path, answer={"verdict": "INCONSISTENT", "certificate": {}})
     bias = {"123": -100, "456": 5}
     request = CandidateRequest("Solve", "public input",

@@ -10,8 +10,8 @@ from pathlib import Path
 import httpx
 from fastapi import FastAPI
 
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
-from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+from operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.capability_catalog_compiler import (
     compile_capability_catalog,
     write_host_projections,
 )

@@ -11,7 +11,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.errors import (
+from pfp.domain.errors import (
     REFUSAL_ARRAY_NOT_SORTED,
     REFUSAL_AUTHORITY_NON_NONE,
     REFUSAL_BODY_DIGEST_MISMATCH,
@@ -19,7 +19,7 @@ from omega_engine_pfp.domain.errors import (
     REFUSAL_ID_MISMATCH,
     REFUSAL_OPEN_WITH_DUAL_WITNESS,
 )
-from omega_engine_pfp.domain.shared_kernel import (
+from pfp.domain.shared_kernel import (
     DEFAULT_REQUIRED_FIELDS,
     ContentDigest,
     DemandId,
@@ -30,8 +30,8 @@ from omega_engine_pfp.domain.shared_kernel import (
     ResidualColour,
     Summary,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest
-from omega_engine_pfp.domain.validation import (
+from pfp.domain.shared_kernel.canonical import domain_digest
+from pfp.domain.validation import (
     MAX_BODY_BYTES,
     MAX_CONSTRUCTORS,
     MAX_DEMANDS,
@@ -49,7 +49,7 @@ from omega_engine_pfp.domain.validation import (
     normalize_utf8_lf,
     raw_content_sha256,
 )
-from omega_engine_pfp.domain.value_objects.wire_keys import (
+from pfp.domain.value_objects.wire_keys import (
     DEMAND_ITEM_WIRE_FIELDS,
     ELIMINATION_RECEIPT_WIRE_FIELDS,
     OBJECTIVE_TYPED_WIRE_FIELDS,
@@ -64,14 +64,14 @@ from omega_engine_pfp.domain.value_objects.wire_keys import (
     PromptArtifactWireKey,
 )
 
-PROMPT_ARTIFACT_SCHEMA = "omega.symbol-game.prompt-artifact.v1"
+PROMPT_ARTIFACT_SCHEMA = "core.symbol-game.prompt-artifact.v1"
 PROMPT_ARTIFACT_FAMILY = "prompt_artifact"
-PAYLOAD_DOMAIN = "omega.symbol-game.prompt-artifact-payload.v1"
-REGIME_DOMAIN = "omega.symbol-game.regime-definition.v1"
+PAYLOAD_DOMAIN = "core.symbol-game.prompt-artifact-payload.v1"
+REGIME_DOMAIN = "core.symbol-game.regime-definition.v1"
 
-ELIMINATION_RECEIPT_SCHEMA = "omega.symbol-game.elimination-receipt.v1"
+ELIMINATION_RECEIPT_SCHEMA = "core.symbol-game.elimination-receipt.v1"
 ELIMINATION_RECEIPT_FAMILY = "elimination_receipt"
-ELIMINATION_RECEIPT_DOMAIN = "omega.symbol-game.elimination-receipt.v1"
+ELIMINATION_RECEIPT_DOMAIN = "core.symbol-game.elimination-receipt.v1"
 AUTHORITY_EFFECT_NONE = "None"
 DEFAULT_REQUIRED_REPLY_FIELDS = DEFAULT_REQUIRED_FIELDS
 
@@ -939,7 +939,7 @@ def build_payload_from_prompt_artifact(
     operation_budget: int = 20,
 ) -> Any:
     """Build an LlmTurnPayloadV1 bound to a PromptArtifactV1."""
-    from omega_engine_pfp.domain.aggregates.llm_turn_run_root import LlmTurnPayloadV1
+    from pfp.domain.aggregates.llm_turn_run_root import LlmTurnPayloadV1
 
     content_sha, content_len = prompt_artifact_to_content_binding(artifact)
     objective_summary = str(artifact.objective_typed.summary)

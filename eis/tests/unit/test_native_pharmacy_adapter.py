@@ -10,18 +10,18 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import (
+from eis.infrastructure.mssn_pharmacy import (
     DetectionContext,
     HostReplayReceipt,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import (
+from eis.infrastructure.native_pharmacy import (
     NATIVE_CLASS_CODES,
     NativePharmacy,
     NativePharmacyUnavailable,
     native_context,
     parse_native_report,
 )
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal
+from operations.domain.rop.result import Err, Ok, Refusal
 
 REPORT = {
     "detectors_run": list(NATIVE_CLASS_CODES.values()),
@@ -81,7 +81,7 @@ def test_every_failure_is_a_typed_refusal(outcome, code: str) -> None:
 
 
 def test_a_missing_binary_is_a_typed_refusal(monkeypatch: pytest.MonkeyPatch) -> None:
-    import omega_engine_pfp.ffi as ffi
+    import pfp.ffi as ffi
 
     def missing(self, binary_path=None):
         raise FileNotFoundError("HOST_BINARY_NOT_FOUND: not built")

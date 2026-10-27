@@ -28,7 +28,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.budget_gate import (
     FALLBACK_NOT_ALLOWED,
     HARD_CEILING_MICROUSD,
     HARD_CEILING_USD,
@@ -38,24 +38,24 @@ from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.govern
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.governance.adversary_gate import (
     GATE_SCOPE,
     RUN_FOLDER_EXISTS,
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
-from omega_engine_woland.domain.providers.model_registry import (
+from adversary.domain.providers.model_registry import (
     ModelNotRegistered,
     ModelParameterCeilingRefused,
 )
-from omega_engine_woland.domain.providers.types import BudgetExceeded, Provider
+from adversary.domain.providers.types import BudgetExceeded, Provider
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 CASE_SUBDIRS = ("base", "controls", "poisoned")
@@ -291,8 +291,8 @@ def test_budget_gate_allow_fallbacks_strict_refusal() -> None:
 # ============================================================================
 
 
-def test_woland_gate_terminal_verdicts(tmp_path: Path) -> None:
-    gate = WolandGate(base_repo_root=tmp_path)
+def test_adversary_gate_terminal_verdicts(tmp_path: Path) -> None:
+    gate = AdversaryGate(base_repo_root=tmp_path)
 
     # Case A: All passed with agreement, 0 defects -> REFERENCE_SELF_CONSISTENT
     cases_all_pass = [
@@ -339,9 +339,9 @@ def test_woland_gate_terminal_verdicts(tmp_path: Path) -> None:
     )
 
 
-def test_woland_gate_label_is_reference_self_check_not_pass_to_master(tmp_path: Path) -> None:
+def test_adversary_gate_label_is_reference_self_check_not_pass_to_master(tmp_path: Path) -> None:
     """Counterexample: an all-pass self-score of the reference solver was labelled PASS_TO_MASTER."""
-    gate = WolandGate(base_repo_root=tmp_path)
+    gate = AdversaryGate(base_repo_root=tmp_path)
     assert (
         gate.determine_terminal_verdict([{"verdict": "PASS", "agreement": True}])
         == "REFERENCE_SELF_CONSISTENT"
@@ -349,9 +349,9 @@ def test_woland_gate_label_is_reference_self_check_not_pass_to_master(tmp_path: 
     assert gate.determine_terminal_verdict([]) == "REFERENCE_SELF_INCONSISTENT"
 
 
-def test_woland_gate_defect_values_are_exact_without_tolerance(tmp_path: Path) -> None:
+def test_adversary_gate_defect_values_are_exact_without_tolerance(tmp_path: Path) -> None:
     """Counterexample: phi1=1e-6 passed under a 1e-6 float tolerance; a measured 1/10^7 must be inconsistent."""
-    gate = WolandGate(base_repo_root=tmp_path)
+    gate = AdversaryGate(base_repo_root=tmp_path)
     cases = [{"verdict": "PASS", "agreement": True}]
     assert gate.determine_terminal_verdict(cases, phi1=Fraction(1, 10**7)) == TERMINAL_REFUSE
     assert (
@@ -364,9 +364,9 @@ def test_woland_gate_defect_values_are_exact_without_tolerance(tmp_path: Path) -
         gate.determine_terminal_verdict(cases, gamma2=False)
 
 
-def test_woland_gate_reverse_write_order_and_sha256_bindings(tmp_path: Path) -> None:
+def test_adversary_gate_reverse_write_order_and_sha256_bindings(tmp_path: Path) -> None:
     """Counterexample: the report was a templated 7-act novella and the DDA tape 8 constant rows."""
-    gate = WolandGate(base_repo_root=tmp_path)
+    gate = AdversaryGate(base_repo_root=tmp_path)
 
     cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
     claim_hygiene = {
@@ -376,7 +376,7 @@ def test_woland_gate_reverse_write_order_and_sha256_bindings(tmp_path: Path) -> 
         "next_test_needed": "Case c2",
     }
 
-    verdict, path_woland, path_sg, digests = gate.evaluate_and_persist(
+    verdict, path_adversary, path_sg, digests = gate.evaluate_and_persist(
         task_key="test_run_reverse_order",
         run_id="test_run_id_001",
         case_results=cases,
@@ -384,11 +384,11 @@ def test_woland_gate_reverse_write_order_and_sha256_bindings(tmp_path: Path) -> 
     )
 
     assert verdict == TERMINAL_REFERENCE_SELF_CONSISTENT
-    assert path_woland.exists()
+    assert path_adversary.exists()
     assert path_sg.exists()
 
     # Verify all 4 files exist in both locations
-    for run_dir in (path_woland, path_sg):
+    for run_dir in (path_adversary, path_sg):
         novella_file = run_dir / "novella.md"
         dda_file = run_dir / "dda_actions.jsonl"
         summary_file = run_dir / "summary.json"
@@ -453,8 +453,8 @@ def test_woland_gate_reverse_write_order_and_sha256_bindings(tmp_path: Path) -> 
         }
 
 
-def test_woland_gate_run_folder_exists_collision_protection(tmp_path: Path) -> None:
-    gate = WolandGate(base_repo_root=tmp_path)
+def test_adversary_gate_run_folder_exists_collision_protection(tmp_path: Path) -> None:
+    gate = AdversaryGate(base_repo_root=tmp_path)
     cases = [{"case_id": "c1", "verdict": "PASS", "agreement": True}]
     claim_hygiene = {
         "supports": "A",
@@ -494,7 +494,7 @@ def test_commit_reveal_phase1_judge_commitment_integrity(tmp_path: Path) -> None
 
     manifest = json.loads((root / "judge_packet" / "manifest.json").read_text(encoding="utf-8"))
     counts = _disk_counts(root / "judge_packet")
-    assert payload["schema"] == "omega.symbol-game.judge-commitment.v1"
+    assert payload["schema"] == "core.symbol-game.judge-commitment.v1"
     assert payload["challenge_id"] == "c021_q40_r"
     assert payload["protocol"] == "SG-CP-v1"
     assert payload["phase"] == "PHASE_1_OPERATOR_JUDGE_COMMITMENT"
@@ -517,7 +517,7 @@ def test_commit_reveal_phase2_freeze_record_integrity(tmp_path: Path) -> None:
     runner.run_phase1_judge_commitment()
     payload = runner.run_phase2_freeze_record()
 
-    assert payload["schema"] == "omega.symbol-game.freeze-record.v1"
+    assert payload["schema"] == "core.symbol-game.freeze-record.v1"
     assert payload["challenge_id"] == "c021_q40_r"
     assert payload["phase"] == "PHASE_2_SOLVER_FREEZE_RECORD"
     assert payload["entrypoint"] == "reference_solver.solver:solve"
@@ -622,7 +622,7 @@ def test_commit_reveal_phase3_evaluates_all_manifest_cases_end_to_end(tmp_path: 
     runner.run_phase2_freeze_record()
     receipt = runner.run_phase3_reveal_and_score(task_key="c021_q40_r_scoring_run_test")
 
-    assert receipt["schema"] == "omega.symbol-game.scoring-receipt.v1"
+    assert receipt["schema"] == "core.symbol-game.scoring-receipt.v1"
     assert receipt["challenge_id"] == "c021_q40_r"
     assert receipt["protocol"] == "SG-CP-v1"
     assert receipt["authority_effect"] == "None"
@@ -649,14 +649,14 @@ def test_commit_reveal_phase3_evaluates_all_manifest_cases_end_to_end(tmp_path: 
     assert budget["allow_fallbacks"] is False
 
     # Reference self-consistency label and run-folder digests (run folders under tmp_path)
-    woland = receipt["woland_reality_gate"]
-    assert woland["terminal_verdict"] == TERMINAL_REFERENCE_SELF_CONSISTENT
-    assert Path(woland["woland_run_folder"]).is_relative_to(tmp_path)
-    assert len(woland["novella_sha256"]) == 64
-    assert len(woland["dda_actions_sha256"]) == 64
-    assert len(woland["summary_sha256"]) == 64
-    assert len(woland["receipt_sha256"]) == 64
-    assert len(woland["dda_head_sha256"]) == 64
+    adversary = receipt["adversary_reality_gate"]
+    assert adversary["terminal_verdict"] == TERMINAL_REFERENCE_SELF_CONSISTENT
+    assert Path(adversary["adversary_run_folder"]).is_relative_to(tmp_path)
+    assert len(adversary["novella_sha256"]) == 64
+    assert len(adversary["dda_actions_sha256"]) == 64
+    assert len(adversary["summary_sha256"]) == 64
+    assert len(adversary["receipt_sha256"]) == 64
+    assert len(adversary["dda_head_sha256"]) == 64
 
     # Claim hygiene assertions
     claim = receipt["claim_hygiene"]

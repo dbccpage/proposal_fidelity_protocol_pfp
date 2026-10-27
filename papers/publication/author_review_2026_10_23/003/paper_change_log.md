@@ -178,8 +178,8 @@ They do not override the current manuscript or claim ledger.
 - Mapped current Rust pharmacy, symgam CLI, finite Symbol Game host, multipath iterator, lift gate, OEWAS retired Python stubs, and proposed Demo 3 manifest without treating them as one integrated live host.
 - Recorded the Genesis comparison as a replayable analogy and the two-spin model as a proposed calibration adapter, with no fermion-sign result.
 - Repaired two bounded historical-auditor edge cases in the shared Demo 3 code: contradictory identity witness fields and mixed-type batch parsing. No live transaction runner was added.
-- Added the omega_functional sole-calculation gate for Φ₁, Ξ, and Γ₂. Identified existing off-boundary paths as migration work and barred them from future live-study scoring.
-- Added a [functional ownership register](docs/functional_boundary_register.md) and routed several finite Rust callers through omega_functional; retired Python DDC functional calculations until a Rust adapter exists. The register keeps remaining violations explicit.
+- Added the core_functional sole-calculation gate for Φ₁, Ξ, and Γ₂. Identified existing off-boundary paths as migration work and barred them from future live-study scoring.
+- Added a [functional ownership register](docs/functional_boundary_register.md) and routed several finite Rust callers through core_functional; retired Python DDC functional calculations until a Rust adapter exists. The register keeps remaining violations explicit.
 - Source inspection began at Symbol Game 71690cbbc83cff45a6a8f0d8455f90d5f0b083d1, Genesis 89fc568a61eb22100edf4070d40eb1449c350ed4, and H3V7N5QF 64a6fbd0d0ebfa92633e35320df2dbe728220987. The initial draft and auditor changes were subsequently captured in 07e9f187f4e3e19cb0bb0634f046555c52a9486d. This is not a frozen live-study revision.
 
 ## 2026-09-24 — recovered session completion

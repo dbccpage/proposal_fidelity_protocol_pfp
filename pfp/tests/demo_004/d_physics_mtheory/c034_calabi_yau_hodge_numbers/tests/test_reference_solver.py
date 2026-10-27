@@ -5,16 +5,16 @@ AuthorityEffect: None.
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.calabi_yau import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.calabi_yau import (
     compute_affine_dimension,
     cross4,
     det3,
     det4,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.ddc_tracer import (
     DDCTracer,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.solver import (
     solve,
 )
 

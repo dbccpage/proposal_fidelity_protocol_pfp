@@ -17,7 +17,7 @@ At HEAD `b55fc96a`, `19L57G1:research/alpha_engine/evidence/lean.json` records `
 
 The local Lean file `lean/Harness.lean` holds 42 theorems, counting generated ones, all within `{propext, Quot.sound}`. They are about the harness types, not about what the driver computed. `Harness.evaluation_does_not_admit` is `rfl` on the first projection of `runEval = (base, eval base target)`. It never calls Python `evaluate`, and its `CanonKey` is an abstract `Nat`. So nothing yet connects what the Python driver did to the sealed Lean semantics.
 
-A trace-level refinement for one fold is the smallest honest step. Each exported step becomes a Lean fact, checked against the sealed definitions. The task stresses data-to-proof generation in the Symbol Game, OEWAS (Omega Engine Workflows, Agents, Skills) Lean pipelines, and OEEIS (Omega Engine Epistemic Immune System) refusal to overstate a trace result as program equivalence.
+A trace-level refinement for one fold is the smallest honest step. Each exported step becomes a Lean fact, checked against the sealed definitions. The task stresses data-to-proof generation in the Symbol Game, OEWAS (Engine Workflows, Agents, Skills) Lean pipelines, and OEEIS (Engine Epistemic Immune System) refusal to overstate a trace result as program equivalence.
 
 ## 3. Formal Problem and Bounds
 
@@ -70,7 +70,7 @@ The operator runs: `python ci/run_gates.py` at HEAD; `python research/alpha_engi
 
 **Held-out folds.** `READING_F` under `mu1`, and `READING_L` under `mu2`. The second is a sole class, whose License is still an apply. The frozen exporter and generator must handle both, and the frozen proof scripts must re-elaborate on them.
 
-**Second checker.** `omega_engine/crates_rs/omega_ooutwire_primitives` (`minima.rs`, `replay.rs`) replays the trace.
+**Second checker.** `engine/crates_rs/core_ooutwire_primitives` (`minima.rs`, `replay.rs`) replays the trace.
 
 **Mutation suite.** The judge must reject each of these: one minimum's items swapped; a key encoding that is not injective; a License naming a fabricated key; a child history missing the impose event.
 
@@ -122,7 +122,7 @@ The catalog row requires none. These are recommended:
 
 **19L57G1, read-only.** At HEAD: `19L57G1:research/alpha_engine/` (`driver_a.py`, `harness.py`, `evaluate.py`, `search_policy.py`, `lean/Harness.lean`, `evidence/`); at `3100c4e`: `19L57G1:lean4/Derivation/Basic.lean` and `Minimality.lean`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_ooutwire_primitives` and `omega_engine/crates_rs/omega_replay`.
+**the_symbol_game.** `engine/crates_rs/core_ooutwire_primitives` and `engine/crates_rs/core_replay`.
 
 **Upgrades.**
 

@@ -9,11 +9,11 @@ import os
 
 import pytest
 
-from omega_engine_pfp.domain.demos import DemoRefusal
-from omega_engine_pfp.infrastructure.demos.execution import Proposals, _annotate_live_result, _scrub
-from omega_engine_pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gateway
-from omega_engine_woland.domain.providers.types import ProviderConfigError
-from omega_engine_woland.infrastructure.providers import credential_source
+from pfp.domain.demos import DemoRefusal
+from pfp.infrastructure.demos.execution import Proposals, _annotate_live_result, _scrub
+from pfp.infrastructure.estimated_gateway import create_accounted_openrouter_gateway
+from adversary.domain.providers.types import ProviderConfigError
+from adversary.infrastructure.providers import credential_source
 
 
 class _FakeTransport:
@@ -32,7 +32,7 @@ def _factory(tmp_path, monkeypatch, *, explicit=None, discovery="off"):
     checkout = tmp_path / "checkout.env"
     _env(checkout, "checkout-secret")
     monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
-    monkeypatch.setenv("OMEGA_CREDENTIAL_DISCOVERY", discovery)
+    monkeypatch.setenv("CORE_CREDENTIAL_DISCOVERY", discovery)
     monkeypatch.setattr(
         credential_source,
         "env_file_candidates",
@@ -99,7 +99,7 @@ def test_live_transcript_redacts_a_file_sourced_key_in_the_error(monkeypatch):
         }
 
     monkeypatch.setattr(
-        "omega_engine_pfp.infrastructure.pilot_matrix.complete_pilot_turn",
+        "pfp.infrastructure.pilot_matrix.complete_pilot_turn",
         fake_turn,
     )
 

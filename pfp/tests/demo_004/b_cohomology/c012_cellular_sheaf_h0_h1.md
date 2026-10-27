@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 A cellular sheaf on a graph attaches a vector space to each vertex and edge and a linear restriction map to each incidence. Global sections (H^0) are the consistent assignments; H^1 measures which edge data cannot come from vertex data. It generalizes the scalar coboundary problem of [C011](c011_cycle_rank_ladder_coboundary_repair.md): with one-dimensional stalks and identity restrictions it is exactly that problem, and with nontrivial restrictions it models consensus under local change of coordinates (Hansen and Ghrist 2019). Generation is hard because the solver must assemble a block coboundary matrix with correct signs and orientations and handle rank drops; verification is cheap because membership, independence and rank are exact linear algebra over Q.
 
-The challenge stresses the Symbol Game's exact host, OEWAS (Omega Engine Workflows, Agents, Skills) decomposition by components and cycles (U13), and the OEEIS (Omega Engine Epistemic Immune System) only through the host's refusal path. A pass shows the game can produce a certified sheaf-cohomology solver on graphs. It does not cover sheaves on higher-dimensional complexes.
+The challenge stresses the Symbol Game's exact host, OEWAS (Engine Workflows, Agents, Skills) decomposition by components and cycles (U13), and the OEEIS (Engine Epistemic Immune System) only through the host's refusal path. A pass shows the game can produce a certified sheaf-cohomology solver on graphs. It does not cover sheaves on higher-dimensional complexes.
 
 ## 3. Formal Problem and Bounds
 
@@ -56,8 +56,8 @@ Vectors use the case's declared ordering of stalk coordinates. The certificate i
 - **Hidden base cases:** 40.
 - **Relabel and gauge controls:** 16. Vertex renaming; reversing an edge together with swapping its two restriction maps and negating the edge's target coordinates; a change of basis on one vertex stalk (x_v ↦ g x_v, restrictions F ↦ F g⁻¹), which preserves dimensions and transforms the certificate.
 - **Poisoned but schema-valid:** 12. Cycles where h = 1 only after cancellation of large factors; restriction maps that are rank-deficient in a way that looks invertible at a glance; targets whose obstruction witness must be nonzero on an edge the target does not touch.
-- **Exact checker:** `omega_homology::cohomology::cohomology_report` on the complex C^0 → C^1 → 0 over `BigRational` (it covers exactly H^0 and H^1, which is all this challenge needs), plus membership and independence checks with `omega_linear_algebra`.
-- **Independent second checker:** a separately written Python `Fraction` Gaussian elimination. `omega_solvers::solver_resolution_free_sheaf_cohomology` uses `f64` with a tolerance and is not a checker; it may appear only as labelled secondary evidence.
+- **Exact checker:** `core_homology::cohomology::cohomology_report` on the complex C^0 → C^1 → 0 over `BigRational` (it covers exactly H^0 and H^1, which is all this challenge needs), plus membership and independence checks with `core_linear_algebra`.
+- **Independent second checker:** a separately written Python `Fraction` Gaussian elimination. `core_solvers::solver_resolution_free_sheaf_cohomology` uses `f64` with a tolerance and is not a checker; it may appear only as labelled secondary evidence.
 - **Checker mutation suite:** an H^0 vector with one coordinate off; a dependent basis; an H^1 complement that fails to span; an η with δᵀη ≠ 0 in one coordinate; an η orthogonal to b; `"2/4"`.
 
 ## 7. Arms and Baselines
@@ -108,8 +108,8 @@ operand component_direct_sum.v1 | kind: decomposition | when: the graph is disco
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_homology` (`cohomology.rs`, `cochain_complex.rs`, exact over `BigRational`) and `omega_engine/crates_rs/omega_linear_algebra` (`image_kernel.rs`).
-- `omega_engine/crates_rs/omega_solvers` (`solver_resolution_free_sheaf_cohomology.rs`, `f64`, secondary only).
+- `engine/crates_rs/core_homology` (`cohomology.rs`, `cochain_complex.rs`, exact over `BigRational`) and `engine/crates_rs/core_linear_algebra` (`image_kernel.rs`).
+- `engine/crates_rs/core_solvers` (`solver_resolution_free_sheaf_cohomology.rs`, `f64`, secondary only).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrade: [U13](../../upgrades/u13_cohomological_task_decomposition.md).
 

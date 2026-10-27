@@ -750,7 +750,7 @@ pub fn coupled_carrier_certificate() -> Result<CoupledCarrierCertificate, String
 ///
 /// ### Source correspondence (`po000_l004_observer_visibility.lean`)
 /// These are source-level comparisons, not generated Lean bindings or a new build.
-/// * `exactness.accepted` (`ω ∉ im(d₀)`) ↔ `PO000.ObserverVisibility.QuotientWitness.omega_not_exact`
+/// * `exactness.accepted` (`ω ∉ im(d₀)`) ↔ `PO000.ObserverVisibility.QuotientWitness.core_not_exact`
 /// * `quotient.distance == 2` (lower bound) ↔ `PO000.ObserverVisibility.QuotientWitness.repair_mass_ge_two`
 /// * `quotient.distance == 2` (Lean attainment at α=0; Rust may choose another minimizer) ↔ `PO000.ObserverVisibility.QuotientWitness.repair_mass_attained`
 /// * Quantification correspondence:

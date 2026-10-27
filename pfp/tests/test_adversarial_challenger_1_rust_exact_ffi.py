@@ -3,7 +3,7 @@
 Authored by Challenger 1 (teamwork_preview_challenger).
 Validates:
 1. Exact Rational / Zero-Float Stress Testing (high precision, negative coords, zero denominators, _to_exact_triad_ints, math.lcm).
-2. FFI Boundary & Native Binary Stress Testing (omega_symbol_game.exe fail-closed on malformed JSON, missing fields, unregistered adapters, out-of-bounds parameters, zero panics).
+2. FFI Boundary & Native Binary Stress Testing (core_symbol_game.exe fail-closed on malformed JSON, missing fields, unregistered adapters, out-of-bounds parameters, zero panics).
 3. Simplicial Homology & Nilpotency Verification (d_{k-1} o d_k = 0 on higher simplices up to dimension 6, non-closed boundary rejection).
 
 AuthorityEffect: None (const).
@@ -18,18 +18,18 @@ from fractions import Fraction
 from pathlib import Path
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_operating_system.adapters.rust_host.ffi import (
+from operations.domain.rop.result import Err, Ok
+from operating_system.adapters.rust_host.ffi import (
     RUNTIME_OUTCOME_SCHEMA,
     RUNTIME_REQUEST_SCHEMA,
     locate_host_binary,
 )
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.solvers.retraction import (
+from pfp.domain.exact.q import Q
+from pfp.domain.solvers.retraction import (
     ObstructionScore,
     _to_exact_triad_ints,
 )
-from omega_engine_pfp.ffi import RustSymbolGameHost, get_default_host
+from pfp.ffi import RustSymbolGameHost, get_default_host
 
 
 # ============================================================================
@@ -37,7 +37,7 @@ from omega_engine_pfp.ffi import RustSymbolGameHost, get_default_host
 # ============================================================================
 
 def _get_raw_binary() -> Path:
-    """Resolve the native omega_symbol_game binary directly."""
+    """Resolve the native core_symbol_game binary directly."""
     located = locate_host_binary()
     assert isinstance(located, Ok), f"Binary location failed: {located}"
     return located.value.binary
@@ -114,7 +114,7 @@ class TestExactRationalZeroFloatStress:
         assert q_neg.den == 13
 
         # Q enforces positive denominator: negative denominator raises ExactError
-        from omega_engine_pfp.domain.exact.errors import ExactError
+        from pfp.domain.exact.errors import ExactError
 
         with pytest.raises(ExactError) as exc_info:
             Q(7, -13)
@@ -127,7 +127,7 @@ class TestExactRationalZeroFloatStress:
 
     def test_zero_denominator_rejected(self):
         """Constructing rationals with zero denominator is strictly rejected."""
-        from omega_engine_pfp.domain.exact.errors import ExactError
+        from pfp.domain.exact.errors import ExactError
 
         with pytest.raises(ExactError) as exc_info:
             Q(1, 0)
@@ -252,7 +252,7 @@ class TestExactRationalZeroFloatStress:
 # ============================================================================
 
 class TestFfiBoundaryAndNativeBinaryStress:
-    """Adversarial testing of the native omega_symbol_game.exe process boundary."""
+    """Adversarial testing of the native core_symbol_game.exe process boundary."""
 
     def test_raw_binary_malformed_json_fails_closed(self):
         """Direct invocation with completely malformed JSON exits with error and zero panics."""

@@ -10,7 +10,7 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
-from omega_engine_pfp.use_cases.detector_adequacy import (
+from pfp.use_cases.detector_adequacy import (
     detectors,
     stage_b,
     stage_b_analysis,

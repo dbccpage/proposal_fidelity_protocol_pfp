@@ -54,7 +54,7 @@ from ..skill_operad.skill_compiler.op_inventory import (
 )
 from .typed_contract_compiler import _read
 
-ROOT = "omega_engine_operads/catalog/contracts/v1"
+ROOT = "operads/catalog/contracts/v1"
 EFFECTS = frozenset({"read_source", "write_workspace", "run_check", "emit_evidence"})
 
 
@@ -76,7 +76,7 @@ def load_code_repair_family(root: Path, *, executor_digest: ContentDigest) -> Co
     }
     schema_digest = ContentDigest.sha256(hashlib.sha256(canonical(schemas)).hexdigest())
     validator_digest = ContentDigest.sha256(hashlib.sha256(
-        (root / "omega_engine_operads/contracts/ddc_code_repair_v1.py").read_bytes()
+        (root / "operads/contracts/ddc_code_repair_v1.py").read_bytes()
     ).hexdigest())
 
     def port(name):
@@ -124,7 +124,7 @@ def load_code_repair_family(root: Path, *, executor_digest: ContentDigest) -> Co
             op_id=op_id, summary=declaration.instruction, inputs=("State",),
             output="Receipt" if stage == "T" else "State",
             binding=HostBinding(target=(
-                "omega_engine_woland/infrastructure/ddc_code_repair.py::CodeRepairRuntime."
+                "adversary/infrastructure/ddc_code_repair.py::CodeRepairRuntime."
                 + dict(EXECUTOR_METHODS)[stage]
             )),
         ))

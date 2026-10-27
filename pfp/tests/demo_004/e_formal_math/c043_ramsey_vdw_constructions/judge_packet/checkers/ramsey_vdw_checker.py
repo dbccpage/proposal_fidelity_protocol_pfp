@@ -6,19 +6,19 @@ Pure Python standard library implementation.
 from itertools import combinations
 from typing import Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
     DRATVerifier,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
     edge_index,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.local_search import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.local_search import (
     has_monochromatic_ap,
     has_monochromatic_clique,
     parse_fixed_edges,
     parse_fixed_elements,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.sat_bridge import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.sat_bridge import (
     encode_ramsey2_to_cnf,
     encode_vdw_to_cnf,
 )
@@ -93,7 +93,7 @@ def check_ramsey2(case: dict, answer: dict) -> Tuple[bool, str]:
             drat_lines = witness.get("drat_proof", [])
             drat_text = "\n".join(drat_lines) if isinstance(drat_lines, list) else str(drat_lines)
             num_vars, clauses = encode_ramsey2_to_cnf(n, s, t, fixed_dict)
-            from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
+            from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
                 parse_drat_proof,
             )
 
@@ -231,7 +231,7 @@ def check_vdw(case: dict, answer: dict) -> Tuple[bool, str]:
             drat_lines = witness.get("drat_proof", [])
             drat_text = "\n".join(drat_lines) if isinstance(drat_lines, list) else str(drat_lines)
             num_vars, clauses = encode_vdw_to_cnf(r, k, n, fixed_dict)
-            from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
+            from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import (
                 parse_drat_proof,
             )
 

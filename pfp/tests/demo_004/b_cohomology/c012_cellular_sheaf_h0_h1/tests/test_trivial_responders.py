@@ -12,10 +12,10 @@ import sys
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.reference_solver.solver import (
     solve,
 )
 

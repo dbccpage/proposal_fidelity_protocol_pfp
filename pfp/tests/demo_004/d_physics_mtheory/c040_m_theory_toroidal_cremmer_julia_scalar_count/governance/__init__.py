@@ -17,14 +17,14 @@ from .commit_reveal_runner import (
     phase3_reveal_and_score,
     verify_commitments,
 )
-from .woland_gate import WolandGate
+from .adversary_gate import AdversaryGate
 
 __all__ = [
     "BudgetCeilingExceededError",
     "BudgetGate",
     "FallbackNotAllowedError",
     "ModelParameterCeilingError",
-    "WolandGate",
+    "AdversaryGate",
     "phase1_commit_judge",
     "phase2_freeze_solver",
     "phase3_reveal_and_score",

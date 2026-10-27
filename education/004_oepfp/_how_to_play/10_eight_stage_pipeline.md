@@ -1,8 +1,8 @@
 # 10. The current eight-stage pipeline
 
 AuthorityEffect: None. Source inspected 2026-10-12:
-[stage definitions](../../../../omega_engine_pfp/domain/stages/stages.py) and
-[pipeline execution](../../../../omega_engine_pfp/use_cases/execute_stage_pipeline.py).
+[stage definitions](../../../../pfp/domain/stages/stages.py) and
+[pipeline execution](../../../../pfp/use_cases/execute_stage_pipeline.py).
 
 The current `run-seed` CLI executes a contiguous prefix of stages 1–8.
 `--stages N` means stages 1 through N, not an arbitrary selection or order.
@@ -26,7 +26,7 @@ mathematical acceptance are separate observations.
 For a zero-call plumbing exercise:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.cli.pfp run-seed DEMO_07 --stages 1
+python -m pfp.entrypoints.cli.pfp run-seed DEMO_07 --stages 1
 ```
 
 Without `--model`, stage-shape fixtures are used. They do not manufacture a

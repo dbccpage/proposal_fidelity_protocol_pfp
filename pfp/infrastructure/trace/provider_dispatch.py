@@ -44,11 +44,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Mapping, Protocol, Sequence
 
-from omega_engine_governance.domain.ingress.limits import (
+from governance.domain.ingress.limits import (
     REFUSAL_PROVIDER_REPLY_TOO_LARGE,
     IngressRefusal,
 )
-from omega_engine_woland.domain.providers.types import (
+from adversary.domain.providers.types import (
     ReplyTooLarge,
     check_reply_bytes,
 )
@@ -99,7 +99,7 @@ SCRIPTED_MODEL = "scripted/p1b-fixture"
 #: Priced at zero: a scripted transport spends nothing, and a nonzero row would
 #: make budget exhaustion in a test mean something it does not.
 SCRIPTED_PRICE_MICROUSD_PER_MTOK = 0
-RAW_PROVIDER_RESPONSE_SCHEMA = "omega.provider.raw-response.v1"
+RAW_PROVIDER_RESPONSE_SCHEMA = "core.provider.raw-response.v1"
 
 
 class EncryptedArtifactStorePort(Protocol):

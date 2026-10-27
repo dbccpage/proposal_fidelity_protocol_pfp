@@ -22,9 +22,9 @@ Vendored dependency clones and generated build caches are **frozen surfaces**. N
 
 The authoritative exclusion list is the tracked **`.markdownlintignore`** at the repository root. Because it is tracked, every `git worktree` checkout receives its own copy and the protection propagates automatically.
 
-> **Incident of record (2026-07-29):** a repo-wide formatting sweep rewrote 39 markdown files across the 9 vendored Lean packages (ATX → Setext headings, blank-line insertion inside lists -- the signature of `markdownlint-cli --fix`). Zero `.lean` files were touched, so proof soundness was unaffected -- but the resulting dirty-dependency warnings were baked into `omega_engine/research/published/004_projection_obstruction/PO000_LEAN_AXIOM_REPORT.txt`, which ships inside a Zenodo release bundle. An external referee reading that receipt cannot tell documentation-only dirt from tampered proofs, so it reads as untrustworthy formal evidence.
+> **Incident of record (2026-07-29):** a repo-wide formatting sweep rewrote 39 markdown files across the 9 vendored Lean packages (ATX → Setext headings, blank-line insertion inside lists -- the signature of `markdownlint-cli --fix`). Zero `.lean` files were touched, so proof soundness was unaffected -- but the resulting dirty-dependency warnings were baked into `engine/research/published/004_projection_obstruction/PO000_LEAN_AXIOM_REPORT.txt`, which ships inside a Zenodo release bundle. An external referee reading that receipt cannot tell documentation-only dirt from tampered proofs, so it reads as untrustworthy formal evidence.
 >
-> Root-cause note, verified experimentally (`markdownlint-cli` 0.49.1): by default the tool's glob **does not descend into dot-directories** (`.lake/`, `.github/`, etc. are skipped), so the plain `--fix "**/*.md"` invocation above cannot reach `.lake/` on its own -- reproduced as a negative control. The vendored files are reachable, and were in fact rewritten, only when the sweep is run **with `-d`/`--dot`** (needed elsewhere, since `.github/PULL_REQUEST_TEMPLATE.md` was among the 39 dirtied files). The prior `--ignore "target"` guard would not have helped either way: the physical package tree is `omega_engine/lean4/.lake/packages`, which is NOT under `target/`. `--ignore-path .markdownlintignore` is the fix that holds regardless of whether `--dot` is used.
+> Root-cause note, verified experimentally (`markdownlint-cli` 0.49.1): by default the tool's glob **does not descend into dot-directories** (`.lake/`, `.github/`, etc. are skipped), so the plain `--fix "**/*.md"` invocation above cannot reach `.lake/` on its own -- reproduced as a negative control. The vendored files are reachable, and were in fact rewritten, only when the sweep is run **with `-d`/`--dot`** (needed elsewhere, since `.github/PULL_REQUEST_TEMPLATE.md` was among the 39 dirtied files). The prior `--ignore "target"` guard would not have helped either way: the physical package tree is `engine/lean4/.lake/packages`, which is NOT under `target/`. `--ignore-path .markdownlintignore` is the fix that holds regardless of whether `--dot` is used.
 
 ---
 
@@ -47,8 +47,8 @@ python -c "import glob, collections; [print(f, collections.Counter(c for c in op
 
 ```powershell
 # Python linter check and format
-ruff check --fix omega_engine_py/ tests/ scripts/
-ruff format omega_engine_py/ tests/ scripts/
+ruff check --fix engine_py/ tests/ scripts/
+ruff format engine_py/ tests/ scripts/
 ```
 
 ## 3. Rust Formatting & Clippy

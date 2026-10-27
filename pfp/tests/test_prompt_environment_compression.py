@@ -2,13 +2,13 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_pfp.domain.prompts.compression import (
+from pfp.domain.prompts.compression import (
     compress_prompt_tree, expand_prompt_tree, prompt_tree_storage_metrics,
 )
-from omega_engine_pfp.infrastructure.compressed_task_turn import prepare_compressed_turn
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-from omega_engine_pfp.use_cases.pfp_proposal import REPAIR_RULES
-from omega_engine_pfp.domain.prompt_representations.common import canonical_json_bytes, sha256_digest
+from pfp.infrastructure.compressed_task_turn import prepare_compressed_turn
+from pfp.infrastructure.task_turn import prepare_task_turn
+from pfp.use_cases.pfp_proposal import REPAIR_RULES
+from pfp.domain.prompt_representations.common import canonical_json_bytes, sha256_digest
 
 
 def reseal(raw):

@@ -92,7 +92,7 @@ class TailReceipt:
     entry_count: int
     head_digest: str
     receipt_sha256: str
-    schema: str = "omega.symbol-game.cemetery-receipt.v1"
+    schema: str = "core.symbol-game.cemetery-receipt.v1"
     authority_effect: str = "None"
 
     def __post_init__(self) -> None:

@@ -52,8 +52,8 @@ why a clean schema and a clean packet can still carry a false claim.
 **19/19 local exercise points** are available from A, B, M, C, and D
 (D contributes three points when the section 6 checks pass). They check
 source-backed execution on this machine. The missing work is a typed,
-observation-preserving Alpha-to-Omega interpretation and independent
-evidence that the corresponding host is the intended Omega Engine.
+observation-preserving Alpha-to-Core interpretation and independent
+evidence that the corresponding host is the intended Engine.
 Source anchors: Alpha `src/lib.rs`, `examples/first.alpha`,
 `examples/refused.alpha`; Symbol Game Paper 032
 `code/l1_symbol_game_governor.py`; Paper 033
@@ -69,7 +69,7 @@ digests for CODA's `check_result_schema.py` and MUB6's
 > - **[Open]**: something this sitting does not decide.
 ## Anchors
 
-- Former notebook: `13_alpha_to_omega_execution`
+- Former notebook: `13_alpha_to_core_execution`
 - The code checks one finite example. It is not a general proof.
 
 ## Exercise

@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.participant_packet.runner import (
     run_participant_solver,
 )
 

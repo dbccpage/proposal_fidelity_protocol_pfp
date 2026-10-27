@@ -33,8 +33,8 @@ The symbolic presentation tower $S(n)$ decomposes into 22 modular levels, each w
 
 ### Level Source Documentation
 
-- **S(n) Levels:** `omega_engine_education/documentation/0_s_n/levels/` (22 files: `level_00_ground.md` to `level_21_discrete_4d_regge_curvature.md`)
-- **MSS-N Levels:** `omega_engine_education/documentation/1_minimal_symbol_system_n_mssn/levels/` (23 files: `level_00_ground.md` to `level_22_100_trans_base_operadic_epochs.md`)
+- **S(n) Levels:** `education/documentation/0_s_n/levels/` (22 files: `level_00_ground.md` to `level_21_discrete_4d_regge_curvature.md`)
+- **MSS-N Levels:** `education/documentation/1_minimal_symbol_system_n_mssn/levels/` (23 files: `level_00_ground.md` to `level_22_100_trans_base_operadic_epochs.md`)
 
 ## 2. MSS-N Trans-Base Operadic Epochs (MSS-22 to MSS-100)
 

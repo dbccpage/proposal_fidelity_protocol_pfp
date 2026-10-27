@@ -9,7 +9,7 @@ The original program writes into the source crate's `artifacts` directory. The
 paper runner changes that one output-directory expression to a required explicit
 argument. Every other source byte is retained. The adapter verifies this exact
 one-expression relationship before execution. Its Cargo manifest uses the
-unchanged native `omega_mub` and `omega_number_theory` owners in the explicitly
+unchanged native `core_mub` and `core_number_theory` owners in the explicitly
 supplied source checkout, with 138 locked dependencies (139 package entries
 including the paper runner). Historical dependency-environment equivalence is not claimed.
 

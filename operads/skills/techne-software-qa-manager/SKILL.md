@@ -12,7 +12,7 @@ operad_residual: "unknown"
 
 # techne-software-qa-manager
 
-The master software quality assurance and verification orchestrator for the Anomalon Logos Techne engineering retinue. Enforces rigorous falsification, small-batch test discipline, and a hard-veto repair loop.
+The master software quality assurance and verification orchestrator for the Sentinel Logos Techne engineering panel. Enforces rigorous falsification, small-batch test discipline, and a hard-veto repair loop.
 
 ## 1. QA Verification Protocol & Auto-Repair Loop
 
@@ -23,13 +23,13 @@ When invoked (`/techne-software-qa-manager <target_path> [--budget 3]`), the QA 
   │ - techne-contract-docstring-import-boundary-auditor: Line 1 docstrings, 0 E402
   │ - techne-docs-lint-hunter-killer: UTF-8 encoding, zero BOM, 0 markdown errors
   ▼
-[Stage 2: Soviet Inspector Hard Veto Gate]
-  │ - techne-code-soviet-inspector: Flags fake-green tests, mock-only illusions,
+[Stage 2: Inspector Hard Veto Gate]
+  │ - techne-code-inspector: Flags fake-green tests, mock-only illusions,
   │   missing fixtures, and unasserted exceptions.
   │ - techne-test-silent-skip-detector: Flags pytest.skip / bare returns.
   │
   ├─► [Veto Triggered] ──► [Auto-Repair Loop (Budget N <= 3)]
-  │                          │ Dispatches failing test/code to techne-code-soviet-builder
+  │                          │ Dispatches failing test/code to techne-code-builder
   │                          │ for hardened mutation repair. Re-enters Stage 2.
   │                          ▼
   │                        [Budget Exhausted] ──► Emit Typed Refusal Receipt (REFUSED)
@@ -43,8 +43,8 @@ When invoked (`/techne-software-qa-manager <target_path> [--budget 3]`), the QA 
 [Stage 4: DDA Invariant & Duality Descent Audit]
   │ - Verifies monotonic defect descent: ΔΦ₁ <= 0, ΔΓ₂ <= 0, Δdefect_count <= 0.
   ▼
-[Stage 5: Old Man ChatGPT Adversarial Red Team Audit]
-  │ - techne-qa-pr-reviewer / Old Man ChatGPT Red Team Identity v2
+[Stage 5: Red Team ChatGPT Adversarial Red Team Audit]
+  │ - techne-qa-pr-reviewer / Red Team ChatGPT Red Team Identity v2
   │ - Merciless adversarial falsification check and audit report emission.
 ```
 
@@ -53,7 +53,7 @@ When invoked (`/techne-software-qa-manager <target_path> [--budget 3]`), the QA 
 1. **Small-Batch Test Execution Invariant (`RULE_TEST_SMALL_BATCH_001`):**
    **YOU MUST NEVER RUN ALL TESTS AT ONCE.** The QA manager runs only individual test files or scoped packages relevant to the active change.
 
-2. **Soviet Inspector Hard Veto (`RULE_SOVIET_VETO_001`):**
+2. **Inspector Hard Veto (`RULE_STRICT_VETO_001`):**
    Any test that passes by asserting nothing (bare returns on missing fixtures, tautological existence assertions, mock-only self-comparisons) is vetoed immediately.
 
 3. **Finite Repair Budget Invariant (`RULE_REPAIR_BUDGET_001`):**
@@ -66,11 +66,11 @@ When invoked (`/techne-software-qa-manager <target_path> [--budget 3]`), the QA 
    Upon completion, emits a canonical `SoftwareQaReceiptV1`:
 
    ```yaml
-   schema_version: omega.software-qa-receipt.v1
+   schema_version: core.software-qa-receipt.v1
    status: PASSED | REFUSED
    authority_effect: None
-   target_path: omega_engine/...
-   soviet_veto_status: CLEAN
+   target_path: engine/...
+   strict_veto_status: CLEAN
    silent_skips_detected: 0
    small_batch_tests_passed: 12
    repair_rounds_used: 1

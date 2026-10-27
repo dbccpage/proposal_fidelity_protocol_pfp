@@ -122,7 +122,7 @@ independent examples. The repository's self panel at the baseline has
 1,000 rows but only 40 distinct base contents, ten in each of four
 categories. That is a finite regression corpus, not a statistical
 estimate of false suppression in open use. See [the regression
-suite](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/test_immune_defect_regressions.py).
+suite](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/test_immune_defect_regressions.py).
 
 The actual two-signal gate offers a small operational model. Signal 1
 records a pattern match. Signal 2 records a supplied structural defect,
@@ -130,7 +130,7 @@ severity, and an evidence identifier. With neither signal the decision
 is `TOLERATED`. Signal 1 alone yields `DIAGNOSTIC_ONLY`. Both signals
 produce a refusal; a high or critical defect alone also produces a
 refusal. A low or medium defect alone remains diagnostic. [The
-implementation](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/immune/danger_gate.py)
+implementation](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/immune/danger_gate.py)
 computes this decision table; it does not independently prove the
 supplied defect or authenticate its evidence identifier. The table is
 only as informative as the independence of its two inputs: Appendix A
@@ -143,7 +143,7 @@ mention with execution. Pair that match with a host-established
 protected-field mutation and the declared policy refuses. The policy
 benefit is plausible, but whether these two inputs are accurate in a
 deployed pipeline remains a separate obligation. The [conjunction
-tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/mssn_sn_demos/test_demo_immune_soviet.py)
+tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/mssn_sn_demos/test_demo_immune_strict.py)
 exercise the decision table on constructed signals. They do not measure
 natural-language classification accuracy.
 
@@ -174,14 +174,14 @@ file](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292
 `research/mssn_sn_tower/demos/antimorphism_farm/harvest/antimorphism_harvest.jsonl`,
 has 112 rows. In 102 of them the response is text written in advance by
 the authors, copied from the scripted fields of the [prompt
-specifications](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_epistemic_immune_system/infrastructure/mssn_domains.py)
+specifications](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/eis/infrastructure/mssn_domains.py)
 in
-`omega_engine_epistemic_immune_system/infrastructure/mssn_domains.py`.
+`eis/infrastructure/mssn_domains.py`.
 The other 10 rows are responses from one model,
 `qwen/qwen-2.5-7b-instruct`. A separate, prompt-specific [rule
-set](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_epistemic_immune_system/infrastructure/mssn_classifier.py)
+set](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/eis/infrastructure/mssn_classifier.py)
 in
-`omega_engine_epistemic_immune_system/infrastructure/mssn_classifier.py`
+`eis/infrastructure/mssn_classifier.py`
 labelled the rows with these identifiers, and no independent checker
 reviewed the labels. The harvest therefore does not measure how often
 models make these errors. It is also not evidence about the package
@@ -310,7 +310,7 @@ sensitivity, or false-suppression rate.
 ## 4. The current host and its missing route seam
 
 The canonical [Demo 3
-vocabulary](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/domain/mssn_sn_demos/demo_3/host.py)
+vocabulary](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/domain/mssn_sn_demos/demo_3/host.py)
 declares six arm identifiers and five fixture identifiers across three
 routes:
 
@@ -329,7 +329,7 @@ Finite signed path      Partial sign-reversing  `NO_NATIVE_PORT`
   -----------------------------------------------------------------------
 
 The [use-case
-host](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/use_cases/mssn_sn_demos/demo_3/host.py)
+host](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/use_cases/mssn_sn_demos/demo_3/host.py)
 supplies phases, fuel accounting, atomic transaction rollback, and
 hash-chained batch receipts. Each batch that the host processes costs
 one unit of fuel, charged before its moves are applied; the default
@@ -446,7 +446,7 @@ port is added requires a new, explicitly versioned evaluation.
 
 The experiment is conditional on implementing and independently
 validating the three route adapters. The existing
-[manifest](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_atlas/coda_atlas/omega_engine_pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/experiment_manifest.yaml)
+[manifest](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/atlas/coda_atlas/pfp/003_pfp_host_admitted_failure_detectors/demos/demo_3/experiment_manifest.yaml)
 remains `proposed_not_executed`, with live execution disabled and
 provider/model fields unset. The following design must be frozen before
 collecting confirmatory data.
@@ -570,19 +570,19 @@ baseline commit; they are not runnable from this deposit. Collect the
 focused tests before execution:
 
 ``` powershell
-python -m pytest omega_engine_pfp/tests/mssn_sn_demos/test_demo_3.py --collect-only -q
-python -m pytest omega_engine_pfp/tests/mssn_sn_demos/test_demo_3.py -q
-python -m pytest omega_engine_pfp/tests/test_immune_defect_regressions.py -q
+python -m pytest pfp/tests/mssn_sn_demos/test_demo_3.py --collect-only -q
+python -m pytest pfp/tests/mssn_sn_demos/test_demo_3.py -q
+python -m pytest pfp/tests/test_immune_defect_regressions.py -q
 ```
 
 The [Demo 3
-tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_pfp/tests/mssn_sn_demos/test_demo_3.py)
+tests](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/pfp/tests/mssn_sn_demos/test_demo_3.py)
 include the refusal, rollback, fuel, and matrix receipt checks described
 in Sections 4 and 5. The two-signal conjunction example is the test
 `test_invariant_two_signal_danger_gate_conjunction_logic` in
-`omega_engine_pfp/tests/mssn_sn_demos/test_demo_immune_soviet.py`.
+`pfp/tests/mssn_sn_demos/test_demo_immune_strict.py`.
 The catalog integrity suite is
-`omega_engine_pfp/tests/test_mssn_catalog.py`. Its offline
+`pfp/tests/test_mssn_catalog.py`. Its offline
 fixture blocks sockets and distinguishes reproducible fixtures from live
 receipts whose verification is integrity-only. Use a fresh writable
 temporary directory; record the interpreter, collection status, command
@@ -647,7 +647,7 @@ paper.
 Write $m$ for the number of Signal 1 matches and $s$ for the Signal 2
 record, which counts as present when its defect count is positive. The
 table of Section 3, as implemented in the repository gate
-(`omega_engine_epistemic_immune_system/domain/danger_gate.py`), gives
+(`eis/domain/danger_gate.py`), gives
 `TOLERATED` when neither signal is present and `DIAGNOSTIC_ONLY` when
 only Signal 1 is. When only Signal 2 is present it gives
 `DEFENSIVE_LOCKDOWN` for a high or critical defect and `DIAGNOSTIC_ONLY`
@@ -696,7 +696,7 @@ own table of Section 4.1 collapses in the same way
 ### A.3 Lemma B: the Hill-type "quorum" is a sum threshold
 
 The repository also has a gate described as a cooperative quorum
-(`omega_engine_epistemic_immune_system/domain/allostery.py`). It adds
+(`eis/domain/allostery.py`). It adds
 the strictly positive sensor signals into $\theta = \sum_i s_i$,
 computes the Hill ratio $H(\theta) = \theta^n / (K^n + \theta^n)$ with
 $H(0) = 0$, and activates when $H(\theta) \geq t$.
@@ -770,7 +770,7 @@ record, and the rule is admitted and fires on a member of the panel.
 
 ### A.5 The repository audited against the lemmas
 
-The findings below refer to `omega_engine_epistemic_immune_system/` at
+The findings below refer to `eis/` at
 the audited commit.
 
 *Lemma A.* The packaged demonstration
@@ -831,7 +831,7 @@ Section 3 asks that a detector be admitted only with a reproduced
 defect, valid near misses, a frozen predicate and bound digests. One
 component of the repository states that record as types: anti-skill V2,
 in
-`omega_engine_workflows_agents_skills/domain/anti_skill/anti_skill_v2.py`
+`workflows_agents_skills/domain/anti_skill/anti_skill_v2.py`
 and `application/anti_skill/anti_skill_v2.py` of the same package.
 
 - *A closed predicate language.* A detector is an expression of at most
@@ -859,7 +859,7 @@ approving decisions exist in a registry scoped to one engine profile
 (claim ledger row P3-26 gives the paths). The Python admission verifier
 and the loader that would activate that registry are retired and return
 a typed refusal
-(`omega_engine_workflows_agents_skills/application/anti_skill_admission/verifier.py`,
+(`workflows_agents_skills/application/anti_skill_admission/verifier.py`,
 lines 25 to 45), no Rust code reads the registry, and the registry that
 the prompt reviewer loads is empty. No detector is therefore admitted
 and active through this record. It shows that the admission record of

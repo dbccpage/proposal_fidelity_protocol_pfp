@@ -38,7 +38,7 @@ from pathlib import Path
 
 SERIES = Path(__file__).resolve().parents[1]
 RECORD = SERIES / "verification" / "formal_math_baselines.json"
-E = "omega_engine_projects/mssn_sn_symgam/challenges/e_formal_math"
+E = "projects/mssn_sn_symgam/challenges/e_formal_math"
 PKG = E.replace("/", ".")
 RUN_C045 = "ea2b55d841bdbe283f2f6ac77abe8a1677cbf0f8"
 RUN_C046_C050 = "46bd1dec156260f073b77caa07d8a453f8efad30"
@@ -47,7 +47,7 @@ RUN_C046_C050 = "46bd1dec156260f073b77caa07d8a453f8efad30"
 # defers annotations and can). The merge commit below changes only that import
 # line in the C045 folder, so the checkers are replayed from it.
 CHECK_C045 = "c568c20062697b54ddb8729e2476d4cfdb5c4982"
-PARENT_INITS = ("omega_engine_projects/__init__.py", "omega_engine_projects/mssn_sn_symgam/__init__.py")
+PARENT_INITS = ("projects/__init__.py", "projects/mssn_sn_symgam/__init__.py")
 
 # challenge: (commit of the runner, commit of the checkers, folder, runner,
 #             second checker, exact checker)

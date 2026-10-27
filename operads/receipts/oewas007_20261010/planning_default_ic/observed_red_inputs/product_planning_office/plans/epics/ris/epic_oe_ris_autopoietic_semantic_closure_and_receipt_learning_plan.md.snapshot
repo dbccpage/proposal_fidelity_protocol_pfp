@@ -1,0 +1,64 @@
+# Epic: Bounded Receipt Succession and Residual Task Admission
+
+**Epic ID:** `EPIC-OE-RIS-AUTOPOIESIS-001`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+
+**Lifecycle scope:** LIVE — successor-adapter contract proposed
+**Consolidation Source:** Historical RIS-001 through RIS-008 and UROS design notes
+**Lead Review:** Manuscript Truth and Adversary
+**Date:** October 2026
+
+## Current code and bounded objective
+
+[core_pipelines/runtime.rs](../../../../engine/crates_rs/core_pipelines/src/runtime.rs) already provides ProblemPacket, CoreBudgets, Residual, CoreResult, domain-separated hashes and bounded iterative run_core/metabolize behavior. Existing [core_runtime tests](../../../../engine/crates_rs/core_pipelines/tests/core_runtime.rs) cover finite execution. Preserve these packet and terminal/evidence/authority distinctions instead of creating duplicate core_packets/core_immune families.
+
+[core_state/task_admission.rs](../../../../engine/crates_rs/core_state/src/task_admission.rs) implements a finite S03-001 source-pinned admission and lease contract. It does not expose TaskAdmission::from_prior_receipt. Do not rewrite frozen pins to retrofit a generic learning loop.
+
+The smallest new behavior is a separate successor adapter that verifies one predecessor's serialized residue and creates one fresh bounded task proposal. Receipt continuity is not a theorem of semantic closure or general self-improvement.
+
+## Dependencies and delivery sequence
+
+1. Specify versioned canonical receipt bytes, domain-separated digest, origin/problem identity, observer binding, replay identity and immutable budget. Preserve the fact that trusted host-independence evidence cannot be created by untrusted wire input.
+2. Implement one predecessor-to-successor mapping over existing typed CoreResult variants. Closed exact work returns AdmissionNotRequired; residual outcomes create only a candidate ProblemPacket. Do not infer exact norm values from prose or floating-point placeholders.
+3. Verify bounded calls and complete residual history through the current runtime, then test tamper/transplant/replay and recovery at the new adapter.
+4. Route immune findings through actual [core_epistemic_immune_system](../../../../engine/crates_rs/core_epistemic_immune_system/) and [core_prompt_civilization](../../../../engine/crates_rs/core_prompt_civilization/) ports if required by a concrete fixture; record findings as evidence, not an authority grant.
+5. Keep self-change proposals inert until separate external promotion. Return typed refusals for unauthorized requests; a runtime panic is not the intended interface.
+
+## Acceptance and ceiling
+
+One valid unresolved predecessor may yield one source-bound bounded proposal. Tampered, transplanted, replayed, closed or unauthorized inputs must return the declared typed outcome without changing governance or execution authority. Preserve current source pins and prior receipts.
+
+This epic adds no background daemon, external fine-tuning loop, universal search theorem, automatic code modification or self-issued ActionLicense. Broader solver/DDC integration requires its own public seam and finite oracle.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** core_pipelines runtime already has typed ProblemPacket/CoreBudgets/Residual/CoreResult and bounded iterative repair with complete residual history. core_state task_admission already implements a finite source-pinned S03-001 admission contract, not TaskAdmission::from_prior_receipt. core_packets and core_immune are absent names here. Add a small successor adapter rather than duplicate packet families or rewrite frozen source pins.
+
+**Bounded behavior and public port:** Use ProblemPacket::from_prompt and run_core/metabolize for current bounded execution. Propose a separate admit_successor(prior_receipt,expected_origin,observer_binding,budget) adapter returning a new ProblemPacket or typed refusal, binding exact residual digest, origin/problem and immutable budget. Depend on a specified serializable receipt contract; host-independence evidence cannot be fabricated by wire deserialization.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Syntax Prefilter checks malformed input; Bare Metal Anchor/Techne implements the smallest production change; Defect Hunter and the Inspector challenge the independent oracle; Punchlist checks custody before Adversary records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | Zero/exhausted budget must terminate with the complete residual history and no extra operator calls; preserve existing bounded loop; a one-step positive control completes only its permitted calls. | Extend `engine/crates_rs/core_pipelines/tests/core_runtime.rs::bounded_successor_budget_controls`; independent call counter and literal expected residual sequence, including overflow boundary. |
+| 2 | A changed residual byte, wrong origin/observer or reused prior receipt must refuse successor admission; implement only digest/origin/replay binding; restore the valid original and emit one fresh bounded packet. | Proposed `engine/crates_rs/core_pipelines/tests/successor_admission.rs::transplant_replay_and_recovery`; independent canonical-byte digest and explicit parent/problem IDs, no production serializer as sole oracle. |
+| 3 | Exact completed predecessor must return AdmissionNotRequired, while an explicitly typed nonclosed/coherent residual produces a candidate task; implement exhaustive terminal mapping without invented floating-point norms. | Proposed `engine/crates_rs/core_pipelines/tests/successor_admission.rs::closed_predecessor_needs_no_successor`; hand-authored typed outcomes and exact expected mapping. |
+| 4 | A self-change proposal or wire-claimed host independence must remain inert/refused; preserve the existing authority/evidence firewall; external valid evidence is handled by its own port without elevating the receipt. | Extend `engine/crates_rs/core_pipelines/tests/core_runtime.rs::successor_cannot_mint_authority`; observable authority/effect and zero state writes, plus a malformed host receipt wire payload. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: Remove the budget exhaustion guard or residual-history accumulation in [runtime.rs](../../../../engine/crates_rs/core_pipelines/src/runtime.rs); the call-count/history witness must fail and recover. The successor adapter branch is not implemented yet, so its digest/transplant mutation is prospective. Do not alter source pins in [task_admission.rs](../../../../engine/crates_rs/core_state/src/task_admission.rs) to manufacture a pass. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+~~~powershell
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_pipelines -j 1 --test core_runtime bounded_successor_budget_controls
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_pipelines -j 1 --test successor_admission
+cargo test --manifest-path engine/crates_rs/Cargo.toml -p core_pipelines -j 1 --test core_runtime successor_cannot_mint_authority
+~~~
+
+**Cross-epic sink ownership:** core_pipelines owns the successor packet adapter; core_state retains its frozen finite admission/lease contract; EIS owns immune findings; Providers owns external request settlement. A successor proposal enters the named owner port with prior/source digests and explicit budget, never a self-admitted rule or authority grant. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Typed receipt succession is bounded task continuity, not autonomous semantic closure, general learning or self-authorization. Pharmacy integration remains an explicit adapter to real core_epistemic_immune_system/core_prompt_civilization ports, with no invented crate or panic-as-refusal claim. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

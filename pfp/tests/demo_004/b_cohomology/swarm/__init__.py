@@ -15,9 +15,9 @@ _EXPORTS = {
     "DdcTracer": "ddc_tracer",
     "LggrDetector": "lggr_detector",
     "LggrVerdict": "lggr_detector",
-    "WolandCohomologyOverseer": "woland_overseer",
-    "WolandSwarmResult": "woland_overseer",
-    "WolandBatteryResult": "woland_overseer",
+    "AdversaryCohomologyOverseer": "adversary_overseer",
+    "AdversarySwarmResult": "adversary_overseer",
+    "AdversaryBatteryResult": "adversary_overseer",
 }
 __all__ = list(_EXPORTS)
 

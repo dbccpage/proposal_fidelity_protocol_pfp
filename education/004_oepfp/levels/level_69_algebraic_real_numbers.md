@@ -24,10 +24,10 @@ reachable_terminal_statuses:
   - Refused
   - Invalid
 source_paths:
-  - omega_engine_education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
+  - education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
+  - education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
+  - education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
+  - education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
 ---
 
 # The Symbol Game Level 69: Real Algebraic Field Q_alg & Sturm Chains
@@ -41,7 +41,7 @@ source_paths:
 **Evaluator Module:** `EnclosureAnalysisModule` (`Real Algebraic Number Q_alg & Sturm Chain Evaluator`)  
 **Evaluator Contract:** `AlgebraicRootContract`  
 
-**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `EnclosureAnalysisModule` or contract `AlgebraicRootContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs).
+**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `EnclosureAnalysisModule` or contract `AlgebraicRootContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs).
 
 ---
 
@@ -54,7 +54,7 @@ $$\mathcal{S}_{69} = \Big( \mathcal{C},\; \mathcal{R}_{\text{active}},\; \mathca
 - **Carrier ($\mathcal{C}$):** `Square-free univariate polynomials in Q[x] with Sturm root isolation chains`. Pinned and immutable upon arena initialization.
 - **Active State ($\mathcal{R}_{\text{active}}$):** Current assigned valuations, configurations, and candidate structures configured on the carrier.
 - **Evaluator Register ($\mathcal{D}_{\text{evaluator}}$):** Instantiation of `EnclosureAnalysisModule` executing under `AlgebraicRootContract`, calculating level-specific objective defect metrics.
-- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `omega-canonical-v1` is not RFC 8785).
+- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `core-canonical-v1` is not RFC 8785).
 - **Invariants ($\mathcal{I}_{\text{invariants}}$):** Fuel ceiling ($T \le 8 turns$), boundary protection masks, and non-mutation constraints.
 
 ### Conceptual Arena Scope
@@ -86,7 +86,7 @@ The game follows a strict non-conflation protocol: **proposals are untrusted hyp
 
 ## 3. Proposal Packet Schema
 
-Proposals targeting Level 69 are specified by the following proposed JSON schema sketch (no schema file exists in source; the runtime sealer `omega-canonical-v1` is not RFC 8785):
+Proposals targeting Level 69 are specified by the following proposed JSON schema sketch (no schema file exists in source; the runtime sealer `core-canonical-v1` is not RFC 8785):
 
 ```json
 {
@@ -151,7 +151,7 @@ Referees evaluate Level 69 candidates through Sturm's theorem on real algebraic 
 | **`Invalid`** | **Yes** | Payload fails schema validation, contains unknown fields, or violates syntactic format. |
 | **`Halted`** | **Yes** | Turn budget `8 turns` exhausted before proposal admission. |
 
-> **Correction (2026-10-20):** `CertifiedReceipt` and `Halted` are not members of the eight-status taxonomy. The source enum [`CodaTerminal`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs) has `ExactRepair`, `StabilizedSurvivor`, `OpenObstruction`, `OracleNeeded`, `LiftLicenseNeeded`, `Refused`, `Invalid` and `InfrastructureFailure`. Read the `CertifiedReceipt` row as part of `ExactRepair` and the `Halted` row as the fuel-exhaustion case of `OpenObstruction`; `OracleNeeded` and `InfrastructureFailure` are not reached in local evaluation.
+> **Correction (2026-10-20):** `CertifiedReceipt` and `Halted` are not members of the eight-status taxonomy. The source enum [`CodaTerminal`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs) has `ExactRepair`, `StabilizedSurvivor`, `OpenObstruction`, `OracleNeeded`, `LiftLicenseNeeded`, `Refused`, `Invalid` and `InfrastructureFailure`. Read the `CertifiedReceipt` row as part of `ExactRepair` and the `Halted` row as the fuel-exhaustion case of `OpenObstruction`; `OracleNeeded` and `InfrastructureFailure` are not reached in local evaluation.
 
 ---
 

@@ -1,10 +1,10 @@
 """Comprehensive domain and use-case test battery for Symbol Game canonical, scoring, and entities.
 
 Drives statement coverage to >= 95% across:
-- omega_engine_pfp.domain.shared_kernel.canonical
-- omega_engine_pfp.domain.entities.coboundary_score
-- omega_engine_pfp.use_cases.scoring
-- omega_engine_pfp.domain.solvers.retraction
+- pfp.domain.shared_kernel.canonical
+- pfp.domain.entities.coboundary_score
+- pfp.use_cases.scoring
+- pfp.domain.solvers.retraction
 
 Governing Directive: Zero Fake Green & Sovereign Rust Math Delegation.
 AuthorityEffect: None.
@@ -17,8 +17,8 @@ import enum
 from fractions import Fraction
 import pytest
 
-from omega_engine_pfp import initialize_exact_ports
-from omega_engine_pfp.domain.entities.coboundary_score import (
+from pfp import initialize_exact_ports
+from pfp.domain.entities.coboundary_score import (
     CandidateProposal,
     CoboundaryScoreResult,
     REFUSAL_AUTHORITY,
@@ -31,9 +31,9 @@ from omega_engine_pfp.domain.entities.coboundary_score import (
     ResidualDropV1,
     _norm_from_wire,
 )
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.models import ObstructionScore, StepVerdict
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.exact.q import Q
+from pfp.domain.models import ObstructionScore, StepVerdict
+from pfp.domain.shared_kernel.canonical import (
     _COMPOUND_TAGS,
     _FrozenValue,
     CanonicalizationError,
@@ -50,8 +50,8 @@ from omega_engine_pfp.domain.shared_kernel.canonical import (
     freeze,
     thaw,
 )
-from omega_engine_pfp.domain.shared_kernel.exact import NotExactError
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.shared_kernel.exact import NotExactError
+from pfp.domain.solvers import (
     BASE,
     AdmitDatum,
     AdmitForm,
@@ -66,7 +66,7 @@ from omega_engine_pfp.domain.solvers import (
     host,
     run_retraction_loop,
 )
-from omega_engine_pfp.use_cases.scoring import (
+from pfp.use_cases.scoring import (
     EvaluateCoboundaryScoreUseCase,
     KILL_CONDITION_MAP,
     REFUSAL_AUTHORITY_NON_NONE,
@@ -150,7 +150,7 @@ def test_canonical_wire_and_unwire_roundtrip() -> None:
     }
     wire = canonical_wire(data)
     assert isinstance(wire, list)
-    assert wire[0] == "omega-canonical-v1"
+    assert wire[0] == "core-canonical-v1"
     assert wire[1] == "mapping"
     unwired = canonical_unwire(wire)
     assert thaw(unwired) == thaw(freeze(data))
@@ -158,7 +158,7 @@ def test_canonical_wire_and_unwire_roundtrip() -> None:
 
 def test_canonical_json_and_digest() -> None:
     cjson = canonical_json({"y": 2, "x": 1})
-    assert cjson.startswith('["omega-canonical-v1","mapping"')
+    assert cjson.startswith('["core-canonical-v1","mapping"')
     digest = domain_digest("test.domain.v1", {"a": 1})
     assert len(digest) == 64
     assert digest == domain_digest("test.domain.v1", {"a": 1})
@@ -175,7 +175,7 @@ def test_canonical_unwire_malformed() -> None:
         canonical_unwire([1, 2])
 
     with pytest.raises(CanonicalizationError, match="unknown canonical wire tag"):
-        canonical_unwire(["omega-canonical-v1", "unknown_tag", []])
+        canonical_unwire(["core-canonical-v1", "unknown_tag", []])
 
 
 # ---------------------------------------------------------------------------
@@ -497,7 +497,7 @@ def test_admitted_constructors_filter() -> None:
 
 def test_residual_drop_v1_wire_roundtrip() -> None:
     drop = ResidualDropV1(
-        omega_mass=5.0,
+        core_mass=5.0,
         residual_mass=2.0,
         delta=3.0,
         relative_drop=0.6,
@@ -817,55 +817,55 @@ def test_canonical_shared_kernel_deep_coverage() -> None:
         thaw(_FrozenValue("unknown_tag_xyz", ()))
 
     # 5. canonical_wire primitives & escape
-    assert canonical_wire(None) == ["omega-canonical-v1", "null", None]
-    assert canonical_wire(True) == ["omega-canonical-v1", "bool", True]
-    assert canonical_wire(False) == ["omega-canonical-v1", "bool", False]
-    assert canonical_wire(100) == ["omega-canonical-v1", "int", "100"]
-    assert canonical_wire("str_val") == ["omega-canonical-v1", "string", "str_val"]
+    assert canonical_wire(None) == ["core-canonical-v1", "null", None]
+    assert canonical_wire(True) == ["core-canonical-v1", "bool", True]
+    assert canonical_wire(False) == ["core-canonical-v1", "bool", False]
+    assert canonical_wire(100) == ["core-canonical-v1", "int", "100"]
+    assert canonical_wire("str_val") == ["core-canonical-v1", "string", "str_val"]
 
     # 6. canonical_unwire format validation
     with pytest.raises(CanonicalizationError, match="must be a three-item array"):
-        canonical_unwire(["omega-canonical-v1", "null"])
+        canonical_unwire(["core-canonical-v1", "null"])
     with pytest.raises(CanonicalizationError, match="marker or tag is invalid"):
         canonical_unwire(["bad-marker", "null", None])
     with pytest.raises(CanonicalizationError, match="marker or tag is invalid"):
-        canonical_unwire(["omega-canonical-v1", 123, None])
+        canonical_unwire(["core-canonical-v1", 123, None])
 
     # null
-    assert canonical_unwire(["omega-canonical-v1", "null", None]) is None
+    assert canonical_unwire(["core-canonical-v1", "null", None]) is None
     with pytest.raises(CanonicalizationError, match="non-null body"):
-        canonical_unwire(["omega-canonical-v1", "null", "not_null"])
+        canonical_unwire(["core-canonical-v1", "null", "not_null"])
 
     # bool
-    assert canonical_unwire(["omega-canonical-v1", "bool", True]) is True
+    assert canonical_unwire(["core-canonical-v1", "bool", True]) is True
     with pytest.raises(CanonicalizationError, match="bool body is invalid"):
-        canonical_unwire(["omega-canonical-v1", "bool", "true"])
+        canonical_unwire(["core-canonical-v1", "bool", "true"])
 
     # int
-    assert canonical_unwire(["omega-canonical-v1", "int", "42"]) == 42
+    assert canonical_unwire(["core-canonical-v1", "int", "42"]) == 42
     with pytest.raises(CanonicalizationError, match="int body is invalid"):
-        canonical_unwire(["omega-canonical-v1", "int", 42])
+        canonical_unwire(["core-canonical-v1", "int", 42])
     with pytest.raises(CanonicalizationError, match="int body is invalid"):
-        canonical_unwire(["omega-canonical-v1", "int", "invalid"])
+        canonical_unwire(["core-canonical-v1", "int", "invalid"])
     with pytest.raises(CanonicalizationError, match="not minimally encoded"):
-        canonical_unwire(["omega-canonical-v1", "int", "042"])
+        canonical_unwire(["core-canonical-v1", "int", "042"])
 
     # string
-    assert canonical_unwire(["omega-canonical-v1", "string", "test"]) == "test"
+    assert canonical_unwire(["core-canonical-v1", "string", "test"]) == "test"
     with pytest.raises(CanonicalizationError, match="string body is invalid"):
-        canonical_unwire(["omega-canonical-v1", "string", 123])
+        canonical_unwire(["core-canonical-v1", "string", 123])
 
     # unknown tag
     with pytest.raises(CanonicalizationError, match="unknown canonical wire tag"):
-        canonical_unwire(["omega-canonical-v1", "unregistered_tag", []])
+        canonical_unwire(["core-canonical-v1", "unregistered_tag", []])
 
     # non-list compound body
     with pytest.raises(CanonicalizationError, match="compound body must be an array"):
-        canonical_unwire(["omega-canonical-v1", "list", "not_a_list"])
+        canonical_unwire(["core-canonical-v1", "list", "not_a_list"])
 
     # float forbidden
     with pytest.raises(CanonicalizationError, match="float values are forbidden"):
-        canonical_unwire(["omega-canonical-v1", "float", [["omega-canonical-v1", "string", "0x1.0p0"]]])
+        canonical_unwire(["core-canonical-v1", "float", [["core-canonical-v1", "string", "0x1.0p0"]]])
 
     # 7. _validate_compound edge cases
     # set / frozenset unordered or duplicate

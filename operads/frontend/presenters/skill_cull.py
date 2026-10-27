@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from omega_engine_operads.domain.skill_garden.cull import CullReport
+from operads.domain.skill_garden.cull import CullReport
 
 
 def render_manifest(report: CullReport, *, now: datetime) -> str:

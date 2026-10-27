@@ -26,15 +26,15 @@ import traceback
 from pathlib import Path
 
 SCHEMA = "paper011.recreated-run.v1"
-OLD_PREFIX = "omega_engine_projects.mssn_sn_symgam"
+OLD_PREFIX = "projects.mssn_sn_symgam"
 LOCAL_PREFIX = "paper011_source"
 ENGINE_ROOTS = (
-    "omega_engine/kernel",
-    "omega_engine_pfp",
-    "omega_engine_epistemic_immune_system",
-    "omega_engine_providers",
-    "omega_engine_woland",
-    "omega_engine_operating_system",
+    "engine/kernel",
+    "pfp",
+    "eis",
+    "providers",
+    "adversary",
+    "operating_system",
 )
 EXCLUDED_PARTS = {"__pycache__", ".pytest_cache", "target", "node_modules", ".git"}
 MUTATION_ANSWER_KEYS = (
@@ -467,7 +467,7 @@ def configure_worker(source: Path, lock: dict, journal: list, output: Path | Non
             if "--bin" not in command:
                 raise ReplayError("IMPLICIT_NATIVE_BUILD_REFUSED")
             name = command[command.index("--bin") + 1]
-            key = {"solve_graph_phi1": "graph_functional", "omega_symbol_game": "symbol_game"}.get(
+            key = {"solve_graph_phi1": "graph_functional", "core_symbol_game": "symbol_game"}.get(
                 name, name
             )
             native = lock["binaries"].get(key)
@@ -579,17 +579,17 @@ def configure_worker(source: Path, lock: dict, journal: list, output: Path | Non
 
     subprocess.run = no_implicit_build
     sys.meta_path.insert(0, SourceFinder(source, journal))
-    os.environ["OMEGA_SYMBOL_GAME_HOST"] = lock["binaries"]["symbol_game"]["path"]
+    os.environ["CORE_SYMBOL_GAME_HOST"] = lock["binaries"]["symbol_game"]["path"]
     os.environ["PAPER011_ENGINE_ROOT"] = lock["engine_root"]
     functional = lock["binaries"].get("graph_functional")
     if functional:
-        os.environ["OMEGA_FUNCTIONAL_GRAPH_BIN"] = functional["path"]
-        os.environ["OMEGA_FUNCTIONAL_GRAPH_SHA256"] = functional["sha256"]
+        os.environ["CORE_FUNCTIONAL_GRAPH_BIN"] = functional["path"]
+        os.environ["CORE_FUNCTIONAL_GRAPH_SHA256"] = functional["sha256"]
 
 
 def trace_native_calls(output: Path) -> None:
     """Record actual OEOS native requests/responses without changing verdicts."""
-    from omega_engine_operating_system.python.adapters.rust_host.ffi import RustSymbolGameHost
+    from operating_system.python.adapters.rust_host.ffi import RustSymbolGameHost
 
     original = RustSymbolGameHost.invoke_runtime
     tape = output / "native_calls.jsonl"
@@ -628,8 +628,8 @@ def native_demo(row: dict, source: Path, output: Path, *, audit_output: Path | N
 
     cid = row["id"]
     if cid == "demo_cohomology_battery":
-        from omega_engine_pfp import initialize_exact_ports
-        from omega_engine_pfp.use_cases.mssn_sn_demos.demo_cohomology_battery.run import (
+        from pfp import initialize_exact_ports
+        from pfp.use_cases.mssn_sn_demos.demo_cohomology_battery.run import (
             run_cohomology_battery,
         )
 
@@ -638,11 +638,11 @@ def native_demo(row: dict, source: Path, output: Path, *, audit_output: Path | N
             cases_dir=source / "demos/demo_cohomology_battery/cases", output_dir=output
         )
     if cid == "demo_q40_quantum_solver":
-        from omega_engine_pfp import initialize_exact_ports
-        from omega_engine_pfp.infrastructure.quantum.dense_checker import (
+        from pfp import initialize_exact_ports
+        from pfp.infrastructure.quantum.dense_checker import (
             verify_dense_spectrum,
         )
-        from omega_engine_pfp.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import (
+        from pfp.use_cases.mssn_sn_demos.demo_q40_quantum_solver.run import (
             run_benchmark_40,
         )
 
@@ -673,7 +673,7 @@ def native_demo(row: dict, source: Path, output: Path, *, audit_output: Path | N
         arguments = ["run", cid, *arguments]
     if cid == "antimorphism_farm":
         arguments = ["run", *arguments]
-    if cid == "demo_woland_tribunal":
+    if cid == "demo_adversary_tribunal":
         arguments = ["run", cid, *arguments]
     if cid == "demo_12":
         arguments.extend(
@@ -681,7 +681,7 @@ def native_demo(row: dict, source: Path, output: Path, *, audit_output: Path | N
                 "--catalog",
                 str(
                     Path(os.environ["PAPER011_ENGINE_ROOT"])
-                    / "omega_engine_pfp/infrastructure/adapters/mssn_research/fixtures/demo_12.json"
+                    / "pfp/infrastructure/adapters/mssn_research/fixtures/demo_12.json"
                 ),
             ]
         )
@@ -1785,9 +1785,9 @@ def run_one(
         not in {
             "PYTHONPATH",
             "PYTHONSTARTUP",
-            "OMEGA_FUNCTIONAL_GRAPH_BIN",
-            "OMEGA_FUNCTIONAL_GRAPH_SHA256",
-            "OMEGA_SYMBOL_GAME_HOST",
+            "CORE_FUNCTIONAL_GRAPH_BIN",
+            "CORE_FUNCTIONAL_GRAPH_SHA256",
+            "CORE_SYMBOL_GAME_HOST",
         }
         and not any(secret in k.upper() for secret in ("API_KEY", "TOKEN", "SECRET", "PASSWORD"))
     }

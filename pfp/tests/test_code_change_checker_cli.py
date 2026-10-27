@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.ffi import find_omega_symbol_game_binary
-from omega_engine_pfp.use_cases.code_change import CreateCodeChangeProposalUseCase
+from pfp.ffi import find_core_symbol_game_binary
+from pfp.use_cases.code_change import CreateCodeChangeProposalUseCase
 
 _REPO = Path(__file__).resolve().parents[2]
 
@@ -31,11 +31,11 @@ def command(tmp_path):
     packet.write_text(json.dumps(session.envelope.to_dict()), encoding="utf-8")
     patch = tmp_path / "candidate.diff"
     patch.write_bytes(b"--- a/src/x.py\n+++ b/src/x.py\n@@ -1,1 +1,1 @@\n-x = 0\n+x = 1\n")
-    binary = find_omega_symbol_game_binary()
+    binary = find_core_symbol_game_binary()
     return [
         sys.executable,
         "-m",
-        "omega_engine_pfp",
+        "pfp",
         "code-change-check-source-bound",
         "--packet",
         str(packet),
@@ -125,7 +125,7 @@ def test_cli_never_overwrites_historical_output(command):
 
 
 def test_compatibility_cli_registers_identical_source_bound_command(command):
-    from omega_engine_pfp.entrypoints.cli.parser import build_parser
+    from pfp.entrypoints.cli.parser import build_parser
 
     args = build_parser().parse_args(command[3:])
     assert args.func is not None

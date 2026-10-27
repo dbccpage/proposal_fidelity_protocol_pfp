@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
-from omega_engine_operations.use_cases.verification.rust_lexical_audit import (  # noqa: E402
+from operations.use_cases.verification.rust_lexical_audit import (  # noqa: E402
     enum_declarations,
     in_test_span,
     mask_non_code,

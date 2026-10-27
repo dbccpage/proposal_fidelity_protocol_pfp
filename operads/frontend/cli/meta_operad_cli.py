@@ -4,10 +4,10 @@ import argparse
 import sys
 from typing import Sequence
 
-from omega_engine_operads.domain.ddc_execution.errors import OperadDomainError
-from omega_engine_operads.domain.ddc_execution.execution import ExecutionPlan
-from omega_engine_operads.domain.operad.errors import Err
-from omega_engine_operads.infrastructure.ddc_execution.runtime import (
+from operads.domain.ddc_execution.errors import OperadDomainError
+from operads.domain.ddc_execution.execution import ExecutionPlan
+from operads.domain.operad.errors import Err
+from operads.infrastructure.ddc_execution.runtime import (
     build_meta_operad_engine,
 )
 

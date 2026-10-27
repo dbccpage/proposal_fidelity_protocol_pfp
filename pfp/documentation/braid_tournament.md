@@ -2,10 +2,10 @@
 
 AuthorityEffect: None.
 
-The current runner is `omega_engine_pfp.infrastructure.braid_tournament`. It
+The current runner is `pfp.infrastructure.braid_tournament`. It
 derives the original tournament's schedules, rational noise construction and
 round order from the retained
-[Paper 022 source](../../omega_engine_education/documentation/004_oepfp/papers/omega_engine_symbol_game/022_pfp_frontier_research/code/adaptive_braid_tournament_demo.py).
+[Paper 022 source](../../education/documentation/004_oepfp/papers/symbol_game/022_pfp_frontier_research/code/adaptive_braid_tournament_demo.py).
 The paper deposit, its old scripts, manifests and recorded results remain
 unchanged. Use the current command below for new runs; the historical scripts
 retain their original dependencies and fallback behavior.
@@ -13,7 +13,7 @@ retain their original dependencies and fallback behavior.
 ## Try one deterministic round
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.braid_tournament --output-dir braid-one --noise-budgets 1/100 --max-rounds 1
+python -m pfp.entrypoints.braid_tournament --output-dir braid-one --noise-budgets 1/100 --max-rounds 1
 ```
 
 `--output-dir` must be new. The command writes `tournament.json` containing
@@ -32,7 +32,7 @@ Exact fractions are preserved. The CLI runs sequentially.
 For an authorized OpenRouter attempt, select the model and allowance explicitly:
 
 ```powershell
-python -m omega_engine_pfp.entrypoints.braid_tournament --output-dir braid-live-one --live --models YOUR_MODEL_ID --noise-budgets 1/100 --max-rounds 1 --max-output-tokens 1024 --max-provider-calls 1 --max-estimated-cost-microusd 10000
+python -m pfp.entrypoints.braid_tournament --output-dir braid-live-one --live --models YOUR_MODEL_ID --noise-budgets 1/100 --max-rounds 1 --max-output-tokens 1024 --max-provider-calls 1 --max-estimated-cost-microusd 10000
 ```
 
 Replace `YOUR_MODEL_ID` with an intended supported model. The existing provider
@@ -74,4 +74,4 @@ over another model. A SHA-256 digest is a content check, not a signature.
 Validation uses deterministic and synthetic-provider controls plus a bounded
 offline command. No fresh paid model evidence is claimed for this migration.
 The original empirical protocol, broader native parity and whole-estate
-PFP/Woland integration remain open under OEPFP-009.
+PFP/Adversary integration remain open under OEPFP-009.

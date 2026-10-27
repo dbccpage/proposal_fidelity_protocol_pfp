@@ -1,0 +1,78 @@
+{
+  "scope": "Four falsifiers replayed on the Adversary gate at the audited commit; single act functions, stub runtime without emitters or model port; no model is called and nothing is written.",
+  "audited_commit": "30609de2c3928238715375a9bac608256fa381d8",
+  "falsifiers": [
+    {
+      "id": "F1",
+      "defect": "input replacement",
+      "input": "triangle, cochain (1, 1, 1) with cycle sum 3; default scorer; one candidate; no critique",
+      "expected": "not AUTHORIZED: no potential removes a cycle sum of 3",
+      "observed": "AUTHORIZED",
+      "is_authorized": true,
+      "trace": {
+        "act2_before": [
+          3.0,
+          0.0
+        ],
+        "act4_fired": true,
+        "cochain_after_act4": [
+          0.0
+        ],
+        "act2_after": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "id": "F2a",
+      "defect": "keyword adjudication",
+      "input": "critic reply: 'Counterexample: the residual (0,0,3) has cycle sum 3, so the claimed repair is false.'",
+      "expected": "blocking",
+      "observed": "not blocking",
+      "candidate_survives": true
+    },
+    {
+      "id": "F2b",
+      "defect": "keyword adjudication",
+      "input": "critic reply: 'No defect found; the certificate checks.'",
+      "expected": "not blocking",
+      "observed": "blocking",
+      "candidate_survives": false
+    },
+    {
+      "id": "F3",
+      "defect": "phantom evidence references",
+      "input": "Act VII with no critique and a dual witness of 1 on edge (0, 1) only, which is not a circulation",
+      "expected": "each evidence reference is the digest of stored bytes; receipt properties are computed",
+      "observed": {
+        "first_reference_is_sha256_of_run_key": true,
+        "receipt_annihilates_coboundary": true,
+        "receipt_norm_bounded": true
+      },
+      "status": "BOUNDED_RESIDUAL"
+    },
+    {
+      "id": "F4",
+      "defect": "templated receipts",
+      "input": "C012 gate: verdict REFUSE, 0 cases, 0 passed, 5 defects",
+      "expected": "no statement of repair, agreement or budget that the inputs do not support",
+      "observed": {
+        "novella_states_full_agreement": true,
+        "novella_states_budget_respected": true,
+        "novella_default_claim_46_cases": true,
+        "novella_names_challenge_C011": true,
+        "step_E_payload": [
+          {
+            "status": "repaired"
+          }
+        ],
+        "step_D_payload": [
+          {
+            "algorithm": "exact_rational_simplex"
+          }
+        ]
+      }
+    }
+  ]
+}

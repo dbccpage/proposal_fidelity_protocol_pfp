@@ -9,15 +9,15 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPipelineFailure, PfpPipelineStep
-from omega_engine_pfp.domain.kernel.result import RefusalCode, TerminalStatus
-from omega_engine_pfp.domain.stages.host_stages import (
+from pfp.domain.contracts.pfp_runtime import PfpPipelineFailure, PfpPipelineStep
+from pfp.domain.kernel.result import RefusalCode, TerminalStatus
+from pfp.domain.stages.host_stages import (
     admit_record,
     hand_off_record,
     receipt_record,
     selection_record,
 )
-from omega_engine_pfp.domain.stages.stages import (
+from pfp.domain.stages.stages import (
     ChallengeReplay,
     ReplayOutcome,
     Stage5Response,
@@ -26,13 +26,13 @@ from omega_engine_pfp.domain.stages.stages import (
     WitnessReplay,
     replay_outcome,
 )
-from omega_engine_pfp.infrastructure.providers import (
+from pfp.infrastructure.providers import (
     OfflineDeterministicPfpProvider,
     SeedHostVerifier,
 )
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
-from omega_engine_pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
+from pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
 
 CANDIDATE = {"proposal": "the candidate"}
 
@@ -72,7 +72,7 @@ def test_fail_open_defaults_are_gone():
                        survivors=[], rule="STAGE5_SURVIVORS_LESS_STAGE7_OBSTRUCTIONS")
     record = Stage8Response(demo_id="d", disposition="SELECT", selected_candidate_id="c",
                             survivors=["c"], rule="STAGE5_SURVIVORS_LESS_STAGE7_OBSTRUCTIONS")
-    assert record.seat == "seat_the_master" and "should_continue" not in record.model_dump()
+    assert record.seat == "seat_manuscript_truth" and "should_continue" not in record.model_dump()
 
 
 class Graded(SeedHostVerifier):
@@ -83,7 +83,7 @@ class Graded(SeedHostVerifier):
         self.accepted, self.unavailable = accepted, unavailable
 
     def _evaluate(self, demo_id, candidate):
-        from omega_engine_pfp.infrastructure.pilot_runners.mssn_checks import GateResult
+        from pfp.infrastructure.pilot_runners.mssn_checks import GateResult
         reasons = ["CHECKER_UNAVAILABLE"] if self.unavailable else []
         if candidate["proposal"] not in self.accepted:
             reasons.append("REJECTED")

@@ -1,7 +1,7 @@
 """Lamarckian Retro-Inheritance Loop Service (NF-02).
 
 Orchestrates the Lamarckian feedback cycle:
-T_loop = <P_0, G_g> -> [Woland Dialectic] -> Artifact A -> [PFP Measurement] -> Defect Witness W -> [Thymus] -> Antibody alpha -> [Forge] -> G_{g+1}
+T_loop = <P_0, G_g> -> [Adversary Dialectic] -> Artifact A -> [PFP Measurement] -> Defect Witness W -> [Thymus] -> Antibody alpha -> [Forge] -> G_{g+1}
 
 Enforces:
 - Rule 1: Protected Core Invariance (Core(G_{g+1}) == Core(G_g)).
@@ -249,11 +249,11 @@ class LamarckianLoopService:
         continue. Its residual is not published as phi1. Gamma2 and xi are
         not measured, so no ``CochainResidualV1`` is published.
         """
-        from omega_engine_pfp.domain.ast_cochain.ast_dependency_complex import (
+        from pfp.domain.ast_cochain.ast_dependency_complex import (
             DEFAULT_LAYER_RANKS,
             DependencyComplexBuilder,
         )
-        from omega_engine_pfp.domain.ast_cochain.ast_source_parser import (
+        from pfp.domain.ast_cochain.ast_source_parser import (
             PythonSourceParser,
         )
 

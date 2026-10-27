@@ -6,7 +6,7 @@ from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, Any, Protocol
 
 if TYPE_CHECKING:
-    from omega_engine_operations.domain.rop.result import Refusal, Result
+    from operations.domain.rop.result import Refusal, Result
 
 
 class PromptCochainHost(Protocol):

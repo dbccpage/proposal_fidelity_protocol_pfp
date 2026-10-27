@@ -1,5 +1,5 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: omega.oesos.rust-prime-host-request.v1
+$id: core.oesos.rust-prime-host-request.v1
 title: Rust Prime/OESOS Host Request V1
 type: object
 additionalProperties: false
@@ -22,7 +22,7 @@ required:
 - budgets
 properties:
   schema_version:
-    const: omega.oesos.rust-prime-host-request.v1
+    const: core.oesos.rust-prime-host-request.v1
   request_id_sha256:
     $ref: '#/$defs/digest'
   challenge_hex:
@@ -30,7 +30,7 @@ properties:
   operation:
     const: evaluate_candidate
   canonicalization_profile:
-    const: omega-sorted-json-no-float-v1
+    const: core-sorted-json-no-float-v1
   authority_effect:
     const: None
   expected_host_registry_hash_sha256:
@@ -40,7 +40,7 @@ properties:
   outer_dda_dialect:
     const: experimental-z-v1
   packet_envelope:
-    $ref: omega.symbol-game.packet-envelope.v2
+    $ref: core.symbol-game.packet-envelope.v2
   source:
     $ref: '#/$defs/sourceBindings'
   carrier:
@@ -185,15 +185,15 @@ $defs:
     type: object
     additionalProperties: false
     required:
-    - before_omega_i128
-    - candidate_omega_i128
+    - before_core_i128
+    - candidate_core_i128
     - candidate_acceptance_mode
     properties:
-      before_omega_i128:
+      before_core_i128:
         type: array
         items:
           $ref: '#/$defs/i128'
-      candidate_omega_i128:
+      candidate_core_i128:
         type: array
         items:
           $ref: '#/$defs/i128'

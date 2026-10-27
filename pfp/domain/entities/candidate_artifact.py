@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 import re
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     canonical_unwire,
     canonical_wire,
@@ -17,7 +17,7 @@ from omega_engine_pfp.domain.shared_kernel.canonical import (
     freeze,
 )
 
-CANDIDATE_SCHEMA = "omega.symbol-game.candidate-artifact.v1"
+CANDIDATE_SCHEMA = "core.symbol-game.candidate-artifact.v1"
 _DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -95,7 +95,7 @@ class CandidateArtifactV1:
     @property
     def candidate_id(self) -> str:
         return domain_digest(
-            "omega.symbol-game.candidate-artifact.v1",
+            "core.symbol-game.candidate-artifact.v1",
             {
                 "schema_version": self.schema_version,
                 "packet_id": self.packet_id,

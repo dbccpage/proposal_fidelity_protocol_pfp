@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Protocol, TypeVar, runtime_checkable
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Result
+from pfp.domain.mssn_research.shared_kernel.result import Result
 
 from .entities import EpistemicQuarantineLedger
 from .errors import GrammarDomainError

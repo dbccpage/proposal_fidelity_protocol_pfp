@@ -2,7 +2,7 @@
 
 import pytest
 
-from omega_engine_pfp.domain.finite_gauge import RunConfig
+from pfp.domain.finite_gauge import RunConfig
 
 
 def test_custom_graph_rejects_undeclared_edge_endpoint() -> None:

@@ -28,7 +28,7 @@ A programme-graph edge states only the relation the review checked. A missing pa
 
 ## Limit
 
-This construction records the 2026-10-11 scoped review. It does not assert that the overstated sentences remain in the current graph; those files were not opened for this digest. Scoping an edge does not discharge quotient, scalar-field, positivity, composition, or operational-availability premises, and it does not certify a programme functor. Formal-declaration scope stays with `/woland-proof-scope-rule`. Premise transfer stays with `/woland-proof-premise-rule`. The historical DAG pytest PASS was not rerun. A later paper edit can make an edge sentence stale; re-read the paper before repeating the attribution.
+This construction records the 2026-10-11 scoped review. It does not assert that the overstated sentences remain in the current graph; those files were not opened for this digest. Scoping an edge does not discharge quotient, scalar-field, positivity, composition, or operational-availability premises, and it does not certify a programme functor. Formal-declaration scope stays with `/adversary-proof-scope-rule`. Premise transfer stays with `/adversary-proof-premise-rule`. The historical DAG pytest PASS was not rerun. A later paper edit can make an edge sentence stale; re-read the paper before repeating the attribution.
 
 ## Dual Anti-Pattern
 

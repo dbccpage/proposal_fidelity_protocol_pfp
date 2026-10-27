@@ -7,8 +7,8 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import intelligence_path
-from omega_engine_operads.frontend.presenters.harvest_presenter import (
+from operating_system.adapters.intelligence_custody.ic_routing import intelligence_path
+from operads.frontend.presenters.harvest_presenter import (
     HarvestPresenter,
 )
 
@@ -19,7 +19,7 @@ def default_repo_root() -> Path:
 
 def run_harvest_cli(argv: Optional[List[str]] = None) -> int:
     root = default_repo_root()
-    parser = argparse.ArgumentParser(prog="harvest_cli", description="Omega Autopoietic Harvester")
+    parser = argparse.ArgumentParser(prog="harvest_cli", description="Core Autopoietic Harvester")
     sub = parser.add_subparsers(dest="command", required=True)
     for cmd, help_text in [
         ("ingest-all", "Harvest into vault"),
@@ -44,7 +44,7 @@ def run_harvest_cli(argv: Optional[List[str]] = None) -> int:
             p.add_argument(
                 "--skills-register",
                 type=Path,
-                default=root / "omega_engine_operads" / "skills" / "ooutwire" / "proposed_skills_register.md",
+                default=root / "operads" / "skills" / "ooutwire" / "proposed_skills_register.md",
             )
             if cmd == "pre-clean-teamwork":
                 p.add_argument(

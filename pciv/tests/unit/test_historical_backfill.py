@@ -2,7 +2,7 @@
 
 import json
 
-from omega_engine_operating_system.adapters.prompt_civ.backfill import (
+from operating_system.adapters.prompt_civ.backfill import (
     RETIRED_PARSER_IDS,
     PromptCivBackfillEngineV1,
 )

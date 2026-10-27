@@ -19,7 +19,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 A Prop wrapper whose proof applies the definition makes `collectAxioms` walk the definition's body. Writing one wrapper is trivial. The work is in proving that the census is complete, and the census must be read from the compiled environment: ParkedAudit records that text-based theorem counts have failed twice in this repository.
 
-The task stresses Symbol Game metaprogramming, OEWAS (Omega Engine Workflows, Agents, Skills) audit workflows, and OEEIS (Omega Engine Epistemic Immune System) vacuity detection.
+The task stresses Symbol Game metaprogramming, OEWAS (Engine Workflows, Agents, Skills) audit workflows, and OEEIS (Engine Epistemic Immune System) vacuity detection.
 
 ## 3. Formal Problem and Bounds
 
@@ -115,7 +115,7 @@ The catalog row requires none of these. They are recommended:
 
 **19L57G1, read-only.** At HEAD: `19L57G1:lean4/ParkedAudit.lean`, `19L57G1:ci/check_parked_audit.py`, the twelve parked modules, and `19L57G1:research/alpha_engine/lean/lakefile.toml`; at `3100c4e`: `19L57G1:lean4/Derivation/Minimality.lean`.
 
-**the_symbol_game.** `omega_engine_pfp/domain/immune/`, and `omega_engine/crates_rs/omega_ooutwire_primitives` (`canonical.rs`, `renaming.rs`) for the instance regimes.
+**the_symbol_game.** `pfp/domain/immune/`, and `engine/crates_rs/core_ooutwire_primitives` (`canonical.rs`, `renaming.rs`) for the instance regimes.
 
 **Upgrades.**
 

@@ -14,17 +14,17 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from omega_engine_operads.application.dtos.query_dtos import (
+from operads.application.dtos.query_dtos import (
     ValidateWorkflowsQuery,
     WorkflowEdgeDTO,
     WorkflowNodeDTO,
 )
-from omega_engine_operads.frontend.cli.main import main
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
-from omega_engine_operads.infrastructure.providers.manifest_signature_provider import (
+from operads.frontend.cli.main import main
+from operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.providers.manifest_signature_provider import (
     ManifestSignatureProvider,
 )
-from omega_engine_operads.infrastructure.storage.outbox_dispatcher import (
+from operads.infrastructure.storage.outbox_dispatcher import (
     OutboxMessageDispatcher,
 )
 
@@ -34,7 +34,7 @@ class TestE2EFullLifecycleRoundtrip(unittest.TestCase):
         self._temp_dir = tempfile.TemporaryDirectory()
         self.workspace_root = Path(self._temp_dir.name)
         self.db_path = str(self.workspace_root / "e2e_lifecycle.db")
-        self.signing_key = b"anomalon_master_signing_key_secret_2026"
+        self.signing_key = b"sentinel_master_signing_key_secret_2026"
 
         # 1. Author skill documents on disk
         author_dir = self.workspace_root / ".agents" / "skills" / "author-skill"
@@ -160,7 +160,7 @@ output:
             epoch=cat_dto.epoch,
             target_format="json",
             payload=proj_dto.payload,
-            signer_id="author:anomalon:primary",
+            signer_id="author:sentinel:primary",
             secret_key=self.signing_key,
         )
         verify_res = sig_provider.verify_envelope(envelope, secret_key=self.signing_key)

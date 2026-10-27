@@ -14,8 +14,8 @@ import json
 from pathlib import Path
 from typing import Any, Sequence
 
-from omega_engine_operads.domain.autopoiesis.entities import MinedAntibody
-from omega_engine_operads.domain.autopoiesis.ports import PharmacyCatalogPort
+from operads.domain.autopoiesis.entities import MinedAntibody
+from operads.domain.autopoiesis.ports import PharmacyCatalogPort
 
 
 class JsonPharmacyAdapter(PharmacyCatalogPort):

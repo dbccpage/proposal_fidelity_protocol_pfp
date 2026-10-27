@@ -19,21 +19,21 @@ from pathlib import Path
 from typing import Any
 
 _worktree_root = next((parent for parent in Path(__file__).resolve().parents
-    if (parent / "omega_engine_pfp").is_dir() and (parent / "omega_engine_woland").is_dir()), None)
+    if (parent / "pfp").is_dir() and (parent / "adversary").is_dir()), None)
 if _worktree_root is not None and str(_worktree_root) not in sys.path:
     sys.path.insert(0, str(_worktree_root))
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import get_hidden_base_cases
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import verify_consistency_certificate
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.run_woland_bakeoff import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import get_hidden_base_cases
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import verify_consistency_certificate
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.run_adversary_bakeoff import (
     not_adjudicated_fields, persist_benchmark_run as persist_benchmark_run,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import CONSISTENCY_JSON_SCHEMA
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.budget_controller import BudgetController
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner import _complete_case
-from omega_engine_pfp.infrastructure.pilot_matrix import _scope, make_pilot_gateways, validate_pilot_gateways
-from omega_engine_pfp.infrastructure.synthesis_matrix import RunnerRefusal, prepare_output_dir
-from omega_engine_woland.domain.providers.types import DecodingParamsV1
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import CONSISTENCY_JSON_SCHEMA
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.budget_controller import BudgetController
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.empirical_001_runner import _complete_case
+from pfp.infrastructure.pilot_matrix import _scope, make_pilot_gateways, validate_pilot_gateways
+from pfp.infrastructure.synthesis_matrix import RunnerRefusal, prepare_output_dir
+from adversary.domain.providers.types import DecodingParamsV1
 from jsonschema import Draft202012Validator
 from decimal import Decimal, InvalidOperation
 from uuid import uuid4

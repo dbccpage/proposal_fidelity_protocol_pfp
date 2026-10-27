@@ -11,12 +11,12 @@ import itertools
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
 from ..entities.packet_envelope import CandidateArtifactV1, PacketEnvelopeV2
 
-from omega_engine_pfp.domain.shared_kernel.authority_effect import AuthorityEffect
-from omega_engine_pfp.domain.entities.oesos_evidence_bundle import DdaLetter
-from omega_engine_pfp.domain.entities.projection_receipt import (
+from pfp.domain.shared_kernel.authority_effect import AuthorityEffect
+from pfp.domain.entities.oesos_evidence_bundle import DdaLetter
+from pfp.domain.entities.projection_receipt import (
     DetectorCase,
     Obstruction,
     ProjectionReceipt,
@@ -24,7 +24,7 @@ from omega_engine_pfp.domain.entities.projection_receipt import (
     SolverProposal,
     TerminalStatus,
 )
-from omega_engine_pfp.domain.entities.problem import (
+from pfp.domain.entities.problem import (
     CandidateSolver,
     IdentityAdapter,
     RuntimeProblem,
@@ -73,7 +73,7 @@ class FrozenCorpus:
     @property
     def digest(self) -> str:
         return domain_digest(
-            "omega.oesos.frozen-corpus.v1",
+            "core.oesos.frozen-corpus.v1",
             {
                 "corpus_id": self.corpus_id,
                 "cases": tuple(
@@ -151,7 +151,7 @@ def evaluate_policy(
     corpus: FrozenCorpus,
 ) -> PolicyScore:
     try:
-        from omega_engine_pfp.domain.entities.lab import OesosLab, RunReceipt
+        from pfp.domain.entities.lab import OesosLab, RunReceipt
     except ImportError:
         from .lab import OesosLab, RunReceipt  # type: ignore
 
@@ -221,7 +221,7 @@ class RoutingPolicyProjector:
     @property
     def config_digest(self) -> str:
         return domain_digest(
-            "omega.oesos.projector-config.v1",
+            "core.oesos.projector-config.v1",
             {
                 "projector_id": self.projector_id,
                 "corpus_digest": self.corpus.digest,
@@ -274,7 +274,7 @@ class RoutingPolicyProjector:
             and envelope.constraints == expected_constraints
             and envelope.payload == freeze(expected_payload)
             and envelope.source_digest
-            == domain_digest("omega.oesos.policy-source.v1", expected_payload)
+            == domain_digest("core.oesos.policy-source.v1", expected_payload)
         )
 
     def project(self, state: Any) -> ProjectionReceipt:
@@ -335,7 +335,7 @@ class RoutingPolicyProjector:
                 )
         return ProjectionReceipt(
             projector_id=self.projector_id,
-            state_hash=domain_digest("omega.oesos.state.v1", policy),
+            state_hash=domain_digest("core.oesos.state.v1", policy),
             obstructions=tuple(obstructions),
             witness=f"matched-budget-corpus:{self.corpus.digest}",
         )
@@ -408,13 +408,13 @@ def propose_routing_update(
     apply: bool = False,
 ) -> SelfImprovementReceipt:
     from collections.abc import Iterable, Sequence
-    from omega_engine_pfp.domain.entities.problem import (
+    from pfp.domain.entities.problem import (
         DetectorCase,
         IdentityAdapter,
         RuntimeProblem,
     )
     try:
-        from omega_engine_pfp.domain.entities.lab import OesosLab
+        from pfp.domain.entities.lab import OesosLab
     except ImportError:
         from .lab import OesosLab  # type: ignore
 
@@ -471,7 +471,7 @@ def propose_routing_update(
         task_id=f"routing-policy:{training.corpus_id}",
         packet_family="oesos_routing_policy",
         carrier_id="routing-policy-v1",
-        initial_state_hash=domain_digest("omega.oesos.native-state.v1", engine.policy),
+        initial_state_hash=domain_digest("core.oesos.native-state.v1", engine.policy),
         payload=payload,
         constraints=(
             "preserve frozen solver registry",
@@ -486,7 +486,7 @@ def propose_routing_update(
             "policy:false-terminal-growth",
         ),
         step_budget=1,
-        source_digest=domain_digest("omega.oesos.policy-source.v1", payload),
+        source_digest=domain_digest("core.oesos.policy-source.v1", payload),
     )
     problem = RuntimeProblem(
         envelope=envelope,

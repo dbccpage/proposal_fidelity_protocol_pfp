@@ -4,7 +4,7 @@ The Symbol Game separates a proposal from its check. You can begin with a
 few marks, a stated goal, and a basic packet. Advanced mathematical routes
 come later.
 
-Read [Paper 000](../papers/omega_engine_symbol_game/000_pfp_introduction/README.md)
+Read [Paper 000](../papers/symbol_game/000_pfp_introduction/README.md)
 for S(n), MSS-N, and basic packets. S(n) names Genesis derivation stages;
 MSS-N names externally designed atlas obligations. Their indices are different.
 
@@ -57,7 +57,7 @@ increases circulation and is refused without changing the accepted board.
 These CUTs edit edge reports. They are not vertex gauge transformations:
 adding differences of vertex values cannot change a closed-cycle circulation.
 For optimization over potentials with fixed reports, read
-[Paper 001](../papers/omega_engine_symbol_game/001_pfp_discrete_cochain_retraction_and_toy_involutions/README.md).
+[Paper 001](../papers/symbol_game/001_pfp_discrete_cochain_retraction_and_toy_involutions/README.md).
 
 The teaching runtime is separate from the native host. Its legacy
 `defect_phi1` field means triangle circulation defect in these lessons;
@@ -70,11 +70,11 @@ From the repository root, with Python 3.12 and pytest installed, run each
 file separately:
 
 ```sh
-python -m pytest omega_engine_education/documentation/004_oepfp/_how_to_play/test_how_to_play_scenarios.py -q
-python -m pytest omega_engine_education/documentation/004_oepfp/_how_to_play/test_educational_governor_boundaries.py -q
+python -m pytest education/documentation/004_oepfp/_how_to_play/test_how_to_play_scenarios.py -q
+python -m pytest education/documentation/004_oepfp/_how_to_play/test_educational_governor_boundaries.py -q
 ```
 
 Keep the proposal, checking rule, and receipt together. If attempts run out
 before a checked answer is found, record an unresolved stop. The advanced
 [board rules](02_the_rules_of_the_board.md), native interfaces, and historical
-editions add their own obligations; the Landau exam is optional advanced study.
+editions add their own obligations; the Examiner exam is optional advanced study.

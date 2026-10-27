@@ -1,4 +1,4 @@
-"""Main CLI entry point for Omega Engine Operads commands."""
+"""Main CLI entry point for Engine Operads commands."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ def _configure_encoding() -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="oeop",
-        description="OEOP: Omega Engine Operads CLI",
+        description="OEOP: Engine Operads CLI",
     )
     parser.add_argument(
         "--workspace",

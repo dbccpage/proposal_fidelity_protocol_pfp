@@ -110,7 +110,7 @@ __all__ = [
     "carrier_digest",
 ]
 
-CALCULUS_RECEIPT_SCHEMA = "omega.glyph_receipt.draft.v1"
+CALCULUS_RECEIPT_SCHEMA = "core.glyph_receipt.draft.v1"
 
 
 class RowOutcome(str, Enum):

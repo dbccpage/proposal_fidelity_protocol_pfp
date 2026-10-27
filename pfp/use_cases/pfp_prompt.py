@@ -10,7 +10,7 @@ import re
 from copy import deepcopy
 from hashlib import sha256
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import (
+from pfp.domain.contracts.pfp_runtime import (
     PfpPrompt,
     PfpPromptTemplate,
     PfpStagePromptInput,

@@ -43,16 +43,16 @@ STAGE_COUNT = len(STAGE_NAMES_BY_INDEX)
 # repair a missing declaration. Every other stage is a model turn.
 HOST_STAGES: frozenset[int] = frozenset({1, 5, 7, 8, 9, 10})
 
-# The core retinue seat that owns each stage. Stages without a seat are host plumbing.
+# The core panel seat that owns each stage. Stages without a seat are host plumbing.
 # The seats are the first five `core_required` entries of
-# omega_engine/crates_rs/omega_woland/src/council_layout_v1.json.
+# engine/crates_rs/core_adversary/src/council_layout_v1.json.
 SEAT_BY_STAGE: Dict[int, str] = {
-    2: "seat_begemot",
-    3: "seat_koroviev",
-    4: "seat_begemot",
-    5: "seat_woland",
-    6: "seat_margarita",
-    8: "seat_the_master",
+    2: "seat_gauge_breaker",
+    3: "seat_defect_hunter",
+    4: "seat_gauge_breaker",
+    5: "seat_adversary",
+    6: "seat_primal_dual",
+    8: "seat_manuscript_truth",
 }
 
 # The closed set of obligations a stage 9 receipt can carry. The stage 9 file maps each
@@ -240,7 +240,7 @@ class StageController(BaseModel):
         return {ref.stage: ref.seat for ref in self.stages if ref.seat is not None}
 
     def stages_for_seat(self, seat: str) -> Tuple[int, ...]:
-        """The stages one core retinue seat owns, in order; empty for an unknown seat."""
+        """The stages one core panel seat owns, in order; empty for an unknown seat."""
         return tuple(ref.stage for ref in self.stages if ref.seat == seat)
 
 
@@ -504,7 +504,7 @@ class Stage8Response(BaseModel):
     demo_id: StrictStr = Field(min_length=1)
     authority_effect: Literal["None"] = "None"
     derived_under_policy: Literal["SPK-001"] = "SPK-001"
-    seat: Literal["seat_the_master"] = "seat_the_master"
+    seat: Literal["seat_manuscript_truth"] = "seat_manuscript_truth"
     disposition: Literal["SELECT", "REJECT"]
     selected_candidate_id: Optional[StrictStr]
     survivors: List[StrictStr]

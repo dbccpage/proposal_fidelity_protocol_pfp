@@ -30,7 +30,7 @@ class PharmacyCatalogRepository:
         repo_root: Path, byte_source: CatalogByteSource | None = None
     ) -> Path:
         """Where the catalog lives under ``repo_root``; computing it creates nothing."""
-        agents_catalog = Path(repo_root) / "omega_engine_epistemic_immune_system" / "antibodies" / "pharmacy_catalog.json"
+        agents_catalog = Path(repo_root) / "eis" / "antibodies" / "pharmacy_catalog.json"
         if byte_source is None:
             return agents_catalog
         if byte_source.is_file(str(agents_catalog)):
@@ -66,7 +66,7 @@ class PharmacyCatalogRepository:
         self.candidates_dir = self.telemetry_dir
         self.specs_dir = self.antibodies_dir / "specs"
         self.oeeis_specs_dir = (
-            self.repo_root / "omega_engine_epistemic_immune_system" / "antibodies" / "antibody_specs"
+            self.repo_root / "eis" / "antibodies" / "antibody_specs"
         )
 
     def target_dir_for_status(self, pharmacy_status: str) -> Path:

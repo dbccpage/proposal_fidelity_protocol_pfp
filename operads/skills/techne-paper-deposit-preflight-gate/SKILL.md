@@ -38,11 +38,11 @@ families: [governance, gate, packaging, techne]
 
 ```bash
 # Lightweight self-check
-py -3.12 omega_engine_operads/skills/techne-paper-deposit-preflight-gate/scripts/check_paper_deposit_preflight.py
+py -3.12 operads/skills/techne-paper-deposit-preflight-gate/scripts/check_paper_deposit_preflight.py
 
 # Evaluate an active preprint package
-py -3.12 omega_engine_operads/skills/techne-paper-deposit-preflight-gate/scripts/check_paper_deposit_preflight.py --paper-path omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme
+py -3.12 operads/skills/techne-paper-deposit-preflight-gate/scripts/check_paper_deposit_preflight.py --paper-path atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme
 
 # Or invoke the unified paper review CLI preflight subcommand
-py -3.12 -m omega_engine_research_papers.use_cases.paper_review.cli preflight --paper-path <paper_path>
+py -3.12 -m research_papers.use_cases.paper_review.cli preflight --paper-path <paper_path>
 ```

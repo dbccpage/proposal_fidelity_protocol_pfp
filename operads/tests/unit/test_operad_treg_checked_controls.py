@@ -2,7 +2,7 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_operads.domain.operad.treg import OperadTregSupervisor
+from operads.domain.operad.treg import OperadTregSupervisor
 
 
 def test_missing_danger_is_not_a_false_positive():
@@ -13,7 +13,7 @@ def test_missing_danger_is_not_a_false_positive():
 
 
 def test_checked_false_positives_target_only_optional_learned_detector():
-    from omega_engine_operads.domain.operad.treg import CheckedFalsePositive
+    from operads.domain.operad.treg import CheckedFalsePositive
     supervisor = OperadTregSupervisor()
     results = []
     for index in range(3):
@@ -26,7 +26,7 @@ def test_checked_false_positives_target_only_optional_learned_detector():
 
 
 def test_mandatory_gate_and_conflicting_witness_cannot_be_downgraded():
-    from omega_engine_operads.domain.operad.treg import CheckedFalsePositive
+    from operads.domain.operad.treg import CheckedFalsePositive
     evidence = CheckedFalsePositive('budget', 'a' * 64, 'host-checker', 'e' * 64)
     supervisor = OperadTregSupervisor(min_suppressions=1)
     with pytest.raises(ValueError, match='PROTECTED_GATE'):
@@ -38,7 +38,7 @@ def test_mandatory_gate_and_conflicting_witness_cannot_be_downgraded():
 
 
 def test_replayed_false_positive_does_not_inflate_count():
-    from omega_engine_operads.domain.operad.treg import CheckedFalsePositive
+    from operads.domain.operad.treg import CheckedFalsePositive
     evidence = CheckedFalsePositive('learned', 'a' * 64, 'host-checker', 'e' * 64)
     supervisor = OperadTregSupervisor()
     for _ in range(5):

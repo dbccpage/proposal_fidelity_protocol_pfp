@@ -36,7 +36,7 @@ must refuse maintenance.
 > - **[Open]**: something this sitting does not decide.
 ## Anchors
 
-- Former notebook: `13_alpha_to_omega_execution`
+- Former notebook: `13_alpha_to_core_execution`
 - The code checks one finite example. It is not a general proof.
 
 ## Exercise

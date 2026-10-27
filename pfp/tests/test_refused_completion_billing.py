@@ -7,10 +7,10 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-from omega_engine_woland.domain.providers.types import CandidateRequest, Provider
-from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+from operations.domain.rop.result import Err, Ok
+from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+from adversary.domain.providers.types import CandidateRequest, Provider
+from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
 REQUEST = CandidateRequest("System", "Original task")
 
@@ -157,14 +157,14 @@ def test_refused_wire_survives_crash_and_explicit_recovery_never_resends(tmp_pat
 
 
 def test_hard_mode_keeps_refused_usage_pending_until_trusted_receipt(tmp_path):
-    from omega_engine_pfp.tests.test_durable_run_budget import (
+    from pfp.tests.test_durable_run_budget import (
         SyntheticTransport,
         generation_payload,
     )
-    from omega_engine_pfp.tests.test_durable_run_budget import (
+    from pfp.tests.test_durable_run_budget import (
         bind as hard_bind,
     )
-    from omega_engine_pfp.tests.test_durable_run_budget import (
+    from pfp.tests.test_durable_run_budget import (
         send as hard_send,
     )
 

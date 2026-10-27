@@ -8,7 +8,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     DEFAULT_REQUIRED_REPLY_FIELDS,
     DemandItemV1,
     ObjectiveTypedV1,
@@ -21,7 +21,7 @@ from omega_engine_pfp.domain import (
     compile_prompt_artifact,
     render_prompt_body,
 )
-from omega_engine_pfp.infrastructure.serialization import (
+from pfp.infrastructure.serialization import (
     write_content_addressed_json,
 )
 from .io_utils import _parse_csv, _read_json, _write_json

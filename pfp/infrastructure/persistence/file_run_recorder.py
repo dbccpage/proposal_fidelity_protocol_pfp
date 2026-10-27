@@ -16,25 +16,25 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from omega_engine_operating_system.adapters.intelligence_custody.ic_routing import (
+from operating_system.adapters.intelligence_custody.ic_routing import (
     IcMigrationRefusal,
     intelligence_path,
     read_activation,
     safe_path,
 )
-from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (
+from operating_system.adapters.intelligence_custody.intelligence_root import (
     try_resolve_intelligence_repo_root,
 )
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.ports.run_recorder import (
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from pfp.domain.ports.run_recorder import (
     RunId,
     RunRecorder,
     RunStream,
     RunTrigger,
 )
 
-MANIFEST_SCHEMA_V1 = "omega.run_folder.manifest.v1"
-RECEIPT_SCHEMA_V1 = "omega.run_folder.receipt.v1"
+MANIFEST_SCHEMA_V1 = "core.run_folder.manifest.v1"
+RECEIPT_SCHEMA_V1 = "core.run_folder.receipt.v1"
 AUTHORITY_EFFECT_NONE = "None"
 
 
@@ -102,14 +102,14 @@ class FileRunRecorder(RunRecorder):
             return Err(Refusal(
                 code=exc.code,
                 message=f"Run custody unavailable under {base}: {exc}",
-                locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                locus="pfp.infrastructure.persistence.file_run_recorder",
             ))
         except OSError as e:
             return Err(
                 Refusal(
                     code="RUN_DIRECTORY_CREATION_FAILED",
                     message=f"Failed to resolve or create runs directory under {base}: {e}",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
         return Ok((base, runs_dir))
@@ -140,13 +140,13 @@ class FileRunRecorder(RunRecorder):
             return Err(Refusal(
                 code=exc.code,
                 message=f"Run custody unavailable: {exc}",
-                locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                locus="pfp.infrastructure.persistence.file_run_recorder",
             ))
         except (OSError, ValueError) as exc:
             return Err(Refusal(
                 code="RUN_CUSTODY_UNAVAILABLE",
                 message=f"Could not validate run custody: {exc}",
-                locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                locus="pfp.infrastructure.persistence.file_run_recorder",
             ))
         return Ok(None)
 
@@ -174,7 +174,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="RUN_FOLDER_EXISTS",
                     message=f"Run folder already exists: {final_dir}",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
 
@@ -186,7 +186,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="STAGING_DIR_CREATION_FAILED",
                     message=f"Could not create staging dir at {staged_dir}: {e}",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
 
@@ -231,7 +231,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="RUN_NOT_OPEN",
                     message=f"Run {run_id.value} is not open for writing",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
 
@@ -249,7 +249,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="STREAM_APPEND_FAILED",
                     message=f"Failed to append to {stream.value}: {e}",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
         return Ok(None)
@@ -273,7 +273,7 @@ class FileRunRecorder(RunRecorder):
             return Err(Refusal(
                 code="RUN_SEAL_FAILED",
                 message=f"Could not hash run files: {exc}",
-                locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                locus="pfp.infrastructure.persistence.file_run_recorder",
             ))
 
         utc_now = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -297,7 +297,7 @@ class FileRunRecorder(RunRecorder):
             return Err(Refusal(
                 code="RUN_SEAL_FAILED",
                 message=f"Could not write run receipt: {exc}",
-                locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                locus="pfp.infrastructure.persistence.file_run_recorder",
             ))
 
         # Atomic rename into final_dir
@@ -306,7 +306,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="RUN_FOLDER_EXISTS",
                     message=f"Destination run directory already exists: {info.final_dir}",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
         try:
@@ -316,7 +316,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="RUN_RENAME_FAILED",
                     message=f"Failed to atomically rename {info.staged_dir} to {info.final_dir}: {e}",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
 
@@ -335,7 +335,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="RUN_NOT_OPEN",
                     message=f"Run {run_id.value} is not open",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
 
@@ -351,7 +351,7 @@ class FileRunRecorder(RunRecorder):
             return Err(Refusal(
                 code="RUN_WRITE_FAILED",
                 message=f"Could not write run summary/report: {exc}",
-                locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                locus="pfp.infrastructure.persistence.file_run_recorder",
             ))
 
         return self._seal_and_rename(info, status="SEALED")
@@ -369,7 +369,7 @@ class FileRunRecorder(RunRecorder):
                 Refusal(
                     code="RUN_NOT_OPEN",
                     message=f"Run {run_id.value} is not open",
-                    locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                    locus="pfp.infrastructure.persistence.file_run_recorder",
                 )
             )
 
@@ -389,7 +389,7 @@ class FileRunRecorder(RunRecorder):
             return Err(Refusal(
                 code="RUN_WRITE_FAILED",
                 message=f"Could not write aborted summary/report: {exc}",
-                locus="omega_engine_pfp.infrastructure.persistence.file_run_recorder",
+                locus="pfp.infrastructure.persistence.file_run_recorder",
             ))
 
         return self._seal_and_rename(info, status="ABORTED", reason=reason)

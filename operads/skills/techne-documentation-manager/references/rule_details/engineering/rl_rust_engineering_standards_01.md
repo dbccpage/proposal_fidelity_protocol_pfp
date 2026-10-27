@@ -16,21 +16,21 @@ This rule codifies native Rust crate exclusivity, Cargo workspace execution root
 
 > **Native Rust Crate Authority:**
 >
-> 1. All root-level engines, solvers, operators, functional evaluators, and pipelines must adopt native Rust crates under `omega_engine/crates_rs` exclusively.
-> 2. Legacy Python crate prototypes (`omega_engine/crates/` and `engine/_legacy/symbol_game_recovery/python/`) are permanently deleted/retired and must never be imported by new or refactored code.
+> 1. All root-level engines, solvers, operators, functional evaluators, and pipelines must adopt native Rust crates under `engine/crates_rs` exclusively.
+> 2. Legacy Python crate prototypes (`engine/crates/` and `engine/_legacy/symbol_game_recovery/python/`) are permanently deleted/retired and must never be imported by new or refactored code.
 > 3. When legacy Python runtimes are retired, dependent verification surfaces must fail closed with a typed `Refusal("RUNTIME_RETIRED", ...)` rather than throwing unhandled `ModuleNotFoundError`.
-> 4. Python-to-Rust crossings must proceed strictly through canonical process or C-ABI FFI seams (`omega_engine_operating_system/python/adapters/rust_host/ffi.py`) with explicit outcome roots framed under `omega.oesos.rust-prime-host-outcome.v1`.
+> 4. Python-to-Rust crossings must proceed strictly through canonical process or C-ABI FFI seams (`operating_system/python/adapters/rust_host/ffi.py`) with explicit outcome roots framed under `core.oesos.rust-prime-host-outcome.v1`.
 
 ## Rust Cargo Workspace Manifest Path Invariant (`RULE_CARGO_WORKSPACE_ROOT_001`)
 
 > **Cargo Workspace Execution Root:**
 >
-> 1. The canonical native Rust Cargo workspace root is located at `omega_engine/crates_rs/Cargo.toml`. The repository root does not contain a top-level `Cargo.toml`.
-> 2. All Cargo commands (`cargo check`, `cargo test`, `cargo build`, `cargo clippy`) must be executed either with working directory set to `omega_engine/crates_rs` or by explicitly providing `--manifest-path omega_engine/crates_rs/Cargo.toml`.
+> 1. The canonical native Rust Cargo workspace root is located at `engine/crates_rs/Cargo.toml`. The repository root does not contain a top-level `Cargo.toml`.
+> 2. All Cargo commands (`cargo check`, `cargo test`, `cargo build`, `cargo clippy`) must be executed either with working directory set to `engine/crates_rs` or by explicitly providing `--manifest-path engine/crates_rs/Cargo.toml`.
 > 3. Single-threaded `-j 1` compilation must remain strictly enforced across all Cargo invocations.
-> 4. **Git Worktree Shared Target Cache:** When executing Cargo commands inside isolated git worktrees (`.worktrees/<name>` or temp checkout paths), agents MUST set `$env:CARGO_TARGET_DIR = "<primary_repo_root>/omega_engine/crates_rs/target"` (or pass `--target-dir`). Never allow an isolated worktree to generate a redundant 30 GB local `target/` cache, which exhausts disk budget and triggers MSVC linker failures (`LNK1140`/`LNK1201`).
-> 5. **Sequential Single-Crate Test Execution:** Never execute multi-crate concurrent test sweeps across the workspace. Run tests sequentially on individual packages (`cargo test -j 1 --manifest-path omega_engine/crates_rs/Cargo.toml -p <crate> --lib`) to avoid Windows file lock collisions on `target/` and prevent transitive dev-dependency build bloat.
-> 6. **Incremental Build Cache Disk Hygiene (`os error 112` Mitigation):** Repeated test and check cycles expand `omega_engine/crates_rs/target/debug/incremental` to 15–30+ GB. When free disk space drops below 5 GB or a build fails with OS error 112 ("There is not enough space on the disk"), agents must selectively purge the incremental cache (`Remove-Item -Recurse -Force "omega_engine/crates_rs/target/debug/incremental"`) rather than running a full `cargo clean`. This instantly reclaims 15–20 GB while preserving pre-compiled dependency rmeta artifacts in `target/debug/deps/`.
+> 4. **Git Worktree Shared Target Cache:** When executing Cargo commands inside isolated git worktrees (`.worktrees/<name>` or temp checkout paths), agents MUST set `$env:CARGO_TARGET_DIR = "<primary_repo_root>/engine/crates_rs/target"` (or pass `--target-dir`). Never allow an isolated worktree to generate a redundant 30 GB local `target/` cache, which exhausts disk budget and triggers MSVC linker failures (`LNK1140`/`LNK1201`).
+> 5. **Sequential Single-Crate Test Execution:** Never execute multi-crate concurrent test sweeps across the workspace. Run tests sequentially on individual packages (`cargo test -j 1 --manifest-path engine/crates_rs/Cargo.toml -p <crate> --lib`) to avoid Windows file lock collisions on `target/` and prevent transitive dev-dependency build bloat.
+> 6. **Incremental Build Cache Disk Hygiene (`os error 112` Mitigation):** Repeated test and check cycles expand `engine/crates_rs/target/debug/incremental` to 15–30+ GB. When free disk space drops below 5 GB or a build fails with OS error 112 ("There is not enough space on the disk"), agents must selectively purge the incremental cache (`Remove-Item -Recurse -Force "engine/crates_rs/target/debug/incremental"`) rather than running a full `cargo clean`. This instantly reclaims 15–20 GB while preserving pre-compiled dependency rmeta artifacts in `target/debug/deps/`.
 
 
 > **Pattern estate:** `AP_RS_001` / `HP_RS_001`, `AP_RS_003` / `HP_RS_003` (`.agents/patterns/anti/rust/`).
@@ -55,15 +55,15 @@ a text scanner does not enforce every key type or wire boundary.
 > **Domain Factorization over Filename Matching:**
 >
 > 1. When porting legacy Python modules into existing native Rust crates, agents must inspect the target crate for existing identically-named files prior to writing.
-> 2. If an existing module already implements mature functionality (e.g., `omega_solvers::solver_of_solvers`), the incoming module's specific bounded responsibility must be factored into an orthogonal domain module (e.g., `plan_grammar.rs`), avoiding name collisions or destructive overwrites.
+> 2. If an existing module already implements mature functionality (e.g., `core_solvers::solver_of_solvers`), the incoming module's specific bounded responsibility must be factored into an orthogonal domain module (e.g., `plan_grammar.rs`), avoiding name collisions or destructive overwrites.
 
-## Omega Engine Tests Rust Exclusivity Invariant (`RULE_OMEGA_ENGINE_TESTS_RUST_EXCLUSIVE_001`)
+## Engine Tests Rust Exclusivity Invariant (`RULE_TESTS_RUST_EXCLUSIVE_001`)
 
-> **Rust Tests Only in `omega_engine/tests`:**
+> **Rust Tests Only in `engine/tests`:**
 >
-> 1. `omega_engine/tests` is dedicated exclusively to native Rust workspace, integration, and unit tests.
+> 1. `engine/tests` is dedicated exclusively to native Rust workspace, integration, and unit tests.
 > 2. It must never contain Python test files, fixtures, or module packages (`test_*.py`, `__init__.py`, `conftest.py`).
-> 3. All Python tests across the repository reside in their respective operational contexts (e.g., `omega_engine_operations/tests/`, `research/papers/.../code/tests/`, `bench/.../tests/`).
+> 3. All Python tests across the repository reside in their respective operational contexts (e.g., `operations/tests/`, `research/papers/.../code/tests/`, `bench/.../tests/`).
 
 ## Review & Audit Cargo Compilation Restraint (`RULE_RUST_REVIEW_CARGO_RESTRAINT_001`)
 

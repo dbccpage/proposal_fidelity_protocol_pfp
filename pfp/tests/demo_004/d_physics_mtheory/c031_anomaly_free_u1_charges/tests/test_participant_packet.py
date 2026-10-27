@@ -11,7 +11,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.solver import (
     solve,
 )
 

@@ -55,15 +55,15 @@ does not adopt the historical parser's particular numeric limits for other tasks
 
 ## Conditional bounds and check binding
 
-Use `/woland-proof-premise-rule` before consuming a conditional bound, and
-`/woland-check-sensitivity-pattern` before treating a component check as a
+Use `/adversary-proof-premise-rule` before consuming a conditional bound, and
+`/adversary-check-sensitivity-pattern` before treating a component check as a
 certificate of the assembled candidate. Those packages keep the retained
 witnesses, later repairs, numerical limits and proposed fixes historical.
 This audit does not rerun them.
 
 Check each affected claim projection and keep different bounds' domains separate.
 For composed checks, inspect auxiliary-source support and assembly as well as
-pairwise components. Use `/woland-proof-scope-rule` to distinguish quantitative
+pairwise components. Use `/adversary-proof-scope-rule` to distinguish quantitative
 margins, qualitative consequences and endpoints; a zero lower bound does not
 make the actual value zero. The typed packages carry the concrete witnesses and
 their source-reported repair limits.

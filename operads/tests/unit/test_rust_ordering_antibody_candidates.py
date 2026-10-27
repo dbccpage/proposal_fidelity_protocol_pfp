@@ -18,7 +18,7 @@ def test_ordering_candidate_has_deciding_controls_and_native_bindings(filename: 
     projection = REPO / ".agents/antibodies/specs" / filename
     assert source.read_bytes() == projection.read_bytes()
     spec = yaml.safe_load(source.read_text(encoding="utf-8"))
-    assert spec["schema_version"] == "omega.immune.antibody-spec.v1"
+    assert spec["schema_version"] == "core.immune.antibody-spec.v1"
     assert spec["pharmacy_status"] == "candidate"
     assert spec["authority_effect"] == "None"
     assert (

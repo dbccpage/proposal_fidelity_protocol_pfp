@@ -6,13 +6,13 @@ Delegates to the `python_development_office` engine, which lives in the
 this one borrows it rather than carrying a second copy of ~2,100 lines.
 
 Previously this was a shim onto
-`omega_engine_operads.frontend.cli.python_dev_cli`, reached by inserting the
+`operads.frontend.cli.python_dev_cli`, reached by inserting the
 repository root onto `sys.path`. That package is not in CODA, and
 `.agents/COPY.md` forbids importing it here.
 
 Run from anywhere::
 
-    python omega_engine_operads/skills/techne-code-python-principal-developer/scripts/python_antipattern_scanner.py <path> [--json]
+    python operads/skills/techne-code-python-principal-developer/scripts/python_antipattern_scanner.py <path> [--json]
 
 AuthorityEffect: None. A clean scan is a measurement, not a review.
 """

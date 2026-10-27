@@ -5,8 +5,8 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_operations.domain.rop.result import Refusal, Result
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Refusal, Result
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
 
 
 class RustReplyControlAdapter:

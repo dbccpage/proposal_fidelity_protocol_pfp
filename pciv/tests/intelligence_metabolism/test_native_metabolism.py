@@ -7,14 +7,14 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal
-from omega_engine_prompt_civilization.frontend.cli.metabolism_cli import main
-from omega_engine_prompt_civilization.infrastructure.intelligence_metabolism import (
+from operations.domain.rop.result import Err, Ok, Refusal
+from pciv.frontend.cli.metabolism_cli import main
+from pciv.infrastructure.intelligence_metabolism import (
     DataSourceAdapter,
     IntelligenceMiner,
     NativeMetabolismKernel,
 )
-from omega_engine_prompt_civilization.use_cases.intelligence_metabolism import (
+from pciv.use_cases.intelligence_metabolism import (
     EpisodeSegmenter,
     MotifMiner,
 )
@@ -23,7 +23,7 @@ from omega_engine_prompt_civilization.use_cases.intelligence_metabolism import (
 def test_native_episode_and_motif_results_match_frozen_source_vectors():
     fixture = (
         Path(__file__).resolve().parents[3]
-        / "omega_engine/crates_rs/tests/omega_prompt_civilization/fixtures/metabolism.json"
+        / "engine/crates_rs/tests/core_prompt_civilization/fixtures/metabolism.json"
     )
     kernel = NativeMetabolismKernel()
     for vector in json.loads(fixture.read_text(encoding="utf-8")):

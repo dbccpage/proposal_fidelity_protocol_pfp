@@ -1,4 +1,4 @@
-"""Compatibility re-exports for Pharmacy Seeder from omega_engine_woland.stage.
+"""Compatibility re-exports for Pharmacy Seeder from adversary.stage.
 
 Imports remain available if the sister package fails, but any use refuses
 with the captured dependency error instead of reporting an empty harvest.
@@ -11,10 +11,10 @@ class BridgeUnavailableError(RuntimeError):
     """The optional pharmacy bridge could not be imported."""
 
 try:
-    from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import (
+    from eis.domain.pharmacy_catalog import (
         PharmacyCatalogRepository,
     )
-    from omega_engine_epistemic_immune_system.domain.pharmacy_models import (
+    from eis.domain.pharmacy_models import (
         Antibody,
         ConstraintType,
         Operatorizability,
@@ -22,8 +22,8 @@ try:
         RuntimeAction,
         Severity,
     )
-    from omega_engine_epistemic_immune_system.domain.pharmacy_seeder import PharmacySeeder
-    from omega_engine_epistemic_immune_system.domain.pharmacy_templates import (
+    from eis.domain.pharmacy_seeder import PharmacySeeder
+    from eis.domain.pharmacy_templates import (
         ANTIBODY_TEMPLATES as DEFAULT_ANTIBODY_TEMPLATES,
     )
 except Exception as exc:

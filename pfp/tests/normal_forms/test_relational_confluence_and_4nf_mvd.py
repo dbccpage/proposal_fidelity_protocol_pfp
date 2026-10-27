@@ -18,12 +18,12 @@ from __future__ import annotations
 import random
 import unittest
 
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     RelationalSchema,
     chase_join_dependency,
 )
-from omega_engine_pfp.domain.normal_forms.relational_extensions import (
+from pfp.domain.normal_forms.relational_extensions import (
     MultivaluedDependency,
     chase_mvd,
     chase_tableau_cell_partition,

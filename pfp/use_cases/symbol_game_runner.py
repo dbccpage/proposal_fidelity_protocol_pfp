@@ -2,7 +2,7 @@
 symbol_game_runner.py
 ======================
 
-Canonical Use Case orchestrating the Symbol Game Control Spine with Multi-Agent Woland Debate
+Canonical Use Case orchestrating the Symbol Game Control Spine with Multi-Agent Adversary Debate
 and continuous Unified Narrative Script (UNS) Trace emission.
 
 AuthorityEffect: None.
@@ -15,22 +15,22 @@ import json
 import time
 from typing import Any, Dict, List, Optional, Sequence
 
-from omega_engine_pfp.domain.bridge.ast_cochain_extractor import (
+from pfp.domain.bridge.ast_cochain_extractor import (
     ASTCochainExtractor,
 )
-from omega_engine_pfp.domain.bridge.symbol_game_engine import (
+from pfp.domain.bridge.symbol_game_engine import (
     SymbolGameDialogueArguer,
     SymbolGamePacketCompiler,
     SymbolGameStepResult,
     UnifiedNarrativeScriptEmitter,
 )
-from omega_engine_pfp.domain.solvers import (
+from pfp.domain.solvers import (
     AdmitDatum,
     HomologyBoundaryClosed,
     compute_obstruction_score,
     host,
 )
-from omega_engine_pfp.functional_boundary import require_rust_functional
+from pfp.functional_boundary import require_rust_functional
 
 
 class SymbolGameRunnerUseCase:
@@ -69,9 +69,9 @@ class SymbolGameRunnerUseCase:
         refactoring_payload = {
             "title": "Multi-Step Code Refactoring Packet: Clean Architecture Decoupling",
             "target_modules": [
-                "omega_engine_pfp.domain",
-                "omega_engine_pfp.use_cases",
-                "omega_engine_pfp.controllers",
+                "pfp.domain",
+                "pfp.use_cases",
+                "pfp.controllers",
             ],
             "initial_defects": [
                 "ast:circular_dependency_between_runner_and_engine",
@@ -97,12 +97,12 @@ class SymbolGameRunnerUseCase:
         max_steps: int = 4,
         fixture_mode: bool = False,
     ) -> Dict[str, Any]:
-        """Runs a multi-round problem reduction under Woland debate and sovereign Rust retraction verification."""
+        """Runs a multi-round problem reduction under Adversary debate and sovereign Rust retraction verification."""
         require_rust_functional("SymbolGameRunnerUseCase.run_problem")
         if type(problem_input) not in (str, dict) or (
-            type(problem_input) is dict and problem_input.get("schema_version") == "omega.woland.graph-task.v1"
+            type(problem_input) is dict and problem_input.get("schema_version") == "core.adversary.graph-task.v1"
         ):
-            raise ValueError("PRODUCTION_GRAPH_UNSUPPORTED: use Woland run-graph")
+            raise ValueError("PRODUCTION_GRAPH_UNSUPPORTED: use Adversary run-graph")
         if fixture_mode is not True:
             raise RuntimeError("FIXTURE_ONLY: the fixed boundary demonstration requires explicit fixture_mode")
         effective_task_id = task_id or f"task_{int(time.time())}"
@@ -150,7 +150,7 @@ class SymbolGameRunnerUseCase:
             }
 
             if is_last:
-                # Terminal step: closed cycle verified by omega_homology
+                # Terminal step: closed cycle verified by core_homology
                 q_hom_closed = HomologyBoundaryClosed("h_boundary", (cycle_face,))
                 next_regime = host(
                     base_history=(AdmitDatum(0), AdmitDatum(1), AdmitDatum(2)),

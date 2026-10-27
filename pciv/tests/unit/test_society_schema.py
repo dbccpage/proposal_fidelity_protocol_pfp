@@ -7,7 +7,7 @@ Zero-Float Law: Uses exact rational arithmetic (fractions.Fraction).
 from fractions import Fraction
 import pytest
 
-from omega_engine_prompt_civilization.domain.society import (
+from pciv.domain.society import (
     AggregateFitnessVectorV1,
     MigrationPolicyV1,
     PromptCivilizationV1,
@@ -72,30 +72,30 @@ def test_aggregate_fitness_vector_validation_errors() -> None:
 def test_migration_policy_bounded_migration_law() -> None:
     policy = MigrationPolicyV1(
         max_incoming_per_epoch=5,
-        taxonomic_admissibility=("omega.math.*", "omega.physics"),
+        taxonomic_admissibility=("core.math.*", "core.physics"),
     )
     # Admitted exact match within quota
-    assert policy.is_migration_allowed("omega.physics", 3, 100) is True
+    assert policy.is_migration_allowed("core.physics", 3, 100) is True
     # Admitted prefix match within quota
-    assert policy.is_migration_allowed("omega.math.integral", 4, 100) is True
+    assert policy.is_migration_allowed("core.math.integral", 4, 100) is True
     # Inadmissible domain
-    assert policy.is_migration_allowed("omega.biology", 2, 100) is False
+    assert policy.is_migration_allowed("core.biology", 2, 100) is False
     # Exceeds quota (6 > 5)
-    assert policy.is_migration_allowed("omega.physics", 6, 100) is False
+    assert policy.is_migration_allowed("core.physics", 6, 100) is False
     # Negative or zero incoming
-    assert policy.is_migration_allowed("omega.physics", 0, 100) is False
+    assert policy.is_migration_allowed("core.physics", 0, 100) is False
     # A stem wildcard does not match a longer label, and an exact label grants no child.
-    assert policy.is_migration_allowed("omega.mathematics", 1, 100) is False
-    assert policy.is_migration_allowed("omega.physics.quantum", 1, 100) is False
+    assert policy.is_migration_allowed("core.mathematics", 1, 100) is False
+    assert policy.is_migration_allowed("core.physics.quantum", 1, 100) is False
 
 
 def test_prompt_society_normative_digest() -> None:
     soc = PromptSocietyV1(
         society_id="sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-        domain_protocol="omega.math.integral:v1",
+        domain_protocol="core.math.integral:v1",
         family_ids=("fam_alpha", "fam_beta"),
         aggregate_fitness_vector=AggregateFitnessVectorV1("4/5", "10/1", "9/10"),
-        migration_policy=MigrationPolicyV1(5, ("omega.math.*",)),
+        migration_policy=MigrationPolicyV1(5, ("core.math.*",)),
         created_utc="2026-10-09T00:00:00Z",
     )
     digest = soc.canonical_digest()

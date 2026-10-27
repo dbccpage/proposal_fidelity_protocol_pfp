@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict
 
-from omega_engine_operads.domain.python_development_office.scan_result import (
+from operads.domain.python_development_office.scan_result import (
     ScanResult,
 )
 

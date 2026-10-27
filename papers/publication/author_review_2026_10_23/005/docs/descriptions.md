@@ -1,6 +1,6 @@
 # Description
 
-PFP V: A Practitioner's Guide to Checked Proposals, version 0.1.0 (2026-10-02), is an initial instructional preprint by Jeremy H. Carroll on the Proposal Fidelity Protocol (PFP), formerly the Symbol Game. The deposit contains the guide, claim ledger, editorial history, a 32-question Landau quiz with a worked study guide, and self-contained Python companion code. Its separately configured native calculator is not deposited.
+PFP V: A Practitioner's Guide to Checked Proposals, version 0.1.0 (2026-10-02), is an initial instructional preprint by Jeremy H. Carroll on the Proposal Fidelity Protocol (PFP), formerly the Symbol Game. The deposit contains the guide, claim ledger, editorial history, a 32-question Examiner quiz with a worked study guide, and self-contained Python companion code. Its separately configured native calculator is not deposited.
 
 The guide takes one small inconsistent graph through a complete session: declare the instance, propose a change, interpret a refusal, admit a repair, verify the result, and restore an earlier state. Three events with unit offsets around a directed triangle give claims (1, 1, 1) that no vertex potential can satisfy. With edge weights (1, 2, 3), a two-line lower-bound argument shows that the weighted minimum is 3, attained by one explicit potential. The guide then separates choosing a potential, which leaves the cycle sum unchanged, from replacing the claims by the consistent (−2, 1, 1), which changes the problem’s data.
 

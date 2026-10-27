@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import sys
 
-from omega_engine_prompt_civilization.frontend.presenters.metabolism_presenter import (
+from pciv.frontend.presenters.metabolism_presenter import (
     run_metabolism_cli,
 )
 

@@ -14,7 +14,7 @@ def check_rop_infrastructure(repo_root: Path) -> list[str]:
     # 1. Check compiler eval runner script at canonical operations path
     eval_runner = (
         repo_root
-        / "omega_engine_operads"
+        / "operads"
         / "skill_operad"
         / "skill_compiler"
         / "eval_runner.py"
@@ -25,7 +25,7 @@ def check_rop_infrastructure(repo_root: Path) -> list[str]:
         violations.append(f"Compiler eval runner is empty (0 bytes): {eval_runner}")
 
     # 2. Check canonical ROP Result monad domain port
-    result_monad = repo_root / "omega_engine_operations" / "domain" / "rop" / "result.py"
+    result_monad = repo_root / "operations" / "domain" / "rop" / "result.py"
     if not result_monad.is_file():
         violations.append(f"Domain Result monad missing: {result_monad}")
     elif result_monad.stat().st_size == 0:

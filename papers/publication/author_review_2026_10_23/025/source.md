@@ -116,7 +116,7 @@ missing native host.
 In the [bounded DDC repair study](../028_pfp_operadic_composition_and_bounded_ddc_repair/paper.md),
 the operation order is C, R, E, I, M, T. Every stage carries the same run key,
 request digest and candidate identity. Compilation uses the existing typed
-workflow and operation-inventory boundaries; Woland owns the working copy and
+workflow and operation-inventory boundaries; Adversary owns the working copy and
 fixed checks. OEEIS screening and Prompt Civilization lineage are injected
 services, not responsibilities absorbed into the capability catalog.
 

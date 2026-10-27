@@ -1,8 +1,8 @@
 ---
 paths:
-  - "omega_engine_operations/**"
-  - "omega_engine_education/**"
-  - "omega_engine_cognitive_operations/**"
+  - "operations/**"
+  - "education/**"
+  - "cognitive_operations/**"
   - ".github/**"
   - "pytest.ini"
 ---

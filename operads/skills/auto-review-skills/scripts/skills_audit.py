@@ -2,7 +2,7 @@
 """Audit script for skill garden packages, meta-skills, families, and registry.
 
 Usage:
-    python omega_engine_operads/skills/auto-review-skills/scripts/skills_audit.py [--repo-root PATH]
+    python operads/skills/auto-review-skills/scripts/skills_audit.py [--repo-root PATH]
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from pathlib import Path
 def repo_root_from(start: Path | None = None) -> Path:
     here = (start or Path.cwd()).resolve()
     for candidate in [here, *here.parents]:
-        if (candidate / ".git").exists() and (candidate / "omega_engine").is_dir():
+        if (candidate / ".git").exists() and (candidate / "engine").is_dir():
             return candidate
     return Path.cwd().resolve()
 
@@ -25,7 +25,7 @@ def audit_meta_and_shared(repo_root: Path) -> dict[str, bool]:
     meta_status = {}
 
     # 1. Audit _shared
-    shared_dir = repo_root / "omega_engine_operads" / "skills" / "_shared"
+    shared_dir = repo_root / "operads" / "skills" / "_shared"
     required_shared_files = [
         "family_registry.md",
         "constraints.md",
@@ -42,7 +42,7 @@ def audit_meta_and_shared(repo_root: Path) -> dict[str, bool]:
         print(f"  [!] Missing _shared directory: {shared_dir}")
 
     # 2. Audit _templates
-    templates_dir = repo_root / "omega_engine_operads" / "skills" / "_templates"
+    templates_dir = repo_root / "operads" / "skills" / "_templates"
     required_template_files = [
         "meta_skill.md",
         "skill_family.md",
@@ -58,7 +58,7 @@ def audit_meta_and_shared(repo_root: Path) -> dict[str, bool]:
         print(f"  [!] Missing _templates directory: {templates_dir}")
 
     # 3. Audit .agents/registry
-    registry_dir = repo_root / "omega_engine_operads" / "registry"
+    registry_dir = repo_root / "operads" / "registry"
     required_registry_files = [
         "aliases.yaml",
         "capabilities.yaml",
@@ -96,14 +96,14 @@ def purge_expired_archives(
 
     requested_apply = apply
     if requested_apply is None:
-        requested_apply = os.environ.get("OMEGA_SKILL_PURGE", "").strip() in ("1", "true", "yes")
+        requested_apply = os.environ.get("CORE_SKILL_PURGE", "").strip() in ("1", "true", "yes")
     apply = False
 
     expired_count = 0
     purged_count = 0
     archive_dirs = [
-        repo_root / "omega_engine_operads" / "skills" / "_archived",
-        repo_root / "omega_engine_operads" / "skills" / "_archive",
+        repo_root / "operads" / "skills" / "_archived",
+        repo_root / "operads" / "skills" / "_archive",
     ]
     now = time.time()
     mode = "REPORT-ONLY (hard delete disabled pending retirement evidence)"
@@ -137,13 +137,13 @@ def purge_expired_archives(
             f"(report-only). Retirement needs eval/telemetry, not mtime alone."
         )
     if requested_apply:
-        print("  [BLOCKED] OMEGA_SKILL_PURGE/apply requested, but hard delete is disabled.")
+        print("  [BLOCKED] CORE_SKILL_PURGE/apply requested, but hard delete is disabled.")
     return purged_count if apply else 0
 
 
 def audit_skills(repo_root: Path) -> int:
     module_path = (
-        repo_root / "omega_engine_operations/use_cases/packaging/agent_skill_manifest_audit.py"
+        repo_root / "operations/use_cases/packaging/agent_skill_manifest_audit.py"
     )
     spec = importlib.util.spec_from_file_location("agent_skill_manifest_audit", module_path)
     if spec is None or spec.loader is None:

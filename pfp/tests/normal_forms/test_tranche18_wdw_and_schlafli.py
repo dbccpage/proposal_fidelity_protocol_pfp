@@ -2,8 +2,8 @@
 
 Aligned Contracts / Systems:
 - nf.physics.wdw
-- omega_functional
-- omega_solvers
+- core_functional
+- core_solvers
 - coda_atlas
 
 AuthorityEffect: None.

@@ -10,23 +10,23 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.autopoiesis.learning import LearningService
-from omega_engine_operads.domain.autopoiesis.learning import (
+from operads.application.autopoiesis.learning import LearningService
+from operads.domain.autopoiesis.learning import (
     CallerContext,
     EvaluationCase,
     FileChange,
     LearningBlocked,
     LearningCandidate,
 )
-from omega_engine_operads.infrastructure.autopoiesis.agent_learning import (
+from operads.infrastructure.autopoiesis.agent_learning import (
     CommandEvaluationSuite,
 )
-from omega_engine_operads.infrastructure.autopoiesis.git_learning import (
+from operads.infrastructure.autopoiesis.git_learning import (
     GitLearningWorkspace,
     command,
 )
-from omega_engine_operads.infrastructure.autopoiesis.intake import capture_episode
-from omega_engine_operads.infrastructure.autopoiesis.learning_runtime import (
+from operads.infrastructure.autopoiesis.intake import capture_episode
+from operads.infrastructure.autopoiesis.learning_runtime import (
     build_learning_completion,
 )
 
@@ -199,8 +199,8 @@ def test_existing_file_must_be_read_before_editing(repo, tmp_path, store):
 
 def test_skill_candidate_runs_real_packaging_and_budget_gate(repo, tmp_path, store, monkeypatch):
     scripts = (
-        "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py",
-        "omega_engine_operads/skill_operad/skill_compiler/budget_gate.py",
+        "operations/use_cases/packaging/sync_cross_host_skills.py",
+        "operads/skill_operad/skill_compiler/budget_gate.py",
     )
     implementation_root = Path(__file__).resolve().parents[3]
     # The production composition root injects recovery/locking dependencies;
@@ -210,15 +210,15 @@ def test_skill_candidate_runs_real_packaging_and_budget_gate(repo, tmp_path, sto
         destination = repo / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes((implementation_root / relative).read_bytes())
-    (repo / "omega_engine").mkdir()
-    (repo / "omega_engine/README.md").write_text(
+    (repo / "engine").mkdir()
+    (repo / "engine/README.md").write_text(
         "Repository marker for the packaging harness.", encoding="utf-8"
     )
-    command(repo, "git", "add", "--", *scripts, "omega_engine/README.md")
+    command(repo, "git", "add", "--", *scripts, "engine/README.md")
     command(repo, "git", "commit", "-m", "install real packaging tools")
     command(repo, "git", "push", "origin", "main")
     service, episode, _, proposer, _ = configured(repo, tmp_path, store)
-    artifact = "omega_engine_operads/skills/fixture/SKILL.md"
+    artifact = "operads/skills/fixture/SKILL.md"
     content = "---\nname: fixture\ndescription: Check manifests\n---\nCheck the manifest before passing.\n"
     candidate = replace(
         proposer.candidate,

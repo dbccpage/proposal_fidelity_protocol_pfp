@@ -5,7 +5,7 @@
 **AuthorityEffect:** None
 **Status:** Player guide recovered from the 2026-05/06 LP-forcing era. Not a theorem. Not an imprimatur. Not the 2026-09 packet-iteration guide.
 
-> **Historical banner.** This is the 2026-05/06 play recipe: finite-symbol forcing, an `lp<...>` packet you can type by hand, a local check, a global check, and named terminals. Cargo paths printed in the archive (`omega_engine/products/symbol_game`, `run_proof_pipeline`, `symsys-pipeline`) **may be stale** and are **not** a live play recipe. **AuthorityEffect is None.** A completed run is **not** a proof. Certificate-shaped output is host routing evidence, not world-truth.
+> **Historical banner.** This is the 2026-05/06 play recipe: finite-symbol forcing, an `lp<...>` packet you can type by hand, a local check, a global check, and named terminals. Cargo paths printed in the archive (`engine/products/symbol_game`, `run_proof_pipeline`, `symsys-pipeline`) **may be stale** and are **not** a live play recipe. **AuthorityEffect is None.** A completed run is **not** a proof. Certificate-shaped output is host routing evidence, not world-truth.
 
 > This folder is **not** `v2_modern_2026-09_packet_iteration`. v2 is five public Symbol Packet Iteration stages plus internal eight-stage YAML modes. This v1 guide is one ad-hoc LP packet. Do not merge the two.
 
@@ -39,7 +39,7 @@ A completed run is not automatically a proof. The pipeline produces artifacts, v
 
 A model may propose. It may emit structured material. It may even emit certificate-shaped material. **It is not the certifier.**
 
-This recovery guide does not mint Omega authority. AuthorityEffect stays None.
+This recovery guide does not mint Core authority. AuthorityEffect stays None.
 
 ---
 
@@ -355,7 +355,7 @@ Stage 7  Countermodel Refinement
 Stage 8  Evidence Plan
 ```
 
-plus `cargo` commands against `omega_engine/products/symbol_game` (`run_proof_pipeline`, `run_operator_tower`, `symsys-pipeline`).
+plus `cargo` commands against `engine/products/symbol_game` (`run_proof_pipeline`, `run_operator_tower`, `symsys-pipeline`).
 
 **Those eight stages are not the original playable game.** The playable unit in this version is the tiny checked `lp<...>` object: packet, local check, global check, terminal. The eight-stage YAML overlay is a later crate-and-contract machine. It is recorded here so you can recognize it in the dump. It is **not** how you play v1. It is **not** a claim that those cargo paths still exist. v2 (2026-09) is the place for live YAML stage counts, and even there the **public** mode is five-stage Symbol Packet Iteration, not public stages 1–8.
 
@@ -373,8 +373,8 @@ Conflating them was the readiness failure mode. This v1 guide is the **player-fa
 
 Recorded, not recommended as live commands:
 
-- Archive how-to-play: `cd omega_engine/products/symbol_game` then `cargo build --all-targets --all-features`.
-- 2026-07-24 archive-mined wrapper: those product-CLI paths may be stale; then-described prod was `crates/omega_symbol_game` and a Python orchestrator under `omega_engine_py/omega_symbol_game/`.
+- Archive how-to-play: `cd engine/products/symbol_game` then `cargo build --all-targets --all-features`.
+- 2026-07-24 archive-mined wrapper: those product-CLI paths may be stale; then-described prod was `crates/core_symbol_game` and a Python orchestrator under `engine_py/core_symbol_game/`.
 - File-backend fixtures `runs/test_fixtures/stage_1.yaml` through `stage_8.yaml` belong to the overlay, not to the LP packet.
 
 If those paths are missing on the tree you are holding, that is expected. Absence of a binary does not refute the LP packet rules.
@@ -387,7 +387,7 @@ Quoted archive box (historical wording, not a seal this guide mints):
 
 > Finite packet grammar + total verifier + packet fidelity + family soundness implies failure is mechanically enumerable, repairable, and terminalizable.
 
-Read it as a **programme slogan of the era**, scoped to a declared finite family and a host verifier. It is not a proof that every future family is sound, and it is not Omega authority.
+Read it as a **programme slogan of the era**, scoped to a declared finite family and a host verifier. It is not a proof that every future family is sound, and it is not Core authority.
 
 ---
 

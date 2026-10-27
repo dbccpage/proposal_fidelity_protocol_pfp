@@ -28,7 +28,7 @@ NATIVE = PAPER / "code/native_genesis_g07"
 SEALED = "3100c4ed5ce70d2b6cff6d2ccd3b0251cf918d0a"
 RESEARCH = "b55fc96a94740b0afde78337350a96d293615f3f"
 ESTATE = "526ffd1748941f1781c0ff584b7033b29088b405"
-PREFIX = "omega_engine/crates_rs/omega_ooutwire_primitives/"
+PREFIX = "engine/crates_rs/core_ooutwire_primitives/"
 NATIVE_TREE = "cfbd79e44ea5424ebad6d34709fa3993a05170e0"
 SOURCE_MANIFEST_SHA256 = "1fdd11089b01ce6746723fa7ddcd3764162c9b24a09a388ee2131aaf2aeabcbb"
 PINS = {
@@ -462,7 +462,7 @@ def build(cargo: Path, rustc: Path, target: Path, host_directory: Path) -> dict:
     environment["RUSTC"] = str(rustc)
     target = target.resolve()
     target.mkdir(parents=True, exist_ok=True)
-    hosts = ["omega_symbol_game.exe", "solve_graph_phi1.exe", "verify_phi2.exe",
+    hosts = ["core_symbol_game.exe", "solve_graph_phi1.exe", "verify_phi2.exe",
              "verify_phi3.exe", "verify_phi4.exe", "verify_wall_functionals.exe"]
     before = {name: sha((host_directory / name).read_bytes()) for name in hosts}
     control_paths = [NATIVE / "Cargo.toml", NATIVE / "src/main.rs", Path(__file__)]

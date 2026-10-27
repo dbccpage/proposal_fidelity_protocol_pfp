@@ -47,7 +47,7 @@ def governed_skills(repo_root: Path) -> list[str]:
     not skill packages, and carry no SKILL.md by design; counting them as breaches
     made a healthy garden look failing.
     """
-    root = repo_root / "omega_engine_operads" / "skills"
+    root = repo_root / "operads" / "skills"
     if not root.is_dir():
         return list(SEED_GOVERNED)
     names = sorted(
@@ -211,7 +211,7 @@ def check_budgets(
     exceptions: dict[str, dict],
     today: date | None = None,
 ) -> int:
-    skills_root = repo_root / "omega_engine_operads" / "skills"
+    skills_root = repo_root / "operads" / "skills"
     breaches = 0
     print(f"=== SKILL BUDGET GATE (max {max_lines} lines / {max_bytes} bytes) ===")
     for name in skills:
@@ -268,7 +268,7 @@ def main() -> int:
     parser.add_argument(
         "--skills",
         default=None,
-        help="Comma-separated skill package names under omega_engine_operads/skills/ "
+        help="Comma-separated skill package names under operads/skills/ "
         "(default: every package in the garden)",
     )
     parser.add_argument("--max-lines", type=int, default=DEFAULT_MAX_LINES)

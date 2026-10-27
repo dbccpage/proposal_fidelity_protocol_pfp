@@ -16,20 +16,20 @@ from typing import Any
 
 import pytest
 
-from omega_engine_operations.domain.level_engine_context import (
+from operations.domain.level_engine_context import (
     current_context,
 )
-from omega_engine_operations.infrastructure.level_engine_ports import ports
-from omega_engine_operations.use_cases.level_engine import reach_replay as RR
-from omega_engine_operations.use_cases.level_engine.bind import LEVELS, TREE_REPLAYS, records
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import dumps, load_path
-from omega_engine_operations.use_cases.level_engine.research_engine.level import run_level
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward import bundles as B
-from omega_engine_pfp.infrastructure.tower_research.level_engine.outward import reach as R
+from operations.infrastructure.level_engine_ports import ports
+from operations.use_cases.level_engine import reach_replay as RR
+from operations.use_cases.level_engine.bind import LEVELS, TREE_REPLAYS, records
+from operations.use_cases.level_engine.research_engine.canon import dumps, load_path
+from operations.use_cases.level_engine.research_engine.level import run_level
+from pfp.infrastructure.tower_research.level_engine.outward import bundles as B
+from pfp.infrastructure.tower_research.level_engine.outward import reach as R
 
 ROOT = current_context().runtime_root
-DRAFT = Path(str(__import__("importlib.resources", fromlist=["files"]).files("omega_engine_pfp.tests.level_engine"))) / "reach_draft"
-CHECKER_REL = "omega_engine_pfp/tests/level_engine/reach_draft/checker_L002.py"
+DRAFT = Path(str(__import__("importlib.resources", fromlist=["files"]).files("pfp.tests.level_engine"))) / "reach_draft"
+CHECKER_REL = "pfp/tests/level_engine/reach_draft/checker_L002.py"
 CHECKER_COMMIT = "a" * 40
 HARNESS_COMMIT = "c" * 40
 WORKING_COMMIT = "d" * 40
@@ -300,8 +300,8 @@ def test_a_record_at_a_d4_apparatus_level_is_framed_apparatus() -> None:
 
 
 def test_the_q_levels_are_registered_with_checked_citations(tmp_path: Path) -> None:
-    from omega_engine_operations.use_cases.level_engine.research_engine.errors import Refusal
-    from omega_engine_pfp.infrastructure.tower_research.level_engine.outward.qlevels import (
+    from operations.use_cases.level_engine.research_engine.errors import Refusal
+    from pfp.infrastructure.tower_research.level_engine.outward.qlevels import (
         REGISTRY,
         registrations,
     )

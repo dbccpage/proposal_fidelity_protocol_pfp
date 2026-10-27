@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Spectral sequences organize a large homology computation into pages, each computed from the last. They are notoriously error-prone by hand: the differential d_r changes bidegree with r, the "zig-zag" that defines d₂ is easy to get wrong, and the two filtrations of a double complex give different E² pages that must converge to the same total homology (McCleary 2001; Weibel 1994, Chapter 5). Generation is research-grade for a small model. Verification is cheap: the checker computes every page from the filtered total complex by exact F₂ ranks, and total homology gives an independent end-to-end test.
 
-The challenge stresses the Symbol Game's exact host, OEWAS (Omega Engine Workflows, Agents, Skills) decomposition of a hard computation into staged subproblems, and no OEEIS (Omega Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified page solver for small double complexes. It does not cover the Serre or Mayer–Vietoris spectral sequences, whose modules in `omega_homology` are shells.
+The challenge stresses the Symbol Game's exact host, OEWAS (Engine Workflows, Agents, Skills) decomposition of a hard computation into staged subproblems, and no OEEIS (Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified page solver for small double complexes. It does not cover the Serre or Mayer–Vietoris spectral sequences, whose modules in `core_homology` are shells.
 
 ## 3. Formal Problem and Bounds
 
@@ -49,7 +49,7 @@ This is the worked example; omitted positions are zero. The solver reports, for 
 - **Hidden base cases:** 32 (16 per filtration request, 8 asking for both).
 - **Relabel controls:** 12. Basis changes within each C_{p,q} by random invertible F₂ matrices (every dimension and rank unchanged), and transposition p ↔ q (swaps the roles of the two filtrations).
 - **Poisoned but schema-valid:** 10. Complexes where d₂ is nonzero only through a zig-zag across three positions; complexes where E² looks like E^∞ but d₃ ≠ 0; complexes where the two filtrations' E² pages have equal Euler characteristic but different dimensions.
-- **Exact checker:** new Rust code over F₂ that builds Tot and the column or row filtration, computes E^r_{p} = Z^r_p / B^r_p from ranks of the filtered pieces, and checks the recursion and the abutment. `omega_homology`'s `spectral_sequence.rs`, `serre_spectral_sequence.rs` and `mayervietoris_ss.rs` are best-effort shells and cannot serve.
+- **Exact checker:** new Rust code over F₂ that builds Tot and the column or row filtration, computes E^r_{p} = Z^r_p / B^r_p from ranks of the filtered pieces, and checks the recursion and the abutment. `core_homology`'s `spectral_sequence.rs`, `serre_spectral_sequence.rs` and `mayervietoris_ss.rs` are best-effort shells and cannot serve.
 - **Independent second checker:** a separately written Python implementation that computes the pages by iterating homology of (E^r, d_r) with explicit subquotient bases, not from the rank formula.
 - **Checker mutation suite:** a d₂ with the wrong target bidegree; an E^∞ whose total-degree sums disagree with H(Tot) by one; a recursion that subtracts only outgoing ranks; E² reported from the wrong filtration; a noncommuting input accepted.
 
@@ -102,8 +102,8 @@ operand transpose_control.v1 | kind: guard | when: both filtrations are availabl
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_homology` (`chain_complex.rs`, `filtered_complex.rs`, `filtration.rs`; `spectral_sequence.rs`, `serre_spectral_sequence.rs` and `mayervietoris_ss.rs` as shells to be replaced).
-- `omega_engine/crates_rs/omega_linear_algebra` for ranks; F₂ arithmetic as used in `omega_symbol_game_runtime` (`f2.rs`).
+- `engine/crates_rs/core_homology` (`chain_complex.rs`, `filtered_complex.rs`, `filtration.rs`; `spectral_sequence.rs`, `serre_spectral_sequence.rs` and `mayervietoris_ss.rs` as shells to be replaced).
+- `engine/crates_rs/core_linear_algebra` for ranks; F₂ arithmetic as used in `core_symbol_game_runtime` (`f2.rs`).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: none in the catalog. Checker work: the exact F₂ page checker in §6.
 
@@ -112,4 +112,4 @@ operand transpose_control.v1 | kind: guard | when: both filtrations are availabl
 - **Supports:** whether a ≤70B-model pipeline produced a solver whose E², differential ranks and E^∞ pages replay exactly on hidden F₂ double complexes, consistent with total homology.
 - **Does not support:** spectral sequences of fibrations or covers; coefficients other than F₂; extension problems (over a field, E^∞ fixes each H_n(Tot) up to isomorphism through its dimension, which is all this challenge checks; over Z it does not).
 - **Narrowest defensible claim:** the frozen solver returned correct pages and differential ranks on the measured number of hidden double complexes.
-- **Next test:** double complexes over Z, where E^∞ no longer determines H(Tot) and extension data must be certified, and the Mayer–Vietoris gluing in `omega_solvers` (`solver_mayer_vietoris_gluing.rs`).
+- **Next test:** double complexes over Z, where E^∞ no longer determines H(Tot) and extension data must be certified, and the Mayer–Vietoris gluing in `core_solvers` (`solver_mayer_vietoris_gluing.rs`).

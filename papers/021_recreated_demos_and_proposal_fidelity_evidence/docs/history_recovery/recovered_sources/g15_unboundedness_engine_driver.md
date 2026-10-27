@@ -16,7 +16,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The research tree on unboundedness split its own verdict after a withdrawal: Lean proves unbounded data only for a prescribed permissive block, while the driver itself was only run in Python. The gap is narrow and precisely located, which makes it a good frontier target. Generation is hard: the driver fires before it grows, selects minimum responses under `mu2`, and must be reasoned about constructively without `Classical.choice`. Verification is cheap: `lake build`, the axiom audit, and a statement-identity check.
 
-The task stresses decomposition into lemmas, OEWAS (Omega Engine Workflows, Agents, Skills) statement discipline, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against a familiar smuggle: transporting unboundedness along an inclusion in the wrong direction. A pass shows the game can close a named Lean gap. It does not settle the external policy beyond the stated driver, measure and bounds.
+The task stresses decomposition into lemmas, OEWAS (Engine Workflows, Agents, Skills) statement discipline, and the OEEIS (Engine Epistemic Immune System) danger gate against a familiar smuggle: transporting unboundedness along an inclusion in the wrong direction. A pass shows the game can close a named Lean gap. It does not settle the external policy beyond the stated driver, measure and bounds.
 
 ## 3. Formal Problem and Bounds
 
@@ -56,7 +56,7 @@ Public statements: T-a, B, T-b and T-c for reading L. The packet includes the na
 
 - **Held-out statements.** The four targets for reading F; T-a and T-b under `mu1`; T-a at bounds `(3, 2)`; a duration statement bounding fire steps between two growths.
 - **Poisoned but schema-valid.** A "proof" of T-b routed through `xstep_unbounded_exists` and the refinement lemma, which only includes driver steps in `XStep` and cannot transfer unboundedness; a file that opens `Classical`; a statement with the supply flag silently set to off.
-- **Checkers.** `python ci/run_gates.py` on the PR branch; the axiom audit; a statement-identity check comparing compiled theorem types with the operator's frozen statement file. Any refutation witness is replayed through the sealed Python kernel read-only, and independently through `omega_ooutwire_primitives` (`tree.rs`, `closure.rs`, `reading.rs`).
+- **Checkers.** `python ci/run_gates.py` on the PR branch; the axiom audit; a statement-identity check comparing compiled theorem types with the operator's frozen statement file. Any refutation witness is replayed through the sealed Python kernel read-only, and independently through `core_ooutwire_primitives` (`tree.rs`, `closure.rs`, `reading.rs`).
 - **Mutation suite.** Weaken `EngineDriver` to `XStep`; swap readings; flip the supply flag; change the bounds; shorten a witness by one event.
 
 ## 7. Arms and Baselines
@@ -99,7 +99,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_ooutwire_primitives](../../../../omega_engine/crates_rs/omega_ooutwire_primitives/) (`tree.rs`, `closure.rs`, `reading.rs`, `minima.rs`); [models.py](../../../../omega_engine_pfp/domain/models.py) for strict descent on open goals.
+- the_symbol_game: [core_ooutwire_primitives](../../../../engine/crates_rs/core_ooutwire_primitives/) (`tree.rs`, `closure.rs`, `reading.rs`, `minima.rs`); [models.py](../../../../pfp/domain/models.py) for strict descent on open goals.
 - 19L57G1 (`b55fc96a`): `19L57G1:research/unboundedness/lean/` (`Driver.lean`, `ClosedFixpoint.lean`, `CostFloor.lean`, `Unboundedness.lean`), `19L57G1:research/unboundedness/unboundedness.py`, `19L57G1:research/ignition/`, `19L57G1:research/second_index/`, `19L57G1:ci/run_gates.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), [U17](../../upgrades/u17_lean_verifier_backend.md).
 

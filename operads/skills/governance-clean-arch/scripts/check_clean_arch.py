@@ -41,13 +41,13 @@ def check_operations_scanner(repo_root: Path) -> list[str]:
         sys.path.insert(0, repo_str)
 
     try:
-        from omega_engine_operads.application.python_development_office.project import (
+        from operads.application.python_development_office.project import (
             ProjectScanner,
         )
-        from omega_engine_operads.domain.python_development_office.architecture_config import (
+        from operads.domain.python_development_office.architecture_config import (
             ArchitectureConfig,
         )
-        from omega_engine_operads.infrastructure.python_development_office.source_repository import (
+        from operads.infrastructure.python_development_office.source_repository import (
             FileSystemSourceRepository,
         )
 
@@ -56,7 +56,7 @@ def check_operations_scanner(repo_root: Path) -> list[str]:
             project_root=str(repo_root),
             sources=FileSystemSourceRepository(),
         )
-        result = scanner.scan(["omega_engine_operations"], arch_only=True)
+        result = scanner.scan(["operations"], arch_only=True)
         for finding in result.findings:
             if (
                 finding.category == "clean_arch"

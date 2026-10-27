@@ -1,7 +1,7 @@
 """Legacy Symbol Game copy of the two-signal danger gate.
 
 Legacy (see the package docstring). Unlike the OEEIS gate
-(`omega_engine_epistemic_immune_system.domain.danger_gate`), this copy puts a
+(`eis.domain.danger_gate`), this copy puts a
 HIGH or CRITICAL Signal 2 alone into DEFENSIVE_LOCKDOWN, so it is not a strict
 two-signal rule, and it does not check that Signal 2 is independent of Signal 1.
 

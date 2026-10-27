@@ -4,10 +4,10 @@ AuthorityEffect: None.
 
 Two fixtures are shared with the Rust kernels:
 
-* ``omega_engine/crates_rs/tests/omega_sheaf_theory/fixtures/epistemic_no_go/
-  empirical_models.json`` (``omega_sheaf_theory::epistemic_observer``);
-* ``omega_engine/crates_rs/tests/omega_contracts/fixtures/epistemic_no_go/
-  provenance_cases.json`` (``omega_contracts::three_role_authority``).
+* ``engine/crates_rs/tests/core_sheaf_theory/fixtures/epistemic_no_go/
+  empirical_models.json`` (``core_sheaf_theory::epistemic_observer``);
+* ``engine/crates_rs/tests/core_contracts/fixtures/epistemic_no_go/
+  provenance_cases.json`` (``core_contracts::three_role_authority``).
 
 This module is a reference check, not a solver. With ``fractions.Fraction``
 and enumeration it re-derives, independently of the Rust code, the parts of
@@ -20,7 +20,7 @@ are checked (defect zero exactly when a global section is reported, a CHSH
 violation forcing a positive defect).
 
 The three-role demonstration runs the companion gate
-``omega_engine_pfp.domain.provenance.ThreeRoleGate`` over the same provenance
+``pfp.domain.provenance.ThreeRoleGate`` over the same provenance
 cases the Rust contract decides, and records which layer refuses each case.
 Two refusals (a prose basis, and an admitted root that is one of the parties)
 exist only in the Rust contract: the gate's packet shape has no basis field
@@ -35,7 +35,7 @@ import unittest
 from fractions import Fraction
 from pathlib import Path
 
-from omega_engine_pfp.domain.provenance import (
+from pfp.domain.provenance import (
     AUTHORITY_EFFECT,
     RefusalReason,
     ThreeRoleGate,
@@ -52,11 +52,11 @@ def _repo_root(start: Path = Path(__file__).resolve()) -> Path:
 
 ROOT = _repo_root()
 MODELS_FIXTURE = (
-    ROOT / "omega_engine" / "crates_rs" / "tests" / "omega_sheaf_theory" / "fixtures"
+    ROOT / "engine" / "crates_rs" / "tests" / "core_sheaf_theory" / "fixtures"
     / "epistemic_no_go" / "empirical_models.json"
 )
 PROVENANCE_FIXTURE = (
-    ROOT / "omega_engine" / "crates_rs" / "tests" / "omega_contracts" / "fixtures"
+    ROOT / "engine" / "crates_rs" / "tests" / "core_contracts" / "fixtures"
     / "epistemic_no_go" / "provenance_cases.json"
 )
 BELL_COVER = ((0, 2), (0, 3), (1, 2), (1, 3))
@@ -327,7 +327,7 @@ class EmpiricalModelFixtureTests(unittest.TestCase):
         self.models = {m["name"]: (Model(m), m["expected"]) for m in self.doc["models"]}
 
     def test_fixture_declares_no_authority_and_canonical_rationals(self) -> None:
-        self.assertEqual(self.doc["schema"], "omega.epistemic_no_go.empirical_models.v1")
+        self.assertEqual(self.doc["schema"], "core.epistemic_no_go.empirical_models.v1")
         self.assertEqual(self.doc["authority_effect"], "None")
         self.assertEqual(len(self.models), 6)
         for model_doc in self.doc["models"]:
@@ -619,7 +619,7 @@ class ThreeRoleAuthorityTests(unittest.TestCase):
         self.cases = {c["name"]: c for c in self.doc["cases"]}
 
     def test_fixture_declares_no_authority(self) -> None:
-        self.assertEqual(self.doc["schema"], "omega.epistemic_no_go.provenance_cases.v1")
+        self.assertEqual(self.doc["schema"], "core.epistemic_no_go.provenance_cases.v1")
         self.assertEqual(self.doc["authority_effect"], "None")
         self.assertEqual(AUTHORITY_EFFECT, "None")
         self.assertEqual(set(self.cases), set(GATE_EXPECTATION))
@@ -653,7 +653,7 @@ class ThreeRoleAuthorityTests(unittest.TestCase):
         """
 
         gate = ThreeRoleGate(SCOPE, frozenset({"root:ops"}))
-        for rank in ("asi:omega-9000", "proof-assistant:lean", "brain:alice", "llm:fable"):
+        for rank in ("asi:core-9000", "proof-assistant:lean", "brain:alice", "llm:fable"):
             with self.subTest(agent=rank):
                 payload = gate_payload(self.cases["distinct_roles_admitted_root"])
                 for role in ("proposer", "evaluator", "authorizer"):

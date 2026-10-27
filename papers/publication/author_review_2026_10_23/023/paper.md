@@ -63,7 +63,7 @@ natural-language claims and source quotations.
                                       $C_j(P, w) \in \{\text{accept}, \text{reject}\}$
                                       evaluating declared predicates
 
-  **Anomalons**                       `OPEN`: Semantic drift between natural language
+  **Sentinels**                       `OPEN`: Semantic drift between natural language
                                       explanations and formal predicate specifications
 
   **CompletionLaw**                   Finite checker evaluation exhaustion over the
@@ -164,7 +164,7 @@ obligations stated above.
 
 The current implementation separates capability composition from
 execution, immune screening, and lineage. OEOP supplies typed operation
-declarations and source-bound instructions; Woland executes configured
+declarations and source-bound instructions; Adversary executes configured
 callbacks; OEEIS supplies the immune observation; Prompt Civilization
 records lineage. Generated host instructions are discovery views, not
 additional claim authorities.
@@ -216,17 +216,17 @@ does not replace a historical deposit or archive.
 ## Sources and relation to the programme
 
 This draft builds on the [WDP
-manuscript](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
+manuscript](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/witnessed_difference_programme.md),
 [Paper 021's source-and-execution
-distinctions](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/paper.md),
+distinctions](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/021_recreated_demos_and_proposal_fidelity_evidence/paper.md),
 and the [corrected findings
-notices](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/README.md).
+notices](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/README.md).
 [Paper
-022](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/022_pfp_frontier_research/paper.md)
+022](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/022_pfp_frontier_research/paper.md)
 supplies a research design whose live-model and offline-strategy claims
 require their own source-bound scrutiny. These drafts do not adopt its
 empirical tables as new measurements. The [PFP
-collection](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/omega_engine_atlas/coda_atlas/F004_papers/015_pfp/README.md)
+collection](https://github.com/dbccpage/the_symbol_game/blob/59dde95a7860063c25d75db37f40af556e9f28ee/atlas/coda_atlas/F004_papers/015_pfp/README.md)
 provides the shared-system/typed-instance protocol. Genesis and MSS-N
 presentation stages do not license a new mathematical or physical
 carrier.

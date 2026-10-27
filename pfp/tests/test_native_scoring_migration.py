@@ -4,15 +4,15 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_pfp.domain.entities.coboundary_score import CandidateProposal
-from omega_engine_pfp.domain.ports import scoring_port as registry
-from omega_engine_pfp.domain.ports.scoring_port import NativeScoringRefusal
-from omega_engine_pfp.infrastructure.adapters.scoring_rust import RustScoringAdapter
-from omega_engine_pfp.use_cases.research import (
+from pfp.domain.entities.coboundary_score import CandidateProposal
+from pfp.domain.ports import scoring_port as registry
+from pfp.domain.ports.scoring_port import NativeScoringRefusal
+from pfp.infrastructure.adapters.scoring_rust import RustScoringAdapter
+from pfp.use_cases.research import (
     ResearchClaimVerifierUnavailable,
     VerifyResearchClaimUseCase,
 )
-from omega_engine_pfp.use_cases.scoring import (
+from pfp.use_cases.scoring import (
     rank_candidate_proposals,
     score_cochain_proposal,
     score_discrete_proposal,
@@ -56,7 +56,7 @@ def test_native_exact_residual_policy_and_total_order():
 
 
 def test_host_failure_is_typed_and_retains_outcome():
-    from omega_engine_operations.domain.rop.result import Ok
+    from operations.domain.rop.result import Ok
 
     class RefusingHost:
         def invoke_runtime(self, action, payload):

@@ -9,9 +9,9 @@ from fractions import Fraction
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal
-from omega_engine_pfp import ffi
-from omega_engine_pfp.domain.cochain import PromptCellComplex
+from operations.domain.rop.result import Err, Ok, Refusal
+from pfp import ffi
+from pfp.domain.cochain import PromptCellComplex
 
 
 def canonical_complex():

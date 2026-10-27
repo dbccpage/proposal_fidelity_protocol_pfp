@@ -17,7 +17,7 @@ from typing import Dict, List, Optional
 
 import yaml
 
-from omega_engine_operads.domain.operad import (
+from operads.domain.operad import (
     ADMITTED_FINITE_COLOURS,
     ColouredOperad,
     ColourSignature,

@@ -2,9 +2,9 @@
 """Regenerate spine_index.md for the panep-math-and-physics-prof skill.
 
 Deterministic regeneration (not accretion) from source-of-truth:
-  1. Paper index   -- dynamic, from omega_engine/research/published/
+  1. Paper index   -- dynamic, from engine/research/published/
   2. GTOC tower    -- dynamic, from research/published/001_coda/
-  3. Spine anchors -- dynamic, from canonical_omega_math_spine.md headings
+  3. Spine anchors -- dynamic, from canonical_core_math_spine.md headings
   4. Routing table -- curated constant (5 primitives + 6-layer GT* map)
 
 Running this from source produces a deterministic file, so the manifest cannot
@@ -26,13 +26,13 @@ def _find_repo_root() -> Path:
     """
     here = Path(__file__).resolve()
     for candidate in here.parents:
-        if (candidate / "omega_engine" / "research" / "published").is_dir():
+        if (candidate / "engine" / "research" / "published").is_dir():
             return candidate
     return here.parents[3]
 
 
 REPO_ROOT = _find_repo_root()
-RESEARCH_DIR = REPO_ROOT / "omega_engine" / "research"
+RESEARCH_DIR = REPO_ROOT / "engine" / "research"
 PUBLISHED_DIR = RESEARCH_DIR / "published"
 
 
@@ -47,7 +47,7 @@ def _find_spine_file() -> Path:
     """
     matches = sorted(
         m
-        for m in RESEARCH_DIR.glob("**/canonical_omega_math_spine.md")
+        for m in RESEARCH_DIR.glob("**/canonical_core_math_spine.md")
         if ".archive" not in m.parts
     )
     if matches:
@@ -57,14 +57,14 @@ def _find_spine_file() -> Path:
         return matches[0]
     archived = (
         REPO_ROOT
-        / "omega_engine"
-        / ".omega_engine_official_archive"
-        / "canonical_omega_math_spine.md"
+        / "engine"
+        / ".official_archive"
+        / "canonical_core_math_spine.md"
     )
     if archived.exists():
         return archived
     # Stable fallback for error messaging if the file is absent entirely.
-    return RESEARCH_DIR / "omega_engine_theory" / "canonical_omega_math_spine.md"
+    return RESEARCH_DIR / "theory" / "canonical_core_math_spine.md"
 
 
 SPINE_FILE = _find_spine_file()
@@ -79,15 +79,15 @@ encyclopedia layer via `indexes/by_layer.md` / `indexes/ledgers/`.
 
 | Need / topic | Primitive | Layer (symbol) | ENC layer | Prof agent |
 |---|---|---|---|---|
-| residuals, defects, observable deltas | Difference (C^1) | Omega_d (L6) | gtfoc | math-prof |
-| exact repair, coboundary | Repair (d0) | Omega_d (L6) | gtfoc | math-prof |
-| witnessed sameness mod repair | Quotient (Q^1) | Omega_d (L6) | gtfoc | math-prof |
-| consistency defect, closure | Closure (d1) | Omega_d (L6) | gtfoc | math-prof |
-| finite descent, terminalization, authority | Authority (Pi#) | Omega_A (L5) | gtfda | math-prof |
-| cross-representation transport, loss ledgers | -- | Omega_chi (L4) | gtmur | math-prof |
-| comparison/completion, monodromy, anti-laundering | -- | Omega_O (L3) | gtor | math-prof |
-| continuum objects, finite shadows, cofinality | -- | Omega_kappa (L2) | gttc | math-prof + physics-prof |
-| residual closure, anomalons, horn-filling | -- | Omega_LO (L1) | gtta | math-prof |
+| residuals, defects, observable deltas | Difference (C^1) | Core_d (L6) | gtfoc | math-prof |
+| exact repair, coboundary | Repair (d0) | Core_d (L6) | gtfoc | math-prof |
+| witnessed sameness mod repair | Quotient (Q^1) | Core_d (L6) | gtfoc | math-prof |
+| consistency defect, closure | Closure (d1) | Core_d (L6) | gtfoc | math-prof |
+| finite descent, terminalization, authority | Authority (Pi#) | Core_A (L5) | gtfda | math-prof |
+| cross-representation transport, loss ledgers | -- | Core_chi (L4) | gtmur | math-prof |
+| comparison/completion, monodromy, anti-laundering | -- | Core_O (L3) | gtor | math-prof |
+| continuum objects, finite shadows, cofinality | -- | Core_kappa (L2) | gttc | math-prof + physics-prof |
+| residual closure, sentinels, horn-filling | -- | Core_LO (L1) | gtta | math-prof |
 | operator lattice, operad coherence, RG flow | -- | global | operad (+ operad-lattice skill) | math-prof |
 | FSP gauge, deformation physics, sheaf Laplacian | -- | quantum realization | quantum | physics-prof |
 | math NOT yet in spine foundations (e.g. Langlands) | -- | EXTENSION | flag as extension | math-prof + substrate-architect |
@@ -280,7 +280,7 @@ _GTOC_DIR_ID = re.compile(r"^(\d{3})_(.+)$")
 
 
 def gtoc_papers_dir(root: Path) -> Path:
-    return root / "omega_engine" / "research" / "published" / "001_coda"
+    return root / "engine" / "research" / "published" / "001_coda"
 
 
 # Legacy GT* layer names -> CODA labels (CODA estate renaming ruling 2026-07-28).
@@ -430,7 +430,7 @@ def render(rows, headings, gtoc_rows=()):
                 "## GTOC foundations tower",
                 "",
                 "One row per tower paper under",
-                "`omega_engine/research/published/001_coda/`; ids are",
+                "`engine/research/published/001_coda/`; ids are",
                 "`gt`-prefixed so they cannot collide with the published `NNN` ids above.",
                 "",
                 "| id | claim | path |",

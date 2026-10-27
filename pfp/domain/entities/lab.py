@@ -10,18 +10,18 @@ import math
 from dataclasses import dataclass, field
 from typing import Any, Iterable
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
-from omega_engine_pfp.domain.entities.packet_envelope import (
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.entities.packet_envelope import (
     AttemptEvidenceV1,
     CandidateArtifactV1,
     EvaluationReceiptV1,
     PacketEnvelopeV2,
 )
-from omega_engine_pfp.domain.entities.problem import (
+from pfp.domain.entities.problem import (
     CandidateSolver,
     RuntimeProblem,
 )
-from omega_engine_pfp.domain.entities.projection_receipt import (
+from pfp.domain.entities.projection_receipt import (
     Obstruction,
     ProjectionReceipt,
     TerminalStatus,
@@ -146,7 +146,7 @@ class OesosLab:
         default_policy = tuple(solver.manifest.solver_id for solver in solver_list)
         self.policy = policy or default_policy
         self._solver_registry_hash = domain_digest(
-            "omega.oesos.solver-registry.v1",
+            "core.oesos.solver-registry.v1",
             tuple(sorted(self._solvers.keys())),
         )
 
@@ -171,7 +171,7 @@ class OesosLab:
 
     def solve(self, problem: RuntimeProblem) -> RunReceipt:
         input_hash = domain_digest(
-            "omega.oesos.native-state.v1", problem.native_initial_state
+            "core.oesos.native-state.v1", problem.native_initial_state
         )
         prime000 = Prime000ShapeReceipt(
             declarations=("01:carrier",),

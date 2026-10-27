@@ -318,7 +318,7 @@ def main() -> int:
     files = iter_test_files(args.paths)
     findings = [finding for path in files for finding in scan_file(path)]
     result = {
-        "schema": "omega.python_test_quality.v1",
+        "schema": "core.python_test_quality.v1",
         "files_scanned": len(files),
         "findings": [asdict(finding) for finding in findings],
         "authority_effect": "None",

@@ -13,7 +13,7 @@ families: [techne, quality, lean4]
 **Status:** canonical-candidate
 **AuthorityEffect:** None
 
-Specialist skill for the Lean 4 catalog at `omega_engine_operads/patterns/anti/lean4/`. OEAUTOP calls this package on every run.
+Specialist skill for the Lean 4 catalog at `operads/patterns/anti/lean4/`. OEAUTOP calls this package on every run.
 
 ## Canonical Anti-Patterns
 
@@ -28,8 +28,8 @@ Specialist skill for the Lean 4 catalog at `omega_engine_operads/patterns/anti/l
 ## Auditor
 
 ```bash
-py -3.12 omega_engine_operads/skills/techne-code-lean4-anti-patterns/scripts/lean4_anti_pattern_auditor.py --path . --check
-py -3.12 omega_engine_operads/skills/techne-code-lean4-anti-patterns/scripts/lean4_anti_pattern_auditor.py --path . --report-out runs/lean4_anti_pattern_receipt.json
+py -3.12 operads/skills/techne-code-lean4-anti-patterns/scripts/lean4_anti_pattern_auditor.py --path . --check
+py -3.12 operads/skills/techne-code-lean4-anti-patterns/scripts/lean4_anti_pattern_auditor.py --path . --report-out runs/lean4_anti_pattern_receipt.json
 ```
 
 `--check` exits 1 when any finding is present. AuthorityEffect stays None.

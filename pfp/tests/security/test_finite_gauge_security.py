@@ -2,7 +2,7 @@
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.input_yaml import (
+from pfp.infrastructure.adapters.finite_gauge.input_yaml import (
     parse_input_yaml,
 )
 

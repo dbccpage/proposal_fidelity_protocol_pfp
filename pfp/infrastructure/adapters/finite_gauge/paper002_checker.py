@@ -11,7 +11,7 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Callable
 
-from omega_engine_pfp.domain.finite_gauge import (
+from pfp.domain.finite_gauge import (
     CandidateCheck,
     CheckerIdentity,
     GaugeFrontier,
@@ -21,7 +21,7 @@ from omega_engine_pfp.domain.finite_gauge import (
     SearchReceipt,
     Witness,
 )
-from omega_engine_pfp.domain.kernel.result import Result
+from pfp.domain.kernel.result import Result
 
 from . import frontier_search, sign_graph
 

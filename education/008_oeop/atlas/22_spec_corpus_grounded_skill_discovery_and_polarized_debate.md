@@ -1,7 +1,7 @@
 # Corpus-Grounded Skill Discovery and Polarized Debate
 
 - **Status:** `PROPOSED` integration contract over a narrower implemented kernel
-- **Bounded context:** `omega_engine_operads`
+- **Bounded context:** `operads`
 - **AuthorityEffect:** `None`
 - **Evidence ceiling:** Candidate generation, structural checking, bounded fixture
   replay, and admission evidence; no generated skill is activated or made true by

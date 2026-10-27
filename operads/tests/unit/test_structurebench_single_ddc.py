@@ -3,13 +3,13 @@ import hashlib
 import json
 import pytest
 
-from omega_engine_operads.structurebench.evaluator import ConstraintOutcome, StructureBenchEvaluator
+from operads.structurebench.evaluator import ConstraintOutcome, StructureBenchEvaluator
 
 
 def bundle(path):
     payloads = {"uns.md": b"# Universal Narrative\n", "ddc.jsonl": b'{"payload":{"letter":"C"}}\n',
                 "uts.jsonl": b'{"kind":"run_checkpoint"}\n', "summary.json": b'{}\n'}
-    receipt = {"bundle_schema_version": "omega.woland.reported-run-bundle.v2"}
+    receipt = {"bundle_schema_version": "core.adversary.reported-run-bundle.v2"}
     for name, raw in payloads.items():
         (path / name).write_bytes(raw)
         receipt[name.split('.')[0] + "_sha256"] = hashlib.sha256(raw).hexdigest()

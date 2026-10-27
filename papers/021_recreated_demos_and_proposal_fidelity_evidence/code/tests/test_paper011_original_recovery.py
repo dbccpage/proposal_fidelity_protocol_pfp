@@ -75,7 +75,7 @@ def test_packet_synchronization_mutations_fail_closed(mutation, error):
 
 
 def test_missing_role_is_not_truncated_into_a_passing_zip():
-    raw = MD.read_bytes().replace(b"##### Round 1 Beat 8: Woland", b"##### omitted role: Woland")
+    raw = MD.read_bytes().replace(b"##### Round 1 Beat 8: Adversary", b"##### omitted role: Adversary")
     with pytest.raises(RECOVERY.RecoveryError, match="COMPLETE_ORIGINAL_ROLE_ORDER_REQUIRED"):
         RECOVERY.parse_rounds(raw)
 
@@ -93,7 +93,7 @@ def source_progression():
     spec.loader.exec_module(module)
     root = PATH.parent.parent / "docs/aggregate_recreated_run/original_recovery_v1"
     raw = (root / "progression_v1/original_symbol_game_runner.py").read_bytes()
-    model_raw = (root / "final_v4/source_files/omega_engine_pfp/domain/bridge/symbol_game_models.py").read_bytes()
+    model_raw = (root / "final_v4/source_files/pfp/domain/bridge/symbol_game_models.py").read_bytes()
     model = types.ModuleType("paper011_original_score_controls")
     sys.modules[model.__name__] = model
     tree, _ = RECOVERY.adapt(model_raw, "symbol_game_models")

@@ -15,7 +15,7 @@ from collections import Counter
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.diophantine_u1 import (
+from pfp.tests.demo_004.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.diophantine_u1 import (
     canonical_representative,
     complete_chiral_u1,
     is_chiral,

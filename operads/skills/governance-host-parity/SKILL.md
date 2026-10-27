@@ -31,5 +31,5 @@ AuthorityEffect: None.
 Run the host parity and completeness audit:
 
 ```bash
-python omega_engine_operads/skills/governance-host-parity/scripts/check_host_parity.py
+python operads/skills/governance-host-parity/scripts/check_host_parity.py
 ```

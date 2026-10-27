@@ -1,13 +1,13 @@
 """Exact rational values and their canonical wire form.
 
-The Python mirror of ``omega_symbol_game_runtime::rational``. ``Fraction`` is
+The Python mirror of ``core_symbol_game_runtime::rational``. ``Fraction`` is
 used here for the same reason ``BigRational`` is used there: so that "the
 residual has vanished" is a **decision** rather than a tolerance.
 
 Exact values cross the wire as **strings** (``"3/4"``, ``"-5"``, ``"0"``),
 never as JSON numbers. A JSON number is a float in most readers, which would
 silently undo the exactness, and the canonicalization profile
-``omega-sorted-json-no-float-v1`` refuses floats outright.
+``core-sorted-json-no-float-v1`` refuses floats outright.
 
 A ``float`` is not an exact value and is never coerced into one silently. Every
 finite float *is* a dyadic rational, so the conversion would succeed -- and

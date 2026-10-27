@@ -12,9 +12,9 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 ## 2. Why This Task
 
-Hosted APIs are Layer 2 only. They expose no attention tensors, no key masks and no full-vocabulary logits, so everything in [C001](c001_attention_distractor_mask_task_level.md) to [C003](c003_head_attribution_activation_patching.md) is out of reach through them. What a hosted route can offer is a decoding control, and the estate already types those controls honestly: `omega_engine_symbol_game/domain/carrier_decoding.py` ranks `GRAMMAR` (exact), `LOGIT_BIAS` (bounded, not exact; a −100 bias is a strong bias, not −∞) and `UNCONSTRAINED`. `bench/mechanism/api_logit_control.py` showed `logit_bias` changing an answer (`7` to `55`), which is steering, not a mask.
+Hosted APIs are Layer 2 only. They expose no attention tensors, no key masks and no full-vocabulary logits, so everything in [C001](c001_attention_distractor_mask_task_level.md) to [C003](c003_head_attribution_activation_patching.md) is out of reach through them. What a hosted route can offer is a decoding control, and the estate already types those controls honestly: `symbol_game/domain/carrier_decoding.py` ranks `GRAMMAR` (exact), `LOGIT_BIAS` (bounded, not exact; a −100 bias is a strong bias, not −∞) and `UNCONSTRAINED`. `bench/mechanism/api_logit_control.py` showed `logit_bias` changing an answer (`7` to `55`), which is steering, not a mask.
 
-The practical question is which control, on a real open-weights route, gives the most host-verified answers per dollar, and whether the route actually applied the control at all. The request body in `OpenRouterBackend` today sends only model, messages and max_tokens, so no hosted control has ever been exercised through the governed path (U06). The challenge stresses the governed provider path, the Symbol Game host, OEWAS (Omega Engine Workflows, Agents, Skills) receipts and, lightly, the OEEIS (Omega Engine Epistemic Immune System) principle that a claimed control is checked, not trusted. A pass ranks controls on this family. Schema validity is not correctness, and a pass does not show otherwise.
+The practical question is which control, on a real open-weights route, gives the most host-verified answers per dollar, and whether the route actually applied the control at all. The request body in `OpenRouterBackend` today sends only model, messages and max_tokens, so no hosted control has ever been exercised through the governed path (U06). The challenge stresses the governed provider path, the Symbol Game host, OEWAS (Engine Workflows, Agents, Skills) receipts and, lightly, the OEEIS (Engine Epistemic Immune System) principle that a claimed control is checked, not trusted. A pass ranks controls on this family. Schema validity is not correctness, and a pass does not show otherwise.
 
 ## 3. Formal Problem and Bounds
 
@@ -106,8 +106,8 @@ operand require_parameters_pin.v1 | kind: control | when: routing through an agg
 ## 13. Estate Reuse and Prerequisites
 
 - `bench/mechanism/api_logit_control.py` (hosted `logit_bias` request, receipt fields) and its receipt.
-- `omega_engine_symbol_game/domain/carrier_decoding.py` (`ConstraintMode`, `provider_capability`, `carrier_gbnf`, `logit_bias_ban`, `verify_emission`).
-- `omega_engine_providers/adapters/model_backends.py` (`OpenRouterBackend`, to gain seed, temperature, `logit_bias`, `response_format` and grammar fields under U06).
+- `symbol_game/domain/carrier_decoding.py` (`ConstraintMode`, `provider_capability`, `carrier_gbnf`, `logit_bias_ban`, `verify_emission`).
+- `providers/adapters/model_backends.py` (`OpenRouterBackend`, to gain seed, temperature, `logit_bias`, `response_format` and grammar fields under U06).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). U06 is both a base requirement and this row's named extra.
 
 ## 14. Claim Hygiene

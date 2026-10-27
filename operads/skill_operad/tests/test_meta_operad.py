@@ -11,7 +11,7 @@ from __future__ import annotations
 from pathlib import Path
 import unittest
 
-from omega_engine_operads.skill_operad.meta_operad import (
+from operads.skill_operad.meta_operad import (
     MorphismViolationError,
     ObstructionClass,
     OperadEcology,
@@ -26,7 +26,7 @@ class MetaOperadHOMC1Tests(unittest.TestCase):
     def setUp(self) -> None:
         self.yaml_path = (
             Path(__file__).resolve().parents[3]
-            / "omega_engine_atlas"
+            / "atlas"
             / "coda_atlas"
             / "prompts"
             / "pilots"
@@ -38,9 +38,9 @@ class MetaOperadHOMC1Tests(unittest.TestCase):
     def test_ecology_loads_three_pilot_operads(self) -> None:
         """Verifies all 3 pilot operads are loaded and internally coherent."""
         self.assertEqual(len(self.ecology.operads), 3)
-        self.assertIn("omega.operad.rational_linear.v1", self.ecology.operads)
-        self.assertIn("omega.operad.wdp_homotopy.v1", self.ecology.operads)
-        self.assertIn("omega.operad.mub6_stengle.v1", self.ecology.operads)
+        self.assertIn("core.operad.rational_linear.v1", self.ecology.operads)
+        self.assertIn("core.operad.wdp_homotopy.v1", self.ecology.operads)
+        self.assertIn("core.operad.mub6_stengle.v1", self.ecology.operads)
 
         for op in self.ecology.operads.values():
             # Must not raise OperadManagementError
@@ -53,16 +53,16 @@ class MetaOperadHOMC1Tests(unittest.TestCase):
 
         m_wdp = self.ecology.morphisms["phi_rl_to_wdp"]
         rc_wdp = m_wdp.verify(
-            self.ecology.operads["omega.operad.rational_linear.v1"],
-            self.ecology.operads["omega.operad.wdp_homotopy.v1"],
+            self.ecology.operads["core.operad.rational_linear.v1"],
+            self.ecology.operads["core.operad.wdp_homotopy.v1"],
         )
         self.assertTrue(rc_wdp.is_pass)
         self.assertEqual(len(rc_wdp.obstructions), 0)
 
         m_mub6 = self.ecology.morphisms["phi_rl_to_mub6"]
         rc_mub6 = m_mub6.verify(
-            self.ecology.operads["omega.operad.rational_linear.v1"],
-            self.ecology.operads["omega.operad.mub6_stengle.v1"],
+            self.ecology.operads["core.operad.rational_linear.v1"],
+            self.ecology.operads["core.operad.mub6_stengle.v1"],
         )
         self.assertTrue(rc_mub6.is_pass)
         self.assertEqual(len(rc_mub6.obstructions), 0)
@@ -71,21 +71,21 @@ class MetaOperadHOMC1Tests(unittest.TestCase):
         """Verifies O_RL embeds into O_WDP and O_MUB6."""
         self.assertTrue(
             self.ecology.check_embedding(
-                "omega.operad.rational_linear.v1",
-                "omega.operad.wdp_homotopy.v1",
+                "core.operad.rational_linear.v1",
+                "core.operad.wdp_homotopy.v1",
             )
         )
         self.assertTrue(
             self.ecology.check_embedding(
-                "omega.operad.rational_linear.v1",
-                "omega.operad.mub6_stengle.v1",
+                "core.operad.rational_linear.v1",
+                "core.operad.mub6_stengle.v1",
             )
         )
         # Non-embedded pair should return False
         self.assertFalse(
             self.ecology.check_embedding(
-                "omega.operad.wdp_homotopy.v1",
-                "omega.operad.mub6_stengle.v1",
+                "core.operad.wdp_homotopy.v1",
+                "core.operad.mub6_stengle.v1",
             )
         )
 
@@ -129,7 +129,7 @@ class MetaOperadHOMC1Tests(unittest.TestCase):
 
     def test_obstruction_cohomology_degrees(self) -> None:
         """Verifies obstruction classes are properly typed into H^0, H^1, H^2."""
-        rl_op = self.ecology.operads["omega.operad.rational_linear.v1"]
+        rl_op = self.ecology.operads["core.operad.rational_linear.v1"]
         h0_classes = [c for c in rl_op.obstruction_classes if c.degree == 0]
         h1_classes = [c for c in rl_op.obstruction_classes if c.degree == 1]
         self.assertTrue(len(h0_classes) >= 1)
@@ -137,7 +137,7 @@ class MetaOperadHOMC1Tests(unittest.TestCase):
         self.assertTrue(len(h1_classes) >= 1)
         self.assertEqual(h1_classes[0].antibody_id, "AB_FALSE_CERTAINTY_DECOY")
 
-        wdp_op = self.ecology.operads["omega.operad.wdp_homotopy.v1"]
+        wdp_op = self.ecology.operads["core.operad.wdp_homotopy.v1"]
         h2_classes = [c for c in wdp_op.obstruction_classes if c.degree == 2]
         self.assertTrue(len(h2_classes) >= 1)
         self.assertEqual(h2_classes[0].antibody_id, "AB_SPARSE_LIFT_OBSTRUCTION")
@@ -146,14 +146,14 @@ class MetaOperadHOMC1Tests(unittest.TestCase):
         """Verifies an ill-typed morphism raises or yields an obstruction receipt."""
         bad_morph = OperadMorphism(
             id="phi_bad",
-            source_id="omega.operad.rational_linear.v1",
-            target_id="omega.operad.wdp_homotopy.v1",
+            source_id="core.operad.rational_linear.v1",
+            target_id="core.operad.wdp_homotopy.v1",
             colour_map={"Eq1": "NONEXISTENT_COLOUR"},
             generator_map={"isolate_y": "isolate_y"},
         )
         receipt = bad_morph.verify(
-            self.ecology.operads["omega.operad.rational_linear.v1"],
-            self.ecology.operads["omega.operad.wdp_homotopy.v1"],
+            self.ecology.operads["core.operad.rational_linear.v1"],
+            self.ecology.operads["core.operad.wdp_homotopy.v1"],
         )
         self.assertFalse(receipt.is_pass)
         self.assertTrue(any("NONEXISTENT_COLOUR" in ob.description for ob in receipt.obstructions))

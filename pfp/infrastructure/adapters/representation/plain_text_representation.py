@@ -8,8 +8,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from omega_engine_pfp.domain.representation.models import TurnView
-from omega_engine_pfp.domain.representation.ports import RepresentationPort
+from pfp.domain.representation.models import TurnView
+from pfp.domain.representation.ports import RepresentationPort
 
 
 class PlainTextRepresentation(RepresentationPort):

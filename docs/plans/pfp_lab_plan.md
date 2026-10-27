@@ -72,7 +72,7 @@ The copied code still imports upstream package names (written `<prefix>_*` below
 | Old name | Imports | Present in this repository? |
 | --- | --- | --- |
 | `<prefix>_pfp` | 2,799 | Yes, as `pfp/` |
-| `<prefix>_woland` | 1,242 | **No** (203 non-test `pfp` files import it) |
+| `<prefix>_adversary` | 1,242 | **No** (203 non-test `pfp` files import it) |
 | `<prefix>_operations` | 1,137 | Yes, under `ops/` |
 | `<prefix>_operads` | 905 | Yes, as `operads/` |
 | `<prefix>_projects` | 634 | **No** |
@@ -85,7 +85,7 @@ The copied code still imports upstream package names (written `<prefix>_*` below
 
 Files importing old names: 1,240 in `pfp`, 382 in `ops`, 344 in `operads`,
 64 in `eis`, 48 in `pciv`. A rename fixes the packages that exist here. It
-cannot fix the Woland, projects and workflows imports, because that code was
+cannot fix the Adversary, projects and workflows imports, because that code was
 not copied.
 
 ### Where the existing code stands against the rubric
@@ -336,7 +336,7 @@ mass-rename imports. Instead, one small scored module installs import aliases
 (`<prefix>_pfp` to `pfp`, `<prefix>_epistemic_immune_system` to `eis`,
 `<prefix>_operads` to `operads`, `<prefix>_prompt_civilization` to
 `pciv`, and the `ops` subpackages) for legacy code that an idea pack needs.
-Modules that import Woland, projects or workflows code stay unusable and are
+Modules that import Adversary, projects or workflows code stay unusable and are
 listed as such. A real rename of any legacy file is done only together with
 bringing that file up to L4D.
 

@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_operads.structurebench import (
+from operads.structurebench import (
     BUNDLE_FILES,
     CONSTRAINT_IDS,
     VALID_TERMINAL_VERDICTS,

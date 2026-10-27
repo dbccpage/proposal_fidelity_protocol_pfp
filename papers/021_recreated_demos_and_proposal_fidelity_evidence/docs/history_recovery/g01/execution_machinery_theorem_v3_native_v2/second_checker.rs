@@ -1,5 +1,5 @@
 //! Thin transport adapter; all enumeration and canonicalization stay in the existing crate.
-use omega_ooutwire_primitives::{
+use core_ooutwire_primitives::{
     bounds::Bounds,
     candidate::{delta_events, Item},
     canonical::{canonical_bruteforce, try_canonical},
@@ -55,7 +55,7 @@ fn solve(request: &Value) -> Result<Value, String> {
         "key":c.key,"size":c.size,"label":c.label})).collect();
     Ok(json!({"status":"COMPUTED","request":request,"cost":mr.cost,
         "measure":measure.name(),"deltas":deltas,"classes":class_rows,
-        "computation":"omega_ooutwire_primitives::min_responses/try_quotient/canonical_bruteforce"}))
+        "computation":"core_ooutwire_primitives::min_responses/try_quotient/canonical_bruteforce"}))
 }
 
 fn main() {

@@ -82,7 +82,7 @@ carries `PROPOSED_LEAN`).
 ## Proposed wording for P3-22 (deposit not edited)
 
 Evidence column, append: "mechanized in
-`omega_engine_education/documentation/004_oepfp/lean4/ThymusScreening.lean`
+`education/documentation/004_oepfp/lean4/ThymusScreening.lean`
 (`sound_all_iff`, `never_rejects_all_iff`, `both_all_iff`; Lean 4.34.0, no
 axioms) at commit <merge commit>". The deposit carries `SHA256SUMS`, so this
 is Jeremy's edit and repin.
@@ -90,7 +90,7 @@ is Jeremy's edit and repin.
 ## Receipt
 
 - Exact command: `lean ThymusScreening.lean` run in
-  `omega_engine_education/documentation/004_oepfp/lean4/`
+  `education/documentation/004_oepfp/lean4/`
 - Tool version: `Lean (version 4.34.0, x86_64-unknown-linux-gnu, commit
   293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)`, release tarball
   `lean-4.34.0-linux.tar.zst` from GitHub (the elan installer host returned
@@ -108,7 +108,7 @@ is Jeremy's edit and repin.
 'Oeeis.Thymus.control_not_sound' does not depend on any axioms
 ```
 
-Jeremy's check on Windows: `cd omega_engine_education\documentation\004_oepfp\lean4`
+Jeremy's check on Windows: `cd education\documentation\004_oepfp\lean4`
 then `lean ThymusScreening.lean` with `leanprover/lean4:v4.34.0`.
 
 ## Compaction envelope
@@ -121,7 +121,7 @@ then `lean ThymusScreening.lean` with `leanprover/lean4:v4.34.0`.
   (P3-25 is a source audit, not formalized here).
 - **Narrowest defensible claim:** a core-Lean file elaborates with exit 0 on
   Lean 4.34.0 and prints an empty axiom set for the seven cited theorems.
-- **Next test:** `lean omega_engine_education/documentation/004_oepfp/lean4/ThymusScreening.lean`
+- **Next test:** `lean education/documentation/004_oepfp/lean4/ThymusScreening.lean`
   on Jeremy's machine.
 - **Changeset:** branch `claude/thymus-screening-soundness-lean-8yai2f` from
   `8ac5da188`; files: `004_oepfp/lean4/ThymusScreening.lean` (new),

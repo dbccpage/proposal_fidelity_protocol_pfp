@@ -1,6 +1,6 @@
 ---
 documentation_contract: symbol-game-documentation/v1
-title: "01_v10rc_system_design_and_integration: Prompt Civilization V1.0RC Architecture & PFP/Woland Integration"
+title: "01_v10rc_system_design_and_integration: Prompt Civilization V1.0RC Architecture & PFP/Adversary Integration"
 kind: architectural-specification
 audience:
   - researchers
@@ -11,13 +11,13 @@ maturity: draft
 claim_status: scoped-local-verification-and-design
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/oepciv/epic_oe_oepciv_001_grammar_validity_and_distribution_plan.md
-  - omega_engine_prompt_civilization/controllers/prompt_civ_controller.py
-  - omega_engine_prompt_civilization/use_cases/custody.py
-  - omega_engine_prompt_civilization/use_cases/fitness.py
-  - omega_engine_prompt_civilization/scripts/run_evolutionary_stress_50gen.py
-  - _ic/woland/oev1rc_integration_closure_digestion.md
-  - omega_engine_education/documentation/010_oepciv/00_index.md
+  - product_planning_office/plans/epics/oepciv/epic_oe_oepciv_001_grammar_validity_and_distribution_plan.md
+  - pciv/controllers/prompt_civ_controller.py
+  - pciv/use_cases/custody.py
+  - pciv/use_cases/fitness.py
+  - pciv/scripts/run_evolutionary_stress_50gen.py
+  - _ic/adversary/oev1rc_integration_closure_digestion.md
+  - education/documentation/010_oepciv/00_index.md
 prerequisites:
   - 00_index.md
   - README.md
@@ -25,27 +25,27 @@ related:
   - ../004_oepfp/README.md
   - ../009_oeeis/README.md
   - normal_forms/nf_01_prompt_society_and_civilization.md
-  - normal_forms/nf_02_lamarckian_pfp_woland_loop.md
+  - normal_forms/nf_02_lamarckian_pfp_adversary_loop.md
 last_verified: 2026-10-13
 ---
 
-# 01_v10rc_system_design_and_integration: Prompt Civilization V1.0RC Architecture & PFP/Woland Integration
+# 01_v10rc_system_design_and_integration: Prompt Civilization V1.0RC Architecture & PFP/Adversary Integration
 
 **AuthorityEffect:** None.  
-**Epistemic Posture:** Scoped local implementation evidence and integration design; mints no operational or mathematical authority. The source and test pins are in the historical verification receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/oev1rc_integration_closure/oepciv_verification.json`). The diagram and biological mechanisms below describe intended architecture, not a claim that every mechanism is wired into the measured runner.
+**Epistemic Posture:** Scoped local implementation evidence and integration design; mints no operational or mathematical authority. The source and test pins are in the historical verification receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/oev1rc_integration_closure/oepciv_verification.json`). The diagram and biological mechanisms below describe intended architecture, not a claim that every mechanism is wired into the measured runner.
 
 ---
 
 ## 1. Executive Summary & Architectural Scope
 
-The **Prompt Civilization (`OEPCIV`)** estate governs the evolutionary life cycle, causal ancestry, multi-objective fitness evaluation, and Lamarckian adaptation of immutable prompt programs within the Omega Engine.
+The **Prompt Civilization (`OEPCIV`)** estate governs the evolutionary life cycle, causal ancestry, multi-objective fitness evaluation, and Lamarckian adaptation of immutable prompt programs within the engine.
 
 The **Version 1.0RC design** distinguishes:
 1. **The Four-Tier Civilizational Topology:**
    $$\text{Prompt Genome } (\mathcal{G}) \longrightarrow \text{Prompt Family } (\mathcal{F}) \longrightarrow \text{Prompt Society } (\mathcal{S}) \longrightarrow \text{Prompt Civilization } (\mathcal{C})$$
 2. **Two-Graph Separation:** Strict demarcation between the **Hierarchical Containment Tree** (dataflow decomposition of an incoming prompt $P$ into a $P^\star$ node tree) and the **Causal Lineage DAG** (evolutionary ancestry, forks, and homologous crossovers across generations).
 3. **Lamarckian Adaptation via Typed Failure Receipts:** Phenotypic mutations derived from external falsification witnesses and cochain obstruction residuals ($\Phi_1 > 0$, $\Gamma_2 > 0$, $\Xi > 0$) retro-inherited into plastic scaffold regions while preserving canalized core invariants.
-4. **Estate Integration:** Existing PFP checkers, Woland fixture bouts, protected-span mutation, and authenticated Python custody can be composed. Section 8 reports the measured finite path; live evolutionary efficacy and the OEPCIV001 grammar/distribution experiment remain research follow-up.
+4. **Estate Integration:** Existing PFP checkers, Adversary fixture bouts, protected-span mutation, and authenticated Python custody can be composed. Section 8 reports the measured finite path; live evolutionary efficacy and the OEPCIV001 grammar/distribution experiment remain research follow-up.
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -68,10 +68,10 @@ The **Version 1.0RC design** distinguishes:
                │ Dispatch to Dialectic Bout                   │ Direct PFP Measurement
                ▼                                              ▼
    ┌───────────────────────┐                      ┌───────────────────────┐
-   │ OMEGA_ENGINE_WOLAND   │                      │  OMEGA_ENGINE_        │
+   │ ADVERSARY   │                      │          │
    │ - 7-Act Bout          │                      │  SYMBOL_GAME (PFP)    │
-   │ - Retinue Debate      │                      │ - Wire Envelope       │
-   │ - Margarita Sandbox   │                      │ - Cochains Phi1/G2/Xi │
+   │ - Panel Debate      │                      │ - Wire Envelope       │
+   │ - Primal Dual Sandbox   │                      │ - Cochains Phi1/G2/Xi │
    │ - Genealogy Adapter   │                      │ - ExactPharmacyPort   │
    └───────────┬───────────┘                      └───────────┬───────────┘
                │                                              │
@@ -140,9 +140,9 @@ When a candidate prompt produces an execution artifact that fails an external or
 
 ---
 
-## 4. Integration with `omega_engine_pfp` (PFP)
+## 4. Integration with `pfp` (PFP)
 
-`omega_engine_pfp` supplies task-specific executable checks. The measured RC runner binds `SymbolGameCandidateChecker` to one finite C011 case and executes it on the actual candidate bytes. It does not measure generic prompt quality or cochain fitness. These additional integration contracts remain design context:
+`pfp` supplies task-specific executable checks. The measured RC runner binds `SymbolGameCandidateChecker` to one finite C011 case and executes it on the actual candidate bytes. It does not measure generic prompt quality or cochain fitness. These additional integration contracts remain design context:
 1. **PFP Wire Envelope (`PfpPacket`):**
    - Transports prompt instructions $P^\star$, runtime response $R_k$, and cryptographic turn proofs.
    - Sealed via RFC 8785 canonical JSON bytes and SHA-256 digests.
@@ -150,25 +150,25 @@ When a candidate prompt produces an execution artifact that fails an external or
    - Evaluates triad residuals: $\Phi_1$ (functional defect), $\Gamma_2$ (obstruction residual), $\Xi$ (diagnostic parity).
    - A cochain report is diagnostic evidence for its declared task. The current feedback runner records `cochain_status=NOT_MEASURED` and never fabricates cochain scores.
 3. **Exact Pharmacy Port (`ExactPharmacyPort`):**
-   - Binds `omega_engine/crates_rs/omega_prompt_civilization/src/pharmacy.rs` to detect failure classes (`LogicalContradiction`, `AxiomViolation`, `FloatContamination`) at native Rust speeds.
+   - Binds `engine/crates_rs/core_prompt_civilization/src/pharmacy.rs` to detect failure classes (`LogicalContradiction`, `AxiomViolation`, `FloatContamination`) at native Rust speeds.
 
 ---
 
-## 5. Integration with `omega_engine_woland`
+## 5. Integration with `adversary`
 
-`omega_engine_woland` serves as the dialectical stress-testing apparatus:
+`adversary` serves as the dialectical stress-testing apparatus:
 1. **7-Act Dialectic Bout Integration:**
    - **Act I (Catalyst):** Prompt ingestion and synthetic diagnostic measurement.
-   - **Act II (Retinue Debate):** Candidate proposals stress-tested between Begemot and Koroviev.
+   - **Act II (Panel Debate):** Candidate proposals stress-tested between Gauge Breaker and Defect Hunter.
    - **Act III (Epistemic Sieve):** Anti-skill fences applied from `OEWAS`.
    - **Act IV (Sandbox Execution):** Challenge checkers and external oracles run in isolated sandboxes.
    - **Act V (Master Formalization):** Candidate synthesis and proof extraction.
    - **Act VII (Verdict):** Terminal crystallization (`PASS_TO_MASTER`, `REFUSE`, `COMPOSTED`).
 2. **Genealogy Estate Adapter (`PromptCivGenealogyAdapter`):**
-   - Wires Woland bout runs into the prompt civilization genealogy ledger (`omega_engine_woland/infrastructure/estates/prompt_civ_genealogy.py`).
+   - Wires Adversary bout runs into the prompt civilization genealogy ledger (`adversary/infrastructure/estates/prompt_civ_genealogy.py`).
    - Every candidate artifact produced in Act II is bound to its producing prompt genome OID.
-3. **Retinue Character Persona Evolution:**
-   - Prompt civilization evolutionary loops evaluate and refine the specialized system prompts for Woland Retinue seats (Begemot's adversarial sharpness, Koroviev's satirical precision, Azazello's ruthless execution) based on historical defect-detection yield.
+3. **Panel Character Persona Evolution:**
+   - Prompt civilization evolutionary loops evaluate and refine the specialized system prompts for Adversary Panel seats (Gauge Breaker's adversarial sharpness, Defect Hunter's satirical precision, Scope Guard's ruthless execution) based on historical defect-detection yield.
 
 ---
 
@@ -189,10 +189,10 @@ When a candidate prompt produces an execution artifact that fails an external or
 
 ## 7. The Autophagous "Fugu" Cemetery & Pharmacy Antibody Gate
 
-To eliminate circular evolutionary search where candidate mutations regress to previously falsified hypotheses, `OEPCIV` integrates directly with Woland's Act IV pre-execution sandbox screening:
+To eliminate circular evolutionary search where candidate mutations regress to previously falsified hypotheses, `OEPCIV` integrates directly with Adversary's Act IV pre-execution sandbox screening:
 
 1. **Failure Interment:**
-   - Woland's existing cemetery adapter stores headstones below its selected canonical `_ic` custody root (default `_ic/darpa/woland/cemetery/`). It does not automatically inter every experimental hint emitted by the feedback runner.
+   - Adversary's existing cemetery adapter stores headstones below its selected canonical `_ic` custody root (default `_ic/darpa/adversary/cemetery/`). It does not automatically inter every experimental hint emitted by the feedback runner.
 2. **Dynamic State Reloading:**
    - the city's `FileCemeteryAdapter` reloads all `*.headstone.json` records from disk dynamically (`load_headstones()`), ensuring subsequent bouts and generational iterations immediately recognize all buried casualties.
 3. **Pre-Execution Act IV Screening:**
@@ -208,7 +208,7 @@ To eliminate circular evolutionary search where candidate mutations regress to p
 
 The October 9 summary is preserved at [historical summary](../../../_ic/nara/historical/oewas007/evolutionary_stress_50gen/summary.json). It reports 50 generations, 150 bouts, and zero provider calls. Its diversity, entropy, and attenuation values came from a harness that did not feed its changing genomes into bouts and injected synthetic defects. Those values are historical diagnostics; they do not demonstrate observed failure-driven adaptation or live improvement. The retained historical artifact set does not justify claiming custody of 150 complete quad bundles.
 
-The current [runner](../../../omega_engine_prompt_civilization/scripts/run_evolutionary_stress_50gen.py) uses a different measured contract:
+The current [runner](../../../pciv/scripts/run_evolutionary_stress_50gen.py) uses a different measured contract:
 
 1. Each bout objective contains the exact current genome text, its CAS digest, and a finite C011 task.
 2. The host-bound independent checker executes on actual candidate bytes; its complete receipt bytes and candidate bytes are retained and independently replayed.
@@ -216,7 +216,7 @@ The current [runner](../../../omega_engine_prompt_civilization/scripts/run_evolu
 4. Protected core bytes remain unchanged, and each child becomes that agent's next-generation parent.
 5. Volatile bout identifiers are retained for exact receipt replay. A separate semantic replay digest covers stable task/genome/verdict/hint progression and agrees across repeated same-seed runs.
 
-The targeted test completed 50 generations and 150 fixture bouts: 450 actual checker observations were REJECTED, none were ACCEPTED, and three initial learning updates added the distinct observed failure hints. Subsequent repetitions added no new hints. It checked persisted bout receipts and repeated two generations at the same seed for deterministic semantic replay. It also changed retained candidate bytes and required replay to fail. Commands, source pins, log hashes, actual observation counts, and the fresh native binary pin are recorded in the historical verification receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/oev1rc_integration_closure/oepciv_verification.json`).
+The targeted test completed 50 generations and 150 fixture bouts: 450 actual checker observations were REJECTED, none were ACCEPTED, and three initial learning updates added the distinct observed failure hints. Subsequent repetitions added no new hints. It checked persisted bout receipts and repeated two generations at the same seed for deterministic semantic replay. It also changed retained candidate bytes and required replay to fail. Commands, source pins, log hashes, actual observation counts, and the fresh native binary pin are recorded in the historical verification receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/oev1rc_integration_closure/oepciv_verification.json`).
 
 This is finite transport/checker/rewrite custody evidence. The deterministic fixture seats need not respond more successfully to added hints. The runner records `efficacy=NOT_MEASURED`, `cochain_status=NOT_MEASURED`, zero provider calls, and `AuthorityEffect=None`; it does not promote experimental hints to admitted antibodies.
 
@@ -230,6 +230,6 @@ The delivered development slice is authenticated host-ledger admission, refusal 
 
 The diagrams, four-tier terminology, and biological analogy remain design descriptions where no named exercised consumer is shown. Low-level mutation helpers check byte-span and witness identifier syntax; a 64-hex witness string alone is not authenticated checker execution, immune admission, or proof of a task failure. The runner uses actual checker observations before creating experimental hints.
 
-[OEPCIV001](../../../omega_engine_product_planning_office/plans/epics/oepciv/epic_oe_oepciv_001_grammar_validity_and_distribution_plan.md) remains `RESEARCH_HOLD`: the proposed grammar-validity and distribution experiment requires a real contributor population, recorded proposal draws, declared baselines, and measured held-out outcomes. Its empirical claims are not a prerequisite invented by this local repair, and they are not completed by fixture tests.
+[OEPCIV001](../../../product_planning_office/plans/epics/oepciv/epic_oe_oepciv_001_grammar_validity_and_distribution_plan.md) remains `RESEARCH_HOLD`: the proposed grammar-validity and distribution experiment requires a real contributor population, recorded proposal draws, declared baselines, and measured held-out outcomes. Its empirical claims are not a prerequisite invented by this local repair, and they are not completed by fixture tests.
 
 Remaining optional extensions are a live feedback trial through the supported accounted PFP boundary, held-out comparisons of rewrite/antibody benefit, and broader task-family/checker coverage. Any benefit claim needs measured independent outcomes and the original per-run cap; a fixture pass, admission receipt, or biological analogy cannot supply that result.

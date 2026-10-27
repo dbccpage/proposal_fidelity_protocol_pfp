@@ -10,11 +10,11 @@ maturity: source-grounded-runtime
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-- omega_engine/crates_rs/omega_symbol_game/src/invoke.rs
-- omega_engine/crates_rs/omega_symbol_game_runtime/src
+- engine/crates_rs/core_symbol_game/src/invoke.rs
+- engine/crates_rs/core_symbol_game_runtime/src
 source_revision: 305b9690f97fc3f5c13e361cfe752a6d5dc7ad8d
 prerequisites: []
-verification: py -3.12 -m omega_engine_pfp.scripts.docs_integrity validate
+verification: py -3.12 -m pfp.scripts.docs_integrity validate
 aliases: []
 related:
 - 08_native_rust_host_architecture.md
@@ -29,7 +29,7 @@ verification_scope: adapter and action names parsed from git show HEAD:invoke.rs
 AuthorityEffect: None.
 
 The native host dispatches runtime requests through the action registry in
-omega_symbol_game/src/invoke.rs. That registry, not a hand-maintained
+core_symbol_game/src/invoke.rs. That registry, not a hand-maintained
 capability list, is the source of truth. Query --describe-runtime when an
 integration needs the currently advertised adapter names.
 
@@ -54,7 +54,7 @@ integration needs the currently advertised adapter names.
 
 ### Full registry at pin 305b9690 (2026-10-22)
 
-Read from the `runtime_actions!` table in [invoke.rs](../../../../omega_engine/crates_rs/omega_symbol_game/src/invoke.rs) as committed at `305b9690`: 150 actions in 57 adapters, in declaration order. `--describe-runtime` returns the adapter names in this order (`advertised_adapters`, which de-duplicates the first column). The summary table above is a reading aid and is incomplete. `f2` is an adapter; its action is `classify_gauge_board`. The CLI still has a separate `classify-board` operation, described in [08](08_native_rust_host_architecture.md). `homology` and `holonomy` are two adapters.
+Read from the `runtime_actions!` table in [invoke.rs](../../../../engine/crates_rs/core_symbol_game/src/invoke.rs) as committed at `305b9690`: 150 actions in 57 adapters, in declaration order. `--describe-runtime` returns the adapter names in this order (`advertised_adapters`, which de-duplicates the first column). The summary table above is a reading aid and is incomplete. `f2` is an adapter; its action is `classify_gauge_board`. The CLI still has a separate `classify-board` operation, described in [08](08_native_rust_host_architecture.md). `homology` and `holonomy` are two adapters.
 
 | Adapter | Actions | Action names |
 | --- | --- | --- |
@@ -65,7 +65,7 @@ Read from the `runtime_actions!` table in [invoke.rs](../../../../omega_engine/c
 | `functional` | 5 | `functional_projection_transfer`, `functional_family_bound`, `functional_family_member`, `functional_evaluate`, `functional_verify` |
 | `qm_classical` | 2 | `qm_classical_evaluate`, `qm_classical_verify` |
 | `workflow` | 8 | `anti_skill_detect`, `skill_garden_cull`, `skill_garden_cull_file`, `workflow_substitute`, `workflow_validate`, `workflow_graph`, `workflow_operation_v3`, `workflow_composition_v3` |
-| `woland` | 3 | `woland_bout`, `woland_support`, `woland_support_file` |
+| `adversary` | 3 | `adversary_bout`, `adversary_support`, `adversary_support_file` |
 | `immune` | 7 | `immune_allostery`, `immune_clonal`, `immune_admission`, `immune_activation`, `immune_screen`, `immune_pharmacy_search`, `immune_pharmacy_search_file` |
 | `prompt_civilization` | 6 | `prompt_civilization`, `prompt_rank`, `prompt_metabolism`, `prompt_metabolism_file`, `learning_signals`, `learning_signals_file` |
 | `intelligence` | 2 | `intelligence_lifecycle`, `intelligence_lifecycle_file` |
@@ -121,7 +121,7 @@ Read from the `runtime_actions!` table in [invoke.rs](../../../../omega_engine/c
 Send a RuntimeRequestV1 JSON document through the native host:
 
 ~~~powershell
-Get-Content -Raw .\runtime-request.json | cargo run --quiet --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game -- invoke
+Get-Content -Raw .\runtime-request.json | cargo run --quiet --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game -- invoke
 ~~~
 
 The invoke operation reads at most 12,582,912 bytes (`MAX_PROMPT_ARTIFACT_RUNTIME_REQUEST_BYTES = 12 * 1024 * 1024`) so that

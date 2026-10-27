@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IX.4"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IX.2 'Definition IX.4'"
+  - "canonical_core_math_spine.md v1.5.2 §IX.2 'Definition IX.4'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -59,7 +59,7 @@ the $S(n)$ level.
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IX.2
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IX.2
   (statement copied verbatim; the source header carries no status bracket).
   Original header line:
   `**Definition IX.4 (Forced Lift).** The fixed-layer algebra $\mathcal{O}_n$ is *sufficient*`

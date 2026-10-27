@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain.representation.models import (
+from pfp.domain.representation.models import (
     ARM_A_CONFIG,
     ARM_C_CONFIG,
     get_arm_config,

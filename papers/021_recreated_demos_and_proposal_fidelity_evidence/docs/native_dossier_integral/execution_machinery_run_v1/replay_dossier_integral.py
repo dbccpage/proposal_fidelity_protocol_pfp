@@ -21,7 +21,7 @@ def build(args, helper) -> None:
     rustc = args.rustc.resolve(strict=True)
     argv = [str(rustc), "--edition", "2021", "--crate-name", "paper011_native_dossier_integral",
             str(SOURCE), "-L", f"dependency={args.deps.resolve()}"]
-    for name, path in (("omega_homology", args.homology_rlib), ("linear_algebra", args.algebra_rlib),
+    for name, path in (("core_homology", args.homology_rlib), ("linear_algebra", args.algebra_rlib),
                        ("num_bigint", args.bigint_rlib), ("serde_json", args.serde_rlib)):
         path = path.resolve(strict=True)
         if str(path) not in before:

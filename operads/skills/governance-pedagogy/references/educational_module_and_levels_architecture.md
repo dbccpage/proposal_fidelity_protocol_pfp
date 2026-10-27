@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 ## 1. Educational Module Renumbering & Propagation Protocol
 
-Educational modules under `omega_engine_education/documentation/` follow strict decimal stratification prefixes (`NNN_<name>`). When a module prefix is modified (e.g., shifting $160 \to 170$ to insert a new bounded context):
+Educational modules under `education/documentation/` follow strict decimal stratification prefixes (`NNN_<name>`). When a module prefix is modified (e.g., shifting $160 \to 170$ to insert a new bounded context):
 
 1. **Atomic Directory Rename**:
    Use `git mv` to rename the parent folder:
@@ -26,7 +26,7 @@ Educational modules under `omega_engine_education/documentation/` follow strict 
 
 Every numbered educational module supporting progressive mastery should maintain a `levels/` directory containing:
 
-### A. The Master Index (`levels/README.md`)
+### A. Manuscript Truth Index (`levels/README.md`)
 - **Metadata Frontmatter**: `documentation_contract: symbol-game-documentation/v1`, `authority_effect: "None"`, and `source_paths`.
 - **Architectural Stratification**: 4 to 5 structural regimes grouping the level progression.
 - **Mermaid Progression DAG**: Visual sequence from Level 00 to the apex verification boundary.

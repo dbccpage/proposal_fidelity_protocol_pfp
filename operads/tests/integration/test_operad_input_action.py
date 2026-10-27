@@ -4,14 +4,14 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_operads.skill_operad.resolver.native_runtime import (
+from operations.domain.rop.result import Ok
+from operads.skill_operad.resolver.native_runtime import (
     NativeOperadRefusal,
     native_validate,
     run_native,
 )
-from omega_engine_operads.skill_operad.resolver.resolver import run
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import (
+from operads.skill_operad.resolver.resolver import run
+from operads.skill_operad.skill_compiler.op_inventory import (
     AntiOpSpec,
     HostBinding,
     OpInventory,
@@ -25,7 +25,7 @@ def fixture(guard=False):
     wire = Wire(op="pair", args=("Code", Wire(op="pair", args=("Code", "Code"))))
     op = OpSpec(op_id="pair", summary="ordered pair", inputs=("Code", "Code"), output="Code", binding=HostBinding(target="native:pair"))
     guards = (AntiOpSpec(op_id="guard", summary="physical left operand", guards="pair", slot=0, inspects="Code", refusal="BLOCK"),) if guard else ()
-    inv = OpInventory(schema_version="omega.oewas.op_inventory.v3", skills=(SkillDecomposition(skill_id="test", ops=(op,), anti_ops=guards, wiring=wire),))
+    inv = OpInventory(schema_version="core.oewas.op_inventory.v3", skills=(SkillDecomposition(skill_id="test", ops=(op,), anti_ops=guards, wiring=wire),))
     return inv, wire
 
 
@@ -34,10 +34,10 @@ def test_oracle_explicit_order_routes_occurrences_and_binds_receipt():
     receipt = run(inv, wire, [10, 20, 30], {"pair": lambda a, b: [a, b]}, {}, input_order=(2, 0, 1))
     assert receipt.completed and receipt.output == [20, [30, 10]]
     assert receipt.to_json()["input_order"] == [2, 0, 1]
-    assert receipt.to_json()["schema"] == "omega.oewas.run_receipt.v3"
+    assert receipt.to_json()["schema"] == "core.oewas.run_receipt.v3"
     legacy = run(inv, wire, [10, 20, 30], {"pair": lambda a, b: [a, b]}, {})
     assert "input_order" not in legacy.to_json()
-    assert legacy.to_json()["schema"] == "omega.oewas.run_receipt.v2"
+    assert legacy.to_json()["schema"] == "core.oewas.run_receipt.v2"
 
 
 @pytest.mark.parametrize("order", [(0, 0, 2), (0, 1), (0, 1, 3), (-1, 0, 1), (False, 1, 2), (0.0, 1, 2)])
@@ -82,7 +82,7 @@ def test_native_invalid_order_refuses_before_effect_and_identity_is_explicit():
 def test_explicit_mixed_colour_boundary_and_mapping_inputs():
     wire = Wire(op="pair", args=("Paper", "Code"))
     op = OpSpec(op_id="pair", summary="typed pair", inputs=("Paper", "Code"), output="State", binding=HostBinding(target="native:pair"))
-    inv = OpInventory(schema_version="omega.oewas.op_inventory.v3", skills=(SkillDecomposition(skill_id="test", ops=(op,), wiring=wire),))
+    inv = OpInventory(schema_version="core.oewas.op_inventory.v3", skills=(SkillDecomposition(skill_id="test", ops=(op,), wiring=wire),))
     checked = native_validate(inv, wire, input_order=(1, 0), values=["program", "paper"])
     assert checked["leaves"] == ["Code", "Paper"]
     assert checked["output"] == ["paper", "program"]
@@ -94,7 +94,7 @@ def test_explicit_mixed_colour_boundary_and_mapping_inputs():
 def test_nullary_explicit_action_and_structural_identity():
     wire = Wire(op="sum", args=())
     op = OpSpec(op_id="sum", summary="nullary zero", inputs=(), output="Code", binding=HostBinding(target="native:sum"))
-    inv = OpInventory(schema_version="omega.oewas.op_inventory.v3", skills=(SkillDecomposition(skill_id="test", ops=(op,), wiring=wire),))
+    inv = OpInventory(schema_version="core.oewas.op_inventory.v3", skills=(SkillDecomposition(skill_id="test", ops=(op,), wiring=wire),))
     assert native_validate(inv, wire, input_order=(), values=[])["output"] == 0
     assert run_native(inv, wire, [], {"sum": lambda: 0}, {}, input_order=()).output == 0
     assert run(inv, wire, [], {"sum": lambda: 0}, {}, input_order=()).output == 0

@@ -9,12 +9,12 @@ import math
 from dataclasses import dataclass
 from typing import Any
 
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
-from omega_engine_pfp.functional_boundary import require_rust_functional
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.projection_receipt import Obstruction, ProjectionReceipt
-from omega_engine_pfp.domain.entities.cochain import CochainCarrier, CochainState
-from omega_engine_pfp.domain.entities.problem import Projector
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.functional_boundary import require_rust_functional
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.entities.projection_receipt import Obstruction, ProjectionReceipt
+from pfp.domain.entities.cochain import CochainCarrier, CochainState
+from pfp.domain.entities.problem import Projector
 
 
 @dataclass(frozen=True, slots=True)
@@ -46,7 +46,7 @@ class CochainProjector(Projector):
         if self.research_parent_event_id is not None:
             config["research_parent_event_id"] = self.research_parent_event_id
         return domain_digest(
-            "omega.oesos.projector-config.v1",
+            "core.oesos.projector-config.v1",
             config,
         )
 
@@ -72,7 +72,7 @@ class CochainProjector(Projector):
         expected_payload: dict[str, Any] = {
             "carrier": self.carrier,
             "omega": native_initial_state.values,
-            "canonical_rust_owner": "omega_solvers::solver_of_solvers",
+            "canonical_rust_owner": "core_solvers::solver_of_solvers",
         }
         if self.research_parent_event_id is not None:
             expected_payload["research_parent_event_id"] = self.research_parent_event_id
@@ -87,7 +87,7 @@ class CochainProjector(Projector):
             and envelope.constraints == expected_constraints
             and envelope.payload == freeze(expected_payload)
             and envelope.source_digest
-            == domain_digest("omega.oesos.coda-fixture.v1", expected_payload)
+            == domain_digest("core.oesos.coda-fixture.v1", expected_payload)
         )
 
     def project(self, state: Any) -> ProjectionReceipt:

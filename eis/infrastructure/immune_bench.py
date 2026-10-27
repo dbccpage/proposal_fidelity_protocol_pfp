@@ -27,11 +27,11 @@ import re
 from dataclasses import dataclass
 from typing import Sequence, Tuple
 
-from omega_engine_epistemic_immune_system.domain import (
+from eis.domain import (
     DetectorRule,
     ThymusGate,
 )
-from omega_engine_epistemic_immune_system.domain.thymus import ThymusSelectionResult
+from eis.domain.thymus import ThymusSelectionResult
 
 from .native_domain import NativeClonalSelectionEngine
 

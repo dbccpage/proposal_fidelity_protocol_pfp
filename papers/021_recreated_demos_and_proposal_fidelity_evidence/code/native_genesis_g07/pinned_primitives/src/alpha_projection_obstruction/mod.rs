@@ -568,8 +568,8 @@ fn observer_receipts() -> Result<(ClaimEvidence, ClaimEvidence, ClaimEvidence, C
             statement_scope: "scalar fibers on the coupled diagram, omega = (1, -1)",
             witness: vec![
                 ("d0", witness.d0.to_string()),
-                ("omega", witness.omega.to_string()),
-                ("omega_exact", witness.exactness.is_exact_coboundary.to_string()),
+                ("omega", witness.core.to_string()),
+                ("core_exact", witness.exactness.is_exact_coboundary.to_string()),
                 ("separator", witness.exactness.separating_left_kernel_vector.as_ref().map_or("none".into(), |v| v.to_string())),
                 ("quotient_distance", witness.quotient.distance.to_string()),
                 ("primal_repair", witness.quotient.repair_witness.to_string()),

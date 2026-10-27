@@ -35,7 +35,7 @@ try:
 except ImportError:  # Statistical and parsing helpers do not require model extras.
     torch = None
 
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
     HARD_KILL_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     apply_distractor_key_mask,
@@ -43,14 +43,14 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
     is_masking_authorized,
     resolve_fluff_positions,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_hidden_base_set,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
     verify_certificate,
 )
 
-from omega_engine_woland.domain.providers.budget import BudgetController
+from adversary.domain.providers.budget import BudgetController
 
 DEFAULT_LOCAL_SNAPSHOT: Path = (
     Path.home()
@@ -630,7 +630,7 @@ def run_empirical_neural_mcnemar_evaluation(
     }
 
     # Persist report and sample traces if run directory exists
-    run_dir = Path("_ic/darpa/woland/runs/c001_mechanism_pilot")
+    run_dir = Path("_ic/darpa/adversary/runs/c001_mechanism_pilot")
     if run_dir.is_dir():
         rep_path = run_dir / "empirical_neural_mcnemar_report.json"
         rep_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")

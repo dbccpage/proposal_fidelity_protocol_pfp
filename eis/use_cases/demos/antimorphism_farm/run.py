@@ -23,10 +23,10 @@ from .contract import (
     refusal_evidence_body,
     refusal_quarantine,
 )
-from omega_engine_pfp.domain.demos import DemoRefusal
-from omega_engine_pfp.infrastructure.demos.canonical import canonical, digest, load
+from pfp.domain.demos import DemoRefusal
+from pfp.infrastructure.demos.canonical import canonical, digest, load
 
-SCHEMA = "omega.symbol-game.demo-receipt.v1"
+SCHEMA = "core.symbol-game.demo-receipt.v1"
 SPLIT_DETAIL = (
     f"{PHARMACY_CONTROL_COUNT} pharmacy controls and {FARM_PROBE_COUNT} "
     "farm probes are not split on farm_probes"
@@ -36,9 +36,9 @@ _PORT_NAMES = frozenset(
     {"classify_response", "detect", "pharmacy_detect", "farm_classify"}
 )
 _PORT_SOURCES = (
-    ("omega_engine_pfp", ("domain", "ports", "exact_ports.py")),
-    ("omega_engine_pfp", ("use_cases", "mssn_demo.py")),
-    ("omega_engine_pfp", ("ffi.py",)),
+    ("pfp", ("domain", "ports", "exact_ports.py")),
+    ("pfp", ("use_cases", "mssn_demo.py")),
+    ("pfp", ("ffi.py",)),
 )
 _RECEIPT_KEYS = frozenset(
     {

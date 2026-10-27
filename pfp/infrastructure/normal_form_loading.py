@@ -6,11 +6,11 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.domain.normal_forms.contract_validation import (
+from pfp.domain.normal_forms.contract_validation import (
     ContractDefect,
     validate_contract_dict,
 )
-from omega_engine_pfp.domain.normal_forms.nf_domain_index import NfIndexEntry
+from pfp.domain.normal_forms.nf_domain_index import NfIndexEntry
 
 
 def validate_contract_file(path: Path) -> list[ContractDefect]:

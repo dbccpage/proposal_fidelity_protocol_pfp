@@ -350,7 +350,7 @@ class SymbolGameStateMachine(Scene):
         r_title.next_to(receipt_box.get_top(), DOWN, buff=0.3)
 
         r_lines = [
-            'schema_version: "omega.symbol-game.evaluation-receipt.v1"',
+            'schema_version: "core.symbol-game.evaluation-receipt.v1"',
             'status: "ExactRepair"',
             "primary_defect_phi1: 0",
             "cycle_sum: 0",

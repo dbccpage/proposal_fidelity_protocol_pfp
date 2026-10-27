@@ -1,4 +1,4 @@
-"""Targeted Soviet Lev Landau Tests for CemeterySink and Tail-Truncation Rejection.
+"""Targeted Examiner Tests for CemeterySink and Tail-Truncation Rejection.
 
 Methodology:
 1. Invariant: Mathematical and architectural invariants (hash-chain, immutability, exact-type eq).
@@ -18,14 +18,14 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.entities.cemetery_entry import CemeteryEntry, TailReceipt
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.exceptions import (
+from pfp.domain.entities.cemetery_entry import CemeteryEntry, TailReceipt
+from pfp.domain.exact.q import Q
+from pfp.domain.exceptions import (
     LedgerIntegrityError,
     LedgerTruncationError,
 )
-from omega_engine_pfp.domain.ports.ports import CemeterySinkPort
-from omega_engine_pfp.infrastructure.persistence.cemetery_sink import (
+from pfp.domain.ports.ports import CemeterySinkPort
+from pfp.infrastructure.persistence.cemetery_sink import (
     GENESIS_DIGEST,
     CemeterySink,
 )
@@ -102,7 +102,7 @@ def test_tail_receipt_value_object_exact_type_equality() -> None:
         entry_count: int
         head_digest: str
         receipt_sha256: str
-        schema: str = "omega.symbol-game.cemetery-receipt.v1"
+        schema: str = "core.symbol-game.cemetery-receipt.v1"
         authority_effect: str = "None"
 
     imp = ReceiptImposter(entry_count=5, head_digest="d5", receipt_sha256="sha5")
@@ -370,7 +370,7 @@ def test_sorted_key_profile_byte_determinism(tmp_path: Path) -> None:
 
 
 # ==============================================================================
-# 4. MUTATION TESTS (SOVIET LANDAU MUTATION VERIFICATION)
+# 4. MUTATION TESTS (STRICT EXAMINER MUTATION VERIFICATION)
 # ==============================================================================
 
 def test_mutation_check_tail_truncation_detection_cannot_be_bypassed(tmp_path: Path) -> None:
@@ -493,8 +493,8 @@ def _reject_constant(token: str) -> None:
 @pytest.mark.parametrize("value", [0.5, float("nan"), float("inf"), -0.0])
 def test_digest_encoder_refuses_floats_and_nan(value: float) -> None:
     """Counterexample: the old encoder digested ``{"t": NaN}`` as the bytes ``NaN``."""
-    from omega_engine_pfp.domain.exceptions import CanonicalizationError
-    from omega_engine_pfp.infrastructure.persistence.cemetery_sink import (
+    from pfp.domain.exceptions import CanonicalizationError
+    from pfp.infrastructure.persistence.cemetery_sink import (
         _canonical_json_bytes,
     )
 
@@ -506,7 +506,7 @@ def test_digest_encoder_refuses_floats_and_nan(value: float) -> None:
 
 def test_float_inputs_are_recorded_exactly_without_json_floats(tmp_path: Path) -> None:
     """A refused turn carrying floats is still recorded, bit for bit, as tagged hex."""
-    from omega_engine_pfp.infrastructure.persistence.cemetery_sink import FLOAT_TAG
+    from pfp.infrastructure.persistence.cemetery_sink import FLOAT_TAG
 
     ledger_file = tmp_path / "floats.jsonl"
     sink = CemeterySink(ledger_file)

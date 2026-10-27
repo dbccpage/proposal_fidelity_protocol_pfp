@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Eguchi, Ooguri and Tachikawa (2010) observed that when the elliptic genus of K3 is expanded in characters of the N = 4 superconformal algebra, the coefficients of the massive characters are sums of dimensions of irreducible representations of the Mathieu group M₂₄: A₁ = 90 = 45 + 45̄, A₂ = 462 = 231 + 231̄, A₃ = 1540 = 770 + 770̄. Computing A_n is exact integer q-series arithmetic with theta functions. Decomposing a class function into irreducible characters is an exact inner product with the character table. Both are cheap to check and easy to get wrong through normalization, the massless character, or the confusion of dimension-matching with character-matching.
 
-The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) series arithmetic through host tools, and OEEIS (Omega Engine Epistemic Immune System) screening of decompositions that match dimensions but not characters.
+The task stresses OEWAS (Engine Workflows, Agents, Skills) series arithmetic through host tools, and OEEIS (Engine Epistemic Immune System) screening of decompositions that match dimensions but not characters.
 
 ## 3. Formal Problem and Bounds
 
@@ -102,7 +102,7 @@ Operands expected: (1) exact q-series with Laurent-polynomial coefficients; (2) 
 ## 13. Estate Reuse and Prerequisites
 
 - No modular-form, Jacobi-form or finite-group character module exists in the estate. The q-series engine and the character-table routines are new Rust work.
-- `omega_engine/crates_rs/omega_kernel` for exact rationals and digests; `omega_engine/crates_rs/omega_linear_algebra` for inverting the character table.
+- `engine/crates_rs/core_kernel` for exact rationals and digests; `engine/crates_rs/core_linear_algebra` for inverting the character table.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

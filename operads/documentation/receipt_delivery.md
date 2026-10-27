@@ -16,8 +16,8 @@ Keep the key out of the repository. Protect the key and tip directory through
 independent OS custody; the application does not manufacture operator trust.
 
 ```powershell
-python -m omega_engine_operads.frontend.cli --workspace . --db-path C:/oe-data/catalog.sqlite3 --json compile-catalog
-python -m omega_engine_operads.frontend.cli --workspace . --db-path C:/oe-data/catalog.sqlite3 --json dispatch-events --tip-path C:/oe-custody/catalog-tip.json --tip-key-file C:/oe-secrets/catalog-tip.key --ledger-id development-catalog
+python -m operads.frontend.cli --workspace . --db-path C:/oe-data/catalog.sqlite3 --json compile-catalog
+python -m operads.frontend.cli --workspace . --db-path C:/oe-data/catalog.sqlite3 --json dispatch-events --tip-path C:/oe-custody/catalog-tip.json --tip-key-file C:/oe-secrets/catalog-tip.key --ledger-id development-catalog
 ```
 
 Use the paths provisioned for the deployment. Repeating the second command
@@ -57,7 +57,7 @@ steals the key or rolls back both independently retained stores.
 ## Targeted verification
 
 ```powershell
-python -m pytest -o addopts= omega_engine_operads/tests/integration/test_outbox_worker_leases.py omega_engine_operads/tests/integration/test_anchored_ledger_delivery.py -q
+python -m pytest -o addopts= operads/tests/integration/test_outbox_worker_leases.py operads/tests/integration/test_anchored_ledger_delivery.py -q
 ```
 
 Use a writable explicit `--basetemp` when Windows sandbox temporary directories

@@ -6,12 +6,12 @@ import hashlib
 import json
 from itertools import product
 
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import (
+from pfp.domain.mssn_research.grammar.spectral_geometry import (
     LiftGoal,
     LiftNecessityCertificate,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     ContentDigest,
     StageLevel,
 )

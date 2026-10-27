@@ -24,21 +24,21 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_epistemic_immune_system.domain.pharmacy_catalog import PharmacyCatalogRepository
-from omega_engine_epistemic_immune_system.domain.pharmacy_models import Antibody
-from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+from eis.domain.pharmacy_catalog import PharmacyCatalogRepository
+from eis.domain.pharmacy_models import Antibody
+from eis.infrastructure.pharmacy_writer import (
     filesystem_byte_writer,
     filesystem_catalog_bytes,
     release_publication_marker,
 )
-from omega_engine_epistemic_immune_system.domain.pharmacy_search import rule_content_bytes, rule_content_sha256
+from eis.domain.pharmacy_search import rule_content_bytes, rule_content_sha256
 
-DEFAULT_DEFINITIONS = Path("omega_engine_epistemic_immune_system/antibodies/definitions/pilot035_candidates.json")
+DEFAULT_DEFINITIONS = Path("eis/antibodies/definitions/pilot035_candidates.json")
 
 
 def load_candidates(path: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     packet = json.loads(path.read_text(encoding="utf-8"))
-    if packet.get("schema_version") != "omega.pharmacy.pilot-candidates.v1":
+    if packet.get("schema_version") != "core.pharmacy.pilot-candidates.v1":
         raise ValueError("PILOT_CANDIDATE_SCHEMA_UNSUPPORTED")
     records = packet["candidates"]
     if not isinstance(records, list) or not records:
@@ -79,9 +79,9 @@ def admission_packet(packet: dict[str, Any], records: list[dict[str, Any]]) -> d
             "observation_kind": "fixture_reproduction",
             "controls": record["controls"],
             "request": {
-                "schema_version": "omega.pharmacy.external-admission-request.v1",
+                "schema_version": "core.pharmacy.external-admission-request.v1",
                 "candidate_digest": digest,
-                "producer_system": "omega_engine_epistemic_immune_system",
+                "producer_system": "eis",
                 "source_manifest_digest": "sha256:" + source_digest,
                 "positive_fixture_digest": "sha256:" + hashlib.sha256(record["positive_fixture"].encode()).hexdigest(),
                 "negative_fixture_digest": "sha256:" + hashlib.sha256(record["negative_fixture"].encode()).hexdigest(),
@@ -109,7 +109,7 @@ def harvest_and_publish(
         records.append(record)
     repository = PharmacyCatalogRepository(
         repo_root,
-        telemetry_dir=repo_root / "omega_engine_epistemic_immune_system/antibodies/candidates",
+        telemetry_dir=repo_root / "eis/antibodies/candidates",
         byte_writer=filesystem_byte_writer,
         byte_source=filesystem_catalog_bytes,
     )

@@ -14,15 +14,15 @@ from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from uuid import uuid4
 
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from pfp.infrastructure.pilot_matrix import (
     _scope,
     complete_pilot_turn,
     make_pilot_gateways,
     validate_pilot_gateways,
 )
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
-from omega_engine_woland.infrastructure.providers.openai_compat import (
+from pfp.infrastructure.task_turn import prepare_task_turn
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
+from adversary.infrastructure.providers.openai_compat import (
     build_openai_compat_body,
     parse_openai_compat_response,
 )
@@ -363,10 +363,10 @@ class OfflineStubClient:
 
 
 def _pins():
-    from omega_engine_pfp.domain import pfp_ingress
-    from omega_engine_pfp.infrastructure import pilot_matrix, task_turn
-    from omega_engine_pfp.use_cases import pfp_prompt, pfp_proposal
-    from omega_engine_woland.infrastructure.providers import openai_compat
+    from pfp.domain import pfp_ingress
+    from pfp.infrastructure import pilot_matrix, task_turn
+    from pfp.use_cases import pfp_prompt, pfp_proposal
+    from adversary.infrastructure.providers import openai_compat
 
     modules = (pilot_matrix, task_turn, pfp_prompt, pfp_proposal, pfp_ingress, openai_compat)
     return {"runner": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -405,7 +405,7 @@ def _new_output(output_dir):
                 or path.name.rstrip(" .") != path.name):
             raise ValueError("OUTPUT_ALIAS_REFUSED")
     historical = Path(__file__).resolve().parents[2] / (
-        "omega_engine_education/documentation/004_oepfp/papers/omega_engine_symbol_game/"
+        "education/documentation/004_oepfp/papers/symbol_game/"
         "008_pfp_mssn_tower_challenges_and_retraction_benchmarks")
     if output.resolve().is_relative_to(historical):
         raise ValueError("HISTORICAL_OUTPUT_REFUSED")

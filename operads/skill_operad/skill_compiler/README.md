@@ -41,13 +41,13 @@ python .agents/operad/skill_compiler/knowledge_parity.py
 
 ```text
 
-# Candidate prose is stored in an omega.skill_compiler.episode.input.v1 JSON file
+# Candidate prose is stored in an core.skill_compiler.episode.input.v1 JSON file
 
 <configured-python> .agents/operad/skill_compiler/episode.py append --file <episode.json>
 <configured-python> .agents/operad/skill_compiler/resolve.py --file <episode.json>
 <configured-python> .agents/operad/skill_compiler/promote.py --file <episode.json>
 
-# Deterministic metrics from omega.autoskill.run.v1 rows
+# Deterministic metrics from core.autoskill.run.v1 rows
 
 <configured-python> .agents/operad/skill_compiler/metrics.py --file <run.json>
 
@@ -99,7 +99,7 @@ python .agents/operad/skill_compiler/eval_runner.py
 | Surface | Role |
 | --- | --- |
 | `../residual_honesty.py` | Scalar observations cannot mint `contractive` (recursive admitted packages) |
-| `../bulk_operad_ingest.py` | DEF-OP-01 quarantine (dry-run; `OMEGA_BULK_OPERAD_INGEST=1` to write) |
+| `../bulk_operad_ingest.py` | DEF-OP-01 quarantine (dry-run; `CORE_BULK_OPERAD_INGEST=1` to write) |
 | `../operad_signature.json` | High-traffic meta SPOEs typed with residual `unknown` |
 | `../_docs/SEMANTICS_MAP.md` | PROPOSED_DESIGN fence for ∞-operad / HoTT minting |
 

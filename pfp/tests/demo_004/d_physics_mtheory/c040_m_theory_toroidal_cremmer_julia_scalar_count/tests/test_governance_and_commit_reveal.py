@@ -21,15 +21,15 @@ from fractions import Fraction
 from pathlib import Path
 from unittest import mock
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance import (
-    woland_gate as woland_gate_module,
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance import (
+    adversary_gate as adversary_gate_module,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance.budget_gate import (
     BudgetCeilingExceededError,
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance.commit_reveal_runner import (
     ManifestCustodyError,
     lf_normalized_bytes,
     phase1_commit_judge,
@@ -39,10 +39,10 @@ from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_th
     verify_commitments,
     verify_manifest_entries,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c040_m_theory_toroidal_cremmer_julia_scalar_count.governance.adversary_gate import (
     CANONICAL_OUTPUT_FILES,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
 CHALLENGE_DIR = Path(__file__).resolve().parent.parent
@@ -72,10 +72,10 @@ def _temp_package(base: Path) -> Path:
     return root
 
 
-class _Frozen(woland_gate_module.datetime):
+class _Frozen(adversary_gate_module.datetime):
     @classmethod
     def now(cls, tz=None):
-        return cls(2026, 9, 29, 12, 0, 0, tzinfo=woland_gate_module.timezone.utc)
+        return cls(2026, 9, 29, 12, 0, 0, tzinfo=adversary_gate_module.timezone.utc)
 
 
 class TestGovernanceAndCommitReveal(unittest.TestCase):
@@ -122,14 +122,14 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
         audit_res = gate.audit_accounting_config(accounting_data)
         self.assertTrue(audit_res["valid"], f"Accounting audit failed: {audit_res['violations']}")
 
-    def test_woland_gate_novella_and_quad_bundle(self) -> None:
+    def test_adversary_gate_novella_and_quad_bundle(self) -> None:
         """The gate must render the measured values and persist the four-file bundle to both run stores.
 
         Counterexample: the report used to be a fixed seven-act narrative that printed 'forty-eight
         hostile mutations' and 'Kill rate certified: exactly 100%' whatever it was given."""
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_repo = Path(tmp_dir)
-            gate = WolandGate(task_key="c040_test_run", base_dir=test_repo)
+            gate = AdversaryGate(task_key="c040_test_run", base_dir=test_repo)
 
             novella = gate.generate_novella(
                 verdict=CONSISTENT,
@@ -163,7 +163,7 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
                 novella=novella,
             )
 
-            for key in ["woland_run_dir", "symgam_run_dir"]:
+            for key in ["adversary_run_dir", "symgam_run_dir"]:
                 d = res_paths[key]
                 self.assertTrue(d.is_dir(), f"Sink dir not created: {d}")
                 self.assertIn(test_repo, d.parents)
@@ -171,10 +171,10 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
                     f = d / fname
                     self.assertTrue(f.is_file(), f"Quad bundle file missing: {f}")
 
-    def test_woland_gate_labels_come_from_exact_counts(self) -> None:
+    def test_adversary_gate_labels_come_from_exact_counts(self) -> None:
         """Counterexamples: an empty suite, one checker disagreement and a float Phi_1 must not be consistent,
         and a PASS_TO_MASTER label must be refused."""
-        gate = WolandGate(base_dir=Path("unused"))
+        gate = AdversaryGate(base_dir=Path("unused"))
         self.assertEqual(gate.determine_terminal_verdict(0, 0, 0), INCONSISTENT)
         self.assertEqual(gate.determine_terminal_verdict(46, 46, 45), INCONSISTENT)
         self.assertEqual(gate.determine_terminal_verdict(46, 46, 46), CONSISTENT)
@@ -183,18 +183,18 @@ class TestGovernanceAndCommitReveal(unittest.TestCase):
         with self.assertRaises(ValueError):
             gate.generate_novella("PASS_TO_MASTER", {})
 
-    def test_woland_gate_never_replaces_a_run_folder(self) -> None:
+    def test_adversary_gate_never_replaces_a_run_folder(self) -> None:
         """Counterexample: every run wrote into the same runs/<task_key> folder and overwrote the previous bundle."""
         with (
             tempfile.TemporaryDirectory() as tmp_dir,
-            mock.patch.object(woland_gate_module, "datetime", _Frozen),
+            mock.patch.object(adversary_gate_module, "datetime", _Frozen),
         ):
-            gate = WolandGate(task_key="c040_collision", base_dir=Path(tmp_dir))
+            gate = AdversaryGate(task_key="c040_collision", base_dir=Path(tmp_dir))
             first = gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="first")
             with self.assertRaises(RunFolderExistsError):
                 gate.persist_run_bundle(receipt={}, summary={}, dda_actions=[], novella="second")
             self.assertEqual(
-                (first["woland_run_dir"] / "novella.md").read_text(encoding="utf-8"), "first"
+                (first["adversary_run_dir"] / "novella.md").read_text(encoding="utf-8"), "first"
             )
 
     def test_commit_reveal_state_machine_and_verification(self) -> None:

@@ -7,25 +7,25 @@ import sys
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.controllers.python_development_office_controller import (
+from operads.controllers.python_development_office_controller import (
     AuditRenderRequest,
     PythonDevelopmentOfficeController,
     QualityInventoryRequest,
 )
-from omega_engine_operads.infrastructure.python_development_office.config import (
+from operads.infrastructure.python_development_office.config import (
     load_config,
 )
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="python -m omega_engine_operads.frontend.cli.python_dev_cli",
+        prog="python -m operads.frontend.cli.python_dev_cli",
         description="Python Development Office: Clean Architecture & Anti-Pattern Auditor",
     )
     parser.add_argument(
         "targets",
         nargs="*",
-        default=["omega_engine_operations"],
+        default=["operations"],
         help="Directories or files to scan",
     )
     parser.add_argument(

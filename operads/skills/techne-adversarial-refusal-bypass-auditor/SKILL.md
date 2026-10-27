@@ -53,10 +53,10 @@ Execute the auditor against target evaluator test suites or bounded contexts:
 
 ```console
 # Run targeted test sweep with hostile refusal injection
-py -3.12 -m pytest omega_engine_operations/tests/unit/ -k "refusal"
+py -3.12 -m pytest operations/tests/unit/ -k "refusal"
 
 # Execute standalone refusal bypass validation
-py -3.12 -m omega_engine_operations.use_cases.verification.adversarial_refusal_audit --target <module_path>
+py -3.12 -m operations.use_cases.verification.adversarial_refusal_audit --target <module_path>
 ```
 
 ### 2. Evaluator Assertion Rules

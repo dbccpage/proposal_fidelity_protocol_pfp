@@ -305,7 +305,7 @@ def generate_mutations(
     ans_oos_no_witness = {"id": "mut_oos_bad_wit", "status": "OUT_OF_SCOPE", "witness": {}}
     mutations.append(("mut_04_oos_bad_witness", case_oos, ans_oos_no_witness))
 
-    # 5. Z4 arithmetic in d=4 (Z4 chirps: omega_4^{s*x^2 + k*x})
+    # 5. Z4 arithmetic in d=4 (Z4 chirps: core_4^{s*x^2 + k*x})
     case_d4 = {"case_id": "mut_d4_z4", "dimension": 4, "num_bases": 5}
     z4_bases = []
     # comp basis

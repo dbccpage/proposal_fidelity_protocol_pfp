@@ -5,14 +5,14 @@ section 3; a second, identical call measures oscillation. Every reply is scored 
 
 - the local read-only detector ``D4`` (one step and the step it cites, no posed item);
 - three baselines that use no answer key (structure share, schema validity, length);
-- the outcome judge, Woland ``check_answer`` on the final answer against the posed system.
+- the outcome judge, Adversary ``check_answer`` on the final answer against the posed system.
 
 Every dispatch passes a cost guard that refuses to start a call whose worst case could
 take the run above the cap. Raw request and response bytes are kept with their SHA-256.
 
-    py -3.12 -m omega_engine_pfp.use_cases.detector_adequacy.stage_b run \
+    py -3.12 -m pfp.use_cases.detector_adequacy.stage_b run \
         --lock-commit <sha> --out <new-dir> --env-file .env      # paid
-    py -3.12 -m omega_engine_pfp.use_cases.detector_adequacy.stage_b run \
+    py -3.12 -m pfp.use_cases.detector_adequacy.stage_b run \
         --lock-commit <sha> --out <new-dir> --fixture            # offline, no network
 
 AuthorityEffect: None.
@@ -37,15 +37,15 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any, Callable
 
-from omega_engine_pfp.use_cases.detector_adequacy import detectors as d
-from omega_engine_pfp.use_cases.detector_adequacy import local_detector as loc
-from omega_engine_pfp.use_cases.detector_adequacy import stage_b_analysis as sba
-from omega_engine_pfp.use_cases.detector_adequacy import traces as tr
-from omega_engine_pfp.use_cases.detector_adequacy import witness_replay as wr
+from pfp.use_cases.detector_adequacy import detectors as d
+from pfp.use_cases.detector_adequacy import local_detector as loc
+from pfp.use_cases.detector_adequacy import stage_b_analysis as sba
+from pfp.use_cases.detector_adequacy import traces as tr
+from pfp.use_cases.detector_adequacy import witness_replay as wr
 
 PREREG_ID = "PREREG-DA-001"
 STAGE = "stage-b"
-LOCK_MANIFEST = "omega_engine_pfp/documentation/detector_adequacy/lock_da_001_stage_b.json"
+LOCK_MANIFEST = "pfp/documentation/detector_adequacy/lock_da_001_stage_b.json"
 
 MODEL = "claude-haiku-5-5"
 ENDPOINT = "https://api.anthropic.com/v1/messages"
@@ -380,7 +380,7 @@ def stage_b_locked_files() -> dict[str, str]:
     rel = Path(__file__).resolve().parent.relative_to(d.repo_root()).as_posix()
     files = dict(d.locked_files())
     files.update({"stage_b": f"{rel}/stage_b.py", "stage_b_analysis": f"{rel}/stage_b_analysis.py",
-                  "local_detector": f"{rel}/local_detector.py", "woland_checker": wr.WOLAND_CHECKER})
+                  "local_detector": f"{rel}/local_detector.py", "adversary_checker": wr.ADVERSARY_CHECKER})
     return files
 
 

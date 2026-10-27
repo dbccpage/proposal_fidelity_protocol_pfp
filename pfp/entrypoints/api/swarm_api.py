@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any, Sequence
 
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     DEFAULT_REQUIRED_REPLY_FIELDS,
     DemandItemV1,
     LlmTurnPayloadV1,
@@ -23,11 +23,11 @@ from omega_engine_pfp.domain import (
     compile_prompt_artifact,
     render_prompt_body,
 )
-from omega_engine_pfp.domain.ports.reply_control_port import ReplyControlPort
-from omega_engine_pfp.infrastructure.adapters.reply_control_adapter import (
+from pfp.domain.ports.reply_control_port import ReplyControlPort
+from pfp.infrastructure.adapters.reply_control_adapter import (
     RustReplyControlAdapter,
 )
-from omega_engine_pfp.infrastructure.serialization import CanonicalizationError
+from pfp.infrastructure.serialization import CanonicalizationError
 
 VALID_RESIDUAL_COLOURS = frozenset(member.value for member in ResidualColour)
 

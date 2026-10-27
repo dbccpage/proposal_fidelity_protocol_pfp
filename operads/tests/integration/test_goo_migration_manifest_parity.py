@@ -5,8 +5,8 @@ import json
 import pathlib
 import tempfile
 import unittest
-from omega_engine_operads.domain.value_objects import SkillId
-from omega_engine_operads.migration.skill_migrator import SkillMigratorV3
+from operads.domain.value_objects import SkillId
+from operads.migration.skill_migrator import SkillMigratorV3
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 

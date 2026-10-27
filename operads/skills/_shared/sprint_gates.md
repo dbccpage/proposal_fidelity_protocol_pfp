@@ -69,7 +69,7 @@ If a `feat(sprint-{NNN}):` or `fix(sprint-{NNN}):` commit exists:
 > review/execution time. This covers two cases: **(a)** deliverables routed *into* `0_planning_documents/`
 > during execution (the directory is the **execution-output destination**); and **(b)** cleanup/documentation
 > sprints whose deliverables are **external edits** (e.g. spine `.md`, gate-skill, or audit-doc changes) with
-> witness artifacts recorded under `omega_engine_product_planning_office/plans/sprints/{NNN}/evidence/` -- *not* in `0_planning_documents/`. In both cases the
+> witness artifacts recorded under `product_planning_office/plans/sprints/{NNN}/evidence/` -- *not* in `0_planning_documents/`. In both cases the
 > empty-directory HARD BLOCK in the review/execution/retro pre-gates is satisfied by a **documented exception**
 > in `review.md` that cites the plan's acceptance criteria. Do not silently bypass; record it.
 > (Source: Sprint 107 -- Π♯ design spike; broadened in Sprint 107-0 to cover external-edit cleanup sprints.)
@@ -103,7 +103,7 @@ If a `feat(sprint-{NNN}):` or `fix(sprint-{NNN}):` commit exists:
 
 ### Ticket Verification vs. Sprint Closure Invariant
 
-- **Ticket Verification (Per-Story):** Execution and DevOps review cycle per story. Each completed story requires verifiable evidence recorded under `omega_engine_product_planning_office/plans/sprints/{NNN}/evidence/` (test report log, build output, or diff summary). Rule: **No path = No credit.**
+- **Ticket Verification (Per-Story):** Execution and DevOps review cycle per story. Each completed story requires verifiable evidence recorded under `product_planning_office/plans/sprints/{NNN}/evidence/` (test report log, build output, or diff summary). Rule: **No path = No credit.**
 - **Sprint Closure (Whole-Sprint):** Retrospective closes the sprint and emits `completion.md` only after **every committed story** has an explicit, recorded disposition:
   1. Delivered with verified evidence receipt, OR
   2. Formally designated as carryover with rationale, OR
@@ -165,9 +165,9 @@ policy decision would be phantom churn").
 
 ---
 
-## Omega Truth Assignment Gate -- RETIRED
+## Core Truth Assignment Gate -- RETIRED
 
-> **RETIRED (2026-06-19 sprint-system modernization).** The `OmegaAssigner` engine does not exist;
+> **RETIRED (2026-06-19 sprint-system modernization).** The `CoreAssigner` engine does not exist;
 > this gate was already marked REMOVED in `techne-sprint-planning-review` and `techne-sprint-execution`. Do not run it.
 > It may return only if the engine is ever built.
 
@@ -219,7 +219,7 @@ when the witness file exists and contains *pasted real evidence* -- never a plac
 
 ### Witness artifact (required)
 
-Planning MUST produce `omega_engine/omega_engine_product_planning_office/plans/sprints/{N}/0_planning_documents/discovery.md`. Handoff to
+Planning MUST produce `engine/product_planning_office/plans/sprints/{N}/0_planning_documents/discovery.md`. Handoff to
 `/techne-sprint-planning-review` HARD-BLOCKS unless this file exists and every required row below
 contains real evidence (no `TBD`, no empty cells, no "see above").
 
@@ -246,9 +246,9 @@ explicitly and say so in the witness -- do not quietly restate the later number.
 $ cargo test -j 1 --no-run    → <paste tail: error count or "compiles clean">
 $ git status --short          → <paste, then classify EACH entry below>
 
-# If touching omega_contracts / anomalon_councils / authority crates, also paste
+# If touching core_contracts / sentinel_councils / authority crates, also paste
 
-$ cargo test -j 1 -p omega_contracts -p anomalon_councils  → <v1 gate: loaded count + 0 findings>
+$ cargo test -j 1 -p core_contracts -p sentinel_councils  → <v1 gate: loaded count + 0 findings>
 <!-- Python sprints: pytest --collect-only / ruff check tails instead -->
 
 ## Working-tree classification (every uncommitted entry accounted for)
@@ -335,7 +335,7 @@ external. *(Source: Sprint 107 retrospective:55-59 -- gates must be sprint-type-
 > Added 2026-06-19 to align the sprint gate layer with the Rust-primary, governance + contracts +
 > obstruction codebase. These **reuse existing Rust/CI machinery -- no new engines**. Scope is
 > deliberately **scoped**: contract/governance gates HARD-block only sprints that touch those crates;
-> other sprints attest. Source: `omega_engine/omega_engine_product_planning_office/plans/sprints/epic_omega_platform/sprint_system_modernization_plan.md`.
+> other sprints attest. Source: `engine/product_planning_office/plans/sprints/epic_core_platform/sprint_system_modernization_plan.md`.
 
 ### Sprint-Type Classification (declared in `quality_gates.md`)
 
@@ -345,24 +345,24 @@ gate block in `quality_gates.md` is in force. Non-applicable gates are marked `N
 
 ### Contracts Corpus Gate  [HARD -- scoped]
 
-A sprint touching `omega_contracts`, `anomalon_councils`, `omega_operator_algebra`, or any crate
+A sprint touching `core_contracts`, `sentinel_councils`, `core_operator_algebra`, or any crate
 consuming contracts MUST run:
 
 ```bash
-cargo test -j 1 -p omega_contracts -p anomalon_councils
+cargo test -j 1 -p core_contracts -p sentinel_councils
 
 ```
 
 and show the v1 corpus gate green (≥510 contracts loaded, zero findings). Reuses
-`omega_contracts/tests/v1_corpus_gate.rs` (the same command `omega-contracts-ci.yml` runs).
+`core_contracts/tests/v1_corpus_gate.rs` (the same command `core-contracts-ci.yml` runs).
 A non-touching sprint records the attestation `[ ] No contract change` in `quality_gates.md`.
 
 ### Governance-Strict Gate  [HARD -- scoped]
 
 A story that expands authority, mutates doctrine, relaxes a boundary, or promotes a residual MUST
 attach a complete 10-field `GovernanceRecord` and pass
-`omega_atlas_reconciliation::governance::check_governance_strict` (role-power separation -- Blackrod
-cannot vote/waive, Woland cannot enforce; no self-cert). `PontiusPilate::judge` adjudicates the
+`core_atlas_reconciliation::governance::check_governance_strict` (role-power separation -- Blackrod
+cannot vote/waive, Adversary cannot enforce; no self-cert). `PontiusIntegrityAuditor::judge` adjudicates the
 contract↔code symbol binding at review. A non-authority sprint records `[ ] No authority change`
 in `quality_gates.md`.
 
@@ -371,7 +371,7 @@ in `quality_gates.md`.
 Every code story declares, and the exit gate verifies: (a) new modules have **unit** tests;
 (b) cross-crate behavior has an **integration** test; (c) ≥1 **e2e** path runs
 (`cargo test -j 1 --test '*_e2e'` for Rust; `pytest -m e2e` for Python). Enforced via the
-`/techne-code-soviet-inspector` veto, extended to check tier presence. A behavior-adding story missing its
+`/techne-code-inspector` veto, extended to check tier presence. A behavior-adding story missing its
 required tier is VETOed.
 
 ### Obstruction Diagnostics  [clippy HARD on touched crates; rest ADVISORY]
@@ -379,7 +379,7 @@ required tier is VETOed.
 - **clippy (HARD):** `cargo clippy -j 1 -p <touched-or-new-crate> --all-targets -- -D warnings` → 0
   warnings. (Repo-wide `-D warnings` is a deferred burndown; the per-sprint gate enforces it on
   touched crates now.)
-- **advisory diagnostics:** `python -m omega_engine_research_papers reconcile <stale|next>` under `governance-wdp` (code↔claim↔contract drift) on every code
+- **advisory diagnostics:** `python -m research_papers reconcile <stale|next>` under `governance-wdp` (code↔claim↔contract drift) on every code
   sprint; `/projection-obstruction` and `/epk-path-kernels` ONLY for stories touching composed-agent
   or projection logic. Findings record as PrimitiveDifference rows -- diagnostic-only; they never block
   by themselves and never authorize.

@@ -14,20 +14,20 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operations.use_cases.packaging.sync_cross_host_skills import HOST_SKILL_ROOTS
-from omega_engine_operads.contracts.typed_capabilities_v1 import (
+from operations.use_cases.packaging.sync_cross_host_skills import HOST_SKILL_ROOTS
+from operads.contracts.typed_capabilities_v1 import (
     ROOT as CONTRACT_ROOT,
 )
-from omega_engine_operads.contracts.typed_capabilities_v1 import (
+from operads.contracts.typed_capabilities_v1 import (
     canonical_bytes,
     contract_json_schema,
 )
-from omega_engine_operads.domain.anti_skills.anti_skill_v2 import (
+from operads.domain.anti_skills.anti_skill_v2 import (
     AntiSkillFixtureBankV1,
     AntiSkillSubjectV1,
     canonical_json_bytes,
 )
-from omega_engine_operads.infrastructure.typed_contract_compiler import (
+from operads.infrastructure.typed_contract_compiler import (
     compile_typed_contracts,
     main,
 )
@@ -131,7 +131,7 @@ def test_check_missing_projection_refuses_without_creating(estate: Path) -> None
 
 
 def test_write_late_host_conflict_keeps_entire_estate_unchanged(estate: Path) -> None:
-    path = estate / HOST_SKILL_ROOTS[-1] / "woland-scope-falsifier/SKILL.md"
+    path = estate / HOST_SKILL_ROOTS[-1] / "adversary-scope-falsifier/SKILL.md"
     path.parent.mkdir()
     path.write_bytes(b"Local host owner instruction.\n")
     before = _snapshot(estate)
@@ -197,7 +197,7 @@ def test_audit_subject_content_cannot_bypass_typed_decoder(estate: Path, change:
     path = estate / "subject.json"
     path.write_bytes(canonical_bytes(value))
     _assert_refused(_main(estate, "--audit-subject", str(path)), "TYPED_CONTRACT_REFUSED")
-    assert not (estate / HOST_SKILL_ROOTS[0] / "woland-claim-audit").exists()
+    assert not (estate / HOST_SKILL_ROOTS[0] / "adversary-claim-audit").exists()
 
 
 def test_audit_missing_subject_file_refuses(estate: Path) -> None:
@@ -211,7 +211,7 @@ def test_audit_missing_subject_file_refuses(estate: Path) -> None:
 def test_audit_current_source_failure_cannot_emit_receipt(estate: Path) -> None:
     path = estate / "subject.json"
     path.write_bytes(canonical_json_bytes(_subject().to_dict()))
-    (estate / CONTRACT_ROOT / "woland_scope_falsifier.json").unlink()
+    (estate / CONTRACT_ROOT / "adversary_scope_falsifier.json").unlink()
     before = _snapshot(estate)
     _assert_refused(_main(estate, "--audit-subject", str(path)), "TYPED_CONTRACT_SOURCE_REFUSED")
     assert _snapshot(estate) == before
@@ -220,9 +220,9 @@ def test_audit_current_source_failure_cannot_emit_receipt(estate: Path) -> None:
 @pytest.mark.parametrize(
     "relative",
     [
-        "woland_claim_audit.json",
-        "woland_scope_falsifier.json",
-        "instructions/woland_claim_audit.md",
+        "adversary_claim_audit.json",
+        "adversary_scope_falsifier.json",
+        "instructions/adversary_claim_audit.md",
         "scope_falsifier_fixtures.json",
     ],
 )
@@ -234,7 +234,7 @@ def test_missing_source_or_resource_refuses_before_projection(estate: Path, rela
 
 
 @pytest.mark.parametrize(
-    "relative", ["woland_claim_audit.json", "instructions/woland_claim_audit.md"]
+    "relative", ["adversary_claim_audit.json", "instructions/adversary_claim_audit.md"]
 )
 def test_oversize_source_or_resource_refuses_before_read_and_projection(
     estate: Path, relative: str
@@ -247,7 +247,7 @@ def test_oversize_source_or_resource_refuses_before_read_and_projection(
 
 
 def test_resource_hash_or_length_edit_cannot_be_hidden_by_cli(estate: Path) -> None:
-    path = estate / CONTRACT_ROOT / "instructions/woland_claim_audit.md"
+    path = estate / CONTRACT_ROOT / "instructions/adversary_claim_audit.md"
     path.write_bytes(path.read_bytes() + b"Local edit.\n")
     before = _snapshot(estate)
     _assert_refused(_main(estate, "--write"), "RESOURCE_BINDING_REFUSED")
@@ -256,7 +256,7 @@ def test_resource_hash_or_length_edit_cannot_be_hidden_by_cli(estate: Path) -> N
 
 @pytest.mark.parametrize("raw", [b"\xff\n", b"CRLF\r\n", b" \n", b"x" * 2049])
 def test_rebound_instruction_decoding_or_shape_refuses(estate: Path, raw: bytes) -> None:
-    _resource(estate, "woland_claim_audit.json", "instruction", raw)
+    _resource(estate, "adversary_claim_audit.json", "instruction", raw)
     before = _snapshot(estate)
     _assert_refused(_main(estate, "--write"), "INSTRUCTION_REFUSED")
     assert _snapshot(estate) == before
@@ -264,7 +264,7 @@ def test_rebound_instruction_decoding_or_shape_refuses(estate: Path, raw: bytes)
 
 @pytest.mark.parametrize("raw", [b"{}", b"[]", b"\xff", b'{"cases": [], "cases": []}'])
 def test_rebound_malformed_fixture_bank_refuses_before_projection(estate: Path, raw: bytes) -> None:
-    _resource(estate, "woland_scope_falsifier.json", "fixtures", raw)
+    _resource(estate, "adversary_scope_falsifier.json", "fixtures", raw)
     before = _snapshot(estate)
     _assert_refused(_main(estate, "--write"), "FIXTURE_BANK_REFUSED")
     assert _snapshot(estate) == before
@@ -276,7 +276,7 @@ def test_well_formed_rebound_bank_with_false_oracle_cannot_pass(estate: Path) ->
     first = replace(bank.cases[0], expected_hit=False, case_digest="")
     changed = replace(bank, cases=(first, *bank.cases[1:]), bank_id="")
     raw = canonical_json_bytes(changed.to_dict())
-    _resource(estate, "woland_scope_falsifier.json", "fixtures", raw)
+    _resource(estate, "adversary_scope_falsifier.json", "fixtures", raw)
     before = _snapshot(estate)
     _assert_refused(_main(estate, "--write"), "FALSIFIER_CONTROLS_REFUSED")
     assert _snapshot(estate) == before
@@ -301,7 +301,7 @@ def test_real_instruction_directory_link_refuses_outside_canonical_bytes(estate:
     before = {path.name: path.read_bytes() for path in outside.iterdir()}
     _assert_refused(_main(estate, "--write"), "SOURCE_LINK_REFUSED")
     assert {path.name: path.read_bytes() for path in outside.iterdir()} == before
-    assert not (estate / HOST_SKILL_ROOTS[0] / "woland-claim-audit").exists()
+    assert not (estate / HOST_SKILL_ROOTS[0] / "adversary-claim-audit").exists()
 
 
 @pytest.mark.parametrize("mode", [[], ["--write", "--check"], ["--show-schema", "--write"]])
@@ -315,7 +315,7 @@ def test_cli_requires_exactly_one_mode(tmp_path: Path, mode: list[str], capsys) 
 
 
 def test_resource_declared_length_mismatch_refuses_with_matching_hash(estate: Path) -> None:
-    source = estate / CONTRACT_ROOT / "woland_claim_audit.json"
+    source = estate / CONTRACT_ROOT / "adversary_claim_audit.json"
     value = json.loads(source.read_bytes())
     value["instruction"]["byte_length"] += 1
     source.write_bytes(canonical_bytes(value))
@@ -325,7 +325,7 @@ def test_resource_declared_length_mismatch_refuses_with_matching_hash(estate: Pa
 
 
 def test_directory_instead_of_instruction_is_not_a_resource(estate: Path) -> None:
-    instruction = estate / CONTRACT_ROOT / "instructions/woland_claim_audit.md"
+    instruction = estate / CONTRACT_ROOT / "instructions/adversary_claim_audit.md"
     instruction.unlink()
     instruction.mkdir()
     before = _snapshot(estate)
@@ -334,8 +334,8 @@ def test_directory_instead_of_instruction_is_not_a_resource(estate: Path) -> Non
 
 
 def test_swapped_typed_contract_kinds_refuse_before_projection(estate: Path) -> None:
-    first = estate / CONTRACT_ROOT / "woland_claim_audit.json"
-    second = estate / CONTRACT_ROOT / "woland_scope_falsifier.json"
+    first = estate / CONTRACT_ROOT / "adversary_claim_audit.json"
+    second = estate / CONTRACT_ROOT / "adversary_scope_falsifier.json"
     first_bytes, second_bytes = first.read_bytes(), second.read_bytes()
     first.write_bytes(second_bytes)
     second.write_bytes(first_bytes)
@@ -345,7 +345,7 @@ def test_swapped_typed_contract_kinds_refuse_before_projection(estate: Path) -> 
 
 
 def test_missing_declared_guard_dependency_refuses_before_projection(estate: Path) -> None:
-    source = estate / CONTRACT_ROOT / "woland_claim_audit.json"
+    source = estate / CONTRACT_ROOT / "adversary_claim_audit.json"
     value = json.loads(source.read_bytes())
     value["dependencies"] = []
     source.write_bytes(canonical_bytes(value))
@@ -361,7 +361,7 @@ def test_valid_bank_with_unknown_spec_id_cannot_enter_replay(estate: Path) -> No
     changed = replace(bank, cases=(first, *bank.cases[1:]), bank_id="")
     _resource(
         estate,
-        "woland_scope_falsifier.json",
+        "adversary_scope_falsifier.json",
         "fixtures",
         canonical_json_bytes(changed.to_dict()),
     )
@@ -371,14 +371,14 @@ def test_valid_bank_with_unknown_spec_id_cannot_enter_replay(estate: Path) -> No
 
 
 def test_bom_instruction_refuses_after_exact_resource_rebinding(estate: Path) -> None:
-    _resource(estate, "woland_claim_audit.json", "instruction", b"\xef\xbb\xbftext\n")
+    _resource(estate, "adversary_claim_audit.json", "instruction", b"\xef\xbb\xbftext\n")
     before = _snapshot(estate)
     _assert_refused(_main(estate, "--write"), "INSTRUCTION_REFUSED")
     assert _snapshot(estate) == before
 
 
 def test_instruction_limit_is_in_utf8_bytes(estate: Path) -> None:
-    _resource(estate, "woland_claim_audit.json", "instruction", ("\u03c9" * 1025).encode())
+    _resource(estate, "adversary_claim_audit.json", "instruction", ("\u03c9" * 1025).encode())
     before = _snapshot(estate)
     _assert_refused(_main(estate, "--write"), "INSTRUCTION_REFUSED")
     assert _snapshot(estate) == before
@@ -386,13 +386,13 @@ def test_instruction_limit_is_in_utf8_bytes(estate: Path) -> None:
 
 def test_instruction_at_exact_byte_limit_projects_successfully(estate: Path) -> None:
     raw = b"x" * 2048
-    _resource(estate, "woland_claim_audit.json", "instruction", raw)
+    _resource(estate, "adversary_claim_audit.json", "instruction", raw)
     code, stdout, stderr = _main(estate, "--write")
     assert code == 0
     assert b"TYPED_PACKAGES_OK packages=2 files=8" in stdout
     assert stderr == ""
     for host in HOST_SKILL_ROOTS:
-        markdown = (estate / host / "woland-claim-audit/SKILL.md").read_bytes()
+        markdown = (estate / host / "adversary-claim-audit/SKILL.md").read_bytes()
         assert raw in markdown
 
 
@@ -406,10 +406,10 @@ def test_deep_malformed_json_is_a_cli_refusal_without_uncaught_recursion(
         path.write_bytes(raw)
         mode = ("--audit-subject", str(path))
     elif where == "contract":
-        (estate / CONTRACT_ROOT / "woland_claim_audit.json").write_bytes(raw)
+        (estate / CONTRACT_ROOT / "adversary_claim_audit.json").write_bytes(raw)
         mode = ("--write",)
     else:
-        _resource(estate, "woland_scope_falsifier.json", "fixtures", raw)
+        _resource(estate, "adversary_scope_falsifier.json", "fixtures", raw)
         mode = ("--write",)
     before = _snapshot(estate)
     _assert_refused(_main(estate, *mode), "TYPED_CONTRACT_REFUSED")

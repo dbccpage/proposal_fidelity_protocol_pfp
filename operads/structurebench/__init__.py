@@ -1,6 +1,6 @@
-"""StructureBench relational contract evaluation over Woland bout artifacts.
+"""StructureBench relational contract evaluation over Adversary bout artifacts.
 
-`EPIC-OE-OEWAS-007`, target module `omega_engine_operads/structurebench`.
+`EPIC-OE-OEWAS-007`, target module `operads/structurebench`.
 
 `AuthorityEffect: None`.
 """

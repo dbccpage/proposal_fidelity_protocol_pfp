@@ -2,7 +2,7 @@
 Judge Case & Mutation Generator for Challenge C043.
 Generates:
 - 64 hidden cases (40 base, 16 gauge/relabel, 8 poisoned)
-- 48 hostile mutations for Lev Landau falsification testing
+- 48 hostile mutations for Examiner falsification testing
 """
 
 import json

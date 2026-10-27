@@ -32,7 +32,7 @@ A companion rewriting note calls itself an active formal engine and mints evalua
 
 Historical intake, not a fresh grammar run. This digest did not run `check_pre_genesis.py`, pytest, `verify-strand`, Lean, or the consolidation gates, and it did not open the grammar, the transcripts, or `paper.md`.
 
-Folder `_ic/darpa/research/pre_genesis_to_mssn_20261009/source_intake/omega_engine_education/documentation/000_pre_genesis/`.
+Folder `_ic/darpa/research/pre_genesis_to_mssn_20261009/source_intake/education/documentation/000_pre_genesis/`.
 
 `rewriting/rewriting_strategies_pregen_wire.md`:
 

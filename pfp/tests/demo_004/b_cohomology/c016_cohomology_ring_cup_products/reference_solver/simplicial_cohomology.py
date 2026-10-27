@@ -250,7 +250,7 @@ def find_primitive_coboundary(
     n = len(simplices_k_minus_1)
     A = [[d_k[i][j] for i in range(n)] for j in range(m)]
 
-    b = [omega.get(s, Fraction(0)) for s in simplices_k]
+    b = [core.get(s, Fraction(0)) for s in simplices_k]
     sol = exact_solve(A, b)
     if sol is None:
         return None

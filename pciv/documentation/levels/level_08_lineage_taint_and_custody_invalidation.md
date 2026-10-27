@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine/crates_rs/omega_prompt_civilization/src/immunity.rs
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - engine/crates_rs/core_prompt_civilization/src/immunity.rs
 ---
 
 # Prompt Civ Level 08: Lineage Taint & Custody Invalidation: Causal vs Global
 
 **AuthorityEffect:** None.  
 **Level:** Level 08 (Security Quarantine, Subtree Taint & Global Disarming)  
-**Rust Immunity Seam:** [`omega_prompt_civilization::immunity`](../../../omega_engine/crates_rs/omega_prompt_civilization/src/immunity.rs)  
+**Rust Immunity Seam:** [`core_prompt_civilization::immunity`](../../../engine/crates_rs/core_prompt_civilization/src/immunity.rs)  
 **Primary Policies:** `TaintPolicyV1`, `ImmunityPropagationPolicyV1`  
 **Core Falsifiers:** `F-RES-07`, `F-RES-11`
 
@@ -85,7 +85,7 @@ Level 08 establishes the formal distinction between two orthogonal negative oper
 ## 3. Rust Engine Seam
 
 ```rust
-// omega_prompt_civilization::immunity
+// core_prompt_civilization::immunity
 pub enum TaintSemantics {
     Or,  // Default: any tainted parent taints the child
     And, // Explicit override: requires all parents tainted

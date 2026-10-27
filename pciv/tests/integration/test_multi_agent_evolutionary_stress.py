@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_prompt_civilization.infrastructure.cas import ContentAddressedStorageV1
-from omega_engine_prompt_civilization.scripts.run_evolutionary_stress_50gen import (
+from pciv.infrastructure.cas import ContentAddressedStorageV1
+from pciv.scripts.run_evolutionary_stress_50gen import (
     CORE,
     replay_observation,
     run_stress_test,
@@ -16,7 +16,7 @@ from omega_engine_prompt_civilization.scripts.run_evolutionary_stress_50gen impo
 
 
 def test_multi_agent_evolutionary_stress_50_generations(tmp_path: Path, monkeypatch) -> None:
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(tmp_path))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(tmp_path))
     output = tmp_path / "stress"
     summary = run_stress_test(50, output, seed=17)
     assert summary["total_bouts_executed"] == 150
@@ -41,7 +41,7 @@ def test_multi_agent_evolutionary_stress_50_generations(tmp_path: Path, monkeypa
             assert row["child_genome_sha256"] != row["parent_genome_sha256"]
         else:
             assert row["child_genome_sha256"] == row["parent_genome_sha256"]
-    receipts = list((output / "_woland").rglob("receipt.json"))
+    receipts = list((output / "_adversary").rglob("receipt.json"))
     assert len(receipts) == 150
     for receipt_path in receipts:
         receipt = json.loads(receipt_path.read_bytes())
@@ -50,7 +50,7 @@ def test_multi_agent_evolutionary_stress_50_generations(tmp_path: Path, monkeypa
 
 
 def test_fixture_replay_preserves_genome_feedback_and_rejects_changed_bytes(tmp_path, monkeypatch):
-    monkeypatch.setenv("OMEGA_INTELLIGENCE_ROOT", str(tmp_path))
+    monkeypatch.setenv("CORE_INTELLIGENCE_ROOT", str(tmp_path))
     first = run_stress_test(2, tmp_path / "first", seed=23)
     replay = run_stress_test(2, tmp_path / "replay", seed=23)
     assert first["replay_sha256"] == replay["replay_sha256"]

@@ -8,12 +8,12 @@ Conceptual source baseline for those curriculum documents:
 `3f3399766108adc4c4e7615dce2573a57be57dd6`
 (prefix `3f3399766`). Stable locations at that commit:
 
-- S(n) core: `omega_engine_education/documentation/0_s_n/core`
-- MSS-N atlas: `omega_engine_education/documentation/1_minimal_symbol_system_n_mssn`
+- S(n) core: `education/documentation/0_s_n/core`
+- MSS-N atlas: `education/documentation/1_minimal_symbol_system_n_mssn`
 - Genesis primitives correction of 2026-10-01:
-  `omega_engine_education/documentation/2_genesis/primitives/README.md`
+  `education/documentation/2_genesis/primitives/README.md`
 - Adversarial audit recorded by that correction:
-  `omega_engine_education/documentation/2_genesis/adversarial_verification/README.md`
+  `education/documentation/2_genesis/adversarial_verification/README.md`
 
 That baseline is not the later candidate checkout, and it is not the SHA-256
 digest of any file executed in this package. Those executed-file hashes are

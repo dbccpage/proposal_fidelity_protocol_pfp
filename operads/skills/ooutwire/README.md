@@ -12,5 +12,5 @@ file was written, never a claim that the condition it describes was fixed.
   is identified but not built, rather than a proposal backlog; admission has
   been automatic since 2026-09-01, so proposals no longer queue.
 - **`prompt-civilization-v0-drafts/`** — inert `auto-antiskill` and
-  `omega-prompt` draft packets awaiting separate human admission; no live skill
+  `core-prompt` draft packets awaiting separate human admission; no live skill
   manifests are present.

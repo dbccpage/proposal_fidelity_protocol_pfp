@@ -35,8 +35,8 @@ from collections.abc import Callable
 from dataclasses import replace
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.level import LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result
+from operations.use_cases.level_engine.research_engine.level import LevelResult
+from operations.use_cases.level_engine.research_engine.replay import Packet, Row, packets as replay_packets, result
 from derivation.represented import TRUNC_WORLD, World, step
 
 CHALLENGE_ID = "granted_steps"

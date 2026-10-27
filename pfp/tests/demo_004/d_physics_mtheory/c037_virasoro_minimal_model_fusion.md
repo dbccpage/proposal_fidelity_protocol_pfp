@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 The Verlinde formula (Verlinde 1988), N_{ij}^k = Σ_m S_{im} S_{jm} S̄_{km} / S_{0m}, turns the modular S-matrix of a rational conformal field theory into non-negative integer fusion coefficients. The entries of S are sines of rational multiples of π, so the sum lives in a cyclotomic field. Evaluating it in floating point and rounding is the usual shortcut, and it is forbidden here. Checking an answer is cheap: fusion must be an associative, commutative ring with the right unit, and the coefficients must match an independent combinatorial rule.
 
-The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) exact algebraic-number arithmetic through host tools, and OEEIS (Omega Engine Epistemic Immune System) screening of rounding-based answers and of Kac-table double counting.
+The task stresses OEWAS (Engine Workflows, Agents, Skills) exact algebraic-number arithmetic through host tools, and OEEIS (Engine Epistemic Immune System) screening of rounding-based answers and of Kac-table double counting.
 
 ## 3. Formal Problem and Bounds
 
@@ -103,8 +103,8 @@ Operands expected: (1) the Verlinde sum with the normalization squared into a ra
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_number_theory/src/cyclotomic.rs` and the fixed-order modules (`cyclotomic28.rs`, `cyclotomic44.rs`, `cyclotomic52.rs`, `cyclotomic120.rs`) cover some but not all orders 4(k + 2); a general Q(ζ_N) type is new Rust work.
-- `omega_engine/crates_rs/omega_quantum_physics/src/s_matrix.rs` and `modular_tensor_category.rs` are best-effort scaffolds and are not used for checking.
+- `engine/crates_rs/core_number_theory/src/cyclotomic.rs` and the fixed-order modules (`cyclotomic28.rs`, `cyclotomic44.rs`, `cyclotomic52.rs`, `cyclotomic120.rs`) cover some but not all orders 4(k + 2); a general Q(ζ_N) type is new Rust work.
+- `engine/crates_rs/core_quantum_physics/src/s_matrix.rs` and `modular_tensor_category.rs` are best-effort scaffolds and are not used for checking.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

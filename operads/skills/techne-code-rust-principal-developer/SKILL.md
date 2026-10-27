@@ -30,7 +30,7 @@ Always derive `PartialOrd, Ord` on enums and value objects representing:
 pub enum EffectOwner { ... }
 ```
 
-**Source:** omega_governance session 2026-05-27 (GovernanceError enum compilation failure)
+**Source:** core_governance session 2026-05-27 (GovernanceError enum compilation failure)
 **Fix:** Rename the field (e.g., `source` → `src`, `source_id`, or `origin`):
 
 ### thiserror v2 Reserved Field Names
@@ -125,7 +125,7 @@ Provide `mul_vec_accumulate(&x, &mut y)` for in-place zero-allocation loops. Com
 ### Operator vs Delimiter Disambiguation in Parsers
 
 **Source:** Symbol Game implementation session 2026-05-22 (symbol_game standalone package fix)
-**When to use:** Standalone packages in `omega_engine/products/` that have their own dependencies (e.g., `symbol_game`, `simplex_cosmos`) but should not be part of the main workspace build.
+**When to use:** Standalone packages in `engine/products/` that have their own dependencies (e.g., `symbol_game`, `simplex_cosmos`) but should not be part of the main workspace build.
 **Fix:** Add an empty `[workspace]` table to the package's `Cargo.toml`:
 **Symptom:** `cargo check` fails with "package believes it's in a workspace when it's not"
 
@@ -230,11 +230,11 @@ Provide `mul_vec_accumulate(&x, &mut y)` for in-place zero-allocation loops. Com
 
 **YAML canonical source of truth:**
 
-## omega_contracts Crate Architecture
+## core_contracts Crate Architecture
 
-**Source:** omega_governance session 2026-05-27
+**Source:** core_governance session 2026-05-27
 
-## omega_governance Crate Conventions
+## core_governance Crate Conventions
 
 **Fail-closed arithmetic:** in cost/quota math, saturate the FINAL result, never an
 
@@ -257,7 +257,7 @@ Provide `mul_vec_accumulate(&x, &mut y)` for in-place zero-allocation loops. Com
 ## Authority
 
 **Source:** Autoskill session 2026-07-17 (Φ₁ emitter placement — operator reuse-crates directive).
-**Operator directive (2026-07-17):** "Look at existing Rust crates inside omega_engine
+**Operator directive (2026-07-17):** "Look at existing Rust crates inside engine
 
 ## Crate-First Rule (survey before writing machinery)
 
@@ -268,7 +268,7 @@ Provide `mul_vec_accumulate(&x, &mut y)` for in-place zero-allocation loops. Com
 
 ## Shared-File Coordination Rule (Multi-Agent)
 
-**Source:** omega_governance session 2026-05-27 (edition 2024→2021 fix, directory redirect)
+**Source:** core_governance session 2026-05-27 (edition 2024→2021 fix, directory redirect)
 **Post-spawn verification:** After subagent completion, always check:
 
 ## Subagent Workspace Convention Transmission

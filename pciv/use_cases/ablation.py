@@ -39,6 +39,6 @@ def barrier_ablation_matrix(
         "authority_effect": "None", "report_only": True,
         "evidence_ceiling": "Measured behavior on supplied finite fixture bank",
         "barriers": list(BARRIERS), "trials": trials,
-        "woland_ablation_flags": {},
-        "woland_flags_note": "Existing no_obstruction_typing changes cochain typing; it does not disable these six boundary guards.",
+        "adversary_ablation_flags": {},
+        "adversary_flags_note": "Existing no_obstruction_typing changes cochain typing; it does not disable these six boundary guards.",
     }

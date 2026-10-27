@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_prompt_civilization.scripts.run_evolutionary_stress_live import (
+from pciv.scripts.run_evolutionary_stress_live import (
     run_live_evolutionary_stress_test,
 )
 

@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Betti numbers cannot tell the torus T² from the wedge S¹ ∨ S¹ ∨ S²: both have (1, 2, 1). The cup product can. On T², for generators α, β of H¹, the product α ⌣ β generates H². On the wedge, every product H¹ × H¹ → H² is zero, because the degree-1 classes come from the circles and products of classes from different wedge summands vanish. The same holds one level up: CP² and S² ∨ S⁴ both have Betti numbers (1, 0, 1, 0, 1), but the square of the generator of H²(CP²) generates H⁴, while on S² ∨ S⁴ that square is zero (Hatcher 2002, §3.2).
 
-Generation is hard: the solver must find cocycle representatives in degrees 1, 2 and 4, form Alexander–Whitney products on ordered simplices, and prove a class is nonzero or zero. Verification is cheap once witnesses are given: a nonzero product is certified by a cycle on which it evaluates to a nonzero number, and a zero product by a cochain whose coboundary it is. The challenge stresses the Symbol Game's exact host, OEWAS (Omega Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Omega Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified cup-product discriminator. Equal cup-product data never proves two spaces are the same.
+Generation is hard: the solver must find cocycle representatives in degrees 1, 2 and 4, form Alexander–Whitney products on ordered simplices, and prove a class is nonzero or zero. Verification is cheap once witnesses are given: a nonzero product is certified by a cycle on which it evaluates to a nonzero number, and a zero product by a cochain whose coboundary it is. The challenge stresses the Symbol Game's exact host, OEWAS (Engine Workflows, Agents, Skills) synthesis, and no OEEIS (Engine Epistemic Immune System) mechanism beyond the refusal path. A pass shows the game can produce a certified cup-product discriminator. Equal cup-product data never proves two spaces are the same.
 
 ## 3. Formal Problem and Bounds
 
@@ -51,7 +51,7 @@ Cochains and chains are sparse maps from simplices (sorted vertex tuples) to can
 - **Hidden base cases:** 24 pairs.
 - **Relabel controls:** 12. Vertex relabelling, which changes the Alexander–Whitney product at cochain level but not the rank; swapping X and Y.
 - **Poisoned but schema-valid:** 8. Two triangulations of the same space of different sizes (a solver guessing from size fails); pairs where squares vanish but a mixed product does not; a T² triangulation whose natural cocycle representatives happen to have a zero product on one face but not in cohomology.
-- **Exact checker:** new Rust code. `omega_homology`'s `cohomology_report` covers only H^0 and H^1, and `cup_product.rs` and `cohomology_algebra.rs` are best-effort shells (`cup_product.rs` uses an `f64` shell field), so neither can check this challenge. The new checker computes H^n for n ≤ 4 over `BigRational`, verifies cocycle and coboundary conditions, forms exact Alexander–Whitney products and evaluates them on cycles.
+- **Exact checker:** new Rust code. `core_homology`'s `cohomology_report` covers only H^0 and H^1, and `cup_product.rs` and `cohomology_algebra.rs` are best-effort shells (`cup_product.rs` uses an `f64` shell field), so neither can check this challenge. The new checker computes H^n for n ≤ 4 over `BigRational`, verifies cocycle and coboundary conditions, forms exact Alexander–Whitney products and evaluates them on cycles.
 - **Independent second checker:** a separately written Python `Fraction` implementation computing the rank of the product map from scratch, without using the submitted witnesses.
 - **Checker mutation suite:** a "cocycle" with δα ≠ 0 on one simplex; a cycle z with ∂z ≠ 0; a product value off by a sign because the vertex order was ignored; a primitive γ with δγ ≠ α ⌣ β; a claimed rank above the true one.
 
@@ -103,10 +103,10 @@ operand rank_not_size.v1 | kind: guard | when: two complexes differ in size | do
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_homology` (`cohomology.rs` for degrees 0 and 1, `cochain.rs`, `coboundary.rs`, `simplicial.rs`; `cup_product.rs` and `cohomology_algebra.rs` as shells to be replaced).
-- `omega_engine/crates_rs/omega_linear_algebra` for exact ranks.
+- `engine/crates_rs/core_homology` (`cohomology.rs` for degrees 0 and 1, `cochain.rs`, `coboundary.rs`, `simplicial.rs`; `cup_product.rs` and `cohomology_algebra.rs` as shells to be replaced).
+- `engine/crates_rs/core_linear_algebra` for exact ranks.
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
-- Extra upgrades: none in the catalog. Checker work: exact cohomology in degrees 2 to 4 and exact cup products in `omega_homology`; this is the largest prerequisite and blocks `packet_built`.
+- Extra upgrades: none in the catalog. Checker work: exact cohomology in degrees 2 to 4 and exact cup products in `core_homology`; this is the largest prerequisite and blocks `packet_built`.
 
 ## 14. Claim Hygiene
 

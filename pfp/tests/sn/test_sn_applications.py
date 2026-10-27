@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.sn_tower.sn_applications import (
+from pfp.domain.sn_tower.sn_applications import (
     DownstreamApplication,
     ReggeCurvature,
     ReggeMetric,

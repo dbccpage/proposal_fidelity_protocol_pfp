@@ -9,7 +9,7 @@
 
 1. **Ticket Assignment:** Dispatch stories to relevant specialist skills based on component domain (Rust, Python, Math, DB, Docs).
 2. **Evidence Collection (MANDATORY):**
-   - For every completed ticket, generate an evidence file under `omega_engine/research/product_planning_office/plans/sprints/{NNN}/evidence/` (test report log, build output, or diff summary).
+   - For every completed ticket, generate an evidence file under `engine/research/product_planning_office/plans/sprints/{NNN}/evidence/` (test report log, build output, or diff summary).
    - Rule: **No path = No credit.**
-3. **Continuous Code Review:** Specialist code review (`rust-code-reviewer`, `math-adversary`, `techne-code-soviet-inspector`) applied before merging to sprint branch.
+3. **Continuous Code Review:** Specialist code review (`rust-code-reviewer`, `math-adversary`, `techne-code-inspector`) applied before merging to sprint branch.
 4. **Handoff:** Upon story completion, proceed to `/techne-sprint-devops-review`.

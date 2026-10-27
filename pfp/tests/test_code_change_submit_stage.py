@@ -34,16 +34,16 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.controllers.code_change_controller import (
+from pfp.controllers.code_change_controller import (
     CodeChangeController,
 )
-from omega_engine_pfp.domain import (
+from pfp.domain import (
     PATCH_ENCODINGS,
     CodeChangeRunRootV1,
     PacketEnvelopeV2,
     thaw,
 )
-from omega_engine_pfp.use_cases.code_change import (
+from pfp.use_cases.code_change import (
     PATCH_ENCODING_UNIFIED_DIFF,
     CodeChangeSession,
 )
@@ -266,7 +266,7 @@ def test_the_candidate_budget_is_still_enforced(controller, session):
     The guard sits above the construction; a repair that moved it below would
     spend budget on a refused submission.
     """
-    from omega_engine_pfp.domain import BudgetExhaustedError
+    from pfp.domain import BudgetExhaustedError
 
     current = session
     budget = int(current.payload.candidate_budget)

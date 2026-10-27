@@ -135,7 +135,7 @@ Plain statement of what happened.
 | Integration tests | PASS/FAIL/NOT PROVIDED | path/output |
 | Coverage | PASS/FAIL/NOT PROVIDED | path/output |
 | Clippy/lint | PASS/FAIL/NOT PROVIDED | path/output |
-| Techne Code Soviet Inspector | PASS/FAIL/NOT RUN | path/output |
+| Techne Code Inspector | PASS/FAIL/NOT RUN | path/output |
 | Evidence paths | PASS/FAIL | paths |
 
 If build, test, coverage, clippy, or evidence output is unavailable,

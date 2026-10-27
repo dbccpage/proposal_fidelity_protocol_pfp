@@ -11,10 +11,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_pfp.domain.calculus_receipt import CarrierAuthority
-from omega_engine_pfp.domain.glyph_calculus import Carrier
-from omega_engine_pfp.entrypoints.cli.symbol_game import main
-from omega_engine_pfp.use_cases.verify_glyph_reply import (
+from pfp.domain.calculus_receipt import CarrierAuthority
+from pfp.domain.glyph_calculus import Carrier
+from pfp.entrypoints.cli.symbol_game import main
+from pfp.use_cases.verify_glyph_reply import (
     PACKET_FIELDS,
     verify_glyph_reply,
 )
@@ -23,7 +23,7 @@ from omega_engine_pfp.use_cases.verify_glyph_reply import (
 #: than hard-coded so that moving the pin breaks the test that reads it.
 GOVERNANCE_CARRIER_PIN = (
     Path(__file__).resolve().parents[2]
-    / "omega_engine_governance"
+    / "governance"
     / "contracts"
     / "pinned"
     / "symbol_game_carrier.json"
@@ -44,7 +44,7 @@ APL_ALPHA = "⍺"  # U+237A
 
 def packet(**overrides: object) -> dict[str, object]:
     base: dict[str, object] = {
-        "schema": "omega.glyph_calculus.draft.v1",
+        "schema": "core.glyph_calculus.draft.v1",
         "carrier": CARRIER,
         "rows": ["PROVE period(c5) = 5", "REDUCE 17 mod 5 = 2"],
     }
@@ -231,7 +231,7 @@ class TestTheCarrierPinReachesTheCli:
         cause would be three layers away from the message.
         """
         body = json.loads(GOVERNANCE_CARRIER_PIN.read_text(encoding="utf-8"))
-        assert body["schema"] == "omega.glyph_carrier_pin.v1"
+        assert body["schema"] == "core.glyph_carrier_pin.v1"
         assert body["carrier"] == CARRIER
 
     def test_the_carrier_flag_makes_the_run_a_verification(
@@ -290,7 +290,7 @@ class TestTheCarrierPinReachesTheCli:
         bad.write_text(
             json.dumps(
                 {
-                    "schema": "omega.glyph_carrier_pin.v1",
+                    "schema": "core.glyph_carrier_pin.v1",
                     "carrier": CARRIER,
                     "vibe": "good",
                 }

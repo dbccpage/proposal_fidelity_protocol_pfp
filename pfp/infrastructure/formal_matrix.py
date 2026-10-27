@@ -10,7 +10,7 @@ module holds what they must all do the same way:
 - Provider and transport failures are recorded as ``INFRA_ERROR``, never as wrong answers.
 - The raw response body and the full reply text are kept, not an excerpt.
 - Run records go to a new folder under the intelligence root resolved by
-  ``omega_engine_operating_system.adapters.intelligence_custody.intelligence_root``; historical result files are never
+  ``operating_system.adapters.intelligence_custody.intelligence_root``; historical result files are never
   overwritten.
 """
 
@@ -131,11 +131,11 @@ def call_openrouter(
         return refused("PFP_ACCOUNTED_GATEWAY_REQUIRED")
     if any(type(value) is not str or not value.strip() for value in (task_id, attempt_id)):
         return refused("PFP_TASK_BINDING_REQUIRED")
-    from omega_engine_pfp.infrastructure.pilot_matrix import (
+    from pfp.infrastructure.pilot_matrix import (
         complete_pilot_turn,
         validate_pilot_gateways,
     )
-    from omega_engine_woland.domain.providers.types import (
+    from adversary.domain.providers.types import (
         CandidateRequest,
         ChatMessage,
         DecodingParamsV1,
@@ -190,7 +190,7 @@ def extract_json_object(text: str) -> dict[str, Any] | None:
 
 def run_folder(challenge_id: str, run_nonce: str) -> Path:
     """A new folder under <intelligence root>/_ic/darpa/symbol_game/matrix_runs/."""
-    from omega_engine_operating_system.adapters.intelligence_custody.intelligence_root import (
+    from operating_system.adapters.intelligence_custody.intelligence_root import (
         resolve_intelligence_repo_root,
     )
 
@@ -265,7 +265,7 @@ def run_model_matrix(
     ``evaluate(case, answer)`` returns ``(ok, message)``. ``prompt_builder(case, token)``
     returns the user prompt (default: ``build_user_prompt`` with ``withheld``).
     """
-    from omega_engine_pfp.infrastructure.pilot_matrix import (
+    from pfp.infrastructure.pilot_matrix import (
         make_pilot_gateways,
         validate_pilot_gateways,
     )
@@ -407,7 +407,7 @@ def run_model_matrix_cli(*, argv: Sequence[str] | None = None, **matrix_options:
         parser.error("at least one case is required for an exploratory run")
     gateways = matrix_options.get("gateways")
     if gateways is not None:
-        from omega_engine_pfp.infrastructure.pilot_matrix import _scope, validate_pilot_gateways
+        from pfp.infrastructure.pilot_matrix import _scope, validate_pilot_gateways
 
         try:
             validate_pilot_gateways(gateways, args.models, max_tokens=args.max_output_tokens)

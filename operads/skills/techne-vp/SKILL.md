@@ -10,7 +10,7 @@ operad_residual: "unknown"
 
 # techne-vp
 
-**Council Surface:** `L3_logos_techne` (`omega_engine/anomalon_councils/councils/L3_logos_techne`)
+**Council Surface:** `L3_logos_techne` (`engine/sentinel_councils/councils/L3_logos_techne`)
 **Enforcement Partner:** `blackrod` ext
 **Boss / Escalation Target:** `techne-svp` ext
 

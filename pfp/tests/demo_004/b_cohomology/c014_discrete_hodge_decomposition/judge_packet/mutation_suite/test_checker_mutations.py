@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import pathlib
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
 

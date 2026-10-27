@@ -22,7 +22,7 @@ Character operators or test evaluation roles returning constant zero residual ma
 
 - Emits unearned consensus and creates an illusion of formal verification.
 - Code containing unproven sorries or broken proofs passes gates undetected.
-- Violates the Landauer/Landau principle of truth verification.
+- Violates the Landauer/Examiner principle of truth verification.
 
 ## Detection Signature
 

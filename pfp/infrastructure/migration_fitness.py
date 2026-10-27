@@ -1,7 +1,7 @@
 """Check migration-map coverage and byte custody, not behavioral Rust parity.
 
 AuthorityEffect: None. Run with ``python -m
-omega_engine_pfp.infrastructure.migration_fitness``.
+pfp.infrastructure.migration_fitness``.
 
 ``--current-python`` separately checks recorded relocation provenance and
 current static distributed ownership. Later canonical edits do not repin the
@@ -22,23 +22,23 @@ from importlib.util import resolve_name
 from pathlib import Path, PurePosixPath
 from typing import Iterable
 
-MAP_SCHEMA = "omega.symbol-game.rust-migration-map.v1"
-PACKAGE = "omega_engine_pfp/"
+MAP_SCHEMA = "core.symbol-game.rust-migration-map.v1"
+PACKAGE = "pfp/"
 DEFAULT_MAP = PACKAGE + "documentation/rust_migration/file_map.json"
 DEFAULT_MANIFEST = PACKAGE + "migration_manifest.json"
-MANIFEST_SCHEMA = "omega.symbol-game.migration-manifest.v2"
+MANIFEST_SCHEMA = "core.symbol-game.migration-manifest.v2"
 # The relocated pilot corpus makes the complete map about 15 MB.
 MAX_MAP_BYTES = 16 * 1024 * 1024
 MAX_SOURCE_BYTES = 1024 * 1024
 SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 REVISION = re.compile(r"[0-9a-f]{40}\Z")
-PYTHON_OWNERS = {"PFP": "omega_engine_pfp/", "Woland": "omega_engine_woland/"}
+PYTHON_OWNERS = {"PFP": "pfp/", "Adversary": "adversary/"}
 RETIRED_PYTHON_ROOTS = (
-    "omega_engine_education.pfp", "omega_engine_education.pilots", "omega_engine_symbol_game"
+    "education.pfp", "education.pilots", "symbol_game"
 )
 CURRENT_PYTHON_SCOPE = "static Python ownership and immutable migration provenance only"
 HISTORICAL_SNAPSHOT_PARTS = frozenset({"source_snapshot", "frozen_sources", "baseline_bytes"})
-HISTORICAL_PYTHON_PREFIXES = ("omega_engine_pfp/infrastructure/tower_evidence/level_engine/v1/",)
+HISTORICAL_PYTHON_PREFIXES = ("pfp/infrastructure/tower_evidence/level_engine/v1/",)
 CURRENT_PYTHON_LIMITS = (
     "Static tracked Python selected by pyproject package discovery or explicit package data; source_snapshot, frozen_sources, baseline_bytes and level-engine v1 evidence are historical snapshots.",
     "Computed dynamic imports, undistributed host scripts and actual installed-wheel behavior are not established.",
@@ -93,7 +93,7 @@ def _repository_path(root: Path, value: object) -> Path:
 
 def tracked_symbol_game_paths(root: Path) -> tuple[str, ...]:
     result = subprocess.run(
-        ["git", "ls-files", "-z", "--", "omega_engine_pfp"],
+        ["git", "ls-files", "-z", "--", "pfp"],
         cwd=root,
         capture_output=True,
         check=True,
@@ -202,7 +202,7 @@ def check_file_map(
                     raise ValueError("target must be a file path string")
                 target_path_text = target.split("::", 1)[0]
                 target_path = _repository_path(root, target_path_text)
-                if not target_path_text.startswith("omega_engine/crates_rs/"):
+                if not target_path_text.startswith("engine/crates_rs/"):
                     raise ValueError("native owner must be in crates_rs")
                 if not target_path.is_file():
                     raise ValueError("native target file does not exist")
@@ -423,7 +423,7 @@ def check_current_python_ownership(
                     MigrationFinding(
                         "CURRENT_OWNER_INVALID",
                         destination,
-                        "explicit owner must match canonical PFP/Woland prefix",
+                        "explicit owner must match canonical PFP/Adversary prefix",
                     )
                 )
             if current.resolve().relative_to(root).as_posix() != destination:

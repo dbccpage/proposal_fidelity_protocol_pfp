@@ -159,7 +159,7 @@ Ports live in Domain or Application. Adapters live in Infrastructure.
 ## 6. Mono-Repo & Paper Package Layout Hygiene (`RULE_MONO_REPO_LAYOUT_001`)
 
 1. **Restricted Top-Level Paper Directory:**
-   - Top-level paper folders (`{paper_folder}/` under `omega_research/programs/NNN_<slug>/<paper_slug>/`) MUST contain ONLY:
+   - Top-level paper folders (`{paper_folder}/` under `core_research/programs/NNN_<slug>/<paper_slug>/`) MUST contain ONLY:
      - `{slug}.md`, `{slug}_claim_ledger.md`, `{slug}_change_log.md`
      - `README.md`, `LICENSE`, `pyproject.toml`
      - `{slug}_{date}.zip`, `{slug}.pdf`, `{slug}.tex` (when built)
@@ -172,7 +172,7 @@ Ports live in Domain or Application. Adapters live in Infrastructure.
 4. **Flat Lean 4 Layout Enforcement:**
    - Local paper Lean formalizations land directly under `{paper_folder}/lean4/`, matching the canonical lake tree path `lean4/research_programs/<domain>/<paper_slug>/`.
 5. **LGGR Paper-Folder Home Law:**
-   - Published LGGR papers live under `omega_research/programs/008_engine_runtime/` (`019_lggr_i_*`, `020_lggr_ii_*`, `021_lggr_iii_*`) with matching Lean paths under `lean4/research_programs/008_engine_runtime/`.
+   - Published LGGR papers live under `core_research/programs/008_engine_runtime/` (`019_lggr_i_*`, `020_lggr_ii_*`, `021_lggr_iii_*`) with matching Lean paths under `lean4/research_programs/008_engine_runtime/`.
 
 ---
 
@@ -260,7 +260,7 @@ Ports live in Domain or Application. Adapters live in Infrastructure.
 Run the automated Clean Architecture fitness function:
 
 ```bash
-python omega_engine_operads/skills/techne-code-principal-architect/scripts/check_clean_arch.py
+python operads/skills/techne-code-principal-architect/scripts/check_clean_arch.py
 ```
 
 ---

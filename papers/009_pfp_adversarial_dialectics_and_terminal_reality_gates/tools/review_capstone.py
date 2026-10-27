@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the Landau capstone: exact recount and controls on retained records."""
+"""Run the Examiner capstone: exact recount and controls on retained records."""
 from __future__ import annotations
 
 import hashlib
@@ -37,7 +37,7 @@ def main() -> int:
         row["adversary_caught_am"] = False
     if recount(changed) != changed_counts:
         raise ValueError("constant-flag control failed")
-    gate = json.loads((directory / "woland_gate_falsifiers.json").read_text())
+    gate = json.loads((directory / "adversary_gate_falsifiers.json").read_text())
     report = {
         "status": "PASS", "counts": asdict(counts),
         "exact_fractions": {key: str(value) if value is not None else None

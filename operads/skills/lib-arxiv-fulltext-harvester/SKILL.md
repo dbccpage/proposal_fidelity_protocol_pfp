@@ -10,11 +10,11 @@ operad_residual: "unknown"
 
 # lib-arxiv-fulltext-harvester
 
-**Ordering:** arXiv first (≈99% success). Do not carpet-scan `markdown/`; Filter-Select-Read via indexes (Paper 007 / `/omega-allopoietic-engine`).
+**Ordering:** arXiv first (≈99% success). Do not carpet-scan `markdown/`; Filter-Select-Read via indexes (Paper 007 / `/core-allopoietic-engine`).
 
-## Host pipeline (`omega_engine_university` CLI — retired)
+## Host pipeline (`university` CLI — retired)
 
-**Retired path.** `omega_engine_university` was the pre-split repository root and exists in neither CODA nor anomalonpy; the command below is kept for the record and does not run here.
+**Retired path.** `university` was the pre-split repository root and exists in neither CODA nor sentinelpy; the command below is kept for the record and does not run here.
 
 ## invariance_level: Tier 16
 

@@ -49,10 +49,10 @@ def _glyph(data):
 
 
 def _prompt_guard(data):
-    from omega_engine_operads.domain.prompt_hierarchy.evaluator import (
+    from operads.domain.prompt_hierarchy.evaluator import (
         DEFAULT_KEYWORD_PATTERNS, evaluate_prompt_gates,
     )
-    from omega_engine_operads.domain.prompt_hierarchy.models import AntiOpBinding, PromptTreeNode, PromptUri
+    from operads.domain.prompt_hierarchy.models import AntiOpBinding, PromptTreeNode, PromptUri
 
     _fields(data, {"prompt_uri", "anti_op", "payload", "harmful_control", "benign_control"})
     _require(data["anti_op"] in DEFAULT_KEYWORD_PATTERNS and DEFAULT_KEYWORD_PATTERNS[data["anti_op"]], "PROMPT_DETECTOR_UNAVAILABLE")
@@ -69,7 +69,7 @@ def _prompt_guard(data):
 
 
 def _skills(data):
-    from omega_engine_operads.contracts.typed_capabilities_v1 import canonical_bytes, parse_typed_capability
+    from operads.contracts.typed_capabilities_v1 import canonical_bytes, parse_typed_capability
     from ..domain.tower.checks import check_operad_compose
 
     _fields(data, {"contracts", "instructions", "bindings", "root"})

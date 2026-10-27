@@ -13,15 +13,15 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.domain.types import PilotSpec, SeedPrompt
-from omega_engine_pfp.infrastructure.model_loading import load_yaml_model
-from omega_engine_woland.tests.pilots.replay_runners._paths import pilots_root, repository_root
-from omega_engine_woland.tests.pilots.replay_runners.mode_capsules.execute import (
+from pfp.domain.types import PilotSpec, SeedPrompt
+from pfp.infrastructure.model_loading import load_yaml_model
+from adversary.tests.pilots.replay_runners._paths import pilots_root, repository_root
+from adversary.tests.pilots.replay_runners.mode_capsules.execute import (
     build_trials,
     digests_match,
     write_trials,
 )
-from omega_engine_woland.tests.pilots.replay_runners.mode_capsules.live_dispatch import (
+from adversary.tests.pilots.replay_runners.mode_capsules.live_dispatch import (
     PAID_MODEL,
     host_answer_matches,
     models_for,
@@ -42,7 +42,7 @@ class _RetiredRootTripwire:
 
 @pytest.mark.parametrize("entrypoint", ["retarget_specs", "dispatch_pilots", "main"])
 def test_retired_mode_live_entrypoints_refuse_before_side_effects(monkeypatch, entrypoint):
-    from omega_engine_woland.tests.pilots.replay_runners.mode_capsules import live_dispatch
+    from adversary.tests.pilots.replay_runners.mode_capsules import live_dispatch
 
     for name in ("resolve_credential", "fetch_paid_pricing", "openrouter_transport", "_write"):
         monkeypatch.setattr(live_dispatch, name, _retired_tripwire, raising=False)
@@ -54,7 +54,7 @@ def test_retired_mode_live_entrypoints_refuse_before_side_effects(monkeypatch, e
 
 
 def test_retired_dossier_live_callable_refuses_before_side_effects(monkeypatch):
-    from omega_engine_woland.tests.pilots.replay_runners.dossier_capsules import run
+    from adversary.tests.pilots.replay_runners.dossier_capsules import run
 
     for name in ("environment", "pricing", "openrouter_transport", "write_once", "SqliteBudgetLedger"):
         monkeypatch.setattr(run, name, _retired_tripwire, raising=False)
@@ -65,7 +65,7 @@ def test_retired_dossier_live_callable_refuses_before_side_effects(monkeypatch):
 
 @pytest.mark.parametrize("session", ["primary", "free_followup"])
 def test_retired_dossier_cli_live_refuses_before_historical_plan(monkeypatch, session):
-    from omega_engine_woland.tests.pilots.replay_runners.dossier_capsules import run
+    from adversary.tests.pilots.replay_runners.dossier_capsules import run
 
     monkeypatch.setattr("sys.argv", ["dossier-capsules", "--live", "--session", session])
     for name in ("prepare", "historical_plan", "live", "replay"):
@@ -79,7 +79,7 @@ def test_retired_mode_runner_source_snapshot_is_hash_bound():
     root = repository_root(Path(__file__))
     manifest_path = (
         root
-        / "omega_engine_pfp/tests/pilot_0000001/misc/retired_mode_trials_runner_v1/manifest.json"
+        / "pfp/tests/pilot_0000001/misc/retired_mode_trials_runner_v1/manifest.json"
     )
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     assert manifest["status"] == "retained_exact_bytes_before_relocation"
@@ -126,11 +126,11 @@ def test_mode_limits_stay_inside_what_ran():
 
 
 def test_written_packets_match_a_fresh_run_and_do_not_touch_later_pilots(tmp_path, monkeypatch):
-    from omega_engine_woland.tests.pilots.replay_runners.mode_capsules import execute
+    from adversary.tests.pilots.replay_runners.mode_capsules import execute
 
     copied_pilots = tmp_path / "pilots"
     shutil.copytree(PILOTS, copied_pilots)
-    relocated = repository_root(PILOTS) / "omega_engine_pfp" / "tests"
+    relocated = repository_root(PILOTS) / "pfp" / "tests"
     for index in range(6):
         name = f"pilot_{index:07d}"
         if not (copied_pilots / name).exists():

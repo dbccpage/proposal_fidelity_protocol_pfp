@@ -10,10 +10,10 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.ddc_tracer import (
+from pfp.tests.demo_004.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.ddc_tracer import (
     DDCTracer,
 )
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.mathieu_moonshine import (
+from pfp.tests.demo_004.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.reference_solver.mathieu_moonshine import (
     solve_mathieu_moonshine_case,
 )
 

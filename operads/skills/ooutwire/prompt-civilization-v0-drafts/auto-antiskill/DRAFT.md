@@ -3,7 +3,7 @@ name: auto-antiskill
 description: "Mine IDE dialogue corrections into provenance-bound candidate anti-skills. Use after repeated model mistakes or explicit corrections. Do not use it to activate a detector, admit a skill, or make a truth verdict."
 version: "0.1.0"
 authority_effect_ceiling: None
-anomalon:
+sentinel:
   status: Draft
   admission: pending
 ---
@@ -38,10 +38,10 @@ Required: [EVIDENCE_BASED, NO_HARDCODED_SECRETS, and MAINTAIN_TESTS](../../../_s
 
 ## Outputs and tests
 
-Outputs: `omega.antiskill.segmented-dialogue.v1` and `omega.antiskill.candidate-set.v1`. Both are inert proposal records with `AuthorityEffect: None`.
+Outputs: `core.antiskill.segmented-dialogue.v1` and `core.antiskill.candidate-set.v1`. Both are inert proposal records with `AuthorityEffect: None`.
 
-Focused tests: `omega_engine/_tests_unit/test_prompt_civilization_dialogue.py`, `test_prompt_civilization_registry.py`, `test_prompt_civilization_evals.py`, and `test_prompt_civilization_skill_boundaries.py`.
+Focused tests: `engine/_tests_unit/test_prompt_civilization_dialogue.py`, `test_prompt_civilization_registry.py`, `test_prompt_civilization_evals.py`, and `test_prompt_civilization_skill_boundaries.py`.
 
 ## Related Skills
 
-`omega-prompt` consumes only the empty v0 runtime registry. `autoskill` records learning episodes; `lib-skill-admission-hygiene` governs any later admission review.
+`core-prompt` consumes only the empty v0 runtime registry. `autoskill` records learning episodes; `lib-skill-admission-hygiene` governs any later admission review.

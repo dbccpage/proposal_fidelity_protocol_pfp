@@ -1,6 +1,6 @@
 ---
 documentation_contract: symbol-game-documentation/v1
-title: "OEWAS Level 07: Typed Workflow Graphs and the Woland 7-Act Dialectic Pipeline"
+title: "OEWAS Level 07: Typed Workflow Graphs and the Adversary 7-Act Dialectic Pipeline"
 kind: architecture-reference
 level: 7
 status: active
@@ -8,16 +8,16 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/workflow_graph.py
+  - operads/domain/workflow_graph.py
   - .agents/workflows/contract_compliance_audit_workflow.json
-  - omega_engine_education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/18_spec_woland_7act_dialectic_workflow.md
-  - omega_engine_woland/
+  - education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/18_spec_adversary_7act_dialectic_workflow.md
+  - adversary/
 last_verified: 2026-10-01
 ---
 
-# OEWAS Level 07: Typed Workflow Graphs & the Woland 7-Act Dialectic Pipeline
+# OEWAS Level 07: Typed Workflow Graphs & the Adversary 7-Act Dialectic Pipeline
 
-**AuthorityEffect:** None. Complete architectural specification for declared workflow JSON manifests, sequential planar pipeline validation, danger signal policies, and the Woland 7-Act dialectic bout state machine; no operational authorization is conferred.
+**AuthorityEffect:** None. Complete architectural specification for declared workflow JSON manifests, sequential planar pipeline validation, danger signal policies, and the Adversary 7-Act dialectic bout state machine; no operational authorization is conferred.
 
 ---
 
@@ -35,7 +35,7 @@ Because each step $k$ substitutes into the well-typed composite accumulated by s
 
 ## 2. The Workflow Manifest Specification
 
-Every declared workflow lives under `.agents/workflows/<workflow_id>.json` conforming to [`REQUIRED_WORKFLOW_KEYS`](../../../../omega_engine_operads/domain/workflow_graph.py#L48-L55):
+Every declared workflow lives under `.agents/workflows/<workflow_id>.json` conforming to [`REQUIRED_WORKFLOW_KEYS`](../../../../operads/domain/workflow_graph.py#L48-L55):
 
 ```json
 {
@@ -72,7 +72,7 @@ Every declared workflow lives under `.agents/workflows/<workflow_id>.json` confo
 
 ## 3. The Planar Pipeline Validation Algorithm: `workflow_graph.py`
 
-In [`omega_engine_operads/domain/workflow_graph.py`](../../../../omega_engine_operads/domain/workflow_graph.py), validation is performed by repeatedly applying `substitute`:
+In [`operads/domain/workflow_graph.py`](../../../../operads/domain/workflow_graph.py), validation is performed by repeatedly applying `substitute`:
 
 ```python
 def validate_workflow(
@@ -143,9 +143,9 @@ If an upstream step emits a critical danger finding (e.g. memory safety violatio
 
 ---
 
-## 5. The Woland 7-Act Dialectic Pipeline
+## 5. The Adversary 7-Act Dialectic Pipeline
 
-For high-consequence deliberations (such as admitting a new mathematical theorem or publishing a research monograph), workflows are executed as a **7-Act Dialectic Bout** managed by [`omega_engine_woland`](../../../../omega_engine_woland/):
+For high-consequence deliberations (such as admitting a new mathematical theorem or publishing a research monograph), workflows are executed as a **7-Act Dialectic Bout** managed by [`adversary`](../../../../adversary/):
 
 ```text
 Act I: Ingestion  ──>  Act II: Elenchus  ──>  Act III: Red-Team  ──>  Act IV: Gauge Break
@@ -178,7 +178,7 @@ stateDiagram-v2
 
 1. **Act I (Exposition & Ingestion):** Ingests the initial artifact (`Paper`, `Proof`, or `Code`), verifies YAML frontmatter and operad colours, and bounds the task scope.
 2. **Act II (Socratic Elenchus):** Ooutwire interrogators question definitions and force the proposer to state implicit axioms.
-3. **Act III (Adversarial Red-Team):** Thanatos and Old Man Red Team execute aggressive boundary-value tests, searching for counterexamples and type defects.
+3. **Act III (Adversarial Red-Team):** Thanatos and Red Team Red Team execute aggressive boundary-value tests, searching for counterexamples and type defects.
 4. **Act IV (9-Dot Gauge Break):** Detects if the bout is trapped in a false dilemma or coordinate artifact; injects an orthogonal perspective.
 5. **Act V (Synthesis):** Techne and Panepistimion synthesize surviving insights into a canonical normal form with minimal residual defect.
 6. **Act VI (Carceral Truth Verification):** Verifies that all Lean 4 proof terms compile without unadmitted axioms (`sorry`), tests pass with zero skips, and claim ledgers match 1:1.
@@ -191,7 +191,7 @@ stateDiagram-v2
 To run the unit tests verifying workflow graph validation:
 
 ```powershell
-# Retired: OEWAS tests/unit/test_workflow_graph_validator.py has no successor file under omega_engine_operads.
+# Retired: OEWAS tests/unit/test_workflow_graph_validator.py has no successor file under operads.
 ```
 
 ### The Level 07 Governance Invariants

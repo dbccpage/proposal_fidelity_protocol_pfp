@@ -24,10 +24,10 @@ reachable_terminal_statuses:
   - Refused
   - Invalid
 source_paths:
-  - omega_engine_education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
-  - omega_engine_education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
+  - education/documentation/004_oepfp/levels/meta_00_symbol_game_foundations.md
+  - education/documentation/004_oepfp/levels/meta_01_symbol_game_historical_curriculum.md
+  - education/documentation/004_oepfp/levels/meta_02_symbol_game_pfp.md
+  - education/documentation/004_oepfp/levels/meta_03_symbol_game_proof_ledger.md
 ---
 
 # The Symbol Game Level 24: Topos Subobject Classifiers & Truth Objects
@@ -41,7 +41,7 @@ source_paths:
 **Evaluator Module:** `CategoryLimitsModule` (`Topos Subobject Classifier & Characteristic Arrow Evaluator`)  
 **Evaluator Contract:** `SubobjectClassifierContract`  
 
-**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `CategoryLimitsModule` or contract `SubobjectClassifierContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../omega_engine/crates_rs/omega_state/src/coda_gtla_protocol.rs).
+**Source status (checked 2026-10-20 at `c419cc6beb`):** specification only. No evaluator named `CategoryLimitsModule` or contract `SubobjectClassifierContract`, no packet schema for this level and no level referee exist in source (`git grep` over `*.rs`, `*.py`, `*.lean`, `*.yaml` and `*.json`). The `REFEREE:` lines below state specified outcomes, not recorded runs, and `carrier_digest` values are placeholders, not computed digests. The terminal names follow [`CodaTerminal`](../../../../engine/crates_rs/core_state/src/coda_gtla_protocol.rs).
 
 ---
 
@@ -54,7 +54,7 @@ $$\mathcal{S}_{24} = \Big( \mathcal{C},\; \mathcal{R}_{\text{active}},\; \mathca
 - **Carrier ($\mathcal{C}$):** `Elementary topos E with subobject classifier Ω and truth arrow true: 1 → Ω`. Pinned and immutable upon arena initialization.
 - **Active State ($\mathcal{R}_{\text{active}}$):** Current assigned valuations, configurations, and candidate structures configured on the carrier.
 - **Evaluator Register ($\mathcal{D}_{\text{evaluator}}$):** Instantiation of `CategoryLimitsModule` (`SubobjectClassifierContract`) calculating level-specific objective defect metrics.
-- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `omega-canonical-v1` is not RFC 8785).
+- **History Trace ($\mathcal{H}_{\text{trace}}$):** Specified append-only record of proposed turn vectors, referee decisions and state digests (the runtime packet sealer `core-canonical-v1` is not RFC 8785).
 - **Invariants ($\mathcal{I}_{\text{invariants}}$):** Fuel ceiling ($T \le 10$), boundary protection masks, and non-mutation constraints.
 
 ### Conceptual Arena Scope
@@ -111,8 +111,8 @@ Proposals at Level 24 are specified as JSON envelopes for the proposed (not yet 
     "move_type": "ASSERT",
     "subobject_mono_m": {"domain": "A", "codomain": "X", "is_monic": true},
     "ambient_object_x": "X",
-    "truth_arrow": "true: 1 -> Omega",
-    "classifier_arrow_chi": "chi_m: X -> Omega",
+    "truth_arrow": "true: 1 -> Core",
+    "classifier_arrow_chi": "chi_m: X -> Core",
     "pullback_square_witness": "iso_A_pullback",
     "proposer_signature": "untrusted_candidate_token" 
   },
@@ -193,7 +193,7 @@ REFEREE:  ACCEPT -> Status: ExactRepair (subobject monomorphism classified by un
 REFEREE:  REFUSED -> Refusal Code: ERR_SUBOBJECT_MONO_DEFECT, Status: Refused (candidate arrow m is not a monomorphism)
   ```
 
-  **Reproducibility gap (2026-10-20):** `is_monic`, the pullback witness and the failure witness are self-reported strings. No topos, objects or arrows are supplied, so neither monicity nor the pullback square can be recomputed. In the topos of finite sets, for example, a complete vector would give `m` as a function table, `Omega = {0, 1}`, `true` picking `1`, and `chi_m(x) = 1` exactly when `x` is in the image of `m`; monicity is then injectivity of the table.
+  **Reproducibility gap (2026-10-20):** `is_monic`, the pullback witness and the failure witness are self-reported strings. No topos, objects or arrows are supplied, so neither monicity nor the pullback square can be recomputed. In the topos of finite sets, for example, a complete vector would give `m` as a function table, `Core = {0, 1}`, `true` picking `1`, and `chi_m(x) = 1` exactly when `x` is in the image of `m`; monicity is then injectivity of the table.
 
 - **Syntax / Carrier Firewall Counterexample (Syntax Violation):**
   ```text

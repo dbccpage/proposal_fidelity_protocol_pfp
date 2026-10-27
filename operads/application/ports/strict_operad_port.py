@@ -5,7 +5,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Tuple
 
-from omega_engine_operations.domain.rop.result import Result
+from operations.domain.rop.result import Result
 from ...domain.entities.operation_v3 import OperationV3
 from ...domain.errors.domain_errors import OeopDomainError
 

@@ -186,7 +186,7 @@ When working with graphiti-core v0.26+:
 | `sprint-execution` | Consumes this plan to guide development |
 | `sprint-retrospective` | Reviews outcomes of plans created here |
 | `blackrod` | Enforces quality gates defined in this plan |
-| `techne-code-soviet-inspector` | Design-time test quality criteria |
+| `techne-code-inspector` | Design-time test quality criteria |
 | `commit` | Used for committing planning documents |
 
 **Family:** sprint-workflow (see [family_registry.md](../_shared/family_registry.md))
@@ -218,7 +218,7 @@ After `/sprint-planning` completes, run `/sprint-planning-review` to initiate th
 | Outbound | `sprint-planning-review` | Produced plan is input for review |
 | Outbound | sprint-execution | Plan guides execution |
 | Outbound | blackrod | Quality gates defined in plan are enforced by Blackrod |
-| Bidirectional | `techne-code-soviet-inspector` | Test requirements defined here, enforced by inspector later |
+| Bidirectional | `techne-code-inspector` | Test requirements defined here, enforced by inspector later |
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)
 

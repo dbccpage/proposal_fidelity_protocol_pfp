@@ -45,8 +45,8 @@ regardless of credentials. Fixture costs and token counts are synthetic and do
 not measure paid inference.
 
 Use the canonical C005 PFP adapter; inspect
-`python -m omega_engine_education.pilots.challenge_suite --help` for its current
-live and checking commands. General Woland challenge composition remains open.
+`python -m education.pilots.challenge_suite --help` for its current
+live and checking commands. General Adversary challenge composition remains open.
 Its independent
 mathematical checker remains authoritative for the finite answer. Hosted decoding
 controls are separate research conditions: they require support in the shared

@@ -8,7 +8,7 @@ Parent: [Paper Template & Harmonization Discipline](../../../../../rules/papers/
 
 **AuthorityEffect:** None.
 
-All research papers, preprints, and formal monograph packages under `omega_engine_atlas/coda_atlas/` and `omega_research/programs/` must strictly comply with the following invariants. Complete execution pipelines and scaffolding commands reside in [`governance-research-paper-edit-publish`](../../../../governance-research-paper-edit-publish/references/harmonization_pipeline.md). Cross-reference publication rubric and specifications: [`rl_coda_publication_and_monograph_specifications.md`](../../../../../rules/papers/rl_coda_publication_and_monograph_specifications.md).
+All research papers, preprints, and formal monograph packages under `atlas/coda_atlas/` and `core_research/programs/` must strictly comply with the following invariants. Complete execution pipelines and scaffolding commands reside in [`governance-research-paper-edit-publish`](../../../../governance-research-paper-edit-publish/references/harmonization_pipeline.md). Cross-reference publication rubric and specifications: [`rl_coda_publication_and_monograph_specifications.md`](../../../../../rules/papers/rl_coda_publication_and_monograph_specifications.md).
 
 ---
 
@@ -57,7 +57,7 @@ Three defects stopped or silently damaged one monograph build on 2026-10-06:
 2. **No backslash command glued to a word in prose.** Under `raw_tex`, `W\T` (a set difference) or `C:\Users` becomes an undefined control sequence. Write `∖` (U+2216) or `$W\setminus T$`, and put paths in code spans.
 3. **Zero `Missing character` lines in the TeX log.** XeLaTeX drops a glyph the font lacks and still exits 0. Map each one in the preamble with `\newunicodechar`, using the kit's `\um{...}` macro for math symbols.
 
-Checked by `omega_engine_research_papers/domain/rules/pandoc_build_rules.py` (gate rules `R_PANDOC_SINGLE_BACKSLASH_MATH`, `R_MD_PROSE_BACKSLASH` and `R_TEX_MISSING_GLYPHS`). The same log scan runs in `paper_edition` rebuild, in review Stage 5, and in checklist `C03`.
+Checked by `research_papers/domain/rules/pandoc_build_rules.py` (gate rules `R_PANDOC_SINGLE_BACKSLASH_MATH`, `R_MD_PROSE_BACKSLASH` and `R_TEX_MISSING_GLYPHS`). The same log scan runs in `paper_edition` rebuild, in review Stage 5, and in checklist `C03`.
 
 ---
 
@@ -75,8 +75,8 @@ Checked by `omega_engine_research_papers/domain/rules/pandoc_build_rules.py` (ga
   2. Monograph header (`<div align="center">YYYY-MM-DD</div>` and `<div align="center">Version 1.0.0</div>`),
   3. Package `README.md` (`**Date:** YYYY-MM-DD` and `**Version:** 1.0.0`), and
   4. The deterministic release ZIP filename (`<slug>_YYYY-MM-DD.zip`).
-- **Retirement of Claim Ledgers & Landau Quizzes**:
-  Claim ledgers (`*_claim_ledger.md`, `claim_ir.yaml`, `claim_code_map.yaml`, `lean_claim_map.md`) are discontinued from paper packages and release verification gates. Lev Landau quizzes (`_lev_landau_theoretical_minimum_quiz/`, `landau_quiz.md`) must never be added to paper packages unless the user personally and explicitly adds them.
+- **Retirement of Claim Ledgers & Examiner Quizzes**:
+  Claim ledgers (`*_claim_ledger.md`, `claim_ir.yaml`, `claim_code_map.yaml`, `lean_claim_map.md`) are discontinued from paper packages and release verification gates. Examiner quizzes (`_lev_examiner_theoretical_minimum_quiz/`, `examiner_quiz.md`) must never be added to paper packages unless the user personally and explicitly adds them.
 - **Lowercase Filenames Discipline**: Use lowercase letters only in filenames that are not `README.md` files (e.g. monographs, documentation, scripts, and reports must be strictly lowercase).
 
 ---

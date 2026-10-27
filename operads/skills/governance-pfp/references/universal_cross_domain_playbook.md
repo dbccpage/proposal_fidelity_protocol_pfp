@@ -122,8 +122,8 @@ import pytest
 @pytest.fixture(autouse=True)
 def require_functional_adapter(monkeypatch, request):
     config = request.config.stash[FUNCTIONAL_ADAPTER_CONFIG]
-    monkeypatch.setenv("OMEGA_FUNCTIONAL_GRAPH_BIN", str(config.path))
-    monkeypatch.setenv("OMEGA_FUNCTIONAL_GRAPH_SHA256", config.sha256)
+    monkeypatch.setenv("CORE_FUNCTIONAL_GRAPH_BIN", str(config.path))
+    monkeypatch.setenv("CORE_FUNCTIONAL_GRAPH_SHA256", config.sha256)
 ```
 
 If no explicit adapter configuration is supplied, the boundary must return `NativeFunctionalUnavailable` or the test must skip with that reason.

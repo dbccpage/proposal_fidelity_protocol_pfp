@@ -16,17 +16,17 @@ from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 from uuid import uuid4
 
-from omega_engine_pfp.infrastructure.pilot_matrix import (
+from pfp.infrastructure.pilot_matrix import (
     _scope,
     complete_pilot_turn,
     make_pilot_gateways,
     validate_pilot_gateways,
 )
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
 
 # The retained Atlas sources use sibling imports. Resolve their packaged owner,
 # independently of cwd/Git; neither source is changed by this consumer.
-MS_MAJORANA_CODE = Path(str(files("omega_engine_atlas").joinpath(
+MS_MAJORANA_CODE = Path(str(files("atlas").joinpath(
     "coda_atlas/F004_papers/009_ms_majorana/code")))
 if not all((MS_MAJORANA_CODE / name).is_file() for name in (
         "majorana_braid_exact.py", "majorana_multiqubit_noise.py")):

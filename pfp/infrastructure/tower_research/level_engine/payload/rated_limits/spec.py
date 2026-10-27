@@ -38,12 +38,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine import lean_text as T
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine import lean_text as T
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 from ..shared import lean_list, rows
 
 CHALLENGE_ID = "rated_limits"
@@ -248,7 +248,7 @@ def lean_certificates(verdicts: Sequence[FixtureVerdict]) -> list[tuple[str, str
     """Every evaluated fixture's clauses; a claim for every ``n`` is certified
     only when its difference certificate (holding) or its witness (failing)
     exists, else it stays computed."""
-    from omega_engine_operations.use_cases.level_engine.research_engine.level import ROOT, load_fixtures
+    from operations.use_cases.level_engine.research_engine.level import ROOT, load_fixtures
 
     by = {f.fid: f.structure for f in load_fixtures(ROOT / "payload" / CHALLENGE_ID)}
     out = []

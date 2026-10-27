@@ -1,0 +1,154 @@
+# Epic: Paired Campaign Execution, OpenRouter Confinement & V1.0RC Release Gates
+
+**Epic ID:** `EPIC-OE-PFP-005`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+**Domain Subfolder:** [`product_planning_office/plans/epics/oepfp/`](.)
+**Date:** October 2026
+**Target Subsystems:** `symbol_game`, `education/pfp`
+
+---
+
+## 1. Claim Discipline & Bounded Evaluation Envelope
+
+1. **What this epic supports:**
+   - Formal specification of the paired evaluation methodology across all 2,500 tasks:
+     $$\text{Total Condition Runs} = 2,500 \text{ tasks} \times 2 \text{ conditions (Baseline vs. PFP)} \times 2 \text{ repetitions} = 10,000 \text{ runs}$$
+   - Strict provider confinement via OpenRouter with zero-cost ceiling on free-tier routes and zero automatic provider/model fallback.
+   - Milestone sequence M1–M6 governing generation, sanitization, templates, bedrock remaking, and scaling waves.
+   - 12 implementation units (U01–U12) and 54 atomic acceptance criteria.
+   - Four distinct release gates, including the formal threshold for Adversary design handoff ($\ge 10/12$ accepted units and $\ge 1,876/2,500$ qualified scenarios).
+
+2. **What this epic does not support:**
+   - Does not authorize bypassing intermediate host gates or declaring premature qualification before running heldout tests.
+   - Does not permit unverified spend or silent retry loops on failed network requests.
+   - Does not conflate software qualification with mathematical proof of LLM cognitive abilities.
+
+3. **Narrowest defensible claim:**
+   - Frozen paired records permit a scoped comparison; repetitions, provider/time confounding and uncertainty must still be analyzed before an efficacy claim.
+
+4. **Next test needed:**
+   - Execute a 10-pilot paired rehearsal run using mock transport to verify that 40 condition runs are generated, persisted, and evaluated with 100% paired-record completion.
+
+---
+
+## 2. Executive Summary & Architectural Motivation
+
+Empirical evaluation of prompt transformation protocols requires rigorous experimental design. Running ad-hoc single-turn prompts without controls or statistical repetitions produces noisy, unreplicable observations.
+
+This epic establishes the paired campaign and release management framework:
+1. **Paired Experimental Design:** Every task is evaluated under Condition A (Baseline without PFP transforms) and Condition B (PFP treatment transforms), each repeated twice with fresh context ($N=10,000$).
+2. **Provider Confinement:** Dispatches route exclusively through `TracedGateway` / `ConfinedGateway`. Network exceptions stop dispatch immediately without switching models or dipping into paid credits.
+3. **Formal Gate Taxonomy:** Concrete gates separate planning, Adversary handoff, scope freeze, and V1.0RC candidate qualification.
+
+---
+
+## 3. Paired Experiment Protocol
+
+| Condition | Description | Transport & Treatment | Oracle Evaluation |
+|:---|:---|:---|:---|
+| **Condition A (Baseline)** | Control arm | Raw task stimulus $P$ sent directly through common transport; PFP rewrites, modes, and antibodies disabled. | Evaluated by private independent host checker. |
+| **Condition B (PFP Treatment)** | Experimental arm | Compiled stimulus $P^*$ with assigned EBNF grammar, active mode (01–20), antibodies, and stage decomposition. | Evaluated by identical private independent host checker. |
+
+### 3.1 Repetition & Independence Invariants
+- Each task undergoes 2 repetitions per condition with independently cleared conversation history:
+  $$\text{Runs per task } i = \{ A_{i,1}, A_{i,2}, B_{i,1}, B_{i,2} \}$$
+- Order of execution is interleaved to prevent time-of-day provider drift from confounding condition results.
+- Private oracle test vectors are strictly quarantined and never transmitted in prompt payloads.
+
+---
+
+## 4. Confinement & Call Budget Arithmetic
+
+- **Free-Tier Spending Ceiling:** Explicitly configured as **$0.000000**.
+- **Paid-Tier Maximum (if authorized):** Strictly $< \$0.001$ per call, with a hard per-run ceiling of $\$0.010$.
+- **Call Counting:**
+  Let $k_i$ be the maximum model calls per repetition of task $i$'s treatment. With 1-call baseline:
+  $$\text{Campaign Calls} = 2 \times \sum_{i=1}^{2500} (1 + k_i)$$
+  - For 1-call reduced profile: $2 \times 2,500 \times (1 + 1) = 10,000$ calls.
+  - For full 7-model-turn profile: $2 \times 2,500 \times (1 + 7) = 40,000$ calls.
+- **Fail-Closed Stop:** Any billing attempt or quota error immediately halts future sends across the entire campaign queue.
+
+---
+
+## 5. Milestone Delivery Schedule (M1–M6)
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                   PFP V1.0RC MILESTONE ROADMAP                         │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│   [ M1: Matrix Generator & Canonical Files ]                           │
+│     - gen_pilot_matrix_2500.py -> pilots/matrix/pilots_2500_matrix.yaml│
+│                                                                        │
+│   [ M2: Sanitizer & Residual Text Ledger ]                             │
+│     - pilot_response_sanitizer.py -> residual_text_ledger.json         │
+│                                                                        │
+│   [ M3: Pilot Template Kit ]                                           │
+│     - _kits/pilot_template/ (spec.yaml, run.py, tests, README)         │
+│                                                                        │
+│   [ M4: Phase 0 Bedrock Remake ]                                       │
+│     - Remake Pilots 00000 to 00149 into 4-artifact anatomy             │
+│                                                                        │
+│   [ M5: Phase 1 First Scaling Wave ]                                   │
+│     - Materialize & execute Pilots 00150 to 01149 (1,000 pilots)       │
+│                                                                        │
+│   [ M6: Phase 2 Second Scaling Wave & Heldout Lock ]                   │
+│     - Materialize Pilots 01150 to 02499 (1,350 pilots)                 │
+│     - Execute 2,000 heldout cases under paired protocol                │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 6. The Four Release Gates
+
+| Gate | Required Evidence & Thresholds | Consequence |
+|:---|:---|:---|
+| **Gate 1: Plan Finalized** | Epics 001–005 live, master matrix verified, 54 acceptance items pinned. | Work authorized; zero execution credit. |
+| **Gate 2: Adversary Design Handoff** | At least **10/12 implementation units (83.33%)** accepted; all U04–U09 checks passing (including P09); at least **1,876/2,500 qualified scenarios (75.04%)** with all 4 outcomes evaluated. | Further Adversary design may resume; no automatic runtime integration. |
+| **Gate 3: Scope Freeze** | Exact candidate commit locked; dependency tree pinned; open defect ledger signed. | Candidate frozen; zero new features or expanded profiles. |
+| **Gate 4: V1.0RC Qualification** | All **12/12 units** accepted; **2,500/2,500 scenarios** completed; passing hermetic candidate checks; reproducible release packet. | Candidate eligible for separate release review; no automatic tag or authority promotion. |
+
+---
+
+## 7. Acceptance Criteria & Gate Verification
+
+1. Execution, if later authorized, must account for all 10,000 planned condition slots, including unresolved attempts; qualification requires complete reconciled pairs.
+2. Free-tier qualification requires independently reconciled zero cost; missing price or usage remains unresolved and blocks qualification.
+3. Adversary handoff gate fails closed if fewer than 10 units or fewer than 1,876 scenarios are completed.
+4. Final candidate release bundle contains cryptographically sealed receipts binding input, output, and checker evaluation digests.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** The 10,000 condition-run arithmetic is a planned design, not executed evidence. Current live_evaluator dispatches directly and marks evidence efficacy_eligible=False; the common durable service, reservation and confinement requirements from PFP-002 must precede campaign qualification. Missing provider cost is unknown, never zero.
+
+**Bounded behavior and public port:** Propose a campaign runner over PFP-002 run/replay/regrade ports taking a frozen manifest of task, condition, repetition, model and checker revisions. Return a durable paired-record ledger and typed dispatch/refusal records. Start with two tasks × two conditions × two repetitions, with transport counted and external network blocked; use a separate explicit policy object for handoff thresholds.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Syntax Prefilter checks malformed input; Bare Metal Anchor/Techne implements the smallest production change; Defect Hunter and the Inspector challenge the independent oracle; Punchlist checks custody before Adversary records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | RED witness → minimal GREEN → refactor | Proposed test and independent oracle |
+|---|---|---|
+| 1 | Missing/duplicate condition-repetition coordinate must fail pair completeness; implement eight unique slots and frozen ordering for two tasks; refactor after a complete ledger passes. | `symbol_game/tests/integration/test_paired_campaign_manifest.py::test_eight_slots_and_missing_pair`; independently enumerate the Cartesian product, not the runner's enumeration helper. |
+| 2 | A failure after reservation must leave the attempt unresolved and block retry/fallback; implement one durable state transition; recover only on explicit reconciliation and preserve the original request ID. | `symbol_game/tests/integration/test_paired_campaign_confinement.py::test_uncertain_attempt_blocks_retry`; actual SQLite reopen, send count and model IDs. |
+| 3 | Missing price/cost, a paid route under zero ceiling, or a transplanted observation must block qualification with zero additional sends; implement source binding and fixed-unit reconciliation; restore an eligible observation and qualify only that record. | `symbol_game/tests/integration/test_paired_campaign_qualification.py::test_unknown_cost_and_transplant_refuse`; independent request/response digests and integer micro-unit sums. |
+| 4 | A policy fixture one unit/scenario below its configured boundary must hold; implement a pure threshold check; accept exact-boundary evidence then reject stale candidate/revision or an incomplete pair. | `symbol_game/tests/integration/test_campaign_release_policy.py::test_exact_policy_boundary_and_stale_candidate`; literal small fixture thresholds with the same comparison logic, followed by explicit production-policy fixture review. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: The current evidence ceiling in [pilot_evidence.py](../../../../education/pfp/infrastructure/pilot_evidence.py) is a real target: changing efficacy_eligible to True must fail the regrading-only witness. Campaign-wide halt, reservation and release-policy targets are not implemented in that file; bind their concrete production branches after PFP-002 before mutation execution. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+```powershell
+py -3.12 -m pytest symbol_game/tests/integration/test_paired_campaign_manifest.py -q
+py -3.12 -m pytest symbol_game/tests/integration/test_paired_campaign_confinement.py -q
+py -3.12 -m pytest symbol_game/tests/integration/test_paired_campaign_qualification.py -q
+py -3.12 -m pytest symbol_game/tests/integration/test_campaign_release_policy.py -q
+```
+
+**Cross-epic sink ownership:** Education owns prompt/spec/checker and four-file source bundles; Providers owns admission/reservation/dispatch/settlement; Symbol Game owns the proposed durable pilot application and observation/evaluation journal. PFP-005 consumes reconciled paired evidence and cannot relabel PFP-000 regrading as efficacy evidence. Contracts/schema changes go to Governance; execution evidence stays outside epics. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** No paid sends, provider-price assertions or efficacy claims arise from this offline rehearsal. The 12-unit/54-item inventory and production release thresholds must be pinned to named criteria before Gate 2 or Gate 4 can be evaluated; tagging remains separate from a policy verdict. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

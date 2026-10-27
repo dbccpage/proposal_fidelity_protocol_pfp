@@ -3,10 +3,10 @@
 AuthorityEffect: None. Reconciled 2026-10-13 against remote main
 `4a64d451606294c404e3298d4a2bff4974343004`.
 
-The Python consolidation and rename are complete: `omega_engine_pfp` owns PFP
+The Python consolidation and rename are complete: `pfp` owns PFP
 and Symbol Game. Retain the `pfp`, `symbol-game` and `level-engine` commands,
 native crate names, wire IDs and frozen evidence. The only active planning
-successor is [PFP-010](../../omega_engine_product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md).
+successor is [PFP-010](../../product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md).
 The [earlier closeout](pfp_epic_closeout.md) records previous deliveries and their
 bounded evidence; its counts are not a fresh result for this change.
 
@@ -15,11 +15,11 @@ bounded evidence; its counts are not a fresh result for this change.
 | Owner | Responsibility | Relevant code |
 | --- | --- | --- |
 | PFP | Prepare the public typed prompt; bind task, attempt and input; check actual reply bytes; replay | [task turn](../infrastructure/task_turn.py), [prompt](../use_cases/pfp_prompt.py), [reply](../use_cases/pfp_proposal.py) |
-| Providers | Allowlist, prices, maximum liability, reservations, persistent spend and trusted settlement | [gateway](../../omega_engine_providers/infrastructure/gateway.py), [SQLite ledger](../../omega_engine_providers/infrastructure/budget_ledger.py) |
-| Woland | Roles, repair limits, workflow state, independent file readback and host commands | [role profile](../../omega_engine_woland/infrastructure/teamwork_pfp.py), [CLI](../../omega_engine_woland/entrypoints/teamwork_cli.py) |
-| Workflows/Agents/Skills | Typed instruction contracts, procedural anti-ops and instruction admission | [prompt gates](../../omega_engine_operads/domain/prompt_hierarchy/evaluator.py) |
-| Epistemic Immune System | Candidate pharmacy, reviewed admission and independent danger evidence | [catalog](../../omega_engine_epistemic_immune_system/domain/pharmacy_catalog.py) |
-| Education | Teaching documents, papers and explanatory lessons | [learning route](../../omega_engine_education/documentation/004_oepfp/README.md) |
+| Providers | Allowlist, prices, maximum liability, reservations, persistent spend and trusted settlement | [gateway](../../providers/infrastructure/gateway.py), [SQLite ledger](../../providers/infrastructure/budget_ledger.py) |
+| Adversary | Roles, repair limits, workflow state, independent file readback and host commands | [role profile](../../adversary/infrastructure/teamwork_pfp.py), [CLI](../../adversary/entrypoints/teamwork_cli.py) |
+| Workflows/Agents/Skills | Typed instruction contracts, procedural anti-ops and instruction admission | [prompt gates](../../operads/domain/prompt_hierarchy/evaluator.py) |
+| Epistemic Immune System | Candidate pharmacy, reviewed admission and independent danger evidence | [catalog](../../eis/domain/pharmacy_catalog.py) |
+| Education | Teaching documents, papers and explanatory lessons | [learning route](../../education/documentation/004_oepfp/README.md) |
 
 Schema-valid prose remains UNVERIFIED. Workflow completion is not mathematical
 acceptance, host execution, instruction admission or antibody activation. The
@@ -52,13 +52,13 @@ composition. Ordinary role turns do not automatically acquire either permission.
    bound and idempotent. Target `test_durable_run_budget` and provider controls.
 5. **Verify the installed distribution.** Build a wheel, install with no source
    fallback outside the checkout, run Python with `-I`, and assert every imported
-   Omega production module originates in the installed target. Execute the
+   Core production module originates in the installed target. Execute the
    [installed probe](../tests/installed_package_probe.py): CLI/resources, typed
-   answer/replay/mutations, PFP-to-OEWAS gate, all Woland public exports and an
-   actual Woland synthetic workflow. Its durable-budget control requires an
+   answer/replay/mutations, PFP-to-OEWAS gate, all Adversary public exports and an
+   actual Adversary synthetic workflow. Its durable-budget control requires an
    explicit native binary, identified by SHA-256. The wheel does not bundle or
    attest that native build. Third-party dependencies come from the invoking
-   environment; no Omega production modules may come from the source checkout.
+   environment; no Core production modules may come from the source checkout.
 6. **Protect route closure.** Exercise teamwork, dialogue, research HTTP, critique
    and native retirement/parity controls. Ban new direct network imports,
    including standard-library HTTP. Retained provider import exceptions require
@@ -96,7 +96,7 @@ is required before calling either a hard-cap live demonstration.
 ## Targeted evidence
 
 All new model wire replies in automated controls are labelled synthetic. The
-[retained current-IDE example](../../omega_engine_woland/tests/pilots/evidence/pfp_app_integration_20261012/ide_handoff/README.md)
+[retained current-IDE example](../../adversary/tests/pilots/evidence/pfp_app_integration_20261012/ide_handoff/README.md)
 is a finite signed matrix calculation, not an independent model comparison.
 Replay reconstructs consumed state from actual reply bytes and rejects changed
 answers, inputs, consumed content and verdicts. New failures enter EIS as
@@ -113,12 +113,12 @@ Unicode-custody, IDE-artifact, transport-admission and packaging gaps. Those
 findings are repaired. The installed durable probe also exposed a Windows
 SQLite initialization handle leak; its repair has a focused regression.
 
-The [scoped verification record](../../omega_engine_woland/tests/pilots/evidence/pfp_app_integration_20261012/verification.json)
+The [scoped verification record](../../adversary/tests/pilots/evidence/pfp_app_integration_20261012/verification.json)
 records **289 distinct passing targeted checks**, the required 52/52 republication
 and 6/6 education gates, and the installed wheel's digest. The isolated probe
-resolved 19 Woland root and two controller exports, checked 682 imported Omega
+resolved 19 Adversary root and two controller exports, checked 682 imported Core
 production modules against the installed target, exercised typed replies,
-replay mutations, OEWAS controls and a synthetic Woland file workflow, then
+replay mutations, OEWAS controls and a synthetic Adversary file workflow, then
 exercised native-backed durable holds, restart refusal and trusted settlement.
 Its two workflow and five accounting fixture calls made no external sends.
 
@@ -141,25 +141,25 @@ rewriting the earlier native/file accounting.
 | --- | --- |
 | `challenge_suite/execution.py` | PFP `infrastructure/challenge_execution.py`: isolated trusted source judges, host execution and replay. |
 | `challenge_suite/live.py` | PFP `infrastructure/challenge_live.py`: PFP campaign composition for original task profiles. |
-| `challenge_suite/woland.py` | Woland `infrastructure/challenge_play.py`: shared challenge workflow and bounded proposal/review/repair. |
-| `challenge_suite/mechanism.py` | Woland `infrastructure/mechanism_play.py`: original C006 session composition. |
+| `challenge_suite/adversary.py` | Adversary `infrastructure/challenge_play.py`: shared challenge workflow and bounded proposal/review/repair. |
+| `challenge_suite/mechanism.py` | Adversary `infrastructure/mechanism_play.py`: original C006 session composition. |
 | `relational_spacetime/compact_prompts.py` | PFP `infrastructure/numbered_prompts.py`: current v1.0.4 numbered-role construction; earlier versions remain literal. |
 
-The retained task profiles now under Woland tests keep these responsibilities:
+The retained task profiles now under Adversary tests keep these responsibilities:
 
 | Retained source group | Reason and boundary |
 | --- | --- |
-| `challenge_suite/catalog.py`, `c001.py`, `__main__.py` | Original problem inventory, public case projection, C001 schema/judge adapter and task/spec preparation. Current execution calls canonical PFP/Woland modules. |
+| `challenge_suite/catalog.py`, `c001.py`, `__main__.py` | Original problem inventory, public case projection, C001 schema/judge adapter and task/spec preparation. Current execution calls canonical PFP/Adversary modules. |
 | `challenge_suite/replay_snapshots.py` | Explicit historical source/revision replay tool; old module paths in its sealed inputs remain historical identities. |
 | `relational_spacetime/tasks.py` | The five original derivation seeds, granted lifts and task-specific schemas. No shared sender or ledger. |
 | `finite_checks.py`, `finite_fixtures.py`, `compact_checks.py` | Original exact fixture judges, witness controls and experiment-specific scoring. They consume canonical PFP contracts and current prompt construction. |
 | `trial_prompts.py`, `final_prompts.py` | Original task/profile licenses, source context, historical recipe inputs and fixture-specific schemas. Current generic numbered-role assembly is canonical PFP. |
 | `baseline.py`, `parameter_trials.py`, `compact_trials.py`, `typed_signals.py` | Named experiment selection, original task/checker wiring, results and historical campaign replay. Construction/execution delegates to existing PFP adapters/use cases; checkpoint/source requirements remain explicit. |
 | `decoding_controls.py` | The pinned Qwen/PO035 experimental capability/tokenizer profile, not a second provider transport. |
-| Formal-math/synthesis matrix helpers | Original cases/judge classifications stay beside their PFP/Woland test profiles. [PR #880](https://github.com/dbccpage/the_symbol_game/pull/880) moves their send path through the shared canonical PFP/accounting adapter; it is merged. |
+| Formal-math/synthesis matrix helpers | Original cases/judge classifications stay beside their PFP/Adversary test profiles. [PR #880](https://github.com/dbccpage/the_symbol_game/pull/880) moves their send path through the shared canonical PFP/accounting adapter; it is merged. |
 
 Infrastructure composes these trusted task profiles explicitly. PFP
-pure domain/use cases do not acquire a Woland dependency to obtain transport or
+pure domain/use cases do not acquire a Adversary dependency to obtain transport or
 judges. This disposition does not turn the original scientific protocols into
 generic finite certificates or retire their unimplemented requirements.
 
@@ -167,16 +167,16 @@ Installed verification now checks the five canonical runtime definitions,
 absence of their old active modules, all fifteen current v1.0.3 pilot/role
 renders, source/registry pins, the six original frozen prompt identities and
 missing/tampered historical-byte refusals. It runs outside the checkout with
-Python isolation and checks every imported Omega production module's origin.
+Python isolation and checks every imported Core production module's origin.
 The native budget probe requires an explicitly identified external binary; the
 wheel neither bundles nor attests that binary's current build. These are offline
 controls, not paid-provider or whole-original-protocol results.
 
 Current-source validation for this ownership slice: the declared wheel built
 successfully, included every selected production/data file, and the isolated
-probe loaded 688 Omega production modules from the installed target. All fifteen
+probe loaded 688 Core production modules from the installed target. All fifteen
 current roles rendered; frozen source lookup/mutation controls and synthetic
-Woland/PFP plus native-backed durable budget controls passed. Zero external
+Adversary/PFP plus native-backed durable budget controls passed. Zero external
 provider calls were made. The external native binary was identified by SHA-256,
 not rebuilt or attested as a build of this candidate.
 
@@ -193,7 +193,7 @@ leave the allowlist. No process or provider fallback was added.
 Use the existing migration checker with its explicit current Python scope:
 
 ```powershell
-python -m omega_engine_pfp.infrastructure.migration_fitness --current-python
+python -m pfp.infrastructure.migration_fitness --current-python
 ```
 
 It checks the manifest's declared moves against original and introduction Git
@@ -214,7 +214,7 @@ historical; use the default command for current coverage and source digests.
 
 New campaign runs capture the exact template, case and TASK files alongside
 Python sources in their existing source snapshot. Replay refuses changes to any
-of these inputs before grading. The Woland challenge adapter already binds TASK
+of these inputs before grading. The Adversary challenge adapter already binds TASK
 bytes and validates the case digest; it constructs its own typed turn and does
 not consume this campaign template.
 
@@ -225,7 +225,7 @@ captured entrypoint identities and the canonical `challenge_live.py` identity:
 
 ```powershell
 git worktree add --detach <disposable-checkout> 69570b3e5fcf4b3799469f7d294ffee5899637fc
-python -m omega_engine_woland.tests.pilots.challenge_suite.replay_snapshots --checkout <disposable-checkout> --evidence omega_engine_woland/tests/pilots/evidence/demo004_pfp_learning --run c005_dev_typed_witness_v5 --output <new-output.json>
+python -m adversary.tests.pilots.challenge_suite.replay_snapshots --checkout <disposable-checkout> --evidence adversary/tests/pilots/evidence/demo004_pfp_learning --run c005_dev_typed_witness_v5 --output <new-output.json>
 git -C <disposable-checkout> status --porcelain
 git worktree remove <disposable-checkout>
 ```
@@ -252,7 +252,7 @@ OpenRouter accounting policy. The accounting API does not claim fixture
 confinement. Both retain their existing runtime APIs. Extra construction calls,
 missing constructor paths and raw imports outside these owners refuse; static
 source checks do not replace the budget, custody and confinement behavior tests.
-Provider exception checks compare the actual canonical Woland types so an old
+Provider exception checks compare the actual canonical Adversary types so an old
 compatibility module name cannot misstate exception identity.
 
 The next bounded slice closes two observed gaps:
@@ -260,7 +260,7 @@ The next bounded slice closes two observed gaps:
 - Derivation replay explicitly closes its SQLite reader after fetching the saved
   budget state, including query/database failures. Opening remains read-only;
   missing databases refuse without creating a replacement. Its provider imports
-  use the current Woland owners. Replay does not rewrite historical packets or
+  use the current Adversary owners. Replay does not rewrite historical packets or
   bypass source/configuration, request, reply or accounting checks.
 - OpenRouter dialogue rejects an unbudgeted raw gateway before dispatch. It
   reuses the enclosing budgeted provider gateway, `EstimatedBudgetGateway` or
@@ -276,7 +276,7 @@ coverage and mathematical task acceptance remain separate claims.
 
 Main added 719 C051-C055 paths after the preceding Rust-map review. The
 initial inventory found retired-owner references in 22 Python files. The active
-imports and command examples now point to `omega_engine_woland.tests.pilots`;
+imports and command examples now point to `adversary.tests.pilots`;
 script bootstrapping uses the current repository boundary instead of the retired
 owner, a hardcoded checkout or the old directory depth. No compatibility package
 or alternative sender is introduced. The shared matrix transport remains the
@@ -293,13 +293,13 @@ neural/model performance, native parity or the original C001-C030 obligations.
 For a deterministic public-example run from the repository root:
 
 ```bash
-python -m omega_engine_woland.tests.pilots.c052_maxflow_mincut_certificates.participant_packet.runner --all-examples
+python -m adversary.tests.pilots.c052_maxflow_mincut_certificates.participant_packet.runner --all-examples
 ```
 
 Inspect the existing PFP matrix CLI without dispatching a model:
 
 ```bash
-python -m omega_engine_woland.tests.pilots.c052_maxflow_mincut_certificates.run_c052_matrix --help
+python -m adversary.tests.pilots.c052_maxflow_mincut_certificates.run_c052_matrix --help
 ```
 
 That inherited repair was offline and did not claim model/native parity.
@@ -352,15 +352,15 @@ financial gateway owns continuing reservation, billing and no-resend decisions;
 there is no second pilot budget implementation. Fresh native checks bind the
 assembled host separately from historical-binary evidence. Targeted commands,
 source hashes and the single collation live under
-Git commit `0622e7e666877c61ae9330fe55b6a223965e23eb` at `_ic/woland/oev1rc_integration_closure`.
+Git commit `0622e7e666877c61ae9330fe55b6a223965e23eb` at `_ic/adversary/oev1rc_integration_closure`.
 
 ## Final Education pilot-owner move
 
 The move from base `ad49ca44b04c39ba07427c9dc79a24695e1ccd52` places the
 remaining 6,798 tracked Education pilot files under
-`omega_engine_woland/tests/pilots`. Root custody verified their original bytes
+`adversary/tests/pilots`. Root custody verified their original bytes
 before current caller/documentation repairs. Education now holds explanatory
-material; `omega_engine_education/pilots` and `omega_engine_education/pfp` are
+material; `education/pilots` and `education/pfp` are
 absent. The earlier `demo_004` and first-six-pilot move remains under PFP tests.
 
 Current numbered prompting uses append-only `1.0.4` for relocated task/source
@@ -373,15 +373,15 @@ old identities inside sealed manifests are intentional.
 
 ## Every-turn closeout, 2026-10-16
 
-Current supported Woland turns use PFP preparation and checked raw replies:
-IDE/remote Retinue (including digestion, learning and repair), graph proposals,
+Current supported Adversary turns use PFP preparation and checked raw replies:
+IDE/remote Panel (including digestion, learning and repair), graph proposals,
 dialogue, research stages/HTTP, critique, typed operations and the native
 `PfpSeatExecutor`. Formal/synthesis helpers and the operad pre-miner reuse
 `complete_pilot_turn`. The pre-miner now requires an injected accounted gateway,
 one explicit model and task identity, executes serially, and stops on unknown
 accounting. Proposed research/fences stay unverified and are not admitted antibodies.
 
-`woland_pfp_route_violations` in the existing architecture fitness owner inventories
+`adversary_pfp_route_violations` in the existing architecture fitness owner inventories
 these call sites, checks their PFP hooks and confines direct HTTP/SDK construction
 to explicit transport/metadata owners. Mutation tests cover removed prepare/check,
 raw/aliased senders and native wrapper removal. This finite source check complements

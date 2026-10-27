@@ -5,11 +5,11 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.domain.planar_substitution import (
+from operads.domain.planar_substitution import (
     SubstitutionError,
 )
-from omega_engine_operads.domain.workflow_graph import validate_workflow
-from omega_engine_operads.infrastructure.workflow_loader import (
+from operads.domain.workflow_graph import validate_workflow
+from operads.infrastructure.workflow_loader import (
     load_garden,
 )
 

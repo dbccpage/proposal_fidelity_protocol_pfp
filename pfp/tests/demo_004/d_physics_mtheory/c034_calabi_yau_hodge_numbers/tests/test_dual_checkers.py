@@ -10,18 +10,18 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.affine_hnf_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.affine_hnf_checker import (
     verify_affine_hnf_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.dual_evaluator import (
     CheckerDisagreementError,
     assert_dual_agreement,
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
     verify_facet_point_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.reference_solver.solver import (
     solve,
 )
 
@@ -158,7 +158,7 @@ def test_assert_dual_agreement_raises_on_divergence(monkeypatch):
     ans = solve(valid_case)
 
     # Checker 1 accepts ans (True), force Checker 2 to reject (False)
-    import omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.dual_evaluator as de_mod
+    import projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.dual_evaluator as de_mod
 
     monkeypatch.setattr(
         de_mod, "verify_affine_hnf_certificate", lambda c, a: (False, "forced divergence")

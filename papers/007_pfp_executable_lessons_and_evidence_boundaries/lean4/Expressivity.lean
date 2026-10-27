@@ -6,7 +6,7 @@
 # Inc 4 Q1-A: `expressivityNorm` on `Q¹_n`
 
 The Lean side of the Symbol Game expressivity norm, lined up with the Rust
-`omega_symbol_game::expressivity::norm`.
+`core_symbol_game::expressivity::norm`.
 
 ## Carrier
 
@@ -32,10 +32,10 @@ exhibits a non-constant potential that shifts the value.
 
 This file is the *definition*. Authority is not minted here. The
 companion file `GrammarCeiling.lean` proves the bound; the sealed
-terminalizer in `omega_sweep_kernel` is the only authority surface.
+terminalizer in `core_sweep_kernel` is the only authority surface.
 -/
 
-namespace OmegaCosmology.SymbolGame
+namespace CoreCosmology.SymbolGame
 
 /-- `expressivityNorm h := Σ |h e|` — the rational ℓ¹ mass of the C¹
     defect cochain `h_n`. -/
@@ -53,4 +53,4 @@ theorem expressivityNorm_cons (x : Int) (xs : List Int) :
 theorem expressivityNorm_nonneg (h : List Int) : 0 ≤ expressivityNorm h := by
   exact Nat.zero_le _
 
-end OmegaCosmology.SymbolGame
+end CoreCosmology.SymbolGame

@@ -7,7 +7,7 @@ AuthorityEffect: None.
 
 import pytest
 
-from omega_engine_workflows_agents_skills.domain.planar_substitution import (
+from workflows_agents_skills.domain.planar_substitution import (
     OperadOperation,
     SubstitutionError,
     associativity_witness,

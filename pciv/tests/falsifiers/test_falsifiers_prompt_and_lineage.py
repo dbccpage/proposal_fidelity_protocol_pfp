@@ -32,14 +32,14 @@ import pytest
 
 
 def test_f_prompt_01_retired_python_crates_path_is_gone() -> None:
-    """F-PROMPT-01: The retired Python crate path omega_engine.crates.prompt_civilization stays gone."""
+    """F-PROMPT-01: The retired Python crate path engine.crates.prompt_civilization stays gone."""
     with pytest.raises(ModuleNotFoundError):
-        import omega_engine.crates.prompt_civilization  # noqa: F401
+        import engine.crates.prompt_civilization  # noqa: F401
 
 
 def test_f_prompt_02_antiskillspecv2_stays_proposed_with_no_runtime_enforcement() -> None:
     """F-PROMPT-02: AntiSkillSpecV2 constructor rejects non-PROPOSED status or runtime_enforcement=True."""
-    from omega_engine_operads.domain.anti_skills.anti_skill_v2 import (
+    from operads.domain.anti_skills.anti_skill_v2 import (
         AntiSkillSpecV2,
     )
 
@@ -71,7 +71,7 @@ def test_f_prompt_02_antiskillspecv2_stays_proposed_with_no_runtime_enforcement(
 
 def test_f_prompt_03_mutation_operator_cannot_admit() -> None:
     """F-PROMPT-03: MutationOperatorCandidateV1 has no admission field and attempting self-admission refuses."""
-    from omega_engine_operating_system.adapters.prompt_civ.forge import (
+    from operating_system.adapters.prompt_civ.forge import (
         MutationOperatorCandidateV1,
     )
 
@@ -90,7 +90,7 @@ def test_f_prompt_03_mutation_operator_cannot_admit() -> None:
 
 def test_f_genome_01_genome_immutable_view_derived_at_declared_revision() -> None:
     """F-GENOME-01: PromptGenomeV1 is immutable; PromptViewV1 derived at declared ledger revision."""
-    from omega_engine_operating_system.adapters.prompt_civ.record import (
+    from operating_system.adapters.prompt_civ.record import (
         CustodyTier,
         PromptGenomeV1,
         PromptViewEngineV1,
@@ -98,7 +98,7 @@ def test_f_genome_01_genome_immutable_view_derived_at_declared_revision() -> Non
 
     genome = PromptGenomeV1(
         source_packet_refs=[{"packet_id": "pkt_01", "sha256": "sha_01"}],
-        domain_model={"domain": "omega.math"},
+        domain_model={"domain": "core.math"},
         parents=[],
         birth_custody=CustodyTier.WILD,
     )
@@ -117,7 +117,7 @@ def test_f_genome_01_genome_immutable_view_derived_at_declared_revision() -> Non
 
 def test_f_genome_02_re_execution_creates_occurrence_not_new_genome() -> None:
     """F-GENOME-02: Executing an unchanged prompt creates ExecutionOccurrenceV1, not a new PromptGenomeV1."""
-    from omega_engine_operating_system.adapters.prompt_civ.record import (
+    from operating_system.adapters.prompt_civ.record import (
         ExecutionOccurrenceV1,
         PromptGenomeRegistryV1,
         PromptGenomeV1,
@@ -126,7 +126,7 @@ def test_f_genome_02_re_execution_creates_occurrence_not_new_genome() -> None:
     registry = PromptGenomeRegistryV1()
     genome = PromptGenomeV1(
         source_packet_refs=[{"packet_id": "pkt_same", "sha256": "sha_same"}],
-        domain_model={"domain": "omega.math"},
+        domain_model={"domain": "core.math"},
         parents=[],
     )
     registry.register_genome(genome)
@@ -155,7 +155,7 @@ def test_f_genome_02_re_execution_creates_occurrence_not_new_genome() -> None:
 
 def test_f_genome_03_derived_fields_rederived_mismatch_refused() -> None:
     """F-GENOME-03: Supplying wrong generation or protected_spans raises DERIVED_FIELD_MISMATCH."""
-    from omega_engine_operating_system.adapters.prompt_civ.record import (
+    from operating_system.adapters.prompt_civ.record import (
         PromptGenomeV1,
     )
 
@@ -163,7 +163,7 @@ def test_f_genome_03_derived_fields_rederived_mismatch_refused() -> None:
     with pytest.raises(ValueError, match="DERIVED_FIELD_MISMATCH"):
         PromptGenomeV1.create_verified(
             source_packet_refs=[{"packet_id": "pkt_child", "sha256": "sha_child"}],
-            domain_model={"domain": "omega.math"},
+            domain_model={"domain": "core.math"},
             parents=[{"parent_id": "parent_gen_3", "generation": 3}],
             declared_generation=2,  # Supplying wrong generation (2 instead of 4)
         )
@@ -174,7 +174,7 @@ def test_f_lineage_01_edges_exist_only_for_witnessed_causal_relations() -> None:
 
     Matching task objectives alone does not create an inheritance edge.
     """
-    from omega_engine_operating_system.adapters.prompt_civ.genealogy import (
+    from operating_system.adapters.prompt_civ.genealogy import (
         LineageGraphV1,
         RelationshipType,
     )
@@ -190,7 +190,7 @@ def test_f_lineage_01_edges_exist_only_for_witnessed_causal_relations() -> None:
             witness_receipt=None,
         )
 
-    from omega_engine_prompt_civilization.domain.causal_witness import seal_causal_witness
+    from pciv.domain.causal_witness import seal_causal_witness
 
     # Legitimate causal relationship with a sealed witness succeeds
     graph.add_edge(
@@ -213,7 +213,7 @@ def test_f_domain_01_hard_domain_eligibility_requires_admitted_local_placement()
 
     Taxonomy recognition or PROPOSED status alone is excluded.
     """
-    from omega_engine_operating_system.adapters.prompt_civ.domain import (
+    from operating_system.adapters.prompt_civ.domain import (
         DomainPlacementV1,
         hard_domain_eligible,
     )
@@ -222,29 +222,29 @@ def test_f_domain_01_hard_domain_eligibility_requires_admitted_local_placement()
     unadmitted_placement = DomainPlacementV1(
         placement_id="place_01",
         content_digest="sha256:prompt_bytes",
-        domain_assignment="omega.math.integral",
-        read_scope=["omega.math.integral"],
+        domain_assignment="core.math.integral",
+        read_scope=["core.math.integral"],
         disposition="INDEXED_UNREAD",
     )
-    assert hard_domain_eligible(unadmitted_placement, "omega.math.integral") is False
+    assert hard_domain_eligible(unadmitted_placement, "core.math.integral") is False
 
     # 2. Admitted local placement with matching read_scope
     admitted_placement = DomainPlacementV1(
         placement_id="place_02",
         content_digest="sha256:prompt_bytes",
-        domain_assignment="omega.math.integral",
-        read_scope=["omega.math.integral"],
+        domain_assignment="core.math.integral",
+        read_scope=["core.math.integral"],
         disposition="ADMITTED_LOCAL",
     )
-    assert hard_domain_eligible(admitted_placement, "omega.math.integral") is True
+    assert hard_domain_eligible(admitted_placement, "core.math.integral") is True
 
 
 def test_f_bio_03_protected_spans_are_immutable() -> None:
     """F-BIO-03: Any mutation attempting to edit bytes within protected_spans is refused."""
-    from omega_engine_operating_system.adapters.prompt_civ.forge import (
+    from operating_system.adapters.prompt_civ.forge import (
         PromptMutationEngineV1,
     )
-    from omega_engine_operating_system.adapters.prompt_civ.record import (
+    from operating_system.adapters.prompt_civ.record import (
         ProtectedSpanV1,
     )
 
@@ -267,7 +267,7 @@ def test_f_bio_03_protected_spans_are_immutable() -> None:
 
 def test_f_bio_04_reference_trail_evaporation_ages_per_contribution() -> None:
     """F-BIO-04: Reference evaporation ages each use on its own (281/256 at epoch 100, NOT 101)."""
-    from omega_engine_operating_system.adapters.prompt_civ.matching import (
+    from operating_system.adapters.prompt_civ.matching import (
         ReferenceTrailEvaporationCalculatorV1,
     )
 
@@ -291,7 +291,7 @@ def test_f_bio_04_reference_trail_evaporation_ages_per_contribution() -> None:
 
 def test_f_bio_05_population_policy_reserves_largest_remainder_allocation() -> None:
     """F-BIO-05: Ecological reserves use largest-remainder allocation (6/3/1 at N=10; sums to N)."""
-    from omega_engine_operating_system.adapters.prompt_civ.forge import (
+    from operating_system.adapters.prompt_civ.forge import (
         PopulationPolicyV1,
     )
 
@@ -313,7 +313,7 @@ def test_f_bio_05_population_policy_reserves_largest_remainder_allocation() -> N
 
 def test_f_select_01_pareto_front_selection_no_composite_scalar() -> None:
     """F-SELECT-01: Candidate prompts partitioned into non-dominated Pareto fronts with lexicographic tiebreak."""
-    from omega_engine_operating_system.adapters.prompt_civ.fitness import (
+    from operating_system.adapters.prompt_civ.fitness import (
         ParetoFrontSelectorV1,
     )
 
@@ -332,7 +332,7 @@ def test_f_select_01_pareto_front_selection_no_composite_scalar() -> None:
 
 def test_f_select_02_exploration_quota_for_unmeasured_prompts() -> None:
     """F-SELECT-02: Unmeasured prompts receive exploration quota so mature lineages do not lock them out."""
-    from omega_engine_operating_system.adapters.prompt_civ.matching import (
+    from operating_system.adapters.prompt_civ.matching import (
         PrecedentMatcherV1,
     )
 
@@ -350,7 +350,7 @@ def test_f_select_02_exploration_quota_for_unmeasured_prompts() -> None:
 
 def test_f_select_03_obligation_binding_exact_verifier_receipt() -> None:
     """F-SELECT-03: Verifier receipt counts toward success ONLY if obligation_id matches task obligation."""
-    from omega_engine_operating_system.adapters.prompt_civ.fitness import (
+    from operating_system.adapters.prompt_civ.fitness import (
         PromptFitnessCalculatorV1,
     )
 
@@ -375,7 +375,7 @@ def test_f_immune_09_no_horizon_reset_relay() -> None:
 
     Child cannot re-originate backward propagation.
     """
-    from omega_engine_operating_system.adapters.prompt_civ.immunity import (
+    from operating_system.adapters.prompt_civ.immunity import (
         ImmunityPropagationEngineV1,
     )
 
@@ -400,7 +400,7 @@ def test_f_immune_09_no_horizon_reset_relay() -> None:
 
 def test_f_immune_10_distance_is_shortest_path_in_inheritance_edge_hops() -> None:
     """F-IMMUNE-10: Multi-parent DAG distance is shortest inheritance-edge hops, NOT generation subtraction."""
-    from omega_engine_operating_system.adapters.prompt_civ.immunity import (
+    from operating_system.adapters.prompt_civ.immunity import (
         DAGHopDistanceCalculatorV1,
     )
 
@@ -418,7 +418,7 @@ def test_f_immune_10_distance_is_shortest_path_in_inheritance_edge_hops() -> Non
 
 def test_f_immune_11_stale_armed_caches_invalidated_upon_revocation() -> None:
     """F-IMMUNE-11: Serving cached repertoire after Suspend or Revoke is disarmed before execution."""
-    from omega_engine_operating_system.adapters.prompt_civ.immunity import (
+    from operating_system.adapters.prompt_civ.immunity import (
         ArmedRepertoireManagerV1,
     )
 
@@ -435,7 +435,7 @@ def test_f_immune_11_stale_armed_caches_invalidated_upon_revocation() -> None:
 
 def test_f_res_06_validity_or_emptiness_alone_earns_no_success_credit() -> None:
     """F-RES-06: Valid syntax or empty outputs earn no success credit in fitness; valid is not correct."""
-    from omega_engine_operating_system.adapters.prompt_civ.fitness import (
+    from operating_system.adapters.prompt_civ.fitness import (
         PromptFitnessCalculatorV1,
     )
 
@@ -453,7 +453,7 @@ def test_f_res_06_validity_or_emptiness_alone_earns_no_success_credit() -> None:
 
 def test_f_res_07_custody_invalidation_is_global_across_all_bindings() -> None:
     """F-RES-07: Suspending or revoking an antibody disarms every binding of that rule version."""
-    from omega_engine_operating_system.adapters.prompt_civ.immunity import (
+    from operating_system.adapters.prompt_civ.immunity import (
         GlobalCustodyRegistryV1,
     )
 
@@ -472,7 +472,7 @@ def test_f_res_07_custody_invalidation_is_global_across_all_bindings() -> None:
 
 def test_f_res_09_comparative_claims_need_holdout_and_multiplicity_correction() -> None:
     """F-RES-09: Emitting comparative benefit claims without holdout split or multiplicity correction is refused."""
-    from omega_engine_operating_system.adapters.prompt_civ.fitness import (
+    from operating_system.adapters.prompt_civ.fitness import (
         ComparativeClaimAuditorV1,
     )
 
@@ -489,7 +489,7 @@ def test_f_res_09_comparative_claims_need_holdout_and_multiplicity_correction() 
 
 def test_f_res_11_taint_moves_forward_under_host_bound_policy() -> None:
     """F-RES-11: Lineage taint moves forward along causal graph under host-bound TaintPolicyV1 (default OR)."""
-    from omega_engine_operating_system.adapters.prompt_civ.immunity import (
+    from operating_system.adapters.prompt_civ.immunity import (
         LineageTaintEngineV1,
         TaintPolicyV1,
     )

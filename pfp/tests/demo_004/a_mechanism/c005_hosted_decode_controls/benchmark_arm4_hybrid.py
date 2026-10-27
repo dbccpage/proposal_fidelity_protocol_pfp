@@ -16,16 +16,16 @@ from pathlib import Path
 from typing import Any
 
 _worktree_root = next((parent for parent in Path(__file__).resolve().parents
-    if (parent / "omega_engine_pfp").is_dir() and (parent / "omega_engine_woland").is_dir()), None)
+    if (parent / "pfp").is_dir() and (parent / "adversary").is_dir()), None)
 if _worktree_root is not None and str(_worktree_root) not in sys.path:
     sys.path.insert(0, str(_worktree_root))
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import get_hidden_base_cases as get_hidden_base_cases
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import verify_consistency_certificate
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.run_woland_bakeoff import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.cases import get_hidden_base_cases as get_hidden_base_cases
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.checkers import verify_consistency_certificate
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.run_adversary_bakeoff import (
     not_adjudicated_fields as not_adjudicated_fields, persist_benchmark_run as persist_benchmark_run,
 )
-from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.benchmark_3arm_scratchpad import (
+from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.benchmark_3arm_scratchpad import (
     _numeric_prompt, _run_benchmark, _main,
 )
 

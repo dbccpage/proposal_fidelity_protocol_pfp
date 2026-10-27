@@ -11,15 +11,15 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.finite_gauge import RunConfig
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.input_yaml import (
+from pfp.domain.finite_gauge import RunConfig
+from pfp.infrastructure.adapters.finite_gauge.input_yaml import (
     parse_input_yaml,
 )
-from omega_engine_pfp.infrastructure.composition.finite_gauge import (
+from pfp.infrastructure.composition.finite_gauge import (
     build_run,
     build_run_store,
 )
-from omega_engine_pfp.use_cases.finite_gauge_workbench import (
+from pfp.use_cases.finite_gauge_workbench import (
     FiniteGaugeRun,
 )
 
@@ -57,9 +57,9 @@ def test_exact_witness_and_restricted_obstruction_are_distinct() -> None:
 
 
 def test_canonical_checker_preserves_historical_bytes_and_shared_types() -> None:
-    from omega_engine_pfp.infrastructure.adapters.finite_gauge import frontier_search, sign_graph
+    from pfp.infrastructure.adapters.finite_gauge import frontier_search, sign_graph
     historical = Path(__file__).resolve().parents[2] / (
-        "omega_engine_atlas/coda_atlas/F004_papers/015_pfp/"
+        "atlas/coda_atlas/F004_papers/015_pfp/"
         "002_pfp_signed_presentations_and_search_frontier/code/genesis_alpha"
     )
     pins = {
@@ -81,11 +81,11 @@ def test_canonical_checker_preserves_historical_bytes_and_shared_types() -> None
 
 @pytest.mark.parametrize("fixture_id", ["gauge_even_triangle", "gauge_odd_triangle"])
 def test_wrong_witness_is_rejected_even_with_resealed_receipt(fixture_id) -> None:
-    from omega_engine_pfp.infrastructure.adapters.finite_gauge import (
+    from pfp.infrastructure.adapters.finite_gauge import (
         frontier_search,
         sign_graph,
     )
-    from omega_engine_pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
+    from pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
         _presentation_key,
     )
 
@@ -112,29 +112,29 @@ def test_source_only_workbench_closure_outside_checkout(tmp_path) -> None:
     root = Path(__file__).resolve().parents[2]
     source_root = tmp_path / "source-only"
     paths = (
-        "omega_engine_pfp/__init__.py",
-        "omega_engine_pfp/infrastructure/__init__.py",
-        "omega_engine_pfp/infrastructure/adapters/__init__.py",
-        "omega_engine_pfp/infrastructure/adapters/finite_gauge/__init__.py",
-        "omega_engine_pfp/infrastructure/adapters/finite_gauge/sign_graph.py",
-        "omega_engine_pfp/infrastructure/adapters/finite_gauge/frontier_search.py",
-        "omega_engine_pfp/infrastructure/adapters/finite_gauge/paper002_checker.py",
-        "omega_engine_pfp/infrastructure/adapters/finite_gauge/run_store.py",
-        "omega_engine_pfp/infrastructure/composition/__init__.py",
-        "omega_engine_pfp/infrastructure/composition/finite_gauge.py",
-        "omega_engine_pfp/domain/finite_gauge/__init__.py",
-        "omega_engine_pfp/domain/finite_gauge/models.py",
-        "omega_engine_pfp/domain/kernel/result.py",
-        "omega_engine_pfp/domain/ports/finite_gauge.py",
-        "omega_engine_pfp/use_cases/__init__.py",
-        "omega_engine_pfp/use_cases/finite_gauge_workbench.py",
+        "pfp/__init__.py",
+        "pfp/infrastructure/__init__.py",
+        "pfp/infrastructure/adapters/__init__.py",
+        "pfp/infrastructure/adapters/finite_gauge/__init__.py",
+        "pfp/infrastructure/adapters/finite_gauge/sign_graph.py",
+        "pfp/infrastructure/adapters/finite_gauge/frontier_search.py",
+        "pfp/infrastructure/adapters/finite_gauge/paper002_checker.py",
+        "pfp/infrastructure/adapters/finite_gauge/run_store.py",
+        "pfp/infrastructure/composition/__init__.py",
+        "pfp/infrastructure/composition/finite_gauge.py",
+        "pfp/domain/finite_gauge/__init__.py",
+        "pfp/domain/finite_gauge/models.py",
+        "pfp/domain/kernel/result.py",
+        "pfp/domain/ports/finite_gauge.py",
+        "pfp/use_cases/__init__.py",
+        "pfp/use_cases/finite_gauge_workbench.py",
     )
     for relative in paths:
         target = source_root / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes((root / relative).read_bytes())
     for package in ("domain", "domain/kernel", "domain/ports"):
-        marker = source_root / "omega_engine_pfp" / package / "__init__.py"
+        marker = source_root / "pfp" / package / "__init__.py"
         marker.parent.mkdir(parents=True, exist_ok=True)
         marker.write_text("", encoding="utf-8")
     probe = """
@@ -142,9 +142,9 @@ import json, sys
 from pathlib import Path
 source_root = Path(sys.argv[1])
 sys.path.insert(0, str(source_root))
-from omega_engine_pfp.domain.finite_gauge import RunConfig
-from omega_engine_pfp.infrastructure.adapters.finite_gauge import frontier_search, sign_graph
-from omega_engine_pfp.infrastructure.composition.finite_gauge import build_run
+from pfp.domain.finite_gauge import RunConfig
+from pfp.infrastructure.adapters.finite_gauge import frontier_search, sign_graph
+from pfp.infrastructure.composition.finite_gauge import build_run
 outcomes = []
 for fixture, budget, expected in (
     ('gauge_even_triangle', 8, 'GAUGE_VERIFIED'),
@@ -157,7 +157,7 @@ for fixture, budget, expected in (
     outcomes.append(result['status'])
 for module in (sign_graph, frontier_search):
     assert Path(module.__file__).is_relative_to(source_root)
-assert not any(name == 'research' or name.startswith(('research.', 'omega_engine_education'))
+assert not any(name == 'research' or name.startswith(('research.', 'education'))
                for name in sys.modules)
 print(json.dumps(outcomes))
 """
@@ -205,7 +205,7 @@ graph:
 def test_fastapi_run_and_replayable_sse() -> None:
     from fastapi.testclient import TestClient
 
-    from omega_engine_pfp.entrypoints.web.workbench import create_app
+    from pfp.entrypoints.web.workbench import create_app
 
     with TestClient(create_app(build_run_store())) as client:
         fixtures = client.get("/api/workbench/fixtures")

@@ -6,12 +6,12 @@ import re
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Refusal
-from omega_engine_pfp.entrypoints.api.swarm_api import (
+from operations.domain.rop.result import Err, Refusal
+from pfp.entrypoints.api.swarm_api import (
     parse_machine_block,
     validate_reply_residual,
 )
-from omega_engine_pfp.infrastructure.serialization import CanonicalizationError
+from pfp.infrastructure.serialization import CanonicalizationError
 
 
 # The retired frontend algorithm is retained here only as a parity oracle.

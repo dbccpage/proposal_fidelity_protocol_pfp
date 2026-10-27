@@ -9,22 +9,22 @@ from copy import deepcopy
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPipelineFailure
-from omega_engine_pfp.domain.contracts.staged_operad import FRAME_TYPES, StageFrame0, json_digest
-from omega_engine_pfp.domain.kernel.result import RefusalCode, TerminalStatus
-from omega_engine_pfp.domain.stages.stages import Stage5Response
-from omega_engine_pfp.infrastructure.providers import OfflineDeterministicPfpProvider
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.execute_stage_pipeline import (
+from pfp.domain.contracts.pfp_runtime import PfpPipelineFailure
+from pfp.domain.contracts.staged_operad import FRAME_TYPES, StageFrame0, json_digest
+from pfp.domain.kernel.result import RefusalCode, TerminalStatus
+from pfp.domain.stages.stages import Stage5Response
+from pfp.infrastructure.providers import OfflineDeterministicPfpProvider
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.execute_stage_pipeline import (
     ExecuteStagePipelineUseCase,
     _EducationPipelineAdapter,
 )
-from omega_engine_woland.infrastructure.pfp_staged_operad import (
+from adversary.infrastructure.pfp_staged_operad import (
     RunNativeStagedPfpUseCase,
     operation_id,
     staged_wire,
 )
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import Wire
+from operads.skill_operad.skill_compiler.op_inventory import Wire
 
 
 class Provider(OfflineDeterministicPfpProvider):
@@ -349,13 +349,13 @@ def test_opt_in_without_an_injected_composition_runner_refuses_before_dispatch()
 
 
 def test_checked_stage_occurrence_stops_the_composite_before_later_dispatch():
-    from omega_engine_operads.skill_operad.resolver.resolver import CheckedOccurrenceRejection
+    from operads.skill_operad.resolver.resolver import CheckedOccurrenceRejection
 
     snapshots = []
     def checked(invocation):
         snapshots.append(invocation)
         if invocation.op_id == operation_id(2):
-            return CheckedOccurrenceRejection(invocation.digest(), "PFP-02-KOROVIEV",
+            return CheckedOccurrenceRejection(invocation.digest(), "PFP-02-DEFECT-HUNTER",
                 "CONTROLLED_BOUND_STAGE_FAILURE", "a" * 64, '{"scope":"controlled host port"}')
 
     owner, provider, host = pipeline()
@@ -436,7 +436,7 @@ def test_staged_occurrences_bind_the_complete_native_model_and_actual_host_resul
     assert [snapshot.ordinal for snapshot in checker.observed] == list(range(11))
     assert len(checker.model.to_json()["occurrences"]) == 11
     checker.model.verify_receipt(owner.pipeline_runner.last_execution)
-    assert result.operad_execution["execution"]["schema"] == "omega.oewas.run_receipt.v5"
+    assert result.operad_execution["execution"]["schema"] == "core.oewas.run_receipt.v5"
     fifth = json.loads(checker.observed[4].output_json)
     assert fifth["prior_results"][4]["data"] == result.stage_responses[5]
     assert len(host.calls) == 1 and [packet.stage for packet in provider.packets] == MODEL_PACKETS

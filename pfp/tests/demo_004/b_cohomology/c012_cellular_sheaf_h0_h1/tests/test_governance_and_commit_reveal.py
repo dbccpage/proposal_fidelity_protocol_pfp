@@ -1,4 +1,4 @@
-"""Tests validating C012 governance (BudgetGate, WolandGate, and Commit-Reveal protocol).
+"""Tests validating C012 governance (BudgetGate, AdversaryGate, and Commit-Reveal protocol).
 
 AuthorityEffect: None.
 """
@@ -11,27 +11,27 @@ import tempfile
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance import (
     commit_reveal_runner as runner_mod,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.budget_gate import (
     HARD_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
     BudgetCeilingExceededError,
     BudgetGate,
     FallbackNotAllowedError,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.commit_reveal_runner import (
     CommitRevealRunner,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.governance.adversary_gate import (
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     RunFolderExistsError,
-    WolandGate,
+    AdversaryGate,
 )
 
-from omega_engine_woland.domain.providers.types import BudgetExceeded, Provider
+from adversary.domain.providers.types import BudgetExceeded, Provider
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
@@ -115,10 +115,10 @@ def test_budget_gate_fallback_and_model_admittance():
     assert spec.total_parameters <= 70_000_000_000
 
 
-def test_woland_gate_verdict_and_bundle_persistence():
+def test_adversary_gate_verdict_and_bundle_persistence():
     with tempfile.TemporaryDirectory() as tmp_dir:
         repo_root = Path(tmp_dir)
-        gate = WolandGate(base_repo_root=repo_root)
+        gate = AdversaryGate(base_repo_root=repo_root)
 
         # 1. Verdict determination
         verdict_pass = gate.determine_terminal_verdict([{"verdict": "PASS", "agreement": True}])
@@ -139,7 +139,7 @@ def test_woland_gate_verdict_and_bundle_persistence():
             "next_test_needed": "C013 Smith Normal Form torsion.",
         }
 
-        verdict, p_woland, p_sg, digests = gate.evaluate_and_persist(
+        verdict, p_adversary, p_sg, digests = gate.evaluate_and_persist(
             task_key=task_key,
             run_id=run_id,
             case_results=[{"verdict": "PASS", "agreement": True}],
@@ -147,11 +147,11 @@ def test_woland_gate_verdict_and_bundle_persistence():
         )
 
         assert verdict == TERMINAL_REFERENCE_SELF_CONSISTENT
-        assert p_woland.is_dir()
+        assert p_adversary.is_dir()
         assert p_sg.is_dir()
 
         # Check 4-file bundle contents in both sinks
-        for run_dir in (p_woland, p_sg):
+        for run_dir in (p_adversary, p_sg):
             assert (run_dir / "novella.md").is_file()
             assert (run_dir / "dda_actions.jsonl").is_file()
             assert (run_dir / "summary.json").is_file()

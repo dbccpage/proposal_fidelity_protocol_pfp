@@ -15,7 +15,7 @@ Both answers are cheap to check, and both are hard to produce.
 - **A solution is checked by evaluation.** Finding one requires either a descent algorithm (Legendre's method) or search within Holzer's bounds (Holzer 1950).
 - **An obstruction is checked quickly too.** One Hilbert symbol `(−ac, −bc)_v = −1` at a single place `v` proves there is no rational point (Hasse–Minkowski for ternary forms). Computing that symbol at a given prime needs only valuations and a Legendre symbol, with no factoring. Finding the prime requires factoring the coefficients.
 
-The asymmetry makes this a clean local-global exercise. It stresses the Symbol Game's handling of two certificate types for one question. It stresses the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that runs factorization, local tests and descent as separate stages. It stresses the OEEIS (Omega Engine Epistemic Immune System) against the common error of reporting "no solution found" as "no solution exists".
+The asymmetry makes this a clean local-global exercise. It stresses the Symbol Game's handling of two certificate types for one question. It stresses the OEWAS (Engine Workflows, Agents, Skills) workflow that runs factorization, local tests and descent as separate stages. It stresses the OEEIS (Engine Epistemic Immune System) against the common error of reporting "no solution found" as "no solution exists".
 
 ## 3. Formal Problem and Bounds
 
@@ -133,7 +133,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse. Big integers come from `omega_engine/crates_rs/omega_kernel` (`num_bigint` and `num_rational` are already workspace dependencies). The Hilbert-symbol checker is new Rust work.
+- The catalog row lists no estate reuse. Big integers come from `engine/crates_rs/core_kernel` (`num_bigint` and `num_rational` are already workspace dependencies). The Hilbert-symbol checker is new Rust work.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 
 ## 14. Claim Hygiene

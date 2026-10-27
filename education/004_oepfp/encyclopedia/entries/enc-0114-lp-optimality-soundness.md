@@ -9,13 +9,13 @@ tower_level: null
 primitive: null
 aliases: []
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "symbol_game_math_spine.md math_spines_v002 §1.5 'Theorem (LP Optimality Soundness)'"
   - "proof_obligations.md v1.3.5 §13 'Theorem (LP-RatOpt soundness)' (section 'PO-C4-FLS — VerifierFamilySoundness', 'Concrete Instance — LP-RatOpt')"
 uses: []
 lean_status: MECHANIZED-PARTIAL
 lean_refs:
-  - "omega_engine/lean4/008_engine_runtime/007_the_symbol_game/PaperER007/L007_07_LPWeakDuality.lean"
+  - "engine/lean4/008_engine_runtime/007_the_symbol_game/PaperER007/L007_07_LPWeakDuality.lean"
   - "PaperER007.lp_max_form_weak_duality"
 extracted: 2026-06-09
 migration: VERIFIED

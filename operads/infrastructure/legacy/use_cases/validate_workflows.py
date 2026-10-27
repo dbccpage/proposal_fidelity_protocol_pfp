@@ -7,7 +7,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.domain.capability_catalog_v1 import (
     decode_capability_catalog,
 )
 

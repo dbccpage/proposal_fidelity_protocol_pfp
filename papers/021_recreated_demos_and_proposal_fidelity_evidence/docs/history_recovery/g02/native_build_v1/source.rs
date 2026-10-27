@@ -1,5 +1,5 @@
 //! G02's declared bounded second checker, independent of recursive sublists.
-use omega_kernel::exact::{integer, to_canonical_string};
+use core_kernel::exact::{integer, to_canonical_string};
 use serde_json::{json, Value};
 use std::io::{self, Read};
 

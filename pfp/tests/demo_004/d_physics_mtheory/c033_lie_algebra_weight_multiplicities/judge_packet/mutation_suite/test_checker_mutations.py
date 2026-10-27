@@ -12,10 +12,10 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.freudenthal_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.freudenthal_checker import (
     verify_freudenthal_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.kostant_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c033_lie_algebra_weight_multiplicities.judge_packet.checkers.kostant_checker import (
     verify_kostant_certificate,
 )
 

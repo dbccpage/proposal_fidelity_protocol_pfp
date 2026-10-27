@@ -3,9 +3,9 @@
 import json
 import sqlite3
 
-from omega_engine_operads.domain.autopoiesis.research import PHASE_CAPS
-from omega_engine_woland.domain.providers.types import ProviderError
-from omega_engine_woland.infrastructure.providers.budget_ledger import SqliteBudgetLedger
+from operads.domain.autopoiesis.research import PHASE_CAPS
+from adversary.domain.providers.types import ProviderError
+from adversary.infrastructure.providers.budget_ledger import SqliteBudgetLedger
 
 
 class HarnessBudgetLedger(SqliteBudgetLedger):

@@ -18,7 +18,7 @@
                       ┌───────────────────────────────┐
                       │    BIT-LEVEL CARRIER GATE     │
                       │  • Unicode codepoints pinned? │
-                      │  • omega-canonical-v1 seal?   │
+                      │  • core-canonical-v1 seal?   │
                       └───────────────┬───────────────┘
                                       │ PASS
                                       ▼
@@ -58,7 +58,7 @@ When the host rejects a move proposal, it emits one of the following typed refus
 | Refusal Code | Category | Cause | Recovery Action |
 | :--- | :--- | :--- | :--- |
 | `REFUSED_CARRIER_MISMATCH` | Security | Proposal contains symbols, characters, or codepoints not in $\mathcal{C}$. | Strip all emojis, unpinned unicode, or off-carrier variables. |
-| `REFUSED_MALFORMED_SYNTAX` | Protocol | Broken JSON, duplicate keys, or missing required fields. | Format the payload with NFC, the `omega-canonical-v1` marker, and bare SHA-256. RFC 8785 names `jcs.rs`, not this sealer. |
+| `REFUSED_MALFORMED_SYNTAX` | Protocol | Broken JSON, duplicate keys, or missing required fields. | Format the payload with NFC, the `core-canonical-v1` marker, and bare SHA-256. RFC 8785 names `jcs.rs`, not this sealer. |
 | `REFUSED_CARRIER_DOMAIN` | Boundary | References vertices or edges not in the active board definition. | Inspect active board topology; use only declared edge keys (e.g. `0->1`). |
 | `REFUSED_MONOTONICITY_VIOLATION`| Invariant | Proposed `CUT` increased defect or left $\Phi_1$ unchanged ($\Phi_1' \ge \Phi_1$). | Ensure proposed vertex potentials strictly decrease cycle circulation. |
 | `REFUSED_NONZERO_DEFECT` | Terminal | `VERIFY` called while boundary defect $\Phi_1 > 0$ or cycle holonomies remain. | Emit valid `CUT` moves to cancel circulation before calling `VERIFY`. |

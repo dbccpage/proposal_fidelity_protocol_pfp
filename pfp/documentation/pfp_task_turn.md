@@ -4,8 +4,8 @@ This offline path prepares an ordinary worker, reviewer or learning task and
 checks its actual reply. It reuses `PfpPromptTemplate`, `PfpTaskPrompt`,
 `PfpPrompt`, strict JSON ingress and the existing independently injected judges.
 It does not dispatch a provider or require a mathematical witness, SPK-only
-fields or eight stages. Woland uses this boundary for its supported model routes;
-[PFP-010](../../omega_engine_product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md)
+fields or eight stages. Adversary uses this boundary for its supported model routes;
+[PFP-010](../../product_planning_office/plans/epics/oepfp/epic_oe_pfp_010_consolidated_residual_plan.md)
 records legacy route dispositions and current limits.
 
 Save this as `task.json`:
@@ -70,9 +70,9 @@ witnesses.
 For a finite task, inject the existing judge boundary:
 
 ```python
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-from omega_engine_pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
-from omega_engine_pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+from pfp.use_cases.pfp_prompt import PreparePfpTaskTurnUseCase
+from pfp.use_cases.pfp_proposal import CheckPfpTaskTurnUseCase
 
 task = PfpTaskPrompt("sum-1", "Add a and b.", {"a": 2, "b": 3}, {"type": "integer"})
 template = PfpPromptTemplate("Complete the supplied task.", "[USER PROMPT]", {})
@@ -93,13 +93,13 @@ independent check can produce `HOST_ACCEPTED`. Judge exceptions/disagreement use
 the existing checker-defect outcome. Raw judge messages remain host-side:
 continuation accepts only the existing bounded `REPAIR_RULES`, and a revised
 candidate needs a fresh check. Provider budgets, continuing run limits and
-automatic Woland orchestration remain responsibilities of the existing run
+automatic Adversary orchestration remain responsibilities of the existing run
 adapter; these offline operations do not pretend to enforce them.
 
 ## Observed handoff and applied lesson
 
 The PFP-000/001 delivery exercised this route with a real review reply from the
-current IDE assistant, then passed the checked answer into Woland's existing
+current IDE assistant, then passed the checked answer into Adversary's existing
 review observation. The binding/schema check returned `PROVIDER_COMPLETED`,
 `UNVERIFIED` and zero provider calls. The subsequent PFP-003/008 delivery uses the same task binding for the supported
 shared coordinator and other model entrypoints. It does not intercept host IDE
@@ -116,24 +116,24 @@ controls across both deliveries passed 185 tests on Python 3.13.11.
 supported tasks. They establish neither universal reasoning improvement nor a
 general mathematical verifier.
 
-## Shared Woland use
+## Shared Adversary use
 
-Python and `/woland` use the existing teamwork coordinator. Ordinary role turns
+Python and `/adversary` use the existing teamwork coordinator. Ordinary role turns
 need one minimal PFP envelope, not eight stages or a mathematical witness.
 
 ```powershell
-$env:OMEGA_SYMBOL_GAME_HOST = (Resolve-Path .scratch/oewas012/native-target/debug/omega_symbol_game.exe).Path
-python -m omega_engine_woland.entrypoints.cli teamwork start --objective "Keep supported Woland model routes on PFP" --state task.json --native-gate-scope omega_engine_woland/config/software_gate_scope_v1.json --native-gate-policy require_pass --checker-id pfp-route-closure-v1 --checker-source omega_engine_pfp/tests/test_route_closure.py --check-command python -B -m pytest omega_engine_pfp/tests/test_route_closure.py -q --override-ini addopts=
-python -m omega_engine_woland.entrypoints.cli teamwork next --state task.json
-python -m omega_engine_woland.entrypoints.cli teamwork submit --state task.json --raw-reply reply.json
+$env:CORE_SYMBOL_GAME_HOST = (Resolve-Path .scratch/oewas012/native-target/debug/core_symbol_game.exe).Path
+python -m adversary.entrypoints.cli teamwork start --objective "Keep supported Adversary model routes on PFP" --state task.json --native-gate-scope adversary/config/software_gate_scope_v1.json --native-gate-policy require_pass --checker-id pfp-route-closure-v1 --checker-source pfp/tests/test_route_closure.py --check-command python -B -m pytest pfp/tests/test_route_closure.py -q --override-ini addopts=
+python -m adversary.entrypoints.cli teamwork next --state task.json
+python -m adversary.entrypoints.cli teamwork submit --state task.json --raw-reply reply.json
 ```
 
 Supply the built native host and an original-task checker appropriate to the
 actual objective. The example checks supported route closure, not review quality.
-Use new state paths. Hella comes first: run `teamwork check --state task.json`.
+Use new state paths. Syntax Prefilter comes first: run `teamwork check --state task.json`.
 For a returned host action, execute its existing command (`native-gates`,
 `recheck`, `ddc-store`, `ddc-read`, `digest` or `ddc-complete`) with the same state.
-Only actions with `communication: pfp` have a model turn. `/woland <task>` performs
+Only actions with `communication: pfp` have a model turn. `/adversary <task>` performs
 this same handoff in the current IDE session; no paid executor is selected.
 
 Read `pfp_turn.system` and `pfp_turn.user`, perform the requested current-session
@@ -150,7 +150,7 @@ Source-bound build/repair and claimed learning edits require this readback.
 For an explicitly paid text-artifact bout:
 
 ```powershell
-python -m omega_engine_woland.entrypoints.cli teamwork run --executor openrouter --objective "Write a concise review checklist" --state bout.json --output checklist.txt --model openai/gpt-4o-mini --max-estimated-cost-microusd 5000 --max-provider-calls 42 --max-output-tokens 1024 --max-repairs 1 --native-gate-scope omega_engine_woland/config/software_gate_scope_v1.json --checker-id checklist.file.v1 --check-command python -c "from pathlib import Path; p=Path('checklist.txt'); assert p.is_file() and p.stat().st_size > 0"
+python -m adversary.entrypoints.cli teamwork run --executor openrouter --objective "Write a concise review checklist" --state bout.json --output checklist.txt --model openai/gpt-4o-mini --max-estimated-cost-microusd 5000 --max-provider-calls 42 --max-output-tokens 1024 --max-repairs 1 --native-gate-scope adversary/config/software_gate_scope_v1.json --checker-id checklist.file.v1 --check-command python -c "from pathlib import Path; p=Path('checklist.txt'); assert p.is_file() and p.stat().st_size > 0"
 ```
 
 The paid example was not executed in this closeout. Its checker establishes
@@ -166,7 +166,7 @@ justified learning through `/auto-oe-autop` and `/auto-learn` once after the run
 Captured `metadata.pfp` records can be rechecked without a provider:
 
 ```python
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
+from pfp.infrastructure.task_turn import prepare_task_turn
 
 turn = prepare_task_turn(system=original_system, user=original_user,
     task_id=original_task_id, attempt_id=original_attempt_id,
@@ -191,7 +191,7 @@ check; model review alone is not independent correctness evidence.
 
 ## Durable hard run budget
 
-`--max-cost-microusd 50000` on Woland's OpenRouter teamwork command binds one
+`--max-cost-microusd 50000` on Adversary's OpenRouter teamwork command binds one
 run ID, objective digest and allowance to the state file's `.budget.sqlite3`
 companion. Worker, review, repair and learning calls claim their bound action
 before dispatch. Reopening the same action never sends it again. Raw vendor
@@ -205,12 +205,12 @@ demonstrate the continuing $0.05 ledger, restart and concurrency behavior;
 they do not establish a vendor bill guarantee. Estimated mode is explicitly
 opt-in and never an automatic fallback from a hard ceiling. Default call
 allowances are 32 for hard policy and 42 for estimated policy; each includes
-repairs and the full Retinue, not a fresh allowance per role.
+repairs and the full Panel, not a fresh allowance per role.
 
 Resume a saved OpenRouter run using a new state path:
 
 ```powershell
-python -m omega_engine_woland.entrypoints.cli teamwork resume --state bout.json --output continued.json --reason "Continue the original task"
+python -m adversary.entrypoints.cli teamwork resume --state bout.json --output continued.json --reason "Continue the original task"
 ```
 
 Continuation reuses the saved model, financial policy, objective and ledger.

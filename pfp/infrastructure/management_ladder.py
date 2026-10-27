@@ -7,29 +7,29 @@ from hashlib import sha256
 import json
 from pathlib import Path
 
-from omega_engine_pfp.domain.pilots.management_ladder import (
+from pfp.domain.pilots.management_ladder import (
     VERSION, SEED, canonical_answer, control_answers, grade_answer, item_bank, select_calibration_items,
 )
-from omega_engine_pfp.domain.prompts.compression import compress_prompt_tree, prompt_tree_storage_metrics
-from omega_engine_pfp.infrastructure.compressed_task_turn import prepare_compressed_turn
-from omega_engine_pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign, native_anthropic_request
-from omega_engine_operations.domain.rop.result import Err
-from omega_engine_pfp.infrastructure.pfp_operad import PfpTurnExecutor
-from omega_engine_pfp.infrastructure.seat_transport.anthropic_messages import AnthropicMessagesTransport
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-from omega_engine_operads.skill_operad.skill_compiler.op_inventory import (
+from pfp.domain.prompts.compression import compress_prompt_tree, prompt_tree_storage_metrics
+from pfp.infrastructure.compressed_task_turn import prepare_compressed_turn
+from pfp.infrastructure.estimated_gateway import NativeAnthropicCampaign, native_anthropic_request
+from operations.domain.rop.result import Err
+from pfp.infrastructure.pfp_operad import PfpTurnExecutor
+from pfp.infrastructure.seat_transport.anthropic_messages import AnthropicMessagesTransport
+from pfp.infrastructure.task_turn import prepare_task_turn
+from operads.skill_operad.skill_compiler.op_inventory import (
     HostBinding, OpInventory, OpSpec, PfpTurnBinding, SkillDecomposition, Wire,
 )
-from omega_engine_operads.skill_operad.resolver.resolver import compose, Refusal
-from omega_engine_operads.skill_operad.resolver.native_runtime import run_native as run
+from operads.skill_operad.resolver.resolver import compose, Refusal
+from operads.skill_operad.resolver.native_runtime import run_native as run
 
 MODELS=('claude-haiku-5-5','claude-sonnet-5-5','claude-opus-5-5')
 STAGE_CAPS=dict(P0=0,P1=200000,P2=600000,P3=800000,P4=400000)
 BASE=Path(__file__).resolve().parents[2]
-DESIGN=BASE/'omega_engine_woland/tests/pilots/certified_ladder/design_v2.md'
-PRICES=BASE/'omega_engine_pfp/fixtures/empirical/anthropic_pricing_20261015.json'
-MODEL_ACCESS=BASE/'omega_engine_pfp/fixtures/empirical/anthropic_model_access_20261015.json'
-MODELS_RESPONSE=BASE/'omega_engine_pfp/fixtures/empirical/anthropic_models_20261015.json'
+DESIGN=BASE/'adversary/tests/pilots/certified_ladder/design_v2.md'
+PRICES=BASE/'pfp/fixtures/empirical/anthropic_pricing_20261015.json'
+MODEL_ACCESS=BASE/'pfp/fixtures/empirical/anthropic_model_access_20261015.json'
+MODELS_RESPONSE=BASE/'pfp/fixtures/empirical/anthropic_models_20261015.json'
 POLICIES=('M0','M1','M2','M3_k1','M3_k3','M3_k5','M3_k8','M4','M5','M6')
 MAX_PRIOR_BYTES=2048
 PLANNED_MAX_CALLS=dict(P0=0,P1=8,P2=12,P3=43,P4=18)
@@ -41,7 +41,7 @@ def canonical(value):
 
 def inventory_for(item):
     specs=tuple(OpSpec(**op,summary='finite composition fixture') for op in item.payload['ops'])
-    return OpInventory(schema_version='omega.oewas.op_inventory.v3',skills=(SkillDecomposition(
+    return OpInventory(schema_version='core.oewas.op_inventory.v3',skills=(SkillDecomposition(
         skill_id='ladder-composition',ops=specs,wiring=Wire.model_validate(item.expected['tree'])),))
 
 
@@ -94,7 +94,7 @@ def host_solve(item, output):
             raise ValueError('INTEGER_FIXTURE_REQUIRED')
         return dict(answer=int(x+y),witness=dict(x=int(x),y=int(y)))
     if item.family=='seeded_defect':
-        from omega_engine_operads.skill_operad.resolver.executors import HOST_EXECUTORS
+        from operads.skill_operad.resolver.executors import HOST_EXECUTORS
         directory=output/'host-inputs'; directory.mkdir(exist_ok=True,parents=True)
         path=directory/(item.item_id+'.py'); raw=item.payload['source'].encode()
         if path.exists() and path.read_bytes()!=raw:
@@ -105,7 +105,7 @@ def host_solve(item, output):
         hit=next(row for row in findings if row['rule_id']=='SFH-PY-001')
         return dict(rule='BARE_EXCEPT',line=hit['line_number'])
     if item.family=='claim_hygiene':
-        from omega_engine_pfp.domain.pilots.fail_closed_gate import _HYPE_REGEX
+        from pfp.domain.pilots.fail_closed_gate import _HYPE_REGEX
         return dict(matches=[dict(token=match.group(),offset=match.start())
             for match in _HYPE_REGEX.finditer(item.payload['text'])])
     raise ValueError('COMPOSITION_HOST_SOLVING_NOT_ADMITTED')
@@ -113,11 +113,11 @@ def host_solve(item, output):
 
 def host_trial(item,output):
     specs=(OpSpec(op_id='host.solve',summary='existing bounded host solver',inputs=('Task',),output='Candidate',
-        binding=HostBinding(target='omega_engine_pfp/infrastructure/management_ladder.py:host_solve')),
+        binding=HostBinding(target='pfp/infrastructure/management_ladder.py:host_solve')),
         OpSpec(op_id='host.check',summary='exact answer gate',inputs=('Candidate',),output='Audit',
-        binding=HostBinding(target='omega_engine_pfp/domain/pilots/management_ladder.py:grade_answer')))
+        binding=HostBinding(target='pfp/domain/pilots/management_ladder.py:grade_answer')))
     wire=Wire(op='host.check',args=(Wire(op='host.solve',args=('Task',)),))
-    inv=OpInventory(schema_version='omega.oewas.op_inventory.v3',skills=(SkillDecomposition(
+    inv=OpInventory(schema_version='core.oewas.op_inventory.v3',skills=(SkillDecomposition(
         skill_id='ladder-host',ops=specs,wiring=wire),))
     return run(inv,wire,[item.payload],{'host.solve':lambda _:canonical_answer(host_solve(item,output)),
         'host.check':lambda answer:grade_answer(item,answer,composition_checker=check_composition)},{})
@@ -132,29 +132,29 @@ def registration(*, prices_path=None, model_access_path=None, models_response_pa
     if access['status']!=200 or access['missing'] or sha256(models_response_path.read_bytes()).hexdigest()!=access['response_sha256']:
         raise ValueError('MODEL_ACCESS_OBSERVATION_INVALID')
     if {row['id'] for row in access['models']} != set(MODELS): raise ValueError('MODEL_ACCESS_SCOPE_INVALID')
-    files=[DESIGN,Path(__file__),BASE/'omega_engine_pfp/domain/pilots/management_ladder.py',
-        BASE/'omega_engine_pfp/domain/pilots/fail_closed_gate.py',
-        BASE/'omega_engine_pfp/infrastructure/estimated_gateway.py',
-        BASE/'omega_engine_pfp/infrastructure/pfp_operad.py',
-        BASE/'omega_engine_operads/skill_operad/resolver/resolver.py',
-        BASE/'omega_engine_pfp/domain/prompts/compression.py',
-        BASE/'omega_engine_pfp/infrastructure/compressed_task_turn.py',
-        BASE/'omega_engine_pfp/infrastructure/task_turn.py',
-        BASE/'omega_engine_pfp/use_cases/pfp_prompt.py',
-        BASE/'omega_engine_pfp/use_cases/pfp_proposal.py',
-        BASE/'omega_engine_pfp/domain/contracts/pfp_runtime.py',
-        BASE/'omega_engine_operads/skill_operad/resolver/native_runtime.py',
-        BASE/'omega_engine_operads/skill_operad/resolver/executors.py',
-        BASE/'omega_engine_operations/use_cases/verification/silent_failure_hunter.py',
-        BASE/'omega_engine_operads/skill_operad/skill_compiler/op_inventory.py',
-        BASE/'omega_engine_pfp/infrastructure/seat_transport/anthropic_messages.py',
-        BASE/'omega_engine_woland/infrastructure/providers/credential_source.py',
-        BASE/'omega_engine/crates_rs/omega_symbol_game/src/anthropic_host.rs',
-        BASE/'omega_engine/crates_rs/omega_woland/src/providers/anthropic/request.rs',
-        BASE/'omega_engine/crates_rs/omega_woland/src/providers/anthropic/response.rs',
-        BASE/'omega_engine/crates_rs/omega_woland/src/providers/anthropic/transport.rs',
-        BASE/'omega_engine/crates_rs/omega_operads/src/operad_runtime.rs',
-        BASE/'omega_engine/crates_rs/omega_operad_theory/src/foundation/planar_tree.rs']
+    files=[DESIGN,Path(__file__),BASE/'pfp/domain/pilots/management_ladder.py',
+        BASE/'pfp/domain/pilots/fail_closed_gate.py',
+        BASE/'pfp/infrastructure/estimated_gateway.py',
+        BASE/'pfp/infrastructure/pfp_operad.py',
+        BASE/'operads/skill_operad/resolver/resolver.py',
+        BASE/'pfp/domain/prompts/compression.py',
+        BASE/'pfp/infrastructure/compressed_task_turn.py',
+        BASE/'pfp/infrastructure/task_turn.py',
+        BASE/'pfp/use_cases/pfp_prompt.py',
+        BASE/'pfp/use_cases/pfp_proposal.py',
+        BASE/'pfp/domain/contracts/pfp_runtime.py',
+        BASE/'operads/skill_operad/resolver/native_runtime.py',
+        BASE/'operads/skill_operad/resolver/executors.py',
+        BASE/'operations/use_cases/verification/silent_failure_hunter.py',
+        BASE/'operads/skill_operad/skill_compiler/op_inventory.py',
+        BASE/'pfp/infrastructure/seat_transport/anthropic_messages.py',
+        BASE/'adversary/infrastructure/providers/credential_source.py',
+        BASE/'engine/crates_rs/core_symbol_game/src/anthropic_host.rs',
+        BASE/'engine/crates_rs/core_adversary/src/providers/anthropic/request.rs',
+        BASE/'engine/crates_rs/core_adversary/src/providers/anthropic/response.rs',
+        BASE/'engine/crates_rs/core_adversary/src/providers/anthropic/transport.rs',
+        BASE/'engine/crates_rs/core_operads/src/operad_runtime.rs',
+        BASE/'engine/crates_rs/core_operad_theory/src/foundation/planar_tree.rs']
     return dict(schema=VERSION,authority_effect='None',local_experiment_seed=SEED,
         provider_seed='UNSUPPORTED',decoding='provider-default; no temperature or seed sent',
         campaign_cap_microusd=2_000_000,stage_caps=STAGE_CAPS,models=MODELS,prices=prices,model_access=access,
@@ -205,7 +205,7 @@ def quote_scope(record,transport,output):
 
 
 def freeze(output,transport=None,*,observation_paths=None):
-    from omega_engine_operating_system.adapters.rust_host.ffi import locate_host_binary
+    from operating_system.adapters.rust_host.ffi import locate_host_binary
     output=Path(output); output.mkdir(parents=True,exist_ok=True)
     record=registration(**(observation_paths or {}))
     located=locate_host_binary()
@@ -323,11 +323,11 @@ def _op_run(item,policy,prepared,complete):
     specs=(OpSpec(op_id='ladder.pfp',summary='execute prepared PFP turn',inputs=('Task',),output='Candidate',
         binding=PfpTurnBinding(role_id='ladder-worker',role_version=VERSION)),
         OpSpec(op_id='ladder.check',summary='exact answer gate',inputs=('Candidate',),output='Audit',
-        binding=HostBinding(target='omega_engine_pfp/domain/pilots/management_ladder.py:grade_answer')),
+        binding=HostBinding(target='pfp/domain/pilots/management_ladder.py:grade_answer')),
         OpSpec(op_id='ladder.report',summary='retain verdict',inputs=('Audit',),output='Receipt',
-        binding=HostBinding(target='omega_engine_pfp/infrastructure/management_ladder.py:_op_run')))
+        binding=HostBinding(target='pfp/infrastructure/management_ladder.py:_op_run')))
     wire=Wire(op='ladder.report',args=(Wire(op='ladder.check',args=(Wire(op='ladder.pfp',args=('Task',)),)),))
-    inv=OpInventory(schema_version='omega.oewas.op_inventory.v3',skills=(SkillDecomposition(
+    inv=OpInventory(schema_version='core.oewas.op_inventory.v3',skills=(SkillDecomposition(
         skill_id='management-ladder',ops=specs,wiring=wire),))
     captured={}
     def capture(turn):
@@ -455,8 +455,8 @@ def run_campaign(output, *, execute=False, transport=None, accounting_path=None,
     prices=registration_record['prices']
     if transport is None:
         import os
-        from omega_engine_woland.infrastructure.providers.credential_source import resolve_credential
-        from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+        from adversary.infrastructure.providers.credential_source import resolve_credential
+        from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
         credential=resolve_credential(('ANTHROPIC_API_KEY',))
         if isinstance(credential,Err): raise ValueError(credential.error.code)
         native=RustSymbolGameHost(process_environ={**os.environ,'ANTHROPIC_API_KEY':credential.value.value})

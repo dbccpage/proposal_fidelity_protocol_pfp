@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.tests.judge_audit import fake_packages as fp
-from omega_engine_woland.tests.pilots.judge_packet_audit import audit, layout, special_checks
+from pfp.tests.judge_audit import fake_packages as fp
+from adversary.tests.pilots.judge_packet_audit import audit, layout, special_checks
 
 
 def test_real_c014_descriptor_uses_current_owner_and_original_checker_contract():
@@ -15,9 +15,9 @@ def test_real_c014_descriptor_uses_current_owner_and_original_checker_contract()
     packages = layout.discover_packages(root)
     package = next(p for p in packages if layout.package_id(p) == "C014")
     descriptor = layout.build_descriptor(root, package)
-    assert descriptor["rel_path"].startswith("omega_engine_pfp/tests/demo_004/")
+    assert descriptor["rel_path"].startswith("pfp/tests/demo_004/")
     assert descriptor["import_prefix"] == (
-        "omega_engine_pfp.tests.demo_004.b_cohomology.c014_discrete_hodge_decomposition."
+        "pfp.tests.demo_004.b_cohomology.c014_discrete_hodge_decomposition."
     )
     assert descriptor["gate"] == dict(kind="function",
         module="judge_packet.checkers.dual_evaluator", function="evaluate_dual")
@@ -27,7 +27,7 @@ def test_real_c014_descriptor_uses_current_owner_and_original_checker_contract()
 
 
 def test_tree_checksum_detects_change_under_current_challenge_owner(tmp_path):
-    case = tmp_path / "omega_engine_pfp/tests/demo_004/z_fake/c999/judge_packet/cases/a.json"
+    case = tmp_path / "pfp/tests/demo_004/z_fake/c999/judge_packet/cases/a.json"
     case.parent.mkdir(parents=True)
     case.write_bytes(b'{"n":1}')
     before = audit._tree_state(tmp_path)
@@ -88,6 +88,6 @@ def test_existing_special_only_c001_selection_is_preserved_and_recorded(tmp_path
     assert summary["special_cases"]["C001"]["path"] == source.relative_to(root).as_posix()
     info = json.loads((out / "run_info.json").read_text())
     assert info["packages"] == ["C001"]
-    assert "omega_engine_woland.tests.pilots.judge_packet_audit.audit" in info["command"]
-    assert "omega_engine_projects" not in info["command"]
+    assert "adversary.tests.pilots.judge_packet_audit.audit" in info["command"]
+    assert "projects" not in info["command"]
     assert info["audited_tree_state_unchanged"]

@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer import (
+from pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer import (
     NONABELIAN_ANTIBODIES,
     BudgetExceededError,
     BudgetGuard,

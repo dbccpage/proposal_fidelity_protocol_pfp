@@ -21,7 +21,7 @@ from fractions import Fraction
 from typing import Any, Mapping
 
 try:
-    from omega_engine_pfp.tests.demo_004.c_quantum.c021_q40_r.reference_solver.pauli import (
+    from pfp.tests.demo_004.c_quantum.c021_q40_r.reference_solver.pauli import (
         VALID_PAULIS,
         PauliString,
     )

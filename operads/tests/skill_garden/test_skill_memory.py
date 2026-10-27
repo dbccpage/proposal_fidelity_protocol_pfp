@@ -16,8 +16,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.infrastructure.skill_garden import skill_memory as memory
-from omega_engine_operads.infrastructure.skill_garden import usage_ledger as ledger
+from operads.infrastructure.skill_garden import skill_memory as memory
+from operads.infrastructure.skill_garden import usage_ledger as ledger
 
 NOW = datetime(2026, 10, 1, tzinfo=timezone.utc)
 

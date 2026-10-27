@@ -13,11 +13,11 @@ families: [techne, quality, sql]
 **Status:** canonical-candidate  
 **AuthorityEffect:** None
 
-Specialist skill for detecting, isolating, and remediating SQL and persistence anti-patterns and certifying dual healthy patterns across `omega_engine_operations/infrastructure/` and relational stores.
+Specialist skill for detecting, isolating, and remediating SQL and persistence anti-patterns and certifying dual healthy patterns across `operations/infrastructure/` and relational stores.
 
 ## Operational Scope
 
-Operates directly against database adapters, migration scripts, and repository queries in SQLite, PostgreSQL, and BigQuery. Consults the canonical catalog at `omega_engine_operads/patterns/anti/sql/`.
+Operates directly against database adapters, migration scripts, and repository queries in SQLite, PostgreSQL, and BigQuery. Consults the canonical catalog at `operads/patterns/anti/sql/`.
 
 ### Canonical Anti-Patterns & Dual Healthy Patterns
 
@@ -47,13 +47,13 @@ The canonical automated auditor is available at [`scripts/sql_anti_pattern_audit
 
 ```bash
 # Audit a specific module or persistence layer
-py -3.12 omega_engine_operads/skills/techne-code-sql-anti-patterns/scripts/sql_anti_pattern_auditor.py --path omega_engine_operations/infrastructure/
+py -3.12 operads/skills/techne-code-sql-anti-patterns/scripts/sql_anti_pattern_auditor.py --path operations/infrastructure/
 
 # Fail-closed check returning non-zero exit code on BLOCKER/MAJOR anti-patterns
-py -3.12 omega_engine_operads/skills/techne-code-sql-anti-patterns/scripts/sql_anti_pattern_auditor.py --path . --check
+py -3.12 operads/skills/techne-code-sql-anti-patterns/scripts/sql_anti_pattern_auditor.py --path . --check
 
 # Generate Markdown audit report
-py -3.12 omega_engine_operads/skills/techne-code-sql-anti-patterns/scripts/sql_anti_pattern_auditor.py --path omega_engine_education/ --report-out reports/sql_anti_pattern_report.md
+py -3.12 operads/skills/techne-code-sql-anti-patterns/scripts/sql_anti_pattern_auditor.py --path education/ --report-out reports/sql_anti_pattern_report.md
 ```
 
 ## Integration with Pattern Hunter

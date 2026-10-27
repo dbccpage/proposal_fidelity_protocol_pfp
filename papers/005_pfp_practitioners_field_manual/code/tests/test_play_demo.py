@@ -32,8 +32,8 @@ def test_worked_session_offline_enumeration(monkeypatch):
 
     These are Python enumeration results, not native results.
     """
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_SHA256", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_SHA256", raising=False)
     result = run_session(verbose=False)
     assert result["calculation_path"] == "python-enumeration"
     _assert_session_table(result)

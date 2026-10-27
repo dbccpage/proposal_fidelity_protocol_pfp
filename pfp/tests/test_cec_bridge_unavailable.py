@@ -2,7 +2,7 @@
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters.cec_bridge_adapter import (
+from pfp.infrastructure.adapters.cec_bridge_adapter import (
     CecBridgeAdapter,
 )
 

@@ -11,10 +11,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.infrastructure.synthesis_matrix import RunnerRefusal
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from pfp.infrastructure.synthesis_matrix import RunnerRefusal
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
-PREFIX = "omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy"
+PREFIX = "pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy"
 ARM5 = importlib.import_module(PREFIX + ".eval_arm5_hybrid")
 ARM6 = importlib.import_module(PREFIX + ".eval_arm6_hierarchical_decimation")
 IMMUNE = importlib.import_module(PREFIX + ".eval_epistemic_immune_transfer")
@@ -221,8 +221,8 @@ def test_nan_legacy_guard_refuses_before_dispatch(tmp_path):
 
 
 def test_ambiguous_transport_without_reply_has_unknown_cost_and_stops(tmp_path):
-    from omega_engine_operations.domain.rop.result import Err
-    from omega_engine_woland.domain.providers.attempt import ProviderFailure, RetryClass
+    from operations.domain.rop.result import Err
+    from adversary.domain.providers.attempt import ProviderFailure, RetryClass
 
     gateway, provider = make_gateway(tmp_path)
 

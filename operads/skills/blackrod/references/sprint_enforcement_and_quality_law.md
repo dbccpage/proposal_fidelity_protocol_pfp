@@ -11,7 +11,7 @@ This document details the orthogonal sprint oversight, quality enforcement, fake
 Blackrod represents the constitutional enforcement axis in software delivery:
 - Councils deliberate.
 - VP diagnoses.
-- Woland reveals hidden contradictions.
+- Adversary reveals hidden contradictions.
 - Blackrod enforces consequences: blocks PRs, quarantines toxic diffs, strips unverified DONE credits, and enforces test quality standards.
 
 ---
@@ -44,7 +44,7 @@ Blackrod actively enforces repository test quality law (`_shared/test_quality_la
 2. **Rust Assertion Checks:**
    ```bash
    # Search for weak patterns in Rust crates
-   rg -n "assert!\(true\)|assert_eq!\(1,\s*1\)" omega_engine --glob "**/*test*"
+   rg -n "assert!\(true\)|assert_eq!\(1,\s*1\)" engine --glob "**/*test*"
    ```
 3. **Precondition and Setup Integrity:**
    - `.unwrap()` / `.expect()` are permitted only during fixture setup, never in core invariant verifications.
@@ -73,8 +73,8 @@ NO_ACTION | BLOCK_APPROVAL | FORCE_FIXES | STRIP_DONE_CREDIT | QUARANTINE | ROLL
 
 | Issue Category | Target Handoff Route |
 | :--- | :--- |
-| Hidden contradiction or simulated certainty | Woland Swarm |
+| Hidden contradiction or simulated certainty | Adversary Swarm |
 | Sprint delivery and evidence audit | VP Engineering |
 | Council-level architecture decision | SVP SADC / Techne |
-| Test quality veto detail | `techne-code-soviet-inspector` |
+| Test quality veto detail | `techne-code-inspector` |
 | Sovereign human override | The Architect ("ooutwire" — Jeremy H. Carroll) |

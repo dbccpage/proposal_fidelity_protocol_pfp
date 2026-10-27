@@ -286,7 +286,7 @@ def build_code_change_proposal_envelope(
     payload: CodeChangeProposalPayloadV1,
     *,
     task_id: str,
-    carrier_id: str = "omega-repository-pathset-v1",
+    carrier_id: str = "core-repository-pathset-v1",
     step_budget: int | None = None,
 ) -> PacketEnvelopeV2:
     """Bind a typed code-change payload into the host-owned packet envelope."""

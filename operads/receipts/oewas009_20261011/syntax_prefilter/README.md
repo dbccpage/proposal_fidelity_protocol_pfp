@@ -1,0 +1,15 @@
+# OEWAS-009 Syntax Prefilter candidate custody evidence
+
+AuthorityEffect: None. Scope: the existing OEEIS pharmacy candidate write/readback boundary. Base commit: c1964010689b0d396ec6392325bd2fe0b26d97d4.
+
+`OeeisImmuneAdapter.record_candidates(defects, run_id=..., task_id=...)` now validates inputs, persists through the existing `PharmacySeeder`, and verifies exact candidate payload bytes, catalog equality and independently recomputed run/task evidence before returning IDs. Candidate payloads remain at `_ic/nara/_archive/telemetry/antibodies/<id>.json`. The existing catalog placement policy is retained. Farming only creates CANDIDATE records with AuthorityEffect None; admitted guidance excludes them.
+
+Actual TDD: catalog container faults produced 2 failures / 2 passes, then 4 passes. Readback/provenance controls produced 8 failures / 4 passes, then 12 passes. Five failures exposed missing actual post-write verification; two exposed the absent new per-record provenance; one exercised the newly introduced optional legacy-field seam. This does not claim pre-existing legacy reading was broken. Existing candidate-only, empty-defect and typed file-obstruction behavior was reused as GREEN evidence.
+
+The expanded named custody file passes 20 cases. The final three-file batch passes 42 cases (20 new, 22 existing adjacent regressions), with seven named source/dependency byte pins unchanged across the run. Ruff lint (F401,F841,I,F821,C901, complexity limit 10) and format checks pass for the five authored files. Full command arrays, raw outputs and hashes are retained.
+
+Three real production guard bypasses are killed by the same 20-case file: removing readback causes 8 failures, removing independent source correlation causes 3, and removing catalog shape validation causes 2. Both production files were restored to exact original bytes; the final 42-case run follows restoration. The first mutation harness incorrectly expected exactly five failures. `mutations.json` preserves that failed harness judgement; `mutations_verified.json` corrects the count from the unchanged original eight-failure log. No test result was fabricated or raw output rewritten.
+
+These are current-record custody checks. A repeated defect updates its latest run/task and times_seen; there is no immutable per-observation history or exactly-once retry claim. Storage failure may leave partial inactive candidate files; no atomic rollback is claimed. Legacy records default missing provenance to empty strings and are not rewritten just by reading. No admission, evidence authenticity, general proof, provider performance or full OEWAS-009 completion is certified. Root owns composed outcome-preservation testing; native validation belongs to root/Scope Guard. `composition_review.json` records a separate bounded source review.
+
+`receipt.json` binds source and evidence. `SHA256SUMS` binds the receipt and every artifact in this evidence directory, excluding itself. Raw logs and initial source snapshots remain byte preserved through scoped .gitattributes.

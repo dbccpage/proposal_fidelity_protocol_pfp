@@ -20,7 +20,7 @@ If the page is long, read one section and run the matching notebook cells. Leave
 
 ### Anchors & Provenance
 - **Paper 032 Anchor**: *The Symbol Game: Three-Layer Sovereignty and Discrete $L_1$ Projection*.
-- **Domain Package**: `omega_engine_pfp.domain.ddc` (Discrete Deformation Calculus).
+- **Domain Package**: `pfp.domain.ddc` (Discrete Deformation Calculus).
 - **Formal Theory**: Lean 4 formalization `PrimitiveDifference.lean` and CODA Discrete Deformation Calculus.
 
 ---

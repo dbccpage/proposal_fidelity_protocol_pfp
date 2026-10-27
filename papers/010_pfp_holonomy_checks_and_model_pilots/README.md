@@ -24,9 +24,9 @@ Version 0.1.0 is the initial public preprint release.
 - `code/data/c017/`: original LF case bytes, provenance and extracted model records.
 - [historical evidence](docs/historical_evidence/README.md): 15 original report/record
   files pinned by source commit, Git blob SHA and SHA-256.
-- [Landau study guide](_lev_landau_theoretical_minimum_quiz/study_guide.md),
-  [24-question quiz](_lev_landau_theoretical_minimum_quiz/quiz.md) and separate
-  [instructor key](_lev_landau_theoretical_minimum_quiz/answer_key.md).
+- [Examiner study guide](_lev_examiner_theoretical_minimum_quiz/study_guide.md),
+  [24-question quiz](_lev_examiner_theoretical_minimum_quiz/quiz.md) and separate
+  [instructor key](_lev_examiner_theoretical_minimum_quiz/answer_key.md).
 - `tools/study_capstone.py`: executable offline exercises using the host and reports.
 - `lean4/`: one identity-link lemma, with historical named and full-module reports.
 - `tools/render_paper.py`, `tools/paper_preamble.tex`: deposited Pandoc/XeLaTeX build.

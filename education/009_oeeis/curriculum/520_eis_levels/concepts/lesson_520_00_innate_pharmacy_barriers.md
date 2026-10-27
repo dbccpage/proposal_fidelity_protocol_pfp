@@ -25,7 +25,7 @@ Examine the 12 innate failure classes compiled in pure Rust (pharmacy.rs) and ve
 
 ## 3. Architecture & Implementation Seam
 ```python
-from omega_engine.crates_rs import pharmacy
+from engine.crates_rs import pharmacy
 # Innate barrier detection
 ```
 

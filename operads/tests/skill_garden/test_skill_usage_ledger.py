@@ -18,10 +18,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.infrastructure.skill_garden import (
+from operads.infrastructure.skill_garden import (
     transcript_harvester as harvester,
 )
-from omega_engine_operads.infrastructure.skill_garden import usage_ledger as ledger
+from operads.infrastructure.skill_garden import usage_ledger as ledger
 
 ROSTER = frozenset({"auto-oe-autop", "techne-run-tests", "blackrod"})
 
@@ -234,7 +234,7 @@ def test_a_malformed_row_is_reported_not_swallowed(fake_repo: Path) -> None:
 def test_repo_root_detection_does_not_key_on_a_path_that_cannot_exist(
     fake_repo: Path,
 ) -> None:
-    """`check_skill_usage.py` keys its own root walk on `omega_engine_py/`.
+    """`check_skill_usage.py` keys its own root walk on `engine_py/`.
 
     CLAUDE.md's stale-path table states that directory does not exist, so that
     loop never matches and always falls through to the cwd. This one keys on
@@ -253,14 +253,14 @@ def test_repo_root_detection_does_not_key_on_a_path_that_cannot_exist(
 def test_mangle_matches_the_observed_project_directory_names() -> None:
     """Pinned against real directory names, not against the implementation."""
     assert (
-        harvester.mangle(Path(r"C:\Users\a343o\source\repos\anomalonpy"))
-        == "C--Users-a343o-source-repos-anomalonpy"
+        harvester.mangle(Path(r"C:\Users\a343o\source\repos\sentinelpy"))
+        == "C--Users-a343o-source-repos-sentinelpy"
     )
     assert (
         harvester.mangle(
-            Path(r"C:\Users\a343o\source\repos\anomalonpy\.claude\worktrees\bg-session-worktree")
+            Path(r"C:\Users\a343o\source\repos\sentinelpy\.claude\worktrees\bg-session-worktree")
         )
-        == "C--Users-a343o-source-repos-anomalonpy--claude-worktrees-bg-session-worktree"
+        == "C--Users-a343o-source-repos-sentinelpy--claude-worktrees-bg-session-worktree"
     )
 
 
@@ -271,9 +271,9 @@ def test_a_worktree_root_resolves_to_its_main_checkout() -> None:
     across directories nobody reads. Mutation: return the path unchanged and the
     harvest silently loses every session run from the main checkout.
     """
-    worktree = Path(r"C:\repos\anomalonpy\.claude\worktrees\bg-session-worktree")
-    assert harvester.main_checkout(worktree) == Path(r"C:\repos\anomalonpy")
-    plain = Path(r"C:\repos\anomalonpy")
+    worktree = Path(r"C:\repos\sentinelpy\.claude\worktrees\bg-session-worktree")
+    assert harvester.main_checkout(worktree) == Path(r"C:\repos\sentinelpy")
+    plain = Path(r"C:\repos\sentinelpy")
     assert harvester.main_checkout(plain) == plain
 
 

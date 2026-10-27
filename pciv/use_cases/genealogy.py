@@ -15,7 +15,7 @@ import json
 import threading
 from typing import Any, Dict, List, Optional, Set
 
-from omega_engine_prompt_civilization.domain.causal_witness import SealedCausalWitness
+from pciv.domain.causal_witness import SealedCausalWitness
 
 
 class RelationshipType(str, Enum):

@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.frustration_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.frustration_checker import (
     check_frustration_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.independent_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.independent_checker import (
     check_independent_frustration,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
     solve,
 )
 

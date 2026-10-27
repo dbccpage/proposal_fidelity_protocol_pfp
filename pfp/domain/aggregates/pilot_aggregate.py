@@ -10,18 +10,18 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any, Optional
 
-from omega_engine_pfp.domain.types.pilot_response import PilotResponse
-from omega_engine_pfp.domain.value_objects.numerics import BoundedTemperature
-from omega_engine_pfp.domain.value_objects.identifiers import CheckerIdVO
-from omega_engine_pfp.domain.value_objects.numerics import DifficultyRung
-from omega_engine_pfp.domain.value_objects.taxonomy import EvaluationStatusVO
-from omega_engine_pfp.domain.value_objects.numerics import MicroUsdSpend
-from omega_engine_pfp.domain.value_objects.identifiers import PilotId
-from omega_engine_pfp.domain.value_objects.identifiers import PromptId
-from omega_engine_pfp.domain.value_objects.identifiers import RequestId
-from omega_engine_pfp.domain.value_objects.numerics import StageNumber
-from omega_engine_pfp.domain.value_objects.taxonomy import TaskFamilyVO
-from omega_engine_pfp.domain.value_objects.taxonomy import TrialStatusVO
+from pfp.domain.types.pilot_response import PilotResponse
+from pfp.domain.value_objects.numerics import BoundedTemperature
+from pfp.domain.value_objects.identifiers import CheckerIdVO
+from pfp.domain.value_objects.numerics import DifficultyRung
+from pfp.domain.value_objects.taxonomy import EvaluationStatusVO
+from pfp.domain.value_objects.numerics import MicroUsdSpend
+from pfp.domain.value_objects.identifiers import PilotId
+from pfp.domain.value_objects.identifiers import PromptId
+from pfp.domain.value_objects.identifiers import RequestId
+from pfp.domain.value_objects.numerics import StageNumber
+from pfp.domain.value_objects.taxonomy import TaskFamilyVO
+from pfp.domain.value_objects.taxonomy import TrialStatusVO
 from .base import AggregateRoot
 
 _UNCHANGED = object()

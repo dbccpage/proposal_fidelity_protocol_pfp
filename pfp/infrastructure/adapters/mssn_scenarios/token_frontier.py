@@ -20,21 +20,21 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any, Sequence
 
-from omega_engine_pfp.domain.mssn_research.grammar.lexical import (
+from pfp.domain.mssn_research.grammar.lexical import (
     FrontierCandidate,
     ParserStateId,
     ProbabilityMass,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import Rational
-from omega_engine_pfp.domain.mssn_research.grammar.entities import (
+from pfp.domain.mssn_research.shared_kernel.result import Err, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import Rational
+from pfp.domain.mssn_research.grammar.entities import (
     TokenFrontier,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.errors import (
     GrammarDomainError,
     ZeroRetainedMassError,
 )
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import (
+from pfp.domain.mssn_research.packets.value_objects import (
     RefusalCode,
 )
 

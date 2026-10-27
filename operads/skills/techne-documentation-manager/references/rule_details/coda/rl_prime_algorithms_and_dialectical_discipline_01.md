@@ -17,8 +17,8 @@ This rule codifies the Prime Triad protocol stages, dialectical gauge breaks, no
 > **Protocol Stages vs Domain Types:**
 >
 > 1. "Prime 000" and its sister stages are protocol stages, NOT types.
-> 2. All noun-shaped, immutable data structures (`CandidatePacket`, `DeclarationPacket`, `AdmissionDecision`, `AdapterStatus`, `LossEntry`, `LossLedger`, `AdapterCheck`, `AntiCheatFlags`, `CanContinueInput`, `CanContinueResult`, `IntakeTraceRecord`) must live in `omega_engine/crates_rs/omega_types/` (`omega_types::prime`, `omega_types::causal_trace`) and `research/omega_engine_prime_algos/code/oe_prime_algorithms.py`.
-> 3. Behavioral operations (`propose_candidate`, `admit_declaration`, `check_adapter`, `can_continue`, `IntakeTrace`) live under `omega_engine/crates_rs/omega_wdp/src/prime_algos/` (`prime_algorithm_0_admission.rs`, `prime_algorithm_0.rs`, `prime_algorithm_1.rs`, `prime_algorithm_2.rs`), `omega_symbol_game::prime`, and `research/omega_engine_prime_algos/code/oe_prime_algorithms.py`.
+> 2. All noun-shaped, immutable data structures (`CandidatePacket`, `DeclarationPacket`, `AdmissionDecision`, `AdapterStatus`, `LossEntry`, `LossLedger`, `AdapterCheck`, `AntiCheatFlags`, `CanContinueInput`, `CanContinueResult`, `IntakeTraceRecord`) must live in `engine/crates_rs/core_types/` (`core_types::prime`, `core_types::causal_trace`) and `research/prime_algos/code/oe_prime_algorithms.py`.
+> 3. Behavioral operations (`propose_candidate`, `admit_declaration`, `check_adapter`, `can_continue`, `IntakeTrace`) live under `engine/crates_rs/core_wdp/src/prime_algos/` (`prime_algorithm_0_admission.rs`, `prime_algorithm_0.rs`, `prime_algorithm_1.rs`, `prime_algorithm_2.rs`), `core_symbol_game::prime`, and `research/prime_algos/code/oe_prime_algorithms.py`.
 
 ---
 
@@ -27,7 +27,7 @@ This rule codifies the Prime Triad protocol stages, dialectical gauge breaks, no
 > **Dialectical Frame-Breaking:**
 >
 > 1. When an agent or solver encounters an apparent deadlock in a frozen carrier framing ($\Phi_1 > 0$ under locked gauge), Act IV executes a **9-Dot Gauge Break**.
-> 2. The gauge break must leverage creative dramatic prose, satire, and philosophical irony (Master & Margarita dialectic) to shatter rigid cognitive assumptions, revealing novel topological alternatives while maintaining strict terminal gate descent to exact certificates.
+> 2. The gauge break must leverage creative dramatic prose, satire, and philosophical irony (Master & Primal Dual dialectic) to shatter rigid cognitive assumptions, revealing novel topological alternatives while maintaining strict terminal gate descent to exact certificates.
 
 ---
 
@@ -61,4 +61,4 @@ This rule codifies the Prime Triad protocol stages, dialectical gauge breaks, no
 >    - Selecting a unique minimum requires declaring an external metric or preference function; a declaration is an external choice, not a mathematical derivation.
 > 4. **Author's Anti-Smuggling Grid Refusal:** Agents must respect the author's recorded refusal (2026-08-31) of external classification grids, avoiding imported third-party typology frames that distort repository-native formalisms.
 > 5. **Second-Derivation Rung Contracts:** Second derivations are bound to `research/second/SEED.md`, requiring generated view regeneration and prohibiting self-excused red verifiers in tree custody pins.
-> 6. **Decoupled Epistemic Boundary:** By owner decision, `19L57G1` is an external, self-contained study of minimal finite admission under tied non-uniqueness. It is an external conceptual analogy, NOT a mathematical foundation or code dependency for the Omega Engine. The Omega Engine does not derive from or depend upon `19L57G1` primitives. A text search of `omega_engine/crates_rs` (2026-09-28) finds no `19L57G1` identifier in the math kernels (`omega_homology`, `omega_functional`, `omega_linear_algebra`, `omega_holonomy`, `omega_solvers`); the only mention is the analogy crate `omega_ooutwire_primitives`. The 2026-09-28 genesis suite run (challenge G25) is not evidence for this boundary, because its verifiers did not verify.
+> 6. **Decoupled Epistemic Boundary:** By owner decision, `19L57G1` is an external, self-contained study of minimal finite admission under tied non-uniqueness. It is an external conceptual analogy, NOT a mathematical foundation or code dependency for the engine. The engine does not derive from or depend upon `19L57G1` primitives. A text search of `engine/crates_rs` (2026-09-28) finds no `19L57G1` identifier in the math kernels (`core_homology`, `core_functional`, `core_linear_algebra`, `core_holonomy`, `core_solvers`); the only mention is the analogy crate `core_ooutwire_primitives`. The 2026-09-28 genesis suite run (challenge G25) is not evidence for this boundary, because its verifiers did not verify.

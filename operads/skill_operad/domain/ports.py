@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterator, List, Optional, Protocol
 
 from .evidence import DiagnosticObservation
-from omega_engine_operads.domain.operad.operad import ColouredOperad
+from operads.domain.operad.operad import ColouredOperad
 
 
 class OperadRepositoryPort(Protocol):

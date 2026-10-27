@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import ast
 
-from omega_engine_operads.application.python_development_office.ast_utils import (
+from operads.application.python_development_office.ast_utils import (
     get_decorator_names,
     has_len_call_in_args,
 )
-from omega_engine_operads.application.python_development_office.rules.base import (
+from operads.application.python_development_office.rules.base import (
     AstRule,
     RuleContext,
 )

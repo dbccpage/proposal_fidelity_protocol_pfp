@@ -50,7 +50,7 @@ second. At the pinned source baseline, `compute_phi1` delegated to the pinned
 native graph calculator only. The package copy later gained a fallback that
 computed the minimum in Python whenever the native call raised, including for
 native input refusals. This revision narrows it: the governor calls the native
-calculator only when `OMEGA_FUNCTIONAL_GRAPH_BIN` is set and then lets every
+calculator only when `CORE_FUNCTIONAL_GRAPH_BIN` is set and then lets every
 native refusal or error propagate; without that setting it computes the minimum
 by exact enumeration of spanning-tree potentials. Both paths refuse floating-point and
 Boolean edge weights. The package tests therefore exercise the Python enumeration unless

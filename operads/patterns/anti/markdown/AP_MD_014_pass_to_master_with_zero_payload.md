@@ -27,7 +27,7 @@ A landing note quotes `PASS_TO_MASTER` or `PASS`, together with exit 0, as if th
 
 ## Witness
 
-Historical landing record, not a fresh education-gate run. This digest did not rerun the gate and did not read its stdout. Source folder `_ic/inr/omega_paper_reviews/paper_landing_20261009/`.
+Historical landing record, not a fresh education-gate run. This digest did not rerun the gate and did not read its stdout. Source folder `_ic/inr/core_paper_reviews/paper_landing_20261009/`.
 
 `README.md`:
 
@@ -37,7 +37,7 @@ Historical landing record, not a fresh education-gate run. This digest did not r
 
 > Education strands gate reports PASS for six strands but validates zero demos because its old common_build.py location was removed on main. No fresh 50-demo success is claimed.
 
-`education_strands.json` records `exit_code` 0 for `omega_engine_operations.use_cases.cicd.education_strands_gate --json`.
+`education_strands.json` records `exit_code` 0 for `operations.use_cases.cicd.education_strands_gate --json`.
 
 ## Hazard & Failure Mode
 

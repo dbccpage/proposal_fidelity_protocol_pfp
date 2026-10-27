@@ -27,8 +27,8 @@ Before any external math/forum draft is RGB-gated or human-posted.
 
 Refuse until removed (case-insensitive whole-token / brand scan):
 
-- Programme brands: Anomalon, Omega Engine (as product pitch), GTOC, GTLA, PrimDiff, AuthorityEffect, IsAuth, FDA/GTFDA, CODA (forum), Q-membrane, Anomalon councils
-- Persona / internal: Thanatos, Woland, Blackrod, Dianoia, Panepistimion, Procurator, OOUTWIRE, Bulgakov cast
+- Programme brands: Sentinel, Engine (as product pitch), GTOC, GTLA, PrimDiff, AuthorityEffect, IsAuth, FDA/GTFDA, CODA (forum), Q-membrane, Sentinel councils
+- Persona / internal: Thanatos, Adversary, Blackrod, Dianoia, Panepistimion, Procurator, OOUTWIRE, the novelist cast
 - Soft hype as *post framing*: never combined before, finite QM foundations (unless pure classical math statement)
 
 **Preprint exception does not apply** on MO/Zulip/Math.SE/LinkedIn forum posts (stricter than `thanatos-anti-dime` Gate 7 preprint permit list).

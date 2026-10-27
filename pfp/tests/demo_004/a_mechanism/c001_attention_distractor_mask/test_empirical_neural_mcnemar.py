@@ -25,10 +25,10 @@ try:
 except ImportError:
     torch = None
 
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_case,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.empirical_neural_mcnemar_evaluation import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.empirical_neural_mcnemar_evaluation import (
     DEFAULT_LOCAL_SNAPSHOT,
     compute_mcnemar_exact,
     get_or_load_neural_model,

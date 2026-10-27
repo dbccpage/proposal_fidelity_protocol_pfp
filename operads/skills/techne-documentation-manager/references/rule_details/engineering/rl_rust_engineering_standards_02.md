@@ -8,7 +8,7 @@ Parent: [Rust Engineering Standards](../../../../../rules/engineering/rl_rust_en
 
 > **Hermetic Test Fixtures & Anti-Scratch Isolation:**
 >
-> 1. Integration tests within native Rust crates (`omega_engine/crates_rs/tests/<crate>/`) must remain strictly hermetic. They must depend exclusively on canonical schemas, standard library fixtures, or local checked-in test vectors.
+> 1. Integration tests within native Rust crates (`engine/crates_rs/tests/<crate>/`) must remain strictly hermetic. They must depend exclusively on canonical schemas, standard library fixtures, or local checked-in test vectors.
 > 2. Core crate tests are strictly prohibited from referencing, scanning, or depending on temporary design demos, unpromoted scratch directories, or transient version folders (e.g. `ow/pfp/1_symbol_game_versions/...`).
 > 3. Any experimental or transient demo tests must reside in the dedicated demo directory (`ow/ow_0_demo/` or `ow/pfp/3_code/`) and never pollute the core crate Cargo workspace.
 > 4. A fixture copied into `tests/data/` from a paper package is a content copy, not a byte copy. `.gitattributes` sets `eol=lf` for JSON, YAML and TOML, so a CRLF source changes bytes on commit. Provenance comments must name the source path and source digest separately from the checked-in digest. Tests should compare parsed content or replayed results, not file digests across the two locations.

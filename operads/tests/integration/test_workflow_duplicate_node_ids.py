@@ -17,12 +17,12 @@ from __future__ import annotations
 
 import unittest
 
-from omega_engine_operads.application.dtos.query_dtos import (
+from operads.application.dtos.query_dtos import (
     ValidateWorkflowsQuery,
     WorkflowEdgeDTO,
     WorkflowNodeDTO,
 )
-from omega_engine_operads.application.queries.validate_workflows import (
+from operads.application.queries.validate_workflows import (
     ValidateWorkflowsHandler,
 )
 

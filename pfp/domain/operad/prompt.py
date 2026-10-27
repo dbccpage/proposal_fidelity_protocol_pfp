@@ -270,8 +270,8 @@ class ColouredOperadPrompt:
 
     def validate(self, source_text: str | None = None) -> bool:
         if self.schema_id not in (
-            "omega.coda.categorical-operad-prompt.v2",
-            "omega.coda.categorical-operad-prompt.v1",
+            "core.coda.categorical-operad-prompt.v2",
+            "core.coda.categorical-operad-prompt.v1",
         ):
             raise ValueError(f"Unsupported schema_id '{self.schema_id}'")
 

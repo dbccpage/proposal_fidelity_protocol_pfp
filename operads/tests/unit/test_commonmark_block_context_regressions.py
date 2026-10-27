@@ -2,8 +2,8 @@
 
 import pytest
 
-from omega_engine_operads.domain.value_objects import SkillId
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import LosslessMarkdownParserAdapter
+from operads.domain.value_objects import SkillId
+from operads.infrastructure.parser.markdown_parser_adapter import LosslessMarkdownParserAdapter
 
 
 FENCE = "~~~oewas.operation.v3\noperation_id: visible\ninputs: []\n~~~"

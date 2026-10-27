@@ -45,10 +45,10 @@ Run the automated scanner across modified files or packages:
 
 ```console
 # Scan specific file or directory
-py -3.12 -m omega_engine_operations.use_cases.verification.silent_failure_hunter path/to/target/
+py -3.12 -m operations.use_cases.verification.silent_failure_hunter path/to/target/
 
 # Output machine-readable JSON report for audit pipelines
-py -3.12 -m omega_engine_operations.use_cases.verification.silent_failure_hunter --json path/to/target/
+py -3.12 -m operations.use_cases.verification.silent_failure_hunter --json path/to/target/
 ```
 
 ### 2. Remediation Protocol

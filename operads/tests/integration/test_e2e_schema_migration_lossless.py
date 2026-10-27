@@ -6,15 +6,15 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from omega_engine_operads.application.commands.compile_catalog import (
+from operads.application.commands.compile_catalog import (
     CompileCatalogCommand,
 )
-from omega_engine_operads.domain.value_objects.identifier import SkillId
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import (
+from operads.domain.value_objects.identifier import SkillId
+from operads.infrastructure.bootstrap import OeopContainer
+from operads.infrastructure.parser.markdown_parser_adapter import (
     LosslessMarkdownParserAdapter,
 )
-from omega_engine_operads.migration.skill_migrator import SkillMigratorV3
+from operads.migration.skill_migrator import SkillMigratorV3
 
 
 class TestE2ESchemaMigrationLossless(unittest.TestCase):

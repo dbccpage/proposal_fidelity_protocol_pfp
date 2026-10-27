@@ -11,8 +11,8 @@ _MODULES = {
     "DdcTracer": "ddc_tracer",
     "Q40Certificate": "q40_solver",
     "Q40StabilizerSolver": "q40_solver",
-    "WolandQuantumOverseer": "woland_overseer",
-    "WolandQuantumSwarmResult": "woland_overseer",
+    "AdversaryQuantumOverseer": "adversary_overseer",
+    "AdversaryQuantumSwarmResult": "adversary_overseer",
 }
 __all__ = list(_MODULES)
 

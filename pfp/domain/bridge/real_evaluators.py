@@ -1,7 +1,7 @@
 """Legacy mathematical evaluator interfaces with a fail-closed Rust boundary.
 
 Generic constraint checks and bipartiteness remain available. Named Phi1 and
-Gamma2 output requires an adapter backed by omega_functional; former Python
+Gamma2 output requires an adapter backed by core_functional; former Python
 functional formulas have been retired.
 
 AuthorityEffect: None.
@@ -12,7 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, List, Mapping, Sequence, Tuple
 
-from omega_engine_pfp.functional_boundary import require_rust_functional
+from pfp.functional_boundary import require_rust_functional
 
 from ..models import ObstructionScore
 

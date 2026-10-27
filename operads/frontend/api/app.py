@@ -24,7 +24,7 @@ def create_app(
     """
     app = FastAPI(
         title="OEWAS V3 API",
-        description="Omega Engine Workflows, Agents & Skills V3 REST API",
+        description="Engine Workflows, Agents & Skills V3 REST API",
         version="3.0.0",
         docs_url="/docs",
         redoc_url="/redoc",

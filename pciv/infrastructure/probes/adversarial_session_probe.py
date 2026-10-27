@@ -23,14 +23,14 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
-from omega_engine_operating_system.adapters.oeos_host import OeosHostAdapter
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from operating_system.adapters.oeos_host import OeosHostAdapter
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     freeze,
 )
-from omega_engine_woland.stage.application.ports import HostPortV1
+from adversary.stage.application.ports import HostPortV1
 
-from omega_engine_prompt_civilization.domain.causal_witness import seal_causal_witness
+from pciv.domain.causal_witness import seal_causal_witness
 from ...domain.models import (
     CustodyTier,
     PromptGenomeRegistryV1,

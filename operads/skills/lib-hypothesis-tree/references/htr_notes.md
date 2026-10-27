@@ -1,4 +1,4 @@
-# Hypothesis tree notes (Anomalon)
+# Hypothesis tree notes (Sentinel)
 
 Inspired by lib-hypothesis-tree refinement patterns (external literature): keep research state in a **tree**, not chat history; use short-lived executors; admit changes only through a **held-out** gate.
 

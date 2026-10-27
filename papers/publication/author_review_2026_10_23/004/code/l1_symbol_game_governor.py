@@ -41,7 +41,7 @@ from typing import (
 def _find_repo_root(start: Path) -> Optional[Path]:
     """Return the nearest ancestor holding the repository's provider package, if any."""
     for p in [start] + list(start.parents):
-        if (p / "omega_engine_providers").is_dir():
+        if (p / "providers").is_dir():
             return p
     return None
 
@@ -269,7 +269,7 @@ def compute_phi1(
 ) -> Tuple[Fraction, Dict[str, Fraction]]:
     """Quotient distance and a minimizing potential.
 
-    When OMEGA_FUNCTIONAL_GRAPH_BIN names a native executable, the native owner
+    When CORE_FUNCTIONAL_GRAPH_BIN names a native executable, the native owner
     decides and every native refusal or error propagates: a refusal is never
     replaced by a Python answer. Without that configuration the same minimum is
     computed by exact enumeration of spanning-forest potentials.
@@ -291,8 +291,8 @@ def compute_phi1(
 
     import os
 
-    if os.environ.get("OMEGA_FUNCTIONAL_GRAPH_BIN"):
-        from omega_engine_providers.adapters.native_functional import compute_graph_phi1
+    if os.environ.get("CORE_FUNCTIONAL_GRAPH_BIN"):
+        from providers.adapters.native_functional import compute_graph_phi1
         return compute_graph_phi1(
             graph.vertices, [(e.u, e.v, e.weight) for e in graph.edges], normalized,
         )

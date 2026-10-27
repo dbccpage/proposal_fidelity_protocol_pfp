@@ -15,7 +15,7 @@ authority_effect: "None"
 **AuthorityEffect:** None.  
 **Track:** 400 (Prompt Civ Foundations)  
 **Level Source:** Level 02 ([`level_02_mutation_operators_and_forge.md`](../../levels/level_02_mutation_operators_and_forge.md))  
-**Rust Seam:** [`omega_prompt_civilization::forge`](../../../../omega_engine/crates_rs/omega_prompt_civilization/src/forge.rs)
+**Rust Seam:** [`core_prompt_civilization::forge`](../../../../engine/crates_rs/core_prompt_civilization/src/forge.rs)
 
 ## 1. Pedagogical Objective
 Understand how canalized mutation operators apply edits exclusively to plastic scaffold byte spans, rejecting any modification to protected boundary framing.

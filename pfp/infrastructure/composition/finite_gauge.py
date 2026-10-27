@@ -6,12 +6,12 @@ from datetime import datetime, timezone
 from time import sleep
 from uuid import uuid4
 
-from omega_engine_pfp.domain.finite_gauge import RunConfig
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
+from pfp.domain.finite_gauge import RunConfig
+from pfp.infrastructure.adapters.finite_gauge.paper002_checker import (
     Paper002FiniteGaugeChecker,
 )
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.run_store import RunStore
-from omega_engine_pfp.use_cases.finite_gauge_workbench import (
+from pfp.infrastructure.adapters.finite_gauge.run_store import RunStore
+from pfp.use_cases.finite_gauge_workbench import (
     FiniteGaugeRun,
     GaugeRunRuntime,
 )

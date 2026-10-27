@@ -1,8 +1,8 @@
 """A reference self-check cannot earn REFERENCE_SELF_CONSISTENT without its asserted evidence."""
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask import (
-    run_woland_bout as bout,
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask import (
+    run_adversary_bout as bout,
 )
 
 
@@ -26,7 +26,7 @@ def test_failed_evidence_refuses_before_persistence(monkeypatch, tmp_path, failu
             bout, "host_verdict", lambda system: ("CONSISTENT", {v: 0 for v in system.items})
         )
     target = tmp_path / "must_not_be_created"
-    result = bout.run_woland_c001_bout(custom_run_dir=target)
+    result = bout.run_adversary_c001_bout(custom_run_dir=target)
     assert result.is_err
     assert result.unwrap_err().code == expected
     assert not target.exists()

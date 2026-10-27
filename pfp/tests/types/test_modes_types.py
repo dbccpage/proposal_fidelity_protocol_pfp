@@ -12,10 +12,10 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure.contract_loading import load_mode_catalog
+from pfp.infrastructure.contract_loading import load_mode_catalog
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.stages import mode_catalog as mc
+from pfp.domain.stages import mode_catalog as mc
 
 HERE = Path(__file__).resolve()
 MODES = HERE.parents[2] / "infrastructure" / "yaml" / "modes"

@@ -4,7 +4,7 @@ The solver snapshot and already-visible cases are read in one invocation.  No
 persisted pre-reveal commitment or provider billing receipt is synthesized.
 
 This scores the reference solver against the package's own judge packet (a
-self-consistency check, not a model evaluation and not a Woland verdict). The
+self-consistency check, not a model evaluation and not a Adversary verdict). The
 judge_packet/ entries of governance/manifest.json are verified over
 LF-normalised bytes before scoring, every scored case and mutation file must be
 listed there, and empty suites are refused.
@@ -18,16 +18,16 @@ import pathlib
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
     solve,
 )
 
 from .budget_gate import verify_budget
-from .woland_gate import (
-    evaluate_woland_gate,
+from .adversary_gate import (
+    evaluate_adversary_gate,
 )
 
 C018_DIR = pathlib.Path(__file__).parent.parent
@@ -137,7 +137,7 @@ def run_provisional_evaluation() -> dict[str, Any]:
     }
 
     # Policy: no commitment was made before the run. That is recorded, and it does not change the label.
-    verdict = evaluate_woland_gate(summary)
+    verdict = evaluate_adversary_gate(summary)
     verdict["details"] = {
         **verdict["details"],
         "commit_reveal_enforced": False,

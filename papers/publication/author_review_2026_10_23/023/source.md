@@ -33,7 +33,7 @@ unchecked natural-language claims and source quotations.
 | **Residuals** | Unchecked prose assertions, invented citations, or unverified universal claims outside $J_{\rm checked}$ |
 | **Witnesses** | Submitted candidate witness $w \in D$ accompanied by typed receipt certifying the admitted subset $J_{\rm checked}$ |
 | **Observers / profiles** | Independent checker functions $C_j(P, w) \in \{\text{accept}, \text{reject}\}$ evaluating declared predicates |
-| **Anomalons** | `OPEN`: Semantic drift between natural language explanations and formal predicate specifications |
+| **Sentinels** | `OPEN`: Semantic drift between natural language explanations and formal predicate specifications |
 | **CompletionLaw** | Finite checker evaluation exhaustion over the declared claim index set $J$ |
 | **Terminal / route** | Receipt emission with exact admitted scope $J_{\rm checked}$, or rejection/refusal on failed required claims |
 | **Authorization** | None supplied. Receipts concern specific checker results and confer no permission to act. |
@@ -118,7 +118,7 @@ local replay checks the mathematical or protocol obligations stated above.
 
 The current implementation separates capability composition from execution,
 immune screening, and lineage. OEOP supplies typed operation declarations and
-source-bound instructions; Woland executes configured callbacks; OEEIS supplies
+source-bound instructions; Adversary executes configured callbacks; OEEIS supplies
 the immune observation; Prompt Civilization records lineage. Generated host
 instructions are discovery views, not additional claim authorities.
 

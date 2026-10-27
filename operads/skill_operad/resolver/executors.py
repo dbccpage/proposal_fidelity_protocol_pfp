@@ -26,7 +26,7 @@ from dataclasses import asdict
 from pathlib import Path
 from types import MappingProxyType
 
-from omega_engine_operations.use_cases.verification.silent_failure_hunter import (
+from operations.use_cases.verification.silent_failure_hunter import (
     SilentFailureFinding,
     scan_directory,
     scan_file,
@@ -90,7 +90,7 @@ def _documents(value):
 
 
 def _glossa_prose(value):
-    from omega_engine_research_papers.use_cases.paper_iteration.paper_preflight import gate_hype
+    from research_papers.use_cases.paper_iteration.paper_preflight import gate_hype
     return [asdict(hit) for name,body in sorted(_documents(value).items()) for hit in gate_hype(Path(name),body)]
 
 
@@ -186,7 +186,7 @@ def _ara_omissions(value):
 
 def _mnc_purge(value):
     docs=_documents(value)
-    path=Path(__file__).resolve().parents[3]/"omega_engine_operads/skills/meta-no-comments/scripts/purge_comments.py"
+    path=Path(__file__).resolve().parents[3]/"operads/skills/meta-no-comments/scripts/purge_comments.py"
     spec=importlib.util.spec_from_file_location("oewas_comment_owner",path.resolve())
     module=importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -239,7 +239,7 @@ class AdmittedAntiSkillDetector:
     and health ports. A textual op label cannot grant detector authority.
     """
     def __init__(self, spec, hit_detector, *, profile_digest, subject_scope, sensor, guard_state, host_health):
-        from omega_engine_operads.domain.anti_skills.anti_skill_v2 import AntiSkillSpecV2
+        from operads.domain.anti_skills.anti_skill_v2 import AntiSkillSpecV2
         if type(spec) is not AntiSkillSpecV2:
             raise TypeError("existing AntiSkillSpecV2 required")
         self.spec_id=spec.spec_id
@@ -252,11 +252,11 @@ class AdmittedAntiSkillDetector:
         self.last_activation=None
 
     def __call__(self,subject):
-        from omega_engine_epistemic_immune_system.use_cases.guard_activation import activate_learned_guard
+        from eis.use_cases.guard_activation import activate_learned_guard
         if type(subject) is not str:
             raise TypeError("typed detector receives exact subject text")
         hit=self.hit_detector(subject)
-        from omega_engine_epistemic_immune_system.domain.guard_activation import ActivationRefusal
+        from eis.domain.guard_activation import ActivationRefusal
         try:
             self.last_activation=activate_learned_guard(self.profile_digest,self.spec_id,hit,subject,subject_scope=self.subject_scope,sensor=self.sensor,guard_state=self.guard_state,host_health=self.host_health,disposition="REFUSE")
         except ActivationRefusal as exc:

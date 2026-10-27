@@ -84,7 +84,7 @@ def test_level_02_planar_trees_and_associativity():
 
 
 def test_level_03_capability_slices_and_swarm_wings():
-    wing = SwarmWing(name="WolandWing", allowed_capabilities={"lint", "format", "parse"})
+    wing = SwarmWing(name="AdversaryWing", allowed_capabilities={"lint", "format", "parse"})
 
     assert wing.can_execute("lint") is True
     assert wing.can_execute("deploy_production") is False

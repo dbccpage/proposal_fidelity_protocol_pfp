@@ -4,14 +4,14 @@
 Driven by the `python_development_office` engine reassembled beside this file.
 
 Previously this was a shim onto
-`omega_engine_operads.frontend.cli.python_dev_cli`, reached by inserting
+`operads.frontend.cli.python_dev_cli`, reached by inserting
 `parents[4]` (the repository root) onto `sys.path`. That package is not in
 CODA, and `.agents/COPY.md` forbids importing it here, so the engine now lives
 in `scripts/python_development_office/`.
 
 Run from anywhere::
 
-    python omega_engine_operads/skills/techne-code-python-code-reviewer/scripts/python_antipattern_scanner.py <path> [--json]
+    python operads/skills/techne-code-python-code-reviewer/scripts/python_antipattern_scanner.py <path> [--json]
 
 AuthorityEffect: None. A clean scan is a measurement, not a review.
 """

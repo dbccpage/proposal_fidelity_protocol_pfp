@@ -25,14 +25,14 @@ reconstructions reported in paper §7.1. If the Git object is unavailable, it re
 snapshot under `fixtures/`, so these data checks run from the deposit alone.
 
 For the production checks described by [the paper](../paper.md), run
-`omega_engine_pfp/tests/test_cemetery_sink.py` and
-`omega_engine_pfp/tests/test_immune_defect_regressions.py` from the
+`pfp/tests/test_cemetery_sink.py` and
+`pfp/tests/test_immune_defect_regressions.py` from the
 root of a full repository checkout.
 
 `deposit_paths.py` is shared release tooling that validates deposit paths for
 the manifest and archive scripts.
 
-`landau_worksheet.py` uses only the standard library and the catalog snapshot
+`examiner_worksheet.py` uses only the standard library and the catalog snapshot
 to recalculate exact quiz arithmetic. It is educational: it does not execute
 the sink, validate JCS conformance, or install a detector. Its outputs can be
 compared with the separate instructor key.

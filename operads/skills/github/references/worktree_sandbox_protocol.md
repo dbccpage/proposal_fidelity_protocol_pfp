@@ -124,7 +124,7 @@ If a branch delete fails because it's "in use by worktree", switch to a differen
 | `gh` not found | winget-installed tools not in PATH | Use full path: `"/c/Program Files/GitHub CLI/gh.exe"` |
 | EBUSY errors | npm/Electron file locks | Close Electron/Node processes, retry |
 | `origin` not found | Remote named `github` not `origin` | Check `git remote -v`; use `github` |
-| `git add` skips files | `.cargo/` and `omega_engine/.omega_skills/` in `.gitignore` | Use `git add -f` for skill/config files |
+| `git add` skips files | `.cargo/` and `engine/.core_skills/` in `.gitignore` | Use `git add -f` for skill/config files |
 | `gh pr create` aborts after successful push | gh fails to associate the branch | Pass `--head <branch>` (and `--base main`) explicitly |
 | `pull` after failed checkout fast-forwards WRONG branch | `git pull origin main` while still on the feature branch | Recover offline: `git branch -f main origin/main` then `git checkout main` (same commit ⇒ working tree preserved) |
 
@@ -208,7 +208,7 @@ Detailed changes:
 - Item 1
 - Item 2
 
-Co-Authored-By: Omega Engine <noreply@anomalon.io>
+Co-Authored-By: Engine <noreply@sentinel.io>
 EOF
 )"
 
@@ -289,7 +289,7 @@ gh pr create \
 - [ ] Local CI passes
 - [ ] Manual verification
 
-Co-Authored-By: Omega Engine <noreply@anomalon.io>
+Co-Authored-By: Engine <noreply@sentinel.io>
 EOF
 )"
 
@@ -519,7 +519,7 @@ main SHA as evidence) instead of resolving conflicts. Source: PR #1528 (2026-07-
 
 ### Playbook 10: Worktree Setup for Parallel Work
 
-**Trigger:** User wants to run multiple Omega Engine sessions
+**Trigger:** User wants to run multiple Engine sessions
 
 ```bash
 
@@ -528,11 +528,11 @@ git checkout main
 git pull origin main
 
 # 2. Create worktree directory
-mkdir -Force omega_engine/worktrees
+mkdir -Force engine/worktrees
 
 # 3. Create worktree for each sprint
-git worktree add omega_engine/worktrees/sprint-101 -b sprint-101 main
-git worktree add omega_engine/worktrees/sprint-102 -b sprint-102 main
+git worktree add engine/worktrees/sprint-101 -b sprint-101 main
+git worktree add engine/worktrees/sprint-102 -b sprint-102 main
 
 # 4. Verify
 git worktree list
@@ -544,11 +544,11 @@ git worktree list
 ```powershell
 
 # Terminal 1
-cd omega_engine/worktrees/sprint-101
+cd engine/worktrees/sprint-101
 claude
 
 # Terminal 2
-cd omega_engine/worktrees/sprint-102
+cd engine/worktrees/sprint-102
 claude
 
 ``` ext
@@ -556,7 +556,7 @@ claude
 **Cleanup after merge:**
 
 ```bash
-cd c:\Users\a343o\source\repos\anomalon
+cd c:\Users\a343o\source\repos\sentinel
 
 # Preflight -- RE-RUN this immediately before acting. Other sessions create
 
@@ -565,7 +565,7 @@ git worktree list
 git -C <wt> status --porcelain | wc -l          # uncommitted work -- must be 0
 git -C <wt> rev-list --count origin/main..HEAD  # unmerged commits -- must be 0
 
-git worktree remove omega_engine/worktrees/sprint-101
+git worktree remove engine/worktrees/sprint-101
 git worktree prune
 
 ``` ext
@@ -665,13 +665,13 @@ The following corrections should ALWAYS trigger `/autoskill`:
 
 ``` ext
 
-Target skill: `omega_engine/.omega_skills/github/SKILL.md` ext
+Target skill: `engine/.core_skills/github/SKILL.md` ext
 
 ---
 
-## Vercel CI/CD Pattern (Anomalon.com)
+## Vercel CI/CD Pattern (Sentinel.com)
 
-When working with Vercel-deployed Next.js apps (e.g., `anomalon_ai/web`):
+When working with Vercel-deployed Next.js apps (e.g., `sentinel_ai/web`):
 
 **Auto-deploy trigger:** Vercel deploys automatically on push/merge to `main`. No manual `gh workflow run` needed.
 
@@ -689,7 +689,7 @@ When working with Vercel-deployed Next.js apps (e.g., `anomalon_ai/web`):
 
 **Known failure pattern:** Serial deploy failures where each fix reveals the next error. Fix ONE issue per deploy cycle; do not stack speculative fixes.
 
-**Source:** Anomalon.com MVP deployment session (convo.md)
+**Source:** Sentinel.com MVP deployment session (convo.md)
 
 ---
 
@@ -744,7 +744,7 @@ Operator pattern for open conflicted `cppms-fallback-*` / “sync to main” PR 
 2. Clean worktree from `origin/main`; **never** resolve in dirty shared checkout with foreign ORT dirt.
 3. Prefer **main** on governance files (skills enforcer/ooutwire, proof_packets master order, OE036 PL-5 CLOSED).
 4. `git checkout PR_HEAD -- <ONLY_PR>` then intentional `git rm` for flat→nested renames only.
-5. Restore root `omega_engine/research/product_planning_office/plans/sprints/` and Wave/RGB paths the PR tip deletes.
+5. Restore root `engine/research/product_planning_office/plans/sprints/` and Wave/RGB paths the PR tip deletes.
 6. Empty index after resolve → **close already-landed** with comment (patch/SHA evidence).
 7. Non-empty selective tip → `force-with-lease` PR head → `gh pr merge --squash`; close superseded stack siblings.
 8. Do **not** run `python scripts/cppms.py` to “fix” these PRs — it re-sweeps.
@@ -754,7 +754,7 @@ See `/goo-commit-isolation-guard` v1.1 and `/0-oe-commit` v1.3.1.
 - **Paper-hygiene PR on dirty main (autoskill 2026-07-25):** never git add -A when foreign review/paper WIP is present. Use worktree from origin/main; stage only paper package + runs/coda/* receipts (+ intentional skill hosts if meta land). Meta skill land stays separate from paper/Rust rabbits when possible.
 - **Paper-repair B/R/G campaign on main (symmetry 2026-07-25):** when operator locks the campaign to **`main` only**, pin receipts to `origin/main` SHA; stage **explicit** paths under `research/_reviews/paper_repair/` + named pilot papers; respect review-request `OPEN`|`IN_WORK`|`CLOSED` and round gate. Still no force-push / no `--no-verify`. Default multi-agent isolation (feature branch/worktree) is overridden **only** by that campaign ruling.
 - **Untracked literature harvest / agent-artifacts (autoskill 2026-07-26):** after CSV→`file_urls.md` combine, **worktree-commit + push + PR before deleting CSVs** (or keep the source zip until PR lands). Never claim complete while `file_urls.md` is untracked-only. If the MD/CSVs vanish, check Recycle Bin for `agent-artifacts-zip_*.zip` and rebuild; do not invent rows. Dirty shared main: isolate harvest PR in `target/grok-worktrees/<slug>` — stage only the artifact tree.
-- **Post-merge main sync + full skill-garden mirror (autoskill 2026-07-26):** after skill/meta PRs merge, `git fetch origin main` + `git reset --hard origin/main` (tracked only; leave untracked `omega_engine/research/library/*.pdf` alone). Then full host mirror from `.agents/skills`: list every package dir and `python scripts/sync_cross_host_skills.py --source-host .agents/skills --skills <all>`; do **not** rely on DEFAULT_SKILLS (8 names). Verify `--check` exit 0 and equal package counts on `.agents`/`.claude`/`.codex`/`.grok`. Land the mirror on a skills-only PR if `.grok` gained packages.
+- **Post-merge main sync + full skill-garden mirror (autoskill 2026-07-26):** after skill/meta PRs merge, `git fetch origin main` + `git reset --hard origin/main` (tracked only; leave untracked `engine/research/library/*.pdf` alone). Then full host mirror from `.agents/skills`: list every package dir and `python scripts/sync_cross_host_skills.py --source-host .agents/skills --skills <all>`; do **not** rely on DEFAULT_SKILLS (8 names). Verify `--check` exit 0 and equal package counts on `.agents`/`.claude`/`.codex`/`.grok`. Land the mirror on a skills-only PR if `.grok` gained packages.
 - **PR conflict remote-mergeable gate (autoskill 2026-07-26):** see §9 — push + fetch/SHA + optional re-merge main + `mergeable: MERGEABLE` before merge. Lean guillemet (`«»`) rewrites and dual-home README writers: temp `.py` only (same PowerShell rule as backticks/LaTeX).
 
 ## Constraints
@@ -775,7 +775,7 @@ Summary:
 ``` ext
 User: Commit my changes with message "feat(sprint-138): event spine schema"
 
-Omega: [Invokes /github or git skill] Checks branch (sprint-138), stages files, runs pre-commit (lint/tests), then commits with provided message. No force push, no amend if already pushed.
+Core: [Invokes /github or git skill] Checks branch (sprint-138), stages files, runs pre-commit (lint/tests), then commits with provided message. No force push, no amend if already pushed.
 
 ``` ext
 
@@ -815,7 +815,7 @@ When resolving open PRs titled `sync to main` or `cppms-fallback-*`:
 
 1. **Tree-diff tip vs `origin/main` first** (`git diff --name-status origin/main PR_HEAD`).
 2. Classify paths: `ONLY_PR` (unique), `ONLY_MAIN` (PR would delete), `M_diff` (content diverge).
-3. **Never full-merge** a tip that deletes Wave Lean, RGB receipts, root `omega_engine/research/product_planning_office/plans/sprints/`, or richer enforcer/ooutwire on main.
+3. **Never full-merge** a tip that deletes Wave Lean, RGB receipts, root `engine/research/product_planning_office/plans/sprints/`, or richer enforcer/ooutwire on main.
 4. **Selective land:** worktree from `origin/main` → `git checkout PR_HEAD -- <ONLY_PR paths>` → `git rm` only intentional flat-legacy moves → restore main on all conflict/regression paths.
 5. **Empty after resolve** (`git diff --cached` empty) → **close as already-landed** (comment + evidence), do **not** force an empty squash.
 6. **Stacked fallbacks** (1653⊂1654⊂1655⊂1656): land **tip unique** once; close supersedes with pointer to the land PR.

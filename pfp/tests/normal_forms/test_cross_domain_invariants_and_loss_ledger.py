@@ -25,7 +25,7 @@ import json
 import unittest
 from typing import Any, Dict
 
-from omega_engine_pfp.domain.normal_forms.reconciliation import (
+from pfp.domain.normal_forms.reconciliation import (
     classify_defect_cocycle,
     evaluate_reconciliation,
     verify_loss_ledger_integrity,

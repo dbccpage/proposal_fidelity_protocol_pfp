@@ -21,7 +21,7 @@ For operational relocation and antibody lifecycle invariants, see:
 
 > **Standard DDD Domain Layout:**
 >
-> Every bounded context under `omega_engine_operations/domain/<bounded_context>/` must be structured into standard DDD modules:
+> Every bounded context under `operations/domain/<bounded_context>/` must be structured into standard DDD modules:
 >
 > 1. `enums.py`: Domain enumerations (`str, Enum`).
 > 2. `value_objects.py`: Strongly-typed Value Objects (`@dataclass(frozen=True)`) enforcing exact-type equality via explicit runtime checks (`if type(self) is not type(other): return False`) paired with explicit static narrowing (`if not isinstance(other, <Class>): return False`) to prevent Pitfall 037 (`assert` optimization stripping), and composite `hash((type(self), ...))`.
@@ -56,8 +56,8 @@ For operational relocation and antibody lifecycle invariants, see:
 
 > **Canonical PFP Application Architecture:**
 >
-> 1. **Zero Ad-Hoc Harness Rebuilding:** Autonomous agents running PFP demos, stage pipelines, or Woland tribunal gates must invoke the canonical Clean Architecture entrypoints under `omega_engine_education` (`omega_engine_pfp.entrypoints.cli.pfp` or `omega_engine_education.scripts.run_pfp_demos`). Agents must NEVER author throwaway runner scripts in `documentation/` or temporary workspaces.
-> 2. **Pure Domain AST Isolation:** `omega_engine_education/domain/` and `omega_engine_pfp/domain/` must maintain zero inward dependency violations, enforced by static AST analysis in `test_pfp_clean_arch.py`.
+> 1. **Zero Ad-Hoc Harness Rebuilding:** Autonomous agents running PFP demos, stage pipelines, or Adversary tribunal gates must invoke the canonical Clean Architecture entrypoints under `education` (`pfp.entrypoints.cli.pfp` or `education.scripts.run_pfp_demos`). Agents must NEVER author throwaway runner scripts in `documentation/` or temporary workspaces.
+> 2. **Pure Domain AST Isolation:** `education/domain/` and `pfp/domain/` must maintain zero inward dependency violations, enforced by static AST analysis in `test_pfp_clean_arch.py`.
 > 3. **Exact Machine Receipts:** All demo executions, stage pipeline runs, and gate evaluations must emit typed `Receipt` objects bearing `authority_effect: "None"` and exact verification status.
 
 ## Module-to-Package Confluence Preservation Invariant (`RULE_MODULE_TO_PACKAGE_CONFLUENCE_001`)

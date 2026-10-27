@@ -20,23 +20,23 @@ import shutil
 import tempfile
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.commit_reveal_runner import (
     CommitRevealRunner,
     ManifestCustodyError,
     lf_normalized_bytes,
     verify_manifest_entries,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.woland_gate import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.governance.adversary_gate import (
     TERMINAL_REFERENCE_SELF_CONSISTENT,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.judge_packet.checkers.dual_evaluator import (
     assert_dual_agreement,
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.ddc_tracer import (
     VALID_DDC_LETTERS,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c031_anomaly_free_u1_charges.reference_solver.solver import (
     solve,
     solve_with_trace,
 )
@@ -230,7 +230,7 @@ def test_tier3_commit_reveal_runner_and_governance():
         assert res["phase3"]["gate_scope"] == "REFERENCE_SOLVER_SELF_CHECK"
         assert res["phase3"]["all_passed"] is True
         assert res["phase3"]["agreements_count"] == 46
-        assert (tmp_path / "_intelligence" / "_woland" / "runs" / "e2e_c031_bout").is_dir()
+        assert (tmp_path / "_intelligence" / "_adversary" / "runs" / "e2e_c031_bout").is_dir()
 
 
 def test_tier3_ddc_tracer_receipt_chain():

@@ -8,10 +8,10 @@ import jsonschema
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure import numbered_prompts as prompts
-from omega_engine_pfp.infrastructure.adapters.pfp_evidence import canonical, digest
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID, CERTIFICATES, ROOT
-from omega_engine_woland.tests.pilots.relational_spacetime.trial_prompts import SECTION_5_SHA256
+from pfp.infrastructure import numbered_prompts as prompts
+from pfp.infrastructure.adapters.pfp_evidence import canonical, digest
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID, CERTIFICATES, ROOT
+from adversary.tests.pilots.relational_spacetime.trial_prompts import SECTION_5_SHA256
 
 
 def _workpad(pilot):
@@ -283,17 +283,17 @@ def test_registry_roles_exact_filenames_history_and_one_candidate_default():
 
 def test_current_profile_supersedes_without_repinning_frozen_registry():
     assert prompts.VERSION == "1.0.4"
-    assert prompts.REGISTRY_PATH.startswith("omega_engine_pfp/")
+    assert prompts.REGISTRY_PATH.startswith("pfp/")
     registry = prompts._registry()
     assert registry["profile_version_state"] == "CURRENT"
     frozen = registry["history"][1]
     assert frozen["kind"] == "FROZEN_PROMPT_ROLE_REGISTRY"
     assert frozen["sha256"] == "34df63f05c168570e7942dc7cd4c4ddd4911723f35996dc008390bdc4e504d68"
-    from omega_engine_pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
+    from pfp.infrastructure.adapters.pfp_frozen_replay import read_frozen_prompt_source
 
     assert digest(read_frozen_prompt_source(frozen["path"])) == frozen["sha256"]
     assert all(
-        not path.startswith("omega_engine_education/pfp/")
+        not path.startswith("education/pfp/")
         for path in registry["file_sha256"]
     )
     for identity, entry in registry["roles"].items():
@@ -320,7 +320,7 @@ def test_tampered_versioned_input_refused_without_touching_real_files(monkeypatc
 
 def test_tampered_current_construction_input_refused(monkeypatch):
     real_read = Path.read_bytes
-    target = ROOT / "omega_engine_woland/tests/pilots/relational_spacetime/tasks.py"
+    target = ROOT / "adversary/tests/pilots/relational_spacetime/tasks.py"
 
     def changed_read(path):
         data = real_read(path)

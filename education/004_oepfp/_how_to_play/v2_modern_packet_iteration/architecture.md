@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **Canonical Symbol Game Theory Spine**
 >
-> The Symbol Game is the finite packet boundary between untrusted generation and Omega authority.
+> The Symbol Game is the finite packet boundary between untrusted generation and Core authority.
 > A model may propose. It may emit structured material. It may even emit certificate-shaped material. It is not the certifier.
 >
 > \[
@@ -12,17 +12,17 @@
 > }
 > \]
 >
-> **Authority Boundary:** Symbol Game emits verifier evidence and terminal statuses. It does not directly mint Omega authority.
+> **Authority Boundary:** Symbol Game emits verifier evidence and terminal statuses. It does not directly mint Core authority.
 >
 > **Governance Rule:** symbol_game_math_spine.md is canonical. symbol_game_proof_ledger.md is archival only and non-admissible. Theory is closeable; implementation authority remains gated until conformance passes.
 
 The Symbol Game is a Rust crate plus YAML prompt contract set for running auditable symbolic reasoning pipelines. The public stage ladder has eleven stages. Stage 8 is selection. Stage 11 is the evidence plan.
 
-## Relationship to the Omega Engine
+## Relationship to the engine
 
-> **The Symbol Game is the first concrete finite packet realization of the Omega Engine at the GTFOC/GTFDA boundary.**
+> **The Symbol Game is the first concrete finite packet realization of the engine at the GTFOC/GTFDA boundary.**
 
-It began as a proof-of-concept for the larger Omega Engine.
+It began as a proof-of-concept for the larger Engine.
 
 It does not attempt to make an LLM authoritative. It constrains the LLM into finite symbolic regimes where proposals become parseable traces. Those traces can then be checked locally, checked against the global packet boundary, repaired, refused, or lifted into a new symbolic context.
 
@@ -38,7 +38,7 @@ mechanical checks
 explicit evidence ceilings
 ```
 
-In the full Omega Engine, these same mechanisms become the basis for operator discovery, operator composition, lift validation, and reusable operator memory.
+In the full Engine, these same mechanisms become the basis for operator discovery, operator composition, lift validation, and reusable operator memory.
 
 > You did not start with a grand machine. You got tired of LLM nonsense and discovered that symbols, boundaries, and validators make the nonsense measurable.
 
@@ -382,7 +382,7 @@ A seed is a typed request: a natural-language prompt compiled into a finite type
 
 ### 2. Realization (Parse)
 
-The realization functor `η_SG#` maps raw LLM output to `TypedOmegaPacket + F` (success or typed refusal). This is total-or-refusing, grammar-preserving, ceiling-preserving, and cannot create authority. See `../math_spines/symbol_game_math_spine.md` Part III "Realization Functor Boundary".
+The realization functor `η_SG#` maps raw LLM output to `TypedCorePacket + F` (success or typed refusal). This is total-or-refusing, grammar-preserving, ceiling-preserving, and cannot create authority. See `../math_spines/symbol_game_math_spine.md` Part III "Realization Functor Boundary".
 
 ### 3. Local Validation
 
@@ -437,7 +437,7 @@ A lift is forced when a context embedding produces a witness that no existing E 
 
 ## Integration Surface
 
-The Symbol Game integrates with `anomalon_ai` as an invisible validation pipeline. Full integration architecture is in `07_anomalon_ai_integration.md`.
+The Symbol Game integrates with `sentinel_ai` as an invisible validation pipeline. Full integration architecture is in `07_sentinel_ai_integration.md`.
 
 ### Data Flow
 
@@ -455,8 +455,8 @@ User Prompt → [Intake] → [Packet Compiler] → [LLM Generator] → [Validato
 | Validator Pipeline | symbol_game::evaluators | Runs 8-stage validation |
 | Operator Memory | symbol_game::lifts + ::policies | Stores/retrieves admitted operators |
 | Immune System | symbol_game::health | Suppresses known-bad patterns |
-| Response Decoder | anomalon_ai::decoders | Maps terminals to confidence labels |
-| Ranking Graph | anomalon_ai::ranking | Routes by historical performance |
+| Response Decoder | sentinel_ai::decoders | Maps terminals to confidence labels |
+| Ranking Graph | sentinel_ai::ranking | Routes by historical performance |
 
 ### Confidence Labels
 

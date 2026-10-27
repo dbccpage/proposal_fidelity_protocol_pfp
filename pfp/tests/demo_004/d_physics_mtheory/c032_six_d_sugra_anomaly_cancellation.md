@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 In six-dimensional (1,0) supergravity with T tensor multiplets, V vector multiplets and H hypermultiplets, cancelling the pure gravitational anomaly requires H − V + 29T = 273. The remaining anomalies cancel through the Green–Schwarz mechanism (Green and Schwarz 1984), generalized to several tensor multiplets by Sagnotti (1992), only if the anomaly polynomial factorizes. That imposes quadratic conditions relating a gravitational vector a and one vector bᵢ per simple gauge factor. Every condition is exact rational arithmetic once the group-theory trace coefficients are known.
 
-The work is bookkeeping-heavy: dimensions of representations, half-hypermultiplets in pseudoreal representations, adjoint hypermultiplets, and trace coefficients for each representation. The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) decomposition into group theory, counting and lattice checks, and OEEIS (Omega Engine Epistemic Immune System) screening of spectra that pass the counting condition but fail factorization.
+The work is bookkeeping-heavy: dimensions of representations, half-hypermultiplets in pseudoreal representations, adjoint hypermultiplets, and trace coefficients for each representation. The task stresses OEWAS (Engine Workflows, Agents, Skills) decomposition into group theory, counting and lattice checks, and OEEIS (Engine Epistemic Immune System) screening of spectra that pass the counting condition but fail factorization.
 
 ## 3. Formal Problem and Bounds
 
@@ -105,8 +105,8 @@ Operands expected: (1) trace coefficients from power sums over weights; (2) half
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine_projects/mssn_sn_symgam/demos/demo_11/` and `research/mssn_sn_tower/demos/demo_11/dossier_2_green_schwarz_anomaly_cancellation/`: the dossier pattern (`input.yaml`, `witness_valid.json`, `witness_near_miss.json`, claim ledger) and the Rust `verify_phi4` route. That dossier is a discrete cochain analogue of the Green–Schwarz mechanism on a triangulated S⁴; it does not compute six-dimensional anomaly polynomials.
-- `omega_engine/crates_rs/omega_linear_algebra` (`exact_ldlt.rs`) for inertia.
+- `projects/mssn_sn_symgam/demos/demo_11/` and `research/mssn_sn_tower/demos/demo_11/dossier_2_green_schwarz_anomaly_cancellation/`: the dossier pattern (`input.yaml`, `witness_valid.json`, `witness_near_miss.json`, claim ledger) and the Rust `verify_phi4` route. That dossier is a discrete cochain analogue of the Green–Schwarz mechanism on a triangulated S⁴; it does not compute six-dimensional anomaly polynomials.
+- `engine/crates_rs/core_linear_algebra` (`exact_ldlt.rs`) for inertia.
 - No Lie-algebra weight-system module exists in the estate. The weight-system code is shared with C033 and is new Rust work.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 

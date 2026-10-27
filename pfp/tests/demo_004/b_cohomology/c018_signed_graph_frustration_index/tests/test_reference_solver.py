@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c018_signed_graph_frustration_index.reference_solver.solver import (
     solve,
 )
 

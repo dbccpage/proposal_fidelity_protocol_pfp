@@ -71,7 +71,7 @@ NOT_RUN with no extracted answer. Original offline reply checking still works.
 Original stage schemas, prompt templates, host checkers and historical files
 remain unchanged. The map updates current owners and controls without repinning
 earlier source custody. This bounded consumer repair is not provider-performance
-evidence, native parity or complete PFP/Woland migration closure.
+evidence, native parity or complete PFP/Adversary migration closure.
 
 ## Typed pilot-response handoff (2026-10-14)
 
@@ -100,7 +100,7 @@ The current map records changed owners and controls without rewriting earlier
 baseline hashes. Existing response/specification YAML schemas, checkers,
 scientific sources and historical receipt files remain unchanged. This is an
 offline typed handoff, not provenance authentication, historical replay renewal,
-native parity or full PFP/Woland migration closure.
+native parity or full PFP/Adversary migration closure.
 
 ## Pilot transition evidence preservation (2026-10-14)
 
@@ -153,7 +153,7 @@ audit behavior, not broad mathematical correctness or model performance.
 Current migration-map hashes cover only the changed current implementation,
 controls and this validation note. Historical map baselines, YAML specifications,
 scientific task sources and receipts remain unchanged. Semantic contract
-execution, native parity and full PFP/Woland migration remain open.
+execution, native parity and full PFP/Adversary migration remain open.
 
 ## Consistency teaching ownership (2026-10-13)
 
@@ -180,7 +180,7 @@ model efficacy, whole-migration closure or the original empirical protocol.
 ## Public runner export ownership (2026-10-13)
 
 Base: `9d8646b27fc9a393944251c6129407e0cd67028e`. Importing the advertised
-`omega_engine_pfp.infrastructure.UnifiedPfpDemoRunner` failed because its lazy
+`pfp.infrastructure.UnifiedPfpDemoRunner` failed because its lazy
 mapping still named the absent `demo_runners.unified_runner`. It now resolves
 the existing `pilot_runners.pilot_dispatch` class. Public names, lazy loading,
 unknown-name `AttributeError`, canonical identity and runner behavior remain.
@@ -197,7 +197,7 @@ historical artifact changed. Full migration and original protocols remain open.
 
 A fresh wheel built from the declared tracked package sources contains the exact
 repaired runtime bytes. Its isolated `python -I` probe ran outside the checkout
-with networking blocked, loaded 276 Omega modules exclusively from the installed
+with networking blocked, loaded 276 Core modules exclusively from the installed
 tree and exercised the public runner/refusal. Wheel SHA-256:
 `cae8b5a08ff3e003d84d7db5ec50947043618ad7b901f3418b421ae7e51289e5`.
 This is selected public API evidence, not a rerun of all installed probes, live
@@ -234,7 +234,7 @@ controls, not independent model trials. Rust controls exercise the custom JSON
 parser, artifact operations and native CLI/MCP reader behavior; the tagged
 identity golden is also checked with ordered JSON maps enabled.
 
-The [evidence folder](../../../_ic/woland/python_prompt_artifact_parity_20261013/README.md)
+The [evidence folder](../../../_ic/adversary/python_prompt_artifact_parity_20261013/README.md)
 contains exact source/executable hashes, prior failures, independent reviews,
 the additive source-map delta and final targeted check results. Existing
 dependency contract-accounting warnings are not certified by these checks.
@@ -247,7 +247,7 @@ mathematical step acceptance. All wider roadmap requirements remain explicit.
 
 Base: `9d8646b27fc9a393944251c6129407e0cd67028e`. Current C051-C055/C059
 dual harnesses now compose with the existing accounted PFP helper. The old
-Woland matrix adapter is retired before dispatch; it no longer duplicates the
+Adversary matrix adapter is retired before dispatch; it no longer duplicates the
 provider ledger or manufactures replacement response bodies. The current C059
 matrix test resolves the relocated pilot namespace. Original cases, source
 solvers, independent judges and historical provider packets are unchanged.
@@ -261,7 +261,7 @@ full sender-inventory closure or original scientific-protocol completion is
 inferred from this slice.
 
 Fresh focused checks: the six pilot files passed 12 selected tests; the related
-C059 unified-store/replay check passed separately. The 13 Woland matrix controls
+C059 unified-store/replay check passed separately. The 13 Adversary matrix controls
 are covered by passing scoped runs: the initial batch passed 12 and exposed one
 synthetic model-admission defect; after explicit fixture admission/pricing, the
 C059 and pre-dispatch cost controls both passed. C059 exercised all ten original
@@ -310,7 +310,7 @@ the original host judge or continue to another proposal. Fixture execution and
 the original protocol matrix remain separate and unchanged.
 
 The first controls also exposed a stale current implementation-digest lookup:
-two provider files had moved to Woland. The reader now names those exact current
+two provider files had moved to Adversary. The reader now names those exact current
 owners and includes the new PFP turn dependencies. It never falls back to retired
 files. The catalog, fixture pins, old receipts and source archives are unchanged;
 old receipts still require their recorded implementation rather than a repin.
@@ -326,11 +326,11 @@ canonical bytes and missing canonical source refusal. Commands used the existing
 Python environment and native helper, with writable temporary directories:
 
 ```powershell
-python -B -m pytest omega_engine_pfp/tests/test_demo_pfp_boundary.py omega_engine_pfp/tests/test_demo_live_receipt.py omega_engine_pfp/tests/test_demo_3_live_receipt.py -q -o addopts="" -p no:cacheprovider
-python -B -m pytest omega_engine_pfp/tests/test_demo_registry_closure.py -k implementation -q -o addopts="" -p no:cacheprovider
+python -B -m pytest pfp/tests/test_demo_pfp_boundary.py pfp/tests/test_demo_live_receipt.py pfp/tests/test_demo_3_live_receipt.py -q -o addopts="" -p no:cacheprovider
+python -B -m pytest pfp/tests/test_demo_registry_closure.py -k implementation -q -o addopts="" -p no:cacheprovider
 ```
 
-The actual `omega_engine_pfp.entrypoints.cli.symbol_game` module also ran
+The actual `pfp.entrypoints.cli.symbol_game` module also ran
 `demo_3` offline and verified it as `VERIFIED_FIXTURE`. A live invocation without
 financial limits refused before output creation. These commands used the current
 source on `PYTHONPATH` from an external working directory, not a wheel. Earlier
@@ -350,14 +350,14 @@ alone does not establish byte equality.
 These are local route/custody controls, with no paid provider request. They do
 not establish model performance, completion of the original live matrix, native
 parity, installed-package coverage or closure of the full migration goal. The
-[ownership guide](../../../omega_engine_education/documentation/004_oepfp/docs/17_runtime_ownership_and_replay.md#current-catalog-demos-through-pfp)
+[ownership guide](../../../education/documentation/004_oepfp/docs/17_runtime_ownership_and_replay.md#current-catalog-demos-through-pfp)
 gives bounded commands and their limits.
 
 ## Native driver prompt-policy binding (2026-10-13)
 
 Base: `681a4dbbd7d7f3d03cd51f06e90e93900ee9cfa6`. The active native driver
 ignored the supplied regime pin and used a round-only prompt ID. The retained
-baseline probes (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/native_driver_prompt_binding_20261013/baseline.json`)
+baseline probes (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/native_driver_prompt_binding_20261013/baseline.json`)
 bind an existing cached executable; they do not claim a fresh build of that base.
 Source review independently identifies the same defect at the fixed revision.
 The CLI also accepted duplicate nested policy keys before typed validation.
@@ -371,7 +371,7 @@ Actual process probes then exposed a private-number-marker object being
 reinterpreted as an integer during a second `Value` deserialization. CLI and
 MCP now preserve parsed payload types directly; focused controls require both
 marker-object refusal and genuine arbitrary-precision integer preservation.
-The finding receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/native_driver_prompt_binding_20261013/intake_finding.json`)
+The finding receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/native_driver_prompt_binding_20261013/intake_finding.json`)
 retains the exact pre-repair binary and request. An inherited intake assertion
 also expected the ordinary 64 KiB limit for an unread envelope beyond the
 existing larger DAG cap; its exact limit expectation and additional maximum-plus-one
@@ -385,7 +385,7 @@ separately from the repaired run. The historical map reconciliation test now
 checks its immutable landing rather than rejecting every later reviewed edit.
 A separate current-map delta test preserves all preceding rows and pins.
 
-See the scoped validation receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/woland/native_driver_prompt_binding_20261013/README.md`) and the digestion `_ic/woland/native_driver_prompt_binding_20261013_digestion.md`
+See the scoped validation receipt (`git show 0622e7e666877c61ae9330fe55b6a223965e23eb:_ic/adversary/native_driver_prompt_binding_20261013/README.md`) and the digestion `_ic/adversary/native_driver_prompt_binding_20261013_digestion.md`
 for exact commands, source hashes, the built executable and both agent reviews.
 No full CI, model call or fresh installed-wheel proof is claimed. The legacy
 native artifact is not the full Python artifact wire contract. Declared token
@@ -422,7 +422,7 @@ finite source/route check, not native parity or the paper's empirical protocol.
 The original referee checks SO/noise conditions; requested target-operation
 equivalence and physical device performance are not established.
 
-Independent Woland review reproduced a report-grading defect: a configured live
+Independent Adversary review reproduced a report-grading defect: a configured live
 proposer could produce no judged result while the report claimed model/referee
 evidence. Grades now follow actual judged live/deterministic observations;
 zero judged results remain explicit, and offline accounting says `no_provider`.
@@ -456,7 +456,7 @@ The reader now selects the documented owner for each capsule before checking
 its recorded input digest. Known historical source names map explicitly to
 current checker/provider owners, retaining exact digest comparison. Missing or
 tampered canonical data cannot fall back to an old duplicate. Preserved Education pilot paths, including the retired runner snapshot, are
-read from the Woland tests owner. The historical manifests themselves are not
+read from the Adversary tests owner. The historical manifests themselves are not
 rewritten. This changes the
 reader and current controls, not historical plans, inputs, requests, provider
 responses, authorization, source archives or pins.
@@ -482,11 +482,11 @@ capsules succeeded, while a retained free-followup reply returned the expected
 Focused command (no full 250-case campaign execution):
 
 ```powershell
-python -m pytest omega_engine_woland/tests/pilots/replay_runners/dossier_capsules/test_campaign.py -k "capsule_reader or current_environment_and_explicit or replay_tampering_refuses or preserved_source_bytes or budget_and_unknown_billing or retired_plan_is_read_only or guidance_preserves" -q -o addopts="" -p no:cacheprovider
+python -m pytest adversary/tests/pilots/replay_runners/dossier_capsules/test_campaign.py -k "capsule_reader or current_environment_and_explicit or replay_tampering_refuses or preserved_source_bytes or budget_and_unknown_billing or retired_plan_is_read_only or guidance_preserves" -q -o addopts="" -p no:cacheprovider
 ```
 
 The C052 example in the pilot runbook now names its actual
-`omega_engine_pfp.tests.pilots` owner; the exact public command with `--help`
+`pfp.tests.pilots` owner; the exact public command with `--help`
 ran successfully in a fresh process. No paid run, grid, native build or original
 scientific-protocol closure is claimed by this reader/documentation slice.
 
@@ -497,7 +497,7 @@ the mode replay adapter still called a fixed live sweep and rewrote pilot specs;
 the dossier CLI refused `--live`, but only after loading a historical plan, and
 its public `live()` function still dispatched. These campaigns were already
 retired. Their live entry points now refuse before mutation, credential access,
-pricing or transport. Current task execution remains with existing PFP/Woland;
+pricing or transport. Current task execution remains with existing PFP/Adversary;
 the fixed campaigns are not reintroduced as a replacement runner.
 
 The public `prepare-task`/`check-task` CLI exercised the original public seed
@@ -523,7 +523,7 @@ drift remains a refusal. Current inventory metadata separately reconciles the
 seven added and fourteen changed PFP paths inherited from merged PR #927,
 without changing original baseline fields or reissuing its execution claims.
 Mode and dossier campaign entry points refuse before side effects. Other sender
-inventory and final PFP/Woland integration stay open.
+inventory and final PFP/Adversary integration stay open.
 
 Merged main at `ef4860cc3829f3f3d7182340d7780a84382621c6` after PR #928 landed. Its current
 inventory and C005 source/validation records are retained alongside this slice.
@@ -559,7 +559,7 @@ The final filename correction separately reproduced four Windows alias/ledger
 collision refusals as failures, then passed all four after preflight rejected
 case aliases, trailing dots/spaces and accounting output names. Static current
 Python ownership and immutable introduction provenance returned zero findings;
-the unchanged epic auditor accepted all 55 epics. Independent Woland review
+the unchanged epic auditor accepted all 55 epics. Independent Adversary review
 also reproduced a paired-ratio defect with an extra malformed case. The repair
 requires every compared observation to form a unique completed eligible pair;
 malformed and duplicate controls now refuse ratios while the valid pair remains
@@ -572,12 +572,12 @@ fields, previous-map recovery and immutable migration-introduction commitments
 remain unchanged. This refresh does not reissue upstream model, native or
 installed results. Mode and dossier live entry points now refuse before
 mutation, credentials, pricing or transport. Full original protocols and final
-whole-estate PFP/Woland closure remain open.
+whole-estate PFP/Adversary closure remain open.
 
 ## C005 scratchpad and hybrid benchmark routing (2026-10-13)
 
 Base: `3b63d72e86b0deceba1bcb06779e38798b7c342b`. Importing the three-arm
-benchmark reproduced `ModuleNotFoundError: omega_engine_projects`. Both retained
+benchmark reproduced `ModuleNotFoundError: projects`. Both retained
 benchmarks now load current owners and execute through the existing PFP/accounted
 gateway. Original schema constants, factorization, McNemar functions and arm
 prompt expressions are compared with that base. The existing report helper has
@@ -649,13 +649,13 @@ reissue runtime or mathematical checks for the moved corpus.
 Current commands for this slice:
 
 ```powershell
-python -m pytest omega_engine_pfp/tests/test_migration_fitness.py -q
-python -m omega_engine_pfp.infrastructure.migration_fitness --current-python
-python -m omega_engine_product_planning_office.use_cases.epic_manifest_audit
+python -m pytest pfp/tests/test_migration_fitness.py -q
+python -m pfp.infrastructure.migration_fitness --current-python
+python -m product_planning_office.use_cases.epic_manifest_audit
 ```
 
 These checks concern inventory, byte/provenance custody and planning metadata.
-Original scientific protocols, installed use after all moves, live Woland/PFP
+Original scientific protocols, installed use after all moves, live Adversary/PFP
 route closure and native parity remain open. The earlier results below retain
 their original revisions and scopes; they are not fresh results for this map.
 
@@ -886,7 +886,7 @@ M1-M6 migration remain open.
 
 Base: `cba7e58c0e7b4c38aef800efe320f635f47b12b1`. The real offline audit command
 failed during discovery because its task root still named the deleted
-`omega_engine_projects/mssn_sn_symgam/challenges` tree. The existing Woland audit
+`projects/mssn_sn_symgam/challenges` tree. The existing Adversary audit
 now discovers the current PFP task tree, builds current execution descriptors,
 checks that tree for mutation and records the current command. Relocated audit
 tests and their synthetic task fixtures import the actual owners.
@@ -920,15 +920,15 @@ suite was unrun.
 
 | Scoped target | Outcome |
 | --- | --- |
-| `omega_symbol_game/tests/mcp_transport.rs` | Passed initialization, registry-derived tool discovery, exact outcome preservation, duplicate/ID refusal, byte ceilings, multi-frame stdio, and compiled-binary execution outside the checkout. Filesystem tools are excluded. |
-| `omega_symbol_game/tests/scoring_migration.rs` | Passed strict obstruction parsing, exact tiny residual preservation, explicit policy, canonical rationals and malformed-field refusal. |
-| `omega_symbol_game/tests/reply_control_contract.rs` | Passed fenced-block syntax, Unicode whitespace and ordered declaration refusals. Python compares native fields and insertion order with the retained independent regex contract. |
-| `omega_symbol_game::signed_transport::tests` | Passed gauge/cycle replay, witness tampering, schema and dimension/scalar limits. |
-| `omega_symbol_game_runtime/tests/stabilizer_certificate_binding.rs` | Passed case identity, basis substitution, decomposition identity/mask/phase substitution and UNKNOWN-code tampering. |
-| `omega_sandbox/tests/hostile_scripts.rs` | POSIX refuses before launching the submitted command. Windows resource controls are unrun on this host. |
+| `core_symbol_game/tests/mcp_transport.rs` | Passed initialization, registry-derived tool discovery, exact outcome preservation, duplicate/ID refusal, byte ceilings, multi-frame stdio, and compiled-binary execution outside the checkout. Filesystem tools are excluded. |
+| `core_symbol_game/tests/scoring_migration.rs` | Passed strict obstruction parsing, exact tiny residual preservation, explicit policy, canonical rationals and malformed-field refusal. |
+| `core_symbol_game/tests/reply_control_contract.rs` | Passed fenced-block syntax, Unicode whitespace and ordered declaration refusals. Python compares native fields and insertion order with the retained independent regex contract. |
+| `core_symbol_game::signed_transport::tests` | Passed gauge/cycle replay, witness tampering, schema and dimension/scalar limits. |
+| `core_symbol_game_runtime/tests/stabilizer_certificate_binding.rs` | Passed case identity, basis substitution, decomposition identity/mask/phase substitution and UNKNOWN-code tampering. |
+| `core_sandbox/tests/hostile_scripts.rs` | POSIX refuses before launching the submitted command. Windows resource controls are unrun on this host. |
 
 The native build also revealed an existing missing `HashMap` import in
-`omega_symbol_game::challenge`; using the sandbox environment field's default
+`core_symbol_game::challenge`; using the sandbox environment field's default
 restores compilation without introducing a nondeterministic certificate map.
 
 ## Executed Python checks

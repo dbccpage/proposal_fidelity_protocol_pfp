@@ -1,0 +1,73 @@
+# Epic: Typed canonical skill contracts, bounded ingress and generated host packages
+
+**Epic ID:** `EPIC-OE-OEWAS-001`
+**AuthorityEffect:** None
+**Status:** `RESEARCH_HOLD`
+**Reviewed:** 2026-10-10
+**Owner:** OEWAS maintainers; admission, native parity and host migration remain with their existing owners.
+
+Typed instruction contracts now have a bounded implementation slice. Two additive canonical packages describe one Adversary claim-audit skill and one executable scope-falsifier anti-skill; generated Markdown serves IDE discovery. Reuse the existing catalog and runtime types. The full epic remains held. Bounded local acceptance is limited to the exact source, controls and results in the [integration verification receipt](../../../../workflows_agents_skills/receipts/typed_contracts_20261010/verification.json).
+
+## Source inspection and retained obligations
+
+[LosslessMarkdownParserAdapter.parse_document](../../../../workflows_agents_skills/infrastructure/parser/markdown_parser_adapter.py) returns Result, preserves input bytes and extracts V3 fenced declarations. [CompileCatalogHandler.handle](../../../../workflows_agents_skills/application/commands/compile_catalog.py) computes content-bound catalog digests. [parse_bytes](../../../../workflows_agents_skills/infrastructure/lossless_skill_parser.py) partitions bytes; it is not a Markdown AST compiler. The [ingress execution receipt](../../../../workflows_agents_skills/receipts/oewas_001_ingress_20261010.json) records the bounded prior implementation, its controls and residuals; this revision does not rerun those tests.
+
+Present non-list operation inputs and non-mapping list entries now refuse with `MALFORMED_OPERATION_INPUTS`; omitted and empty inputs remain valid. The indexed error locus preserves the malformed entry. Valid admission text remains UNADMITTED. Same-command retries return their recorded catalog snapshot even after source edits; a fresh key and current expected version request recompilation. Reusing a key with a changed command refuses. A source edit alone is not a changed command.
+
+The former proposal conflated frontmatter, byte partitioning and V3 declarations, invented an AstOrderValidator, and assumed globally monotonic headings. CommonMark permits H2 after H3 and sibling repetition. Any estate-specific section-order policy requires its own producer, consumer and compatibility decision. The ten-colour [OPERAD_COLOURS](../../../../workflows_agents_skills/domain/planar_substitution.py) vocabulary remains unchanged; the proposed six-colour migration requires an explicit carrier/schema mapping with OERUST007 before implementation.
+
+## Bounded canonical-contract decision
+
+The [design and primary-source mapping](../../../../workflows_agents_skills/documentation/typed_canonical_contracts_v1.md) defines the slice and distinguishes borrowed ideas from local synthesis. Canonical package inputs are `workflows_agents_skills/catalog/contracts/v1/adversary_claim_audit.json`, `workflows_agents_skills/catalog/contracts/v1/adversary_scope_falsifier.json` and their referenced instruction bodies. These are additive instruction-package contracts, not a replacement for `core.contract.v2` governance contracts or the full capability inventory.
+
+The [compiler's public port](../../../../workflows_agents_skills/infrastructure/typed_contract_compiler.py) is `compile_typed_contracts(repo_root)`. It validates the versioned closed wire shape before constructing existing `OperationV3`, `CapabilityCatalogV1`, `AntiSkillSpecV2` and fixture-bank objects. Pydantic validation belongs at this ingress boundary; it must not become a parallel registry or treat permissive HTTP/IDE DTOs as canonical contracts. Only `skill` and `anti_skill` package kinds belong to this slice. The falsifier binding is exactly ALL of one NOT_SUBSET_FIELDS atom over ordered fields `(claim_scope, evidence_scope)`, with no values; alternative predicates cannot retain this binding. The broader taxonomy remains explicit future work.
+
+Output consists of a declaration-only compiled package, an executable offline detector with a finite fixture result, and deterministic IDE-compatible packages named `adversary-claim-audit` and `adversary-scope-falsifier` under active host skill roots. Existing Adversary packages and host-maintained bytes must be preserved. A scoped two-entry catalog reuses the existing catalog model; it must not replace the full estate inventory. The existing estate compiler consumes generated metadata by freshly compiling canonical inputs and requiring their resources in its tracked inventory; drift and untracked sources refuse. It also retains every tracked host package resource, so operator context changes remain digest-visible. Catalog declarations remain UNBOUND and operations non-executable. Generated Markdown and a passing detector fixture do not grant admission.
+
+The implemented `verify_typed_contract_admission` helper reuses the existing independently signed instruction-plan admission verifier after fresh audit/plan selection. Its targeted tests cover signed instruction custody and subject/source/fixture/signature refusal controls. This verifies instruction custody only, using caller-controlled external signer trust; test keys are not production operator approvals or Adversary dispatch. Exact source/body bindings remain required. The closed-predicate detector remains PROPOSED with runtime enforcement disabled. The retired Python detector admission verifier and the differently shaped Rust immune spec are not substitute admission paths. No approval, key, signature or production activation may be fabricated.
+
+## Implementation review findings
+
+Independent real-port controls exposed two actionable defects: generated catalog entries dropped additional tracked host resources, and a correctly byte-bound invalid UTF-8 instruction leaked UnicodeDecodeError. Both received bounded production repairs and focused GREEN replays; the [independent evidence](../../../../workflows_agents_skills/receipts/typed_contracts_20261010/independent/review.json) retains the original failing tests and raw outputs. A separate CLI review exposed relative `--repo-root .` failing the projector absolute-root contract; the CLI now normalizes its root before projection. Its own RED/GREEN evidence belongs to the integration receipt. Other reviewed controls characterize existing behavior rather than inventing RED history. Mutation and restoration receipts retain their historical exact source pins; later refactors receive a new focused replay rather than rewriting earlier evidence.
+
+Compiled operand spans identify the instruction ResourceRef object in canonical JSON. External instruction bytes are separately hashed; the span does not claim to contain those bytes. The aggregate contracts digest also binds compiler and wire source bytes. Empty claim scope remains an invalid subject under the existing domain contract. No domain widening is implied.
+
+## Obstruction review and TDD test plan
+
+The existing [ext-mattpocock-tdd entry](../../../../.agents/skills/ext-mattpocock-tdd/SKILL.md) declares an operadic Code-to-Code operation. The following concrete RED/GREEN sequence is this epic's local test plan, not an additional requirement inferred from that minimal skill.
+
+The oracle combines expected public compiler results, independently labelled detector outcomes, and independently hashed generated bytes. Refusal cases must produce their specified errors while valid recovery controls retain the declared output and admission boundaries. Refactor the existing compiler or projector only after the relevant controls are GREEN, then replay those same controls against the changed source.
+
+1. **RED → minimal GREEN:** call `compile_typed_contracts` on the canonical pair through its public port. Require an existing catalog encode/decode round trip, ordered operation ports and a candidate-plan composition that stays Unadmitted. Author the first failing behavior before production; an already-GREEN control characterizes reuse.
+2. **RED → minimal GREEN:** in temporary package roots, require refusal of duplicate or escaped duplicate JSON keys, unknown fields/kinds, coercible wrong types, changed instruction bytes, path escape and missing references. A valid bounded input is the recovery control. Extend the same compiler rather than adding a second catalog framework.
+3. **RED → minimal GREEN:** execute the actual scope-falsifier predicate on independently labelled overclaim and bounded subjects across distinct contexts. Require exact match/disposition and negative controls. Wrong implementation/spec/fixture bindings must refuse. Keep PROPOSED and runtime-enforcement-false facets through serialization.
+4. **RED → minimal GREEN:** generate only the two named packages into temporary host roots. Independently hash each output, compare cross-host bytes, repeat to check determinism, detect tampering, and refuse conflicting host-owned content. Assert existing Adversary and unrelated catalog/package bytes are preserved. A successful retry must not silently overwrite an incompatible file.
+5. **Reuse or observed RED:** where exercised, independently signed Adversary admission must bind the exact selected plan, source snapshot and ordered bodies. Changed source, foreign signature or altered approval input must refuse at the existing admission port. Missing independent authorization keeps this optional path held.
+
+Implementation tests: `workflows_agents_skills/tests/unit/test_typed_contract_compiler.py`, `workflows_agents_skills/tests/unit/test_typed_contract_audit.py`, `workflows_agents_skills/tests/unit/test_typed_contract_review.py` and `operations/tests/packaging/test_project_typed_contracts.py`. Retained public ingress controls: [unit refusal tests](../../../../workflows_agents_skills/tests/unit/test_ingress_no_silent_schema_repair.py) and [filesystem/parser/SQLite integration](../../../../workflows_agents_skills/tests/integration/test_ingress_catalog_port_order_and_idempotency.py). These paths identify the intended scope; execution counts and acceptance come only from the measured receipt.
+
+```powershell
+python -X utf8 -m pytest -o addopts='' -o filterwarnings='' workflows_agents_skills/tests/unit/test_typed_contract_compiler.py workflows_agents_skills/tests/unit/test_typed_contract_audit.py operations/tests/packaging/test_project_typed_contracts.py -q
+python -X utf8 -m pytest -o addopts='' -o filterwarnings='' workflows_agents_skills/tests/unit/test_ingress_no_silent_schema_repair.py workflows_agents_skills/tests/integration/test_ingress_catalog_port_order_and_idempotency.py -q
+```
+
+| Theoretical minimum | Concrete obligation |
+| --- | --- |
+| INVARIANT | Canonical bytes determine typed declarations and generated packages; no compilation or fixture result self-admits execution. |
+| BREAK | Accept an ambiguous key, detach an instruction body digest, overwrite host-owned content, or promote a declaration after fixture success. |
+| WITNESS | Real compiler outputs, independent byte hashes, exact predicate results, conflict refusals and restored-source controls. |
+| MUTATION | Source-inspected targets are the compiler's `_resource` digest/length comparison, the [strict wire parser](../../../../workflows_agents_skills/contracts/typed_capabilities_v1.py), and the [host projector](../../../../operations/use_cases/packaging/project_typed_contracts.py) `_inspect_file` byte comparison. A relevant bypass must make its negative control fail before exact restoration; measured execution remains required. |
+
+Examiner controls are valid encode/decode and deterministic output (1), malformed/refused input (2), changed-body/digest and host transplant (3), production guard bypass (4), and real compiler-to-catalog/detector/host package integration (5). Finite fixtures are not population-level accuracy or prompt-injection security evidence.
+
+Route DOC_MGR through source/UTF-8/link custody; DEV_MGR with Syntax Prefilter/Scope Guard through the existing public ports; QA_MGR/Inspector through one-to-three files per batch and at most three repair attempts; BUILDER through invariant/falsifier review, with Adversary adjudicating recorded evidence and Defect Hunter dissent preserved. Any Rust work uses one named crate and `-j 1`; none is required by this slice. A SoftwareQaReceiptV1 requires its actual writer/schema; this plan is not one.
+
+## Residuals and evidence ceiling
+
+The existing AST architecture gate still fails in untouched prompt-hierarchy evaluator/parser and skill-garden cull modules. The [pinned-base reproduction](../../../../workflows_agents_skills/receipts/typed_contracts_20261010/independent/baseline_architecture.json) reproduces both failures on base `9c7460168817db3cd06b037925cb12f913575c25`, with byte-identical offending sources and architecture test. OEWAS domain maintainers own this separate repair; bounded acceptance is not a clean architecture-gate or full-suite claim.
+
+Full-scope blockers remain owned: OEWAS001 maintains canonical/frontmatter/V3 compatibility, remaining fenced CommonMark cases and any section-order policy; OEWAS006 owns native contract parity; OEWAS004 owns wider host distribution; OEWAS008 owns retirement/caller migration; admission maintainers own independently authorized activation and trust. Rules, workflows, agents, helpful/anti patterns and admitted antibody references require separate explicit contracts before compilation. No source, research draft, host package or existing catalog is retired by this slice.
+
+The narrow claim is deterministic compilation and finite detector behavior for two named packages. Research novelty, a universal agent specification, full operad realization, general security, production admission and estate-wide migration remain unestablished. The bounded pair is implemented and locally exercised; its acceptance ceiling is the linked exact execution evidence, including source/test/command/mutation/restoration custody. Optional signed-helper acceptance concerns instruction custody only, while detector runtime activation stays HOLD. It is not full epic completion. Full epic status remains `RESEARCH_HOLD`.
+
+The [shared-review reconciliation](../../../receipts/epic_design_review_20261010.md) retains its attachment boundary. Cross-epic ownership and custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

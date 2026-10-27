@@ -11,7 +11,7 @@ from python_development_office.domain.antipattern_finding import (
 
 @dataclass
 class ScanResult:
-    schema: str = "omega.python_development_office.v1"
+    schema: str = "core.python_development_office.v1"
     files_scanned: int = 0
     modules_indexed: int = 0
     total_findings: int = 0

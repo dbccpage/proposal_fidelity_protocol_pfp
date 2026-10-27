@@ -3,10 +3,10 @@
 Two separate code paths from the detectors:
 
 * ``replay_witness`` re-derives each named step's relation with Cramer's rule and the
-  Woland dossier checker's ``mv`` (``omega_engine_woland/tests/pilots/replay_runners/
+  Adversary dossier checker's ``mv`` (``adversary/tests/pilots/replay_runners/
   dossier_capsules/checking.py``), not with the detectors' parsing or arithmetic. A red
   verdict is sound only when every step it names is confirmed defective here.
-* ``answer_is_correct`` is the outcome judge: the Woland checker's ``check_answer`` on the
+* ``answer_is_correct`` is the outcome judge: the Adversary checker's ``check_answer`` on the
   final answer against the posed system. The detectors never call it.
 
 AuthorityEffect: None.
@@ -19,19 +19,19 @@ import sys
 from fractions import Fraction
 from typing import Any, Dict, Iterable, List, Tuple
 
-from omega_engine_pfp.use_cases.detector_adequacy.detectors import repo_root
-from omega_engine_pfp.use_cases.detector_adequacy.traces import cramer
+from pfp.use_cases.detector_adequacy.detectors import repo_root
+from pfp.use_cases.detector_adequacy.traces import cramer
 
-WOLAND_CHECKER = "omega_engine_woland/tests/pilots/replay_runners/dossier_capsules/checking.py"
+ADVERSARY_CHECKER = "adversary/tests/pilots/replay_runners/dossier_capsules/checking.py"
 
 _CHECKER: Any = None
 
 
-def woland_checker() -> Any:
+def adversary_checker() -> Any:
     global _CHECKER
     if _CHECKER is None:
-        path = repo_root() / WOLAND_CHECKER
-        spec = importlib.util.spec_from_file_location("da001_woland_dossier_checking", path)
+        path = repo_root() / ADVERSARY_CHECKER
+        spec = importlib.util.spec_from_file_location("da001_adversary_dossier_checking", path)
         if spec is None or spec.loader is None:
             raise ImportError(str(path))
         module = importlib.util.module_from_spec(spec)
@@ -57,7 +57,7 @@ def step_is_defective(trace: Dict[str, Any], sid: str) -> bool:
     """Re-derive one step's relation independently; True when the step is wrong."""
     steps = _by_id(trace)
     step = steps[sid]
-    mv = woland_checker().mv
+    mv = adversary_checker().mv
     kind = step["kind"]
     if kind == "given":
         return step["output"] != trace["posed"]
@@ -98,4 +98,4 @@ def answer_is_correct(trace: Dict[str, Any]) -> bool:
     n = len(posed["A"])
     task = {"kind": "linear", "matrix": posed["A"], "b": posed["b"], "target": [1] + [0] * (n - 1)}
     xs = [str(Fraction(v)) for v in answer["output"]["x"]]
-    return bool(woland_checker().check_answer(task, {"solution": xs, "target": xs[0]}))
+    return bool(adversary_checker().check_answer(task, {"solution": xs, "target": xs[0]}))

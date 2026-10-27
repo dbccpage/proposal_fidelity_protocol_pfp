@@ -1,6 +1,6 @@
 ---
 paths:
-  - "omega_engine_product_planning_office/**"
+  - "product_planning_office/**"
 ---
 
 # Rule: Product Planning Epic Hygiene

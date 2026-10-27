@@ -25,7 +25,7 @@ from typing import Any
 
 SCHEMA = "paper011.mechanism-recreation.v1"
 MIN_TORCH = (2, 13, 0)
-PFP = "omega_engine_education/documentation/030_the_symbol_game_proposal_fidelity_protocol_pfp/demos"
+PFP = "education/documentation/030_the_symbol_game_proposal_fidelity_protocol_pfp/demos"
 MECHANISM_SPECS = {
     "C001": "c001_attention_distractor_mask_task_level.md",
     "C002": "c002_attention_steering_sweep_correctness.md",
@@ -130,7 +130,7 @@ class Native:
         if sha(self.path.read_bytes()) != self.expected_sha256:
             raise MechanismError("NATIVE_BYTES_CHANGED")
         request = payload if self.functional else {
-            "schema_version": "omega.symbol-game.runtime-request.v1", "action": action, "payload": payload,
+            "schema_version": "core.symbol-game.runtime-request.v1", "action": action, "payload": payload,
         }
         raw = canonical(request)
         if len(raw) > 65_536:
@@ -145,7 +145,7 @@ class Native:
         if self.functional:
             if response.get("status") != "PASS" or not isinstance(response.get("result"), dict):
                 raise MechanismError("NATIVE_GRAPH_REFUSAL")
-        elif (response.get("schema_version") != "omega.symbol-game.runtime-outcome.v1"
+        elif (response.get("schema_version") != "core.symbol-game.runtime-outcome.v1"
               or response.get("action") != action or response.get("success") is not True
               or response.get("error") is not None or not isinstance(response.get("result"), dict)):
             raise MechanismError("NATIVE_RUNTIME_REFUSAL: " + str(response.get("error")))

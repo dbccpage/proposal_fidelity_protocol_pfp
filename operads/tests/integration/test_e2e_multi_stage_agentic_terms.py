@@ -8,8 +8,8 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from omega_engine_operads.domain.value_objects.identifier import OperationId
-from omega_engine_operads.infrastructure.bootstrap import OeopContainer
+from operads.domain.value_objects.identifier import OperationId
+from operads.infrastructure.bootstrap import OeopContainer
 
 
 class TestE2EMultiStageAgenticTerms(unittest.TestCase):

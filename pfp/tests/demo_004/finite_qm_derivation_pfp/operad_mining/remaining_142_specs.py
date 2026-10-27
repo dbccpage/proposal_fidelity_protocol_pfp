@@ -320,7 +320,7 @@ NODE_142_PAPER_REFS: dict[str, list[str]] = {
         "papers/derivations/13_finite_qm_information/TFQ-0268_von_neumann_entropy_interface_for_mixed_states.md"
     ],
     "FQ-IMPL-F64-GATING": [
-        "papers/derivations/22_implementation_sibling/TFQ-0179_keep_omega_mub_float_cross-checks_from_authorizing_a_mub_6_existence_claim.md",
+        "papers/derivations/22_implementation_sibling/TFQ-0179_keep_core_mub_float_cross-checks_from_authorizing_a_mub_6_existence_claim.md",
         "papers/derivations/22_implementation_sibling/TFQ-0188_refuse_the_f64_lift_scale_on_cycleliftspec_as_a_licence_for_an_exact.md"
     ],
     "FQ-IMPL-WDP-AMPLITUDE-BRIDGE": [
@@ -468,16 +468,16 @@ NODE_142_PAPER_REFS: dict[str, list[str]] = {
         "papers/derivations/09_finite_hilbert/TFQ-0314_cochain_lift_still_prices_the_born_law_as_an_import.md"
     ],
     "DS-QM212-MAJORANA-PROBLEM": [
-        "papers/derivations/22_implementation_sibling/TFQ-0181_keep_omega_majorana_a_gf_2_diagnostic_and_do_not_treat_it_as_an.md"
+        "papers/derivations/22_implementation_sibling/TFQ-0181_keep_core_majorana_a_gf_2_diagnostic_and_do_not_treat_it_as_an.md"
     ],
     "IMPL-FSP-SWITCHING-NORMAL-FORM-NF002": [
-        "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_omega_engine_runtime.md"
+        "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_engine_runtime.md"
     ],
     "IMPL-THYMUS-SCREENING-SOUNDNESS": [
         "papers/derivations/23_engine_custody/TFQ-0204_finite_floor_binding_for_a_quantum_carrier.md"
     ],
     "IMPL-LGGR-FINITE-RESULTS-LEAN": [
-        "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_omega_engine_runtime.md"
+        "papers/derivations/23_engine_custody/TFQ-0200_three-language_custody_on_the_engine_runtime.md"
     ]
 }
 

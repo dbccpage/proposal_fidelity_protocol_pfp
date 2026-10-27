@@ -1,9 +1,9 @@
 """Discrete Deformation Calculus (DDC) Alphabet, Priority Cascade, & Lyapunov Descent.
 
 Canonical Provenance:
-- `coda_atlas/F004_papers/006_project_anomalon_codename_woland_omega_engine/001_discrete_deformation_calculus/discrete_deformation_calculus.md`
+- `coda_atlas/F004_papers/006_project_sentinel_codename_adversary_engine/001_discrete_deformation_calculus/discrete_deformation_calculus.md`
   (Paper ID: `oe_010_dda_trace_calculus`, Series: `008_engine_runtime`)
-- `omega_engine/crates_rs/omega_discrete_deformation_algebra/src/dda_alphabet.rs`
+- `engine/crates_rs/core_discrete_deformation_algebra/src/dda_alphabet.rs`
 
 GTOC is no longer used; all current DDA hails from Discrete Deformation Calculus (DDC / DDA).
 

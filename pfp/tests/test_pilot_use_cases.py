@@ -3,7 +3,7 @@
 Verifies:
   1. EvaluatePilotUseCase accepts PilotAggregate and returns Result[PilotAggregate, DomainError].
   2. AssemblePromptUseCase accepts PilotAggregate, PilotId, StageNumber.
-  3. EvaluateWolandGatesUseCase accepts PilotAggregate and PilotId.
+  3. EvaluateAdversaryGatesUseCase accepts PilotAggregate and PilotId.
   4. ExecuteStagePipelineUseCase accepts and returns typed PilotAggregate and PilotId.
   5. RewritePromptUseCase accepts PilotAggregate and SpanPartitionAggregate directly.
   6. RunDemoUseCase accepts PilotAggregate and PilotId directly.
@@ -17,37 +17,37 @@ from __future__ import annotations
 import unittest
 from typing import Any, Dict, Mapping
 
-from omega_engine_pfp.domain.aggregates.pilot_aggregate import PilotAggregate
-from omega_engine_pfp.domain.aggregates.rewriting_aggregate import SpanPartitionAggregate
-from omega_engine_pfp.domain.contracts.gates import WolandGateId
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.domain.prompts.prompts import PromptPacket
-from omega_engine_pfp.domain.stages.stages import Stage5Response
-from omega_engine_pfp.domain.value_objects.numerics import BoundedTemperature
-from omega_engine_pfp.domain.value_objects.topology import ByteSpanVO
-from omega_engine_pfp.domain.value_objects.identifiers import CheckerIdVO
-from omega_engine_pfp.domain.value_objects.numerics import DifficultyRung
-from omega_engine_pfp.domain.value_objects.taxonomy import EvaluationStatusVO
-from omega_engine_pfp.domain.value_objects.numerics import MicroUsdSpend
-from omega_engine_pfp.domain.value_objects.identifiers import NormalFormId
-from omega_engine_pfp.domain.value_objects.identifiers import PilotId
-from omega_engine_pfp.domain.value_objects.identifiers import PromptId
-from omega_engine_pfp.domain.value_objects.identifiers import RequestId
-from omega_engine_pfp.domain.value_objects.taxonomy import SpanRoleVO
-from omega_engine_pfp.domain.value_objects.numerics import StageNumber
-from omega_engine_pfp.domain.value_objects.taxonomy import TaskFamilyVO
-from omega_engine_pfp.domain.value_objects.taxonomy import TrialStatusVO
-from omega_engine_pfp.infrastructure.pilot_runners.pilot_dispatch import UnifiedPfpDemoRunner
-from omega_engine_pfp.infrastructure.gate_evaluators import WolandTribunalGateEvaluator
-from omega_engine_pfp.infrastructure.providers import OfflineDeterministicPfpProvider
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.assemble_prompt import AssemblePromptUseCase
-from omega_engine_pfp.use_cases.evaluate_gates import EvaluateWolandGatesUseCase
-from omega_engine_pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
-from omega_engine_pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
-from omega_engine_pfp.use_cases.rewrite_prompt import RewritePromptUseCase
-from omega_engine_pfp.use_cases.run_demo import RunDemoUseCase
-from omega_engine_pfp.use_cases.verify_contracts import VerifyPfpContractsUseCase
+from pfp.domain.aggregates.pilot_aggregate import PilotAggregate
+from pfp.domain.aggregates.rewriting_aggregate import SpanPartitionAggregate
+from pfp.domain.contracts.gates import AdversaryGateId
+from pfp.domain.kernel.result import RefusalCode
+from pfp.domain.prompts.prompts import PromptPacket
+from pfp.domain.stages.stages import Stage5Response
+from pfp.domain.value_objects.numerics import BoundedTemperature
+from pfp.domain.value_objects.topology import ByteSpanVO
+from pfp.domain.value_objects.identifiers import CheckerIdVO
+from pfp.domain.value_objects.numerics import DifficultyRung
+from pfp.domain.value_objects.taxonomy import EvaluationStatusVO
+from pfp.domain.value_objects.numerics import MicroUsdSpend
+from pfp.domain.value_objects.identifiers import NormalFormId
+from pfp.domain.value_objects.identifiers import PilotId
+from pfp.domain.value_objects.identifiers import PromptId
+from pfp.domain.value_objects.identifiers import RequestId
+from pfp.domain.value_objects.taxonomy import SpanRoleVO
+from pfp.domain.value_objects.numerics import StageNumber
+from pfp.domain.value_objects.taxonomy import TaskFamilyVO
+from pfp.domain.value_objects.taxonomy import TrialStatusVO
+from pfp.infrastructure.pilot_runners.pilot_dispatch import UnifiedPfpDemoRunner
+from pfp.infrastructure.gate_evaluators import AdversaryTribunalGateEvaluator
+from pfp.infrastructure.providers import OfflineDeterministicPfpProvider
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.assemble_prompt import AssemblePromptUseCase
+from pfp.use_cases.evaluate_gates import EvaluateAdversaryGatesUseCase
+from pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
+from pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
+from pfp.use_cases.rewrite_prompt import RewritePromptUseCase
+from pfp.use_cases.run_demo import RunDemoUseCase
+from pfp.use_cases.verify_contracts import VerifyPfpContractsUseCase
 
 
 def _make_sample_pilot(
@@ -96,7 +96,7 @@ class TestPilotUseCasesMigration(unittest.TestCase):
     def setUp(self) -> None:
         self.storage = PfpFileSystemStorageAdapter()
         self.provider = OfflineDeterministicPfpProvider()
-        self.gate_evaluator = WolandTribunalGateEvaluator()
+        self.gate_evaluator = AdversaryTribunalGateEvaluator()
         self.runner = UnifiedPfpDemoRunner()
 
     def test_evaluate_pilot_use_case_with_pilot_aggregate(self) -> None:
@@ -142,8 +142,8 @@ class TestPilotUseCasesMigration(unittest.TestCase):
         self.assertEqual(packet.demo_id, p_id.value)
         self.assertEqual(packet.stage, 2)
 
-    def test_evaluate_woland_gates_use_case_with_pilot_aggregate(self) -> None:
-        use_case = EvaluateWolandGatesUseCase(self.gate_evaluator)
+    def test_evaluate_adversary_gates_use_case_with_pilot_aggregate(self) -> None:
+        use_case = EvaluateAdversaryGatesUseCase(self.gate_evaluator)
         pilot = _make_sample_pilot()
         receipt_dict = {
             "demo_id": pilot.target,
@@ -153,7 +153,7 @@ class TestPilotUseCasesMigration(unittest.TestCase):
         }
         res = use_case.evaluate_pilot(
             pilot=pilot,
-            gate_id=WolandGateId.CARRIER_GROUNDING,
+            gate_id=AdversaryGateId.CARRIER_GROUNDING,
             execution_receipt=receipt_dict,
         )
         self.assertTrue(res.is_ok)

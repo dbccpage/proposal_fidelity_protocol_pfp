@@ -1,4 +1,4 @@
-"""Budget Controller for the Woland Quantum Swarm (C021).
+"""Budget Controller for the Adversary Quantum Swarm (C021).
 
 Enforces execution cost constraints:
 - Hard ceiling: <= $0.25 per execution.

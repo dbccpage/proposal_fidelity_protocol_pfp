@@ -9,17 +9,17 @@ from __future__ import annotations
 
 from typing import Protocol, Sequence
 
-from omega_engine_operads.domain.operad.errors import Result
-from omega_engine_operads.domain.python_development_office.antipattern_finding import (
+from operads.domain.operad.errors import Result
+from operads.domain.python_development_office.antipattern_finding import (
     AntipatternFinding,
 )
-from omega_engine_operads.domain.python_development_office.errors import (
+from operads.domain.python_development_office.errors import (
     SourceReadError,
 )
-from omega_engine_operads.domain.python_development_office.module_info import (
+from operads.domain.python_development_office.module_info import (
     ModuleInfo,
 )
-from omega_engine_operads.domain.python_development_office.scan_result import (
+from operads.domain.python_development_office.scan_result import (
     ScanResult,
 )
 

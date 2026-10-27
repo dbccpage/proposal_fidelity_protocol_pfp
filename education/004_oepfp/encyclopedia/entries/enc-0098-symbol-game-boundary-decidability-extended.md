@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:VII.2", "po:PO-SGBD"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §VII.2 'Theorem VII.2'"
+  - "canonical_core_math_spine.md v1.5.2 §VII.2 'Theorem VII.2'"
   - "proof_obligations.md v1.3.5 §13 PO-SGBD 'Theorem' (unnamed; variant with proof body)"
 uses: []
 lean_status: NOT-STARTED
@@ -75,7 +75,7 @@ Theorem IV.2 (which this extends) and the terminalizer step is §VII.1 (PO-TPC).
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §VII.2
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §VII.2
   (statement copied verbatim). Original header line:
   `**Theorem VII.2 (Symbol Game Boundary Decidability, extended).** [PROVED]`
 

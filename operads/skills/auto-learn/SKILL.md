@@ -5,7 +5,7 @@ operad_source_colours: ["State", "Audit", "Code", "Contract"]
 operad_target_colour: "Contract"
 operad_arity: 4
 operad_residual: "unknown"
-families: [meta, governance, woland]
+families: [meta, governance, adversary]
 ---
 
 # Auto Learn
@@ -81,7 +81,7 @@ adapted repository workflow, not a clone of a private implementation.
 When `remediation_suggestions` are emitted by `auto-anti-pattern-lint` or an AutoP
 post-run handoff:
 
-1. **Invocation**: Run `py -3.12 omega_engine_operads/skills/auto-learn/scripts/auto_learn.py --repair`
+1. **Invocation**: Run `py -3.12 operads/skills/auto-learn/scripts/auto_learn.py --repair`
    (optionally passing `--remediations <json_file>`, `--changed`, or `--files <file...>`).
 2. **Smallest High-Confidence Correction**: The engine evaluates each suggestion against
    proven dual healthy patterns:
@@ -105,15 +105,15 @@ post-run handoff:
 ## Finish Hook and Storage
 
 
-After each outer `/woland` or `/woland-digests` run, including a partial or failed
+After each outer `/adversary` or `/adversary-digests` run, including a partial or failed
 run, `/auto-oe-autop` invokes this skill once in the current IDE with the original
 need, actual observations, changed paths and remaining findings. Run the same
 small loop on a failed run; a missing prerequisite can itself yield a scoped
 lesson without pretending the original task succeeded.
 
-Inner AutoP, Woland and learning helpers return their observations to the outer
+Inner AutoP, Adversary and learning helpers return their observations to the outer
 run. The outer finish consumes those observations once. Learning edits and their
-recheck do not invoke another finish hook. This prevents an AutoP -> Woland ->
+recheck do not invoke another finish hook. This prevents an AutoP -> Adversary ->
 AutoP or auto-learn -> auto-learn recursion chain. Use a simple in-session flag
 or the existing task context; no persistent hook registry is needed.
 

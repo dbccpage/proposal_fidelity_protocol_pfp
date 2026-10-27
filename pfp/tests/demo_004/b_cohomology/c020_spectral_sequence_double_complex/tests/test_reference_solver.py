@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c020_spectral_sequence_double_complex.reference_solver.solver import (
     solve,
 )
 

@@ -7,24 +7,24 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.application.governance_digest.apply_proposals import (
+from operads.application.governance_digest.apply_proposals import (
     apply_proposals,
 )
-from omega_engine_operads.application.governance_digest.digest_corpus import (
+from operads.application.governance_digest.digest_corpus import (
     canonical_json,
     digest_corpus,
 )
-from omega_engine_operads.application.governance_digest.receipt_path import (
+from operads.application.governance_digest.receipt_path import (
     receipt_destination_allowed,
     write_receipt,
 )
-from omega_engine_operads.application.governance_digest.repairs import live_repairs
-from omega_engine_operads.application.governance_digest.textops import (
+from operads.application.governance_digest.repairs import live_repairs
+from operads.application.governance_digest.textops import (
     apply_edits,
     measure,
     sha256_text,
 )
-from omega_engine_operads.domain.governance_digest.records import (
+from operads.domain.governance_digest.records import (
     EditLocator,
     GovernanceCorpus,
     PatternDoc,
@@ -32,7 +32,7 @@ from omega_engine_operads.domain.governance_digest.records import (
     RepairSpec,
     TextDoc,
 )
-from omega_engine_operads.infrastructure.fs.governance_corpus_adapter import (
+from operads.infrastructure.fs.governance_corpus_adapter import (
     FsGovernanceCorpusAdapter,
 )
 
@@ -418,7 +418,7 @@ class GovernanceDigestTests(unittest.TestCase):
                 _doc("documentation", ".agents/documentation/sessions/code_lesson.md", code_lesson),
             ),
             handoffs=(_doc("teamwork", ".agents/teamwork/auditor_1/handoff.md", incomplete),),
-            paper_reviews=(_doc("omega_paper_reviews", "_intelligence/omega_paper_reviews/paper.json", paper),),
+            paper_reviews=(_doc("core_paper_reviews", "_intelligence/core_paper_reviews/paper.json", paper),),
             absent_corpora=("_intelligence/symbol_game/runs",),
             stale_pointers=(
                 _doc(
@@ -448,7 +448,7 @@ class GovernanceDigestTests(unittest.TestCase):
         self.assertNotIn("recurring_touch:pkg/nested/a.py", by_id)
         self.assertNotIn("recurring_touch:pkg/c.py", by_id)
         self.assertEqual(by_id["lesson_candidate:.agents/documentation/sessions/code_lesson.md"]["disposition"], "lesson_candidate")
-        paper_finding = by_id["lesson_candidate:_intelligence/omega_paper_reviews/paper.json"]
+        paper_finding = by_id["lesson_candidate:_intelligence/core_paper_reviews/paper.json"]
         evidence = {item["name"]: item["value"] for item in paper_finding["evidence"]}
         self.assertEqual(evidence["counterexample"], LESSON["counterexample"])
         self.assertEqual(evidence["verification"], LESSON["verification"])

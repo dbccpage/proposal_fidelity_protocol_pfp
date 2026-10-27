@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Tuple
 
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.models import ObstructionScore
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.models import ObstructionScore
 
 
 @dataclass(frozen=True)

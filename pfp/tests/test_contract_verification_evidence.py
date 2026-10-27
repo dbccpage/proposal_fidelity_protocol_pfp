@@ -5,15 +5,15 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.domain.contracts.contracts import ContractSpec
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.domain.value_objects.identifiers import NormalFormId, PilotId
-from omega_engine_pfp.domain.value_objects.taxonomy import TrialStatusVO
-from omega_engine_pfp.entrypoints.cli.pfp import main
-from omega_engine_pfp.entrypoints.cli.pfp_normal_forms import run_normal_forms_cli
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.tests.test_pilot_use_cases import _make_sample_pilot
-from omega_engine_pfp.use_cases.verify_contracts import VerifyPfpContractsUseCase
+from pfp.domain.contracts.contracts import ContractSpec
+from pfp.domain.kernel.result import RefusalCode
+from pfp.domain.value_objects.identifiers import NormalFormId, PilotId
+from pfp.domain.value_objects.taxonomy import TrialStatusVO
+from pfp.entrypoints.cli.pfp import main
+from pfp.entrypoints.cli.pfp_normal_forms import run_normal_forms_cli
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.tests.test_pilot_use_cases import _make_sample_pilot
+from pfp.use_cases.verify_contracts import VerifyPfpContractsUseCase
 
 
 def test_public_verification_refuses_and_points_to_structural_audit(capsys):

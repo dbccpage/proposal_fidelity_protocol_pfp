@@ -38,7 +38,7 @@ def live_args(tmp_path):
     ("--max-estimated-cost-microusd", "0"), ("--timeout", "nan"),
 ])
 def test_invalid_live_limits_refuse_before_credentials_or_output(tmp_path, monkeypatch, capsys, flag, value):
-    from omega_engine_pfp.infrastructure import estimated_gateway
+    from pfp.infrastructure import estimated_gateway
 
     monkeypatch.setattr(estimated_gateway, "create_accounted_openrouter_gateway",
                         lambda *a, **kw: pytest.fail("invalid input reached credentials"))
@@ -54,7 +54,7 @@ def test_invalid_live_limits_refuse_before_credentials_or_output(tmp_path, monke
 
 @pytest.mark.parametrize("suffix", ["", ".budget.sqlite3", ".budget.sqlite3.replies"])
 def test_live_output_or_accounting_cannot_be_reused(tmp_path, monkeypatch, capsys, suffix):
-    from omega_engine_pfp.infrastructure import estimated_gateway
+    from pfp.infrastructure import estimated_gateway
 
     monkeypatch.setattr(estimated_gateway, "create_accounted_openrouter_gateway",
                         lambda *a, **kw: pytest.fail("existing state reached credentials"))
@@ -66,9 +66,9 @@ def test_live_output_or_accounting_cannot_be_reused(tmp_path, monkeypatch, capsy
 
 
 def test_live_cli_composes_explicit_bounds_and_original_pipeline(tmp_path, monkeypatch, capsys):
-    from omega_engine_pfp.infrastructure import estimated_gateway
-    from omega_engine_pfp.infrastructure.adapters import pfp_campaign
-    from omega_engine_pfp.infrastructure.providers import OfflineDeterministicPfpProvider
+    from pfp.infrastructure import estimated_gateway
+    from pfp.infrastructure.adapters import pfp_campaign
+    from pfp.infrastructure.providers import OfflineDeterministicPfpProvider
 
     sentinel = object()
     observed = {}
@@ -99,8 +99,8 @@ def test_live_cli_composes_explicit_bounds_and_original_pipeline(tmp_path, monke
 
 
 def test_live_requires_explicit_limits_and_reports_credential_refusal(tmp_path, monkeypatch, capsys):
-    from omega_engine_pfp.infrastructure import estimated_gateway
-    from omega_engine_woland.domain.providers.types import ProviderConfigError
+    from pfp.infrastructure import estimated_gateway
+    from adversary.domain.providers.types import ProviderConfigError
 
     calls = []
     def unavailable(*args, **options):

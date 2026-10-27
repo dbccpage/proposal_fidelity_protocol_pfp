@@ -20,11 +20,11 @@ import zipfile
 from pathlib import Path
 from typing import Any, Sequence
 
-from omega_engine_operads.domain.autopoiesis.entities import (
+from operads.domain.autopoiesis.entities import (
     HarvestRecord,
     HarvestSnapshot,
 )
-from omega_engine_operads.domain.autopoiesis.ports import HarvestVaultPort
+from operads.domain.autopoiesis.ports import HarvestVaultPort
 
 
 class FileHarvestVault(HarvestVaultPort):

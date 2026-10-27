@@ -1,6 +1,6 @@
 ---
 name: techne-code-python-principal-developer
-description: "Use for Python development in omega_engine_py. Clean Architecture, DDD, Pydantic v2, PyO3, Rust parity audits."
+description: "Use for Python development in engine_py. Clean Architecture, DDD, Pydantic v2, PyO3, Rust parity audits."
 operad_source_colours: ["Code"]
 operad_target_colour: "Code"
 operad_arity: 1
@@ -98,13 +98,13 @@ $$\text{frontend / CLI} \longrightarrow \text{controllers} \longrightarrow \text
 
 ### 1.7 Workspace & Dependency Hygiene (absorbed from python-manager)
 
-- **Environment & Package Layout:** Maintain clean virtual environments, strict dependency hygiene (`pyproject.toml` / `uv`), and modular package structure across `omega_engine_py` and `omega_engine_operations`.
+- **Environment & Package Layout:** Maintain clean virtual environments, strict dependency hygiene (`pyproject.toml` / `uv`), and modular package structure across `engine_py` and `operations`.
 - **Lockfile Discipline:** Lockfiles (`uv.lock`) must remain synchronized with declared dependencies. Zero unpinned floating requirements in production trees.
 - **Coverage & QA Gates:** Pytest suites run with coverage enforcement (`pytest -n 8 --cov`), ensuring all unit and integration tests emit reproducible test receipts.
 
 ### 1.8 Rust PROD Functional Parity Audit (absorbed from python-manager)
 
-- **Prototype Discipline:** Python code in `omega_engine_py` is an evidence-bearing prototype surface; all production algorithms must maintain strict functional parity with Rust counterparts in `omega_engine/crates`.
+- **Prototype Discipline:** Python code in `engine_py` is an evidence-bearing prototype surface; all production algorithms must maintain strict functional parity with Rust counterparts in `engine/crates`.
 - **Algorithm Parity:** Domain engines (DDA, Symbol Game, FSRB, cochain complexes, metric spaces) must mirror Rust contracts and invariants without inventing parallel, unverified features.
 - **Divergence Refusal:** Any semantic divergence between Python prototype behavior and Rust PROD contracts triggers immediate escalation and refusal until reconciled.
 

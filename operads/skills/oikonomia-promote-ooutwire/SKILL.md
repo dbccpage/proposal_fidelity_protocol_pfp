@@ -27,7 +27,7 @@ operad_residual: "unknown"
 
 ### 1. Resume & Career Asset Optimization
 
-- **Data Source:** Reviews all master career assets under `job_hunt/resumes/` (`cv_master_updated_2026.md`, `career_objective_resume_versions.md`, `anomalon_supporting_document.md`, `cover_letter_io_associates_2026.md`).
+- **Data Source:** Reviews all master career assets under `job_hunt/resumes/` (`cv_master_updated_2026.md`, `career_objective_resume_versions.md`, `sentinel_supporting_document.md`, `cover_letter_io_associates_2026.md`).
 - **Tailored Resumes:** Generates position-specific markdown/LaTeX resumes highlighting senior software architecture, AI/ML engineering, Rust/Python production development, and Clean Architecture leadership.
 - **LinkedIn & Portfolio Alignment:** Synchronizes LinkedIn summary, work experience highlights, and GitHub portfolio showcases with `job_hunt/resumes/linkedin/`.
 
@@ -41,11 +41,11 @@ operad_residual: "unknown"
 - **Behavioral STAR Framing:** Formulates STAR (Situation, Task, Action, Result) narratives highlighting high-impact technical delivery and leadership.
 - **Technical & System Design Defense:** Simulates deep-dive interview questioning across Rust performance, Clean Architecture, Pydantic v2 validation, database indexing, and LLM agentic orchestration.
 
-### 4. Anomalon & Omega Engine Marketing Strategy
+### 4. Sentinel & Engine Marketing Strategy
 
 - **Product Positioning:** Translates complex theoretical research (CODA, GTLA, FOC, DIME, 5-morphism pipelines) into accessible executive summaries, investor pitches, and public product landing pages.
 - **Media & Content Factory (`mimesis`):** Collaborates with `L3_nous_mimesis` to design visual diagrams, interactive demo launcher cards, blog posts, and technical whitepapers.
-- **Public math legibility (forums):** For MathOverflow, Lean Zulip, Math.SE, and LinkedIn math essays, route through the `public-math-legibility` RGB pipeline (proposed skills Entry 0015–0021). Ops home: `omega_engine_atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/docs/lean_zulip_legibility_ops.md` and `mo_mathse_question_pack.md`. **Hard rules:** no house dialect on forum posts; no LEAN_TOY-as-theorem; agents draft, human posts; Thanatos+Glossa veto override marketing.
+- **Public math legibility (forums):** For MathOverflow, Lean Zulip, Math.SE, and LinkedIn math essays, route through the `public-math-legibility` RGB pipeline (proposed skills Entry 0015–0021). Ops home: `atlas/coda_atlas/F004_papers/002_projection_obstruction/000_projection_obstruction/docs/lean_zulip_legibility_ops.md` and `mo_mathse_question_pack.md`. **Hard rules:** no house dialect on forum posts; no LEAN_TOY-as-theorem; agents draft, human posts; Thanatos+Glossa veto override marketing.
 
 ---
 
@@ -54,7 +54,7 @@ operad_residual: "unknown"
 Whenever `oikonomia-promote-ooutwire` identifies new marketing, business, or career workflow requirements:
 
 1. Formulate candidate skill proposals (e.g. `mimesis-brand-storyteller`, `oikonomia-interview-simulator`).
-2. Land proposals directly in `omega_engine_operads/skills/ooutwire/proposed_skills_register.md` and `omega_engine_operads/skills/ooutwire/recommended_skills_to_build.md` for human review.
+2. Land proposals directly in `operads/skills/ooutwire/proposed_skills_register.md` and `operads/skills/ooutwire/recommended_skills_to_build.md` for human review.
 
 ---
 
@@ -63,7 +63,7 @@ Whenever `oikonomia-promote-ooutwire` identifies new marketing, business, or car
 Whenever `oikonomia-promote-ooutwire` encounters missing resume data, unaligned career records, application tracking defects, or marketing presentation errors:
 
 1. Automatically create a formal investigation report under:
-   `omega_engine/anomalon_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_oikonomia_promote_{defect_id}.md`
+   `engine/sentinel_councils/councils/blackrod/investigations/investigation_{YYYYMMDD}_oikonomia_promote_{defect_id}.md`
 2. Include error context, root cause analysis, affected files, and recommended workflow remediation plan for Blackrod review.
 
 ## Mandatory De-Linting & Encoding Cleanliness (`RULE_MARKDOWN_DELINTING_001`)

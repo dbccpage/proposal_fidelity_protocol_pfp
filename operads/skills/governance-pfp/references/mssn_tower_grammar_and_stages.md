@@ -50,7 +50,7 @@ $$\boxed{\texttt{lift\_status=unproved} \lor \texttt{lift\_status=unlicensed} \i
 
 ### 3.2 Two-Part Decoupled Level Architecture
 
-To maintain absolute claim hygiene, every level specification document across the research atlas (`omega_engine_education/documentation/1_minimal_symbol_system_n_mssn/levels/`) must be decoupled into two distinct structural parts:
+To maintain absolute claim hygiene, every level specification document across the research atlas (`education/documentation/1_minimal_symbol_system_n_mssn/levels/`) must be decoupled into two distinct structural parts:
 
 1. **`## Part I: Row Contract`**:
    - Carrier Grammar & Syntactic Forms (pure boundary expressions, typed inputs).

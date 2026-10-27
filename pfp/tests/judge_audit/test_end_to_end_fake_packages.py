@@ -18,8 +18,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_woland.tests.pilots.judge_packet_audit import audit, canonical
-from omega_engine_pfp.tests.judge_audit import fake_packages as fp
+from adversary.tests.pilots.judge_packet_audit import audit, canonical
+from pfp.tests.judge_audit import fake_packages as fp
 
 
 def _run(

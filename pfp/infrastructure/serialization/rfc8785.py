@@ -1,8 +1,8 @@
 """Strict integer/string subset of the domain JCS-style encoder.
 
-This is not the ``omega-canonical-v1`` packet sealer. The sealer is
-``omega_engine_pfp.domain.shared_kernel.canonical.canonical_json``, which
-emits the tagged wire ``["omega-canonical-v1", tag, body]``. This function
+This is not the ``core-canonical-v1`` packet sealer. The sealer is
+``pfp.domain.shared_kernel.canonical.canonical_json``, which
+emits the tagged wire ``["core-canonical-v1", tag, body]``. This function
 must not be called as that sealer.
 
 The supported subset is JSON null, booleans, integers, strings, arrays, and
@@ -19,14 +19,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from omega_engine_pfp.domain.canonical import JcsError, rfc8785_canonical_json
+from pfp.domain.canonical import JcsError, rfc8785_canonical_json
 
 RFC8785_FORMAT_NAME = "rfc8785"
 
 
 @dataclass(frozen=True, slots=True)
 class Rfc8785Encoding:
-    """One RFC 8785 encoding. ``format_name`` is never ``omega-canonical-v1``."""
+    """One RFC 8785 encoding. ``format_name`` is never ``core-canonical-v1``."""
 
     format_name: str
     text: str

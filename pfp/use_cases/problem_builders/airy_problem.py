@@ -4,26 +4,26 @@ from __future__ import annotations
 
 from typing import Any
 
-from omega_engine_pfp.domain.entities import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.airy import (
+from pfp.domain.entities import PacketEnvelopeV2
+from pfp.domain.entities.airy import (
     AiryCriticalCarrierV1,
     AiryCriticalStateV1,
     AirySeedSlotV1,
     ComplexScalarV1,
 )
-from omega_engine_pfp.domain.entities.airy_projector import (
+from pfp.domain.entities.airy_projector import (
     AIRY_CARRIER_ID,
     AIRY_OBSTRUCTION_ID,
     AIRY_PACKET_FAMILY,
     AiryCriticalProjector,
     _payload,
 )
-from omega_engine_pfp.domain.entities.problem import (
+from pfp.domain.entities.problem import (
     DetectorCase,
     IdentityAdapter,
     RuntimeProblem,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
 
 DEFAULT_AIRY_LAMBDA = 1.0 + 0.4j
 DEFAULT_AIRY_SEEDS = (
@@ -111,7 +111,7 @@ def build_airy_problem(
         ),
     )
 
-    initial_state_hash = domain_digest("omega.oesos.native-state.v1", initial_state)
+    initial_state_hash = domain_digest("core.oesos.native-state.v1", initial_state)
     payload = _payload(carrier, initial_state)
 
     envelope = PacketEnvelopeV2(

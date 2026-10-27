@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import unittest
 
-from omega_engine_operads.domain.errors.domain_errors import (
+from operads.domain.errors.domain_errors import (
     AuthorityCeilingExceededError,
     DomainInvariantError,
     InvalidCompositionError,
@@ -13,13 +13,13 @@ from omega_engine_operads.domain.errors.domain_errors import (
     SchemaMismatchError,
     UnresolvedResidualError,
 )
-from omega_engine_operads.domain.events.domain_events import (
+from operads.domain.events.domain_events import (
     CatalogCompiledV3,
     EstateCapturedV3,
 )
-from omega_engine_operads.domain.value_objects.byte_span import SourceByteSpan
-from omega_engine_operads.domain.value_objects.content_digest import ContentDigest
-from omega_engine_operads.domain.value_objects.identifier import (
+from operads.domain.value_objects.byte_span import SourceByteSpan
+from operads.domain.value_objects.content_digest import ContentDigest
+from operads.domain.value_objects.identifier import (
     CausationId,
     ColourId,
     CorrelationId,

@@ -476,8 +476,8 @@ def verify_b_cohomology_exact_certificate_checker() -> bool:
 def verify_committed_c004_and_c006_receipts() -> bool:
     """Verify the 13 committed C004, claude-fable-5-1, C006, C005, C001, and B-COH receipts."""
     repo_root = Path(__file__).resolve().parents[6]
-    mech_dir = repo_root / "omega_engine_pfp" / "tests" / "demo_004" / "a_mechanism"
-    b_coh_dir = repo_root / "omega_engine_pfp" / "tests" / "demo_004" / "b_cohomology"
+    mech_dir = repo_root / "pfp" / "tests" / "demo_004" / "a_mechanism"
+    b_coh_dir = repo_root / "pfp" / "tests" / "demo_004" / "b_cohomology"
     if not mech_dir.is_dir():
         return False
     r1 = json.loads((mech_dir / "c004_paired_benchmark_receipt.json").read_text("utf-8"))

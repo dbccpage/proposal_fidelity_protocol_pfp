@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_woland.tests.pilots.challenge_suite import typed_certificate_repair
-from omega_engine_woland.tests.pilots.challenge_suite.typed_certificate_repair import (
+from adversary.tests.pilots.challenge_suite import typed_certificate_repair
+from adversary.tests.pilots.challenge_suite.typed_certificate_repair import (
     EDGES,
     check_certificate,
 )
@@ -28,7 +28,7 @@ def test_positive_wrong_witness_and_rebound_wrong_calculations():
 
 
 PACKET_REVISION = "0622e7e666877c61ae9330fe55b6a223965e23eb"
-PACKET = "_ic/woland/oev1rc_integration_closure/live_teamwork"
+PACKET = "_ic/adversary/oev1rc_integration_closure/live_teamwork"
 
 
 def packet_bytes(name: str) -> bytes:
@@ -110,7 +110,7 @@ def test_previously_claimed_action_cannot_report_or_send_a_new_call(tmp_path, mo
 
 
 def test_duplicate_content_in_original_vendor_wire_cannot_be_silently_repaired(tmp_path):
-    from omega_engine_woland.domain.providers.types import ProviderError
+    from adversary.domain.providers.types import ProviderError
 
     state, ledger = replay_fixture(tmp_path)
     with closing(sqlite3.connect(ledger)) as connection, connection:

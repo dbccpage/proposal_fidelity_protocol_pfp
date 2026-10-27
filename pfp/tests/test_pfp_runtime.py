@@ -5,17 +5,17 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
-from omega_engine_pfp.infrastructure.adapters.pfp_campaign import (
+from pfp.domain.contracts.pfp_runtime import PfpPromptTemplate, PfpTaskPrompt
+from pfp.infrastructure.adapters.pfp_campaign import (
     CAP,
     PfpCampaignAdapter,
     canonical,
     micro,
     replay_stages,
 )
-from omega_engine_pfp.use_cases.pfp_prompt import AssemblePfpPromptUseCase
-from omega_engine_pfp.use_cases.pfp_proposal import REPAIR_RULES
-from omega_engine_pfp.use_cases.pfp_stages import RunPfpStagesUseCase
+from pfp.use_cases.pfp_prompt import AssemblePfpPromptUseCase
+from pfp.use_cases.pfp_proposal import REPAIR_RULES
+from pfp.use_cases.pfp_stages import RunPfpStagesUseCase
 
 MODEL = "offline-fixture"
 
@@ -268,14 +268,14 @@ def test_cost_rounds_up_without_zeroing_small_bills(value, expected):
 
 
 def _host_port(stop_stage, host5, calls):
-    from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPipelineStep
-    from omega_engine_pfp.domain.stages.host_stages import (
+    from pfp.domain.contracts.pfp_runtime import PfpPipelineStep
+    from pfp.domain.stages.host_stages import (
         admit_record,
         hand_off_record,
         receipt_record,
         selection_record,
     )
-    from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+    from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
 
     storage = PfpFileSystemStorageAdapter()
     rules, routing = storage.load_stage_file(9).obligation_rules, storage.load_terminal_routing()
@@ -313,7 +313,7 @@ PASS = {"host_verdict": "PASS", "exact_checks_passed": True, "surviving_candidat
                                       (None, tuple(range(1, 12)), "VERIFIED_WITH_RESIDUALS")]
 )
 def test_numbered_pipeline_keeps_fifth_stage_host_only(stop_stage, completed, terminal):
-    from omega_engine_pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
+    from pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
 
     calls = []
     run = RunPfpPipelineUseCase().execute(tuple(range(1, 12)), _host_port(stop_stage, PASS, calls))
@@ -326,8 +326,8 @@ def test_numbered_pipeline_keeps_fifth_stage_host_only(stop_stage, completed, te
 @pytest.mark.parametrize("stages", [(), (2, 1), (1, 2, 3, 4, 6, 7, 8), (True, 2, 3, 4, 5, 6, 7, 8),
                                     tuple(range(1, 13))])
 def test_numbered_pipeline_refuses_incomplete_or_coerced_stage_plan(stages):
-    from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPipelineFailure
-    from omega_engine_pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
+    from pfp.domain.contracts.pfp_runtime import PfpPipelineFailure
+    from pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
 
     with pytest.raises(PfpPipelineFailure, match="Expected a contiguous"):
         RunPfpPipelineUseCase().execute(stages, object())
@@ -335,7 +335,7 @@ def test_numbered_pipeline_refuses_incomplete_or_coerced_stage_plan(stages):
 
 @pytest.mark.parametrize("host", [{"host_verdict": "PASS"}, {"host_verdict": "FAIL", "exact_checks_passed": False}])
 def test_visiting_stage_five_is_not_independent_success(host):
-    from omega_engine_pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
+    from pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
 
     calls = []
     result = RunPfpPipelineUseCase().execute(tuple(range(1, 12)), _host_port(None, host, calls))

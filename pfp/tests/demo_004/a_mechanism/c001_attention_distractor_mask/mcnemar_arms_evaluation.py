@@ -29,18 +29,18 @@ IS_SYNTHETIC_FIXTURE: bool = True
 IS_EMPIRICAL_MEASUREMENT: bool = False
 EVALUATION_TYPE: str = "SYNTHETIC_VERIFICATION_HARNESS_FIXTURE"
 
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
     attention_mass_masking_decision,
     is_masking_authorized,
     resolve_fluff_positions,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.case_generator import (
     generate_hidden_base_set,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solve import (
     solve,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.solver import (
     verify_certificate,
 )
 
@@ -231,7 +231,7 @@ def run_mcnemar_hidden_base_arms_evaluation(
 
     # Persist report if run directory exists
     report_path = Path(
-        "_ic/darpa/woland/runs/c001_mechanism_pilot/mcnemar_evaluation_report.json"
+        "_ic/darpa/adversary/runs/c001_mechanism_pilot/mcnemar_evaluation_report.json"
     )
     if report_path.parent.is_dir():
         report_path.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")

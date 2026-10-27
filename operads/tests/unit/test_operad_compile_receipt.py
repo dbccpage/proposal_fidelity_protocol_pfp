@@ -14,7 +14,7 @@ from __future__ import annotations
 import json
 import pathlib
 
-from omega_engine_operads.application.operad.compiler_service import (
+from operads.application.operad.compiler_service import (
     OperadCompilerService,
 )
 

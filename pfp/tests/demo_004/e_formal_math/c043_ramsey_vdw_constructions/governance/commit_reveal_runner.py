@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 Scores the frozen reference solver against this package's own judge packet and
 checks that the judge's hostile mutations are rejected. It evaluates no model
-and is not a Woland verdict.
+and is not a Adversary verdict.
 
 Custody, stated plainly:
 
@@ -45,20 +45,20 @@ from typing import Any
 
 PKG_ROOT = Path(__file__).resolve().parent.parent
 for _parent in PKG_ROOT.parents:
-    if (_parent / "omega_engine_pfp").is_dir() and (_parent / "omega_engine_woland").is_dir():
+    if (_parent / "pfp").is_dir() and (_parent / "adversary").is_dir():
         if str(_parent) not in sys.path:
             sys.path.insert(0, str(_parent))
         break
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.governance.woland_gate import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.governance.adversary_gate import (
     GATE_SCOPE,
     TERMINAL_REFUSE,
-    WolandGateC043,
+    AdversaryGateC043,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.solver import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.solver import (
     solve,
 )
 
@@ -244,7 +244,7 @@ def _run(
         mutations_killed += 1 if _ok is not True else 0
         mutations_rejected_by_both += 1 if (first is False and second is False) else 0
 
-    gate = WolandGateC043(run_id, intelligence_repo_root=intelligence_repo_root)
+    gate = AdversaryGateC043(run_id, intelligence_repo_root=intelligence_repo_root)
     residuals: list[str] = []  # closed residuals that change the label; none are declared
     verdict = gate.evaluate_verdict(
         total_cases=len(case_records),

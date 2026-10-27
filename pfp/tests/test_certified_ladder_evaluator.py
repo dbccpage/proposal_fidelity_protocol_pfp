@@ -13,14 +13,14 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from omega_engine_pfp.domain.pilots.certified_ladder import (
+from pfp.domain.pilots.certified_ladder import (
     DebtMetric,
     HypothesisVerdict,
 )
-from omega_engine_pfp.use_cases.evaluate_certified_ladder import (
+from pfp.use_cases.evaluate_certified_ladder import (
     EvaluateCertifiedLadderUseCase,
 )
-from omega_engine_woland.tests.pilots.certified_ladder.hypothesis_evaluator import (
+from adversary.tests.pilots.certified_ladder.hypothesis_evaluator import (
     CertifiedLadderEvaluator,
 )
 

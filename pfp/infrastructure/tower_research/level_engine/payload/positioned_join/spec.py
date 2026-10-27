@@ -32,10 +32,10 @@ from __future__ import annotations
 
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.canon import load_path
-from omega_engine_operations.use_cases.level_engine.research_engine.components import ROOT
-from omega_engine_operations.use_cases.level_engine.research_engine.level import FixtureVerdict, LevelResult
-from omega_engine_operations.use_cases.level_engine.research_engine.sealed_evidence import lean_citation
+from operations.use_cases.level_engine.research_engine.canon import load_path
+from operations.use_cases.level_engine.research_engine.components import ROOT
+from operations.use_cases.level_engine.research_engine.level import FixtureVerdict, LevelResult
+from operations.use_cases.level_engine.research_engine.sealed_evidence import lean_citation
 from derivation.trace_algebra import REWRITE_ALPHABET, list_battery, nf, no_redex, rw_reducts
 
 CHALLENGE_ID = "positioned_join"

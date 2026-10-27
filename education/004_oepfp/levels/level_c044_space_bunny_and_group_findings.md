@@ -14,7 +14,7 @@
 > checked, and the counts would not measure identification. The audit behind these
 > notices is recorded in the collection's `verification/residuals.md`, section 8.
 
-> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../omega_engine_atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_woland/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c044_finite_group_identification/`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/). Its scoring receipt [`commit_reveal/c044_l41_scoring_receipt.json`](../../../../omega_engine_pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/commit_reveal/c044_l41_scoring_receipt.json) records 64/64, 48/48 and 1.4585 s for the reference solver only. No model-run record is retained.
+> **Source check (2026-10-20, pin `c419cc6beb`).** This file is a copy of the note of the same name, without the `level_` prefix, in [`atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/`](../../../../atlas/coda_atlas/F004_papers/015_pfp/symbol_game_challenge_and_demos_findings/). The collection's `verification/residuals.md` is not found in either copy, and no `_intelligence/_adversary/runs/` directory exists at the pin, so the run folders and digests named below cannot be opened. The package is now [`e_formal_math/c044_finite_group_identification/`](../../../../pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/). Its scoring receipt [`commit_reveal/c044_l41_scoring_receipt.json`](../../../../pfp/tests/demo_004/e_formal_math/c044_finite_group_identification/commit_reveal/c044_l41_scoring_receipt.json) records 64/64, 48/48 and 1.4585 s for the reference solver only. No model-run record is retained.
 
 > **Correction notice (2026-09-28).** Paper 010 (version 2.0.0) re-derived the model
 > counts for C017 and C045 to C050 from the retained run records; where they differ
@@ -38,7 +38,7 @@ Challenge **C044 (`c044_finite_group_identification`)** challenges autonomous so
 We developed, verified, and sealed the complete reference package under SG-CP v1:
 - **Reference Solver:** Exact algebraic group closure, Latin square and associativity validation, invariant computation (orders, center, derived subgroup, abelianization invariant factors, conjugacy classes, solutions to $x^k = e$), and structured basis backtracking isomorphism search.
 - **Judge Packet:** 64 hidden cases (40 base, 16 relabelled gauge controls, 8 poisoned cases) and 48 hostile mutated certificates.
-- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c044_eval_1790622696`.
+- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 1.458s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c044_eval_1790622696`.
 - **Empirical Matrix:** Benchmarked **Space Bunny Alpha** (`stealth/space-bunny-alpha`), **LLaMA 3.3 70B Instruct**, and **LLaMA 3.1 8B Instruct** across a 10-instance calibrated panel.
 
 ---

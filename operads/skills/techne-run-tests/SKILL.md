@@ -30,10 +30,10 @@ operad_residual: "unknown"
 
 ## Example Session (2)
 
-**Source:** Anomalon.com MVP deployment session (convo.md) -- 4 serial Vercel failures before green deploy
+**Source:** Sentinel.com MVP deployment session (convo.md) -- 4 serial Vercel failures before green deploy
 **Emergency triage pipeline** (when Vercel deploys fail in sequence):
 
-## Vercel / Next.js Pre-Deploy Checklist (Anomalon.com MVP Learning)
+## Vercel / Next.js Pre-Deploy Checklist (Sentinel.com MVP Learning)
 
 **Source:** Sprint 058 Copilot PR review feedback (weak assertions in test_news_migration.py)
 **Red Flags to Check:**
@@ -53,7 +53,7 @@ operad_residual: "unknown"
 
 **Source:** QUIP implementation session 2026-02-20
 
-### PyO3 with Python 3.14+ (omega_engine)
+### PyO3 with Python 3.14+ (engine)
 
 ### Rust Build Resource Constraints (MANDATORY)
 
@@ -116,8 +116,8 @@ coverage 7.13.1:
 | `python -m pytest <any test> --cov=<mod>` | dies during **collection**: `ImportError: cannot load module more than once per process` (raised from `numpy/_core/multiarray.py`) |
 | `python -m coverage run -m pytest ...` | runs, but collects nothing: `No data was collected`, modules reported "never imported" |
 
-It reproduces on **untouched** files (`omega_epk/tests/test_defects.py`,
-`omega_epk/tests/test_metrics_identity.py`), so it is an environment/tooling
+It reproduces on **untouched** files (`core_epk/tests/test_defects.py`,
+`core_epk/tests/test_metrics_identity.py`), so it is an environment/tooling
 incompatibility, never evidence about the code under test. Always demonstrate that
 before blaming a change.
 

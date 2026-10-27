@@ -21,7 +21,7 @@ Shared checklist for all skills that involve committing code.
 
 | Condition | Check | Command | Blocking |
 | ----------- | ------- | --------- | ---------- |
-| Test files staged | Techne Code Soviet Inspector | `/techne-code-soviet-inspector <staged test paths>` | Yes |
+| Test files staged | Techne Code Inspector | `/techne-code-inspector <staged test paths>` | Yes |
 | Frontend changes | React tests | `npm run test:react:run` | Yes |
 | Skill files staged | Autoskill suggestion | `/autoskill` | No |
 | **Skill files staged** | **Skill `name:` == directory name** | `python .agents/skills/_shared/verify_skill_names.py` | **Yes** |
@@ -56,7 +56,7 @@ for h in .claude .codex .grok; do rm -rf "$h/skills/<old-name>"; done
 
 Then re-run all three gates. Confirm the removal, do not assume it:
 `ls -d .{claude,codex,grok}/skills/<old-name>` must return three "No such file" errors.
-(Observed 2026-07-28 during the `soviet-inspector` → `techne-code-soviet-inspector`
+(Observed 2026-07-28 during the `inspector` → `techne-code-inspector`
 rename.)
 
 ## A blocking row must name a runner that exists
@@ -71,24 +71,24 @@ ls scripts/<name>.py    # or Test-Path in PowerShell
 ```
 
 This row carried `python scripts/test_quality_inspector.py` as **blocking** until
-2026-07-28. That file has never existed on this branch -- `anomalon_councils/src/test_quality.rs`
+2026-07-28. That file has never existed on this branch -- `sentinel_councils/src/test_quality.rs`
 says so in its own header comment, which is how it was finally caught. The row now
 invokes the skill, which is what actually runs.
 
-## Techne Code Soviet Inspector Gate
+## Techne Code Inspector Gate
 
 There is **no standalone Python runner.** `scripts/test_quality_inspector.py` does not
 exist on this branch, and a checklist row that names it produces a gate everyone
 believes ran and nobody executed. The doctrine lives in the skill; the
 mechanically-checkable subset is ported to Rust in
-`omega_engine/anomalon_councils/src/test_quality.rs`.
+`engine/sentinel_councils/src/test_quality.rs`.
 
 ```text
 staged_test_files = staged paths matching **/tests/**.py, **/tests/**.rs,
                     and inline #[cfg(test)] changes in **/src/**.rs
 
 if staged_test_files:
-    invoke /techne-code-soviet-inspector <staged_test_files>
+    invoke /techne-code-inspector <staged_test_files>
 
     VETO or BLOCKED   -> commit is blocked; fix the defect or report the refusal
     PASS_WITH_PATCHES -> apply the named patches, then re-run
@@ -97,7 +97,7 @@ if staged_test_files:
 ```
 
 Missing tests are the Builder's job, not the committer's improvisation: route a VETO
-through `/rip-testing`, which runs Inspector → `/techne-code-soviet-builder` → Inspector
+through `/rip-testing`, which runs Inspector → `/techne-code-builder` → Inspector
 under a finite budget. Never reach green by deleting or `#[ignore]`-ing the failing test.
 
 ## Windows-Specific
@@ -108,4 +108,4 @@ See: [windows_cli.md](../windows_cli.md) for Windows command patterns.
 
 **Used by:** `commit`, `lint`, `run-tests`, `code-review`, `github`
 
-**Source:** Sprint 050-0 (protected branch), Sprint 058 (Techne Code Soviet Inspector)
+**Source:** Sprint 050-0 (protected branch), Sprint 058 (Techne Code Inspector)

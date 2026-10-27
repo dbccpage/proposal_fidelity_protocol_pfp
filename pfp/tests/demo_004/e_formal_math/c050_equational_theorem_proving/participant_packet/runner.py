@@ -11,7 +11,7 @@ REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pyproject.
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c050_equational_theorem_proving.reference_solver import (
+from pfp.tests.demo_004.e_formal_math.c050_equational_theorem_proving.reference_solver import (
     solve,
 )
 

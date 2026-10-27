@@ -6,10 +6,10 @@ Runs exact checker and independent checker and fails closed on disagreement.
 
 from typing import Any, Dict, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.judge_packet.checkers.exact_checker import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.judge_packet.checkers.exact_checker import (
     check_exact,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.judge_packet.checkers.independent_checker import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.judge_packet.checkers.independent_checker import (
     independent_check,
 )
 

@@ -19,7 +19,7 @@ operad_residual: "unknown"
 >
 > **STRICT STAGING & COMMIT DIRECTIVE:** Stage only explicitly named paths. Never use `git add .`, `git add -A`, or commit anything under `target/**`.
 
-- **Policy:** `.anomalon/policies/git_discipline.md`
+- **Policy:** `.sentinel/policies/git_discipline.md`
 - **Version:** 2.3.0 (CPPMS, 0-oe-commit, techne-qa-pr-reviewer & git-guardrails-claude-code consolidation)
 
 ---
@@ -69,7 +69,7 @@ When performing automated landing or multi-step PR creation:
    - Snapshot `git diff --cached --name-only` immediately before `git commit`. Refuse commit if index drifts after pathspec add.
    - **Republication Checklist Pre-Commit Gate:** Execute the pre-commit gate before committing:
      ```powershell
-     py -3.12 -m omega_engine_operations.use_cases.cicd.republication_checklist_gate
+     py -3.12 -m operations.use_cases.cicd.republication_checklist_gate
      ```
      Commit is permitted only when receipt status is `PASS`.
 4. **Commit & Branch Push:**
@@ -93,14 +93,14 @@ When performing automated landing or multi-step PR creation:
 ### Quick Command
 
 ```bash
-py -3.12 -m omega_engine_governance.infrastructure.cicd_process_flow.review_pr <PR_NUMBER_OR_URL> --trusted-repository <ABSOLUTE_CLEAN_TRUSTED_REPOSITORY> --trusted-head <40_HEX_TRUSTED_HEAD> --output-dir <ABSOLUTE_EXTERNAL_AUDIT_DIRECTORY>
+py -3.12 -m governance.infrastructure.cicd_process_flow.review_pr <PR_NUMBER_OR_URL> --trusted-repository <ABSOLUTE_CLEAN_TRUSTED_REPOSITORY> --trusted-head <40_HEX_TRUSTED_HEAD> --output-dir <ABSOLUTE_EXTERNAL_AUDIT_DIRECTORY>
 ```
 
 ### What It Does Automatically
 
 1. **Fetches PR Metadata**: Resolves branch, head SHA, title, and base ref via `gh pr view`.
 2. **Worktree & Locus Resolution**: Finds active worktree or checks out PR branch cleanly without polluting active git state.
-3. **Old Man ChatGPT Red Team v2 Quality & Truth Gate**:
+3. **Red Team ChatGPT Red Team v2 Quality & Truth Gate**:
    - **Census Verification**: 59 explicit `[workspace].members` paths, 60 resolved packages (`cargo metadata --no-deps`).
    - **Authority Fencing**: Asserts `ExecutionAuthority: NONE` on expansion roadmaps & `HISTORICAL_SNAPSHOT` on past audits.
    - **Operad Validation**: Verifies 0 errors in `.agents/operad/validate_operad.py`.
@@ -148,7 +148,7 @@ Detailed operational rules for PR review gates are located in [Specialized PR Re
 6. **Untracked Stash Inspection & Recovery Protocol (`goo-untracked-stash-recovery`)**:
    - When uncommitted files are missing after branch switching, inspect untracked stash commit refs (`stash@{N}^3`) and recover missing paths via `git checkout "stash@{N}^3" -- <paths...>`.
 7. **Optional Education Diagnostics**:
-   - `py -3.12 -m omega_engine_operations.use_cases.cicd.education_strands_gate` remains available for scoped diagnostics. It is not a commit or merge requirement; report its actual coverage and failures without treating removal of the requirement as a passing result.
+   - `py -3.12 -m operations.use_cases.cicd.education_strands_gate` remains available for scoped diagnostics. It is not a commit or merge requirement; report its actual coverage and failures without treating removal of the requirement as a passing result.
 8. **GitHub CLI GraphQL Token Scope Guard (`goo-gh-graphql-pat-scope-guard`)**:
    - Avoid bare `gh pr view <number>` when verifying PR merge status. Default queries inspect commit status check rollups, failing with `GraphQL: Resource not accessible by personal access token` on restricted tokens. Use explicit JSON projections: `gh pr view <number> --json state,mergedAt,mergeCommit,url`.
 

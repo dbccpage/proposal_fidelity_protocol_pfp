@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **Canonical Symbol Game Theory Spine**
 >
-> The Symbol Game is the finite packet boundary between untrusted generation and Omega authority.
+> The Symbol Game is the finite packet boundary between untrusted generation and Core authority.
 > A model may propose. It may emit structured material. It may even emit certificate-shaped material. It is not the certifier.
 >
 > \[
@@ -12,7 +12,7 @@
 > }
 > \]
 >
-> **Authority Boundary:** Symbol Game emits verifier evidence and terminal statuses. It does not directly mint Omega authority.
+> **Authority Boundary:** Symbol Game emits verifier evidence and terminal statuses. It does not directly mint Core authority.
 >
 > **Governance Rule:** symbol_game_math_spine.md is canonical. symbol_game_proof_ledger.md is archival only and non-admissible. Theory is closeable; implementation authority remains gated until conformance passes.
 
@@ -132,7 +132,7 @@ EvidencePromotionAttempt
 ## Build
 
 ```bash
-cd omega_engine/products/symbol_game
+cd engine/products/symbol_game
 cargo build --all-targets --all-features
 ```
 

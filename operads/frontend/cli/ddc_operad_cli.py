@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import argparse
 
-from omega_engine_operads.frontend.presenters.ddc_operad_presenter import (
+from operads.frontend.presenters.ddc_operad_presenter import (
     DdcOperadPresenter,
 )
 

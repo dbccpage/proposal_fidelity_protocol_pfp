@@ -1,8 +1,8 @@
 """Tranche 17: Regge-Bianchi Spacetime & Higher Simplicial Coboundary Solvers (Tests 316-335).
 
 Aligned Contracts / Systems:
-- omega_homology
-- omega_holonomy
+- core_homology
+- core_holonomy
 - nf.coda.tsnf
 - nf.cochain.dhnf
 - BoutService
@@ -16,23 +16,23 @@ from __future__ import annotations
 import unittest
 from fractions import Fraction
 
-from omega_engine_pfp.ffi import get_default_host
-from omega_engine_woland.domain.evidence import (
+from pfp.ffi import get_default_host
+from adversary.domain.evidence import (
     CandidateCheckV1,
     CheckerVerdict,
     MeasurementStatus,
     ObstructionMeasurementV1,
     sha256_ref,
 )
-from omega_engine_woland.domain.network import Network
-from omega_engine_woland.infrastructure.cochain_adapter import (
+from adversary.domain.network import Network
+from adversary.infrastructure.cochain_adapter import (
     DefaultCochainScoringAdapter,
     _permutation_parity,
     build_exact_four_simplex_boundary,
     build_exact_tetrahedra_boundary,
 )
-from omega_engine_woland.stage.domain import AUTHORITY_EFFECT_NONE, CandidateProposalV1
-from omega_engine_woland.use_cases.act_helpers import execute_act7_authorization_gate
+from adversary.stage.domain import AUTHORITY_EFFECT_NONE, CandidateProposalV1
+from adversary.use_cases.act_helpers import execute_act7_authorization_gate
 
 # Act VII reads typed evidence (2026-09-29 honest-gate change): an exact
 # measurement and a challenge-checker verdict bound to the candidate bytes and
@@ -217,7 +217,7 @@ class TestTranche17ReggeBianchiHigherCoboundaries(unittest.TestCase):
     def test_4d_regge_deficit_receipt_generation_and_hashing(self) -> None:
         """Verify cryptographic receipt generation for Regge spacetime deficits."""
         cand = CandidateProposalV1(
-            producer_agent_id="seat_koroviev",
+            producer_agent_id="seat_defect_hunter",
             work_packet_id="sha256:0000000000000000000000000000000000000000000000000000000000000000",
             artifact_refs=(
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000",
@@ -249,7 +249,7 @@ class TestTranche17ReggeBianchiHigherCoboundaries(unittest.TestCase):
     def test_4d_regge_act7_terminal_gate_adversarial_zero_claim_refusal(self) -> None:
         """Assert Act VII rejects adversarial zero-claim when delta2_defect > 0."""
         cand = CandidateProposalV1(
-            producer_agent_id="seat_azazello",
+            producer_agent_id="seat_scope_guard",
             work_packet_id="sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
             artifact_refs=(
                 "sha256:0000000000000000000000000000000000000000000000000000000000000000",

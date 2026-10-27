@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from omega_engine_pfp.domain.demos import DemoRefusal, refuse_model_functionals
+from pfp.domain.demos import DemoRefusal, refuse_model_functionals
 
 DEMO_ID = "antimorphism_farm"
 AUTHORITY_EFFECT = "None"

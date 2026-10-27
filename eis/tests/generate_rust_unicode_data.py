@@ -36,7 +36,7 @@ def main():
     if low is not None:
         nonprintable.append((low,0x10FFFF))
     repo = next(path for path in Path(__file__).resolve().parents if (path / ".git").exists())
-    root = repo / "omega_engine/crates_rs/omega_types"
+    root = repo / "engine/crates_rs/core_types"
     source = ["// Generated from the unchanged Python oracle by generate_rust_unicode_data.py.",
         "// Do not edit by hand. The oracle version is intentionally frozen.",
         f'pub(crate) const PYTHON_UNICODE_VERSION: &str = "{unicodedata.unidata_version}";',

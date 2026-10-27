@@ -18,8 +18,8 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any, Sequence
 
-from omega_engine_pfp.ffi import RustSymbolGameHost, get_default_host
-from omega_engine_woland.infrastructure.cochain_adapter import to_canonical_rational_str
+from pfp.ffi import RustSymbolGameHost, get_default_host
+from adversary.infrastructure.cochain_adapter import to_canonical_rational_str
 
 
 @dataclass

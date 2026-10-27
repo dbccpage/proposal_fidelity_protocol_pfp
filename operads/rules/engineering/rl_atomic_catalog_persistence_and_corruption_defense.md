@@ -2,10 +2,10 @@
 rule_id: RL_ENG_CATALOG_001
 name: atomic_catalog_persistence_and_corruption_defense
 category: engineering
-subsystem: omega_engine_epistemic_immune_system
+subsystem: eis
 authority_effect: None
 paths:
-  - "omega_engine_epistemic_immune_system/**"
+  - "eis/**"
 ---
 
 # Rule: Atomic Catalog Persistence

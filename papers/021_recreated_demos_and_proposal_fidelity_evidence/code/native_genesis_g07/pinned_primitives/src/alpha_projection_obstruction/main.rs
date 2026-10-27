@@ -7,7 +7,7 @@
 //!
 //! `AuthorityEffect: None.`
 
-use omega_ooutwire_primitives::alpha_projection_obstruction::run;
+use core_ooutwire_primitives::alpha_projection_obstruction::run;
 
 fn main() {
     let write = std::env::args().any(|a| a == "--write");
@@ -21,7 +21,7 @@ fn main() {
     let text = run.to_text();
     print!("{text}");
     if write {
-        let path = omega_ooutwire_primitives::alpha_projection_obstruction::receipt_path();
+        let path = core_ooutwire_primitives::alpha_projection_obstruction::receipt_path();
         std::fs::write(&path, text.as_bytes()).expect("write RECEIPT.txt");
         eprintln!("wrote {}", path.display());
     }

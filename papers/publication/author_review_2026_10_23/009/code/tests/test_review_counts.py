@@ -69,7 +69,7 @@ def test_empty_rows_do_not_become_perfect_detection():
 
 
 def test_gate_record_is_five_probes_in_four_families():
-    path = ROOT / "docs/historical_evidence/woland_gate_falsifiers.json"
+    path = ROOT / "docs/historical_evidence/adversary_gate_falsifiers.json"
     record = json.loads(path.read_text())
     assert record["audited_commit"] == "30609de2c3928238715375a9bac608256fa381d8"
     probes = record["falsifiers"]

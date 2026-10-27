@@ -15,13 +15,13 @@ aliases:
   - "paper:er006:symbol-game-firewall"
   - "paper:er007:the-symbol-game-monograph"
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
-  - "omega_engine/lean4/008_engine_runtime/PaperER006/PaperER006.lean"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/lean4/008_engine_runtime/PaperER006/PaperER006.lean"
 uses: ["ENC-0889", "ENC-0890", "ENC-0932"]
 lean_status: MECHANIZED-PARTIAL
 lean_refs:
-  - "omega_engine/lean4/008_engine_runtime/PaperER006/PaperER006.lean"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_finite_consequences.lean"
+  - "engine/lean4/008_engine_runtime/PaperER006/PaperER006.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_finite_consequences.lean"
   - "PaperER007.symbol_game_lggr_authority_firewall_finite_consequences"
 extracted: 2026-06-13
 migration: EXTRACTED
@@ -40,7 +40,7 @@ conjunct at the strengths typed in Paper 040 §5.
 
 In the finite Symbol Game kernels, local success, packetization, operation-tree
 composition, and sheaf-local consistency are proposal/evidence phenomena. They
-do not promote themselves to global acceptance or terminal Omega authority.
+do not promote themselves to global acceptance or terminal Core authority.
 
 PaperER007 L007_09 separately adds recursive child-folding semantics, but it does
 not change the exact type of this inherited six-conjunct wrapper: its operation
@@ -60,7 +60,7 @@ comparison and firewall maps (proved on the all-undeclared packet).
 ## Proof Pointer
 
 The paper-owned facade is mechanized in
-`omega_engine/lean4/research_programs/008_engine_runtime/007_er007_finite_consequences.lean` as:
+`engine/lean4/research_programs/008_engine_runtime/007_er007_finite_consequences.lean` as:
 
 - `PaperER007.symbol_game_lggr_authority_firewall_finite_consequences`
 
@@ -92,7 +92,7 @@ these existing mechanized kernels:
 
 - This is the Symbol Game form of Local Green != Global Red.
 - The sheaf reading is disciplined: local sections require declared gluing and
-  authority-firewall maps before they can be treated as a global Omega claim.
+  authority-firewall maps before they can be treated as a global Core claim.
 - The theorem is an architecture/governance result, not a claim of new operator
   theory and not a proof of arbitrary natural-language truth validation.
 

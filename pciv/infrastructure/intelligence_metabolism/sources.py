@@ -31,12 +31,12 @@ SOURCE_REGISTRY: dict[str, DataSourceAdapter] = {
         record_parser_kind="receipt_folder",
         description="Sealed Symbol Game execution runs",
     ),
-    "woland_runs": DataSourceAdapter(
-        source_id="woland_runs",
-        relative_path="_ic/darpa/woland/runs",
+    "adversary_runs": DataSourceAdapter(
+        source_id="adversary_runs",
+        relative_path="_ic/darpa/adversary/runs",
         file_pattern="**/receipt.json",
         record_parser_kind="receipt_folder",
-        description="Woland dialectical bout runs and StructureBench quad bundles",
+        description="Adversary dialectical bout runs and StructureBench quad bundles",
     ),
     "antibodies": DataSourceAdapter(
         source_id="antibodies",

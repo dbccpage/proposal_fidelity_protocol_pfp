@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from fractions import Fraction
 
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import (
+from pfp.domain.mssn_research.grammar.spectral_geometry import (
     AutopoieticExpansionCyclePacket,
     Regge4DPacket,
     ZetaShadowPacket,
 )
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.result import Ok, Refusal, Result
 
 from ..packets.invariants import _exact_det
 from ..packets.value_objects import RefusalCode

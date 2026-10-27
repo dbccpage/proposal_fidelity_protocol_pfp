@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.algebraic_engine import (
+from pfp.tests.demo_004.e_formal_math.c044_finite_group_identification.reference_solver.algebraic_engine import (
     parse_presentation,
 )
 

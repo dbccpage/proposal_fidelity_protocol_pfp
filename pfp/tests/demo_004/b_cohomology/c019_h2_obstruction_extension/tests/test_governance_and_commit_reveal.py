@@ -1,17 +1,17 @@
-"""Test budget gate, provisional evaluation, and Woland gate."""
+"""Test budget gate, provisional evaluation, and Adversary gate."""
 
 from __future__ import annotations
 
 import pathlib
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.budget_gate import (
     verify_budget,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.commit_reveal_runner import (
     run_provisional_evaluation,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.woland_gate import (
-    evaluate_woland_gate,
+from projects.mssn_sn_symgam.challenges.b_cohomology.c019_h2_obstruction_extension.governance.adversary_gate import (
+    evaluate_adversary_gate,
 )
 
 C019_DIR = pathlib.Path(__file__).parent.parent
@@ -44,7 +44,7 @@ def test_gate_refuses_zero_of_zero_mutations():
         "mutations_killed": 4,
         "budget_passed": True,
     }
-    assert evaluate_woland_gate(base)["verdict"] == "REFERENCE_SELF_CONSISTENT"
-    assert evaluate_woland_gate({**base, "mutations_total": 0, "mutations_killed": 0})[
+    assert evaluate_adversary_gate(base)["verdict"] == "REFERENCE_SELF_CONSISTENT"
+    assert evaluate_adversary_gate({**base, "mutations_total": 0, "mutations_killed": 0})[
         "verdict"
     ] == ("REFERENCE_SELF_INCONSISTENT")

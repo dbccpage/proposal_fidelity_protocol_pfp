@@ -6,7 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import (
+from operads.infrastructure.storage.sqlite_unit_of_work import (
     SqliteUnitOfWork,
 )
 
@@ -61,7 +61,7 @@ def test_real_process_workers_cannot_claim_same_live_row(tmp_path):
     seed(path)
     code = '''
 import json,sys
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import SqliteUnitOfWork
+from operads.infrastructure.storage.sqlite_unit_of_work import SqliteUnitOfWork
 with SqliteUnitOfWork(sys.argv[1]) as worker:
     print(json.dumps(worker.claim_pending_outbox(sys.argv[2],now=100.0).unwrap()))
 '''

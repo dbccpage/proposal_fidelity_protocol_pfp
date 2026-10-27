@@ -11,14 +11,14 @@ evidence_grades:
   Lean: false
   gated: true
 authority_effect: "None"
-canonical_source: omega_engine_education/documentation/13_normal_forms/contracts_normal_forms/
+canonical_source: education/documentation/13_normal_forms/contracts_normal_forms/
 last_verified: 2026-09-29
 ---
 
 # Normal Forms & Canonical Form Contracts â€” The Symbol Game PFP
 
 **AuthorityEffect:** None.  
-**Canonical Source:** [`omega_engine_education/documentation/13_normal_forms/contracts_normal_forms/`](../../13_normal_forms/contracts_normal_forms)
+**Canonical Source:** [`education/documentation/13_normal_forms/contracts_normal_forms/`](../../13_normal_forms/contracts_normal_forms)
 
 ---
 

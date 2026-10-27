@@ -33,7 +33,7 @@ def render(pandoc: str, xelatex: str) -> None:
     manuscript = (ROOT / "paper.md").read_text(encoding="utf-8")
     title = re.search(r"^# (.+)$", manuscript, re.M).group(1)
     header = manuscript.split("</div>", 1)[0]
-    author = next(line.rstrip("\\") for line in header.splitlines() if line.startswith("Jeremy"))
+    author = next(line.rstrip("\\") for line in header.splitlines() if line.startswith("Bare Metal Anchor"))
     date = next(line for line in header.splitlines() if line.startswith("2026-"))
     body_source = manuscript.split("</div>", 1)[1]
     table_space = {"1": 18, "2": 20, "3": 25, "4": 16}

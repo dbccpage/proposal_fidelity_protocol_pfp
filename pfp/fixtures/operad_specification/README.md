@@ -4,7 +4,7 @@ AuthorityEffect: None.
 
 `reference.json` and `reference.yaml` describe the same finite example.
 `architecture_spec.schema.json` is generated from
-`omega_engine_pfp.domain.operad.specification.ArchitectureSpec`.
+`pfp.domain.operad.specification.ArchitectureSpec`.
 
 Use `parse_architecture_json(raw_utf8_json)` for JSON input. It rejects duplicate
 keys before Pydantic validation. A YAML consumer must reject duplicate mapping
@@ -27,10 +27,10 @@ normal-form convergence, DPO confluence, trusted signing, or native acceptance.
 A `NullTreeNode` is a typed failed term and is distinct from any density matrix.
 
 The existing bounded DPO owner is
-`omega_engine_pfp.domain.rewriting.finite_dpo.apply_registered_rule`. It supports
+`pfp.domain.rewriting.finite_dpo.apply_registered_rule`. It supports
 one finite attributed directed-graph schema with identity-key monic interfaces.
 Exact density/partial-trace execution belongs to
-`omega_quantum_physics::density_matrix::ExactDensityMatrix`. Signature metadata
+`core_quantum_physics::density_matrix::ExactDensityMatrix`. Signature metadata
 names the existing EIS authenticated verification source; an explicit trust
 policy artifact is required, and cryptographic verification remains unperformed.
 
@@ -39,7 +39,7 @@ requires signature/key bytes and a trust-policy artifact, while retaining
 `signature_status: supplied_not_cryptographically_verified`.
 
 The focused source-level validation suite is
-`omega_engine_pfp/tests/test_operad_specification.py`. It includes forged source
+`pfp/tests/test_operad_specification.py`. It includes forged source
 bindings, UTF-8 boundary cuts, nominal/permutation/type errors, node reuse,
 missing DPO/cocycle obligations, unrelated owner references, matrix-claim
 laundering, and signed/unsigned receipt confusion controls.

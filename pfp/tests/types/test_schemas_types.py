@@ -10,10 +10,10 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure.contract_loading import load_schema_register_from_files
+from pfp.infrastructure.contract_loading import load_schema_register_from_files
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.contracts import schema_register as sr
+from pfp.domain.contracts import schema_register as sr
 
 HERE = Path(__file__).resolve()
 ROOT = HERE.parents[2] / "infrastructure" / "yaml"

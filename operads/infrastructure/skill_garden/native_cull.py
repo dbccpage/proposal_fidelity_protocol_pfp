@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
-from omega_engine_operads.domain.skill_garden.cull import (
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err, Ok, Refusal, Result
+from operads.domain.skill_garden.cull import (
     CullPolicy,
     CullReport,
     GardenSnapshot,

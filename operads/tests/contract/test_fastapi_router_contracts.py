@@ -5,7 +5,7 @@ import unittest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from omega_engine_operads.infrastructure.bootstrap import (
+from operads.infrastructure.bootstrap import (
     create_oeop_container,
 )
 

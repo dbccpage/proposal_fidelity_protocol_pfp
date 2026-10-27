@@ -10,34 +10,34 @@ import importlib
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from omega_engine_operads.domain.python_development_office.antipattern_finding import AntipatternFinding
-    from omega_engine_operads.domain.python_development_office.architecture_config import ArchitectureConfig, DependencyException
-    from omega_engine_operads.domain.python_development_office.errors import ArchitecturePolicyViolationError, MalformedConfigurationError, PythonDevOfficeDomainError
-    from omega_engine_operads.domain.python_development_office.finding_severity import FindingSeverity
-    from omega_engine_operads.domain.python_development_office.imported_symbol import ImportedSymbol
-    from omega_engine_operads.domain.python_development_office.module_info import ModuleInfo
-    from omega_engine_operads.domain.python_development_office.protocols import AntipatternRuleProtocol, ArchitectureAuditorProtocol, AstScannerProtocol, PythonCodeReviewerProtocol
-    from omega_engine_operads.domain.python_development_office.rule_category import RuleCategory
-    from omega_engine_operads.domain.python_development_office.scan_result import ScanResult
+    from operads.domain.python_development_office.antipattern_finding import AntipatternFinding
+    from operads.domain.python_development_office.architecture_config import ArchitectureConfig, DependencyException
+    from operads.domain.python_development_office.errors import ArchitecturePolicyViolationError, MalformedConfigurationError, PythonDevOfficeDomainError
+    from operads.domain.python_development_office.finding_severity import FindingSeverity
+    from operads.domain.python_development_office.imported_symbol import ImportedSymbol
+    from operads.domain.python_development_office.module_info import ModuleInfo
+    from operads.domain.python_development_office.protocols import AntipatternRuleProtocol, ArchitectureAuditorProtocol, AstScannerProtocol, PythonCodeReviewerProtocol
+    from operads.domain.python_development_office.rule_category import RuleCategory
+    from operads.domain.python_development_office.scan_result import ScanResult
 
 __all__ = ['AntipatternFinding', 'AntipatternRuleProtocol', 'ArchitectureAuditorProtocol', 'ArchitectureConfig', 'ArchitecturePolicyViolationError', 'AstScannerProtocol', 'DependencyException', 'FindingSeverity', 'ImportedSymbol', 'MalformedConfigurationError', 'ModuleInfo', 'PythonCodeReviewerProtocol', 'PythonDevOfficeDomainError', 'RuleCategory', 'ScanResult']
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
-    'AntipatternFinding': ('omega_engine_operads.domain.python_development_office.antipattern_finding', 'AntipatternFinding'),
-    'ArchitectureConfig': ('omega_engine_operads.domain.python_development_office.architecture_config', 'ArchitectureConfig'),
-    'DependencyException': ('omega_engine_operads.domain.python_development_office.architecture_config', 'DependencyException'),
-    'ArchitecturePolicyViolationError': ('omega_engine_operads.domain.python_development_office.errors', 'ArchitecturePolicyViolationError'),
-    'MalformedConfigurationError': ('omega_engine_operads.domain.python_development_office.errors', 'MalformedConfigurationError'),
-    'PythonDevOfficeDomainError': ('omega_engine_operads.domain.python_development_office.errors', 'PythonDevOfficeDomainError'),
-    'FindingSeverity': ('omega_engine_operads.domain.python_development_office.finding_severity', 'FindingSeverity'),
-    'ImportedSymbol': ('omega_engine_operads.domain.python_development_office.imported_symbol', 'ImportedSymbol'),
-    'ModuleInfo': ('omega_engine_operads.domain.python_development_office.module_info', 'ModuleInfo'),
-    'AntipatternRuleProtocol': ('omega_engine_operads.domain.python_development_office.protocols', 'AntipatternRuleProtocol'),
-    'ArchitectureAuditorProtocol': ('omega_engine_operads.domain.python_development_office.protocols', 'ArchitectureAuditorProtocol'),
-    'AstScannerProtocol': ('omega_engine_operads.domain.python_development_office.protocols', 'AstScannerProtocol'),
-    'PythonCodeReviewerProtocol': ('omega_engine_operads.domain.python_development_office.protocols', 'PythonCodeReviewerProtocol'),
-    'RuleCategory': ('omega_engine_operads.domain.python_development_office.rule_category', 'RuleCategory'),
-    'ScanResult': ('omega_engine_operads.domain.python_development_office.scan_result', 'ScanResult'),
+    'AntipatternFinding': ('operads.domain.python_development_office.antipattern_finding', 'AntipatternFinding'),
+    'ArchitectureConfig': ('operads.domain.python_development_office.architecture_config', 'ArchitectureConfig'),
+    'DependencyException': ('operads.domain.python_development_office.architecture_config', 'DependencyException'),
+    'ArchitecturePolicyViolationError': ('operads.domain.python_development_office.errors', 'ArchitecturePolicyViolationError'),
+    'MalformedConfigurationError': ('operads.domain.python_development_office.errors', 'MalformedConfigurationError'),
+    'PythonDevOfficeDomainError': ('operads.domain.python_development_office.errors', 'PythonDevOfficeDomainError'),
+    'FindingSeverity': ('operads.domain.python_development_office.finding_severity', 'FindingSeverity'),
+    'ImportedSymbol': ('operads.domain.python_development_office.imported_symbol', 'ImportedSymbol'),
+    'ModuleInfo': ('operads.domain.python_development_office.module_info', 'ModuleInfo'),
+    'AntipatternRuleProtocol': ('operads.domain.python_development_office.protocols', 'AntipatternRuleProtocol'),
+    'ArchitectureAuditorProtocol': ('operads.domain.python_development_office.protocols', 'ArchitectureAuditorProtocol'),
+    'AstScannerProtocol': ('operads.domain.python_development_office.protocols', 'AstScannerProtocol'),
+    'PythonCodeReviewerProtocol': ('operads.domain.python_development_office.protocols', 'PythonCodeReviewerProtocol'),
+    'RuleCategory': ('operads.domain.python_development_office.rule_category', 'RuleCategory'),
+    'ScanResult': ('operads.domain.python_development_office.scan_result', 'ScanResult'),
 }
 
 

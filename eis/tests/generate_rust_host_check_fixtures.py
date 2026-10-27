@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.domain.host_checks import (
+from eis.domain.host_checks import (
     persona_authority_leak_loci,
     protected_field_loci,
     protected_field_spans,
@@ -57,7 +57,7 @@ def main():
         '["phi",{"phi":0}]', '{"text":"{\\"phi\\":0}"}',
         '{"phi":"\\\\\\\""}', '{"phi\\', '{"phi"', '{"phi": [',
     )]
-    path = Path(__file__).resolve().parents[2] / "omega_engine/crates_rs/tests/omega_epistemic_immune_system/fixtures/python_host_checks_v1.json"
+    path = Path(__file__).resolve().parents[2] / "engine/crates_rs/tests/core_epistemic_immune_system/fixtures/python_host_checks_v1.json"
     path.write_text(json.dumps({"vectors":rows,"spans_only":spans},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(f"Frozen {len(rows)} host-check and {len(spans)} span-only vectors before native implementation.")
 

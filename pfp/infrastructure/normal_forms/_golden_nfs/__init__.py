@@ -6,20 +6,20 @@ import importlib
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema import NormalFormContract
-    from omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema import NormalFormContractMetaSchema
-    from omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions import NormalFormFoundationalDefinitions
-    from omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions import QuadrilateralCriterion
-    from omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_standard_schema import NormalFormStandard
+    from pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema import NormalFormContract
+    from pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema import NormalFormContractMetaSchema
+    from pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions import NormalFormFoundationalDefinitions
+    from pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions import QuadrilateralCriterion
+    from pfp.infrastructure.normal_forms._golden_nfs.normal_form_standard_schema import NormalFormStandard
 
 __all__ = ['NormalFormContract', 'NormalFormContractMetaSchema', 'NormalFormFoundationalDefinitions', 'QuadrilateralCriterion', 'NormalFormStandard']
 
 _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
-    'NormalFormContract': ('omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema', 'NormalFormContract'),
-    'NormalFormContractMetaSchema': ('omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema', 'NormalFormContractMetaSchema'),
-    'NormalFormFoundationalDefinitions': ('omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions', 'NormalFormFoundationalDefinitions'),
-    'QuadrilateralCriterion': ('omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions', 'QuadrilateralCriterion'),
-    'NormalFormStandard': ('omega_engine_pfp.infrastructure.normal_forms._golden_nfs.normal_form_standard_schema', 'NormalFormStandard'),
+    'NormalFormContract': ('pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema', 'NormalFormContract'),
+    'NormalFormContractMetaSchema': ('pfp.infrastructure.normal_forms._golden_nfs.normal_form_contract_schema', 'NormalFormContractMetaSchema'),
+    'NormalFormFoundationalDefinitions': ('pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions', 'NormalFormFoundationalDefinitions'),
+    'QuadrilateralCriterion': ('pfp.infrastructure.normal_forms._golden_nfs.normal_form_definitions', 'QuadrilateralCriterion'),
+    'NormalFormStandard': ('pfp.infrastructure.normal_forms._golden_nfs.normal_form_standard_schema', 'NormalFormStandard'),
 }
 
 

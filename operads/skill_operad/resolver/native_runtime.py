@@ -8,14 +8,14 @@ from __future__ import annotations
 import json
 from collections.abc import Mapping
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err
 from .resolver import (
     Refusal, RunReceipt, digest, wire_json, all_ops, execute_step, _Stop,
     _wire_leaves, _occurrence_binding,
 )
 from ..skill_compiler.op_inventory import AntiOpSpec
-from omega_engine_operads.contracts.operad_realization_v1 import (
+from operads.contracts.operad_realization_v1 import (
     ModelBindingError, realize_native_result,
 )
 
@@ -85,7 +85,7 @@ def run_native(inventory, wire, values, executors, detectors, *, host=None, inpu
     Unused legacy paths and their receipt projections remain unchanged.
     """
     steps=[]; cleared=[]; guard_events=[]
-    binding={"inventory_digest":digest(inventory.model_dump(mode="json")),"interpreter_version":"omega.oewas.native-plan-host.v1"}
+    binding={"inventory_digest":digest(inventory.model_dump(mode="json")),"interpreter_version":"core.oewas.native-plan-host.v1"}
     try:
         binding["input_digest"]=digest(values)
         if occurrence_checker is not None:
@@ -95,7 +95,7 @@ def run_native(inventory, wire, values, executors, detectors, *, host=None, inpu
                 input_order = tuple(range(len(_wire_leaves(wire))))
         checked=native_validate(inventory, wire, host=host, input_order=input_order)
         if input_order is not None:
-            binding.update(input_order=tuple(checked["input_order"]), interpreter_version="omega.oewas.native-plan-host.reindexed.v1")
+            binding.update(input_order=tuple(checked["input_order"]), interpreter_version="core.oewas.native-plan-host.reindexed.v1")
         plan=checked["execution_plan"]
         binding.update(native_term_id=checked["term_id"],native_plan_digest=digest({"steps":plan,"output_ref":checked["output_ref"]}))
         model = None

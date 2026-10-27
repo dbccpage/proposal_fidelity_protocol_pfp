@@ -8,13 +8,13 @@ from pathlib import Path
 from typing import Any
 
 _CHECKER_SOURCE_OWNERS = {
-    "omega_engine_symbol_game.infrastructure.tower_research.reach": "omega_engine_symbol_game",
-    "omega_engine_pfp.infrastructure.tower_research.reach": "omega_engine_pfp",
+    "symbol_game.infrastructure.tower_research.reach": "symbol_game",
+    "pfp.infrastructure.tower_research.reach": "pfp",
 }
 
 
 def _active_checker_pin() -> dict[str, Any]:
-    from omega_engine_operations.domain.level_engine_context import (
+    from operations.domain.level_engine_context import (
         ContextRefusal,
         current_context,
     )
@@ -35,7 +35,7 @@ def _active_checker_pin() -> dict[str, Any]:
 
 
 def _verify_active_checkers(raw: bytes, result: dict[str, Any]) -> None:
-    from omega_engine_pfp.domain.tower.registry import STAGES
+    from pfp.domain.tower.registry import STAGES
     pin = _active_checker_pin()
     resource_package = pin.get("resource_package")
     owner = _CHECKER_SOURCE_OWNERS.get(resource_package) if isinstance(resource_package, str) else None

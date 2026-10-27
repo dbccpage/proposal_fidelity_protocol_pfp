@@ -20,8 +20,8 @@ This rule codifies operad manifest directory layouts, autopoietic skill coalesce
 > 2. **Operadic Trinity Ontological Mapping:**
 >    - **Rules (Objects):** Invariant boundary contracts, negative definitions, and fail-closed safety fences. Rules declare *what cannot happen*.
 >    - **Skills (Morphisms / Operations):** Composable transformations mapping input colours to output colours ($A_1 \otimes \dots \otimes A_n \to B$). Skills declare *how work is performed*.
->    - **Swarms (Execution Engines):** Sovereign multi-agent execution engines implemented under `omega_engine_woland` (`OmegaEngineWolandSwarm`) parameterized by native workload specializations (`software_dev`, `research`, `deep_research`, `teamwork`).
-> 3. **Anti-Persona Law:** Agents must never recreate static persona manifests or invoke simulated persona dialogues. All execution flows proceed through typed skill operations or sovereign Woland swarm dispatches.
+>    - **Swarms (Execution Engines):** Sovereign multi-agent execution engines implemented under `adversary` (`AdversarySwarm`) parameterized by native workload specializations (`software_dev`, `research`, `deep_research`, `teamwork`).
+> 3. **Anti-Persona Law:** Agents must never recreate static persona manifests or invoke simulated persona dialogues. All execution flows proceed through typed skill operations or sovereign Adversary swarm dispatches.
 
 ---
 
@@ -69,7 +69,7 @@ This rule codifies operad manifest directory layouts, autopoietic skill coalesce
 
 > **Structured Operad Asset Storage & Resolution:**
 >
-> 1. **Canonical locations:** generated declaration catalogs live in `.agents/skill_operads/`; canonical typed capabilities live in `omega_engine_operads/catalog/contracts/v1/`; executable inventory YAML and legacy JSON projections live in `omega_engine_operads/skill_operad/yaml/` and `skill_operad/json/`.
+> 1. **Canonical locations:** generated declaration catalogs live in `.agents/skill_operads/`; canonical typed capabilities live in `operads/catalog/contracts/v1/`; executable inventory YAML and legacy JSON projections live in `operads/skill_operad/yaml/` and `skill_operad/json/`.
 > 2. **Existing readers:** use the existing catalog/inventory loaders. Historical `.agents/operad/` identities remain historical references, not an instruction to recreate that directory.
 > 3. **Generation and parity:** regenerate declaration projections with `capability_catalog_compiler`; generate selected typed guidance with `typed_contract_compiler`; mirror changed skills with `sync_cross_host_skills`. Host-owned content and historical bytes remain intact.
 
@@ -79,7 +79,7 @@ This rule codifies operad manifest directory layouts, autopoietic skill coalesce
 
 > **Atomic Shared Package Synchronization:**
 >
-> 1. **Synchronous Mirroring Mandate:** Any script, tool, or agent that modifies files under `.agents/skills/_shared/` (including `regen_family_registry.py` updates to `family_registry.md` or `_manifest.json`) MUST immediately execute `python omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py --skills _shared`.
+> 1. **Synchronous Mirroring Mandate:** Any script, tool, or agent that modifies files under `.agents/skills/_shared/` (including `regen_family_registry.py` updates to `family_registry.md` or `_manifest.json`) MUST immediately execute `python operations/use_cases/packaging/sync_cross_host_skills.py --skills _shared`.
 > 2. **Pre-AutoP Parity Requirement:** The AutoP meta-pipeline Stage 2 gate verifies byte-level package hash equality across all four hosts (`.agents/`, `.claude/`, `.codex/`, `.grok/`). No AutoP cycle or PR submission may proceed while `_shared/` manifests diverge across hosts.
 
 ---

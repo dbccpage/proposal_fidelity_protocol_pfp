@@ -2,7 +2,7 @@
 
 AuthorityEffect: None.
 
-`omega_symbol_game_runtime::stabilizer` owns solving and checking. Its public
+`core_symbol_game_runtime::stabilizer` owns solving and checking. Its public
 wire result is `id`, `status`, `energy` as an integer pair, `degeneracy`,
 `basis` as input term IDs, `decomposition` as `id/mask/phase` rows, and
 `minimizers` as assignment indices. Basis and decomposition use the deterministic

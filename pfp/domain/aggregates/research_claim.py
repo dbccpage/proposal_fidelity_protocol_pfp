@@ -13,7 +13,7 @@ import re
 from typing import Any, Mapping, Sequence
 
 
-from omega_engine_pfp.domain.shared_kernel.canonical import (
+from pfp.domain.shared_kernel.canonical import (
     CanonicalizationError,
     canonical_bytes,
     canonical_unwire,
@@ -22,7 +22,7 @@ from omega_engine_pfp.domain.shared_kernel.canonical import (
     freeze,
     thaw,
 )
-from omega_engine_pfp.domain.validation import (
+from pfp.domain.validation import (
     MAX_ARRAY_LENGTH,
     MAX_PATH_LENGTH,
     MAX_STRING_LENGTH,
@@ -47,13 +47,13 @@ from omega_engine_pfp.domain.validation import (
 # Schemas & Consts
 # ---------------------------------------------------------------------------
 
-RESEARCH_CLAIM_SCHEMA = "omega.symbol-game.research-claim.v1"
-SOURCE_ARTIFACT_SCHEMA = "omega.symbol-game.source-artifact.v1"
-RESEARCH_CLAIM_ITEM_SCHEMA = "omega.symbol-game.research-claim-item.v1"
-SOURCE_INTAKE_SCHEMA = "omega.symbol-game.source-intake-receipt.v1"
-SOURCE_INTAKE_BUNDLE_SCHEMA = "omega.symbol-game.source-intake-bundle.v1"
-RUN_ROOT_SCHEMA = "omega.symbol-game.research-run-root.v1"
-SEMANTIC_STEP_SCHEMA = "omega.symbol-game.semantic-dda-step.v1"
+RESEARCH_CLAIM_SCHEMA = "core.symbol-game.research-claim.v1"
+SOURCE_ARTIFACT_SCHEMA = "core.symbol-game.source-artifact.v1"
+RESEARCH_CLAIM_ITEM_SCHEMA = "core.symbol-game.research-claim-item.v1"
+SOURCE_INTAKE_SCHEMA = "core.symbol-game.source-intake-receipt.v1"
+SOURCE_INTAKE_BUNDLE_SCHEMA = "core.symbol-game.source-intake-bundle.v1"
+RUN_ROOT_SCHEMA = "core.symbol-game.research-run-root.v1"
+SEMANTIC_STEP_SCHEMA = "core.symbol-game.semantic-dda-step.v1"
 
 RESEARCH_PACKET_FAMILY = "research_claim"
 WITTEN_FINITE_FAMILY = "witten_airy_finite_v1"
@@ -107,16 +107,16 @@ REFUSAL_REFUSAL_ERASURE = "REFUSAL_ERASURE"
 REFUSAL_MARKDOWN_CLAIM_INJECTION = "MARKDOWN_CLAIM_INJECTION"
 RESEARCH_ALLOWED_TRANSFORMS = ("canonical_wire",)
 
-SOURCE_MANIFEST_DOMAIN = "omega.symbol-game.research-source-manifest.v1"
-CLAIM_MANIFEST_DOMAIN = "omega.symbol-game.research-claim-manifest.v1"
-INITIAL_STATE_DOMAIN = "omega.symbol-game.research-initial-state.v1"
-PAYLOAD_DOMAIN = "omega.symbol-game.research-payload.v1"
-SOURCE_INTAKE_BUNDLE_DOMAIN = "omega.symbol-game.source-intake-bundle.v1"
+SOURCE_MANIFEST_DOMAIN = "core.symbol-game.research-source-manifest.v1"
+CLAIM_MANIFEST_DOMAIN = "core.symbol-game.research-claim-manifest.v1"
+INITIAL_STATE_DOMAIN = "core.symbol-game.research-initial-state.v1"
+PAYLOAD_DOMAIN = "core.symbol-game.research-payload.v1"
+SOURCE_INTAKE_BUNDLE_DOMAIN = "core.symbol-game.source-intake-bundle.v1"
 
-RESEARCH_PACKET_MEDIA_TYPE = "application/vnd.omega.research-packet+json"
-SOURCE_INTAKE_MEDIA_TYPE = "application/vnd.omega.source-intake+json"
-DDA_TRACE_MEDIA_TYPE = "application/x-omega-dda-trace+jsonl"
-OESOS_EVIDENCE_BUNDLE_MEDIA_TYPE = "application/vnd.omega.oesos-evidence+json"
+RESEARCH_PACKET_MEDIA_TYPE = "application/vnd.core.research-packet+json"
+SOURCE_INTAKE_MEDIA_TYPE = "application/vnd.core.source-intake+json"
+DDA_TRACE_MEDIA_TYPE = "application/x-core-dda-trace+jsonl"
+OESOS_EVIDENCE_BUNDLE_MEDIA_TYPE = "application/vnd.core.oesos-evidence+json"
 
 MAX_SOURCES = 16
 MAX_CLAIMS = 32
@@ -318,7 +318,7 @@ def _canonical_string_value(node: Any, label: str) -> str:
     if (
         type(node) is not list
         or len(node) != 3
-        or node[0] != "omega-canonical-v1"
+        or node[0] != "core-canonical-v1"
         or node[1] != "string"
         or type(node[2]) is not str
     ):
@@ -333,7 +333,7 @@ def _validate_initial_state_node(node: Any, *, depth: int = 0) -> None:
     if type(node) is not list or len(node) != 3:
         _fail("initial_state_payload is not canonical wire")
     marker, tag, body = node
-    if marker != "omega-canonical-v1" or type(tag) is not str:
+    if marker != "core-canonical-v1" or type(tag) is not str:
         _fail("initial_state_payload is not canonical wire")
     if tag in {"null", "bool", "int", "string"}:
         if tag == "string":
@@ -364,7 +364,7 @@ def _validate_initial_state_node(node: Any, *, depth: int = 0) -> None:
             if (
                 type(entry) is not list
                 or len(entry) != 3
-                or entry[0] != "omega-canonical-v1"
+                or entry[0] != "core-canonical-v1"
                 or entry[1] != "entry"
                 or type(entry[2]) is not list
                 or len(entry[2]) != 2
@@ -1170,7 +1170,7 @@ class FrozenCorpus:
     source_root: str
     files: tuple[CorpusFileRef, ...]
     corpus_sha256: str
-    schema_version: str = "omega.frozen_corpus.v1"
+    schema_version: str = "core.frozen_corpus.v1"
 
     def __post_init__(self) -> None:
         if not self.source_root or not self.files:
@@ -1232,7 +1232,7 @@ class ResearchSeedPacket:
     parent_ledger_sha256: str | None = None
     evidence_ceiling: EvidenceCeiling = EvidenceCeiling.EXPLORATORY_ONLY
     authority_effect: AuthorityEffect = AuthorityEffect.None_
-    schema_version: str = "omega.research_seed_packet.v1"
+    schema_version: str = "core.research_seed_packet.v1"
 
 
 @dataclass
@@ -1249,7 +1249,7 @@ class ResearchProposal:
     declared_cochain_verdict: str | None = None
     requested_terminal: str = "human_review"
     authority_effect: AuthorityEffect = AuthorityEffect.None_
-    schema_version: str = "omega.research_proposal.v1"
+    schema_version: str = "core.research_proposal.v1"
 
 
 @dataclass
@@ -1275,11 +1275,11 @@ ResearchClaimItemV1 = ResearchClaimV1
 
 
 RESEARCH_CLAIM_FAMILY = "research_claim"
-RESEARCH_RUN_ROOT_SCHEMA = "omega.symbol-game.research-run-root.v1"
+RESEARCH_RUN_ROOT_SCHEMA = "core.symbol-game.research-run-root.v1"
 
-from omega_engine_pfp.domain.entities.candidate_artifact import CandidateArtifactV1
-from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.source_artifact import (
+from pfp.domain.entities.candidate_artifact import CandidateArtifactV1
+from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+from pfp.domain.entities.source_artifact import (
     SourceArtifactV1,
     SourceIntakeBundleV1,
     SourceIntakeReceiptV1,

@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Repeated sampling is the obvious baseline for any task with a cheap exact verifier. Brown et al. (2024, *Large Language Monkeys*) found that coverage, the fraction of problems solved by at least one of k samples, keeps rising with k over several orders of magnitude, and that in domains with automatic verifiers this converts directly into solved problems. The [Q40 review](../00_q40_review.md) noted that the Q40 synthesis trial never tried it, although its budget allowed several hundred attempts. Every Symbol Game claim should therefore be read against the sampling frontier: if best-of-N reaches the same success for the same money, the game's structure has shown no additional benefit (protocol §9, "A and D tie").
 
-This challenge draws that frontier once, carefully, so later challenges can cite it. It stresses the governed provider path and its cost records, the Symbol Game's iterative loop, OEWAS (Omega Engine Workflows, Agents, Skills) compute allocation (U21), and none of the OEEIS (Omega Engine Epistemic Immune System) mechanisms. A pass gives a cost-per-verified-success frontier for this task pool. It does not show that any strategy is best elsewhere.
+This challenge draws that frontier once, carefully, so later challenges can cite it. It stresses the governed provider path and its cost records, the Symbol Game's iterative loop, OEWAS (Engine Workflows, Agents, Skills) compute allocation (U21), and none of the OEEIS (Engine Epistemic Immune System) mechanisms. A pass gives a cost-per-verified-success frontier for this task pool. It does not show that any strategy is best elsewhere.
 
 ## 3. Formal Problem and Bounds
 

@@ -9,12 +9,12 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.5"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
-  - "canonical_omega_math_spine.md v1.5.2 §IV.2 'Definition IV.5'"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "canonical_core_math_spine.md v1.5.2 §IV.2 'Definition IV.5'"
 uses: []
 lean_status: MECHANIZED-PARTIAL
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_fidelity_adequacy.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_fidelity_adequacy.lean"
   - "PaperER007.fidelity_clause_mem_all"
   - "PaperER007.replay_fidelity_clause_iff"
   - "PaperER007.replay_all_eight_fidelity_iff"
@@ -57,7 +57,7 @@ Given a finite typed seed $s$ and a finite typed packet $P$, the fidelity predic
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.2
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.2
   (statement copied verbatim; definition carries no status bracket).
   Original header line:
   `**Definition IV.5 (Fidelity Predicate $F(s, P)$).** Given a finite typed seed $s$ and a finite typed packet $P$, the fidelity predicate $F(s, P) = 1$ iff all of the following hold:`

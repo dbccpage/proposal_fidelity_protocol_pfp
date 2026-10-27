@@ -17,8 +17,8 @@ from study_capstone import run_capstone
 
 @pytest.fixture
 def offline(monkeypatch):
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_BIN", raising=False)
-    monkeypatch.delenv("OMEGA_FUNCTIONAL_GRAPH_SHA256", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_BIN", raising=False)
+    monkeypatch.delenv("CORE_FUNCTIONAL_GRAPH_SHA256", raising=False)
 
 
 def _graph():
@@ -132,7 +132,7 @@ def test_native_projection_error_preserves_pre_cut_state(offline, monkeypatch):
             raise native_functional.NativeFunctionalUnavailable("projection refused")
         return (Q(3) if len(calls) == 1 else Q(0)), {"a": Q(0), "b": Q(-2), "c": Q(-1)}
 
-    monkeypatch.setenv("OMEGA_FUNCTIONAL_GRAPH_BIN", "configured-for-boundary-test")
+    monkeypatch.setenv("CORE_FUNCTIONAL_GRAPH_BIN", "configured-for-boundary-test")
     monkeypatch.setattr(native_functional, "compute_graph_phi1", calculator)
     with pytest.raises(native_functional.NativeFunctionalUnavailable, match="projection refused"):
         governor.step_cut(proposed_claims={("a", "b"): Q(-2), ("b", "c"): Q(1), ("c", "a"): Q(1)})

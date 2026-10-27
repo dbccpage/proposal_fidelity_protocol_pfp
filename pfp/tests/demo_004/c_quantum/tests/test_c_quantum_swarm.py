@@ -1,4 +1,4 @@
-"""Test suite for the Woland Quantum Swarm & C021 (Q40-R) Stabilizer Architecture.
+"""Test suite for the Adversary Quantum Swarm & C021 (Q40-R) Stabilizer Architecture.
 
 Tests:
 1. Commuting stabilizer solver ground state energies and degeneracies.
@@ -26,16 +26,16 @@ from pathlib import Path
 
 import pytest
 
-_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir())
+_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir())
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 if __package__ in (None, ""):
-    __package__ = "omega_engine_pfp.tests.demo_004.c_quantum.tests"
+    __package__ = "pfp.tests.demo_004.c_quantum.tests"
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_pfp.domain.quantum.certificate_checker import check_certificate
-from omega_engine_pfp.infrastructure.adapters.stabilizer_rust_adapter import (
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from pfp.domain.quantum.certificate_checker import check_certificate
+from pfp.infrastructure.adapters.stabilizer_rust_adapter import (
     StabilizerRustAdapter,
 )
 
@@ -44,7 +44,7 @@ from ..swarm import (
     BudgetController,
     BudgetExhaustedRefusal,
     DdcTracer,
-    WolandQuantumOverseer,
+    AdversaryQuantumOverseer,
 )
 
 _STABILIZER = StabilizerRustAdapter()
@@ -422,8 +422,8 @@ def test_c021_ddc_tape_verification(default_host: RustSymbolGameHost):
 # =============================================================================
 
 
-def test_c021_woland_swarm_requires_woland_binding(tmp_path):
-    overseer = WolandQuantumOverseer(repo_root=tmp_path, budget_ceiling=Decimal("0.25"))
+def test_c021_adversary_swarm_requires_adversary_binding(tmp_path):
+    overseer = AdversaryQuantumOverseer(repo_root=tmp_path, budget_ceiling=Decimal("0.25"))
     case = {
         "id": "h_07",
         "n": 3,
@@ -434,7 +434,7 @@ def test_c021_woland_swarm_requires_woland_binding(tmp_path):
     }
     res = overseer.execute_challenge("C021", case, task_key="c021_h07_test")
     assert res.verdict == "REFUSE"
-    assert res.refusal_code == "WOLAND_EXECUTION_UNAVAILABLE"
+    assert res.refusal_code == "ADVERSARY_EXECUTION_UNAVAILABLE"
     assert res.certificate.status == "UNKNOWN"
     assert res.receipt_sha256 == ""
     assert not res.output_directory.exists()

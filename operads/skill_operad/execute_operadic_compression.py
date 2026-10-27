@@ -44,7 +44,7 @@ def run_compression(
     else:
         repo_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         operad_dir = os.path.join(repo_root, ".agents", "operad")
-    skills_dir = os.path.join(repo_root, "omega_engine_operads", "skills")
+    skills_dir = os.path.join(repo_root, "operads", "skills")
     archived_dir = os.path.join(skills_dir, "_archived")
 
     sig_path = (
@@ -76,7 +76,7 @@ def run_compression(
         slices = json.load(f)
 
     # 1. Build initial concrete operad
-    concrete = ColouredOperad("AnomalonConcreteOperad")
+    concrete = ColouredOperad("SentinelConcreteOperad")
     for c in sig.get("colours", {}).keys():
         concrete.add_colour(c)
 
@@ -114,7 +114,7 @@ def run_compression(
         for row in traces:
             SQ.record(row["skill_id"], row["run_id"], float(row["phi_before"]), float(row["phi_after"]))
 
-    meta_operad = SQ.build_meta_operad("AnomalonMetaOperad")
+    meta_operad = SQ.build_meta_operad("SentinelMetaOperad")
     report = SQ.report()
     report["applied"] = False
     report["status"] = "PROPOSED_NOT_EXECUTED"

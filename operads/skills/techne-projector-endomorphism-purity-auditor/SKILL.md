@@ -18,7 +18,7 @@ families: [mathematics, operators, purity]
 
 ## 1. Prime Directive
 
-The **Projector Endomorphism Purity Auditor** enforces the algebraic purity of all Projector operators throughout the Omega Engine.
+The **Projector Endomorphism Purity Auditor** enforces the algebraic purity of all Projector operators throughout the engine.
 
 ---
 
@@ -29,7 +29,7 @@ The **Projector Endomorphism Purity Auditor** enforces the algebraic purity of a
 2. **Forbidden Computational Smuggling:**
    - Projectors are strictly forbidden from calculating $\Phi_1$, calculating $\Gamma_2$, validating `PacketEnvelope` records, judging numerical exactness, or certifying solver retractions.
 3. **Module Custody:**
-   - All functional $\Phi / \Gamma$ evaluations belong exclusively to `crates/functional/` or `crates_rs/omega_functional/`.
+   - All functional $\Phi / \Gamma$ evaluations belong exclusively to `crates/functional/` or `crates_rs/core_functional/`.
 
 ---
 

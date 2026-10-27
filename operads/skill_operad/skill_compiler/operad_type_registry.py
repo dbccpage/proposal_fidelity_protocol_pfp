@@ -47,7 +47,7 @@ class Finding:
 
 
 def repo_root(start: Path = Path(__file__).resolve()) -> Path:
-    return next(p for p in start.parents if (p / "omega_engine_operads").is_dir() and (p / "pyproject.toml").is_file())
+    return next(p for p in start.parents if (p / "operads").is_dir() and (p / "pyproject.toml").is_file())
 
 
 def _resolve(module: str, path: str):
@@ -154,7 +154,7 @@ def _frontmatter(path: Path) -> dict:
 
 def _skills(root: Path, source: dict) -> list:
     pattern = re.compile(source["skills"])
-    skills = root / "omega_engine_operads" / "skills"
+    skills = root / "operads" / "skills"
     names = sorted(p.name for p in skills.iterdir()
                    if p.is_dir() and pattern.search(p.name) and (p / "SKILL.md").is_file())
     field = source.get("field")

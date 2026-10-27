@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 The Round-5 trace in `research/mssn_sn_tower/demos/anti_morphism_observations.md` is the target. On K4 (cycle rank b₁ = |E| − |V| + 1 = 6 − 4 + 1 = 3) with claims a→b = 1, b→c = 2, c→a = 3, b→d = 1, d→a = 2, c→d = 1, `qwen/qwen-2.5-7b-instruct` asserted all six edges, fixed cycle 1 through the chord c→a = −3, then regressed: it re-asserted edges and repeated an unchanged CUT until fuel ran out at Φ₁ = 8. The two remaining chord values, b→d = −3 and c→d = −5, were never proposed. That is AM-4, the idempotent stationary attractor. On the diamond (b₁ = 2) the same model reached Φ₁ = 0 in 9 turns once the host supplied residuals and decoupling guidance (Round 4e).
 
-The hypothesis is that the model loses track of which cycles are closed, not that it cannot compute one chord. If so, a host that keeps the state (asserted edges, per-cycle residuals, closed chords, the last move's digest) and shows it compactly each turn should break the attractor. Chain of thought keeps that state inside the context, where it competes with history. The challenge stresses the Symbol Game turn loop and cemetery, OEWAS (Omega Engine Workflows, Agents, Skills) working-memory design, and the OEEIS (Omega Engine Epistemic Immune System) AM-4 detector. A pass would show the host ledger beats in-context state tracking on these boards. It would not show that the model understands cohomology.
+The hypothesis is that the model loses track of which cycles are closed, not that it cannot compute one chord. If so, a host that keeps the state (asserted edges, per-cycle residuals, closed chords, the last move's digest) and shows it compactly each turn should break the attractor. Chain of thought keeps that state inside the context, where it competes with history. The challenge stresses the Symbol Game turn loop and cemetery, OEWAS (Engine Workflows, Agents, Skills) working-memory design, and the OEEIS (Engine Epistemic Immune System) AM-4 detector. A pass would show the host ledger beats in-context state tracking on these boards. It would not show that the model understands cohomology.
 
 ## 3. Formal Problem and Bounds
 
@@ -46,7 +46,7 @@ The frozen deliverable is a session pipeline: `pipeline.json` (model, route or l
 - **Hidden base cases:** 60 boards (10 per b₁ from 3 to 8).
 - **Relabel controls:** 20 boards with renamed vertices and reversed edge orientations (reversing an edge negates its claim).
 - **Poisoned but schema-valid:** 12 boards whose prompt history contains a stale, previously admitted CUT (so repeating it is stationary), and boards with a chord that must be set to exactly 0.
-- **Exact checker:** Rust `omega_symbol_game` `verify_l1_certificate` and `exact_solve_l1_primal_dual` for Φ₁, plus a potential check.
+- **Exact checker:** Rust `core_symbol_game` `verify_l1_certificate` and `exact_solve_l1_primal_dual` for Φ₁, plus a potential check.
 - **Independent second checker:** Python `Fraction` potential propagation (`bench/head_to_head/host.py`).
 - **Checker mutation suite:** a final cochain with one cycle sum of 1, a potential inconsistent with one edge, a `VERIFY` accepted at Φ₁ > 0, and an admitted CUT that increased Φ₁.
 
@@ -107,8 +107,8 @@ operand ledger_not_history.v1 | kind: control | when: sessions exceed 8 turns | 
 ## 13. Estate Reuse and Prerequisites
 
 - `research/mssn_sn_tower/demos/anti_morphism_observations.md` (Rounds 4 to 5, the AM-4 schema and fixtures) and the Round-5 trace it cites under `research/mssn_sn_tower/demos/demo_1/traces/`.
-- `omega_engine_symbol_game/domain/topology/subturn.py` (`SubTurnChordDecomposition`, `AttentionContextBoundary`, currently a data model only).
-- `omega_engine_symbol_game/domain/immune/treg.py`; `omega_engine/crates_rs/omega_symbol_game` (Φ₁ and certificates).
+- `symbol_game/domain/topology/subturn.py` (`SubTurnChordDecomposition`, `AttentionContextBoundary`, currently a data model only).
+- `symbol_game/domain/immune/treg.py`; `engine/crates_rs/core_symbol_game` (Φ₁ and certificates).
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: [U12](../../upgrades/u12_host_scratch_space_working_memory.md), [U13](../../upgrades/u13_cohomological_task_decomposition.md). Arm F also needs [U11](../../upgrades/u11_local_open_weights_mechanism_runtime.md).
 

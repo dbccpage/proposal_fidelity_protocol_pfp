@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 For independent bit-flip errors, a minimum-weight correction for the surface code can be found by minimum-weight perfect matching of the syndrome defects, with lattice path lengths as edge weights (Dennis, Kitaev, Landahl, Preskill 2002). A correction's syndrome is checked by one sparse F2 product. Its optimality has a compact certificate: the dual variables of the matching linear program, including the odd-set constraints, whose objective equals the correction's weight.
 
-The task asks for both halves. A decoder that returns a valid but non-minimal correction fails, and so does one that claims optimality without dual variables that check. It stresses OEWAS (Omega Engine Workflows, Agents, Skills) assembly of graph algorithms and OEEIS (Omega Engine Epistemic Immune System) screening of greedy answers presented as optimal.
+The task asks for both halves. A decoder that returns a valid but non-minimal correction fails, and so does one that claims optimality without dual variables that check. It stresses OEWAS (Engine Workflows, Agents, Skills) assembly of graph algorithms and OEEIS (Engine Epistemic Immune System) screening of greedy answers presented as optimal.
 
 ## 3. Formal Problem and Bounds
 
@@ -101,9 +101,9 @@ Operands expected: (1) add one boundary copy per defect, joined to each other at
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_quantum_physics/src/toric.rs` (2 × 2 toric code) and `binary_field.rs`.
-- `omega_engine/crates_rs/omega_majorana` (GF(2) torus parity play, `repair_capacity.rs`) for layouts; its receipts are diagnostic only.
-- `omega_engine/crates_rs/omega_homology` (boundary maps: a syndrome is the boundary of an error chain) and `omega_engine/crates_rs/omega_solvers` (network simplex and max-flow, which do not solve general matching).
+- `engine/crates_rs/core_quantum_physics/src/toric.rs` (2 × 2 toric code) and `binary_field.rs`.
+- `engine/crates_rs/core_majorana` (GF(2) torus parity play, `repair_capacity.rs`) for layouts; its receipts are diagnostic only.
+- `engine/crates_rs/core_homology` (boundary maps: a syndrome is the boundary of an error chain) and `engine/crates_rs/core_solvers` (network simplex and max-flow, which do not solve general matching).
 - A blossom matching implementation with dual output is not in the estate and is new Rust work.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 

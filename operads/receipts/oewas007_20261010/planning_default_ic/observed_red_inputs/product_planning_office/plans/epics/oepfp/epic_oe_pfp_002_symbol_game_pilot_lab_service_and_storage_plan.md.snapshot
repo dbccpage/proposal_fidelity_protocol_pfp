@@ -1,0 +1,200 @@
+# Epic: Symbol Game Integrated Pilot Application, PilotLabService & Durable Ledger Storage
+
+**Epic ID:** `EPIC-OE-PFP-002`
+**AuthorityEffect:** None
+**Status:** `LIVE`
+**Domain Subfolder:** [`product_planning_office/plans/epics/oepfp/`](.)
+**Date:** October 2026
+**Target Subsystems:** `symbol_game`, `education/pfp`
+
+---
+
+## 1. Claim Discipline & Bounded Evaluation Envelope
+
+1. **What this epic supports:**
+   - Architecture and implementation specification for `PilotLabService` in [`symbol_game`](../../../../symbol_game/).
+   - Unification of Web, CLI, and offline batch campaign execution under a single layered use-case service.
+   - Durable SQLite WAL ledger persistence for execution plans, runs, steps, attempts, evaluations, and reservations.
+   - Content-addressed artifact storage (CAS) preserving raw response bytes and preventing duplicate file bloat.
+   - Strict budget accounting enforcing a zero-spend ceiling on free-tier routes and atomic attempt reservations.
+
+2. **What this epic does not support:**
+   - Does not claim that process memory storage provides reliable recovery across daemon crashes.
+   - Does not authorize automatic fallback to paid model routes upon network or quota failure.
+   - Does not permit modifying saved historical evaluation records during a replay or regrade pass.
+
+3. **Narrowest defensible claim:**
+   - A durable service must demonstrate recovery against explicit commit boundaries; an append-only journal alone does not prove zero loss for uncertain external calls.
+
+4. **Next test needed:**
+   - Implement an integration test verifying that stopping a campaign during step 4 preserves steps 1–3 in the SQLite journal and permits effect-safe resumption.
+
+---
+
+## 2. Executive Summary & Architectural Motivation
+
+The current finite signed-graph workbench uses RunStore from `use_cases/finite_gauge_workbench.py` through `entrypoints/web/workbench.py`; it is a separate bounded application, not a failed PilotLabService implementation. Pilot scripts currently have fragmented evaluation paths. Add the pilot service as a separate vertical slice and preserve the existing workbench.
+
+This epic establishes the unified application architecture:
+1. **Ownership:** `symbol_game` owns the integrated pilot application and laboratory service (`PilotLabService`).
+2. **Layered Decoupling:** Clean architecture separation across `domain/` (ports, value objects), `use_cases/` (`PilotLabService`), `infrastructure/` (SQLite journal, CAS storage, gateway adapters), and `entrypoints/` (CLI, FastAPI).
+3. **Execution Semantics:** Deterministic execution lifecycle (`run`, `replay`, `regrade`, `rerun`, `fork`, `stop/resume`).
+4. **Replay Integrity:** Replay evaluates stored bytes with pinned dependencies, making zero provider calls.
+
+---
+
+## 3. Current Implementation State & Limitations
+
+- **Implemented:**
+  - Existing FastAPI finite-graph workbench under `symbol_game/entrypoints/web/`; pilot integration remains proposed.
+  - Existing trace gateways under `symbol_game/infrastructure/trace/`, including `gateway_factories.py` and `traced_gateway.py`; campaign confinement/reservations still require integration.
+  - Exact non-boolean integer operation/step budgets in `symbol_game/domain/shared_kernel/budget.py`; this is not a money/debit reservation ledger.
+- **Unimplemented / Remaining Work:**
+  - `PilotLabService` orchestrating unified batch and interactive runs.
+  - SQLite WAL persistence layer for long-horizon campaign runs.
+  - Integration of `pfp_pilots` subpackage under `symbol_game`.
+  - Atomic reservation ledger preventing concurrent over-dispatch.
+
+---
+
+## 4. Target Architecture & Storage Layout
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                   PILOTLABSERVICE ARCHITECTURE                         │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│   [ CLI Entrypoint ]         [ Web API / UI Entrypoint ]               │
+│          │                               │                             │
+│          └───────────────┬───────────────┘                             │
+│                          ▼                                             │
+│                [ PilotLabService ] (Use Case)                          │
+│                          │                                             │
+│       ┌──────────────────┼───────────────────┐                         │
+│       ▼                  ▼                   ▼                         │
+│  [ Dispatcher ]   [ Replay Engine ]   [ Regrade Engine ]               │
+│       │                  │                   │                         │
+│       ▼                  ▼                   ▼                         │
+│  [ Gateway ]     [ Cached CAS ]       [ Host Oracles ]                 │
+│  (TracedGateway) (Content-Addressed)  (Rust / Python)                  │
+│       │                  │                   │                         │
+│       └──────────────────┼───────────────────┘                         │
+│                          ▼                                             │
+│             [ SQLite WAL Journal Ledger ]                              │
+│              - plans                                                   │
+│              - runs                                                    │
+│              - steps                                                   │
+│              - attempts                                                │
+│              - evaluations                                             │
+│              - reservations                                            │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### 4.1 Persistence Schema (SQLite WAL)
+
+```sql
+CREATE TABLE IF NOT EXISTS pfp_campaign_plans (
+    plan_id TEXT PRIMARY KEY,
+    created_at TEXT NOT NULL,
+    pilot_count INTEGER NOT NULL,
+    parameters_json TEXT NOT NULL,
+    sha256 TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS pfp_runs (
+    run_id TEXT PRIMARY KEY,
+    plan_id TEXT NOT NULL REFERENCES pfp_campaign_plans(plan_id),
+    pilot_id TEXT NOT NULL,
+    condition TEXT NOT NULL, -- 'baseline' | 'treatment'
+    repetition INTEGER NOT NULL,
+    status TEXT NOT NULL, -- 'PENDING', 'RUNNING', 'COMPLETED', 'REFUSED', 'FAILED'
+    created_at TEXT NOT NULL,
+    completed_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS pfp_attempts (
+    attempt_id TEXT PRIMARY KEY,
+    run_id TEXT NOT NULL REFERENCES pfp_runs(run_id),
+    stage_number INTEGER NOT NULL,
+    model_id TEXT NOT NULL,
+    request_digest TEXT NOT NULL,
+    response_digest TEXT, -- NULL until reply bytes are durably retained
+    attempt_state TEXT NOT NULL, -- Admitted / Dispatched / OutcomeUnknown / CompletedPendingSettlement / Settled
+    cost_microusd INTEGER CHECK (cost_microusd >= 0), -- NULL = unreconciled; never implicit zero
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS pfp_evaluations (
+    eval_id TEXT PRIMARY KEY,
+    attempt_id TEXT NOT NULL REFERENCES pfp_attempts(attempt_id),
+    checker_id TEXT NOT NULL,
+    verdict TEXT NOT NULL, -- 'PASS', 'REFUSE', 'ERROR'
+    structure_delta NUMERIC,
+    receipt_json TEXT NOT NULL,
+    evaluated_at TEXT NOT NULL
+);
+```
+
+---
+
+## Existing provider boundary and pending-reply custody
+
+Reuse [CompletionService.admit/complete](../../../../providers/use_cases/completion.py), [AdmittedRequest/CompletionOutcome](../../../../providers/domain/attempt.py) and [BudgetController](../../../../providers/domain/budget.py) rather than build an independent accounting engine. The existing provider boundary distinguishes pre-dispatch, OutcomeUnknown, CompletedPendingSettlement and Settled states. The proposed pilot journal is an adapter linking provider attempt/reservation IDs to run/stage/checker evidence. Unknown maximum liability must refuse before dispatch; missing actual usage/cost stays unreconciled after dispatch. Completion with retained bytes is not financial settlement.
+
+The proposed response_digest is nullable while no reply exists; a completed-response state requires a retained response digest. Test an admitted row with NULL response and unknown actual cost, reopen it, then distinguish no-send pre-dispatch recovery from dispatched OutcomeUnknown recovery. Never resend an uncertain dispatched attempt automatically. A later valid settlement is idempotent; a response/generation transplant cannot settle another attempt.
+
+**Additional ordered TDD slice:** proposed `symbol_game/tests/integration/test_pilot_provider_boundary.py::test_pending_response_unknown_cost_and_settlement` starts RED on the NOT NULL schema/duplicated lifecycle, adds the smallest provider-to-journal adapter, then verifies unknown liability refusal (zero sends), NULL pending response persistence, reply retention with pending settlement, transplant refusal and valid idempotent recovery. Use real temporary ledger/SQLite and the existing CompletionService with only transport injected. Independent oracles are provider attempt IDs, byte digests, exact micro-unit liabilities and send counts. Mutate the transition validation or settle_once identity check in the verified [budget.py](../../../../providers/domain/budget.py); the negative state/identity witness must fail and recover.
+
+```powershell
+py -3.12 -m pytest providers/tests/test_completion_contracts.py -q
+py -3.12 -m pytest symbol_game/tests/integration/test_pilot_provider_boundary.py -q
+```
+
+## 5. Execution & Lifecycle Invariants
+
+1. **Zero Provider Calls on Replay:** Replaying a past run re-evaluates stored candidate bytes against the specified checker. It is forbidden to dispatch external API calls during replay.
+2. **Append-Only Regrades:** Regrading an observation with an updated checker appends a new entry to `pfp_evaluations`; it never overwrites historical evaluations.
+3. **Fail-Closed Budget Reservations:** Before any request is sent, a tentative cost reservation is registered in SQLite. If available quota is exceeded, dispatch terminates immediately with `BUDGET_EXHAUSTED`.
+4. **Digest Mismatch Visibility:** If the raw bytes in the CAS store do not match the SHA-256 digest recorded in `pfp_attempts`, replay emits `CUSTODY_DIGEST_MISMATCH` and halts.
+
+---
+
+## 6. Acceptance Criteria & Gate Verification
+
+1. `PilotLabService` can execute a single pilot or a batch matrix run through both CLI and FastAPI endpoints.
+2. Simulating a crash during a 100-pilot campaign allows restarting the service and resuming without repeating completed attempts.
+3. Replaying 50 stored runs with network access disabled succeeds and reproduces identical verdict receipts.
+4. Each dispatched attempt has reconciled usage or an explicit unreconciled-cost hold; a zero-spend claim requires billing evidence.
+
+## Obstruction review and TDD test plan
+
+**Review basis (2026-10-10):** [workbench.create_app](../../../../symbol_game/entrypoints/web/workbench.py) exposes a finite signed-graph workbench backed by `finite_gauge_workbench.RunStore`, not a pilot laboratory. No `PilotLabService` implementation was found. Existing [Budget](../../../../symbol_game/domain/shared_kernel/budget.py) validates bounded integer operations, not dollar reservations. Preserve that workbench; the SQL below is a proposed schema, not an executed migration.
+
+**Bounded behavior and public port:** Proposed `PilotLabService.run(plan_id, idempotency_key)`, `replay(run_id)`, `regrade(run_id, checker_pin)` and `resume(run_id)` over journal/CAS ports. One frozen pilot, request/reply bytes and checker pins yield durable attempt/evaluation IDs or refusal. Use real temporary SQLite files reopened by a second service instance; substitute a recording transport only for the external model.
+
+**Dependencies and review routing:** Implement one case at a time after the stated dependency is available. Syntax Prefilter checks malformed input; Bare Metal Anchor/Techne implements the smallest production change; Defect Hunter and the Inspector challenge the independent oracle; Punchlist checks custody before Adversary records the scoped result. Use the four stages intake, implementation, adversarial QA, and receipt review. Stop after at most three repair attempts and retain the blocking witness.
+
+| Order | One-test RED → minimal GREEN → refactor slice | Proposed test and oracle |
+| --- | --- | --- |
+| 1 | Reopen a one-attempt journal and require unchanged request/reply bytes and state. RED the proposed service API; implement one append transaction and CAS readback before refactoring. | `symbol_game/tests/integration/test_pilot_lab_journal.py::test_attempt_survives_reopen`; SQLite queries and independently hashed blobs. |
+| 2 | Crash after reservation before reply persistence: resume retains an uncertain attempt and forbids resending until reconciliation. A committed reply must not be dispatched again. | Same file, `test_resume_distinguishes_uncertain_and_committed_attempts`; committed rows and exact send count. |
+| 3 | Replay without a transport re-evaluates stored bytes; altered CAS, absent checker pin and transplanted run binding refuse. Regrade appends, preserving the original evaluation. | `symbol_game/tests/integration/test_pilot_lab_replay.py::test_replay_regrade_and_transplant_controls`; real checker and before/after row digests. |
+| 4 | Two connections compete for the final integer reservation/idempotency key: at most one dispatch. Unknown provider cost stays unreconciled. Implement only unique admission plus a transaction. | `symbol_game/tests/integration/test_pilot_lab_reservations.py::test_atomic_last_reservation_and_idempotency`; transaction outcomes/send count; requires explicit usage/spend policy. |
+
+**Theoretical Minimum:** INVARIANT: the bounded behavior above. BREAK: the negative inputs in the ordered slices. WITNESS: actual returned value/refusal plus persisted bytes or send counts, compared with the stated independent oracle. MUTATION: The proposed service/journal is absent; its verified mutation target is unavailable until the production seam exists. Then mutate its unique idempotency insert or reservation predicate. Existing [pilot_evidence.write_once](../../../../education/pfp/infrastructure/pilot_evidence.py) is a separate real custody target: removing unequal-byte conflict rejection must break overwrite controls. Source existence was checked for this plan; mutation execution and RED recovery are still prospective. Do not count a mock-only verdict or a skipped native test as verification.
+
+**Proposed small-batch commands:** Run each named test first with `-k <test_name>` to demonstrate RED, implement the minimum GREEN, then run the one-file regression command below before refactoring. Paths labeled proposed are not claimed to exist. Commands are not execution receipts.
+
+```powershell
+py -3.12 -m pytest symbol_game/tests/integration/test_pilot_lab_journal.py -q
+py -3.12 -m pytest symbol_game/tests/integration/test_pilot_lab_replay.py -q
+py -3.12 -m pytest symbol_game/tests/integration/test_pilot_lab_reservations.py -q
+```
+
+**Cross-epic sink ownership:** Education owns prompt/spec/checker and four-file source bundles; Providers owns admission/reservation/dispatch/settlement; Symbol Game owns the proposed durable pilot application and observation/evaluation journal. PFP-005 consumes reconciled paired evidence and cannot relabel PFP-000 regrading as efficacy evidence. Contracts/schema changes go to Governance; execution evidence stays outside epics. A producer supplies immutable source evidence; the consumer validates its own contract and emits its own scoped receipt. No downstream plan may reuse a producer PASS as an admission decision.
+
+**Scope and evidence ceiling:** Start with one pilot, transport and checker. CLI/HTTP follow the service contract. A scripted transport verifies orchestration, not live efficacy or billing; a free model label is not a reconciled zero bill. Record any eventual SoftwareQaReceiptV1 with exact command, runtime version, exit status, tested scope, base/head and source digests, failing input, mutation diff, and recovery output outside `plans/epics/`. This planning update executes none of these proposed tests and grants no runtime or admission authority.
+
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

@@ -47,7 +47,7 @@ from models import (
 )
 
 # Canonical stable namespace for deterministic UUIDv5 generation
-COMPOSITION_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_DNS, "coda.anomalon.org.paper.composition")
+COMPOSITION_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_DNS, "coda.sentinel.org.paper.composition")
 
 # Forbidden words per Claim Hygiene rule
 FORBIDDEN_WORDS = [
@@ -62,8 +62,8 @@ RE_FORBIDDEN = re.compile(r"\b(" + "|".join(re.escape(w) for w in FORBIDDEN_WORD
 INHOUSE_AND_OVERGUARDED_PATTERNS: List[Tuple[str, re.Pattern[str]]] = [
     ("AuthorityEffect", re.compile(r"\bAuthorityEffect\b")),
     ("GTLA", re.compile(r"\bGTLA\b")),
-    ("Woland", re.compile(r"\bWoland\b")),
-    ("Old Man / OMC", re.compile(r"\b(?:Old Man|OMC)\b")),
+    ("Adversary", re.compile(r"\bAdversary\b")),
+    ("Red Team / OMC", re.compile(r"\b(?:Red Team|OMC)\b")),
     ("Blackrod", re.compile(r"\bBlackrod\b")),
     ("anti-skill", re.compile(r"\banti-skill\b", re.IGNORECASE)),
     ("monorepo / worktree", re.compile(r"\b(?:monorepo|worktree)\b", re.IGNORECASE)),

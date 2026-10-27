@@ -5,13 +5,13 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from omega_engine_operads.application.autopoiesis import AutopoieticHarvester
-from omega_engine_operads.infrastructure.autopoiesis import (
+from operads.application.autopoiesis import AutopoieticHarvester
+from operads.infrastructure.autopoiesis import (
     FileHarvestVault,
     JsonPharmacyAdapter,
     MarkdownSkillsAdapter,
 )
-from omega_engine_operads.infrastructure.autopoiesis.harvest_source import (
+from operads.infrastructure.autopoiesis.harvest_source import (
     FilesystemHarvestSource,
 )
 

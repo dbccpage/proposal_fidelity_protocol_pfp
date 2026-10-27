@@ -1,7 +1,7 @@
 //! Matolcsi-Weiner Conjecture 2 verifier binary.
 //!
 //! Verifies the algebraic identity from arXiv:2503.14752 on the catalog of known
-//! MUB-triples in omega_mub, using exact Cyc24 arithmetic.
+//! MUB-triples in core_mub, using exact Cyc24 arithmetic.
 //!
 //! The chain: Conj2 + Conj3 ⟹ Zauner's conjecture (MUB(6) = 3).
 //!
@@ -11,14 +11,14 @@
 //! AuthorityEffect: None
 //! Firewall: NOT MUB(6)=3, NOT MUB(6)<=3; stated region only; mints no authority
 
-use omega_mub::omega_native::d6_exact_curvature_cochain::{canonical_triple_exact, inner};
-use omega_mub::omega_native::mub6_dita_seed_cover::{
+use core_mub::core_native::d6_exact_curvature_cochain::{canonical_triple_exact, inner};
+use core_mub::core_native::mub6_dita_seed_cover::{
     all_genuine_dita_seeds, dita_seed_triple_columns_qa,
 };
-use omega_mub::omega_native::mub6_matolcsi_weiner_conj2::{
+use core_mub::core_native::mub6_matolcsi_weiner_conj2::{
     verify_conjecture2_single, Conj2SingleResult,
 };
-use omega_number_theory::cyclotomic::Cyc24;
+use core_number_theory::cyclotomic::Cyc24;
 
 use serde::Serialize;
 use sha2::{Digest, Sha256};
@@ -180,7 +180,7 @@ fn main() {
     println!("║                                                                  ║");
     println!("║  What this supports:                                             ║");
     println!("║    The Matolcsi-Weiner identity is consistent with {total} exact     ║");
-    println!("║    MUB-triples over Q(zeta_24) from the omega_mub catalog.       ║");
+    println!("║    MUB-triples over Q(zeta_24) from the core_mub catalog.       ║");
     println!("║  What this does NOT support:                                     ║");
     println!("║    This is finite-sample verification, not a proof of Conj. 2.   ║");
     println!("║  Narrowest defensible claim:                                     ║");
@@ -190,7 +190,7 @@ fn main() {
     println!("╚══════════════════════════════════════════════════════════════════╝");
 
     let payload = ReportPayload {
-        schema: "omega.mub6.conj2-verification.v3".to_string(),
+        schema: "core.mub6.conj2-verification.v3".to_string(),
         firewall: FIREWALL.to_string(),
         authority_effect: "None".to_string(),
         digest_contract: DIGEST_CONTRACT.to_string(),
@@ -217,7 +217,7 @@ mod tests {
 
     fn empty_payload() -> ReportPayload {
         ReportPayload {
-            schema: "omega.mub6.conj2-verification.test".to_string(),
+            schema: "core.mub6.conj2-verification.test".to_string(),
             firewall: FIREWALL.to_string(),
             authority_effect: "None".to_string(),
             digest_contract: DIGEST_CONTRACT.to_string(),

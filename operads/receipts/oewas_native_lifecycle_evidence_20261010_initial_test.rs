@@ -1,5 +1,5 @@
 //! Lifecycle metadata parity only; evidence authenticity and execution authority are separate.
-use omega_workflows_agents_skills::estate::execute;
+use core_workflows_agents_skills::estate::execute;
 use serde_json::{json, Value};
 
 fn digest(algorithm: &str, content: &str) -> Value {

@@ -23,11 +23,11 @@ from pathlib import Path
 import pytest
 import yaml
 
-from omega_engine_pfp.domain.types import CheckerId
-from omega_engine_pfp.domain.types import EvaluationStatus
-from omega_engine_pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
-from omega_engine_pfp.domain.types import NegativeMutationFixture
-from omega_engine_pfp.domain.kernel.result import RefusalCode
+from pfp.domain.types import CheckerId
+from pfp.domain.types import EvaluationStatus
+from pfp.domain.pilots.fail_closed_gate import FailClosedRefusalGate
+from pfp.domain.types import NegativeMutationFixture
+from pfp.domain.kernel.result import RefusalCode
 
 APPLICATION_ROOT = Path(__file__).resolve().parents[1]
 DOMAIN_FIXTURES_PATH = (

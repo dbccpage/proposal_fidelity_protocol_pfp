@@ -16,7 +16,7 @@ sources:
 uses: ["ENC-0897", "ENC-0901", "ENC-0905"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -36,7 +36,7 @@ tower is the `delta = 2` Symbol Game tower must distinguish the RH-named
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
 
 The Lean theorem names are:
 

@@ -7,7 +7,7 @@ import json
 import pathlib
 from typing import Dict, List, Optional
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Result
+from operations.domain.rop.result import Err, Ok, Result
 from ..domain.entities.catalog_v3 import CapabilitySliceV3
 from ..domain.entities.operation_v3 import OperationV3, PortSpecV3
 from ..domain.errors.domain_errors import DomainInvariantError, OeopDomainError

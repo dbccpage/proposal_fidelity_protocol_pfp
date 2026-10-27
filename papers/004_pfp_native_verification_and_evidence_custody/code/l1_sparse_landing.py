@@ -273,7 +273,7 @@ def weighted_l1_cost(residual: Sequence[Fraction], weights: Sequence[int]) -> Fr
 # ---------------------------------------------------------------------------
 
 def three_cycle(weights: Tuple[int, int, int]) -> ConstraintGraph:
-    """Directed 3-cycle 0->1->2->0 with the given edge weights (omega_0, omega_1, omega_2)."""
+    """Directed 3-cycle 0->1->2->0 with the given edge weights (core_0, core_1, core_2)."""
     w0, w1, w2 = weights
     return ConstraintGraph(
         vertices=("0", "1", "2"),

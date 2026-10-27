@@ -3,7 +3,7 @@
 AuthorityEffect: None.
 
 Editable Markdown skills and workflow specifications live in
-`omega_engine_operads/skills/` and `omega_engine_operads/workflows/`.
+`operads/skills/` and `operads/workflows/`.
 The `.agents`, `.claude`, `.codex`, and `.grok` copies are generated discovery
 views, not alternative instruction authorities. Edit the OEOP source and use
 the existing packaging tools to update selected host packages. Host-specific
@@ -14,20 +14,20 @@ Its generated views are `GEMINI.md` and each host's `AGENTS.md`.
 `manifests/host_discovery_version.txt` supplies the unchanged `0.0.0-a00`
 compatibility marker in each host's `VERSION`; no release or admission is implied.
 
-Typed declarations and composition live under `omega_engine_operads/contracts/`
-and `omega_engine_operads/skill_operad/`. Existing serialized identifiers and
+Typed declarations and composition live under `operads/contracts/`
+and `operads/skill_operad/`. Existing serialized identifiers and
 historical receipts keep their original identities. Source ownership does not
 admit every discovered skill for runtime execution or issue any capability.
 
 OEOP supplies capability definitions and composition. OEEIS owns immune
 evaluation and antibody data, Prompt Civilization owns evolution and lineage,
-and Woland owns execution, scheduling, budgets, and run evidence. These remain
+and Adversary owns execution, scheduling, budgets, and run evidence. These remain
 separate subsystems with injected interfaces.
 
 The source cutover covers skills, workflows, rules, registries, hook templates,
 and anti/helpful pattern descriptions in OEOP. Antibody definitions, pharmacy
-data and anti-skill data live in `omega_engine_epistemic_immune_system/antibodies/`
-and `omega_engine_epistemic_immune_system/antiskills/`. Runtime candidate stores
+data and anti-skill data live in `eis/antibodies/`
+and `eis/antiskills/`. Runtime candidate stores
 and the existing activation rules stay with their runtime owners. Quarantine
 history, host settings and the existing content-lock address are preserved.
 Existing Grok-only Rhai entrypoints remain host-specific configuration; they
@@ -38,7 +38,7 @@ shadow-only do not describe this source layout.
 Use the existing mirror CLI for a selected Markdown skill package:
 
 ```text
-python -m omega_engine_operations.controllers.skill_mirror_cli --skills <name>
+python -m operations.controllers.skill_mirror_cli --skills <name>
 ```
 
 Selected shared configuration trees use the existing packaging `mirror_skill`

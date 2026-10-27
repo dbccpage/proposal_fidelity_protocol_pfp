@@ -17,7 +17,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 Under `mu2` at Challenge 3 the width is 1 (`mu2_unique`, `3100c4e`), but the sealed tree summary shows that ties appear deeper down. Computing the widths is mechanical. The hard part is a conjecture that is precise and that the data do not already refute.
 
-The task exercises the Symbol Game's census-to-conjecture discipline, OEWAS (Omega Engine Workflows, Agents, Skills) pipelines, and OEEIS (Omega Engine Epistemic Immune System) refusal of unboundedness claims. The repository records unboundedness as kind (d).
+The task exercises the Symbol Game's census-to-conjecture discipline, OEWAS (Engine Workflows, Agents, Skills) pipelines, and OEEIS (Engine Epistemic Immune System) refusal of unboundedness claims. The repository records unboundedness as kind (d).
 
 ## 3. Formal Problem and Bounds
 
@@ -72,7 +72,7 @@ The judge holds out P1 depths 4 to 15, all checked, and P2 depths 51 to 60, whic
 
 Controls: relabel control: a presentation-token renaming of the genesis history must give identical histograms; reconciliation control: the counts must match 236 and 422.
 
-The second checker is `omega_engine/crates_rs/omega_ooutwire_primitives` (`tree.rs`, `minima.rs`, `canonical.rs`), which rebuilds P1. The gate runner is `python ci/run_gates.py` at HEAD.
+The second checker is `engine/crates_rs/core_ooutwire_primitives` (`tree.rs`, `minima.rs`, `canonical.rs`), which rebuilds P1. The gate runner is `python ci/run_gates.py` at HEAD.
 
 The mutation suite must reject each of these: widths counted over raw deltas instead of classes; depth off by one; supply turned off; a conjecture that the receipt's own data refute.
 
@@ -122,7 +122,7 @@ The catalog row requires none of these. They are recommended:
 
 **19L57G1, read-only.** At `3100c4e`: `19L57G1:code/derivation/engine.py`, `candidates.py`, `iso.py`, `19L57G1:artifacts/claims.json` and `19L57G1:lean4/Derivation/Minimality.lean`; at HEAD: `19L57G1:research/unboundedness/` and `19L57G1:research/alpha_engine/evaluate.py`.
 
-**the_symbol_game.** `omega_engine/crates_rs/omega_ooutwire_primitives` (`tree.rs`) and `omega_engine_pfp/domain/immune/danger_gate.py`.
+**the_symbol_game.** `engine/crates_rs/core_ooutwire_primitives` (`tree.rs`) and `pfp/domain/immune/danger_gate.py`.
 
 **Upgrades.**
 

@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any, Dict, List, Optional
 
-from omega_engine_prompt_civilization.domain.causal_witness import SealedCausalWitness
+from pciv.domain.causal_witness import SealedCausalWitness
 
 
 @dataclass(frozen=True)

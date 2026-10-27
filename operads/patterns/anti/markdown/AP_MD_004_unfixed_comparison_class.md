@@ -42,7 +42,7 @@ and:
 
 > The larger problem is the unqualified existential formula for $\mathsf{Authority}(s)$ in Section 4.3. If the family can be chosen freely, each of two indistinguishable survivors can be made uniquely accepted by declaring its singleton family. The stated rule then cannot establish exclusive physical authority between them. Deleting competitors has supplied no new empirical information.
 
-Source: `_ic/inr/omega_paper_reviews/2026-10-08_representation_abundance_publication_review/review.md`.
+Source: `_ic/inr/core_paper_reviews/2026-10-08_representation_abundance_publication_review/review.md`.
 
 ## Hazard & Failure Mode
 

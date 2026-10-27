@@ -6,7 +6,7 @@ source of truth for membership. This script never invents a family and never
 edits the CURATED block below the marker -- it rewrites only the generated
 table, so hand-written propagation patterns survive regeneration.
 
-Run from the repo root:  python omega_engine_operads/skills/_shared/regen_family_registry.py
+Run from the repo root:  python operads/skills/_shared/regen_family_registry.py
 Exit 1 if the registry changed (use in a gate to catch drift).
 """
 
@@ -18,7 +18,7 @@ import re
 import sys
 
 # Canonical skill root (mirrored to .claude/.codex/.grok via sync_cross_host_skills).
-SKILLS = pathlib.Path("omega_engine_operads/skills")
+SKILLS = pathlib.Path("operads/skills")
 if not SKILLS.is_dir():
     SKILLS = pathlib.Path(".claude/skills")
 REGISTRY = SKILLS / "_shared" / "family_registry.md"

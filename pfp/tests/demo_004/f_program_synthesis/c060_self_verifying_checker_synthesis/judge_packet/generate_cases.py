@@ -10,13 +10,13 @@ from pathlib import Path
 # Ensure repository root is on sys.path
 sys.path.append(str(Path(__file__).resolve().parents[6]))
 
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
     verify_candidate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.independent_checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.independent_checker import (
     independent_check,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.reference_solver.checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.reference_solver.checker import (
     check as ref_check,
 )
 

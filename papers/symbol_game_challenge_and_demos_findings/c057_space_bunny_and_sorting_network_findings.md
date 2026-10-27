@@ -16,7 +16,7 @@
 **AuthorityEffect:** None.
 **Date:** September 28, 2026.
 **Domain:** `f_program_synthesis` (Wave 3).
-**Protocol:** SG-CP v1 with Woland Terminal Reality Gate commit-reveal protocol.
+**Protocol:** SG-CP v1 with Adversary Terminal Reality Gate commit-reveal protocol.
 **Evaluator Run ID:** `c057_eval_1790647557`.
 **Solver Digest:** `a76406084c143de8498a7f89ad79b66d306cef7b777dacc3e9c61df3c1b12d88`.
 **Tested Models:**
@@ -30,7 +30,7 @@
 
 Challenge C057 evaluates the synthesis of comparator sorting networks for $n \le 12$ channels within comparator bounds $k$, subject to mandatory prefix layers and forbidden comparator sets. All solutions are rigorously evaluated by the **0-1 principle** (verifying that all $2^n$ binary inputs are mapped to sorted outputs), prefix adherence, and forbidden set avoidance.
 
-The challenge was sealed under the Woland Terminal Reality Gate:
+The challenge was sealed under the Adversary Terminal Reality Gate:
 - **Solver Commitment SHA-256:** `a76406084c143de8498a7f89ad79b66d306cef7b777dacc3e9c61df3c1b12d88`
 - **Hidden Test Cases:** **64 / 64 passed (100.0%)** (32 base cases including proven optimal bounds for $n=9, 10, 11, 12$, 16 reflection/permutation controls, 16 poisoned cases).
 - **Hostile Mutation Kill Rate:** **48 / 48 killed (100.0%)** by dual checkers (`exact_checker.py` and `independent_checker.py`).

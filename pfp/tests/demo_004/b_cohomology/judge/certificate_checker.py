@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from omega_engine_pfp.domain.cohomology.certificate_checker import check_certificate
-from omega_engine_pfp.domain.cohomology.solver import detect_challenge
+from pfp.domain.cohomology.certificate_checker import check_certificate
+from pfp.domain.cohomology.solver import detect_challenge
 
 
 def check_cohomology_certificate(case: Mapping[str, Any], res: Mapping[str, Any]) -> dict[str, Any]:

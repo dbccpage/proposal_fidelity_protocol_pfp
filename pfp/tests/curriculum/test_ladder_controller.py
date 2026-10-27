@@ -7,10 +7,10 @@ AuthorityEffect: None.
 
 import pytest
 
-from omega_engine_pfp.domain.curriculum.models import (
+from pfp.domain.curriculum.models import (
     JudgeChangedError,
 )
-from omega_engine_pfp.use_cases.curriculum.ladder_controller import (
+from pfp.use_cases.curriculum.ladder_controller import (
     LadderController,
 )
 

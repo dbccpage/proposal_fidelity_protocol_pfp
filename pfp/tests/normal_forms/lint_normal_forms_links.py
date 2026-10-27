@@ -1,9 +1,9 @@
 """Documentation link linter for normal forms contracts relocation.
 
 Scans Markdown documentation files and updates references from:
-    omega_engine_governance/contracts/contracts_normal_forms
+    governance/contracts/contracts_normal_forms
 to:
-    omega_engine_education/documentation/13_normal_forms/contracts_normal_forms
+    education/documentation/13_normal_forms/contracts_normal_forms
 
 Handles:
 - Plain path strings (slash and backslash variants)
@@ -35,32 +35,32 @@ def _find_repo_root(p: Path = Path(__file__).resolve()) -> Path:
 REPO_ROOT = _find_repo_root()
 _CAND150 = (
     REPO_ROOT
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "014_normal_forms"
     / "contracts_normal_forms"
 )
 _CAND15 = (
     REPO_ROOT
-    / "omega_engine_education"
+    / "education"
     / "documentation"
     / "15_normal_forms"
     / "contracts_normal_forms"
 )
 TARGET_CANONICAL = _CAND150 if _CAND150.is_dir() else _CAND15
 
-OLD_PATH_STR = "omega_engine_governance/contracts/contracts_normal_forms"
-NEW_PATH_STR = "omega_engine_education/documentation/13_normal_forms/contracts_normal_forms"
+OLD_PATH_STR = "governance/contracts/contracts_normal_forms"
+NEW_PATH_STR = "education/documentation/13_normal_forms/contracts_normal_forms"
 
-OLD_PATH_BS = "omega_engine_governance\\contracts\\contracts_normal_forms"
-NEW_PATH_BS = "omega_engine_education\\documentation\\13_normal_forms\\contracts_normal_forms"
+OLD_PATH_BS = "governance\\contracts\\contracts_normal_forms"
+NEW_PATH_BS = "education\\documentation\\13_normal_forms\\contracts_normal_forms"
 
 URI_PATTERN = re.compile(
-    r"file:///[cC]:/Users/a343o/source/repos/the_symbol_game/omega_engine_governance/contracts/contracts_normal_forms"
+    r"file:///[cC]:/Users/a343o/source/repos/the_symbol_game/governance/contracts/contracts_normal_forms"
 )
 
 REL_LINK_PATTERN = re.compile(
-    r"\((?:\.\.[/\\])+omega_engine_governance[/\\]contracts[/\\]contracts_normal_forms([/\\]?[^)]*)\)"
+    r"\((?:\.\.[/\\])+governance[/\\]contracts[/\\]contracts_normal_forms([/\\]?[^)]*)\)"
 )
 
 HOST_ROOTS = [".agents", ".claude", ".codex", ".grok"]
@@ -112,7 +112,7 @@ def lint_and_fix_file(file_path: Path) -> list[str]:
         text = new_text
         changes.append(f"Replaced {n_uri} file URI(s)")
 
-    # 2. Replace relative markdown links like (../../../../omega_engine_governance/contracts/contracts_normal_forms/...)
+    # 2. Replace relative markdown links like (../../../../governance/contracts/contracts_normal_forms/...)
     def _rel_sub(match: re.Match[str]) -> str:
         subpath = match.group(1).lstrip("/\\")
         dest_file = TARGET_CANONICAL / subpath if subpath else TARGET_CANONICAL
@@ -189,10 +189,10 @@ def run_linter() -> int:
 
     # Also update verify_normal_forms.py and extra python docstrings
     extra_py_files = [
-        REPO_ROOT / "omega_engine_education" / "tests" / "normal_forms" / "verify_normal_forms.py",
-        REPO_ROOT / "omega_engine_education" / "domain" / "normal_forms" / "harness.py",
+        REPO_ROOT / "education" / "tests" / "normal_forms" / "verify_normal_forms.py",
+        REPO_ROOT / "education" / "domain" / "normal_forms" / "harness.py",
         REPO_ROOT
-        / "omega_engine_education"
+        / "education"
         / "tests"
         / "normal_forms"
         / "test_asrf_and_bqnf_fsign_runtime.py",

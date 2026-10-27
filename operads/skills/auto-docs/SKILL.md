@@ -59,10 +59,10 @@ When invoked, `auto-docs` executes a 4-step pipeline:
 
 ```bash
 # Execute auto-docs for current session changes
-python -m omega_engine_operations.use_cases.packaging.auto_docs_service
+python -m operations.use_cases.packaging.auto_docs_service
 
 # Run via skill entrypoint with a custom topic label
-python omega_engine_operads/skills/auto-docs/scripts/run.py --topic "feature_refactor"
+python operads/skills/auto-docs/scripts/run.py --topic "feature_refactor"
 ```
 
 ### 2. Inspection / Scan-Only Mode
@@ -70,7 +70,7 @@ python omega_engine_operads/skills/auto-docs/scripts/run.py --topic "feature_ref
 Scan the session-touched files for comment slop without modifying code:
 
 ```bash
-python -m omega_engine_operations.use_cases.packaging.auto_docs_service --scan-only
+python -m operations.use_cases.packaging.auto_docs_service --scan-only
 ```
 
 ### 3. Targeted Path Execution
@@ -78,7 +78,7 @@ python -m omega_engine_operations.use_cases.packaging.auto_docs_service --scan-o
 Document and clean specific files or directories:
 
 ```bash
-python -m omega_engine_operations.use_cases.packaging.auto_docs_service omega_engine_operations/use_cases/packaging
+python -m operations.use_cases.packaging.auto_docs_service operations/use_cases/packaging
 ```
 
 ---

@@ -1,7 +1,7 @@
 """Test Degree-Wise DSL Verification Bout and Automatic Operadic Compression.
 
 Verifies:
-1. Woland bout execution artifact bundle for degree-wise DSL verification.
+1. Adversary bout execution artifact bundle for degree-wise DSL verification.
 2. Exact cochain boundaries on declared C3 triangle carrier (Phi_1 = 0, Gamma_2 = 0).
 3. DDC tape hash-chain validation and DDC candidate runtime law compliance.
 4. Colored operad morphism compilation and exact residual calculation.
@@ -16,11 +16,11 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_operads.skill_operad.ddc_operad_parser import DdcOperadParser
+from operads.skill_operad.ddc_operad_parser import DdcOperadParser
 
 
 def _find_verification_run_dir(repo_root: Path) -> Path:
-    runs_dir = repo_root / "_ic" / "woland" / "runs"
+    runs_dir = repo_root / "_ic" / "adversary" / "runs"
     matching = sorted(runs_dir.glob("*degree_wise_dsl_verification*"))
     if not matching:
         pytest.skip(f"No verification run directory found matching *degree_wise_dsl_verification* in {runs_dir}")
@@ -28,7 +28,7 @@ def _find_verification_run_dir(repo_root: Path) -> Path:
 
 
 def test_quad_bundle_and_exact_cochains() -> None:
-    """Verify the Woland bout run directory and exact cochains for degree-wise DSL verification."""
+    """Verify the Adversary bout run directory and exact cochains for degree-wise DSL verification."""
     repo_root = Path(__file__).resolve().parents[3]
     run_dir = _find_verification_run_dir(repo_root)
 
@@ -83,7 +83,7 @@ def test_ddc_operad_parsing() -> None:
 def test_automatic_operadic_compression(tmp_path: Path) -> None:
     """Verify automatic operadic compression into an operad directory."""
     repo_root = Path(__file__).resolve().parents[3]
-    operad_orig_dir = repo_root / "omega_engine_operads" / "skill_operad"
+    operad_orig_dir = repo_root / "operads" / "skill_operad"
     run_dir = _find_verification_run_dir(repo_root)
     ddc_file = run_dir / "ddc.jsonl"
 

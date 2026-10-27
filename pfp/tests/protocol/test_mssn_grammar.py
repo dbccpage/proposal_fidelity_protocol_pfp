@@ -1,4 +1,4 @@
-"""Tests for omega_engine_pfp.domain.tower.grammar against the real golden_corpus (Grammar
+"""Tests for pfp.domain.tower.grammar against the real golden_corpus (Grammar
 section 17's canonical test corpus, transcribed verbatim from the source doc).
 
 AuthorityEffect: None.
@@ -23,7 +23,7 @@ REPO_ROOT = _find_repo_root()
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_pfp.domain.tower import (
+from pfp.domain.tower import (
     golden_corpus,
     grammar,  # noqa: E402
 )

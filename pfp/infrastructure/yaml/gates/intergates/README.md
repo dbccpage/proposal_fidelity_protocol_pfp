@@ -5,7 +5,7 @@ design references. They contain proposed cognitive interpretations, not evidence
 that a gate prevents sycophancy, guarantees progress or establishes a theorem.
 
 The explicit finite resolution is `pfp-intergates-source-v1`. Its numeric and
-signature predicates have one native owner, `omega_woland.intergates.v2`; Python
+signature predicates have one native owner, `core_adversary.intergates.v2`; Python
 validates the declared input shape and uses an injected native evaluator. Missing
 native composition refuses. Absence of `contract_profile`, or explicit
 `legacy-diagnostic-v1`, keeps the original weaker diagnostic predicates. Unknown
@@ -24,7 +24,7 @@ vagueness, antagonism and exploit severity are in [0,1]. Round/turn indices are
 positive integers and the previous record, when required, must be adjacent.
 All source-profile requests include `contract_profile: pfp-intergates-source-v1`.
 The exact top-level field types are declared in the existing
-`omega_engine_woland/domain/intergates/payload_contract.py`.
+`adversary/domain/intergates/payload_contract.py`.
 
 | ID / design reference | Input and finite decision |
 | --- | --- |
@@ -35,7 +35,7 @@ The exact top-level field types are declared in the existing
 | IG05 [urgency](05_false_urgency_desensitization.yaml) | `prompt_text`, `urgency_indicators`, `sanitized_prompt_text`, `verification_started_ms`, `verification_completed_ms`, `minimum_buffer_ms`, `declared_time_constraint`. Recompute exact case-insensitive stripping of known/declared urgency markers; the downstream text must equal that result. The positive host-selected audit buffer must have elapsed, using supplied timestamps, with no sleeps. A declared deadline additionally requires the authenticated timestamp witness below. The pure predicate does not itself advance a clock or forward a prompt. |
 | IG06 [rejoin](06_affective_deescalation_rejoin.yaml) | `turn_number`, `antagonism_score`, `prior_turn`, `has_acknowledged_error`, `repair_action_proposed`, `scar_before`, `scar_after`, `deescalation_envelope`. Adjacent history records whether antagonism is high (>0.6) for two turns. Each high current score requires the envelope, acknowledgement and a nonempty repair action before rejoin. Retain every prior scar. Supplied scores are operational observations, not diagnoses. |
 | IG07 [consensus](07_manufactured_consensus_audit.yaml) | Distinct `agent_evaluator_ids`, matching distinct `sampling_seeds`, `producer_id`, `producer_context_hex`, `evaluator_contexts`, `dissenting_evaluator_ids`, `dissent_records`. At least two reviewers, none the producer; reviewer contexts differ from producer context. Each dissent record binds the declared reviewer to nonempty content bytes. Identity/seed/context diversity is a finite independence control, not proof of truth or statistical independence. |
-| IG08 [quarantine](08_quarantine_recovery_containment.yaml) | `quarantine_cause`, `harm_class`, `repair_before_hex`, `repair_after_hex`, `candidate_content`, `checker_receipt_hex`, `checker_receipt_verdict`, plus shared trust and dual witnesses. Repair bytes must be nonempty, changed, and the exact accepted candidate. The checker receipt must accept that candidate; two distinct configured Stravinsky/Master issuers and public keys authenticate the same receipt. No trust or two arbitrary strings cannot admit. This profile covers changed prompt-byte repair; environment-only recovery needs its own explicit contract. |
+| IG08 [quarantine](08_quarantine_recovery_containment.yaml) | `quarantine_cause`, `harm_class`, `repair_before_hex`, `repair_after_hex`, `candidate_content`, `checker_receipt_hex`, `checker_receipt_verdict`, plus shared trust and dual witnesses. Repair bytes must be nonempty, changed, and the exact accepted candidate. The checker receipt must accept that candidate; two distinct configured Quarantine/Master issuers and public keys authenticate the same receipt. No trust or two arbitrary strings cannot admit. This profile covers changed prompt-byte repair; environment-only recovery needs its own explicit contract. |
 | IG09 [defense](09_deception_countermeasure_tie.yaml) | `detected_exploit_uids`, `exploit_severities`, `bound_countermeasure_uids`, `applied_countermeasure_uids`. Unique aligned lists establish exact positional 1-to-1 UID associations. Every detected exploit needs its defense; severity >0.7 requires that corresponding defense actually be recorded as applied. The finite association does not establish real-world effectiveness. |
 | IG10 [terminal](10_terminal_reality_tether.yaml) | `candidate_summary_text`, `checker_receipt_verdict`, `candidate_content`, `checker_receipt_hex`, plus shared trust/checker attestation. Recompute hype/four-part summary checks and parse exact receipt bytes; require ACCEPTED, exact candidate digest and matching configured `checker_id`. Authenticate the receipt under the declared checker trust policy. This is separate from native gate authorization and does not upgrade a finite checker to a universal proof. |
 
@@ -49,14 +49,14 @@ Verification is relative to that supplied policy; it does not establish an
 independently authenticated operator or grant authority. Missing trust is an
 explicit refusal, never a trusted boolean or fallback PASS.
 
-The binding scope is `woland.intergate.source.v1`; `spec_id` is the exact gate ID,
+The binding scope is `adversary.intergate.source.v1`; `spec_id` is the exact gate ID,
 `rule_digest` is the original YAML SHA reference, `subject_digest` hashes exact
 candidate UTF-8 bytes, and `source_digest` matches the declared source.
 `context_digest` hashes `task_id` UTF-8 except IG08, where it hashes the compact
 UTF-8 JSON array `[task_id, quarantine_cause, harm_class, repair_before_hex,
 repair_after_hex]`. Use the native owner to construct/check exact bindings.
 
-- IG08: `witness_issuers` has configured `stravinsky`/`master` issuers;
+- IG08: `witness_issuers` has configured `quarantine`/`master` issuers;
   `dual_witnesses` contains exactly two signed ADMIT/REINSTATE statements over the
   exact checker receipt. Distinct issuer names alone are insufficient.
 - IG10: `checker_issuer`, `checker_id`, `checker_attestation` bind a signed ADMIT

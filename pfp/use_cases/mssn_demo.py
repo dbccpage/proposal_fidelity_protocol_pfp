@@ -5,7 +5,7 @@ from __future__ import annotations
 import copy
 from typing import Any
 
-from omega_engine_pfp.domain.demos import CheckerPort, DemoRefusal
+from pfp.domain.demos import CheckerPort, DemoRefusal
 
 
 def evaluate_cases(

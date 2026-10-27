@@ -23,7 +23,7 @@ from __future__ import annotations
 import hashlib
 from fractions import Fraction
 
-from omega_engine_pfp.domain.cochain import (
+from pfp.domain.cochain import (
     ClosedNonExactClass,
     CochainRefusal,
     ExactCoboundary,
@@ -31,7 +31,7 @@ from omega_engine_pfp.domain.cochain import (
     PrimeTriadContext,
     PromptCellComplex,
 )
-from omega_engine_pfp.domain.contracts.cochain import (
+from pfp.domain.contracts.cochain import (
     RULE_PROMPT_COCHAIN_CHAIN_LAW_001,
     RULE_PROMPT_COCHAIN_FOUR_WAY_DISPOSITION_001,
     RULE_PROMPT_COCHAIN_IMPOSSIBLE_PROFILE_001,
@@ -39,10 +39,10 @@ from omega_engine_pfp.domain.contracts.cochain import (
     RULE_PROMPT_COCHAIN_ZERO_GAP_001,
     get_prompt_cochain_evaluation_contract,
 )
-from omega_engine_pfp.ffi import (
+from pfp.ffi import (
     evaluate_prompt_cochain_disposition as evaluate_prompt_cochain,
 )
-from omega_engine_pfp.ffi import get_default_host
+from pfp.ffi import get_default_host
 
 
 def make_triangle_complex(with_face: bool = True) -> PromptCellComplex:
@@ -289,7 +289,7 @@ def test_prime_002_budget_exhaustion():
 def test_cochain_evaluation_contract_spec():
     """Verify machine-verifiable contract definition for prompt cochain evaluation."""
     contract = get_prompt_cochain_evaluation_contract()
-    assert contract.contract_id == "urn:omega:pfp:contract:prompt_cochain_evaluation:v1.0.0"
+    assert contract.contract_id == "urn:core:pfp:contract:prompt_cochain_evaluation:v1.0.0"
     assert contract.authority_effect == "None"
 
     # Invariants must contain all 5 required rules

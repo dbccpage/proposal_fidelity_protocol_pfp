@@ -1,7 +1,7 @@
 """Constants the anti-skill domain carried over from prompt_civilization.
 
 The three values the relocated anti-skill types use, unchanged from
-`omega_engine/crates/prompt_civilization/domain/constants.py` (retired in
+`engine/crates/prompt_civilization/domain/constants.py` (retired in
 39c9deb75).
 
 AuthorityEffect: None.

@@ -3,8 +3,8 @@
 Evaluates discrete retraction turns against the obstruction triad:
     (Gamma_2, Phi_1, defect_count)
 where:
-    - Phi_1: Simplicial boundary defect evaluated via sovereign ExactHomologyPort (omega_homology).
-    - Gamma_2: Discrete holonomy curvature defect evaluated via sovereign ExactHolonomyPort (omega_holonomy).
+    - Phi_1: Simplicial boundary defect evaluated via sovereign ExactHomologyPort (core_homology).
+    - Gamma_2: Discrete holonomy curvature defect evaluated via sovereign ExactHolonomyPort (core_holonomy).
     - defect_count: Active count of unsatisfied requirements in the extended regime.
 
 Governing Invariant: Symbol Game Non-Prose Communication & Zero Data-Loss Invariant.

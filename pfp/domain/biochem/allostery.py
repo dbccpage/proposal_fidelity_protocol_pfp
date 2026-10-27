@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any, Sequence
 
-from omega_engine_pfp.domain.biochem.errors import ZeroFloatViolationError
+from pfp.domain.biochem.errors import ZeroFloatViolationError
 
 
 @dataclass(frozen=True)

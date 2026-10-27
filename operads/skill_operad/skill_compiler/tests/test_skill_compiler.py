@@ -82,7 +82,7 @@ class EpisodeTests(unittest.TestCase):
             rows = load_episodes(root)
             self.assertEqual(len(rows), 1)
             self.assertEqual(rows[0]["id"], ep["id"])
-            self.assertEqual(rows[0]["schema"], "omega.skill_compiler.episode.v1")
+            self.assertEqual(rows[0]["schema"], "core.skill_compiler.episode.v1")
 
     def test_append_partitions_by_episode_utc_timestamp(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -129,8 +129,8 @@ class EpisodeTests(unittest.TestCase):
 class CanonicalPlacementTests(unittest.TestCase):
     def test_compiler_and_eval_bank_have_one_canonical_home(self) -> None:
         repo_root = PKG.parents[2]
-        self.assertTrue((repo_root / "omega_engine_operads" / "skill_operad" / "skill_compiler").is_dir())
-        self.assertTrue((repo_root / "omega_engine_operads" / "skill_operad" / "skill_compiler" / "eval_bank" / "cases.json").is_file())
+        self.assertTrue((repo_root / "operads" / "skill_operad" / "skill_compiler").is_dir())
+        self.assertTrue((repo_root / "operads" / "skill_operad" / "skill_compiler" / "eval_bank" / "cases.json").is_file())
         for host in (".agents", ".antigravity", ".claude", ".codex", ".gemini", ".grok"):
             self.assertFalse(
                 (repo_root / host / "operad" / "skill_compiler").exists(),
@@ -558,7 +558,7 @@ class BudgetGateHelpers(unittest.TestCase):
     def test_an_exception_whose_body_is_not_a_mapping_is_refused(self) -> None:
         """`name: true` would otherwise be read as an approved exception."""
         with self.assertRaises((TypeError, ValueError)):
-            self._load("exceptions:\n  woland: true\n")
+            self._load("exceptions:\n  adversary: true\n")
 
     # -- parse_expiry -------------------------------------------------------
 
@@ -600,7 +600,7 @@ class BudgetGateFallbackParser(unittest.TestCase):
 
     def test_an_entry_before_the_root_is_refused(self) -> None:
         with self.assertRaises(ValueError):
-            self._parse("  woland:\n")
+            self._parse("  adversary:\n")
 
     def test_an_empty_exceptions_root_parses_to_nothing(self) -> None:
         self.assertEqual(self._parse("exceptions: {}\n")["exceptions"], {})
@@ -608,18 +608,18 @@ class BudgetGateFallbackParser(unittest.TestCase):
     def test_a_duplicate_exception_name_is_refused(self) -> None:
         with self.assertRaises(ValueError):
             self._parse(
-                "exceptions:\n  woland:\n    approved: true\n  woland:\n    approved: true\n"
+                "exceptions:\n  adversary:\n    approved: true\n  adversary:\n    approved: true\n"
             )
 
     def test_an_unsupported_exception_field_is_refused(self) -> None:
         """Mutation: widen the allowed key set and this fails."""
         with self.assertRaises(ValueError):
-            self._parse("exceptions:\n  woland:\n    unknown_field: 1\n")
+            self._parse("exceptions:\n  adversary:\n    unknown_field: 1\n")
 
     def test_a_duplicate_exception_field_is_refused(self) -> None:
         with self.assertRaises(ValueError):
             self._parse(
-                "exceptions:\n  woland:\n    approved: true\n    approved: false\n"
+                "exceptions:\n  adversary:\n    approved: true\n    approved: false\n"
             )
 
     def test_unsupported_indentation_is_refused(self) -> None:
@@ -628,7 +628,7 @@ class BudgetGateFallbackParser(unittest.TestCase):
 
     def test_a_missing_scalar_value_is_refused(self) -> None:
         with self.assertRaises(ValueError):
-            self._parse("exceptions:\n  woland:\n    approved:\n")
+            self._parse("exceptions:\n  adversary:\n    approved:\n")
 
     def test_a_comment_only_value_parses_as_text_and_fails_closed_later(self) -> None:
         """`approved: # yes` is not refused here, and does not need to be.
@@ -642,12 +642,12 @@ class BudgetGateFallbackParser(unittest.TestCase):
         I first assumed: a test that demands a refusal the parser never makes
         would have to be deleted the moment anyone ran it.
         """
-        parsed = self._parse("exceptions:\n  woland:\n    approved: # yes\n")
+        parsed = self._parse("exceptions:\n  adversary:\n    approved: # yes\n")
 
-        self.assertEqual(parsed["exceptions"]["woland"]["approved"], "# yes")
+        self.assertEqual(parsed["exceptions"]["adversary"]["approved"], "# yes")
 
         ok, why = valid_exception(
-            "woland", {"approved": "# yes", "expires": "2099-01-01"}, date(2026, 1, 1)
+            "adversary", {"approved": "# yes", "expires": "2099-01-01"}, date(2026, 1, 1)
         )
         self.assertFalse(ok)
         self.assertIn("exact boolean true", why)
@@ -659,26 +659,26 @@ class BudgetGateFallbackParser(unittest.TestCase):
         Mutation: drop the `isinstance(parsed, str)` check and this fails.
         """
         with self.assertRaises(ValueError):
-            self._parse("exceptions:\n  woland:\n    reason: 'a', 'b'\n")
+            self._parse("exceptions:\n  adversary:\n    reason: 'a', 'b'\n")
 
     def test_a_quoted_string_containing_brackets_is_still_a_string(self) -> None:
         """The paired control. `'[1, 2]'` evaluates to the STRING "[1, 2]", so
         a checker that refused every quoted value would pass the test above
         while rejecting legitimate prose."""
-        parsed = self._parse("exceptions:\n  woland:\n    reason: '[1, 2]'\n")
+        parsed = self._parse("exceptions:\n  adversary:\n    reason: '[1, 2]'\n")
 
-        self.assertEqual(parsed["exceptions"]["woland"]["reason"], "[1, 2]")
+        self.assertEqual(parsed["exceptions"]["adversary"]["reason"], "[1, 2]")
 
     def test_integers_and_quoted_strings_round_trip(self) -> None:
         """The positive control: a parser that refused everything would pass
         every refusal test above."""
         parsed = self._parse(
             "exceptions:\n"
-            "  woland:\n"
+            "  adversary:\n"
             "    approved: true\n"
             "    max_lines: 400\n"
             "    reason: 'a stated reason'\n"
-        )["exceptions"]["woland"]
+        )["exceptions"]["adversary"]
 
         self.assertIs(parsed["approved"], True)
         self.assertEqual(parsed["max_lines"], 400)

@@ -45,8 +45,8 @@ grep. This is the grep, with a denominator.
 ## Running it
 
 ```powershell
-python omega_engine_operations/domain/cicd/uncalled_module_audit.py
-python omega_engine_operations/domain/cicd/uncalled_module_audit.py --path omega_engine_pfp
+python operations/domain/cicd/uncalled_module_audit.py
+python operations/domain/cicd/uncalled_module_audit.py --path pfp
 ```
 
 Exit `0` when every scanned module has a caller, `1` when any does not, `2` on
@@ -94,7 +94,7 @@ Built from the sprint 001-039 Blackrod enforcement audit, which found the shape
 in `dda`, `transport`, `debate`, `guard`, `probing`, `coda`, `bytecode`,
 `grammar`, `structurebench`, `colour_vocabulary_ledger`, `release_gate`,
 `architecture_fitness` and `skill_budget_census`. Held by
-`omega_engine_operations/tests/unit/test_uncalled_module_audit.py` (9 tests),
+`operations/tests/unit/test_uncalled_module_audit.py` (9 tests),
 each finding case paired with a control proving the scan returns clean on the
 wired case.
 

@@ -1,10 +1,10 @@
 # AuthorityEffect: None.
 """Tests for Kronecker extension in C026."""
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.gaussian_rational import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.gaussian_rational import (
     GaussianRat,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.kronecker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.kronecker import (
     compute_strides,
     coords_to_index,
     extend_local_matrix,

@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.participant_packet.runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c012_cellular_sheaf_h0_h1.participant_packet.runner import (
     load_cases,
     load_solver_func,
     run_cases,

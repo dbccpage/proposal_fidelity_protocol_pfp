@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from datetime import datetime, timezone
-from omega_engine_operations.domain.rop.result import Ok, Result
+from operations.domain.rop.result import Ok, Result
 from ...application.ports.projection_manifest_port import ProjectionManifestPort
 from ...domain.entities.catalog_v3 import EstateCatalogV3
 from ...domain.errors.domain_errors import OeopDomainError
@@ -45,7 +45,7 @@ def projection_manifest(catalog: EstateCatalogV3, target_format: str) -> dict:
 def read_projection_documents(repo_root: Path, relative_path: str, operation_ids: set[str]):
     """Replay a stored projection against current canonical sources before selection."""
     from ...application.commands.compile_catalog import catalog_content_digest
-    from ...application.woland_candidate_plan import PlanRefusal, _PROJECTION_PATH
+    from ...application.adversary_candidate_plan import PlanRefusal, _PROJECTION_PATH
     from ...domain.entities.catalog_v3 import EstateCatalogV3
     from ...domain.value_objects.identifier import EstateRef, SkillId
     from ..parser.markdown_parser_adapter import LosslessMarkdownParserAdapter
@@ -69,7 +69,7 @@ def read_projection_documents(repo_root: Path, relative_path: str, operation_ids
             ):
                 raise ValueError("canonical source path required")
             source_bytes = _read(root, path)
-            if path.startswith("omega_engine_operads/catalog/contracts/v1/") and path.endswith(".json"):
+            if path.startswith("operads/catalog/contracts/v1/") and path.endswith(".json"):
                 if typed_documents is None:
                     typed_documents = {doc.source_relative_path: doc for doc in compile_typed_contracts(root).all_documents}
                 document = typed_documents[path]

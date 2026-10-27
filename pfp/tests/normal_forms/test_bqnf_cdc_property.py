@@ -17,9 +17,9 @@ from pathlib import Path
 from typing import Any, Dict
 
 _EDU_ROOT = next(
-    p / "omega_engine_education"
+    p / "education"
     for p in Path(__file__).resolve().parents
-    if (p / "omega_engine_education/documentation/014_normal_forms").is_dir()
+    if (p / "education/documentation/014_normal_forms").is_dir()
 )
 _CANDIDATE_DIRS = [
     _EDU_ROOT / "documentation" / "014_normal_forms" / "demos",
@@ -280,7 +280,7 @@ class TestBqnfCdcProperties(unittest.TestCase):
 
     def test_average_maintenance_fixture_and_property_integration(self) -> None:
         """Integration: Execute the BQNF average maintenance fixture suite."""
-        from omega_engine_pfp.tests.normal_forms.test_bqnf_average_maintenance_integration import (
+        from pfp.tests.normal_forms.test_bqnf_average_maintenance_integration import (
             TestBqnfAverageMaintenanceIntegration,
         )
 

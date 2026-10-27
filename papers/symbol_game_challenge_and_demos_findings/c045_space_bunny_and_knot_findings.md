@@ -39,7 +39,7 @@ Challenge **C045 (`c045_knot_polynomials_from_pd`)** evaluates whether autonomou
 We implemented, verified, and sealed the reference package under SG-CP v1:
 - **Reference Solver:** Combinatorial Euler rotation verification ($V - E + F = 2$), Alexander arc matrix reduction, state-sum Kauffman bracket in $\mathbb{Z}[A, A^{-1}]$, Jones polynomial normalization $V(t) = (-A^3)^{-w} \langle K \rangle |_{A = t^{-1/4}}$, and Rolfsen catalog classification up to 7 crossings.
 - **Judge Packet:** 64 hidden cases (unknot, trefoil, figure eight, cinquefoil, three-twist, stevedore, 6_2, 6_3, 7_1, with gauge renumberings and invalid edge/planarity controls) and 48 hostile mutated certificates.
-- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.427s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c045_eval_1790623789`.
+- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.427s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c045_eval_1790623789`.
 - **Empirical Matrix:** Benchmarked **LLaMA 3.3 70B Instruct**, **Space Bunny Alpha** (`stealth/space-bunny-alpha`), and **LLaMA 3.1 8B Instruct** across a 10-instance calibrated panel.
 
 ---

@@ -12,16 +12,16 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.normal_forms.contract_validation import validate_contract_dict
-from omega_engine_pfp.domain.normal_forms.examples import order_line
-from omega_engine_pfp.domain.normal_forms.reconciliation import verify_loss_ledger_integrity
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.contract_validation import validate_contract_dict
+from pfp.domain.normal_forms.examples import order_line
+from pfp.domain.normal_forms.reconciliation import verify_loss_ledger_integrity
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     JoinDependency,
     compute_attribute_closure,
     find_candidate_keys,
 )
-from omega_engine_pfp.domain.normal_forms.tower_forms import verify_zfnf
+from pfp.domain.normal_forms.tower_forms import verify_zfnf
 
 DOMAIN = Path(__file__).resolve().parents[2] / "domain" / "normal_forms"
 INFRASTRUCTURE = Path(__file__).resolve().parents[2] / "infrastructure" / "normal_forms"
@@ -40,8 +40,8 @@ CANONICAL_MODULES = {
 
 
 def test_canonical_split_has_no_legacy_harness_or_oversized_module() -> None:
-    assert importlib.util.find_spec("omega_engine_pfp.domain.normal_forms.harness") is None
-    assert importlib.util.find_spec("omega_engine_pfp.infrastructure.normal_forms.nf_harness") is None
+    assert importlib.util.find_spec("pfp.domain.normal_forms.harness") is None
+    assert importlib.util.find_spec("pfp.infrastructure.normal_forms.nf_harness") is None
     assert not (INFRASTRUCTURE / "nf_examples.py").exists()
     for module in CANONICAL_MODULES:
         path = DOMAIN / f"{module}.py"

@@ -7,12 +7,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.frontend.presenters.skill_cull import render_manifest
-from omega_engine_operads.infrastructure.skill_garden.cull_candidates import (
+from operads.frontend.presenters.skill_cull import render_manifest
+from operads.infrastructure.skill_garden.cull_candidates import (
     compute_candidates,
     load_policy,
 )
-from omega_engine_operads.infrastructure.skill_garden.usage_ledger import (
+from operads.infrastructure.skill_garden.usage_ledger import (
     repo_root_from,
 )
 

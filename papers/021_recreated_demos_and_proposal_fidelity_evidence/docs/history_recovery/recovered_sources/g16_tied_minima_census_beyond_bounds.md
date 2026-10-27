@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md). **Genesis rul
 
 The sealed record prices the genesis challenge exhaustively only within two items and arity two. Beyond that, the reading-L tie class is known to be infinite in arity by a Lean family, reading F has no such family, and larger item bounds are listed as unexplored. The census is search-heavy (the candidate space grows quickly with arity and item count, and classes must be formed under the implemented isomorphism) while each answer is cheap to check: replay a representative, recompute validity and price, recompute the canonical key.
 
-The task stresses exact enumeration without pruning shortcuts, OEWAS (Omega Engine Workflows, Agents, Skills) receipt discipline, and the OEEIS (Omega Engine Epistemic Immune System) danger gate against reading a unique minimum as a license. The sealed engine can run this census itself, so a pass is expected to be useful automation rather than evidence of model advantage (§10).
+The task stresses exact enumeration without pruning shortcuts, OEWAS (Engine Workflows, Agents, Skills) receipt discipline, and the OEEIS (Engine Epistemic Immune System) danger gate against reading a unique minimum as a license. The sealed engine can run this census itself, so a pass is expected to be useful automation rather than evidence of model advantage (§10).
 
 ## 3. Formal Problem and Bounds
 
@@ -60,7 +60,7 @@ Four public cases: the `(2, 2)` slice for both readings and both measures, with 
 - **Held-out cases.** The three new bounds for both readings and measures, plus `(2, 4)`, `(3, 4)` and `(4, 2)`.
 - **Relabel controls.** Each case repeated with presentation tokens renamed; the class keys and counts must not change. These are not independent trials.
 - **Poisoned but schema-valid.** An output that treats reading F's genesis datum as absent in L's sense; an output that merges the link-to and link-from classes, which are non-isomorphic because the bijection must preserve the required pair; an output that lists one class and calls it the answer.
-- **Checkers.** The exact checker is the sealed `min_responses`, run read-only by the operator. The independent second checker is the Rust reading `omega_ooutwire_primitives::minima` (`min_responses`, `quotient`) with `enumeration::iter_full_deltas`.
+- **Checkers.** The exact checker is the sealed `min_responses`, run read-only by the operator. The independent second checker is the Rust reading `core_ooutwire_primitives::minima` (`min_responses`, `quotient`) with `enumeration::iter_full_deltas`.
 - **Mutation suite.** Drop a class; merge two classes; misprice one delta; insert an invalid delta; duplicate a representative under a renaming.
 
 ## 7. Arms and Baselines
@@ -103,7 +103,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- the_symbol_game: [omega_ooutwire_primitives](../../../../omega_engine/crates_rs/omega_ooutwire_primitives/) (`minima.rs`, `enumeration.rs`, `measure.rs`, `canonical.rs`, `bounds.rs`); [danger_gate.py](../../../../omega_engine_pfp/domain/immune/danger_gate.py).
+- the_symbol_game: [core_ooutwire_primitives](../../../../engine/crates_rs/core_ooutwire_primitives/) (`minima.rs`, `enumeration.rs`, `measure.rs`, `canonical.rs`, `bounds.rs`); [danger_gate.py](../../../../pfp/domain/immune/danger_gate.py).
 - 19L57G1: the sealed engine (`code/derivation/`, cited by path at `3100c4e`, run read-only, never copied); `19L57G1:research/second_stream/` (a three-item bound in another setting, `b55fc96a`); `19L57G1:ci/run_gates.py`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras.
 

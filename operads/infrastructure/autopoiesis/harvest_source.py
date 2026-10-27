@@ -8,7 +8,7 @@ import stat
 from pathlib import Path
 from typing import Iterator, Mapping
 
-from omega_engine_operads.domain.autopoiesis.ports import (
+from operads.domain.autopoiesis.ports import (
     ArtifactLocation,
     HarvestSourceFile,
 )

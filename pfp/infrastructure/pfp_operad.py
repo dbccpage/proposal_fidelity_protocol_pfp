@@ -2,8 +2,8 @@
 from dataclasses import dataclass
 import json
 
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn, PfpTurnRefusal
-from omega_engine_operads.skill_operad.resolver.resolver import ExecutionResult
+from pfp.infrastructure.task_turn import prepare_task_turn, PfpTurnRefusal
+from operads.skill_operad.resolver.resolver import ExecutionResult
 
 
 @dataclass

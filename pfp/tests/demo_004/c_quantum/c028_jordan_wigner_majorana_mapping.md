@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Fermion-to-qubit mappings are pure sign bookkeeping. The Jordan–Wigner string, the reordering signs of creation and annihilation operators, and the factors of i in Majorana operators are exactly where a plausible derivation goes wrong. Every step is cheap to verify: the 2N Majorana images must be Hermitian Pauli strings that pairwise anticommute, they must act correctly on encoded basis states, and the Hamiltonian must equal its expansion in those images.
 
-Bravyi and Kitaev (2002) showed that encodings other than Jordan–Wigner give shorter operator strings. The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) phase tracking through host checks, and OEEIS (Omega Engine Epistemic Immune System) screening of answers correct up to a sign.
+Bravyi and Kitaev (2002) showed that encodings other than Jordan–Wigner give shorter operator strings. The task stresses OEWAS (Engine Workflows, Agents, Skills) phase tracking through host checks, and OEEIS (Engine Epistemic Immune System) screening of answers correct up to a sign.
 
 ## 3. Formal Problem and Bounds
 
@@ -102,9 +102,9 @@ Operands expected: (1) the Pauli product table with an explicit power-of-i count
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_majorana` (GF(2) parity diagnostics and cell complexes; its receipts are diagnostic only).
-- `omega_engine/crates_rs/omega_quantum_physics/src/pauli.rs` (commutation) and `binary_field.rs` (F2 arithmetic).
-- `omega_engine/crates_rs/omega_symbol_game` exact characteristic polynomial and rank actions for the second checker.
+- `engine/crates_rs/core_majorana` (GF(2) parity diagnostics and cell complexes; its receipts are diagnostic only).
+- `engine/crates_rs/core_quantum_physics/src/pauli.rs` (commutation) and `binary_field.rs` (F2 arithmetic).
+- `engine/crates_rs/core_symbol_game` exact characteristic polynomial and rank actions for the second checker.
 - Rust has no phase-tracked Pauli string product. The checker needs one; [U14](../../upgrades/u14_rust_quantum_stabilizer_port.md) will provide a shared one and should be reused if it lands first.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 

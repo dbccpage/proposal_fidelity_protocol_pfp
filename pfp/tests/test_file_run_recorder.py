@@ -12,12 +12,12 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.domain.ports.run_recorder import (
+from pfp.domain.ports.run_recorder import (
     RunId,
     RunStream,
     RunTrigger,
 )
-from omega_engine_pfp.infrastructure.persistence.file_run_recorder import (
+from pfp.infrastructure.persistence.file_run_recorder import (
     FileRunRecorder,
     compute_file_sha256,
 )

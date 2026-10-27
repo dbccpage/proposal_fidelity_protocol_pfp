@@ -27,7 +27,7 @@ A review stage is blocked and the recorded process exit is nonzero, but a nested
 
 ## Witness
 
-Historical receipt, not a fresh preflight. This digest did not rerun gates. Source folder `_ic/inr/omega_paper_reviews/2026-10-06_po_r2/`.
+Historical receipt, not a fresh preflight. This digest did not rerun gates. Source folder `_ic/inr/core_paper_reviews/2026-10-06_po_r2/`.
 
 `exits.txt`:
 

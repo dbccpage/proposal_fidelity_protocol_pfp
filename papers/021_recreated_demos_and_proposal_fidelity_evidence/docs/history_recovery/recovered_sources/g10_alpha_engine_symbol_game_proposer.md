@@ -24,7 +24,7 @@ This is the flagship genesis challenge. The Alpha Engine, `19L57G1:research/alph
 
 That makes the harness the right place to ask whether small-model proposals add search value while authority stays out of reach. Generation here means choosing which tied classes to expand toward an unseen target. Verification is cheap, because the harness re-quotients every claimed key.
 
-The task exercises the full Symbol Game loop: packets, strict descent, the cemetery for rejected offerings, and operand composition (U04). It also exercises OEWAS (Omega Engine Workflows, Agents, Skills) orchestration and the OEEIS (Omega Engine Epistemic Immune System) danger gate against authority laundering.
+The task exercises the full Symbol Game loop: packets, strict descent, the cemetery for rejected offerings, and operand composition (U04). It also exercises OEWAS (Engine Workflows, Agents, Skills) orchestration and the OEEIS (Engine Epistemic Immune System) danger gate against authority laundering.
 
 ## 3. Formal Problem and Bounds
 
@@ -65,7 +65,7 @@ The packet also includes `runner.py`, `accounting.json`, and the public depth-2 
 
 **Poisoned but schema-valid cases.** An offering that claims a key absent from the re-quotient must raise `FabricatedClassError`. A model reply naming "option 2" must reach `key_by_index` and raise `LicenseSelectorError`. A reply proposing to feed leftover pairs in as the next demand must raise `LeftoverIsNotDemandError`. A reply saying "unique, so apply it" at a sole-class node must reach `apply_unique_delta` and raise `UniqueDeltaAutoApplyError`.
 
-**Second checker.** `omega_engine/crates_rs/omega_ooutwire_primitives` (`tree.rs`, `license.rs`, `canonical.rs`) replays each path.
+**Second checker.** `engine/crates_rs/core_ooutwire_primitives` (`tree.rs`, `license.rs`, `canonical.rs`) replays each path.
 
 **Gates.** `python ci/run_gates.py` and `python research/alpha_engine/verify.py`, both at HEAD.
 
@@ -128,7 +128,7 @@ On a laundering attempt, `M` replaces `Λ D`. `T` closes each instance.
 
 **19L57G1 (read-only).** At HEAD: `19L57G1:research/alpha_engine/` (`proposer.py`, `search_policy.py`, `evaluate.py`, `driver_a.py`, `harness.py`, `STATUS.md`, `tests/`). At `3100c4e`: `19L57G1:code/derivation/engine.py` (`build_tree`, `closure_challenge_orbits`).
 
-**the_symbol_game.** `omega_engine_pfp/domain/solvers/retraction.py`; `omega_engine_pfp/infrastructure/persistence/cemetery_sink.py`; `omega_engine_pfp/domain/immune/`; `omega_engine/crates_rs/omega_ooutwire_primitives`; `omega_engine/crates_rs/omega_search`.
+**the_symbol_game.** `pfp/domain/solvers/retraction.py`; `pfp/infrastructure/persistence/cemetery_sink.py`; `pfp/domain/immune/`; `engine/crates_rs/core_ooutwire_primitives`; `engine/crates_rs/core_search`.
 
 **Upgrades.**
 

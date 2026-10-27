@@ -6,10 +6,10 @@ import argparse
 import sys
 from pathlib import Path
 
-from omega_engine_operads.application.ddc_execution.parse_ddc_tape_use_case import (
+from operads.application.ddc_execution.parse_ddc_tape_use_case import (
     ParseDdcTapeRequest,
 )
-from omega_engine_operads.infrastructure.ddc_execution.ddc_tape import (
+from operads.infrastructure.ddc_execution.ddc_tape import (
     WorkflowDdcTapeParser,
     build_parse_ddc_tape_use_case,
 )

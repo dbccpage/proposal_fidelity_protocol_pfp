@@ -1,4 +1,4 @@
-"""Deterministic Rust lexical triage for Omega Engine crates and loose files.
+"""Deterministic Rust lexical triage for Engine crates and loose files.
 
 Audits:
 1. AP_RS_002: Domain enums / status types missing PartialOrd/Ord.
@@ -23,11 +23,11 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-DEFAULT_BASE_DIR = Path("omega_engine/crates_rs")
+DEFAULT_BASE_DIR = Path("engine/crates_rs")
 NON_CRATE_FILES = "<non-crate>"
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
-from omega_engine_operations.use_cases.verification.rust_lexical_audit import (  # noqa: E402
+from operations.use_cases.verification.rust_lexical_audit import (  # noqa: E402
     enum_declarations,
     in_test_span,
     mask_non_code,

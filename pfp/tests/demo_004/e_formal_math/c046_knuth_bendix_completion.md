@@ -19,7 +19,7 @@ Checking a completed system is mechanical:
 
 By Newman's lemma, termination plus local confluence gives confluence. Producing a finite complete system is search-hard. Knuth–Bendix completion (Knuth & Bendix 1970) can diverge, and some finitely presented monoids with decidable word problem have no finite complete rewriting system at all (Squier 1987).
 
-This is the estate's home ground. Critical peaks are the Symbol Game's commuting-square obstructions, and `omega_symbol_game_runtime` already refuses to read a failed join search as non-confluence. The challenge also stresses the OEWAS (Omega Engine Workflows, Agents, Skills) loop between orienting and joining, and the OEEIS (Omega Engine Epistemic Immune System) against the claim "confluent" when a join search merely ran out.
+This is the estate's home ground. Critical peaks are the Symbol Game's commuting-square obstructions, and `core_symbol_game_runtime` already refuses to read a failed join search as non-confluence. The challenge also stresses the OEWAS (Engine Workflows, Agents, Skills) loop between orienting and joining, and the OEEIS (Engine Epistemic Immune System) against the claim "confluent" when a join search merely ran out.
 
 ## 3. Formal Problem and Bounds
 
@@ -82,7 +82,7 @@ A complete `COMPLETED` certificate covers all of the following:
   - rule sets that are locally confluent but non-terminating under the declared order;
   - a precedence containing a cycle;
   - a case whose equations make the theory trivial.
-- **Exact checker:** Rust, built on `omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/` (`critical_pairs`, `replay_path`, `reachable`), with its own critical-pair enumeration and order comparisons.
+- **Exact checker:** Rust, built on `engine/crates_rs/core_symbol_game_runtime/src/rewriting/` (`critical_pairs`, `replay_path`, `reachable`), with its own critical-pair enumeration and order comparisons.
 - **Independent second checker:** a Python implementation by a different author, and kbmag (Holt) for the string cases, pinned at packet-build time.
 - **Mutation suite:** the checker must reject: an omitted critical pair; a path step applying a rule at the wrong offset; a rule that increases in the order; a rule with no derivation (unsound); an input equation left unjoinable (incomplete); a `DIVERGED` report whose "unjoined" pair actually joins.
 
@@ -136,8 +136,8 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine_projects/mssn_sn_symgam/demos/demo_polygraph_confluence`, the catalog reuse row, for its fixture and receipt discipline.
-- `omega_engine/crates_rs/omega_symbol_game_runtime/src/rewriting/` (`reduction.rs`, `peak.rs` with `BoundedWithUnjoinedPeak`).
+- `projects/mssn_sn_symgam/demos/demo_polygraph_confluence`, the catalog reuse row, for its fixture and receipt discipline.
+- `engine/crates_rs/core_symbol_game_runtime/src/rewriting/` (`reduction.rs`, `peak.rs` with `BoundedWithUnjoinedPeak`).
 - `lean4/ConfluenceFlip.lean`.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 

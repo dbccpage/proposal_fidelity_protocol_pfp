@@ -2,8 +2,8 @@
 
 from pathlib import Path
 
-from omega_engine_operads.structurebench import evaluate_bundle
-from omega_engine_operads.tests.unit import (
+from operads.structurebench import evaluate_bundle
+from operads.tests.unit import (
     test_structurebench_no_vacuous_decisions as fixtures,
 )
 

@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from omega_engine_pfp.domain.ports.stabilizer_port import StabilizerPort
+from pfp.domain.ports.stabilizer_port import StabilizerPort
 
 
 def solve(case: Mapping[str, Any], *, port: StabilizerPort | None = None) -> dict[str, Any]:

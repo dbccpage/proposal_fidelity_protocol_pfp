@@ -98,7 +98,7 @@ _EXPORTS.update(
     {
         "AssemblePromptUseCase": "assemble_prompt",
         "EvaluateCertifiedLadderUseCase": "evaluate_certified_ladder",
-        "EvaluateWolandGatesUseCase": "evaluate_gates",
+        "EvaluateAdversaryGatesUseCase": "evaluate_gates",
         "EvaluatePilotUseCase": "evaluate_pilot",
         "EvaluatePilotSuiteUseCase": "evaluate_pilot_suite",
         "ExecuteStagePipelineUseCase": "execute_stage_pipeline",

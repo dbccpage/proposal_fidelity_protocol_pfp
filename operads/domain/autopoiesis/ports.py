@@ -1,4 +1,4 @@
-"""Domain ports for the Omega Autopoiesis Engine.
+"""Domain ports for the Core Autopoiesis Engine.
 
 Defines interfaces for:
 1. HarvestVaultPort: Content-addressed storage (CAS) and snapshot registry.

@@ -1,7 +1,7 @@
 ---
 paths:
-  - "omega_engine_education/**"
-  - "omega_engine_pfp/**"
+  - "education/**"
+  - "pfp/**"
 ---
 
 # Rule: PFP Demo Round Anatomy & Live-Run Integrity

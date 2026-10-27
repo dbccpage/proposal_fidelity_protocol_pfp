@@ -12,7 +12,7 @@ from pathlib import Path, PurePosixPath
 
 import yaml
 
-from omega_engine_pfp.domain.type_register.type_register import (
+from pfp.domain.type_register.type_register import (
     DerivedType,
     ModulePath,
     ModuleRow,
@@ -56,7 +56,7 @@ def code_dir(root: Path) -> Path:
     """Use the canonical package for its documents and retain isolated scans."""
     application = Path(__file__).resolve().parents[1]
     resolved = root.resolve()
-    education = application.parent / "omega_engine_education"
+    education = application.parent / "education"
     if resolved.is_relative_to(application) or resolved.is_relative_to(education):
         return application
     return resolved

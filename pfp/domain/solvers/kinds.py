@@ -1,8 +1,8 @@
 """Typed requirement kinds over derivable instances.
 
 Seven base kinds, plus sovereign mathematical obligations:
-* HomologyBoundaryClosed: simplicial boundary closure ∂₁ ∘ ∂₂ = 0 routed to omega_homology.
-* HolonomyLoopClosed: path-ordered loop closure U(γ) = I routed to omega_holonomy.
+* HomologyBoundaryClosed: simplicial boundary closure ∂₁ ∘ ∂₂ = 0 routed to core_homology.
+* HolonomyLoopClosed: path-ordered loop closure U(γ) = I routed to core_holonomy.
 
 Governing Invariant: Value Object Exact-Type Equality Invariant (RULE_VALUE_OBJECT_EXACT_TYPE_EQUALITY_001).
 Sovereign Rust Math Delegation Rule: Zero Python Math Re-invention.
@@ -244,7 +244,7 @@ class Total:
 
 @dataclass(frozen=True)
 class HomologyBoundaryClosed:
-    """Simplicial homology boundary law verification d o d = 0 via omega_homology."""
+    """Simplicial homology boundary law verification d o d = 0 via core_homology."""
 
     rid: str
     faces: tuple[tuple[tuple[int, int, int], ...], ...]
@@ -257,7 +257,7 @@ class HomologyBoundaryClosed:
 
 @dataclass(frozen=True)
 class HolonomyLoopClosed:
-    """Discrete path-ordered loop closure U(gamma) = I via omega_holonomy."""
+    """Discrete path-ordered loop closure U(gamma) = I via core_holonomy."""
 
     rid: str
     tables: tuple[tuple[tuple[Q, ...], ...], ...]
@@ -271,7 +271,7 @@ class HolonomyLoopClosed:
 
 @dataclass(frozen=True)
 class SimplicialBoundaryLawSatisfied:
-    """Higher-dimensional simplicial homology boundary matrix verification d_{k-1} o d_k = 0 via omega_homology."""
+    """Higher-dimensional simplicial homology boundary matrix verification d_{k-1} o d_k = 0 via core_homology."""
 
     rid: str
     simplices: tuple[tuple[int, ...], ...]
@@ -455,16 +455,16 @@ def refutation(o: Oracle, q: Req) -> tuple[object, ...]:
             if len(rows) > 1:
                 out.append((key, tuple(sorted(rows))))
     elif isinstance(q, HomologyBoundaryClosed):
-        # Sovereign delegation to omega_homology
+        # Sovereign delegation to core_homology
         if not get_homology_port().verify_boundary_closed(q.faces):
             out.append("boundary_law_violation")
     elif isinstance(q, SimplicialBoundaryLawSatisfied):
-        # Sovereign delegation to omega_homology
+        # Sovereign delegation to core_homology
         report = get_homology_port().verify_simplicial_boundary_law(q.simplices)
         if not report.get("boundary_law_verified", False):
             out.append("simplicial_boundary_law_violation")
     elif isinstance(q, HolonomyLoopClosed):
-        # Sovereign delegation to omega_holonomy
+        # Sovereign delegation to core_holonomy
         if not get_holonomy_port().is_ordered_closure(q.tables, q.word):
             out.append("loop_closure_violation")
     return tuple(sorted(set(out), key=repr))

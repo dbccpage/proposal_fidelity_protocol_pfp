@@ -17,7 +17,7 @@ references name files under `code/tests/`.
 | G005-04 | The session refuses (5,0,0), admits (-2,1,1), and restores the prior snapshot | [Session](code/play_demo.py); `test_play_demo.py::test_worked_session_offline_enumeration` (Python enumeration path); `test_play_demo.py::test_worked_session_matches_manual` (native path, skips without pins) | Enumeration-path result in this package; native result needs a configured run |
 | G005-05 | The package quickstart delegates the named minimum to the native adapter and rejects missing pins and non-exact inputs | [Quickstart](code/quickstart.py), [adapter copy](code/native_functional.py); `test_quickstart_native.py::test_quickstart_requires_native_pin`, `test_quickstart_native.py::test_approximate_or_boolean_input_is_rejected`, `test_quickstart_native.py::test_candidate_enumeration_is_retired`, `test_quickstart_native.py::test_projection_replays_native_and_is_idempotent` (native, skips without pins) | Native graph path, not every runtime surface |
 | G005-06 | CUT permits non-increase, including stationary outcomes | [Governor copy](code/l1_symbol_game_governor.py), `step_cut` | Source-inspected; no arbitrary-search termination guarantee |
-| G005-07 | Hashes bind declared bytes; current replay needs matching sources and inputs | Guide Section 6; [functional-boundary notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/omega_engine_education/FUNCTIONAL_BOUNDARY.md) at the baseline | No unsigned producer authentication or semantic proof |
+| G005-07 | Hashes bind declared bytes; current replay needs matching sources and inputs | Guide Section 6; [functional-boundary notes](https://github.com/dbccpage/the_symbol_game/blob/52cb5457f6c485ba548cfd292f6012a941ed22cf/education/FUNCTIONAL_BOUNDARY.md) at the baseline | No unsigned producer authentication or semantic proof |
 | G005-08 | Domain labels and hypothetical chat costs are illustrative | [Scenario implementation](code/multi_domain_symbol_game_bouts.py) | No domain theorem or measured LLM comparison |
 | G005-09 | The native-test fixture consumes caller pins and skips only its dependent tests, with a stated reason, when configuration is absent | [Fixture](code/tests/conftest.py) and tests explicitly requesting `native_functional` | No build, automatic pin, or source-to-binary attestation |
 | G005-10 | The package runs without the repository: it carries copies of the native adapter and the graph governor with source path, commit, SHA-256, and local changes recorded | Vendored file headers; `test_vendored_sources.py::test_vendored_header_is_complete`; `test_vendored_sources.py::test_vendored_copy_matches_recorded_source` (compares with Git objects inside a repository checkout, apart from the documented `step_cut` change; skips elsewhere) | Custody of copied bytes; not a native build attestation |
@@ -30,7 +30,7 @@ references name files under `code/tests/`.
 Tests that request the `native_functional` fixture need configured pins; without
 them they skip and state that reason. No skipped case counts as a successful
 native execution. For this revision the package tests were run once with a
-pinned `solve_graph_phi1` built from the unchanged `omega_functional` source
+pinned `solve_graph_phi1` built from the unchanged `core_functional` source
 (SHA-256 `2b0379557993246cacb1ed8964f9f096964019ecc1c2fb781e6b18f2ca6c8a65`, a Windows build): 75 passed, none skipped.
 The executable is not deposited; another reader must build and pin their own.
 

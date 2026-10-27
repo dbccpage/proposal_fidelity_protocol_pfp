@@ -23,7 +23,7 @@ PAPER = Path(__file__).resolve().parents[1]
 COMMIT = "5e5e64e441da1c357179b6979daa9f780dcc36b4"
 TREE = "e955f8014523b5cab13843a94fbd1191402a63c0"
 DELETION_COMMIT = "6ab48c9c1ff04ff96a12878de557d3b5d5746b82"
-SOURCE_PREFIX = "omega_engine_projects/mssn_sn_symgam/challenges/k_genesis_19l57g1/"
+SOURCE_PREFIX = "projects/mssn_sn_symgam/challenges/k_genesis_19l57g1/"
 RECOVERED_PREFIX = "docs/history_recovery/recovered_sources/"
 MANIFEST_PATH = PAPER / "docs/history_recovery/recovery_manifest.json"
 PINS = {
@@ -51,7 +51,7 @@ PINS = {
     "g22_h3v7n5qf_a_perform_lower_bound.md": "156bd833c73ad5648904c238d7a0a445e9c6e7a3",
     "g23_h3v7n5qf_choice_free_reproofs.md": "6178272a5c72d1a4954d5c63108882bf6ea317c4",
     "g24_genesis_h3_seed_edit_ablation_bench.md": "4f1ee499e786c76f0928fa5f028d0d43bc78b6dc",
-    "g25_genesis_as_omega_foundation_crosswalk.md": "e25836268929cec11b974abea1a45d2a120681d5",
+    "g25_genesis_as_core_foundation_crosswalk.md": "e25836268929cec11b974abea1a45d2a120681d5",
     "run_genesis_suite.py": "e5b305e4c7b3fe530d1c0d94ac5b4653a3d6a34e",
     "results/genesis_master_report.json": "38bc64dd3b2254e9af9bf0bd9df5435e2dd1509a",
     "results/genesis_receipt.json": "1c77c28a41be54f6a19aa39742b862acff5f0b17",

@@ -6,18 +6,18 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operating_system.adapters.prompt_civ.cas import ContentAddressedStorageV1
-from omega_engine_operating_system.adapters.prompt_civ.forge import PopulationPolicyV1
-from omega_engine_operating_system.adapters.prompt_civ.record import (
+from operating_system.adapters.prompt_civ.cas import ContentAddressedStorageV1
+from operating_system.adapters.prompt_civ.forge import PopulationPolicyV1
+from operating_system.adapters.prompt_civ.record import (
     PromptGenomeV1,
     ProtectedSpanV1,
 )
-from omega_engine_prompt_civilization.domain.prompt_ecology.protocols import DefectWitnessV1
-from omega_engine_prompt_civilization.infrastructure.prompt_ecology.telemetry import (
+from pciv.domain.prompt_ecology.protocols import DefectWitnessV1
+from pciv.infrastructure.prompt_ecology.telemetry import (
     JsonlTelemetrySource,
     SqliteMetabolismStore,
 )
-from omega_engine_prompt_civilization.use_cases.prompt_ecology.ingest import ingest_batch
+from pciv.use_cases.prompt_ecology.ingest import ingest_batch
 
 
 class ArithmeticReplay:

@@ -1,6 +1,6 @@
 ---
 documentation_contract: symbol-game-documentation/v1
-title: "008_oeop: Omega Engine Operads (OEOP): Multicategories and Operads"
+title: "008_oeop: Engine Operads (OEOP): Multicategories and Operads"
 kind: grammar-reference
 audience:
   - engineers
@@ -11,9 +11,9 @@ maturity: production
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_education/documentation/008_oeop/00_index.md
-  - omega_engine_education/documentation/008_oeop/multi_agent_swarm_orchestration_and_operad.md
-  - omega_engine_education/documentation/008_oeop/levels/README.md
+  - education/documentation/008_oeop/00_index.md
+  - education/documentation/008_oeop/multi_agent_swarm_orchestration_and_operad.md
+  - education/documentation/008_oeop/levels/README.md
 aliases:
   - oeop
   - 008_oewas
@@ -23,7 +23,7 @@ aliases:
 last_verified: 2026-10-10
 ---
 
-# 008_oeop: Omega Engine Operads (OEOP): Multicategories and Operads
+# 008_oeop: Engine Operads (OEOP): Multicategories and Operads
 
 **AuthorityEffect:** None. Multi-agent workflows, operadic composition, and skill compilation documentation; no authorization is conferred.
 
@@ -32,45 +32,45 @@ last_verified: 2026-10-10
 ## Current implementation update (2026-10-22)
 
 This strand was `008_oewas`; it is now `008_oeop`, after the package it documents. Sections
-below that name OEWAS, `omega_engine_workflows_agents_skills` or a dated revision are kept as
+below that name OEWAS, `workflows_agents_skills` or a dated revision are kept as
 they were written.
 
-- **Package name.** `omega_engine_workflows_agents_skills` is retired and its live callers import
-  `omega_engine_operads` (PR #1308). Epic identifiers such as `EPIC-OE-OEWAS-012` keep the old
+- **Package name.** `workflows_agents_skills` is retired and its live callers import
+  `operads` (PR #1308). Epic identifiers such as `EPIC-OE-OEWAS-012` keep the old
   name.
 - **Operad type registry.** Six YAML files under
-  [`skill_operad/yaml/operad_types/`](../../../omega_engine_operads/skill_operad/yaml/operad_types/)
+  [`skill_operad/yaml/operad_types/`](../../../operads/skill_operad/yaml/operad_types/)
   name each type the operad estate uses (capabilities and lifecycle, colours and wires,
   operations, signature families, operands, immune and negative types), list the Python, Rust,
   data and skill sources that declare or use it, and record a decision: `SETTLED` when the
   sources agree, `PROPOSED` when they differ and a human choice is pending. The gate
-  `py -3.12 -m omega_engine_operads.skill_operad.skill_compiler.operad_type_registry --repo-root .`
+  `py -3.12 -m operads.skill_operad.skill_compiler.operad_type_registry --repo-root .`
   reads every source and exits 1 on drift. At this revision it reports 56 types, 49 settled and 7
   proposed, with 0 findings. The registry records decisions; it does not change the sources.
-- **Self-digestion.** `omega_engine_woland/entrypoints/self_digestion_cli.py` reads finished
-  Woland run folders, asks a model for candidate operads under a ledger cap, and admits a
+- **Self-digestion.** `adversary/entrypoints/self_digestion_cli.py` reads finished
+  Adversary run folders, asks a model for candidate operads under a ledger cap, and admits a
   candidate only after host validation (PR #1310). The first pass over the old runs admitted 3
   operads, all infrastructure cascades (for example a provider HTTP 400 followed by failing
   native gates); no reasoning lesson was admitted. Teamwork runs attach admitted operads to seat
   prompts through `--operads`.
-- **Normal forms.** The contracts moved from `omega_engine_pfp/infrastructure/yaml/nf` to
-  `omega_engine_pfp/infrastructure/yaml/normal_forms`, and the strand from `150_normal_forms` to
+- **Normal forms.** The contracts moved from `pfp/infrastructure/yaml/nf` to
+  `pfp/infrastructure/yaml/normal_forms`, and the strand from `150_normal_forms` to
   [`014_normal_forms`](../014_normal_forms/README.md).
 
 ## Earlier implementation update
 
 OEWAS-012 adds native checked execution plans, all five bounded skill adapters,
-full-Retinue operation bindings, typed PFP turns and guarded regulation. See the
-[operator guide and observed campaign limits](atlas/29_guide_woland_operad_management_ladder.md).
+full-Panel operation bindings, typed PFP turns and guarded regulation. See the
+[operator guide and observed campaign limits](atlas/29_guide_adversary_operad_management_ladder.md).
 The first live request ended in an unresolved transport failure; no model
 comparison is claimed. The following review remains historical.
 
 ## Status at 201dc8d (2026-10-15)
 
 This section records what is built and what runs on `origin/main` at `201dc8d`, from the
-2026-10-15 OEWAS and Woland review, with each count below re-checked against that revision. It
+2026-10-15 OEWAS and Adversary review, with each count below re-checked against that revision. It
 says nothing about later revisions. The plan that follows from it is
-[EPIC-OE-OEWAS-012](../../../omega_engine_product_planning_office/plans/epics/oewas/epic_oe_oewas_012_woland_operad_binding_and_management_ladder_pilot_plan.md).
+[EPIC-OE-OEWAS-012](../../../product_planning_office/plans/epics/oewas/epic_oe_oewas_012_adversary_operad_binding_and_management_ladder_pilot_plan.md).
 
 **What is built** (`DECLARED` unless marked otherwise):
 
@@ -78,17 +78,17 @@ says nothing about later revisions. The plan that follows from it is
   anti-ops. 5 ops and 3 anti-ops carry a code binding. The checker prints
   `8 BOUND to code`; that figure counts ops and anti-ops together.
 - **Resolver** (`IMPLEMENTED`, [chapter 27](atlas/27_spec_op_resolver.md)). It lives at
-  `omega_engine_operads/skill_operad/resolver/{resolver,executors}.py`. It
+  `operads/skill_operad/resolver/{resolver,executors}.py`. It
   composes trees in the free planar coloured operad generated by the inventory ops and returns a
   tree with the fewest ops, ties broken by sorted JSON. It has no identity ops (`compose` from
   `Audit` to `Audit` refuses with `NO_ADMISSIBLE_PATH`) and no symmetric action.
 - **Coarse signature.** `.agents/skill_operads/operad_signature.json` lists 232 operations (one
   per skill), 10 colours and 10 identities. 211 operations have `residual_effect: unknown`.
 - **Eight operad implementations:** `domain/planar.py` (used by the resolver),
-  `domain/planar_substitution.py`, `domain/operad.py`, `coloured_operad.py` (used by Woland's DDC
+  `domain/planar_substitution.py`, `domain/operad.py`, `coloured_operad.py` (used by Adversary's DDC
   operad bout), the `colored_operad.py` facade, the quotient modules (`quotient_operad.py`,
-  `symmetric_quotient.py`), the Rust crate `omega_operad_theory` (not built or run in the
-  review), and a 15-line Lean file (`OmegaEngineOewas.lean`) with one theorem and no operad laws.
+  `symmetric_quotient.py`), the Rust crate `core_operad_theory` (not built or run in the
+  review), and a 15-line Lean file (`Oewas.lean`) with one theorem and no operad laws.
 
 **What runs:**
 
@@ -100,7 +100,7 @@ says nothing about later revisions. The plan that follows from it is
   `.agents/skill_operads/agent_capability_slices.json` is `{"agents": {}}`. Past that check, the
   CLI's `NullMorphismEvaluator` refuses every morphism.
 - No production module imports the resolver; only its two byte-identical test copies (19 tests
-  each) do. Woland does not call it. Woland uses OEWAS for signed instruction admission, anti-skill
+  each) do. Adversary does not call it. Adversary uses OEWAS for signed instruction admission, anti-skill
   v2 checks, DDC trace logging and learning records.
 - The operad laws are not tested on values. The associativity tests compare colour lists on
   hand-written signatures, and the unit check in `coloured_operad.py` reads back the unit entries
@@ -115,18 +115,18 @@ files and folders present only under `.agents/antibodies`. This breaks the four-
 
 ### Update at `6023941` (2026-10-15)
 
-**Rust bridge in Woland.** Commit `afabb78c7` added
-[`oewas_oeeis_bridge.rs`](../../../omega_engine/crates_rs/omega_woland/src/oewas_oeeis_bridge.rs):
-`OeeisImmuneAdapter` implements the OEWAS `ImmuneScreenPort`, and `WolandOewasBoutBridge` licenses
-the seven Woland stage ports through the Rust planar substitution in
-`omega_workflows_agents_skills`. Its test passes:
-`cargo test -j 1 -p omega_woland --test oewas_oeeis_bridge` (cargo 1.97.0) exits 0 with 4 of 4
-passed. Nothing outside its own source and test refers to `WolandOewasBoutBridge`, and it does not
-use the Python resolver or the 15-op inventory. This is the first Woland code that composes through
+**Rust bridge in Adversary.** Commit `afabb78c7` added
+[`oewas_oeeis_bridge.rs`](../../../engine/crates_rs/core_adversary/src/oewas_oeeis_bridge.rs):
+`OeeisImmuneAdapter` implements the OEWAS `ImmuneScreenPort`, and `AdversaryOewasBoutBridge` licenses
+the seven Adversary stage ports through the Rust planar substitution in
+`core_workflows_agents_skills`. Its test passes:
+`cargo test -j 1 -p core_adversary --test oewas_oeeis_bridge` (cargo 1.97.0) exits 0 with 4 of 4
+passed. Nothing outside its own source and test refers to `AdversaryOewasBoutBridge`, and it does not
+use the Python resolver or the 15-op inventory. This is the first Adversary code that composes through
 an OEWAS operad, and it is the natural seat for decision D1 (Rust kernel, decided 2026-10-15).
 
 **Coda-atlas prompt pilots.** The folder
-[`omega_engine_atlas/coda_atlas/prompts`](../../../omega_engine_atlas/coda_atlas/prompts/) (60
+[`atlas/coda_atlas/prompts`](../../../atlas/coda_atlas/prompts/) (60
 files, added in `f13b482eb` and `4a0b300ba`) uses "operad" for a prompt layout: headings, typed
 slots and a composition diagram written in prose. No pilot file calls `ColouredOperad`, the
 resolver or the op inventory, and no arity, colour or `∘_i` law is checked by code. The pilot
@@ -147,7 +147,7 @@ The complete educational level curriculum for multi-agent workflows, operadic co
 | [**Level 04**](levels/level_04_epistemic_anti_skills_and_somatic_mutation.md) | **Polarized Operads & Anti-Skills** | Polarized operad $(\mathcal{O}^+, \mathcal{O}^-)$ & somatic decay | Negative detectors, somatic hypermutation, half-life decay |
 | [**Level 05**](levels/level_05_regulatory_treg_supervision_and_antibody_synthesis.md) | **Regulatory Treg Supervision** | Autoimmune tolerance threshold $\tau = 40\%$ | Downgrade to `DIAGNOSTIC_ONLY`, sample floor $N \ge 3$ |
 | [**Level 06**](levels/level_06_residual_geometry_and_ddc_contractivity.md) | **Residual Geometry & DDC Contractivity** | Defect descent $\Delta \Phi \le 0$ & evidence traces | `CONTRACTIVE_OBSERVED` vs `PROVISIONAL`, 3-run audit |
-| [**Level 07**](levels/level_07_workflow_graphs_and_dialectic_pipelines.md) | **Workflow Graphs & Dialectic Pipelines** | Slot-based pipeline substitution & Woland 7-Act | Acyclic planar sequences, danger gates, Woland dialectic |
+| [**Level 07**](levels/level_07_workflow_graphs_and_dialectic_pipelines.md) | **Workflow Graphs & Dialectic Pipelines** | Slot-based pipeline substitution & Adversary 7-Act | Acyclic planar sequences, danger gates, Adversary dialectic |
 | [**Level 08**](levels/level_08_four_host_mirror_parity_and_synchronization.md) | **Four-Host Parity & Deep Consolidation** | Mirror parity (`.agents`, `.claude`, `.codex`, `.grok`) | Anti-fragmentation law, 5-phase merge, sync scripts |
 | [**Level 09**](levels/level_09_sovereign_non_authority_and_deliberation_receipts.md) | **Sovereign Non-Authority & Receipts** | `AuthorityEffect: None` & cryptographic receipts | RFC 8785 canonical digest, human promotion firewall |
 | [**Level 10**](levels/level_10_higher_operad_and_ddc_tape_execution.md) | **Higher Operad Adapter & DDC Tapes** | Higher Operad adapter, DDC tape execution & Rust estate verification | Monotonic descent $\Delta \Phi \le 0$, atomic mirror rollbacks, compiled Rust estate contract |
@@ -187,7 +187,7 @@ All technical specifications, review guides, and autopoietic debate protocols ha
 | [`15_lookup_archive_and_autop_inventory.md`](atlas/15_lookup_archive_and_autop_inventory.md) | Archive & AutoP Capability Inventory |
 | [`16_guide_oewas_test_suite_execution.md`](atlas/16_guide_oewas_test_suite_execution.md) | OEWAS Test Suite Execution & Verification Harness |
 | [`17_notes_oewas_integration_plan_and_system_topology.md`](atlas/17_notes_oewas_integration_plan_and_system_topology.md) | Multi-System Topology & Integration Plan |
-| [`18_spec_woland_7act_dialectic_workflow.md`](atlas/18_spec_woland_7act_dialectic_workflow.md) | Woland 7-Act Dialectic Workflow State Machine |
+| [`18_spec_adversary_7act_dialectic_workflow.md`](atlas/18_spec_adversary_7act_dialectic_workflow.md) | Adversary 7-Act Dialectic Workflow State Machine |
 | [`19_spec_skill_consolidation_and_deep_modules.md`](atlas/19_spec_skill_consolidation_and_deep_modules.md) | Deep Module Skill Consolidation & Anti-Fragmentation Law |
 | [`20_spec_oewas_v3_production_engine.md`](atlas/20_spec_oewas_v3_production_engine.md) | OEWAS v3 Production Architecture Blueprint |
 | [`21_spec_debate_grounded_autopoiesis_and_structurebench_contracts.md`](atlas/21_spec_debate_grounded_autopoiesis_and_structurebench_contracts.md) | Debate-Grounded Autopoiesis & StructureBench Contracts |
@@ -217,4 +217,4 @@ All documentation uses lowercase underscore-separated filenames, relative links,
 
 - [**Curriculum Master Index**](curriculum/README.md): Interactive laboratory notebooks, concept lessons, narration scripts, and media assets.
 
-- [29 Woland operations and the bounded management ladder](atlas/29_guide_woland_operad_management_ladder.md)
+- [29 Adversary operations and the bounded management ladder](atlas/29_guide_adversary_operad_management_ladder.md)

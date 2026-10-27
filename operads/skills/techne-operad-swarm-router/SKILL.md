@@ -13,11 +13,11 @@ operad_residual: "unknown"
 **Status:** `NOT_SUPPORTED`  
 **AuthorityEffect:** `None`  
 **Council:** `L3_logos_techne`  
-**Retirement Notice:** Standalone swarm routers are retired under `RULE_WOLAND_BASE_SWARM_SPECIALIZATION_001`. All multi-agent deliberation, routing, and task decomposition are executed via `OmegaEngineWolandSwarm` and `/woland` SPOE dispatch with narrowed specialization profiles.
+**Retirement Notice:** Standalone swarm routers are retired under `RULE_ADVERSARY_BASE_SWARM_SPECIALIZATION_001`. All multi-agent deliberation, routing, and task decomposition are executed via `AdversarySwarm` and `/adversary` SPOE dispatch with narrowed specialization profiles.
 
 ## When to use (Deprecated)
 
-This skill is deprecated. Use `/woland` with appropriate `--swarm-type` or `--specialization` profile instead.
+This skill is deprecated. Use `/adversary` with appropriate `--swarm-type` or `--specialization` profile instead.
 transitions between distinct agent roles and artifact boundaries.
 
 ## Inputs

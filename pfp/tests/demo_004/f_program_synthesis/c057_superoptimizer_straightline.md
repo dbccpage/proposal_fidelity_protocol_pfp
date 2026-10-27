@@ -17,7 +17,7 @@ Equivalence of short bit-vector programs is decidable and cheap to check:
 
 Finding a shorter program is search over an exponential space. That is the setting of superoptimization (Massalin 1987). Models know many bit-trick identities, which helps, but they also confidently misremember them, and the exhaustive check catches that immediately.
 
-This stresses the Symbol Game's synthesis-plus-search loop, the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that separates candidate generation from equivalence checking, and the OEEIS (Omega Engine Epistemic Immune System) against recalled identities that are almost right. A pass shows certified shortening on these programs. It does not show a production compiler pass.
+This stresses the Symbol Game's synthesis-plus-search loop, the OEWAS (Engine Workflows, Agents, Skills) workflow that separates candidate generation from equivalence checking, and the OEEIS (Engine Epistemic Immune System) against recalled identities that are almost right. A pass shows certified shortening on these programs. It does not show a production compiler pass.
 
 ## 3. Formal Problem and Bounds
 
@@ -71,7 +71,7 @@ A certificate is complete when the program parses, uses only declared inputs and
 
 Arms A to D follow the protocol. **Arm E** is an enumerative superoptimizer with no model. In the style of Massalin (1987), it enumerates programs by increasing length and filters them on random test vectors, then confirms with the exact checker. It is pinned at packet-build time.
 
-The estate's `omega_engine/crates_rs/omega_search/src/search_mcts_anf_synthesis.rs` is an 8-bit expression-synthesis search marked `LEGACY_CANDIDATE_GENERATOR_ONLY`. It may supply E's candidates but is not a verifier. E should solve short targets and may time out on 5-instruction targets at width 32. A tie with E means the model added no identity knowledge. Arm F is not in the catalog row.
+The estate's `engine/crates_rs/core_search/src/search_mcts_anf_synthesis.rs` is an 8-bit expression-synthesis search marked `LEGACY_CANDIDATE_GENERATOR_ONLY`. It may supply E's candidates but is not a verifier. E should solve short targets and may time out on 5-instruction targets at width 32. A tie with E means the model added no identity knowledge. Arm F is not in the catalog row.
 
 ## 8. Budget, Models and Provenance
 
@@ -117,7 +117,7 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse. `omega_engine/crates_rs/omega_search/src/search_mcts_anf_synthesis.rs` is a legacy candidate generator only.
+- The catalog row lists no estate reuse. `engine/crates_rs/core_search/src/search_mcts_anf_synthesis.rs` is a legacy candidate generator only.
 - Width-32 proofs reuse the [C042](../e_formal_math/c042_sat_with_drat_certificates.md) pipeline.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md), plus the row extra [U10](../../upgrades/u10_synthesis_loop_v2.md).
 

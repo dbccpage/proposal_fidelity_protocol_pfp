@@ -16,22 +16,22 @@ def test_distribution_discovers_only_the_declared_pilot_runtime_subset(tmp_path)
         "tool"
     ]["setuptools"]["packages"]["find"]
     allowed = {
-        "omega_engine_pfp.tests.demo_004.e_formal_math.checker",
-        "omega_engine_woland.tests.pilots.matrix",
-        "omega_engine_woland.tests.pilots.relational_spacetime",
-        "omega_engine_woland.tests.pilots.challenge_suite",
-        "omega_engine_woland.tests.pilots.pilot_0000192",
-        "omega_engine_education.domain",
+        "pfp.tests.demo_004.e_formal_math.checker",
+        "adversary.tests.pilots.matrix",
+        "adversary.tests.pilots.relational_spacetime",
+        "adversary.tests.pilots.challenge_suite",
+        "adversary.tests.pilots.pilot_0000192",
+        "education.domain",
     }
     forbidden = {
-        "omega_engine_pfp.tests.other_test_helpers",
-        "omega_engine_woland.tests.other_test_helpers",
-        "omega_engine_woland.tests.pilots.pilot_0000193",
-        "omega_engine_woland.tests.pilots.evidence.frozen_sources",
-        "omega_engine_woland.tests.pilots.relational_spacetime.tests",
-        "omega_engine_education.pilots.matrix",
-        "omega_engine_education.pfp",
-        "omega_engine_education.pfp.infrastructure",
+        "pfp.tests.other_test_helpers",
+        "adversary.tests.other_test_helpers",
+        "adversary.tests.pilots.pilot_0000193",
+        "adversary.tests.pilots.evidence.frozen_sources",
+        "adversary.tests.pilots.relational_spacetime.tests",
+        "education.pilots.matrix",
+        "education.pfp",
+        "education.pfp.infrastructure",
     }
     for name in allowed | forbidden:
         directory = tmp_path.joinpath(*name.split("."))
@@ -58,12 +58,12 @@ sys.path.insert(0, root)
 
 class MissingEducation(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
-        if fullname.split('.')[0] in {'omega_engine_education', 'omega_engine_projects'}:
+        if fullname.split('.')[0] in {'education', 'projects'}:
             raise ModuleNotFoundError('Education and legacy aliases unavailable: ' + fullname)
 
 sys.meta_path.insert(0, MissingEducation())
-module = importlib.import_module('omega_engine_pfp.infrastructure.' + name)
-assert Path(module.__file__).resolve() == Path(root) / 'omega_engine_pfp/infrastructure' / (name + '.py')
+module = importlib.import_module('pfp.infrastructure.' + name)
+assert Path(module.__file__).resolve() == Path(root) / 'pfp/infrastructure' / (name + '.py')
 if name == 'formal_matrix':
     assert module.participant_view({'case_id': 'private', 'expected': 7, 'data': 2}, 'public') == {'case_id': 'public', 'data': 2}
     result = module.call_openrouter('', 'vendor/model', [{'role': 'user', 'content': 'public task'}])
@@ -72,7 +72,7 @@ else:
     assert module.prompt_view({'case_id': 'private', 'expected': 7, 'data': 2}, 'public') == {'case_id': 'public', 'data': 2}
     result = module.call_model('', 'vendor/model', 'public system', 'public task', max_tokens=256, title='ownership control')
     assert not result.ok and result.error == 'PFP_ACCOUNTED_GATEWAY_REQUIRED'
-assert not any(key.split('.')[0] in {'omega_engine_education', 'omega_engine_projects'} for key in sys.modules)
+assert not any(key.split('.')[0] in {'education', 'projects'} for key in sys.modules)
 """
     result = subprocess.run(
         [sys.executable, "-E", "-B", "-c", driver, str(root), module],
@@ -100,7 +100,7 @@ def readonly_help(event, args):
         raise RuntimeError('C059_HELP_FILE_WRITE_FORBIDDEN')
 sys.addaudithook(readonly_help)
 sys.argv = ['run_c059_matrix', '--help']
-runpy.run_module('omega_engine_woland.tests.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix', run_name='__main__')
+runpy.run_module('adversary.tests.pilots.c059_sql_null_total_query_synthesis.run_c059_matrix', run_name='__main__')
 """
     result = subprocess.run(
         [sys.executable, "-E", "-B", "-c", driver, str(root)],

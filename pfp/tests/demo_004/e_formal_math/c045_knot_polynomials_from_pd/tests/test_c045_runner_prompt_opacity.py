@@ -10,13 +10,13 @@ from __future__ import annotations
 import importlib
 import inspect
 
-from omega_engine_pfp.infrastructure.formal_matrix import (
+from pfp.infrastructure.formal_matrix import (
     map_back,
     opaque_token,
 )
 
 RUNNER = importlib.import_module(
-    "omega_engine_pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.run_c045_matrix"
+    "pfp.tests.demo_004.e_formal_math.c045_knot_polynomials_from_pd.run_c045_matrix"
 )
 CASES = RUNNER.TEST_CASES
 HIDDEN_KEYS = ()

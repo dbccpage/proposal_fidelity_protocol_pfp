@@ -1,12 +1,12 @@
-# Woland: a bounded typed contract experiment
+# Adversary: a bounded typed contract experiment
 
 AuthorityEffect: None. Skill-authored swarm record; terminal OPEN_RESIDUAL.
 
 ## I. The assembly
 
-Woland scoped one additive claim-audit skill and one offline scope falsifier.
-Koroviev reviewed contracts and prior art; Hella tested audit and signature
-custody; Azazello tested host file ownership. The root agent integrated their
+Adversary scoped one additive claim-audit skill and one offline scope falsifier.
+Defect Hunter reviewed contracts and prior art; Syntax Prefilter tested audit and signature
+custody; Scope Guard tested host file ownership. The root agent integrated their
 work in a fresh worktree at base 9c7460168817db3cd06b037925cb12f913575c25.
 
 ## II. The declaration
@@ -49,4 +49,4 @@ Retained logs record real guard mutations and exact restorations. Two broader
 architecture failures require base comparison; no whole-suite success is
 claimed. Full epic migration, live guard activation, native parity, independent
 research novelty and benchmark claims remain held. This record is not a live
-Woland bout, production approval or challenge-checker acceptance.
+Adversary bout, production approval or challenge-checker acceptance.

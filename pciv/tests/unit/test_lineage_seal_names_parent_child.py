@@ -7,20 +7,20 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_prompt_civilization.domain.causal_witness import (
+from pciv.domain.causal_witness import (
     PLACEHOLDER_WITNESS,
     seal_causal_witness,
 )
-from omega_engine_operating_system.adapters.prompt_civ.genealogy import (
+from operating_system.adapters.prompt_civ.genealogy import (
     LineageGraphV1 as AdapterGraph,
 )
-from omega_engine_operating_system.adapters.prompt_civ.genealogy import (
+from operating_system.adapters.prompt_civ.genealogy import (
     RelationshipType as AdapterRelationship,
 )
-from omega_engine_prompt_civilization.use_cases.genealogy import (
+from pciv.use_cases.genealogy import (
     LineageGraphV1 as UseCaseGraph,
 )
-from omega_engine_prompt_civilization.use_cases.genealogy import (
+from pciv.use_cases.genealogy import (
     RelationshipType as UseCaseRelationship,
 )
 

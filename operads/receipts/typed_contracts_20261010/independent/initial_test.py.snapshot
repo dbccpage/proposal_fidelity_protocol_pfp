@@ -6,13 +6,13 @@ import hashlib
 import shutil
 from pathlib import Path
 
-from omega_engine_workflows_agents_skills.contracts.typed_capabilities_v1 import (
+from workflows_agents_skills.contracts.typed_capabilities_v1 import (
     ROOT as CONTRACT_ROOT,
 )
-from omega_engine_workflows_agents_skills.infrastructure.capability_catalog_compiler import (
+from workflows_agents_skills.infrastructure.capability_catalog_compiler import (
     compile_capability_catalog,
 )
-from omega_engine_workflows_agents_skills.infrastructure.typed_contract_compiler import (
+from workflows_agents_skills.infrastructure.typed_contract_compiler import (
     compile_typed_contracts,
 )
 
@@ -36,14 +36,14 @@ def _generated_estate(tmp_path: Path) -> tuple[Path, set[str]]:
 
 def test_full_catalog_preserves_tracked_generated_package_resources(tmp_path: Path) -> None:
     root, tracked = _generated_estate(tmp_path)
-    relative = ".agents/skills/woland-claim-audit/references/operator-note.md"
+    relative = ".agents/skills/adversary-claim-audit/references/operator-note.md"
     note = root / relative
     note.parent.mkdir()
     note.write_bytes(b"Host-maintained operator context.\n")
     tracked.add(relative)
 
     first = compile_capability_catalog(root, tracked_paths=tuple(sorted(tracked)))
-    skill = next(item for item in first.skills if item.skill_id == "woland-claim-audit")
+    skill = next(item for item in first.skills if item.skill_id == "adversary-claim-audit")
     resource = next((item for item in skill.package_resources if item.path == relative.removeprefix(".agents/")), None)
     assert resource is not None, "Generated packages must retain the existing tracked-resource catalog contract"
     assert resource.sha256 == hashlib.sha256(note.read_bytes()).hexdigest()

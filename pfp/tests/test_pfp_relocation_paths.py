@@ -12,16 +12,16 @@ import pytest
 APPLICATION = Path(__file__).resolve().parents[1]
 NAMESPACE = APPLICATION.name
 REPOSITORY = APPLICATION.parent
-EDUCATION = REPOSITORY / "omega_engine_education"
+EDUCATION = REPOSITORY / "education"
 
 
 def module(relative):
     return importlib.import_module(f"{NAMESPACE}.{relative}")
 
 
-def test_pilot_data_uses_the_woland_test_owner():
+def test_pilot_data_uses_the_adversary_test_owner():
     pilot = module("infrastructure.pilot_runner")
-    assert pilot.SEED_CATALOG == REPOSITORY / "omega_engine_woland/tests/pilots/matrix/seeds.yaml"
+    assert pilot.SEED_CATALOG == REPOSITORY / "adversary/tests/pilots/matrix/seeds.yaml"
     assert pilot.CANONICAL_PROMPT_TEMPLATE == APPLICATION / "infrastructure/yaml/prompts/templates/template_single_slot.yaml"
 
 
@@ -104,16 +104,16 @@ def test_type_test_helpers_resolve_the_new_package_without_a_legacy_pfp_tree():
         sys.modules.pop("pfp_relocation_register", None)
 
 
-def test_replay_paths_find_woland_pilots_from_the_combined_application():
-    paths = importlib.import_module("omega_engine_woland.tests.pilots.replay_runners._paths")
-    assert paths.pilots_root(Path(__file__)) == REPOSITORY / "omega_engine_woland/tests/pilots"
+def test_replay_paths_find_adversary_pilots_from_the_combined_application():
+    paths = importlib.import_module("adversary.tests.pilots.replay_runners._paths")
+    assert paths.pilots_root(Path(__file__)) == REPOSITORY / "adversary/tests/pilots"
     assert paths.repository_root(Path(__file__)) == REPOSITORY
 
 
 def test_replay_paths_accept_a_linked_worktree_file(tmp_path):
-    paths = importlib.import_module("omega_engine_woland.tests.pilots.replay_runners._paths")
+    paths = importlib.import_module("adversary.tests.pilots.replay_runners._paths")
     checkout = tmp_path / "checkout"
-    estate = checkout / "omega_engine_woland/tests/pilots"
+    estate = checkout / "adversary/tests/pilots"
     (estate / "matrix").mkdir(parents=True)
     (estate / "pilot_0000006").mkdir()
     (checkout / ".git").write_text("gitdir: elsewhere\n", encoding="utf-8")

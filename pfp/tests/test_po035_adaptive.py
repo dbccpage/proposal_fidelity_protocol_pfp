@@ -4,13 +4,13 @@ import json
 
 import pytest
 
-from omega_engine_woland.tests.pilots.relational_spacetime.typed_signals import build_prompt
-from omega_engine_woland.tests.pilots.relational_spacetime.typed_signals import ingress
-from omega_engine_woland.tests.pilots.relational_spacetime.typed_signals import limits_for
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import BY_ID
-from omega_engine_woland.tests.pilots.relational_spacetime.tasks import proposal_body
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_checks import evaluate
-from omega_engine_woland.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
+from adversary.tests.pilots.relational_spacetime.typed_signals import build_prompt
+from adversary.tests.pilots.relational_spacetime.typed_signals import ingress
+from adversary.tests.pilots.relational_spacetime.typed_signals import limits_for
+from adversary.tests.pilots.relational_spacetime.tasks import BY_ID
+from adversary.tests.pilots.relational_spacetime.tasks import proposal_body
+from adversary.tests.pilots.relational_spacetime.finite_checks import evaluate
+from adversary.tests.pilots.relational_spacetime.finite_fixtures import fixture_payload
 
 
 def test_side_channel_preserves_packet_refusal():

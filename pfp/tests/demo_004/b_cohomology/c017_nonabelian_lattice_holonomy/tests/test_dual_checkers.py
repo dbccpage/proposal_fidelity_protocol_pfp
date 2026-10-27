@@ -5,16 +5,16 @@ from __future__ import annotations
 import json
 import pathlib
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.algebraic_holonomy_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.algebraic_holonomy_checker import (
     check_algebraic_holonomy_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.independent_checker import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.independent_checker import (
     check_independent_holonomy,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
     solve,
 )
 

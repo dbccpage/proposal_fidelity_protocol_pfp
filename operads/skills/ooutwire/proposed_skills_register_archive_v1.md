@@ -86,23 +86,23 @@ AuthorityEffect: None.
 * **Evidence:** Promoted from `prompt-civilization-v0-drafts/auto-antiskill/DRAFT.md` into canonical `.agents/skills/auto-antiskill/SKILL.md`, activated `agents/openai.yaml`, preserved `references/admission-boundary.md`, wired wrapper `scripts/auto_antiskill.py`, and verified under unit tests.
 * **Implementation Status:** `ADMITTED` 2026-09-18 under the 2026-09-01 amendment. Written to `.agents/skills/auto-antiskill/SKILL.md` and mirrored across all six host roots.
 
-#### Entry 0276: `omega-prompt`
+#### Entry 0276: `core-prompt`
 
 * **Proposed By:** Prompt Civilization v0 Drafts Promotion run 2026-09-18
 * **Confidence:** HIGH
-* **Target Folder:** `.agents/skills/omega-prompt/`
+* **Target Folder:** `.agents/skills/core-prompt/`
 * **Signal:** Consequential IDE prompts (code modifications, proof/verification claims, publication, external side effects) require deterministic pre-send review, typing, acceptance criteria verification, and non-claim bounding before dispatch.
-* **Evidence:** Promoted from `prompt-civilization-v0-drafts/omega-prompt/DRAFT.md` into canonical `.agents/skills/omega-prompt/SKILL.md`, activated `agents/openai.yaml`, preserved `references/prompt-proposal.md`, wired wrapper `scripts/omega_prompt.py`, and verified under unit tests.
-* **Implementation Status:** `ADMITTED` 2026-09-18 under the 2026-09-01 amendment. Written to `.agents/skills/omega-prompt/SKILL.md` and mirrored across all six host roots.
+* **Evidence:** Promoted from `prompt-civilization-v0-drafts/core-prompt/DRAFT.md` into canonical `.agents/skills/core-prompt/SKILL.md`, activated `agents/openai.yaml`, preserved `references/prompt-proposal.md`, wired wrapper `scripts/core_prompt.py`, and verified under unit tests.
+* **Implementation Status:** `ADMITTED` 2026-09-18 under the 2026-09-01 amendment. Written to `.agents/skills/core-prompt/SKILL.md` and mirrored across all six host roots.
 
-#### Entry 0277: `omega-paper-review-swarm`
+#### Entry 0277: `core-paper-review-swarm`
 
 * **Proposed By:** workflow-skill-creator run 2026-09-18 (CODA Paper Review & Verification Swarm)
 * **Confidence:** HIGH
-* **Target Folder:** `.agents/skills/omega-paper-review-swarm/`
+* **Target Folder:** `.agents/skills/core-paper-review-swarm/`
 * **Signal:** Paper reviews, formal verification audits, and deposit envelope preparation across `coda_atlas/F004_papers/` and `coda_atlas/F005_coda/` require a deterministic, orchestrated multi-agent pipeline. Manual execution across 12 `paper*` skills, 33 specialized prof/techne/gate skills, and multiple sub-checkers causes human fatigue and risks introducing subtle envelope or linter defects.
-* **Evidence:** Encapsulates 12 `paper*` skills (`paper-adversary`, `paper-build`, `paper-clean-architecture-mono-repo-auditor`, `paper-improver`, `paper-lean4-adversary`, `paper-lean4-improver`, `paper-lev-landau-quiz-hardcore-tester`, `paper-package-techne`, `paper-proof-signoff`, `paper-redteam-dialogue`, `paper-release`, `paper-reviewer-notebook`) and 33 specialized prof/techne/gate skills into a deterministic 7-stage pipeline (Stages 0–6) with Option A bounded self-healing fuel loop (up to 3 cycles), strictly scoped to F004/F005, halting at `human-promotion-firewall` under `AuthorityEffect: None`. Implemented CLI runner `scripts/orchestrate_paper_review.py` with structured file receipts and mined candidate anti-skills.
-* **Implementation Status:** `ADMITTED` 2026-09-18 under the 2026-09-01 amendment. Written to `.agents/skills/omega-paper-review-swarm/SKILL.md` and mirrored across all six host roots.
+* **Evidence:** Encapsulates 12 `paper*` skills (`paper-adversary`, `paper-build`, `paper-clean-architecture-mono-repo-auditor`, `paper-improver`, `paper-lean4-adversary`, `paper-lean4-improver`, `paper-lev-examiner-quiz-hardcore-tester`, `paper-package-techne`, `paper-proof-signoff`, `paper-redteam-dialogue`, `paper-release`, `paper-reviewer-notebook`) and 33 specialized prof/techne/gate skills into a deterministic 7-stage pipeline (Stages 0–6) with Option A bounded self-healing fuel loop (up to 3 cycles), strictly scoped to F004/F005, halting at `human-promotion-firewall` under `AuthorityEffect: None`. Implemented CLI runner `scripts/orchestrate_paper_review.py` with structured file receipts and mined candidate anti-skills.
+* **Implementation Status:** `ADMITTED` 2026-09-18 under the 2026-09-01 amendment. Written to `.agents/skills/core-paper-review-swarm/SKILL.md` and mirrored across all six host roots.
 
 #### Entry 0278: `goo-quotient-universal-factor-uniqueness-gate`
 
@@ -165,7 +165,7 @@ AuthorityEffect: None.
 * **Proposed By:** auto-oe-autop run 2026-09-21 (Monograph House Numbering & Dialect Purification Gate)
 * **Confidence:** HIGH
 * **Target Folder:** `.agents/skills/goo-paper-unanchored-numbering-and-dialect-purification-gate/`
-* **Signal:** Research papers and monographs across `coda_atlas/F004_papers/` and `coda_atlas/F005_coda/` frequently retain unanchored internal development numbering (e.g. `Paper 000`, `Paper 001`, `Paper 003`, `Paper {NNN}`), internal apparatus labels (`GTLA`, `OMEGA TOWER`), and private migration artifacts (`absorbed from QM_081...`) that convey no meaning to outside scholars, violate dialect firewalls, and fail pre-release verification.
+* **Signal:** Research papers and monographs across `coda_atlas/F004_papers/` and `coda_atlas/F005_coda/` frequently retain unanchored internal development numbering (e.g. `Paper 000`, `Paper 001`, `Paper 003`, `Paper {NNN}`), internal apparatus labels (`GTLA`, `CORE TOWER`), and private migration artifacts (`absorbed from QM_081...`) that convey no meaning to outside scholars, violate dialect firewalls, and fail pre-release verification.
 * **Evidence:** Cross-cluster audit across 135 packages identified 42 manuscripts containing unanchored house numbering. De-languaging and citation standardization in `006_vector_and_quantum_observer_geometries` and `008_so_k_invariant_gauge_classification` resolved reader comprehension blockers and passed `/paper-release` Stage 4 pre-flight checks.
 * **Implementation Status:** `ADMITTED` 2026-09-21 under the 2026-09-01 amendment. Written to `.agents/skills/goo-paper-unanchored-numbering-and-dialect-purification-gate/SKILL.md` and mirrored across all six host roots.
 
@@ -184,7 +184,7 @@ AuthorityEffect: None.
 * **Confidence:** HIGH
 * **Target Folder:** `.agents/skills/goo-paper-root-release-zip-and-anti-scaffolding-gate/`
 * **Signal:** Research paper deposit packages across `coda_atlas/F004_papers/` and `coda_atlas/F005_coda/` frequently created standalone release ZIPs inside nested `dist/` subdirectories, causing clutter and non-hermetic release structures. Furthermore, residual build scaffolding (`rt/`, `dist/`, `dev_rips/`, `scratchpad/`, `paper_build_prep/`, `scratch/`, `legacy_omnibus/`) and authoring checklist files (`DEPOSIT_CHECKLIST.md`, `CITATION.cff`, stray `.log` files) were frequently left behind in package trees, corrupting `MANIFEST.sha256` and failing deposit purity. In addition, monograph slug detection previously misidentified auxiliary markdown files (e.g. `references.md`, `descriptions.md`) as main monographs.
-* **Evidence:** Standardized standalone release ZIP generation directly in `{paper_folder}/{slug}_{date}.zip` (forbidding `dist/`) across `000_witnessed_difference_programme`, `006_vector_and_quantum_observer_geometries`, and `008_so_k_invariant_gauge_classification`. Enforced automatic pre-flight and pre-deposit purges in Stages 0 and 6 of `omega-paper-review-swarm` (`stages.py`, `deposit.py`). Implemented dedicated `package` CLI subcommand in `cli.py` prioritizing primary `.tex` and filtering non-monograph `.md` files. Removed legacy scaffolding and regenerated cryptographically verified manifests across `000_witnessed_difference_programme`, `006_primitive_axiomatics`, and `lggr_i` through `lggr_vi` with 100% SHA256 integrity.
+* **Evidence:** Standardized standalone release ZIP generation directly in `{paper_folder}/{slug}_{date}.zip` (forbidding `dist/`) across `000_witnessed_difference_programme`, `006_vector_and_quantum_observer_geometries`, and `008_so_k_invariant_gauge_classification`. Enforced automatic pre-flight and pre-deposit purges in Stages 0 and 6 of `core-paper-review-swarm` (`stages.py`, `deposit.py`). Implemented dedicated `package` CLI subcommand in `cli.py` prioritizing primary `.tex` and filtering non-monograph `.md` files. Removed legacy scaffolding and regenerated cryptographically verified manifests across `000_witnessed_difference_programme`, `006_primitive_axiomatics`, and `lggr_i` through `lggr_vi` with 100% SHA256 integrity.
 * **Implementation Status:** `ADMITTED` 2026-09-21 under the 2026-09-01 amendment. Written to `.agents/skills/goo-paper-root-release-zip-and-anti-scaffolding-gate/SKILL.md` and mirrored across all six host roots.
 
 #### Entry 0286: `goo-paper-bibliography-and-landscape-table-layout-gate`
@@ -204,7 +204,7 @@ AuthorityEffect: None.
 * **Lead Council:** `L3_nous_panepistimion`
 * **Status:** `ADMITTED` 2026-09-24
 * **Confidence:** `HIGH`
-* **Scope:** Master Pedagogical Authority for The Symbol Game (Ages 5 to 500), 2026 online micro-attention metrics, and 25-lesson beginner curriculum in `omega_engine_education/the_symbol_game/lessons/000_beginners/`.
+* **Scope:** Master Pedagogical Authority for The Symbol Game (Ages 5 to 500), 2026 online micro-attention metrics, and 25-lesson beginner curriculum in `education/the_symbol_game/lessons/000_beginners/`.
 
 #### Entry 0288: `techne-code-symbol-game-reviewer`
 * **Lead Council:** `L3_logos_techne`
@@ -288,7 +288,7 @@ AuthorityEffect: None.
 * **Lead Council:** `L3_logos_theoria`
 * **Status:** `ADMITTED` 2026-09-25
 * **Confidence:** `HIGH`
-* **Scope:** Consolidated Omega Engine Algorithm Prime Triad (Prime -1, 000, 001, 002) and CODA Cn ascent authority.
+* **Scope:** Consolidated Engine Algorithm Prime Triad (Prime -1, 000, 001, 002) and CODA Cn ascent authority.
 
 #### Entry 0302: `techne-adversarial-refusal-bypass-auditor`
 * **Lead Council:** `L3_logos_techne`

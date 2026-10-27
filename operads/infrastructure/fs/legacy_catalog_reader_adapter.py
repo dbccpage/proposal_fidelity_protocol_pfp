@@ -6,7 +6,7 @@ import hashlib
 import pathlib
 from typing import List, Optional, Tuple
 
-from omega_engine_operations.domain.rop.result import Ok, Result
+from operations.domain.rop.result import Ok, Result
 
 from ...application.ports.legacy_catalog_reader_port import LegacyCatalogReaderPort
 from ...domain.entities.operation_v3 import OperationV3, PortSpecV3

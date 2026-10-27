@@ -11,9 +11,9 @@ maturity: canonical
 claim_status: source-grounded
 authority_effect: "None"
 source_paths:
-  - omega_engine_pfp
-  - omega_engine/crates_rs/omega_symbol_game
-  - omega_engine/crates_rs/omega_symbol_game_runtime
+  - pfp
+  - engine/crates_rs/core_symbol_game
+  - engine/crates_rs/core_symbol_game_runtime
 last_verified: 2026-10-20
 verification_scope: runtime names checked against the tracked file list; design sections not re-derived
 ---
@@ -27,9 +27,9 @@ verification_scope: runtime names checked against the tracked file list; design 
 > 2026-10-20 pin. The nearest current records are
 > [13_review_findings_and_pilot_runbook.md](13_review_findings_and_pilot_runbook.md)
 > and the PFP50 derivation control
-> [plan_7d_pfp50_catalog](../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/derivation_controls/plan_7d_pfp50_catalog/derivation.md).
+> [plan_7d_pfp50_catalog](../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/code/derivation_controls/plan_7d_pfp50_catalog/derivation.md).
 > Gate/mode YAML is not evidence of execution. These reference demos are not
-> wired into a 13-gate Woland/Woland pipeline, and no live-provider completion
+> wired into a 13-gate Adversary/Adversary pipeline, and no live-provider completion
 > or general theorem follows from their local checks.
 
 > **Current-source status (2026-10-20, pin `c419cc6beb`).** Most runtime names in
@@ -38,12 +38,12 @@ verification_scope: runtime names checked against the tracked file list; design 
 >
 > | Named in this page | At the pin |
 > | --- | --- |
-> | Binaries `run_proof_pipeline`, `run_operator_tower`, `run_genesis`, `symproof`, `symsys-pipeline` and the `cargo run` commands below | Not present. The Rust binaries are `omega_symbol_game` ([Cargo.toml](../../../../omega_engine/crates_rs/omega_symbol_game/Cargo.toml)), `symgam` ([runtime Cargo.toml](../../../../omega_engine/crates_rs/omega_symbol_game_runtime/Cargo.toml)) and four `verify_phi*` / `verify_wall_functionals` binaries under `omega_symbol_game/src/bin/`. |
+> | Binaries `run_proof_pipeline`, `run_operator_tower`, `run_genesis`, `symproof`, `symsys-pipeline` and the `cargo run` commands below | Not present. The Rust binaries are `core_symbol_game` ([Cargo.toml](../../../../engine/crates_rs/core_symbol_game/Cargo.toml)), `symgam` ([runtime Cargo.toml](../../../../engine/crates_rs/core_symbol_game_runtime/Cargo.toml)) and four `verify_phi*` / `verify_wall_functionals` binaries under `core_symbol_game/src/bin/`. |
 > | Modules `proof_pipeline.rs`, `pipeline_run.rs`, `sn_encoder.rs`, `prompt_builder.rs`, `prompt_router.rs`, `parse_response.rs`, `http_backend.rs`, `file_backend.rs`, `claude_backend.rs`, `mode.rs` | Not present in any tracked crate. |
 > | Mode directories `yaml/mode_1_candidate_ideas_proposer`, `yaml/mode_2_proofer`, `yaml/mode_5_operator` with `stage_1_compression_gate.yaml` ... `stage_8_evidence_plan.yaml` | Kept as teaching contracts under [`_how_to_play/contracts/`](../_how_to_play/contracts/symbol_game.contract.yaml). No current runtime loads them. |
-> | "Stage 1 is the Compression Gate and Stage 8 is the Evidence Plan" | Historical. The public runtime ([controller.yaml](../../../../omega_engine_pfp/infrastructure/yaml/stages/controller.yaml)) has 11 stages: 1 admit, 2 ideation, 3 audit, 4 l2_extraction, 5 evaluation (host), 6 adversarial, 7 challenge_replay, 8 selection, 9 receipt, 10 hand_off, 11 evidence_plan. |
-> | `AuthorityCeiling` five-level chain (PO-CEIL-001) and `mode.rs` | `proof_obligations.md` and `mode.rs` are not present. The current Rust `AuthorityCeiling` in [xi_diagnostic.rs](../../../../omega_engine/crates_rs/omega_types/src/xi_diagnostic.rs) has two variants, `DiagnosticOnly` and `TieBreakerOnly`. |
-> | `../math_spines/symbol_game_math_spine.md` (Parts II and III) | Not present at that path. A library certificate record for an archived `symbol_game_math_spine.md` exists under `omega_engine_library/coda_library/encyclopedia/library/certificates/`. The "proved consistent" statements below cite that absent file and were not rechecked. |
+> | "Stage 1 is the Compression Gate and Stage 8 is the Evidence Plan" | Historical. The public runtime ([controller.yaml](../../../../pfp/infrastructure/yaml/stages/controller.yaml)) has 11 stages: 1 admit, 2 ideation, 3 audit, 4 l2_extraction, 5 evaluation (host), 6 adversarial, 7 challenge_replay, 8 selection, 9 receipt, 10 hand_off, 11 evidence_plan. |
+> | `AuthorityCeiling` five-level chain (PO-CEIL-001) and `mode.rs` | `proof_obligations.md` and `mode.rs` are not present. The current Rust `AuthorityCeiling` in [xi_diagnostic.rs](../../../../engine/crates_rs/core_types/src/xi_diagnostic.rs) has two variants, `DiagnosticOnly` and `TieBreakerOnly`. |
+> | `../math_spines/symbol_game_math_spine.md` (Parts II and III) | Not present at that path. A library certificate record for an archived `symbol_game_math_spine.md` exists under `library/coda_library/encyclopedia/library/certificates/`. The "proved consistent" statements below cite that absent file and were not rechecked. |
 >
 > Read the runtime sections (Runtime Shape, Symbol Game Workflow, Main Commands,
 > Resuming) as a record of the earlier design. The packet lifecycle, local/global
@@ -53,7 +53,7 @@ verification_scope: runtime names checked against the tracked file list; design 
 > [!IMPORTANT]
 > **Canonical Symbol Game Theory Spine**
 >
-> The Symbol Game is the finite packet boundary between untrusted generation and Omega authority.
+> The Symbol Game is the finite packet boundary between untrusted generation and Core authority.
 > A model may propose. It may emit structured material. It may even emit certificate-shaped material. It is not the certifier.
 >
 > \[
@@ -62,17 +62,17 @@ verification_scope: runtime names checked against the tracked file list; design 
 > }
 > \]
 >
-> **Authority Boundary:** Symbol Game emits verifier evidence and terminal statuses. It does not directly mint Omega authority.
+> **Authority Boundary:** Symbol Game emits verifier evidence and terminal statuses. It does not directly mint Core authority.
 >
 > **Governance Rule:** symbol_game_math_spine.md is canonical. symbol_game_proof_ledger.md is archival only and non-admissible. Theory is closeable; implementation authority remains gated until conformance passes.
 
 The Symbol Game is a Rust crate plus YAML prompt contract set for running auditable symbolic reasoning pipelines. The public stage convention is one-based: Stage 1 is the Compression Gate and Stage 8 is the Evidence Plan.
 
-## Relationship to the Omega Engine
+## Relationship to the engine
 
-> **The Symbol Game is the first concrete finite packet realization of the Omega Engine at the GTFOC/GTFDA boundary.**
+> **The Symbol Game is the first concrete finite packet realization of the engine at the GTFOC/GTFDA boundary.**
 
-It began as a proof-of-concept for the larger Omega Engine.
+It began as a proof-of-concept for the larger Engine.
 
 It does not attempt to make an LLM authoritative. It constrains the LLM into finite symbolic regimes where proposals become parseable traces. Those traces can then be checked locally, checked against the global packet boundary, repaired, refused, or lifted into a new symbolic context.
 
@@ -89,7 +89,7 @@ explicit evidence ceilings
 
 ```
 
-In the full Omega Engine, these same mechanisms become the basis for operator discovery, operator composition, lift validation, and reusable operator memory.
+In the full Engine, these same mechanisms become the basis for operator discovery, operator composition, lift validation, and reusable operator memory.
 
 > You did not start with a grand machine. You got tired of LLM nonsense and discovered that symbols, boundaries, and validators make the nonsense measurable.
 
@@ -440,7 +440,7 @@ A seed is a typed request: a natural-language prompt compiled into a finite type
 
 ### 2. Realization (Parse)
 
-The realization functor `η_SG#`maps raw LLM output to`TypedOmegaPacket + F`(success or typed refusal). This is total-or-refusing, grammar-preserving, ceiling-preserving, and cannot create authority. See`../math_spines/symbol_game_math_spine.md` Part III "Realization Functor Boundary".
+The realization functor `η_SG#`maps raw LLM output to`TypedCorePacket + F`(success or typed refusal). This is total-or-refusing, grammar-preserving, ceiling-preserving, and cannot create authority. See`../math_spines/symbol_game_math_spine.md` Part III "Realization Functor Boundary".
 
 ### 3. Local Validation
 
@@ -495,7 +495,7 @@ A lift is forced when a context embedding produces a witness that no existing E 
 
 ## Integration Surface
 
-The Symbol Game integrates with `anomalon_ai`as an invisible validation pipeline. Full integration architecture is in`07_anomalon_ai_integration.md`.
+The Symbol Game integrates with `sentinel_ai`as an invisible validation pipeline. Full integration architecture is in`07_sentinel_ai_integration.md`.
 
 ### Data Flow
 
@@ -514,8 +514,8 @@ User Prompt → [Intake] → [Packet Compiler] → [LLM Generator] → [Validato
 | Validator Pipeline | symbol_game::evaluators         | Runs 8-stage validation                   |
 | Operator Memory    | symbol_game::lifts + ::policies | Stores/retrieves admitted operators       |
 | Immune System      | symbol_game::health             | Suppresses known-bad patterns             |
-| Response Decoder   | anomalon_ai::decoders           | Maps terminals to confidence labels       |
-| Ranking Graph      | anomalon_ai::ranking            | Routes by historical performance          |
+| Response Decoder   | sentinel_ai::decoders           | Maps terminals to confidence labels       |
+| Ranking Graph      | sentinel_ai::ranking            | Routes by historical performance          |
 
 ### Confidence Labels
 
@@ -560,7 +560,7 @@ graph TD
     D2["Defect 2: Semantic Laundering<br/>(Calling speculative analogies 'theorems')"]
     D3["Defect 3: Broken Lineage<br/>(Silently deleting old claims without trace ledgers)"]
     
-    Fix["Paper Repair Protocol (CEC-PFP-000)<br/>- Factor into focused leaves <= 150 lines<br/>- Landau Theoretical Minimum format<br/>- Non-destructive hash-bound archival"]
+    Fix["Paper Repair Protocol (CEC-PFP-000)<br/>- Factor into focused leaves <= 150 lines<br/>- Examiner Theoretical Minimum format<br/>- Non-destructive hash-bound archival"]
     
     D1 --> Fix
     D2 --> Fix
@@ -576,8 +576,8 @@ When repairing an obsolete, bloated, or fragmented research monograph, the agent
 * Separate normative definitions from historical planning drafts and research quarantine notes.
 * Partition monolithic text dumps into focused, progressively numbered leaf documents (<= 300 lines).
 
-#### Step 2: Claim Scoping & Landau Formatting
-* Convert informal prose claims into formal Landau Quad-Elements:
+#### Step 2: Claim Scoping & Examiner Formatting
+* Convert informal prose claims into formal Examiner Quad-Elements:
   1. **Invariant:** The exact formal statement.
   2. **Boundary:** The carrier and hypotheses under which it holds.
   3. **Witness:** The computational receipt or certificate deciding truth.

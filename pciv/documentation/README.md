@@ -11,9 +11,9 @@ maturity: draft
 claim_status: verified
 authority_effect: "None"
 source_paths:
-- omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-- omega_engine_product_planning_office/receipts/requested_plan_completion_2026_10_02.json
-- omega_engine/crates_rs/omega_prompt_civilization/src/lib.rs
+- product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+- product_planning_office/receipts/requested_plan_completion_2026_10_02.json
+- engine/crates_rs/core_prompt_civilization/src/lib.rs
 prerequisites: []
 aliases: []
 related:
@@ -48,7 +48,7 @@ The complete 11-level progressive technical curriculum and interactive track lab
 - [**Level 02: Mutation Operators & Forge**](levels/level_02_mutation_operators_and_forge.md): Canalized Core vs Plastic Scaffold (`MutationOperatorCandidateV1`, epoch boundaries).
 - [**Level 03: Lamarckian Retro-Inheritance**](levels/level_03_lamarckian_retro_inheritance.md): Hop-Bounded Retro-Inheritance ($d \le 10$, $(1/2)^d$ attenuation, no horizon reset).
 - [**Level 04: Pareto Selection & Fitness**](levels/level_04_pareto_selection_and_fitness.md): Multi-Objective Exact Evaluation (Exact $\mathbb{Q}$, Pareto fronts, unmeasured exploration quotas).
-- [**Level 05: Inverse Lineage PageRank**](levels/level_05_inverse_lineage_pagerank.md): Certified Ancestral Utility (`omega.spectral.pagerank.v2` exact rational solver, transport parameter $q_c$).
+- [**Level 05: Inverse Lineage PageRank**](levels/level_05_inverse_lineage_pagerank.md): Certified Ancestral Utility (`core.spectral.pagerank.v2` exact rational solver, transport parameter $q_c$).
 - [**Level 06: Precedent Retrieval & Evaporation**](levels/level_06_precedent_retrieval_and_evaporation.md): Lexicographic Matching & Pheromone Evaporation (Half-life $H$ epoch-based decay).
 - [**Level 07: Ecological Reserves & Population**](levels/level_07_ecological_reserves_and_population.md): Population Policy & Ecological Reserves (Largest-remainder allocation, disjoint reserves).
 - [**Level 08: Lineage Taint & Custody Invalidation**](levels/level_08_lineage_taint_and_custody_invalidation.md): Lineage Taint vs Custody Invalidation (Forward causal taint fixpoint vs disarming).

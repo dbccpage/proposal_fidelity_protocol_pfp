@@ -31,7 +31,7 @@ Each input artifact must strictly conform to its declared operad color contract 
 ## Operational Transformation Workflow
 
 1. **Type & Color Check:** Assert that all supplied input artifacts exist and match declared source colors `Proof`.
-2. **Deterministic Evaluation:** Execute the domain-specific transformation or verification logic under `omega_engine_operads.application.ddc_execution.meta_operad_engine`.
+2. **Deterministic Evaluation:** Execute the domain-specific transformation or verification logic under `operads.application.ddc_execution.meta_operad_engine`.
 3. **Residual Measurement:** Measure pre-execution residual $R_\text{before}$ and post-execution residual $R_\text{after}$.
 4. **Output Emission:** Emit the target artifact of color `Proof` to the designated output path.
 5. **Evidence Trace Recording:** Append the run record (input/output hashes, timestamps, residual delta) to `evidence_trace.json`.
@@ -41,13 +41,13 @@ Each input artifact must strictly conform to its declared operad color contract 
 Run this metaskill directly using its executable script:
 
 ```bash
-python omega_engine_operads/skills/meta-glossa-proof-to-proof-verifier/scripts/execute.py
+python operads/skills/meta-glossa-proof-to-proof-verifier/scripts/execute.py
 ```
 
 Or invoke via the unified operad engine:
 
 ```bash
-python -m omega_engine_operads.frontend.cli.meta_operad_cli meta-glossa-proof-to-proof-verifier
+python -m operads.frontend.cli.meta_operad_cli meta-glossa-proof-to-proof-verifier
 ```
 
 ## Residual Contract & Evidence Recording

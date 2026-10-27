@@ -5,7 +5,7 @@ from copy import deepcopy
 import pytest
 import yaml
 
-from omega_engine_pfp.infrastructure import pilot_runner
+from pfp.infrastructure import pilot_runner
 
 
 def test_all_seeds_keep_exact_prompt_bytes():

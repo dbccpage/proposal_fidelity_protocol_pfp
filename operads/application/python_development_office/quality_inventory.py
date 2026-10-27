@@ -9,15 +9,15 @@ import re
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 
-from omega_engine_operads.application.python_development_office.test_receipt_verification import (
+from operads.application.python_development_office.test_receipt_verification import (
     ReceiptVerificationRequest,
     verify_test_execution_receipts,
 )
-from omega_engine_operads.domain.operad.errors import Err, Ok, Result
-from omega_engine_operads.domain.python_development_office.quality_errors import (
+from operads.domain.operad.errors import Err, Ok, Result
+from operads.domain.python_development_office.quality_errors import (
     QualityInventoryExecutionError,
 )
-from omega_engine_operads.domain.python_development_office.quality_inventory import (
+from operads.domain.python_development_office.quality_inventory import (
     FileQualityRecord,
     FunctionMetrics,
     PythonQualityPolicy,
@@ -25,7 +25,7 @@ from omega_engine_operads.domain.python_development_office.quality_inventory imp
     QualityInventoryReceipt,
     TestTierEvidence,
 )
-from omega_engine_operads.domain.python_development_office.quality_ports import (
+from operads.domain.python_development_office.quality_ports import (
     ComplexityAnalyzer,
     PythonInventoryRepository,
     TestExecutionReceiptRepository,

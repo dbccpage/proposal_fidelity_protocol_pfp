@@ -13,11 +13,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
-_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir())
+_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir())
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.reference_solver.solver import (  # noqa: E402
+from projects.mssn_sn_symgam.challenges.c_quantum.c022_stabilizer_code_distance.reference_solver.solver import (  # noqa: E402
     solve,
 )
 

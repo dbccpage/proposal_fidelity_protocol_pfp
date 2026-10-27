@@ -2,8 +2,8 @@
 
 Aligned Contracts / Systems:
 - nf.fsm.automata
-- omega_engine_governance
-- omega_contracts
+- governance
+- core_contracts
 
 AuthorityEffect: None.
 """
@@ -65,8 +65,8 @@ class TestTranche24FspBoundaryAndStateNfs(unittest.TestCase):
         self.assertFalse(is_empty)
 
     # Test 460
-    def test_buchi_automata_omega_regular_language_acceptance(self) -> None:
-        """Verify omega-regular acceptance of word u v^omega."""
+    def test_buchi_automata_core_regular_language_acceptance(self) -> None:
+        """Verify core-regular acceptance of word u v^omega."""
         lasso = {"prefix": "0", "loop": "1"}
         # Loop contains accepting condition
         is_accepted = "1" in lasso["loop"]

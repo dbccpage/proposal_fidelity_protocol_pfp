@@ -25,7 +25,7 @@
 
 - [ ] Related Skills section accurate
 - [ ] Output schema / receipt shape documented
-- [ ] Minimal tests named under `omega_engine_py/tests_mvp/` ext
+- [ ] Minimal tests named under `engine_py/tests_mvp/` ext
 
 ## Provenance
 

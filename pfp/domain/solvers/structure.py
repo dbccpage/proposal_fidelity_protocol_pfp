@@ -129,7 +129,7 @@ class FiniteStructure:
             self.digests,
         )
 
-    # -- Simplicial Homology Routing (omega_homology) ------------------------
+    # -- Simplicial Homology Routing (core_homology) ------------------------
     def faces_as_signed_cells(self) -> list[list[tuple[int, int, int]]]:
         """Extracts cell faces as signed boundary terms (tail, head, sign)."""
         edge_rows = [args for name, args in self.tuples if name == "edge"]
@@ -155,11 +155,11 @@ class FiniteStructure:
         return out
 
     def verify_boundary_closed(self, port: ExactHomologyPort | None = None) -> bool:
-        """Verifies boundary law d o d = 0 via sovereign omega_homology port."""
+        """Verifies boundary law d o d = 0 via sovereign core_homology port."""
         hom_port = port or get_homology_port()
         return hom_port.verify_boundary_closed(self.faces_as_signed_cells())
 
-    # -- Discrete Holonomy Routing (omega_holonomy) --------------------------
+    # -- Discrete Holonomy Routing (core_holonomy) --------------------------
     def turn_tables(
         self, axes_sort: str = "axis", turn_sort: str = "turn"
     ) -> dict[int, tuple[tuple[Q, ...], ...]]:
@@ -188,7 +188,7 @@ class FiniteStructure:
         word: Sequence[tuple[int, bool]],
         port: ExactHolonomyPort | None = None,
     ) -> Sequence[Sequence[Q]]:
-        """Evaluates path-ordered loop product via sovereign omega_holonomy port."""
+        """Evaluates path-ordered loop product via sovereign core_holonomy port."""
         hol_port = port or get_holonomy_port()
         sort_names = {s for s, _ in self.sorts}
         if "turn" not in sort_names:
@@ -203,7 +203,7 @@ class FiniteStructure:
         word: Sequence[tuple[int, bool]],
         port: ExactHolonomyPort | None = None,
     ) -> bool:
-        """Verifies whether loop product is identity via sovereign omega_holonomy port."""
+        """Verifies whether loop product is identity via sovereign core_holonomy port."""
         hol_port = port or get_holonomy_port()
         sort_names = {s for s, _ in self.sorts}
         if "turn" not in sort_names:

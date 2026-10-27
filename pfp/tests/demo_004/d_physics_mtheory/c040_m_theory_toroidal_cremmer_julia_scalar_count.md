@@ -21,7 +21,7 @@ Cremmer and Julia (1979) found that eleven-dimensional supergravity reduced on a
 
 There are two independent routes to each number. One counts fields: internal components of the metric and of the three-form, plus every form that is dual to a scalar in D dimensions. The other is group theory: the dimension of the noncompact part of the algebra. Agreement between the routes is the certificate. Direct counting is where answers go wrong. In low dimensions p-forms must be dualized (in D dimensions a p-form is dual to a (D − p − 2)-form), so a count that stops at "metric plus three-form" is short in D = 5, 4 and 3.
 
-The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) two-route verification, and OEEIS (Omega Engine Epistemic Immune System) screening of answers that quote the famous totals without a breakdown that adds up.
+The task stresses OEWAS (Engine Workflows, Agents, Skills) two-route verification, and OEEIS (Engine Epistemic Immune System) screening of answers that quote the famous totals without a breakdown that adds up.
 
 ## 3. Formal Problem and Bounds
 
@@ -105,7 +105,7 @@ Operands expected: (1) a p-form in D dimensions is dual to a (D − p − 2)-for
 ## 13. Estate Reuse and Prerequisites
 
 - No Lie-algebra or supergravity field-content module exists in the estate. This challenge depends on the weight-system code built for C033, extended to E₆, E₇ and E₈ root systems; that is new Rust work.
-- `omega_engine/crates_rs/omega_kernel` for exact integers.
+- `engine/crates_rs/core_kernel` for exact integers.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

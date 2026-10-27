@@ -2,19 +2,19 @@
 
 import unittest
 
-from omega_engine_operads.domain.value_objects import (
+from operads.domain.value_objects import (
     AuthorityEffect,
     OperandId,
     OperationId,
     SkillId,
 )
-from omega_engine_operads.domain.value_objects.lifecycle_facets import (
+from operads.domain.value_objects.lifecycle_facets import (
     AdmissionFacet,
     ExecutorBindingFacet,
     SchemaBindingFacet,
     ValidationFacet,
 )
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import (
+from operads.infrastructure.parser.markdown_parser_adapter import (
     LosslessMarkdownParserAdapter,
 )
 

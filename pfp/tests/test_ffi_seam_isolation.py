@@ -2,11 +2,11 @@
 
 `RULE_FFI_SEAM_ISOLATION_001` and the Parity Seam Isolation Invariant give one
 module the job of locating and spawning the native host:
-`omega_engine_operating_system/adapters/rust_host/ffi.py`.
+`operating_system/adapters/rust_host/ffi.py`.
 
 This adapter had grown its own four-path search over `target/{debug,release}`.
 Two answers to "where is the host" is one too many, and the drift was not
-theoretical: the local copy ignored `OMEGA_SYMBOL_GAME_HOST`, which CLAUDE.md
+theoretical: the local copy ignored `CORE_SYMBOL_GAME_HOST`, which CLAUDE.md
 documents as the supported way to point at a binary built elsewhere. Anyone
 relying on that variable was silently served a stale `target/debug` build, or
 told the host was missing while holding a perfectly good path to it.
@@ -21,28 +21,28 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal
-from omega_engine_operating_system.adapters.rust_host import ffi as native_host
-from omega_engine_pfp.ffi import (
+from operations.domain.rop.result import Err, Ok, Refusal
+from operating_system.adapters.rust_host import ffi as native_host
+from pfp.ffi import (
     RustSymbolGameHost,
-    find_omega_symbol_game_binary,
+    find_core_symbol_game_binary,
 )
 
 
 def test_the_environment_override_is_honoured(tmp_path: Path) -> None:
     """The regression. The previous four-path search never read this variable."""
-    stand_in = tmp_path / "omega_symbol_game.exe"
+    stand_in = tmp_path / "core_symbol_game.exe"
     stand_in.write_bytes(b"")
 
-    previous = os.environ.get("OMEGA_SYMBOL_GAME_HOST")
-    os.environ["OMEGA_SYMBOL_GAME_HOST"] = str(stand_in)
+    previous = os.environ.get("CORE_SYMBOL_GAME_HOST")
+    os.environ["CORE_SYMBOL_GAME_HOST"] = str(stand_in)
     try:
-        assert find_omega_symbol_game_binary() == stand_in
+        assert find_core_symbol_game_binary() == stand_in
     finally:
         if previous is None:
-            os.environ.pop("OMEGA_SYMBOL_GAME_HOST", None)
+            os.environ.pop("CORE_SYMBOL_GAME_HOST", None)
         else:
-            os.environ["OMEGA_SYMBOL_GAME_HOST"] = previous
+            os.environ["CORE_SYMBOL_GAME_HOST"] = previous
 
 
 def test_a_missing_host_carries_the_seam_refusal_code(tmp_path: Path) -> None:
@@ -52,19 +52,19 @@ def test_a_missing_host_carries_the_seam_refusal_code(tmp_path: Path) -> None:
     this boundary -- but the code survives, which is what lets a caller tell
     "not built yet" from "looked in the wrong place".
     """
-    previous = os.environ.get("OMEGA_SYMBOL_GAME_HOST")
-    os.environ["OMEGA_SYMBOL_GAME_HOST"] = str(tmp_path / "does-not-exist.exe")
+    previous = os.environ.get("CORE_SYMBOL_GAME_HOST")
+    os.environ["CORE_SYMBOL_GAME_HOST"] = str(tmp_path / "does-not-exist.exe")
     try:
         with pytest.raises(FileNotFoundError) as caught:
-            find_omega_symbol_game_binary()
+            find_core_symbol_game_binary()
         assert "HOST_BINARY_NOT_FOUND" in str(caught.value) or "not exist" in str(
             caught.value
         )
     finally:
         if previous is None:
-            os.environ.pop("OMEGA_SYMBOL_GAME_HOST", None)
+            os.environ.pop("CORE_SYMBOL_GAME_HOST", None)
         else:
-            os.environ["OMEGA_SYMBOL_GAME_HOST"] = previous
+            os.environ["CORE_SYMBOL_GAME_HOST"] = previous
 
 
 def test_this_module_does_not_locate_the_host_itself() -> None:
@@ -73,12 +73,12 @@ def test_this_module_does_not_locate_the_host_itself() -> None:
     Asserted against the source because the failure mode is someone helpfully
     re-adding a fallback list when the delegation looks like indirection.
     """
-    import omega_engine_pfp.ffi as adapter
+    import pfp.ffi as adapter
 
     source = Path(adapter.__file__).read_text(encoding="utf-8")
     assert "locate_host_binary" in source, "the adapter must delegate the lookup"
 
-    function = source.split("def find_omega_symbol_game_binary", 1)[1].split(
+    function = source.split("def find_core_symbol_game_binary", 1)[1].split(
         "\nclass ", 1
     )[0]
     # Skip the docstring: it explains the removed search, so scanning it would
@@ -99,7 +99,7 @@ def test_this_module_does_not_locate_the_host_itself() -> None:
 
 
 def test_action_adapter_does_not_spawn_or_extract_native_results() -> None:
-    import omega_engine_pfp.ffi as adapter
+    import pfp.ffi as adapter
 
     source = Path(adapter.__file__).read_text(encoding="utf-8")
     assert "subprocess" not in source

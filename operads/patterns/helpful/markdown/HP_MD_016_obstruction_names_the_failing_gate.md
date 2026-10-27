@@ -29,7 +29,7 @@ The terminal sentence names the stage that failed and the error class that recei
 
 The witness in [AP_MD_016_gate_fail_called_math_research](../../anti/markdown/AP_MD_016_gate_fail_called_math_research.md) is the historical folder `pfp_loop_20260928_234130`, dated 2026-09-28. No gate, pytest, ruff, notebook, TeX, or Lean command was rerun. Paper 009 does record `MISSING_DUAL_WITNESS`. That blocker is not what the shared sentence identifies, and the other ten receipts do not record it. Stage 5 on paper 002 is `PASS` with `visual_inspection` `NOT_VERIFIED`.
 
-`/woland-proof-scope-rule` still refuses a mechanized-proof sentence when the Lean stage is `NOT_APPLICABLE`. `/declared-vs-actual-gate` still separates `NOT_APPLICABLE` from `PASS`. `/woland-assigned-outcome-rule` still keeps every assigned stage in the count. `/governance-research-paper-edit-publish` still owns deposit bijection, `verify_deposit.py`, and the mechanism inventory. `/omega-old-man-red-team` still owns a missing dual certificate. `/adversarial-receipt-audit` still owns a green stage that leaves sight `NOT_VERIFIED`. This pattern does not replace those owners.
+`/adversary-proof-scope-rule` still refuses a mechanized-proof sentence when the Lean stage is `NOT_APPLICABLE`. `/declared-vs-actual-gate` still separates `NOT_APPLICABLE` from `PASS`. `/adversary-assigned-outcome-rule` still keeps every assigned stage in the count. `/governance-research-paper-edit-publish` still owns deposit bijection, `verify_deposit.py`, and the mechanism inventory. `/core-red-team` still owns a missing dual certificate. `/adversarial-receipt-audit` still owns a green stage that leaves sight `NOT_VERIFIED`. This pattern does not replace those owners.
 
 ## Dual Anti-Pattern
 

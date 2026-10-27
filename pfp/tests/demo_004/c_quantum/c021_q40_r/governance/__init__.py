@@ -24,7 +24,7 @@ from .commit_reveal_runner import (
     run_phase2_freeze_record,
     run_phase3_reveal_and_score,
 )
-from .woland_gate import (
+from .adversary_gate import (
     GATE_SCOPE,
     RUN_FOLDER_EXISTS,
     TERMINAL_OPEN_RESIDUAL,
@@ -32,8 +32,8 @@ from .woland_gate import (
     TERMINAL_REFUSE,
     TERMINAL_VERDICTS,
     RunFolderExistsError,
-    WolandGate,
-    persist_woland_run_bundle,
+    AdversaryGate,
+    persist_adversary_run_bundle,
 )
 
 __all__ = [
@@ -55,8 +55,8 @@ __all__ = [
     "TERMINAL_REFERENCE_SELF_CONSISTENT",
     "TERMINAL_REFUSE",
     "TERMINAL_VERDICTS",
-    "WolandGate",
-    "persist_woland_run_bundle",
+    "AdversaryGate",
+    "persist_adversary_run_bundle",
     "run_commit_reveal_pipeline",
     "run_phase1_judge_commitment",
     "run_phase2_freeze_record",

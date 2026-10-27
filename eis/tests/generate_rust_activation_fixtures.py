@@ -6,14 +6,14 @@ import dataclasses
 import json
 from pathlib import Path
 
-from omega_engine_epistemic_immune_system.domain.guard_activation import (
+from eis.domain.guard_activation import (
     ActivationRefusal,
     DangerSignalReceiptV1,
     DetectorHitRefV1,
     GuardActivationReceiptV1,
     evaluate_activation,
 )
-from omega_engine_epistemic_immune_system.domain.thymus import CandidateDetector, ThymusGate
+from eis.domain.thymus import CandidateDetector, ThymusGate
 
 
 def digest(char):
@@ -90,7 +90,7 @@ def main():
     thymus = ThymusGate(panel)
     overlap = [{"panel": panel, "pattern": pattern, "expected": dataclasses.asdict(thymus.evaluate_candidate(CandidateDetector(pattern)))} for pattern in ("defect", "exact rational", "^clean", "bad|fraud", "clean_[ab]", "^absent$")]
     fixture = {"records": records, "activations": activations, "legacy_thymus_overlap": overlap}
-    path = Path(__file__).resolve().parents[2] / "omega_engine/crates_rs/tests/omega_epistemic_immune_system/fixtures/python_activation_v1.json"
+    path = Path(__file__).resolve().parents[2] / "engine/crates_rs/tests/core_epistemic_immune_system/fixtures/python_activation_v1.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(fixture, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Frozen {len(records)} record, {len(activations)} activation and {len(overlap)} limited overlap vectors before native extension.")

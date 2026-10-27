@@ -28,10 +28,10 @@ fixtures.
 | [docs/descriptions.md](docs/descriptions.md) | Plain-text description for the deposit record |
 | [docs/references.md](docs/references.md) | Bibliography |
 | [code/README.md](code/README.md) | What the package tests do and do not show |
-| [_lev_landau_theoretical_minimum_quiz/quiz.md](_lev_landau_theoretical_minimum_quiz/quiz.md) | 24 graded problems, levels 0-7 |
-| [_lev_landau_theoretical_minimum_quiz/study_guide.md](_lev_landau_theoretical_minimum_quiz/study_guide.md) | Worked prerequisites and replay instructions |
-| [_lev_landau_theoretical_minimum_quiz/instructor_key.md](_lev_landau_theoretical_minimum_quiz/instructor_key.md) | Separate answers, proofs, and rubric |
-| [code/landau_worksheet.py](code/landau_worksheet.py) | Standard-library exact educational replay |
+| [_lev_examiner_theoretical_minimum_quiz/quiz.md](_lev_examiner_theoretical_minimum_quiz/quiz.md) | 24 graded problems, levels 0-7 |
+| [_lev_examiner_theoretical_minimum_quiz/study_guide.md](_lev_examiner_theoretical_minimum_quiz/study_guide.md) | Worked prerequisites and replay instructions |
+| [_lev_examiner_theoretical_minimum_quiz/instructor_key.md](_lev_examiner_theoretical_minimum_quiz/instructor_key.md) | Separate answers, proofs, and rubric |
+| [code/examiner_worksheet.py](code/examiner_worksheet.py) | Standard-library exact educational replay |
 | [docs/first_publication_review_2026_10_02.md](docs/first_publication_review_2026_10_02.md) | Review findings and publication verdict |
 | [docs/first_publication_validation_2026_10_02.json](docs/first_publication_validation_2026_10_02.json) | Fresh source-bound execution record |
 | `code/tests/` | Package tests |
@@ -47,7 +47,7 @@ py -3.12 -m pytest code/tests/test_006_epistemic_immune.py -q
 py -3.12 -m pytest code/tests/test_006_worked_example.py -q
 py -3.12 -m pytest code/tests/test_006_catalog_file.py -q
 py -3.12 -m ruff check code
-py -3.12 code/landau_worksheet.py
+py -3.12 code/examiner_worksheet.py
 ```
 
 `test_006_worked_example.py` runs the paper's Section 6 example and its three
@@ -67,8 +67,8 @@ From the root of a full repository checkout, choosing the baseline commit
 the actual source hashes for a current-branch run:
 
 ```powershell
-py -3.12 -m pytest omega_engine_pfp/tests/test_cemetery_sink.py -q
-py -3.12 -m pytest omega_engine_pfp/tests/test_immune_defect_regressions.py -q
+py -3.12 -m pytest pfp/tests/test_cemetery_sink.py -q
+py -3.12 -m pytest pfp/tests/test_immune_defect_regressions.py -q
 ```
 
 No provider call, model download, or network access is required.
@@ -99,7 +99,7 @@ The fresh package-local `docs/first_publication_validation_2026_10_02.json`
 lists commands, tool versions, source hashes, outcomes, and tested scope.
 The implementation replay uses byte-verified materialized baseline sources;
 it is not a full-repository or current-branch integration run. Historical
-receipts here and under `_intelligence/omega_paper_reviews/` keep their original
+receipts here and under `_intelligence/core_paper_reviews/` keep their original
 bytes, dates, and scope.
 
 ## Licenses

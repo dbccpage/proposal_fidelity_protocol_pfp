@@ -13,7 +13,7 @@
 - **Challenge ID:** `C049`
 - **Domain:** `e_formal_math` (Formal Mathematics, Category Theory, Universal Constructions)
 - **Mathematical Invariant:** Limit/Colimit universal cone verification, unique mediating morphism factorizations, and natural functor adjunction certifications ($F \dashv G \iff \eta: 1_C \Rightarrow GF, \varepsilon: FG \Rightarrow 1_D$ satisfying triangle identities $\varepsilon F \circ F\eta = 1_F$ and $G\varepsilon \circ \eta G = 1_G$).
-- **Woland Reality Gate Status:** `PASS_TO_MASTER` (Commit SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`, 64/64 base cases passed, 48/48 hostile mutations defended/killed).
+- **Adversary Reality Gate Status:** `PASS_TO_MASTER` (Commit SHA-256: `88b989fd6c50851e0a9ffa799b9d817594508a8678e47636a146b8d51de78702`, 64/64 base cases passed, 48/48 hostile mutations defended/killed).
 
 ---
 

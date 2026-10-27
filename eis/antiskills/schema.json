@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://anomalon.local/schemas/anti-skill-v1.json",
+  "$id": "https://sentinel.local/schemas/anti-skill-v1.json",
   "title": "OE anti-skill v1 wire contracts",
   "$defs": {
     "digest": {
@@ -71,7 +71,7 @@
         "annotation": { "$ref": "#/$defs/annotation" },
         "authority_effect": { "const": "None" },
         "schema_version": {
-          "const": "omega.antiskill.conversation-episode.v1"
+          "const": "core.antiskill.conversation-episode.v1"
         },
         "episode_id": { "$ref": "#/$defs/digest" }
       }
@@ -111,7 +111,7 @@
         "activation_kind": { "const": "human_review_required" },
         "status": { "const": "PROPOSED" },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.antiskill.candidate.v1" },
+        "schema_version": { "const": "core.antiskill.candidate.v1" },
         "candidate_id": { "$ref": "#/$defs/digest" }
       }
     },
@@ -183,7 +183,7 @@
         },
         "commutes_with": { "$ref": "#/$defs/uniqueStrings" },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.antiskill.spec.v1" },
+        "schema_version": { "const": "core.antiskill.spec.v1" },
         "spec_digest": { "$ref": "#/$defs/digest" }
       }
     },
@@ -203,7 +203,7 @@
           "maxItems": 256
         },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.antiskill.registry.v1" },
+        "schema_version": { "const": "core.antiskill.registry.v1" },
         "registry_id": { "$ref": "#/$defs/digest" }
       }
     },
@@ -232,7 +232,7 @@
         "passed": { "type": "boolean" },
         "authority_effect": { "const": "None" },
         "schema_version": {
-          "const": "omega.antiskill.evaluation-case-result.v1"
+          "const": "core.antiskill.evaluation-case-result.v1"
         },
         "result_id": { "$ref": "#/$defs/digest" }
       }
@@ -265,7 +265,7 @@
         },
         "outcome": { "enum": ["COMPUTED_PASS", "COMPUTED_FAIL"] },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.antiskill.evaluation-receipt.v1" },
+        "schema_version": { "const": "core.antiskill.evaluation-receipt.v1" },
         "receipt_id": { "$ref": "#/$defs/digest" }
       }
     },
@@ -311,7 +311,7 @@
         "unresolved_questions": { "$ref": "#/$defs/uniqueStrings" },
         "proposed_prompt": { "type": "string" },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.prompt.typed.v1" },
+        "schema_version": { "const": "core.prompt.typed.v1" },
         "prompt_id": { "$ref": "#/$defs/digest" }
       }
     },
@@ -337,7 +337,7 @@
         "repair_hint": { "type": "string", "minLength": 1 },
         "detector_ref": { "$ref": "#/$defs/identifier" },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.prompt.finding.v1" },
+        "schema_version": { "const": "core.prompt.finding.v1" },
         "finding_id": { "$ref": "#/$defs/digest" }
       }
     },
@@ -374,7 +374,7 @@
         },
         "protected_fields_ok": { "type": "boolean" },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.prompt.review-receipt.v1" },
+        "schema_version": { "const": "core.prompt.review-receipt.v1" },
         "receipt_id": { "$ref": "#/$defs/digest" }
       }
     },
@@ -391,7 +391,7 @@
         },
         "receipt": { "$ref": "#/$defs/promptReviewReceipt" },
         "registry": { "$ref": "#/$defs/registry" },
-        "schema_version": { "const": "omega.prompt.review-bundle.v1" }
+        "schema_version": { "const": "core.prompt.review-bundle.v1" }
       }
     },
     "approvedPrompt": {
@@ -424,7 +424,7 @@
         "operation_budget": { "type": "integer", "minimum": 1, "maximum": 4096 },
         "requested_effects": { "$ref": "#/$defs/uniqueStrings" },
         "authority_effect": { "const": "None" },
-        "schema_version": { "const": "omega.prompt.approved.v1" },
+        "schema_version": { "const": "core.prompt.approved.v1" },
         "approved_prompt_id": { "$ref": "#/$defs/digest" }
       }
     }

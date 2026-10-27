@@ -14,15 +14,15 @@ import re
 import pytest
 from pydantic import ValidationError
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPipelineFailure, PfpPipelineStep
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.domain.stages.host_stages import (
+from pfp.domain.contracts.pfp_runtime import PfpPipelineFailure, PfpPipelineStep
+from pfp.domain.kernel.result import RefusalCode
+from pfp.domain.stages.host_stages import (
     admit_record,
     hand_off_record,
     receipt_record,
     selection_record,
 )
-from omega_engine_pfp.domain.stages.stages import (
+from pfp.domain.stages.stages import (
     ChallengeReplay,
     ControllerStageRef,
     ReplayOutcome,
@@ -31,10 +31,10 @@ from omega_engine_pfp.domain.stages.stages import (
     requires_problem,
     stage_subset_problem,
 )
-from omega_engine_pfp.infrastructure.providers import OfflineDeterministicPfpProvider
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
-from omega_engine_pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
+from pfp.infrastructure.providers import OfflineDeterministicPfpProvider
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
+from pfp.use_cases.pfp_stages import RunPfpPipelineUseCase
 
 STORAGE = PfpFileSystemStorageAdapter()
 CONTROLLER = STORAGE.load_stage_controller()

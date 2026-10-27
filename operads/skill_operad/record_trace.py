@@ -22,7 +22,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
 
-TRACE_SCHEMA = "omega.operad.execution_trace.v1"
+TRACE_SCHEMA = "core.operad.execution_trace.v1"
 _THREAD_LOCK = threading.Lock()
 
 

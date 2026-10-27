@@ -1,14 +1,14 @@
 """Regulatory T-Cells (Tregs), Anti-Anti-Skills & Peripheral Tolerance Safeguards.
 
 Re-exports TregSupervisor and associated value objects from the canonical
-domain package: omega_engine_epistemic_immune_system.domain.treg.
+domain package: eis.domain.treg.
 
 AuthorityEffect: None.
 """
 
 from __future__ import annotations
 
-from omega_engine_epistemic_immune_system.domain.treg import (
+from eis.domain.treg import (
     AuthorityLevel,
     AutoimmuneToxicityReport,
     RegulatoryAntibody,

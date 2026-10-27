@@ -1,6 +1,6 @@
 ---
 name: auto-oe-autop
-description: "Finish each Woland run with scoped IDE learning and practical repairs; run the full estate-maintenance pipeline only when explicitly requested."
+description: "Finish each Adversary run with scoped IDE learning and practical repairs; run the full estate-maintenance pipeline only when explicitly requested."
 invocation: entry
 operad_source_colours: ["State", "Audit"]
 operad_target_colour: "Contract"
@@ -14,7 +14,7 @@ families: [meta]
 **AuthorityEffect:** `None`.
 
 The default `/auto-oe-autop` is a small finish step in the current IDE session.
-After every outer `/woland` and `/woland-digests` run, including partial or failed
+After every outer `/adversary` and `/adversary-digests` run, including partial or failed
 work, invoke [/auto-learn](../auto-learn/SKILL.md) once with the original need,
 concrete observations, corrections, changed paths and unresolved findings.
 Do useful learning now; do not substitute a receipt pile for applied structure.
@@ -44,7 +44,7 @@ authorized scope and existing custody rules.
 
 ## One Outer Finish, No Recursion
 
-The outer run owns this finish step. Inner AutoP/Woland/auto-learn helpers return
+The outer run owns this finish step. Inner AutoP/Adversary/auto-learn helpers return
 their findings to it; the outer finish consumes them once. Applying a lesson and
 rechecking it do not start another AutoP finish. A simple in-session flag or the
 existing task context is sufficient; no scheduler or hook registry is needed.
@@ -59,7 +59,7 @@ Run the full sequential nine-stage script only for an explicit maintenance
 request or an explicitly configured legacy maintenance integration:
 
 ```powershell
-py -3.12 omega_engine_operads/skills/auto-oe-autop/scripts/orchestrate_autop.py --maintenance --verbose
+py -3.12 operads/skills/auto-oe-autop/scripts/orchestrate_autop.py --maintenance --verbose
 ```
 
 Existing callers that explicitly supply `--receipt` or `--output` retain their

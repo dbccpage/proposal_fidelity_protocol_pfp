@@ -1,7 +1,7 @@
 # AuthorityEffect: None.
 """Tests for Exact and Independent Dual Checkers in C041."""
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual
+from pfp.tests.demo_004.e_formal_math.c041_lean4_finite_lemma_proofs.judge_packet.checkers.dual_evaluator import evaluate_dual
 
 
 def test_dual_evaluator_valid_proof():

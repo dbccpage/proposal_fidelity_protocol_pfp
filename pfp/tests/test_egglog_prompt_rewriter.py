@@ -3,7 +3,7 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_pfp.infrastructure.adapters import egglog_prompt_rewriter as owner
+from pfp.infrastructure.adapters import egglog_prompt_rewriter as owner
 
 
 def test_actual_hostile_rule_cannot_drop_a_constraint(monkeypatch):

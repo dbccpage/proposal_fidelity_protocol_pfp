@@ -9,14 +9,14 @@ from functools import partial
 from pathlib import Path
 
 PKG_ROOT = Path(__file__).resolve().parent
-REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir() and (p / "omega_engine_woland").is_dir())
+REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir() and (p / "adversary").is_dir())
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.dual_evaluator import (  # noqa: E402
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.judge_packet.checkers.dual_evaluator import (  # noqa: E402
     evaluate_dual,
 )
-from omega_engine_pfp.infrastructure.formal_matrix import (  # noqa: E402
+from pfp.infrastructure.formal_matrix import (  # noqa: E402
     run_model_matrix,
     run_model_matrix_cli,
 )

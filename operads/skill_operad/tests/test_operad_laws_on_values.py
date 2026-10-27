@@ -1,5 +1,5 @@
-from omega_engine_operads.skill_operad.domain.planar import ColoredOp, identity
-from omega_engine_operads.skill_operad.domain.evidence import EMPTY, Residual
+from operads.skill_operad.domain.planar import ColoredOp, identity
+from operads.skill_operad.domain.evidence import EMPTY, Residual
 
 
 def test_identity_is_structural_not_a_name():

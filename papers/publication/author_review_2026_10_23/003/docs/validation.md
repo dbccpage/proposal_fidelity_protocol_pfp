@@ -14,7 +14,7 @@
 The interrupted task was recovered from the [shared conversation](https://chatgpt.com/s/cx_6ab5540129448191bb7f3b0ccf293bab)
 and its local task record. Its three requirements were the seven-question reviewer
 response, Paper 003, and exclusive functional calculation in
-`omega_engine/crates_rs/omega_functional/src`.
+`engine/crates_rs/core_functional/src`.
 
 The draft and preceding repairs were preserved in
 `07e9f187f4e3e19cb0bb0634f046555c52a9486d` on `codex/mub6-0924094100`.
@@ -71,21 +71,21 @@ bundled Python for standard-library tests. No model provider calls were made.
 ## Availability limits
 
 The graph adapter requires a trusted locally built executable and its SHA-256
-pin. See the education setup, `omega_engine_education/FUNCTIONAL_BOUNDARY.md` in the repository.
+pin. See the education setup, `education/FUNCTIONAL_BOUNDARY.md` in the repository.
 The generic Python DDC, Paper 001 primal-dual certificate, fixed-section
-educational scorer, old LP speedup benchmark, AST functional proxies, and Woland
+educational scorer, old LP speedup benchmark, AST functional proxies, and Adversary
 functional routes are explicitly unavailable until supported native adapters exist.
 The old benchmark refuses because comparing two aliases of the same native solver
 would manufacture an independent speedup comparison.
 
-The full `omega_certifiers` library test target cannot compile because
+The full `core_certifiers` library test target cannot compile because
 `meron_certificate.rs:488` includes a missing Meron JSON fixture under
 `research/published`. The include reference is identical in the recovered base.
 This unrelated fixture was not fabricated or repinned. The separate native
 functional verifier tests passed.
 
-Some legacy Woland/Woland/operations imports depend on the already absent
-`omega_engine.kernel` package. Their changed refusal paths were source-checked;
+Some legacy Adversary/Adversary/operations imports depend on the already absent
+`engine.kernel` package. Their changed refusal paths were source-checked;
 no end-to-end execution coverage is claimed for those imports. Existing tests
 that require retired Python calculators are no longer valid availability checks.
 A repository-wide test sweep was not run.

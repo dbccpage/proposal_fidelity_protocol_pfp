@@ -8,7 +8,7 @@ Parent: [GTLA Rules Rubric](../../../../../rules/authority/rl_gtla_rules_rubric.
 
 **AuthorityEffect:** None.
 
-> **Mandatory Governance Directive:** Every AI agent, subagent, and LLM executing within the Anomalon Omega Engine repository MUST observe these 7 GTLA Invariants across all code, prose, agendas, minutes, and proof ledgers. Aligned with published monograph `007_gtla.md` (v2.0.1).
+> **Mandatory Governance Directive:** Every AI agent, subagent, and LLM executing within the Sentinel Engine repository MUST observe these 7 GTLA Invariants across all code, prose, agendas, minutes, and proof ledgers. Aligned with published monograph `007_gtla.md` (v2.0.1).
 
 ---
 
@@ -38,9 +38,9 @@ Parent: [GTLA Rules Rubric](../../../../../rules/authority/rl_gtla_rules_rubric.
 
 * **Law:** Systems must maintain strict separation across four independent axes with zero implicit coercions:
   1. *Diagnostic Axis:* Exact repair ($\Phi_1 = 0$), closed residual ($\Phi_1 > 0, \Gamma_2 = 0$), open obstruction ($\Gamma_2 > 0$).
-  2. *Routing Axis:* Terminal routing values (`CheckPassed`, `RequiresLift`, `Repair`, `Refusal`, `NoRule`, `BudgetUnknown`, `Refused`), owned by `omega_types::routing`.
+  2. *Routing Axis:* Terminal routing values (`CheckPassed`, `RequiresLift`, `Repair`, `Refusal`, `NoRule`, `BudgetUnknown`, `Refused`), owned by `core_types::routing`.
   3. *Extension Axis:* Presentation depth from proved lifts.
-  4. *Authority Axis:* Grade + `AuthorityEffect` + external `VerifiedPromotion` certificate, with transition guards owned by `omega_types::fda`.
+  4. *Authority Axis:* Grade + `AuthorityEffect` + external `VerifiedPromotion` certificate, with transition guards owned by `core_types::fda`.
 * **Fence:** Higher-layer authority or unearned proof status cannot be smuggled into lower-layer proposals. Diagnostic green or residual mass is **not** authority.
 
 ---
@@ -56,7 +56,7 @@ Parent: [GTLA Rules Rubric](../../../../../rules/authority/rl_gtla_rules_rubric.
 
 * **Law:** Every evaluation path must terminate in exactly one pairwise disjoint token per registry axis:
   * *Diagnostic Class Axis:* `ExactRepair`, `ClosedResidual`, `OpenObstruction`.
-  * *Routing Terminal Axis:* `CheckPassed`, `RequiresLift`, `Repair`, `Refusal`, `NoRule`, `BudgetUnknown`, `Refused` (owned by `omega_types::routing`, with guards owned by `omega_types::fda`).
+  * *Routing Terminal Axis:* `CheckPassed`, `RequiresLift`, `Repair`, `Refusal`, `NoRule`, `BudgetUnknown`, `Refused` (owned by `core_types::routing`, with guards owned by `core_types::fda`).
 * **Fence:** Overlapping or ambiguous terminal states are prohibited.
 
 ---
@@ -70,16 +70,16 @@ Parent: [GTLA Rules Rubric](../../../../../rules/authority/rl_gtla_rules_rubric.
 
 ## 8. Canonical Source References
 
-The CODA component monographs are archived, byte for byte, as historical inputs to the Witnessed Difference Programme (WDP) monograph. The links below point to that archive (`docs/source_archive/coda_component_packages/` under the WDP package); the earlier `research/omega_engine_coda/papers/` tree no longer exists.
+The CODA component monographs are archived, byte for byte, as historical inputs to the Witnessed Difference Programme (WDP) monograph. The links below point to that archive (`docs/source_archive/coda_component_packages/` under the WDP package); the earlier `research/coda/papers/` tree no longer exists.
 
-* **Flagship GTLA Monograph (v2.0.1):** [`coda_gtla/coda_gtla_monograph.md.txt`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/coda_gtla/coda_gtla_monograph.md.txt)
-* **GTLA Claim Ledger:** [`coda_gtla/coda_gtla_claim_ledger.md.txt`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/coda_gtla/coda_gtla_claim_ledger.md.txt)
-* **CODA-FDA (Finite Descent Authority):** [`fda/coda_fda.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/fda/coda_fda.md)
-* **CODA-FOC (Finite Obstruction Calculus):** [`foc/coda_foc.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/foc/coda_foc.md)
-* **CODA-OR (Omniversal Re-Presentation):** [`or/coda_or.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/or/coda_or.md)
-* **CODA-MUR (Meta & Universal Re-Presentation):** [`mur/coda_mur.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/mur/coda_mur.md)
-* **CODA-Q (The Continuum):** [`q/coda_q.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/q/coda_q.md)
-* **CODA (Calculus of Obstruction, Descent, and Authority):** [`coda/coda.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/coda/coda.md)
-* **CODA-CS (Continuum Shadow):** [`cs/coda_cs.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/cs/coda_cs.md)
-* **CODA-A (Anomalon):** [`a/coda_a.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/a/coda_a.md)
-* **CODA-CS-Q Bridge:** [`cs_q/coda_cs_q_bridge.md`](../../../../../../omega_engine_atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/cs_q/coda_cs_q_bridge.md)
+* **Flagship GTLA Monograph (v2.0.1):** [`coda_gtla/coda_gtla_monograph.md.txt`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/coda_gtla/coda_gtla_monograph.md.txt)
+* **GTLA Claim Ledger:** [`coda_gtla/coda_gtla_claim_ledger.md.txt`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/coda_gtla/coda_gtla_claim_ledger.md.txt)
+* **CODA-FDA (Finite Descent Authority):** [`fda/coda_fda.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/fda/coda_fda.md)
+* **CODA-FOC (Finite Obstruction Calculus):** [`foc/coda_foc.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/foc/coda_foc.md)
+* **CODA-OR (Omniversal Re-Presentation):** [`or/coda_or.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/or/coda_or.md)
+* **CODA-MUR (Meta & Universal Re-Presentation):** [`mur/coda_mur.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/mur/coda_mur.md)
+* **CODA-Q (The Continuum):** [`q/coda_q.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/q/coda_q.md)
+* **CODA (Calculus of Obstruction, Descent, and Authority):** [`coda/coda.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/coda/coda.md)
+* **CODA-CS (Continuum Shadow):** [`cs/coda_cs.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/cs/coda_cs.md)
+* **CODA-A (Sentinel):** [`a/coda_a.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/a/coda_a.md)
+* **CODA-CS-Q Bridge:** [`cs_q/coda_cs_q_bridge.md`](../../../../../../atlas/coda_atlas/F004_papers/001_finite_obstruction_calculus/000_witnessed_difference_programme/docs/source_archive/coda_component_packages/cs_q/coda_cs_q_bridge.md)

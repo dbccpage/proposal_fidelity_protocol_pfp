@@ -22,28 +22,28 @@ REPO_ROOT = next(
     (
         parent
         for parent in Path(__file__).resolve().parents
-        if (parent / "omega_engine_pfp").is_dir() and (parent / "omega_engine_woland").is_dir()
+        if (parent / "pfp").is_dir() and (parent / "adversary").is_dir()
     ),
     None,
 )
 if REPO_ROOT is not None and str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (
+from pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.judge_packet.checkers.dual_evaluator import (
     evaluate_dual,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.lattice_holonomy import (
+from pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.lattice_holonomy import (
     compute_all_plaquettes,
     compute_torus_global_loops,
 )
 
-from omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer import (
+from pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.eval_epistemic_immune_transfer import (
     _main,
     _model_slug,
     _query,
     _run_cases,
 )
-from omega_engine_pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
+from pfp.tests.demo_004.b_cohomology.c017_nonabelian_lattice_holonomy.reference_solver.solver import (
     solve as reference_solve,
 )
 

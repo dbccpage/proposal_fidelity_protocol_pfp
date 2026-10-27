@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c016_cohomology_ring_cup_products.governance.budget_gate import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c016_cohomology_ring_cup_products.governance.budget_gate import (
     check_budget_gate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c016_cohomology_ring_cup_products.governance.commit_reveal_runner import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c016_cohomology_ring_cup_products.governance.commit_reveal_runner import (
     run_provisional_evaluation,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c016_cohomology_ring_cup_products.governance.woland_gate import (
-    evaluate_woland_terminal_gate,
+from projects.mssn_sn_symgam.challenges.b_cohomology.c016_cohomology_ring_cup_products.governance.adversary_gate import (
+    evaluate_adversary_terminal_gate,
 )
 
 
@@ -65,11 +65,11 @@ def test_gate_refuses_empty_mutation_suite_and_float_only_kill_rate():
     A summary that only carries the old float ``mutation_kill_rate`` is also refused.
     """
     full = {"total_cases": 4, "passed_cases": 4, "mutations_total": 3, "mutations_killed": 3}
-    assert evaluate_woland_terminal_gate(full, True)[0] == "REFERENCE_SELF_CONSISTENT"
+    assert evaluate_adversary_terminal_gate(full, True)[0] == "REFERENCE_SELF_CONSISTENT"
     empty = {**full, "mutations_total": 0, "mutations_killed": 0}
-    assert evaluate_woland_terminal_gate(empty, True)[0] == "REFERENCE_SELF_INCONSISTENT"
+    assert evaluate_adversary_terminal_gate(empty, True)[0] == "REFERENCE_SELF_INCONSISTENT"
     legacy = {"total_cases": 4, "passed_cases": 4, "mutation_kill_rate": 1.0}
-    assert evaluate_woland_terminal_gate(legacy, True)[0] == "REFERENCE_SELF_INCONSISTENT"
-    assert evaluate_woland_terminal_gate({**full, "total_cases": 0, "passed_cases": 0}, True)[
+    assert evaluate_adversary_terminal_gate(legacy, True)[0] == "REFERENCE_SELF_INCONSISTENT"
+    assert evaluate_adversary_terminal_gate({**full, "total_cases": 0, "passed_cases": 0}, True)[
         0
     ] == ("REFERENCE_SELF_INCONSISTENT")

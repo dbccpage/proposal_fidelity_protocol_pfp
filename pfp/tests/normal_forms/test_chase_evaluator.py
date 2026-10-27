@@ -18,7 +18,7 @@ from __future__ import annotations
 import random
 import unittest
 
-from omega_engine_pfp.domain.normal_forms.relational import (
+from pfp.domain.normal_forms.relational import (
     FunctionalDependency,
     RelationalSchema,
     chase_join_dependency,

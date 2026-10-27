@@ -14,8 +14,8 @@ AuthorityEffect: None.
 
 Use a host-selected source manifest, writable-file list, fixed command argv and
 one offline patch. OEOP owns the six declarations under
-`omega_engine_operads/catalog/contracts/v1/ddc_code_repair_*.json`.
-Woland binds their executors through the existing typed workflow compiler and
+`operads/catalog/contracts/v1/ddc_code_repair_*.json`.
+Adversary binds their executors through the existing typed workflow compiler and
 native operad runner. This does not admit these operations for production.
 
 | Move | Actual action |
@@ -30,11 +30,11 @@ native operad runner. This does not admit these operations for production.
 From the repository root, execute the real offline example:
 
 ```text
-python -m omega_engine_woland.documentation.examples.code_repair
+python -m adversary.documentation.examples.code_repair
 ```
 
 The existing native-host selection must be available. A caller's own request
-uses `python -m omega_engine_woland.entrypoints.code_repair_cli --help`.
+uses `python -m adversary.entrypoints.code_repair_cli --help`.
 Run output stays outside the source tree, is never overwritten, and retains
 the patch, request, working copy, observations, lineage and native receipt.
 

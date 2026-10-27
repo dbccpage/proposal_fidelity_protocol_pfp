@@ -11,7 +11,7 @@ unchanged; only its location moved.
 ``` ext
 User: /sprint-execution 055
 
-Omega: I'll begin execution of Sprint 055.
+Core: I'll begin execution of Sprint 055.
 
 **Pre-Execution Gate:**
   Checking planning documents...
@@ -29,13 +29,13 @@ Omega: I'll begin execution of Sprint 055.
 
 Executing 3 stories (10 points)...
 
-### STORY-055-001: Add Techne Code Soviet Inspector pre-DONE gate (3 pts)
+### STORY-055-001: Add Techne Code Inspector pre-DONE gate (3 pts)
 
 Commitment submitted: p_success=0.85
 
 Implementing pre-DONE gate logic in sprint-execution skill...
-Writing tests in tests/test_techne_code_soviet_inspector.py...
-Running Techne Code Soviet Inspector on new tests... PASS
+Writing tests in tests/test_techne_code_inspector.py...
+Running Techne Code Inspector on new tests... PASS
 
 Outcome submitted: actual=1
 

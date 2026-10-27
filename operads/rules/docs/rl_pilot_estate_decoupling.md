@@ -2,7 +2,7 @@
 paths:
   - "**/pilots/**"
   - "**/matrix/**"
-  - "omega_engine_pfp/**"
+  - "pfp/**"
 ---
 
 # Rule: Pilot Estate Decoupling & Semiotic Carrier Quad-Axis Separation

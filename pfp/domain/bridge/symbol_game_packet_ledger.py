@@ -8,9 +8,9 @@ from __future__ import annotations
 import json
 from typing import Any, Dict, Sequence
 
-from omega_engine_governance.domain.intelligence_community import canonical_intelligence_route
-from omega_engine_pfp.domain import PacketEnvelopeV2
-from omega_engine_pfp.domain.ports.run_artifact_port import RunArtifactSinkPort
+from governance.domain.intelligence_community import canonical_intelligence_route
+from pfp.domain import PacketEnvelopeV2
+from pfp.domain.ports.run_artifact_port import RunArtifactSinkPort
 
 from .symbol_game_models import SymbolGameStepResult
 

@@ -6,7 +6,7 @@ Markdown rendering (`paper.md`), and its claim ledger. `source.md` and
 their original repository-relative links. Use the linked renderings for reading.
 
 Code baseline: 59dde95a7860063c25d75db37f40af556e9f28ee. Revised source path:
-`omega_engine_atlas/coda_atlas/F004_papers/015_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md`.
+`atlas/coda_atlas/F004_papers/015_pfp/009_pfp_adversarial_dialectics_and_terminal_reality_gates/paper.md`.
 
 Build identities are in `build_receipt.json`; the collection manifest records
 all inputs and outputs. Related revised papers link to sibling packages; code

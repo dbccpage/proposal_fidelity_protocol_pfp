@@ -8,40 +8,40 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operads.application.commands.compile_catalog import (
+from operads.application.commands.compile_catalog import (
     CompileCatalogHandler,
     operation_content_digest,
 )
-from omega_engine_operads.application.dtos.command_dtos import CompileCatalogCommand
-from omega_engine_operads.domain.capability_catalog_v1 import (
+from operads.application.dtos.command_dtos import CompileCatalogCommand
+from operads.domain.capability_catalog_v1 import (
     encode_capability_catalog,
 )
-from omega_engine_operads.domain.value_objects.identifier import (
+from operads.domain.value_objects.identifier import (
     CausationId,
     CorrelationId,
     EstateRef,
     IdempotencyKey,
 )
-from omega_engine_operads.domain.value_objects.lifecycle_facets import (
+from operads.domain.value_objects.lifecycle_facets import (
     AdmissionFacet,
 )
-from omega_engine_operads.infrastructure.capability_catalog_compiler import (
+from operads.infrastructure.capability_catalog_compiler import (
     compile_capability_catalog,
 )
-from omega_engine_operads.infrastructure.fs.fs_estate_source_adapter import (
+from operads.infrastructure.fs.fs_estate_source_adapter import (
     FsEstateSourceAdapter,
 )
-from omega_engine_operads.infrastructure.fs.legacy_catalog_reader_adapter import (
+from operads.infrastructure.fs.legacy_catalog_reader_adapter import (
     LegacyCatalogReaderAdapter,
 )
-from omega_engine_operads.infrastructure.parser.markdown_parser_adapter import (
+from operads.infrastructure.parser.markdown_parser_adapter import (
     LosslessMarkdownParserAdapter,
 )
-from omega_engine_operads.infrastructure.providers.system_clock import SystemClock
-from omega_engine_operads.infrastructure.providers.uuid_id_generator import (
+from operads.infrastructure.providers.system_clock import SystemClock
+from operads.infrastructure.providers.uuid_id_generator import (
     UuidIdGenerator,
 )
-from omega_engine_operads.infrastructure.storage.sqlite_unit_of_work import (
+from operads.infrastructure.storage.sqlite_unit_of_work import (
     SqliteUnitOfWork,
 )
 

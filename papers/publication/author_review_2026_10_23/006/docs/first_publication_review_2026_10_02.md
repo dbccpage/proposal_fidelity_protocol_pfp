@@ -80,7 +80,7 @@ integrity and prefix comparison, failures/resources, catalog provenance,
 maintenance records and denominators, exact decay, and research/publication
 claims. Learners must supply a calculation or counterexample and state its
 contract and limit. The Apartment 50 frame is fictional; the levels and rubric
-are an original curriculum, not historical Landau authority or measured gains.
+are an original curriculum, not historical Examiner authority or measured gains.
 
 ## Publication and source
 

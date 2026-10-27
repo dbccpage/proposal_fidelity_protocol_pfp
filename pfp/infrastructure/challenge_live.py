@@ -12,34 +12,34 @@ from dataclasses import replace
 from uuid import uuid4
 from pathlib import Path
 
-from omega_engine_pfp.domain.contracts.pfp_runtime import PfpPrompt
-from omega_engine_pfp.infrastructure.adapters.pfp_campaign import (
+from pfp.domain.contracts.pfp_runtime import PfpPrompt
+from pfp.infrastructure.adapters.pfp_campaign import (
     replay_stages, grade_reply, micro, request,
     write_new as _write_new,
 )
-from omega_engine_pfp.use_cases.pfp_stages import PfpStagePolicy
-from omega_engine_pfp.use_cases.pfp_proposal import ProposalCheck, REPAIR_RULES
-from omega_engine_pfp.infrastructure.pilot_matrix import _scope, complete_pilot_turn
-from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
-from omega_engine_woland.domain.providers.types import Provider
-from omega_engine_woland.infrastructure.providers.openai_compat import build_openai_compat_body, parse_openai_compat_response
-from omega_engine_woland.infrastructure.providers.wire import decode_reply
-from omega_engine_woland.use_cases.providers.completion import request_digest
+from pfp.use_cases.pfp_stages import PfpStagePolicy
+from pfp.use_cases.pfp_proposal import ProposalCheck, REPAIR_RULES
+from pfp.infrastructure.pilot_matrix import _scope, complete_pilot_turn
+from pfp.infrastructure.task_turn import prepare_task_turn
+from adversary.domain.providers.types import Provider
+from adversary.infrastructure.providers.openai_compat import build_openai_compat_body, parse_openai_compat_response
+from adversary.infrastructure.providers.wire import decode_reply
+from adversary.use_cases.providers.completion import request_digest
 
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import ROOT
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import digest
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import load_plan
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import prompt_for, prompt_input_paths
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import relocated
-from omega_engine_pfp.infrastructure.challenge_execution import isolated
-from omega_engine_pfp.infrastructure.challenge_execution import source_bindings
+from adversary.tests.pilots.challenge_suite.catalog import ROOT
+from adversary.tests.pilots.challenge_suite.catalog import digest
+from adversary.tests.pilots.challenge_suite.catalog import load_plan
+from adversary.tests.pilots.challenge_suite.catalog import prompt_for, prompt_input_paths
+from adversary.tests.pilots.challenge_suite.catalog import relocated
+from pfp.infrastructure.challenge_execution import isolated
+from pfp.infrastructure.challenge_execution import source_bindings
 
 
 def choose_case(challenge_id, split, ordinal):
     if split not in ("development", "held_out") or type(ordinal) is not int or ordinal < 0:
         raise ValueError("INVALID_CASE_SELECTION")
     if challenge_id == "C001":
-        from omega_engine_woland.tests.pilots.challenge_suite.c001 import case_rows
+        from adversary.tests.pilots.challenge_suite.c001 import case_rows
 
         matches = [row for row in case_rows() if row["split"] == split]
         if ordinal >= len(matches):
@@ -59,29 +59,29 @@ def choose_case(challenge_id, split, ordinal):
 
 
 RUNTIME_SOURCES = (
-    "omega_engine_pfp/domain/pfp_ingress.py",
-    "omega_engine_pfp/domain/contracts/__init__.py",
-    "omega_engine_pfp/domain/contracts/pfp_runtime.py",
-    "omega_engine_pfp/use_cases/pfp_prompt.py",
-    "omega_engine_pfp/infrastructure/adapters/pfp_campaign.py",
-    "omega_engine_pfp/use_cases/pfp_proposal.py",
-    "omega_engine_pfp/use_cases/pfp_stages.py",
-    "omega_engine_pfp/infrastructure/adapters/pfp_proposals.py",
-    "omega_engine_pfp/ffi.py",
-    "omega_engine_woland/tests/pilots/challenge_suite/catalog.py",
-    "omega_engine_pfp/infrastructure/challenge_execution.py",
-    "omega_engine_pfp/infrastructure/challenge_live.py",
+    "pfp/domain/pfp_ingress.py",
+    "pfp/domain/contracts/__init__.py",
+    "pfp/domain/contracts/pfp_runtime.py",
+    "pfp/use_cases/pfp_prompt.py",
+    "pfp/infrastructure/adapters/pfp_campaign.py",
+    "pfp/use_cases/pfp_proposal.py",
+    "pfp/use_cases/pfp_stages.py",
+    "pfp/infrastructure/adapters/pfp_proposals.py",
+    "pfp/ffi.py",
+    "adversary/tests/pilots/challenge_suite/catalog.py",
+    "pfp/infrastructure/challenge_execution.py",
+    "pfp/infrastructure/challenge_live.py",
 )
 
 
 SCHEMA = "pfp.challenge-accounted.v1"
 RUNTIME_SOURCES += (
-    "omega_engine_pfp/infrastructure/pilot_matrix.py",
-    "omega_engine_pfp/infrastructure/task_turn.py",
-    "omega_engine_pfp/infrastructure/estimated_gateway.py",
-    "omega_engine_woland/infrastructure/providers/wire.py",
-    "omega_engine_woland/infrastructure/providers/openai_compat.py",
-    "omega_engine_woland/use_cases/providers/completion.py",
+    "pfp/infrastructure/pilot_matrix.py",
+    "pfp/infrastructure/task_turn.py",
+    "pfp/infrastructure/estimated_gateway.py",
+    "adversary/infrastructure/providers/wire.py",
+    "adversary/infrastructure/providers/openai_compat.py",
+    "adversary/use_cases/providers/completion.py",
 )
 
 

@@ -10,9 +10,9 @@ import subprocess
 
 import pytest
 
-from omega_engine_pfp.infrastructure import consistency_teaching as recording
-from omega_engine_pfp.tests.demo_004.a_mechanism.consistency_teaching import conditions, host, tasks
-from omega_engine_pfp.tests.test_pilot_matrix_pfp import make_gateway
+from pfp.infrastructure import consistency_teaching as recording
+from pfp.tests.demo_004.a_mechanism.consistency_teaching import conditions, host, tasks
+from pfp.tests.test_pilot_matrix_pfp import make_gateway
 
 
 def test_teaching_scene_import_is_offline_and_has_no_retired_bench_dependencies(monkeypatch):
@@ -27,7 +27,7 @@ def test_teaching_scene_import_is_offline_and_has_no_retired_bench_dependencies(
 
     monkeypatch.setattr(builtins, "__import__", checked_import)
     module = importlib.import_module(
-        "omega_engine_education.documentation.004_oepfp.curriculum.scenes.naked_prompt_launder")
+        "education.documentation.004_oepfp.curriculum.scenes.naked_prompt_launder")
     assert callable(module.record_one) and callable(module.render_mp4)
     assert attempted == []
 
@@ -148,7 +148,7 @@ def test_cli_reuses_one_gateway_and_stops_before_hard_case(tmp_path, monkeypatch
 
 def test_renderer_existing_output_refuses_before_optional_import(tmp_path, monkeypatch):
     scene = importlib.import_module(
-        "omega_engine_education.documentation.004_oepfp.curriculum.scenes.naked_prompt_launder")
+        "education.documentation.004_oepfp.curriculum.scenes.naked_prompt_launder")
     output = tmp_path / "old.mp4"
     output.write_bytes(b"original movie")
     original = builtins.__import__

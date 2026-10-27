@@ -6,8 +6,8 @@ Read the [guide](paper.md), or its [PDF](paper.pdf). This instructional companio
 
 The guide separates a potential adjustment, which preserves the original cycle sum, from replacement of edge claims. The manuscript, worked session, and capstone all use claims (1,1,1) and weights (1,2,3).
 
-- [Landau quiz: 32 questions in eight levels](_lev_landau_theoretical_minimum_quiz/quiz.md)
-- [Study guide, worked answers, and capstone](_lev_landau_theoretical_minimum_quiz/study_guide.md)
+- [Examiner quiz: 32 questions in eight levels](_lev_examiner_theoretical_minimum_quiz/quiz.md)
+- [Study guide, worked answers, and capstone](_lev_examiner_theoretical_minimum_quiz/study_guide.md)
 - [Claim ledger](paper_claim_ledger.md) and [editorial history](paper_change_log.md)
 - [Publication review](docs/publication_review_2026_10_02.md) and [fresh execution record](docs/publication_review_2026_10_02.json)
 - [Description](docs/descriptions.md) and [references](docs/references.md)
@@ -24,14 +24,14 @@ python code/play_demo.py
 python code/study_capstone.py
 ```
 
-With `OMEGA_FUNCTIONAL_GRAPH_BIN` unset, these use exact Python enumeration. Both print the selected calculator path. A configured native calculator's refusal or error propagates; neither substitutes a Python value after that failure. The capstone preserves actual verdicts and snapshot restoration but is not a canonical native receipt.
+With `CORE_FUNCTIONAL_GRAPH_BIN` unset, these use exact Python enumeration. Both print the selected calculator path. A configured native calculator's refusal or error propagates; neither substitutes a Python value after that failure. The capstone preserves actual verdicts and snapshot restoration but is not a canonical native receipt.
 
 The native-only [quickstart](code/quickstart.py) requires `solve_graph_phi1`, which is not included in the deposit. In a separate checkout or worktree at the code baseline, confirm the source revision with `git rev-parse HEAD`, then build:
 
 ```powershell
-cargo build --locked -j 1 --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_functional --bin solve_graph_phi1
-$env:OMEGA_FUNCTIONAL_GRAPH_BIN = (Resolve-Path omega_engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
-$env:OMEGA_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:OMEGA_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
+cargo build --locked -j 1 --manifest-path engine/crates_rs/Cargo.toml -p core_functional --bin solve_graph_phi1
+$env:CORE_FUNCTIONAL_GRAPH_BIN = (Resolve-Path engine/crates_rs/target/debug/solve_graph_phi1.exe).Path
+$env:CORE_FUNCTIONAL_GRAPH_SHA256 = (Get-FileHash -Algorithm SHA256 $env:CORE_FUNCTIONAL_GRAPH_BIN).Hash.ToLowerInvariant()
 ```
 
 Use the actual output path if Cargo uses a custom target directory, and the native executable name on other platforms. Return to the paper directory and run:

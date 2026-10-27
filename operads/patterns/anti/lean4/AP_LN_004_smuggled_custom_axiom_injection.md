@@ -24,7 +24,7 @@ Injecting custom `axiom` declarations (e.g. `axiom tao_fails_conjecture2`, `axio
   `grep -rnE "^\s*axiom\s+" lean4/research_programs/`
 - Lean 4 Environment Axiom Print:
   `#print axioms <TheoremName>` emitting identifiers outside `[propext, Classical.choice, Quot.sound]`.
-- Observed in `task_woland_mub6_mission2_axiom_purge_20261009` (Act VIII: The Trial of the Three Smuggled Axioms):
+- Observed in `task_adversary_mub6_mission2_axiom_purge_20261009` (Act VIII: The Trial of the Three Smuggled Axioms):
   "A procedural shortcut occurred in the previous watch. To bind the sporadic literature classes, three synthetic axioms were injected rather than discharged constructively to core kernels."
 
 ## Hazard & Failure Mode

@@ -13,14 +13,14 @@ import pytest
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
-from omega_engine_operations.domain.rop.result import Err, Ok
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
-from omega_engine_pfp.infrastructure.openrouter_seat_gateway import (
+from operations.domain.rop.result import Err, Ok
+from pfp.domain.value_objects.seat_turn import SeatTurnRequestV1
+from pfp.infrastructure.openrouter_seat_gateway import (
     CallLedger,
     RoutedSeatExecutor,
     parse_machine_block,
 )
-from omega_engine_pfp.infrastructure.seat_transport.routing import (
+from pfp.infrastructure.seat_transport.routing import (
     BudgetPolicy,
     RouteLeg,
     RoutingTable,
@@ -40,7 +40,7 @@ def _legs() -> tuple[RouteLeg, ...]:
 def _table(budget: BudgetPolicy) -> RoutingTable:
     return RoutingTable(
         "t", "openrouter", Fraction(1, 2), budget,
-        (SeatRoute("Koroviev", "strong", _legs()), SeatRoute("Begemot", "cheap", _legs())),
+        (SeatRoute("Defect Hunter", "strong", _legs()), SeatRoute("Gauge Breaker", "cheap", _legs())),
     )
 
 
@@ -74,7 +74,7 @@ def _rows(tmp_path):
 
 @FAST
 @given(
-    seats=st.lists(st.sampled_from(["Koroviev", "Begemot"]), min_size=1, max_size=25),
+    seats=st.lists(st.sampled_from(["Defect Hunter", "Gauge Breaker"]), min_size=1, max_size=25),
     cap=st.integers(min_value=200, max_value=5000),
     in_tok=st.integers(0, 40),
     out_tok=st.integers(0, 64),
@@ -107,7 +107,7 @@ def test_reserve_mode_overshoot_is_bounded_to_one_call_and_then_refuses(tmp_path
     biggest = 0
     for _ in costs:
         before = ex.spent_bout
-        result = ex._execute_legacy_fixture(_req("Koroviev"))
+        result = ex._execute_legacy_fixture(_req("Defect Hunter"))
         if isinstance(result, Err):
             assert result.error.code == "BUDGET_BOUT_EXCEEDED"
             assert ex.spent_bout == before
@@ -117,7 +117,7 @@ def test_reserve_mode_overshoot_is_bounded_to_one_call_and_then_refuses(tmp_path
     over = max(0, ex.spent_bout - cap)
     assert over <= biggest
     if ex.spent_bout > cap:
-        assert ex._execute_legacy_fixture(_req("Koroviev")).error.code == "BUDGET_BOUT_EXCEEDED"
+        assert ex._execute_legacy_fixture(_req("Defect Hunter")).error.code == "BUDGET_BOUT_EXCEEDED"
 
 
 @FAST
@@ -139,7 +139,7 @@ def test_reserve_mode_overshoot_is_bounded_to_one_call_and_then_refuses(tmp_path
 def test_hostile_replies_never_raise_and_always_leave_a_typed_ledger_row(tmp_path_factory, payload):
     tmp = tmp_path_factory.mktemp("hostile")
     ex = _executor(tmp, lambda m, r, mt: payload, BudgetPolicy(10**9, 10**10))
-    result = ex._execute_legacy_fixture(_req("Koroviev"))
+    result = ex._execute_legacy_fixture(_req("Defect Hunter"))
     assert isinstance(result, (Ok, Err))
     rows = _rows(tmp)
     assert rows, "every attempt must be recorded"
@@ -168,7 +168,7 @@ def test_every_leg_is_attempted_in_order_and_failures_are_recorded(tmp_path_fact
         return _body()
 
     ex = _executor(tmp, transport, BudgetPolicy(10**9, 10**10))
-    result = ex._execute_legacy_fixture(_req("Koroviev"))
+    result = ex._execute_legacy_fixture(_req("Defect Hunter"))
     rows = _rows(tmp)
     first_ok = next((i for i, failed in enumerate(fail_mask) if not failed), None)
     if first_ok is None:
@@ -195,7 +195,7 @@ def test_any_non_none_authority_effect_is_refused_without_a_reply(tmp_path_facto
     tmp = tmp_path_factory.mktemp("authority")
     block = f"```machine\nAUTHORITY_EFFECT={effect}\nRESIDUAL_COLOUR=Open\nDISPOSITION=PASS_TO_MASTER\nDDC_LETTER=E\n```\n"
     ex = _executor(tmp, lambda m, r, mt: _body(content=block), BudgetPolicy(10**9, 10**10))
-    result = ex._execute_legacy_fixture(_req("Koroviev"))
+    result = ex._execute_legacy_fixture(_req("Defect Hunter"))
     if effect.strip() == "None":
         assert isinstance(result, Ok)
     else:
@@ -204,7 +204,7 @@ def test_any_non_none_authority_effect_is_refused_without_a_reply(tmp_path_facto
 
 def test_negative_token_counts_refuse_at_provider_parser_and_record_every_attempt(tmp_path):
     ex = _executor(tmp_path, lambda m, r, mt: _body(prompt=-1, completion=1), BudgetPolicy(10**9, 10**10))
-    result = ex._execute_legacy_fixture(_req("Koroviev"))
+    result = ex._execute_legacy_fixture(_req("Defect Hunter"))
     # Strict provider usage validation runs before constructing a seat reply.
     assert isinstance(result, Err) and result.error.code == "ALL_LEGS_FAILED"
     rows = _rows(tmp_path)
@@ -241,11 +241,11 @@ def test_canonical_seat_key_is_idempotent_and_case_insensitive(name):
 def test_day_cap_is_enforced_across_executors_sharing_a_ledger(tmp_path):
     budget = BudgetPolicy(10**9, 600)
     a = _executor(tmp_path, lambda m, r, mt: _body(prompt=100, completion=10), budget)
-    results = [a._execute_legacy_fixture(_req("Koroviev")) for _ in range(5)]
+    results = [a._execute_legacy_fixture(_req("Defect Hunter")) for _ in range(5)]
     spent = CallLedger(tmp_path / "calls.jsonl").spent_on("2026-10-04")
     assert spent <= 600 and any(isinstance(r, Err) and r.error.code == "BUDGET_DAY_EXCEEDED" for r in results)
     b = _executor(tmp_path, lambda m, r, mt: _body(), budget)
-    assert b._execute_legacy_fixture(_req("Koroviev")).error.code == "BUDGET_DAY_EXCEEDED"
+    assert b._execute_legacy_fixture(_req("Defect Hunter")).error.code == "BUDGET_DAY_EXCEEDED"
 
 
 @pytest.mark.parametrize("name", ["", "   ", "\u65e5\u672c", "___", "!!!"])
@@ -256,7 +256,7 @@ def test_ids_without_ascii_alphanumerics_never_match_a_seat(name):
 
 
 def test_sharp_s_folds_to_ss_and_is_refused_with_a_typed_code():
-    from omega_engine_pfp.infrastructure.seat_transport.routing import canonical_seat_key
+    from pfp.infrastructure.seat_transport.routing import canonical_seat_key
 
     assert canonical_seat_key("\u00df") == canonical_seat_key("SS") == "ss"
     result = _table(BudgetPolicy(10**6, 10**7)).seat("\u00df")
@@ -266,7 +266,7 @@ def test_sharp_s_folds_to_ss_and_is_refused_with_a_typed_code():
 def test_validator_refuses_a_seat_whose_key_is_empty():
     from dataclasses import replace
 
-    from omega_engine_pfp.infrastructure.seat_transport.routing import validate_table
+    from pfp.infrastructure.seat_transport.routing import validate_table
 
     table = _table(BudgetPolicy(10**6, 10**7))
     bad = replace(table, seats=table.seats + (SeatRoute("\u65e5\u672c", "cheap", _legs()),))

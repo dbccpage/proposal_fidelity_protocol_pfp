@@ -6,10 +6,10 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_pfp.tests.demo_004.c_quantum.c027_kochen_specker_contextuality.judge_packet.checkers import (
+from pfp.tests.demo_004.c_quantum.c027_kochen_specker_contextuality.judge_packet.checkers import (
     independent_checker,
 )
-from omega_engine_pfp.tests.demo_004.c_quantum.c027_kochen_specker_contextuality.judge_packet.checkers.exact_checker import (
+from pfp.tests.demo_004.c_quantum.c027_kochen_specker_contextuality.judge_packet.checkers.exact_checker import (
     verify_exact,
 )
 

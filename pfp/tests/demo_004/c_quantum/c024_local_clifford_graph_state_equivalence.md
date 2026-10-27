@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Two graph states |G⟩ and |G′⟩ on the same labelled vertices are equivalent under local Clifford operations exactly when G′ can be reached from G by a sequence of local complementations (Van den Nest, Dehaene, De Moor 2004). Bouchet gave a polynomial-time algorithm for deciding local equivalence of graphs (Bouchet 1991). Both directions have cheap certificates: a vertex sequence to replay, or an invariant that differs.
 
-The task is a decision problem with two certificate types, so a solver that only ever says "equivalent" or only ever says "not equivalent" fails half the set. It stresses OEWAS (Omega Engine Workflows, Agents, Skills) search over orbits and OEEIS (Omega Engine Epistemic Immune System) screening of answers that confuse labelled equivalence with graph isomorphism.
+The task is a decision problem with two certificate types, so a solver that only ever says "equivalent" or only ever says "not equivalent" fails half the set. It stresses OEWAS (Engine Workflows, Agents, Skills) search over orbits and OEEIS (Engine Epistemic Immune System) screening of answers that confuse labelled equivalence with graph isomorphism.
 
 ## 3. Formal Problem and Bounds
 
@@ -102,9 +102,9 @@ Operands expected: (1) local complementation is an involution, so reverse the se
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_linear_algebra` for F2 rank; `omega_engine/crates_rs/omega_number_theory/src/binary_field.rs`.
-- `omega_engine/crates_rs/omega_quantum_physics/src/clifford.rs` (the single-qubit Clifford quotient Sp(2, F2), order 6), for the local Clifford framing.
-- `omega_engine/crates_rs/omega_quantum_physics/src/ghz_state.rs` is a scaffold marked best-effort and is not used for checking.
+- `engine/crates_rs/core_linear_algebra` for F2 rank; `engine/crates_rs/core_number_theory/src/binary_field.rs`.
+- `engine/crates_rs/core_quantum_physics/src/clifford.rs` (the single-qubit Clifford quotient Sp(2, F2), order 6), for the local Clifford framing.
+- `engine/crates_rs/core_quantum_physics/src/ghz_state.rs` is a scaffold marked best-effort and is not used for checking.
 - No graph-state or local-complementation module exists in Rust; the checker is new work.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 

@@ -172,7 +172,7 @@ _PFP_EXPORTS = {
     "GateReceipt": (".contracts.gates", "GateReceipt"),
     "GateSpec": (".contracts.gates", "GateSpec"),
     "GateVerdict": (".contracts.gates", "GateVerdict"),
-    "WolandGateId": (".contracts.gates", "WolandGateId"),
+    "AdversaryGateId": (".contracts.gates", "AdversaryGateId"),
     "SchemaCatalog": (".contracts.schemas", "SchemaCatalog"),
     "SchemaSpec": (".contracts.schemas", "SchemaSpec"),
     "SchemaValidationResult": (".contracts.schemas", "SchemaValidationResult"),

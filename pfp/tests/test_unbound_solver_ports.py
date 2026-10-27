@@ -17,12 +17,12 @@ from types import ModuleType
 
 import pytest
 
-import omega_engine_pfp.domain.solvers as solvers_package
-from omega_engine_pfp.domain.exact.q import Q
-from omega_engine_pfp.domain.solvers.regime import Regime
+import pfp.domain.solvers as solvers_package
+from pfp.domain.exact.q import Q
+from pfp.domain.solvers.regime import Regime
 
 KINDS = Path(solvers_package.__file__).resolve().parent / "kinds.py"
-FRESH = "omega_engine_pfp.domain.solvers._kinds_unbound_copy"
+FRESH = "pfp.domain.solvers._kinds_unbound_copy"
 
 
 @pytest.fixture

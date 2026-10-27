@@ -11,11 +11,11 @@ primitive: null
 aliases: ["paper:sn-packets:public-prompt-memory-redaction"]
 sources:
   - "s_n_packets_and_the_symbol_game.md §9 'Theorem 11: Public Prompt Memory Requires Redaction'"
-  - ".planning/2026-06-12-omega-engine-immune-review.md §24 'Privacy and Abuse Model'"
+  - ".planning/2026-06-12-immune-review.md §24 'Privacy and Abuse Model'"
 uses: ["ENC-0888"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean"
 extracted: 2026-06-13
 migration: VERIFIED
 ---
@@ -31,7 +31,7 @@ Raw prompt presence or a missing hash blocks public-safe status.
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_runtime_limits.lean`.
 
 The Lean theorem names are:
 

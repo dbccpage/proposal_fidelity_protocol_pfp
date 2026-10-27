@@ -47,7 +47,7 @@ that revision. The other files in this package are companion material:
   paths, a content-addressed repair log, a sparse-landing certificate builder, a
   retired scaling entry point, and three historical benchmarks with their
   receipts), plus `code/tests/`. The governor's `compute_phi1` uses exact
-  Python enumeration when `OMEGA_FUNCTIONAL_GRAPH_BIN` is unset. With a
+  Python enumeration when `CORE_FUNCTIONAL_GRAPH_BIN` is unset. With a
   configured native executable, it calls that calculator and propagates every
   native refusal or error. Its `step_cut`
   refuses a relational CUT that omits a declared edge (status
@@ -94,25 +94,25 @@ attention-benchmark test file skips and says why.
 Extract [the audited source archive](audited_source/README.md) and run these
 commands from the extracted root `pfp-iv-native-source-52cb5457/`. On Windows,
 set `CARGO_TARGET_DIR` to a short directory outside the archive. Do not point
-it at another checkout's `omega_engine/crates_rs/target`.
+it at another checkout's `engine/crates_rs/target`.
 
 ```powershell
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test host_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test foundation_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test invoke_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test native_cli_intake
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test host_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test foundation_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test invoke_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test native_cli_intake
 ```
 
 A historical author-run report records all four targets on 2026-09-28 EDT
 (2026-09-29 UTC), with 12, 11, 32 and 9 passing tests under Rust 1.98.0.
-The `omega_symbol_game` crate tree at the recorded run commit
+The `core_symbol_game` crate tree at the recorded run commit
 `1c7092c3db2ab2fa65999cf2555aff7733b97b99` is
 `75d77aa5e1f30dfc102f00c8f7cb6159418dec63`, the same tree as the code
 baseline. The October 2 package-local receipt does not record a fresh run of
 these native targets. Raw Cargo standard output was not retained.
 Python targets are `test_packet_contracts.py`, `test_exact_functional_port.py`,
 `test_functional_boundary.py`, and `test_ffi_seam_isolation.py` under
-`omega_engine_pfp/tests/`. Collect first and preserve native skips. A
+`pfp/tests/`. Collect first and preserve native skips. A
 scripted host validates adapter handling, not native computation.
 
 ## Toolchain and verification record

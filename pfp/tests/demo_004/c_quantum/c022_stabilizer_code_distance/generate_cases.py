@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "omega_engine_pfp").is_dir())
+_REPO_ROOT = next(p for p in Path(__file__).resolve().parents if (p / "pfp").is_dir())
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 

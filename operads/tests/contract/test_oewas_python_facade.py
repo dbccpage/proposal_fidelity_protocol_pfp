@@ -1,7 +1,7 @@
 """Contract tests for OeopApiV3 Python Facade."""
 
 import unittest
-from omega_engine_operads.infrastructure.bootstrap import (
+from operads.infrastructure.bootstrap import (
     create_oeop_container,
 )
 

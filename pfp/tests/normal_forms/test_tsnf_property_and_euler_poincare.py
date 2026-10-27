@@ -30,7 +30,7 @@ from collections import deque
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_pfp.domain.normal_forms.topology import (
+from pfp.domain.normal_forms.topology import (
     verify_tsnf,
 )
 

@@ -8,7 +8,7 @@ cemetery, or formulary products, and does not claim a Phi1 reality gate.
 Everything concrete (the Symbol Game fixture controls, the native pharmacy,
 the screen wiring, the quarantine store, the packaged fixture replies) is
 injected as a `Demo4eWiring` by the composition root
-`omega_engine_epistemic_immune_system/entrypoints/demo_4e_cogsci_autopoiesis.py`.
+`eis/entrypoints/demo_4e_cogsci_autopoiesis.py`.
 This module imports no infrastructure.
 
 Signal 2 comes from host checks on the payload, never from the detector's
@@ -34,7 +34,7 @@ from .policy import (
     require_control,
 )
 
-SCHEMA = "omega.workflows.demo-4e-cogsci-autopoiesis.receipt.v1"
+SCHEMA = "core.workflows.demo-4e-cogsci-autopoiesis.receipt.v1"
 _RECEIPT_KEYS = {
     "schema",
     "AuthorityEffect",

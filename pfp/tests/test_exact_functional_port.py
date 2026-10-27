@@ -14,17 +14,17 @@ from typing import Any
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_operating_system.adapters.rust_host.ffi import locate_host_binary
-from omega_engine_pfp.domain.exact.errors import ExactError
-from omega_engine_pfp.domain.value_objects.functional_receipt import FunctionalReceipt
-from omega_engine_pfp.fixtures.gate11_residual_dual import (
+from operations.domain.rop.result import Ok
+from operating_system.adapters.rust_host.ffi import locate_host_binary
+from pfp.domain.exact.errors import ExactError
+from pfp.domain.value_objects.functional_receipt import FunctionalReceipt
+from pfp.fixtures.gate11_residual_dual import (
     frozen_fixtures,
     host_verify_self,
     k0_d0,
     k0_d1,
 )
-from omega_engine_pfp.infrastructure.adapters.exact_rust_adapter import (
+from pfp.infrastructure.adapters.exact_rust_adapter import (
     RustExactEngineAdapter,
 )
 
@@ -101,7 +101,7 @@ def test_a_missing_binary_is_a_typed_refusal_with_its_reason(monkeypatch) -> Non
     def absent() -> Any:
         raise FileNotFoundError("HOST_BINARY_NOT_FOUND: not built")
 
-    monkeypatch.setattr("omega_engine_pfp.ffi.get_default_host", absent)
+    monkeypatch.setattr("pfp.ffi.get_default_host", absent)
     adapter = RustExactEngineAdapter()
     with pytest.raises(ExactError) as caught:
         adapter.evaluate(k0_d0(), k0_d1(), [Fraction(0)] * 5)
@@ -113,7 +113,7 @@ def test_a_wiring_defect_is_not_swallowed_as_a_missing_host(monkeypatch) -> None
     def broken() -> Any:
         raise RuntimeError("defect")
 
-    monkeypatch.setattr("omega_engine_pfp.ffi.get_default_host", broken)
+    monkeypatch.setattr("pfp.ffi.get_default_host", broken)
     with pytest.raises(RuntimeError):
         RustExactEngineAdapter()
 
@@ -131,7 +131,7 @@ def _live_adapter() -> RustExactEngineAdapter:
     return RustExactEngineAdapter()
 
 
-def test_live_k0_fixtures_are_classified_by_omega_functional() -> None:
+def test_live_k0_fixtures_are_classified_by_core_functional() -> None:
     adapter = _live_adapter()
     expected = {
         "Exact": "ExactRepair",
@@ -145,10 +145,10 @@ def test_live_k0_fixtures_are_classified_by_omega_functional() -> None:
 
 
 def test_live_gate11_self_replays_every_fixture(tmp_path: Path) -> None:
-    from omega_engine_pfp.entrypoints.cli.symbol_game import main
+    from pfp.entrypoints.cli.symbol_game import main
 
     record = host_verify_self(_live_adapter())
     assert record["overall_passed"] is True
-    assert record["functional_owner"] == "omega_engine/crates_rs/omega_functional"
+    assert record["functional_owner"] == "engine/crates_rs/core_functional"
     assert main(["gate11-self", "--out-dir", str(tmp_path)]) == 0
     assert (tmp_path / "host_record.json").exists()

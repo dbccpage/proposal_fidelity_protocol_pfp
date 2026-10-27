@@ -4,9 +4,9 @@
 **AuthorityEffect:** None
 **Status:** `RESEARCH_HOLD`
 **Design readiness:** bounded experiment specified; production contract and source assumptions remain open.
-**System:** [omega_engine_operating_system](../../../../omega_engine_operating_system)
+**System:** [operating_system](../../../../operating_system)
 **Registry relationship:** `INTEGRATION_HYPOTHESIS`; 0 file rows directly assigned to this system.
-**Owner:** maintainers of `omega_engine_operating_system`; specialist roles below.
+**Owner:** maintainers of `operating_system`; specialist roles below.
 **Date:** 2026-10-10
 
 ## Problem and source-derived experiment
@@ -22,7 +22,7 @@ This is a proposed transfer from the linked source material. A relevance score o
 - [LIB-017055_specification_and_verific.md](../../../research_papers/library/08_general_foundations/LIB-017055_specification_and_verific.md) — `integration_hypothesis`; SHA-256 `5865ffbe65ab41899c19a710fa01ce29d6cc22e1c9646da2db63ac1e89e595a7`.
 - [LIB-019769_verified_reductions_for_o.md](../../../research_papers/library/05_optimization_and_search/LIB-019769_verified_reductions_for_o.md) — `integration_hypothesis`; SHA-256 `fd1fc6447229e62b0d70c65f99b6039532c9c4e1b3e4a958af21d4efd39855f9`.
 
-Use the [estate epic index](../README.md) to resolve adjacent owners and the [design-review reconciliation](../../../receipts/epic_design_review_20261010.md) for current OEWAS/Woland limits. This epic adds the experiment above; existing suite plans continue to own their broader architecture, migrations and release work.
+Use the [estate epic index](../README.md) to resolve adjacent owners and the [design-review reconciliation](../../../receipts/epic_design_review_20261010.md) for current OEWAS/Adversary limits. This epic adds the experiment above; existing suite plans continue to own their broader architecture, migrations and release work.
 
 ## Contract to settle before implementation
 
@@ -36,12 +36,12 @@ Use the [estate epic index](../README.md) to resolve adjacent owners and the [de
 
 - Specify source assumptions and checker trust configuration before implementation readiness.
 - Bind prospective acceptance tests to an existing production port; record a real mutation failure before GREEN.
-- Coordinate the diagnostic/production boundary with the Woland transition epic and native host owners.
+- Coordinate the diagnostic/production boundary with the Adversary transition epic and native host owners.
 
-1. Researcher specifies the finite instance and assumption map; Koroviev records counterexamples and scope objections.
-2. DEV_MGR chooses the existing system port and implementation target; Hella checks input shape and Azazello fixes budget and owned paths.
-3. QA_MGR and Soviet Inspector run the production-bound negative and positive controls in batches of at most three test files; repair attempts are bounded to three. Native compilation uses `cargo ... -j 1`.
-4. Woland adjudicates from bound checker evidence; DOC_MGR checks links/encoding and BUILDER checks the theoretical minimum. Preserve all unresolved objections. Output is a SoftwareQaReceiptV1 only after its production schema and writer are bound.
+1. Researcher specifies the finite instance and assumption map; Defect Hunter records counterexamples and scope objections.
+2. DEV_MGR chooses the existing system port and implementation target; Syntax Prefilter checks input shape and Scope Guard fixes budget and owned paths.
+3. QA_MGR and Inspector run the production-bound negative and positive controls in batches of at most three test files; repair attempts are bounded to three. Native compilation uses `cargo ... -j 1`.
+4. Adversary adjudicates from bound checker evidence; DOC_MGR checks links/encoding and BUILDER checks the theoretical minimum. Preserve all unresolved objections. Output is a SoftwareQaReceiptV1 only after its production schema and writer are bound.
 
 ## Theoretical minimum and proposed TDD acceptance
 
@@ -52,9 +52,9 @@ Use the [estate epic index](../README.md) to resolve adjacent owners and the [de
 | WITNESS | Recovery must reject incomplete custody and preserve the original record. |
 | MUTATION | Apply the BREAK to the selected production path after its owner is resolved; require the negative control to turn RED, restore the implementation, then rerun GREEN. No production mutation is claimed executed by this draft. |
 
-Landau Class 1: positive finite example. Class 2: malformed input. Class 3: changed-source/candidate transplant. Class 4: the counterexample above. Class 5: production-bound replay and mutation. All five are **proposed acceptance tests** until recorded against the chosen implementation; mock-only Class 0 evidence is insufficient.
+Examiner Class 1: positive finite example. Class 2: malformed input. Class 3: changed-source/candidate transplant. Class 4: the counterexample above. Class 5: production-bound replay and mutation. All five are **proposed acceptance tests** until recorded against the chosen implementation; mock-only Class 0 evidence is insufficient.
 
-The implemented planning check is `py -3.12 -m omega_engine_product_planning_office.use_cases.prior_art_epic_audit`. It checks source and navigation custody, not the experiment's correctness. The experiment's production test command remains a required design decision owned by this system.
+The implemented planning check is `py -3.12 -m product_planning_office.use_cases.prior_art_epic_audit`. It checks source and navigation custody, not the experiment's correctness. The experiment's production test command remains a required design decision owned by this system.
 
 ## Claim discipline
 
@@ -67,7 +67,7 @@ The implemented planning check is `py -3.12 -m omega_engine_product_planning_off
 
 **Plan status:** proposed behavior tests; no implementation completion is implied. The [requested TDD skill](../../../../.agents/skills/ext-mattpocock-tdd/SKILL.md) currently contains an operadic signature and authority fence only. The concrete RED/GREEN sequence below is this plan's specification, not an invented additional skill instruction.
 
-**Existing public seam:** [HarnessRunReceiptV1.from_canonical / canonical_digest](../../../../omega_engine_operating_system/python/domain/receipt.py). Canonical receipt types exist; future intergate finding persistence must use the existing injected sink and canonical four-file bundle. A standalone diagnostic writer is not an accepted execution path. Crash-atomic publication and orphan recovery remain a concrete storage dependency, not completed by this change.
+**Existing public seam:** [HarnessRunReceiptV1.from_canonical / canonical_digest](../../../../operating_system/python/domain/receipt.py). Canonical receipt types exist; future intergate finding persistence must use the existing injected sink and canonical four-file bundle. A standalone diagnostic writer is not an accepted execution path. Crash-atomic publication and orphan recovery remain a concrete storage dependency, not completed by this change.
 
 **Bounded behavior:** Preserve the immutable diagnostic input, implementation and specification digests across interrupted storage.
 
@@ -79,10 +79,10 @@ The implemented planning check is `py -3.12 -m omega_engine_product_planning_off
 | 2: adversarial control | Crash after staged bytes but before publication, or reuse an occupied receipt path; recovery must never publish partial data as complete or overwrite old evidence. | Enforce the actual missing predicate at the owning seam. Keep the valid control green and preserve the typed refusal. |
 | 3: replay and recovery | Reopen the store and distinguish committed receipt, staged orphan and absent output without fabricating a success record. | Restore the original implementation after mutation, rerun the same controls, then refactor without changing the oracle, input bytes or claimed scope. |
 
-**Proposed test file:** `omega_engine_operating_system/tests/test_prior_art_immutable_receipt_recovery.py`. It is a future acceptance target, not an existing suite or a recorded pass. Invoke one slice/test at a time before extending this file; keep batches to at most three files/crates and Rust compilation at `-j 1`.
+**Proposed test file:** `operating_system/tests/test_prior_art_immutable_receipt_recovery.py`. It is a future acceptance target, not an existing suite or a recorded pass. Invoke one slice/test at a time before extending this file; keep batches to at most three files/crates and Rust compilation at `-j 1`.
 
 ```powershell
-py -3.12 -m pytest omega_engine_operating_system/tests/test_prior_art_immutable_receipt_recovery.py -q
+py -3.12 -m pytest operating_system/tests/test_prior_art_immutable_receipt_recovery.py -q
 ```
 
 **Decisive mutation target:** the linked existing seam is the integration target; select and record the exact predicate/function at implementation time. The mutation must remove the adversarial check above and make its behavior test fail. Source presence is verified here; execution of that mutation and RED/GREEN recovery is not claimed. A missing semantic layer remains a blocking dependency, not a passing mock substitute.

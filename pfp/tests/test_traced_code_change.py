@@ -18,8 +18,8 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp.domain import CanonicalizationError
-from omega_engine_pfp.infrastructure.trace import (
+from pfp.domain import CanonicalizationError
+from pfp.infrastructure.trace import (
     DURABILITY_FSYNC_LIVE,
     EVENT_CANDIDATE_SUBMITTED,
     EVENT_GATES_EVALUATED,
@@ -36,7 +36,7 @@ from omega_engine_pfp.infrastructure.trace import (
     read_records,
     read_status,
 )
-from omega_engine_pfp.use_cases.code_change import BoundCandidate
+from pfp.use_cases.code_change import BoundCandidate
 
 OWNED = "src/x.py"
 PROTECTED = "README.md"

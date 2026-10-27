@@ -35,28 +35,28 @@ _repo_root = Path(__file__).resolve().parents[7]
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.algebraic_checker import (
     verify_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator import (
     CheckerDisagreementError,
     assert_dual_agreement,
     evaluate_dual,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.spectral_checker import (
     GaussianRational,
     _build_exact_hamiltonian,
     _ldlt_hermitian_psd,
     verify_spectral_optimality,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.ddc_tracer import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.ddc_tracer import (
     DDCTracer,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.pauli import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.pauli import (
     _SINGLE_PAULI_MUL,
     PauliString,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.reference_solver.solver import (
     solve,
     solve_with_trace,
 )
@@ -923,7 +923,7 @@ class TestDualEvaluatorHardeningAndDiscrepancyProtection:
         from unittest.mock import patch
 
         with patch(
-            "omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator.evaluate_dual",
+            "projects.mssn_sn_symgam.challenges.c_quantum.c021_q40_r.judge_packet.checkers.dual_evaluator.evaluate_dual",
             return_value={
                 "verdict": "CHECKER_DISAGREEMENT",
                 "case_id": "disagreement_case",

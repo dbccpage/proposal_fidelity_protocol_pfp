@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Any, Callable
 from pydantic import Field
-from omega_engine_pfp.domain.types.base import PfpBaseModel
+from pfp.domain.types.base import PfpBaseModel
 
 
 class DimensionDefinition(PfpBaseModel):

@@ -24,16 +24,16 @@ from fractions import Fraction
 from pathlib import Path
 
 PAPER = Path(__file__).absolute().parents[1]
-ATLAS = "omega_engine_atlas/coda_atlas/omega_engine_pfp/"
+ATLAS = "atlas/coda_atlas/pfp/"
 P001 = ATLAS + "001_pfp_discrete_cochain_retraction_and_toy_involutions/"
 P004 = ATLAS + "004_pfp_native_verification_and_evidence_custody/"
 P006 = ATLAS + "006_pfp_epistemic_immune_system_and_cemetery_dag_mining/"
 P008 = ATLAS + "008_pfp_mssn_tower_challenges_and_retraction_benchmarks/"
 P009 = ATLAS + "009_pfp_adversarial_dialectics_and_terminal_reality_gates/"
 P010 = ATLAS + "010_pfp_holonomy_checks_and_model_pilots/"
-FSP = "omega_engine_projects/fsp/meron_sign_problem/code/"
+FSP = "projects/fsp/meron_sign_problem/code/"
 PFP = (
-    "omega_engine_education/documentation/030_the_symbol_game_proposal_fidelity_protocol_pfp/demos/"
+    "education/documentation/030_the_symbol_game_proposal_fidelity_protocol_pfp/demos/"
 )
 AGGREGATES = (
     "FSP_BLIND_CLUSTER_RECOVERY",
@@ -51,8 +51,8 @@ AGGREGATES = (
     "CHALLENGE_MUTATION_SUITES",
 )
 EXTRA_FILES = (
-    "omega_engine_pfp/controllers/symbol_game_controller.py",
-    "omega_engine_operating_system/python/adapters/rust_host/theory_requests.py",
+    "pfp/controllers/symbol_game_controller.py",
+    "operating_system/python/adapters/rust_host/theory_requests.py",
     PFP + "demos/demos_runner.py",
     FSP + "meron_schema.sql",
     FSP + "prompt_builder.py",
@@ -62,13 +62,13 @@ EXTRA_FILES = (
     P008 + "docs/source_archive/source_index.json",
     P008 + "docs/source_archive/c005_working_report.md",
     P004 + "code/l1_symbol_game_governor.py",
-    "omega_engine_providers/adapters/native_functional.py",
+    "providers/adapters/native_functional.py",
     P009 + "code/triangle_cycle_sum.py",
     P009 + "code/review_counts.py",
     P001 + "code/certificate_gate.py",
     P001 + "code/exact_fock_gap.py",
     P010 + "code/holonomy.py",
-    "omega_engine_projects/mub6/code/conj2_symbolic_verification/test_karlsson_conj2.py",
+    "projects/mub6/code/conj2_symbolic_verification/test_karlsson_conj2.py",
     *(
         P010 + "code/data/c017/" + name + ".json"
         for name in (
@@ -247,14 +247,14 @@ class Context:
         return passed
 
 
-class PinnedWolandFinder(importlib.abc.MetaPathFinder):
+class PinnedAdversaryFinder(importlib.abc.MetaPathFinder):
     """Resolve only the explicitly pinned the city owner, retaining source custody."""
 
     def __init__(self, ctx: Context):
         self.ctx = ctx
 
     def find_spec(self, fullname, path=None, target=None):
-        if fullname != "omega_engine_woland" and not fullname.startswith("omega_engine_woland."):
+        if fullname != "adversary" and not fullname.startswith("adversary."):
             return None
         base = self.ctx.engine.joinpath(*fullname.split("."))
         initial = base / "__init__.py"
@@ -554,7 +554,7 @@ def meron(ctx: Context, family: str) -> dict:
 
 def mub(ctx: Context, family: str) -> dict:
     module = ctx.module(
-        "omega_engine_projects/mub6/code/conj2_symbolic_verification/test_karlsson_conj2.py"
+        "projects/mub6/code/conj2_symbolic_verification/test_karlsson_conj2.py"
     )
     x, y = module.symbols("x y", nonzero=True)
     matrix = module.displayed_affine_ansatz(x, y)
@@ -584,7 +584,7 @@ def mub(ctx: Context, family: str) -> dict:
         expected=True,
         grade="NEGATIVE_CONTROL",
     )
-    fixture = "omega_engine/crates_rs/omega_mub/artifacts/mub6_conj2_verification.json"
+    fixture = "engine/crates_rs/core_mub/artifacts/mub6_conj2_verification.json"
     ctx.observe(
         family,
         "retained_native_fixture",
@@ -600,7 +600,7 @@ def mub(ctx: Context, family: str) -> dict:
 
 
 def packets(ctx: Context, family: str) -> dict:
-    from omega_engine_pfp.domain.entities.packet_envelope import PacketEnvelopeV2
+    from pfp.domain.entities.packet_envelope import PacketEnvelopeV2
 
     files = ctx.paths(family, ".jsonl")
     rows, groups = [], defaultdict(list)
@@ -655,7 +655,7 @@ def packets(ctx: Context, family: str) -> dict:
     ctx.observe(family, "current_stream_transition_census", transitions, grade="HISTORICAL_RECOUNT")
     # A fresh positive transport computation checks the current codec separately
     # from any historical score or untrusted terminal label.
-    from omega_engine_pfp.domain.packet_codec import PacketCodec
+    from pfp.domain.packet_codec import PacketCodec
 
     positive = PacketCodec.seal(
         {"original_family": family, "preserved_carrier": "finite_transport_control"},
@@ -685,20 +685,20 @@ def packets(ctx: Context, family: str) -> dict:
 
 def original_live_ast(ctx: Context, family: str) -> dict:
     """Replay the retained four-stage source fixture with a native injected port."""
-    source_path = "omega_engine_pfp/controllers/symbol_game_controller.py"
+    source_path = "pfp/controllers/symbol_game_controller.py"
     fixture, extraction = original_ast_fixture(ctx.read(source_path))
     if any(
-        name == "omega_engine_woland" or name.startswith("omega_engine_woland.")
+        name == "adversary" or name.startswith("adversary.")
         for name in sys.modules
     ):
-        raise AggregateReplayError("PRELOADED_WOLAND_SOURCE_CUSTODY_UNAVAILABLE")
-    finder = PinnedWolandFinder(ctx)
+        raise AggregateReplayError("PRELOADED_ADVERSARY_SOURCE_CUSTODY_UNAVAILABLE")
+    finder = PinnedAdversaryFinder(ctx)
     sys.meta_path.insert(0, finder)
     try:
-        from omega_engine_woland.domain.cochain.metrics_evaluator import ASTMetricsEvaluator
-        from omega_engine_woland.domain.ports import FunctionalEvaluationReceiptV1
-        from omega_engine_operating_system.python.adapters.rust_host import theory_requests
-        from omega_engine_operating_system.python.adapters.rust_host.ffi import RustSymbolGameHost
+        from adversary.domain.cochain.metrics_evaluator import ASTMetricsEvaluator
+        from adversary.domain.ports import FunctionalEvaluationReceiptV1
+        from operating_system.python.adapters.rust_host import theory_requests
+        from operating_system.python.adapters.rust_host.ffi import RustSymbolGameHost
 
         host = RustSymbolGameHost(binary=Path(ctx.capability["binaries"]["symbol_game"]["path"]))
         port = BoundNativeFunctionalPort(host, theory_requests, FunctionalEvaluationReceiptV1)
@@ -1068,7 +1068,7 @@ def c005_controls(ctx: Context, family: str, runner) -> dict:
     cases = ctx.module(folder + "cases.py").get_hidden_base_cases()
     cases = [case for case in cases if case["kind"] == "consistency"]
     checkers = ctx.module(folder + "checkers.py")
-    native = ctx.module("omega_engine_providers/adapters/native_functional.py")
+    native = ctx.module("providers/adapters/native_functional.py")
     records = []
     for case in cases:
         nodes = sorted({node for u, v, _ in case["edges"] for node in (u, v)})
@@ -1233,7 +1233,7 @@ def conditioning(ctx: Context, family: str) -> dict:
 
 def retained_immune_controls(ctx: Context, family: str) -> bool:
     """Replay the retained bench on original patterns with explicit current defaults."""
-    from omega_engine_epistemic_immune_system.domain import ClonalSelectionEngine, DetectorRule
+    from eis.domain import ClonalSelectionEngine, DetectorRule
 
     original = ctx.module(PFP + "demos/antimorphism_farm/immune_bench.py")
     panel = original.CLEAN_PHYSICS_SELF_PANEL
@@ -1398,8 +1398,8 @@ def retained_immune_controls(ctx: Context, family: str) -> bool:
 
 
 def immune(ctx: Context, family: str) -> dict:
-    from omega_engine_epistemic_immune_system.domain.thymus import ThymusGate
-    from omega_engine_epistemic_immune_system.domain.value_objects import DetectorRule
+    from eis.domain.thymus import ThymusGate
+    from eis.domain.value_objects import DetectorRule
 
     panel = (
         "Known valid candidate: exact finite signed pairs.",
@@ -2104,8 +2104,8 @@ def extend_capability(base: dict, inventory: dict, replay) -> dict:
     engine = replay.verify_engine(base, full_runtime=False)
     required = set(EXTRA_FILES)
     required.update(
-        "omega_engine_woland/" + relative
-        for relative in replay.source_files(engine / "omega_engine_woland")
+        "adversary/" + relative
+        for relative in replay.source_files(engine / "adversary")
         if relative.endswith(".py")
     )
     for folder in (

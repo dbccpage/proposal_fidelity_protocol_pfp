@@ -6,7 +6,7 @@ import hashlib
 from dataclasses import asdict
 from typing import Sequence
 
-from omega_engine_operads.domain.autopoiesis.learning import (
+from operads.domain.autopoiesis.learning import (
     CallerContext,
     EvaluationPort,
     LearningBlocked,

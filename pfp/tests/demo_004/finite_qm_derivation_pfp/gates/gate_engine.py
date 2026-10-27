@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.a_mechanism.derivation_dag_pfp_staged_benchmark import (
+from pfp.tests.demo_004.a_mechanism.derivation_dag_pfp_staged_benchmark import (
     CarrierDerivationProjection,
     derivation_candidate_json_schema,
 )
@@ -51,7 +51,7 @@ class FiniteQmGateReceipt:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "schema": "omega.pfp.finite_qm.gate_receipt.v1",
+            "schema": "core.pfp.finite_qm.gate_receipt.v1",
             "authority_effect": self.authority_effect,
             "work_id": self.work_id,
             "status": self.status,

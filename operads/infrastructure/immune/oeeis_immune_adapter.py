@@ -10,7 +10,7 @@ from __future__ import annotations
 import re
 from typing import Sequence
 
-from omega_engine_epistemic_immune_system.domain import (
+from eis.domain import (
     AllostericConsensusGate,
     AllosteryRefusal,
     DangerSeverity,
@@ -21,7 +21,7 @@ from omega_engine_epistemic_immune_system.domain import (
     ThymusGate,
     TwoSignalDangerGate,
 )
-from omega_engine_epistemic_immune_system.infrastructure.native_domain import (
+from eis.infrastructure.native_domain import (
     NativeAllostericConsensusGate,
 )
 

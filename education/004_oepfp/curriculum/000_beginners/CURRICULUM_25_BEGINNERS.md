@@ -1,8 +1,8 @@
 # The Symbol Game — 25-Lesson Master Curriculum for Beginners (Ages 5 to 500)
 
 > **Series:** Triangles & Distinction to Everything — Track 000 (Beginners)  
-> **Location:** `omega_engine_education/the_symbol_game/lessons/000_beginners/`  
-> **Custody:** Panepistimion Council (`L3_nous_panepistimion`) & Woland Terminal Reality Gate (`L3_logos_thanatos`)  
+> **Location:** `education/the_symbol_game/lessons/000_beginners/`  
+> **Custody:** Panepistimion Council (`L3_nous_panepistimion`) & Adversary Terminal Reality Gate (`L3_logos_thanatos`)  
 > **AuthorityEffect:** `None`
 
 ---

@@ -14,7 +14,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Long Symbol Game sessions repeat the task statement and grow the history every turn. Three remedies are available: send everything (full history); let the host rewrite history into a typed state (compaction, U12); or keep the model's key-value cache for a fixed prefix and edit it (KV-prefix reuse and eviction, a Layer-1 operation on a local model). Each has a failure mode. Full history costs tokens and buries early constraints, which models use less well in the middle of long contexts (Liu et al. 2024). Compaction can drop a constraint the host did not know mattered. KV eviction changes what later tokens can attend to, much as a key mask does in [C001](c001_attention_distractor_mask_task_level.md).
 
-Nothing in the estate measures these trade-offs at task level. The Paper 032 benchmark (`attention_entropy_kv_norm_benchmark.py`) measured KV-cache Frobenius energy and attention entropy for one prompt pair and found **higher** entropy and **higher** KV energy under the carrier prompt (0.4430 to 0.4785; 16.67 to 22.92 million), with different prompt lengths. It supports no claim that compact prompts make attention sparser. This challenge measures accuracy, cost and constraint retention directly. It stresses the Symbol Game turn loop, OEWAS (Omega Engine Workflows, Agents, Skills) working memory, and the OEEIS (Omega Engine Epistemic Immune System) principle that the host, not the model, is the record of what was agreed.
+Nothing in the estate measures these trade-offs at task level. The Paper 032 benchmark (`attention_entropy_kv_norm_benchmark.py`) measured KV-cache Frobenius energy and attention entropy for one prompt pair and found **higher** entropy and **higher** KV energy under the carrier prompt (0.4430 to 0.4785; 16.67 to 22.92 million), with different prompt lengths. It supports no claim that compact prompts make attention sparser. This challenge measures accuracy, cost and constraint retention directly. It stresses the Symbol Game turn loop, OEWAS (Engine Workflows, Agents, Skills) working memory, and the OEEIS (Engine Epistemic Immune System) principle that the host, not the model, is the record of what was agreed.
 
 ## 3. Formal Problem and Bounds
 
@@ -46,7 +46,7 @@ The frozen deliverable is `pipeline.json` (model, revision, tokenizer hash, cont
 - **Hidden base cases:** 40 sessions.
 - **Relabel controls:** 12 sessions with renamed vertices and permuted stage order where the stages are independent.
 - **Poisoned but schema-valid:** 10 sessions with a typo restatement in a status turn and 6 with a stage-1 relation that must be repaired late.
-- **Exact checker:** Rust Φ₁ via `omega_symbol_game` and a replay of every admitted move against the declared constraints.
+- **Exact checker:** Rust Φ₁ via `core_symbol_game` and a replay of every admitted move against the declared constraints.
 - **Independent second checker:** Python `Fraction` propagation plus an independent violation scanner over the transcript.
 - **Checker mutation suite:** a final cochain that is exact but edits a non-repairable relation, a potential off by one, and a transcript whose violation count was edited.
 
@@ -106,8 +106,8 @@ operand restatement_diff.v1 | kind: guard | when: a turn restates a known constr
 ## 13. Estate Reuse and Prerequisites
 
 - `research/mssn_sn_tower/papers/032_the_symbol_game_three_layer_sovereignty_and_discrete_l1_projection/code/attention_entropy_kv_norm_benchmark.py` (KV energy and attention entropy measurement) and its receipt.
-- `omega_engine_symbol_game/domain/topology/subturn.py` (`AttentionContextBoundary`).
-- `bench/head_to_head/host.py`; `omega_engine/crates_rs/omega_symbol_game`.
+- `symbol_game/domain/topology/subturn.py` (`AttentionContextBoundary`).
+- `bench/head_to_head/host.py`; `engine/crates_rs/core_symbol_game`.
 - Base upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 - Extra upgrades: [U11](../../upgrades/u11_local_open_weights_mechanism_runtime.md) (KV access), [U12](../../upgrades/u12_host_scratch_space_working_memory.md) (ledger).
 

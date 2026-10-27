@@ -5,9 +5,9 @@ from __future__ import annotations
 import re
 from typing import Protocol, Union
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
-from omega_engine_pfp.domain.tower.grammar import App, Atom, Diff
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.domain.tower.grammar import App, Atom, Diff
 
 from .errors import MalformedWireError, PacketDomainError, StageFloorViolationError
 from .value_objects import Opcode, RefusalCode

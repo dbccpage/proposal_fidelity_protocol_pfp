@@ -6,12 +6,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
-from omega_engine_operads.domain.autopoiesis.learning import (
+from pfp.domain.value_objects.seat_turn import SeatTurnReplyV1
+from operads.domain.autopoiesis.learning import (
     CallerContext,
     LearningBlocked,
 )
-from omega_engine_operads.infrastructure.autopoiesis.agent_learning import (
+from operads.infrastructure.autopoiesis.agent_learning import (
     call_parent,
 )
 

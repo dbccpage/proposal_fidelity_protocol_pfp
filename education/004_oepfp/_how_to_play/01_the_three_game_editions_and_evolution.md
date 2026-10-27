@@ -26,7 +26,7 @@ graph TD
 | **Era & Policy** | May 2026 (`lp-forcing.v1`) | Sept 2026 (`SPK-002`) | Sept 2026–Present (`SG-L1-ORACLE`) |
 | **Primary Container** | Single `lp<...>` expression | 5-stage YAML artifacts | Dual-space state machine ($TAU_SG_V1$) |
 | **Public Stage Count** | 1 (Ad-hoc packet) | 5 stages (`seed` $\to$ `expand` $\to$ `descent` $\to$ `attack` $\to$ `prompt`) | Continuous turns with 4 moves (`ASSERT`, `CUT`, `VERIFY`, `RETRACT`) |
-| **Referee Engine** | Rational Simplex Solver over $\mathbb{Q}$ | Schema validator & replay harness (`omega_symbol_game`) | Discrete Oracle Governor ($\Phi_1$ boundary cochain evaluator) |
+| **Referee Engine** | Rational Simplex Solver over $\mathbb{Q}$ | Schema validator & replay harness (`core_symbol_game`) | Discrete Oracle Governor ($\Phi_1$ boundary cochain evaluator) |
 | **Defect Metric** | Primal-dual duality gap $\Delta = c^T x - b^T y$ | Stage refusal codes (`Refusal`, `Repair`, `OracleNeeded`) | Integer $L_1$ defect cochain $\|\Phi_1\|_1$ and cycle rank $\beta_1$ |
 | **Failure Mode Addressed** | Unbounded continuous hallucination | State mutation & schema drift | **Cancellation laundering** & **Stationary loop trapping** |
 | **Decoupling Strategy** | Matrix inversion on simplex | Stage-by-stage YAML boundary checking | Spanning tree potential + chord-basis nullspace projection |

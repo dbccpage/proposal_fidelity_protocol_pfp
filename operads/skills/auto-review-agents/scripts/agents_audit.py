@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Audit script for agent retinue definition files.
+"""Audit script for agent panel definition files.
 
 Usage:
-    python omega_engine_operads/skills/auto-review-agents/scripts/agents_audit.py [--repo-root PATH]
+    python operads/skills/auto-review-agents/scripts/agents_audit.py [--repo-root PATH]
 """
 
 from __future__ import annotations
@@ -16,14 +16,14 @@ from pathlib import Path
 def repo_root_from(start: Path | None = None) -> Path:
     here = (start or Path.cwd()).resolve()
     for candidate in [here, *here.parents]:
-        if (candidate / ".git").exists() and (candidate / "omega_engine").is_dir():
+        if (candidate / ".git").exists() and (candidate / "engine").is_dir():
             return candidate
     return Path.cwd().resolve()
 
 
 def audit_agents(repo_root: Path) -> int:
     module_path = (
-        repo_root / "omega_engine_operations/use_cases/packaging/agent_skill_manifest_audit.py"
+        repo_root / "operations/use_cases/packaging/agent_skill_manifest_audit.py"
     )
     spec = importlib.util.spec_from_file_location("agent_skill_manifest_audit", module_path)
     if spec is None or spec.loader is None:
@@ -46,7 +46,7 @@ def audit_agents(repo_root: Path) -> int:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Audit agents in the agent retinue.")
+    parser = argparse.ArgumentParser(description="Audit agents in the agent panel.")
     parser.add_argument("--repo-root", default=None, help="Repository root path")
     args = parser.parse_args()
 

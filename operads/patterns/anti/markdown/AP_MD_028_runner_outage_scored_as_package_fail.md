@@ -28,7 +28,7 @@ A formal Lean stage and a test stage are `FAIL`, and the package is `NEEDS_REVIS
 
 ## Witness
 
-Historical receipts and reviews. This digest did not rerun gates, pytest, lake, or the network check. Source folder `_ic/inr/omega_paper_reviews/`.
+Historical receipts and reviews. This digest did not rerun gates, pytest, lake, or the network check. Source folder `_ic/inr/core_paper_reviews/`.
 
 `008_so_k_invariant_gauge_classification_swarm_receipt.json` (`SWARM_REV_20260927_223121`) has `overall_status` `NEEDS_REVISION`. Stage `formal_lean4_mechanization` is `FAIL`. Its error includes:
 

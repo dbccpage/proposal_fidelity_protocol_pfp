@@ -17,7 +17,7 @@ import random
 from fractions import Fraction
 from typing import Callable, Dict, List
 
-from omega_engine_pfp.use_cases.detector_adequacy.traces import Trace, _step, cramer, det, q
+from pfp.use_cases.detector_adequacy.traces import Trace, _step, cramer, det, q
 
 
 def _xs(trace: Trace) -> List[Fraction]:

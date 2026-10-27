@@ -1,7 +1,7 @@
 # AuthorityEffect: None.
 """Unit tests for MUB construction and refusal logic."""
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.mub_construction import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c025_mub_prime_power_exact.reference_solver.mub_construction import (
     build_mub_solution,
     get_standard_mubs,
 )

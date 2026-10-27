@@ -6,7 +6,7 @@ Pure Python standard library implementation.
 from itertools import combinations
 from typing import Dict, List, Optional, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
     QR_17,
     edge_index,
     pentagon_5_colouring,
@@ -154,7 +154,7 @@ def solve_ramsey2_paley(n: int, s: int, t: int, fixed_dict: Dict[int, str]) -> O
             return cand_embed
 
     if s == 3 and t == 4 and n <= 8:
-        from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+        from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
             ramsey_seed_r34,
         )
 
@@ -168,7 +168,7 @@ def solve_ramsey2_paley(n: int, s: int, t: int, fixed_dict: Dict[int, str]) -> O
 
 def embed_paley_17(n: int, fixed_dict: Dict[int, str]) -> Optional[str]:
     """Embed vertices of K_n into Paley 17 to satisfy fixed edge constraints."""
-    from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+    from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
         index_to_edge,
     )
 
@@ -216,7 +216,7 @@ def embed_paley_17(n: int, fixed_dict: Dict[int, str]) -> Optional[str]:
 
 def embed_greenwood_gleason_16(n: int, fixed_dict: Dict[int, str]) -> Optional[str]:
     """Embed vertices of K_n into Greenwood-Gleason 16 to satisfy fixed edge constraints."""
-    from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+    from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
         GF16_C0,
         GF16_C1,
         GF16_C2,
@@ -285,7 +285,7 @@ def solve_vdw_local_search(
     """
     import random
 
-    from omega_engine_pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
+    from pfp.tests.demo_004.e_formal_math.c043_ramsey_vdw_constructions.reference_solver.algebraic_seeds import (
         vdw_seed_w25,
         vdw_seed_w33,
     )

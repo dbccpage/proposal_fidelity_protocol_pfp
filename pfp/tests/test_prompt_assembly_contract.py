@@ -11,10 +11,10 @@ from types import SimpleNamespace
 import pytest
 from jsonschema import Draft202012Validator, ValidationError
 
-from omega_engine_pfp.controllers.pfp_controller import PfpController
-from omega_engine_pfp.domain.prompts.prompts import PromptPacket
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.use_cases.assemble_prompt import AssemblePromptUseCase
+from pfp.controllers.pfp_controller import PfpController
+from pfp.domain.prompts.prompts import PromptPacket
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.use_cases.assemble_prompt import AssemblePromptUseCase
 
 
 def test_stage_one_schema_accepts_original_witness_only_for_bound_demo():
@@ -73,7 +73,7 @@ def test_actual_assemble_cli_exposes_real_packet_and_hashes(tmp_path, json_outpu
     seed = {"seed": "private assembly sentinel Ω"}
     seed_path = tmp_path / "seed.json"
     seed_path.write_text(json.dumps(seed), encoding="utf-8")
-    command = [sys.executable, "-B", "-m", "omega_engine_pfp.entrypoints.cli.pfp",
+    command = [sys.executable, "-B", "-m", "pfp.entrypoints.cli.pfp",
         "assemble", "--demo-id", "demo_001", "--stage", "1", "--seed-json", str(seed_path)]
     if json_output:
         command.append("--json")

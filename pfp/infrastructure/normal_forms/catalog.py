@@ -12,13 +12,13 @@ from typing import Any
 
 import yaml
 
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import Finding
-from omega_engine_pfp.infrastructure.normal_forms.contract_model import load_yaml
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import CONTRACTS_DIR
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import INDEX_PATH
-from omega_engine_pfp.infrastructure.normal_forms.contract_paths import STANDARD_PATH
-from omega_engine_pfp.infrastructure.normal_forms.validate_v0 import validate_contract_v0
-from omega_engine_pfp.infrastructure.normal_forms.validate_v1 import validate_contract_v1
+from pfp.infrastructure.normal_forms.contract_model import Finding
+from pfp.infrastructure.normal_forms.contract_model import load_yaml
+from pfp.infrastructure.normal_forms.contract_paths import CONTRACTS_DIR
+from pfp.infrastructure.normal_forms.contract_paths import INDEX_PATH
+from pfp.infrastructure.normal_forms.contract_paths import STANDARD_PATH
+from pfp.infrastructure.normal_forms.validate_v0 import validate_contract_v0
+from pfp.infrastructure.normal_forms.validate_v1 import validate_contract_v1
 
 
 def validate_contract(

@@ -22,7 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 _SKIP_DIR_NAMES = frozenset({".git", "node_modules", "__pycache__", ".venv"})
 _LIVE_README_TAIL = (
-    "omega_engine_education",
+    "education",
     "the_symbol_game",
     "lessons",
     "how_to_play",
@@ -54,28 +54,28 @@ _DOOR_DOCS = (
 )
 _LIVE_HOW_TO_PLAY = (
     REPO_ROOT
-    / "omega_engine_education"
+    / "education"
     / "the_symbol_game"
     / "lessons"
     / "how_to_play"
     / "readme.md"
 )
-_SYMBOL_README = REPO_ROOT / "omega_engine_pfp" / "README.md"
+_SYMBOL_README = REPO_ROOT / "pfp" / "README.md"
 _PACKET_DIR = (
     REPO_ROOT
-    / "omega_engine_governance"
+    / "governance"
     / "contracts"
     / "contracts_pfp"
 )
 _ABSENT_PACKET_HOME = (
     REPO_ROOT
-    / "omega_engine_governance"
+    / "governance"
     / "contracts"
     / "contracts_packets"
     / "symbol_game"
 )
 _TOWER_README = REPO_ROOT / "research" / "mssn_sn_tower" / "1_the_tower" / "README.md"
-_EDUCATION_ROOT = REPO_ROOT / "omega_engine_education"
+_EDUCATION_ROOT = REPO_ROOT / "education"
 
 _INLINE_LINK = re.compile(
     r"\[(?:\\.|[^\[\]\n])*\]\(\s*(<[^>\n]+>|[^)\s]+)"
@@ -239,7 +239,7 @@ def how_to_play_readme_problems(markdown: str, base_dir: Path, live: Path) -> li
         if not _path_is_live_readme(resolved, live):
             problems.append(
                 f"how_to_play/readme.md link {raw!r} resolves to {resolved}, "
-                "not omega_engine_education/the_symbol_game/lessons/how_to_play/readme.md"
+                "not education/the_symbol_game/lessons/how_to_play/readme.md"
             )
     return problems
 
@@ -524,7 +524,7 @@ def test_resolver_reports_file_uri_to_missing_file(tmp_path: Path) -> None:
 def test_how_to_play_helper_reports_dead_relative_readme(tmp_path: Path) -> None:
     live = (
         tmp_path
-        / "omega_engine_education"
+        / "education"
         / "notebooks"
         / "lessons"
         / "how_to_play"
@@ -546,7 +546,7 @@ def test_how_to_play_helper_reports_dead_relative_readme(tmp_path: Path) -> None
 def test_how_to_play_helper_accepts_live_education_readme(tmp_path: Path) -> None:
     live = (
         tmp_path
-        / "omega_engine_education"
+        / "education"
         / "notebooks"
         / "lessons"
         / "how_to_play"
@@ -557,7 +557,7 @@ def test_how_to_play_helper_accepts_live_education_readme(tmp_path: Path) -> Non
     base = tmp_path / "research" / "mssn_sn_tower"
     base.mkdir(parents=True)
     text = (
-        "See [play](../../omega_engine_education/notebooks/lessons/"
+        "See [play](../../education/notebooks/lessons/"
         "how_to_play/readme.md).\n"
     )
     assert how_to_play_readme_problems(text, base, live) == []
@@ -566,7 +566,7 @@ def test_how_to_play_helper_accepts_live_education_readme(tmp_path: Path) -> Non
 def test_how_to_play_helper_accepts_file_uri_to_live_readme(tmp_path: Path) -> None:
     live = (
         tmp_path
-        / "omega_engine_education"
+        / "education"
         / "notebooks"
         / "lessons"
         / "how_to_play"
@@ -598,7 +598,7 @@ def test_index_and_mssn_how_to_play_links_resolve_to_live_readme() -> None:
 
 
 def test_missing_symbol_game_readme_is_reported(tmp_path: Path) -> None:
-    readme = tmp_path / "omega_engine_pfp" / "README.md"
+    readme = tmp_path / "pfp" / "README.md"
     failures = symbol_game_readme_failures(readme, tmp_path)
     assert failures
     assert any(item.startswith("missing file:") for item in failures)
@@ -787,7 +787,7 @@ def test_cp1252_filename_check_allows_windows_codepage_punctuation() -> None:
 def test_directory_walk_reports_planted_name_and_skips_ignored_parents(
     tmp_path: Path,
 ) -> None:
-    planted = tmp_path / "omega_engine_governance" / "contracts_pfp"
+    planted = tmp_path / "governance" / "contracts_pfp"
     planted.mkdir(parents=True)
     for parent in _SKIP_DIR_NAMES:
         ignored = tmp_path / parent / "contracts_pfp"

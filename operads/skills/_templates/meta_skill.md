@@ -123,7 +123,7 @@ Required constraints for all meta-skills:
 ```text
 User: /{skill-name}
 
-Omega: [Brief description of what will be analyzed]
+Core: [Brief description of what will be analyzed]
 
 # {Skill Name} Report
 

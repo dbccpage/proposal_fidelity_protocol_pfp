@@ -5,13 +5,13 @@ from copy import deepcopy
 
 import pytest
 
-from omega_engine_pfp.domain.kernel.result import RefusalCode
-from omega_engine_pfp.infrastructure.storage import PfpFileSystemStorageAdapter
-from omega_engine_pfp.tests.test_canonical_stage_execution import Host, ObservingProvider
-from omega_engine_pfp.tests.test_pilot_use_cases import _make_sample_pilot
-from omega_engine_pfp.tests.test_typed_pilot_response_handoff import _inputs
-from omega_engine_pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
-from omega_engine_pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
+from pfp.domain.kernel.result import RefusalCode
+from pfp.infrastructure.storage import PfpFileSystemStorageAdapter
+from pfp.tests.test_canonical_stage_execution import Host, ObservingProvider
+from pfp.tests.test_pilot_use_cases import _make_sample_pilot
+from pfp.tests.test_typed_pilot_response_handoff import _inputs
+from pfp.use_cases.evaluate_pilot import EvaluatePilotUseCase
+from pfp.use_cases.execute_stage_pipeline import ExecuteStagePipelineUseCase
 
 
 class StoppingHost(Host):

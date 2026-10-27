@@ -32,16 +32,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from omega_engine_woland.domain.providers.types import (  # noqa: E402
+from adversary.domain.providers.types import (  # noqa: E402
     CandidateRequest,
 )
-from omega_engine_operating_system.adapters.security import (  # noqa: E402
+from operating_system.adapters.security import (  # noqa: E402
     FixtureOnlyAeadProtector,
 )
-from omega_engine_operating_system.infrastructure import (  # noqa: E402
+from operating_system.infrastructure import (  # noqa: E402
     EncryptedArtifactCas,
 )
-from omega_engine_pfp.infrastructure.trace import (  # noqa: E402
+from pfp.infrastructure.trace import (  # noqa: E402
     DURABILITY_FSYNC_LIVE,
     EVENT_RESPONSE_DURABLE,
     SCRIPTED_MODEL,
@@ -49,7 +49,7 @@ from omega_engine_pfp.infrastructure.trace import (  # noqa: E402
     fixture_gateway,
     scripted_openai_payload,
 )
-from omega_engine_pfp.infrastructure.trace.provider_dispatch import (  # noqa: E402
+from pfp.infrastructure.trace.provider_dispatch import (  # noqa: E402
     AbruptProcessExit,
 )
 

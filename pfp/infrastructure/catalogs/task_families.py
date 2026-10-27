@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
-from omega_engine_pfp.infrastructure.yaml_loading import strict_yaml_load
-from omega_engine_pfp.domain.task_families.task_family_types import (
+from pfp.infrastructure.yaml_loading import strict_yaml_load
+from pfp.domain.task_families.task_family_types import (
     TaskFamilyDefinition,
     GroundTruthProvider,
 )
@@ -26,7 +26,7 @@ class TaskFamilyRegistry:
     def get_instance(cls, register_path: Path | None = None) -> TaskFamilyRegistry:
         if cls._instance is None:
             cls._instance = TaskFamilyRegistry(register_path=register_path)
-            from omega_engine_pfp.domain.value_objects.taxonomy import (
+            from pfp.domain.value_objects.taxonomy import (
                 register_task_family_provider,
             )
 

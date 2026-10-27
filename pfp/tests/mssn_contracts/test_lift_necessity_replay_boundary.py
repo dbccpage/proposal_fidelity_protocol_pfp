@@ -12,12 +12,12 @@ SOURCE_ROOT = Path(__file__).resolve().parents[2]
 if str(SOURCE_ROOT) not in sys.path:
     sys.path.insert(0, str(SOURCE_ROOT))
 
-from omega_engine_pfp.domain.mssn_research.grammar.lift_policies import (
+from pfp.domain.mssn_research.grammar.lift_policies import (
     check_lift_necessity_certificate,
     execute_bounded_lift_necessity_search,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import LiftGoal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, StageLevel
+from pfp.domain.mssn_research.grammar.spectral_geometry import LiftGoal
+from pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, StageLevel
 
 
 class TestLiftNecessityReplayBoundary(unittest.TestCase):

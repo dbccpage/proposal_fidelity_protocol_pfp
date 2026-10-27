@@ -8,12 +8,12 @@ from contextlib import closing
 from datetime import datetime, timezone
 from decimal import ROUND_CEILING, Decimal
 
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1
-from omega_engine_woland.infrastructure.providers.budget_ledger import SqliteBudgetLedger
-from omega_engine_woland.infrastructure.providers.openai_compat import build_openai_compat_body
-from omega_engine_woland.infrastructure.providers.openrouter_deadline import dispatch_deadline
-from omega_engine_woland.infrastructure.providers.wire import decode_reply
-from omega_engine_pfp.use_cases.pfp_derivation_loops import DerivationLimits, DerivationStop
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1
+from adversary.infrastructure.providers.budget_ledger import SqliteBudgetLedger
+from adversary.infrastructure.providers.openai_compat import build_openai_compat_body
+from adversary.infrastructure.providers.openrouter_deadline import dispatch_deadline
+from adversary.infrastructure.providers.wire import decode_reply
+from pfp.use_cases.pfp_derivation_loops import DerivationLimits, DerivationStop
 
 from .pfp_evidence import canonical, digest, write_once
 
@@ -106,7 +106,7 @@ def write_current(path, value):
 
 def prepare_research_turn(prompt, model, run_id, pilot, loop, *, experiment=False):
     from dataclasses import replace
-    from omega_engine_pfp.infrastructure.task_turn import prepare_task_turn
+    from pfp.infrastructure.task_turn import prepare_task_turn
 
     if experiment:
         from .pfp_experiment import request_for as original_request

@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Sequence
 
-from omega_engine_epistemic_immune_system.infrastructure.native_domain import native_admission
+from eis.infrastructure.native_domain import native_admission
 
 
 @dataclass(frozen=True)

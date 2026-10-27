@@ -8,12 +8,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from omega_engine_pfp.domain.finite_gauge import RunConfig
-from omega_engine_pfp.infrastructure.adapters.finite_gauge.input_yaml import (
+from pfp.domain.finite_gauge import RunConfig
+from pfp.infrastructure.adapters.finite_gauge.input_yaml import (
     parse_input_yaml,
 )
-from omega_engine_pfp.infrastructure.composition.finite_gauge import build_run
-from omega_engine_pfp.use_cases.finite_gauge_workbench import (
+from pfp.infrastructure.composition.finite_gauge import build_run
+from pfp.use_cases.finite_gauge_workbench import (
     fixtures,
 )
 
@@ -63,7 +63,7 @@ def cmd_serve_workbench(args: argparse.Namespace) -> int:
     try:
         import uvicorn
 
-        from omega_engine_pfp.entrypoints.web.workbench import app
+        from pfp.entrypoints.web.workbench import app
     except ModuleNotFoundError as exc:
         raise ValueError("FastAPI workbench requires: pip install -e '.[web]'") from exc
     uvicorn.run(app, host="127.0.0.1", port=args.port)

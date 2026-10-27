@@ -6,7 +6,7 @@ AuthorityEffect: None. Source revision: `000ee9b0c234eda74340e424d6cfb3f6ec001df
 
 ## Predict before calculating
 
-Draw vertices 0, 1, 2 and 3. Draw arrows **0 to 1**, **1 to 2**, **2 to 3**, and **0 to 3**. Keep that edge order. The [public input](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_public_input.json) supplies rational observations `c=(2,-3,5,7)` and one declared face. The picture represents supplied data; it is not derived from bare inscription. *(Definition.)*
+Draw vertices 0, 1, 2 and 3. Draw arrows **0 to 1**, **1 to 2**, **2 to 3**, and **0 to 3**. Keep that edge order. The [public input](../../../../pfp/fixtures/finite_qm_workflow/c4_public_input.json) supplies rational observations `c=(2,-3,5,7)` and one declared face. The picture represents supplied data; it is not derived from bare inscription. *(Definition.)*
 
 ```text
 0 --2--> 1 ---(-3)---> 2 --5--> 3
@@ -111,4 +111,4 @@ The six research stages **P0–P5** are distinct from the eleven public runtime 
 
 This note gives a finite derivation. The review's displayed arithmetic agrees with the [worked certificate](../levels/level_finite_qm_certificate_walkthrough.md); native judging, provider dispatch, notebook replay, audio playback and learner testing were not performed here. A host check, if later run, establishes only its implemented predicates on the bound task. *(Scope.)*
 
-Sources: [public matrices and data](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_public_input.json), [work unit and unpaid quantum imports](../../../../omega_engine_pfp/fixtures/finite_qm_workflow/c4_work_unit.json), [native judge adapter](../../../../omega_engine_pfp/infrastructure/finite_qm_cochain_judge.py), [Chapter 03 duality](03_math_obstruction_mass_duality_and_exact_lp.md), and [rewrite distinctions](../rewriting/finite_qm_residual_repair.md).
+Sources: [public matrices and data](../../../../pfp/fixtures/finite_qm_workflow/c4_public_input.json), [work unit and unpaid quantum imports](../../../../pfp/fixtures/finite_qm_workflow/c4_work_unit.json), [native judge adapter](../../../../pfp/infrastructure/finite_qm_cochain_judge.py), [Chapter 03 duality](03_math_obstruction_mass_duality_and_exact_lp.md), and [rewrite distinctions](../rewriting/finite_qm_residual_repair.md).

@@ -69,7 +69,7 @@ denominators, safety intervals, and study stopping.
 The study guide teaches prerequisites and new worked examples. The instructor
 key gives every answer, exact calculations, proof sketches, acceptable scope,
 and a standard-library replay worksheet. Neither the curriculum nor its rubric
-claims historical Landau authority, measured learning gains, or operational
+claims historical Examiner authority, measured learning gains, or operational
 authorization.
 
 ## Remaining research work

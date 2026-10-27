@@ -511,7 +511,7 @@ def run_and_generate_receipt(receipt_path: Optional[str] = None) -> Dict[str, An
     v_auth2 = session_2.run_turn("Auth turn 2")
 
     receipt: Dict[str, Any] = {
-        "receipt_schema": "omega.symbol_game.paper_033_execution_receipt.v1",
+        "receipt_schema": "core.symbol_game.paper_033_execution_receipt.v1",
         "benchmark_name": "Paper 033 Practitioner Field Manual Execution & Streaming Harness",
         "paper_id": "PO-033",
         "version": "1.1.0",

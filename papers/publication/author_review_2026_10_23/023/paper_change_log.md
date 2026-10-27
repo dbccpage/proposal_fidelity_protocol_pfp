@@ -2,7 +2,7 @@
 
 ## 0.2.0 — 2026-10-21
 
-Connect the unchanged finite scope theorem to the implemented OEOP/Woland
+Connect the unchanged finite scope theorem to the implemented OEOP/Adversary
 repair workflow and distinguish compilation, execution, immune observation,
 lineage and authorization. Use the current four-line manuscript header and
 public authorization wording. Prior replay records remain historical evidence.

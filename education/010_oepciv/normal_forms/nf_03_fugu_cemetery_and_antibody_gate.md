@@ -11,15 +11,15 @@ maturity: draft
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_woland/infrastructure/default_adapters.py
-  - omega_engine_woland/use_cases/act_helpers.py
-  - omega_engine_prompt_civilization/tests/integration/test_fugu_cemetery_blocking_loop.py
+  - adversary/infrastructure/default_adapters.py
+  - adversary/use_cases/act_helpers.py
+  - pciv/tests/integration/test_fugu_cemetery_blocking_loop.py
 prerequisites:
   - ../01_v10rc_system_design_and_integration.md
   - nf_01_prompt_society_and_civilization.md
-  - nf_02_lamarckian_pfp_woland_loop.md
+  - nf_02_lamarckian_pfp_adversary_loop.md
 related:
-  - ../../120_the_woland_retinue_swarm/11_autophagous_fugu_cemetery_and_pharmacy_antibody_gates.md
+  - ../../120_the_adversary_panel_swarm/11_autophagous_fugu_cemetery_and_pharmacy_antibody_gates.md
 last_verified: 2026-10-09
 ---
 
@@ -35,7 +35,7 @@ last_verified: 2026-10-09
 In evolutionary prompt algorithms, random mutations and LLM proposals routinely drift into previously discovered failure modes, repeating invalid imports, broken type constraints, or known logical contradictions across generations.
 
 The **Autophagous "Fugu" Gate** closes this loop:
-1. Every failed candidate mutation in generation $g$ is interred as a typed `CemeteryHeadstoneV1` record within `_intelligence/_woland/cemetery/`.
+1. Every failed candidate mutation in generation $g$ is interred as a typed `CemeteryHeadstoneV1` record within `_intelligence/_adversary/cemetery/`.
 2. Active failure witnesses are translated into structural lint rules and semantic antibodies within the epistemic pharmacy repertoire.
 3. In generation $g+1$, candidate mutations are screened *prior to execution* at Act IV. If a mutation matches an interred casualty or an active antibody, the gate refuses execution with an immutable typed refusal.
 
@@ -105,7 +105,7 @@ sequenceDiagram
     autonumber
     participant Gen1 as Generation g = 1 (Proposer)
     participant Act4_1 as Act IV Sandbox Gate (g = 1)
-    participant Cemetery as Cemetery Adapter (_intelligence/_woland/cemetery/)
+    participant Cemetery as Cemetery Adapter (_intelligence/_adversary/cemetery/)
     participant Pharmacy as Pharmacy Seeder
     participant Gen2 as Generation g = 2 (Proposer)
     participant Act4_2 as Act IV Sandbox Gate (g = 2)

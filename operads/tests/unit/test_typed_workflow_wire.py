@@ -18,7 +18,7 @@ def _payload() -> dict:
         "nodes": [
             {
                 "node_id": "audit",
-                "operation_id": "woland-claim-audit",
+                "operation_id": "adversary-claim-audit",
                 "source_digest": "sha256:" + "a" * 64,
                 "operation_digest": "sha256:" + "b" * 64,
             }
@@ -29,7 +29,7 @@ def _payload() -> dict:
 
 
 def _parse(payload: dict):
-    from omega_engine_operads.contracts.typed_workflow_v1 import (
+    from operads.contracts.typed_workflow_v1 import (
         parse_typed_workflow,
     )
 
@@ -37,7 +37,7 @@ def _parse(payload: dict):
 
 
 def test_wire_roundtrip_retains_pins_and_ordered_open_ports() -> None:
-    from omega_engine_operads.contracts.typed_workflow_v1 import (
+    from operads.contracts.typed_workflow_v1 import (
         TypedWorkflowWireV1,
         canonical_workflow_bytes,
         parse_typed_workflow,
@@ -120,7 +120,7 @@ def test_source_pins_have_one_exact_profile(pin: str) -> None:
     ids=["duplicate", "nonfinite", "invalid-utf8", "oversized"],
 )
 def test_parser_rejects_ambiguous_nonfinite_invalid_or_oversized_bytes(raw: bytes) -> None:
-    from omega_engine_operads.contracts.typed_workflow_v1 import (
+    from operads.contracts.typed_workflow_v1 import (
         parse_typed_workflow,
     )
 
@@ -143,7 +143,7 @@ def test_domain_cannot_bypass_exact_types_and_collection_bounds() -> None:
 
 
 def test_deeply_nested_bounded_json_has_a_normal_validation_refusal() -> None:
-    from omega_engine_operads.contracts.typed_workflow_v1 import (
+    from operads.contracts.typed_workflow_v1 import (
         parse_typed_workflow,
     )
 
@@ -160,7 +160,7 @@ def test_deeply_nested_bounded_json_has_a_normal_validation_refusal() -> None:
     ],
 )
 def test_duplicate_key_in_otherwise_valid_workflow_is_refused(key: str, value: str) -> None:
-    from omega_engine_operads.contracts.typed_workflow_v1 import (
+    from operads.contracts.typed_workflow_v1 import (
         parse_typed_workflow,
     )
 

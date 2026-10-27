@@ -8,7 +8,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-from omega_engine_governance.infrastructure.storage.schema_totality import install_totality_fences
+from governance.infrastructure.storage.schema_totality import install_totality_fences
 
 from .contract_paths import NORMAL_FORMS_DIR
 

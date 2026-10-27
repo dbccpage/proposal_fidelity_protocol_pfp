@@ -18,15 +18,15 @@ import shutil
 from fractions import Fraction
 from pathlib import Path
 
-import omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.commit_reveal_runner as runner_mod
+import pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.commit_reveal_runner as runner_mod
 import pytest
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.budget_gate import BudgetReceipt, C042BudgetGate
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.commit_reveal_runner import ManifestCustodyError
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.woland_gate import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.budget_gate import BudgetReceipt, C042BudgetGate
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.commit_reveal_runner import ManifestCustodyError
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.governance.adversary_gate import (
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
-    WolandGateC042,
+    AdversaryGateC042,
 )
 
 PKG_ROOT = Path(__file__).resolve().parent.parent
@@ -112,17 +112,17 @@ def test_budget_gate_constraints():
     assert gate.total_spent_usd() == Fraction(50, 1_000_000)
 
 
-def test_woland_structurebench_quad(tmp_path):
-    woland = WolandGateC042(task_key="test_c042_quad", intelligence_repo_root=tmp_path / "intel")
+def test_adversary_structurebench_quad(tmp_path):
+    adversary = AdversaryGateC042(task_key="test_c042_quad", intelligence_repo_root=tmp_path / "intel")
     assert not (tmp_path / "intel").exists()
-    run_folder = woland.emit_structurebench_quad(
+    run_folder = adversary.emit_structurebench_quad(
         verdict=TERMINAL_REFERENCE_SELF_CONSISTENT,
         total_cases=64,
         passed_cases=64,
         defects=[],
         receipt_meta={"challenge": "c042"},
     )
-    assert run_folder.parent == tmp_path / "intel" / "_intelligence" / "_woland" / "runs"
+    assert run_folder.parent == tmp_path / "intel" / "_intelligence" / "_adversary" / "runs"
     for name in ("receipt.json", "novella.md", "dda_actions.jsonl", "summary.json"):
         assert (run_folder / name).is_file()
     summary = json.loads((run_folder / "summary.json").read_text(encoding="utf-8"))
@@ -130,10 +130,10 @@ def test_woland_structurebench_quad(tmp_path):
     assert summary["gate_scope"] == "REFERENCE_SOLVER_SELF_CHECK"
 
 
-def test_woland_gate_refuses_the_retired_label(tmp_path):
-    woland = WolandGateC042(task_key="test_c042_label", intelligence_repo_root=tmp_path / "intel")
+def test_adversary_gate_refuses_the_retired_label(tmp_path):
+    adversary = AdversaryGateC042(task_key="test_c042_label", intelligence_repo_root=tmp_path / "intel")
     with pytest.raises(ValueError, match="LABEL_MISMATCH"):
-        woland.emit_structurebench_quad(
+        adversary.emit_structurebench_quad(
             verdict="PASS_TO_MASTER", total_cases=64, passed_cases=64, defects=[], receipt_meta={}
         )
 
@@ -154,7 +154,7 @@ def test_reference_run_records_custody_facts_without_capping_the_label(tmp_path)
     assert sorted(p.name for p in (tmp_path / "receipts").iterdir()) == [
         "c042_l41_scoring_receipt.json"
     ]
-    run_dir = tmp_path / "intel" / "_intelligence" / "_woland" / "runs" / receipt["run_folder"]
+    run_dir = tmp_path / "intel" / "_intelligence" / "_adversary" / "runs" / receipt["run_folder"]
     summary = json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
     assert summary["informational_residuals"] == ["NO_PRE_RUN_COMMITMENT"]
     assert summary["verdict"] == receipt["verdict"]
@@ -203,8 +203,8 @@ def test_refuse_all_reference_is_inconsistent(tmp_path, monkeypatch):
 
 
 def test_informational_residuals_never_change_the_gate_label(tmp_path):
-    woland = WolandGateC042(task_key="test_c042_notes", intelligence_repo_root=tmp_path / "intel")
-    run_folder = woland.emit_structurebench_quad(
+    adversary = AdversaryGateC042(task_key="test_c042_notes", intelligence_repo_root=tmp_path / "intel")
+    run_folder = adversary.emit_structurebench_quad(
         total_cases=3,
         passed_cases=3,
         defects=[],
@@ -216,7 +216,7 @@ def test_informational_residuals_never_change_the_gate_label(tmp_path):
     receipt = json.loads((run_folder / "receipt.json").read_text(encoding="utf-8"))
     assert receipt["verdict"] == TERMINAL_REFERENCE_SELF_CONSISTENT
     assert receipt["informational_residuals"] == ["NO_PRE_RUN_COMMITMENT"]
-    closed = WolandGateC042(task_key="test_c042_closed", intelligence_repo_root=tmp_path / "intel")
+    closed = AdversaryGateC042(task_key="test_c042_closed", intelligence_repo_root=tmp_path / "intel")
     closed_folder = closed.emit_structurebench_quad(
         total_cases=3,
         passed_cases=3,

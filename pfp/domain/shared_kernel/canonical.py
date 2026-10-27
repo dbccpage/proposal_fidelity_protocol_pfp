@@ -18,7 +18,7 @@ from typing import Any
 from ..exceptions import CanonicalizationError
 
 # Typed wire marker. Not an RFC 8785 / JCS format name.
-CANONICAL_MARKER = "omega-canonical-v1"
+CANONICAL_MARKER = "core-canonical-v1"
 
 
 @dataclass(frozen=True, slots=True)
@@ -453,7 +453,7 @@ def _serde_json_text(text: str) -> str:
 
 
 def canonical_json(value: Any) -> str:
-    """Seal a value as compact ``omega-canonical-v1`` JSON.
+    """Seal a value as compact ``core-canonical-v1`` JSON.
 
     The bytes are the tagged wire ``[marker, tag, body]`` with no whitespace.
     This is the packet sealer. It is not RFC 8785: the tree holds only arrays,

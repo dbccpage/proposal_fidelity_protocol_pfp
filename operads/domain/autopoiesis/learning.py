@@ -48,7 +48,7 @@ class LearningEpisodeV1:
     successes: tuple[str, ...] = ()
     errors: tuple[str, ...] = ()
     origin: str = "session"
-    schema: str = "omega.autopoiesis.learning-episode.v1"
+    schema: str = "core.autopoiesis.learning-episode.v1"
     caller_configuration_reference: str | None = None
     caller_budget_reference: str | None = None
 
@@ -121,10 +121,10 @@ class LearningCandidate:
         if any(type(c.path) is not str or type(c.content) is not str for c in self.changes):
             raise ValueError("file changes must contain strings")
         prefixes = {
-            "RULE": "omega_engine_operads/rules/",
-            "SKILL": "omega_engine_operads/skills/",
-            "AGENT": "omega_engine_operads/agents/",
-            "WORKFLOW": "omega_engine_operads/domain/autopoiesis/profiles/",
+            "RULE": "operads/rules/",
+            "SKILL": "operads/skills/",
+            "AGENT": "operads/agents/",
+            "WORKFLOW": "operads/domain/autopoiesis/profiles/",
         }
         if self.kind in prefixes and not self.artifact_id.startswith(prefixes[self.kind]):
             raise ValueError("artifact kind and canonical path disagree")

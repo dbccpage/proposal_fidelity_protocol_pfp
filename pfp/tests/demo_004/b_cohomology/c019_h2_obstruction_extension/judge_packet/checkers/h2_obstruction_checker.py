@@ -5,7 +5,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any
 
-from omega_engine_pfp.tests.demo_004.b_cohomology.c019_h2_obstruction_extension.reference_solver.exact_linalg import (
+from pfp.tests.demo_004.b_cohomology.c019_h2_obstruction_extension.reference_solver.exact_linalg import (
     parse_rational,
 )
 

@@ -3,7 +3,7 @@
 
 from fractions import Fraction
 
-from omega_engine_projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.gaussian_rational import (
+from projects.mssn_sn_symgam.challenges.c_quantum.c026_frustration_free_projector_hamiltonians.reference_solver.gaussian_rational import (
     GaussianRat,
     format_fraction,
     parse_fraction,

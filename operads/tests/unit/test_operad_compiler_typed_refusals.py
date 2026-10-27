@@ -15,10 +15,10 @@ import pathlib
 
 import pytest
 
-from omega_engine_operads.application.operad.compiler_service import (
+from operads.application.operad.compiler_service import (
     OperadCompilerService,
 )
-from omega_engine_operads.domain.operad import SkillSignatureRefusal
+from operads.domain.operad import SkillSignatureRefusal
 
 _GOOD = (
     "---\nname: good\noperad_source_colours: [State]\n"

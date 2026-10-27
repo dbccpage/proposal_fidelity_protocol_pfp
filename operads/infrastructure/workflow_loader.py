@@ -26,8 +26,8 @@ from ..domain.workflow_graph import (
 )
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
-SKILLS_DIR = ROOT_DIR / "omega_engine_operads" / "skills"
-WORKFLOWS_DIR = ROOT_DIR / "omega_engine_operads" / "workflows"
+SKILLS_DIR = ROOT_DIR / "operads" / "skills"
+WORKFLOWS_DIR = ROOT_DIR / "operads" / "workflows"
 
 _FRONTMATTER = re.compile(r"^---\r?\n(.*?)\r?\n---\r?\n", re.DOTALL)
 

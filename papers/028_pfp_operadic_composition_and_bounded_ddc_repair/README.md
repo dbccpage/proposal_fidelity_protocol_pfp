@@ -9,7 +9,7 @@
 An unpublished author-review implementation paper. Read [the manuscript](paper.md)
 ([PDF](paper.pdf), [TeX](paper.tex))
 and [the reproduction note](docs/reproduction.md). It describes the implemented
-OEOP/OEEIS/Prompt Civilization/Woland split and one provider-free supplied-patch
+OEOP/OEEIS/Prompt Civilization/Adversary split and one provider-free supplied-patch
 execution. It does not introduce a theorem, Lean proof, model experiment, DOI,
 deposit, production admission or detector activation.
 

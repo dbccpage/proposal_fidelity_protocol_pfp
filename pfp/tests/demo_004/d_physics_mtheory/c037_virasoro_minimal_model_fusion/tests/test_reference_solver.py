@@ -11,12 +11,12 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver import (
     fusion_engine,
     solver,
     verlinde,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c037_virasoro_minimal_model_fusion.reference_solver.solver import (
     get_last_tracer,
     solve,
 )

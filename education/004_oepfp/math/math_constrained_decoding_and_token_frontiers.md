@@ -45,7 +45,7 @@ governance_dependency: "None"
 # Application Note: Constrained Decoding, Attention-Sparse Output Boundaries, and Token Frontiers
 
 **Status:** Downstream Mathematical Application  
-**Context:** Formulates the mathematical foundations of constrained neural decoding, dynamic logit masking, Bayesian re-normalization, the $\ell_1$ norm invariance theorem on the probability simplex, and the Three-Layer Sovereignty Boundary. Grounded in `attention_sparse_output_boundary.md` (not found at source pin `c419cc6beb`, 2026-10-20), `demo_token_frontier` (now at `omega_engine_atlas/coda_atlas/F004_papers/015_pfp/003_pfp_host_admitted_failure_detectors/demos/demo_token_frontier/`), and Challenges C001–C010.  
+**Context:** Formulates the mathematical foundations of constrained neural decoding, dynamic logit masking, Bayesian re-normalization, the $\ell_1$ norm invariance theorem on the probability simplex, and the Three-Layer Sovereignty Boundary. Grounded in `attention_sparse_output_boundary.md` (not found at source pin `c419cc6beb`, 2026-10-20), `demo_token_frontier` (now at `atlas/coda_atlas/F004_papers/015_pfp/003_pfp_host_admitted_failure_detectors/demos/demo_token_frontier/`), and Challenges C001–C010.  
 **Authority:** None. Probability theory, discrete optimization, and runtime boundary contracts.
 
 ---
@@ -130,7 +130,7 @@ $$\sum_{t \in V_{\mathrm{valid}}(S)} P_{\mathrm{constrained}}(t) = \sum_{t \in V
 If the base model places zero probability on every syntactically legal token ($M_{\mathrm{retained}} = 0$), division by zero occurs. The engine refuses to hallucinate or default to an unconstrained token. It halts immediately and returns a typed refusal:
 
 $$\operatorname{Refusal}(\text{ZeroRetainedMassError: Retained probability mass is exactly zero})$$
-with code `DecodingRefusalCode.ZERO_RETAINED_MASS` (defined in [`omega_engine_pfp/domain/decoding/errors.py`](../../../../omega_engine_pfp/domain/decoding/errors.py); the entity is `TokenFrontier` in [`token_frontier.py`](../../../../omega_engine_pfp/domain/decoding/token_frontier.py), read 2026-10-20).
+with code `DecodingRefusalCode.ZERO_RETAINED_MASS` (defined in [`pfp/domain/decoding/errors.py`](../../../../pfp/domain/decoding/errors.py); the entity is `TokenFrontier` in [`token_frontier.py`](../../../../pfp/domain/decoding/token_frontier.py), read 2026-10-20).
 
 *When can the mass be zero? (2026-10-20)* Under an exact softmax every token has probability $\exp(z_v)/\sum_u \exp(z_u) > 0$, so $M_{\mathrm{retained}} = 0$ happens only when $V_{\mathrm{valid}}(S) = \varnothing$ or when the base distribution has already been truncated or rounded (top-$k$, top-$p$, quantized probabilities). *Worked example:* base probabilities $(1/2, 1/3, 1/6)$ on tokens $(a, b, c)$ with $V_{\mathrm{valid}} = \{b, c\}$ give $M_{\mathrm{retained}} = 1/3 + 1/6 = 1/2$ and constrained probabilities $(0, 2/3, 1/3)$, which sum to 1. With $V_{\mathrm{valid}} = \{c\}$ after a top-2 truncation that zeroed $c$, the mass is 0 and the engine refuses.
 

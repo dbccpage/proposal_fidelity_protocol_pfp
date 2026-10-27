@@ -2,8 +2,8 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_epistemic_immune_system.domain.guard_activation import DetectorHitRefV1
-from omega_engine_epistemic_immune_system.use_cases.regulate_guard import BenignCheckResult, RegulatedGuardState
+from eis.domain.guard_activation import DetectorHitRefV1
+from eis.use_cases.regulate_guard import BenignCheckResult, RegulatedGuardState
 
 
 class Admitted:

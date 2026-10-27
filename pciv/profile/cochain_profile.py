@@ -1,6 +1,6 @@
 """One prompt profile whose checker is ``verify_cochain_complex``.
 
-``omega_ooutwire_primitives::alpha_projection_obstruction::cochain_presentation::verify_cochain_complex``
+``core_ooutwire_primitives::alpha_projection_obstruction::cochain_presentation::verify_cochain_complex``
 is Rust-only. This module is the pure-Python admission check for that
 function: ``d1 ∘ d0 = 0`` on exact integer or rational matrices, and a
 refusal otherwise. Phi1 is the exact ℓ¹ mass of that composition residual.

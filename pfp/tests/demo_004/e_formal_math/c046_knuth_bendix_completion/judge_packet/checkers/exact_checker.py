@@ -7,18 +7,18 @@ and (for COMPLETE) soundness: every submitted rule must follow from the input eq
 
 from typing import Any, Dict, List, Tuple
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.judge_completion import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.judge_packet.checkers.judge_completion import (
     follows_from,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.critical_pairs import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.critical_pairs import (
     get_critical_pairs,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.term import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.term import (
     Term,
     normalize,
     parse_term,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.term_order import (
+from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.term_order import (
     TermOrder,
 )
 
@@ -121,7 +121,7 @@ def check_exact(case: Dict[str, Any], ans: Dict[str, Any]) -> Tuple[bool, str]:
             return False, "Missing is_confluent field"
 
         # Verify truth using reference solver
-        from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
+        from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
             solve as ref_solve,
         )
 
@@ -138,7 +138,7 @@ def check_exact(case: Dict[str, Any], ans: Dict[str, Any]) -> Tuple[bool, str]:
         if "normal_form" not in ans or "term" not in ans:
             return False, "Missing normal_form or term field"
 
-        from omega_engine_pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
+        from pfp.tests.demo_004.e_formal_math.c046_knuth_bendix_completion.reference_solver.solver import (
             solve as ref_solve,
         )
 

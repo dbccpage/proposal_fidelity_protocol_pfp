@@ -2,7 +2,7 @@
 test_symbol_game_deepening.py
 =============================
 
-Comprehensive unit tests for the deepened Clean Architecture components of omega_engine_pfp:
+Comprehensive unit tests for the deepened Clean Architecture components of pfp:
 - PacketCodec (sealing, canonical JSON, SHA-256 verification)
 - ProposalEvaluator (residual drops, contractiveness, kill conditions, ranking)
 - SymbolGameEngine (deep facade seam)
@@ -15,18 +15,18 @@ from __future__ import annotations
 
 import pytest
 
-from omega_engine_pfp import (
+from pfp import (
     ObstructionScore,
     PacketCodec,
     ProposalEvaluator,
     SymbolGameController,
     SymbolGameEngine,
 )
-from omega_engine_pfp.domain.evaluator import KillReason
-from omega_engine_pfp.domain.exceptions import SymbolGameValidationError
-from omega_engine_pfp.domain.models import SymbolGameEnvelope
-from omega_engine_pfp.domain.ports.ports import EvaluatorPort, StoragePort
-from omega_engine_pfp.functional_boundary import RustFunctionalRequired
+from pfp.domain.evaluator import KillReason
+from pfp.domain.exceptions import SymbolGameValidationError
+from pfp.domain.models import SymbolGameEnvelope
+from pfp.domain.ports.ports import EvaluatorPort, StoragePort
+from pfp.functional_boundary import RustFunctionalRequired
 
 
 def test_packet_codec_seal_and_verify():
@@ -154,7 +154,7 @@ def test_symbol_game_engine_facade_seam():
     assert outcome.authority_effect == "None"
 
     # 2. Problem solving fails closed: Phi1 and Gamma2 are minted only by
-    # omega_engine/crates_rs/omega_functional/src, and no Rust-backed adapter
+    # engine/crates_rs/core_functional/src, and no Rust-backed adapter
     # backs the facade yet, so it must refuse rather than report PASSED.
     with pytest.raises(RustFunctionalRequired, match="RUST_FUNCTIONAL_REQUIRED"):
         engine.solve_problem("reduce 1-cochain boundary defect", max_steps=3)

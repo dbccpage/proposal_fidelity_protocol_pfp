@@ -12,10 +12,10 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.affine_hnf_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.affine_hnf_checker import (
     verify_affine_hnf_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
     verify_facet_point_certificate,
 )
 

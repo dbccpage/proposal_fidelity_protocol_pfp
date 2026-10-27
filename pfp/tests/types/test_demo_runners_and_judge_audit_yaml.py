@@ -14,20 +14,20 @@ from pathlib import Path
 
 import yaml
 
-from omega_engine_pfp.infrastructure.pilot_runners.gate_checks import (
+from pfp.infrastructure.pilot_runners.gate_checks import (
     FORBIDDEN_WORDS as FORBIDDEN_WORDS_001,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.declaration_checks import (
+from pfp.infrastructure.pilot_runners.declaration_checks import (
     FORBIDDEN_WORDS as FORBIDDEN_WORDS_002,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_models import (
+from pfp.infrastructure.pilot_runners.mssn_models import (
     ExecutionAttestationMode,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_models import PfpStageStatus
-from omega_engine_pfp.infrastructure.pilot_runners.mssn_models import ProposalStatus
-from omega_engine_woland.tests.pilots.judge_packet_audit.audit import OUTCOME_CODES
-from omega_engine_woland.tests.pilots.judge_packet_audit.leakage import VERDICT_WORDS
-from omega_engine_woland.tests.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
+from pfp.infrastructure.pilot_runners.mssn_models import PfpStageStatus
+from pfp.infrastructure.pilot_runners.mssn_models import ProposalStatus
+from adversary.tests.pilots.judge_packet_audit.audit import OUTCOME_CODES
+from adversary.tests.pilots.judge_packet_audit.leakage import VERDICT_WORDS
+from adversary.tests.pilots.judge_packet_audit.static_analysis import REFUSAL_STATUS_WORDS
 
 _INFRA_ROOT = Path(__file__).resolve().parents[2] / "infrastructure"
 _DEMO_RUNNERS_YAML_DIR = _INFRA_ROOT / "yaml" / "demo_runners"

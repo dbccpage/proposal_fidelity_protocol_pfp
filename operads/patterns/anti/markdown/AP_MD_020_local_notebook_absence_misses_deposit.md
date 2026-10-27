@@ -28,7 +28,7 @@ A pedagogy stage records that no local notebooks were found and marks itself not
 
 ## Witness
 
-Historical receipts. This digest did not rerun gates, open the notebooks, or open the worktree. Source folder `_ic/inr/omega_paper_reviews/pfp_mssn_batch_20260929_061529/`.
+Historical receipts. This digest did not rerun gates, open the notebooks, or open the worktree. Source folder `_ic/inr/core_paper_reviews/pfp_mssn_batch_20260929_061529/`.
 
 `003/run_all_receipt.json` (`SWARM_REV_20260929_061529`) has `overall_status` `PASS`. Stage `interactive_pedagogy_and_replay` is `NOT_APPLICABLE`. Its note is:
 

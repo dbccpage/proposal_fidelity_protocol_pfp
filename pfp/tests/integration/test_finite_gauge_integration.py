@@ -1,7 +1,7 @@
 """Integration contract for the real Paper 002 finite-gauge adapter."""
 
-from omega_engine_pfp.domain.finite_gauge import RunConfig
-from omega_engine_pfp.infrastructure.composition.finite_gauge import build_run
+from pfp.domain.finite_gauge import RunConfig
+from pfp.infrastructure.composition.finite_gauge import build_run
 
 
 def test_real_checker_replays_verified_even_triangle() -> None:

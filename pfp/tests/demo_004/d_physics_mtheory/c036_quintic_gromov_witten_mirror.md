@@ -15,7 +15,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Candelas, de la Ossa, Green and Parkes (1991) computed the genus-zero instanton numbers of the quintic threefold from the periods of its mirror: n₁ = 2875, n₂ = 609250, n₃ = 317206375. The computation is a chain of exact power-series operations: the hypergeometric fundamental period, the logarithmic period, the mirror map, its inversion, the Yukawa coupling, and the multiple-cover expansion. Every step is checkable in exact rationals, and the output has a sharp built-in test: every nᵈ must come out an integer. An error in the mirror map or the normalization almost always produces non-integers.
 
-The task stresses OEWAS (Omega Engine Workflows, Agents, Skills) decomposition of a long exact pipeline, and OEEIS (Omega Engine Epistemic Immune System) screening of answers that reproduce the famous first numbers from memory but fail at higher degree or on unfamiliar families.
+The task stresses OEWAS (Engine Workflows, Agents, Skills) decomposition of a long exact pipeline, and OEEIS (Engine Epistemic Immune System) screening of answers that reproduce the famous first numbers from memory but fail at higher degree or on unfamiliar families.
 
 ## 3. Formal Problem and Bounds
 
@@ -106,7 +106,7 @@ Operands expected: (1) the Frobenius log-derivative gives ϖ̃₁ coefficients w
 ## 13. Estate Reuse and Prerequisites
 
 - No power-series or Picard–Fuchs module exists in the estate. The series engine, shared with C035, is new Rust work.
-- `omega_engine/crates_rs/omega_kernel` for exact big rationals and digests.
+- `engine/crates_rs/core_kernel` for exact big rationals and digests.
 - The h¹¹ = 1 certification of each pinned family reuses the C034 checker.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 

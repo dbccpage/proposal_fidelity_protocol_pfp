@@ -3,7 +3,7 @@
 Aligned Contracts / Systems:
 - nf.physics.susy
 - coda_gauge_higgs_susy
-- omega_homology
+- core_homology
 
 AuthorityEffect: None.
 """

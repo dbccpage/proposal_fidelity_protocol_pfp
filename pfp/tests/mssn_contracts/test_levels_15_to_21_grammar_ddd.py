@@ -34,8 +34,8 @@ RESEARCH_DIR = Path(__file__).resolve().parent.parent.parent
 if str(RESEARCH_DIR) not in sys.path:
     sys.path.insert(0, str(RESEARCH_DIR))
 
-from omega_engine_pfp.domain.mssn_research.grammar.entities import TowerGrammar
-from omega_engine_pfp.domain.mssn_research.grammar.errors import (
+from pfp.domain.mssn_research.grammar.entities import TowerGrammar
+from pfp.domain.mssn_research.grammar.errors import (
     AuthorityBoundaryError,
     AutopoieticCycleError,
     DialectChecksumError,
@@ -44,18 +44,18 @@ from omega_engine_pfp.domain.mssn_research.grammar.errors import (
     ReggeSimplicialError,
     ZetaSpectralQuarantineError,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_policies import (
+from pfp.domain.mssn_research.grammar.spectral_policies import (
     check_autopoietic_expansion_cycle,
     check_regge_4d_simplicial_curvature,
     check_zeta_spectral_quarantine,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.authority_policies import (
+from pfp.domain.mssn_research.grammar.authority_policies import (
     check_dialect_container_integrity,
     check_hodge_decomposition,
     check_ind_object_morphism,
     check_master_horizon_authority,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import (
+from pfp.domain.mssn_research.grammar.spectral_geometry import (
     AutopoieticExpansionCyclePacket,
     CycleRemediationAction,
     HingeDeficit,
@@ -65,7 +65,7 @@ from omega_engine_pfp.domain.mssn_research.grammar.spectral_geometry import (
     ZetaShadowPacket,
     ZetaType,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.authority import (
+from pfp.domain.mssn_research.grammar.authority import (
     CandidateProposal,
     DialectContainer,
     DialectTag,
@@ -81,10 +81,10 @@ from omega_engine_pfp.domain.mssn_research.grammar.authority import (
     StageMorphism,
     TerminalAuthorityToken,
 )
-from omega_engine_pfp.domain.mssn_research.grammar.exact_structures import ExactRationalMatrix
-from omega_engine_pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, Rational, StageLevel
+from pfp.domain.mssn_research.grammar.exact_structures import ExactRationalMatrix
+from pfp.domain.mssn_research.packets.value_objects import Opcode, RefusalCode
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal
+from pfp.domain.mssn_research.shared_kernel.value_objects import ContentDigest, Rational, StageLevel
 
 
 # ===========================================================================

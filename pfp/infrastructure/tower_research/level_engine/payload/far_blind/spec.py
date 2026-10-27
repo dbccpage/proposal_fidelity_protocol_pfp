@@ -33,11 +33,11 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ZERO, Q, fmt_q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.q import ZERO, Q, fmt_q
+from operations.use_cases.level_engine.research_engine.kinds import Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 from ..shared import (NOUGHT, TABLE_DEFS, Table, certificates, grid, lean_list, lean_q, lean_table,
                             mirrored, render, rows, size_of, tadd, tmul, unit_table)
 

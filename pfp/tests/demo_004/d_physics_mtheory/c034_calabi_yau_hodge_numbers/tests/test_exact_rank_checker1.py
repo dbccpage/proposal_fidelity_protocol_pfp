@@ -8,7 +8,7 @@ reported rank 1. Booleans were silently accepted as 1.0.
 from __future__ import annotations
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
     _compute_affine_dim_c1,
     _compute_rank_c1,
 )

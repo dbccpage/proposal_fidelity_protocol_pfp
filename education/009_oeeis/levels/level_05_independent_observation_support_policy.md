@@ -14,15 +14,15 @@ evidence_grades:
   gated: true
 authority_effect: "None"
 source_paths:
-  - omega_engine_product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
-  - omega_engine_epistemic_immune_system/domain/external_admission.py
+  - product_planning_office/plans/epics/epic_claude_oeeis_oeprmptciv_plan.md
+  - eis/domain/external_admission.py
 ---
 
 # EIS Level 05: Independent Observation Support Policy: Maximum Independent Sets
 
 **AuthorityEffect:** None.  
 **Level:** Level 05 (Causal Observation Deduplication & Correlation Graph Independence)  
-**Python Admission Seam:** [`omega_engine_epistemic_immune_system.domain.external_admission`](../../../../omega_engine_epistemic_immune_system/domain/external_admission.py)  
+**Python Admission Seam:** [`eis.domain.external_admission`](../../../../eis/domain/external_admission.py)  
 **Primary Policy:** `ObservationSupportPolicyV1`  
 **Core Falsifiers:** `F-SUPPORT-01`, `F-SUPPORT-02`, `F-SUPPORT-03`, `F-SUPPORT-04`
 
@@ -109,7 +109,7 @@ Level 05 establishes **`ObservationSupportPolicyV1`**:
 ## 3. Python Domain Seam
 
 ```python
-# omega_engine_epistemic_immune_system.domain.external_admission
+# eis.domain.external_admission
 class ObservationSupportPolicyV1:
     def compute_support(self, observations: List[DefectObservationV1]) -> int:
         # Step 1: Duplicate collapse

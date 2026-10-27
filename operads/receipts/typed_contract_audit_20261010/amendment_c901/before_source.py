@@ -14,7 +14,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Literal
 
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
 from ..domain.anti_skills import (
     AntiSkillEvaluationReceiptV2,
@@ -32,15 +32,15 @@ from ..domain.capability_catalog_v1 import (
 )
 from ..domain.entities.typed_contract_package import CompiledTypedPackageV1
 from .anti_skill.anti_skill_v2 import evaluate_antiskill_fixture_bank
-from .woland_candidate_plan import PlanNodeV01, PlanRefusal
-from .woland_instruction_admission import (
+from .adversary_candidate_plan import PlanNodeV01, PlanRefusal
+from .adversary_instruction_admission import (
     InstructionAdmissionRefusal,
     VerifiedInstructionAdmissionV01,
     verify_signed_instruction_admission,
 )
-from .woland_task_selection import (
-    WolandCandidateRouteV01,
-    WolandTaskShapeV01,
+from .adversary_task_selection import (
+    AdversaryCandidateRouteV01,
+    AdversaryTaskShapeV01,
     select_candidate_plan,
 )
 
@@ -266,7 +266,7 @@ def verify_typed_contract_admission(
     subject: AntiSkillSubjectV1,
     *,
     compile_current: Callable[[], CompiledTypedPackageV1],
-    task: WolandTaskShapeV01,
+    task: AdversaryTaskShapeV01,
     manifest_bytes: bytes,
     signature_path: Path,
     allowed_signers_path: Path,
@@ -278,7 +278,7 @@ def verify_typed_contract_admission(
     The caller supplies an operator-controlled external signer trust root.
     The signed request must be the exact audited subject identifier. This
     verifies instruction custody only: no detector registry, live admission,
-    guard-trio replacement or Woland dispatch is performed.
+    guard-trio replacement or Adversary dispatch is performed.
     """
     fresh = _fresh_audit(subject, compile_current, expected_contracts_digest)
     if isinstance(fresh, Err):
@@ -288,14 +288,14 @@ def verify_typed_contract_admission(
         return _refused(
             "TYPED_CONTRACT_SUBJECT_FALSIFIED", "actual predicate found a scope overclaim"
         )
-    if type(task) is not WolandTaskShapeV01 or task.request_digest != subject.subject_id:
+    if type(task) is not AdversaryTaskShapeV01 or task.request_digest != subject.subject_id:
         return _refused(
             "TYPED_CONTRACT_TASK_BINDING_MISMATCH",
             "task request must bind the exact audited subject",
         )
     try:
-        root = PlanNodeV01("woland-claim-audit", ((0, PlanNodeV01("woland-scope-falsifier")),))
-        route = WolandCandidateRouteV01(
+        root = PlanNodeV01("adversary-claim-audit", ((0, PlanNodeV01("adversary-scope-falsifier")),))
+        route = AdversaryCandidateRouteV01(
             "route.typed-contract-audit",
             task.workload_profile_id,
             task.workload_profile_digest,

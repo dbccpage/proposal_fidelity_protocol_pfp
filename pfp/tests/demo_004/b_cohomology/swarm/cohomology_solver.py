@@ -7,9 +7,9 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.cohomology.certificate_checker import check_certificate
-from omega_engine_pfp.domain.cohomology.solver import solve
-from omega_engine_pfp.domain.ports.cohomology_port import CohomologySolverPort
+from pfp.domain.cohomology.certificate_checker import check_certificate
+from pfp.domain.cohomology.solver import solve
+from pfp.domain.ports.cohomology_port import CohomologySolverPort
 
 
 def _wire(value: Fraction) -> str:

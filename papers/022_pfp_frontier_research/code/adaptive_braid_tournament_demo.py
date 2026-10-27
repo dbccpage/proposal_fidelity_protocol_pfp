@@ -37,8 +37,8 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 # Resolve repository paths dynamically
 CURRENT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = (next((p for p in CURRENT_DIR.parents if (p / ".git").exists()), None) or CURRENT_DIR.parents[6])
-MS_MAJORANA_CODE = REPO_ROOT / "omega_engine_projects" / "ms_majorana" / "code"
-PROVIDERS_DIR = REPO_ROOT / "omega_engine_providers" / "adapters"
+MS_MAJORANA_CODE = REPO_ROOT / "projects" / "ms_majorana" / "code"
+PROVIDERS_DIR = REPO_ROOT / "providers" / "adapters"
 
 for p in (str(MS_MAJORANA_CODE), str(PROVIDERS_DIR)):
     if p not in sys.path:

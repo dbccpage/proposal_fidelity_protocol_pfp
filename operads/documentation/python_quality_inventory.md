@@ -9,11 +9,11 @@ readiness.
 Run it from the repository root with the pinned runtime:
 
 ```powershell
-py -3.12 -m omega_engine_operads.frontend.cli.python_dev_cli `
+py -3.12 -m operads.frontend.cli.python_dev_cli `
   . --quality-inventory --project-root .
 ```
 
-The command emits a JSON `omega.python_quality_inventory.v1` receipt and exits:
+The command emits a JSON `core.python_quality_inventory.v1` receipt and exits:
 
 - `0` for a bounded `STRUCTURAL_PASS`;
 - `1` when enforced findings block the policy;
@@ -33,7 +33,7 @@ visible but are non-enforcing.
 
 Test file presence never satisfies a tier. The gate loads, but never executes, JSON receipts from
 `artifacts/python_quality/test_execution_receipts` by default; `--test-receipts` may select another
-directory inside the project root. Each `omega.python_test_execution_receipt.v1` record must bind:
+directory inside the project root. Each `core.python_test_execution_receipt.v1` record must bind:
 
 - an argument-vector command, Python 3.12 version, exit code, and positive test count;
 - repository-relative targets covering every policy-matched file in that tier;

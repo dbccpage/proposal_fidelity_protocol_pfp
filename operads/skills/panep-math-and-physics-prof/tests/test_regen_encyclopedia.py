@@ -39,16 +39,16 @@ def test_parse_gtmur_heading_strips_markdown_marker():
 
 
 def test_coda_nested_ground_up_keeps_gg_namespace():
-    tower = "omega_engine/research/published/001_coda/coda_fda/paper.md"
-    ground = "omega_engine/research/published/001_coda/gtoc/001_gtoc_time/001_gtoc_time.md"
+    tower = "engine/research/published/001_coda/coda_fda/paper.md"
+    ground = "engine/research/published/001_coda/gtoc/001_gtoc_time/001_gtoc_time.md"
     assert r._qualified_pid("001", tower) == "gt001"
     assert r._qualified_pid("001", ground) == "gg001"
 
 
 def test_source_paper_ids_are_path_qualified_and_case_stable():
-    ground = "omega_engine/research/published/001_coda/gtoc/001_gtoc_time/001_gtoc_time.md §3"
+    ground = "engine/research/published/001_coda/gtoc/001_gtoc_time/001_gtoc_time.md §3"
     quantum = (
-        "omega_engine/research/published/003_quantum_foundations/"
+        "engine/research/published/003_quantum_foundations/"
         "qm_004_state_effect_pairing_audit/qm_004_state_effect_pairing_audit.md"
     )
     assert r._source_paper_pid(ground) == "gg001"

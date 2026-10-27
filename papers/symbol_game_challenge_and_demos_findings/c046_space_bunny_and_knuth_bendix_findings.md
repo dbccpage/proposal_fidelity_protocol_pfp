@@ -43,7 +43,7 @@ Challenge **C046 (`c046_knuth_bendix_completion`)** tests equational theorem pro
 We developed, verified, and sealed the reference solver package under SG-CP v1:
 - **Reference Solver:** Robinson unification, subterm address replacement, Lexicographic Path Order with symbol precedence, textbook agenda saturation queue, and variable canonicalization.
 - **Judge Packet:** 64 hidden cases (40 base, 16 relabel/gauge controls, 8 poisoned cases) and 48 hostile mutated certificates.
-- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.741s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_woland/runs/c046_eval_1790624400`.
+- **Commit-Reveal Gate:** **`PASS_TO_MASTER` (64/64 cases passed in 0.741s, 48/48 hostile mutations killed (100.0%))** sealed into `_intelligence/_adversary/runs/c046_eval_1790624400`.
 
 ---
 

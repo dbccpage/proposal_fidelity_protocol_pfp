@@ -52,8 +52,8 @@ interrupted-attempt markers are never rewritten into new efficacy evidence.
 ## Recheck the selected behavior
 
 ```powershell
-python -m pytest omega_engine_pfp/tests/test_pfp_runtime.py omega_engine_pfp/tests/test_challenge_learning.py -q
-python -m pytest omega_engine_pfp/tests/test_legacy_live_preflight.py omega_engine_pfp/tests/test_p0_evidence_integrity.py -q
+python -m pytest pfp/tests/test_pfp_runtime.py pfp/tests/test_challenge_learning.py -q
+python -m pytest pfp/tests/test_legacy_live_preflight.py pfp/tests/test_p0_evidence_integrity.py -q
 ```
 
 These are targeted lifecycle, witness and failure controls, not model trials or

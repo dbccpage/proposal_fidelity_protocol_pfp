@@ -141,7 +141,7 @@ No evidence path = no credit.
 
 ## Phase 3 — Test Quality Review
 
-Apply Techne Code Soviet Inspector standards.
+Apply Techne Code Inspector standards.
 
 Flag:
 
@@ -193,7 +193,7 @@ Inspect code changes for:
 Ask:
 
 ```text
-Does this sprint move the Omega Engine toward the operator ecology?
+Does this sprint move the engine toward the operator ecology?
 Or did it create more unrouted power?
 
 ``` ext

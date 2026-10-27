@@ -7,17 +7,17 @@ import json
 
 import pytest
 
-from omega_engine_woland.tests.pilots.challenge_suite.__main__ import HARNESS_MUTANTS
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import load_plan
-from omega_engine_woland.tests.pilots.challenge_suite.catalog import prompt_for
-from omega_engine_pfp.infrastructure.adapters.pfp_proposals import SymbolGameProposalAdapter
-from omega_engine_pfp.use_cases.pfp_prompt import stimulus, task_contract
-from omega_engine_pfp.use_cases.pfp_proposal import (
+from adversary.tests.pilots.challenge_suite.__main__ import HARNESS_MUTANTS
+from adversary.tests.pilots.challenge_suite.catalog import load_plan
+from adversary.tests.pilots.challenge_suite.catalog import prompt_for
+from pfp.infrastructure.adapters.pfp_proposals import SymbolGameProposalAdapter
+from pfp.use_cases.pfp_prompt import stimulus, task_contract
+from pfp.use_cases.pfp_proposal import (
     CheckProposalUseCase,
     ProposalCheck,
     repair_feedback,
 )
-from omega_engine_pfp.use_cases.pfp_stages import PfpStagePolicy
+from pfp.use_cases.pfp_stages import PfpStagePolicy
 
 
 def envelope():
@@ -251,8 +251,8 @@ def test_redacted_contract_withholds_status_and_phi1_values(tmp_path):
 
 @pytest.mark.parametrize("kind", ["consistency", "cycle_repair"])
 def test_exact_c005_schema_survives_example_mining(kind):
-    from omega_engine_woland.tests.pilots.challenge_suite.catalog import load_case
-    from omega_engine_pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
+    from adversary.tests.pilots.challenge_suite.catalog import load_case
+    from pfp.tests.demo_004.a_mechanism.c005_hosted_decode_controls.schemas import (
         CONSISTENCY_JSON_SCHEMA,
         CYCLE_REPAIR_JSON_SCHEMA,
     )

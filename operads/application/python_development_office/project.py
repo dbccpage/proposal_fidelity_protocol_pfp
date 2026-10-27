@@ -5,21 +5,21 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Iterable
 
-from omega_engine_operads.application.python_development_office.rules.registry import (
+from operads.application.python_development_office.rules.registry import (
     RuleRegistry,
 )
-from omega_engine_operads.application.python_development_office.visitor import (
+from operads.application.python_development_office.visitor import (
     scan_source_ast,
 )
-from omega_engine_operads.domain.operad.errors import Err
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.operad.errors import Err
+from operads.domain.python_development_office import (
     AntipatternFinding,
     ArchitectureConfig,
     ModuleInfo,
     RuleCategory,
     ScanResult,
 )
-from omega_engine_operads.domain.python_development_office.protocols import (
+from operads.domain.python_development_office.protocols import (
     SourceRepositoryProtocol,
 )
 

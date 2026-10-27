@@ -25,7 +25,7 @@ exhibited zero residual. The cell remains executable with its default answer.
 | The toy host retains state on the exhibited increase | `COMPUTED` in this teaching implementation |
 | Every directed board has an exact potential | **Not established**; the first cycle is a counterexample to the unqualified claim |
 | A named Genesis theorem holds | Requires direct review of that exact source and hypotheses |
-| An Omega Engine action is authorized | Requires a separate policy and host decision |
+| An Engine action is authorized | Requires a separate policy and host decision |
 
 For each real cross-source claim, write the source commit and path, exact
 carrier, typed map, target checker, lost information, and remaining open
@@ -50,6 +50,6 @@ Tower files for this sitting:
 - [research/mssn_sn_tower/_theory/README.md](../../../../../research/mssn_sn_tower/_theory/README.md)
 - [research/mssn_sn_tower/_theory/03_the_symbol_game.md](../../../../../research/mssn_sn_tower/_theory/03_the_symbol_game.md)
 - [research/mssn_sn_tower/_theory/09_authority_fences.md](../../../../../research/mssn_sn_tower/_theory/09_authority_fences.md)
-- [research/mssn_sn_tower/education_crosswalk_genesis_omega.md](../../../../../research/mssn_sn_tower/education_crosswalk_genesis_omega.md)
+- [research/mssn_sn_tower/education_crosswalk_genesis_core.md](../../../../../research/mssn_sn_tower/education_crosswalk_genesis_core.md)
 
 Frontier sitting already on disk: [N0_the_genesis_distinction.md](../../600_mssn_frontier/N0_the_genesis_distinction/N0_the_genesis_distinction.md). It is a different folder. This lesson does not replace it.

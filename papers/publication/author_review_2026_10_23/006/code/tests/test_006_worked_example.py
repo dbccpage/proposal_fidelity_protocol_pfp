@@ -18,7 +18,7 @@ import pytest
 
 PACKAGE = Path(__file__).resolve().parents[2]
 PAPER = PACKAGE / "paper.md"
-SINK_SOURCE = Path("omega_engine_pfp", "infrastructure", "persistence", "cemetery_sink.py")
+SINK_SOURCE = Path("pfp", "infrastructure", "persistence", "cemetery_sink.py")
 
 
 def _repository_root() -> Path | None:
@@ -53,9 +53,9 @@ def store(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> dict[str, object]:
     namespace: dict[str, object] = {"__name__": "pfp_vi_section_6"}
     exec(compile(_section6_block(), "paper.md#section-6", "exec"), namespace)
     namespace["sink_module"] = importlib.import_module(
-        "omega_engine_pfp.infrastructure.persistence.cemetery_sink"
+        "pfp.infrastructure.persistence.cemetery_sink"
     )
-    namespace["errors"] = importlib.import_module("omega_engine_pfp.domain.exceptions")
+    namespace["errors"] = importlib.import_module("pfp.domain.exceptions")
     return namespace
 
 

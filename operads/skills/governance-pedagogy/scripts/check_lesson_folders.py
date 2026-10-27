@@ -17,7 +17,7 @@ from pathlib import Path
 def find_repo_root() -> Path:
     current = Path(__file__).resolve()
     for parent in current.parents:
-        if (parent / ".agents").is_dir() and (parent / "omega_engine_education").is_dir():
+        if (parent / ".agents").is_dir() and (parent / "education").is_dir():
             return parent
     raise RuntimeError(f"Could not locate repo root from {current}")
 
@@ -141,7 +141,7 @@ def find_lessons(lessons: Path) -> list[LessonEntry]:
 
 
 def _curriculum_roots(repo_root: Path) -> list[Path]:
-    education = repo_root / "omega_engine_education"
+    education = repo_root / "education"
     curriculum_base = education / "curriculum"
     docs_base = education / "documentation"
     return [
@@ -165,8 +165,8 @@ def _collect_lessons(repo_root: Path) -> list[LessonEntry]:
     existing = [path for path in _curriculum_roots(repo_root) if path.is_dir()]
     if existing:
         return [entry for path in existing for entry in find_lessons(path)]
-    old_documented = repo_root / "omega_engine_education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/lessons"
-    lessons = old_documented if old_documented.is_dir() else repo_root / "omega_engine_education/the_symbol_game/lessons"
+    old_documented = repo_root / "education/documentation/3_the_symbol_game_proposal_fidelity_protocol_pfp/lessons"
+    lessons = old_documented if old_documented.is_dir() else repo_root / "education/the_symbol_game/lessons"
     if not lessons.is_dir():
         raise LessonDiscoveryError(f"missing lessons directory: {lessons}")
     return find_lessons(lessons)

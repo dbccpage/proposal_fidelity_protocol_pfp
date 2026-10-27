@@ -8,8 +8,8 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Sequence
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
+from pfp.domain.mssn_research.shared_kernel.result import Err, Ok, Refusal, Result
+from pfp.domain.mssn_research.shared_kernel.value_objects import StageLevel
 
 from .errors import (
     MalformedWireError,

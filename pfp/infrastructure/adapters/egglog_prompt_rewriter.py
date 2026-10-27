@@ -10,7 +10,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
-from omega_engine_pfp.domain.rewriting.rewrites import ROLES, RewriteReceipt, RewriteRequest, Segment
+from pfp.domain.rewriting.rewrites import ROLES, RewriteReceipt, RewriteRequest, Segment
 
 EGGLOG_VERSION = "14.0.0"
 MAX_ITERATIONS = 10

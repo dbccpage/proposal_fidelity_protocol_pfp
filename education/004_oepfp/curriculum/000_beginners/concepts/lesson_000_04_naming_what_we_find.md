@@ -61,7 +61,7 @@ If the page is long, read one section and run the matching notebook cells. Leave
 <summary>Click to view solution</summary>
 
 ```python
-from omega_engine_pfp.domain.tower import grammar
+from pfp.domain.tower import grammar
 
 # 1. Valid atoms
 p1 = grammar.parse("<dinosaur>")

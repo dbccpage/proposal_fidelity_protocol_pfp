@@ -18,8 +18,8 @@ if TYPE_CHECKING:
     from .errors import ArityMismatchError, DomainError, Err, Failure, IllTypedCompositionError, InvalidColourError, InvariantViolationError, MissingUnitError, Ok, Result, SliceViolationError, Success
     from .evidence import CommandRecord, ConcreteWitness, DiagnosticObservation, EvidenceReceipt, HallucinationWitness, PathObstructionWitness, Residual, Witness, EMPTY
     from .hott import Homotopy2Cell, Path, identity_path, refl, transport, transport_along_path
-    from omega_engine_operads.domain.operad.operad import AgentSlice, ColouredOperad
-    from omega_engine_operads.domain.operad.operation import OperationId, OperationSignature
+    from operads.domain.operad.operad import AgentSlice, ColouredOperad
+    from operads.domain.operad.operation import OperationId, OperationSignature
     from .planar import ArgumentCountError, ArityMismatch, Color, ColorMismatch, ColoredOp, OperadError, Term, formal_compose, identity, nullary, receipt_to_residual
     from .ports import FileLockPort, OperadRepositoryPort, null_file_lock
     from .span_operands import DocumentSpanPartition, SpanMulticategoryMorphism, SpanOperand, partition_markdown_document
@@ -61,10 +61,10 @@ _LAZY_IMPORTS: dict[str, tuple[str, str]] = {
     'refl': ('.hott', 'refl'),
     'transport': ('.hott', 'transport'),
     'transport_along_path': ('.hott', 'transport_along_path'),
-    'AgentSlice': ('omega_engine_operads.domain.operad.operad', 'AgentSlice'),
-    'ColouredOperad': ('omega_engine_operads.domain.operad.operad', 'ColouredOperad'),
-    'OperationId': ('omega_engine_operads.domain.operad.operation', 'OperationId'),
-    'OperationSignature': ('omega_engine_operads.domain.operad.operation', 'OperationSignature'),
+    'AgentSlice': ('operads.domain.operad.operad', 'AgentSlice'),
+    'ColouredOperad': ('operads.domain.operad.operad', 'ColouredOperad'),
+    'OperationId': ('operads.domain.operad.operation', 'OperationId'),
+    'OperationSignature': ('operads.domain.operad.operation', 'OperationSignature'),
     'ArgumentCountError': ('.planar', 'ArgumentCountError'),
     'ArityMismatch': ('.planar', 'ArityMismatch'),
     'Color': ('.planar', 'Color'),

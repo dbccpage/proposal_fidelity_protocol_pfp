@@ -11,12 +11,12 @@ from .budget_gate import (
     BudgetGate,
 )
 from .commit_reveal_runner import CommitRevealRunner
-from .woland_gate import (
+from .adversary_gate import (
     TERMINAL_OPEN_RESIDUAL,
     TERMINAL_REFERENCE_SELF_CONSISTENT,
     TERMINAL_REFUSE,
     TERMINAL_VERDICTS,
-    WolandGate,
+    AdversaryGate,
 )
 
 __all__ = [
@@ -30,5 +30,5 @@ __all__ = [
     "TERMINAL_VERDICTS",
     "BudgetGate",
     "CommitRevealRunner",
-    "WolandGate",
+    "AdversaryGate",
 ]

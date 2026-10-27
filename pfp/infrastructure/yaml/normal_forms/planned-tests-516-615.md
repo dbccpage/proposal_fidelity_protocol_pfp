@@ -8,7 +8,7 @@ Tests 1–515 stay in the parent inventory. The rows below are planned. They hav
 ## 26. Tranche 27: Exact Rational Constraint Sums (Tests 516–535)
 
 **Status:** Planned. No module and no execution receipt.  
-Target Module: `omega_engine_governance/tests/normal_forms/test_tranche27_exact_rational_constraint_sums.py`  
+Target Module: `governance/tests/normal_forms/test_tranche27_exact_rational_constraint_sums.py`  
 Aligned Contracts: `nf.physics.wdwnf`, `nf.physics.l1_constraint_closure`, `nf.runtime.zfnf`
 
 Each amplitude is a signed rational $\sigma_i N_i / D_i$ with $D_i > 0$. The net constraint is the GCD-reduced fold $\sum_i \sigma_i N_i / D_i$, and the constraint vanishes exactly when $N_{\text{net}} = 0$.
@@ -41,7 +41,7 @@ Each amplitude is a signed rational $\sigma_i N_i / D_i$ with $D_i > 0$. The net
 ## 27. Tranche 28: Null Totality, Boolean Identity, Residual Zero & Candidate Sets (Tests 536–555)
 
 **Status:** Planned. No module and no execution receipt.  
-Target Module: `omega_engine_governance/tests/normal_forms/test_tranche28_null_totality_and_guard_identity.py`  
+Target Module: `governance/tests/normal_forms/test_tranche28_null_totality_and_guard_identity.py`  
 Aligned Contracts: `nf.evidence.certificate`, `nf.coda.eqnf`, `nf.runtime.zfnf`, `normal_form_contract_schema.yaml`
 
 Boolean fields use `type(val) is bool`. SQL disagreement uses `IS DISTINCT FROM`. Guard $g_3$ requires `residual_mass == 0`. Guard $g_5$ requires set equality of candidate identifiers.
@@ -74,7 +74,7 @@ Boolean fields use `type(val) is bool`. SQL disagreement uses `IS DISTINCT FROM`
 ## 28. Tranche 29: Loss-Ledger Trigger Registry (Tests 556–575)
 
 **Status:** Planned. No module and no execution receipt.  
-Target Module: `omega_engine_governance/tests/normal_forms/test_tranche29_loss_ledger_trigger_registry.py`  
+Target Module: `governance/tests/normal_forms/test_tranche29_loss_ledger_trigger_registry.py`  
 Aligned Contracts: `nf.evidence.loss_ledger`, `nf.compilation.cpnf`, `nf.transport.gtmur`, `nf.motion.flow_control`, `nf.representation.gnf`, `nf.motion.locality_lrb`, `nf.epistemic.location`, `nf.epistemic.enf`
 
 The closed registry in `normal_form_contract_schema.yaml` is the only source of trigger ids. `loss_ledger_required: conditional` carries one of those ids.
@@ -107,7 +107,7 @@ The closed registry in `normal_form_contract_schema.yaml` is the only source of 
 ## 29. Tranche 30: Pseudometric Separation & Quotient Factors (Tests 576–595)
 
 **Status:** Planned. No module and no execution receipt.  
-Target Module: `omega_engine_governance/tests/normal_forms/test_tranche30_pseudometric_and_quotient_factors.py`  
+Target Module: `governance/tests/normal_forms/test_tranche30_pseudometric_and_quotient_factors.py`  
 Aligned Contracts: `nf.epistemic.odnf`, `nf.coda.eqnf`, `nf.transport.gtmur`
 
 Distance zero is a pseudometric fact. Point equality is claimed only after a declared separation axiom. Quotient distance is the $L_1$ distance on the quotient, and a factor through the quotient is unique on the declared kernel.
@@ -140,7 +140,7 @@ Distance zero is a pseudometric fact. Point equality is claimed only after a dec
 ## 30. Tranche 31: Operational Pipeline & Terminal Routes (Tests 596–615)
 
 **Status:** Planned. No module and no execution receipt.  
-Target Module: `omega_engine_governance/tests/normal_forms/test_tranche31_operational_pipeline_and_terminal_routes.py`  
+Target Module: `governance/tests/normal_forms/test_tranche31_operational_pipeline_and_terminal_routes.py`  
 Aligned Contracts: `nf.epistemic.authority`, `nf.evidence.certificate`, `nf.evidence.ddanf`, `nf.coda.eqnf`
 
 The operational harness runs `route`, then `descend`, then `verify`, then `terminalize`, and stops at the first refusal. `GuardEvidence` is read from that trace. Caller-supplied booleans are `GuardAttestations` and stay on the attestation side of the boundary.

@@ -8,7 +8,7 @@ for the reproduction route in the paper.
 ## Identity
 
 - Source commit: `52cb5457f6c485ba548cfd292f6012a941ed22cf`.
-- `omega_symbol_game` crate tree: `75d77aa5e1f30dfc102f00c8f7cb6159418dec63`.
+- `core_symbol_game` crate tree: `75d77aa5e1f30dfc102f00c8f7cb6159418dec63`.
 - Historical native-run commit in the September report:
   `1c7092c3db2ab2fa65999cf2555aff7733b97b99`. At that commit the same crate
   tree is `75d77aa5e1f30dfc102f00c8f7cb6159418dec63`.
@@ -45,14 +45,14 @@ The extracted root is `pfp-iv-native-source-52cb5457/`.
 The members are the files at the source commit under:
 
 - `LICENSE` and `LICENSING.md` (PolyForm Noncommercial 1.0.0).
-- `omega_engine/crates_rs`, including `Cargo.lock` and the workspace manifest.
-- `omega_engine/tests`, which the workspace lists as a member.
-- `omega_engine/kernel`.
-- `omega_engine_governance/contracts/contracts_the_symbol_game`.
-- `omega_engine_governance/contracts/contracts_packets`.
-- `omega_engine_pfp`.
-- `omega_engine_providers`.
-- `omega_engine_operating_system/python`.
+- `engine/crates_rs`, including `Cargo.lock` and the workspace manifest.
+- `engine/tests`, which the workspace lists as a member.
+- `engine/kernel`.
+- `governance/contracts/contracts_the_symbol_game`.
+- `governance/contracts/contracts_packets`.
+- `pfp`.
+- `providers`.
+- `operating_system/python`.
 
 The workspace member list was not reduced. A shorter member list would make
 `cargo test --locked` fail to load the workspace. A copy of `host.rs` alone
@@ -62,9 +62,9 @@ No `rust-toolchain` or `rust-toolchain.toml` file exists at this commit. The
 historical runner recorded in the September report is Rust 1.98.0
 (`x86_64-pc-windows-msvc`).
 
-`omega_symbol_game/build.rs` includes `../contract_shapes_build.rs` and looks
+`core_symbol_game/build.rs` includes `../contract_shapes_build.rs` and looks
 for the symbol-game contract directory included above. It sets
-`OMEGA_HOST_SOURCE_REVISION` from the environment or from `git describe`, and
+`CORE_HOST_SOURCE_REVISION` from the environment or from `git describe`, and
 otherwise records `UNSTAMPED`. An extracted copy has no `.git` directory, so a
 build that does not set that variable is unstamped.
 
@@ -73,21 +73,21 @@ build that does not set that variable is unstamped.
 From the extracted root, with Rust 1.98.0 and the locked dependency set:
 
 ```powershell
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test host_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test foundation_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test invoke_contract
-cargo test -j 1 --locked --manifest-path omega_engine/crates_rs/Cargo.toml -p omega_symbol_game --test native_cli_intake
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test host_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test foundation_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test invoke_contract
+cargo test -j 1 --locked --manifest-path engine/crates_rs/Cargo.toml -p core_symbol_game --test native_cli_intake
 ```
 
 On Windows, set `CARGO_TARGET_DIR` to a short directory outside this archive.
-Do not point it at another checkout's `omega_engine/crates_rs/target`.
+Do not point it at another checkout's `engine/crates_rs/target`.
 
 The four Python tests named by the paper are:
 
-- `omega_engine_pfp/tests/test_packet_contracts.py`
-- `omega_engine_pfp/tests/test_exact_functional_port.py`
-- `omega_engine_pfp/tests/test_functional_boundary.py`
-- `omega_engine_pfp/tests/test_ffi_seam_isolation.py`
+- `pfp/tests/test_packet_contracts.py`
+- `pfp/tests/test_exact_functional_port.py`
+- `pfp/tests/test_functional_boundary.py`
+- `pfp/tests/test_ffi_seam_isolation.py`
 
 Their top-level imports are present in this archive. Imports reached only
 while those tests run were not enumerated here.

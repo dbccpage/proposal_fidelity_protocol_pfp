@@ -27,7 +27,7 @@ def test_f_immune_01_harvest_writes_candidate_only() -> None:
 
     Stores CANDIDATE only.
     """
-    from omega_engine_woland.stage.domain.immune.models import Antibody, PharmacyStatus
+    from adversary.stage.domain.immune.models import Antibody, PharmacyStatus
 
     # Direct construction with admitted is refused
     with pytest.raises(ValueError, match="CANDIDATE_ONLY_UPON_CREATION"):
@@ -47,7 +47,7 @@ def test_f_immune_01_harvest_writes_candidate_only() -> None:
 
 def test_f_immune_02_frequency_never_activates() -> None:
     """F-IMMUNE-02: High occurrence count never sets ACTIVE or writes an admission record."""
-    from omega_engine_woland.stage.domain.immune.models import Antibody, PharmacyStatus
+    from adversary.stage.domain.immune.models import Antibody, PharmacyStatus
 
     antibody = Antibody.farm(
         antibody_id="ab_test_freq",
@@ -68,12 +68,12 @@ def test_f_immune_03_seeder_digest_binds_detector_fixture_scope_implementation()
 
     Legacy defect_str:run_id:task_id hashing is rejected.
     """
-    from omega_engine_woland.stage.domain.immune.seeder import ImmuneSeederV1
+    from adversary.stage.domain.immune.seeder import ImmuneSeederV1
 
     seeder = ImmuneSeederV1()
     detector_bytes = b"def detect_flaw(ast): return True"
     fixture_bytes = b"{\"trigger\": \"flaw\"}"
-    scope = "omega.math.cochain"
+    scope = "core.math.cochain"
     impl_bytes = b"class CochainDetector: pass"
 
     evidence_hash = seeder.compute_evidence_sha256(
@@ -100,7 +100,7 @@ def test_f_immune_03_seeder_digest_binds_detector_fixture_scope_implementation()
 
 def test_f_immune_04_retired_verifier_is_not_a_replay() -> None:
     """F-IMMUNE-04: verifier.py returning runtime_retired does not increment replay evidence count."""
-    from omega_engine_epistemic_immune_system.domain.external_admission import (
+    from eis.domain.external_admission import (
         ReplayVerifierV1,
     )
 
@@ -115,7 +115,7 @@ def test_f_immune_04_retired_verifier_is_not_a_replay() -> None:
 
 def test_f_immune_05_two_signals_stay_independent() -> None:
     """F-IMMUNE-05: Deriving danger from detector match or model output raises TWO_SIGNAL_COLLAPSE."""
-    from omega_engine_epistemic_immune_system.domain.danger_gate import (
+    from eis.domain.danger_gate import (
         Signal1Match,
         Signal2Danger,
         TwoSignalCollapseError,
@@ -139,7 +139,7 @@ def test_f_immune_05_two_signals_stay_independent() -> None:
 
 def test_f_immune_06_signal_2_alone_never_activates_guard() -> None:
     """F-IMMUNE-06: Signal 2 without matching detector returns no activation, never DEFENSIVE_LOCKDOWN."""
-    from omega_engine_epistemic_immune_system.domain.danger_gate import (
+    from eis.domain.danger_gate import (
         GuardDisposition,
         Signal2Danger,
         TwoSignalDangerGate,
@@ -161,7 +161,7 @@ def test_f_immune_06_signal_2_alone_never_activates_guard() -> None:
 
 def test_f_immune_07_thymus_regex_miss_never_admits() -> None:
     """F-IMMUNE-07: A thymus regex miss sets self_tolerant=True against self-panel, never is_admitted=True."""
-    from omega_engine_epistemic_immune_system.domain.thymus import (
+    from eis.domain.thymus import (
         CandidateDetector,
         ThymusGate,
     )
@@ -179,7 +179,7 @@ def test_f_immune_07_thymus_regex_miss_never_admits() -> None:
 
 def test_f_immune_08_no_float_boost_and_no_autonomous_decay() -> None:
     """F-IMMUNE-08: stimulate(float) raises TypeError; apply_decay cannot flip is_active without epoch decision."""
-    from omega_engine_epistemic_immune_system.domain.clonal_selection import (
+    from eis.domain.clonal_selection import (
         ClonalSelectorV1,
     )
 
@@ -202,18 +202,18 @@ def test_f_scope_01_two_eligibility_predicates_stay_distinct() -> None:
     Provisional antibody arms detectors that yield FINDING only.
     HOLD and REFUSE strictly require enforcing_eligible (HumanAdmitted + admitted scope + danger).
     """
-    from omega_engine_epistemic_immune_system.domain.danger_gate import (
+    from eis.domain.danger_gate import (
         GuardDisposition,
         ImmuneEvaluationEngineV1,
     )
-    from omega_engine_woland.stage.domain.immune.models import AntibodyCustodyTier
+    from adversary.stage.domain.immune.models import AntibodyCustodyTier
 
     engine = ImmuneEvaluationEngineV1()
 
     # 1. Provisional custody antibody
     disposition_provisional = engine.evaluate(
         custody=AntibodyCustodyTier.PROVISIONAL,
-        target_scope="omega.math",
+        target_scope="core.math",
         detector_match=True,
         independent_danger=True,
     )
@@ -223,8 +223,8 @@ def test_f_scope_01_two_eligibility_predicates_stay_distinct() -> None:
     # 2. HumanAdmitted antibody with matching scope and independent danger
     disposition_admitted = engine.evaluate(
         custody=AntibodyCustodyTier.HUMAN_ADMITTED,
-        target_scope="omega.math",
-        admitted_scope=["omega.math"],
+        target_scope="core.math",
+        admitted_scope=["core.math"],
         detector_match=True,
         independent_danger=True,
     )
@@ -233,7 +233,7 @@ def test_f_scope_01_two_eligibility_predicates_stay_distinct() -> None:
 
 def test_f_custody_01_provisional_is_diagnostic_only() -> None:
     """F-CUSTODY-01: Support >= 3 promotes to Provisional and review_queue.jsonl, never writes admission record."""
-    from omega_engine_epistemic_immune_system.use_cases.provisional_promotion import (
+    from eis.use_cases.provisional_promotion import (
         ProvisionalPromotionEngineV1,
     )
 
@@ -243,7 +243,7 @@ def test_f_custody_01_provisional_is_diagnostic_only() -> None:
     promotion_result = engine.promote_candidate_if_eligible(
         candidate_id=candidate_id,
         support_count=3,
-        diagnostic_scope=["omega.symbol_game"],
+        diagnostic_scope=["core.symbol_game"],
     )
 
     assert promotion_result.new_custody == "Provisional"
@@ -254,7 +254,7 @@ def test_f_custody_01_provisional_is_diagnostic_only() -> None:
 
 def test_f_custody_02_admission_binds_exact_rule_bytes_scope_and_issuer() -> None:
     """F-CUSTODY-02: Reusing an admission decision for changed rule bytes produces DECISION_BINDING_MISMATCH."""
-    from omega_engine_epistemic_immune_system.domain.external_admission import (
+    from eis.domain.external_admission import (
         HumanAdmissionApplierV1,
         HumanAntiSkillAdmissionDecisionV1,
     )
@@ -265,7 +265,7 @@ def test_f_custody_02_admission_binds_exact_rule_bytes_scope_and_issuer() -> Non
         decision_id="dec-2026-001",
         issuer="human_auditor_alice",
         rule_bytes_sha256="sha256:exact_rule_v1",
-        scope="omega.cochain",
+        scope="core.cochain",
         receipt_sha256="sha256:receipt_sig_01",
     )
 
@@ -279,7 +279,7 @@ def test_f_custody_02_admission_binds_exact_rule_bytes_scope_and_issuer() -> Non
 
 def test_f_bio_06_no_automatic_anergy_emits_proposal_only() -> None:
     """F-BIO-06: Benign-ignore counts emit AnergyProposalV1 to TregSupervisor queue; detector never self-suspends."""
-    from omega_engine_epistemic_immune_system.domain.anergy import (
+    from eis.domain.anergy import (
         AnergyMonitorV1,
         AnergyProposalV1,
     )
@@ -299,7 +299,7 @@ def test_f_bio_06_no_automatic_anergy_emits_proposal_only() -> None:
 
 def test_f_bio_07_authority_mimicry_flagged() -> None:
     """F-BIO-07: Boilerplate textual claims of admin/system authority without host receipt trigger failure classes."""
-    from omega_engine_epistemic_immune_system.domain.failure_classes import (
+    from eis.domain.failure_classes import (
         InnatePatternDetectorV1,
     )
 
@@ -320,7 +320,7 @@ def test_f_bio_07_authority_mimicry_flagged() -> None:
 
 def test_f_hold_02_bounded_topology_telemetry_diagnostic_firewall() -> None:
     """F-HOLD-02: Under RESEARCH_HOLD, topology telemetry has evidence_ceiling: DiagnosticOnly and zero operational integration."""
-    from omega_engine_epistemic_immune_system.domain.homology_telemetry import (
+    from eis.domain.homology_telemetry import (
         PersistentHomologyTelemetryV1,
     )
 

@@ -7,19 +7,19 @@ from hashlib import sha256
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_pfp.infrastructure import estimated_gateway as owner
-from omega_engine_pfp.infrastructure.pilot_matrix import complete_pilot_turn, validate_pilot_gateways
-from omega_engine_woland.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
-from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
-from omega_engine_woland.infrastructure.providers.credential_source import ResolvedCredential
+from operations.domain.rop.result import Ok
+from pfp.infrastructure import estimated_gateway as owner
+from pfp.infrastructure.pilot_matrix import complete_pilot_turn, validate_pilot_gateways
+from adversary.domain.providers.types import CandidateRequest, DecodingParamsV1, Provider
+from adversary.infrastructure.providers.gateway import unbudgeted_gateway
+from adversary.infrastructure.providers.credential_source import ResolvedCredential
 
 
 MODELS = ("claude-haiku-5-5", "claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-sonnet-4-5-20250929")
 
 
 def test_messages_builder_uses_supported_structured_output_without_generation_seed():
-    from omega_engine_woland.infrastructure.providers.anthropic_messages import build_anthropic_body
+    from adversary.infrastructure.providers.anthropic_messages import build_anthropic_body
     schema=dict(type='object',properties=dict(answer=dict(type='string')),required=['answer'],additionalProperties=False)
     request=CandidateRequest('system','user',decoding=DecodingParamsV1(
         response_format=dict(type='json_schema',json_schema=dict(name='answer',schema=schema))))

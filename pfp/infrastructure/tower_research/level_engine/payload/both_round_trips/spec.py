@@ -41,12 +41,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.linalg import rank
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Functional, Oracle, Req, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.linalg import rank
+from operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q
+from operations.use_cases.level_engine.research_engine.kinds import Functional, Oracle, Req, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 from ..shared import rows
 
 CHALLENGE_ID = "both_round_trips"

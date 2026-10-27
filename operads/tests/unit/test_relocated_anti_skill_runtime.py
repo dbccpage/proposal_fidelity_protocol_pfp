@@ -1,6 +1,6 @@
 """The relocated anti-skill runtime must reproduce the retired one's recorded evidence.
 
-The runtime moved here from the retired `omega_engine/crates/prompt_civilization`
+The runtime moved here from the retired `engine/crates/prompt_civilization`
 (39c9deb75). The autop_001 canary run pinned three specs, their fixture bank and
 three evaluation receipts, all produced by the retired source. Those bytes are
 the oracle: identifiers come from `canonical_id` and every document must
@@ -12,14 +12,14 @@ AuthorityEffect: None.
 import unittest
 from pathlib import Path
 
-from omega_engine_operads.application.anti_skill import anti_skill_v2 as runtime
-from omega_engine_operads.domain.anti_skills.anti_skill_v2 import (
+from operads.application.anti_skill import anti_skill_v2 as runtime
+from operads.domain.anti_skills.anti_skill_v2 import (
     canonical_json_bytes,
 )
 
 CANARY = (
     Path(__file__).resolve().parents[3]
-    / "omega_engine_operations" / "evidence" / "omega_campaign" / "autop_001" / "canary"
+    / "operations" / "evidence" / "core_campaign" / "autop_001" / "canary"
 )
 # Source digest of the retired prompt_civilization anti_skill_v2 modules; the
 # pinned specs bind it.

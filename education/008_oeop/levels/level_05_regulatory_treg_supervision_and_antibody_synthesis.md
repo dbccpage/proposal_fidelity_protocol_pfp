@@ -8,8 +8,8 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/domain/operad/treg.py
-  - omega_engine_education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/13_spec_polarized_operad_and_anti_skills.md
+  - operads/domain/operad/treg.py
+  - education/documentation/9_workflows_agents_skills_was_multicategories_and_operads/atlas/13_spec_polarized_operad_and_anti_skills.md
 last_verified: 2026-10-01
 ---
 
@@ -28,7 +28,7 @@ When anti-skills become too aggressive or overly broad, they begin flagging beni
 - Developers and agents waste 100% of their compute attempting to satisfy conflicting, tautological constraints.
 - The system collapses into self-inflicted deadlock.
 
-In mammalian biology, **Regulatory T-cells (Tregs)** actively monitor the immune response and suppress autoreactive effector T-cells before they destroy healthy tissue. In the Anomalon Engine, this regulatory function is performed by the **Operad Treg Supervisor**.
+In mammalian biology, **Regulatory T-cells (Tregs)** actively monitor the immune response and suppress autoreactive effector T-cells before they destroy healthy tissue. In the Sentinel Engine, this regulatory function is performed by the **Operad Treg Supervisor**.
 
 ---
 
@@ -60,7 +60,7 @@ The Treg supervisor models suppression reliability using exact rational arithmet
 
 ## 3. Code Implementation Walkthrough: `treg.py`
 
-The supervisor lives in [`omega_engine_operads/domain/operad/treg.py`](../../../../omega_engine_operads/domain/operad/treg.py):
+The supervisor lives in [`operads/domain/operad/treg.py`](../../../../operads/domain/operad/treg.py):
 
 ```python
 class OperadTregSupervisor:
@@ -175,7 +175,7 @@ class OperadTregReceipt:
 To verify Treg supervisor functionality and mathematical fractions locally:
 
 ```powershell
-# Retired: OEWAS tests/unit/test_operad_treg_supervisor.py has no successor file under omega_engine_operads.
+# Retired: OEWAS tests/unit/test_operad_treg_supervisor.py has no successor file under operads.
 ```
 
 ### The Level 05 Governance Invariants

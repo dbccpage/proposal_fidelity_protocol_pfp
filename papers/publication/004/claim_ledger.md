@@ -14,7 +14,7 @@ Package paths (`code/`, `lean4/`, `docs/`) are relative to this package.
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   ID                Claim                   Exact evidence                                                                                     Status and limit
   ----------------- ----------------------- -------------------------------------------------------------------------------------------------- ---------------------------------------------
-  P4-01             Default host, runtime   `omega_engine/crates_rs/omega_symbol_game/src/main.rs`, `lib.rs`, `invoke.rs`, `foundation.rs`     Source inventory; no global parity theorem
+  P4-01             Default host, runtime   `engine/crates_rs/core_symbol_game/src/main.rs`, `lib.rs`, `invoke.rs`, `foundation.rs`     Source inventory; no global parity theorem
                     dispatcher, and
                     foundation library are
                     distinct interfaces.
@@ -53,28 +53,28 @@ Package paths (`code/`, `lean4/`, `docs/`) are relative to this package.
                     validated metadata, not
                     an internal watchdog.
 
-  P4-07             Python uses the         `omega_engine_pfp/ffi.py`                                                                  Source-inspected adapter; authentication is
+  P4-07             Python uses the         `pfp/ffi.py`                                                                  Source-inspected adapter; authentication is
                     operating-system native                                                                                                    separate
                     seam and preserves the
                     complete outcome.
 
-  P4-08             The graph tutorial      `omega_engine_providers/adapters/native_functional.py`                                             The adapter itself has no Python numerical
+  P4-08             The graph tutorial      `providers/adapters/native_functional.py`                                             The adapter itself has no Python numerical
                     adapter requires its                                                                                                       fallback; see P4-15 for this package's
                     own executable path and                                                                                                    governor
                     SHA-256 pin.
 
-  P4-09             PacketCodec uses NFC    `omega_engine_pfp/domain/packet_codec.py`                                                  Source-inspected limitation; no RFC 8785 or
+  P4-09             PacketCodec uses NFC    `pfp/domain/packet_codec.py`                                                  Source-inspected limitation; no RFC 8785 or
                     plus tagged encoding                                                                                                       full-envelope claim
                     and checks only payload
                     digest and authority in
                     `verify`.
 
-  P4-10             PacketEnvelopeV2 binds  `omega_engine_pfp/domain/entities/packet_envelope.py`                                      Transport identity; deserialization is not a
+  P4-10             PacketEnvelopeV2 binds  `pfp/domain/entities/packet_envelope.py`                                      Transport identity; deserialization is not a
                     a richer identity and                                                                                                      solver certificate
                     freezes payload
                     representation.
 
-  P4-11             Legacy `run-turn`,      `omega_engine_pfp/tests/test_functional_boundary.py`                                       Source-inspected retirement assertions
+  P4-11             Legacy `run-turn`,      `pfp/tests/test_functional_boundary.py`                                       Source-inspected retirement assertions
                     `run-bout`, and `run`
                     refuse before writing
                     functionals.

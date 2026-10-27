@@ -9,10 +9,10 @@ ROOT = Path(__file__).resolve().parents[6]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.judge_packet.exact_checker import (
     verify_candidate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.reference_solver.checker import (
+from projects.mssn_sn_symgam.challenges.f_program_synthesis.c060_self_verifying_checker_synthesis.reference_solver.checker import (
     check,
 )
 

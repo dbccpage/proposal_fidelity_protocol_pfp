@@ -1,7 +1,7 @@
 import pytest
-from omega_engine_operads.domain.operad import ColouredOperad, OperationSignature, AgentSlice
-from omega_engine_operads.skill_operad.meta_operad import OperadicEcology
-from omega_engine_operads.domain.operad.errors import MissingUnitError
+from operads.domain.operad import ColouredOperad, OperationSignature, AgentSlice
+from operads.skill_operad.meta_operad import OperadicEcology
+from operads.domain.operad.errors import MissingUnitError
 
 
 def test_identity_name_does_not_bypass_capability_slice():
@@ -25,12 +25,12 @@ def test_declared_meta_operation_does_not_execute():
 def test_offline_quotient_package_import_without_path_injection():
     import subprocess
     import sys
-    result=subprocess.run([sys.executable,"-c","import omega_engine_operads.skill_operad.quotient_operad"],capture_output=True,text=True)
+    result=subprocess.run([sys.executable,"-c","import operads.skill_operad.quotient_operad"],capture_output=True,text=True)
     assert result.returncode==0,result.stderr
 
 
 def test_symbolic_unit_table_is_not_unit_law_evidence_and_does_not_self_repair():
-    from omega_engine_operads.skill_operad.coloured_operad import ColouredOperad as SymbolicRegistry, CompositionKey
+    from operads.skill_operad.coloured_operad import ColouredOperad as SymbolicRegistry, CompositionKey
     registry=SymbolicRegistry()
     registry.add_operation("f","F",["Code"],"Code")
     registry.ensure_units()

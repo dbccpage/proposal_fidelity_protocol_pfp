@@ -20,7 +20,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from omega_engine_woland.domain.providers.types import BudgetExceeded
+from adversary.domain.providers.types import BudgetExceeded
 
 MICROUSD_PER_USD = 1_000_000
 BUDGET_CONFIG_INVALID = "BUDGET_CONFIG_INVALID"

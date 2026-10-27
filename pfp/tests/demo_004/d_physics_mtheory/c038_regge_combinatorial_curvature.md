@@ -17,7 +17,7 @@ For a triangulated closed surface, the combinatorial curvature of a vertex is k_
 
 On graphs, Ollivier's Ricci curvature (Ollivier 2009) of an edge is κ(x, y) = 1 − W₁(m_x, m_y)/d(x, y), where W₁ is an optimal-transport cost. For rational laziness α the transport is a finite linear program with a rational optimum and a checkable primal–dual certificate. Forman's curvature is a closed-form degree expression.
 
-Everything here has a cheap exact check. The challenge is a warm-up for the physics domain. It stresses OEWAS (Omega Engine Workflows, Agents, Skills) manifold validation before computation, and OEEIS (Omega Engine Epistemic Immune System) screening of Gauss–Bonnet totals computed on inputs that are not manifolds.
+Everything here has a cheap exact check. The challenge is a warm-up for the physics domain. It stresses OEWAS (Engine Workflows, Agents, Skills) manifold validation before computation, and OEEIS (Engine Epistemic Immune System) screening of Gauss–Bonnet totals computed on inputs that are not manifolds.
 
 ## 3. Formal Problem and Bounds
 
@@ -59,7 +59,7 @@ A surface answer is complete when every number equals the checker's exact value 
 - **Relabel and gauge controls:** 10 controls: vertex relabelling; triangles listed with reversed orientation; a stellar subdivision of a base surface (χ and classification invariant, k_v redistributed); graph relabelling by a random permutation.
 - **Poisoned-but-schema-valid cases:** 6 cases: a pinched surface whose V − E + F still looks plausible; a closed surface with one duplicated triangle; a graph where α = 0 and α = 1/2 give different curvature signs.
 - **Exact checker (Rust):** manifold tests, exact χ and curvature, and the Ollivier linear program by exact network simplex with dual extraction.
-- **Independent second checker:** χ and orientability from homology (Betti numbers over Q and the integral top homology by Smith normal form in `omega_homology`), and the transport cost by scaling masses to integers and solving the integer min-cost flow with successive shortest paths.
+- **Independent second checker:** χ and orientability from homology (Betti numbers over Q and the integral top homology by Smith normal form in `core_homology`), and the transport cost by scaling masses to integers and solving the integer min-cost flow with successive shortest paths.
 - **Mutation suite:** a curvature off by 1/6 at one vertex, orientability flipped, a transport plan violating one marginal, a potential with one edge of slope above 1, a Forman value with deg u + deg v miscounted, χ reported for a pinched surface.
 
 ## 7. Arms and Baselines
@@ -80,7 +80,7 @@ $0.50 per arm, enforced before each call. Candidate models: `meta-llama/llama-3.
 ## 10. Interpretation
 
 - Computing Gauss–Bonnet on a pinched surface is the key failure: the formula is applied without checking its hypothesis.
-- The existing `omega_general_relativity` Regge module uses floating-point angles with a tolerance. Any use of it is secondary evidence only; the exact equilateral case needs no angles.
+- The existing `core_general_relativity` Regge module uses floating-point angles with a tolerance. Any use of it is secondary evidence only; the exact equilateral case needs no angles.
 - A pass certifies discrete geometry on finite complexes and graphs. It is not a statement about continuum general relativity or quantum gravity.
 
 ## 11. OEEIS, Attention, Logit and Scratch-Space Hooks
@@ -101,9 +101,9 @@ Operands expected: (1) test vertex links before using Gauss–Bonnet; (2) Σ (6 
 
 ## 13. Estate Reuse and Prerequisites
 
-- `omega_engine/crates_rs/omega_general_relativity/src/regge_calculus.rs` (2D Regge deficits on `omega_homology` complexes; f64 angles with `DEFAULT_TOL`, so secondary only) and `ricci_curvature.rs` (a best-effort scaffold, not used for checking).
-- `omega_engine/crates_rs/omega_homology` (simplicial complexes, Betti numbers, Smith normal form).
-- `omega_engine/crates_rs/omega_solvers` (`network_simplex_solver.rs`, `exact_weighted_l1_lp.rs`) for exact transport.
+- `engine/crates_rs/core_general_relativity/src/regge_calculus.rs` (2D Regge deficits on `core_homology` complexes; f64 angles with `DEFAULT_TOL`, so secondary only) and `ricci_curvature.rs` (a best-effort scaffold, not used for checking).
+- `engine/crates_rs/core_homology` (simplicial complexes, Betti numbers, Smith normal form).
+- `engine/crates_rs/core_solvers` (`network_simplex_solver.rs`, `exact_weighted_l1_lp.rs`) for exact transport.
 - Upgrades: base only: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md).
 
 ## 14. Claim Hygiene

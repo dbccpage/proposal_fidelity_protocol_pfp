@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
-from omega_engine_pfp.domain.mssn_research.shared_kernel.value_objects import (
+from pfp.domain.mssn_research.shared_kernel.value_objects import (
     Rational,
 )
 
@@ -180,7 +180,7 @@ class ExactBianchiComplex4D:
 class ExactPhi4Certificate:
     """Exact rational LP weak duality certificate for degree-4 cavity cochains (Phi_4).
 
-    Mirrors omega_engine/crates_rs/omega_functional/src/phi4.rs.
+    Mirrors engine/crates_rs/core_functional/src/phi4.rs.
     """
     flux_g: tuple[Rational, ...]
     complex: ExactBianchiComplex4D

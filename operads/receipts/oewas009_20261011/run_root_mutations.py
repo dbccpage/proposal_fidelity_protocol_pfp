@@ -12,17 +12,17 @@ runner = out / "run_python_check.py"
 controls = [
     (
         "decision_binding_mutant",
-        "omega_engine_woland/infrastructure/estates/oewas_native_anti_skill.py",
-        '    expected["schema_version"] = "omega.native.anti-skill-decision.v1"\n    if any(wire[k] != v for k, v in expected.items()):',
-        '    expected["schema_version"] = "omega.native.anti-skill-decision.v1"\n    if False:  # scoped mutation: exact deployment/request binding bypass',
-        "omega_engine_woland/tests/spine/test_native_anti_skill_ingress.py::test_actual_native_response_tampering_is_refused",
+        "adversary/infrastructure/estates/oewas_native_anti_skill.py",
+        '    expected["schema_version"] = "core.native.anti-skill-decision.v1"\n    if any(wire[k] != v for k, v in expected.items()):',
+        '    expected["schema_version"] = "core.native.anti-skill-decision.v1"\n    if False:  # scoped mutation: exact deployment/request binding bypass',
+        "adversary/tests/spine/test_native_anti_skill_ingress.py::test_actual_native_response_tampering_is_refused",
     ),
     (
         "foreign_task_mutant",
-        "omega_engine_woland/use_cases/base_swarm/woland_swarm.py",
+        "adversary/use_cases/base_swarm/adversary_swarm.py",
         "        if not fixture_mode and outcome.task_key != request.task_key:",
         "        if False:  # scoped mutation: foreign-task write barrier bypass",
-        "omega_engine_woland/tests/spine/test_cross_engine_task_binding.py::test_foreign_task_is_refused_before_estate_writes",
+        "adversary/tests/spine/test_cross_engine_task_binding.py::test_foreign_task_is_refused_before_estate_writes",
     ),
 ]
 results = []

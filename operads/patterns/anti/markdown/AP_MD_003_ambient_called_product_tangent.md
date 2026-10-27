@@ -26,7 +26,7 @@ Prose names the full ambient space of traceless Hermitian variations as the tang
 
 ## Witness
 
-Historical source, not a fresh manuscript inspection or recomputed dimension count: `C:\Users\a343o\source\repos\the_symbol_game\_ic\inr\omega_paper_reviews\2026-10-08_po034_first_publication_review\review.md` (review dated 2026-10-08 at main commit `c33fb25be7f7bb340eb7345d90134dc116bac244`).
+Historical source, not a fresh manuscript inspection or recomputed dimension count: `C:\Users\a343o\source\repos\the_symbol_game\_ic\inr\core_paper_reviews\2026-10-08_po034_first_publication_review\review.md` (review dated 2026-10-08 at main commit `c33fb25be7f7bb340eb7345d90134dc116bac244`).
 
 > The manuscript says that the full vector space of traceless Hermitian variations is the tangent space of the algebraic product manifold. This is false. That vector space is the ambient translation space $\mathcal B_0$. The product tangent space is the smaller space $\operatorname{im}P$ already correctly specified by Theorem 4.1.
 >

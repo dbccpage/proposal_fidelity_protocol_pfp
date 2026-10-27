@@ -7,13 +7,13 @@ from __future__ import annotations
 
 from typing import Protocol
 
-from omega_engine_pfp.domain.finite_gauge import (
+from pfp.domain.finite_gauge import (
     CheckerIdentity,
     GaugeRefusal,
     GraphSpec,
     SearchReceipt,
 )
-from omega_engine_pfp.domain.kernel.result import Result
+from pfp.domain.kernel.result import Result
 
 
 class FiniteGaugeCheckerPort(Protocol):

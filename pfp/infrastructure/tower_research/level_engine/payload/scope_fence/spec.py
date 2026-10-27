@@ -30,12 +30,12 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
-from omega_engine_operations.use_cases.level_engine.research_engine.encoding import Encoding
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.linalg import det
-from omega_engine_operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q
-from omega_engine_operations.use_cases.level_engine.research_engine.kinds import Closure, Forbid, Functional, Oracle, Total
-from omega_engine_operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
-from omega_engine_operations.use_cases.level_engine.research_engine.structure import FiniteStructure
+from operations.use_cases.level_engine.research_engine.encoding import Encoding
+from operations.use_cases.level_engine.research_engine.exact.linalg import det
+from operations.use_cases.level_engine.research_engine.exact.q import ONE, ZERO, Q, fmt_q
+from operations.use_cases.level_engine.research_engine.kinds import Closure, Forbid, Functional, Oracle, Total
+from operations.use_cases.level_engine.research_engine.level import Compiled, DecodedClause, Fixture, FixtureVerdict
+from operations.use_cases.level_engine.research_engine.structure import FiniteStructure
 
 CHALLENGE_ID = "scope_fence"
 ANSWER_TYPE = "M"
@@ -115,7 +115,7 @@ LEAN_MODULE = "ScopeFence"
 def lean_render(fixtures: Sequence[Fixture], verdicts: Sequence[FixtureVerdict]) -> str:
     """The certificate module: one table and one value per evaluated fixture,
     the determinant of ``I - uA`` and the verdict, each re-decided by the kernel."""
-    from omega_engine_operations.use_cases.level_engine.research_engine import lean_text as T
+    from operations.use_cases.level_engine.research_engine import lean_text as T
 
     by = {f.fid: f for f in fixtures}
     lines = T.header(LEAN_MODULE, "The determinant clause of `scope_fence`, decided by the kernel", [

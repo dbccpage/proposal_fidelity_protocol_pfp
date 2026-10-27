@@ -24,7 +24,7 @@
 //! The represented refusal path separately recomputes its menu certificate.
 //!
 //! ```compile_fail
-//! use omega_ooutwire_primitives::certificate::{Certificate, TestResult};
+//! use core_ooutwire_primitives::certificate::{Certificate, TestResult};
 //! let green = TestResult { name: "suite".into(), passed: true };
 //! let _c: Certificate = Certificate::from(green);
 //! ```

@@ -260,7 +260,7 @@ def test_supplemental_candidates_bind_original_targets_and_separate_controls(tmp
 
 
 def test_import_relocation_preserves_algorithm_body_and_records_change():
-    source = b"from omega_engine_projects.mssn_sn_symgam.challenges.x import exact\ndef evaluate(x):\n    return x * 3 + 1\n"
+    source = b"from projects.mssn_sn_symgam.challenges.x import exact\ndef evaluate(x):\n    return x * 3 + 1\n"
     transformed, changes = replay.relocate_source(source, "sample.py")
     original_function = ast.parse(source).body[1]
     recreated_function = ast.parse(transformed).body[1]
@@ -269,7 +269,7 @@ def test_import_relocation_preserves_algorithm_body_and_records_change():
         {
             "kind": "RELOCATE_IMPORT",
             "line": 1,
-            "before": "omega_engine_projects.mssn_sn_symgam.challenges.x",
+            "before": "projects.mssn_sn_symgam.challenges.x",
             "after": "paper011_source.challenges.x",
         }
     ]
@@ -289,7 +289,7 @@ def test_obsolete_path_bootstrap_removed_without_changing_other_guards():
 def test_unaliased_old_absolute_import_requires_review():
     with pytest.raises(replay.ReplayError, match="REQUIRES_REVIEW"):
         replay.relocate_source(
-            b"import omega_engine_projects.mssn_sn_symgam.challenges.foo\n", "x.py"
+            b"import projects.mssn_sn_symgam.challenges.foo\n", "x.py"
         )
 
 
@@ -592,7 +592,7 @@ def test_unreadable_engine_json_is_retained_and_blocks_execution(tmp_path):
 
 
 def test_native_trace_reads_result_boolean_property(tmp_path):
-    mod_name = "omega_engine_operating_system.python.adapters.rust_host.ffi"
+    mod_name = "operating_system.python.adapters.rust_host.ffi"
     module = types.ModuleType(mod_name)
 
     class Host:
@@ -684,7 +684,7 @@ def test_lean_discovery_requires_the_explicit_pinned_capability(tmp_path, monkey
     monkeypatch.setattr(replay.socket, "getaddrinfo", replay.socket.getaddrinfo)
     monkeypatch.setattr(replay.subprocess, "run", replay.subprocess.run)
     monkeypatch.setattr(sys, "meta_path", list(sys.meta_path))
-    monkeypatch.setenv("OMEGA_SYMBOL_GAME_HOST", "before")
+    monkeypatch.setenv("CORE_SYMBOL_GAME_HOST", "before")
     monkeypatch.setenv("PAPER011_ENGINE_ROOT", "before")
     lock = {"engine_root": str(tmp_path), "binaries": {"symbol_game": {"path": "host.exe"}}}
     replay.configure_worker(tmp_path, lock, [])
@@ -718,7 +718,7 @@ def test_lean_file_mode_tape_retains_proof_judge_and_generated_module(tmp_path, 
     monkeypatch.setattr(replay.socket, "getaddrinfo", replay.socket.getaddrinfo)
     monkeypatch.setattr(replay.subprocess, "run", compiler)
     monkeypatch.setattr(sys, "meta_path", list(sys.meta_path))
-    monkeypatch.setenv("OMEGA_SYMBOL_GAME_HOST", "before")
+    monkeypatch.setenv("CORE_SYMBOL_GAME_HOST", "before")
     monkeypatch.setenv("PAPER011_ENGINE_ROOT", "before")
     lock = {
         "engine_root": str(tmp_path),
@@ -760,7 +760,7 @@ def test_native_tape_captures_physical_bytes_and_returns_original_text_view(tmp_
     monkeypatch.setattr(replay.socket, "getaddrinfo", replay.socket.getaddrinfo)
     monkeypatch.setattr(replay.subprocess, "run", native)
     monkeypatch.setattr(sys, "meta_path", list(sys.meta_path))
-    monkeypatch.setenv("OMEGA_SYMBOL_GAME_HOST", "before")
+    monkeypatch.setenv("CORE_SYMBOL_GAME_HOST", "before")
     monkeypatch.setenv("PAPER011_ENGINE_ROOT", "before")
     lock = {
         "engine_root": str(tmp_path),

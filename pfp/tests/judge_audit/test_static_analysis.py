@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_woland.tests.pilots.judge_packet_audit import static_analysis as sa
+from adversary.tests.pilots.judge_packet_audit import static_analysis as sa
 
 REL = "z_fake.c950_static"
 
@@ -21,8 +21,8 @@ def _pkg(tmp_path: Path, files: dict[str, str]) -> Path:
 
 
 @pytest.mark.parametrize("prefix", (
-    "omega_engine_pfp.tests.demo_004.",
-    "omega_engine_projects.mssn_sn_symgam.challenges.",
+    "pfp.tests.demo_004.",
+    "projects.mssn_sn_symgam.challenges.",
 ))
 def test_relative_and_absolute_imports_resolve_to_package_relative_names(tmp_path: Path, prefix: str) -> None:
     pkg = _pkg(

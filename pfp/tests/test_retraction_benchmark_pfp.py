@@ -11,13 +11,13 @@ from types import SimpleNamespace
 
 import pytest
 
-from omega_engine_pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
-from omega_engine_woland.domain.providers.types import Provider
-from omega_engine_woland.infrastructure.providers.gateway import unbudgeted_gateway
+from pfp.infrastructure.estimated_gateway import EstimatedBudgetGateway
+from adversary.domain.providers.types import Provider
+from adversary.infrastructure.providers.gateway import unbudgeted_gateway
 
 
 def owner():
-    return importlib.import_module("omega_engine_pfp.infrastructure.retraction_benchmark")
+    return importlib.import_module("pfp.infrastructure.retraction_benchmark")
 
 
 def gateway(tmp_path, *, fault=None, max_calls=24, answer="VERDICT: CONSISTENT"):
@@ -199,7 +199,7 @@ def test_all_original_graphs_conditions_and_control_labels(tmp_path, monkeypatch
 def test_sealed_source_and_copied_original_judges_prompts_are_identical():
     module = owner()
     original = Path(__file__).resolve().parents[2] / (
-        "omega_engine_education/documentation/004_oepfp/papers/omega_engine_symbol_game/"
+        "education/documentation/004_oepfp/papers/symbol_game/"
         "008_pfp_mssn_tower_challenges_and_retraction_benchmarks/code/retraction_benchmark_runner.py")
     raw = original.read_bytes()
     assert hashlib.sha256(raw).hexdigest() == module.HISTORICAL_SOURCE_SHA256
@@ -335,7 +335,7 @@ def test_replay_refuses_source_drift_and_historical_schema(tmp_path):
 
 
 def test_current_cli_offline_and_replay_are_bounded(tmp_path, capsys):
-    from omega_engine_pfp.entrypoints.retraction_benchmark import main
+    from pfp.entrypoints.retraction_benchmark import main
     output = tmp_path / "current"
     assert main(["--conditions", "baseline", "hinted", "--tasks", "retract_01_tree_clean",
                  "--output-dir", str(output)]) == 0

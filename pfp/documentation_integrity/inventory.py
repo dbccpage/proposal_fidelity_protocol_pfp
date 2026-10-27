@@ -163,7 +163,7 @@ class ClassificationContext:
         return self.source_path[len(root_path) :].lstrip("/")
 
 
-VERIFY = "python -m omega_engine_pfp.scripts.docs_integrity validate"
+VERIFY = "python -m pfp.scripts.docs_integrity validate"
 
 
 def _classification(
@@ -375,9 +375,9 @@ def _implementation_classification(context: ClassificationContext) -> dict[str, 
         "tested" if len(destinations) > 1 else "implementation",
     )
     value["verification"] = (
-        "python -m pytest omega_engine_pfp/tests"
+        "python -m pytest pfp/tests"
         if root_id == "python_symbol_game"
-        else f"cargo test -p {'omega_symbol_game_runtime' if root_id == 'rust_runtime' else 'omega_symbol_game'}"
+        else f"cargo test -p {'core_symbol_game_runtime' if root_id == 'rust_runtime' else 'core_symbol_game'}"
     )
     return value
 

@@ -12,7 +12,7 @@ parameters. **Protocol:** [SG-CP v1](../01_challenge_protocol.md).
 
 Checking a colouring is exhaustive and cheap. K17 has 2,380 four-vertex subsets, and {1, …, 1131} has on the order of 10⁵ six-term progressions. Finding one near the bound is search-hard, and the hidden side constraints (pre-coloured edges or elements) stop a module from simply emitting a memorised Paley colouring. It then has to find an automorphism or relabelling that meets the constraints, or search.
 
-This stresses the Symbol Game's search host under large exact checks, and the cemetery, where near-miss colourings with one monochromatic structure are valuable operand material. It stresses the OEWAS (Omega Engine Workflows, Agents, Skills) workflow that alternates algebraic construction with local search, and the OEEIS (Omega Engine Epistemic Immune System), which must quarantine fabricated "impossibility" claims.
+This stresses the Symbol Game's search host under large exact checks, and the cemetery, where near-miss colourings with one monochromatic structure are valuable operand material. It stresses the OEWAS (Engine Workflows, Agents, Skills) workflow that alternates algebraic construction with local search, and the OEEIS (Engine Epistemic Immune System), which must quarantine fabricated "impossibility" claims.
 
 A pass shows that the module constructs these witnesses. It does not show a new Ramsey or van der Waerden bound.
 
@@ -102,7 +102,7 @@ The catalog declares no OEEIS hook. Observed mechanisms:
 - **Danger gate.** Signal 1 is an impossibility claim; Signal 2 is the absence of a checkable refutation. Both are needed to quarantine it.
 - **Clonal maturation.** `ClonalSelectionEngine` can mutate local-search move operators, such as flipping one edge in the monochromatic structure, as detectors that rank near misses. This is observational only.
 - **Expected antimorphisms:** AM-2 CUT_ABSOLUTE_CLAIM (asserting impossibility), AM-4 (re-emitting the same near-miss colouring) and AM-5 (a global colour inversion, which is harmless only when `s = t`).
-- **Layer 2:** a character-level grammar mask (`[01]` or `[012]` of exact length) via `carrier_gbnf` in `omega_engine_symbol_game/domain/carrier_decoding.py` (unwired). The bench shows that grammar masks give parseable output, but parseability is not correctness.
+- **Layer 2:** a character-level grammar mask (`[01]` or `[012]` of exact length) via `carrier_gbnf` in `symbol_game/domain/carrier_decoding.py` (unwired). The bench shows that grammar masks give parseable output, but parseability is not correctness.
 - **Layer 1:** not applicable.
 - **Scratch space:** the host keeps the list of monochromatic structures in the current best colouring as a working set.
 
@@ -119,9 +119,9 @@ Operands to mine:
 
 ## 13. Estate Reuse and Prerequisites
 
-- The catalog row lists no estate reuse. The exhaustive checker is new Rust work and belongs next to `omega_engine/crates_rs/omega_solvers`.
+- The catalog row lists no estate reuse. The exhaustive checker is new Rust work and belongs next to `engine/crates_rs/core_solvers`.
 - Infeasibility proofs reuse the C042 pipeline ([C042](c042_sat_with_drat_certificates.md)).
-- `omega_engine/crates_rs/omega_search` (beam, simulated annealing, genetic) can serve arm E's local search.
+- `engine/crates_rs/core_search` (beam, simulated annealing, genetic) can serve arm E's local search.
 - Upgrades: [U01](../../upgrades/u01_symbol_game_run_folder_mandate.md), [U02](../../upgrades/u02_intelligence_metabolism_mining.md), [U03](../../upgrades/u03_ddc_prime_trace_instrumentation.md), [U05](../../upgrades/u05_engine_turn_driver.md), [U06](../../upgrades/u06_governed_provider_path.md), [U07](../../upgrades/u07_challenge_packet_runner.md), [U08](../../upgrades/u08_matched_arms_harness.md), [U09](../../upgrades/u09_sandboxed_execution_seam.md). No row extras; [U10](../../upgrades/u10_synthesis_loop_v2.md) is recommended.
 
 ## 14. Claim Hygiene

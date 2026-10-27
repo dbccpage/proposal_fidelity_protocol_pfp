@@ -6,15 +6,15 @@ import ast
 from pathlib import Path
 from typing import Sequence
 
-from omega_engine_operads.application.python_development_office.ast_utils import (
+from operads.application.python_development_office.ast_utils import (
     extract_imported_symbols,
     parse_suppressions,
 )
-from omega_engine_operads.application.python_development_office.rules.base import (
+from operads.application.python_development_office.rules.base import (
     AstRule,
     RuleContext,
 )
-from omega_engine_operads.domain.python_development_office import (
+from operads.domain.python_development_office import (
     AntipatternFinding,
     ArchitectureConfig,
     ModuleInfo,

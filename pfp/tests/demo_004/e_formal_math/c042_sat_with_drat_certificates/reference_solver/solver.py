@@ -9,9 +9,9 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.ddc_tracer import DDCTracer
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import compute_sha256, parse_dimacs_cnf
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import (
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.ddc_tracer import DDCTracer
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.drat_engine import compute_sha256, parse_dimacs_cnf
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.family_solvers import (
     decode_coloring,
     decode_latin_square,
     decode_php,
@@ -23,7 +23,7 @@ from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificat
     encode_tiling,
     encode_tseitin,
 )
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.sat_solver import solve_cnf
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.sat_solver import solve_cnf
 
 
 def validate_case_boundaries(case: Dict[str, Any]) -> Optional[Dict[str, Any]]:

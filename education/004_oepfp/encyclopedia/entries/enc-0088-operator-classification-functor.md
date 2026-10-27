@@ -9,7 +9,7 @@ tower_level: null
 primitive: null
 aliases: ["spine:IV.9"]
 sources:
-  - "canonical_omega_math_spine.md v1.5.2 §IV.3 'Definition IV.9'"
+  - "canonical_core_math_spine.md v1.5.2 §IV.3 'Definition IV.9'"
 uses: []
 lean_status: NOT-STARTED
 lean_refs: []
@@ -44,7 +44,7 @@ with priority order $M \prec C \prec E \prec R \prec I \prec M_{\mathsf{fallback
 
 ## Provenance
 
-- Extracted 2026-06-09 from `canonical_omega_math_spine.md` v1.5.2, §IV.3
+- Extracted 2026-06-09 from `canonical_core_math_spine.md` v1.5.2, §IV.3
   (statement copied verbatim; definition carries no status bracket).
   Original header line:
   `**Definition IV.9 (Operator Classification Functor $\mathcal{O}$).** The first-match priority classifier over declared actions:`

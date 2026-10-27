@@ -22,7 +22,7 @@ Automated session documentation explicitly ignores session documentation directo
 
 - In `get_session_touched_files`, filter out paths containing `sessions`, `_intelligence`, `_ic`, and `.system_generated`.
 - In `synthesize_session_documentation`, display at most 100 touched files in markdown. If more files are touched, append `- *... and N additional files modified*`.
-- When session documentation accumulates in active estates, periodically digest and purge historical provenance files via `/woland-digests` to maintain terminal estate boundaries.
+- When session documentation accumulates in active estates, periodically digest and purge historical provenance files via `/adversary-digests` to maintain terminal estate boundaries.
 
 ## Limit
 

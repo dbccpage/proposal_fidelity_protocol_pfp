@@ -19,11 +19,11 @@ from __future__ import annotations
 from dataclasses import dataclass, fields
 from enum import Enum
 from itertools import combinations, permutations
-from omega_engine_pfp.infrastructure.serialization import CanonicalizationError, domain_digest
+from pfp.infrastructure.serialization import CanonicalizationError, domain_digest
 
 
 AUTHORITY_EFFECT_NONE = "None"
-BRIDGE_SCHEMA = "omega.symbol-game.retained-profile-cec-bridge.v1"
+BRIDGE_SCHEMA = "core.symbol-game.retained-profile-cec-bridge.v1"
 MAX_AUTOMORPHISM_CARRIER = 8
 
 
@@ -174,7 +174,7 @@ class PrimitiveCarrierV1:
 
     @property
     def primitive_id(self) -> str:
-        return domain_digest("omega.symbol-game.primitive-carrier.v1", self)
+        return domain_digest("core.symbol-game.primitive-carrier.v1", self)
 
 
 @dataclass(frozen=True, slots=True)
@@ -254,7 +254,7 @@ class ObserverPresentationV1:
 
     @property
     def presentation_id(self) -> str:
-        return domain_digest("omega.symbol-game.observer-presentation.v1", self)
+        return domain_digest("core.symbol-game.observer-presentation.v1", self)
 
     def profile(self, state: str) -> tuple[str, ...]:
         for row in self.profiles:
@@ -293,7 +293,7 @@ class BridgeProblemV1:
 
     @property
     def problem_id(self) -> str:
-        return domain_digest("omega.symbol-game.retained-profile-problem.v1", self)
+        return domain_digest("core.symbol-game.retained-profile-problem.v1", self)
 
 
 @dataclass(frozen=True, slots=True)
@@ -381,7 +381,7 @@ class ActiveObstructionV1:
 
     @property
     def obstruction_id(self) -> str:
-        return domain_digest("omega.symbol-game.active-obstruction.v1", self)
+        return domain_digest("core.symbol-game.active-obstruction.v1", self)
 
 
 def active_obstruction_of_components(
@@ -478,7 +478,7 @@ class DemandOrbitV1:
 
     @property
     def orbit_id(self) -> str:
-        return domain_digest("omega.symbol-game.demand-orbit.v1", self)
+        return domain_digest("core.symbol-game.demand-orbit.v1", self)
 
 
 def demand_orbits(problem: BridgeProblemV1) -> tuple[DemandOrbitV1, ...]:
@@ -702,7 +702,7 @@ class SameLevelRepairCandidateV1:
 
     @property
     def candidate_id(self) -> str:
-        return domain_digest("omega.symbol-game.same-level-repair.v1", self)
+        return domain_digest("core.symbol-game.same-level-repair.v1", self)
 
 
 @dataclass(frozen=True, slots=True)
@@ -826,7 +826,7 @@ class ConservativeExtensionProposalV1:
     @property
     def proposal_id(self) -> str:
         return domain_digest(
-            "omega.symbol-game.conservative-extension-proposal.v1", self
+            "core.symbol-game.conservative-extension-proposal.v1", self
         )
 
 
@@ -856,7 +856,7 @@ class CECChildPacketV1:
 
     @property
     def packet_id(self) -> str:
-        return domain_digest("omega.symbol-game.cec-child-packet.v1", self)
+        return domain_digest("core.symbol-game.cec-child-packet.v1", self)
 
 
 @dataclass(frozen=True, slots=True)
@@ -891,7 +891,7 @@ class CECChildEvaluationV1:
 
     @property
     def receipt_id(self) -> str:
-        return domain_digest("omega.symbol-game.cec-child-evaluation.v1", self)
+        return domain_digest("core.symbol-game.cec-child-evaluation.v1", self)
 
 
 @dataclass(frozen=True, slots=True)

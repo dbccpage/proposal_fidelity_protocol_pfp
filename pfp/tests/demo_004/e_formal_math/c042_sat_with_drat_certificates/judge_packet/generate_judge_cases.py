@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import solve
+from pfp.tests.demo_004.e_formal_math.c042_sat_with_drat_certificates.reference_solver.solver import solve
 
 PKG_ROOT = Path(__file__).resolve().parent.parent
 JUDGE_CASES_DIR = PKG_ROOT / "judge_packet" / "cases"

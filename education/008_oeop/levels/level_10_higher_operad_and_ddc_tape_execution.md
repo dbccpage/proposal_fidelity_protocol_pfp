@@ -7,12 +7,12 @@ maturity: production
 claim_status: verified
 authority_effect: "None"
 source_paths:
-  - omega_engine_operads/infrastructure/operad/higher_operad_adapter.py
-  - omega_engine_operads/infrastructure/ddc_execution/ddc_tape.py
-  - omega_engine_operations/use_cases/packaging/skill_mirror_recovery.py
-  - omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py
-  - omega_engine_operads/application/woland_candidate_plan.py
-  - omega_engine/crates_rs/omega_workflows_agents_skills/src/estate.rs
+  - operads/infrastructure/operad/higher_operad_adapter.py
+  - operads/infrastructure/ddc_execution/ddc_tape.py
+  - operations/use_cases/packaging/skill_mirror_recovery.py
+  - operations/use_cases/packaging/sync_cross_host_skills.py
+  - operads/application/adversary_candidate_plan.py
+  - engine/crates_rs/core_workflows_agents_skills/src/estate.rs
 last_verified: 2026-10-14
 ---
 
@@ -24,12 +24,12 @@ last_verified: 2026-10-14
 
 ## 1. Executive Summary & Architectural Motivation
 
-While Levels 00 through 09 established the 10-Coloured Operad $\mathcal{O}_{10}$, planar tree associativity, capability slicing, and regulatory Treg gates in Python domain models, recent production hardening in `omega_engine_operads` (OEWAS) closes three critical structural seams:
+While Levels 00 through 09 established the 10-Coloured Operad $\mathcal{O}_{10}$, planar tree associativity, capability slicing, and regulatory Treg gates in Python domain models, recent production hardening in `operads` (OEWAS) closes three critical structural seams:
 
 1. **Higher Operad to DDC Tape Bridging:** Moving from abstract tree evaluation to concrete execution traces recorded as Discrete Deformation Contractivity (DDC) tapes (`ddc_tape.py`, `higher_operad_adapter.py`).
 2. **Transactional Mirror Parity & Recovery:** Replacing bare copy synchronization with fail-closed transactional rollbacks across the four mirrored host roots (`.agents`, `.claude`, `.codex`, `.grok`) via `SkillMirrorTransaction` and `SkillMirrorRecovery`.
-3. **Sovereign Rust Estate Verification:** Moving structural boundaries out of declarative prose into sovereign compiled Rust (`omega_engine/crates_rs/omega_workflows_agents_skills/src/estate.rs`), verifying operad arity, capability slices, and estate integrity at compile time.
-4. **Woland Ingress & Swarm Singularity:** Binding OEWAS candidate planning and task selection (`application/woland_candidate_plan.py`) directly to Woland as the sole agentic swarm entrypoint.
+3. **Sovereign Rust Estate Verification:** Moving structural boundaries out of declarative prose into sovereign compiled Rust (`engine/crates_rs/core_workflows_agents_skills/src/estate.rs`), verifying operad arity, capability slices, and estate integrity at compile time.
+4. **Adversary Ingress & Swarm Singularity:** Binding OEWAS candidate planning and task selection (`application/adversary_candidate_plan.py`) directly to Adversary as the sole agentic swarm entrypoint.
 
 ---
 
@@ -73,11 +73,11 @@ The updated `SkillMirrorRecovery` and `SkillMirrorTransaction` protocol enforces
 
 ---
 
-## 4. Compiled Rust Estate Verification (`omega_workflows_agents_skills`)
+## 4. Compiled Rust Estate Verification (`core_workflows_agents_skills`)
 
 In accordance with the repository's primary law—*Markdown is specification; gates must live in fully tested code*—the OEWAS structural boundaries are enforced by compiled Rust crates:
 
-- **Crate Root:** `omega_engine/crates_rs/omega_workflows_agents_skills`
+- **Crate Root:** `engine/crates_rs/core_workflows_agents_skills`
 - **Core Module:** `src/estate.rs`
 - **Verification Suite:** `tests/estate_composition_contract.rs`
 
@@ -88,13 +88,13 @@ In accordance with the repository's primary law—*Markdown is specification; ga
 
 ---
 
-## 5. Woland Ingress & Candidate Planning
+## 5. Adversary Ingress & Candidate Planning
 
-OEWAS does not spawn independent unmonitored swarms. All candidate workflows, task selection, and prompt instruction ingress route into `omega_engine_woland`:
+OEWAS does not spawn independent unmonitored swarms. All candidate workflows, task selection, and prompt instruction ingress route into `adversary`:
 
-- `application/woland_candidate_plan.py`: Packages operad candidate trees into Woland-compliant candidate plans.
-- `application/woland_instruction_admission.py`: Enforces fail-closed admission fences before model dispatch.
-- `application/woland_task_selection.py`: Selects pending tasks based on objective matching and capability slice authorization.
+- `application/adversary_candidate_plan.py`: Packages operad candidate trees into Adversary-compliant candidate plans.
+- `application/adversary_instruction_admission.py`: Enforces fail-closed admission fences before model dispatch.
+- `application/adversary_task_selection.py`: Selects pending tasks based on objective matching and capability slice authorization.
 
 ---
 
@@ -102,14 +102,14 @@ OEWAS does not spawn independent unmonitored swarms. All candidate workflows, ta
 
 ```powershell
 # 1. Verify DDC Operad Clean Architecture integration
-py -3.12 -m pytest omega_engine_operads/tests/ddc_execution/test_ddc_operad_clean_arch.py -v
+py -3.12 -m pytest operads/tests/ddc_execution/test_ddc_operad_clean_arch.py -v
 
 # 2. Verify skill mirror transaction recovery
-py -3.12 -m pytest omega_engine_operations/tests/packaging/test_skill_mirror_transaction.py -v
+py -3.12 -m pytest operations/tests/packaging/test_skill_mirror_transaction.py -v
 
 # 3. Verify compiled Rust estate composition contract
-cargo test -p omega_workflows_agents_skills --test estate_composition_contract
+cargo test -p core_workflows_agents_skills --test estate_composition_contract
 
-# 4. Verify Woland candidate plan integration
-py -3.12 -m pytest omega_engine_operads/tests/unit/test_woland_candidate_plan.py -v
+# 4. Verify Adversary candidate plan integration
+py -3.12 -m pytest operads/tests/unit/test_adversary_candidate_plan.py -v
 ```

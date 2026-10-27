@@ -11,13 +11,13 @@ import time
 from typing import Any, Dict, List
 
 from ...domain.stages.demos import CheckResult, DemoRunReceipt, DemoSpec
-from omega_engine_pfp.infrastructure.pilot_runners.declaration_checks import (
+from pfp.infrastructure.pilot_runners.declaration_checks import (
     evaluate_generalization_antibodies,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.declaration_checks import (
+from pfp.infrastructure.pilot_runners.declaration_checks import (
     test_bivariate_mixed_derivative_oracle,
 )
-from omega_engine_pfp.infrastructure.pilot_runners.declaration_checks import (
+from pfp.infrastructure.pilot_runners.declaration_checks import (
     test_refusal_payload_masking_oracle,
 )
 
@@ -70,7 +70,7 @@ def run_demo_002(spec: DemoSpec) -> DemoRunReceipt:
         ))
     demo_002_dir = (
         repo_root
-        / "omega_engine_education"
+        / "education"
         / "documentation"
         / "030_the_symbol_game_proposal_fidelity_protocol_pfp"
         / "pilots"

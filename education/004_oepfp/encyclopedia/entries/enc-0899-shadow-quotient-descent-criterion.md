@@ -11,13 +11,13 @@ tower_level: null
 primitive: difference
 aliases: ["paper:sn-packets:shadow-quotient-descent", "paper:sn-packets:fiber-invariance-criterion"]
 sources:
-  - "omega_engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
+  - "engine/research/published/008_engine_runtime/007_the_symbol_game/007_the_symbol_game_monograph.md"
   - "s_n_packets_and_the_symbol_game.md §11 'Theorem 18: Shadow Quotient Descent Is Exactly Fiber Invariance'"
 uses: ["ENC-0897", "ENC-0898", "ENC-0889"]
 lean_status: MECHANIZED
 lean_refs:
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
-  - "omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_factorization.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean"
+  - "engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_factorization.lean"
   - "PaperER007.shadow_quotient_descent_iff_fiber_invariance"
 extracted: 2026-06-13
 migration: VERIFIED
@@ -34,7 +34,7 @@ invariant on shadow fibers: whenever `shadow(x) = shadow(y)`, then
 
 ## Proof Pointer
 
-Mechanized in `omega_engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
+Mechanized in `engine/lean4/research_programs/008_engine_runtime/007_er007_shadow_boundary.lean`.
 
 The Lean theorem name is:
 

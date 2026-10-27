@@ -8,36 +8,36 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_epistemic_immune_system.use_cases.demos.demo_4e_cogsci_autopoiesis.policy import (
+from eis.use_cases.demos.demo_4e_cogsci_autopoiesis.policy import (
     DEMO_ID,
     DemoRefusal,
     model_reply_defects,
     require_control,
 )
-from omega_engine_epistemic_immune_system.infrastructure import immune_demo_screens
-from omega_engine_epistemic_immune_system.infrastructure.mssn_pharmacy import FailureClass
-from omega_engine_epistemic_immune_system.infrastructure.mssn_ports import PharmacyMatcher
-from omega_engine_epistemic_immune_system.infrastructure.native_pharmacy import (
+from eis.infrastructure import immune_demo_screens
+from eis.infrastructure.mssn_pharmacy import FailureClass
+from eis.infrastructure.mssn_ports import PharmacyMatcher
+from eis.infrastructure.native_pharmacy import (
     NativePharmacy,
     NativePharmacyUnavailable,
 )
-from omega_engine_epistemic_immune_system.use_cases.demos.demo_4e_cogsci_autopoiesis import (
+from eis.use_cases.demos.demo_4e_cogsci_autopoiesis import (
     run_packaged_immune as use_case,
 )
 try:
-    from omega_engine_projects.mssn_sn_symgam.demos.demos_runner import run_demo_4e_cli as main
+    from projects.mssn_sn_symgam.demos.demos_runner import run_demo_4e_cli as main
 except (ImportError, ModuleNotFoundError):
     main = None
 
 # The composition root; the use case itself imports no infrastructure.
 checker = importlib.import_module(
-    "omega_engine_epistemic_immune_system.entrypoints.demo_4e_cogsci_autopoiesis"
+    "eis.entrypoints.demo_4e_cogsci_autopoiesis"
 )
 
 ROOT = Path(__file__).resolve().parents[3]
 FRONTEND = (
     ROOT
-    / "omega_engine_projects"
+    / "projects"
     / "mssn_sn_symgam"
     / "demos"
     / "demos_runner.py"
@@ -47,7 +47,7 @@ PHARMACY_RULES = {f"pharmacy-{item.value}" for item in FailureClass}
 
 def _require_native_host() -> None:
     """The pharmacy's native classes need the built Symbol Game host."""
-    from omega_engine_operating_system.adapters.rust_host.ffi import locate_host_binary
+    from operating_system.adapters.rust_host.ffi import locate_host_binary
 
     located = locate_host_binary()
     if located.is_err:
@@ -210,7 +210,7 @@ def test_missing_native_host_is_a_typed_refusal(tmp_path: Path, monkeypatch: pyt
 
 
 def test_gutted_model_refusal_is_not_optional(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    from omega_engine_pfp.domain.demos import refuse_model_functionals
+    from pfp.domain.demos import refuse_model_functionals
 
     seen: list[object] = []
 
@@ -219,7 +219,7 @@ def test_gutted_model_refusal_is_not_optional(tmp_path: Path, monkeypatch: pytes
         return refuse_model_functionals(value)
 
     monkeypatch.setattr(
-        "omega_engine_epistemic_immune_system.use_cases.demos.demo_4e_cogsci_autopoiesis.policy.refuse_model_functionals",
+        "eis.use_cases.demos.demo_4e_cogsci_autopoiesis.policy.refuse_model_functionals",
         spy,
     )
     result = checker.run_packaged_immune(tmp_path, checker.packaged_replies())
@@ -231,7 +231,7 @@ def test_sources_do_not_read_historical_products_or_embed_the_checker():
     paths = [
         Path(checker.__file__),
         ROOT
-        / "omega_engine_epistemic_immune_system"
+        / "eis"
         / "use_cases"
         / "demos"
         / "demo_4e_cogsci_autopoiesis"
@@ -297,4 +297,4 @@ def test_project_cli_run_and_verify(tmp_path: Path):
     assert main(["run", DEMO_ID, "--output-dir", str(output)]) == 0
     assert main(["verify", str(output / "receipt.json")]) == 0
     runner = FRONTEND.read_text(encoding="utf-8")
-    assert "omega_engine_epistemic_immune_system.entrypoints.demo_4e_cogsci_autopoiesis" in runner
+    assert "eis.entrypoints.demo_4e_cogsci_autopoiesis" in runner

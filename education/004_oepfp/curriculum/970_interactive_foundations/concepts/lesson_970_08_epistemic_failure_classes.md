@@ -12,7 +12,7 @@ If the page is long, read one section and run the matching notebook cells. Leave
 
 ## Section 3: The Epistemic Immune System (12 Failure Classes)
 
-Mined directly from production experiments and codified in `omega_prompt_civilization/src/pharmacy.rs`, the **Epistemic Immune System** is an anti-skill pharmacy consisting of 12 mechanical, deterministic failure detectors.
+Mined directly from production experiments and codified in `core_prompt_civilization/src/pharmacy.rs`, the **Epistemic Immune System** is an anti-skill pharmacy consisting of 12 mechanical, deterministic failure detectors.
 
 ### Two Cardinal Rules of the Pharmacy:
 1. **Detection is separate from repair**: A `Finding` records what is wrong and nothing else. No detector proposes or applies a fix. Coupling detection with repair allows a detector to launder its own bypass.

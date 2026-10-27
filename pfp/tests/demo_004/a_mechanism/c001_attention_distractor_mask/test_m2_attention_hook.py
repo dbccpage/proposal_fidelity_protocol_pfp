@@ -20,7 +20,7 @@ import pytest
 
 torch = pytest.importorskip("torch")
 
-from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
+from projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_distractor_mask.attention_hook import (
     DEFAULT_DANGER_TAU,
     HARD_KILL_CEILING_MICROUSD,
     TARGET_BUDGET_MICROUSD,
@@ -36,14 +36,14 @@ from omega_engine_projects.mssn_sn_symgam.challenges.a_mechanism.c001_attention_
     verify_position_ids_invariant,
 )
 
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_signals import (
     SignalIndependenceRefusal,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
 )
-from omega_engine_woland.domain.providers.types import BudgetExceeded
+from adversary.domain.providers.types import BudgetExceeded
 
 # ==============================================================================
 # 1. Attention Mask Zeroing Across Heads and Layers

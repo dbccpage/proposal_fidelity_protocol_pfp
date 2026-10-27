@@ -11,10 +11,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping
 
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.affine_hnf_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.affine_hnf_checker import (
     verify_affine_hnf_certificate,
 )
-from omega_engine_pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
+from pfp.tests.demo_004.d_physics_mtheory.c034_calabi_yau_hodge_numbers.judge_packet.checkers.facet_point_checker import (
     verify_facet_point_certificate,
 )
 

@@ -1,4 +1,4 @@
-"""Fixed per-seat model routing for Symbol Game seat transports (used by the Woland retinue).
+"""Fixed per-seat model routing for Symbol Game seat transports (used by the Adversary panel).
 
 Each seat that calls a model has one primary router and an ordered list of at
 least three models from three different vendors on that router, followed by
@@ -16,16 +16,16 @@ from dataclasses import asdict, dataclass, is_dataclass
 from fractions import Fraction
 from typing import Any
 
-from omega_engine_operating_system.adapters.rust_host.ffi import RustSymbolGameHost
-from omega_engine_operations.domain.rop.result import Err, Ok, Refusal, Result
+from operating_system.adapters.rust_host.ffi import RustSymbolGameHost
+from operations.domain.rop.result import Err, Ok, Refusal, Result
 
-_LOCUS = "omega_engine_pfp.infrastructure.seat_transport.routing"
+_LOCUS = "pfp.infrastructure.seat_transport.routing"
 
 
 def invoke(operation: str, **payload: Any) -> Result[Any, Refusal]:
-    """Run one ``woland_support`` routing operation on the native host."""
+    """Run one ``adversary_support`` routing operation on the native host."""
     response = RustSymbolGameHost().invoke_runtime_with_file(
-        "woland_support", {"operation": operation, **payload}, file_action="woland_support_file"
+        "adversary_support", {"operation": operation, **payload}, file_action="adversary_support_file"
     )
     if isinstance(response, Err):
         return response
@@ -43,7 +43,7 @@ def value(operation: str, **payload: Any) -> Any:
     result = invoke(operation, **payload)
     if isinstance(result, Err):
         error = result.error
-        if error.code == "WOLAND_EVIDENCE_TYPE_ERROR":
+        if error.code == "ADVERSARY_EVIDENCE_TYPE_ERROR":
             raise TypeError(error.message)
         raise ValueError(error.message)
     return result.value
@@ -70,7 +70,7 @@ MIN_PRIMARY_MODELS = 3
 
 
 def canonical_seat_key(seat_id: str) -> str:
-    """Map a display name ("The Master") or runtime id ("seat_the_master") to one key."""
+    """Map a display name ("Manuscript Truth") or runtime id ("seat_manuscript_truth") to one key."""
     return value("routing_key", seat_id=seat_id)
 
 

@@ -12,10 +12,10 @@ import json
 from pathlib import Path
 
 import pytest
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.judge_packet.checkers.jacobi_character_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.judge_packet.checkers.jacobi_character_checker import (
     verify_jacobi_character_certificate,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.judge_packet.checkers.matrix_inversion_checker import (
+from projects.mssn_sn_symgam.challenges.d_physics_mtheory.c035_k3_elliptic_genus_mathieu_moonshine.judge_packet.checkers.matrix_inversion_checker import (
     verify_matrix_inversion_certificate,
 )
 

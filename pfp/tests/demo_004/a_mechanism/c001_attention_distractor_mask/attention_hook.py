@@ -17,7 +17,7 @@ Implements Milestone 2 requirements for Symbol Game Mechanism Challenge C001:
      Ensures coordinate containment (`d_start <= t_start and t_end <= d_end`) without any token-ID matching.
 3. Masking decisions (corrected 2026-09-29):
    - `evaluate_danger_gate` uses the Epistemic Immune System's two-signal gate
-     (`omega_engine_epistemic_immune_system.domain.danger_gate.TwoSignalDangerGate.evaluate_independent`).
+     (`eis.domain.danger_gate.TwoSignalDangerGate.evaluate_independent`).
      Signal 1 is the distractor-span detector (`len(fluff_positions) > 0`). The only independent
      Signal 2 is a host verifier's refusal of the unmasked turn (`host_refusal=True`, observed by
      `c001-host-verifier`). Signal 2 alone does not authorize masking.
@@ -28,7 +28,7 @@ Implements Milestone 2 requirements for Symbol Game Mechanism Challenge C001:
      when the distractor attention mass exceeds tau. It makes no two-signal claim.
    - Strict Zero-Float Law: uses `fractions.Fraction` for all ratios and thresholds (floats raise TypeError).
 4. Pre-dispatch Budget Controller:
-   - Integrates with `omega_engine_woland.domain.providers.budget.BudgetController`.
+   - Integrates with `adversary.domain.providers.budget.BudgetController`.
    - Sets target spend < $0.05 (50,000 micro-USD) and hard kill ceiling $0.25 (250,000 micro-USD).
    - Local PyTorch/Python solvers bill 0 micro-USD ($0.00). Any remote route is validated fail-closed prior to dispatch.
 
@@ -47,21 +47,21 @@ try:
 except ImportError:  # pragma: no cover
     torch = None
 
-from omega_engine_epistemic_immune_system.domain.danger_gate import (
+from eis.domain.danger_gate import (
     DangerEvaluationResult,
     TwoSignalDangerGate,
 )
-from omega_engine_epistemic_immune_system.domain.danger_signals import (
+from eis.domain.danger_signals import (
     SignalIndependenceRefusal,
 )
-from omega_engine_epistemic_immune_system.domain.value_objects import (
+from eis.domain.value_objects import (
     DangerDecision,
     DangerSeverity,
     Signal1Match,
     Signal2Danger,
 )
-from omega_engine_woland.domain.providers.budget import BudgetController
-from omega_engine_woland.domain.providers.types import BudgetExceeded, BudgetReceipt
+from adversary.domain.providers.budget import BudgetController
+from adversary.domain.providers.types import BudgetExceeded, BudgetReceipt
 
 # Canonical budget limits in integer micro-USD
 TARGET_BUDGET_MICROUSD: int = 50_000  # $0.05 target spend
@@ -621,7 +621,7 @@ def apply_distractor_key_mask(
 class MechanismBudgetController:
     """Pre-dispatch budget controller enforcing sub-$0.05 target and $0.25 hard kill ceiling.
 
-    Integrates with omega_engine_woland.domain.providers.budget.BudgetController.
+    Integrates with adversary.domain.providers.budget.BudgetController.
     - Local PyTorch/Python solvers bill exactly 0 micro-USD ($0.00).
     - Remote routes validate budget fail-closed prior to dispatch.
     - Breaches above hard_kill_ceiling_microusd raise BudgetExceeded.

@@ -1,0 +1,61 @@
+# Epic: Explicit estate replacement, preserved routing and reversible package migration
+
+**Epic ID:** `EPIC-OE-OEWAS-008`
+**AuthorityEffect:** None
+**Status:** `RESEARCH_HOLD`
+**Reviewed:** 2026-10-10
+**Owner:** OEWAS maintainers and dependency owners named below.
+
+The [shared-review reconciliation](../../../receipts/epic_design_review_20261010.md) records the readable review and unavailable attachments. Full-scope readiness is held. Existing tests are source references, not current execution receipts.
+
+## Source inspection and repaired obstructions
+
+OEWAS001/004 already own parser, budget and packaging mechanisms. This epic owns their estate migration and legacy-route replacement, not duplicate validators. Arbitrary Markdown heading order does not diagnose corruption; fenced declarations, references and routing semantics do.
+
+[SwarmSpecializationV1/specialize](../../../../adversary/domain/specialization.py) and [registered profiles](../../../../adversary/use_cases/base_swarm/specializations.py) already exist; remove their reimplementation from active deliverables. Fixed8/12 retirement counts and assertions that specific skills remain corrupted need fresh inventory. [legacy absence tests](../../../../adversary/tests/test_legacy_rip_manifest_absence_gate.py) define their scanner inside the tests; passing them is not runtime retirement enforcement.
+
+## Bounded contract and dependency decisions
+
+Use [CompileProjectionHandler.handle](../../../../workflows_agents_skills/application/commands/compile_projection.py) and [FourHostSkillMirror](../../../../operations/use_cases/packaging/sync_cross_host_skills.py) on one retired-route/replacement package in temporary hosts. Input: pinned old package and named replacement profile. Output: projection/packaging result preserving source refs and disabling old executable access. Oracle: independent file inventory and actual profile/route lookup, not a forbidden-word scan.
+
+OEWAS008 owns reviewed old→replacement routing, caller coverage, archived bytes, reference closure and rollback. Adversary residual SAGA6 owns runtime narrowing; OEWAS004 owns package parity; each host owner supplies activation evidence. Delete no live package based only on a rip-prefix. Missing replacement for any caller or unrecoverable old bytes holds migration. The inspected ProjectionManifestAdapter emits catalog/operation IDs only; it does not expose executable retirement or verify stored receipts. Agree additive retirement/lifecycle fields in that existing payload and name its native consuming verification port before the first migration test. Until then tests may characterize the existing projection but cannot claim disabled runtime access; do not invent another registry.
+
+## Obstruction review and TDD test plan
+
+**Independent oracle for these slices:** independent file inventory and actual profile/route lookup, not a forbidden-word scan.
+
+Candidate: `workflows_agents_skills/tests/integration/test_retired_route_projection_contract.py`.
+
+1. **RED → minimal GREEN:** compile a temporary estate with one reviewed retired operation/replacement. Call the real projection handler; require disabled retired access and replacement source custody. Author only after the retirement-schema dependency is settled. Add the smallest missing projection behavior, then refactor.
+2. **RED → minimal GREEN:** transplant the old projection receipt onto replacement bytes; the owning verification port must refuse. A missing linked reference makes packaging incomplete. Recover by reinstalling pinned prior bytes in all four temporary hosts and verifying before activation.
+3. **RED → minimal GREEN:** call existing `specialize` with extra ports, larger budget and widened terminals; require SpecializationError plus a valid narrowing control. Reuse [specialization tests](../../../../adversary/tests/spine/test_specialization_contract.py) instead of a second hierarchy. Renamed legacy callers must resolve to that profile or remain held.
+
+| Theoretical minimum | Obligation |
+| --- | --- |
+| INVARIANT | Retire executable access only after replacement/caller coverage/recoverable custody. |
+| BREAK | Drop a live route, widen child capabilities or reuse an old receipt. |
+| WITNESS | Missing replacement/foreign digest holds; widened specialization refuses. |
+| MUTATION | Linked `specialize` enforces parent port/terminal/budget ceilings. Bypass one guard and require RED; source inspected only. Retirement mutation remains unverified until its schema/verifier is bound. |
+
+Examiner controls: valid replacement (1), missing reference (2), old-receipt transplant (3), widening/missing caller (4), actual projection/packaging rollback plus mutation (5). Package PASS cannot close all-estate caller coverage.
+
+### Execution and evidence discipline
+
+Use the explicitly invoked [ext-mattpocock-tdd skill](../../../../.agents/skills/ext-mattpocock-tdd/SKILL.md). Its current entry declares a Code-to-Code operation; the concrete sequence above is this plan's local design. Observe one behavior test RED, implement minimal GREEN, then refactor with adjacent controls. Already-GREEN behavior is reuse, not fabricated RED. No proposed tests were authored or run by this review.
+
+Run from repository root after authoring the named candidate file:
+
+```powershell
+& 'C:/Users/a343o/source/repos/the_symbol_game/.venv/Scripts/python.exe' -X utf8 -m pytest workflows_agents_skills/tests/integration/test_retired_route_projection_contract.py -q
+```
+
+Four-stage route: DOC_MGR pins bytes/UTF-8/links; DEV_MGR with Syntax Prefilter/Scope Guard binds the public port and budget; QA_MGR/Inspector run one-to-three files per batch and at most three repair attempts; BUILDER checks invariant/falsifier and Adversary adjudicates recorded evidence, preserving Defect Hunter dissent. Rust work uses one crate and `-j 1`. SoftwareQaReceiptV1 requires its actual schema/writer; this Markdown is not one.
+
+## Claim discipline
+
+- Supports: source-inspected residual scope and prospective behavior tests.
+- Does not support: implementation completion, executed tests, automatic admission, full design readiness or a mathematical theorem.
+- Narrowest claim: One reviewed replacement is bounded; estate retirement requires caller coverage, archived bytes and separate host activation.
+- Next evidence: bind the candidate test to the public port, observe real RED/minimal GREEN/refactor, and retain source/candidate/test digests, command, exit status and mutation/restoration evidence under `receipts/`.
+
+Cross-epic ownership and retained custody follow the [integration decision](../../decisions/adr_20261010_epic_integration_ownership.md).

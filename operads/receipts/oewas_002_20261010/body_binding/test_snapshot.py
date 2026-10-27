@@ -10,27 +10,27 @@ from pathlib import Path
 
 import pytest
 
-from omega_engine_operations.domain.rop.result import Ok
-from omega_engine_workflows_agents_skills.application.commands.compile_catalog import (
+from operations.domain.rop.result import Ok
+from workflows_agents_skills.application.commands.compile_catalog import (
     operation_content_digest,
 )
-from omega_engine_workflows_agents_skills.application.dtos.success_dtos import (
+from workflows_agents_skills.application.dtos.success_dtos import (
     WorkflowValidationResultDTO,
 )
-from omega_engine_workflows_agents_skills.application.typed_workflow_compiler import (
+from workflows_agents_skills.application.typed_workflow_compiler import (
     compile_typed_workflow,
 )
-from omega_engine_workflows_agents_skills.application.woland_candidate_plan import (
+from workflows_agents_skills.application.adversary_candidate_plan import (
     PlanNodeV01,
     compile_candidate_plan,
 )
-from omega_engine_workflows_agents_skills.domain.entities.typed_workflow import (
+from workflows_agents_skills.domain.entities.typed_workflow import (
     TypedWorkflowV1,
     WorkflowBindingV1,
     WorkflowInputV1,
     WorkflowNodeV1,
 )
-from omega_engine_workflows_agents_skills.infrastructure.typed_contract_compiler import (
+from workflows_agents_skills.infrastructure.typed_contract_compiler import (
     compile_typed_contracts,
 )
 
@@ -38,7 +38,7 @@ ROOT = next(
     path for path in Path(__file__).resolve().parents if (path / "pyproject.toml").is_file()
 )
 EFFECTS = frozenset({"read_subject", "emit_finding"})
-TREE = PlanNodeV01("woland-claim-audit", ((0, PlanNodeV01("woland-scope-falsifier")),))
+TREE = PlanNodeV01("adversary-claim-audit", ((0, PlanNodeV01("adversary-scope-falsifier")),))
 
 
 def _documents(bodies=("Check claim A.", "Check claim B."), *, effectful=False):
@@ -46,7 +46,7 @@ def _documents(bodies=("Check claim A.", "Check claim B."), *, effectful=False):
     documents = []
     for document in originals:
         operation = document.operations[0]
-        index = 0 if str(operation.operation_id) == "woland-claim-audit" else 1
+        index = 0 if str(operation.operation_id) == "adversary-claim-audit" else 1
         documents.append(
             replace(
                 document,
@@ -61,8 +61,8 @@ def _workflow(documents):
     by_id = {str(doc.operations[0].operation_id): doc for doc in documents}
     nodes = []
     for node_id, operation_id in (
-        ("audit", "woland-claim-audit"),
-        ("falsifier", "woland-scope-falsifier"),
+        ("audit", "adversary-claim-audit"),
+        ("falsifier", "adversary-scope-falsifier"),
     ):
         document = by_id[operation_id]
         nodes.append(

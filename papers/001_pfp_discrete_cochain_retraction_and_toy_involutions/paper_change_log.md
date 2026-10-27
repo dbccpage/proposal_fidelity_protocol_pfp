@@ -6,7 +6,7 @@ Recorded canonical Zenodo record <https://zenodo.org/records/23114044> (DOI: `10
 
 ## 2026-10-02 — Publication review evidence attribution and package census reconciliation
 
-Reconciled deposit manifests (`MANIFEST.sha256`, `SHA256SUMS`) and deterministic release archive to include the full intended supplementary file set (the six companion PDFs and `docs/keywords.md`) and current preface/quiz hashes. Corrected evidence attribution in `paper.md`, `paper_claim_ledger.md`, `README.md`, and `zenodo_metadata.json`: citing `docs/release_validation_2026_10_02_review_repairs.json` for the complete package test suite, Lean build, notebook execution, and adapter/governor SHA-256 bindings, while scoping `docs/release_validation_2026_10_02_continued_review.json` to targeted follow-on checks. Clarified in `_lev_landau_theoretical_minimum_quiz/instructor_key.md` that Lean formalization files are distributed in `lean4/`. Recompiled `paper.pdf`.
+Reconciled deposit manifests (`MANIFEST.sha256`, `SHA256SUMS`) and deterministic release archive to include the full intended supplementary file set (the six companion PDFs and `docs/keywords.md`) and current preface/quiz hashes. Corrected evidence attribution in `paper.md`, `paper_claim_ledger.md`, `README.md`, and `zenodo_metadata.json`: citing `docs/release_validation_2026_10_02_review_repairs.json` for the complete package test suite, Lean build, notebook execution, and adapter/governor SHA-256 bindings, while scoping `docs/release_validation_2026_10_02_continued_review.json` to targeted follow-on checks. Clarified in `_lev_examiner_theoretical_minimum_quiz/instructor_key.md` that Lean formalization files are distributed in `lean4/`. Recompiled `paper.pdf`.
 
 ## 2026-10-02 — Continued review repairs
 
@@ -15,14 +15,14 @@ for its positive optimum. That notebook is the minimum-5 triangle, separate
 from the manuscript minimum of 3. The BQNF-FSIGN contract lists `stoquastic` as
 the positivity-route alias and states that a concrete `Refused_*` status is the
 abstract terminal `Refused`. A six-exercise notebook worksheet sits beside the
-Landau examination and does not replace it. The first-round receipt
+Examiner examination and does not replace it. The first-round receipt
 `docs/release_validation_2026_10_02_review_repairs.json` stays in place. No
 Zenodo deposit and no DOI.
 
 ## 2026-10-02 — Review repairs before release
 
 Local repairs from the 2026-10-02 publication review. The central graph
-argument is unchanged. The Landau companion now uses the corrected operators
+argument is unchanged. The Examiner companion now uses the corrected operators
 \(Bs\), \(B^T\lambda=0\), and \(c+B\phi\), tests uniqueness on nonzero
 coboundaries in \(\operatorname{im} B\), and drops the invalid converse. The
 preface labels the dialogue as fiction. The study guide separates heuristic
@@ -137,7 +137,7 @@ claims. Current scope is governed by paper.md and paper_claim_ledger.md.
 - **Demo 1 Historical Pilot Log Corrections:** Retitled Demo 1 rounds as historical pilot behavior on partial host states. Documented the directed 3-cycle sum invariant ($1+2+2=5 \ne 0$) and $\operatorname{rank}(d_0) = 2$. Clarified that $\Gamma_2$ and $\Xi$ in pilot tables were binary admission proxies (`admitted_proxy`, `refused_proxy`), not live functional measurements. Documented that R2b and R3 prompts supplied example CUT syntax and R2b asserted only $a \to b$. Clarified that the diamond graph is a 1-skeleton complex with two $H^1$ loops, not an $H^2 \ne 0$ fixture, and documented that `_lift_hint` was never delivered to the model prompt.
 - **Packet Tower Prompt Notes Demystification:** Aligned `packet_tower_llm_notes.md` with PO-032 §2 and OEWAS Spec §3, discarding speculative "soft logit masking" claims and framing prompt changes as context conditioning perturbations on the proposal distribution.
 - **Demo 3 Replay Auditor & Regression Testing:** Updated `run_demo3_replay.py` contradiction checking to flag contradictions when either `action: identity` or `type: identity` is paired with nonidentity mappings, rejected non-object batch items, and added unit regression tests covering both cases (16/16 tests passing).
-- **Rust Pharmacy & Runtime Executable Boundary:** Pruned `detectors_run` in `omega_prompt_civilization/src/pharmacy.rs` to 11 active predicates (removed unexecuted `PERSONA_AUTHORITY_LEAK`). Hashed separately defined semantic payload (stripping version/schema labels) for `VERSION_DUPLICATION`. Bound `SCHEMA_SEMANTIC_LAUNDERING` suppression to verified host replay receipts, and preserved `raw_bytes_digest` alongside `normalized_json_digest`. Demoted theorem name laundering to diagnostic finding.
+- **Rust Pharmacy & Runtime Executable Boundary:** Pruned `detectors_run` in `core_prompt_civilization/src/pharmacy.rs` to 11 active predicates (removed unexecuted `PERSONA_AUTHORITY_LEAK`). Hashed separately defined semantic payload (stripping version/schema labels) for `VERSION_DUPLICATION`. Bound `SCHEMA_SEMANTIC_LAUNDERING` suppression to verified host replay receipts, and preserved `raw_bytes_digest` alongside `normalized_json_digest`. Demoted theorem name laundering to diagnostic finding.
 
 ## 2026-09-24 — Demo 3 naming clarification
 

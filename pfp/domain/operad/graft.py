@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import enum
 from typing import Any, Mapping, Sequence
 
-from omega_engine_pfp.domain.operad.errors import (
+from pfp.domain.operad.errors import (
     IllTypedCompositionError,
     OperadError,
 )

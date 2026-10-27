@@ -24,7 +24,7 @@ run (which is itself a refusal, never a pass).
 
 Usage
 -----
-    python omega_engine_operads/skills/declared-vs-actual-gate/scripts/check_declared_programs.py
+    python operads/skills/declared-vs-actual-gate/scripts/check_declared_programs.py
     python ... --json          machine-readable receipt on stdout
 """
 
@@ -41,46 +41,46 @@ from pathlib import Path
 # (declaring skill, repo-relative path). Sourced from the stage lists in
 # auto-oe-autop, auto-improve-autoskill and auto-review-skills, plus the two
 # packaging programs the audit wrappers import at run time.
-# Vendored from anomalonpy 2026-09-04. These paths were never "missing files"
-# in CODA -- they are the shared skill-compiler machinery, which anomalonpy
+# Vendored from sentinelpy 2026-09-04. These paths were never "missing files"
+# in CODA -- they are the shared skill-compiler machinery, which sentinelpy
 # owns and this repository had only referenced. Reading absence from disk as
 # non-existence produced a parallel reimplementation of all seven; the
 # originals are now vendored and this list points at them.
 DECLARED_PROGRAMS: tuple[tuple[str, str], ...] = (
-    ("autoskill", "omega_engine_operads/skill_operad/skill_compiler/README.md"),
-    ("autoskill", "omega_engine_operads/skill_operad/skill_compiler/promote.py"),
-    ("autoskill", "omega_engine_operads/skill_operad/skill_compiler/episode.py"),
-    ("autoskill", "omega_engine_operads/skill_operad/skill_compiler/resolve.py"),
-    ("autoskill", "omega_engine_operads/skill_operad/yaml/routes.yaml"),
+    ("autoskill", "operads/skill_operad/skill_compiler/README.md"),
+    ("autoskill", "operads/skill_operad/skill_compiler/promote.py"),
+    ("autoskill", "operads/skill_operad/skill_compiler/episode.py"),
+    ("autoskill", "operads/skill_operad/skill_compiler/resolve.py"),
+    ("autoskill", "operads/skill_operad/yaml/routes.yaml"),
     ("autoskill", "runs/skill_compiler/episodes"),
-    ("auto-oe-autop", "omega_engine_operads/skill_operad/skill_compiler/knowledge_parity.py"),
+    ("auto-oe-autop", "operads/skill_operad/skill_compiler/knowledge_parity.py"),
     (
         "auto-improve-autoskill",
-        "omega_engine_operads/skill_operad/skill_compiler/budget_gate.py",
+        "operads/skill_operad/skill_compiler/budget_gate.py",
     ),
-    ("auto-improve-autoskill", "omega_engine_operads/skill_operad/yaml/budget_exceptions.yaml"),
-    ("auto-review-skills", "omega_engine_operads/skill_operad/skill_compiler/eval_runner.py"),
-    ("auto-review-skills", "omega_engine_operads/skill_operad/skill_compiler/eval_bank/cases.json"),
+    ("auto-improve-autoskill", "operads/skill_operad/yaml/budget_exceptions.yaml"),
+    ("auto-review-skills", "operads/skill_operad/skill_compiler/eval_runner.py"),
+    ("auto-review-skills", "operads/skill_operad/skill_compiler/eval_bank/cases.json"),
     (
         "auto-review-agents",
-        "omega_engine_operations/use_cases/packaging/agent_skill_manifest_audit.py",
+        "operations/use_cases/packaging/agent_skill_manifest_audit.py",
     ),
-    ("auto-review-skills", "omega_engine_operations/use_cases/packaging/sync_cross_host_skills.py"),
-    ("auto-review-skills", "omega_engine_operads/skills/auto-review-skills/scripts/check_skill_usage.py"),
-    ("_shared", "omega_engine_operads/skill_operad/verify_skill_names.py"),
+    ("auto-review-skills", "operations/use_cases/packaging/sync_cross_host_skills.py"),
+    ("auto-review-skills", "operads/skills/auto-review-skills/scripts/check_skill_usage.py"),
+    ("_shared", "operads/skill_operad/verify_skill_names.py"),
     # Data the audits refuse to run without. An absent signature or slice
     # registry is reported blocked rather than treated as "nothing to check".
-    ("auto-review-agents", "omega_engine_operads/skill_operad/json/operad_signature.json"),
+    ("auto-review-agents", "operads/skill_operad/json/operad_signature.json"),
     (
         "auto-review-agents",
-        "omega_engine_operads/skill_operad/json/agent_capability_slices.json",
+        "operads/skill_operad/json/agent_capability_slices.json",
     ),
-    ("auto-review-skills", "omega_engine_operads/registry/lifecycle.yaml"),
-    ("auto-review-skills", "omega_engine_operads/registry/capabilities.yaml"),
-    ("auto-review-skills", "omega_engine_operads/registry/roles.yaml"),
-    ("auto-review-skills", "omega_engine_operads/registry/providers.yaml"),
-    ("auto-review-skills", "omega_engine_operads/registry/aliases.yaml"),
-    ("auto-review-skills", "omega_engine_operads/registry/compatibility-epoch.yaml"),
+    ("auto-review-skills", "operads/registry/lifecycle.yaml"),
+    ("auto-review-skills", "operads/registry/capabilities.yaml"),
+    ("auto-review-skills", "operads/registry/roles.yaml"),
+    ("auto-review-skills", "operads/registry/providers.yaml"),
+    ("auto-review-skills", "operads/registry/aliases.yaml"),
+    ("auto-review-skills", "operads/registry/compatibility-epoch.yaml"),
 )
 
 SKILLS_DIRNAME = "skills"
@@ -102,7 +102,7 @@ def host_roots(root: Path) -> list[str]:
 
 def _source_owner(root: Path) -> str:
     """Use OEOP in the current estate; read legacy host-only fixtures explicitly."""
-    return "omega_engine_operads" if (root / "omega_engine_operads").is_dir() else ".agents"
+    return "operads" if (root / "operads").is_dir() else ".agents"
 
 
 # --------------------------------------------------------------------------
@@ -243,7 +243,7 @@ def check_parity(root: Path, hosts: list[str]) -> dict:
     trees = {h: _tree(root, h) for h in {canon, *hosts}}
     base = trees[canon]
     rows = []
-    for host in hosts if canon == "omega_engine_operads" else hosts[1:]:
+    for host in hosts if canon == "operads" else hosts[1:]:
         other = trees[host]
         missing = sorted(set(base) - set(other))
         extra = sorted(set(other) - set(base))
@@ -294,7 +294,7 @@ def check_agent_licences(root: Path, hosts: list[str]) -> dict:
     """A licence is a capability ceiling, so the direction of drift matters.
 
     Deployed-grants-more is the case that matters: a host would be running an
-    agent with colours the canonical retinue never granted it. A pure
+    agent with colours the canonical panel never granted it. A pure
     re-ordering of the same set is cosmetic and reported as such.
     """
     owner = _source_owner(root)

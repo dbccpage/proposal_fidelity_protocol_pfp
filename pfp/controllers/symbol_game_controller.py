@@ -49,7 +49,7 @@ class SymbolGameController:
         """Compose the controller.
 
         ``target_dir`` is the explicit output root: run artifacts are written
-        under ``target_dir/_intelligence/``. For a Woland run the caller passes
+        under ``target_dir/_intelligence/``. For a Adversary run the caller passes
         the root from ``resolve_intelligence_repo_root``. There is no default
         root; without one the runner has no emitter and emission refuses.
         """
@@ -60,7 +60,7 @@ class SymbolGameController:
             emitter = None
             if target_dir is not None:
                 root = Path(target_dir)
-                from omega_engine_epistemic_immune_system.infrastructure.pharmacy_writer import (
+                from eis.infrastructure.pharmacy_writer import (
                     filesystem_catalog_bytes,
                 )
 
@@ -163,7 +163,7 @@ class SymbolGameController:
         )
 
     def run_specimen_mt000(self) -> Dict[str, Any]:
-        """Runs the mt_000 live specimen claim reduction under Woland character debate."""
+        """Runs the mt_000 live specimen claim reduction under Adversary character debate."""
         mt000_claims = {
             "title": "Specimen mt_000: Finite Discrete Residual Geometry",
             "claims": [
@@ -189,9 +189,9 @@ class SymbolGameController:
         refactoring_payload = {
             "title": "Multi-Step Code Refactoring Packet: Clean Architecture Decoupling",
             "target_modules": [
-                "omega_engine_pfp.domain",
-                "omega_engine_pfp.use_cases",
-                "omega_engine_pfp.controllers",
+                "pfp.domain",
+                "pfp.use_cases",
+                "pfp.controllers",
             ],
             "initial_defects": [
                 "ast:circular_dependency_between_runner_and_engine",

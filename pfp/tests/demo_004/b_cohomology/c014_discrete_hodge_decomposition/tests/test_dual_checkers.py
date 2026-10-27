@@ -13,10 +13,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.judge_packet.checkers.dual_evaluator import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.judge_packet.checkers.dual_evaluator import (
     assert_dual_agreement,
 )
-from omega_engine_projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.reference_solver.solver import (
+from projects.mssn_sn_symgam.challenges.b_cohomology.c014_discrete_hodge_decomposition.reference_solver.solver import (
     solve,
 )
 

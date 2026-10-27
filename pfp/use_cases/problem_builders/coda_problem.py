@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-from omega_engine_pfp.domain.entities import PacketEnvelopeV2
-from omega_engine_pfp.domain.entities.cochain import CochainCarrier, CochainState
-from omega_engine_pfp.domain.entities.cochain_projector import CochainProjector
-from omega_engine_pfp.domain.entities.problem import (
+from pfp.domain.entities import PacketEnvelopeV2
+from pfp.domain.entities.cochain import CochainCarrier, CochainState
+from pfp.domain.entities.cochain_projector import CochainProjector
+from pfp.domain.entities.problem import (
     DetectorCase,
     IdentityAdapter,
     RuntimeProblem,
 )
-from omega_engine_pfp.domain.shared_kernel.canonical import domain_digest, freeze
+from pfp.domain.shared_kernel.canonical import domain_digest, freeze
 
 CODA_CARRIER_ID = "finite-cochain-2-v1"
 CODA_PACKET_FAMILY = "cochain_obstruction"
@@ -65,13 +65,13 @@ def build_coda_problem(
     payload = {
         "carrier": carrier,
         "omega": initial.values,
-        "canonical_rust_owner": "omega_solvers::solver_of_solvers",
+        "canonical_rust_owner": "core_solvers::solver_of_solvers",
     }
     if research_parent_event_id is not None:
         payload["research_parent_event_id"] = research_parent_event_id
 
-    source_digest = domain_digest("omega.oesos.coda-fixture.v1", payload)
-    initial_state_hash = domain_digest("omega.oesos.native-state.v1", initial)
+    source_digest = domain_digest("core.oesos.coda-fixture.v1", payload)
+    initial_state_hash = domain_digest("core.oesos.native-state.v1", initial)
 
     envelope = PacketEnvelopeV2(
         task_id=task_id,
