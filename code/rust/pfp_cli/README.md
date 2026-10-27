@@ -37,6 +37,14 @@ cargo install --locked --git https://github.com/dbccpage/proposal_fidelity_proto
 | `pfp replay PACKET [--root DIR]` | Checks that the files still match the packet. Never reads outside `--root`, even through links | Never |
 | `pfp explain [CODE]` | What a code means, why it matters, what to do, where to read more | Never |
 | `pfp demo` | `check` on a bundled prompt and reply | Never |
+| `pfp skills --catalog FILE [--json]` | Counts skills bound to an executor, residual effects and agents in a compiled skill catalogue | Never |
+| `pfp licence ROLE SKILL --catalog FILE` | Exit 0 if the catalogue licenses the role to use the skill, 1 (`UNLICENSED_SKILL`) if a colour is outside its licence | Never |
+| `pfp export --mcp --catalog FILE` | Prints the bound skills as MCP tool definitions, with the operad signature in `_meta` | Never |
+
+The catalogue is `operads/skill_operad/json/capability_catalog.v1.json`, written
+by `python -m operads.infrastructure.capability_catalog_compiler --write`. For
+example, `pfp licence rust-dev glossa-claim-hygiene-linter --catalog ...`
+exits 1: that skill reads `Paper`, which `rust-dev` is not licensed for.
 
 Exit codes: **0** nothing found, **1** findings or mismatches, **2** could not
 run (bad arguments, a missing or non-regular file, non-UTF-8 input, input over

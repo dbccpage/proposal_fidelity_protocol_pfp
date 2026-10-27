@@ -9,6 +9,7 @@
 //!
 //! Exit codes: 0 nothing found, 1 findings or mismatches, 2 could not run.
 
+use pfp_cli::skills::{self, Licence};
 use pfp_cli::{catalog, check, clean, count, packet, Input, Text};
 use std::ffi::OsString;
 use std::fs::{self, File, OpenOptions};
@@ -35,6 +36,12 @@ USAGE
       What a code means and what to do. No CODE lists them all.
   pfp demo
       Run check on a bundled prompt and reply.
+  pfp skills --catalog FILE [--json]
+      Count bound and unbound skills in a compiled skill catalogue.
+  pfp licence ROLE SKILL --catalog FILE
+      Whether the catalogue licenses ROLE to use SKILL (exit 1 if not).
+  pfp export --mcp --catalog FILE
+      Print the bound skills as MCP tool definitions.
 
 EXIT CODES
   0 nothing found   1 findings or mismatches   2 could not run
@@ -85,6 +92,9 @@ fn dispatch(args: &[String]) -> Run {
         "replay" => cmd_replay(rest),
         "explain" => cmd_explain(rest),
         "demo" => cmd_demo(rest),
+        "skills" => cmd_skills(rest),
+        "licence" | "license" => cmd_licence(rest),
+        "export" => cmd_export(rest),
         "help" => print(HELP, ExitCode::SUCCESS),
         "-V" | "--version" => print(&format!("{}\n", pfp_cli::TOOL), ExitCode::SUCCESS),
         other => fail(format!("unknown command {other:?}; try `pfp help`")),
@@ -393,6 +403,73 @@ fn cmd_replay(args: &[String]) -> Run {
         ));
         print(&out, ExitCode::from(1))
     }
+}
+
+fn read_catalog(args: &Args) -> Result<skills::Catalog, Fail> {
+    let Some(name) = args.option("--catalog") else {
+        return fail(
+            "name the catalogue with --catalog, e.g. operads/skill_operad/json/capability_catalog.v1.json",
+        );
+    };
+    let text = read_text(name)?;
+    skills::parse_catalog(text.body.as_bytes()).map_err(|e| Fail(format!("{name}: {e}")))
+}
+
+fn to_json(value: &serde_json::Value) -> Result<String, Fail> {
+    Ok(serde_json::to_string_pretty(value).map_err(|e| Fail(e.to_string()))? + "\n")
+}
+
+fn cmd_skills(args: &[String]) -> Run {
+    let args = parse(args, &["--catalog"], &["--json"])?;
+    if !args.positional.is_empty() {
+        return fail("skills takes no file names; use --catalog FILE");
+    }
+    let catalog = read_catalog(&args)?;
+    if !args.flag("--json") {
+        return print(&skills::render_summary(&catalog), ExitCode::SUCCESS);
+    }
+    let bound = catalog.skills.iter().filter(|s| s.is_bound()).count();
+    let summary = serde_json::json!({
+        "skills": catalog.skills.len(),
+        "bound": bound,
+        "unbound": catalog.skills.len() - bound,
+        "agents": catalog.agents.len(),
+        "authority_effect": "None",
+    });
+    print(&to_json(&summary)?, ExitCode::SUCCESS)
+}
+
+fn cmd_licence(args: &[String]) -> Run {
+    let args = parse(args, &["--catalog"], &[])?;
+    let [role, skill] = args.positional.as_slice() else {
+        return fail("licence takes a ROLE and a SKILL");
+    };
+    let catalog = read_catalog(&args)?;
+    let (role_shown, skill_shown) = (clean(role), clean(skill));
+    match skills::licence(&catalog, role, skill) {
+        Licence::Licensed => print(
+            &format!("{role_shown} is licensed to use {skill_shown}.\n"),
+            ExitCode::SUCCESS,
+        ),
+        Licence::NotLicensed { outside } => print(
+            &format!(
+                "  REFUSE   UNLICENSED_SKILL  {role_shown} may not use {skill_shown}: {} outside its licence.\n",
+                outside.join(", ")
+            ),
+            ExitCode::from(1),
+        ),
+        Licence::UnknownAgent => fail(format!("no role {role_shown:?} in the catalogue")),
+        Licence::UnknownSkill => fail(format!("no skill {skill_shown:?} in the catalogue")),
+    }
+}
+
+fn cmd_export(args: &[String]) -> Run {
+    let args = parse(args, &["--catalog"], &["--mcp"])?;
+    if !args.flag("--mcp") || !args.positional.is_empty() {
+        return fail("export needs --mcp (the only format) and --catalog FILE");
+    }
+    let catalog = read_catalog(&args)?;
+    print(&to_json(&skills::mcp_tools(&catalog))?, ExitCode::SUCCESS)
 }
 
 fn cmd_explain(args: &[String]) -> Run {
