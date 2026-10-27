@@ -11,6 +11,7 @@
 
 - [pfp package](PFP-Package.md)
 - [Operads](Operads.md)
+  - [Versus agents, skills, rules](Operads-Versus-Agents-Skills-Rules.md)
   - [Primer](Operads-Primer.md) · [Prompt trees](Operads-Prompt-Trees.md)
   - [Rewriting and packetization](Operads-Rewriting-and-Packetization.md)
   - [Typed workflows](Operads-Typed-Workflows.md) · [Skills](Operads-Skills-and-Catalog.md)

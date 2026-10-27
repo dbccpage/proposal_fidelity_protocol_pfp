@@ -1,6 +1,6 @@
 # Operad primer
 
-Part of [Operads](Operads.md). Next: [Prompts as operad trees](Operads-Prompt-Trees.md)
+Part of [Operads](Operads.md). Previous: [Operads versus agents, skills and rules](Operads-Versus-Agents-Skills-Rules.md) · Next: [Prompts as operad trees](Operads-Prompt-Trees.md)
 
 This page builds a coloured operad from nothing, using the definitions in
 [`operads/domain/operad/`](https://github.com/dbccpage/proposal_fidelity_protocol_pfp/tree/main/operads/domain/operad).
