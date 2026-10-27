@@ -23,3 +23,13 @@
 - [025](Paper-025.md) · [026](Paper-026.md) · [027](Paper-027.md) · [028](Paper-028.md)
 - [029](Paper-029.md)
 - [Contributing](Contributing.md)
+
+**Rewriting**
+
+- [Rewriting overview](Rewriting.md)
+- Pre-Genesis: [overview](Rewriting-Pre-Genesis.md) · [strategies](Rewriting-Pre-Genesis-Strategies.md) · [examples](Rewriting-Pre-Genesis-Examples.md)
+- Genesis: [overview](Rewriting-Genesis.md) · [strategies](Rewriting-Genesis-Strategies.md) · [examples](Rewriting-Genesis-Examples.md)
+- S(n): [overview](Rewriting-Sn.md) · [retractions](Rewriting-Sn-Retraction.md) · [examples](Rewriting-Sn-Examples.md)
+- MSS-N: [overview](Rewriting-MSS-N.md) · [strategies](Rewriting-MSS-N-Strategies.md) · [examples](Rewriting-MSS-N-Examples.md)
+- PFP: [overview](Rewriting-PFP.md) · [residual repair](Rewriting-PFP-Residual-Repair.md) · [dialects](Rewriting-PFP-Dialects.md)
+- WDP: [overview](Rewriting-WDP.md) · [DDC](Rewriting-WDP-DDC.md) · [examples](Rewriting-WDP-Examples.md)
