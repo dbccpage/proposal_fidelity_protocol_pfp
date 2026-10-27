@@ -42,6 +42,7 @@ SIGNATURE_FILENAME = "operad_signature.json"
 SLICES_FILENAME = "agent_capability_slices.json"
 INVENTORY_PATH = Path("operads/skill_operad/yaml/op_inventory.yaml")
 SCRIPT_EXECUTORS_PATH = Path("operads/skill_operad/yaml/script_executors.yaml")
+ROLES_PATH = Path("operads/registry/roles.yaml")
 
 COLOUR_DESCRIPTIONS = COLOUR_MEANINGS
 
@@ -458,6 +459,61 @@ def _bind_executors(
     )
 
 
+def _agents_from_roles(
+    repo_root: Path, skills: tuple[SkillCapabilityV1, ...]
+) -> tuple[AgentCapabilityV1, ...]:
+    """One agent per role in ``registry/roles.yaml``, licensed by its colours.
+
+    A role may use exactly the skills whose every source and target colour is in its
+    licence (the sub-operad its colours generate), less any skill whose ``agent_scope``
+    names other agents. The catalogue seal re-checks each licence against the skills.
+    """
+    raw = _read_tracked(repo_root, ROLES_PATH.as_posix())
+    data = yaml.load(raw.decode("utf-8"), Loader=_DuplicateRefusingLoader)
+    if type(data) is not dict or data.get("schema") != "core.registry.roles.v1":
+        _refuse("ROLES_SCHEMA_REFUSED", ROLES_PATH.as_posix(), "expected core.registry.roles.v1")
+    if data.get("authority_effect") != "None" or type(data.get("agents")) is not dict:
+        _refuse("ROLES_SCHEMA_REFUSED", ROLES_PATH.as_posix(), "authority_effect None and agents map")
+    digest = _canonical_source_digest(raw, ROLES_PATH.as_posix())
+    agents = []
+    for agent_id, row in sorted(data["agents"].items()):
+        locus = f"{ROLES_PATH.as_posix()}:{agent_id}"
+        if type(row) is not dict or set(row) != {"licence"}:
+            _refuse("ROLE_FIELDS_REFUSED", locus, "a role has exactly one field, licence")
+        colours = _string_list(row, "licence", locus, required=True)
+        allowed = set(colours)
+        licensed = tuple(
+            skill.skill_id
+            for skill in skills
+            if {*skill.source_colours, skill.target_colour} <= allowed
+            and (not skill.agent_scope or "all" in skill.agent_scope or agent_id in skill.agent_scope)
+        )
+        if not licensed:
+            _refuse("ROLE_LICENCE_EMPTY", locus, "the licence admits no skill")
+        agents.append(
+            AgentCapabilityV1(
+                agent_id=agent_id,
+                name=agent_id,
+                description=f"Role {agent_id}: may use skills typed in {', '.join(colours)}.",
+                model="inherit",
+                source_path=_neutral_path(ROLES_PATH.as_posix()),
+                source_digest=digest,
+                license_digest=compute_agent_license_digest(
+                    agent_id=agent_id,
+                    licensed_skill_ids=licensed,
+                    licensed_colour_ids=colours,
+                    tools=(),
+                    standalone=False,
+                ),
+                licensed_skill_ids=licensed,
+                licensed_colour_ids=colours,
+                tools=(),
+                standalone=False,
+            )
+        )
+    return tuple(agents)
+
+
 def compile_capability_catalog(
     repo_root: Path,
     *,
@@ -524,6 +580,8 @@ def compile_capability_catalog(
         (_agent_from_source(repo_root=repo_root, path=path) for path in agent_paths),
         key=lambda item: item.agent_id,
     ))
+    if not agents and ROLES_PATH.as_posix() in inventory.paths:
+        agents = _agents_from_roles(repo_root, skills)
     try:
         return seal_capability_catalog(skills=skills, agents=agents)
     except CapabilityCatalogRefusal as error:
